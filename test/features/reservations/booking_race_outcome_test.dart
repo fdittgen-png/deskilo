@@ -5,6 +5,7 @@
 // "the level has reservations" for a seat under a whole-reserved desk); a
 // checkout that lost the race to another checkout or to the day-end sweep
 // says the reservation is already closed instead of a generic failure.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/reservations/presentation/booking_error_text.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,8 +15,8 @@ import '../../helpers/reservation_refused.dart';
 void main() {
   // #3810 — the codes 0739 raises with these refusals.
   const codes = {
-    'not checked in': 'DKK25',
-    'the level has reservations in that period': 'DKK26',
+    'not checked in': DkCode.dkk25,
+    'the level has reservations in that period': DkCode.dkk26,
   };
   String map(String message) => bookingErrorText(englishL10n,
       refused(message: message, code: codes[message]), 'fallback');

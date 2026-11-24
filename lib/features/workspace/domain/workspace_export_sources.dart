@@ -256,7 +256,7 @@ const List<ExportSource> workspaceExportSources = [
       'period',
       'occurred_on',
       'created_at',
-      'description',
+      'description', 'allocation_mode', // #4165 spent by the month rules or only by allocations
     },
   ),
   ExportSource(
@@ -278,7 +278,7 @@ const List<ExportSource> workspaceExportSources = [
       'status',
       // #3905 — a reversal at the provider, when and why.
       'reversed_at',
-      'reversal_reason',
+      'reversal_reason', 'allocation_mode', // #4165 the same, for a payment
     },
   ),
   ExportSource(
@@ -413,7 +413,7 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('usage_records'),
   ExportSource.everyColumn('invoice_matches'),
   ExportSource.everyColumn('invoice_reminders'),
-  ExportSource.everyColumn('invoice_dunning_holds'),
+  ExportSource.everyColumn('invoice_dunning_holds'), ExportSource.everyColumn('invoice_line_tracks'), // #4436
   ExportSource.everyColumn('tax_exemption_certificates'),
   ExportSource.everyColumn('suppliers'),
   // #4164 — the billing identity of each customer the business invoices.

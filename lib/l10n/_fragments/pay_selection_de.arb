@@ -50,5 +50,11 @@
   "financesTakeBackTitle": "Diese Meldung zurücknehmen?",
   "financesTakeBackBody": "Sie haben gemeldet, {invoices} bezahlt zu haben. Zurückgenommen muss das Unternehmen sie nicht mehr bestätigen, und diese Rechnungen können wieder bezahlt werden.",
   "financesTakenBack": "Meldung zurückgenommen. Ihre Rechnungen können wieder bezahlt werden.",
-  "financesTakeBackFailed": "Die Meldung konnte nicht zurückgenommen werden. Versuchen Sie es erneut."
+  "financesTakeBackFailed": "Die Meldung konnte nicht zurückgenommen werden. Versuchen Sie es erneut.",
+  "financesSelectionOnlyStandalone": "Rechnungen ohne Monat werden zusammen bezahlt, getrennt von Monatsrechnungen.",
+  "financesSelectionOnlyMonthly": "Monatsrechnungen werden mit ihrem Monat bezahlt, getrennt von Rechnungen ohne Monat.",
+  "financesStandaloneTotal": "Gesamt: {amount}",
+  "payOnlineStandaloneUnsupported": "Der Zahlungsdienst dieses Betriebs muss aktualisiert werden, bevor Rechnungen ohne Monat online bezahlt werden können.",
+  "claimRefusedStandaloneInMonthly": "Eine Rechnung ohne Monat wird für sich bezahlt, getrennt von Monatsrechnungen. Es wurde nichts belastet.",
+  "claimRefusedMonthlyInStandalone": "Monatsrechnungen werden mit ihrem Monat bezahlt, getrennt von Rechnungen ohne Monat. Es wurde nichts belastet."
 }

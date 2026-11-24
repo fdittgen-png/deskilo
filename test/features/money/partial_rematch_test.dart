@@ -4,6 +4,7 @@
 // against the REMAINING amount — maybe until fully paid, maybe the
 // rest is written off (#504).
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/refusal_matchers.dart';
@@ -92,7 +93,7 @@ void main() {
         paymentLedgerId: paymentId,
         resolution: 'exact',
       ),
-      throwsRefusal('DKI06'),
+      throwsRefusal(DkCode.dki06),
     );
   });
 

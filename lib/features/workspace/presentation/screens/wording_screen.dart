@@ -24,6 +24,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/l10n/lexicon_defaults.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -166,7 +167,7 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
       builder: (context, snapshot) {
         final defaults = snapshot.data;
         if (defaults == null) return const LoadingView();
-        final query = _search.text.trim().toLowerCase();
+        final query = foldForSearch(_search.text.trim());
 
         bool matches(String key) {
           final override = mine[key] as String?;
@@ -174,9 +175,9 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
             return false;
           }
           if (query.isEmpty) return true;
-          final product = lexiconDefault(defaults, key).toLowerCase();
+          final product = foldForSearch(lexiconDefault(defaults, key));
           return product.contains(query) ||
-              (override ?? '').toLowerCase().contains(query);
+              foldForSearch(override ?? '').contains(query);
         }
 
         final bySurface = <LexiconSurface, List<String>>{};

@@ -7,6 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -185,8 +187,8 @@ class _ImportDialogState extends ConsumerState<_ImportDialog> {
                     file.basis == ValuationBasis.book
                         ? l10n.valuationBasisBook
                         : l10n.valuationBasisTax,
-                    material.formatMediumDate(file.periodFrom!),
-                    material.formatMediumDate(file.periodTo!),
+                    appFormatOf(context).dates(DateShape.date).format(file.periodFrom!),
+                    appFormatOf(context).dates(DateShape.date).format(file.periodTo!),
                     file.currency,
                     file.rows.length,
                   ),
@@ -370,8 +372,8 @@ class _ConfirmDialogState extends ConsumerState<_ConfirmDialog> {
                     DropdownMenuItem(
                       value: c.id,
                       child: Text(
-                        '${c.sourceSystem} · ${material.formatMediumDate(c.periodFrom)}'
-                        ' – ${material.formatMediumDate(c.periodTo)}',
+                        '${c.sourceSystem} · ${appFormatOf(context).dates(DateShape.date).format(c.periodFrom)}'
+                        ' – ${appFormatOf(context).dates(DateShape.date).format(c.periodTo)}',
                       ),
                     ),
                 ],

@@ -8,6 +8,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/reservations/application/book_seat.dart';
 import 'package:deskilo/features/reservations/application/booking_outcome_observation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
@@ -63,7 +64,7 @@ void main() {
       expect(refused.payload, {'refusal': 'conflict'});
       expect(refusalCategory(StateError('outside the opening hours')), 'closed');
       expect(refusalCategory(StateError('quota exceeded')), 'quota');
-      expect(refusalCategory(StateError('42501')), 'permission');
+      expect(refusalCategory(StateError(PgCode.insufficientPrivilege)), 'permission');
       expect(refusalCategory(StateError('something odd')), 'other');
     });
 

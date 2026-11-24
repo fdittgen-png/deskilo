@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -198,7 +199,7 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
           ),
           subtitle: Text(
             [
-              purchaseStateLabel(l10n, p.state),
+              purchaseStateLabel(l10n, p.state, wire: p.stateWire),
               if (p.category.isNotEmpty) p.category,
             ].join(' · '),
           ),
@@ -419,7 +420,7 @@ class _PurchaseDetailView extends ConsumerWidget {
         if (detail.dueOn != null)
           Text(
             l10n.purchasesDueOn(
-              MaterialLocalizations.of(context).formatMediumDate(detail.dueOn!),
+              appFormatOf(context).dates(DateShape.date).format(detail.dueOn!),
             ),
           ),
         const SizedBox(height: AppSpacing.lg),

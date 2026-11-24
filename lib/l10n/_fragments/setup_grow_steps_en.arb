@@ -43,15 +43,6 @@
   "@setupGrowVatInForce": {
     "description": "#2875 setup grow steps: setupGrowVatInForce"
   },
-  "setupGrowVatRate": "{rate} %",
-  "@setupGrowVatRate": {
-    "description": "#2875 setup grow steps: setupGrowVatRate",
-    "placeholders": {
-      "rate": {
-        "type": "String"
-      }
-    }
-  },
   "setupGrowVatUsualTitle": "Your country's usual rates",
   "@setupGrowVatUsualTitle": {
     "description": "#2875 setup grow steps: setupGrowVatUsualTitle"
@@ -86,7 +77,7 @@
       }
     }
   },
-  "setupGrowVatPreviewRate": "VAT {rate} %",
+  "setupGrowVatPreviewRate": "VAT {rate}",
   "@setupGrowVatPreviewRate": {
     "description": "#2875 setup grow steps: setupGrowVatPreviewRate",
     "placeholders": {

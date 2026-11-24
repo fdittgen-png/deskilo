@@ -5,6 +5,7 @@
 // nothing was deleted and why: until when, under which rule, or which hold.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
@@ -23,7 +24,7 @@ class _RetainedBooks extends FakeWorkspaceRepository {
     resetWorkspaceCalls.add(workspaceId);
     throw PostgrestException(
       message: 'retention: the books of this space are kept ...',
-      code: 'DKE01',
+      code: DkCode.dke01,
       details: jsonEncode(assessment),
     );
   }

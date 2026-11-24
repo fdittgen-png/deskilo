@@ -15,6 +15,7 @@ import '../invoice_journey.dart';
 import '../invoice_status.dart';
 import '../report_strings_l10n.dart';
 import 'einvoice_receipt_line.dart';
+import 'invoice_line_measure.dart';
 import 'sent_einvoice_download.dart';
 
 /// The parts of the invoice sheet below the header: what the document
@@ -52,6 +53,7 @@ class InvoiceDetailSections {
               InvoiceKind.usage => Icons.receipt_long_outlined,
               InvoiceKind.settlement => Icons.merge_outlined,
               InvoiceKind.full => Icons.description_outlined,
+              InvoiceKind.unknown => Icons.help_outline,
             },
             size: 16,
             color: theme.colorScheme.primary,
@@ -84,13 +86,32 @@ class InvoiceDetailSections {
           child: Row(
             children: [
               Expanded(
-                child: Text(
-                  invoiceLineText(
-                    reportStringsOf(l10n, formatLocale: appFormatOf(context).locale),
-                    position,
-                    association: association,
-                    period: invoice.period,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      invoiceLineText(
+                        reportStringsOf(l10n, formatLocale: appFormatOf(context).locale),
+                        position,
+                        association: association,
+                        period: invoice.period,
+                      ),
+                    ),
+                    // #4162 -- an issued commercial line's exact measure.
+                    if (invoiceLineMeasureText(l10n, position) case final measure?)
+                      Text(
+                        measure,
+                        key: ValueKey('invoice-detail-line-measure-$i'),
+                        style: theme.textTheme.bodySmall,
+                      ),
+                    // #4436 -- the lots and pieces a goods line took, frozen with the invoice.
+                    if (invoiceLineTracksText(l10n, invoice.lineTracks[position.commercialLineId] ?? const []) case final tracks?)
+                      Text(
+                        tracks,
+                        key: ValueKey('invoice-detail-line-tracks-$i'),
+                        style: theme.textTheme.bodySmall,
+                      ),
+                  ],
                 ),
               ),
               const SizedBox(width: AppSpacing.sm),

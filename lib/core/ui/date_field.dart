@@ -18,6 +18,7 @@ import '../l10n/context_l10n.dart';
 import '../shortcuts/app_shortcuts.dart';
 import '../shortcuts/shortcut_scope.dart';
 import '../time/clock.dart';
+import '../trace/trace_logger.dart';
 import 'adaptive/task_surface.dart';
 import 'app_date_picker.dart';
 import 'form_kit.dart';
@@ -162,7 +163,8 @@ class _AppDateFieldState extends State<AppDateField> {
         context,
         listen: false,
       ).read(clockProvider).now();
-    } on StateError {
+    } on StateError catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'ui', 'date_field: StateError handled', error: e, stackTrace: st);
       now = _first;
     }
     final initial = current ?? now;

@@ -10,10 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/i18n/app_format.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/stock_view.dart';
 import '../application/stock_walk.dart';
@@ -22,6 +25,7 @@ import '../providers/stock_providers.dart';
 import 'stock_day.dart';
 import 'stock_first_run.dart';
 import 'stock_place_text.dart';
+import 'stock_track_find_sheet.dart';
 
 class StockScreen extends ConsumerWidget {
   /// The balances (`/stock`) or the movement log (`/stock/movements`): the
@@ -39,6 +43,14 @@ class StockScreen extends ConsumerWidget {
       appBar: AppBar(
         title: PageTitle(tab == StockTab.onHand ? l10n.permModuleStock : l10n.stockTabMovements),
         actions: [
+          // #4436 -- what carries a track ID, for whom the server lets read the stock
+          if (workspaceId != null && _readsStock(ref.watch(myPermissionsProvider)))
+            IconButton(
+              key: const ValueKey('stock-track-find-open'),
+              icon: const Icon(Icons.qr_code_2),
+              tooltip: l10n.stockTrackFindTitle,
+              onPressed: () => showStockTrackFindSheet(context, workspaceId: workspaceId),
+            ),
           if (workspaceId != null)
             IconButton(
               key: const ValueKey('stock-reload'),
@@ -93,6 +105,10 @@ class StockScreen extends ConsumerWidget {
     );
   }
 }
+
+/// Whether [held] reads the stock's trace, as the server's own guard asks.
+bool _readsStock(Set<WorkspacePermission> held) =>
+    held.contains(WorkspacePermission.viewStock) || held.contains(WorkspacePermission.manageStock);
 
 StockFilters _filtersOf(String workspaceId, StockView view) => (
   workspaceId: workspaceId,
@@ -187,7 +203,7 @@ class _OnHandList extends ConsumerWidget {
           '${row.lotCode == null ? l10n.stockNoLot : l10n.stockLotLabel(row.lotCode!)}',
         ),
         trailing: Text(
-          l10n.stockQuantityWithUnit(row.quantity.text, row.unit),
+          l10n.stockQuantityWithUnit(appFormatOf(context).quantity(row.quantity), row.unit),
           style: Theme.of(context).textTheme.titleMedium,
         ),
         // #4434 -- where else the item is, and where it was on a past day
@@ -209,7 +225,7 @@ class _MovementsList extends ConsumerWidget {
     final provider = stockMovementsWalkProvider(_filtersOf(workspaceId, view));
     final addresses = ref.watch(stockAddressesProvider(workspaceId));
     final walk = ref.watch(provider);
-    final day = MaterialLocalizations.of(context);
+    final day = appFormatOf(context).dates(DateShape.numeric);
     return _Walk<StockMovementRow>(
       walk: walk,
       emptyText: view.filtered ? l10n.stockEmptyFiltered : l10n.stockMovementsEmpty,
@@ -220,10 +236,10 @@ class _MovementsList extends ConsumerWidget {
         title: Text(m.itemLabel),
         subtitle: Text(
           '${addresses[m.fromLocationId] ?? m.fromLocationCode} → ${addresses[m.toLocationId] ?? m.toLocationCode} · '
-          '${day.formatCompactDate(stockDayOf(ref, m.occurredAt))}',
+          '${day.format(stockDayOf(ref, m.occurredAt))}',
         ),
         trailing: Text(
-          l10n.stockQuantityWithUnit(m.quantity.text, m.unit),
+          l10n.stockQuantityWithUnit(appFormatOf(context).quantity(m.quantity), m.unit),
           style: Theme.of(context).textTheme.titleMedium,
         ),
         onTap: () => context.push('/stock/movements/${m.id}'),

@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/navigation/list_detail_route.dart';
@@ -15,6 +16,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_trace.dart';
 import '../providers/stock_providers.dart';
+import 'stock_read_failed.dart';
 
 /// The trace of the movement [movementId] of [workspaceId], as a block of the movement's page.
 class StockTraceSection extends ConsumerWidget {
@@ -29,18 +31,7 @@ class StockTraceSection extends ConsumerWidget {
     final provider = stockTraceProvider((workspaceId: workspaceId, movementId: movementId));
     final body = switch (ref.watch(provider)) {
       AsyncLoading() => const Padding(padding: EdgeInsets.all(AppSpacing.md), child: LinearProgressIndicator()),
-      AsyncError() => Column(
-        key: const ValueKey('stock-trace-failed'),
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(l10n.stockReadFailed),
-          TextButton(
-            key: const ValueKey('stock-trace-retry'),
-            onPressed: () => ref.invalidate(provider),
-            child: Text(l10n.identityConnectRetry),
-          ),
-        ],
-      ),
+      AsyncError(:final error) => StockReadFailed(keyName: 'stock-trace', error: error, onRetry: () => ref.invalidate(provider)),
       AsyncData(:final value) => value.traces.isEmpty
           ? Text(l10n.stockTraceNoPurchase, key: const ValueKey('stock-trace-none'))
           : _Purchase(purchase: value.traces.first.purchase),
@@ -64,7 +55,7 @@ class StockTraceSection extends ConsumerWidget {
 
 String _day(BuildContext context, String? iso) {
   final at = iso == null ? null : DateTime.tryParse(iso);
-  return at == null ? (iso ?? '') : MaterialLocalizations.of(context).formatMediumDate(at);
+  return at == null ? (iso ?? '') : appFormatOf(context).dates(DateShape.date).format(at);
 }
 
 class _Purchase extends StatelessWidget {

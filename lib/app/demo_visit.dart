@@ -21,6 +21,7 @@ import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../core/backend/backend_settings.dart';
+import '../core/trace/trace_logger.dart';
 import '../features/auth/providers/auth_providers.dart';
 import '../features/workspace/providers/active_workspace_providers.dart';
 import 'route_classes.dart' show kDefaultHome;
@@ -93,7 +94,8 @@ class DemoVisit extends _$DemoVisit {
       workspace = await ref
           .read(activeWorkspaceIdProvider.future)
           .timeout(_kWorkspaceWait);
-    } on Object {
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'app', 'demo_visit: Object handled', error: e, stackTrace: st);
       // A workspace that cannot be read in time is no workspace to come back
       // to: the visit then returns home rather than waiting on it.
     }

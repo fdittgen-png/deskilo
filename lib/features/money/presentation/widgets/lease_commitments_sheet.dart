@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/ids/request_id.dart';
@@ -253,7 +254,7 @@ class _OccurrenceCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${MaterialLocalizations.of(context).formatMediumDate(o.dueOn)} · '
+              '${appFormatOf(context).dates(DateShape.date).format(o.dueOn)} · '
               '${_stateLabel(l10n, o.state)}',
               key: ValueKey('commitment-state-${o.id}'),
               style: Theme.of(context).textTheme.titleSmall,

@@ -22,6 +22,7 @@ import '../data/supabase_stock_reversals.dart';
 import '../data/supabase_stock_tags.dart';
 import '../data/supabase_stock_trace.dart';
 import '../data/supabase_stock_trace_chain.dart';
+import '../data/supabase_stock_track_find.dart';
 import '../data/supabase_stock_where_is.dart';
 import '../domain/handling_units.dart';
 import '../domain/item_groups.dart';
@@ -41,6 +42,7 @@ import '../domain/stock_service_creator.dart';
 import '../domain/stock_tags.dart';
 import '../domain/stock_trace.dart';
 import '../domain/stock_trace_chain.dart';
+import '../domain/stock_track_find.dart';
 import '../domain/stock_where_is.dart';
 import '../presentation/stock_expiry_printer.dart';
 
@@ -213,12 +215,23 @@ final stockTraceChainReaderProvider = Provider<StockTraceChainReader>(
 );
 
 /// #4432 -- the chain of the lot (or, without a lot, the pieces) a movement belongs to.
-/// The subject is exactly one of a movement, a lot or a piece.
-final stockMovementChainProvider =
-    FutureProvider.autoDispose.family<TraceChain, ({String workspaceId, String? movementId, String? lotId, String? pieceId})>(
+/// The subject is exactly one of a movement, a lot, a piece or a sold line (#4436).
+final stockMovementChainProvider = FutureProvider.autoDispose
+    .family<TraceChain, ({String workspaceId, String? movementId, String? lotId, String? pieceId, String? counterLineId})>(
   (ref, key) => ref
       .watch(stockTraceChainReaderProvider)
-      .chain(key.workspaceId, movementId: key.movementId, lotId: key.lotId, pieceId: key.pieceId),
+      .chain(key.workspaceId, movementId: key.movementId, lotId: key.lotId, pieceId: key.pieceId, counterLineId: key.counterLineId),
+  retry: (_, _) => null,
+);
+
+/// #4436 -- what carries a track ID (0940), for the selected business. The Demo and the tests replace it.
+final stockTrackFinderProvider = Provider<StockTrackFinder>(
+  (ref) => SupabaseStockTrackFind(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// #4436 -- the answer for one code typed or scanned.
+final stockTrackFindProvider = FutureProvider.autoDispose.family<TrackFindAnswer, ({String workspaceId, String code})>(
+  (ref, key) => ref.watch(stockTrackFinderProvider).find(key.workspaceId, key.code),
   retry: (_, _) => null,
 );
 

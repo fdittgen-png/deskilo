@@ -4,7 +4,8 @@
 // where it went out, each step with its places, its quantity, the pieces it carried and the document that caused it.
 // A document the reader may not see is said, never left out. Each step opens its own movement. A failed read can be
 // asked again and is never shown as an empty chain. The same chain opens from "Where is it" for a lot or a piece
-// (showStockChainSheet).
+// (showStockChainSheet), and from a sale found by its track ID (#4436): a sold line read backwards names the lots and
+// the pieces it took, the facts its receipt froze.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -16,6 +17,7 @@ import '../../../core/ui/app_sheet.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_trace_chain.dart';
 import '../providers/stock_providers.dart';
+import 'stock_read_failed.dart';
 
 /// The words of a movement's reason; an unknown reason is shown as it came.
 String stockMoveReasonText(AppLocalizations l10n, String reason) => switch (reason) {
@@ -43,8 +45,8 @@ String? _documentText(AppLocalizations l10n, TraceDocument? d) {
   };
 }
 
-/// Opens the chain of a lot or of a piece (exactly one of them) in a sheet.
-Future<void> showStockChainSheet(BuildContext context, {required String workspaceId, String? lotId, String? pieceId}) =>
+/// Opens the chain of a lot, a piece or a sold line (exactly one of them) in a sheet.
+Future<void> showStockChainSheet(BuildContext context, {required String workspaceId, String? lotId, String? pieceId, String? counterLineId}) =>
     showAppSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -53,45 +55,50 @@ Future<void> showStockChainSheet(BuildContext context, {required String workspac
         child: SingleChildScrollView(
           key: const ValueKey('stock-chain-sheet'),
           padding: const EdgeInsets.fromLTRB(AppSpacing.md, 0, AppSpacing.md, AppSpacing.md),
-          child: StockChainSection(workspaceId: workspaceId, lotId: lotId, pieceId: pieceId),
+          child: StockChainSection(workspaceId: workspaceId, lotId: lotId, pieceId: pieceId, counterLineId: counterLineId),
         ),
       ),
     );
 
 class StockChainSection extends ConsumerWidget {
-  /// The chain of exactly one subject: the movement on screen, a lot or a piece.
-  const StockChainSection({required this.workspaceId, this.movementId, this.lotId, this.pieceId, super.key})
-    : assert((movementId == null ? 0 : 1) + (lotId == null ? 0 : 1) + (pieceId == null ? 0 : 1) == 1, 'one subject');
+  /// The chain of exactly one subject: the movement on screen, a lot, a piece or a sold line.
+  const StockChainSection({required this.workspaceId, this.movementId, this.lotId, this.pieceId, this.counterLineId, super.key})
+    : assert(
+        (movementId == null ? 0 : 1) + (lotId == null ? 0 : 1) + (pieceId == null ? 0 : 1) + (counterLineId == null ? 0 : 1) == 1,
+        'one subject',
+      );
 
   final String workspaceId;
   final String? movementId;
   final String? lotId;
   final String? pieceId;
+  final String? counterLineId;
+
+  String _title(AppLocalizations l10n) {
+    if (counterLineId != null) return l10n.stockChainSaleTitle;
+    return pieceId != null ? l10n.stockChainPieceTitle : l10n.stockChainTitle;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final provider = stockMovementChainProvider((workspaceId: workspaceId, movementId: movementId, lotId: lotId, pieceId: pieceId));
+    final provider = stockMovementChainProvider((
+      workspaceId: workspaceId,
+      movementId: movementId,
+      lotId: lotId,
+      pieceId: pieceId,
+      counterLineId: counterLineId,
+    ));
     final fmt = appFormatOf(context);
     final body = switch (ref.watch(provider)) {
       AsyncLoading() => const LinearProgressIndicator(),
-      AsyncError() => Column(
-        key: const ValueKey('stock-chain-failed'),
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(l10n.stockReadFailed),
-          TextButton(
-            key: const ValueKey('stock-chain-retry'),
-            onPressed: () => ref.invalidate(provider),
-            child: Text(l10n.identityConnectRetry),
-          ),
-        ],
-      ),
-      AsyncData(:final value) => value.steps.length < 2
+      AsyncError(:final error) => StockReadFailed(keyName: 'stock-chain', error: error, onRetry: () => ref.invalidate(provider)),
+      AsyncData(:final value) => value.steps.length < 2 && value.took.isEmpty
           ? Text(l10n.stockChainEmpty, key: const ValueKey('stock-chain-empty'))
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                for (final (i, t) in value.took.indexed) _TookTile(index: i, track: t),
                 for (final s in value.steps)
                   ListTile(
                     key: ValueKey('stock-chain-step-${s.movementId}'),
@@ -115,11 +122,32 @@ class StockChainSection extends ConsumerWidget {
         key: const ValueKey('stock-chain'),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(pieceId != null ? l10n.stockChainPieceTitle : l10n.stockChainTitle, style: Theme.of(context).textTheme.titleMedium),
+          Text(_title(l10n), style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: AppSpacing.sm),
           body,
         ],
       ),
+    );
+  }
+}
+
+/// What a sold line took, as its receipt froze it: a lot with its quantity, a piece by its tag.
+class _TookTile extends StatelessWidget {
+  const _TookTile({required this.index, required this.track});
+
+  final int index;
+  final TraceTrack track;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final piece = track.kind == 'piece';
+    return ListTile(
+      key: ValueKey('stock-chain-took-$index'),
+      contentPadding: EdgeInsets.zero,
+      dense: true,
+      leading: Icon(piece ? Icons.sell_outlined : Icons.inventory_2_outlined),
+      title: Text(piece ? l10n.stockChainTookPiece(track.code) : l10n.stockChainTookLot(track.code, track.quantity?.text ?? '')),
     );
   }
 }

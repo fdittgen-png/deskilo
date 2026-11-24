@@ -18,5 +18,20 @@
   "stockMoveReasonReturnIn": "Reso dal cliente",
   "stockMoveReasonReturnOut": "Reso al fornitore",
   "stockChainPieceTitle": "Tutti i movimenti di questo pezzo",
-  "stockChainOpen": "Tutti i movimenti"
+  "stockChainOpen": "Tutti i movimenti",
+  "stockTrackFindTitle": "Cercare un codice di tracciabilità",
+  "stockTrackFindField": "Codice del lotto o etichetta",
+  "stockTrackFindHelper": "Il codice del lotto come ricevuto, il codice della sua etichetta o l'etichetta di un pezzo.",
+  "stockTrackFindSubmit": "Cerca",
+  "stockTrackFindRequired": "Prima digitare o scansionare un codice.",
+  "stockTrackFindNone": "Nulla in questa attività porta {code}.",
+  "stockTrackFindLots": "Lotti",
+  "stockTrackFindPieces": "Pezzi",
+  "stockTrackFindSales": "Vendite che lo hanno preso",
+  "stockTrackFindNoSale": "Nessuna vendita lo ha ancora preso.",
+  "stockTrackFindExpires": "Scade il {date}",
+  "stockTrackFindTruncated": "Sono mostrate solo le prime corrispondenze.",
+  "stockChainSaleTitle": "Ciò che questa vendita ha preso",
+  "stockChainTookLot": "Lotto {code} · {quantity}",
+  "stockChainTookPiece": "Pezzo {tag}"
 }

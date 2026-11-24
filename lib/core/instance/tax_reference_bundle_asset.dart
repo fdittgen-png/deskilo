@@ -2,10 +2,10 @@
 import 'dart:convert';
 
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
-import 'package:flutter/foundation.dart' show compute;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../trace/traced_compute.dart';
 import '../vat/tax_reference_active.dart';
 
 part 'tax_reference_bundle_asset.g.dart';
@@ -36,8 +36,10 @@ Future<TaxReferenceSet> Function() taxReferenceBundleLoader(Ref ref) =>
 /// (`compute`; on the web it stays on the one thread there is), while the
 /// rest of start-up runs.
 Future<void> installBundledTaxReference() async => ActiveTaxReference.install(
-      await compute(
+      await tracedCompute(
         _parseTaxReferenceBundle,
         await rootBundle.loadString(_taxReferenceAssetPath),
+        area: 'instance',
+        what: 'the tax reference parsing',
       ),
     );

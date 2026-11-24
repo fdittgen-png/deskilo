@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
+import '../text/collation.dart';
 
 /// The IANA zones an owner may pick for a workspace (#711).
 ///
@@ -45,9 +46,9 @@ abstract final class TimeZones {
   /// Names matching [query] (case-insensitive, on any part — `paris`,
   /// `europe/`, `york`), or all of them for an empty query.
   static List<String> search(String query) {
-    final q = query.trim().toLowerCase().replaceAll(' ', '_');
+    final q = foldForSearch(query.trim()).replaceAll(' ', '_');
     if (q.isEmpty) return all;
-    return all.where((n) => n.toLowerCase().contains(q)).toList();
+    return all.where((n) => foldForSearch(n).contains(q)).toList();
   }
 
   /// Whether the clock can install [name].

@@ -19,6 +19,8 @@
 // a match still awaiting its validation and a movement that settles nothing
 // (DKB01), money out (DKB02), a request id used for another line and no
 // reason (22023).
+import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/bank_statement_repository.dart';
 import 'package:deskilo/core/demo/data/event_repository.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
@@ -174,8 +176,8 @@ void main() {
     expect(bank.unmatches, hasLength(1));
     final fifth = (await line(5)).id;
     final first = (await line(1)).id;
-    expect(await _code(() => bank.unmatchIn(fifth, reason: 'x', requestId: 'r1')), '22023');
-    expect(await _code(() => bank.unmatchIn(first, reason: '  ', requestId: 'r9')), '22023');
+    expect(await _code(() => bank.unmatchIn(fifth, reason: 'x', requestId: 'r1')), PgCode.invalidParameterValue);
+    expect(await _code(() => bank.unmatchIn(first, reason: '  ', requestId: 'r9')), PgCode.invalidParameterValue);
     final sent = await line(1);
     expect(sent.status, BankLineStatus.recorded);
     expect(
@@ -189,7 +191,7 @@ void main() {
       () async {
     bank.mayUnmatch = () => false;
     final first = (await line(1)).id;
-    expect(await _code(() => bank.unmatchIn(first, reason: 'x', requestId: 'n1')), '42501');
+    expect(await _code(() => bank.unmatchIn(first, reason: 'x', requestId: 'n1')), PgCode.insufficientPrivilege);
     expect(bank.unmatches, isEmpty);
     expect(money.invoiceMatchesStore.containsKey('id-I1'), isTrue);
   });
@@ -210,7 +212,7 @@ void main() {
   test('refused on the repository itself, with the code and the sentence the '
       'person reads', () async {
     final l10n = englishL10n;
-    Future<void> refused(int n, String code, KnownRefusal family, [String? words]) async {
+    Future<void> refused(int n, String code, String sentence, [String? words]) async {
       final id = (await line(n)).id;
       PostgrestException? error;
       try {
@@ -219,23 +221,24 @@ void main() {
         error = e;
       }
       expect(error?.code, code, reason: 'line $n');
-      expect(knownRefusalOf(error!), family, reason: 'line $n');
-      final sentence = knownRefusalText(l10n, error)!;
-      if (words != null) expect(sentence, contains(words), reason: 'line $n');
+      // #4413 -- the bank's codes are worded by money's table, not a core family.
+      final said = knownRefusalText(l10n, error!)!;
+      expect(said, sentence, reason: 'line $n');
+      if (words != null) expect(said, contains(words), reason: 'line $n');
       expect(bank.unmatches.containsKey('q$n'), isFalse, reason: 'nothing is on record');
     }
 
-    await refused(2, 'DKB04', KnownRefusal.bankMatchBeyondLink, 'credit note');
-    await refused(6, 'DKB04', KnownRefusal.bankMatchBeyondLink, 'settlement');
+    await refused(2, DkCode.dkb04, l10n.refusalBankMatchBeyondLink, 'credit note');
+    await refused(6, DkCode.dkb04, l10n.refusalBankMatchBeyondLink, 'settlement');
     // A match whose amount its payments do not explain is not restated.
     money.invoiceMatchesStore['id-I3'] = money.invoiceMatchesStore['id-I3']!
         .copyWith(paidCents: 15001);
-    await refused(3, 'DKB05', KnownRefusal.bankMatchSeveralPayments, 'without guessing');
-    await refused(7, 'DKB01', KnownRefusal.bankLineDecided);
-    await refused(8, 'DKB02', KnownRefusal.bankLineRefused);
+    await refused(3, DkCode.dkb05, l10n.refusalBankMatchSeveralPayments, 'without guessing');
+    await refused(7, DkCode.dkb01, l10n.refusalBankLineDecided);
+    await refused(8, DkCode.dkb02, l10n.refusalBankLineRefused);
 
     bank.booksClosedThrough = DateTime.utc(2999);
-    await refused(5, 'DKB06', KnownRefusal.bankMatchClosedPeriod, 'closed period');
+    await refused(5, DkCode.dkb06, l10n.refusalBankMatchClosedPeriod, 'closed period');
     expect(money.invoiceMatchesStore.containsKey('id-I4'), isTrue, reason: 'the match is still there');
   });
 
@@ -248,9 +251,9 @@ void main() {
 
     final third = (await line(3)).id;
     expect(await _code(() => bank.unmatchIn(third, reason: 'x', requestId: 's0')),
-        'DKB07', reason: 'the first payment is undone last');
+        DkCode.dkb07, reason: 'the first payment is undone last');
     expect(
-      knownRefusalText(englishL10n, const PostgrestException(message: '', code: 'DKB07')),
+      knownRefusalText(englishL10n, const PostgrestException(message: '', code: DkCode.dkb07)),
       contains('later payments first'),
     );
 
@@ -294,7 +297,7 @@ void main() {
       BankLineStatus.pending,
     );
     final seventh = (await line(7)).id;
-    expect(await _code(() => bank.unmatchIn(seventh, reason: 'x', requestId: 'p1')), 'DKB01');
+    expect(await _code(() => bank.unmatchIn(seventh, reason: 'x', requestId: 'p1')), DkCode.dkb01);
     expect(money.invoiceMatchesStore.containsKey('id-I6'), isTrue,
         reason: 'the pending match is still there');
     expect(bank.unmatches, isEmpty);

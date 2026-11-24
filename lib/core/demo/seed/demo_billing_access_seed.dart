@@ -6,16 +6,26 @@
 // invitation the owner issues. The documents a held subject reads are
 // synthetic and belong to the head's business alone; they are answered the way
 // the server's `my_finance_overview_v2` answers a billing-grant row.
+//
+// #4168 -- a grant is held by ONE login: the Demo's account is the persona's.
+// Kessler Conseil, the freelancer, invited two of its customers and both
+// accepted: Lindner Beratung's invoices are read by Ada, who runs that
+// practice (her explicit grant: being the practice's owner authorises nothing
+// here), and Chiara Bernard, a customer in her own name with no business of hers,
+// reads hers from her personal account.
 import '../../../features/money/domain/finance_invoice.dart';
 import '../data/fake_billing_access.dart';
 import '../demo_fixture.dart';
+import '../demo_persona.dart';
 import '../demo_space_ids.dart';
 import '../demo_spaces.dart';
+import 'demo_freelancer_seed.dart' show demoKesslerChiaraId, demoKesslerLindnerId;
 
 /// The Demo's grants, over the customers each space keeps.
 FakeBillingAccessRepository seedDemoBillingAccess(DemoFixture fixture) {
   return FakeBillingAccessRepository(
     clock: () => fixture.seededAt,
+    accountOf: () => fixture.profiles.myUserId,
     customerOf: (workspaceId, subjectId) {
       for (final key in DemoSpaceKey.values) {
         if (key.id != workspaceId) continue;
@@ -32,7 +42,25 @@ FakeBillingAccessRepository seedDemoBillingAccess(DemoFixture fixture) {
             if (w.id == workspaceId) w.name,
         ].firstOrNull ??
         workspaceId,
-  )..seedAccepted(demoFirstSpaceId, _weiss, 'WEISS2026');
+  )
+    ..seedAccepted(
+      demoFirstSpaceId,
+      _weiss,
+      'WEISS2026',
+      principal: initialDemoPersona.userId,
+    )
+    ..seedAccepted(
+      demoFreelancerSpaceId,
+      demoKesslerLindnerId,
+      'LINDNER2026',
+      principal: DemoPersona.owner.userId,
+    )
+    ..seedAccepted(
+      demoFreelancerSpaceId,
+      demoKesslerChiaraId,
+      'CHIARA2026',
+      principal: DemoPersona.admin.userId,
+    );
 }
 
 const _weiss = 'demo-customer-weiss';

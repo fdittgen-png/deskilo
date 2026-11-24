@@ -10,7 +10,7 @@
   "mcpConfirmNotFound": "No hay ninguna solicitud así para usted.",
   "mcpConfirmUnavailable": "No se pudo cargar esta solicitud. Vuelva a intentarlo desde el enlace.",
   "mcpConfirmNewStatus": "Nuevo estado: {status}",
-  "mcpConfirmNewShare": "Nueva parte de suscripción: {pct} %",
+  "mcpConfirmNewShare": "Nueva parte de suscripción: {pct}",
   "mcpConfirmApprove": "Su respuesta: aprobar",
   "mcpConfirmRefuse": "Su respuesta: rechazar",
   "mcpConfirmPeriod": "Periodo: {period}",
@@ -24,7 +24,7 @@
   "mcpConfirmFieldChange": "{field}: {from} → {to}",
   "mcpConfirmClosureReason": "Motivo: {reason}",
   "mcpConfirmInvitee": "Invitación para",
-  "mcpConfirmShareFrom": "Nueva parte de suscripción: {pct} % desde el {date}",
+  "mcpConfirmShareFrom": "Nueva parte de suscripción: {pct} desde el {date}",
   "mcpConfirmPauseUntil": "Pausa del {from} al {to}",
   "mcpConfirmPauseOpen": "Pausa desde el {from}, hasta que se reanude",
   "mcpConfirmCancelDated": "Cancelar el cambio con fecha {date}"

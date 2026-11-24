@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -18,7 +19,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/calendar_days.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../application/customer_quote_commands.dart';
 import '../../domain/customer_quote.dart';
 import '../../providers/business_day_provider.dart';
 import '../../providers/customer_quote_providers.dart';
@@ -163,14 +163,14 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
     if (!mounted) return;
     final l10n = context.l10n;
     _set(switch (outcome) {
-      QuoteDone(:final value) => s.copy(
+      CommandDone(:final value) => s.copy(
         busy: false,
         prep: () => value,
         reviewed: false,
         requestId: newRequestId,
       ),
-      QuoteRefused(:final refusal) => s.copy(busy: false, said: () => quoteRefusalText(l10n, refusal)),
-      QuoteUnreached() => s.copy(busy: false, said: () => l10n.quoteUnreached),
+      CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)) => s.copy(busy: false, said: () => quoteRefusalText(l10n, refusal)),
+      _ => s.copy(busy: false, said: () => l10n.quoteUnreached),
     });
   }
 
@@ -193,12 +193,12 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
       ..invalidate(customerQuotesProvider(widget.workspaceId))
       ..invalidate(customerQuoteProvider((workspaceId: widget.workspaceId, quoteId: widget.quote.id)));
     _set(switch (outcome) {
-      QuoteDone(:final value) => s.copy(busy: false, converted: value),
+      CommandDone(:final value) => s.copy(busy: false, converted: value),
       // the invoice moved under the review: it is checked again, never issued unseen
-      QuoteRefused(:final refusal) when refusal.kind == QuoteRefusalKind.needsReview =>
+      CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)) when refusal.kind == QuoteRefusalKind.needsReview =>
         s.copy(busy: false, prep: () => null, reviewed: false, said: () => quoteRefusalText(l10n, refusal)),
-      QuoteRefused(:final refusal) => s.copy(busy: false, said: () => quoteRefusalText(l10n, refusal)),
-      QuoteUnreached() => s.copy(busy: false, said: () => l10n.quoteUnreached),
+      CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)) => s.copy(busy: false, said: () => quoteRefusalText(l10n, refusal)),
+      _ => s.copy(busy: false, said: () => l10n.quoteUnreached),
     });
   }
 

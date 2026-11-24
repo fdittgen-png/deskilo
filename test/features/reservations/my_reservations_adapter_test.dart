@@ -16,6 +16,7 @@ import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_target.dart';
 import 'package:deskilo/core/backend/connection_outcome.dart';
 import 'package:deskilo/core/backend/context_clients.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/data/unreadable_rows.dart';
 import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/core/trace/trace_logger.dart';
@@ -352,19 +353,19 @@ void main() {
     }
 
     test('an older host without the read is unsupported', () => expectRefusal(
-        (status: 404, code: 'PGRST202', message: 'Could not find the function'),
+        (status: 404, code: PgCode.pgrstFunctionNotFound, message: 'Could not find the function'),
         MyReservationsFailure.unsupported));
 
     test('42501 is forbidden', () => expectRefusal(
-        (status: 403, code: '42501', message: 'personal read unavailable'),
+        (status: 403, code: PgCode.insufficientPrivilege, message: 'personal read unavailable'),
         MyReservationsFailure.forbidden));
 
     test('22023 is an invalid question', () => expectRefusal(
-        (status: 400, code: '22023', message: 'the window is longer than 400 days'),
+        (status: 400, code: PgCode.invalidParameterValue, message: 'the window is longer than 400 days'),
         MyReservationsFailure.invalid));
 
     test('a registry without the personal rows is misconfigured', () => expectRefusal(
-        (status: 400, code: 'P0001', message: 'unknown setting personal.reservation_page_size'),
+        (status: 400, code: PgCode.raiseException, message: 'unknown setting personal.reservation_page_size'),
         MyReservationsFailure.misconfigured));
 
     test('any other database error passes through untyped', () async {

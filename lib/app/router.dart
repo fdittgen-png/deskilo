@@ -14,6 +14,7 @@ import '../features/profile/providers/profile_providers.dart';
 import '../features/task_recorder/presentation/ui_capture.dart'
     show RecorderWindowObserver;
 import '../features/workspace/providers/workspace_providers.dart';
+import '../features/workspace/providers/workspace_schema_providers.dart';
 import 'entry_intents.dart';
 import 'entry_resumption.dart';
 import 'format_surface_sync.dart';
@@ -76,6 +77,8 @@ GoRouter router(Ref ref) {
     ..listen(requiredPrivacyVersionProvider, (_, _) => reask()) // #1914
     ..listen(schemaCompatibilityProvider, (_, _) => reask()) // #1312
     ..listen(appFloorProvider, (_, _) => reask()) // #3726
+    // #3729 — the installation hosting the workspace, judged on its own.
+    ..listen(currentWorkspaceInstallationSchemaProvider, (_, _) => reask())
     // #1650 — the continuation restored from the device, or captured on
     // the way to sign-in: its destination is where sign-in returns to.
     ..listen(entryIntentsProvider, (_, _) => reask())

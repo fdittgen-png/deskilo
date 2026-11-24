@@ -18,5 +18,20 @@
   "stockMoveReasonReturnIn": "Vom Kunden zurückgegeben",
   "stockMoveReasonReturnOut": "An den Lieferanten zurückgegeben",
   "stockChainPieceTitle": "Alle Bewegungen dieses Stücks",
-  "stockChainOpen": "Alle Bewegungen"
+  "stockChainOpen": "Alle Bewegungen",
+  "stockTrackFindTitle": "Rückverfolgungscode suchen",
+  "stockTrackFindField": "Chargencode oder Etikett",
+  "stockTrackFindHelper": "Der Chargencode wie geliefert, der Code auf ihrem Etikett oder das Etikett eines Stücks.",
+  "stockTrackFindSubmit": "Suchen",
+  "stockTrackFindRequired": "Zuerst einen Code eingeben oder scannen.",
+  "stockTrackFindNone": "Nichts in diesem Betrieb trägt {code}.",
+  "stockTrackFindLots": "Chargen",
+  "stockTrackFindPieces": "Stücke",
+  "stockTrackFindSales": "Verkäufe, die davon genommen haben",
+  "stockTrackFindNoSale": "Noch kein Verkauf hat davon genommen.",
+  "stockTrackFindExpires": "Läuft ab am {date}",
+  "stockTrackFindTruncated": "Nur die ersten Treffer werden gezeigt.",
+  "stockChainSaleTitle": "Was dieser Verkauf genommen hat",
+  "stockChainTookLot": "Charge {code} · {quantity}",
+  "stockChainTookPiece": "Stück {tag}"
 }

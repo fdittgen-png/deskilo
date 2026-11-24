@@ -1,0 +1,6 @@
+{
+  "unknownWireValue": "{value} (desconocido para esta versión de la aplicación)",
+  "unknownWireInvoiceKind": "Un tipo que esta versión de la aplicación no conoce",
+  "unknownWireReadOnly": "Esta versión de la aplicación no sabe qué es este registro: puede leerse, no modificarse. Actualice la aplicación para trabajar con él.",
+  "unknownWireKindFeatures": "Este tipo también ajusta {count, plural, one{una función} other{{count} funciones}} que esta versión de la aplicación no conoce. Actualice la aplicación para elegirlo."
+}

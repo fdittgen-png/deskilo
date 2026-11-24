@@ -399,7 +399,7 @@ Future<void> showPriceNegotiationSheet(
   );
   if (ok != true || readOnly || !context.mounted) return;
   int? cents(String raw) {
-    final t = raw.trim().replaceAll(',', '.');
+    final t = raw.trim();
     if (t.isEmpty) return null;
     // #1140 — the currency's own minor digits, never a literal 100.
     return appFormatOf(context).parseMinor(t);

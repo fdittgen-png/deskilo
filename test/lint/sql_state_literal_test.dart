@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
 final _quotedCode = RegExp(
-  r"'(DK[A-Z0-9]{3}|P0001|PGRST\d+|42501|22023|40001|42883|42703|0A000|23505|28000|55000)'",
+  r"'(DK[A-Z0-9]{3}|P0001|PGRST\d+|\d\dP\d\d|42501|22023|40001|42883|42703|0A000|23505|28000|55000)'",
 );
 
 const _constantFiles = {
@@ -19,6 +19,12 @@ const _constantFiles = {
 
 /// RATCHET: the quoted codes left outside the two constants files. Only falls.
 const _budget = 0;
+
+/// RATCHET: the quoted codes the tests still spell (test/lint excepted:
+/// its fixtures spell a code on purpose). Most are inside a double-quoted
+/// or raw string, where a constant cannot stand; the till's tests are
+/// still to come. Only falls.
+const _testBudget = 36;
 
 /// The quoted codes of [source]: comment lines and what follows a trailing `//` are not code.
 List<String> quotedCodes(String source) => [
@@ -34,11 +40,17 @@ void main() {
     expect(quotedCodes("// '42501' is the permission code"), isEmpty);
     expect(quotedCodes("final x = 1; // 'DKG07' later"), isEmpty);
     expect(quotedCodes("final zip = '34120';"), isEmpty);
+    expect(quotedCodes("if (code == '42P01') {}"), ['42P01']);
   });
 
   test('no refusal code is spelled outside the constants files', () {
     final found = <String>[];
-    for (final f in handWrittenDartFiles('lib')) {
+    for (final f in [
+      ...handWrittenDartFiles('lib'),
+      for (final package in directoryNames('packages'))
+        if (directoryAt('packages/$package/lib').existsSync())
+          ...handWrittenDartFiles('packages/$package/lib'),
+    ]) {
       final path = f.path.replaceAll('\\', '/');
       if (_constantFiles.contains(path)) continue;
       for (final code in quotedCodes(f.readAsStringSync())) {
@@ -56,6 +68,23 @@ void main() {
       found.length,
       _budget,
       reason: 'it fell: lower _budget to ${found.length}',
+    );
+  });
+
+  test('the tests read a code by its constant too', () {
+    final found = <String>[];
+    for (final f in handWrittenDartFiles('test')) {
+      final path = f.path.replaceAll('\\', '/');
+      if (path.contains('test/lint/')) continue;
+      for (final code in quotedCodes(f.readAsStringSync())) {
+        found.add('$path: $code');
+      }
+    }
+    expect(
+      found.length,
+      _testBudget,
+      reason: 'write DkCode.x / PgCode.x in a test (#4417); when one left, '
+          'lower _testBudget to ${found.length}:\n${found.take(30).join('\n')}',
     );
   });
 }

@@ -78,10 +78,11 @@ feature from now on, not only to VAT.
 - **The server reads the same registry (#1333).** A gate in SQL asks
   `public.feature_effective(workspace, 'key')` — stored JSON boolean over
   the default, AND every parent — never `feature_flags ->> 'key'` by hand.
-  `public.feature_registry()` is generated from `featureManifest`: adding,
-  removing or re-parenting a feature, or changing its default or tier,
-  means a migration carrying the output of
-  `dart run tool/build_feature_registry_sql.dart`;
+  `public.feature_registry()` reads the rows of `feature_registry_entries`
+  (0949), which come from `featureManifest`: adding, removing or re-parenting
+  a feature, or changing its default or tier, means a migration carrying the
+  rows `dart run tool/build_feature_registry_sql.dart` prints (a few lines,
+  between its markers); the function is never restated.
   `test/lint/feature_registry_sql_test.dart` names the feature until it does.
 
 Every `WorkspaceFeature` also belongs to exactly one primary subprocess in
@@ -848,12 +849,22 @@ migration after it keeps an older app right:
   (the floor does not exist yet, so for now: nothing is removed);
 - from the next migration on, the line after `-- risk:` is
   `-- apps: additive | needs app at least N | breaks apps below N`. The lint
-  that requires it is K4 (#3731), not yet written: until then a reviewer
-  checks it.
+  that requires it is K4 (#3731, `test/lint/consumer_contract_test.dart`,
+  scanner `tool/migration_apps.dart`): `additive` drops, renames and changes
+  no function's parameters without defaults (a function dropped and created
+  again in the same file to add a defaulted parameter is judged by its new
+  list, and an old parameter keeps its default); `breaks apps below N` raises
+  `deskilo_app_floor()` to N in the same file. The PR text and the ready line
+  carry one sentence: what an app of the last release does after this
+  migration (the database job's consumer-contract step proves the structure).
 Anything stored or exchanged with a version of its own gets a row in that
 record's table, with what its reader does with a higher version (refuse,
 ignore, show generically); reading an unknown or missing value as a known
-one is not allowed.
+one is not allowed. A server value becomes an enum with an explicit
+`unknown` that keeps the raw text and allows no action (K3, #3730):
+`test/lint/unknown_wire_value_test.dart` refuses `values.byName` in the
+domain, data and package layers and lets the fallbacks to a known state
+only fall; `wire_switch_throw_test.dart` counts the throwing ones.
 
 **The gate this feeds has no feature flag.** A server older than the app
 sends every route to `/server-update` (`lib/app/schema_gate.dart`); the

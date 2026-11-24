@@ -13,6 +13,8 @@
 // (`--dart-define=DESKILO_LOCAL_ENDPOINTS=true`, the local test stack):
 // public input never reaches localhost by default.
 
+import '../trace/trace_logger.dart';
+
 /// Which kind of endpoint a value is checked as.
 enum PublicEndpointKind {
   /// A base URL the app adds `?q=…&limit=1` to.
@@ -58,7 +60,8 @@ PublicEndpointProblem? publicEndpointProblem(
   final Uri uri;
   try {
     uri = Uri.parse(probe);
-  } on FormatException {
+  } on FormatException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'net', 'public_endpoint: FormatException handled', error: e, stackTrace: st);
     return PublicEndpointProblem.notAUrl;
   }
   if (!uri.hasScheme || uri.host.isEmpty) return PublicEndpointProblem.notAUrl;

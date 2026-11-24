@@ -6,6 +6,7 @@
 // screen), refuses a record whose required fields, required states or
 // must-understand terms this version cannot interpret, and refuses a
 // management input key the contract does not list instead of dropping it.
+import '../trace/trace_logger.dart';
 import 'public_network_operations.dart';
 import 'public_network_spec.dart';
 
@@ -167,7 +168,7 @@ Object? _decodeValue(
         if (field.maxItems != null && items.length >= field.maxItems!) break;
         try {
           items.add(decodePublicRecord(field.schema!, item));
-        } on PublicContractRefusal {
+        } on PublicContractRefusal catch (e, st) { TraceLogger.instance.log(TraceLevel.debug, 'public_network', 'public_network_codec: PublicContractRefusal handled', error: e, stackTrace: st);
           // Each element is a record of its own: one this version cannot
           // honour is dropped, and the list stays usable.
         }

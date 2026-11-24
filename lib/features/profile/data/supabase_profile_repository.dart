@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/data/server_names.dart';
 import '../../../core/i18n/format_prefs.dart';
 import '../../../core/phone/phone_entry.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/personal_info.dart';
 import '../domain/privacy_notice.dart';
 import '../domain/profile.dart';
@@ -387,7 +388,8 @@ class SupabaseProfileRepository implements ProfileRepository {
       return await _client.storage
           .from('avatars')
           .download(_avatarPath(userId));
-    } on StorageException {
+    } on StorageException catch (caught, caughtStack) {
+      TraceLogger.instance.log(TraceLevel.debug, 'profile', 'supabase_profile_repository: StorageException handled', error: caught, stackTrace: caughtStack);
       // No object (never uploaded) or not readable — the initial avatar
       // shows instead; not an error worth surfacing.
       return null;

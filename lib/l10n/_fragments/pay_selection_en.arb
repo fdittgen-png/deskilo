@@ -312,5 +312,34 @@
   "financesTakeBackFailed": "The declaration could not be taken back. Try again.",
   "@financesTakeBackFailed": {
     "description": "#4140 — said when taking back a declaration failed"
+  },
+  "financesSelectionOnlyStandalone": "Invoices without a month are paid together, apart from monthly invoices.",
+  "@financesSelectionOnlyStandalone": {
+    "description": "#4165 the kind of a selection of invoices without a month: a monthly invoice cannot join it"
+  },
+  "financesSelectionOnlyMonthly": "Monthly invoices are paid with their month, apart from invoices without one.",
+  "@financesSelectionOnlyMonthly": {
+    "description": "#4165 the kind of a selection of monthly invoices: an invoice without a month cannot join it"
+  },
+  "financesStandaloneTotal": "Total: {amount}",
+  "@financesStandaloneTotal": {
+    "description": "#4165 the one amount paid or declared for invoices without a month; amount: formatted money",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payOnlineStandaloneUnsupported": "This business's payment service must be updated before invoices without a month can be paid online.",
+  "@payOnlineStandaloneUnsupported": {
+    "description": "#4165 the business's payment service does not take invoices without a month"
+  },
+  "claimRefusedStandaloneInMonthly": "An invoice without a month is paid on its own, apart from monthly invoices. Nothing was charged.",
+  "@claimRefusedStandaloneInMonthly": {
+    "description": "#4165 a payment with a month named an invoice without one (DKC14)"
+  },
+  "claimRefusedMonthlyInStandalone": "Monthly invoices are paid with their month, apart from invoices without one. Nothing was charged.",
+  "@claimRefusedMonthlyInStandalone": {
+    "description": "#4165 a payment of invoices without a month named one that has a month (DKC16)"
   }
 }

@@ -2,11 +2,12 @@
 import 'dart:convert';
 
 import 'package:archive/archive.dart' show GZipDecoder;
-import 'package:flutter/foundation.dart' show Uint8List, compute, kIsWeb, visibleForTesting;
+import 'package:flutter/foundation.dart' show Uint8List, kIsWeb, visibleForTesting;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../backend/auth_callback_guard.dart';
+import '../trace/traced_compute.dart';
 import 'deployment_base_native.dart'
     if (dart.library.js_interop) 'deployment_base_web.dart';
 import 'instance_builder.dart';
@@ -24,9 +25,11 @@ part 'instance_bundle_asset.g.dart';
 /// the UI isolate.
 Future<InstanceBundle> _loadInstanceBundleAsset() async {
   final data = await rootBundle.load(InstanceBundle.assetPath);
-  return compute(
+  return tracedCompute(
     decodeInstanceBundleAsset,
     data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
+    area: 'instance',
+    what: 'the instance bundle decoding',
   );
 }
 

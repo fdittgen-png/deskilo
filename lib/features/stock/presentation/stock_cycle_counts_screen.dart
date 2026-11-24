@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -21,7 +22,6 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_config.dart';
@@ -30,6 +30,7 @@ import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_cycle_plan_sheet.dart';
 import 'stock_day.dart';
+import 'stock_read_failed.dart';
 
 class StockCycleCountsScreen extends ConsumerWidget {
   const StockCycleCountsScreen({super.key});
@@ -63,20 +64,12 @@ class StockCycleCountsScreen extends ConsumerWidget {
 
 String _day(BuildContext context, String iso) {
   final at = DateTime.tryParse(iso);
-  return at == null ? iso : MaterialLocalizations.of(context).formatMediumDate(at);
+  return at == null ? iso : appFormatOf(context).dates(DateShape.date).format(at);
 }
 
 /// A read that failed says so and can be asked again.
-Widget _failed(AppLocalizations l10n, String key, VoidCallback retry) => Center(
-  key: ValueKey('$key-failed'),
-  child: Column(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Text(l10n.stockReadFailed),
-      TextButton(key: ValueKey('$key-retry'), onPressed: retry, child: Text(l10n.identityConnectRetry)),
-    ],
-  ),
-);
+Widget _failed(Object error, String key, VoidCallback retry) =>
+    StockReadFailed(keyName: key, error: error, onRetry: retry);
 
 class _Tasks extends ConsumerWidget {
   const _Tasks({required this.workspaceId});
@@ -93,7 +86,7 @@ class _Tasks extends ConsumerWidget {
         .watch(provider)
         .when(
           loading: () => const LoadingView(),
-          error: (_, _) => _failed(l10n, 'stock-cycle-tasks', () => ref.invalidate(provider)),
+          error: (e, _) => _failed(e, 'stock-cycle-tasks', () => ref.invalidate(provider)),
           data: (tasks) => tasks.isEmpty
               ? Center(child: Text(l10n.stockCycleNoTasks, key: const ValueKey('stock-cycle-no-tasks')))
               : ListView(
@@ -155,7 +148,7 @@ class _Plans extends ConsumerWidget {
       );
       if (saved) ref.invalidate(stockCountPlansProvider(workspaceId));
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the plan sheet could not read what it needs: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the plan sheet could not read what it needs', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
     }
   }
@@ -170,7 +163,7 @@ class _Plans extends ConsumerWidget {
         .watch(provider)
         .when(
           loading: () => const LoadingView(),
-          error: (_, _) => _failed(l10n, 'stock-cycle-plans', () => ref.invalidate(provider)),
+          error: (e, _) => _failed(e, 'stock-cycle-plans', () => ref.invalidate(provider)),
           data: (plans) => ListView(
             padding: const EdgeInsets.all(AppSpacing.md),
             children: [
@@ -234,7 +227,7 @@ class _History extends ConsumerWidget {
         .watch(provider)
         .when(
           loading: () => const LoadingView(),
-          error: (_, _) => _failed(l10n, 'stock-cycle-history', () => ref.invalidate(provider)),
+          error: (e, _) => _failed(e, 'stock-cycle-history', () => ref.invalidate(provider)),
           data: (rows) => rows.isEmpty
               ? Center(child: Text(l10n.stockCycleHistoryEmpty, key: const ValueKey('stock-cycle-history-empty')))
               : ListView(
@@ -247,8 +240,8 @@ class _History extends ConsumerWidget {
                         title: Text(l10n.stockCycleHistoryRow(items[r.itemId]?.name ?? r.itemId, places[r.locationId] ?? r.locationId)),
                         subtitle: Text(
                           [
-                            if (r.lastCountedAt != null) l10n.stockCycleHistoryLast(MaterialLocalizations.of(context).formatMediumDate(r.lastCountedAt!)),
-                            if (r.accuracyPercent != null) l10n.stockCycleHistoryAccuracy(r.counts, '${r.accuracyPercent}'),
+                            if (r.lastCountedAt != null) l10n.stockCycleHistoryLast(appFormatOf(context).date(r.lastCountedAt!)),
+                            if (r.accuracyPercent != null) l10n.stockCycleHistoryAccuracy(r.counts, appFormatOf(context).ratePercent(r.accuracyPercent!)),
                           ].join(' · '),
                         ),
                       ),

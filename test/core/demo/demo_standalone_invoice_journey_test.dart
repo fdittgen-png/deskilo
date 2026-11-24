@@ -8,6 +8,7 @@
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/application/issue_standalone_invoice.dart';
 import 'package:deskilo/features/money/domain/standalone_invoice.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
@@ -88,8 +89,8 @@ void main() {
         requestId: 'req-1',
       ),
     );
-    expect(outcome, isA<StandaloneIssuedOutcome>());
-    final id = (outcome as StandaloneIssuedOutcome).invoiceId;
+    expect(outcome, isA<CommandDone<StandaloneIssued>>());
+    final id = (outcome as CommandDone<StandaloneIssued>).value.invoiceId;
     final invoices = await container.read(invoiceQueriesProvider).fetchInvoices(workspaceId);
     final invoice = invoices.firstWhere((i) => i.id == id);
     expect(invoice.lines.single.quantityText, '1.5');
@@ -111,7 +112,7 @@ void main() {
     expect(second.number, isNot(first.number));
   });
 
-  test('a stale revision, a closed draft and a goods line are refused before an invoice exists', () async {
+  test('a stale revision, a closed draft and a goods line naming no item are refused before an invoice exists', () async {
     final commands = container.read(standaloneInvoiceCommandsProvider);
     final a = await commands.saveDraft(workspaceId: workspaceId, draft: draft());
     final before = (await container.read(invoiceQueriesProvider).fetchInvoices(workspaceId)).length;
@@ -120,10 +121,11 @@ void main() {
     expect(newer.revision, 2);
     final stale = await container.read(standaloneIssuanceProvider).issue(
       StandaloneIssueAttempt(workspaceId: workspaceId, draftId: a.draftId, revision: 1, requestId: 'req-s'));
-    expect(stale, isA<StandaloneIssueRefused>());
+    expect(stale, isA<CommandRefused<StandaloneIssued>>());
     final goods = await commands.saveDraft(workspaceId: workspaceId, draft: draft(supply: 'goods'));
     final p = await commands.preview(workspaceId: workspaceId, draftId: goods.draftId, revision: goods.revision);
-    expect(p.missing, ['line_1_supply']);
+    // #4433: goods are a supply kind now; a goods line without one of the business's items is missing its item.
+    expect(p.missing, ['line_1_item']);
     final tooPrecise = await commands.saveDraft(workspaceId: workspaceId, draft: draft(quantity: '0.0000001'));
     expect((await commands.preview(workspaceId: workspaceId, draftId: tooPrecise.draftId, revision: 1)).missing,
         ['line_1_quantity']);

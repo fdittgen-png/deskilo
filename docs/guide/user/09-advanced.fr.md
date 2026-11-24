@@ -7,7 +7,7 @@ Ce qui entoure le travail de tous les jours : le côté test d'un espace et le c
 
 Dans ce chapitre :
 - [Un espace a deux côtés](help:user.advanced.environments) · [Entrer d'un côté](help:user.advanced.enter-environment) · [Un espace de test](help:user.advanced.test-space) · [Qui peut déployer](help:user.advanced.deploy-permissions) · [Déployer entre les côtés](help:user.advanced.deploy) · [Situation de l'espace et archive de l'exercice](help:user.advanced.status-archive)
-- [Votre propre serveur](help:user.advanced.own-server)
+- [Votre propre serveur](help:user.advanced.own-server) · [Quand une installation exige une application plus récente](help:user.advanced.app-floor) · [Publier une nouvelle version](help:user.advanced.releases)
 - [Les assistants](help:user.advanced.assistants) · [Connecter un assistant](help:user.advanced.assistants-connect) · [Les autorisations](help:user.advanced.assistants-approve) · [Ce que les assistants peuvent faire](help:user.advanced.assistants-policy)
 - [L'enregistreur de tâches](help:user.advanced.recorder) · [Enregistrer une tâche](help:user.advanced.recorder-record) · [Relire un enregistrement](help:user.advanced.recorder-review) · [Créer un guide](help:user.advanced.guide-make) · [Suivre un guide](help:user.advanced.guide-play) · [Le menu rond](help:user.advanced.guide-circle) · [Modifier un guide](help:user.advanced.guide-edit) · [Confidentialité des enregistrements](help:user.advanced.recorder-privacy)
 - [L'espace de démonstration](help:user.advanced.demo) · [Mode tournage](help:user.advanced.filming)
@@ -168,6 +168,52 @@ Vous voulez les données de votre communauté sur un serveur que vous maîtrisez
 - Un opérateur peut activer les assistants pour toute l'installation — voir [Les autorisations](help:user.advanced.assistants-approve).
 
 **Voir aussi:** [Votre propre serveur](help:user.backend.server)
+
+<!-- anchor: user.advanced.app-floor -->
+### Quand une installation exige une application plus récente
+
+**Public:** Opérateur·rice · Propriétaire
+
+Une installation peut indiquer que seule une application plus récente peut l'utiliser. Vous voulez savoir quand c'est justifié et ce que verront vos testeurs et vos membres.
+
+**Étapes**
+
+1. Relevez le seuil seulement quand une ancienne application serait fausse, et non simplement incomplète : un correctif de sécurité, ou un changement de sens des données enregistrées. Une fonction manquante n'est pas une raison.
+2. Relevez-le dans une modification à part, et seulement après que l'application plus récente a été disponible pour tous les testeurs et membres pendant la période de prise en charge. Les testeurs de l'installation de référence sont bloqués dès que le seuil est relevé.
+3. Dites d'abord aux personnes quelle application installer et où : le store d'origine, la page des versions, ou le rechargement de l'application web.
+4. Ensuite, ouvrez l'application sur un ancien appareil et vérifiez que **Cette application doit être mise à jour** apparaît.
+
+**Bon à savoir**
+
+- Une application sous le seuil voit un seul écran, **Cette application doit être mise à jour**, avec la façon de la mettre à jour sur sa plateforme, **Vérifier à nouveau**, **Réglages du serveur** et **Se déconnecter**. L'aide, la confidentialité et la démo restent ouvertes.
+- Le seuil appartient à une seule installation : la même application continue de fonctionner sur toutes les autres installations de la personne. Quand seule l'installation d'une entreprise refuse l'application, seule cette entreprise affiche l'écran, qui propose alors aussi **Retour à Moi** ; vos autres entreprises restent ouvertes.
+- Si le seuil ne peut pas être lu, l'application n'est pas bloquée. Un refus déjà lu reste en place jusqu'à ce qu'une réponse plus récente le lève, et l'application redemande au retour.
+- Le seuil est une courtoisie pour les applications qui le connaissent, pas un verrou : les règles d'argent et de droits sont décidées par le serveur, quelle que soit l'application.
+
+**Voir aussi :** [Faire tourner votre propre serveur](help:user.advanced.own-server) · [Plateformes](help:user.advanced.platforms)
+
+<!-- anchor: user.advanced.releases -->
+### Publier une nouvelle version : le serveur d'abord
+
+**Public:** Opérateur·rice
+
+Vous exploitez une installation et une nouvelle version de l'application arrive. Le serveur est toujours mis à jour avant l'application, et une ancienne application n'est jamais écartée sans prévenir.
+
+**Étapes**
+
+1. Mettez d'abord le serveur à jour : appliquez ses nouvelles migrations, puis ses fonctions. Rien ne change pour les membres : une application déjà installée continue de fonctionner, car le serveur ne fait qu'ajouter.
+2. Publiez l'application. Avant tout envoi, le train de publication lit l'installation qu'il dessert et s'arrête, en nommant les migrations manquantes, quand l'installation est en retard, refuse la nouvelle application ou ne peut pas être lue. Une fois l'application publiée, la version du serveur y indique *À jour*, et une ancienne application indique *Le serveur est plus récent que cette app — mettez l'app à jour dès que possible*.
+3. Attendez le délai de prise en charge : [Profils](app:/profiles) → **Réglages de la plateforme (valeurs par défaut)** → **Versions de l'application** → **Délai de prise en charge des anciennes applications**. Il court à partir du jour où la nouvelle application est disponible sur le canal de distribution le plus lent, pas du jour où elle a été construite : l'examen d'un store peut prendre des jours.
+4. Seulement alors, relevez l'application la plus ancienne acceptée par l'installation, dans une migration à part. Une application en dessous affiche **Cette application doit être mise à jour** avec la façon de la mettre à jour sur sa plateforme ; rien de ce que le membre a saisi n'est perdu.
+
+**Bon à savoir**
+
+- Une application plus récente que son serveur indique *Mise à jour nécessaire : cette app a besoin du schéma …*. C'est le cas que l'ordre « le serveur d'abord » évite.
+- Pour annuler un relèvement, abaissez de nouveau l'application la plus ancienne acceptée, ou supprimez ce seuil, dans une nouvelle migration : une application bloquée refonctionne à son prochain démarrage ou à son retour au premier plan.
+- Le train de publication ne fait que lire l'installation : il n'applique aucune migration et ne change pas qui peut publier.
+- Ne relevez jamais l'application la plus ancienne acceptée dans la migration qui a besoin de la nouvelle application : les testeurs de cette installation seraient bloqués dès qu'elle est appliquée.
+
+**Voir aussi:** [Faire tourner votre propre serveur](help:user.advanced.own-server)
 
 <!-- anchor: user.advanced.assistants -->
 ### Les assistants : ce que c'est

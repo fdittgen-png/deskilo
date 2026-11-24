@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -23,6 +24,7 @@ import '../domain/stock_page.dart';
 import '../domain/stock_trace.dart';
 import '../providers/stock_providers.dart';
 import 'stock_day.dart';
+import 'stock_read_failed.dart';
 
 class StockValueScreen extends ConsumerWidget {
   const StockValueScreen({super.key});
@@ -42,16 +44,7 @@ class StockValueScreen extends ConsumerWidget {
       final provider = stockValuationProvider(workspaceId);
       body = switch (ref.watch(provider)) {
         AsyncLoading() => const LoadingView(),
-        AsyncError() => Center(
-          key: const ValueKey('stock-value-failed'),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(l10n.stockReadFailed),
-              TextButton(key: const ValueKey('stock-value-retry'), onPressed: () => ref.invalidate(provider), child: Text(l10n.identityConnectRetry)),
-            ],
-          ),
-        ),
+        AsyncError(:final error) => StockReadFailed(keyName: 'stock-value', error: error, onRetry: () => ref.invalidate(provider)),
         AsyncData(:final value) => _Value(valuation: value, workspaceId: workspaceId),
       };
     }
@@ -80,8 +73,8 @@ class _Value extends ConsumerWidget {
     final items = {for (final i in ref.watch(stockItemsProvider(workspaceId)).value ?? const <StockItem>[]) i.id: i}; // empty-ok: a name falls back to its id
     String name(String id) => items[id]?.name ?? id;
     String unit(String id) => items[id]?.unit ?? '';
-    final dates = MaterialLocalizations.of(context);
-    String stamp(DateTime at) => dates.formatMediumDate(stockDayOf(ref, at));
+    final dates = appFormatOf(context).dates(DateShape.date);
+    String stamp(DateTime at) => dates.format(stockDayOf(ref, at));
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.md),
       children: [

@@ -19,19 +19,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/consumer_contract.dart';
 import '../../tool/consumer_contract/extract.dart';
+import '../../tool/migration_apps.dart';
 import 'lint_sources.dart';
 
 /// The first migration that must carry the `-- apps:` line: the ones before
 /// it are classified by the consumer-contract check, not by a header.
 const int _appsLineFrom = 898;
-
-final _appsLine = RegExp(
-  r'^-- apps: (additive|needs app at least \d+|breaks apps below \d+)\s*$',
-);
-final _dropsOrRenames = RegExp(
-  r'\b(drop\s+(table|column|function|view|materialized\s+view|type)|rename\s+(column|to))\b',
-  caseSensitive: false,
-);
 
 ConsumerContract _of(String source) {
   final c = ConsumerContract();
@@ -152,28 +145,15 @@ h(c) => c.from('t').upsert({'e': 1}, onConflict: 'k1, k2');''');
 
   test('every migration from $_appsLineFrom on says what it does to apps', () {
     final problems = <String>[];
+    final earlier = <String, List<Map<String, bool>>>{};
     for (final f in sqlFiles('supabase/migrations')) {
       final name = f.uri.pathSegments.last;
       final n = int.tryParse(name.split('_').first);
-      if (n == null || n < _appsLineFrom) continue;
-      final lines = f.readAsLinesSync();
-      final head = lines.take(8).where(_appsLine.hasMatch).toList();
-      if (head.isEmpty) {
-        problems.add('$name: no `-- apps:` line in its header');
-        continue;
+      final sql = f.readAsStringSync();
+      if (n != null && n >= _appsLineFrom) {
+        problems.addAll(appsFindings(name, sql, earlier: earlier));
       }
-      if (head.first.contains('additive')) {
-        final body = lines
-            .where((l) => !l.trimLeft().startsWith('--'))
-            .where(_dropsOrRenames.hasMatch)
-            .toList();
-        if (body.isNotEmpty) {
-          problems.add(
-            '$name: says additive but drops or renames: '
-            '${body.first.trim()}',
-          );
-        }
-      }
+      rememberFunctions(earlier, sql);
     }
     expect(
       problems,
@@ -182,5 +162,116 @@ h(c) => c.from('t').upsert({'e': 1}, onConflict: 'k1, k2');''');
           'ADR 0053 section 4: `-- apps: additive`, '
           '`-- apps: needs app at least N` or `-- apps: breaks apps below N`',
     );
+  });
+
+  group('the apps line scanner', () {
+    const head = '-- SPDX\n-- risk: additive\n';
+    List<String> run(String line, String body, [String earlierSql = '']) {
+      final earlier = <String, List<Map<String, bool>>>{};
+      rememberFunctions(earlier, earlierSql);
+      return appsFindings(
+        '0999_x.sql',
+        '$head$line\n$body',
+        earlier: earlier,
+      );
+    }
+
+    const old = 'create function public.fn_a(p_x int) returns int as \$\$ select 1 \$\$ language sql;';
+
+    test('a file without the line is named', () {
+      expect(appsFindings('0999_x.sql', '-- risk: additive\nselect 1;'), hasLength(1));
+    });
+
+    test('additive passes a new function and a defaulted new parameter', () {
+      expect(run('-- apps: additive', 'create table t(a int);'), isEmpty);
+      expect(
+        run(
+          '-- apps: additive',
+          'create or replace function public.fn_a(p_x int, p_y int default 0) returns int as \$\$ select 1 \$\$ language sql;',
+          old,
+        ),
+        isEmpty,
+      );
+    });
+
+    test('additive that drops a table, column or function fails', () {
+      for (final d in [
+        'drop table t;',
+        'alter table t drop column c;',
+        'drop function public.fn_a(int);',
+        'alter table t rename column a to b;',
+      ]) {
+        expect(run('-- apps: additive', d), hasLength(1), reason: d);
+      }
+      expect(run('-- apps: breaks apps below 5', 'drop table t;'), hasLength(1),
+          reason: 'breaks needs the floor');
+    });
+
+    test('additive that drops a parameter or adds one without default fails', () {
+      final dropped = run(
+        '-- apps: additive',
+        'create or replace function public.fn_a() returns int as \$\$ select 1 \$\$ language sql;',
+        old,
+      );
+      expect(dropped.single, contains('fn_a'));
+      final added = run(
+        '-- apps: additive',
+        'create or replace function public.fn_a(p_x int, p_y int) returns int as \$\$ select 1 \$\$ language sql;',
+        old,
+      );
+      expect(added.single, contains('fn_a(p_x, p_y)'));
+    });
+
+    test('additive may drop and recreate a function to add a defaulted '
+        'parameter, and only then', () {
+      const recreate =
+          'drop function if exists public.fn_a(int);\n'
+          'create function public.fn_a(p_x int, p_y int default 0) returns int as \$\$ select 1 \$\$ language sql;';
+      expect(run('-- apps: additive', recreate, old), isEmpty);
+      const recreateNarrower =
+          'drop function if exists public.fn_a(int);\n'
+          'create function public.fn_a() returns int as \$\$ select 1 \$\$ language sql;';
+      expect(
+        run('-- apps: additive', recreateNarrower, old).single,
+        contains('fn_a'),
+      );
+      const dropsAnother =
+          'drop function if exists public.fn_b(int);\n'
+          'create function public.fn_a(p_x int, p_y int default 0) returns int as \$\$ select 1 \$\$ language sql;';
+      expect(
+        run('-- apps: additive', dropsAnother, old).single,
+        contains('drops or renames'),
+      );
+    });
+
+    test('additive that removes a default an old call omits fails', () {
+      const defaulted =
+          'create function public.fn_a(p_x int default 1) returns int as \$\$ select 1 \$\$ language sql;';
+      expect(
+        run(
+          '-- apps: additive',
+          'create or replace function public.fn_a(p_x int) returns int as \$\$ select 1 \$\$ language sql;',
+          defaulted,
+        ).single,
+        contains('fn_a(p_x)'),
+      );
+    });
+
+    test('a comment that mentions drop table does not count', () {
+      expect(run('-- apps: additive', '-- drop table t;\nselect 1;'), isEmpty);
+    });
+
+    test('breaks below N must raise the floor to N in the same file', () {
+      expect(run('-- apps: breaks apps below 5', 'select 1;').single,
+          contains('deskilo_app_floor'));
+      const raise =
+          'create or replace function public.deskilo_app_floor() returns int language sql as \$\$ select 5::int; \$\$;';
+      expect(run('-- apps: breaks apps below 5', raise), isEmpty);
+      expect(run('-- apps: breaks apps below 6', raise), hasLength(1));
+    });
+
+    test('needs app at least N asks nothing of the floor', () {
+      expect(run('-- apps: needs app at least 3', 'select 1;'), isEmpty);
+    });
   });
 }

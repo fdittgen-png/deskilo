@@ -6,6 +6,7 @@
 // currencies with one month the server could not answer, a qualified
 // (partial) month, a text card, a card the server does not answer in an
 // export (its 0A000) and a card whose filter the plan cannot answer.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/workspace/domain/bi_batch.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_definition.dart';
@@ -153,7 +154,7 @@ Map<String, Object?> _result(BiBatchRequestLike r, int shift) {
       'request_key': r.key,
       'metric_id': r.metricId,
       'ok': false,
-      'code': '0A000',
+      'code': PgCode.featureNotSupported,
       'message': 'unsupported metric',
     };
   }
@@ -186,7 +187,7 @@ Map<String, Object?> _result(BiBatchRequestLike r, int shift) {
     };
   }
   if (r.metricId == 'finance.collected' && month == '2026-07') {
-    return {...meta, 'ok': false, 'code': '22023', 'message': 'not answered'};
+    return {...meta, 'ok': false, 'code': PgCode.invalidParameterValue, 'message': 'not answered'};
   }
   return {
     ...meta,

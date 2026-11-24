@@ -101,7 +101,7 @@ void main() {
     await pump(tester, dated('schedule_member_share_change',
         {'pct': 50, 'effective_on': '2026-12-01'}));
     expect(find.text('Ada Lovelace'), findsOneWidget);
-    expect(change(), contains('50 %'));
+    expect(change(), contains('50%'), reason: 'the rate in the format of the member (en_US: no space)');
     expect(change(), contains('2026'));
     await pump(tester, dated('schedule_member_pause',
         {'from': '2026-12-01', 'to': '2027-01-01'}));

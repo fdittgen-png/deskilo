@@ -6,6 +6,8 @@
 // server message changes nothing. The server's answer becomes ONE pure value
 // at the data boundary (`ReservationRefusal.fromServer`), and no shape of
 // DETAIL, however malformed, turns a refusal into a second failure.
+import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/reservations/domain/reservation_refusal.dart';
 import 'package:deskilo/features/reservations/presentation/booking_error_text.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -98,10 +100,10 @@ void main() {
     expect(_words(en, 'DKK06', '{"minutes" : 20}'), en.planSlotError(20));
     expect(_words(en, 'DKK34', '{"days" : 120}'), en.bookingSeriesTooLong(120));
     // A detail already decoded reads the same.
-    expect(_words(en, 'DKK10', {'minutes': 240}), en.bookingTooLongError(240));
+    expect(_words(en, DkCode.dkk10, {'minutes': 240}), en.bookingTooLongError(240));
     // No DETAIL, or one that is not JSON: the screen's own grid, else 15.
-    expect(_words(en, 'DKK06', null, stepMinutes: 30), en.planSlotError(30));
-    expect(_words(en, 'DKK06', 'not json'), en.planSlotError(15));
+    expect(_words(en, DkCode.dkk06, null, stepMinutes: 30), en.planSlotError(30));
+    expect(_words(en, DkCode.dkk06, 'not json'), en.planSlotError(15));
   });
 
   group('a malformed DETAIL is never a second failure', () {
@@ -138,7 +140,7 @@ void main() {
 
     test('a whole number written as a double keeps its meaning', () {
       expect(_words(en, 'DKK06', '{"minutes": 45.0}'), en.planSlotError(45));
-      expect(_words(en, 'DKK06', {'minutes': 45.0}), en.planSlotError(45));
+      expect(_words(en, DkCode.dkk06, {'minutes': 45.0}), en.planSlotError(45));
       // ... and a fraction is not a duration.
       expect(
         _words(en, 'DKK06', '{"minutes": 45.5}', stepMinutes: 30),
@@ -160,12 +162,12 @@ void main() {
         ['minutes'],
       ]) {
         expect(
-          () => ReservationRefusal.fromServer(code: 'DKK06', details: details),
+          () => ReservationRefusal.fromServer(code: DkCode.dkk06, details: details),
           returnsNormally,
           reason: '$details',
         );
         expect(
-          _words(en, 'DKK06', details, stepMinutes: 30),
+          _words(en, DkCode.dkk06, details, stepMinutes: 30),
           en.planSlotError(30),
           reason: '$details',
         );
@@ -174,7 +176,7 @@ void main() {
 
     test('a detail map with keys of any type is read', () {
       expect(
-        _words(en, 'DKK08', <Object?, Object?>{1: 'x', 'days': 7}),
+        _words(en, DkCode.dkk08, <Object?, Object?>{1: 'x', 'days': 7}),
         en.bookingHorizonError(7),
       );
     });
@@ -185,7 +187,7 @@ void main() {
     expect(
       bookingErrorText(
         fr,
-        _refused('a sentence nobody pinned', code: 'DKK29'),
+        _refused('a sentence nobody pinned', code: DkCode.dkk29),
         'fallback',
       ),
       fr.bookingNotYours,
@@ -194,7 +196,7 @@ void main() {
 
   test('a code that is not a booking refusal is not read as one', () {
     final en = lookupAppLocalizations(const Locale('en'));
-    expect(_words(en, 'DKB01', null), isNull);
+    expect(_words(en, DkCode.dkb01, null), isNull);
     expect(_words(en, null, null), isNull);
     // An unknown code keeps no code and no sentence: nothing of the backend
     // reaches a person, and the screen's own fallback is shown.
@@ -236,8 +238,8 @@ void main() {
 
   test('another reservation blocks: by its code or its words, never the '
       'member\'s own', () {
-    expect(isBlockedByOtherError(_refused('x', code: 'DKK26')), isTrue);
-    expect(isBlockedByOtherError(_refused('x', code: '23P01')), isTrue);
+    expect(isBlockedByOtherError(_refused('x', code: DkCode.dkk26)), isTrue);
+    expect(isBlockedByOtherError(_refused('x', code: PgCode.exclusionViolation)), isTrue);
     expect(isBlockedByOtherError(_refused('seat already reserved')), isTrue);
     expect(
       isBlockedByOtherError(
@@ -249,7 +251,7 @@ void main() {
   });
 
   test('the typed refusal carries no wording and says what it is', () {
-    final refused = _refused('secret backend text', code: 'DKK06');
+    final refused = _refused('secret backend text', code: DkCode.dkk06);
     expect(refused.toString(), 'ReservationRefused(coded DKK06)');
     expect(refused.toString(), isNot(contains('secret')));
   });

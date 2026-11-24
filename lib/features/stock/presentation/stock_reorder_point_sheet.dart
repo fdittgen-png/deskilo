@@ -10,6 +10,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/format/decimal_input.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -85,8 +86,9 @@ class _PointDraft {
   List<StockVariant> variants = const [];
   String? _variantsOf;
 
-  /// What was typed, with a decimal comma read as the point the server reads.
-  String _dot(String field) => fields.text(field).trim().replaceAll(',', '.');
+  /// What was typed, read in the member's format (1,5 or 1.5) as the exact text the server reads; what is no
+  /// quantity stays as typed, for the check to refuse.
+  String _dot(String field) => exactQuantityFromInput(fields.text(field), locale: locale).value?.text ?? fields.text(field).trim();
 
   bool get isNew => point == null;
   String get unit => items.where((i) => i.id == item).firstOrNull?.unit ?? '';
@@ -134,7 +136,7 @@ class _PointDraft {
       );
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a reorder point was not saved: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a reorder point was not saved', error: e, stackTrace: st);
       return stockSaveProblem(l10n, e);
     }
   }
@@ -147,7 +149,7 @@ class _PointDraft {
     try {
       variants = [for (final v in await config.variants(workspaceId, id)) if (v.id != null && v.active) v];
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the variants could not be read: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the variants could not be read', error: e, stackTrace: st);
       variants = const [];
     }
     refresh();

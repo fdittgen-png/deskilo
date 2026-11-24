@@ -225,7 +225,7 @@
   "@standaloneFieldBasis": {
     "description": "#4165 standalone invoice composer: standaloneFieldBasis"
   },
-  "standaloneFieldSupply": "eine Dienstleistung (Waren werden hier noch nicht berechnet)",
+  "standaloneFieldSupply": "was die Zeile liefert: eine Dienstleistung, eine Immobilie oder Waren",
   "@standaloneFieldSupply": {
     "description": "#4165 standalone invoice composer: standaloneFieldSupply"
   },

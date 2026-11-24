@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/state/policy_read.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/bank/bank_records.dart' show BankRowsUnreadable;
@@ -55,7 +56,8 @@ class BankReconciliationActions {
         statementId: statementId,
         sourceLimits: ref.read(bankImportSettingsProvider).limits,
       );
-    } on BankRowsUnreadable {
+    } on BankRowsUnreadable catch (caught, caughtStack) {
+      TraceLogger.instance.log(TraceLevel.info, 'money', 'bank_reconciliation_actions: BankRowsUnreadable handled', error: caught, stackTrace: caughtStack);
       // #3913 — a report never leaves a movement out: refused, with what
       // to do next.
       if (context.mounted) {

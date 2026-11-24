@@ -21,6 +21,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../domain/action_registry.dart' show uiRoutes;
@@ -165,7 +166,8 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
         l10n.taskWizardGuideAdded,
       );
       Navigator.of(context).pop();
-    } on Object {
+    } on Object catch (caught, caughtStack) {
+      TraceLogger.instance.log(TraceLevel.info, 'task_recorder', 'guide_draft_screen: Object handled', error: caught, stackTrace: caughtStack);
       if (!mounted) return;
       setState(() => _saving = false);
       AppSnack.error(

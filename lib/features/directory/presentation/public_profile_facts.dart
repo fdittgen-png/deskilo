@@ -47,7 +47,7 @@ class PublicProfileFacts extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (final fact in facts) Text('${fact.label}: ${fact.value}'),
+          for (final fact in facts) Text(context.l10n.labelWithValue(fact.label, fact.value)),
           if (workspace.takesInquiries == true)
             Text(l.publicProfileTakesInquiries),
         ],

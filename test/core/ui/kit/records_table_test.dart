@@ -7,6 +7,7 @@
 // secondary click, the three states, and cards on a phone.
 import 'dart:async';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/storage/prefs_stores.dart';
 import 'package:deskilo/core/ui/kit/records_table.dart';
 import 'package:deskilo/core/ui/kit/records_table_parts.dart';
@@ -443,7 +444,7 @@ void main() {
       tester,
       RecordsFailed(error: error, onRetry: () => retried++),
     );
-    await failedWith(const PostgrestException(message: 'x', code: '42501'));
+    await failedWith(const PostgrestException(message: 'x', code: PgCode.insufficientPrivilege));
     expect(_k('records-denied'), findsOneWidget);
     expect(
       find.text(

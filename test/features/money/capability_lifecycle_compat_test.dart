@@ -10,6 +10,7 @@
 //    an unknown state reads as servicing (admits nothing), an unknown phase of a
 //    transmission as uncertain (never a failure that invites a resend);
 //  * a version or module a client sends is only ever declared, never a selector.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/features/money/application/accounting_connection_commands.dart';
 import 'package:deskilo/features/money/domain/capability_state.dart';
@@ -22,7 +23,7 @@ void main() {
   group('the global schema gate is unchanged by the lifecycle', () {
     test('a server behind this app blocks; one ahead of it does not', () {
       expect(
-        compareSchema(requiredSchemaVersion - 1),
+        compareSchema(appNeedsSchemaVersion - 1),
         SchemaCompatibility.behind,
       );
       expect(compareSchema(null), SchemaCompatibility.behind);
@@ -47,7 +48,7 @@ void main() {
     test('the refusal the server gives is worded, not generic', () {
       const refusal = PostgrestException(
         message: 'accounting connections are switched off in this space',
-        code: '0A000',
+        code: PgCode.featureNotSupported,
       );
       expect(
         AccountingConnectionCommands.refusalOf(refusal),

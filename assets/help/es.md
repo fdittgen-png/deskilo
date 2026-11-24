@@ -2416,6 +2416,7 @@ Quiere encontrar una factura, ver si está pagada y obtener su PDF.
 - Pulse el icono de pago en una factura abierta para ir a **Pagos**.
 - Si la lista está vacía, el espacio todavía no le ha facturado; factura un mes cuando lo cierra.
 - Las facturas no se pueden editar. Una factura equivocada se marca como **Errónea** y se sustituye por una nueva; la errónea desaparece de su lista. Cuando varias facturas se agrupan en una, la factura agrupada las sustituye en su lista.
+- Una línea facturada por horas, por días o por peso (por ejemplo *1.5 h a 90 EUR*, o *0.75 kg a 12.5 EUR por 10 kg*) muestra bajo su concepto la cantidad exacta, su unidad y el precio introducido, tal como los imprime el PDF; su importe es el fijado al emitir la factura. Una línea registrada por una versión más reciente de la aplicación se muestra tal cual e indica que no se puede usar aquí: actualice la aplicación para trabajar con ella.
 
 **Véase también:** [Pague lo que debe](help:user.money.payments) · [Sus finanzas en todos sus espacios](help:user.money.finances)
 
@@ -2874,6 +2875,29 @@ La lista muestra cada invitación como invitada, en lectura, caducada o terminad
 
 **Véase también:** [Clientes facturados](help:user.money.customers.billing)
 
+### Una factura de cliente sin mes
+
+**Público:** Administrador/a · Propietario
+
+Hoy ha prestado un servicio a un cliente concreto (una consulta, una clase, un entregable acordado) y quiere facturarlo ya, sin reserva, suscripción ni mes detrás. Necesita el derecho de emitir facturas y la función **Facturas independientes**.
+
+**Pasos**
+
+1. Abra **Facturas** y elija **Factura de cliente sin mes**.
+2. Elija el cliente, después la fecha del servicio y el vencimiento.
+3. Añada las líneas: una descripción, una cantidad, una unidad y un precio. Elegir un artículo del catálogo es opcional; un servicio puntual se escribe con palabras.
+4. Elija **Revisar la factura**. La vista previa muestra los importes y el impuesto exactamente como se emitirán, o lo que aún falta.
+5. Elija **Emitir la factura** para confirmar. La factura se numera, se guarda tal como se emitió y se abre.
+
+**Conviene saber**
+
+- La factura no tiene mes de facturación: una segunda factura distinta del mismo cliente el mismo mes es una factura propia, y la factura mensual, si la hay, queda intacta.
+- Los importes y el impuesto los calcula siempre el servidor, nunca se toman de la pantalla; el precio está en la moneda del negocio.
+- Su borrador se conserva al cambiar el tamaño de la ventana o si se rechaza una comprobación. Si la respuesta a **Emitir la factura** no llega, la misma confirmación nunca emite una segunda factura: búsquela de nuevo.
+- Cambiar después el catálogo o el cliente nunca modifica una factura emitida.
+
+**Véase también:** [Clientes facturados](help:user.money.customers.billing) · [Pagar facturas sin mes](help:user.money.finances.standalone)
+
 ### Presupuestos
 
 **Público:** Administrador/a · Propietario
@@ -3024,6 +3048,34 @@ Donde su país aún no permite la caja, esta nombra la operación que falta y no
 
 Un artículo trazado indica de dónde se tomó. Cuando vende un artículo seguido por lote sin elegir un lote, la venta lo toma de los lotes en existencia, primero el que caduca antes y nunca uno caducado; bajo la línea vendida, la caja muestra el código de cada lote tal como se recibió, con la cantidad tomada, por ejemplo **Lote SUP-A × 2 · Lote SUP-B × 1**, y cada pieza por su etiqueta. Si la empresa usa un lector, escanee la etiqueta de una pieza para añadirla: la venta toma exactamente las piezas escaneadas, y la misma pieza dos veces se rechaza. Estos identificadores de trazabilidad quedan fijados con el ticket: cambiar más tarde un lote o una etiqueta nunca altera un ticket ya emitido. En las existencias, la trazabilidad de un lote o de una pieza indica el ticket que lo vendió.
 
+### Abrir la caja, contar y cerrar
+
+**Público:** Administrador/a · Propietario
+
+Usted lleva un cajón de caja y quiere saber que el dinero que contiene es correcto al final del día.
+
+Abra **Cajón de caja** en el menú de ventas (requiere la función de sesiones de caja y el derecho de emitir facturas o de ver las finanzas). Cada caja del negocio aparece con su estado. Quien gestiona las sedes añade una caja con **Añadir una caja** y puede renombrarla o desactivarla.
+
+Pulse **Abrir la caja**, escriba el **Fondo del cajón** (o, si su negocio cuenta por denominación, el valor de cada billete o moneda y cuántos hay) y confirme. Una caja tiene una sola sesión abierta a la vez, y con las sesiones de caja la caja solo vende sobre una sesión abierta: sin ninguna abierta, ofrece **Abrir la caja** en lugar de vender.
+
+**Entrada o salida de efectivo** registra el dinero puesto en el cajón o sacado de él, con un **Motivo** elegido de la lista de su negocio. Una salida por encima del límite del negocio la registra quien puede registrar pagos salientes.
+
+**Contar y cerrar** pide el **Efectivo contado en el cajón** y lo que se **Lleva al banco**. Cuando el negocio cuenta a ciegas, el efectivo esperado no se muestra antes del recuento; quien puede ver las finanzas lo ve, y la diferencia mientras escribe. Un recuento que difiere del efectivo esperado solo se cierra con su motivo, que la caja pide. Tras el cierre, la caja dice lo esperado, lo contado y la diferencia. Los pagos con tarjeta sin respuesta se listan aparte y nunca cuentan como efectivo.
+
+**Cierre del día.** Quien puede ver las finanzas abre **Cierre del día** desde el cajón de caja y pulsa **Cerrar el día** cuando cada caja está cerrada (una caja aún abierta se nombra y rechaza el cierre). Las sesiones cerradas del día forman un informe numerado: cada sesión con lo esperado, lo contado, la diferencia y su motivo, los cobros por medio de pago y por tipo de impuesto, el efectivo entrado y salido, los reembolsos y el rango de números de tickets. **Días cerrados** lista los informes ya hechos; un día cerrado no se cambia nunca. Es el registro propio del negocio; el contenido legal que un país exige al cierre del día llega con su propio módulo.
+
+### Cuando la caja está sin conexión
+
+**Público:** Administrador/a · Propietario
+
+Vende en el mostrador y se pierde la conexión: quiere seguir vendiendo y saber que nada se pierde ni se cuenta dos veces.
+
+Active **Vender sin conexión, solo en efectivo** (requiere la función de sesiones de caja). Cuando una llamada al servidor no recibe respuesta, la caja indica **Sin conexión: solo efectivo. Las ventas se guardan en este dispositivo y se envían cuando vuelve la conexión.** y sigue vendiendo solo en efectivo, a los precios que tenía la última vez que estuvo conectada; un artículo sin precio en el dispositivo no se vende. Cada venta se guarda en el dispositivo con el número siguiente de su sesión de caja; el recibo dice **Registrada sin conexión** con ese número y **Sin firmar. Se envía al servidor cuando vuelve la conexión.**: no tiene número de recibo hasta que el servidor lo recibe.
+
+La caja vuelve a buscar la conexión sola, y **Buscar la conexión ahora** lo hace al instante. Cuando vuelve la conexión, las ventas se envían en orden, cada una con el número con que se hizo, de modo que una venta ya recibida nunca se cuenta dos veces. Entonces la caja dice cuántas se registraron y, de cada venta que el servidor rechazó, por qué (por ejemplo, el precio cambió más de lo permitido o el artículo ya no se vende); el efectivo de una venta rechazada permanece en el recuento del cajón. Si la sesión se cerró entretanto, la caja dice: «La sesión se cerró: estas ventas permanecen en el dispositivo para un responsable.» Las ventas permanecen en el dispositivo hasta que un responsable las haya tratado.
+
+Tres ajustes del negocio acotan lo que se acepta: **Tiempo máximo sin conexión (minutos)**, **Máximo de ventas sin conexión por sesión de caja** y **Diferencia de precio admitida sin conexión (%)**. Si los datos sin conexión del dispositivo no se pueden leer, no se vende nada sin conexión hasta que un responsable decida; **Descartar los datos sin conexión** los descarta tras una advertencia, porque las ventas aún no enviadas se pierden para siempre.
+
 ### Etiquetas RFID: una por lote o una por pieza
 
 **Público:** Administrador/a · Propietario
@@ -3093,6 +3145,7 @@ Abra una línea de **Stock** para ver **Dónde está** ese artículo (o ese lote
 - Los lugares en un estante suman siempre la cantidad mostrada arriba.
 - En un día pasado no se muestra la mercancía en camino; las piezas sí, desde el día en que se siguen (una pieza hecha antes no tiene historial anterior).
 - Toque un lugar que tiene un lote para ver **Todos los movimientos** de ese lote, desde la entrega con la que llegó hasta su salida; el botón de cronología de una pieza muestra **Todos los movimientos de esta pieza**. Un documento que no puede ver se nombra por su tipo, nunca se omite.
+- **Buscar un código de trazabilidad** (el botón de código arriba en **Existencias**) acepta un código de lote tal como se recibió, el código de la etiqueta de un lote o la etiqueta de una pieza, escrito o escaneado. Lista los lotes y las piezas que lo llevan y las ventas que los tomaron. Toque un lote o una pieza para ver todos sus movimientos; toque una venta para ver lo que tomó esa línea del ticket: cada lote con su cantidad, cada pieza por su etiqueta. Un ticket que no puede ver se nombra por su tipo y no se abre. Si no se encuentra nada, se indica; una búsqueda rechazada o fallida lo indica y puede repetirse.
 
 ### Valor de las existencias y origen de la mercancía
 
@@ -3193,6 +3246,28 @@ Una empresa que le factura puede darle un código para que lea lo que le factura
 - Pagar estas facturas desde aquí aún no se ofrece.
 
 **Véase también:** [Sus finanzas en todos sus espacios](help:user.money.finances)
+
+### Pagar facturas sin mes
+
+**Público:** Miembro
+
+Una empresa le ha emitido facturas que no pertenecen a ningún mes. Se pagan juntas, aparte.
+
+**Pasos**
+
+1. Abra [Mis finanzas](app:/money) y marque las facturas sin mes que quiere pagar. Son de una empresa y una moneda.
+2. Una barra indica cuántas ha marcado y su total. Elija **Pagar** para pagar en línea, o **He pagado** si ya pagó de otra manera.
+3. La confirmación enumera las facturas y un único total. Confirme: se abre un pago o se envía una sola declaración.
+
+**Conviene saber**
+
+- Las facturas sin mes y las mensuales no se pagan nunca juntas: una vez marcado un tipo, no se puede marcar el otro, y una línea lo dice. Si la empresa rechaza igualmente una mezcla, se le informa y no se cobra nada.
+- El importe es lo que las facturas aún deben. Si cambió, actualice e inténtelo de nuevo.
+- Si la respuesta se perdió por el camino, elija **Pagar** otra vez: es el mismo pago, encontrado de nuevo, nunca un segundo. Un pago solo figura como pagado cuando la empresa lo ha recibido.
+- El dinero se contabiliza en el mes en que llega. Lo que una factura no toma sigue siendo su crédito en la empresa hasta que se asigne.
+- Una empresa cuyo servicio de pago es demasiado antiguo lo dice antes de enviar nada.
+
+**Véase también:** [Sus finanzas entre espacios](help:user.money.finances)
 
 ### Sus negocios de un vistazo
 
@@ -6431,7 +6506,7 @@ Lo que rodea al trabajo diario: la cara de pruebas de un espacio y la real, los 
 
 En este capítulo:
 - [Un espacio tiene dos caras](help:user.advanced.environments) · [Entre en una cara](help:user.advanced.enter-environment) · [Un espacio de prueba](help:user.advanced.test-space) · [Quién puede desplegar](help:user.advanced.deploy-permissions) · [Despliegue entre las caras](help:user.advanced.deploy) · [Situación del espacio y archivo del ejercicio](help:user.advanced.status-archive)
-- [Su propio servidor](help:user.advanced.own-server)
+- [Su propio servidor](help:user.advanced.own-server) · [Cuando una instalación exige una aplicación más reciente](help:user.advanced.app-floor) · [Publicar una nueva versión](help:user.advanced.releases)
 - [Asistentes](help:user.advanced.assistants) · [Conecte un asistente](help:user.advanced.assistants-connect) · [Aprobaciones](help:user.advanced.assistants-approve) · [Qué pueden hacer los asistentes](help:user.advanced.assistants-policy)
 - [El grabador de tareas](help:user.advanced.recorder) · [Grabe una tarea](help:user.advanced.recorder-record) · [Revise una grabación](help:user.advanced.recorder-review) · [Cree una guía](help:user.advanced.guide-make) · [Siga una guía](help:user.advanced.guide-play) · [El menú circular](help:user.advanced.guide-circle) · [Edite una guía](help:user.advanced.guide-edit) · [Privacidad de las grabaciones](help:user.advanced.recorder-privacy)
 - [El espacio de demostración](help:user.advanced.demo) · [Modo grabación](help:user.advanced.filming)
@@ -6585,6 +6660,50 @@ Quiere los datos de su comunidad en un servidor que usted controle, o pertenece 
 - Un operador puede activar los asistentes para toda la instalación; véase [Aprobaciones](help:user.advanced.assistants-approve).
 
 **Véase también:** [Su propio servidor](help:user.backend.server)
+
+### Cuando una instalación exige una aplicación más reciente
+
+**Público:** Operador/a · Propietario
+
+Una instalación puede indicar que solo se use con ella una aplicación más reciente. Quiere saber cuándo está justificado y qué verán sus probadores y miembros.
+
+**Pasos**
+
+1. Suba el mínimo solo cuando una aplicación antigua sería errónea y no simplemente incompleta: una corrección de seguridad o un cambio en el significado de los datos guardados. Que falte una función no es motivo.
+2. Súbalo en un cambio aparte y solo cuando la aplicación más reciente lleve disponible para todos los probadores y miembros el periodo de soporte. Los probadores de la instalación de referencia quedan bloqueados en cuanto se sube el mínimo.
+3. Avise antes a las personas de qué aplicación instalar y dónde: la tienda de la que la instalaron, la página de versiones o recargando la aplicación web.
+4. Después, abra la aplicación en un dispositivo antiguo y compruebe que aparece **Esta aplicación necesita una actualización**.
+
+**Conviene saber**
+
+- Una aplicación por debajo del mínimo ve una sola pantalla, **Esta aplicación necesita una actualización**, con cómo actualizar en su plataforma, **Comprobar de nuevo**, **Ajustes del servidor** y **Cerrar sesión**. La ayuda, la privacidad y la demo siguen abiertas.
+- El mínimo pertenece a una instalación: la misma aplicación sigue funcionando en todas las demás instalaciones de la persona. Cuando solo la instalación de una empresa rechaza la aplicación, solo esa empresa muestra la pantalla, que entonces ofrece también **Volver a Yo**; sus demás empresas siguen abiertas.
+- Si no se puede leer el mínimo, la aplicación no se bloquea. Un rechazo ya leído se mantiene hasta que una respuesta más reciente lo levante, y la aplicación vuelve a preguntar al regresar.
+- El mínimo es una cortesía para las aplicaciones que lo conocen, no un cerrojo: las reglas de dinero y permisos las decide el servidor, sea cual sea la aplicación.
+
+**Véase también:** [Gestione su propio servidor](help:user.advanced.own-server) · [Plataformas](help:user.advanced.platforms)
+
+### Publicar una nueva versión: primero el servidor
+
+**Público:** Operador/a
+
+Usted gestiona una instalación y llega una nueva versión de la aplicación. El servidor siempre se actualiza antes que la aplicación, y una aplicación antigua nunca queda fuera sin aviso.
+
+**Pasos**
+
+1. Actualice primero el servidor: aplique sus nuevas migraciones y después sus funciones. Para los miembros no cambia nada: una aplicación ya instalada sigue funcionando, porque el servidor solo añade.
+2. Publique la aplicación. Antes de cualquier subida, el tren de publicación lee la instalación a la que entrega y se detiene, nombrando las migraciones que faltan, cuando la instalación va por detrás, rechaza la nueva aplicación o no se puede leer. Una vez publicada la aplicación, la versión del servidor indica en ella *Actualizado*, y una aplicación antigua indica *El servidor es más reciente que esta app: actualice la app cuando pueda*.
+3. Espere el plazo de soporte: [Perfiles](app:/profiles) → **Ajustes de la plataforma (valores por defecto)** → **Versiones de la aplicación** → **Plazo de soporte de las aplicaciones antiguas**. Cuenta desde el día en que la nueva aplicación está disponible en el canal de distribución más lento, no desde el día en que se construyó: la revisión de una tienda puede tardar días.
+4. Solo entonces eleve la aplicación más antigua que acepta la instalación, en una migración propia. Una aplicación por debajo muestra **Esta aplicación necesita una actualización** con cómo actualizarla en su plataforma; no se pierde nada de lo que el miembro introdujo.
+
+**Conviene saber**
+
+- Una aplicación más reciente que su servidor indica *Necesita una actualización: esta app necesita el esquema …*. Es el caso que evita el orden «primero el servidor».
+- Para deshacer una elevación, vuelva a bajar la aplicación más antigua aceptada, o quite el límite, en una nueva migración: una aplicación bloqueada vuelve a funcionar en su próximo inicio o al volver al primer plano.
+- El tren de publicación solo lee la instalación: no aplica ninguna migración ni cambia quién puede publicar.
+- Nunca eleve la aplicación más antigua aceptada en la migración que necesita la nueva aplicación: los probadores de esa instalación quedarían bloqueados en cuanto se aplique.
+
+**Véase también:** [Gestione su propio servidor](help:user.advanced.own-server)
 
 ### Asistentes: qué son
 

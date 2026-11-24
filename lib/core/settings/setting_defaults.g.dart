@@ -6,6 +6,8 @@
 // the registry's, read through `SettingsSet`.
 
 abstract final class SettingDefaults {
+  /// `apps.support_window_days`
+  static const int appsSupportWindowDays = 30;
   /// `assets.valuation_max_rows`
   static const int assetsValuationMaxRows = 2000;
   /// `bank.import_max_bytes`
@@ -210,6 +212,8 @@ abstract final class SettingDefaults {
   static const int stockGroupDefaultCountDays = 0;
   /// `stock.group_default_tag_mode`
   static const String stockGroupDefaultTagMode = 'none';
+  /// `stock.invoice_sale_place`
+  static const String stockInvoiceSalePlace = 'MAIN';
   /// `stock.price_rounding`
   static const String stockPriceRounding = 'none';
   /// `stock.repeated_scan`

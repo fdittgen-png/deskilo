@@ -6838,6 +6838,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Choisissez les factures que ce paiement règle.';
 
   @override
+  String get claimRefusedMonthlyInStandalone =>
+      'Les factures mensuelles se règlent avec leur mois, séparément des factures sans mois. Rien n\'a été débité.';
+
+  @override
   String get claimRefusedMonths =>
       'Un paiement règle les factures d’un seul mois. Rien n’a été débité.';
 
@@ -6867,6 +6871,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get claimRefusedRequestChanged =>
       'Ce paiement a déjà été envoyé sous une autre forme. Vérifiez les paiements déclarés, puis réessayez.';
+
+  @override
+  String get claimRefusedStandaloneInMonthly =>
+      'Une facture sans mois se règle seule, séparément des factures mensuelles. Rien n\'a été débité.';
 
   @override
   String get claimRefusedWithdrawn =>
@@ -7020,6 +7028,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String commaPair(String first, String second) {
     return '$first, $second';
   }
+
+  @override
+  String commercialLineMeasure(String quantity, String price) {
+    return '$quantity à $price';
+  }
+
+  @override
+  String commercialLineMeasurePer(String quantity, String price, String base) {
+    return '$quantity à $price pour $base';
+  }
+
+  @override
+  String get commercialLineUnreadable =>
+      'Enregistré par une version plus récente : ces données sont affichées telles quelles et ne peuvent pas être utilisées ici';
 
   @override
   String get commonCancel => 'Annuler';
@@ -7483,6 +7505,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get conversationYesterday => 'Hier';
+
+  @override
+  String counterLotsExpired(String held, String asked, String expired) {
+    return 'Seuls $held des $asked demandés sont vendables ici : $expired de plus ont dépassé leur date. Rien n\'a été vendu.';
+  }
+
+  @override
+  String counterLotsShort(String held, String asked) {
+    return 'Seuls $held des $asked demandés sont ici. Rien n\'a été vendu.';
+  }
 
   @override
   String countryChangeBody(String country, String features) {
@@ -8039,7 +8071,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String datevProblemAutomatic(String percent, String account) {
-    return '$percent % serait comptabilisé sur $account, le compte automatique d\'un autre taux';
+    return '$percent serait comptabilisé sur $account, le compte automatique d\'un autre taux';
   }
 
   @override
@@ -8098,7 +8130,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String datevProblemTaxKey(String percent, String account) {
-    return 'aucun BU-Schlüssel n\'est enregistré pour $percent % sur le compte $account';
+    return 'aucun BU-Schlüssel n\'est enregistré pour $percent sur le compte $account';
   }
 
   @override
@@ -11630,6 +11662,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get exportValueNameWorkspace => 'Espace de travail';
 
   @override
+  String get failedPartNotShown =>
+      'Cette partie n\'a pas pu être affichée. Revenez en arrière et ouvrez-la de nouveau.';
+
+  @override
   String get favoriteKeptOnDeviceRefused =>
       'Gardé sur cet appareil uniquement : votre compte ne peut pas enregistrer ce lieu.';
 
@@ -12399,6 +12435,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureNavigationStyleDesc =>
       'Chaque membre choisit dans ses réglages comment l\'application navigue : la barre classique avec le bouton rond Réserver, ou le menu comme sur le web. Désactivé : chaque appareil garde le défaut de sa plateforme.';
+
+  @override
+  String featureNeedsNewerInstallation(String feature, String since) {
+    return 'Cette installation est trop ancienne pour cette fonction. Elle a besoin de $feature à partir du schéma $since ; demandez à la personne qui gère le serveur de le mettre à jour.';
+  }
 
   @override
   String get featureNfcBadges => 'Badges RFID / NFC';
@@ -13765,6 +13806,14 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get financesSelectionOnlyMonthly =>
+      'Les factures mensuelles se règlent avec leur mois, séparément des factures sans mois.';
+
+  @override
+  String get financesSelectionOnlyStandalone =>
+      'Les factures sans mois se règlent ensemble, séparément des factures mensuelles.';
+
+  @override
   String financesSelectionSummary(int count, String amount) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -13781,6 +13830,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String financesSourceUnavailable(String host) {
     return 'Les documents de $host n\'ont pas pu être lus pour l\'instant ; ce qui est affiché vient de vos autres espaces.';
+  }
+
+  @override
+  String financesStandaloneTotal(String amount) {
+    return 'Total : $amount';
   }
 
   @override
@@ -18909,11 +18963,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get itemGroupMargin => 'Marge cible sur le coût (%)';
 
   @override
-  String itemGroupMarginValue(String percent) {
-    return '$percent %';
-  }
-
-  @override
   String get itemGroupMinAge => 'Âge minimum pour une vente';
 
   @override
@@ -21085,7 +21134,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String mcpConfirmNewShare(String pct) {
-    return 'Nouvelle part d\'abonnement : $pct %';
+    return 'Nouvelle part d\'abonnement : $pct';
   }
 
   @override
@@ -21117,7 +21166,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String mcpConfirmShareFrom(String pct, String date) {
-    return 'Nouvelle part d\'abonnement : $pct % à partir du $date';
+    return 'Nouvelle part d\'abonnement : $pct à partir du $date';
   }
 
   @override
@@ -22947,7 +22996,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String memberPlanShare(String pct) {
-    return 'Forfait $pct %';
+    return 'Forfait $pct';
   }
 
   @override
@@ -25209,6 +25258,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get payOnlineReversedTitle => 'Paiement en ligne annulé';
 
   @override
+  String get payOnlineStandaloneUnsupported =>
+      'Le service de paiement de cet établissement doit être mis à jour avant que des factures sans mois puissent être payées en ligne.';
+
+  @override
   String get payOnlineStartAgain =>
       'Ce paiement ne peut plus être poursuivi. Relancez le paiement.';
 
@@ -25382,10 +25435,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Quand cela s\'exécute : chaque matin sur le serveur, si l\'installation planifie des tâches (pg_cron) ; sinon quand un administrateur ouvre Finances. L\'opérateur de votre serveur sait ce qui s\'applique.';
 
   @override
-  String get paymentRoutingNumberLabel => 'Routing number';
+  String get paymentRoutingNumberLabel => 'Numéro de routage (ABA)';
 
   @override
-  String get paymentSortCodeLabel => 'Sort code';
+  String get paymentSortCodeLabel => 'Code guichet (sort code)';
 
   @override
   String get paymentTermsEdit => 'Demander un changement';
@@ -32107,6 +32160,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Si vous gérez ce serveur : appliquez les migrations manquantes avec `dart run tool/instance.dart install --ref <projet>`. Seul ce qui manque est exécuté.';
 
   @override
+  String schemaUpdateRunning(String version, String from, String to) {
+    return 'Cette installation tourne en version $version : il lui manque les migrations $from à $to.';
+  }
+
+  @override
   String get schemaUpdateServer => 'Réglages du serveur';
 
   @override
@@ -32388,6 +32446,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingGroupBusiness => 'Activité';
 
   @override
+  String get settingGroupCompatibility => 'Versions de l\'application';
+
+  @override
   String get settingGroupDirectory => 'Annuaire des membres';
 
   @override
@@ -32426,6 +32487,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingGuardrailFallback =>
       'Fixé par le logiciel ; affiché pour que vous sachiez qu\'il existe.';
+
+  @override
+  String get settingHintAppsSupportWindowDays =>
+      'Combien de jours une ancienne application reste acceptée après qu\'une plus récente est disponible sur le canal de distribution le plus lent. L\'application la plus ancienne acceptée par cette installation n\'est relevée qu\'une fois ce nombre de jours écoulé, pour que chaque membre ait le temps de la mettre à jour.';
 
   @override
   String get settingHintAssetsValuationMaxRows =>
@@ -32836,6 +32901,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce).';
 
   @override
+  String get settingHintStockInvoiceSalePlace =>
+      'Le code d’un lieu de l’entreprise qui détient du stock, par exemple MAIN. Les biens vendus sur facture en partent à l’émission de la facture.';
+
+  @override
   String get settingHintStockPriceRounding =>
       'Comment un prix de vente proposé est arrondi : au 0,05 ou 0,10 le plus proche, ou à un prix qui finit par 0,99. Il ne sert qu\'à proposer un prix.';
 
@@ -32869,6 +32938,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingHistoryEmpty =>
       'Aucune version enregistrée : la valeur par défaut s\'applique.';
+
+  @override
+  String get settingLabelAppsSupportWindowDays =>
+      'Délai de prise en charge des anciennes applications';
 
   @override
   String get settingLabelAssetsValuationMaxRows =>
@@ -33254,6 +33327,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Mode d\'étiquette par défaut des articles';
 
   @override
+  String get settingLabelStockInvoiceSalePlace =>
+      'Lieu d’où partent les biens vendus sur facture';
+
+  @override
   String get settingLabelStockPriceRounding => 'Arrondi des prix';
 
   @override
@@ -33372,6 +33449,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'par heure';
+
+  @override
+  String get settingUnitPlaceCode => 'code d’emplacement';
 
   @override
   String get settingUnitQuarters => 'trimestres';
@@ -34087,12 +34167,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String setupGrowVatPreviewRate(String rate) {
-    return 'TVA $rate %';
-  }
-
-  @override
-  String setupGrowVatRate(String rate) {
-    return '$rate %';
+    return 'TVA $rate';
   }
 
   @override
@@ -35880,6 +35955,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get standaloneFactLines => 'au moins une ligne';
 
   @override
+  String get standaloneFactSalePlace =>
+      'le lieu d’où partent les ventes : indiquez un lieu qui détient du stock dans les réglages de l’entreprise';
+
+  @override
   String get standaloneFactSalesTax =>
       'cette entreprise ajoute une taxe de vente, ce qui n’est pas encore pris en charge ici';
 
@@ -35912,7 +35991,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get standaloneFieldDescription => 'une description';
 
   @override
+  String get standaloneFieldGoodsAbroad =>
+      'un acheteur du pays de l’entreprise : les biens vendus à l’étranger ne se facturent pas encore ici';
+
+  @override
+  String get standaloneFieldGoodsOff =>
+      'la gestion des stocks, désactivée dans cette entreprise';
+
+  @override
+  String get standaloneFieldItem => 'un article tenu en stock et en vente';
+
+  @override
   String get standaloneFieldLineId => 'enregistrer à nouveau le brouillon';
+
+  @override
+  String get standaloneFieldLot => 'un lot de cet article';
+
+  @override
+  String get standaloneFieldPieces =>
+      'les étiquettes des pièces, en codes d’étiquette';
 
   @override
   String get standaloneFieldPrice => 'un prix avec six décimales au plus';
@@ -35922,11 +36019,32 @@ class AppLocalizationsFr extends AppLocalizations {
       'une quantité supérieure à zéro, avec six décimales au plus';
 
   @override
+  String get standaloneFieldStock =>
+      'des biens que le stock peut vendre tels que saisis';
+
+  @override
+  String get standaloneFieldStockExpired => 'un lot qui n’est pas périmé';
+
+  @override
+  String get standaloneFieldStockLot => 'un lot présent de cet article';
+
+  @override
+  String get standaloneFieldStockPieces =>
+      'les pièces vendues : une étiquette par pièce, chacune d’une pièce présente';
+
+  @override
+  String get standaloneFieldStockShort =>
+      'assez en stock au lieu d’où partent les ventes';
+
+  @override
   String get standaloneFieldSupply =>
-      'une prestation de services (les biens ne se facturent pas encore ici)';
+      'ce que fournit la ligne : une prestation, un bien immobilier ou des biens';
 
   @override
   String get standaloneFieldUnit => 'une unité';
+
+  @override
+  String get standaloneFieldVariant => 'la variante de l’article';
 
   @override
   String get standaloneFieldVatRate => 'un taux de TVA défini par l’entreprise';
@@ -35955,7 +36073,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get standaloneInvoiceLineDescription => 'Description';
 
   @override
+  String get standaloneInvoiceLineGoods => 'Vendu depuis le stock';
+
+  @override
   String get standaloneInvoiceLineGross => 'Le prix est TTC';
+
+  @override
+  String get standaloneInvoiceLineNoGoods => 'Rien du stock (une prestation)';
+
+  @override
+  String get standaloneInvoiceLinePieces => 'Étiquettes des pièces vendues';
+
+  @override
+  String get standaloneInvoiceLinePiecesHint =>
+      'Une étiquette par pièce, séparées par des virgules : cet article est suivi pièce par pièce.';
 
   @override
   String get standaloneInvoiceLinePrice => 'Prix unitaire';
@@ -36302,7 +36433,20 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get stockChainSaleTitle => 'Ce que cette vente a pris';
+
+  @override
   String get stockChainTitle => 'Tous les mouvements de ce lot';
+
+  @override
+  String stockChainTookLot(String code, String quantity) {
+    return 'Lot $code · $quantity';
+  }
+
+  @override
+  String stockChainTookPiece(String tag) {
+    return 'Pièce $tag';
+  }
 
   @override
   String get stockChainTruncated =>
@@ -36426,7 +36570,7 @@ class AppLocalizationsFr extends AppLocalizations {
       other: '$count comptages',
       one: '$count comptage',
     );
-    return '$_temp0, $percent % exacts';
+    return '$_temp0, $percent exacts';
   }
 
   @override
@@ -36478,7 +36622,7 @@ class AppLocalizationsFr extends AppLocalizations {
       other: '$count jours',
       one: '$count jour',
     );
-    return 'tous les $_temp0';
+    return 'Intervalle : $_temp0';
   }
 
   @override
@@ -38169,6 +38313,48 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockTraceTitle => 'D’où cela vient';
+
+  @override
+  String stockTrackFindExpires(String date) {
+    return 'Expire le $date';
+  }
+
+  @override
+  String get stockTrackFindField => 'Code de lot ou étiquette';
+
+  @override
+  String get stockTrackFindHelper =>
+      'Le code du lot tel que reçu, le code de son étiquette, ou l\'étiquette d\'une pièce.';
+
+  @override
+  String get stockTrackFindLots => 'Lots';
+
+  @override
+  String get stockTrackFindNoSale => 'Aucune vente ne l\'a encore pris.';
+
+  @override
+  String stockTrackFindNone(String code) {
+    return 'Rien dans cette entreprise ne porte $code.';
+  }
+
+  @override
+  String get stockTrackFindPieces => 'Pièces';
+
+  @override
+  String get stockTrackFindRequired => 'Saisissez ou scannez d\'abord un code.';
+
+  @override
+  String get stockTrackFindSales => 'Ventes qui l\'ont pris';
+
+  @override
+  String get stockTrackFindSubmit => 'Rechercher';
+
+  @override
+  String get stockTrackFindTitle => 'Retrouver un code de traçabilité';
+
+  @override
+  String get stockTrackFindTruncated =>
+      'Seules les premières correspondances sont affichées.';
 
   @override
   String stockTransferLine(
@@ -41016,6 +41202,405 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillConfirmSale => 'Confirmer la vente';
 
   @override
+  String tillDayAmountLine(String label, String amount) {
+    return '$label : $amount';
+  }
+
+  @override
+  String get tillDayByRate => 'Ventes par taux de taxe';
+
+  @override
+  String get tillDayByTender => 'Encaissements par moyen de paiement';
+
+  @override
+  String tillDayCorrections(String amount) {
+    return 'Corrections : $amount';
+  }
+
+  @override
+  String tillDayDifferences(String amount) {
+    return 'Écart total des tiroirs : $amount';
+  }
+
+  @override
+  String get tillDayHelp =>
+      'Réunit les sessions fermées des caisses en un rapport numéroté. Chaque caisse doit d\'abord être fermée.';
+
+  @override
+  String tillDayItem(String number, String date) {
+    return '$number · $date';
+  }
+
+  @override
+  String get tillDayNone => 'Aucune journée n\'est encore clôturée.';
+
+  @override
+  String get tillDayOpen => 'Clôturer la journée';
+
+  @override
+  String tillDayPaidIn(String amount) {
+    return 'Espèces entrées : $amount';
+  }
+
+  @override
+  String tillDayPaidOut(String amount) {
+    return 'Espèces sorties : $amount';
+  }
+
+  @override
+  String get tillDayPast => 'Journées clôturées';
+
+  @override
+  String tillDayRateLine(String rate, String net, String tax, String gross) {
+    return '$rate % : HT $net, taxe $tax, TTC $gross';
+  }
+
+  @override
+  String tillDayReceiptRange(String first, String last) {
+    return 'Tickets $first à $last';
+  }
+
+  @override
+  String tillDayRefunds(String amount) {
+    return 'Remboursements : $amount';
+  }
+
+  @override
+  String get tillDayRefusalClosed => 'Cette journée est déjà clôturée.';
+
+  @override
+  String get tillDayRefusalFuture =>
+      'Une journée ne peut pas être clôturée avant d\'avoir commencé.';
+
+  @override
+  String get tillDayRefusalNothing =>
+      'Aucune session n\'a été fermée ce jour : il n\'y a rien à clôturer.';
+
+  @override
+  String tillDayRefusalTillOpen(String name) {
+    return 'La caisse $name est encore ouverte. Comptez-la et fermez-la d\'abord.';
+  }
+
+  @override
+  String tillDayReportDate(String date) {
+    return 'Journée d\'activité : $date';
+  }
+
+  @override
+  String tillDayReportTitle(String number) {
+    return 'Rapport de journée $number';
+  }
+
+  @override
+  String tillDaySalesTotal(String amount) {
+    return 'Ventes : $amount';
+  }
+
+  @override
+  String tillDaySessionLine(
+    String till,
+    String expected,
+    String counted,
+    String difference,
+  ) {
+    return '$till : attendu $expected, compté $counted, écart $difference';
+  }
+
+  @override
+  String tillDaySessionReason(String reason) {
+    return 'Motif : $reason';
+  }
+
+  @override
+  String get tillDaySessions => 'Sessions';
+
+  @override
+  String get tillDayTenderCash => 'Espèces';
+
+  @override
+  String get tillDayTenderOther => 'Autre';
+
+  @override
+  String get tillDayTitle => 'Clôture de la journée';
+
+  @override
+  String tillDayToday(String date) {
+    return 'Journée à clôturer : $date';
+  }
+
+  @override
+  String get tillDrawerAddTill => 'Ajouter une caisse';
+
+  @override
+  String get tillDrawerAmountInvalid => 'Saisissez un montant.';
+
+  @override
+  String get tillDrawerAmountZero => 'Le montant doit être supérieur à zéro.';
+
+  @override
+  String get tillDrawerBanked => 'Déposé à la banque';
+
+  @override
+  String get tillDrawerBankedAbove =>
+      'Le montant déposé ne peut pas dépasser les espèces comptées.';
+
+  @override
+  String get tillDrawerBankedHelp =>
+      'La part des espèces comptées déposée à la banque. Laissez vide s\'il n\'y en a pas.';
+
+  @override
+  String tillDrawerBreakdown(
+    String float,
+    String sales,
+    String paidIn,
+    String paidOut,
+  ) {
+    return 'Fond $float, ventes $sales, entrées $paidIn, sorties $paidOut';
+  }
+
+  @override
+  String get tillDrawerCashAction => 'Entrée ou sortie d\'espèces';
+
+  @override
+  String get tillDrawerChoose => 'Vendre sur quelle caisse ?';
+
+  @override
+  String get tillDrawerCloseAction => 'Compter et fermer';
+
+  @override
+  String get tillDrawerCloseSubmit => 'Fermer la caisse';
+
+  @override
+  String tillDrawerCloseTitle(String till) {
+    return 'Compter et fermer $till';
+  }
+
+  @override
+  String tillDrawerClosedBanked(String amount) {
+    return 'Déposé à la banque : $amount.';
+  }
+
+  @override
+  String tillDrawerClosedCard(String amount) {
+    return 'Paiements par carte sans réponse : $amount. Ils ne sont pas comptés comme espèces.';
+  }
+
+  @override
+  String tillDrawerClosedCounts(String expected, String counted) {
+    return 'Attendu $expected, compté $counted.';
+  }
+
+  @override
+  String tillDrawerClosedOver(String amount) {
+    return 'Excédent de $amount.';
+  }
+
+  @override
+  String get tillDrawerClosedSame =>
+      'Le comptage correspond aux espèces attendues.';
+
+  @override
+  String tillDrawerClosedShort(String amount) {
+    return 'Manque $amount.';
+  }
+
+  @override
+  String get tillDrawerClosedTitle => 'Caisse fermée';
+
+  @override
+  String get tillDrawerCounted => 'Espèces comptées dans le tiroir';
+
+  @override
+  String get tillDrawerCountedHelp => 'Comptez ce qui est dans le tiroir.';
+
+  @override
+  String get tillDrawerCountedHelpBlind =>
+      'Comptez ce qui est dans le tiroir. Les espèces attendues s\'affichent après le comptage.';
+
+  @override
+  String get tillDrawerDenomAdd => 'Ajouter une coupure';
+
+  @override
+  String get tillDrawerDenomCount => 'Combien';
+
+  @override
+  String get tillDrawerDenomIncomplete =>
+      'Chaque ligne demande une valeur supérieure à zéro et un nombre de pièces, sans valeur en double.';
+
+  @override
+  String get tillDrawerDenomRemove => 'Retirer cette ligne';
+
+  @override
+  String tillDrawerDenomTotal(String amount) {
+    return 'Total compté : $amount';
+  }
+
+  @override
+  String get tillDrawerDenomValue => 'Valeur d\'un billet ou d\'une pièce';
+
+  @override
+  String get tillDrawerDifferenceAsked =>
+      'Le comptage diffère des espèces attendues. Dites pourquoi pour fermer la caisse.';
+
+  @override
+  String tillDrawerDifferenceLive(String amount) {
+    return 'Écart : $amount';
+  }
+
+  @override
+  String get tillDrawerDifferenceReason =>
+      'Pourquoi le comptage diffère-t-il ?';
+
+  @override
+  String get tillDrawerDifferenceReasonMissing =>
+      'Dites pourquoi le comptage diffère.';
+
+  @override
+  String get tillDrawerEditTill => 'Modifier la caisse';
+
+  @override
+  String get tillDrawerEntryAmount => 'Montant';
+
+  @override
+  String get tillDrawerEntryDone => 'Mouvement d\'espèces enregistré.';
+
+  @override
+  String tillDrawerEntryLimit(String limit) {
+    return 'Au-delà de $limit, une sortie est enregistrée par une personne qui peut enregistrer des paiements sortants.';
+  }
+
+  @override
+  String get tillDrawerEntryPaidIn => 'Entrée';
+
+  @override
+  String get tillDrawerEntryPaidOut => 'Sortie';
+
+  @override
+  String get tillDrawerEntryReason => 'Motif';
+
+  @override
+  String get tillDrawerEntryReasonMissing => 'Choisissez un motif.';
+
+  @override
+  String get tillDrawerEntrySubmit => 'Enregistrer';
+
+  @override
+  String get tillDrawerEntryTitle => 'Entrée ou sortie d\'espèces';
+
+  @override
+  String tillDrawerExpected(String amount) {
+    return 'Espèces attendues : $amount';
+  }
+
+  @override
+  String get tillDrawerExpectedHidden =>
+      'Les espèces attendues s\'affichent après le comptage du tiroir.';
+
+  @override
+  String get tillDrawerFailed => 'La caisse n\'a pas pu le faire. Réessayez.';
+
+  @override
+  String get tillDrawerFloat => 'Fond de caisse';
+
+  @override
+  String get tillDrawerFloatHelp =>
+      'Les espèces avec lesquelles le tiroir démarre, comptées maintenant.';
+
+  @override
+  String get tillDrawerLoadFailed => 'Les caisses n\'ont pas pu être lues.';
+
+  @override
+  String get tillDrawerManage => 'Caisses et tiroirs';
+
+  @override
+  String get tillDrawerNameMissing => 'Donnez un nom à la caisse.';
+
+  @override
+  String get tillDrawerNoTills =>
+      'Il n\'y a pas encore de caisse. Ajoutez la première pour compter un tiroir.';
+
+  @override
+  String get tillDrawerNoTillsPerson =>
+      'Aucune caisse n\'est encore créée. Une personne qui gère les sites l\'ajoute.';
+
+  @override
+  String get tillDrawerOpenAction => 'Ouvrir la caisse';
+
+  @override
+  String get tillDrawerOpenFirstBody =>
+      'Ouvrez une caisse avec son fond de caisse avant de vendre.';
+
+  @override
+  String get tillDrawerOpenFirstTitle => 'Aucune caisse n\'est ouverte';
+
+  @override
+  String tillDrawerOpenTitle(String till) {
+    return 'Ouvrir $till';
+  }
+
+  @override
+  String get tillDrawerRefusalAboveLimit =>
+      'Une sortie de cette importance est enregistrée par une personne qui peut enregistrer des paiements sortants.';
+
+  @override
+  String get tillDrawerRefusalAlreadyOpen =>
+      'Cette caisse est déjà ouverte. Comptez-la et fermez-la avant de la rouvrir ou de la désactiver.';
+
+  @override
+  String get tillDrawerRefusalDenominations =>
+      'Les comptages par coupure ne font pas le montant.';
+
+  @override
+  String get tillDrawerRefusalDifference =>
+      'Le comptage diffère des espèces attendues. Dites pourquoi avant de fermer.';
+
+  @override
+  String get tillDrawerRefusalNameTaken =>
+      'Une autre caisse de cette entreprise porte déjà ce nom.';
+
+  @override
+  String get tillDrawerRefusalOpenFirst =>
+      'Ouvrez d\'abord la caisse : une vente demande une session ouverte sur sa caisse.';
+
+  @override
+  String get tillDrawerRefusalReasonUnknown =>
+      'Ce motif n\'est pas dans la liste de l\'entreprise. Choisissez-en un dans la liste.';
+
+  @override
+  String get tillDrawerRefusalSessionGone =>
+      'Cette session n\'est plus ouverte.';
+
+  @override
+  String get tillDrawerRefusalTillUnknown =>
+      'Ce n\'est pas une caisse active de cette entreprise.';
+
+  @override
+  String get tillDrawerStateClosed => 'Fermée';
+
+  @override
+  String get tillDrawerStateOff => 'Désactivée';
+
+  @override
+  String tillDrawerStateOpen(String float) {
+    return 'Ouverte · fond de caisse $float';
+  }
+
+  @override
+  String get tillDrawerTillActive => 'En service';
+
+  @override
+  String get tillDrawerTillName => 'Nom de la caisse';
+
+  @override
+  String get tillDrawerTillNewTitle => 'Nouvelle caisse';
+
+  @override
+  String get tillDrawerTillSave => 'Enregistrer la caisse';
+
+  @override
+  String get tillDrawerTitle => 'Tiroir-caisse';
+
+  @override
   String get tillFailed => 'La caisse n\'a pas pu le faire. Réessayez.';
 
   @override
@@ -41049,6 +41634,125 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get tillNotReadyHint =>
       'Rien n\'est numéroté ni encaissé tant que l\'opération du pays n\'est pas prise en charge.';
+
+  @override
+  String get tillOfflineBanner =>
+      'Hors ligne — espèces uniquement. Les ventes sont conservées sur cet appareil et envoyées au retour de la connexion.';
+
+  @override
+  String get tillOfflineClosedSession =>
+      'La session a été fermée : ces ventes restent sur l\'appareil pour un responsable.';
+
+  @override
+  String get tillOfflineDiscard => 'Supprimer les données hors ligne';
+
+  @override
+  String get tillOfflineDiscardBody =>
+      'Les ventes non envoyées sont perdues définitivement. Ne supprimez les données qu\'après vérification par un responsable.';
+
+  @override
+  String get tillOfflineDiscardConfirm => 'Supprimer les données';
+
+  @override
+  String tillOfflineGaps(String numbers) {
+    return 'Numéros de vente manquants sur le serveur : $numbers.';
+  }
+
+  @override
+  String tillOfflineKept(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ventes restent',
+      one: '$count vente reste',
+    );
+    return '$_temp0 sur cet appareil pour un responsable.';
+  }
+
+  @override
+  String get tillOfflineNoPrice =>
+      'Cet article n\'a pas de prix sur cet appareil : il ne peut pas être vendu hors ligne.';
+
+  @override
+  String get tillOfflineNotSigned =>
+      'Non signé. Il est envoyé au serveur au retour de la connexion.';
+
+  @override
+  String get tillOfflineReasonBeforeSession =>
+      'Faite avant l\'ouverture de cette caisse.';
+
+  @override
+  String get tillOfflineReasonCash =>
+      'Les espèces données étaient inférieures au total.';
+
+  @override
+  String get tillOfflineReasonClock =>
+      'L\'horloge de l\'appareil était en avance.';
+
+  @override
+  String get tillOfflineReasonItem => 'L\'article n\'est plus vendu.';
+
+  @override
+  String get tillOfflineReasonOther =>
+      'Les règles de la caisse l\'ont refusée.';
+
+  @override
+  String get tillOfflineReasonPrice =>
+      'Le prix a changé plus que ce qui est autorisé.';
+
+  @override
+  String get tillOfflineReasonTooLong =>
+      'Faite trop longtemps après la perte de la connexion.';
+
+  @override
+  String get tillOfflineReasonTooMany =>
+      'Plus de ventes hors ligne que ce qui est autorisé.';
+
+  @override
+  String tillOfflineRecorded(int seq) {
+    return 'Enregistrée hors ligne · vente $seq de cette caisse';
+  }
+
+  @override
+  String tillOfflineReportAccepted(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ventes ont été enregistrées.',
+      one: '$count vente a été enregistrée.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tillOfflineReportRefused(int seq, String reason) {
+    return 'La vente $seq a été refusée : $reason Ses espèces restent dans le comptage du tiroir.';
+  }
+
+  @override
+  String get tillOfflineReportTitle => 'Ventes hors ligne envoyées';
+
+  @override
+  String get tillOfflineSendNow => 'Chercher la connexion maintenant';
+
+  @override
+  String get tillOfflineSyncing => 'Envoi des ventes hors ligne…';
+
+  @override
+  String get tillOfflineUnreadable =>
+      'Les données hors ligne de cet appareil sont illisibles. Rien ne se vend hors ligne tant qu\'un responsable n\'a pas décidé.';
+
+  @override
+  String tillOfflineWaiting(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ventes attendent sur cet appareil',
+      one: '1 vente attend sur cet appareil',
+      zero: 'Aucune vente n\'attend sur cet appareil',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get tillOpCorrectReceipt => 'correction d\'un ticket';
@@ -41550,6 +42254,30 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get unblockAction => 'Débloquer';
+
+  @override
+  String get unknownWireInvoiceKind =>
+      'Un type que cette version de l\'application ne connaît pas';
+
+  @override
+  String unknownWireKindFeatures(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fonctions',
+      one: '$count fonction',
+    );
+    return 'Ce type règle aussi $_temp0 que cette version de l\'application ne connaît pas. Mettez à jour l\'application pour le choisir.';
+  }
+
+  @override
+  String get unknownWireReadOnly =>
+      'Cette version de l\'application ne sait pas ce qu\'est cet enregistrement : il peut être lu, pas modifié. Mettez à jour l\'application pour le traiter.';
+
+  @override
+  String unknownWireValue(String value) {
+    return '$value (inconnu de cette version de l\'application)';
+  }
 
   @override
   String unreadableRowsNotice(int count) {

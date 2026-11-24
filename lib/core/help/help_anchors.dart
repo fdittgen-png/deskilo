@@ -29,6 +29,11 @@ abstract final class HelpAnchor {
   static const moneyBillingAccess = 'user.money.customers.access';
   static const moneyBilledToYou = 'user.money.finances.billed';
 
+  /// #4165 — a customer invoice without a month: issued by the business,
+  /// paid by the customer apart from monthly invoices.
+  static const moneyStandaloneInvoice = 'user.money.invoices.standalone';
+  static const moneyStandalonePayment = 'user.money.finances.standalone';
+
   /// #4166 — the customer quotes: an offer to a billing customer, sent and
   /// amended as revisions.
   static const moneyQuotes = 'user.money.quotes';
@@ -49,6 +54,8 @@ abstract final class HelpAnchor {
   static const moneyStockUnits = 'user.money.stock.units';
   static const moneyStockBulkRead = 'user.money.stock.bulkread';
   static const moneyTill = 'user.money.till';
+  static const moneyTillDrawer = 'user.money.till-drawer';
+  static const moneyTillOffline = 'user.money.till-offline';
 
   /// #3527 — the Sales, Purchases and Cash pages.
   static const moneySales = 'user.money.sales';

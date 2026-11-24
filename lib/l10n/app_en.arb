@@ -8885,6 +8885,10 @@
   "@claimRefusedEmpty": {
     "description": "#3556 Refusal: the payment named no invoice"
   },
+  "claimRefusedMonthlyInStandalone": "Monthly invoices are paid with their month, apart from invoices without one. Nothing was charged.",
+  "@claimRefusedMonthlyInStandalone": {
+    "description": "#4165 a payment of invoices without a month named one that has a month (DKC16)"
+  },
   "claimRefusedMonths": "A payment is for the invoices of one month. Nothing was charged.",
   "@claimRefusedMonths": {
     "description": "#3556 Refusal: invoices of several months in one payment"
@@ -8916,6 +8920,10 @@
   "claimRefusedRequestChanged": "This payment was already sent as another one. Check the declared payments, then try again.",
   "@claimRefusedRequestChanged": {
     "description": "#4321 — a declaration sent again under the request id of another payment (DKC15)"
+  },
+  "claimRefusedStandaloneInMonthly": "An invoice without a month is paid on its own, apart from monthly invoices. Nothing was charged.",
+  "@claimRefusedStandaloneInMonthly": {
+    "description": "#4165 a payment with a month named an invoice without one (DKC14)"
   },
   "claimRefusedWithdrawn": "You withdrew this payment. Select the invoices again to pay them.",
   "@claimRefusedWithdrawn": {
@@ -9102,6 +9110,37 @@
         "type": "String"
       }
     }
+  },
+  "commercialLineMeasure": "{quantity} at {price}",
+  "@commercialLineMeasure": {
+    "description": "#4162 an issued commercial line in the invoice sheet: its exact quantity with its unit, at the price entered (e.g. '1.5 h at 90 EUR')",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "commercialLineMeasurePer": "{quantity} at {price} per {base}",
+  "@commercialLineMeasurePer": {
+    "description": "#4162 the same, for a price quoted for more than one unit (e.g. '30 kg at 12.5 EUR per 10 kg')",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "commercialLineUnreadable": "Recorded by a newer version: these facts are shown as written and cannot be used here",
+  "@commercialLineUnreadable": {
+    "description": "#4162 an issued line whose facts this version of the app cannot interpret: shown, never used"
   },
   "commonCancel": "Cancel",
   "@commonCancel": {
@@ -9689,6 +9728,33 @@
   "conversationYesterday": "Yesterday",
   "@conversationYesterday": {
     "description": "#687 - messaging centre"
+  },
+  "counterLotsExpired": "Only {held} of the {asked} asked for is fit to sell here: {expired} more is past its date. Nothing was sold.",
+  "@counterLotsExpired": {
+    "description": "#4436 a counter sale refused for its lots (DKG03, scope lots)",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      },
+      "expired": {
+        "type": "String"
+      }
+    }
+  },
+  "counterLotsShort": "Only {held} of the {asked} asked for is here. Nothing was sold.",
+  "@counterLotsShort": {
+    "description": "#4436 a counter sale refused for its lots (DKG03, scope lots)",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
   },
   "countryChangeBody": "In {country} these features are not available and stop working: {features}. Their switches are kept: they return if you change the country back.",
   "@countryChangeBody": {
@@ -10436,7 +10502,7 @@
       }
     }
   },
-  "datevProblemAutomatic": "{percent} % would be booked to {account}, the automatic account of another rate",
+  "datevProblemAutomatic": "{percent} would be booked to {account}, the automatic account of another rate",
   "@datevProblemAutomatic": {
     "description": "DATEV export (#2375): a rate is booked to the automatic account of another rate",
     "placeholders": {
@@ -10557,7 +10623,7 @@
       }
     }
   },
-  "datevProblemTaxKey": "no BU-Schlüssel is recorded for {percent} % on account {account}",
+  "datevProblemTaxKey": "no BU-Schlüssel is recorded for {percent} on account {account}",
   "@datevProblemTaxKey": {
     "description": "DATEV export (#2375): no BU key for a rate booked to a non-automatic account",
     "placeholders": {
@@ -15282,6 +15348,10 @@
   "@exportValueNameWorkspace": {
     "description": "#3485 exportValueName: the label for case 'workspace'."
   },
+  "failedPartNotShown": "This part could not be shown. Go back and open it again.",
+  "@failedPartNotShown": {
+    "description": "#4416 Shown in a release build where a part of a screen failed to build, instead of the framework's grey box. The failure is in the trace."
+  },
   "favoriteKeptOnDeviceRefused": "Kept on this device only: your account cannot save this place.",
   "@favoriteKeptOnDeviceRefused": {
     "description": "Shown as a text in personal space card (me)."
@@ -16179,6 +16249,18 @@
   "featureNavigationStyleDesc": "Each member picks in their settings how the app navigates: the classic bottom bar with the round Reserve button, or the menu the web uses. Off: every device keeps its platform's default.",
   "@featureNavigationStyleDesc": {
     "description": "#969 navigation style: featureNavigationStyleDesc"
+  },
+  "featureNeedsNewerInstallation": "This installation is too old for this feature. It needs {feature} from schema {since}; ask whoever runs the server to update it.",
+  "@featureNeedsNewerInstallation": {
+    "description": "#3729 Note under a feature's switch, for an administrator: the installation hosting the workspace is older than the feature needs",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      },
+      "since": {
+        "type": "String"
+      }
+    }
   },
   "featureNfcBadges": "RFID / NFC badges",
   "@featureNfcBadges": {
@@ -17910,6 +17992,14 @@
       }
     }
   },
+  "financesSelectionOnlyMonthly": "Monthly invoices are paid with their month, apart from invoices without one.",
+  "@financesSelectionOnlyMonthly": {
+    "description": "#4165 the kind of a selection of monthly invoices: an invoice without a month cannot join it"
+  },
+  "financesSelectionOnlyStandalone": "Invoices without a month are paid together, apart from monthly invoices.",
+  "@financesSelectionOnlyStandalone": {
+    "description": "#4165 the kind of a selection of invoices without a month: a monthly invoice cannot join it"
+  },
   "financesSelectionSummary": "{count, plural, one{1 invoice selected · {amount}} other{{count} invoices selected · {amount}}}",
   "@financesSelectionSummary": {
     "description": "#3556 Selection bar: how many invoices are selected and what they still owe; {amount} names its currency",
@@ -17931,6 +18021,15 @@
     "description": "Me › Finances: a connected host whose documents could not be read is named above the lists; the rest is complete",
     "placeholders": {
       "host": {
+        "type": "String"
+      }
+    }
+  },
+  "financesStandaloneTotal": "Total: {amount}",
+  "@financesStandaloneTotal": {
+    "description": "#4165 the one amount paid or declared for invoices without a month; amount: formatted money",
+    "placeholders": {
+      "amount": {
         "type": "String"
       }
     }
@@ -24461,15 +24560,6 @@
   "@itemGroupMargin": {
     "description": "#4361 G12 finance parameters of an item group"
   },
-  "itemGroupMarginValue": "{percent} %",
-  "@itemGroupMarginValue": {
-    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
-    "placeholders": {
-      "percent": {
-        "type": "String"
-      }
-    }
-  },
   "itemGroupMinAge": "Minimum age for a sale",
   "@itemGroupMinAge": {
     "description": "#4361 G12 item groups: itemGroupMinAge"
@@ -27453,7 +27543,7 @@
       }
     }
   },
-  "mcpConfirmNewShare": "New subscription share: {pct} %",
+  "mcpConfirmNewShare": "New subscription share: {pct}",
   "@mcpConfirmNewShare": {
     "description": "#1619 mcp_confirmation",
     "placeholders": {
@@ -27509,7 +27599,7 @@
   "@mcpConfirmRefuse": {
     "description": "#1619 mcp_confirmation"
   },
-  "mcpConfirmShareFrom": "New subscription share: {pct} % from {date}",
+  "mcpConfirmShareFrom": "New subscription share: {pct} from {date}",
   "@mcpConfirmShareFrom": {
     "description": "#3937 mcp_confirmation: the share and the day it applies from",
     "placeholders": {
@@ -29842,7 +29932,7 @@
       }
     }
   },
-  "memberPlanShare": "Plan {pct}%",
+  "memberPlanShare": "Plan {pct}",
   "@memberPlanShare": {
     "description": "#704 - the contact section of a member profile",
     "placeholders": {
@@ -32841,6 +32931,10 @@
   "payOnlineReversedTitle": "Online payment reversed",
   "@payOnlineReversedTitle": {
     "description": "#3905 card title on the bill: an online payment the provider reversed (a refund or a dispute)"
+  },
+  "payOnlineStandaloneUnsupported": "This business's payment service must be updated before invoices without a month can be paid online.",
+  "@payOnlineStandaloneUnsupported": {
+    "description": "#4165 the business's payment service does not take invoices without a month"
   },
   "payOnlineStartAgain": "This payment can no longer be continued. Start the payment again.",
   "@payOnlineStartAgain": {
@@ -41457,6 +41551,21 @@
   "@schemaUpdateOperator": {
     "description": "#1312 What the person running the server should do; the command stays untranslated"
   },
+  "schemaUpdateRunning": "This installation runs version {version}, so migrations {from} to {to} are missing.",
+  "@schemaUpdateRunning": {
+    "description": "#3729 For the person who runs the server, on the update screen: the schema the installation reports and the range of migrations it lacks",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "schemaUpdateServer": "Server settings",
   "@schemaUpdateServer": {
     "description": "#1312 Button opening Settings → Server"
@@ -41810,6 +41919,10 @@
   "@settingGroupBusiness": {
     "description": "Settings editor: the name of the group holding the business settings (#3549)."
   },
+  "settingGroupCompatibility": "App versions",
+  "@settingGroupCompatibility": {
+    "description": "#3732 Settings group: how long older app versions stay accepted by this installation"
+  },
   "settingGroupDirectory": "Member directory",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -41861,6 +41974,10 @@
   "settingGuardrailFallback": "Fixed by the software; it is shown so you know it exists.",
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
+  },
+  "settingHintAppsSupportWindowDays": "How many days an older app stays accepted after a newer one is available on the slowest channel you distribute it through. The oldest app this installation accepts is raised only once this many days have passed, so every member has time to update.",
+  "@settingHintAppsSupportWindowDays": {
+    "description": "#3732 Platform setting apps.support_window_days: what it decides, under its name"
   },
   "settingHintAssetsValuationMaxRows": "The most rows one batch of the accountant's valuations may carry, one row per asset. A larger file is refused as a whole; split it before importing.",
   "@settingHintAssetsValuationMaxRows": {
@@ -42270,6 +42387,10 @@
   "@settingHintStockGroupDefaultTagMode": {
     "description": "#4361 setting label/hint"
   },
+  "settingHintStockInvoiceSalePlace": "The code of a place of the business that holds stock, for example MAIN. Goods sold on an invoice leave from there when the invoice is issued.",
+  "@settingHintStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
+  },
   "settingHintStockPriceRounding": "How a proposed sale price is rounded: to the nearest 0.05 or 0.10, or to a price ending in 0.99. It is used only to propose a price.",
   "@settingHintStockPriceRounding": {
     "description": "#4361 setting label/hint"
@@ -42305,6 +42426,10 @@
   "settingHistoryEmpty": "No stored version: the default applies.",
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
+  },
+  "settingLabelAppsSupportWindowDays": "Support window for older apps",
+  "@settingLabelAppsSupportWindowDays": {
+    "description": "#3732 Platform setting apps.support_window_days: its name in the settings editor"
   },
   "settingLabelAssetsValuationMaxRows": "Valuation rows per batch",
   "@settingLabelAssetsValuationMaxRows": {
@@ -42714,6 +42839,10 @@
   "@settingLabelStockGroupDefaultTagMode": {
     "description": "#4361 setting label/hint"
   },
+  "settingLabelStockInvoiceSalePlace": "Place goods sold on an invoice leave from",
+  "@settingLabelStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
+  },
   "settingLabelStockPriceRounding": "Price rounding",
   "@settingLabelStockPriceRounding": {
     "description": "#4361 setting label/hint"
@@ -42884,6 +43013,10 @@
   "settingUnitPerHour": "per hour",
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitPlaceCode": "place code",
+  "@settingUnitPlaceCode": {
+    "description": "#4433 the unit of the selling place setting: a place is named by its code"
   },
   "settingUnitQuarters": "quarters",
   "@settingUnitQuarters": {
@@ -43723,18 +43856,9 @@
       }
     }
   },
-  "setupGrowVatPreviewRate": "VAT {rate} %",
+  "setupGrowVatPreviewRate": "VAT {rate}",
   "@setupGrowVatPreviewRate": {
     "description": "#2875 setup grow steps: setupGrowVatPreviewRate",
-    "placeholders": {
-      "rate": {
-        "type": "String"
-      }
-    }
-  },
-  "setupGrowVatRate": "{rate} %",
-  "@setupGrowVatRate": {
-    "description": "#2875 setup grow steps: setupGrowVatRate",
     "placeholders": {
       "rate": {
         "type": "String"
@@ -45995,6 +46119,10 @@
   "@standaloneFactLines": {
     "description": "#4165 standalone invoice composer: standaloneFactLines"
   },
+  "standaloneFactSalePlace": "the place goods are sold from: set a place that holds stock in the business settings",
+  "@standaloneFactSalePlace": {
+    "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
+  },
   "standaloneFactSalesTax": "this business adds sales tax, which is not supported here yet",
   "@standaloneFactSalesTax": {
     "description": "#4165 standalone invoice composer: standaloneFactSalesTax"
@@ -46035,9 +46163,29 @@
   "@standaloneFieldDescription": {
     "description": "#4165 standalone invoice composer: standaloneFieldDescription"
   },
+  "standaloneFieldGoodsAbroad": "a buyer in this business’s country: goods sold abroad are not invoiced here yet",
+  "@standaloneFieldGoodsAbroad": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsAbroad"
+  },
+  "standaloneFieldGoodsOff": "the goods ledger, which is off in this business",
+  "@standaloneFieldGoodsOff": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsOff"
+  },
+  "standaloneFieldItem": "an item kept in stock and on sale",
+  "@standaloneFieldItem": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldItem"
+  },
   "standaloneFieldLineId": "saving the draft again",
   "@standaloneFieldLineId": {
     "description": "#4165 standalone invoice composer: standaloneFieldLineId"
+  },
+  "standaloneFieldLot": "a lot of this item",
+  "@standaloneFieldLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldLot"
+  },
+  "standaloneFieldPieces": "the tags of the pieces, as tag codes",
+  "@standaloneFieldPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldPieces"
   },
   "standaloneFieldPrice": "a price with at most six decimals",
   "@standaloneFieldPrice": {
@@ -46047,13 +46195,37 @@
   "@standaloneFieldQuantity": {
     "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
   },
-  "standaloneFieldSupply": "a service (goods are not invoiced here yet)",
+  "standaloneFieldStock": "goods the stock can sell as entered",
+  "@standaloneFieldStock": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStock"
+  },
+  "standaloneFieldStockExpired": "a lot that has not expired",
+  "@standaloneFieldStockExpired": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockExpired"
+  },
+  "standaloneFieldStockLot": "a lot of this item that is there",
+  "@standaloneFieldStockLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockLot"
+  },
+  "standaloneFieldStockPieces": "the pieces sold: one tag per piece, each of a piece that is there",
+  "@standaloneFieldStockPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockPieces"
+  },
+  "standaloneFieldStockShort": "enough on hand at the place goods are sold from",
+  "@standaloneFieldStockShort": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockShort"
+  },
+  "standaloneFieldSupply": "what the line supplies: a service, property or goods",
   "@standaloneFieldSupply": {
     "description": "#4165 standalone invoice composer: standaloneFieldSupply"
   },
   "standaloneFieldUnit": "a unit",
   "@standaloneFieldUnit": {
     "description": "#4165 standalone invoice composer: standaloneFieldUnit"
+  },
+  "standaloneFieldVariant": "the variant of the item",
+  "@standaloneFieldVariant": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldVariant"
   },
   "standaloneFieldVatRate": "a VAT rate the business has set",
   "@standaloneFieldVatRate": {
@@ -46092,9 +46264,25 @@
   "@standaloneInvoiceLineDescription": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineDescription"
   },
+  "standaloneInvoiceLineGoods": "Sold from stock",
+  "@standaloneInvoiceLineGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineGoods"
+  },
   "standaloneInvoiceLineGross": "The price includes tax",
   "@standaloneInvoiceLineGross": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineGross"
+  },
+  "standaloneInvoiceLineNoGoods": "Nothing from stock (a service)",
+  "@standaloneInvoiceLineNoGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineNoGoods"
+  },
+  "standaloneInvoiceLinePieces": "Tags of the pieces sold",
+  "@standaloneInvoiceLinePieces": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePieces"
+  },
+  "standaloneInvoiceLinePiecesHint": "One tag per piece, separated by commas: this item is tracked piece by piece.",
+  "@standaloneInvoiceLinePiecesHint": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePiecesHint"
   },
   "standaloneInvoiceLinePrice": "Unit price",
   "@standaloneInvoiceLinePrice": {
@@ -46505,9 +46693,34 @@
       }
     }
   },
+  "stockChainSaleTitle": "What this sale took",
+  "@stockChainSaleTitle": {
+    "description": "#4436 G21 find by track ID"
+  },
   "stockChainTitle": "Every movement of this lot",
   "@stockChainTitle": {
     "description": "#4432 G18 trace chain"
+  },
+  "stockChainTookLot": "Lot {code} · {quantity}",
+  "@stockChainTookLot": {
+    "description": "#4436 G21 find by track ID",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockChainTookPiece": "Piece {tag}",
+  "@stockChainTookPiece": {
+    "description": "#4436 G21 find by track ID",
+    "placeholders": {
+      "tag": {
+        "type": "String"
+      }
+    }
   },
   "stockChainTruncated": "Only the first movements are shown.",
   "@stockChainTruncated": {
@@ -46669,9 +46882,9 @@
   "@stockCycleEveryDays": {
     "description": "#4295 cycle counts"
   },
-  "stockCycleHistoryAccuracy": "{count, plural, one{1 count} other{{count} counts}}, {percent} % exact",
+  "stockCycleHistoryAccuracy": "{count, plural, one{1 count} other{{count} counts}}, {percent} exact",
   "@stockCycleHistoryAccuracy": {
-    "description": "#4295 cycle counts",
+    "description": "#4295 cycle counts: how many counts and the share of them that was exact; percent arrives formatted with its own sign (AppFormat.ratePercent)",
     "placeholders": {
       "count": {
         "type": "int"
@@ -48989,6 +49202,64 @@
   "stockTraceTitle": "Where this came from",
   "@stockTraceTitle": {
     "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTrackFindExpires": "Expires {date}",
+  "@stockTrackFindExpires": {
+    "description": "#4436 G21 find by track ID",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTrackFindField": "Lot code or tag",
+  "@stockTrackFindField": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindHelper": "The lot code as received, the code on its label, or a piece's tag.",
+  "@stockTrackFindHelper": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindLots": "Lots",
+  "@stockTrackFindLots": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindNoSale": "No sale took it yet.",
+  "@stockTrackFindNoSale": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindNone": "Nothing in this business carries {code}.",
+  "@stockTrackFindNone": {
+    "description": "#4436 G21 find by track ID",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTrackFindPieces": "Pieces",
+  "@stockTrackFindPieces": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindRequired": "Type or scan a code first.",
+  "@stockTrackFindRequired": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindSales": "Sales that took it",
+  "@stockTrackFindSales": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindSubmit": "Find",
+  "@stockTrackFindSubmit": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindTitle": "Find a track ID",
+  "@stockTrackFindTitle": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindTruncated": "Only the first matches are shown.",
+  "@stockTrackFindTruncated": {
+    "description": "#4436 G21 find by track ID"
   },
   "stockTransferLine": "{item}: {left} {unit} on the way of {loaded}",
   "@stockTransferLine": {
@@ -52631,6 +52902,598 @@
   "@tillConfirmSale": {
     "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
   },
+  "tillDayAmountLine": "{label}: {amount}",
+  "@tillDayAmountLine": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayByRate": "Sales by tax rate",
+  "@tillDayByRate": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayByTender": "Takings by tender",
+  "@tillDayByTender": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayCorrections": "Corrections: {amount}",
+  "@tillDayCorrections": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayDifferences": "Total difference of the drawers: {amount}",
+  "@tillDayDifferences": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayHelp": "Gathers the closed sessions of the tills into one numbered report. Every till must be closed first.",
+  "@tillDayHelp": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayItem": "{number} · {date}",
+  "@tillDayItem": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayNone": "No day has been closed yet.",
+  "@tillDayNone": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayOpen": "Close the day",
+  "@tillDayOpen": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayPaidIn": "Cash paid in: {amount}",
+  "@tillDayPaidIn": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayPaidOut": "Cash paid out: {amount}",
+  "@tillDayPaidOut": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayPast": "Closed days",
+  "@tillDayPast": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayRateLine": "{rate}%: net {net}, tax {tax}, gross {gross}",
+  "@tillDayRateLine": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "net": {
+        "type": "String"
+      },
+      "tax": {
+        "type": "String"
+      },
+      "gross": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayReceiptRange": "Receipts {first} to {last}",
+  "@tillDayReceiptRange": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayRefunds": "Refunds: {amount}",
+  "@tillDayRefunds": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayRefusalClosed": "This day is already closed.",
+  "@tillDayRefusalClosed": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayRefusalFuture": "A day cannot be closed before it has begun.",
+  "@tillDayRefusalFuture": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayRefusalNothing": "No session was closed on this day: there is nothing to close.",
+  "@tillDayRefusalNothing": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayRefusalTillOpen": "The till {name} is still open. Count and close it first.",
+  "@tillDayRefusalTillOpen": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayReportDate": "Business day: {date}",
+  "@tillDayReportDate": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayReportTitle": "Day report {number}",
+  "@tillDayReportTitle": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDaySalesTotal": "Sales: {amount}",
+  "@tillDaySalesTotal": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDaySessionLine": "{till}: expected {expected}, counted {counted}, difference {difference}",
+  "@tillDaySessionLine": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "till": {
+        "type": "String"
+      },
+      "expected": {
+        "type": "String"
+      },
+      "counted": {
+        "type": "String"
+      },
+      "difference": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDaySessionReason": "Reason: {reason}",
+  "@tillDaySessionReason": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDaySessions": "Sessions",
+  "@tillDaySessions": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayTenderCash": "Cash",
+  "@tillDayTenderCash": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayTenderOther": "Other",
+  "@tillDayTenderOther": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayTitle": "Day close",
+  "@tillDayTitle": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayToday": "Day to close: {date}",
+  "@tillDayToday": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerAddTill": "Add a till",
+  "@tillDrawerAddTill": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerAmountInvalid": "Type an amount.",
+  "@tillDrawerAmountInvalid": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerAmountZero": "The amount must be above zero.",
+  "@tillDrawerAmountZero": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerBanked": "Taken to the bank",
+  "@tillDrawerBanked": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerBankedAbove": "The bank amount cannot be more than the counted cash.",
+  "@tillDrawerBankedAbove": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerBankedHelp": "The part of the counted cash taken to the bank. Leave empty if none.",
+  "@tillDrawerBankedHelp": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerBreakdown": "Float {float}, sales {sales}, paid in {paidIn}, paid out {paidOut}",
+  "@tillDrawerBreakdown": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "float": {
+        "type": "String"
+      },
+      "sales": {
+        "type": "String"
+      },
+      "paidIn": {
+        "type": "String"
+      },
+      "paidOut": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerCashAction": "Paid in or out",
+  "@tillDrawerCashAction": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerChoose": "Sell on which till?",
+  "@tillDrawerChoose": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerCloseAction": "Count and close",
+  "@tillDrawerCloseAction": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerCloseSubmit": "Close the till",
+  "@tillDrawerCloseSubmit": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerCloseTitle": "Count and close {till}",
+  "@tillDrawerCloseTitle": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "till": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerClosedBanked": "Taken to the bank: {amount}.",
+  "@tillDrawerClosedBanked": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerClosedCard": "Card payments still unanswered: {amount}. They are not counted as cash.",
+  "@tillDrawerClosedCard": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerClosedCounts": "Expected {expected}, counted {counted}.",
+  "@tillDrawerClosedCounts": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "expected": {
+        "type": "String"
+      },
+      "counted": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerClosedOver": "Over by {amount}.",
+  "@tillDrawerClosedOver": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerClosedSame": "The count matches the expected cash.",
+  "@tillDrawerClosedSame": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerClosedShort": "Short by {amount}.",
+  "@tillDrawerClosedShort": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerClosedTitle": "Till closed",
+  "@tillDrawerClosedTitle": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerCounted": "Cash counted in the drawer",
+  "@tillDrawerCounted": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerCountedHelp": "Count what is in the drawer.",
+  "@tillDrawerCountedHelp": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerCountedHelpBlind": "Count what is in the drawer. The expected cash is shown after the count.",
+  "@tillDrawerCountedHelpBlind": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDenomAdd": "Add a denomination",
+  "@tillDrawerDenomAdd": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDenomCount": "How many",
+  "@tillDrawerDenomCount": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDenomIncomplete": "Every row needs a value above zero and a number of pieces, and no value twice.",
+  "@tillDrawerDenomIncomplete": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDenomRemove": "Remove this row",
+  "@tillDrawerDenomRemove": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDenomTotal": "Total counted: {amount}",
+  "@tillDrawerDenomTotal": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerDenomValue": "Value of a note or coin",
+  "@tillDrawerDenomValue": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDifferenceAsked": "The count differs from the expected cash. Say why to close the till.",
+  "@tillDrawerDifferenceAsked": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDifferenceLive": "Difference: {amount}",
+  "@tillDrawerDifferenceLive": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerDifferenceReason": "Why does the count differ?",
+  "@tillDrawerDifferenceReason": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDifferenceReasonMissing": "Say why the count differs.",
+  "@tillDrawerDifferenceReasonMissing": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEditTill": "Edit the till",
+  "@tillDrawerEditTill": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryAmount": "Amount",
+  "@tillDrawerEntryAmount": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryDone": "Cash entry recorded.",
+  "@tillDrawerEntryDone": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryLimit": "Above {limit}, a paid-out is recorded by someone who may record outgoing payments.",
+  "@tillDrawerEntryLimit": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerEntryPaidIn": "Paid in",
+  "@tillDrawerEntryPaidIn": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryPaidOut": "Paid out",
+  "@tillDrawerEntryPaidOut": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryReason": "Reason",
+  "@tillDrawerEntryReason": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryReasonMissing": "Choose a reason.",
+  "@tillDrawerEntryReasonMissing": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntrySubmit": "Record",
+  "@tillDrawerEntrySubmit": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryTitle": "Paid in or out",
+  "@tillDrawerEntryTitle": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerExpected": "Expected cash: {amount}",
+  "@tillDrawerExpected": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerExpectedHidden": "The expected cash is shown after you count the drawer.",
+  "@tillDrawerExpectedHidden": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerFailed": "The till could not do that. Try again.",
+  "@tillDrawerFailed": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerFloat": "Float in the drawer",
+  "@tillDrawerFloat": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerFloatHelp": "The cash the drawer starts with, counted now.",
+  "@tillDrawerFloatHelp": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerLoadFailed": "The tills could not be read.",
+  "@tillDrawerLoadFailed": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerManage": "Tills and drawers",
+  "@tillDrawerManage": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerNameMissing": "Give the till a name.",
+  "@tillDrawerNameMissing": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerNoTills": "There is no till yet. Add the first one to start counting a drawer.",
+  "@tillDrawerNoTills": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerNoTillsPerson": "No till has been set up yet. Someone who manages the sites adds it.",
+  "@tillDrawerNoTillsPerson": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerOpenAction": "Open the till",
+  "@tillDrawerOpenAction": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerOpenFirstBody": "Open a till with its float before selling.",
+  "@tillDrawerOpenFirstBody": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerOpenFirstTitle": "No till is open",
+  "@tillDrawerOpenFirstTitle": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerOpenTitle": "Open {till}",
+  "@tillDrawerOpenTitle": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "till": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerRefusalAboveLimit": "A paid-out this large is recorded by someone who may record outgoing payments.",
+  "@tillDrawerRefusalAboveLimit": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalAlreadyOpen": "This till is already open. Count and close it before opening it again or switching it off.",
+  "@tillDrawerRefusalAlreadyOpen": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalDenominations": "The counts by denomination do not add up to the amount.",
+  "@tillDrawerRefusalDenominations": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalDifference": "The count differs from the expected cash. Say why before closing.",
+  "@tillDrawerRefusalDifference": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalNameTaken": "Another till of this business already has this name.",
+  "@tillDrawerRefusalNameTaken": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalOpenFirst": "Open the till first: a sale needs an open session on its till.",
+  "@tillDrawerRefusalOpenFirst": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalReasonUnknown": "This reason is not on the business's list. Choose one from the list.",
+  "@tillDrawerRefusalReasonUnknown": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalSessionGone": "This session is not open any more.",
+  "@tillDrawerRefusalSessionGone": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalTillUnknown": "This is not an active till of this business.",
+  "@tillDrawerRefusalTillUnknown": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerStateClosed": "Closed",
+  "@tillDrawerStateClosed": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerStateOff": "Switched off",
+  "@tillDrawerStateOff": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerStateOpen": "Open · float {float}",
+  "@tillDrawerStateOpen": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "float": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerTillActive": "In use",
+  "@tillDrawerTillActive": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerTillName": "Name of the till",
+  "@tillDrawerTillName": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerTillNewTitle": "New till",
+  "@tillDrawerTillNewTitle": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerTillSave": "Save the till",
+  "@tillDrawerTillSave": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerTitle": "Till drawer",
+  "@tillDrawerTitle": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
   "tillFailed": "The till could not do that. Try again.",
   "@tillFailed": {
     "description": "#4366 the till"
@@ -52675,6 +53538,139 @@
   "tillNotReadyHint": "Nothing is numbered and nothing is taken until the country's operation is supported.",
   "@tillNotReadyHint": {
     "description": "#4366 the till"
+  },
+  "tillOfflineBanner": "Offline — cash only. Sales are kept on this device and sent when the connection returns.",
+  "@tillOfflineBanner": {
+    "description": "#4373 the till sells offline: the banner"
+  },
+  "tillOfflineClosedSession": "The session was closed: these sales stay on the device for a manager.",
+  "@tillOfflineClosedSession": {
+    "description": "#4373 the send was refused because the session was closed (DKL12)"
+  },
+  "tillOfflineDiscard": "Discard the offline data",
+  "@tillOfflineDiscard": {
+    "description": "#4373 drop the unreadable offline data: the action"
+  },
+  "tillOfflineDiscardBody": "Sales that were not sent yet are lost for good. Only discard the data after a manager has checked.",
+  "@tillOfflineDiscardBody": {
+    "description": "#4373 drop the unreadable offline data: the warning"
+  },
+  "tillOfflineDiscardConfirm": "Discard the data",
+  "@tillOfflineDiscardConfirm": {
+    "description": "#4373 drop the unreadable offline data: confirm"
+  },
+  "tillOfflineGaps": "Sale numbers missing at the server: {numbers}.",
+  "@tillOfflineGaps": {
+    "description": "#4373 the answer of the send: sale numbers the server finds missing",
+    "placeholders": {
+      "numbers": {
+        "type": "String"
+      }
+    }
+  },
+  "tillOfflineKept": "{count, plural, one{1 sale stays} other{{count} sales stay}} on this device for a manager.",
+  "@tillOfflineKept": {
+    "description": "#4373 the answer of the send: sales that stay on the device",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tillOfflineNoPrice": "This item has no price on this device, so it cannot be sold offline.",
+  "@tillOfflineNoPrice": {
+    "description": "#4373 a line the device holds no price for"
+  },
+  "tillOfflineNotSigned": "Not signed. It is sent to the server when the connection returns.",
+  "@tillOfflineNotSigned": {
+    "description": "#4373 the receipt of a sale made offline: not signed yet"
+  },
+  "tillOfflineReasonBeforeSession": "Made before this till was opened.",
+  "@tillOfflineReasonBeforeSession": {
+    "description": "#4373 why the server refused an offline sale: BeforeSession"
+  },
+  "tillOfflineReasonCash": "The cash given was less than the total.",
+  "@tillOfflineReasonCash": {
+    "description": "#4373 why the server refused an offline sale: Cash"
+  },
+  "tillOfflineReasonClock": "The device clock was ahead.",
+  "@tillOfflineReasonClock": {
+    "description": "#4373 why the server refused an offline sale: Clock"
+  },
+  "tillOfflineReasonItem": "The item is no longer sold.",
+  "@tillOfflineReasonItem": {
+    "description": "#4373 why the server refused an offline sale: Item"
+  },
+  "tillOfflineReasonOther": "The till rules refused it.",
+  "@tillOfflineReasonOther": {
+    "description": "#4373 why the server refused an offline sale: Other"
+  },
+  "tillOfflineReasonPrice": "The price changed by more than is allowed.",
+  "@tillOfflineReasonPrice": {
+    "description": "#4373 why the server refused an offline sale: Price"
+  },
+  "tillOfflineReasonTooLong": "Made too long after the connection was lost.",
+  "@tillOfflineReasonTooLong": {
+    "description": "#4373 why the server refused an offline sale: TooLong"
+  },
+  "tillOfflineReasonTooMany": "More offline sales than allowed.",
+  "@tillOfflineReasonTooMany": {
+    "description": "#4373 why the server refused an offline sale: TooMany"
+  },
+  "tillOfflineRecorded": "Recorded offline · sale {seq} of this till",
+  "@tillOfflineRecorded": {
+    "description": "#4373 the receipt of a sale made offline: its number on this till [not a count: seq]",
+    "placeholders": {
+      "seq": {
+        "type": "int"
+      }
+    }
+  },
+  "tillOfflineReportAccepted": "{count, plural, one{1 sale was recorded.} other{{count} sales were recorded.}}",
+  "@tillOfflineReportAccepted": {
+    "description": "#4373 the answer of the send: how many sales were recorded",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tillOfflineReportRefused": "Sale {seq} was refused: {reason} Its cash stays in the drawer count.",
+  "@tillOfflineReportRefused": {
+    "description": "#4373 the answer of the send: a sale the server refused, with its reason [not a count: seq]",
+    "placeholders": {
+      "seq": {
+        "type": "int"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "tillOfflineReportTitle": "Offline sales sent",
+  "@tillOfflineReportTitle": {
+    "description": "#4373 the answer of the send: title"
+  },
+  "tillOfflineSendNow": "Look for the connection now",
+  "@tillOfflineSendNow": {
+    "description": "#4373 look for the connection and send the waiting sales"
+  },
+  "tillOfflineSyncing": "Sending the offline sales…",
+  "@tillOfflineSyncing": {
+    "description": "#4373 the waiting sales are being sent"
+  },
+  "tillOfflineUnreadable": "The offline data on this device cannot be read. Nothing can be sold offline until a manager decides.",
+  "@tillOfflineUnreadable": {
+    "description": "#4373 the offline data of the device cannot be read"
+  },
+  "tillOfflineWaiting": "{count, plural, =0{No sale waits on this device} one{1 sale waits on this device} other{{count} sales wait on this device}}",
+  "@tillOfflineWaiting": {
+    "description": "#4373 the till sells offline: how many sales wait on the device",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "tillOpCorrectReceipt": "correcting a receipt",
   "@tillOpCorrectReceipt": {
@@ -53242,6 +54238,34 @@
   "unblockAction": "Unblock",
   "@unblockAction": {
     "description": "Shown as a text in blocked people card (me)."
+  },
+  "unknownWireInvoiceKind": "A kind this version of the app does not know",
+  "@unknownWireInvoiceKind": {
+    "description": "#3730 the kind of an invoice whose kind a newer server sent and this app does not know."
+  },
+  "unknownWireKindFeatures": "This kind also sets {count, plural, one{one feature} other{{count} features}} this version of the app does not know. Update the app to choose it.",
+  "@unknownWireKindFeatures": {
+    "description": "#3730 the business kind chooser: the chosen kind's profile names features this app does not know, so saving it is refused.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+  "unknownWireReadOnly": "This version of the app does not know what this record is: it can be read, not changed. Update the app to work on it.",
+  "@unknownWireReadOnly": {
+    "description": "#3730 an action was asked on a record whose kind or state this app does not know; only reading is allowed."
+  },
+  "unknownWireValue": "{value} (not known to this version of the app)",
+  "@unknownWireValue": {
+    "description": "#3730 a status or kind sent by a newer server that this app does not know, shown as the server's own text.",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "future_locked"
+      }
+    }
   },
   "unreadableRowsNotice": "{count, plural, one{1 entry could not be shown: this version of the app does not know it. Update the app to see it.} other{{count} entries could not be shown: this version of the app does not know them. Update the app to see them.}}",
   "@unreadableRowsNotice": {

@@ -66,6 +66,8 @@ const STEPS=[
   selectEl(T('fedRetention'),'federation.retentionHours',opts(FED_RETENTION),T('fedRetentionHint'),null,'identity'),
   selectEl(T('fedAnswerWait'),'federation.answerWait',opts(FED_ANSWER_WAIT),T('fedAnswerWaitHint'),null,'identity'),
   selectEl(T('fedFactBatch'),'federation.factBatch',opts(FED_FACT_BATCH),T('fedFactBatchHint'),null,'identity'),
+  // #3732 — every installation decides how long an older app stays accepted.
+  selectEl(T('appSupportWindow'),'appSupport.windowDays',opts(APP_SUPPORT_WINDOW),T('appSupportWindowHint'),null,'identity'),
   ...(S.network.roles==='combined'?[selectEl(T('dirPageSize'),'directory.pageSize',opts(DIR_PAGE),T('dirPageSizeHint'),null,'identity'),selectEl(T('dirQueryLength'),'directory.queryLength',opts(DIR_QUERY),T('dirQueryLengthHint'),null,'identity')]:[]),
   // #2556 — every server reads its part of the inbox one page at a time.
   selectEl(T('inboxPageSize'),'inbox.pageSize',opts(INBOX_PAGE),T('inboxPageSizeHint'),null,'identity'),
@@ -271,7 +273,7 @@ const STEPS=[
   if(on('stockManagement'))k.push(checkbox(T('stockAllowNegative'),T('stockAllowNegativeHint'),S.stock.allowNegative,v=>set('stock.allowNegative',v)));
   // #4293 — how a place address (site, zone, aisle, bay, shelf) is written.
   // #4365 — goods sold by weight: a new item is proposed in kilograms.
-  if(on('stockManagement'))k.push(checkbox(T('stockWeighedGoods'),T('stockWeighedGoodsHint'),S.stock.weighedGoods,v=>set('stock.weighedGoods',v)));
+  if(on('stockManagement'))k.push(checkbox(T('stockWeighedGoods'),T('stockWeighedGoodsHint'),S.stock.weighedGoods,v=>set('stock.weighedGoods',v)),input(T('stockInvoiceSalePlace'),'stock.invoiceSalePlace',T('stockInvoiceSalePlaceHint'),'text','MAIN','services')); // #4433
   if(on('stockManagement'))k.push(selectEl(T('stockAddressSeparator'),'stock.addressSeparator',opts(STOCK_SEP),T('stockAddressSeparatorHint'),null,'services'));
   if(on('stockTags'))k.push(selectEl(T('stockTagGrace'),'stock.tagGrace',opts(STOCK_TAG_GRACE),T('stockTagGraceHint'),null,'services'));
   if(on('stockScanning'))k.push(selectEl(T('stockRepeatedScan'),'stock.repeatedScan',opts(STOCK_REPEAT),T('stockRepeatedScanHint'),null,'services'));

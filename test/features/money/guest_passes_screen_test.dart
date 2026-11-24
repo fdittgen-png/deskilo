@@ -3,6 +3,7 @@
 // #3308 — the guest passes screen: the space's passes and who sees what,
 // and a sale through THE identity form with the pass in its extra
 // section: one Save sends the guest's identity, the place and the window.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/presentation/screens/guest_passes_screen.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
@@ -73,7 +74,7 @@ class _Passes implements GuestPassRepository {
   Future<int> revoke(String workspaceId, {required String passId, required String requestId}) async {
     revoked.add((passId: passId, requestId: requestId));
     if (refused.contains(passId)) {
-      throw const PostgrestException(message: 'this guest pass is already revoked', code: 'DKD01');
+      throw const PostgrestException(message: 'this guest pass is already revoked', code: DkCode.dkd01);
     }
     records = [
       for (final p in records)

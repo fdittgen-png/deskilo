@@ -9,6 +9,7 @@ import 'package:markdown_widget/markdown_widget.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/navigation/page_spec.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../providers/help_providers.dart';
@@ -82,12 +83,12 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
 
   void _jumpToTopic(String topic) {
     if (!mounted) return;
-    final needle = topic.toLowerCase();
+    final needle = foldForSearch(topic);
     for (final toc in _toc.tocList) {
       // childrenSpan, not build(): h1/h2 builds wrap the text in a
       // WidgetSpan (divider layout) whose plain text is a placeholder.
       final heading = toc.node.childrenSpan.toPlainText();
-      if (heading.toLowerCase().contains(needle)) {
+      if (foldForSearch(heading).contains(needle)) {
         _toc.jumpToIndex(toc.widgetIndex);
         return;
       }

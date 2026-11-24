@@ -7,7 +7,7 @@ The things around the everyday work: the test side of a space and the real one, 
 
 In this chapter:
 - [A space has two sides](help:user.advanced.environments) · [Enter a side](help:user.advanced.enter-environment) · [A test space](help:user.advanced.test-space) · [Who may deploy](help:user.advanced.deploy-permissions) · [Deploy between the sides](help:user.advanced.deploy) · [Workspace status and the year archive](help:user.advanced.status-archive)
-- [Your own server](help:user.advanced.own-server)
+- [Your own server](help:user.advanced.own-server) · [When an installation requires a newer app](help:user.advanced.app-floor) · [Release a new version](help:user.advanced.releases)
 - [Assistants](help:user.advanced.assistants) · [Connect an assistant](help:user.advanced.assistants-connect) · [Approvals](help:user.advanced.assistants-approve) · [What assistants may do](help:user.advanced.assistants-policy)
 - [The task recorder](help:user.advanced.recorder) · [Record a task](help:user.advanced.recorder-record) · [Review a recording](help:user.advanced.recorder-review) · [Make a guide](help:user.advanced.guide-make) · [Follow a guide](help:user.advanced.guide-play) · [The circle menu](help:user.advanced.guide-circle) · [Edit a guide](help:user.advanced.guide-edit) · [Privacy of recordings](help:user.advanced.recorder-privacy)
 - [The demo workspace](help:user.advanced.demo) · [Filming mode](help:user.advanced.filming)
@@ -168,6 +168,52 @@ You want your community's data on a server you control, or you belong to an orga
 - An operator can switch assistants on for the whole installation — see [Approvals](help:user.advanced.assistants-approve).
 
 **See also:** [Your own server](help:user.backend.server)
+
+<!-- anchor: user.advanced.app-floor -->
+### When an installation requires a newer app
+
+**Audience:** Operator · Owner
+
+An installation can say that only a newer app may be used with it. You want to know when that is justified and what your testers and members will see.
+
+**Steps**
+
+1. Raise the floor only when an old app would be wrong, not merely incomplete: a security fix, or a change in what stored data means. Missing features are not a reason.
+2. Raise it in a change of its own, and only after the newer app has been available to every tester and member for the support period. Testers on the reference installation are blocked the moment the floor is raised.
+3. Tell people first which app to install, and where: the store they installed from, the releases page, or reloading the web app.
+4. Afterwards, open the app on an older device and check that **This app needs an update** appears.
+
+**Good to know**
+
+- An app below the floor sees one screen, **This app needs an update**, with how to update on its platform, **Check again**, **Server settings** and **Sign out**. Help, privacy and the demo stay open.
+- The floor belongs to one installation: the same app keeps working on every other installation the person uses. When only the installation of one business refuses the app, only that business shows the screen, which then also offers **Back to Me**; your other businesses stay open.
+- If the floor cannot be read, the app is not blocked. A refusal that was already read stays until a newer answer lifts it, and the app asks again when you return to it.
+- The floor is a courtesy to apps that know it, not a lock: money and permission rules are decided by the server whatever the app.
+
+**See also:** [Run your own server](help:user.advanced.own-server) · [Platforms](help:user.advanced.platforms)
+
+<!-- anchor: user.advanced.releases -->
+### Release a new version: the server first
+
+**Audience:** Operator
+
+You run an installation and a new version of the app is coming. The server is always updated before the app, and an older app is never shut out without warning.
+
+**Steps**
+
+1. Update the server first: apply its new migrations, then its functions. Nothing changes for members: an app already installed keeps working, because the server only adds.
+2. Publish the app. Before any upload, the release train reads the installation it ships to and stops, naming the missing migrations, when the installation is behind, refuses the new app or cannot be read. Once the app is out, the server's version reads *Up to date* in it, and an older app reads *The server is newer than this app — update the app when you can*.
+3. Wait the support window: [Profiles](app:/profiles) → **Platform settings (defaults)** → **App versions** → **Support window for older apps**. It counts from the day the new app is available on the slowest channel you distribute it through, not from the day it was built: a store review can take days.
+4. Only then raise the oldest app the installation accepts, in a migration of its own. An app below it shows **This app needs an update** with how to update on its platform; nothing the member entered is lost.
+
+**Good to know**
+
+- An app newer than its server reads *Needs an update: this app needs schema …*. That is the case the server-first order prevents.
+- To undo a raise, lower the oldest accepted app again, or remove it, in a new migration: a blocked app works again the next time it starts or comes back to the foreground.
+- The release train only reads the installation: it applies no migration and does not change who may publish.
+- Never raise the oldest accepted app in the migration that first needs the new app: testers on that installation would be blocked the moment it is applied.
+
+**See also:** [Run your own server](help:user.advanced.own-server)
 
 <!-- anchor: user.advanced.assistants -->
 ### Assistants: what they are

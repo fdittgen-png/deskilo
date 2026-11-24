@@ -11,6 +11,7 @@
 // database administrator. The connector URL is the backend's own function.
 // The strings exist in five languages (French rendered here).
 import 'package:deskilo/core/backend/backend_settings.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
 import 'package:deskilo/core/demo/data/instance_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
@@ -179,7 +180,7 @@ void main() {
     final onboarding = FakeMcpOnboardingRepository()
       ..workspaceSwitchError = const PostgrestException(
         message: 'the features changed since they were read: mcpAccess',
-        code: 'DK409',
+        code: DkCode.dk409,
       );
     await _pump(
       tester,

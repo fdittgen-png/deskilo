@@ -18,5 +18,20 @@
   "stockMoveReasonReturnIn": "Devuelto por el cliente",
   "stockMoveReasonReturnOut": "Devuelto al proveedor",
   "stockChainPieceTitle": "Todos los movimientos de esta pieza",
-  "stockChainOpen": "Todos los movimientos"
+  "stockChainOpen": "Todos los movimientos",
+  "stockTrackFindTitle": "Buscar un código de trazabilidad",
+  "stockTrackFindField": "Código de lote o etiqueta",
+  "stockTrackFindHelper": "El código del lote tal como se recibió, el código de su etiqueta o la etiqueta de una pieza.",
+  "stockTrackFindSubmit": "Buscar",
+  "stockTrackFindRequired": "Escriba o escanee primero un código.",
+  "stockTrackFindNone": "Nada en este negocio lleva {code}.",
+  "stockTrackFindLots": "Lotes",
+  "stockTrackFindPieces": "Piezas",
+  "stockTrackFindSales": "Ventas que lo tomaron",
+  "stockTrackFindNoSale": "Ninguna venta lo ha tomado todavía.",
+  "stockTrackFindExpires": "Caduca el {date}",
+  "stockTrackFindTruncated": "Solo se muestran las primeras coincidencias.",
+  "stockChainSaleTitle": "Lo que tomó esta venta",
+  "stockChainTookLot": "Lote {code} · {quantity}",
+  "stockChainTookPiece": "Pieza {tag}"
 }

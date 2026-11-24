@@ -2416,6 +2416,7 @@ Vous voulez retrouver une facture, voir si elle est payée et obtenir son PDF.
 - Touchez l'icône de paiement sur une facture en cours pour aller à **Paiements**.
 - Si la liste est vide, l'espace ne vous a pas encore facturé ; il facture un mois une fois celui-ci clôturé.
 - Les factures ne se modifient pas. Une facture erronée est marquée **Erronée** et remplacée par une nouvelle, et l'erronée disparaît de votre liste. Quand des factures sont regroupées en une seule, la facture regroupée les remplace dans votre liste.
+- Une ligne facturée à l'heure, au jour ou au poids (par exemple *1.5 h à 90 EUR*, ou *0.75 kg à 12.5 EUR pour 10 kg*) affiche sous son libellé la quantité exacte, son unité et le prix saisi, comme le PDF les imprime ; son montant est celui fixé à l'émission de la facture. Une ligne enregistrée par une version plus récente de l'application est affichée telle quelle et indique qu'elle ne peut pas être utilisée ici : mettez l'application à jour pour la traiter.
 
 **Voir aussi:** [Payer ce que vous devez](help:user.money.payments) · [Vos finances dans tous vos espaces](help:user.money.finances)
 
@@ -2874,6 +2875,29 @@ La liste montre chaque invitation comme invitée, en lecture, expirée ou termin
 
 **Voir aussi :** [Clients facturés](help:user.money.customers.billing)
 
+### Une facture client sans mois
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous avez rendu un service à un client désigné aujourd'hui (une consultation, un cours, un livrable convenu) et vous voulez le facturer tout de suite, sans réservation, sans abonnement ni mois derrière. Il faut le droit d'émettre des factures et la fonction **Factures ponctuelles**.
+
+**Étapes**
+
+1. Ouvrez **Factures** et choisissez **Facture client sans mois**.
+2. Choisissez le client, puis la date de la prestation et l'échéance.
+3. Ajoutez les lignes : une description, une quantité, une unité et un prix. Choisir un article du catalogue est facultatif : une prestation ponctuelle s'écrit en toutes lettres.
+4. Choisissez **Vérifier la facture**. L'aperçu montre les montants et la taxe exactement comme ils seront émis, ou ce qui manque encore.
+5. Choisissez **Émettre la facture** pour confirmer. La facture est numérotée, conservée telle qu'émise et ouverte.
+
+**Bon à savoir**
+
+- La facture n'a pas de mois de facturation : une seconde facture distincte du même client le même mois est sa propre facture, et la facture mensuelle, s'il y en a une, reste intacte.
+- Les montants et la taxe sont toujours calculés par le serveur, jamais repris de l'écran ; le prix est dans la devise de l'établissement.
+- Votre brouillon reste tel quel quand vous redimensionnez la fenêtre ou qu'une vérification est refusée. Si la réponse à **Émettre la facture** n'arrive pas, la même confirmation n'émet jamais une seconde facture : cherchez-la à nouveau.
+- Modifier ensuite le catalogue ou le client ne change jamais une facture émise.
+
+**Voir aussi :** [Clients facturés](help:user.money.customers.billing) · [Payer des factures sans mois](help:user.money.finances.standalone)
+
 ### Devis
 
 **Public:** Administrateur·rice · Propriétaire
@@ -3024,6 +3048,34 @@ Là où votre pays n'autorise pas encore la caisse, elle nomme l'opération manq
 
 Un article tracé indique d'où il a été pris. Quand vous vendez un article suivi par lot sans choisir de lot, la vente le prend dans les lots en stock, celui qui expire le premier d'abord et jamais un lot périmé ; sous la ligne vendue, la caisse affiche le code de chaque lot tel qu'il a été reçu, avec la quantité prise, par exemple **Lot SUP-A × 2 · Lot SUP-B × 1**, et chaque pièce par son étiquette. Si l'entreprise utilise un lecteur, scannez l'étiquette d'une pièce pour l'ajouter : la vente prend exactement les pièces scannées, et la même pièce deux fois est refusée. Ces identifiants de traçabilité sont figés avec le ticket : modifier plus tard un lot ou une étiquette ne change jamais un ticket déjà émis. Dans le stock, la traçabilité d'un lot ou d'une pièce indique le ticket qui l'a vendu.
 
+### Ouvrir la caisse, compter et fermer
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous tenez un tiroir-caisse et voulez savoir que l'argent qu'il contient est juste en fin de journée.
+
+Ouvrez **Tiroir-caisse** dans le menu des ventes (il demande la fonction sessions de caisse et le droit d'émettre des factures ou de voir les finances). Chaque caisse de l'entreprise est listée avec son état. Une personne qui gère les sites ajoute une caisse avec **Ajouter une caisse** et peut la renommer ou la désactiver.
+
+Appuyez sur **Ouvrir la caisse**, saisissez le **Fond de caisse** (ou, si votre entreprise compte par coupure, la valeur de chaque billet ou pièce et leur nombre) et confirmez. Une caisse n'a qu'une session ouverte à la fois, et avec les sessions de caisse la caisse ne vend que sur une session ouverte : sans session ouverte, elle propose **Ouvrir la caisse** au lieu de vendre.
+
+**Entrée ou sortie d'espèces** enregistre l'argent mis dans le tiroir ou retiré, avec un **Motif** choisi dans la liste de votre entreprise. Une sortie au-delà de la limite de l'entreprise est enregistrée par une personne qui peut enregistrer des paiements sortants.
+
+**Compter et fermer** demande les **Espèces comptées dans le tiroir** et ce qui est **Déposé à la banque**. Quand l'entreprise compte à l'aveugle, les espèces attendues ne s'affichent pas avant le comptage ; une personne qui peut voir les finances les voit, ainsi que l'écart pendant la saisie. Un comptage qui diffère des espèces attendues ne se ferme qu'avec son motif, que la caisse demande. Après la fermeture, la caisse indique ce qui était attendu, ce qui a été compté et l'écart. Les paiements par carte sans réponse sont listés à part et jamais comptés comme espèces.
+
+**Clôture de la journée.** Une personne qui peut voir les finances ouvre **Clôture de la journée** depuis le tiroir-caisse et appuie sur **Clôturer la journée** quand chaque caisse est fermée (une caisse encore ouverte est nommée et refuse la clôture). Les sessions fermées du jour forment un rapport numéroté : chaque session avec l'attendu, le compté, l'écart et son motif, les encaissements par moyen de paiement et par taux de taxe, les espèces entrées et sorties, les remboursements et la plage des numéros de tickets. **Journées clôturées** liste les rapports déjà faits ; une journée clôturée ne change jamais. C'est le registre propre de l'entreprise ; le contenu légal qu'un pays demande à une clôture de journée vient avec son propre module.
+
+### Quand la caisse est hors ligne
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous vendez au comptoir et la connexion est perdue : vous voulez continuer à vendre et être sûr que rien ne se perd ni ne se compte deux fois.
+
+Activez **Vendre hors ligne, en espèces seulement** (elle suppose la fonction des sessions de caisse). Quand un appel au serveur reste sans réponse, la caisse indique **Hors ligne — espèces uniquement. Les ventes sont conservées sur cet appareil et envoyées au retour de la connexion.** et continue à vendre en espèces uniquement, aux prix qu'elle avait lors de sa dernière connexion ; un article dont l'appareil n'a pas le prix n'est pas vendu. Chaque vente est conservée sur l'appareil sous le numéro suivant de sa session de caisse ; le reçu porte **Enregistrée hors ligne** avec ce numéro et **Non signé. Il est envoyé au serveur au retour de la connexion.** : il n'a pas de numéro de reçu tant que le serveur ne l'a pas reçu.
+
+La caisse cherche d'elle-même sa connexion, et **Chercher la connexion maintenant** le fait aussitôt. Quand la connexion revient, les ventes sont envoyées dans l'ordre, chacune sous le numéro avec lequel elle a été faite : une vente déjà reçue n'est donc jamais comptée deux fois. La caisse indique alors combien ont été enregistrées et, pour chaque vente refusée par le serveur, pourquoi (par exemple le prix a changé au-delà de ce qui est permis, ou l'article n'est plus vendu) ; les espèces d'une vente refusée restent dans le comptage du tiroir. Si la session a été fermée entre-temps, la caisse dit : « La session a été fermée : ces ventes restent sur l'appareil pour un responsable. » Les ventes restent sur l'appareil jusqu'à ce qu'un responsable les ait traitées.
+
+Trois réglages de l'entreprise bornent ce qui est accepté : **Durée maximale hors ligne (minutes)**, **Nombre maximal de ventes hors ligne par session de caisse** et **Écart de prix toléré hors ligne (%)**. Si les données hors ligne de l'appareil sont illisibles, rien ne se vend hors ligne tant qu'un responsable n'a pas décidé ; **Supprimer les données hors ligne** les supprime après un avertissement, car les ventes non encore envoyées sont perdues définitivement.
+
 ### Puces RFID : une par lot ou une par pièce
 
 **Public:** Administrateur·rice · Propriétaire
@@ -3093,6 +3145,7 @@ Ouvrez une ligne du **Stock** pour voir **Où est-ce** pour cet article (ou ce l
 - Les emplacements sur une étagère s'additionnent toujours à la quantité affichée en haut.
 - À un jour passé, les marchandises en route ne sont pas montrées ; les pièces le sont, depuis le jour où elles sont suivies (une pièce faite avant n'a pas d'historique avant).
 - Touchez un emplacement qui tient un lot pour voir **Tous les mouvements** de ce lot, de la livraison par laquelle il est arrivé jusqu'à sa sortie ; le bouton chronologie d'une pièce montre **Tous les mouvements de cette pièce**. Un document que vous ne pouvez pas voir est nommé par son type, jamais omis.
+- **Retrouver un code de traçabilité** (le bouton code en haut du **Stock**) prend un code de lot tel que reçu, le code de l'étiquette d'un lot ou l'étiquette d'une pièce, saisi ou scanné. Il liste les lots et les pièces qui le portent et les ventes qui les ont pris. Touchez un lot ou une pièce pour tous ses mouvements ; touchez une vente pour voir ce que cette ligne de ticket a pris : chaque lot avec sa quantité, chaque pièce par son étiquette. Un ticket que vous ne pouvez pas voir est nommé par son type et ne s'ouvre pas. Si rien n'est trouvé, c'est dit ; une recherche refusée ou en échec le dit et peut être relancée.
 
 ### Valeur du stock et origine des marchandises
 
@@ -3193,6 +3246,28 @@ Une entreprise qui vous facture peut vous remettre un code, pour que vous lisiez
 - Payer ces factures d'ici n'est pas encore proposé.
 
 **Voir aussi :** [Vos finances dans tous vos espaces](help:user.money.finances)
+
+### Payer des factures sans mois
+
+**Public:** Membre
+
+Une entreprise vous a émis des factures qui n'appartiennent à aucun mois. Elles se règlent ensemble, à part.
+
+**Étapes**
+
+1. Ouvrez [Mes finances](app:/money) et cochez les factures sans mois à payer. Elles relèvent d'une seule entreprise et d'une seule devise.
+2. Une barre indique combien vous en avez cochées et leur total. Choisissez **Payer** pour payer en ligne, ou **J’ai payé** si vous avez déjà payé autrement.
+3. La confirmation liste les factures et un seul total. Confirmez : un paiement en ligne s'ouvre, ou une seule déclaration est envoyée.
+
+**Bon à savoir**
+
+- Les factures sans mois et les factures mensuelles ne se règlent jamais ensemble : une fois un type coché, l'autre ne peut plus l'être, et une ligne le dit. Si l'entreprise refuse tout de même un mélange, vous en êtes informé et rien n'est débité.
+- Le montant est ce que les factures doivent encore. S'il a changé, actualisez et recommencez.
+- Si la réponse s'est perdue en route, choisissez à nouveau **Payer** : c'est le même paiement, retrouvé, jamais un second. Un paiement n'est affiché comme payé qu'une fois reçu par l'entreprise.
+- L'argent est comptabilisé le mois où il arrive. Ce qu'une facture ne prend pas reste votre crédit auprès de l'entreprise jusqu'à son affectation.
+- Une entreprise dont le service de paiement est trop ancien le dit avant tout envoi.
+
+**Voir aussi :** [Vos finances entre espaces](help:user.money.finances)
 
 ### Vos activités en un coup d'œil
 
@@ -6431,7 +6506,7 @@ Ce qui entoure le travail de tous les jours : le côté test d'un espace et le c
 
 Dans ce chapitre :
 - [Un espace a deux côtés](help:user.advanced.environments) · [Entrer d'un côté](help:user.advanced.enter-environment) · [Un espace de test](help:user.advanced.test-space) · [Qui peut déployer](help:user.advanced.deploy-permissions) · [Déployer entre les côtés](help:user.advanced.deploy) · [Situation de l'espace et archive de l'exercice](help:user.advanced.status-archive)
-- [Votre propre serveur](help:user.advanced.own-server)
+- [Votre propre serveur](help:user.advanced.own-server) · [Quand une installation exige une application plus récente](help:user.advanced.app-floor) · [Publier une nouvelle version](help:user.advanced.releases)
 - [Les assistants](help:user.advanced.assistants) · [Connecter un assistant](help:user.advanced.assistants-connect) · [Les autorisations](help:user.advanced.assistants-approve) · [Ce que les assistants peuvent faire](help:user.advanced.assistants-policy)
 - [L'enregistreur de tâches](help:user.advanced.recorder) · [Enregistrer une tâche](help:user.advanced.recorder-record) · [Relire un enregistrement](help:user.advanced.recorder-review) · [Créer un guide](help:user.advanced.guide-make) · [Suivre un guide](help:user.advanced.guide-play) · [Le menu rond](help:user.advanced.guide-circle) · [Modifier un guide](help:user.advanced.guide-edit) · [Confidentialité des enregistrements](help:user.advanced.recorder-privacy)
 - [L'espace de démonstration](help:user.advanced.demo) · [Mode tournage](help:user.advanced.filming)
@@ -6585,6 +6660,50 @@ Vous voulez les données de votre communauté sur un serveur que vous maîtrisez
 - Un opérateur peut activer les assistants pour toute l'installation — voir [Les autorisations](help:user.advanced.assistants-approve).
 
 **Voir aussi:** [Votre propre serveur](help:user.backend.server)
+
+### Quand une installation exige une application plus récente
+
+**Public:** Opérateur·rice · Propriétaire
+
+Une installation peut indiquer que seule une application plus récente peut l'utiliser. Vous voulez savoir quand c'est justifié et ce que verront vos testeurs et vos membres.
+
+**Étapes**
+
+1. Relevez le seuil seulement quand une ancienne application serait fausse, et non simplement incomplète : un correctif de sécurité, ou un changement de sens des données enregistrées. Une fonction manquante n'est pas une raison.
+2. Relevez-le dans une modification à part, et seulement après que l'application plus récente a été disponible pour tous les testeurs et membres pendant la période de prise en charge. Les testeurs de l'installation de référence sont bloqués dès que le seuil est relevé.
+3. Dites d'abord aux personnes quelle application installer et où : le store d'origine, la page des versions, ou le rechargement de l'application web.
+4. Ensuite, ouvrez l'application sur un ancien appareil et vérifiez que **Cette application doit être mise à jour** apparaît.
+
+**Bon à savoir**
+
+- Une application sous le seuil voit un seul écran, **Cette application doit être mise à jour**, avec la façon de la mettre à jour sur sa plateforme, **Vérifier à nouveau**, **Réglages du serveur** et **Se déconnecter**. L'aide, la confidentialité et la démo restent ouvertes.
+- Le seuil appartient à une seule installation : la même application continue de fonctionner sur toutes les autres installations de la personne. Quand seule l'installation d'une entreprise refuse l'application, seule cette entreprise affiche l'écran, qui propose alors aussi **Retour à Moi** ; vos autres entreprises restent ouvertes.
+- Si le seuil ne peut pas être lu, l'application n'est pas bloquée. Un refus déjà lu reste en place jusqu'à ce qu'une réponse plus récente le lève, et l'application redemande au retour.
+- Le seuil est une courtoisie pour les applications qui le connaissent, pas un verrou : les règles d'argent et de droits sont décidées par le serveur, quelle que soit l'application.
+
+**Voir aussi :** [Faire tourner votre propre serveur](help:user.advanced.own-server) · [Plateformes](help:user.advanced.platforms)
+
+### Publier une nouvelle version : le serveur d'abord
+
+**Public:** Opérateur·rice
+
+Vous exploitez une installation et une nouvelle version de l'application arrive. Le serveur est toujours mis à jour avant l'application, et une ancienne application n'est jamais écartée sans prévenir.
+
+**Étapes**
+
+1. Mettez d'abord le serveur à jour : appliquez ses nouvelles migrations, puis ses fonctions. Rien ne change pour les membres : une application déjà installée continue de fonctionner, car le serveur ne fait qu'ajouter.
+2. Publiez l'application. Avant tout envoi, le train de publication lit l'installation qu'il dessert et s'arrête, en nommant les migrations manquantes, quand l'installation est en retard, refuse la nouvelle application ou ne peut pas être lue. Une fois l'application publiée, la version du serveur y indique *À jour*, et une ancienne application indique *Le serveur est plus récent que cette app — mettez l'app à jour dès que possible*.
+3. Attendez le délai de prise en charge : [Profils](app:/profiles) → **Réglages de la plateforme (valeurs par défaut)** → **Versions de l'application** → **Délai de prise en charge des anciennes applications**. Il court à partir du jour où la nouvelle application est disponible sur le canal de distribution le plus lent, pas du jour où elle a été construite : l'examen d'un store peut prendre des jours.
+4. Seulement alors, relevez l'application la plus ancienne acceptée par l'installation, dans une migration à part. Une application en dessous affiche **Cette application doit être mise à jour** avec la façon de la mettre à jour sur sa plateforme ; rien de ce que le membre a saisi n'est perdu.
+
+**Bon à savoir**
+
+- Une application plus récente que son serveur indique *Mise à jour nécessaire : cette app a besoin du schéma …*. C'est le cas que l'ordre « le serveur d'abord » évite.
+- Pour annuler un relèvement, abaissez de nouveau l'application la plus ancienne acceptée, ou supprimez ce seuil, dans une nouvelle migration : une application bloquée refonctionne à son prochain démarrage ou à son retour au premier plan.
+- Le train de publication ne fait que lire l'installation : il n'applique aucune migration et ne change pas qui peut publier.
+- Ne relevez jamais l'application la plus ancienne acceptée dans la migration qui a besoin de la nouvelle application : les testeurs de cette installation seraient bloqués dès qu'elle est appliquée.
+
+**Voir aussi:** [Faire tourner votre propre serveur](help:user.advanced.own-server)
 
 ### Les assistants : ce que c'est
 

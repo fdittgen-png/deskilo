@@ -7,6 +7,7 @@
 // presence, not a violation; a RUNNING booking may grow its end to a
 // later canonical edge — from the seat, without cancelling anything.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -135,7 +136,7 @@ void main() {
           .add(_row(start: _at(10, 30), end: _at(12)));
       await expectLater(
         repo.checkIn('res-1'),
-        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK17')),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk17)),
       );
     });
 
@@ -159,7 +160,7 @@ void main() {
       );
       await expectLater(
         repo.checkIn('res-far'),
-        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK17')),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk17)),
       );
     });
   });
@@ -177,7 +178,7 @@ void main() {
 
       await expectLater(
         repo.updateTimes('res-1', startsAt: _at(9), endsAt: _at(17)),
-        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK31')),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk31)),
       );
     });
 
@@ -197,7 +198,7 @@ void main() {
 
       await expectLater(
         repo.updateTimes('res-1', startsAt: _at(8), endsAt: _at(9)),
-        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK32')),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk32)),
       );
     });
 
@@ -210,7 +211,7 @@ void main() {
       ));
       await expectLater(
         repo.updateTimes('res-1', startsAt: _at(6), endsAt: _at(17)),
-        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK33')),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk33)),
       );
     });
   });

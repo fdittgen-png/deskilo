@@ -15,6 +15,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
@@ -134,7 +135,7 @@ class _BiEvolutionChartState extends State<BiEvolutionChart> {
         : p.partial
         ? ' · ${widget.partialLabel}'
         : '';
-    return '${widget.periodLabel(p.period)}: $what$tag';
+    return context.l10n.labelWithValue(widget.periodLabel(p.period), '$what$tag');
   }
 
   @override

@@ -22,6 +22,7 @@ import '../../features/events/providers/event_providers.dart';
 import '../../features/me/providers/me_providers.dart'
     show myReservationsSourcesFromMe, pendingAdmissionsFromMe;
 import '../../features/money/domain/hmrc_submission.dart';
+import '../../features/money/domain/till_drawer.dart' show DrawerSettings;
 import '../../features/money/providers/bank_statement_providers.dart';
 import '../../features/money/providers/credit_move_providers.dart';
 import '../../features/money/providers/credit_providers.dart';
@@ -34,6 +35,7 @@ import '../../features/money/providers/purchase_providers.dart';
 import '../../features/money/providers/recorded_payments_providers.dart';
 import '../../features/money/providers/settlement_review_providers.dart';
 import '../../features/money/providers/standalone_invoice_providers.dart';
+import '../../features/money/providers/till_drawer_providers.dart';
 import '../../features/money/providers/till_providers.dart';
 import '../../features/plan/providers/accessory_providers.dart';
 import '../../features/plan/providers/charging_station_providers.dart';
@@ -43,9 +45,11 @@ import '../../features/stock/providers/stock_providers.dart';
 import '../../features/workspace/domain/member.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
+import '../../features/workspace/providers/settings_providers.dart' show currentSettingsProvider;
 import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../features/workspace/providers/workspace_roles_providers.dart';
+import '../settings/settings.dart' show SettingsSet;
 import '../storage/resume_place_store.dart';
 import '../time/clock.dart';
 import 'data/bank_statement_repository.dart';
@@ -67,10 +71,13 @@ import 'data/demo_stock_reversals.dart';
 import 'data/demo_stock_tags.dart';
 import 'data/demo_stock_trace.dart';
 import 'data/demo_stock_trace_chain.dart';
+import 'data/demo_stock_track_find.dart';
 import 'data/demo_stock_where_is.dart';
 import 'data/demo_till.dart';
+import 'data/demo_till_drawer.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
+import 'data/money/demo_invoice_goods_catalogue.dart';
 import 'data/money/demo_invoice_issue_drafts.dart';
 import 'data/money/demo_invoice_original_repository.dart';
 import 'data/money/demo_settlement_reviews.dart';
@@ -139,7 +146,8 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
       workspaces: space.workspaces,
     );
   });
-  final tills = _demoTills(fixture);
+  final drawers = demoSpacesOf((key) => DemoTillDrawer());
+  final tills = _demoTills(fixture, drawers);
   final myReservations = _myReservations(fixture);
   final stocks = _DemoStocks(fixture);
   // #3865 — each space's last bank statement lives on the fixture.
@@ -258,11 +266,9 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     ..._hmrcOverrides(fixture),
     // #2578 — the payments behind the collected figure, from the same
     // matches the finance cards sum.
-    recordedPaymentsRepositoryProvider.overrideWith(
-      (ref) => demoPickSpace(ref, payments),
-    ),
-    tillPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
-    tillOfflinePortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
+    recordedPaymentsRepositoryProvider.overrideWith((ref) => demoPickSpace(ref, payments)),
+    ..._tillOverrides(tills, drawers),
+    ..._stockTraceOverrides(stocks, tills),
   ];
 }
 
@@ -281,8 +287,10 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
   ),
   invoiceCommandsProvider.overrideWith((ref) => money(ref).invoiceCommands),
   standaloneInvoiceCommandsProvider.overrideWith(
-    (ref) => money(ref).standaloneInvoiceCommands,
+    // #4433 -- and sells goods from the business's own goods ledger
+    (ref) => money(ref).standaloneInvoiceCommands..goods = stocks.of(ref).ledger,
   ), // #4165
+  invoiceGoodsCatalogueProvider.overrideWith((ref) => DemoInvoiceGoodsCatalogue(stocks.of(ref).ledger)),
   taxReportingRepositoryProvider.overrideWith(
     (ref) => money(ref).taxReporting,
   ),
@@ -332,8 +340,6 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
     ),
   ),
   // #4173 — and traces its goods to the orders they were put away from, and values them.
-  // #4432 — and the whole chain of a lot, from its own ledger.
-  stockTraceChainReaderProvider.overrideWith((ref) => DemoStockTraceChain(stocks.of(ref).ledger)),
   stockTraceReaderProvider.overrideWith(
     (ref) => DemoStockTrace(
       stocks.of(ref).id,
@@ -361,6 +367,23 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
       stocks.of(ref).tags,
       () => ref.read(myPermissionsProvider),
       (ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository).now,
+    ),
+  ),
+];
+
+/// #4432 — the whole chain of a lot, from the business's own ledger; #4436 — and of a line its till sold, read
+/// backwards, and what carries a track ID: the lots, the pieces and those sales.
+List<Override> _stockTraceOverrides(_DemoStocks stocks, DemoSpaces<DemoTill> tills) => [
+  stockTraceChainReaderProvider.overrideWith(
+    (ref) => DemoStockTraceChain(stocks.of(ref).ledger, sold: () => demoPickSpace(ref, tills).soldLines),
+  ),
+  stockTrackFinderProvider.overrideWith(
+    (ref) => DemoStockTrackFind(
+      stocks.of(ref).ledger,
+      stocks.of(ref).expiry,
+      stocks.of(ref).tags,
+      sold: () => demoPickSpace(ref, tills).soldLines,
+      held: () => ref.read(myPermissionsProvider),
     ),
   ),
 ];
@@ -439,10 +462,37 @@ List<Override> _hmrcOverrides(DemoFixture fixture) => [
 ];
 
 /// #4366 — each space's till: its own counter, its own numbers.
-DemoSpaces<DemoTill> _demoTills(DemoFixture fixture) => demoSpacesOf(
+/// The till's ports: its sales, its drawer (following the business's settings and the person's rights) and its offline sales.
+List<Override> _tillOverrides(DemoSpaces<DemoTill> tills, DemoSpaces<DemoTillDrawer> drawers) => [
+    tillPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
+    // #4367 — the drawer follows the business's settings and the person's rights, as the server does.
+    tillDrawerPortProvider.overrideWith((ref) {
+      return demoPickSpace<DemoTillDrawer>(ref, drawers)
+        ..rules = (() => ref.read(currentSettingsProvider).asData?.value == null
+            ? const DrawerSettings(blindCount: true, byDenomination: false, reasons: ['change', 'expense', 'other'], paidOutLimitMinor: 0)
+            : _drawerSettingsOf(ref.read(currentSettingsProvider).requireValue))
+        ..canSeeFinances = (() => ref.read(myPermissionsProvider).contains(WorkspacePermission.viewFinances))
+        ..canRecordOutgoing = (() => ref.read(myPermissionsProvider).contains(WorkspacePermission.recordOutgoingPayments))
+        ..me = (() => ref.read(myMemberProvider).value?.id ?? 'demo-member');
+    }),
+    tillOfflinePortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
+];
+
+DemoSpaces<DemoTill> _demoTills(DemoFixture fixture, DemoSpaces<DemoTillDrawer> drawers) => demoSpacesOf(
   (key) => DemoTill(
+    drawer: drawers.at(key),
     country: fixture.workspaces.workspaces.firstWhere((w) => w.id == key.id).countryCode,
     currency: key.currency,
     vatPercent: 20,
+    // #4436 -- a sale is kept with the Demo's day, so the trace finds it from the track IDs it took
+    clock: () => fixture.seededAt,
   ),
+);
+
+/// #4367 — the drawer's settings as the business has them.
+DrawerSettings _drawerSettingsOf(SettingsSet settings) => DrawerSettings(
+  blindCount: settings.read<bool>('counter.blind_count'),
+  byDenomination: settings.read<bool>('counter.count_by_denomination'),
+  reasons: DrawerSettings.reasonsOf(settings.read<String>('counter.cash_reasons')),
+  paidOutLimitMinor: settings.read<int>('counter.paid_out_limit_minor'),
 );

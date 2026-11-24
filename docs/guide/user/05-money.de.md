@@ -134,6 +134,7 @@ Sie möchten eine Rechnung finden, sehen, ob sie bezahlt ist, und ihr PDF erhalt
 - Tippen Sie bei einer offenen Rechnung auf das Zahlungssymbol, um zu **Zahlungen** zu gelangen.
 - Ist die Liste leer, hat der Workspace Ihnen noch nichts in Rechnung gestellt; er stellt einen Monat nach dem Abschluss in Rechnung.
 - Rechnungen lassen sich nicht bearbeiten. Eine falsche Rechnung wird als **Fehlerhaft** markiert und durch eine neue ersetzt; die fehlerhafte verschwindet aus Ihrer Liste. Werden Rechnungen zu einer zusammengefasst, ersetzt die zusammengefasste Rechnung sie in Ihrer Liste.
+- Eine Position nach Stunden, Tagen oder Gewicht (zum Beispiel *1.5 h zu 90 EUR* oder *0.75 kg zu 12.5 EUR je 10 kg*) zeigt unter ihrer Bezeichnung die genaue Menge, ihre Einheit und den erfassten Preis, so wie das PDF sie druckt; ihr Betrag ist der bei der Ausstellung festgelegte. Eine Position, die eine neuere Version der App erfasst hat, wird unverändert gezeigt und sagt, dass sie hier nicht verwendet werden kann: Aktualisieren Sie die App, um damit zu arbeiten.
 
 **Siehe auch:** [Offenes bezahlen](help:user.money.payments) · [Ihre Finanzen in allen Workspaces](help:user.money.finances)
 
@@ -620,6 +621,30 @@ Die Liste zeigt jede Einladung als eingeladen, liest, abgelaufen oder beendet. *
 
 **Siehe auch:** [Rechnungskunden](help:user.money.customers.billing)
 
+<!-- anchor: user.money.invoices.standalone -->
+### Eine Kundenrechnung ohne Monat
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie haben heute eine Leistung für einen benannten Kunden erbracht (eine Beratung, eine Stunde, ein vereinbartes Ergebnis) und wollen sie jetzt abrechnen, ohne Buchung, Abonnement oder Monat dahinter. Sie brauchen das Recht, Rechnungen auszustellen, und die Funktion **Einzelrechnungen**.
+
+**Schritte**
+
+1. Öffnen Sie **Rechnungen** und wählen Sie **Kundenrechnung ohne Monat**.
+2. Wählen Sie den Kunden, dann Leistungsdatum und Fälligkeit.
+3. Fügen Sie die Zeilen hinzu: eine Beschreibung, eine Menge, eine Einheit und einen Preis. Ein Artikel aus dem Katalog ist optional, eine Einzelleistung schreiben Sie in Worten.
+4. Wählen Sie **Rechnung prüfen**. Die Vorschau zeigt Beträge und Steuer genau so, wie sie ausgestellt werden, oder was noch fehlt.
+5. Wählen Sie **Rechnung ausstellen**, um zu bestätigen. Die Rechnung wird nummeriert, wie ausgestellt aufbewahrt und geöffnet.
+
+**Gut zu wissen**
+
+- Die Rechnung hat keinen Abrechnungsmonat: Eine zweite, eigene Rechnung desselben Kunden im selben Monat ist eine eigene Rechnung, und die Monatsrechnung, falls vorhanden, bleibt unberührt.
+- Beträge und Steuer berechnet immer der Server, nie der Bildschirm; der Preis steht in der Währung des Betriebs.
+- Ihr Entwurf bleibt beim Ändern der Fenstergröße oder nach einer abgelehnten Prüfung erhalten. Kommt die Antwort auf **Rechnung ausstellen** nicht an, stellt dieselbe Bestätigung nie eine zweite Rechnung aus: Suchen Sie sie erneut.
+- Spätere Änderungen an Katalog oder Kunde ändern eine ausgestellte Rechnung nie.
+
+**Siehe auch:** [Rechnungskunden](help:user.money.customers.billing) · [Rechnungen ohne Monat bezahlen](help:user.money.finances.standalone)
+
 <!-- anchor: user.money.quotes -->
 ### Angebote
 
@@ -777,6 +802,36 @@ Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang 
 
 Ein rückverfolgter Artikel nennt, woraus er entnommen wurde. Verkaufen Sie einen chargengeführten Artikel, ohne eine Charge zu wählen, entnimmt der Verkauf ihn den vorrätigen Chargen, die zuerst ablaufende zuerst und nie eine abgelaufene; unter der verkauften Zeile zeigt die Kasse den Code jeder Charge wie beim Wareneingang mit der entnommenen Menge, zum Beispiel **Charge SUP-A × 2 · Charge SUP-B × 1**, und jedes Stück mit seinem Tag. Nutzt das Unternehmen einen Scanner, scannen Sie den Tag eines Stücks, um dieses Stück zu buchen: Der Verkauf nimmt genau die gescannten Stücke, und dasselbe Stück zweimal wird abgelehnt. Diese Rückverfolgungs-IDs werden mit dem Beleg festgeschrieben: Eine spätere Änderung einer Charge oder eines Tags ändert einen bereits ausgestellten Beleg nie. Im Lager nennt die Rückverfolgung einer Charge oder eines Stücks den Beleg, mit dem es verkauft wurde.
 
+<!-- anchor: user.money.till-drawer -->
+### Kasse öffnen, zählen und schließen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie führen eine Kassenschublade und wollen am Tagesende wissen, dass das Geld darin stimmt.
+
+Öffnen Sie **Kassenschublade** im Verkaufsmenü (es braucht die Funktion Kassensitzungen und das Recht, Rechnungen auszustellen oder die Finanzen zu sehen). Jede Kasse des Betriebs steht mit ihrem Zustand in der Liste. Wer die Standorte verwaltet, legt mit **Kasse hinzufügen** eine Kasse an und kann sie umbenennen oder abschalten.
+
+Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade** ein (oder, wenn Ihr Betrieb nach Stückelung zählt, den Wert jedes Scheins oder jeder Münze und die Anzahl) und bestätigen Sie. Eine Kasse hat jeweils eine offene Sitzung, und mit Kassensitzungen verkauft die Kasse nur auf einer offenen Sitzung: ohne offene Sitzung bietet sie **Kasse öffnen** statt des Verkaufs an.
+
+**Einlage oder Entnahme** erfasst Bargeld, das in die Schublade gelegt oder entnommen wird, mit einem **Grund** aus der Liste Ihres Betriebs. Eine Entnahme über dem Limit des Betriebs erfasst, wer ausgehende Zahlungen erfassen darf.
+
+**Zählen und schließen** fragt nach dem **Im Fach gezählten Bargeld** und dem, was **Zur Bank gebracht** wird. Zählt der Betrieb blind, wird das erwartete Bargeld vor dem Zählen nicht angezeigt; wer die Finanzen sehen darf, sieht es und beim Eintippen die Differenz. Eine Zählung, die vom erwarteten Bargeld abweicht, wird nur mit ihrem Grund geschlossen, den die Kasse erfragt. Nach dem Schließen nennt die Kasse das Erwartete, das Gezählte und die Differenz. Unbeantwortete Kartenzahlungen stehen getrennt und zählen nie als Bargeld.
+
+**Tagesabschluss.** Wer die Finanzen sehen darf, öffnet **Tagesabschluss** in der Kassenschublade und tippt auf **Tag abschließen**, sobald jede Kasse geschlossen ist (eine noch offene Kasse wird genannt und verweigert den Abschluss). Die geschlossenen Sitzungen des Tages werden zu einem nummerierten Bericht: jede Sitzung mit Erwartetem, Gezähltem, Differenz und Grund, die Einnahmen nach Zahlungsart und Steuersatz, das ein- und entnommene Bargeld, die Erstattungen und der Bereich der Belegnummern. **Abgeschlossene Tage** listet die bereits erstellten Berichte; ein abgeschlossener Tag wird nie geändert. Das ist die eigene Aufzeichnung des Betriebs; den rechtlichen Inhalt, den ein Land vom Tagesabschluss verlangt, liefert ein eigenes Modul.
+
+<!-- anchor: user.money.till-offline -->
+### Wenn die Kasse offline ist
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie verkaufen an der Kasse und die Verbindung geht verloren: Sie möchten weiter verkaufen und sicher sein, dass nichts verloren geht oder doppelt gezählt wird.
+
+Schalten Sie **Offline verkaufen, nur bar** ein (die Funktion Kassensitzungen wird vorausgesetzt). Bekommt ein Aufruf an den Server keine Antwort, meldet die Kasse **Offline – nur Barzahlung. Die Verkäufe bleiben auf diesem Gerät und werden gesendet, sobald die Verbindung wieder da ist.** und verkauft weiter, nur gegen Bargeld, zu den Preisen, die sie zuletzt online kannte; ein Artikel ohne Preis auf dem Gerät wird nicht verkauft. Jeder Verkauf bleibt auf dem Gerät unter der nächsten Nummer seiner Kassensitzung; der Beleg trägt **Offline erfasst** mit dieser Nummer und **Nicht signiert. Der Beleg wird an den Server gesendet, sobald die Verbindung wieder da ist.** – eine Belegnummer erhält er erst, wenn der Server ihn empfangen hat.
+
+Die Kasse sucht ihre Verbindung von selbst wieder, **Verbindung jetzt suchen** tut es sofort. Ist die Verbindung zurück, werden die Verkäufe der Reihe nach gesendet, jeder unter der Nummer, mit der er entstand; ein bereits empfangener Verkauf wird also nie doppelt gezählt. Die Kasse sagt dann, wie viele erfasst wurden und, für jeden vom Server abgelehnten Verkauf, warum (zum Beispiel: der Preis hat sich stärker geändert als erlaubt, oder der Artikel wird nicht mehr verkauft); das Bargeld eines abgelehnten Verkaufs bleibt in der Kassenzählung. Wurde die Sitzung inzwischen geschlossen, sagt die Kasse: „Die Sitzung wurde geschlossen: Diese Verkäufe bleiben für eine Leitung auf dem Gerät.“ Die Verkäufe bleiben auf dem Gerät, bis eine Leitung sie bearbeitet hat.
+
+Drei Einstellungen des Betriebs begrenzen, was angenommen wird: **Längste Offline-Zeit (Minuten)**, **Höchstzahl Offline-Verkäufe je Kassensitzung** und **Erlaubte Preisabweichung offline (%)**. Sind die Offline-Daten des Geräts nicht lesbar, wird offline nichts verkauft, bis eine Leitung entscheidet; **Offline-Daten verwerfen** verwirft sie nach einer Warnung, denn noch nicht gesendete Verkäufe gehen endgültig verloren.
+
 <!-- anchor: user.money.stock.rfid -->
 ### RFID-Tags: eines pro Charge oder eines pro Stück
 
@@ -850,6 +905,7 @@ Sind die Funktionen *Etiketten* und *Etikettenlesung* an, bietet eine Zähl-Aufg
 - Die Plätze im Regal ergeben immer die oben gezeigte Menge.
 - An einem vergangenen Tag wird Ware unterwegs nicht gezeigt; die Stücke schon, ab dem Tag, an dem sie verfolgt werden (ein früher entstandenes Stück hat davor keinen Verlauf).
 - Tippen Sie auf einen Platz mit einer Charge, um **Alle Bewegungen** dieser Charge zu sehen, von der Lieferung, mit der sie kam, bis zu ihrem Abgang; die Zeitleisten-Schaltfläche eines Stücks zeigt **Alle Bewegungen dieses Stücks**. Ein Beleg, den Sie nicht sehen dürfen, wird mit seiner Art genannt, nie weggelassen.
+- **Rückverfolgungscode suchen** (die Code-Schaltfläche oben im **Lager**) nimmt einen Chargencode wie geliefert, den Code auf dem Etikett einer Charge oder das Etikett eines Stücks, eingegeben oder gescannt. Sie listet die Chargen und Stücke, die ihn tragen, und die Verkäufe, die davon genommen haben. Tippen Sie auf eine Charge oder ein Stück für alle seine Bewegungen; tippen Sie auf einen Verkauf, um zu sehen, was diese Bonzeile genommen hat: jede Charge mit ihrer Menge, jedes Stück mit seinem Etikett. Ein Bon, den Sie nicht sehen dürfen, wird mit seiner Art genannt und öffnet sich nicht. Wird nichts gefunden, steht das da; eine abgelehnte oder fehlgeschlagene Suche sagt es und kann wiederholt werden.
 
 <!-- anchor: user.money.stock.value -->
 ### Lagerwert und Herkunft der Ware
@@ -956,6 +1012,29 @@ Ein Betrieb, der Ihnen Rechnungen stellt, kann Ihnen einen Code geben, damit Sie
 - Diese Rechnungen von hier aus zu bezahlen, wird noch nicht angeboten.
 
 **Siehe auch:** [Ihre Finanzen in allen Workspaces](help:user.money.finances)
+
+<!-- anchor: user.money.finances.standalone -->
+### Rechnungen ohne Monat bezahlen
+
+**Zielgruppe:** Mitglied
+
+Ein Betrieb hat Ihnen Rechnungen ausgestellt, die zu keinem Monat gehören. Sie werden zusammen und für sich bezahlt.
+
+**Schritte**
+
+1. Öffnen Sie [Meine Finanzen](app:/money) und haken Sie die Rechnungen ohne Monat an, die Sie bezahlen wollen. Sie gehören zu einem Betrieb und einer Währung.
+2. Eine Leiste zeigt, wie viele Sie angehakt haben, und ihre Summe. Wählen Sie **Bezahlen** für die Online-Zahlung oder **Ich habe bezahlt**, wenn Sie schon anders bezahlt haben.
+3. Die Bestätigung listet die Rechnungen und eine Summe. Bestätigen Sie: Es öffnet sich eine Zahlung, oder es wird eine Meldung gesendet.
+
+**Gut zu wissen**
+
+- Rechnungen ohne Monat und Monatsrechnungen werden nie zusammen bezahlt: Ist eine Art angehakt, lässt sich die andere nicht anhaken, und eine Zeile sagt es. Lehnt der Betrieb eine Mischung trotzdem ab, erfahren Sie es, und es wird nichts belastet.
+- Der Betrag ist, was die Rechnungen noch offen haben. Hat er sich geändert, aktualisieren Sie und versuchen Sie es erneut.
+- Ging die Antwort unterwegs verloren, wählen Sie **Bezahlen** erneut: Es ist dieselbe Zahlung, wiedergefunden, nie eine zweite. Eine Zahlung gilt erst als bezahlt, wenn der Betrieb sie erhalten hat.
+- Das Geld wird in dem Monat gebucht, in dem es eintrifft. Was eine Rechnung nicht aufnimmt, bleibt Ihr Guthaben beim Betrieb, bis es zugeordnet wird.
+- Ein Betrieb, dessen Zahlungsdienst zu alt ist, sagt das, bevor etwas gesendet wird.
+
+**Siehe auch:** [Ihre Finanzen über Spaces hinweg](help:user.money.finances)
 
 <!-- anchor: user.money.businesses -->
 ### Ihre Unternehmen auf einen Blick

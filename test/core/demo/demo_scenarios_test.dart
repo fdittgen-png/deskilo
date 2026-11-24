@@ -16,6 +16,7 @@
 //     regional formats), demonstrated by being on.
 import 'dart:async';
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/asset_valuation_repository.dart';
 import 'package:deskilo/core/demo/data/bank_statement_demo_seed.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
@@ -108,6 +109,8 @@ import '../../helpers/demo_payment_journeys.dart';
 import '../../helpers/demo_plan_booking_journeys.dart';
 import '../../helpers/demo_settings_shell_journeys.dart';
 import '../../helpers/demo_standalone_journey.dart';
+import '../../helpers/demo_till_drawer_journey.dart';
+import '../../helpers/demo_till_offline_journey.dart';
 import '../../helpers/demo_vies_export_journeys.dart';
 import '../../helpers/demo_whatsapp_journeys.dart';
 
@@ -1422,7 +1425,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         return false;
       } on PostgrestException catch (e) {
         final allows = (await reversals.reversible(demoFirstSpaceId, ['demo-stock-movement-3']))['demo-stock-movement-3']!;
-        return e.code == 'DKG17' && ledger.balance('demo-item-mugs', 'demo-place-main').text == '32' && allows.remaining.text == '50';
+        return e.code == DkCode.dkg17 && ledger.balance('demo-item-mugs', 'demo-place-main').text == '32' && allows.remaining.text == '50';
       }
     },
   ),
@@ -1446,7 +1449,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         await reversals.decideCount(demoFirstSpaceId, 'count-2', StockCountDecision.apply, 'req-4');
         return false;
       } on PostgrestException catch (e) {
-        return e.code == 'DKG20' && ledger.balance('demo-item-beans', 'demo-place-main').text == '9';
+        return e.code == DkCode.dkg20 && ledger.balance('demo-item-beans', 'demo-place-main').text == '9';
       }
     },
   ),
@@ -1466,7 +1469,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       try {
         await units.move(demoFirstSpaceId, 'req-2', unitId: pallet.id, toLocationId: 'demo-place-main', revision: pallet.revision);
       } on StockUnitRefused catch (e) {
-        refused = e.code == 'DKG27';
+        refused = e.code == DkCode.dkg27;
       }
       final carton = (await units.page(demoFirstSpaceId)).rows.firstWhere((u) => u.code == 'CT-001');
       final boxes = await units.repack(
@@ -1478,7 +1481,8 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
             UnitDraft(code: 'CT-001-$n', kind: HandlingUnitKind.box, locationId: carton.locationId, lines: const [UnitLineDraft(itemId: 'demo-item-beans', quantity: '5')]),
         ],
       );
-      return moved.locationId == 'demo-place-shelf' && ledger.balance('demo-item-mugs', 'demo-place-shelf').text == '42' && refused && boxes.length == 2;
+      // the shelf held 12 mugs less the 2 the shop sold from it (#4173); the pallet brings 30
+      return moved.locationId == 'demo-place-shelf' && ledger.balance('demo-item-mugs', 'demo-place-shelf').text == '40' && refused && boxes.length == 2;
     },
   ),
   // #4431 — the expiry report: what expired and what is about to, by date, the five basket pieces one by one, and a place keeps
@@ -1521,7 +1525,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         await cycle.skipLine(demoFirstSpaceId, lines[1].lineId, ' ', 'req-2');
         return false;
       } on PostgrestException catch (e) {
-        if (e.code != 'DKG07') return false;
+        if (e.code != DkCode.dkg07) return false;
       }
       for (final l in lines.skip(1)) {
         await cycle.skipLine(demoFirstSpaceId, l.lineId, 'Behind the pallet', 'skip-${l.lineId}');
@@ -1580,7 +1584,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         await tags.bind(demoFirstSpaceId, requestId: 'r2', code: '04aa11bb', owner: const TagOwner.place('demo-place-shelf'));
         return false;
       } on StockTagRefused catch (e) {
-        return read.kind == ScannedKind.tag && read.place?.id == 'demo-place-back' && e.code == 'DKG22';
+        return read.kind == ScannedKind.tag && read.place?.id == 'demo-place-back' && e.code == DkCode.dkg22;
       }
     },
   ),
@@ -1764,8 +1768,29 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     _owner,
     'Ada invoices 1.5 hours at 80.00 to a customer with no booking behind it: '
     'the preview and the issued invoice state the exact quantity, and the same '
-    'request never issues twice',
+    'request never issues twice, and its customer declares it paid in one '
+    'declaration apart from the monthly ones',
     (_) => standaloneInvoiceJourney(),
+  ),
+  // #4184 — a sale at the counter: rung up, priced by the server, paid in cash and numbered.
+  WorkspaceFeature.counterReceipts: _action(
+    _owner,
+    'Ada rings up a litre of milk at the counter, takes the cash and the sale is numbered',
+    (_) => tillSaleJourney(),
+  ),
+  // #4367 — the cash drawer: open with a float, sell, pay out, count and close.
+  WorkspaceFeature.counterTillSessions: _action(
+    _owner,
+    'Ada opens the front counter with a 100.00 float, sells for cash, pays 5.00 out, counts the drawer and closes it, closes the day; a '
+    'short count at the market stall closes only with its reason',
+    (_) => tillDrawerJourney(),
+  ),
+  // #4373 — the till keeps selling for cash when the connection is lost, and the sales are sent when it returns.
+  WorkspaceFeature.counterOfflineCash: _action(
+    _owner,
+    'the bakery sells three cash sales offline from the prices the till held, sends them in order when the connection returns '
+    '(none twice), counts the drawer exactly and closes the day with them; a sale sent into the closed session is refused',
+    (_) => tillOfflineJourney(),
   ),
 };
 

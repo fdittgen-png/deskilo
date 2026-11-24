@@ -2,7 +2,7 @@
 //
 // #3556 (1b) — a payment that names the invoices it pays (its claim, 0797)
 // can be refused by the business's server before anything is charged or
-// recorded: each refusal has its code (DKC01–DKC15) and the app answers
+// recorded: each refusal has its code (DKC01–DKC16) and the app answers
 // each by its own sentence, never as a failure of the app.
 
 import '../../../core/codes/dk_code.dart';
@@ -49,8 +49,16 @@ enum ClaimRefusal {
   /// DKC13 — the business already decided this declaration.
   decided(DkCode.dkc13),
 
+  /// DKC14 — a monthly payment naming an invoice without a month (#4165):
+  /// such an invoice is paid on its own.
+  standaloneInMonthly(DkCode.dkc14),
+
   /// DKC15 — the request id of this payment was used for another one.
   requestChanged(DkCode.dkc15),
+
+  /// DKC16 — a payment of invoices without a month naming an invoice that
+  /// has one (#4165): monthly invoices are paid with their month.
+  monthlyInStandalone(DkCode.dkc16),
 
   /// A claim's code this version does not know (a newer server's).
   other('');
@@ -88,7 +96,21 @@ class InvoiceClaim {
     required this.period,
     required this.amountCents,
     required this.invoiceIds,
+    this.standalone = false,
   });
+
+  /// #4165 — a payment of invoices without a month: no period, the
+  /// invoices of one financial subject, sent under a request id the server
+  /// requires (`open_standalone_payment_intent_v1`,
+  /// `record_standalone_payment_v1`).
+  const InvoiceClaim.standalone({
+    required this.amountCents,
+    required this.invoiceIds,
+  }) : period = '',
+       standalone = true;
+
+  /// True for [InvoiceClaim.standalone]; its [period] is empty.
+  final bool standalone;
 
   final String period;
   final int amountCents;

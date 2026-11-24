@@ -50,5 +50,11 @@
   "financesTakeBackTitle": "Ritirare questa dichiarazione?",
   "financesTakeBackBody": "Ha dichiarato di aver pagato {invoices}. Una volta ritirata, l’azienda non deve più confermarla e queste fatture possono essere pagate di nuovo.",
   "financesTakenBack": "Dichiarazione ritirata. Le sue fatture possono essere pagate di nuovo.",
-  "financesTakeBackFailed": "Non è stato possibile ritirare la dichiarazione. Riprovi."
+  "financesTakeBackFailed": "Non è stato possibile ritirare la dichiarazione. Riprovi.",
+  "financesSelectionOnlyStandalone": "Le fatture senza mese si pagano insieme, separatamente dalle fatture mensili.",
+  "financesSelectionOnlyMonthly": "Le fatture mensili si pagano con il loro mese, separatamente dalle fatture senza mese.",
+  "financesStandaloneTotal": "Totale: {amount}",
+  "payOnlineStandaloneUnsupported": "Il servizio di pagamento di questa attività deve essere aggiornato prima che le fatture senza mese possano essere pagate online.",
+  "claimRefusedStandaloneInMonthly": "Una fattura senza mese si paga da sola, separatamente dalle fatture mensili. Non è stato addebitato nulla.",
+  "claimRefusedMonthlyInStandalone": "Le fatture mensili si pagano con il loro mese, separatamente dalle fatture senza mese. Non è stato addebitato nulla."
 }

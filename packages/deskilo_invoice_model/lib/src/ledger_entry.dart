@@ -45,6 +45,11 @@ sealed class LedgerEntry with _$LedgerEntry implements SystemStamped {
     /// and recorded on the 26th is dated the 3rd; null on entries booked
     /// before 0070 and on those where booking IS the event.
     DateTime? occurredOn,
+
+    /// #4165 (0901) — how the entry is spent: `legacy` by the month rules,
+    /// `explicit` only by the allocations that name it (a payment of invoices
+    /// without a month, posted in the month it arrived).
+    @Default('legacy') String allocationMode,
     /// #992 — the server's stamp on this row.
     @Default(SystemColumns.none) SystemColumns system,
   }) = _LedgerEntry;

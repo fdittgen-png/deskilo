@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -172,9 +173,7 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
                               if (message.body.isNotEmpty)
                                 SelectableText(message.body),
                               Text(
-                                MaterialLocalizations.of(
-                                  context,
-                                ).formatShortDate(appFormatOf(context).wall(message.createdAt)),
+                                appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(message.createdAt)),
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ],

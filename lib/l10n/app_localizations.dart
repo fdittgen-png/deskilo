@@ -10655,6 +10655,12 @@ abstract class AppLocalizations {
   /// **'Choose the invoices this payment is for.'**
   String get claimRefusedEmpty;
 
+  /// #4165 a payment of invoices without a month named one that has a month (DKC16)
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly invoices are paid with their month, apart from invoices without one. Nothing was charged.'**
+  String get claimRefusedMonthlyInStandalone;
+
   /// #3556 Refusal: invoices of several months in one payment
   ///
   /// In en, this message translates to:
@@ -10702,6 +10708,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This payment was already sent as another one. Check the declared payments, then try again.'**
   String get claimRefusedRequestChanged;
+
+  /// #4165 a payment with a month named an invoice without one (DKC14)
+  ///
+  /// In en, this message translates to:
+  /// **'An invoice without a month is paid on its own, apart from monthly invoices. Nothing was charged.'**
+  String get claimRefusedStandaloneInMonthly;
 
   /// #3556 Refusal: retrying a payment whose invoices were withdrawn
   ///
@@ -10924,6 +10936,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{first}, {second}'**
   String commaPair(String first, String second);
+
+  /// #4162 an issued commercial line in the invoice sheet: its exact quantity with its unit, at the price entered (e.g. '1.5 h at 90 EUR')
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} at {price}'**
+  String commercialLineMeasure(String quantity, String price);
+
+  /// #4162 the same, for a price quoted for more than one unit (e.g. '30 kg at 12.5 EUR per 10 kg')
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} at {price} per {base}'**
+  String commercialLineMeasurePer(String quantity, String price, String base);
+
+  /// #4162 an issued line whose facts this version of the app cannot interpret: shown, never used
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded by a newer version: these facts are shown as written and cannot be used here'**
+  String get commercialLineUnreadable;
 
   /// Generic cancel action in dialogs
   ///
@@ -11680,6 +11710,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Yesterday'**
   String get conversationYesterday;
+
+  /// #4436 a counter sale refused for its lots (DKG03, scope lots)
+  ///
+  /// In en, this message translates to:
+  /// **'Only {held} of the {asked} asked for is fit to sell here: {expired} more is past its date. Nothing was sold.'**
+  String counterLotsExpired(String held, String asked, String expired);
+
+  /// #4436 a counter sale refused for its lots (DKG03, scope lots)
+  ///
+  /// In en, this message translates to:
+  /// **'Only {held} of the {asked} asked for is here. Nothing was sold.'**
+  String counterLotsShort(String held, String asked);
 
   /// #2454 country change
   ///
@@ -12650,7 +12692,7 @@ abstract class AppLocalizations {
   /// DATEV export (#2375): a rate is booked to the automatic account of another rate
   ///
   /// In en, this message translates to:
-  /// **'{percent} % would be booked to {account}, the automatic account of another rate'**
+  /// **'{percent} would be booked to {account}, the automatic account of another rate'**
   String datevProblemAutomatic(String percent, String account);
 
   /// DATEV export (#2375): the books could not post the purchases, with the missing roles or rates
@@ -12722,7 +12764,7 @@ abstract class AppLocalizations {
   /// DATEV export (#2375): no BU key for a rate booked to a non-automatic account
   ///
   /// In en, this message translates to:
-  /// **'no BU-Schlüssel is recorded for {percent} % on account {account}'**
+  /// **'no BU-Schlüssel is recorded for {percent} on account {account}'**
   String datevProblemTaxKey(String percent, String account);
 
   /// DATEV export dialog (#2375): include the invoice PDFs, linked from each row
@@ -18646,6 +18688,12 @@ abstract class AppLocalizations {
   /// **'Workspace'**
   String get exportValueNameWorkspace;
 
+  /// #4416 Shown in a release build where a part of a screen failed to build, instead of the framework's grey box. The failure is in the trace.
+  ///
+  /// In en, this message translates to:
+  /// **'This part could not be shown. Go back and open it again.'**
+  String get failedPartNotShown;
+
   /// Shown as a text in personal space card (me).
   ///
   /// In en, this message translates to:
@@ -19935,6 +19983,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Each member picks in their settings how the app navigates: the classic bottom bar with the round Reserve button, or the menu the web uses. Off: every device keeps its platform\'s default.'**
   String get featureNavigationStyleDesc;
+
+  /// #3729 Note under a feature's switch, for an administrator: the installation hosting the workspace is older than the feature needs
+  ///
+  /// In en, this message translates to:
+  /// **'This installation is too old for this feature. It needs {feature} from schema {since}; ask whoever runs the server to update it.'**
+  String featureNeedsNewerInstallation(String feature, String since);
 
   /// Feature switch: RFID/NFC card check-in at a kiosk (0046)
   ///
@@ -22090,6 +22144,18 @@ abstract class AppLocalizations {
   /// **'A payment is for one business in one currency: {business}.'**
   String financesSelectionOneBusiness(String business);
 
+  /// #4165 the kind of a selection of monthly invoices: an invoice without a month cannot join it
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly invoices are paid with their month, apart from invoices without one.'**
+  String get financesSelectionOnlyMonthly;
+
+  /// #4165 the kind of a selection of invoices without a month: a monthly invoice cannot join it
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices without a month are paid together, apart from monthly invoices.'**
+  String get financesSelectionOnlyStandalone;
+
   /// #3556 Selection bar: how many invoices are selected and what they still owe; {amount} names its currency
   ///
   /// In en, this message translates to:
@@ -22107,6 +22173,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The documents of {host} could not be read right now; what is shown comes from your other spaces.'**
   String financesSourceUnavailable(String host);
+
+  /// #4165 the one amount paid or declared for invoices without a month; amount: formatted money
+  ///
+  /// In en, this message translates to:
+  /// **'Total: {amount}'**
+  String financesStandaloneTotal(String amount);
 
   /// Me › Finances
   ///
@@ -29760,12 +29832,6 @@ abstract class AppLocalizations {
   /// **'Target margin on cost (%)'**
   String get itemGroupMargin;
 
-  /// #4361 G12: a target margin as the group shows it; the percent arrives formatted
-  ///
-  /// In en, this message translates to:
-  /// **'{percent} %'**
-  String itemGroupMarginValue(String percent);
-
   /// #4361 G12 item groups: itemGroupMinAge
   ///
   /// In en, this message translates to:
@@ -33139,7 +33205,7 @@ abstract class AppLocalizations {
   /// #1619 mcp_confirmation
   ///
   /// In en, this message translates to:
-  /// **'New subscription share: {pct} %'**
+  /// **'New subscription share: {pct}'**
   String mcpConfirmNewShare(String pct);
 
   /// #1619 mcp_confirmation
@@ -33181,7 +33247,7 @@ abstract class AppLocalizations {
   /// #3937 mcp_confirmation: the share and the day it applies from
   ///
   /// In en, this message translates to:
-  /// **'New subscription share: {pct} % from {date}'**
+  /// **'New subscription share: {pct} from {date}'**
   String mcpConfirmShareFrom(String pct, String date);
 
   /// #1619 mcp_confirmation
@@ -36187,7 +36253,7 @@ abstract class AppLocalizations {
   /// #704 - the contact section of a member profile
   ///
   /// In en, this message translates to:
-  /// **'Plan {pct}%'**
+  /// **'Plan {pct}'**
   String memberPlanShare(String pct);
 
   /// #3618 members at the desk: plan tab row
@@ -39787,6 +39853,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Online payment reversed'**
   String get payOnlineReversedTitle;
+
+  /// #4165 the business's payment service does not take invoices without a month
+  ///
+  /// In en, this message translates to:
+  /// **'This business\'s payment service must be updated before invoices without a month can be paid online.'**
+  String get payOnlineStandaloneUnsupported;
 
   /// #3556 A retried online payment the server ended (failed or too old): start a new one
   ///
@@ -50928,6 +51000,12 @@ abstract class AppLocalizations {
   /// **'If you run this server: apply the missing migrations with `dart run tool/instance.dart install --ref <project>`. Only what is missing runs.'**
   String get schemaUpdateOperator;
 
+  /// #3729 For the person who runs the server, on the update screen: the schema the installation reports and the range of migrations it lacks
+  ///
+  /// In en, this message translates to:
+  /// **'This installation runs version {version}, so migrations {from} to {to} are missing.'**
+  String schemaUpdateRunning(String version, String from, String to);
+
   /// #1312 Button opening Settings → Server
   ///
   /// In en, this message translates to:
@@ -51342,6 +51420,12 @@ abstract class AppLocalizations {
   /// **'Business'**
   String get settingGroupBusiness;
 
+  /// #3732 Settings group: how long older app versions stay accepted by this installation
+  ///
+  /// In en, this message translates to:
+  /// **'App versions'**
+  String get settingGroupCompatibility;
+
   /// #2486 settings: Settings group title.
   ///
   /// In en, this message translates to:
@@ -51419,6 +51503,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fixed by the software; it is shown so you know it exists.'**
   String get settingGuardrailFallback;
+
+  /// #3732 Platform setting apps.support_window_days: what it decides, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'How many days an older app stays accepted after a newer one is available on the slowest channel you distribute it through. The oldest app this installation accepts is raised only once this many days have passed, so every member has time to update.'**
+  String get settingHintAppsSupportWindowDays;
 
   /// #2576 valuation settings
   ///
@@ -52032,6 +52122,12 @@ abstract class AppLocalizations {
   /// **'Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece).'**
   String get settingHintStockGroupDefaultTagMode;
 
+  /// #4433 goods sold on an invoice: settingHintStockInvoiceSalePlace
+  ///
+  /// In en, this message translates to:
+  /// **'The code of a place of the business that holds stock, for example MAIN. Goods sold on an invoice leave from there when the invoice is issued.'**
+  String get settingHintStockInvoiceSalePlace;
+
   /// #4361 setting label/hint
   ///
   /// In en, this message translates to:
@@ -52085,6 +52181,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No stored version: the default applies.'**
   String get settingHistoryEmpty;
+
+  /// #3732 Platform setting apps.support_window_days: its name in the settings editor
+  ///
+  /// In en, this message translates to:
+  /// **'Support window for older apps'**
+  String get settingLabelAppsSupportWindowDays;
 
   /// #2576 valuation settings
   ///
@@ -52698,6 +52800,12 @@ abstract class AppLocalizations {
   /// **'Default tag mode of items'**
   String get settingLabelStockGroupDefaultTagMode;
 
+  /// #4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace
+  ///
+  /// In en, this message translates to:
+  /// **'Place goods sold on an invoice leave from'**
+  String get settingLabelStockInvoiceSalePlace;
+
   /// #4361 setting label/hint
   ///
   /// In en, this message translates to:
@@ -52913,6 +53021,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'per hour'**
   String get settingUnitPerHour;
+
+  /// #4433 the unit of the selling place setting: a place is named by its code
+  ///
+  /// In en, this message translates to:
+  /// **'place code'**
+  String get settingUnitPlaceCode;
 
   /// #2578 settings: unit of a count of quarters.
   ///
@@ -53853,14 +53967,8 @@ abstract class AppLocalizations {
   /// #2875 setup grow steps: setupGrowVatPreviewRate
   ///
   /// In en, this message translates to:
-  /// **'VAT {rate} %'**
+  /// **'VAT {rate}'**
   String setupGrowVatPreviewRate(String rate);
-
-  /// #2875 setup grow steps: setupGrowVatRate
-  ///
-  /// In en, this message translates to:
-  /// **'{rate} %'**
-  String setupGrowVatRate(String rate);
 
   /// #2875 setup grow steps: setupGrowVatUsualNote
   ///
@@ -56765,6 +56873,12 @@ abstract class AppLocalizations {
   /// **'at least one line'**
   String get standaloneFactLines;
 
+  /// #4433 goods sold on an invoice: standaloneFactSalePlace
+  ///
+  /// In en, this message translates to:
+  /// **'the place goods are sold from: set a place that holds stock in the business settings'**
+  String get standaloneFactSalePlace;
+
   /// #4165 standalone invoice composer: standaloneFactSalesTax
   ///
   /// In en, this message translates to:
@@ -56825,11 +56939,41 @@ abstract class AppLocalizations {
   /// **'a description'**
   String get standaloneFieldDescription;
 
+  /// #4433 goods sold on an invoice: standaloneFieldGoodsAbroad
+  ///
+  /// In en, this message translates to:
+  /// **'a buyer in this business’s country: goods sold abroad are not invoiced here yet'**
+  String get standaloneFieldGoodsAbroad;
+
+  /// #4433 goods sold on an invoice: standaloneFieldGoodsOff
+  ///
+  /// In en, this message translates to:
+  /// **'the goods ledger, which is off in this business'**
+  String get standaloneFieldGoodsOff;
+
+  /// #4433 goods sold on an invoice: standaloneFieldItem
+  ///
+  /// In en, this message translates to:
+  /// **'an item kept in stock and on sale'**
+  String get standaloneFieldItem;
+
   /// #4165 standalone invoice composer: standaloneFieldLineId
   ///
   /// In en, this message translates to:
   /// **'saving the draft again'**
   String get standaloneFieldLineId;
+
+  /// #4433 goods sold on an invoice: standaloneFieldLot
+  ///
+  /// In en, this message translates to:
+  /// **'a lot of this item'**
+  String get standaloneFieldLot;
+
+  /// #4433 goods sold on an invoice: standaloneFieldPieces
+  ///
+  /// In en, this message translates to:
+  /// **'the tags of the pieces, as tag codes'**
+  String get standaloneFieldPieces;
 
   /// #4165 standalone invoice composer: standaloneFieldPrice
   ///
@@ -56843,10 +56987,40 @@ abstract class AppLocalizations {
   /// **'a quantity above zero with at most six decimals'**
   String get standaloneFieldQuantity;
 
+  /// #4433 goods sold on an invoice: standaloneFieldStock
+  ///
+  /// In en, this message translates to:
+  /// **'goods the stock can sell as entered'**
+  String get standaloneFieldStock;
+
+  /// #4433 goods sold on an invoice: standaloneFieldStockExpired
+  ///
+  /// In en, this message translates to:
+  /// **'a lot that has not expired'**
+  String get standaloneFieldStockExpired;
+
+  /// #4433 goods sold on an invoice: standaloneFieldStockLot
+  ///
+  /// In en, this message translates to:
+  /// **'a lot of this item that is there'**
+  String get standaloneFieldStockLot;
+
+  /// #4433 goods sold on an invoice: standaloneFieldStockPieces
+  ///
+  /// In en, this message translates to:
+  /// **'the pieces sold: one tag per piece, each of a piece that is there'**
+  String get standaloneFieldStockPieces;
+
+  /// #4433 goods sold on an invoice: standaloneFieldStockShort
+  ///
+  /// In en, this message translates to:
+  /// **'enough on hand at the place goods are sold from'**
+  String get standaloneFieldStockShort;
+
   /// #4165 standalone invoice composer: standaloneFieldSupply
   ///
   /// In en, this message translates to:
-  /// **'a service (goods are not invoiced here yet)'**
+  /// **'what the line supplies: a service, property or goods'**
   String get standaloneFieldSupply;
 
   /// #4165 standalone invoice composer: standaloneFieldUnit
@@ -56854,6 +57028,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'a unit'**
   String get standaloneFieldUnit;
+
+  /// #4433 goods sold on an invoice: standaloneFieldVariant
+  ///
+  /// In en, this message translates to:
+  /// **'the variant of the item'**
+  String get standaloneFieldVariant;
 
   /// #4165 standalone invoice composer: standaloneFieldVatRate
   ///
@@ -56903,11 +57083,35 @@ abstract class AppLocalizations {
   /// **'Description'**
   String get standaloneInvoiceLineDescription;
 
+  /// #4433 goods sold on an invoice: standaloneInvoiceLineGoods
+  ///
+  /// In en, this message translates to:
+  /// **'Sold from stock'**
+  String get standaloneInvoiceLineGoods;
+
   /// #4165 standalone invoice composer: standaloneInvoiceLineGross
   ///
   /// In en, this message translates to:
   /// **'The price includes tax'**
   String get standaloneInvoiceLineGross;
+
+  /// #4433 goods sold on an invoice: standaloneInvoiceLineNoGoods
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing from stock (a service)'**
+  String get standaloneInvoiceLineNoGoods;
+
+  /// #4433 goods sold on an invoice: standaloneInvoiceLinePieces
+  ///
+  /// In en, this message translates to:
+  /// **'Tags of the pieces sold'**
+  String get standaloneInvoiceLinePieces;
+
+  /// #4433 goods sold on an invoice: standaloneInvoiceLinePiecesHint
+  ///
+  /// In en, this message translates to:
+  /// **'One tag per piece, separated by commas: this item is tracked piece by piece.'**
+  String get standaloneInvoiceLinePiecesHint;
 
   /// #4165 standalone invoice composer: standaloneInvoiceLinePrice
   ///
@@ -57395,11 +57599,29 @@ abstract class AppLocalizations {
   /// **'Receipt {label}'**
   String stockChainReceipt(String label);
 
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'What this sale took'**
+  String get stockChainSaleTitle;
+
   /// #4432 G18 trace chain
   ///
   /// In en, this message translates to:
   /// **'Every movement of this lot'**
   String get stockChainTitle;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Lot {code} · {quantity}'**
+  String stockChainTookLot(String code, String quantity);
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {tag}'**
+  String stockChainTookPiece(String tag);
 
   /// #4432 G18 trace chain
   ///
@@ -57599,10 +57821,10 @@ abstract class AppLocalizations {
   /// **'Every how many days'**
   String get stockCycleEveryDays;
 
-  /// #4295 cycle counts
+  /// #4295 cycle counts: how many counts and the share of them that was exact; percent arrives formatted with its own sign (AppFormat.ratePercent)
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, one{1 count} other{{count} counts}}, {percent} % exact'**
+  /// **'{count, plural, one{1 count} other{{count} counts}}, {percent} exact'**
   String stockCycleHistoryAccuracy(int count, String percent);
 
   /// #4295 cycle counts
@@ -60412,6 +60634,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Where this came from'**
   String get stockTraceTitle;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {date}'**
+  String stockTrackFindExpires(String date);
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Lot code or tag'**
+  String get stockTrackFindField;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'The lot code as received, the code on its label, or a piece\'s tag.'**
+  String get stockTrackFindHelper;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Lots'**
+  String get stockTrackFindLots;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'No sale took it yet.'**
+  String get stockTrackFindNoSale;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in this business carries {code}.'**
+  String stockTrackFindNone(String code);
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Pieces'**
+  String get stockTrackFindPieces;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Type or scan a code first.'**
+  String get stockTrackFindRequired;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Sales that took it'**
+  String get stockTrackFindSales;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Find'**
+  String get stockTrackFindSubmit;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Find a track ID'**
+  String get stockTrackFindTitle;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Only the first matches are shown.'**
+  String get stockTrackFindTruncated;
 
   /// #4170 transfers and take-out: a label or message
   ///
@@ -65176,6 +65470,628 @@ abstract class AppLocalizations {
   /// **'Confirm the sale'**
   String get tillConfirmSale;
 
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: {amount}'**
+  String tillDayAmountLine(String label, String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Sales by tax rate'**
+  String get tillDayByRate;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Takings by tender'**
+  String get tillDayByTender;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Corrections: {amount}'**
+  String tillDayCorrections(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Total difference of the drawers: {amount}'**
+  String tillDayDifferences(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Gathers the closed sessions of the tills into one numbered report. Every till must be closed first.'**
+  String get tillDayHelp;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'{number} · {date}'**
+  String tillDayItem(String number, String date);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'No day has been closed yet.'**
+  String get tillDayNone;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Close the day'**
+  String get tillDayOpen;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash paid in: {amount}'**
+  String tillDayPaidIn(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash paid out: {amount}'**
+  String tillDayPaidOut(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Closed days'**
+  String get tillDayPast;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'{rate}%: net {net}, tax {tax}, gross {gross}'**
+  String tillDayRateLine(String rate, String net, String tax, String gross);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Receipts {first} to {last}'**
+  String tillDayReceiptRange(String first, String last);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Refunds: {amount}'**
+  String tillDayRefunds(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'This day is already closed.'**
+  String get tillDayRefusalClosed;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'A day cannot be closed before it has begun.'**
+  String get tillDayRefusalFuture;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'No session was closed on this day: there is nothing to close.'**
+  String get tillDayRefusalNothing;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The till {name} is still open. Count and close it first.'**
+  String tillDayRefusalTillOpen(String name);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Business day: {date}'**
+  String tillDayReportDate(String date);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Day report {number}'**
+  String tillDayReportTitle(String number);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Sales: {amount}'**
+  String tillDaySalesTotal(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'{till}: expected {expected}, counted {counted}, difference {difference}'**
+  String tillDaySessionLine(
+    String till,
+    String expected,
+    String counted,
+    String difference,
+  );
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Reason: {reason}'**
+  String tillDaySessionReason(String reason);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get tillDaySessions;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get tillDayTenderCash;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get tillDayTenderOther;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Day close'**
+  String get tillDayTitle;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Day to close: {date}'**
+  String tillDayToday(String date);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Add a till'**
+  String get tillDrawerAddTill;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Type an amount.'**
+  String get tillDrawerAmountInvalid;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The amount must be above zero.'**
+  String get tillDrawerAmountZero;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Taken to the bank'**
+  String get tillDrawerBanked;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The bank amount cannot be more than the counted cash.'**
+  String get tillDrawerBankedAbove;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The part of the counted cash taken to the bank. Leave empty if none.'**
+  String get tillDrawerBankedHelp;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Float {float}, sales {sales}, paid in {paidIn}, paid out {paidOut}'**
+  String tillDrawerBreakdown(
+    String float,
+    String sales,
+    String paidIn,
+    String paidOut,
+  );
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Paid in or out'**
+  String get tillDrawerCashAction;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Sell on which till?'**
+  String get tillDrawerChoose;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Count and close'**
+  String get tillDrawerCloseAction;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Close the till'**
+  String get tillDrawerCloseSubmit;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Count and close {till}'**
+  String tillDrawerCloseTitle(String till);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Taken to the bank: {amount}.'**
+  String tillDrawerClosedBanked(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Card payments still unanswered: {amount}. They are not counted as cash.'**
+  String tillDrawerClosedCard(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Expected {expected}, counted {counted}.'**
+  String tillDrawerClosedCounts(String expected, String counted);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Over by {amount}.'**
+  String tillDrawerClosedOver(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The count matches the expected cash.'**
+  String get tillDrawerClosedSame;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Short by {amount}.'**
+  String tillDrawerClosedShort(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Till closed'**
+  String get tillDrawerClosedTitle;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash counted in the drawer'**
+  String get tillDrawerCounted;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Count what is in the drawer.'**
+  String get tillDrawerCountedHelp;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Count what is in the drawer. The expected cash is shown after the count.'**
+  String get tillDrawerCountedHelpBlind;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Add a denomination'**
+  String get tillDrawerDenomAdd;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'How many'**
+  String get tillDrawerDenomCount;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Every row needs a value above zero and a number of pieces, and no value twice.'**
+  String get tillDrawerDenomIncomplete;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this row'**
+  String get tillDrawerDenomRemove;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Total counted: {amount}'**
+  String tillDrawerDenomTotal(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Value of a note or coin'**
+  String get tillDrawerDenomValue;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The count differs from the expected cash. Say why to close the till.'**
+  String get tillDrawerDifferenceAsked;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Difference: {amount}'**
+  String tillDrawerDifferenceLive(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Why does the count differ?'**
+  String get tillDrawerDifferenceReason;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Say why the count differs.'**
+  String get tillDrawerDifferenceReasonMissing;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the till'**
+  String get tillDrawerEditTill;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get tillDrawerEntryAmount;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash entry recorded.'**
+  String get tillDrawerEntryDone;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Above {limit}, a paid-out is recorded by someone who may record outgoing payments.'**
+  String tillDrawerEntryLimit(String limit);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Paid in'**
+  String get tillDrawerEntryPaidIn;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Paid out'**
+  String get tillDrawerEntryPaidOut;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get tillDrawerEntryReason;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a reason.'**
+  String get tillDrawerEntryReasonMissing;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get tillDrawerEntrySubmit;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Paid in or out'**
+  String get tillDrawerEntryTitle;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Expected cash: {amount}'**
+  String tillDrawerExpected(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The expected cash is shown after you count the drawer.'**
+  String get tillDrawerExpectedHidden;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The till could not do that. Try again.'**
+  String get tillDrawerFailed;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Float in the drawer'**
+  String get tillDrawerFloat;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The cash the drawer starts with, counted now.'**
+  String get tillDrawerFloatHelp;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The tills could not be read.'**
+  String get tillDrawerLoadFailed;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Tills and drawers'**
+  String get tillDrawerManage;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Give the till a name.'**
+  String get tillDrawerNameMissing;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'There is no till yet. Add the first one to start counting a drawer.'**
+  String get tillDrawerNoTills;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'No till has been set up yet. Someone who manages the sites adds it.'**
+  String get tillDrawerNoTillsPerson;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Open the till'**
+  String get tillDrawerOpenAction;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Open a till with its float before selling.'**
+  String get tillDrawerOpenFirstBody;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'No till is open'**
+  String get tillDrawerOpenFirstTitle;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Open {till}'**
+  String tillDrawerOpenTitle(String till);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'A paid-out this large is recorded by someone who may record outgoing payments.'**
+  String get tillDrawerRefusalAboveLimit;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'This till is already open. Count and close it before opening it again or switching it off.'**
+  String get tillDrawerRefusalAlreadyOpen;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The counts by denomination do not add up to the amount.'**
+  String get tillDrawerRefusalDenominations;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The count differs from the expected cash. Say why before closing.'**
+  String get tillDrawerRefusalDifference;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Another till of this business already has this name.'**
+  String get tillDrawerRefusalNameTaken;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Open the till first: a sale needs an open session on its till.'**
+  String get tillDrawerRefusalOpenFirst;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'This reason is not on the business\'s list. Choose one from the list.'**
+  String get tillDrawerRefusalReasonUnknown;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'This session is not open any more.'**
+  String get tillDrawerRefusalSessionGone;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'This is not an active till of this business.'**
+  String get tillDrawerRefusalTillUnknown;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get tillDrawerStateClosed;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Switched off'**
+  String get tillDrawerStateOff;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Open · float {float}'**
+  String tillDrawerStateOpen(String float);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'In use'**
+  String get tillDrawerTillActive;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Name of the till'**
+  String get tillDrawerTillName;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'New till'**
+  String get tillDrawerTillNewTitle;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Save the till'**
+  String get tillDrawerTillSave;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Till drawer'**
+  String get tillDrawerTitle;
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -65235,6 +66151,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing is numbered and nothing is taken until the country\'s operation is supported.'**
   String get tillNotReadyHint;
+
+  /// #4373 the till sells offline: the banner
+  ///
+  /// In en, this message translates to:
+  /// **'Offline — cash only. Sales are kept on this device and sent when the connection returns.'**
+  String get tillOfflineBanner;
+
+  /// #4373 the send was refused because the session was closed (DKL12)
+  ///
+  /// In en, this message translates to:
+  /// **'The session was closed: these sales stay on the device for a manager.'**
+  String get tillOfflineClosedSession;
+
+  /// #4373 drop the unreadable offline data: the action
+  ///
+  /// In en, this message translates to:
+  /// **'Discard the offline data'**
+  String get tillOfflineDiscard;
+
+  /// #4373 drop the unreadable offline data: the warning
+  ///
+  /// In en, this message translates to:
+  /// **'Sales that were not sent yet are lost for good. Only discard the data after a manager has checked.'**
+  String get tillOfflineDiscardBody;
+
+  /// #4373 drop the unreadable offline data: confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Discard the data'**
+  String get tillOfflineDiscardConfirm;
+
+  /// #4373 the answer of the send: sale numbers the server finds missing
+  ///
+  /// In en, this message translates to:
+  /// **'Sale numbers missing at the server: {numbers}.'**
+  String tillOfflineGaps(String numbers);
+
+  /// #4373 the answer of the send: sales that stay on the device
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 sale stays} other{{count} sales stay}} on this device for a manager.'**
+  String tillOfflineKept(int count);
+
+  /// #4373 a line the device holds no price for
+  ///
+  /// In en, this message translates to:
+  /// **'This item has no price on this device, so it cannot be sold offline.'**
+  String get tillOfflineNoPrice;
+
+  /// #4373 the receipt of a sale made offline: not signed yet
+  ///
+  /// In en, this message translates to:
+  /// **'Not signed. It is sent to the server when the connection returns.'**
+  String get tillOfflineNotSigned;
+
+  /// #4373 why the server refused an offline sale: BeforeSession
+  ///
+  /// In en, this message translates to:
+  /// **'Made before this till was opened.'**
+  String get tillOfflineReasonBeforeSession;
+
+  /// #4373 why the server refused an offline sale: Cash
+  ///
+  /// In en, this message translates to:
+  /// **'The cash given was less than the total.'**
+  String get tillOfflineReasonCash;
+
+  /// #4373 why the server refused an offline sale: Clock
+  ///
+  /// In en, this message translates to:
+  /// **'The device clock was ahead.'**
+  String get tillOfflineReasonClock;
+
+  /// #4373 why the server refused an offline sale: Item
+  ///
+  /// In en, this message translates to:
+  /// **'The item is no longer sold.'**
+  String get tillOfflineReasonItem;
+
+  /// #4373 why the server refused an offline sale: Other
+  ///
+  /// In en, this message translates to:
+  /// **'The till rules refused it.'**
+  String get tillOfflineReasonOther;
+
+  /// #4373 why the server refused an offline sale: Price
+  ///
+  /// In en, this message translates to:
+  /// **'The price changed by more than is allowed.'**
+  String get tillOfflineReasonPrice;
+
+  /// #4373 why the server refused an offline sale: TooLong
+  ///
+  /// In en, this message translates to:
+  /// **'Made too long after the connection was lost.'**
+  String get tillOfflineReasonTooLong;
+
+  /// #4373 why the server refused an offline sale: TooMany
+  ///
+  /// In en, this message translates to:
+  /// **'More offline sales than allowed.'**
+  String get tillOfflineReasonTooMany;
+
+  /// #4373 the receipt of a sale made offline: its number on this till [not a count: seq]
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded offline · sale {seq} of this till'**
+  String tillOfflineRecorded(int seq);
+
+  /// #4373 the answer of the send: how many sales were recorded
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 sale was recorded.} other{{count} sales were recorded.}}'**
+  String tillOfflineReportAccepted(int count);
+
+  /// #4373 the answer of the send: a sale the server refused, with its reason [not a count: seq]
+  ///
+  /// In en, this message translates to:
+  /// **'Sale {seq} was refused: {reason} Its cash stays in the drawer count.'**
+  String tillOfflineReportRefused(int seq, String reason);
+
+  /// #4373 the answer of the send: title
+  ///
+  /// In en, this message translates to:
+  /// **'Offline sales sent'**
+  String get tillOfflineReportTitle;
+
+  /// #4373 look for the connection and send the waiting sales
+  ///
+  /// In en, this message translates to:
+  /// **'Look for the connection now'**
+  String get tillOfflineSendNow;
+
+  /// #4373 the waiting sales are being sent
+  ///
+  /// In en, this message translates to:
+  /// **'Sending the offline sales…'**
+  String get tillOfflineSyncing;
+
+  /// #4373 the offline data of the device cannot be read
+  ///
+  /// In en, this message translates to:
+  /// **'The offline data on this device cannot be read. Nothing can be sold offline until a manager decides.'**
+  String get tillOfflineUnreadable;
+
+  /// #4373 the till sells offline: how many sales wait on the device
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No sale waits on this device} one{1 sale waits on this device} other{{count} sales wait on this device}}'**
+  String tillOfflineWaiting(int count);
 
   /// #4366 the till
   ///
@@ -65997,6 +67063,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unblock'**
   String get unblockAction;
+
+  /// #3730 the kind of an invoice whose kind a newer server sent and this app does not know.
+  ///
+  /// In en, this message translates to:
+  /// **'A kind this version of the app does not know'**
+  String get unknownWireInvoiceKind;
+
+  /// #3730 the business kind chooser: the chosen kind's profile names features this app does not know, so saving it is refused.
+  ///
+  /// In en, this message translates to:
+  /// **'This kind also sets {count, plural, one{one feature} other{{count} features}} this version of the app does not know. Update the app to choose it.'**
+  String unknownWireKindFeatures(int count);
+
+  /// #3730 an action was asked on a record whose kind or state this app does not know; only reading is allowed.
+  ///
+  /// In en, this message translates to:
+  /// **'This version of the app does not know what this record is: it can be read, not changed. Update the app to work on it.'**
+  String get unknownWireReadOnly;
+
+  /// #3730 a status or kind sent by a newer server that this app does not know, shown as the server's own text.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} (not known to this version of the app)'**
+  String unknownWireValue(String value);
 
   /// #3884 One line under a list: entries the server sent with a value this app version does not know are left out of the list, not shown wrongly.
   ///

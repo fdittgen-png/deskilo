@@ -527,4 +527,84 @@ void main() {
       );
     });
   });
+
+  // #4162 (0943, `559_tax_point_frozen_line_net.sql`) -- a commercial line
+  // declares the net the server froze on it, never a split recomputed from
+  // its gross: 120.01 at 20 % frozen as 100.00 + 20.01 (the legacy split
+  // would say 100.01). A legacy line and a version this reader cannot
+  // interpret keep the split, as the SQL twin does.
+  group('a commercial line\'s frozen net — the 559 fixture', () {
+    setUp(() => WorkspaceTime.install('Europe/Paris'));
+
+    Map<String, Object?> frozen({int version = 1}) => {
+      'version': version,
+      'line_id': 'l-1',
+      'quantity': '1.5',
+      'supply': 'general',
+      'unit': {'code': 'hour', 'un_ece_code': 'HUR', 'label': 'h'},
+      'unit_price': {
+        'amount': '66.67',
+        'currency': 'EUR',
+        'basis': 'net',
+        'base_quantity': '1',
+      },
+      'amounts': {
+        'currency': 'EUR',
+        'net_minor': '10000',
+        'tax_minor': '2001',
+        'gross_minor': '12001',
+        'rule': 'half_up_per_line',
+      },
+    };
+
+    Invoice withLine(String number, int day, CommercialLine? commercial) =>
+        _invoice(number, _at(9, day), [(12001, 20, 'S')], legal: _debits)
+            .copyWith(
+              lines: [
+                InvoiceLine(
+                  label: number,
+                  amountCents: 12001,
+                  vatPercent: 20,
+                  commercial: commercial,
+                ),
+              ],
+            );
+
+    test('the commercial invoice declares its frozen net; the others split', () {
+      final v1 = commercialLineFromSnapshot(frozen());
+      final future = commercialLineFromSnapshot(frozen(version: 2));
+      expect(v1, isA<CommercialLineV1>());
+      expect(future, isA<CommercialLineUnsupported>());
+      final invoices = [
+        withLine('FN-C', 10, v1),
+        withLine('FN-L', 11, null),
+        withLine('FN-U', 12, future),
+      ];
+      final amounts = vatTaxPointLedger(
+        invoices,
+        basis: vatTaxPointBasis('FR', null, reference: ActiveTaxReference.current),
+        dayOf: WorkspaceTime.dateOf,
+        reference: ActiveTaxReference.current,
+      );
+      expect(
+        [for (final a in amounts) (a.on, a.grossCents, a.netCents, a.vatCents)],
+        [
+          (DateTime(2026, 9, 10), 12001, 10000, 2001),
+          (DateTime(2026, 9, 11), 12001, 10001, 2000),
+          (DateTime(2026, 9, 12), 12001, 10001, 2000),
+        ],
+      );
+    });
+
+    test('the printed net of the line is the frozen one', () {
+      final line = withLine('FN-C', 10, commercialLineFromSnapshot(frozen()))
+          .lines
+          .single;
+      expect(line.frozenNetMinor, 10000);
+      expect(line.authoritativeNetCents, 10000);
+      final legacy = withLine('FN-L', 11, null).lines.single;
+      expect(legacy.frozenNetMinor, isNull);
+      expect(legacy.authoritativeNetCents, 10001);
+    });
+  });
 }

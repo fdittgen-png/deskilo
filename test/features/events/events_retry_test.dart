@@ -8,6 +8,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:deskilo/core/cache/read_retry.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/data/sweep_throttle.dart';
 import 'package:deskilo/core/demo/data/event_repository.dart';
 import 'package:deskilo/core/time/clock.dart';
@@ -89,7 +90,7 @@ void main() {
 
   test('a missing sweep function: one sweep, and the feed loads', () async {
     final c = start(
-      sweep: (r) => error(r, 404, 'PGRST202'),
+      sweep: (r) => error(r, 404, PgCode.pgrstFunctionNotFound),
       list: (r) => http.Response('[]', 200, headers: _json, request: r),
     );
     final sub = c.listen(eventsProvider, (_, _) {});
@@ -101,7 +102,7 @@ void main() {
   test('a denied read is read once, not ten times', () async {
     final c = start(
       sweep: (r) => http.Response('null', 200, headers: _json, request: r),
-      list: (r) => error(r, 403, '42501'),
+      list: (r) => error(r, 403, PgCode.insufficientPrivilege),
     );
     final sub = c.listen(eventsProvider, (_, _) {});
     addTearDown(sub.close);

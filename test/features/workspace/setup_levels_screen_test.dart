@@ -6,6 +6,7 @@
 // "no" writes nothing.
 import 'dart:async';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/workspace/domain/setup_level_change.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -214,7 +215,7 @@ void main() {
     final repo = await _pump(tester);
     repo.flagWriteErrorNext = const PostgrestException(
       message: 'permission denied',
-      code: '42501',
+      code: PgCode.insufficientPrivilege,
     );
     await tester.tap(find.byKey(const ValueKey('setup-preset-complet')));
     await _frames(tester);

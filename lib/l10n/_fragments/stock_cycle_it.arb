@@ -33,7 +33,7 @@
   "stockCycleHistoryEmpty": "Non è ancora stato contato nulla.",
   "stockCycleHistoryRow": "{item} · {place}",
   "stockCycleHistoryLast": "Ultimo conteggio il {date}",
-  "stockCycleHistoryAccuracy": "{count, plural, one{1 conteggio} other{{count} conteggi}}, {percent} % esatti",
+  "stockCycleHistoryAccuracy": "{count, plural, one{1 conteggio} other{{count} conteggi}}, {percent} esatti",
   "stockCycleTaskTitle": "Contare",
   "stockCycleScan": "Scansiona o digita un codice a barre",
   "stockCycleScanWhich": "Più righe ancora da contare hanno questo codice: scelga quella che sta contando.",

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -63,7 +64,7 @@ class MemberContactCard extends ConsumerWidget {
       if (isSelf || isAdmin)
         (
           Icons.pie_chart_outline,
-          l10n.memberPlanShare('${member.subscriptionPct}'),
+          l10n.memberPlanShare(appFormatOf(context).ratePercent(member.subscriptionPct)),
         ),
       if ((isSelf || isAdmin) && member.status != MemberStatus.active)
         (Icons.pause_circle_outline, _statusLabel(l10n, member.status)),

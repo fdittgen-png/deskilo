@@ -1,5 +1,22 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
+import '../../../core/trace/trace_logger.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+/// #4165 (0901) — how a payment is spent: `legacy` by the month rules every
+/// payment followed before, `explicit` only by the allocations that name it
+/// (a payment of invoices without a month).
+enum PaymentAllocationMode {
+  legacy('legacy'),
+  explicit('explicit');
+
+  const PaymentAllocationMode(this.wire);
+  final String wire;
+
+  /// A value this version does not know reads as the older, month-based one.
+  static PaymentAllocationMode fromWire(Object? wire) =>
+      values.where((m) => m.wire == wire).firstOrNull ?? legacy;
+}
 
 /// One online-payment attempt (migration 0045): the provider order the
 /// app started and what became of it. Admin-readable for diagnostics and
@@ -23,6 +40,7 @@ class PaymentIntent implements SystemStamped {
     this.reversedAt,
     this.reversalReason = '',
     this.reversalReviewedAt,
+    this.allocationMode = PaymentAllocationMode.legacy,
     this.system = SystemColumns.none,
   });
 
@@ -59,6 +77,10 @@ class PaymentIntent implements SystemStamped {
   final DateTime? reversedAt;
   final String reversalReason;
 
+  /// #4165 — how the payment is spent: [PaymentAllocationMode.explicit] for
+  /// a payment of invoices without a month, spent only by its allocations.
+  final PaymentAllocationMode allocationMode;
+
   /// #3925 — when someone who sees the finances looked at the reversal;
   /// null while it waits for them.
   final DateTime? reversalReviewedAt;
@@ -81,7 +103,8 @@ class PaymentIntent implements SystemStamped {
       if (amount.scale > exponent) return null;
       return (amount.units * BigInt.from(10).pow(exponent - amount.scale))
           .toInt();
-    } on AccountingException {
+    } on AccountingException catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'money', 'payment_intent: AccountingException handled', error: e, stackTrace: st);
       return null;
     }
   }
@@ -102,6 +125,7 @@ class PaymentIntent implements SystemStamped {
         reversedAt: reversedAt,
         reversalReason: reversalReason,
         reversalReviewedAt: at,
+        allocationMode: allocationMode,
         system: system,
       );
 
@@ -125,5 +149,6 @@ class PaymentIntent implements SystemStamped {
         reversalReviewedAt: row['reversal_reviewed_at'] == null
             ? null
             : DateTime.parse(row['reversal_reviewed_at'] as String),
+        allocationMode: PaymentAllocationMode.fromWire(row['allocation_mode']),
       );
 }

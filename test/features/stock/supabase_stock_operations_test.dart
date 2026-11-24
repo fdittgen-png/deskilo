@@ -9,6 +9,7 @@
 // or a field and a reason (DKG11).
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/stock/data/supabase_stock_operations.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_operations.dart';
@@ -103,13 +104,13 @@ void main() {
   });
 
   test('less on hand than asked is the typed failure, whole; a field and a reason is a refusal', () async {
-    final short = _with((r) => _json(400, {'code': 'DKG03', 'message': 'not that much', 'details': null, 'hint': null}));
+    final short = _with((r) => _json(400, {'code': DkCode.dkg03, 'message': 'not that much', 'details': null, 'hint': null}));
     await expectLater(
       short.operations.transfer(_ws, const [StockLineDraft(itemId: 'i-1', quantity: '9', fromLocationId: 'a', toLocationId: 'b')], 'req-6'),
       throwsA(isA<StockNotEnough>()),
     );
     final refused = _with((r) => _json(400, {
-      'code': 'DKG11',
+      'code': DkCode.dkg11,
       'message': 'not valid',
       'details': '{"field": "to_location_id", "reason": "same_site"}',
       'hint': null,

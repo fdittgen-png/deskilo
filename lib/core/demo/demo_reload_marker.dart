@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #3235 — a tab hint is not a session, identity, consent or return route.
 
+import '../trace/trace_logger.dart';
+
 enum DemoReloadMarkerState { absent, armed, invalid, unavailable }
 
 /// A cold start with a tab hint must not mount an inner live route. Explicit
@@ -60,7 +62,8 @@ class DemoReloadMarker {
         _armed => DemoReloadMarkerState.armed,
         _ => DemoReloadMarkerState.invalid,
       };
-    } on Object {
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'demo', 'demo_reload_marker: Object handled', error: e, stackTrace: st);
       return DemoReloadMarkerState.unavailable;
     }
   }
@@ -70,7 +73,8 @@ class DemoReloadMarker {
     try {
       storage.write(_armed);
       return read() == DemoReloadMarkerState.armed;
-    } on Object {
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'demo', 'demo_reload_marker: Object handled', error: e, stackTrace: st);
       return false;
     }
   }
@@ -80,7 +84,8 @@ class DemoReloadMarker {
     try {
       storage.clear();
       return read() == DemoReloadMarkerState.absent;
-    } on Object {
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'demo', 'demo_reload_marker: Object handled', error: e, stackTrace: st);
       return false;
     }
   }

@@ -6,6 +6,7 @@
 // empty answer.
 import 'dart:io';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/money/application/accounting_export_source.dart';
 import 'package:deskilo/features/money/presentation/screens/invoice_register_screen.dart';
@@ -134,7 +135,7 @@ void main() {
     tester,
   ) async {
     final probe = await _pump(tester);
-    probe.fail(const PostgrestException(message: 'denied', code: '42501'));
+    probe.fail(const PostgrestException(message: 'denied', code: PgCode.insufficientPrivilege));
     await tester.pump();
     expect(find.text(_en.readStateDenied), findsOneWidget);
     expect(find.text(_en.invoicesEmpty), findsNothing);

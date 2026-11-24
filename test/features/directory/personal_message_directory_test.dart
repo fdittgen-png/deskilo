@@ -7,6 +7,7 @@
 // answer (pgTAP 274).
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/directory/data/supabase_personal_message_directory_repository.dart';
 import 'package:deskilo/features/directory/domain/personal_message_directory.dart';
 import 'package:deskilo/features/directory/domain/recipient_search.dart';
@@ -142,9 +143,9 @@ void main() {
     final home = _Home();
     final adapter = _adapter(home);
     for (final (status, code, failure) in [
-      (404, 'PGRST202', DirectoryFailure.unsupported),
-      (403, '42501', DirectoryFailure.forbidden),
-      (400, '22023', DirectoryFailure.invalid),
+      (404, PgCode.pgrstFunctionNotFound, DirectoryFailure.unsupported),
+      (403, PgCode.insufficientPrivilege, DirectoryFailure.forbidden),
+      (400, PgCode.invalidParameterValue, DirectoryFailure.invalid),
     ]) {
       home.refusal = (status: status, code: code);
       await expectLater(adapter.groups(), _refused(failure));

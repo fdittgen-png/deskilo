@@ -6,6 +6,7 @@
 // generic failure that invites issuing again); "Check again" only READS the
 // archive of the attempt's own workspace and, when the invoice exists, hands
 // back the ORIGINAL invoice id.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/validation/pending_validation.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
@@ -186,7 +187,7 @@ void main() {
           _ScriptedCommands(
             const PostgrestException(
               message: 'already invoiced',
-              code: 'P0001',
+              code: PgCode.raiseException,
             ),
           ),
           _Archive(const []),

@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_trace.dart';
 import '../providers/stock_providers.dart';
@@ -59,7 +60,8 @@ class _State extends ConsumerState<StockDocumentGoodsBlock> {
         _next = page.next;
         _loading = false;
       });
-    } on Object {
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'stock', 'stock_document_goods_block: Object handled', error: e, stackTrace: st);
       if (!mounted) return;
       setState(() {
         _failed = true;

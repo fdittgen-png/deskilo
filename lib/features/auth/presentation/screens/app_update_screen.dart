@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/backend/app_floor.dart';
+import '../../../../core/backend/installation_schema.dart';
+import '../../../../core/instance/app_compatibility.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../providers/auth_providers.dart';
@@ -17,6 +19,11 @@ import '../../providers/sign_out.dart';
 /// this screen offers signing out. It says what happened and the way to
 /// update on this platform.
 ///
+/// When only the installation hosting the current business refuses this app
+/// (its own floor, read with its own client), only that business's routes
+/// come here: the account and its other businesses stay, and the screen
+/// leads back to Me.
+///
 /// No feature flag, for the reason the Server screen has none: the flags
 /// live on the installation this screen says this app cannot use.
 class AppUpdateScreen extends ConsumerWidget {
@@ -27,6 +34,8 @@ class AppUpdateScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final signedIn = ref.watch(authStateProvider).value != null;
+    final onlyThisHost =
+        ref.watch(appFloorProvider).value != AppFloorVerdict.below;
     final how = kIsWeb
         ? l10n.appUpdateWeb
         : switch (defaultTargetPlatform) {
@@ -65,7 +74,11 @@ class AppUpdateScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.lg),
             FilledButton.icon(
               key: const ValueKey('app-update-retry'),
-              onPressed: () => ref.invalidate(appFloorProvider),
+              onPressed: () {
+                ref
+                  ..invalidate(appFloorProvider)
+                  ..invalidate(workspaceSchemaProvider);
+              },
               icon: const Icon(Icons.refresh),
               label: Text(l10n.invoiceIssueCheckAgain),
             ),
@@ -76,6 +89,15 @@ class AppUpdateScreen extends ConsumerWidget {
               icon: const Icon(Icons.dns_outlined),
               label: Text(l10n.schemaUpdateServer),
             ),
+            if (signedIn && onlyThisHost) ...[
+              const SizedBox(height: AppSpacing.sm),
+              OutlinedButton.icon(
+                key: const ValueKey('app-update-me'),
+                onPressed: () => context.go('/me'),
+                icon: const Icon(Icons.switch_account_outlined),
+                label: Text(l10n.spaceBackToMe),
+              ),
+            ],
             if (signedIn) ...[
               const SizedBox(height: AppSpacing.sm),
               TextButton.icon(

@@ -5,7 +5,9 @@
 // HTTP answer, as the other data tests; and the Demo answers through the same ports.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/demo_stock_tags.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/stock/data/supabase_stock_cycle_counts.dart';
 import 'package:deskilo/features/stock/data/supabase_stock_tags.dart';
 import 'package:deskilo/features/stock/domain/stock_bulk_read.dart';
@@ -84,11 +86,11 @@ void main() {
 
   test('a refusal of the count read is its typed failure, and a closed task is refused as the server refuses it', () async {
     final port = SupabaseStockCycleCounts(
-      _client((_) => _json(400, {'code': 'DKG19', 'message': 'this task is no longer open', 'details': null, 'hint': null}), []),
+      _client((_) => _json(400, {'code': DkCode.dkg19, 'message': 'this task is no longer open', 'details': null, 'hint': null}), []),
     );
     await expectLater(
       port.countByTagRead(_ws, requestId: 'r', taskId: 't', codes: ['A']),
-      throwsA(isA<PostgrestException>().having((e) => e.code, 'code', 'DKG19')),
+      throwsA(isA<Refusal>().having((e) => e.code, 'code', DkCode.dkg19)),
     );
   });
 

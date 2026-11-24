@@ -182,7 +182,7 @@ class _GroupDraft {
       }
       return await _apply(l10n);
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'an item group was not saved: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'an item group was not saved', error: e, stackTrace: st);
       return itemGroupProblem(l10n, e);
     }
   }
@@ -390,7 +390,7 @@ class _GroupDraft {
       if (context.mounted) AppSnack.info(context, l10n.itemGroupDeleted);
       navigator.pop(true);
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'an item group was not deleted: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'an item group was not deleted', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, itemGroupProblem(l10n, e));
     }
   }

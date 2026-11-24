@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -44,7 +45,6 @@ class PurchaseClaimsSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final material = MaterialLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -85,7 +85,7 @@ class PurchaseClaimsSection extends ConsumerWidget {
                         appFormatOf(context).moneyIn(o.currency).formatMinor(a.amountCents),
                         a.paidOn == null
                             ? ''
-                            : material.formatMediumDate(a.paidOn!),
+                            : appFormatOf(context).dates(DateShape.date).format(a.paidOn!),
                         paymentMethodLabel(l10n, a.method),
                       ),
               ),

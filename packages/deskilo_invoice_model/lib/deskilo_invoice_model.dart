@@ -24,6 +24,7 @@ export 'src/invoice_seller_kind.dart';
 export 'src/invoice_ubl.dart';
 export 'src/invoice_ubl_check.dart';
 export 'src/ledger_entry.dart';
+export 'src/line_track.dart';
 export 'src/national_invoice_rules.dart';
 export 'src/payment_reference_rules.dart';
 export 'src/payment_terms.dart';

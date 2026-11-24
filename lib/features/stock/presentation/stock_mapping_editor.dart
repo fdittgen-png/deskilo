@@ -93,7 +93,7 @@ class _MappingsSheetState extends State<_MappingsSheet> {
           future: _loaded,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              TraceLogger.instance.warn('stock', 'the supplier articles could not be read: ${snapshot.error}');
+              TraceLogger.instance.warn('stock', 'the supplier articles could not be read', error: snapshot.error, stackTrace: snapshot.stackTrace);
               return Text(l10n.stockReadFailed, key: const ValueKey('stock-mappings-failed'));
             }
             final data = snapshot.data;
@@ -200,7 +200,7 @@ class _MappingDraft {
       );
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a supplier article was not saved: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a supplier article was not saved', error: e, stackTrace: st);
       return stockSaveProblem(l10n, e);
     }
   }

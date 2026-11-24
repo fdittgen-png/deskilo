@@ -75,6 +75,7 @@ List<NavGroup> navGroupsOf(
       'drawer-invoices',
       'drawer-invoice-register',
       'drawer-till',
+      'drawer-till-drawer',
       'drawer-quotes',
       'drawer-engagements',
       'drawer-billing-customers',

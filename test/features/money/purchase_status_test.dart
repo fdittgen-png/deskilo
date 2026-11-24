@@ -121,4 +121,28 @@ void main() {
       PurchaseQualification.taxNotQualified,
     );
   });
+
+  // #3730 — a state from a newer server.
+  group('a state this app does not know', () {
+    test('is read as unknown with its text, never as a draft', () {
+      final summary = PurchaseSummary.fromRow({
+        'id': 'p-9',
+        'kind': 'bill',
+        'state': 'future_disputed',
+      });
+      expect(summary.state, PurchaseState.unknown);
+      expect(summary.stateWire, 'future_disputed');
+      expect(PurchaseState.of('unknown'), PurchaseState.unknown);
+      expect(PurchaseState.of('draft'), PurchaseState.draft);
+    });
+
+    test('offers no decision, and owes what the server listed', () {
+      final s = purchaseStatusOf(
+        _detail(state: PurchaseState.unknown, owed: [_owed(120)]),
+      );
+      expect(s.approval, PurchaseApproval.unknown);
+      expect(s.settlement, PurchaseSettlement.unpaid,
+          reason: 'never "nothing owed" on a guess');
+    });
+  });
 }

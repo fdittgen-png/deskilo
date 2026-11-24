@@ -105,6 +105,7 @@ String _itemGroupSettingLabel(AppLocalizations l10n, String key) => switch (key)
       'stock.price_rounding' => l10n.settingLabelStockPriceRounding,
       'stock.tag_rebind_grace_days' => l10n.settingLabelStockTagRebindGraceDays,
       'stock.repeated_scan' => l10n.settingLabelStockRepeatedScan,
+      'stock.invoice_sale_place' => l10n.settingLabelStockInvoiceSalePlace,
       'stock.tag_read_max_tags' => l10n.settingLabelStockTagReadMaxTags,
       'stock.tag_read_unit_as_quantity' => l10n.settingLabelStockTagReadUnitAsQuantity,
       _ => _bankSettingLabel(l10n, key),
@@ -266,6 +267,7 @@ String? _itemGroupSettingHint(AppLocalizations l10n, String key) => switch (key)
       'stock.price_rounding' => l10n.settingHintStockPriceRounding,
       'stock.tag_rebind_grace_days' => l10n.settingHintStockTagRebindGraceDays,
       'stock.repeated_scan' => l10n.settingHintStockRepeatedScan,
+      'stock.invoice_sale_place' => l10n.settingHintStockInvoiceSalePlace,
       'stock.tag_read_max_tags' => l10n.settingHintStockTagReadMaxTags,
       'stock.tag_read_unit_as_quantity' => l10n.settingHintStockTagReadUnitAsQuantity,
       _ => _bankSettingHint(l10n, key),
@@ -336,34 +338,38 @@ String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) 
       'records' => l10n.settingGroupRecords,
       'business' => l10n.settingGroupBusiness,
       'region' => l10n.settingGroupRegion,
+      'compatibility' => l10n.settingGroupCompatibility,
       _ => group,
     };
 
-String settingUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {
-      'seconds' => l10n.settingUnitSeconds,
-      'milliseconds' => l10n.settingUnitMilliseconds,
-      'minutes' => l10n.settingUnitMinutes,
-      'hours' => l10n.settingUnitHours,
-      'days' => l10n.settingUnitDays,
-      'months' => l10n.settingUnitMonths,
-      'quarters' => l10n.settingUnitQuarters,
-      'years' => l10n.settingUnitYears,
-      'currency units' => l10n.settingUnitCurrencyUnits,
-      'rows' => l10n.settingUnitRows,
-      'requests' => l10n.settingUnitRequests,
-      'attempts' => l10n.settingUnitAttempts,
-      'per hour' => l10n.settingUnitPerHour,
-      'per day' => l10n.settingUnitPerDay,
-      'entries' => l10n.settingUnitEntries,
-      'characters' => l10n.settingUnitCharacters,
-      'pages' => l10n.settingUnitPages,
-      'cards' => l10n.settingUnitCards,
-      'tags' => l10n.settingUnitTags,
-      'bytes' => l10n.settingUnitBytes,
-      'url' => l10n.settingUnitUrl,
-      'url template' => l10n.settingUnitUrlTemplate,
-      _ => unit,
-    };
+/// The name of each unit a setting is counted in; an unknown unit is shown as the server wrote it.
+final Map<String, String Function(AppLocalizations)> _unitLabels = {
+  'seconds': (l) => l.settingUnitSeconds,
+  'milliseconds': (l) => l.settingUnitMilliseconds,
+  'minutes': (l) => l.settingUnitMinutes,
+  'hours': (l) => l.settingUnitHours,
+  'days': (l) => l.settingUnitDays,
+  'months': (l) => l.settingUnitMonths,
+  'quarters': (l) => l.settingUnitQuarters,
+  'years': (l) => l.settingUnitYears,
+  'currency units': (l) => l.settingUnitCurrencyUnits,
+  'rows': (l) => l.settingUnitRows,
+  'place code': (l) => l.settingUnitPlaceCode,
+  'requests': (l) => l.settingUnitRequests,
+  'attempts': (l) => l.settingUnitAttempts,
+  'per hour': (l) => l.settingUnitPerHour,
+  'per day': (l) => l.settingUnitPerDay,
+  'entries': (l) => l.settingUnitEntries,
+  'characters': (l) => l.settingUnitCharacters,
+  'pages': (l) => l.settingUnitPages,
+  'cards': (l) => l.settingUnitCards,
+  'tags': (l) => l.settingUnitTags,
+  'bytes': (l) => l.settingUnitBytes,
+  'url': (l) => l.settingUnitUrl,
+  'url template': (l) => l.settingUnitUrlTemplate,
+};
+
+String settingUnitLabel(AppLocalizations l10n, String unit) => _unitLabels[unit]?.call(l10n) ?? unit;
 
 String settingProblemLabel(AppLocalizations l10n, SettingProblem p) => switch (p) {
       SettingProblem.notANumber => l10n.settingProblemNotANumber,
@@ -393,12 +399,14 @@ String? settingRangeLabel(AppLocalizations l10n, SettingDefinition d) {
 }
 
 /// #4217 — the window to send a checkout again, per provider; #4325 — how long
-/// a prepared e-invoice may wait for its dispatch before the owner is told.
+/// a prepared e-invoice may wait for its dispatch before the owner is told;
+/// #3732 — how long an older app stays accepted (the installation's own).
 String _paymentSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'payments.resend_window_mollie_minutes' => l10n.settingLabelPaymentsResendWindowMollieMinutes,
       'payments.resend_window_paypal_minutes' => l10n.settingLabelPaymentsResendWindowPaypalMinutes,
       'payments.resend_window_stripe_minutes' => l10n.settingLabelPaymentsResendWindowStripeMinutes,
       'einvoice.stuck_attempt_minutes' => l10n.settingLabelEinvoiceStuckAttemptMinutes,
+      'apps.support_window_days' => l10n.settingLabelAppsSupportWindowDays,
       _ => key,
     };
 
@@ -407,5 +415,6 @@ String? _paymentSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'payments.resend_window_paypal_minutes' => l10n.settingHintPaymentsResendWindowPaypalMinutes,
       'payments.resend_window_stripe_minutes' => l10n.settingHintPaymentsResendWindowStripeMinutes,
       'einvoice.stuck_attempt_minutes' => l10n.settingHintEinvoiceStuckAttemptMinutes,
+      'apps.support_window_days' => l10n.settingHintAppsSupportWindowDays,
       _ => null,
     };

@@ -2416,6 +2416,7 @@ Sie möchten eine Rechnung finden, sehen, ob sie bezahlt ist, und ihr PDF erhalt
 - Tippen Sie bei einer offenen Rechnung auf das Zahlungssymbol, um zu **Zahlungen** zu gelangen.
 - Ist die Liste leer, hat der Workspace Ihnen noch nichts in Rechnung gestellt; er stellt einen Monat nach dem Abschluss in Rechnung.
 - Rechnungen lassen sich nicht bearbeiten. Eine falsche Rechnung wird als **Fehlerhaft** markiert und durch eine neue ersetzt; die fehlerhafte verschwindet aus Ihrer Liste. Werden Rechnungen zu einer zusammengefasst, ersetzt die zusammengefasste Rechnung sie in Ihrer Liste.
+- Eine Position nach Stunden, Tagen oder Gewicht (zum Beispiel *1.5 h zu 90 EUR* oder *0.75 kg zu 12.5 EUR je 10 kg*) zeigt unter ihrer Bezeichnung die genaue Menge, ihre Einheit und den erfassten Preis, so wie das PDF sie druckt; ihr Betrag ist der bei der Ausstellung festgelegte. Eine Position, die eine neuere Version der App erfasst hat, wird unverändert gezeigt und sagt, dass sie hier nicht verwendet werden kann: Aktualisieren Sie die App, um damit zu arbeiten.
 
 **Siehe auch:** [Offenes bezahlen](help:user.money.payments) · [Ihre Finanzen in allen Workspaces](help:user.money.finances)
 
@@ -2874,6 +2875,29 @@ Die Liste zeigt jede Einladung als eingeladen, liest, abgelaufen oder beendet. *
 
 **Siehe auch:** [Rechnungskunden](help:user.money.customers.billing)
 
+### Eine Kundenrechnung ohne Monat
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie haben heute eine Leistung für einen benannten Kunden erbracht (eine Beratung, eine Stunde, ein vereinbartes Ergebnis) und wollen sie jetzt abrechnen, ohne Buchung, Abonnement oder Monat dahinter. Sie brauchen das Recht, Rechnungen auszustellen, und die Funktion **Einzelrechnungen**.
+
+**Schritte**
+
+1. Öffnen Sie **Rechnungen** und wählen Sie **Kundenrechnung ohne Monat**.
+2. Wählen Sie den Kunden, dann Leistungsdatum und Fälligkeit.
+3. Fügen Sie die Zeilen hinzu: eine Beschreibung, eine Menge, eine Einheit und einen Preis. Ein Artikel aus dem Katalog ist optional, eine Einzelleistung schreiben Sie in Worten.
+4. Wählen Sie **Rechnung prüfen**. Die Vorschau zeigt Beträge und Steuer genau so, wie sie ausgestellt werden, oder was noch fehlt.
+5. Wählen Sie **Rechnung ausstellen**, um zu bestätigen. Die Rechnung wird nummeriert, wie ausgestellt aufbewahrt und geöffnet.
+
+**Gut zu wissen**
+
+- Die Rechnung hat keinen Abrechnungsmonat: Eine zweite, eigene Rechnung desselben Kunden im selben Monat ist eine eigene Rechnung, und die Monatsrechnung, falls vorhanden, bleibt unberührt.
+- Beträge und Steuer berechnet immer der Server, nie der Bildschirm; der Preis steht in der Währung des Betriebs.
+- Ihr Entwurf bleibt beim Ändern der Fenstergröße oder nach einer abgelehnten Prüfung erhalten. Kommt die Antwort auf **Rechnung ausstellen** nicht an, stellt dieselbe Bestätigung nie eine zweite Rechnung aus: Suchen Sie sie erneut.
+- Spätere Änderungen an Katalog oder Kunde ändern eine ausgestellte Rechnung nie.
+
+**Siehe auch:** [Rechnungskunden](help:user.money.customers.billing) · [Rechnungen ohne Monat bezahlen](help:user.money.finances.standalone)
+
 ### Angebote
 
 **Zielgruppe:** Administrator:in · Inhaber
@@ -3024,6 +3048,34 @@ Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang 
 
 Ein rückverfolgter Artikel nennt, woraus er entnommen wurde. Verkaufen Sie einen chargengeführten Artikel, ohne eine Charge zu wählen, entnimmt der Verkauf ihn den vorrätigen Chargen, die zuerst ablaufende zuerst und nie eine abgelaufene; unter der verkauften Zeile zeigt die Kasse den Code jeder Charge wie beim Wareneingang mit der entnommenen Menge, zum Beispiel **Charge SUP-A × 2 · Charge SUP-B × 1**, und jedes Stück mit seinem Tag. Nutzt das Unternehmen einen Scanner, scannen Sie den Tag eines Stücks, um dieses Stück zu buchen: Der Verkauf nimmt genau die gescannten Stücke, und dasselbe Stück zweimal wird abgelehnt. Diese Rückverfolgungs-IDs werden mit dem Beleg festgeschrieben: Eine spätere Änderung einer Charge oder eines Tags ändert einen bereits ausgestellten Beleg nie. Im Lager nennt die Rückverfolgung einer Charge oder eines Stücks den Beleg, mit dem es verkauft wurde.
 
+### Kasse öffnen, zählen und schließen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie führen eine Kassenschublade und wollen am Tagesende wissen, dass das Geld darin stimmt.
+
+Öffnen Sie **Kassenschublade** im Verkaufsmenü (es braucht die Funktion Kassensitzungen und das Recht, Rechnungen auszustellen oder die Finanzen zu sehen). Jede Kasse des Betriebs steht mit ihrem Zustand in der Liste. Wer die Standorte verwaltet, legt mit **Kasse hinzufügen** eine Kasse an und kann sie umbenennen oder abschalten.
+
+Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade** ein (oder, wenn Ihr Betrieb nach Stückelung zählt, den Wert jedes Scheins oder jeder Münze und die Anzahl) und bestätigen Sie. Eine Kasse hat jeweils eine offene Sitzung, und mit Kassensitzungen verkauft die Kasse nur auf einer offenen Sitzung: ohne offene Sitzung bietet sie **Kasse öffnen** statt des Verkaufs an.
+
+**Einlage oder Entnahme** erfasst Bargeld, das in die Schublade gelegt oder entnommen wird, mit einem **Grund** aus der Liste Ihres Betriebs. Eine Entnahme über dem Limit des Betriebs erfasst, wer ausgehende Zahlungen erfassen darf.
+
+**Zählen und schließen** fragt nach dem **Im Fach gezählten Bargeld** und dem, was **Zur Bank gebracht** wird. Zählt der Betrieb blind, wird das erwartete Bargeld vor dem Zählen nicht angezeigt; wer die Finanzen sehen darf, sieht es und beim Eintippen die Differenz. Eine Zählung, die vom erwarteten Bargeld abweicht, wird nur mit ihrem Grund geschlossen, den die Kasse erfragt. Nach dem Schließen nennt die Kasse das Erwartete, das Gezählte und die Differenz. Unbeantwortete Kartenzahlungen stehen getrennt und zählen nie als Bargeld.
+
+**Tagesabschluss.** Wer die Finanzen sehen darf, öffnet **Tagesabschluss** in der Kassenschublade und tippt auf **Tag abschließen**, sobald jede Kasse geschlossen ist (eine noch offene Kasse wird genannt und verweigert den Abschluss). Die geschlossenen Sitzungen des Tages werden zu einem nummerierten Bericht: jede Sitzung mit Erwartetem, Gezähltem, Differenz und Grund, die Einnahmen nach Zahlungsart und Steuersatz, das ein- und entnommene Bargeld, die Erstattungen und der Bereich der Belegnummern. **Abgeschlossene Tage** listet die bereits erstellten Berichte; ein abgeschlossener Tag wird nie geändert. Das ist die eigene Aufzeichnung des Betriebs; den rechtlichen Inhalt, den ein Land vom Tagesabschluss verlangt, liefert ein eigenes Modul.
+
+### Wenn die Kasse offline ist
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie verkaufen an der Kasse und die Verbindung geht verloren: Sie möchten weiter verkaufen und sicher sein, dass nichts verloren geht oder doppelt gezählt wird.
+
+Schalten Sie **Offline verkaufen, nur bar** ein (die Funktion Kassensitzungen wird vorausgesetzt). Bekommt ein Aufruf an den Server keine Antwort, meldet die Kasse **Offline – nur Barzahlung. Die Verkäufe bleiben auf diesem Gerät und werden gesendet, sobald die Verbindung wieder da ist.** und verkauft weiter, nur gegen Bargeld, zu den Preisen, die sie zuletzt online kannte; ein Artikel ohne Preis auf dem Gerät wird nicht verkauft. Jeder Verkauf bleibt auf dem Gerät unter der nächsten Nummer seiner Kassensitzung; der Beleg trägt **Offline erfasst** mit dieser Nummer und **Nicht signiert. Der Beleg wird an den Server gesendet, sobald die Verbindung wieder da ist.** – eine Belegnummer erhält er erst, wenn der Server ihn empfangen hat.
+
+Die Kasse sucht ihre Verbindung von selbst wieder, **Verbindung jetzt suchen** tut es sofort. Ist die Verbindung zurück, werden die Verkäufe der Reihe nach gesendet, jeder unter der Nummer, mit der er entstand; ein bereits empfangener Verkauf wird also nie doppelt gezählt. Die Kasse sagt dann, wie viele erfasst wurden und, für jeden vom Server abgelehnten Verkauf, warum (zum Beispiel: der Preis hat sich stärker geändert als erlaubt, oder der Artikel wird nicht mehr verkauft); das Bargeld eines abgelehnten Verkaufs bleibt in der Kassenzählung. Wurde die Sitzung inzwischen geschlossen, sagt die Kasse: „Die Sitzung wurde geschlossen: Diese Verkäufe bleiben für eine Leitung auf dem Gerät.“ Die Verkäufe bleiben auf dem Gerät, bis eine Leitung sie bearbeitet hat.
+
+Drei Einstellungen des Betriebs begrenzen, was angenommen wird: **Längste Offline-Zeit (Minuten)**, **Höchstzahl Offline-Verkäufe je Kassensitzung** und **Erlaubte Preisabweichung offline (%)**. Sind die Offline-Daten des Geräts nicht lesbar, wird offline nichts verkauft, bis eine Leitung entscheidet; **Offline-Daten verwerfen** verwirft sie nach einer Warnung, denn noch nicht gesendete Verkäufe gehen endgültig verloren.
+
 ### RFID-Tags: eines pro Charge oder eines pro Stück
 
 **Zielgruppe:** Administrator:in · Inhaber
@@ -3093,6 +3145,7 @@ Sind die Funktionen *Etiketten* und *Etikettenlesung* an, bietet eine Zähl-Aufg
 - Die Plätze im Regal ergeben immer die oben gezeigte Menge.
 - An einem vergangenen Tag wird Ware unterwegs nicht gezeigt; die Stücke schon, ab dem Tag, an dem sie verfolgt werden (ein früher entstandenes Stück hat davor keinen Verlauf).
 - Tippen Sie auf einen Platz mit einer Charge, um **Alle Bewegungen** dieser Charge zu sehen, von der Lieferung, mit der sie kam, bis zu ihrem Abgang; die Zeitleisten-Schaltfläche eines Stücks zeigt **Alle Bewegungen dieses Stücks**. Ein Beleg, den Sie nicht sehen dürfen, wird mit seiner Art genannt, nie weggelassen.
+- **Rückverfolgungscode suchen** (die Code-Schaltfläche oben im **Lager**) nimmt einen Chargencode wie geliefert, den Code auf dem Etikett einer Charge oder das Etikett eines Stücks, eingegeben oder gescannt. Sie listet die Chargen und Stücke, die ihn tragen, und die Verkäufe, die davon genommen haben. Tippen Sie auf eine Charge oder ein Stück für alle seine Bewegungen; tippen Sie auf einen Verkauf, um zu sehen, was diese Bonzeile genommen hat: jede Charge mit ihrer Menge, jedes Stück mit seinem Etikett. Ein Bon, den Sie nicht sehen dürfen, wird mit seiner Art genannt und öffnet sich nicht. Wird nichts gefunden, steht das da; eine abgelehnte oder fehlgeschlagene Suche sagt es und kann wiederholt werden.
 
 ### Lagerwert und Herkunft der Ware
 
@@ -3193,6 +3246,28 @@ Ein Betrieb, der Ihnen Rechnungen stellt, kann Ihnen einen Code geben, damit Sie
 - Diese Rechnungen von hier aus zu bezahlen, wird noch nicht angeboten.
 
 **Siehe auch:** [Ihre Finanzen in allen Workspaces](help:user.money.finances)
+
+### Rechnungen ohne Monat bezahlen
+
+**Zielgruppe:** Mitglied
+
+Ein Betrieb hat Ihnen Rechnungen ausgestellt, die zu keinem Monat gehören. Sie werden zusammen und für sich bezahlt.
+
+**Schritte**
+
+1. Öffnen Sie [Meine Finanzen](app:/money) und haken Sie die Rechnungen ohne Monat an, die Sie bezahlen wollen. Sie gehören zu einem Betrieb und einer Währung.
+2. Eine Leiste zeigt, wie viele Sie angehakt haben, und ihre Summe. Wählen Sie **Bezahlen** für die Online-Zahlung oder **Ich habe bezahlt**, wenn Sie schon anders bezahlt haben.
+3. Die Bestätigung listet die Rechnungen und eine Summe. Bestätigen Sie: Es öffnet sich eine Zahlung, oder es wird eine Meldung gesendet.
+
+**Gut zu wissen**
+
+- Rechnungen ohne Monat und Monatsrechnungen werden nie zusammen bezahlt: Ist eine Art angehakt, lässt sich die andere nicht anhaken, und eine Zeile sagt es. Lehnt der Betrieb eine Mischung trotzdem ab, erfahren Sie es, und es wird nichts belastet.
+- Der Betrag ist, was die Rechnungen noch offen haben. Hat er sich geändert, aktualisieren Sie und versuchen Sie es erneut.
+- Ging die Antwort unterwegs verloren, wählen Sie **Bezahlen** erneut: Es ist dieselbe Zahlung, wiedergefunden, nie eine zweite. Eine Zahlung gilt erst als bezahlt, wenn der Betrieb sie erhalten hat.
+- Das Geld wird in dem Monat gebucht, in dem es eintrifft. Was eine Rechnung nicht aufnimmt, bleibt Ihr Guthaben beim Betrieb, bis es zugeordnet wird.
+- Ein Betrieb, dessen Zahlungsdienst zu alt ist, sagt das, bevor etwas gesendet wird.
+
+**Siehe auch:** [Ihre Finanzen über Spaces hinweg](help:user.money.finances)
 
 ### Ihre Unternehmen auf einen Blick
 
@@ -6431,7 +6506,7 @@ Das, was die tägliche Arbeit umgibt: die Testseite eines Space und die echte, A
 
 In diesem Kapitel:
 - [Ein Space hat zwei Seiten](help:user.advanced.environments) · [Eine Seite betreten](help:user.advanced.enter-environment) · [Ein Testspace](help:user.advanced.test-space) · [Wer ausrollen darf](help:user.advanced.deploy-permissions) · [Zwischen den Seiten ausrollen](help:user.advanced.deploy) · [Status des Workspace und das Jahresarchiv](help:user.advanced.status-archive)
-- [Ihr eigener Server](help:user.advanced.own-server)
+- [Ihr eigener Server](help:user.advanced.own-server) · [Wenn eine Installation eine neuere App verlangt](help:user.advanced.app-floor) · [Eine neue Version veröffentlichen](help:user.advanced.releases)
 - [Assistenten](help:user.advanced.assistants) · [Einen Assistenten verbinden](help:user.advanced.assistants-connect) · [Freigaben](help:user.advanced.assistants-approve) · [Was Assistenten dürfen](help:user.advanced.assistants-policy)
 - [Der Aufgabenrekorder](help:user.advanced.recorder) · [Eine Aufgabe aufzeichnen](help:user.advanced.recorder-record) · [Eine Aufzeichnung prüfen](help:user.advanced.recorder-review) · [Eine Anleitung erstellen](help:user.advanced.guide-make) · [Einer Anleitung folgen](help:user.advanced.guide-play) · [Das Kreismenü](help:user.advanced.guide-circle) · [Eine Anleitung bearbeiten](help:user.advanced.guide-edit) · [Datenschutz der Aufzeichnungen](help:user.advanced.recorder-privacy)
 - [Der Demo-Workspace](help:user.advanced.demo) · [Aufnahmemodus](help:user.advanced.filming)
@@ -6585,6 +6660,50 @@ Sie möchten die Daten Ihrer Gemeinschaft auf einem Server, den Sie kontrolliere
 - Ein Betreiber kann Assistenten für die ganze Installation einschalten — siehe [Freigaben](help:user.advanced.assistants-approve).
 
 **Siehe auch:** [Ihr eigener Server](help:user.backend.server)
+
+### Wenn eine Installation eine neuere App verlangt
+
+**Zielgruppe:** Betreiber:in · Inhaber
+
+Eine Installation kann festlegen, dass nur eine neuere App mit ihr benutzt werden darf. Sie möchten wissen, wann das gerechtfertigt ist und was Ihre Tester und Mitglieder sehen.
+
+**Schritte**
+
+1. Heben Sie die Untergrenze nur an, wenn eine alte App falsch statt nur unvollständig wäre: bei einer Sicherheitskorrektur oder wenn sich die Bedeutung gespeicherter Daten ändert. Fehlende Funktionen sind kein Grund.
+2. Heben Sie sie in einer eigenen Änderung an, und erst, nachdem die neuere App allen Testern und Mitgliedern über die Unterstützungsdauer zur Verfügung stand. Tester auf der Referenzinstallation sind gesperrt, sobald die Untergrenze angehoben wird.
+3. Sagen Sie den Leuten vorher, welche App sie installieren sollen und wo: im Store, aus dem sie sie haben, auf der Seite der Veröffentlichungen oder durch Neuladen der Web-App.
+4. Öffnen Sie danach die App auf einem älteren Gerät und prüfen Sie, dass **Diese App braucht ein Update** erscheint.
+
+**Gut zu wissen**
+
+- Eine App unter der Untergrenze sieht einen einzigen Bildschirm, **Diese App braucht ein Update**, mit dem Weg zum Update auf ihrer Plattform, **Erneut prüfen**, **Server-Einstellungen** und **Abmelden**. Hilfe, Datenschutz und die Demo bleiben offen.
+- Die Untergrenze gehört zu einer Installation: Dieselbe App arbeitet auf allen anderen Installationen der Person weiter. Lehnt nur die Installation eines Unternehmens die App ab, zeigt nur dieses Unternehmen den Bildschirm, der dann auch **Zurück zu Ich** anbietet; Ihre anderen Unternehmen bleiben offen.
+- Lässt sich die Untergrenze nicht lesen, wird die App nicht gesperrt. Eine bereits gelesene Ablehnung bleibt, bis eine neuere Antwort sie aufhebt, und die App fragt bei der Rückkehr erneut.
+- Die Untergrenze ist ein Entgegenkommen an Apps, die sie kennen, keine Sperre: Geld- und Berechtigungsregeln entscheidet der Server, egal welche App anfragt.
+
+**Siehe auch:** [Einen eigenen Server betreiben](help:user.advanced.own-server) · [Plattformen](help:user.advanced.platforms)
+
+### Eine neue Version veröffentlichen: zuerst der Server
+
+**Zielgruppe:** Betreiber:in
+
+Sie betreiben eine Installation, und eine neue Version der App kommt. Der Server wird immer vor der App aktualisiert, und eine ältere App wird nie ohne Vorwarnung ausgesperrt.
+
+**Schritte**
+
+1. Aktualisieren Sie zuerst den Server: Wenden Sie seine neuen Migrationen an, danach seine Funktionen. Für die Mitglieder ändert sich nichts: Eine bereits installierte App arbeitet weiter, denn der Server fügt nur hinzu.
+2. Veröffentlichen Sie die App. Vor jedem Upload liest der Release-Zug die Installation, an die er ausliefert, und hält an, mit den fehlenden Migrationen, wenn die Installation zurückliegt, die neue App ablehnt oder nicht gelesen werden kann. Ist die App erschienen, zeigt sie für die Serverversion *Aktuell*, und eine ältere App zeigt *Der Server ist neuer als diese App — aktualisieren Sie die App, sobald Sie können*.
+3. Warten Sie die Unterstützungsfrist ab: [Profile](app:/profiles) → **Plattform-Einstellungen (Standardwerte)** → **App-Versionen** → **Unterstützungsfrist für ältere Apps**. Sie zählt ab dem Tag, an dem die neue App auf dem langsamsten Vertriebskanal verfügbar ist, nicht ab dem Tag, an dem sie gebaut wurde: Eine Store-Prüfung kann Tage dauern.
+4. Erst dann heben Sie die älteste App an, die die Installation annimmt, in einer eigenen Migration. Eine App darunter zeigt **Diese App braucht ein Update** mit dem Weg zum Update auf ihrer Plattform; nichts, was das Mitglied eingegeben hat, geht verloren.
+
+**Gut zu wissen**
+
+- Eine App, die neuer als ihr Server ist, zeigt *Aktualisierung nötig: diese App braucht Schema …*. Genau das verhindert die Reihenfolge „zuerst der Server“.
+- Um eine Anhebung rückgängig zu machen, senken Sie die älteste angenommene App in einer neuen Migration wieder ab oder entfernen die Grenze: Eine gesperrte App arbeitet beim nächsten Start oder bei der Rückkehr in den Vordergrund wieder.
+- Der Release-Zug liest die Installation nur: Er wendet keine Migration an und ändert nicht, wer veröffentlichen darf.
+- Heben Sie die älteste angenommene App nie in der Migration an, die die neue App als erste braucht: Die Tester dieser Installation wären gesperrt, sobald sie angewendet ist.
+
+**Siehe auch:** [Einen eigenen Server betreiben](help:user.advanced.own-server)
 
 ### Assistenten: was sie sind
 

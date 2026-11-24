@@ -14,19 +14,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/failure/app_failure.dart';
+import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../application/customer_quote_commands.dart';
 import '../../domain/billing_customer.dart';
 import '../../domain/customer_quote.dart';
+import '../../domain/invoice_goods.dart';
 import '../../domain/standalone_invoice.dart';
 import '../../providers/billing_customer_providers.dart';
 import '../../providers/business_day_provider.dart';
 import '../../providers/customer_quote_providers.dart';
 import '../../providers/money_providers.dart' show vatRatesProvider;
+import '../../providers/standalone_invoice_providers.dart' show invoiceGoodsItemsProvider;
 import '../quotes/quote_text.dart';
 import '../standalone/standalone_line_form.dart';
 import 'money_view_data.dart';
@@ -141,7 +144,7 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
     if (!mounted) return false;
     final l10n = context.l10n;
     switch (outcome) {
-      case QuoteDone(:final value):
+      case CommandDone(:final value):
         _form
           ..quoteId = value.quoteId
           ..version = value.version
@@ -150,11 +153,11 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
         attachLineIds(_form.lines, read?.draft?.lines ?? const <StandaloneLine>[]);
         ref.invalidate(customerQuotesProvider(workspaceId));
         return true;
-      case QuoteRefused(:final refusal):
+      case CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)):
         _form
           ..said = quoteRefusalText(l10n, refusal)
           ..changed();
-      case QuoteUnreached():
+      case _:
         _form
           ..said = l10n.quoteUnreached
           ..changed();
@@ -204,14 +207,14 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
       ..invalidate(customerQuotesProvider(workspaceId))
       ..invalidate(customerQuoteProvider((workspaceId: workspaceId, quoteId: id)));
     switch (outcome) {
-      case QuoteDone():
+      case CommandDone():
         context.go('/money/quotes/$id');
-      case QuoteRefused(:final refusal):
+      case CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)):
         _form
           ..busy = false
           ..said = quoteRefusalText(l10n, refusal)
           ..changed();
-      case QuoteUnreached():
+      case _:
         _form
           ..busy = false
           ..said = l10n.quoteUnreached
@@ -267,6 +270,10 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
     final customers = ref.watch(billingCustomersProvider(workspaceId)).value ?? const <BillingParty>[]; // empty-ok: no customer list means nothing to choose
     // empty-ok: the rates only offer a choice; none leaves the business's default
     final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: the rates only offer a choice
+    // #4433 -- with the goods ledger on, a quote line may offer an item kept in stock (its pieces are named on the invoice)
+    final goods = featureOn(ref.watch(enabledFeatureKeysProvider), 'stockManagement', byDefault: false)
+        ? ref.watch(invoiceGoodsItemsProvider(workspaceId)).value ?? const <InvoiceGoodsItem>[] // empty-ok: the items only offer a choice; none leaves every line a service
+        : const <InvoiceGoodsItem>[];
     final today = ref.watch(businessDayProvider);
     final validity = ref.watch(quoteValidityProvider);
     return ListView(
@@ -343,6 +350,7 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
             index: i,
             form: line,
             rates: rates,
+            goods: goods,
             enabled: !locked,
             onChanged: _form.changed,
             onRemove: _form.lines.length > 1

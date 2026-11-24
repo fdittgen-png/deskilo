@@ -23,6 +23,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_expiry.dart';
 import '../providers/stock_providers.dart';
+import 'stock_read_failed.dart';
 
 class StockExpiryScreen extends ConsumerStatefulWidget {
   const StockExpiryScreen({super.key});
@@ -158,17 +159,10 @@ class _Answer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
     final provider = stockExpiryReportProvider((workspaceId: workspaceId, query: query));
     return ref.watch(provider).when(
       loading: () => const Padding(padding: EdgeInsets.all(AppSpacing.lg), child: LoadingView()),
-      error: (e, st) => Column(
-        key: const ValueKey('stock-expiry-failed'),
-        children: [
-          Text(l10n.stockExpiryReadFailed),
-          TextButton(key: const ValueKey('stock-expiry-retry'), onPressed: () => ref.invalidate(provider), child: Text(l10n.identityConnectRetry)),
-        ],
-      ),
+      error: (e, st) => StockReadFailed(keyName: 'stock-expiry', error: e, onRetry: () => ref.invalidate(provider)),
       data: (report) => _Rows(report: report, query: query),
     );
   }

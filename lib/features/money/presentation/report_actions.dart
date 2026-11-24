@@ -8,6 +8,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/share/file_sharer.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/trace/workspace_context_not_ready.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/app_snack.dart';
@@ -68,7 +69,8 @@ Future<void> runReportActions(
     final InvoiceReport? report;
     try {
       report = render!();
-    } on WorkspaceContextNotReady {
+    } on WorkspaceContextNotReady catch (caught, caughtStack) {
+      TraceLogger.instance.log(TraceLevel.info, 'money', 'report_actions: WorkspaceContextNotReady handled', error: caught, stackTrace: caughtStack);
       AppSnack.error(context, l10n.workspaceTaxContextNotReady);
       return;
     }

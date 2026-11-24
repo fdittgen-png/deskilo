@@ -18,6 +18,7 @@ import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/scan/scan_scope.dart';
+import '../../../core/text/collation.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/dropdown_field.dart';
@@ -141,7 +142,7 @@ class _ItemsState extends ConsumerState<_Items> {
         _loading = false;
       });
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the registry was not read: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the registry was not read', error: e, stackTrace: st);
       if (!mounted || generation != _generation) return;
       setState(() {
         _failed = true;
@@ -151,11 +152,11 @@ class _ItemsState extends ConsumerState<_Items> {
   }
 
   bool _matches(StockRegistryRow r, String separator) {
-    final q = _query.trim().toLowerCase();
+    final q = foldForSearch(_query.trim());
     if (q.isEmpty) return true;
-    return r.label.toLowerCase().contains(q) ||
-        (r.barcode ?? '').toLowerCase().contains(q) ||
-        (r.homeAddressPath ?? '').split(stockAddressJoint).join(separator).toLowerCase().contains(q);
+    return foldForSearch(r.label).contains(q) ||
+        foldForSearch(r.barcode ?? '').contains(q) ||
+        foldForSearch((r.homeAddressPath ?? '').split(stockAddressJoint).join(separator)).contains(q);
   }
 
   /// A search submitted that is a whole barcode, or shows nothing, is a code typed by hand: it goes the way a scanner's goes.

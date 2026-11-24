@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/debouncer.dart';
 import '../../../../core/ui/labeled_rows.dart';
@@ -67,7 +68,7 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final typed = _controller.text.trim().toLowerCase();
+    final typed = foldForSearch(_controller.text.trim());
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final me = ref.watch(myMemberProvider).value;
     final conversations = ref.watch(conversationsProvider).value ?? const [];
@@ -80,14 +81,14 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
               if (m.id != me?.id &&
                   m.status == MemberStatus.active &&
                   !m.isKiosk &&
-                  (names[m.id] ?? '').toLowerCase().contains(typed))
+                  foldForSearch(names[m.id] ?? '').contains(typed))
                 m,
           ];
     final groups = typed.isEmpty
         ? const <Conversation>[]
         : [
             for (final c in conversations)
-              if (c.isGroup && (c.title ?? '').toLowerCase().contains(typed))
+              if (c.isGroup && foldForSearch(c.title ?? '').contains(typed))
                 c,
           ];
     final messages = _query.isEmpty

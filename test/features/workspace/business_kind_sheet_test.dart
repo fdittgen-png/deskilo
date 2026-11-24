@@ -31,6 +31,9 @@ class _Kinds implements BusinessKindRepository {
   /// #4168 — set to move the freelancer's profile after the owner opened the sheet.
   int freelancerVersion = 1;
 
+  /// #3730 — kinds a newer server offers beside the known ones.
+  final extra = <BusinessKind>[];
+
   @override
   Future<List<BusinessKind>> kinds() async => [
     const BusinessKind(code: 'coworking', sortOrder: 10),
@@ -46,6 +49,7 @@ class _Kinds implements BusinessKindRepository {
     ),
     const BusinessKind(code: 'shop', sortOrder: 47, profile: _shop),
     const BusinessKind(code: 'service', sortOrder: 50, profile: _noPlaces),
+    ...extra,
   ];
 
   @override
@@ -108,11 +112,12 @@ Future<(_Kinds, FakeWorkspaceRepository)> _open(
   WidgetTester tester, {
   Map<String, dynamic> flags = const {},
   FakeSettingsRepository? settings,
+  List<BusinessKind> extra = const [],
 }) async {
   tester.view.physicalSize = const Size(900, 3000);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
-  final kinds = _Kinds();
+  final kinds = _Kinds()..extra.addAll(extra);
   final workspace = FakeWorkspaceRepository.withWorkspace(featureFlags: flags);
   await pumpApp(
     tester,
@@ -281,5 +286,34 @@ void main() {
     expect(workspace.flagWrites.length, before);
     expect(find.byKey(const ValueKey('form-sheet-error')), findsOneWidget);
     expect(find.textContaining('updated while you were choosing'), findsOneWidget);
+  });
+
+  testWidgets('#3730 — a kind whose profile names a feature this app does '
+      'not know is explained and refused before anything is written', (
+    tester,
+  ) async {
+    final (kinds, workspace) = await _open(
+      tester,
+      extra: const [
+        BusinessKind(
+          code: 'future_kind',
+          sortOrder: 60,
+          profile: {'futureFeature': true, 'invoicing': true},
+        ),
+      ],
+    );
+    final before = workspace.flagWrites.length;
+    await _tap(tester, 'business-kind-future_kind');
+    expect(
+      find.byKey(const ValueKey('business-kind-unknown-features')),
+      findsOneWidget,
+    );
+    await _tap(tester, 'business-kind-save');
+
+    expect(tester.takeException(), isNull);
+    expect(kinds.writes, isEmpty);
+    expect(workspace.flagWrites.length, before);
+    expect(find.byKey(const ValueKey('form-sheet-error')), findsOneWidget);
+    expect(find.textContaining('Update the app'), findsWidgets);
   });
 }

@@ -146,7 +146,7 @@ class _OrdersTable extends StatelessWidget {
           flex: 3,
           sortKey: (o) => o.state.index,
           cell: (_, o) => Text(
-            purchaseOrderStateLabel(l, o.state),
+            purchaseOrderStateLabel(l, o.state, wire: o.stateWire),
             overflow: TextOverflow.ellipsis,
           ),
         ),

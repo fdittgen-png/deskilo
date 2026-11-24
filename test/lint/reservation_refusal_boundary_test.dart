@@ -26,6 +26,7 @@ void main() {
     expect(_imports(value).toList(), [
       'dart:convert',
       '../../../core/codes/dk_code.dart', // pure constants (#4417)
+      '../../../core/codes/pg_code.dart', // pure constants (#4417)
     ]);
   });
 

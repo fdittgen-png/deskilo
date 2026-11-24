@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -28,11 +29,14 @@ import 'purchase_order_receipt_actions.dart';
 import 'purchase_order_send_actions.dart';
 import 'purchase_order_sheet.dart';
 
-/// The words of an order's [state].
+/// The words of an order's [state]; a state this app does not know is
+/// shown as the server's [wire] text (#3730).
 String purchaseOrderStateLabel(
   AppLocalizations l10n,
-  PurchaseOrderState state,
-) => switch (state) {
+  PurchaseOrderState state, {
+  String wire = '',
+}) => switch (state) {
+  PurchaseOrderState.unknown => l10n.unknownWireValue(wire),
   PurchaseOrderState.draft => l10n.purchasesStateDraft,
   PurchaseOrderState.sent => l10n.purchaseOrderStateSent,
   PurchaseOrderState.partlyReceived => l10n.purchaseOrderStatePartlyReceived,
@@ -200,9 +204,20 @@ class PurchaseOrderDetails extends ConsumerWidget {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-            Chip(
-              key: ValueKey('purchase-order-state-${order.reference}'),
-              label: Text(purchaseOrderStateLabel(l10n, order.state)),
+            // A state's words may be long (a state this app does not
+            // know is said with its text, #3730): the chip gives way.
+            Flexible(
+              child: Chip(
+                key: ValueKey('purchase-order-state-${order.reference}'),
+                label: Text(
+                  purchaseOrderStateLabel(
+                    l10n,
+                    order.state,
+                    wire: order.stateWire,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
           ],
         ),
@@ -211,7 +226,7 @@ class PurchaseOrderDetails extends ConsumerWidget {
           Text(
             l10n.labelWithValue(
               l10n.purchaseOrderExpected,
-              MaterialLocalizations.of(context).formatMediumDate(d),
+              appFormatOf(context).dates(DateShape.date).format(d),
             ),
           ),
         const FormGap.small(),

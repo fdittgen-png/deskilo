@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -43,6 +44,54 @@ class _Confirm extends StatelessWidget {
   final FinanceSelection selection;
   final bool declare;
 
+  /// #4165 — invoices without a month: their list and one amount, paid or
+  /// declared at once.
+  Widget _standalone(BuildContext context, MoneyFormat money, String business) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    return SafeArea(
+      key: ValueKey(
+        declare ? 'finances-declare-confirm' : 'finances-pay-confirm',
+      ),
+      child: ListView(
+        shrinkWrap: true,
+        padding: AppSpacing.lgAll,
+        children: [
+          Text(
+            declare
+                ? l10n.financesDeclareTitle(business)
+                : l10n.financesPayTitle(business),
+            style: theme.textTheme.titleMedium,
+          ),
+          const SizedBox(height: AppSpacing.md),
+          for (final invoice in selection.standaloneInvoices)
+            Text(
+              l10n.financesSelectionInvoiceAmount(
+                invoice.number,
+                money.formatMinor(FinanceSelection.dueOf(invoice)),
+              ),
+            ),
+          const SizedBox(height: AppSpacing.md),
+          Text(
+            l10n.financesStandaloneTotal(money.formatMinor(selection.cents)),
+            key: const ValueKey('finances-confirm-standalone-total'),
+            style: theme.textTheme.titleSmall,
+          ),
+          const SizedBox(height: AppSpacing.md),
+          FilledButton(
+            key: const ValueKey('finances-confirm-send'),
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(
+              declare
+                  ? l10n.financesDeclareSend
+                  : l10n.financesPayAmount(money.formatMinor(selection.cents)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -50,6 +99,7 @@ class _Confirm extends StatelessWidget {
     final money = personalFormatOf(context).moneyNamed(selection.currency!);
     final months = selection.months;
     final business = selection.workspaceName ?? '';
+    if (selection.isStandalone) return _standalone(context, money, business);
     final first = months.first;
     final then = [
       for (final m in months.skip(1))

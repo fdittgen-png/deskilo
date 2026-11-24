@@ -11,16 +11,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/features/enabled_feature_keys.dart';
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/time/calendar_days.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../application/issue_standalone_invoice.dart';
+import '../../domain/invoice_goods.dart';
 import '../../domain/standalone_invoice.dart';
 import '../../providers/business_day_provider.dart';
 import '../../providers/money_providers.dart'
@@ -51,7 +56,9 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
   List<String> _missing = const [];
   bool _refused = false;
   String? _requestId;
-  StandaloneIssueUnknown? _unknown;
+  // The attempt whose answer did not come, kept to look for its receipt.
+  StandaloneIssueAttempt? _attempt;
+  CommandUnreached<StandaloneIssued>? _unknown;
 
   @override
   void dispose() {
@@ -137,6 +144,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
       requestId: _requestId ??= newRequestId(),
     );
     setState(() => _busy = true);
+    _attempt = attempt;
     final outcome = await ref.read(standaloneIssuanceProvider).issue(attempt);
     if (!mounted) return;
     _settle(outcome);
@@ -144,27 +152,29 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
 
   Future<void> _look() async {
     final unknown = _unknown;
-    if (unknown == null) return;
+    final attempt = _attempt;
+    if (unknown == null || attempt == null) return;
     setState(() => _busy = true);
-    final outcome = await ref.read(standaloneIssuanceProvider).look(unknown);
+    final outcome =
+        await ref.read(standaloneIssuanceProvider).look(attempt, unknown);
     if (!mounted) return;
     _settle(outcome);
   }
 
-  void _settle(StandaloneIssueOutcome outcome) {
+  void _settle(CommandOutcome<StandaloneIssued> outcome) {
     switch (outcome) {
-      case StandaloneIssuedOutcome(:final invoiceId):
+      case CommandDone(:final value):
         setState(() => _busy = false);
-        context.go('$invoicesPath/$invoiceId');
-      case StandaloneIssueRefused(:final error):
+        context.go('$invoicesPath/${value.invoiceId}');
+      case CommandRefused(:final refusal):
         setState(() {
           _busy = false;
           _unknown = null;
           _refused = true;
-          _missing = standaloneRefusalKeys(error);
+          _missing = standaloneRefusalKeys(refusal);
           _preview = null;
         });
-      case StandaloneIssueUnknown():
+      case CommandUnreached():
         setState(() {
           _busy = false;
           _unknown = outcome;
@@ -199,7 +209,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
         padding: const EdgeInsets.all(16),
         children: [
           ..._header(context, locked),
-          ..._linesSection(context, locked),
+          ..._linesSection(context, workspaceId, locked),
           ..._status(context),
           const FormGap(),
           _actions(context, workspaceId, locked),
@@ -211,6 +221,12 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
   /// The title, and the way out: back to the invoices, the draft left behind.
   AppBar _bar(BuildContext context) => AppBar(
     title: PageTitle(context.l10n.invoiceCreate),
+    actions: [
+      HelpDot(
+        context.l10n.standaloneInvoiceMore,
+        anchor: HelpAnchor.moneyStandaloneInvoice,
+      ),
+    ],
     leading: CloseButton(
       key: const ValueKey('standalone-close'),
       onPressed: () => context.go(invoicesPath),
@@ -221,7 +237,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
     final l = context.l10n;
     final names = ref.watch(memberLabelsProvider);
     final customers = names.entries.toList()
-      ..sort((a, b) => a.value.compareTo(b.value));
+      ..sort((a, b) => compareNames(a.value, b.value));
     final today = ref.watch(businessDayProvider);
     ref.watch(invoiceDueDaysProvider); // the due date offered follows the payment term when it is read
     return [
@@ -287,9 +303,15 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
     ];
   }
 
-  List<Widget> _linesSection(BuildContext context, bool locked) {
+  List<Widget> _linesSection(BuildContext context, String workspaceId, bool locked) {
     final l = context.l10n;
     final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: the rates only offer a choice; none leaves the business's default
+    // #4433 -- with the goods ledger on, a line may sell an item kept in stock, and name its pieces where they are tagged
+    final keys = ref.watch(enabledFeatureKeysProvider);
+    final goods = featureOn(keys, 'stockManagement', byDefault: false)
+        ? ref.watch(invoiceGoodsItemsProvider(workspaceId)).value ?? const <InvoiceGoodsItem>[] // empty-ok: the items only offer a choice; none leaves every line a service
+        : const <InvoiceGoodsItem>[];
+    final pieces = featureOn(keys, 'stockTags', byDefault: false);
     return [
       Text(l.standaloneInvoiceLines, style: Theme.of(context).textTheme.titleMedium?.strong),
       for (final (i, line) in _lines.indexed)
@@ -298,6 +320,8 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
           index: i,
           form: line,
           rates: rates,
+          goods: goods,
+          pieces: pieces,
           enabled: !locked,
           onChanged: _edited,
           onRemove: _lines.length > 1

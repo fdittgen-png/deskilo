@@ -95,8 +95,9 @@ String? _decimalInputText(
 }
 
 /// The number typed in [raw] as canonical dot-decimal text (`12.5`), or null: what a screen sends when the server reads
-/// the text itself. [grouping] off reads a quantity or a weight: one separator at most, always the decimal one.
-String? decimalTextFromInput(String raw, {required String locale, bool grouping = true, bool allowNegative = false}) =>
+/// the text itself. [grouping] off reads a quantity, a weight or a rate: one separator at most, always the decimal one,
+/// and no locale is needed.
+String? decimalTextFromInput(String raw, {String? locale, bool grouping = true, bool allowNegative = false}) =>
     _decimalInputText(raw, locale: locale, grouping: grouping, allowNegative: allowNegative);
 
 /// #4161 -- a quantity typed by a member: the locale entry (`0,5`, `1 234,5`)

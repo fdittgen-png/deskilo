@@ -14,6 +14,7 @@ import 'dart:typed_data';
 
 import 'package:deskilo_task_recording/task_recording.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/task_recording_codec.dart';
 import '../package/storyboard_review.dart';
 import '../package/task_package.dart';
@@ -136,7 +137,8 @@ WorkbenchImport openTaskFile(Uint8List bytes) {
 String? _utf8(Uint8List bytes) {
   try {
     return const Utf8Decoder().convert(bytes);
-  } on FormatException {
+  } on FormatException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'task_recorder', 'workbench_import: FormatException handled', error: e, stackTrace: st);
     return null;
   }
 }

@@ -49,6 +49,16 @@ extension SalesEntries on DrawerEntries {
           () => go('/till'),
           route: '/till',
         ),
+      // #4367 — the cash drawer of the tills: open with a float, count and close.
+      if (features.contains(WorkspaceFeature.counterTillSessions) &&
+          (may(WorkspacePermission.issueInvoices) || may(WorkspacePermission.viewFinances)))
+        DrawerEntry(
+          'drawer-till-drawer',
+          Icons.account_balance_wallet_outlined,
+          l10n.tillDrawerManage,
+          () => go('/till/drawer'),
+          route: '/till/drawer',
+        ),
       // #4166 — the quotes: an offer to a billing customer before an invoice.
       if (own.contains(BusinessEntry.quotes))
         DrawerEntry(

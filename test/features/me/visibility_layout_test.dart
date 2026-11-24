@@ -8,6 +8,7 @@
 // sit side by side (60:40); otherwise the preview follows the editor. A
 // home without `set_visibility_if_unchanged_network_v1` (PGRST202 / 42883)
 // is named as such, writes nothing and falls back to no other writer.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/me/data/visibility_rpc.dart';
 import 'package:deskilo/features/me/domain/visibility_write.dart';
 import 'package:deskilo/features/me/providers/personal_shell_providers.dart';
@@ -168,17 +169,17 @@ void main() {
         'refusal stays the server\'s', () {
       PostgrestException refusal(String code, [String message = 'x']) =>
           PostgrestException(message: message, code: code);
-      expect(visibilityWriteRefusal(refusal('PGRST202')),
+      expect(visibilityWriteRefusal(refusal(PgCode.pgrstFunctionNotFound)),
           isA<VisibilityUnsupported>());
-      expect(visibilityWriteRefusal(refusal('42883')),
+      expect(visibilityWriteRefusal(refusal(PgCode.undefinedFunction)),
           isA<VisibilityUnsupported>());
       expect(visibilityWriteRefusal(refusal('PT409')),
           isA<VisibilityConflict>());
-      expect(visibilityWriteRefusal(refusal('P0001', 'visibility_conflict')),
+      expect(visibilityWriteRefusal(refusal(PgCode.raiseException, 'visibility_conflict')),
           isA<VisibilityConflict>());
-      expect(visibilityWriteRefusal(refusal('42501', 'permission denied')),
+      expect(visibilityWriteRefusal(refusal(PgCode.insufficientPrivilege, 'permission denied')),
           isNull);
-      expect(visibilityWriteRefusal(refusal('P0001', 'stale_fact')), isNull);
+      expect(visibilityWriteRefusal(refusal(PgCode.raiseException, 'stale_fact')), isNull);
     });
   });
 }

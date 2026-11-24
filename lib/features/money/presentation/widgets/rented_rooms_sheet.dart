@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -213,11 +214,11 @@ class _RoomCard extends StatelessWidget {
               Text(
                 r.availableUntil == null
                     ? l10n.roomRentWindowOpen(
-                        material.formatMediumDate(r.availableFrom),
+                        appFormatOf(context).dates(DateShape.date).format(r.availableFrom),
                       )
                     : l10n.roomRentWindow(
-                        material.formatMediumDate(r.availableFrom),
-                        material.formatMediumDate(r.availableUntil!),
+                        appFormatOf(context).dates(DateShape.date).format(r.availableFrom),
+                        appFormatOf(context).dates(DateShape.date).format(r.availableUntil!),
                       ),
               ),
               Text(l10n.roomRentCostLine(money!.formatMinor(r.costCents))),

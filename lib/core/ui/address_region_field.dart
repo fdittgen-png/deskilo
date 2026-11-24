@@ -6,6 +6,7 @@
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/text/collation.dart';
 import '../../l10n/app_localizations.dart';
 import '../jurisdiction/installed_postal_layouts.dart';
 import '../l10n/context_l10n.dart';
@@ -89,7 +90,7 @@ class _AddressRegionFieldState extends State<AddressRegionField> {
   /// The country's regions by name, after an empty choice.
   static List<DropdownMenuItem<String>> _items(RegionField field) {
     final byName = field.names.entries.toList()
-      ..sort((a, b) => a.value.compareTo(b.value));
+      ..sort((a, b) => compareNames(a.value, b.value));
     return [
       const DropdownMenuItem(value: '', child: Text('')),
       for (final e in byName)

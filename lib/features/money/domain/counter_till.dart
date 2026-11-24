@@ -6,6 +6,8 @@
 // uses. Amounts are MINOR units; a quantity is an exact decimal string; nothing here prices a line.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
+import 'till_quantity.dart';
+
 /// One operation of the counter in the business's country, under the case the owner declared.
 class TillOperation {
   const TillOperation({required this.operation, required this.outcome, required this.reason, required this.note});
@@ -71,7 +73,10 @@ class TillLine {
   /// exactly these pieces, and the server refuses a quantity that is not their number.
   final List<String> pieces;
 
-  TillLine withQuantity(String q) => TillLine(itemId: itemId, name: name, quantity: q, unit: unit, pieces: pieces);
+  /// The line at quantity [q]. Named pieces stay only when [q] is exactly their number: any other quantity (a tap on the item's key, a
+  /// typed number) leaves the line a plain quantity of the item, because the server refuses a quantity that is not the number of its
+  /// named pieces (DKG25) and would say so only after the cash was taken.
+  TillLine withQuantity(String q) => TillLine(itemId: itemId, name: name, quantity: q, unit: unit, pieces: tillQuantityOf(q) == '${pieces.length}' ? pieces : const []);
 
   /// The line with the piece tagged [tag] added: one more, named.
   TillLine withPiece(String tag) =>
@@ -252,16 +257,21 @@ abstract interface class TillPort {
   Future<TillReadiness> readiness(String workspaceId);
 
   /// Prices [lines]; [receiptId] and [expectedRevision] replace the lines of an open draft, both null make a new one.
-  Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision});
+  /// [tillId] names the till the sale is made on: a business that runs till sessions needs one with an open session.
+  Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision, String? tillId});
 
   Future<TillSold> finalize(String workspaceId, {required String requestId, required String receiptId, required int expectedRevision, required List<TillTender> tenders});
 }
 
 /// #4366 -- an item the till offers as a key: what a tap rings up.
 class TillKey {
-  const TillKey({required this.id, required this.name, required this.unit});
+  const TillKey({required this.id, required this.name, required this.unit, this.grossMinor});
 
   final String id;
   final String name;
   final String unit;
+
+  /// #4373 -- the item's price, gross, minor units of one unit, when the route knows it: what the till falls back on when it sells
+  /// offline. The server prices every online sale; this is never used for one.
+  final int? grossMinor;
 }

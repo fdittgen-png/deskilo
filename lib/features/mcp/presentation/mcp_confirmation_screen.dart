@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/mcp/mcp_operations.dart';
@@ -198,9 +199,9 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
       McpOperationId.requestMemberStatusChange =>
         l10n.mcpConfirmNewStatus('${args['status']}'),
       McpOperationId.requestSubscriptionChange =>
-        l10n.mcpConfirmNewShare('${args['pct']}'),
+        l10n.mcpConfirmNewShare(_share(format, args['pct'])),
       McpOperationId.scheduleMemberShareChange => l10n.mcpConfirmShareFrom(
-        '${args['pct']}',
+        _share(format, args['pct']),
         format.isoDay('${args['effective_on']}'),
       ),
       McpOperationId.scheduleMemberPause =>
@@ -308,3 +309,6 @@ String _featureChanges(AppLocalizations l10n, Map<String, Object?> target) {
     if (off.isNotEmpty) l10n.mcpConfirmSwitchOff(off),
   ].join('\n');
 }
+
+/// A share the assistant asks for (a JSON number), as a rate in the member's format; anything else as it came.
+String _share(AppFormat format, Object? raw) => raw is num ? format.ratePercent(raw) : '$raw';

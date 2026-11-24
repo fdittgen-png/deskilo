@@ -22,10 +22,24 @@ enum InvoiceKind {
   usage,
 
   /// Several invoices regrouped into one (#803).
-  settlement;
+  settlement,
 
-  static InvoiceKind fromWire(String? raw) =>
-      InvoiceKind.values.asNameMap()[raw ?? ''] ?? InvoiceKind.full;
+  /// #3730 — a kind a newer server sent and this app does not know. The
+  /// invoice is read and printed; nothing is issued, corrected or settled
+  /// on a guess, and no command ever sends this name.
+  unknown;
+
+  /// The kinds an invoice is issued as: every kind but [unknown].
+  static List<InvoiceKind> get issuable => [
+    for (final k in values)
+      if (k != unknown) k,
+  ];
+
+  /// A missing kind is a pre-0142 row (a full invoice); a kind this app
+  /// does not know is [unknown], never a full invoice.
+  static InvoiceKind fromWire(String? raw) => raw == null || raw.isEmpty
+      ? InvoiceKind.full
+      : (issuable.asNameMap()[raw] ?? InvoiceKind.unknown);
 
   /// Whether this document charges the fee for a month still to come.
   /// The reader needs telling: an invoice dated 28 August for September
@@ -33,7 +47,9 @@ enum InvoiceKind {
   bool get isInAdvance => this == InvoiceKind.subscription;
 
   /// #3994 — the kind a correction of this invoice is issued as: the same
-  /// for a subscription or a usage invoice, else a full invoice (0784).
+  /// for a subscription or a usage invoice, else a full invoice (0784). An
+  /// [unknown] invoice is never corrected (the app's invoice actions
+  /// refuse it), so its answer is never sent.
   InvoiceKind get correctionKind =>
       this == InvoiceKind.subscription || this == InvoiceKind.usage
       ? this

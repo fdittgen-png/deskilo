@@ -18,13 +18,7 @@ import 'action_registry.dart';
 enum CoverageStatus { recorded, recorder, excluded, planned }
 
 class RouteCoverage {
-  const RouteCoverage(
-    this.route,
-    this.status, {
-    this.category,
-    this.owner,
-    this.selfOpening = false,
-  });
+  const RouteCoverage(this.route, this.status, {this.category, this.owner, this.selfOpening = false});
 
   /// The route pattern as the router registers it (`:name` = a segment).
   final String route;
@@ -402,6 +396,8 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/stock/places', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/settings', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/till', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/till/drawer', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/till/day', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes/:id', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes/:id/edit', CoverageStatus.planned, owner: '#1884'),

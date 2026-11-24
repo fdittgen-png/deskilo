@@ -1,0 +1,6 @@
+{
+  "unknownWireValue": "{value} (dieser App-Version nicht bekannt)",
+  "unknownWireInvoiceKind": "Eine Art, die diese App-Version nicht kennt",
+  "unknownWireReadOnly": "Diese App-Version weiß nicht, was dieser Eintrag ist: Er kann gelesen, aber nicht geändert werden. Aktualisieren Sie die App, um damit zu arbeiten.",
+  "unknownWireKindFeatures": "Diese Art stellt außerdem {count, plural, one{eine Funktion} other{{count} Funktionen}} ein, die diese App-Version nicht kennt. Aktualisieren Sie die App, um sie zu wählen."
+}

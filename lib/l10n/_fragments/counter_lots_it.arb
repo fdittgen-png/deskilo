@@ -1,0 +1,5 @@
+{
+  "@@locale": "it",
+  "counterLotsExpired": "Solo {held} dei {asked} richiesti sono vendibili qui: altri {expired} sono scaduti. Non è stato venduto nulla.",
+  "counterLotsShort": "Qui ci sono solo {held} dei {asked} richiesti. Non è stato venduto nulla."
+}

@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:deskilo/core/cache/cached_fetch.dart';
 import 'package:deskilo/core/cache/read_failure.dart';
 import 'package:deskilo/core/cache/stale_reads.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -42,11 +43,11 @@ void main() {
       ReadFailure.transient,
     );
     expect(
-      classifyReadFailure(const PostgrestException(message: 'm', code: '42501')),
+      classifyReadFailure(const PostgrestException(message: 'm', code: PgCode.insufficientPrivilege)),
       ReadFailure.denied,
     );
     expect(
-      classifyReadFailure(const PostgrestException(message: 'm', code: 'PGRST301')),
+      classifyReadFailure(const PostgrestException(message: 'm', code: PgCode.pgrstJwtExpired)),
       ReadFailure.denied,
     );
     expect(
@@ -64,7 +65,7 @@ void main() {
       'dropped', () async {
     final cache = await _warm();
     await expectLater(
-      _read(cache, () async => throw const PostgrestException(message: 'denied', code: '42501')),
+      _read(cache, () async => throw const PostgrestException(message: 'denied', code: PgCode.insufficientPrivilege)),
       throwsA(isA<PostgrestException>()),
     );
     expect(await cache.get('resv:k'), isNull);

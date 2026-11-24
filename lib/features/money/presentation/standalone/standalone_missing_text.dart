@@ -20,12 +20,28 @@ String _text(AppLocalizations l, String key) {
       'vat_rate' => l.standaloneFieldVatRate,
       'amount' => l.standaloneFieldAmount,
       'line_id' => l.standaloneFieldLineId,
-      final other => other ?? key,
+      final other => _goodsFact(l, other) ?? other ?? key,
     };
     return l.standaloneInvoiceMissingLine(line.group(1)!, fact);
   }
   return _draftText(l, key);
 }
+
+/// #4433 -- a goods line: what it sells, and what the stock says when it would leave.
+String? _goodsFact(AppLocalizations l, String? fact) => switch (fact) {
+  'item' => l.standaloneFieldItem,
+  'variant' => l.standaloneFieldVariant,
+  'lot' => l.standaloneFieldLot,
+  'units' => l.standaloneFieldPieces,
+  'goods_off' => l.standaloneFieldGoodsOff,
+  'goods_cross_border' => l.standaloneFieldGoodsAbroad,
+  'stock_not_enough' => l.standaloneFieldStockShort,
+  'stock_pieces' => l.standaloneFieldStockPieces,
+  'stock_lot' => l.standaloneFieldStockLot,
+  'stock_lot_expired' => l.standaloneFieldStockExpired,
+  'stock' => l.standaloneFieldStock,
+  _ => null,
+};
 
 String _draftText(AppLocalizations l, String key) => switch (key) {
     'service_date' => l.standaloneFactServiceDate,
@@ -38,6 +54,8 @@ String _draftText(AppLocalizations l, String key) => switch (key) {
     'total_not_positive' => l.standaloneFactTotal,
     'currency' => l.standaloneFactCurrency,
     'unknown_subject' => l.standaloneFactUnknownSubject,
+    'stock_sale_place' => l.standaloneFactSalePlace,
+    'goods_off' => l.standaloneFieldGoodsOff,
     _ => _stateText(l, key),
   };
 

@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/ids/request_id.dart';
 import '../domain/counter_till.dart';
 import '../domain/till_offline.dart';
+import '../domain/till_offline_queue.dart';
 import '../presentation/till_session.dart';
 
 /// #4366 -- the till's server: readiness, a priced draft and the one command that makes the sale. The app wires the
@@ -27,3 +29,18 @@ final tillSessionProvider = Provider.family<TillSession, String>((ref, workspace
 /// #4373 -- the server side of the offline sales (`counter_offline_sync_v1`, `counter_offline_list_v1`). The app wires the live
 /// one (`tillPortFromApp`'s sibling); the Demo and the tests replace it.
 final tillOfflinePortProvider = Provider<TillOfflinePort>((ref) => throw UnimplementedError('the offline till port is wired by the app'));
+
+/// #4373 -- where the offline state of a business's till is kept: the app wires the secure store (`tillOfflineStoreFromApp`); the
+/// Demo and the tests keep it in memory.
+final tillOfflineStoreFactoryProvider = Provider<OfflineStore Function(String workspaceId)>(
+  (ref) => throw UnimplementedError('the offline store is wired by the app'),
+);
+
+/// #4373 -- the offline queue of one business's till: its prices, its device name and the sales waiting to be sent.
+final tillOfflineQueueProvider = Provider.family<TillOfflineQueue, String>(
+  (ref, workspaceId) => TillOfflineQueue(store: ref.read(tillOfflineStoreFactoryProvider)(workspaceId), newRequestId: newRequestId),
+);
+
+/// #4373 -- whether this business's till may go on selling for cash when the connection is lost (`counterOfflineCash` on, under
+/// till sessions). Off until the app wires it from the business's features (`tillOfflineEnabledFromApp`).
+final tillOfflineEnabledProvider = Provider<bool>((ref) => false);

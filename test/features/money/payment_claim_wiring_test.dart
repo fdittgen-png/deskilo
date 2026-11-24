@@ -7,6 +7,8 @@
 // claim, and how many invoices it says the payment names.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/money/data/supabase_member_account_commands.dart';
 import 'package:deskilo/features/money/data/supabase_payment_gateway_repository.dart';
 import 'package:deskilo/features/money/domain/payment_claims.dart';
@@ -133,7 +135,7 @@ void main() {
       () async {
         final commands = SupabaseMemberAccountCommands(
           _answering(400, {
-            'code': 'DKC07',
+            'code': DkCode.dkc07,
             'message': 'a payment of these invoices is what they still owe',
             'details': null,
             'hint': null,
@@ -155,7 +157,7 @@ void main() {
       final seen = <String>[];
       final commands = SupabaseMemberAccountCommands(
         _answering(400, {
-          'code': 'DKC13',
+          'code': DkCode.dkc13,
           'message': 'this declaration was already decided',
           'details': null,
           'hint': null,
@@ -174,7 +176,7 @@ void main() {
     test('another database error stays what it is', () async {
       final commands = SupabaseMemberAccountCommands(
         _answering(400, {
-          'code': 'P0001',
+          'code': PgCode.raiseException,
           'message': 'something else',
           'details': null,
           'hint': null,
@@ -207,7 +209,7 @@ void main() {
             jsonEncode(
               status == 200
                   ? 'event-1'
-                  : {'code': 'DKC06', 'message': 'held', 'details': '', 'hint': ''},
+                  : {'code': DkCode.dkc06, 'message': 'held', 'details': '', 'hint': ''},
             ),
             status,
             headers: {'content-type': 'application/json'},

@@ -225,7 +225,7 @@
   "@standaloneFieldBasis": {
     "description": "#4165 standalone invoice composer: standaloneFieldBasis"
   },
-  "standaloneFieldSupply": "a service (goods are not invoiced here yet)",
+  "standaloneFieldSupply": "what the line supplies: a service, property or goods",
   "@standaloneFieldSupply": {
     "description": "#4165 standalone invoice composer: standaloneFieldSupply"
   },

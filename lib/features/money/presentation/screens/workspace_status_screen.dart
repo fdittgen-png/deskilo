@@ -15,6 +15,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/dashboard_grid.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -173,7 +174,11 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
           const SizedBox(height: AppSpacing.md),
           switch (status) {
             AsyncData(value: final s) => _StatusBody(status: s),
-            AsyncError(:final error) => Text(error.toString()),
+            AsyncError(:final error) => ReadFailureBanner(
+              error: error,
+              onRetry: () =>
+                  ref.invalidate(workspaceStatusProvider(_from, _to)),
+            ),
             _ => const LoadingView(),
           },
         ],

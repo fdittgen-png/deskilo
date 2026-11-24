@@ -12,6 +12,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/format/decimal_input.dart';
+import '../../../core/i18n/app_format.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -32,6 +34,7 @@ import 'stock_config_text.dart';
 import 'stock_day.dart';
 import 'stock_move_sheets.dart';
 import 'stock_place_text.dart';
+import 'stock_read_failed.dart';
 
 class StockTransfersScreen extends ConsumerWidget {
   const StockTransfersScreen({super.key});
@@ -104,7 +107,7 @@ class StockTransfersScreen extends ConsumerWidget {
       );
       if (done) ref.invalidate(openTransfersProvider(workspaceId));
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the move sheet could not read the stock: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the move sheet could not read the stock', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
     }
   }
@@ -122,17 +125,7 @@ class _OnTheWay extends ConsumerWidget {
     final transfers = ref.watch(openTransfersProvider(workspaceId));
     return transfers.when(
       loading: () => const LoadingView(),
-      error: (e, st) => Column(
-        key: const ValueKey('stock-transfers-failed'),
-        children: [
-          Text(l10n.stockReadFailed),
-          TextButton(
-            key: const ValueKey('stock-transfers-retry'),
-            onPressed: () => ref.invalidate(openTransfersProvider(workspaceId)),
-            child: Text(l10n.identityConnectRetry),
-          ),
-        ],
-      ),
+      error: (e, st) => StockReadFailed(keyName: 'stock-transfers', error: e, onRetry: () => ref.invalidate(openTransfersProvider(workspaceId))),
       data: (list) => list.isEmpty
           ? Padding(
               key: const ValueKey('stock-transfers-empty'),
@@ -157,7 +150,7 @@ class _TransferCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final day = MaterialLocalizations.of(context).formatCompactDate(stockDayOf(ref, transfer.loadedAt));
+    final day = appFormatOf(context).dates(DateShape.numeric).format(stockDayOf(ref, transfer.loadedAt));
     final addresses = ref.watch(stockAddressesProvider(workspaceId));
     return Card(
       key: ValueKey('stock-transfer-${transfer.id}'),
@@ -222,7 +215,7 @@ class _TransferCard extends ConsumerWidget {
       );
       if (done) ref.invalidate(openTransfersProvider(workspaceId));
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the receive sheet could not read the places: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the receive sheet could not read the places', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
     }
   }
@@ -305,7 +298,7 @@ class _ReceiveDraft {
       ], requestId);
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'goods were not received: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'goods were not received', error: e, stackTrace: st);
       return stockSaveProblem(l10n, e);
     }
   }

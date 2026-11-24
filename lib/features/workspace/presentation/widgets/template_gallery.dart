@@ -113,11 +113,11 @@ class TemplateGallery extends ConsumerStatefulWidget {
   static bool matches(
       WorkspaceTemplate t, String query, Set<String> tags) {
     if (!tags.every(t.tags.contains)) return false;
-    final q = query.trim().toLowerCase();
+    final q = foldForSearch(query.trim());
     if (q.isEmpty) return true;
-    return t.name.toLowerCase().contains(q) ||
-        t.description.toLowerCase().contains(q) ||
-        t.tags.any((tag) => tag.toLowerCase().contains(q));
+    return foldForSearch(t.name).contains(q) ||
+        foldForSearch(t.description).contains(q) ||
+        t.tags.any((tag) => foldForSearch(tag).contains(q));
   }
 
   @override

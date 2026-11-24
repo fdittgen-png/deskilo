@@ -59,3 +59,10 @@ targetRules = ["generic-api-key"]
 condition = "AND"
 paths = ['''^test/features/task_recorder/ui_capture_values_test\.dart$''']
 regexes = ['''^Canary-Secret-4711$''']
+
+[[allowlists]]
+description = "The release train's installation map names the publishable Supabase key the app already ships (lib/core/backend/backend_config.dart); a publishable key is public by design and grants only what row-level security allows"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''^contracts/release/installations\.json$''']
+regexes = ['''^sb_publishable_PqXoa0tyQTjsZCPD_LrEQw_P7LJtalL$''']

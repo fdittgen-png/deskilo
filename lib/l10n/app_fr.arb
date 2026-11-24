@@ -3969,6 +3969,7 @@
   "claimRefusedCurrency": "L’une de ces factures est dans une autre devise que celle des paiements de l’entreprise. Rien n’a été débité.",
   "claimRefusedDecided": "L’entreprise a déjà décidé de ce paiement.",
   "claimRefusedEmpty": "Choisissez les factures que ce paiement règle.",
+  "claimRefusedMonthlyInStandalone": "Les factures mensuelles se règlent avec leur mois, séparément des factures sans mois. Rien n'a été débité.",
   "claimRefusedMonths": "Un paiement règle les factures d’un seul mois. Rien n’a été débité.",
   "claimRefusedNotMyPayment": "Ce paiement n’est pas à vous de le retirer.",
   "claimRefusedNotProcessing": "Ce paiement n’est plus en cours. Actualisez pour voir où il en est.",
@@ -3977,6 +3978,7 @@
   "claimRefusedOther": "L’entreprise a refusé ces factures pour ce paiement. Actualisez et réessayez.",
   "claimRefusedOtherMonth": "Ces factures sont d’un autre mois que ce paiement. Rien n’a été débité.",
   "claimRefusedRequestChanged": "Ce paiement a déjà été envoyé sous une autre forme. Vérifiez les paiements déclarés, puis réessayez.",
+  "claimRefusedStandaloneInMonthly": "Une facture sans mois se règle seule, séparément des factures mensuelles. Rien n'a été débité.",
   "claimRefusedWithdrawn": "Vous avez retiré ce paiement. Sélectionnez à nouveau les factures pour les payer.",
   "coOwnerAction": "Copropriété",
   "coOwnerActivate": "Promouvoir propriétaire maintenant",
@@ -4104,6 +4106,9 @@
   },
   "comingSoon": "Bientôt disponible",
   "commaPair": "{first}, {second}",
+  "commercialLineMeasure": "{quantity} à {price}",
+  "commercialLineMeasurePer": "{quantity} à {price} pour {base}",
+  "commercialLineUnreadable": "Enregistré par une version plus récente : ces données sont affichées telles quelles et ne peuvent pas être utilisées ici",
   "commonCancel": "Annuler",
   "commonClose": "Fermer",
   "commonCopy": "Copier",
@@ -4290,6 +4295,8 @@
   "@conversationYesterday": {
     "description": "#687 - messaging centre"
   },
+  "counterLotsExpired": "Seuls {held} des {asked} demandés sont vendables ici : {expired} de plus ont dépassé leur date. Rien n'a été vendu.",
+  "counterLotsShort": "Seuls {held} des {asked} demandés sont ici. Rien n'a été vendu.",
   "countryChangeBody": "En {country}, ces fonctionnalités ne sont pas disponibles et cessent de fonctionner : {features}. Leurs interrupteurs sont conservés : elles reviennent si vous remettez le pays d'origine.",
   "@countryChangeBody": {
     "description": "#2454 country change",
@@ -4695,7 +4702,7 @@
   },
   "datevDebtorBase": "Compte Debitor du membre n° 0",
   "datevProblemAccountLength": "le compte {account} n'a pas {length} chiffres",
-  "datevProblemAutomatic": "{percent} % serait comptabilisé sur {account}, le compte automatique d'un autre taux",
+  "datevProblemAutomatic": "{percent} serait comptabilisé sur {account}, le compte automatique d'un autre taux",
   "datevProblemBooksBlocked": "Les écritures n'ont pas pu comptabiliser les achats : {subjects}",
   "@datevProblemBooksBlocked": {
     "description": "DATEV export (#2375): the books could not post the purchases, with the missing roles or rates",
@@ -4737,7 +4744,7 @@
       }
     }
   },
-  "datevProblemTaxKey": "aucun BU-Schlüssel n'est enregistré pour {percent} % sur le compte {account}",
+  "datevProblemTaxKey": "aucun BU-Schlüssel n'est enregistré pour {percent} sur le compte {account}",
   "datevVoucherLinks": "Joindre les PDF des factures et les lier depuis chaque ligne (Beleglink)",
   "decisionSurfaceEmpty": "Rien ne vous attend",
   "@decisionSurfaceEmpty": {
@@ -7112,6 +7119,7 @@
   "exportValueNameUsage": "Consommation",
   "exportValueNameW": "Ouest",
   "exportValueNameWorkspace": "Espace de travail",
+  "failedPartNotShown": "Cette partie n'a pas pu être affichée. Revenez en arrière et ouvrez-la de nouveau.",
   "favoriteKeptOnDeviceRefused": "Gardé sur cet appareil uniquement : votre compte ne peut pas enregistrer ce lieu.",
   "favoriteKeptOnDeviceUnreachable": "Gardé sur cet appareil uniquement : votre compte n’a pas pu être joint. Réessayez plus tard.",
   "featureAccessorySupplements": "Suppléments d'accessoires",
@@ -7595,6 +7603,18 @@
   "featureNavigationStyleDesc": "Chaque membre choisit dans ses réglages comment l'application navigue : la barre classique avec le bouton rond Réserver, ou le menu comme sur le web. Désactivé : chaque appareil garde le défaut de sa plateforme.",
   "@featureNavigationStyleDesc": {
     "description": "#969 navigation style: featureNavigationStyleDesc"
+  },
+  "featureNeedsNewerInstallation": "Cette installation est trop ancienne pour cette fonction. Elle a besoin de {feature} à partir du schéma {since} ; demandez à la personne qui gère le serveur de le mettre à jour.",
+  "@featureNeedsNewerInstallation": {
+    "description": "#3729 Note under a feature's switch, for an administrator: the installation hosting the workspace is older than the feature needs",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      },
+      "since": {
+        "type": "String"
+      }
+    }
   },
   "featureNfcBadges": "Badges RFID / NFC",
   "featureNfcBadgesDesc": "Les membres pointent à une borne en approchant une carte RFID/NFC. Nécessite un appareil Android avec NFC.",
@@ -8510,6 +8530,8 @@
   "financesSelectionInvoiceAmount": "{number} · {amount}",
   "financesSelectionMonthAmount": "{month} : {amount}",
   "financesSelectionOneBusiness": "Un paiement est pour une seule entreprise, dans une seule devise : {business}.",
+  "financesSelectionOnlyMonthly": "Les factures mensuelles se règlent avec leur mois, séparément des factures sans mois.",
+  "financesSelectionOnlyStandalone": "Les factures sans mois se règlent ensemble, séparément des factures mensuelles.",
   "financesSelectionSummary": "{count, plural, one{{count} facture sélectionnée · {amount}} other{{count} factures sélectionnées · {amount}}}",
   "financesShowAmount": "Afficher le montant",
   "financesSourceUnavailable": "Les documents de {host} n'ont pas pu être lus pour l'instant ; ce qui est affiché vient de vos autres espaces.",
@@ -8521,6 +8543,7 @@
       }
     }
   },
+  "financesStandaloneTotal": "Total : {amount}",
   "financesStateClosed": "Clôturée",
   "@financesStateClosed": {
     "description": "Me › Finances"
@@ -11328,15 +11351,6 @@
   "@itemGroupMargin": {
     "description": "#4361 G12 finance parameters of an item group"
   },
-  "itemGroupMarginValue": "{percent} %",
-  "@itemGroupMarginValue": {
-    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
-    "placeholders": {
-      "percent": {
-        "type": "String"
-      }
-    }
-  },
   "itemGroupMinAge": "Âge minimum pour une vente",
   "itemGroupMove": "Déplacer",
   "itemGroupMoveReaches": "{count, plural, one{Le déplacement change {count} réglage.} other{Le déplacement change {count} réglages.}}",
@@ -12776,14 +12790,14 @@
   "mcpConfirmFieldChange": "{field} : {from} → {to}",
   "mcpConfirmInvitee": "Invitation pour",
   "mcpConfirmLevel": "{process} : {level}",
-  "mcpConfirmNewShare": "Nouvelle part d'abonnement : {pct} %",
+  "mcpConfirmNewShare": "Nouvelle part d'abonnement : {pct}",
   "mcpConfirmNewStatus": "Nouveau statut : {status}",
   "mcpConfirmNotFound": "Aucune demande de ce type ne vous concerne.",
   "mcpConfirmPauseOpen": "Pause à partir du {from}, jusqu'à la reprise",
   "mcpConfirmPauseUntil": "Pause du {from} au {to}",
   "mcpConfirmPeriod": "Période : {period}",
   "mcpConfirmRefuse": "Votre réponse : refuser",
-  "mcpConfirmShareFrom": "Nouvelle part d'abonnement : {pct} % à partir du {date}",
+  "mcpConfirmShareFrom": "Nouvelle part d'abonnement : {pct} à partir du {date}",
   "mcpConfirmStale": "Cette demande ne correspond plus aux données actuelles ou à vos accès. Rien n'a été fait.",
   "mcpConfirmStepDone": "Elle sera marquée comme faite.",
   "mcpConfirmStepLater": "Elle sera mise de côté pour plus tard.",
@@ -13424,7 +13438,7 @@
   "memberPlanJoinedUnknown": "Non enregistrée",
   "memberPlanPausedNoDates": "Suspendu : aucune date n'est enregistrée pour cette suspension",
   "memberPlanPausedSince": "Suspendu depuis le {date}",
-  "memberPlanShare": "Forfait {pct} %",
+  "memberPlanShare": "Forfait {pct}",
   "@memberPlanShare": {
     "description": "#704 - the contact section of a member profile",
     "placeholders": {
@@ -14368,6 +14382,7 @@
   "payOnlineReversedDetail": "Le paiement {reference} ({amount} via {provider}) a été annulé par le prestataire (un remboursement ou une contestation). L'entreprise corrige votre solde.",
   "payOnlineReversedPartDetail": "Sur le paiement {reference} ({amount} via {provider}), le prestataire a annulé {reversed} (un remboursement ou une contestation). L'entreprise corrige votre solde.",
   "payOnlineReversedTitle": "Paiement en ligne annulé",
+  "payOnlineStandaloneUnsupported": "Le service de paiement de cet établissement doit être mis à jour avant que des factures sans mois puissent être payées en ligne.",
   "payOnlineStartAgain": "Ce paiement ne peut plus être poursuivi. Relancez le paiement.",
   "payOnlineTestKeys": "Le paiement en ligne n'est pas disponible : le prestataire de paiement est configuré avec des identifiants de test. L'entreprise doit saisir ses clés de production.",
   "paymentAccountNumberLabel": "Numéro de compte",
@@ -14442,11 +14457,11 @@
   "@paymentRemindersWhen": {
     "description": "#2332: when automatic payment reminders run"
   },
-  "paymentRoutingNumberLabel": "Routing number",
+  "paymentRoutingNumberLabel": "Numéro de routage (ABA)",
   "@paymentRoutingNumberLabel": {
     "description": "#711 - globalization"
   },
-  "paymentSortCodeLabel": "Sort code",
+  "paymentSortCodeLabel": "Code guichet (sort code)",
   "@paymentSortCodeLabel": {
     "description": "#711 - globalization"
   },
@@ -18905,6 +18920,21 @@
   "schemaUpdateBody": "Cette application a besoin de la version {version} du schéma DesKilo, et le serveur auquel elle se connecte en exécute une plus ancienne. Tant que le serveur n'est pas mis à jour, l'application échouerait sans pouvoir expliquer pourquoi : elle s'arrête donc ici.",
   "schemaUpdateMember": "Sinon : prévenez la personne qui gère votre espace. Rien de ce que vous avez saisi n'est perdu.",
   "schemaUpdateOperator": "Si vous gérez ce serveur : appliquez les migrations manquantes avec `dart run tool/instance.dart install --ref <projet>`. Seul ce qui manque est exécuté.",
+  "schemaUpdateRunning": "Cette installation tourne en version {version} : il lui manque les migrations {from} à {to}.",
+  "@schemaUpdateRunning": {
+    "description": "#3729 For the person who runs the server, on the update screen: the schema the installation reports and the range of migrations it lacks",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "schemaUpdateServer": "Réglages du serveur",
   "schemaUpdateTitle": "Ce serveur doit être mis à jour",
   "searchActionInvite": "Inviter un membre",
@@ -19045,6 +19075,7 @@
     "description": "#2486 settings: Settings group title."
   },
   "settingGroupBusiness": "Activité",
+  "settingGroupCompatibility": "Versions de l'application",
   "settingGroupDirectory": "Annuaire des membres",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -19088,6 +19119,7 @@
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
   },
+  "settingHintAppsSupportWindowDays": "Combien de jours une ancienne application reste acceptée après qu'une plus récente est disponible sur le canal de distribution le plus lent. L'application la plus ancienne acceptée par cette installation n'est relevée qu'une fois ce nombre de jours écoulé, pour que chaque membre ait le temps de la mettre à jour.",
   "settingHintAssetsValuationMaxRows": "Le plus grand nombre de lignes d'un lot de valorisations du comptable, une par bien. Un fichier plus grand est refusé en entier ; scindez-le avant l'import.",
   "@settingHintAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
@@ -19322,6 +19354,10 @@
   },
   "settingHintStockGroupDefaultCountDays": "Tous les combien de jours un article que ni un groupe ni un réglage propre ne concerne est proposé pour un comptage tournant. 0 : non planifié.",
   "settingHintStockGroupDefaultTagMode": "Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce).",
+  "settingHintStockInvoiceSalePlace": "Le code d’un lieu de l’entreprise qui détient du stock, par exemple MAIN. Les biens vendus sur facture en partent à l’émission de la facture.",
+  "@settingHintStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
+  },
   "settingHintStockPriceRounding": "Comment un prix de vente proposé est arrondi : au 0,05 ou 0,10 le plus proche, ou à un prix qui finit par 0,99. Il ne sert qu'à proposer un prix.",
   "settingHintStockRepeatedScan": "Ce que fait une feuille de marchandises quand le même code est scanné de nouveau : ajouter un de plus à la ligne, ou demander la quantité.",
   "settingHintStockTagReadMaxTags": "Combien d'étiquettes différentes une lecture en masse conserve avant de ne plus en prendre. Une même étiquette lue plusieurs fois compte une fois.",
@@ -19340,6 +19376,7 @@
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
   },
+  "settingLabelAppsSupportWindowDays": "Délai de prise en charge des anciennes applications",
   "settingLabelAssetsValuationMaxRows": "Lignes de valorisation par lot",
   "@settingLabelAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
@@ -19574,6 +19611,10 @@
   },
   "settingLabelStockGroupDefaultCountDays": "Cycle de comptage par défaut (jours)",
   "settingLabelStockGroupDefaultTagMode": "Mode d'étiquette par défaut des articles",
+  "settingLabelStockInvoiceSalePlace": "Lieu d’où partent les biens vendus sur facture",
+  "@settingLabelStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
+  },
   "settingLabelStockPriceRounding": "Arrondi des prix",
   "settingLabelStockRepeatedScan": "Un code scanné de nouveau",
   "settingLabelStockTagReadMaxTags": "Nombre maximal d'étiquettes par lecture en masse",
@@ -19718,6 +19759,7 @@
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitPlaceCode": "code d’emplacement",
   "settingUnitQuarters": "trimestres",
   "settingUnitRequests": "requêtes",
   "@settingUnitRequests": {
@@ -19986,8 +20028,7 @@
   "setupGrowVatOpen": "Modifier les taux de TVA",
   "setupGrowVatPreviewNoVat": "Aucune TVA n'est facturée : une ligne de {gross} est facturée telle quelle.",
   "setupGrowVatPreviewNote": "Une ligne d'exemple de {gross}, TVA comprise, ventilée comme sur une facture :",
-  "setupGrowVatPreviewRate": "TVA {rate} %",
-  "setupGrowVatRate": "{rate} %",
+  "setupGrowVatPreviewRate": "TVA {rate}",
   "setupGrowVatUsualNote": "Un point de départ, pas un conseil fiscal : votre expert-comptable confirme quel taux s'applique à ce que vous vendez.",
   "setupGrowVatUsualTitle": "Les taux habituels de votre pays",
   "setupGuidanceTitle": "Conseils et vérifications",
@@ -20675,6 +20716,10 @@
   "@standaloneFactLines": {
     "description": "#4165 standalone invoice composer: standaloneFactLines"
   },
+  "standaloneFactSalePlace": "le lieu d’où partent les ventes : indiquez un lieu qui détient du stock dans les réglages de l’entreprise",
+  "@standaloneFactSalePlace": {
+    "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
+  },
   "standaloneFactSalesTax": "cette entreprise ajoute une taxe de vente, ce qui n’est pas encore pris en charge ici",
   "@standaloneFactSalesTax": {
     "description": "#4165 standalone invoice composer: standaloneFactSalesTax"
@@ -20715,9 +20760,29 @@
   "@standaloneFieldDescription": {
     "description": "#4165 standalone invoice composer: standaloneFieldDescription"
   },
+  "standaloneFieldGoodsAbroad": "un acheteur du pays de l’entreprise : les biens vendus à l’étranger ne se facturent pas encore ici",
+  "@standaloneFieldGoodsAbroad": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsAbroad"
+  },
+  "standaloneFieldGoodsOff": "la gestion des stocks, désactivée dans cette entreprise",
+  "@standaloneFieldGoodsOff": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsOff"
+  },
+  "standaloneFieldItem": "un article tenu en stock et en vente",
+  "@standaloneFieldItem": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldItem"
+  },
   "standaloneFieldLineId": "enregistrer à nouveau le brouillon",
   "@standaloneFieldLineId": {
     "description": "#4165 standalone invoice composer: standaloneFieldLineId"
+  },
+  "standaloneFieldLot": "un lot de cet article",
+  "@standaloneFieldLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldLot"
+  },
+  "standaloneFieldPieces": "les étiquettes des pièces, en codes d’étiquette",
+  "@standaloneFieldPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldPieces"
   },
   "standaloneFieldPrice": "un prix avec six décimales au plus",
   "@standaloneFieldPrice": {
@@ -20727,13 +20792,37 @@
   "@standaloneFieldQuantity": {
     "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
   },
-  "standaloneFieldSupply": "une prestation de services (les biens ne se facturent pas encore ici)",
+  "standaloneFieldStock": "des biens que le stock peut vendre tels que saisis",
+  "@standaloneFieldStock": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStock"
+  },
+  "standaloneFieldStockExpired": "un lot qui n’est pas périmé",
+  "@standaloneFieldStockExpired": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockExpired"
+  },
+  "standaloneFieldStockLot": "un lot présent de cet article",
+  "@standaloneFieldStockLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockLot"
+  },
+  "standaloneFieldStockPieces": "les pièces vendues : une étiquette par pièce, chacune d’une pièce présente",
+  "@standaloneFieldStockPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockPieces"
+  },
+  "standaloneFieldStockShort": "assez en stock au lieu d’où partent les ventes",
+  "@standaloneFieldStockShort": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockShort"
+  },
+  "standaloneFieldSupply": "ce que fournit la ligne : une prestation, un bien immobilier ou des biens",
   "@standaloneFieldSupply": {
     "description": "#4165 standalone invoice composer: standaloneFieldSupply"
   },
   "standaloneFieldUnit": "une unité",
   "@standaloneFieldUnit": {
     "description": "#4165 standalone invoice composer: standaloneFieldUnit"
+  },
+  "standaloneFieldVariant": "la variante de l’article",
+  "@standaloneFieldVariant": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldVariant"
   },
   "standaloneFieldVatRate": "un taux de TVA défini par l’entreprise",
   "@standaloneFieldVatRate": {
@@ -20772,9 +20861,25 @@
   "@standaloneInvoiceLineDescription": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineDescription"
   },
+  "standaloneInvoiceLineGoods": "Vendu depuis le stock",
+  "@standaloneInvoiceLineGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineGoods"
+  },
   "standaloneInvoiceLineGross": "Le prix est TTC",
   "@standaloneInvoiceLineGross": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineGross"
+  },
+  "standaloneInvoiceLineNoGoods": "Rien du stock (une prestation)",
+  "@standaloneInvoiceLineNoGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineNoGoods"
+  },
+  "standaloneInvoiceLinePieces": "Étiquettes des pièces vendues",
+  "@standaloneInvoiceLinePieces": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePieces"
+  },
+  "standaloneInvoiceLinePiecesHint": "Une étiquette par pièce, séparées par des virgules : cet article est suivi pièce par pièce.",
+  "@standaloneInvoiceLinePiecesHint": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePiecesHint"
   },
   "standaloneInvoiceLinePrice": "Prix unitaire",
   "@standaloneInvoiceLinePrice": {
@@ -20987,7 +21092,10 @@
   "stockChainPieceTitle": "Tous les mouvements de cette pièce",
   "stockChainPieces": "{count, plural, one{{count} pièce} other{{count} pièces}}",
   "stockChainReceipt": "Ticket {label}",
+  "stockChainSaleTitle": "Ce que cette vente a pris",
   "stockChainTitle": "Tous les mouvements de ce lot",
+  "stockChainTookLot": "Lot {code} · {quantity}",
+  "stockChainTookPiece": "Pièce {tag}",
   "stockChainTruncated": "Seuls les premiers mouvements sont affichés.",
   "stockChainUnavailable": "Un document que vous ne pouvez pas consulter",
   "stockCostLabel": "Coût par unité",
@@ -21020,7 +21128,7 @@
   "stockCycleCounted": "Compté.",
   "stockCycleCountedDifference": "Compté. Écart avec le stock enregistré : {difference}",
   "stockCycleEveryDays": "Tous les combien de jours",
-  "stockCycleHistoryAccuracy": "{count, plural, one{{count} comptage} other{{count} comptages}}, {percent} % exacts",
+  "stockCycleHistoryAccuracy": "{count, plural, one{{count} comptage} other{{count} comptages}}, {percent} exacts",
   "stockCycleHistoryEmpty": "Rien n’a encore été compté.",
   "stockCycleHistoryLast": "Dernier comptage le {date}",
   "stockCycleHistoryRow": "{item} · {place}",
@@ -21032,7 +21140,7 @@
   "stockCycleNoPlans": "Aucun plan pour l’instant : rien n’est compté selon un calendrier.",
   "stockCycleNoTasks": "Rien à compter pour l’instant.",
   "stockCyclePlanActive": "Utilisé",
-  "stockCyclePlanEvery": "tous les {count, plural, one{{count} jour} other{{count} jours}}",
+  "stockCyclePlanEvery": "Intervalle : {count, plural, one{{count} jour} other{{count} jours}}",
   "stockCyclePlanItemsCount": "{count, plural, one{{count} article} other{{count} articles}}",
   "stockCyclePlanName": "Nom",
   "stockCyclePlanNameRequired": "Donnez un nom au plan.",
@@ -22114,6 +22222,18 @@
   "stockTraceReceived": "Reçu le {date}",
   "stockTraceReversed": "{amount} annulés le {date}",
   "stockTraceTitle": "D’où cela vient",
+  "stockTrackFindExpires": "Expire le {date}",
+  "stockTrackFindField": "Code de lot ou étiquette",
+  "stockTrackFindHelper": "Le code du lot tel que reçu, le code de son étiquette, ou l'étiquette d'une pièce.",
+  "stockTrackFindLots": "Lots",
+  "stockTrackFindNoSale": "Aucune vente ne l'a encore pris.",
+  "stockTrackFindNone": "Rien dans cette entreprise ne porte {code}.",
+  "stockTrackFindPieces": "Pièces",
+  "stockTrackFindRequired": "Saisissez ou scannez d'abord un code.",
+  "stockTrackFindSales": "Ventes qui l'ont pris",
+  "stockTrackFindSubmit": "Rechercher",
+  "stockTrackFindTitle": "Retrouver un code de traçabilité",
+  "stockTrackFindTruncated": "Seules les premières correspondances sont affichées.",
   "stockTransferLine": "{item} : {left} {unit} en route sur {loaded}",
   "@stockTransferLine": {
     "description": "#4170 transfers and take-out: a label or message",
@@ -23754,6 +23874,108 @@
   "@tillConfirmSale": {
     "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
   },
+  "tillDayAmountLine": "{label} : {amount}",
+  "tillDayByRate": "Ventes par taux de taxe",
+  "tillDayByTender": "Encaissements par moyen de paiement",
+  "tillDayCorrections": "Corrections : {amount}",
+  "tillDayDifferences": "Écart total des tiroirs : {amount}",
+  "tillDayHelp": "Réunit les sessions fermées des caisses en un rapport numéroté. Chaque caisse doit d'abord être fermée.",
+  "tillDayItem": "{number} · {date}",
+  "tillDayNone": "Aucune journée n'est encore clôturée.",
+  "tillDayOpen": "Clôturer la journée",
+  "tillDayPaidIn": "Espèces entrées : {amount}",
+  "tillDayPaidOut": "Espèces sorties : {amount}",
+  "tillDayPast": "Journées clôturées",
+  "tillDayRateLine": "{rate} % : HT {net}, taxe {tax}, TTC {gross}",
+  "tillDayReceiptRange": "Tickets {first} à {last}",
+  "tillDayRefunds": "Remboursements : {amount}",
+  "tillDayRefusalClosed": "Cette journée est déjà clôturée.",
+  "tillDayRefusalFuture": "Une journée ne peut pas être clôturée avant d'avoir commencé.",
+  "tillDayRefusalNothing": "Aucune session n'a été fermée ce jour : il n'y a rien à clôturer.",
+  "tillDayRefusalTillOpen": "La caisse {name} est encore ouverte. Comptez-la et fermez-la d'abord.",
+  "tillDayReportDate": "Journée d'activité : {date}",
+  "tillDayReportTitle": "Rapport de journée {number}",
+  "tillDaySalesTotal": "Ventes : {amount}",
+  "tillDaySessionLine": "{till} : attendu {expected}, compté {counted}, écart {difference}",
+  "tillDaySessionReason": "Motif : {reason}",
+  "tillDaySessions": "Sessions",
+  "tillDayTenderCash": "Espèces",
+  "tillDayTenderOther": "Autre",
+  "tillDayTitle": "Clôture de la journée",
+  "tillDayToday": "Journée à clôturer : {date}",
+  "tillDrawerAddTill": "Ajouter une caisse",
+  "tillDrawerAmountInvalid": "Saisissez un montant.",
+  "tillDrawerAmountZero": "Le montant doit être supérieur à zéro.",
+  "tillDrawerBanked": "Déposé à la banque",
+  "tillDrawerBankedAbove": "Le montant déposé ne peut pas dépasser les espèces comptées.",
+  "tillDrawerBankedHelp": "La part des espèces comptées déposée à la banque. Laissez vide s'il n'y en a pas.",
+  "tillDrawerBreakdown": "Fond {float}, ventes {sales}, entrées {paidIn}, sorties {paidOut}",
+  "tillDrawerCashAction": "Entrée ou sortie d'espèces",
+  "tillDrawerChoose": "Vendre sur quelle caisse ?",
+  "tillDrawerCloseAction": "Compter et fermer",
+  "tillDrawerCloseSubmit": "Fermer la caisse",
+  "tillDrawerCloseTitle": "Compter et fermer {till}",
+  "tillDrawerClosedBanked": "Déposé à la banque : {amount}.",
+  "tillDrawerClosedCard": "Paiements par carte sans réponse : {amount}. Ils ne sont pas comptés comme espèces.",
+  "tillDrawerClosedCounts": "Attendu {expected}, compté {counted}.",
+  "tillDrawerClosedOver": "Excédent de {amount}.",
+  "tillDrawerClosedSame": "Le comptage correspond aux espèces attendues.",
+  "tillDrawerClosedShort": "Manque {amount}.",
+  "tillDrawerClosedTitle": "Caisse fermée",
+  "tillDrawerCounted": "Espèces comptées dans le tiroir",
+  "tillDrawerCountedHelp": "Comptez ce qui est dans le tiroir.",
+  "tillDrawerCountedHelpBlind": "Comptez ce qui est dans le tiroir. Les espèces attendues s'affichent après le comptage.",
+  "tillDrawerDenomAdd": "Ajouter une coupure",
+  "tillDrawerDenomCount": "Combien",
+  "tillDrawerDenomIncomplete": "Chaque ligne demande une valeur supérieure à zéro et un nombre de pièces, sans valeur en double.",
+  "tillDrawerDenomRemove": "Retirer cette ligne",
+  "tillDrawerDenomTotal": "Total compté : {amount}",
+  "tillDrawerDenomValue": "Valeur d'un billet ou d'une pièce",
+  "tillDrawerDifferenceAsked": "Le comptage diffère des espèces attendues. Dites pourquoi pour fermer la caisse.",
+  "tillDrawerDifferenceLive": "Écart : {amount}",
+  "tillDrawerDifferenceReason": "Pourquoi le comptage diffère-t-il ?",
+  "tillDrawerDifferenceReasonMissing": "Dites pourquoi le comptage diffère.",
+  "tillDrawerEditTill": "Modifier la caisse",
+  "tillDrawerEntryAmount": "Montant",
+  "tillDrawerEntryDone": "Mouvement d'espèces enregistré.",
+  "tillDrawerEntryLimit": "Au-delà de {limit}, une sortie est enregistrée par une personne qui peut enregistrer des paiements sortants.",
+  "tillDrawerEntryPaidIn": "Entrée",
+  "tillDrawerEntryPaidOut": "Sortie",
+  "tillDrawerEntryReason": "Motif",
+  "tillDrawerEntryReasonMissing": "Choisissez un motif.",
+  "tillDrawerEntrySubmit": "Enregistrer",
+  "tillDrawerEntryTitle": "Entrée ou sortie d'espèces",
+  "tillDrawerExpected": "Espèces attendues : {amount}",
+  "tillDrawerExpectedHidden": "Les espèces attendues s'affichent après le comptage du tiroir.",
+  "tillDrawerFailed": "La caisse n'a pas pu le faire. Réessayez.",
+  "tillDrawerFloat": "Fond de caisse",
+  "tillDrawerFloatHelp": "Les espèces avec lesquelles le tiroir démarre, comptées maintenant.",
+  "tillDrawerLoadFailed": "Les caisses n'ont pas pu être lues.",
+  "tillDrawerManage": "Caisses et tiroirs",
+  "tillDrawerNameMissing": "Donnez un nom à la caisse.",
+  "tillDrawerNoTills": "Il n'y a pas encore de caisse. Ajoutez la première pour compter un tiroir.",
+  "tillDrawerNoTillsPerson": "Aucune caisse n'est encore créée. Une personne qui gère les sites l'ajoute.",
+  "tillDrawerOpenAction": "Ouvrir la caisse",
+  "tillDrawerOpenFirstBody": "Ouvrez une caisse avec son fond de caisse avant de vendre.",
+  "tillDrawerOpenFirstTitle": "Aucune caisse n'est ouverte",
+  "tillDrawerOpenTitle": "Ouvrir {till}",
+  "tillDrawerRefusalAboveLimit": "Une sortie de cette importance est enregistrée par une personne qui peut enregistrer des paiements sortants.",
+  "tillDrawerRefusalAlreadyOpen": "Cette caisse est déjà ouverte. Comptez-la et fermez-la avant de la rouvrir ou de la désactiver.",
+  "tillDrawerRefusalDenominations": "Les comptages par coupure ne font pas le montant.",
+  "tillDrawerRefusalDifference": "Le comptage diffère des espèces attendues. Dites pourquoi avant de fermer.",
+  "tillDrawerRefusalNameTaken": "Une autre caisse de cette entreprise porte déjà ce nom.",
+  "tillDrawerRefusalOpenFirst": "Ouvrez d'abord la caisse : une vente demande une session ouverte sur sa caisse.",
+  "tillDrawerRefusalReasonUnknown": "Ce motif n'est pas dans la liste de l'entreprise. Choisissez-en un dans la liste.",
+  "tillDrawerRefusalSessionGone": "Cette session n'est plus ouverte.",
+  "tillDrawerRefusalTillUnknown": "Ce n'est pas une caisse active de cette entreprise.",
+  "tillDrawerStateClosed": "Fermée",
+  "tillDrawerStateOff": "Désactivée",
+  "tillDrawerStateOpen": "Ouverte · fond de caisse {float}",
+  "tillDrawerTillActive": "En service",
+  "tillDrawerTillName": "Nom de la caisse",
+  "tillDrawerTillNewTitle": "Nouvelle caisse",
+  "tillDrawerTillSave": "Enregistrer la caisse",
+  "tillDrawerTitle": "Tiroir-caisse",
   "tillFailed": "La caisse n'a pas pu le faire. Réessayez.",
   "tillKeysEmpty": "Il n'y a encore rien à vendre. Ajoutez d'abord des articles dans le stock.",
   "tillKeysTitle": "Articles à encaisser",
@@ -23776,6 +23998,139 @@
   "tillNextCustomer": "Client suivant",
   "tillNotReady": "Pas encore prêt dans votre pays : {operation}",
   "tillNotReadyHint": "Rien n'est numéroté ni encaissé tant que l'opération du pays n'est pas prise en charge.",
+  "tillOfflineBanner": "Hors ligne — espèces uniquement. Les ventes sont conservées sur cet appareil et envoyées au retour de la connexion.",
+  "@tillOfflineBanner": {
+    "description": "#4373 the till sells offline: the banner"
+  },
+  "tillOfflineClosedSession": "La session a été fermée : ces ventes restent sur l'appareil pour un responsable.",
+  "@tillOfflineClosedSession": {
+    "description": "#4373 the send was refused because the session was closed (DKL12)"
+  },
+  "tillOfflineDiscard": "Supprimer les données hors ligne",
+  "@tillOfflineDiscard": {
+    "description": "#4373 drop the unreadable offline data: the action"
+  },
+  "tillOfflineDiscardBody": "Les ventes non envoyées sont perdues définitivement. Ne supprimez les données qu'après vérification par un responsable.",
+  "@tillOfflineDiscardBody": {
+    "description": "#4373 drop the unreadable offline data: the warning"
+  },
+  "tillOfflineDiscardConfirm": "Supprimer les données",
+  "@tillOfflineDiscardConfirm": {
+    "description": "#4373 drop the unreadable offline data: confirm"
+  },
+  "tillOfflineGaps": "Numéros de vente manquants sur le serveur : {numbers}.",
+  "@tillOfflineGaps": {
+    "description": "#4373 the answer of the send: sale numbers the server finds missing",
+    "placeholders": {
+      "numbers": {
+        "type": "String"
+      }
+    }
+  },
+  "tillOfflineKept": "{count, plural, one{{count} vente reste} other{{count} ventes restent}} sur cet appareil pour un responsable.",
+  "@tillOfflineKept": {
+    "description": "#4373 the answer of the send: sales that stay on the device",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tillOfflineNoPrice": "Cet article n'a pas de prix sur cet appareil : il ne peut pas être vendu hors ligne.",
+  "@tillOfflineNoPrice": {
+    "description": "#4373 a line the device holds no price for"
+  },
+  "tillOfflineNotSigned": "Non signé. Il est envoyé au serveur au retour de la connexion.",
+  "@tillOfflineNotSigned": {
+    "description": "#4373 the receipt of a sale made offline: not signed yet"
+  },
+  "tillOfflineReasonBeforeSession": "Faite avant l'ouverture de cette caisse.",
+  "@tillOfflineReasonBeforeSession": {
+    "description": "#4373 why the server refused an offline sale: BeforeSession"
+  },
+  "tillOfflineReasonCash": "Les espèces données étaient inférieures au total.",
+  "@tillOfflineReasonCash": {
+    "description": "#4373 why the server refused an offline sale: Cash"
+  },
+  "tillOfflineReasonClock": "L'horloge de l'appareil était en avance.",
+  "@tillOfflineReasonClock": {
+    "description": "#4373 why the server refused an offline sale: Clock"
+  },
+  "tillOfflineReasonItem": "L'article n'est plus vendu.",
+  "@tillOfflineReasonItem": {
+    "description": "#4373 why the server refused an offline sale: Item"
+  },
+  "tillOfflineReasonOther": "Les règles de la caisse l'ont refusée.",
+  "@tillOfflineReasonOther": {
+    "description": "#4373 why the server refused an offline sale: Other"
+  },
+  "tillOfflineReasonPrice": "Le prix a changé plus que ce qui est autorisé.",
+  "@tillOfflineReasonPrice": {
+    "description": "#4373 why the server refused an offline sale: Price"
+  },
+  "tillOfflineReasonTooLong": "Faite trop longtemps après la perte de la connexion.",
+  "@tillOfflineReasonTooLong": {
+    "description": "#4373 why the server refused an offline sale: TooLong"
+  },
+  "tillOfflineReasonTooMany": "Plus de ventes hors ligne que ce qui est autorisé.",
+  "@tillOfflineReasonTooMany": {
+    "description": "#4373 why the server refused an offline sale: TooMany"
+  },
+  "tillOfflineRecorded": "Enregistrée hors ligne · vente {seq} de cette caisse",
+  "@tillOfflineRecorded": {
+    "description": "#4373 the receipt of a sale made offline: its number on this till [not a count: seq]",
+    "placeholders": {
+      "seq": {
+        "type": "int"
+      }
+    }
+  },
+  "tillOfflineReportAccepted": "{count, plural, one{{count} vente a été enregistrée.} other{{count} ventes ont été enregistrées.}}",
+  "@tillOfflineReportAccepted": {
+    "description": "#4373 the answer of the send: how many sales were recorded",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tillOfflineReportRefused": "La vente {seq} a été refusée : {reason} Ses espèces restent dans le comptage du tiroir.",
+  "@tillOfflineReportRefused": {
+    "description": "#4373 the answer of the send: a sale the server refused, with its reason [not a count: seq]",
+    "placeholders": {
+      "seq": {
+        "type": "int"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "tillOfflineReportTitle": "Ventes hors ligne envoyées",
+  "@tillOfflineReportTitle": {
+    "description": "#4373 the answer of the send: title"
+  },
+  "tillOfflineSendNow": "Chercher la connexion maintenant",
+  "@tillOfflineSendNow": {
+    "description": "#4373 look for the connection and send the waiting sales"
+  },
+  "tillOfflineSyncing": "Envoi des ventes hors ligne…",
+  "@tillOfflineSyncing": {
+    "description": "#4373 the waiting sales are being sent"
+  },
+  "tillOfflineUnreadable": "Les données hors ligne de cet appareil sont illisibles. Rien ne se vend hors ligne tant qu'un responsable n'a pas décidé.",
+  "@tillOfflineUnreadable": {
+    "description": "#4373 the offline data of the device cannot be read"
+  },
+  "tillOfflineWaiting": "{count, plural, =0{Aucune vente n'attend sur cet appareil} one{1 vente attend sur cet appareil} other{{count} ventes attendent sur cet appareil}}",
+  "@tillOfflineWaiting": {
+    "description": "#4373 the till sells offline: how many sales wait on the device",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "tillOpCorrectReceipt": "correction d'un ticket",
   "tillOpExportFiscal": "export des données fiscales",
   "tillOpIssueReceipt": "émission d'un ticket",
@@ -23962,6 +24317,10 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Débloquer",
+  "unknownWireInvoiceKind": "Un type que cette version de l'application ne connaît pas",
+  "unknownWireKindFeatures": "Ce type règle aussi {count, plural, one{{count} fonction} other{{count} fonctions}} que cette version de l'application ne connaît pas. Mettez à jour l'application pour le choisir.",
+  "unknownWireReadOnly": "Cette version de l'application ne sait pas ce qu'est cet enregistrement : il peut être lu, pas modifié. Mettez à jour l'application pour le traiter.",
+  "unknownWireValue": "{value} (inconnu de cette version de l'application)",
   "unreadableRowsNotice": "{count, plural, one{{count} entrée n'a pas pu être affichée : cette version de l'application ne la connaît pas. Mettez l'application à jour pour la voir.} other{{count} entrées n'ont pas pu être affichées : cette version de l'application ne les connaît pas. Mettez l'application à jour pour les voir.}}",
   "unsavedChangesBody": "Ce que vous avez modifié sur cette page n'est pas encore enregistré.",
   "unsavedChangesDiscard": "Abandonner les modifications",

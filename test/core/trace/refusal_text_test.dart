@@ -14,6 +14,8 @@
 // drop silently back to "Something went wrong".
 import 'dart:io';
 
+import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/trace/guarded.dart';
 import 'package:deskilo/core/trace/refusal_text.dart';
@@ -60,7 +62,7 @@ void main() {
         'only owners may invite admins',
         'only workspace settings managers may change the wording',
       ]) {
-        expect(knownRefusalOf(_pg(m, code: 'DKN01')), KnownRefusal.permission,
+        expect(knownRefusalOf(_pg(m, code: DkCode.dkn01)), KnownRefusal.permission,
             reason: m);
         // The sentence alone is no longer read: the code decides.
         expect(knownRefusalOf(_pg(m)), isNull, reason: m);
@@ -69,7 +71,7 @@ void main() {
           knownRefusalOf(_pg(
               'new row violates row-level security policy for table "fee_bands"')),
           KnownRefusal.permission);
-      expect(knownRefusalOf(_pg('permission denied for table x', code: '42501')),
+      expect(knownRefusalOf(_pg('permission denied for table x', code: PgCode.insufficientPrivilege)),
           KnownRefusal.permission);
     });
 
@@ -78,12 +80,12 @@ void main() {
       // permission refusal: a member told "not allowed" would not know to file
       // a rights request.
       final e = _pg('privacy_self_service_off: file a rights request instead',
-          code: '42501');
+          code: PgCode.insufficientPrivilege);
       expect(knownRefusalOf(e), KnownRefusal.privacySelfServiceOff);
       expect(knownRefusalText(englishL10n, e), englishL10n.privacySelfServiceOff);
       expect(englishL10n.privacySelfServiceOff, contains('rights request'));
       // An ordinary 42501 stays a permission refusal.
-      expect(knownRefusalOf(_pg('permission denied for table x', code: '42501')),
+      expect(knownRefusalOf(_pg('permission denied for table x', code: PgCode.insufficientPrivilege)),
           KnownRefusal.permission);
     });
 
@@ -96,28 +98,30 @@ void main() {
     test('a locked currency or country (#2332, DK423)', () {
       final e = _pg('money_locale_locked: the currency and the country are '
           'fixed once this space has issued a document or recorded money',
-          code: 'DK423');
+          code: DkCode.dk423);
       expect(knownRefusalOf(e), KnownRefusal.moneyLocaleLocked);
       expect(knownRefusalText(englishL10n, e), contains('currency and the country'));
     });
 
     test('an accounting connection explains its own refusals (#2370, DKA01-03)', () {
-      expect(knownRefusalOf(_pg('already connected', code: 'DKA01')), KnownRefusal.changedMeanwhile);
-      final closed = _pg('this connection has delivered: revoke it and connect again', code: 'DKA02');
-      expect(knownRefusalOf(closed), KnownRefusal.accountingConnectionClosed);
+      // #4413 -- the accounting connection's words are money's, not a core family.
+      expect(knownRefusalText(englishL10n, _pg('already connected', code: DkCode.dka01)),
+          englishL10n.refusalChangedMeanwhile);
+      final closed = _pg('this connection has delivered: revoke it and connect again', code: DkCode.dka02);
+      expect(knownRefusalOf(closed), isNull);
       expect(knownRefusalText(englishL10n, closed), contains('Revoke it and connect again'));
-      final value = _pg('paste the whole token', code: 'DKA03');
-      expect(knownRefusalOf(value), KnownRefusal.accountingValueRefused);
+      final value = _pg('paste the whole token', code: DkCode.dka03);
+      expect(knownRefusalText(englishL10n, value), englishL10n.refusalAccountingValue);
       expect(knownRefusalText(englishL10n, value), contains('check the token'));
       // The codes are the server's: the migration still raises each.
       final sql = File('supabase/migrations/0595_accounting_connections.sql').readAsStringSync();
-      for (final code in ['DKA01', 'DKA02', 'DKA03']) {
+      for (final code in [DkCode.dka01, DkCode.dka02, DkCode.dka03]) {
         expect(sql, contains("errcode = '$code'"), reason: code);
       }
     });
 
     test('records still under retention: nothing was deleted (#2571, DKE01)', () {
-      final kept = _pg('retention: the books of this space are kept until 2036-12-31', code: 'DKE01');
+      final kept = _pg('retention: the books of this space are kept until 2036-12-31', code: DkCode.dke01);
       expect(knownRefusalOf(kept), KnownRefusal.retentionKept);
       expect(knownRefusalText(englishL10n, kept), contains('Nothing was deleted'));
       // The code is the server's: the migration still raises it.
@@ -126,23 +130,24 @@ void main() {
     });
 
     test('a bank statement explains its own refusals (#2380, DKB01-03)', () {
-      final decided = _pg('this movement already settles an invoice', code: 'DKB01');
-      expect(knownRefusalOf(decided), KnownRefusal.bankLineDecided);
+      final decided = _pg('this movement already settles an invoice', code: DkCode.dkb01);
+      // #4413 -- the bank's words are money's, not a core family.
+      expect(knownRefusalOf(decided), isNull);
       expect(knownRefusalText(englishL10n, decided), contains('decided meanwhile'));
-      expect(knownRefusalOf(_pg('money out settles no invoice', code: 'DKB02')),
-          KnownRefusal.bankLineRefused);
-      expect(knownRefusalOf(_pg('too many movements', code: 'DKB03')),
-          KnownRefusal.bankFileRefused);
+      expect(knownRefusalText(englishL10n, _pg('money out settles no invoice', code: DkCode.dkb02)),
+          englishL10n.refusalBankLineRefused);
+      expect(knownRefusalText(englishL10n, _pg('too many movements', code: DkCode.dkb03)),
+          englishL10n.refusalBankFileRefused);
       // The codes are the server's: the migration still raises each.
       final sql = File('supabase/migrations/0603_bank_statements.sql').readAsStringSync();
-      for (final code in ['DKB01', 'DKB02', 'DKB03']) {
+      for (final code in [DkCode.dkb01, DkCode.dkb02, DkCode.dkb03]) {
         expect(sql, contains("errcode = '$code'"), reason: code);
       }
     });
 
     test('a rate on issued invoices changes by law (#2356, DKV01)', () {
       final e = _pg('vat_rate_versioned: Standard 20 % is on issued invoices; '
-          'change it by law from a date', code: 'DKV01');
+          'change it by law from a date', code: DkCode.dkv01);
       expect(knownRefusalOf(e), KnownRefusal.vatRateVersioned);
       expect(knownRefusalText(englishL10n, e), contains('Change by law'));
       // The code is the server's: some migration still raises it.
@@ -155,11 +160,11 @@ void main() {
 
     test('already decided, and changed meanwhile, by their codes (#3811)',
         () {
-      expect(knownRefusalOf(_pg('already decided', code: 'DKD01')),
+      expect(knownRefusalOf(_pg('already decided', code: DkCode.dkd01)),
           KnownRefusal.alreadyDecided);
-      expect(knownRefusalOf(_pg('you already decided this event', code: 'DKD01')),
+      expect(knownRefusalOf(_pg('you already decided this event', code: DkCode.dkd01)),
           KnownRefusal.alreadyDecided);
-      expect(knownRefusalOf(_pg('invoice is voided', code: 'DKI03')),
+      expect(knownRefusalOf(_pg('invoice is voided', code: DkCode.dki03)),
           KnownRefusal.changedMeanwhile);
       // The sentence alone is no longer read: the code decides.
       expect(knownRefusalOf(_pg('invoice is voided')), isNull);
@@ -175,7 +180,7 @@ void main() {
   testWidgets('a guarded action refused for a permission says so instead of '
       '"try again"', (tester) async {
     await _pumpGuarded(
-        tester, _pg('not an admin of this workspace', code: 'DKN01'));
+        tester, _pg('not an admin of this workspace', code: DkCode.dkn01));
     expect(find.textContaining('do not have the permission'), findsOneWidget);
     expect(find.text(_generic), findsNothing);
   });

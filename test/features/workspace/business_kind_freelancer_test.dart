@@ -7,6 +7,7 @@
 // reviewed is what a save checks, and a profile that changed after the review is
 // refused (nothing written) so it is reviewed again. A save whose flags moved
 // meanwhile keeps the kind and says the features were refused.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/business_kind_repository.dart';
 import 'package:deskilo/core/demo/data/settings_repository.dart';
 import 'package:deskilo/features/workspace/application/business_kind_commands.dart';
@@ -201,7 +202,7 @@ void main() {
     expect(kinds.writes, isEmpty);
     expect(workspace.flagWrites, isEmpty);
 
-    kinds.applied = const BusinessKindApplied(kindStage: 'applied', flagsStage: 'refused', refusal: 'DK409');
+    kinds.applied = const BusinessKindApplied(kindStage: 'applied', flagsStage: 'refused', refusal: DkCode.dk409);
     expect(await save(), BusinessKindOutcome.kindSavedFlagsRefused);
 
     kinds.applied = const BusinessKindApplied(kindStage: 'refused', flagsStage: 'none', refusal: 'profile_changed');

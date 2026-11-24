@@ -24,14 +24,6 @@ const _notForTheApp = <String, String>{
   'DKGZZ':
       'a preview marker: the group and item-move functions raise it inside their own block to roll '
       'a preview back, and catch it there (0883)',
-  'DKC14':
-      'a payment claim naming a standalone invoice: the app offers no payment '
-      'of one until the payment part of #4165 (B), where its words are '
-      'mapped; the refusal is the server\'s guard for any other caller (0820)',
-  'DKC16':
-      'a standalone payment naming a monthly invoice: the app offers no '
-      'standalone payment until the client part of #4165 (B2), where its '
-      'words are mapped; the refusal is the server\'s guard for any other caller (0901)',
   'DKP02':
       'the app offers no plan to add to a room since plans are retired '
       '(#4042); a room keeps the plans it named already',
@@ -70,7 +62,7 @@ const _notForTheApp = <String, String>{
 
 /// #4415 -- RATCHET: how many codes a person never meets in the app. A new
 /// refusal arrives with its words; this list only shortens.
-const _notForTheAppCeiling = 15;
+const _notForTheAppCeiling = 13;
 
 final _raised = RegExp(
   r"errcode\s*=\s*'(DK[A-Z0-9]{3})'"
@@ -153,7 +145,8 @@ void main() {
       unread,
       isEmpty,
       reason:
-          'map the code to its words in the app (refusal_text.dart, '
+          'map the code to its words in the app (refusal_text.dart, a '
+          'feature table such as stock_refusal_words.dart, '
           'booking_error_text.dart), or name it in _notForTheApp with '
           'the reason a person never meets it there',
     );

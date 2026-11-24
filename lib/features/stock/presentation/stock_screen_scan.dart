@@ -32,7 +32,7 @@ class StockScreenScan {
       }
       return answer;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a scanned code could not be resolved: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a scanned code could not be resolved', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, l10n.stockScanFailed);
       return null;
     }

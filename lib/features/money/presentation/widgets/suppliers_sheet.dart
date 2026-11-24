@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -197,14 +198,12 @@ class SuppliersView extends ConsumerWidget {
     );
     if (standIn != null) return standIn;
     final all = allRead.requireValue;
-    final needle = query.trim().toLowerCase();
+    final needle = foldForSearch(query.trim());
     final suppliers = needle.isEmpty
         ? all
         : [
             for (final s in all)
-              if ('${s.number} ${s.name} ${s.taxIdEntered}'
-                  .toLowerCase()
-                  .contains(needle))
+              if (foldForSearch('${s.number} ${s.name} ${s.taxIdEntered}').contains(needle))
                 s,
           ];
     // #3070 — what each supplier cost this year; a failed or empty read

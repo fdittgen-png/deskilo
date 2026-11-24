@@ -8,6 +8,7 @@
 // reading as "all gone". Erasing names the one space it erases, and its
 // confirmation does not claim more than that space.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/privacy/privacy_policy.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/profile/domain/rights_request.dart';
@@ -257,7 +258,7 @@ void main() {
       final fakes = await _pump(tester, owner: false);
       fakes.calendar.eraseFailure = const PostgrestException(
         message: 'privacy_self_service_off: file a rights request instead',
-        code: '42501',
+        code: PgCode.insufficientPrivilege,
       );
       await openMyPrivacy(tester);
       final erase = find.byKey(const ValueKey('privacy-erase'));

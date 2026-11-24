@@ -2522,6 +2522,7 @@ You want to find an invoice, see whether it is paid and get its PDF.
 - Tap the payment icon on an open invoice to go to **Payments**.
 - If the list is empty, the workspace has not invoiced you yet; it invoices a month once it closes.
 - Invoices cannot be edited. A wrong invoice is marked **Erroneous** and replaced by a new one, and the erroneous one leaves your list. When invoices are regrouped into one, the regrouped invoice replaces them in your list.
+- A line invoiced by the hour, the day or a weight (for example *1.5 h at 90 EUR*, or *0.75 kg at 12.5 EUR per 10 kg*) shows under its label the exact quantity, its unit and the price it was entered at, as the PDF prints them; its amount is the one fixed when the invoice was issued. A line recorded by a newer version of the app is shown as written and says it cannot be used here: update the app to work with it.
 
 **See also:** [Pay what you owe](#pay-what-you-owe) · [Your finances across spaces](#your-finances-across-spaces)
 
@@ -3008,6 +3009,30 @@ The list shows each invitation as invited, reading, expired or ended. **End acce
 
 **See also:** [Billing customers](#billing-customers)
 
+<!-- anchor: user.money.invoices.standalone -->
+### A customer invoice without a month
+
+**Audience:** Administrator · Owner
+
+You have done a job for a named customer today (a consultation, a lesson, an agreed deliverable) and want to invoice it now, without a booking, a subscription or a month behind it. You need the right to issue invoices and the **Standalone invoices** feature.
+
+**Steps**
+
+1. Open **Invoices** and choose **A customer invoice without a month**.
+2. Choose the customer, then the service date and the due date.
+3. Add the lines: a description, a quantity, a unit and a price. Choosing an item from the catalogue is optional, so an ad hoc service can be written in words.
+4. Choose **Check the invoice**. The preview shows the amounts and the tax exactly as they will be issued, or what is still missing.
+5. Choose **Issue the invoice** to confirm. The invoice is numbered, kept as issued and opened.
+
+**Good to know**
+
+- The invoice has no billing month: a second, separate invoice of the same customer in the same month is its own invoice, and the monthly invoice, if there is one, is untouched.
+- Amounts and tax are always computed by the server, never taken from the screen; the price is in the business's currency.
+- Your draft stays as it is when you resize the window or a check is refused. If an answer to **Issue the invoice** does not arrive, the same confirmation never issues a second invoice: look it up again.
+- Changing the catalogue or the customer afterwards never changes an issued invoice.
+
+**See also:** [Billing customers](#billing-customers) · [Paying invoices without a month](#paying-invoices-without-a-month)
+
 <!-- anchor: user.money.quotes -->
 ### Quotes
 
@@ -3165,6 +3190,36 @@ Where your country does not yet allow the counter, the till says which operation
 
 A traced good names what it was taken from. When you sell an item tracked by lot without choosing a lot, the sale takes it from the lots on hand, the first to expire first and never an expired one; under the sold line the till shows each lot's code as received with the quantity taken from it, for example **Lot SUP-A × 2 · Lot SUP-B × 1**, and each piece by its tag. Where the business uses a scanner, scan a piece's tag to ring up that piece: the sale takes exactly the pieces scanned, and the same piece twice is refused. These track IDs are frozen with the receipt: changing a lot or a tag later never alters a receipt already issued. In the stock, the trace of a lot or a piece names the receipt that sold it.
 
+<!-- anchor: user.money.till-drawer -->
+### Open the till, count and close it
+
+**Audience:** Administrator · Owner
+
+You work a cash drawer and want to know that the money in it is right at the end of the day.
+
+Open **Till drawer** in the sales menu (it needs the till sessions feature and the right to issue invoices or to see the finances). Every till of the business is listed with its state. Someone who manages the sites adds a till with **Add a till** and can rename it or switch it off.
+
+Press **Open the till**, type the **Float in the drawer** (or, when your business counts by denomination, the value of each note or coin and how many) and confirm. A till has one open session at a time, and with till sessions on the till sells only on an open session: with none open it offers **Open the till** instead of selling.
+
+**Paid in or out** records cash put into or taken out of the drawer, with a **Reason** chosen from your business's list. A paid-out above the business's limit is recorded by someone who may record outgoing payments.
+
+**Count and close** asks for the **Cash counted in the drawer** and what is **Taken to the bank**. When the business counts blind, the expected cash is not shown before the count; someone who may see the finances sees it, and the difference as they type. A count that differs from the expected cash is closed only with its reason, which the till asks for. After the close the till says what was expected, what was counted and the difference. Card payments still unanswered are listed apart and never counted as cash.
+
+**Day close.** Someone who may see the finances opens **Day close** from the till drawer and presses **Close the day** once every till is closed (a till still open is named and refuses it). The day's closed sessions become one numbered report: each session with what was expected, counted, the difference and its reason, the takings by tender and by tax rate, the cash paid in and out, the refunds and the range of receipt numbers. **Closed days** lists the reports already made; a closed day is never changed. This is the business's own record; the legal content a country asks of a day close comes with its own module.
+
+<!-- anchor: user.money.till-offline -->
+### When the till is offline
+
+**Audience:** Administrator · Owner
+
+You sell at the counter and the connection is lost: you want to go on selling, and to know that nothing is lost or counted twice.
+
+Turn on **Selling offline, cash only** (it needs the till sessions feature). When a call to the server gets no answer, the till says **Offline — cash only. Sales are kept on this device and sent when the connection returns.** and goes on selling for cash only, at the prices it held when it was last online, and an item the till holds no price for is not sold. Each sale is kept on the device under the next number of its till session; the receipt reads **Recorded offline** with that number and **Not signed. It is sent to the server when the connection returns.** - it has no receipt number until the server has received it.
+
+The till looks for its connection again by itself, and **Look for the connection now** does it at once. When the connection is back, the sales are sent in order, each under the number it was made with, so a sale already received is never counted twice. The till then says how many were recorded and, for each sale the server refused, why (for example the price changed beyond what is allowed, or the item is no longer sold); the cash of a refused sale stays in the drawer count. If the session was closed meanwhile, the till says: "The session was closed: these sales stay on the device for a manager." The sales stay on the device until a manager has dealt with them.
+
+Three settings of the business bound what is accepted: **Longest offline period (minutes)**, **Most offline sales per till session** and **Price difference allowed offline (%)**. If the offline data of the device cannot be read, nothing is sold offline until a manager decides; **Discard the offline data** drops it after a warning, because sales not yet sent are lost for good.
+
 <!-- anchor: user.money.stock.rfid -->
 ### RFID tags: one per batch or one per piece
 
@@ -3238,6 +3293,7 @@ Open any line of **Stock** to see **Where is it** for that item (or that lot): e
 - The places on a shelf always add up to the quantity shown on top.
 - At a past day the goods on the road are not shown; the pieces are, from the day they are followed (a piece made before has no history before it).
 - Tap a place that holds a lot to see **Every movement of this lot**, from the delivery it came with to where it went out; the timeline button of a piece shows **Every movement of this piece**. A document you may not see is named by its kind, never left out.
+- **Find a track ID** (the code button at the top of **Stock**) takes a lot code as received, the code on a lot's label or a piece's tag, typed or scanned. It lists the lots and pieces that carry it and the sales that took them. Tap a lot or a piece for every movement of it; tap a sale to see what that receipt line took: each lot with its quantity, each piece by its tag. A receipt you may not see is named by its kind and does not open. Nothing found says so; a refused or failed search says so and can be tried again.
 
 <!-- anchor: user.money.stock.value -->
 ### Stock value and where goods came from
@@ -3342,6 +3398,29 @@ A business that invoices you can give you a code, so you read what it invoices y
 - A code that cannot be used (wrong, expired, withdrawn, or already taken by another account) always gets the same answer: ask the business for a new one.
 - Accepting makes you no member of the business. The business can end the access, and so can you; nothing is erased when it ends.
 - Paying these invoices from here is not offered yet.
+
+**See also:** [Your finances across spaces](#your-finances-across-spaces)
+
+<!-- anchor: user.money.finances.standalone -->
+### Paying invoices without a month
+
+**Audience:** Member
+
+A business issued you invoices that belong to no month. They are paid together, on their own.
+
+**Steps**
+
+1. Open [My finances](https://fdittgen-png.github.io/deskilo/#/money) and tick the invoices without a month you want to pay. They belong to one business and one currency.
+2. A bar shows how many you ticked and their total. Choose **Pay** to pay online, or **I have paid** if you already paid another way.
+3. The confirmation lists the invoices and one total. Confirm: one checkout opens, or one declaration is sent.
+
+**Good to know**
+
+- Invoices without a month and monthly invoices are never paid together: once you tick one kind, the other cannot be ticked, and a line says so. If the business refuses a mix anyway, you are told so and nothing is charged.
+- The amount is what the invoices still owe. If it changed, refresh and try again.
+- If the answer was lost on the way, choose **Pay** again: it is the same payment, found again, never a second one. A payment is shown as paid only once the business has received it.
+- The money is posted in the month it arrives. What an invoice does not take stays your credit with that business until it is allocated.
+- A business whose payment service is too old says so before anything is sent.
 
 **See also:** [Your finances across spaces](#your-finances-across-spaces)
 
@@ -6804,7 +6883,7 @@ The things around the everyday work: the test side of a space and the real one, 
 
 In this chapter:
 - [A space has two sides](#a-space-has-two-sides) · [Enter a side](#enter-the-real-side-or-the-test-side) · [A test space](#what-a-test-space-is-for) · [Who may deploy](#who-may-deploy-and-enter-production) · [Deploy between the sides](#deploy-between-the-two-sides) · [Workspace status and the year archive](#workspace-status-and-the-year-archive)
-- [Your own server](#run-your-own-server)
+- [Your own server](#run-your-own-server) · [When an installation requires a newer app](#when-an-installation-requires-a-newer-app) · [Release a new version](#release-a-new-version-the-server-first)
 - [Assistants](#assistants-what-they-are) · [Connect an assistant](#connect-an-assistant) · [Approvals](#approvals-and-confirmations-for-assistants) · [What assistants may do](#what-assistants-may-do-in-a-workspace)
 - [The task recorder](#the-task-recorder-and-guided-tours) · [Record a task](#record-a-task) · [Review a recording](#review-edit-and-export-a-recording) · [Make a guide](#make-a-guide-from-a-recording) · [Follow a guide](#follow-a-guide) · [The circle menu](#the-circle-menu) · [Edit a guide](#edit-or-repair-a-guide) · [Privacy of recordings](#what-a-recording-keeps)
 - [The demo workspace](#the-demo-workspace) · [Filming mode](#filming-mode)
@@ -6965,6 +7044,52 @@ You want your community's data on a server you control, or you belong to an orga
 - An operator can switch assistants on for the whole installation — see [Approvals](#approvals-and-confirmations-for-assistants).
 
 **See also:** [Your own server](#your-own-server)
+
+<!-- anchor: user.advanced.app-floor -->
+### When an installation requires a newer app
+
+**Audience:** Operator · Owner
+
+An installation can say that only a newer app may be used with it. You want to know when that is justified and what your testers and members will see.
+
+**Steps**
+
+1. Raise the floor only when an old app would be wrong, not merely incomplete: a security fix, or a change in what stored data means. Missing features are not a reason.
+2. Raise it in a change of its own, and only after the newer app has been available to every tester and member for the support period. Testers on the reference installation are blocked the moment the floor is raised.
+3. Tell people first which app to install, and where: the store they installed from, the releases page, or reloading the web app.
+4. Afterwards, open the app on an older device and check that **This app needs an update** appears.
+
+**Good to know**
+
+- An app below the floor sees one screen, **This app needs an update**, with how to update on its platform, **Check again**, **Server settings** and **Sign out**. Help, privacy and the demo stay open.
+- The floor belongs to one installation: the same app keeps working on every other installation the person uses. When only the installation of one business refuses the app, only that business shows the screen, which then also offers **Back to Me**; your other businesses stay open.
+- If the floor cannot be read, the app is not blocked. A refusal that was already read stays until a newer answer lifts it, and the app asks again when you return to it.
+- The floor is a courtesy to apps that know it, not a lock: money and permission rules are decided by the server whatever the app.
+
+**See also:** [Run your own server](#run-your-own-server) · [Platforms](#deskilo-on-your-devices)
+
+<!-- anchor: user.advanced.releases -->
+### Release a new version: the server first
+
+**Audience:** Operator
+
+You run an installation and a new version of the app is coming. The server is always updated before the app, and an older app is never shut out without warning.
+
+**Steps**
+
+1. Update the server first: apply its new migrations, then its functions. Nothing changes for members: an app already installed keeps working, because the server only adds.
+2. Publish the app. Before any upload, the release train reads the installation it ships to and stops, naming the missing migrations, when the installation is behind, refuses the new app or cannot be read. Once the app is out, the server's version reads *Up to date* in it, and an older app reads *The server is newer than this app — update the app when you can*.
+3. Wait the support window: [Profiles](https://fdittgen-png.github.io/deskilo/#/profiles) → **Platform settings (defaults)** → **App versions** → **Support window for older apps**. It counts from the day the new app is available on the slowest channel you distribute it through, not from the day it was built: a store review can take days.
+4. Only then raise the oldest app the installation accepts, in a migration of its own. An app below it shows **This app needs an update** with how to update on its platform; nothing the member entered is lost.
+
+**Good to know**
+
+- An app newer than its server reads *Needs an update: this app needs schema …*. That is the case the server-first order prevents.
+- To undo a raise, lower the oldest accepted app again, or remove it, in a new migration: a blocked app works again the next time it starts or comes back to the foreground.
+- The release train only reads the installation: it applies no migration and does not change who may publish.
+- Never raise the oldest accepted app in the migration that first needs the new app: testers on that installation would be blocked the moment it is applied.
+
+**See also:** [Run your own server](#run-your-own-server)
 
 <!-- anchor: user.advanced.assistants -->
 ### Assistants: what they are

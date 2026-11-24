@@ -3,7 +3,9 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/fact_line.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -75,7 +77,6 @@ class BookPeriodsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final material = MaterialLocalizations.of(context);
     final overview = ref.watch(bookPeriodsProvider(workspaceId));
     return SheetShell(
       title: l10n.bookPeriodsTitle,
@@ -112,7 +113,7 @@ class BookPeriodsView extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${material.formatMediumDate(p.from)} – ${material.formatMediumDate(p.to)}',
+                          '${appFormatOf(context).dates(DateShape.date).format(p.from)} – ${appFormatOf(context).dates(DateShape.date).format(p.to)}',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Text(
@@ -148,13 +149,13 @@ class BookPeriodsView extends ConsumerWidget {
                   title: Text(
                     l10n.bookPeriodsExportLine(
                       e.formatId.toUpperCase(),
-                      material.formatMediumDate(e.from),
-                      material.formatMediumDate(e.to),
+                      appFormatOf(context).dates(DateShape.date).format(e.from),
+                      appFormatOf(context).dates(DateShape.date).format(e.to),
                     ),
                   ),
                   subtitle: Text(
                     factLine(l10n, [
-                      material.formatMediumDate(e.exportedAt),
+                      appFormatOf(context).dates(DateShape.date).format(e.exportedAt),
                       '${e.sha256.substring(0, 12)}…',
                       if (e.closedPeriod) l10n.bookPeriodsExportClosed,
                     ]),

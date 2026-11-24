@@ -8,6 +8,7 @@
 // auto-completes stale ones at their own end. The fake mirrors all of
 // it; bookingErrorText maps the substrings.
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
@@ -54,7 +55,7 @@ void main() {
         endsAt: kTestNow.add(const Duration(hours: 2)),
         checkIn: true,
       ),
-      _refuses('DKK19'),
+      _refuses(DkCode.dkk19),
     );
     expect(repo.reservations, hasLength(1));
   });
@@ -70,7 +71,7 @@ void main() {
         startsAt: kTestNow.add(const Duration(hours: 1)),
         endsAt: kTestNow.add(const Duration(hours: 3)),
       ),
-      _refuses('DKK19'),
+      _refuses(DkCode.dkk19),
     );
   });
 
@@ -98,7 +99,7 @@ void main() {
       ));
     await expectLater(
       repo.checkIn('res-next'),
-      _refuses('DKK20'),
+      _refuses(DkCode.dkk20),
     );
   });
 
@@ -162,7 +163,7 @@ void main() {
         startsAt: kTestNow.add(const Duration(hours: 1)),
         endsAt: kTestNow.add(const Duration(hours: 3)),
       ),
-      _refuses('DKK19'),
+      _refuses(DkCode.dkk19),
     );
   });
 
@@ -173,13 +174,13 @@ void main() {
         refused(
           message: message,
           code: message.contains('you already have a reservation')
-              ? 'DKK19'
+              ? DkCode.dkk19
               : message.contains('checked in elsewhere')
-                  ? 'DKK20'
+                  ? DkCode.dkk20
                   : message.contains('not bookable as a whole')
-                      ? 'DKK22'
+                      ? DkCode.dkk22
                       : message.contains('level booking is not enabled')
-                          ? 'DKK23'
+                          ? DkCode.dkk23
                           : null,
         ),
         'fallback');

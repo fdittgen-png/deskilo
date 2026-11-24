@@ -29,6 +29,14 @@ import 'lint_sources.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #4436/0947 restates counter_receipt_finalize_v1 from the LIVE dev body (pg_get_functiondef at schema 943:
+  // md5(prosrc) 82076ff9fd420cc1a000a8265d50d298, the 0939 body, which carries 0908's share lock on the sale's till
+  // session). The diff to it adds only the goods items' lock before their lots are planned and the plan around what
+  // the earlier lines take; pgTAP 561, 553, 525 and 520 green on dev with 0947, rolled back.
+  'counter_receipt_finalize_v1@0947',
+  // #4433/0950 restates void_invoice from 0942; the LIVE dev body (md5(prosrc) ee1554f252cb3d770df13ae186c96155, schema
+  // 943) is 0942's byte for byte, and 0950 differs only where an unknown invoice now meets issuing_member like a foreign one.
+  'void_invoice@0950',
   // #4165/0901 restates settle_online_payment from the LIVE dev definition
   // (pg_get_functiondef, the 0797 body with 0393's gate and 0757's
   // captured/reversed return) and adds only the explicit branch: the
@@ -205,6 +213,36 @@ const _reviewed = {
   'create_workspace@0202',
 };
 
+/// #4397 -- what the guard found when it learned to see a patch written as `pg_get_functiondef('public.<name>(…)'`
+/// (before it saw only `proname = '…'`, and found none of these). Each pair is a whole re-creation AFTER an in-place
+/// patch, not yet argued against the live body. Recorded so that no NEW pair can join: the set may shrink (argue a pair
+/// against `pg_get_functiondef` on the live project, move it to `_reviewed` with what you checked), never grow.
+const _foundWhenWidened = {
+  'clear_einvoice_credentials@0796',
+  'counter_receipt_finalize_v1@0939',
+  'invoice_legal_snapshot@0794',
+  'mcp_execute_v1@0411',
+  'mcp_execute_v1@0412',
+  'mcp_target@0759',
+  'member_has_permission@0804',
+  'member_profile_projection@0712',
+  'member_profile_projection@0788',
+  'member_profile_purposes@0713',
+  'preview_my_member_profile@0712',
+  'save_book_mapping@0517',
+  'set_payment_credentials@0796',
+  'set_personal_preferences@0578',
+  'set_personal_preferences@0715',
+  'set_personal_preferences@0737',
+  'set_seat_block@0809',
+  'upsert_site@0789',
+  'void_invoice@0942',
+};
+
+/// A function whose generator restates it whole every time it changes (`tool/build_template_field_registry_sql.dart`):
+/// its history is restatements by design, and #4396 turns it into rows. Exempt until then.
+const _generatedWhole = {'template_field_registry'};
+
 /// #2392 — from the facade's restatement on, an MCP function changes by
 /// a whole new definition (a new `mcp_op_<id>` for a new operation), never
 /// by an anchored patch of its live text. [sources] maps a migration's
@@ -216,6 +254,39 @@ List<String> mcpAnchorPatches(Map<String, String> sources, {String since = '0412
             .hasMatch(e.value))
       e.key,
 ]..sort();
+
+/// The functions a migration's text patches in place: it reads the live body (`pg_get_functiondef`, by the name
+/// in the call or by `proname = '…'`) and rewrites it at an anchor (#4397 -- every form, not only `proname`).
+Set<String> patchedFunctions(String source) => {
+  for (final m in RegExp(r"proname\s*=\s*'(\w+)'").allMatches(source)) m.group(1)!,
+  for (final m in RegExp(r"pg_get_functiondef\(\s*'(?:public\.)?(\w+)\s*\(").allMatches(source)) m.group(1)!,
+};
+
+/// `function@migration` for each wholesale re-creation of a function AFTER the last migration that patched it, that
+/// is not in [_reviewed] (nor, unless [withBaseline], in `_foundWhenWidened`). [sources] maps a migration's four-digit number to its text.
+List<String> recreatedAfterPatch(Map<String, String> sources, {bool withBaseline = false}) {
+  final patchedIn = <String, List<String>>{};
+  final recreatedIn = <String, List<String>>{};
+  for (final MapEntry(key: number, value: source) in sources.entries) {
+    for (final name in patchedFunctions(source)) {
+      (patchedIn[name] ??= []).add(number);
+    }
+    for (final m in RegExp(r'create or replace function public\.(\w+)').allMatches(source)) {
+      (recreatedIn[m.group(1)!] ??= []).add(number);
+    }
+  }
+  final offenders = <String>[];
+  for (final entry in patchedIn.entries) {
+    if (_generatedWhole.contains(entry.key)) continue;
+    final lastPatch = entry.value.reduce((a, b) => a.compareTo(b) > 0 ? a : b);
+    for (final recreation in recreatedIn[entry.key] ?? const <String>[]) {
+      if (recreation.compareTo(lastPatch) <= 0) continue;
+      final key = '${entry.key}@$recreation';
+      if (!_reviewed.contains(key) && (withBaseline || !_foundWhenWidened.contains(key))) offenders.add(key);
+    }
+  }
+  return offenders..sort();
+}
 
 void main() {
   test('#2392 no migration anchors a patch into an mcp_ function', () {
@@ -240,34 +311,10 @@ select pg_temp.anchor_replace(pg_get_functiondef('public.mcp_authorize(uuid, uui
 
   test('no migration re-creates a function a later-unreviewed patch owns',
       () {
-    final files = sqlFiles('supabase/migrations');
-
-    final patchedIn = <String, List<String>>{};
-    final recreatedIn = <String, List<String>>{};
-
-    for (final file in files) {
-      final number = file.uri.pathSegments.last.substring(0, 4);
-      final source = file.readAsStringSync();
-      // A patch reads the live body and rewrites it at an anchor.
-      for (final m
-          in RegExp(r"proname\s*=\s*'(\w+)'").allMatches(source)) {
-        (patchedIn[m.group(1)!] ??= []).add(number);
-      }
-      for (final m in RegExp(r'create or replace function public\.(\w+)')
-          .allMatches(source)) {
-        (recreatedIn[m.group(1)!] ??= []).add(number);
-      }
-    }
-
-    final offenders = <String>[];
-    for (final entry in patchedIn.entries) {
-      final lastPatch = entry.value.reduce((a, b) => a.compareTo(b) > 0 ? a : b);
-      for (final recreation in recreatedIn[entry.key] ?? const <String>[]) {
-        if (recreation.compareTo(lastPatch) <= 0) continue;
-        final key = '${entry.key}@$recreation';
-        if (!_reviewed.contains(key)) offenders.add(key);
-      }
-    }
+    final offenders = recreatedAfterPatch({
+      for (final f in sqlFiles('supabase/migrations'))
+        f.uri.pathSegments.last.substring(0, 4): f.readAsStringSync(),
+    });
 
     expect(offenders, isEmpty,
         reason: 'These functions are re-created wholesale AFTER a '
@@ -279,13 +326,37 @@ select pg_temp.anchor_replace(pg_get_functiondef('public.mcp_authorize(uuid, uui
             'checked.');
   });
 
+  test('#4397 the guard sees a patch however it reads the live body, and can fail', () {
+    const byDef = '''
+do \$p\$ declare v_def text := pg_get_functiondef('public.stock_apply_lines(uuid, uuid, uuid, jsonb, text, timestamptz, jsonb, text)'::regprocedure);
+begin execute pg_temp.anchor_replace(v_def, 'a', 'b'); end \$p\$;''';
+    const byName = "select pg_get_functiondef(p.oid) from pg_proc p where p.proname = 'stock_apply_lines'";
+    const recreate = 'create or replace function public.stock_apply_lines(p_workspace_id uuid) returns void';
+    for (final patch in [byDef, byName]) {
+      expect(recreatedAfterPatch({'0100': patch, '0200': recreate}), ['stock_apply_lines@0200']);
+      expect(recreatedAfterPatch({'0100': recreate, '0200': patch}), isEmpty, reason: 'a patch after the definition is the normal order');
+    }
+    expect(recreatedAfterPatch({'0100': byDef, '0200': recreate.replaceAll('stock_apply_lines', 'other_fn')}), isEmpty);
+    expect(patchedFunctions("pg_get_functiondef('public.f(uuid)'::regprocedure) pg_get_functiondef('g(int)'::regprocedure)"),
+        {'f', 'g'});
+  });
+
+  test('#4397 the recorded set only shrinks: each pair in it is still found', () {
+    final all = recreatedAfterPatch({
+      for (final f in sqlFiles('supabase/migrations'))
+        f.uri.pathSegments.last.substring(0, 4): f.readAsStringSync(),
+    }, withBaseline: true).toSet();
+    expect(_foundWhenWidened.difference(all), isEmpty,
+        reason: 'these pairs no longer exist: remove them from _foundWhenWidened');
+  });
+
   test('the reviewed set has not gone stale', () {
     // Every entry must still describe a real pair; a removed migration
     // or a renamed function should shrink this list, not be forgotten.
     final numbers = sqlFiles('supabase/migrations')
         .map((f) => f.uri.pathSegments.last.substring(0, 4))
         .toSet();
-    for (final key in _reviewed) {
+    for (final key in {..._reviewed, ..._foundWhenWidened}) {
       expect(numbers, contains(key.split('@').last),
           reason: '$key names a migration that no longer exists');
     }

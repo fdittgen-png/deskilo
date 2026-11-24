@@ -8,6 +8,7 @@
 import 'dart:async';
 
 import 'package:deskilo/app/theme.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/application/unassigned_money.dart';
@@ -238,7 +239,7 @@ void main() {
       decision: (ref, eventId, {required accept}) async {
         asked++;
         throw const PostgrestException(
-            message: 'event already decided', code: 'DKD01');
+            message: 'event already decided', code: DkCode.dkd01);
       },
     );
     await tester.tap(find.byKey(const ValueKey('invoice-page-confirm')));

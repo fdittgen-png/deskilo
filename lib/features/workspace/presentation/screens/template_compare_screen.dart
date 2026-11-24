@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -101,7 +102,7 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
               for (final r in rows)
                 if ((!_differencesOnly ||
                         r.difference != ComparisonDifference.same) &&
-                    (_filter.isEmpty || r.path.toLowerCase().contains(_filter)))
+                    (_filter.isEmpty || foldForSearch(r.path).contains(_filter)))
                   r,
             ];
             return Column(
@@ -138,7 +139,7 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
                           hintText: l10n.compareSearch,
                         ),
                         onChanged: (v) =>
-                            setState(() => _filter = v.trim().toLowerCase()),
+                            setState(() => _filter = foldForSearch(v.trim())),
                       ),
                       if (!wide && widget.templates.length > 2) ...[
                         const SizedBox(height: AppSpacing.sm),

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/fact_line.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -157,7 +158,6 @@ class _AssetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final material = MaterialLocalizations.of(context);
     final cost = asset.acquisitionCostCents;
     return Card(
       key: ValueKey('equipment-${asset.id}'),
@@ -174,7 +174,7 @@ class _AssetCard extends StatelessWidget {
               factLine(l10n, [
                 _stateLabel(l10n, asset),
                 if (asset.availableForUseOn != null)
-                  l10n.equipmentUsedSince(material.formatMediumDate(asset.availableForUseOn!)),
+                  l10n.equipmentUsedSince(appFormatOf(context).dates(DateShape.date).format(asset.availableForUseOn!)),
               ]),
               key: ValueKey('equipment-state-${asset.id}'),
             ),

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/backend_uri.dart';
+import '../../../core/trace/trace_logger.dart';
 
 /// Role an invite grants on join. There is deliberately no `owner` value:
 /// ownership is never invitable — only an owner can grant it, by editing
@@ -187,7 +188,8 @@ abstract final class InvitationReader {
     final Map<String, String> query;
     try {
       query = uri.queryParameters;
-    } on FormatException {
+    } on FormatException catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'workspace', 'invite_uri: FormatException handled', error: e, stackTrace: st);
       return const InvitationDescriptor.refused(InvitationProblem.noCode);
     }
     final code = (query['code'] ?? '').trim().toUpperCase();

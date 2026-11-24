@@ -27,10 +27,10 @@ status; an object the app writes whole is merged, never replaced; remove or narr
 nothing until the installation's floor allows it (it does not exist yet: remove
 nothing). From the next migration the line after `-- risk:` is
 `-- apps: additive | needs app at least N | breaks apps below N`, required from 0898 by
-`test/lint/consumer_contract_test.dart` (an `additive` file drops and renames nothing). The
+`test/lint/consumer_contract_test.dart` (an `additive` file drops and renames nothing and changes no function's parameters without defaults; the drop-and-recreate below is judged by the new list; `breaks apps below N` raises `deskilo_app_floor()` to N in the same file). The
 database job proves every released app's calls and columns are still served
-(`scripts/consumer_contract_check.sh`); say in the ready line what an app of the last
-release does after the change. Rules: AGENT_RULES, "Every migration ends with its version".
+(`scripts/consumer_contract_check.sh`); say in the PR text and the ready line, in one sentence, what an app of the
+last release does after the change. Rules: AGENT_RULES, "Every migration ends with its version".
 
 ## 1. The number
 - Dev project `zwzbynivewivvjmripeb` (never the tankstellen project). Files are
@@ -121,8 +121,9 @@ release does after the change. Rules: AGENT_RULES, "Every migration ends with it
   `public.role_permission_catalog()` whole (0195 moved the array there; 0340 is the
   latest); `roles_screen_test` reads the LATEST definer of that function.
   `has_permission` admin defaults are a literal list too.
-- **Features**: `public.feature_registry()` carries `build_feature_registry_sql.dart`'s
-  output (`feature_registry_sql_test`); gates call `public.feature_effective(ws, 'key')`.
+- **Features**: `public.feature_registry()` reads `feature_registry_entries` (0949); a migration carries the
+  rows `build_feature_registry_sql.dart` prints between its markers (`feature_registry_sql_test`) and never restates
+  the function; gates call `public.feature_effective(ws, 'key')`.
 - `invoices_no_mutation` (→ `invoices_immutable()`): lift only for test data, re-arm.
   A guard comparing whole rows subtracts `public.system_column_names()`.
 - Decisions apply through an AFTER UPDATE trigger on `events`, never a branch in

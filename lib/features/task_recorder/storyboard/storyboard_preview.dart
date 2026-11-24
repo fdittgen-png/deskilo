@@ -112,7 +112,8 @@ class _StoryboardPreviewState extends State<StoryboardPreview> {
           onChanged: (edit) {
             try {
               widget.onChanged(edit(sb));
-            } on StoryboardEditException {
+            } on StoryboardEditException catch (e, st) {
+              TraceLogger.instance.log(TraceLevel.debug, 'task_recorder', 'storyboard_preview: StoryboardEditException handled', error: e, stackTrace: st);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(l.taskExportStoryboardOrderRefused)),
               );

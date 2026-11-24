@@ -7,6 +7,8 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/format/decimal_input.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -26,13 +28,18 @@ String unitKindText(AppLocalizations l10n, HandlingUnitKind kind) => switch (kin
   HandlingUnitKind.other => l10n.stockUnitKindOther,
 };
 
+/// A quantity typed in the member's format (1,5 or 1.5) as the exact text the server reads; what is no quantity is
+/// sent as typed, for the server to refuse.
+String _typed(BuildContext context, String raw) =>
+    exactQuantityFromInput(raw, locale: appFormatOf(context).locale).value?.text ?? raw.trim();
+
 /// What a command of a unit answered, or the words of why it did not: null when it worked.
 Future<String?> _guard(AppLocalizations l10n, Future<void> Function() act) async {
   try {
     await act();
     return null;
   } on StockConfigFailure catch (e, stack) {
-    TraceLogger.instance.warn('stock', 'a handling unit command was refused: $e', stackTrace: stack);
+    TraceLogger.instance.warn('stock', 'a handling unit command was refused', error: e, stackTrace: stack);
     return stockSaveProblem(l10n, e);
   }
 }
@@ -69,7 +76,7 @@ Future<void> showMakeUnitSheet(
             labelCode: fields['label'].text.trim(),
             kind: kind,
             locationId: place ?? '',
-            lines: [UnitLineDraft(itemId: item ?? '', quantity: fields['quantity'].text.trim().replaceAll(',', '.'))],
+            lines: [UnitLineDraft(itemId: item ?? '', quantity: _typed(context, fields['quantity'].text))],
           ),
         );
         await onDone(made);
@@ -186,7 +193,8 @@ Future<void> showRepackSheet(
       onSubmit: () => _guard(l10n, () async {
         final l = line;
         final n = int.tryParse(fields['boxes'].text.trim()) ?? 0;
-        final each = ExactQuantity.parse(fields['each'].text.trim().replaceAll(',', '.'));
+        final each = exactQuantityFromInput(fields['each'].text, locale: appFormatOf(context).locale).value;
+        if (each == null) throw const StockConfigRefused('each', 'quantity_invalid');
         var total = ExactQuantity.zero;
         for (var i = 0; i < n; i++) {
           total = total + each;

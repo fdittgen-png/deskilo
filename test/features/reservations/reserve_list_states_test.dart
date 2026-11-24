@@ -6,6 +6,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
@@ -69,7 +70,7 @@ void main() {
   testWidgets('a refused read is access, never "no seats"; Try again reads '
       'the same plan once more', (tester) async {
     final plans = _Plans()
-      ..failure = const PostgrestException(message: 'rls', code: '42501');
+      ..failure = const PostgrestException(message: 'rls', code: PgCode.insufficientPrivilege);
     await pumpHub(tester, floorPlans: plans);
     await _toList(tester);
     await _retriesRunOut(tester);
@@ -112,7 +113,7 @@ void main() {
     expect(find.byKey(_refreshing), findsOneWidget);
     expect(find.byKey(_skeleton), findsNothing);
 
-    plans.failure = const PostgrestException(message: 'gone', code: '42501');
+    plans.failure = const PostgrestException(message: 'gone', code: PgCode.insufficientPrivilege);
     plans.hold!.complete();
     await _retriesRunOut(tester);
     expect(find.byKey(_list), findsOneWidget);

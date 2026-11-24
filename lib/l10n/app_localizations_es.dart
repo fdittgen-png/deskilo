@@ -6806,6 +6806,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get claimRefusedEmpty => 'Elija las facturas que paga este pago.';
 
   @override
+  String get claimRefusedMonthlyInStandalone =>
+      'Las facturas mensuales se pagan con su mes, aparte de las facturas sin mes. No se ha cobrado nada.';
+
+  @override
   String get claimRefusedMonths =>
       'Un pago es para las facturas de un mes. No se ha cobrado nada.';
 
@@ -6835,6 +6839,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get claimRefusedRequestChanged =>
       'Este pago ya se envió con otros datos. Compruebe los pagos declarados y vuelva a intentarlo.';
+
+  @override
+  String get claimRefusedStandaloneInMonthly =>
+      'Una factura sin mes se paga por separado, aparte de las facturas mensuales. No se ha cobrado nada.';
 
   @override
   String get claimRefusedWithdrawn =>
@@ -6988,6 +6996,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String commaPair(String first, String second) {
     return '$first, $second';
   }
+
+  @override
+  String commercialLineMeasure(String quantity, String price) {
+    return '$quantity a $price';
+  }
+
+  @override
+  String commercialLineMeasurePer(String quantity, String price, String base) {
+    return '$quantity a $price por $base';
+  }
+
+  @override
+  String get commercialLineUnreadable =>
+      'Registrado por una versión más reciente: estos datos se muestran tal cual y no se pueden usar aquí';
 
   @override
   String get commonCancel => 'Cancelar';
@@ -7448,6 +7470,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get conversationYesterday => 'Ayer';
+
+  @override
+  String counterLotsExpired(String held, String asked, String expired) {
+    return 'Solo $held de los $asked pedidos se pueden vender aquí: $expired más han caducado. No se vendió nada.';
+  }
+
+  @override
+  String counterLotsShort(String held, String asked) {
+    return 'Solo hay aquí $held de los $asked pedidos. No se vendió nada.';
+  }
 
   @override
   String countryChangeBody(String country, String features) {
@@ -7997,7 +8029,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String datevProblemAutomatic(String percent, String account) {
-    return 'el $percent % se contabilizaría en $account, la cuenta automática de otro tipo';
+    return 'el $percent se contabilizaría en $account, la cuenta automática de otro tipo';
   }
 
   @override
@@ -8056,7 +8088,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String datevProblemTaxKey(String percent, String account) {
-    return 'no hay ningún BU-Schlüssel registrado para el $percent % en la cuenta $account';
+    return 'no hay ningún BU-Schlüssel registrado para el $percent en la cuenta $account';
   }
 
   @override
@@ -11573,6 +11605,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get exportValueNameWorkspace => 'Espacio de trabajo';
 
   @override
+  String get failedPartNotShown =>
+      'Esta parte no se ha podido mostrar. Vuelva atrás y ábrala de nuevo.';
+
+  @override
   String get favoriteKeptOnDeviceRefused =>
       'Guardado solo en este dispositivo: su cuenta no puede guardar este lugar.';
 
@@ -12337,6 +12373,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureNavigationStyleDesc =>
       'Cada miembro elige en sus ajustes cómo navega la app: la barra inferior clásica con el botón redondo Reservar, o el menú como en la web. Desactivado: cada dispositivo conserva el valor por defecto de su plataforma.';
+
+  @override
+  String featureNeedsNewerInstallation(String feature, String since) {
+    return 'Esta instalación es demasiado antigua para esta función. Necesita $feature desde el esquema $since; pida a quien gestiona el servidor que la actualice.';
+  }
 
   @override
   String get featureNfcBadges => 'Credenciales RFID / NFC';
@@ -13696,6 +13737,14 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get financesSelectionOnlyMonthly =>
+      'Las facturas mensuales se pagan con su mes, aparte de las facturas sin mes.';
+
+  @override
+  String get financesSelectionOnlyStandalone =>
+      'Las facturas sin mes se pagan juntas, aparte de las facturas mensuales.';
+
+  @override
   String financesSelectionSummary(int count, String amount) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -13712,6 +13761,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String financesSourceUnavailable(String host) {
     return 'No se pudieron leer los documentos de $host por ahora; lo que se muestra procede de sus otros espacios.';
+  }
+
+  @override
+  String financesStandaloneTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -18823,11 +18877,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get itemGroupMargin => 'Margen objetivo sobre el coste (%)';
 
   @override
-  String itemGroupMarginValue(String percent) {
-    return '$percent %';
-  }
-
-  @override
   String get itemGroupMinAge => 'Edad mínima para una venta';
 
   @override
@@ -20991,7 +21040,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String mcpConfirmNewShare(String pct) {
-    return 'Nueva parte de suscripción: $pct %';
+    return 'Nueva parte de suscripción: $pct';
   }
 
   @override
@@ -21022,7 +21071,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String mcpConfirmShareFrom(String pct, String date) {
-    return 'Nueva parte de suscripción: $pct % desde el $date';
+    return 'Nueva parte de suscripción: $pct desde el $date';
   }
 
   @override
@@ -22838,7 +22887,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String memberPlanShare(String pct) {
-    return 'Plan $pct %';
+    return 'Plan $pct';
   }
 
   @override
@@ -25094,6 +25143,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get payOnlineReversedTitle => 'Pago en línea revertido';
 
   @override
+  String get payOnlineStandaloneUnsupported =>
+      'El servicio de pago de este negocio debe actualizarse antes de poder pagar en línea facturas sin mes.';
+
+  @override
   String get payOnlineStartAgain =>
       'Este pago ya no se puede continuar. Vuelva a iniciar el pago.';
 
@@ -25266,10 +25319,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cuándo se ejecuta: cada mañana en el servidor, si la instalación programa tareas (pg_cron); si no, cuando un administrador abre Finanzas. El operador de su servidor sabe cuál se aplica.';
 
   @override
-  String get paymentRoutingNumberLabel => 'Routing number';
+  String get paymentRoutingNumberLabel => 'Número de ruta (ABA)';
 
   @override
-  String get paymentSortCodeLabel => 'Sort code';
+  String get paymentSortCodeLabel => 'Código de sucursal (sort code)';
 
   @override
   String get paymentTermsEdit => 'Solicitar un cambio';
@@ -31969,6 +32022,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Si gestiona este servidor: aplique las migraciones que faltan con `dart run tool/instance.dart install --ref <proyecto>`. Solo se ejecuta lo que falta.';
 
   @override
+  String schemaUpdateRunning(String version, String from, String to) {
+    return 'Esta instalación está en la versión $version: faltan las migraciones $from a $to.';
+  }
+
+  @override
   String get schemaUpdateServer => 'Ajustes del servidor';
 
   @override
@@ -32247,6 +32305,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingGroupBusiness => 'Negocio';
 
   @override
+  String get settingGroupCompatibility => 'Versiones de la aplicación';
+
+  @override
   String get settingGroupDirectory => 'Directorio de miembros';
 
   @override
@@ -32285,6 +32346,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingGuardrailFallback =>
       'Fijado por el software; se muestra para que sepa que existe.';
+
+  @override
+  String get settingHintAppsSupportWindowDays =>
+      'Cuántos días sigue aceptada una aplicación antigua después de que haya una más reciente disponible en el canal de distribución más lento. La aplicación más antigua que acepta esta instalación solo se eleva cuando han pasado esos días, para que cada miembro tenga tiempo de actualizarla.';
 
   @override
   String get settingHintAssetsValuationMaxRows =>
@@ -32695,6 +32760,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza).';
 
   @override
+  String get settingHintStockInvoiceSalePlace =>
+      'El código de un lugar de la empresa que tiene existencias, por ejemplo MAIN. Los bienes vendidos en factura salen de allí al emitir la factura.';
+
+  @override
   String get settingHintStockPriceRounding =>
       'Cómo se redondea un precio de venta propuesto: al 0,05 o 0,10 más cercano, o a un precio que termina en 0,99. Solo sirve para proponer un precio.';
 
@@ -32728,6 +32797,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingHistoryEmpty =>
       'Ninguna versión guardada: se aplica el valor por defecto.';
+
+  @override
+  String get settingLabelAppsSupportWindowDays =>
+      'Plazo de soporte de las aplicaciones antiguas';
 
   @override
   String get settingLabelAssetsValuationMaxRows =>
@@ -33118,6 +33191,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Modo de etiqueta por defecto de los artículos';
 
   @override
+  String get settingLabelStockInvoiceSalePlace =>
+      'Lugar del que salen los bienes vendidos en factura';
+
+  @override
   String get settingLabelStockPriceRounding => 'Redondeo de precios';
 
   @override
@@ -33236,6 +33313,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'por hora';
+
+  @override
+  String get settingUnitPlaceCode => 'código de ubicación';
 
   @override
   String get settingUnitQuarters => 'trimestres';
@@ -33944,12 +34024,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String setupGrowVatPreviewRate(String rate) {
-    return 'IVA $rate %';
-  }
-
-  @override
-  String setupGrowVatRate(String rate) {
-    return '$rate %';
+    return 'IVA $rate';
   }
 
   @override
@@ -35725,6 +35800,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get standaloneFactLines => 'al menos una línea';
 
   @override
+  String get standaloneFactSalePlace =>
+      'el lugar del que se vende: indique un lugar con existencias en los ajustes de la empresa';
+
+  @override
   String get standaloneFactSalesTax =>
       'esta empresa añade impuesto de ventas, que aquí aún no se admite';
 
@@ -35757,7 +35836,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get standaloneFieldDescription => 'una descripción';
 
   @override
+  String get standaloneFieldGoodsAbroad =>
+      'un comprador del país de la empresa: los bienes vendidos al extranjero aún no se facturan aquí';
+
+  @override
+  String get standaloneFieldGoodsOff =>
+      'la gestión de existencias, desactivada en esta empresa';
+
+  @override
+  String get standaloneFieldItem => 'un artículo con existencias y a la venta';
+
+  @override
   String get standaloneFieldLineId => 'guardar de nuevo el borrador';
+
+  @override
+  String get standaloneFieldLot => 'un lote de este artículo';
+
+  @override
+  String get standaloneFieldPieces =>
+      'las etiquetas de las piezas, como códigos de etiqueta';
 
   @override
   String get standaloneFieldPrice => 'un precio con seis decimales como máximo';
@@ -35767,11 +35864,32 @@ class AppLocalizationsEs extends AppLocalizations {
       'una cantidad mayor que cero con seis decimales como máximo';
 
   @override
+  String get standaloneFieldStock =>
+      'bienes que las existencias pueden vender tal como se han introducido';
+
+  @override
+  String get standaloneFieldStockExpired => 'un lote que no esté caducado';
+
+  @override
+  String get standaloneFieldStockLot => 'un lote presente de este artículo';
+
+  @override
+  String get standaloneFieldStockPieces =>
+      'las piezas vendidas: una etiqueta por pieza, cada una de una pieza presente';
+
+  @override
+  String get standaloneFieldStockShort =>
+      'suficientes existencias en el lugar del que se vende';
+
+  @override
   String get standaloneFieldSupply =>
-      'un servicio (los bienes aún no se facturan aquí)';
+      'lo que suministra la línea: un servicio, un inmueble o bienes';
 
   @override
   String get standaloneFieldUnit => 'una unidad';
+
+  @override
+  String get standaloneFieldVariant => 'la variante del artículo';
 
   @override
   String get standaloneFieldVatRate => 'un tipo de IVA definido por la empresa';
@@ -35800,7 +35918,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get standaloneInvoiceLineDescription => 'Descripción';
 
   @override
+  String get standaloneInvoiceLineGoods => 'Vendido de las existencias';
+
+  @override
   String get standaloneInvoiceLineGross => 'El precio incluye el impuesto';
+
+  @override
+  String get standaloneInvoiceLineNoGoods =>
+      'Nada de las existencias (un servicio)';
+
+  @override
+  String get standaloneInvoiceLinePieces => 'Etiquetas de las piezas vendidas';
+
+  @override
+  String get standaloneInvoiceLinePiecesHint =>
+      'Una etiqueta por pieza, separadas por comas: este artículo se sigue pieza por pieza.';
 
   @override
   String get standaloneInvoiceLinePrice => 'Precio unitario';
@@ -36145,7 +36277,20 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get stockChainSaleTitle => 'Lo que tomó esta venta';
+
+  @override
   String get stockChainTitle => 'Todos los movimientos de este lote';
+
+  @override
+  String stockChainTookLot(String code, String quantity) {
+    return 'Lote $code · $quantity';
+  }
+
+  @override
+  String stockChainTookPiece(String tag) {
+    return 'Pieza $tag';
+  }
 
   @override
   String get stockChainTruncated =>
@@ -36268,7 +36413,7 @@ class AppLocalizationsEs extends AppLocalizations {
       other: '$count recuentos',
       one: '1 recuento',
     );
-    return '$_temp0, $percent % exactos';
+    return '$_temp0, $percent exactos';
   }
 
   @override
@@ -38004,6 +38149,48 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockTraceTitle => 'De dónde viene';
+
+  @override
+  String stockTrackFindExpires(String date) {
+    return 'Caduca el $date';
+  }
+
+  @override
+  String get stockTrackFindField => 'Código de lote o etiqueta';
+
+  @override
+  String get stockTrackFindHelper =>
+      'El código del lote tal como se recibió, el código de su etiqueta o la etiqueta de una pieza.';
+
+  @override
+  String get stockTrackFindLots => 'Lotes';
+
+  @override
+  String get stockTrackFindNoSale => 'Ninguna venta lo ha tomado todavía.';
+
+  @override
+  String stockTrackFindNone(String code) {
+    return 'Nada en este negocio lleva $code.';
+  }
+
+  @override
+  String get stockTrackFindPieces => 'Piezas';
+
+  @override
+  String get stockTrackFindRequired => 'Escriba o escanee primero un código.';
+
+  @override
+  String get stockTrackFindSales => 'Ventas que lo tomaron';
+
+  @override
+  String get stockTrackFindSubmit => 'Buscar';
+
+  @override
+  String get stockTrackFindTitle => 'Buscar un código de trazabilidad';
+
+  @override
+  String get stockTrackFindTruncated =>
+      'Solo se muestran las primeras coincidencias.';
 
   @override
   String stockTransferLine(
@@ -40833,6 +41020,403 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillConfirmSale => 'Confirmar la venta';
 
   @override
+  String tillDayAmountLine(String label, String amount) {
+    return '$label: $amount';
+  }
+
+  @override
+  String get tillDayByRate => 'Ventas por tipo de impuesto';
+
+  @override
+  String get tillDayByTender => 'Cobros por medio de pago';
+
+  @override
+  String tillDayCorrections(String amount) {
+    return 'Correcciones: $amount';
+  }
+
+  @override
+  String tillDayDifferences(String amount) {
+    return 'Diferencia total de los cajones: $amount';
+  }
+
+  @override
+  String get tillDayHelp =>
+      'Reúne las sesiones cerradas de las cajas en un informe numerado. Antes debe cerrarse cada caja.';
+
+  @override
+  String tillDayItem(String number, String date) {
+    return '$number · $date';
+  }
+
+  @override
+  String get tillDayNone => 'Todavía no se ha cerrado ningún día.';
+
+  @override
+  String get tillDayOpen => 'Cerrar el día';
+
+  @override
+  String tillDayPaidIn(String amount) {
+    return 'Efectivo entrado: $amount';
+  }
+
+  @override
+  String tillDayPaidOut(String amount) {
+    return 'Efectivo salido: $amount';
+  }
+
+  @override
+  String get tillDayPast => 'Días cerrados';
+
+  @override
+  String tillDayRateLine(String rate, String net, String tax, String gross) {
+    return '$rate %: neto $net, impuesto $tax, bruto $gross';
+  }
+
+  @override
+  String tillDayReceiptRange(String first, String last) {
+    return 'Tickets $first a $last';
+  }
+
+  @override
+  String tillDayRefunds(String amount) {
+    return 'Reembolsos: $amount';
+  }
+
+  @override
+  String get tillDayRefusalClosed => 'Este día ya está cerrado.';
+
+  @override
+  String get tillDayRefusalFuture =>
+      'Un día no puede cerrarse antes de empezar.';
+
+  @override
+  String get tillDayRefusalNothing =>
+      'No se cerró ninguna sesión este día: no hay nada que cerrar.';
+
+  @override
+  String tillDayRefusalTillOpen(String name) {
+    return 'La caja $name sigue abierta. Cuéntela y ciérrela primero.';
+  }
+
+  @override
+  String tillDayReportDate(String date) {
+    return 'Día de actividad: $date';
+  }
+
+  @override
+  String tillDayReportTitle(String number) {
+    return 'Informe del día $number';
+  }
+
+  @override
+  String tillDaySalesTotal(String amount) {
+    return 'Ventas: $amount';
+  }
+
+  @override
+  String tillDaySessionLine(
+    String till,
+    String expected,
+    String counted,
+    String difference,
+  ) {
+    return '$till: esperado $expected, contado $counted, diferencia $difference';
+  }
+
+  @override
+  String tillDaySessionReason(String reason) {
+    return 'Motivo: $reason';
+  }
+
+  @override
+  String get tillDaySessions => 'Sesiones';
+
+  @override
+  String get tillDayTenderCash => 'Efectivo';
+
+  @override
+  String get tillDayTenderOther => 'Otro';
+
+  @override
+  String get tillDayTitle => 'Cierre del día';
+
+  @override
+  String tillDayToday(String date) {
+    return 'Día a cerrar: $date';
+  }
+
+  @override
+  String get tillDrawerAddTill => 'Añadir una caja';
+
+  @override
+  String get tillDrawerAmountInvalid => 'Escriba un importe.';
+
+  @override
+  String get tillDrawerAmountZero => 'El importe debe ser mayor que cero.';
+
+  @override
+  String get tillDrawerBanked => 'Llevado al banco';
+
+  @override
+  String get tillDrawerBankedAbove =>
+      'El importe al banco no puede superar el efectivo contado.';
+
+  @override
+  String get tillDrawerBankedHelp =>
+      'La parte del efectivo contado que se lleva al banco. Déjelo vacío si no hay.';
+
+  @override
+  String tillDrawerBreakdown(
+    String float,
+    String sales,
+    String paidIn,
+    String paidOut,
+  ) {
+    return 'Fondo $float, ventas $sales, entradas $paidIn, salidas $paidOut';
+  }
+
+  @override
+  String get tillDrawerCashAction => 'Entrada o salida de efectivo';
+
+  @override
+  String get tillDrawerChoose => '¿En qué caja vender?';
+
+  @override
+  String get tillDrawerCloseAction => 'Contar y cerrar';
+
+  @override
+  String get tillDrawerCloseSubmit => 'Cerrar la caja';
+
+  @override
+  String tillDrawerCloseTitle(String till) {
+    return 'Contar y cerrar $till';
+  }
+
+  @override
+  String tillDrawerClosedBanked(String amount) {
+    return 'Llevado al banco: $amount.';
+  }
+
+  @override
+  String tillDrawerClosedCard(String amount) {
+    return 'Pagos con tarjeta sin respuesta: $amount. No cuentan como efectivo.';
+  }
+
+  @override
+  String tillDrawerClosedCounts(String expected, String counted) {
+    return 'Esperado $expected, contado $counted.';
+  }
+
+  @override
+  String tillDrawerClosedOver(String amount) {
+    return 'Sobran $amount.';
+  }
+
+  @override
+  String get tillDrawerClosedSame =>
+      'El recuento coincide con el efectivo esperado.';
+
+  @override
+  String tillDrawerClosedShort(String amount) {
+    return 'Faltan $amount.';
+  }
+
+  @override
+  String get tillDrawerClosedTitle => 'Caja cerrada';
+
+  @override
+  String get tillDrawerCounted => 'Efectivo contado en el cajón';
+
+  @override
+  String get tillDrawerCountedHelp => 'Cuente lo que hay en el cajón.';
+
+  @override
+  String get tillDrawerCountedHelpBlind =>
+      'Cuente lo que hay en el cajón. El efectivo esperado se muestra después de contar.';
+
+  @override
+  String get tillDrawerDenomAdd => 'Añadir una denominación';
+
+  @override
+  String get tillDrawerDenomCount => 'Cuántos';
+
+  @override
+  String get tillDrawerDenomIncomplete =>
+      'Cada fila necesita un valor mayor que cero y un número de piezas, sin valores repetidos.';
+
+  @override
+  String get tillDrawerDenomRemove => 'Quitar esta fila';
+
+  @override
+  String tillDrawerDenomTotal(String amount) {
+    return 'Total contado: $amount';
+  }
+
+  @override
+  String get tillDrawerDenomValue => 'Valor de un billete o moneda';
+
+  @override
+  String get tillDrawerDifferenceAsked =>
+      'El recuento difiere del efectivo esperado. Indique el motivo para cerrar la caja.';
+
+  @override
+  String tillDrawerDifferenceLive(String amount) {
+    return 'Diferencia: $amount';
+  }
+
+  @override
+  String get tillDrawerDifferenceReason => '¿Por qué difiere el recuento?';
+
+  @override
+  String get tillDrawerDifferenceReasonMissing =>
+      'Indique por qué difiere el recuento.';
+
+  @override
+  String get tillDrawerEditTill => 'Editar la caja';
+
+  @override
+  String get tillDrawerEntryAmount => 'Importe';
+
+  @override
+  String get tillDrawerEntryDone => 'Movimiento de efectivo registrado.';
+
+  @override
+  String tillDrawerEntryLimit(String limit) {
+    return 'Por encima de $limit, una salida la registra quien puede registrar pagos salientes.';
+  }
+
+  @override
+  String get tillDrawerEntryPaidIn => 'Entrada';
+
+  @override
+  String get tillDrawerEntryPaidOut => 'Salida';
+
+  @override
+  String get tillDrawerEntryReason => 'Motivo';
+
+  @override
+  String get tillDrawerEntryReasonMissing => 'Elija un motivo.';
+
+  @override
+  String get tillDrawerEntrySubmit => 'Registrar';
+
+  @override
+  String get tillDrawerEntryTitle => 'Entrada o salida de efectivo';
+
+  @override
+  String tillDrawerExpected(String amount) {
+    return 'Efectivo esperado: $amount';
+  }
+
+  @override
+  String get tillDrawerExpectedHidden =>
+      'El efectivo esperado se muestra después de contar el cajón.';
+
+  @override
+  String get tillDrawerFailed => 'La caja no pudo hacerlo. Inténtelo de nuevo.';
+
+  @override
+  String get tillDrawerFloat => 'Fondo del cajón';
+
+  @override
+  String get tillDrawerFloatHelp =>
+      'El efectivo con el que empieza el cajón, contado ahora.';
+
+  @override
+  String get tillDrawerLoadFailed => 'No se pudieron leer las cajas.';
+
+  @override
+  String get tillDrawerManage => 'Cajas y cajones';
+
+  @override
+  String get tillDrawerNameMissing => 'Dé un nombre a la caja.';
+
+  @override
+  String get tillDrawerNoTills =>
+      'Todavía no hay ninguna caja. Añada la primera para empezar a contar un cajón.';
+
+  @override
+  String get tillDrawerNoTillsPerson =>
+      'Todavía no se ha creado ninguna caja. La añade quien gestiona las sedes.';
+
+  @override
+  String get tillDrawerOpenAction => 'Abrir la caja';
+
+  @override
+  String get tillDrawerOpenFirstBody =>
+      'Abra una caja con su fondo antes de vender.';
+
+  @override
+  String get tillDrawerOpenFirstTitle => 'Ninguna caja está abierta';
+
+  @override
+  String tillDrawerOpenTitle(String till) {
+    return 'Abrir $till';
+  }
+
+  @override
+  String get tillDrawerRefusalAboveLimit =>
+      'Una salida de este importe la registra quien puede registrar pagos salientes.';
+
+  @override
+  String get tillDrawerRefusalAlreadyOpen =>
+      'Esta caja ya está abierta. Cuéntela y ciérrela antes de abrirla de nuevo o desactivarla.';
+
+  @override
+  String get tillDrawerRefusalDenominations =>
+      'Los recuentos por denominación no suman el importe.';
+
+  @override
+  String get tillDrawerRefusalDifference =>
+      'El recuento difiere del efectivo esperado. Indique el motivo antes de cerrar.';
+
+  @override
+  String get tillDrawerRefusalNameTaken =>
+      'Otra caja de este negocio ya tiene este nombre.';
+
+  @override
+  String get tillDrawerRefusalOpenFirst =>
+      'Abra primero la caja: una venta necesita una sesión abierta en su caja.';
+
+  @override
+  String get tillDrawerRefusalReasonUnknown =>
+      'Este motivo no está en la lista del negocio. Elija uno de la lista.';
+
+  @override
+  String get tillDrawerRefusalSessionGone => 'Esta sesión ya no está abierta.';
+
+  @override
+  String get tillDrawerRefusalTillUnknown =>
+      'No es una caja activa de este negocio.';
+
+  @override
+  String get tillDrawerStateClosed => 'Cerrada';
+
+  @override
+  String get tillDrawerStateOff => 'Desactivada';
+
+  @override
+  String tillDrawerStateOpen(String float) {
+    return 'Abierta · fondo $float';
+  }
+
+  @override
+  String get tillDrawerTillActive => 'En uso';
+
+  @override
+  String get tillDrawerTillName => 'Nombre de la caja';
+
+  @override
+  String get tillDrawerTillNewTitle => 'Caja nueva';
+
+  @override
+  String get tillDrawerTillSave => 'Guardar la caja';
+
+  @override
+  String get tillDrawerTitle => 'Cajón de caja';
+
+  @override
   String get tillFailed => 'La caja no pudo hacerlo. Inténtelo de nuevo.';
 
   @override
@@ -40866,6 +41450,123 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get tillNotReadyHint =>
       'No se numera ni se cobra nada mientras la operación del país no esté admitida.';
+
+  @override
+  String get tillOfflineBanner =>
+      'Sin conexión: solo efectivo. Las ventas se guardan en este dispositivo y se envían cuando vuelve la conexión.';
+
+  @override
+  String get tillOfflineClosedSession =>
+      'La sesión se cerró: estas ventas permanecen en el dispositivo para un responsable.';
+
+  @override
+  String get tillOfflineDiscard => 'Descartar los datos sin conexión';
+
+  @override
+  String get tillOfflineDiscardBody =>
+      'Las ventas que aún no se enviaron se pierden para siempre. Descarte los datos solo después de que un responsable los haya revisado.';
+
+  @override
+  String get tillOfflineDiscardConfirm => 'Descartar los datos';
+
+  @override
+  String tillOfflineGaps(String numbers) {
+    return 'Números de venta que faltan en el servidor: $numbers.';
+  }
+
+  @override
+  String tillOfflineKept(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ventas permanecen',
+      one: '1 venta permanece',
+    );
+    return '$_temp0 en este dispositivo para un responsable.';
+  }
+
+  @override
+  String get tillOfflineNoPrice =>
+      'Este artículo no tiene precio en este dispositivo, por lo que no se puede vender sin conexión.';
+
+  @override
+  String get tillOfflineNotSigned =>
+      'Sin firmar. Se envía al servidor cuando vuelve la conexión.';
+
+  @override
+  String get tillOfflineReasonBeforeSession =>
+      'Hecha antes de abrir esta caja.';
+
+  @override
+  String get tillOfflineReasonCash =>
+      'El efectivo entregado era menor que el total.';
+
+  @override
+  String get tillOfflineReasonClock =>
+      'El reloj del dispositivo estaba adelantado.';
+
+  @override
+  String get tillOfflineReasonItem => 'El artículo ya no se vende.';
+
+  @override
+  String get tillOfflineReasonOther => 'Las reglas de la caja lo rechazaron.';
+
+  @override
+  String get tillOfflineReasonPrice => 'El precio cambió más de lo permitido.';
+
+  @override
+  String get tillOfflineReasonTooLong =>
+      'Hecha demasiado tiempo después de perder la conexión.';
+
+  @override
+  String get tillOfflineReasonTooMany =>
+      'Más ventas sin conexión de las permitidas.';
+
+  @override
+  String tillOfflineRecorded(int seq) {
+    return 'Registrada sin conexión · venta $seq de esta caja';
+  }
+
+  @override
+  String tillOfflineReportAccepted(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Se registraron $count ventas.',
+      one: 'Se registró 1 venta.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tillOfflineReportRefused(int seq, String reason) {
+    return 'Se rechazó la venta $seq: $reason Su efectivo permanece en el recuento del cajón.';
+  }
+
+  @override
+  String get tillOfflineReportTitle => 'Ventas sin conexión enviadas';
+
+  @override
+  String get tillOfflineSendNow => 'Buscar la conexión ahora';
+
+  @override
+  String get tillOfflineSyncing => 'Enviando las ventas sin conexión…';
+
+  @override
+  String get tillOfflineUnreadable =>
+      'Los datos sin conexión de este dispositivo no se pueden leer. No se venderá nada sin conexión hasta que un responsable decida.';
+
+  @override
+  String tillOfflineWaiting(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ventas esperan en este dispositivo',
+      one: '1 venta espera en este dispositivo',
+      zero: 'Ninguna venta espera en este dispositivo',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get tillOpCorrectReceipt => 'corrección de un ticket';
@@ -41367,6 +42068,30 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get unblockAction => 'Desbloquear';
+
+  @override
+  String get unknownWireInvoiceKind =>
+      'Un tipo que esta versión de la aplicación no conoce';
+
+  @override
+  String unknownWireKindFeatures(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count funciones',
+      one: 'una función',
+    );
+    return 'Este tipo también ajusta $_temp0 que esta versión de la aplicación no conoce. Actualice la aplicación para elegirlo.';
+  }
+
+  @override
+  String get unknownWireReadOnly =>
+      'Esta versión de la aplicación no sabe qué es este registro: puede leerse, no modificarse. Actualice la aplicación para trabajar con él.';
+
+  @override
+  String unknownWireValue(String value) {
+    return '$value (desconocido para esta versión de la aplicación)';
+  }
 
   @override
   String unreadableRowsNotice(int count) {

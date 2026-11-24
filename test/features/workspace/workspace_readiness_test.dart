@@ -318,7 +318,7 @@ void main() {
     final pushed = await _pump(
       tester,
       FakeLocalSetupRepository(readinessSections: _sections(seats: true)),
-      serverSchema: requiredSchemaVersion - 1,
+      serverSchema: appNeedsSchemaVersion - 1,
     );
     expect(
       find.text('Before a first booking: Server and database version'),

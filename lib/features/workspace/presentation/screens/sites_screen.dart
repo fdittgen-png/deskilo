@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
@@ -102,7 +103,7 @@ class SitesScreen extends ConsumerWidget {
               ],
             ],
           ),
-        AsyncError(:final error) => Center(child: Text(error.toString())),
+        AsyncError(:final error) => ReadFailureBanner(error: error, onRetry: () => ref.invalidate(sitesProvider)),
         _ => const LoadingView(),
       },
     );

@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -46,7 +47,7 @@ void main() {
           case '/rest/v1/rpc/public_network_descriptor':
             // #1832 — a server from before negotiation: the baseline.
             return http.Response(
-              jsonEncode({'code': 'PGRST202', 'message': 'not found'}),
+              jsonEncode({'code': PgCode.pgrstFunctionNotFound, 'message': 'not found'}),
               404,
               headers: {'content-type': 'application/json'},
               request: request,
@@ -129,7 +130,7 @@ void main() {
           body = {'installation_id': 'target-installation'};
         } else if (r.url.path == '/rest/v1/rpc/public_network_descriptor') {
           return http.Response(
-            jsonEncode({'code': 'PGRST202', 'message': 'not found'}),
+            jsonEncode({'code': PgCode.pgrstFunctionNotFound, 'message': 'not found'}),
             404,
             headers: {'content-type': 'application/json'},
             request: r,

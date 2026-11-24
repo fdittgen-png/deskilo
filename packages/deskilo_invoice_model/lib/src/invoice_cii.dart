@@ -5,7 +5,9 @@ import 'package:xml/xml.dart';
 import 'e_invoice_totals.dart';
 import 'einvoice_input.dart';
 import 'invoice.dart';
+import 'invoice_line_commercial.dart';
 import 'invoice_structured_line.dart';
+import 'line_track.dart';
 import 'subdivision.dart';
 import 'swiss_qr_bill.dart';
 import 'vat_rate.dart';
@@ -190,6 +192,13 @@ class _CiiWriter {
         })
         ..element('ram:SpecifiedTradeProduct', nest: () {
           ram('Name', input.lineText(line));
+          // #4436 -- BG-32: the lot and the pieces a goods line took, as item attributes (BT-160, BT-161)
+          for (final t in invoice.lineTracks[line.commercialLineId] ?? const <LineTrack>[]) {
+            builder.element('ram:ApplicableProductCharacteristic', nest: () {
+              ram('Description', t.kind == LineTrackKind.lot ? 'Lot' : 'Serial number');
+              ram('Value', t.code);
+            });
+          }
         });
       builder.element('ram:SpecifiedLineTradeAgreement', nest: () {
         builder.element('ram:NetPriceProductTradePrice', nest: () {

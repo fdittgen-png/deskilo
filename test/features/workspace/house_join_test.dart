@@ -4,6 +4,7 @@
 // read as the server lists them, a request answers a member at once or a
 // request the house decides, the server's refusals are said in their own
 // words, and only a house's owners set its welcome.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
 import 'package:deskilo/features/workspace/data/supabase_organisation_repository.dart';
 import 'package:deskilo/features/workspace/domain/organisation.dart';
@@ -73,27 +74,27 @@ void main() {
   test('the server\'s refusals are said in their own words', () {
     expect(
       SupabaseOrganisationRepository.refusalOf(
-        '42501',
+        PgCode.insufficientPrivilege,
         'only a member of a house of this organisation asks to join another',
       ),
       OrganisationRefusal.notAMember,
     );
     expect(
       SupabaseOrganisationRepository.refusalOf(
-        '42501',
+        PgCode.insufficientPrivilege,
         'only a person asks to join a house',
       ),
       OrganisationRefusal.onlyAPerson,
     );
     expect(
       SupabaseOrganisationRepository.refusalOf(
-        '22023',
+        PgCode.invalidParameterValue,
         'this business is no house of an organisation',
       ),
       OrganisationRefusal.noHouse,
     );
     expect(
-      SupabaseOrganisationRepository.refusalOf('42501', 'anything else'),
+      SupabaseOrganisationRepository.refusalOf(PgCode.insufficientPrivilege, 'anything else'),
       OrganisationRefusal.notOwner,
     );
   });

@@ -88,14 +88,14 @@ class BookingReviewSummary extends StatelessWidget {
               key: const ValueKey('booking-review-resource'),
               style: Theme.of(context).textTheme.titleSmall,
             ),
-            Text('${words.uxBookingFor}: $person'),
+            Text(words.labelWithValue(words.uxBookingFor, person)),
             if (walkUp) Text(words.planStartNow),
             BookingWindowSummary(
               window: window,
               today: today,
               timezone: timezone,
             ),
-            if (recurrence != null) Text('${words.planRepeatLabel}: $recurrence'),
+            if (recurrence case final repeat?) Text(words.labelWithValue(words.planRepeatLabel, repeat)),
             if (resourcePriceLabel case final price?)
               Text(price, key: const ValueKey('booking-known-price')),
             if (allowance case final a?) BookingAllowanceLine(memberId: a.memberId, period: a.period),

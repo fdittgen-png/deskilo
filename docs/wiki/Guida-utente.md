@@ -2522,6 +2522,7 @@ Vuole trovare una fattura, vedere se è pagata e ottenerne il PDF.
 - Tocchi l'icona del pagamento su una fattura aperta per passare a **Pagamenti**.
 - Se l'elenco è vuoto, lo spazio non Le ha ancora fatturato nulla; fattura un mese solo dopo la sua chiusura.
 - Le fatture non si possono modificare. Una fattura sbagliata è contrassegnata come **Errata** e sostituita da una nuova, e quella errata scompare dal Suo elenco. Quando più fatture vengono raggruppate in una, la fattura raggruppata le sostituisce nel suo elenco.
+- Una riga fatturata a ore, a giorni o a peso (ad esempio *1.5 h a 90 EUR*, oppure *0.75 kg a 12.5 EUR per 10 kg*) mostra sotto la descrizione la quantità esatta, la sua unità e il prezzo inserito, come li stampa il PDF; il suo importo è quello fissato all'emissione della fattura. Una riga registrata da una versione più recente dell'app è mostrata così com'è e indica che non può essere usata qui: per lavorarci occorre aggiornare l'app.
 
 **Vedi anche:** [Pagare quanto dovuto](#pagare-quanto-dovuto) · [Le Sue finanze in tutti gli spazi](#le-sue-finanze-in-tutti-gli-spazi)
 
@@ -3008,6 +3009,30 @@ L'elenco mostra ogni invito come invitato, in lettura, scaduto o terminato. **Te
 
 **Vedere anche:** [Clienti fatturati](#clienti-fatturati)
 
+<!-- anchor: user.money.invoices.standalone -->
+### Una fattura cliente senza mese
+
+**Destinatari:** Amministratore · Proprietario
+
+Oggi ha reso un servizio a un cliente indicato (una consulenza, una lezione, un risultato concordato) e vuole fatturarlo subito, senza prenotazione, abbonamento o mese alle spalle. Servono il diritto di emettere fatture e la funzione **Fatture singole**.
+
+**Passaggi**
+
+1. Apra **Fatture** e scelga **Fattura cliente senza mese**.
+2. Scelga il cliente, poi la data della prestazione e la scadenza.
+3. Aggiunga le righe: una descrizione, una quantità, un'unità e un prezzo. Scegliere un articolo dal catalogo è facoltativo; una prestazione occasionale si scrive a parole.
+4. Scelga **Verificare la fattura**. L'anteprima mostra importi e imposta esattamente come saranno emessi, oppure ciò che manca ancora.
+5. Scelga **Emettere la fattura** per confermare. La fattura viene numerata, conservata così come emessa e aperta.
+
+**Da sapere**
+
+- La fattura non ha un mese di fatturazione: una seconda fattura distinta dello stesso cliente nello stesso mese è una fattura a sé, e la fattura mensile, se c'è, resta intatta.
+- Importi e imposta li calcola sempre il server, mai presi dalla schermata; il prezzo è nella valuta dell'attività.
+- La bozza resta com'è quando si ridimensiona la finestra o una verifica viene rifiutata. Se la risposta a **Emettere la fattura** non arriva, la stessa conferma non emette mai una seconda fattura: la si cerchi di nuovo.
+- Modificare poi il catalogo o il cliente non cambia mai una fattura emessa.
+
+**Vedere anche:** [Clienti fatturati](#clienti-fatturati) · [Pagare fatture senza mese](#pagare-fatture-senza-mese)
+
 <!-- anchor: user.money.quotes -->
 ### Preventivi
 
@@ -3165,6 +3190,36 @@ Dove il suo paese non consente ancora la cassa, questa indica l'operazione manca
 
 Un articolo tracciato indica da dove è stato preso. Quando vende un articolo gestito a lotti senza scegliere un lotto, la vendita lo preleva dai lotti in giacenza, prima quello che scade per primo e mai uno scaduto; sotto la riga venduta la cassa mostra il codice di ogni lotto come è stato ricevuto, con la quantità prelevata, per esempio **Lotto SUP-A × 2 · Lotto SUP-B × 1**, e ogni pezzo con la sua etichetta. Se l'azienda usa un lettore, scansioni l'etichetta di un pezzo per aggiungerlo: la vendita preleva esattamente i pezzi scansionati, e lo stesso pezzo due volte viene rifiutato. Questi identificativi di tracciabilità sono fissati con lo scontrino: modificare in seguito un lotto o un'etichetta non altera mai uno scontrino già emesso. Nel magazzino, la tracciabilità di un lotto o di un pezzo indica lo scontrino che lo ha venduto.
 
+<!-- anchor: user.money.till-drawer -->
+### Aprire la cassa, contare e chiudere
+
+**Destinatari:** Amministratore · Proprietario
+
+Si gestisce un cassetto di cassa e si vuole sapere che il denaro al suo interno sia corretto a fine giornata.
+
+Aprire **Cassetto di cassa** nel menu delle vendite (richiede la funzione sessioni di cassa e il diritto di emettere fatture o di vedere le finanze). Ogni cassa dell'attività è elencata con il suo stato. Chi gestisce le sedi aggiunge una cassa con **Aggiungere una cassa** e può rinominarla o disattivarla.
+
+Premere **Aprire la cassa**, digitare il **Fondo cassa nel cassetto** (o, se l'attività conta per taglio, il valore di ogni banconota o moneta e quanti pezzi) e confermare. Una cassa ha una sola sessione aperta alla volta e, con le sessioni di cassa, la cassa vende solo su una sessione aperta: senza sessione aperta propone **Aprire la cassa** invece di vendere.
+
+**Versamento o prelievo** registra il denaro messo nel cassetto o prelevato, con un **Motivo** scelto dall'elenco dell'attività. Un prelievo oltre il limite dell'attività viene registrato da chi può registrare i pagamenti in uscita.
+
+**Contare e chiudere** chiede i **Contanti contati nel cassetto** e quanto viene **Portato in banca**. Quando l'attività conta alla cieca, i contanti attesi non vengono mostrati prima del conteggio; chi può vedere le finanze li vede, insieme alla differenza mentre digita. Un conteggio che differisce dai contanti attesi si chiude solo con il suo motivo, che la cassa richiede. Dopo la chiusura la cassa indica quanto era atteso, quanto è stato contato e la differenza. I pagamenti con carta senza risposta sono elencati a parte e mai contati come contanti.
+
+**Chiusura della giornata.** Chi può vedere le finanze apre **Chiusura della giornata** dal cassetto di cassa e preme **Chiudere la giornata** quando ogni cassa è chiusa (una cassa ancora aperta viene indicata e rifiuta la chiusura). Le sessioni chiuse della giornata diventano un rapporto numerato: ogni sessione con atteso, contato, differenza e motivo, gli incassi per mezzo di pagamento e per aliquota, i contanti versati e prelevati, i rimborsi e l'intervallo dei numeri degli scontrini. **Giornate chiuse** elenca i rapporti già fatti; una giornata chiusa non cambia mai. È la registrazione propria dell'attività; il contenuto legale che un paese richiede alla chiusura della giornata arriva con un proprio modulo.
+
+<!-- anchor: user.money.till-offline -->
+### Quando la cassa è offline
+
+**Destinatari:** Amministratore · Proprietario
+
+Vende al banco e la connessione si perde: vuole continuare a vendere ed essere certo che nulla vada perso o venga contato due volte.
+
+Attivi **Vendere offline, solo in contanti** (richiede la funzione delle sessioni di cassa). Quando una chiamata al server non riceve risposta, la cassa indica **Offline: solo contanti. Le vendite restano su questo dispositivo e vengono inviate quando la connessione torna.** e continua a vendere solo in contanti, ai prezzi che aveva all'ultimo collegamento; un articolo di cui il dispositivo non ha il prezzo non viene venduto. Ogni vendita resta sul dispositivo con il numero successivo della sua sessione di cassa; lo scontrino riporta **Registrata offline** con quel numero e **Non firmato. Viene inviato al server quando la connessione torna.**: non ha un numero di scontrino finché il server non l'ha ricevuto.
+
+La cassa cerca da sola la connessione, e **Cerca subito la connessione** lo fa subito. Quando la connessione torna, le vendite vengono inviate in ordine, ciascuna con il numero con cui è stata fatta, così una vendita già ricevuta non viene mai contata due volte. La cassa dice poi quante sono state registrate e, per ogni vendita rifiutata dal server, perché (ad esempio il prezzo è cambiato oltre il consentito, o l'articolo non è più in vendita); i contanti di una vendita rifiutata restano nel conteggio del cassetto. Se nel frattempo la sessione è stata chiusa, la cassa dice: «La sessione è stata chiusa: queste vendite restano sul dispositivo per un responsabile.» Le vendite restano sul dispositivo finché un responsabile non le ha trattate.
+
+Tre impostazioni dell'attività limitano ciò che viene accettato: **Durata massima offline (minuti)**, **Massimo di vendite offline per sessione di cassa** e **Differenza di prezzo ammessa offline (%)**. Se i dati offline del dispositivo non sono leggibili, non si vende nulla offline finché un responsabile non decide; **Elimina i dati offline** li elimina dopo un avviso, perché le vendite non ancora inviate vanno perse definitivamente.
+
 <!-- anchor: user.money.stock.rfid -->
 ### Tag RFID: uno per lotto o uno per pezzo
 
@@ -3238,6 +3293,7 @@ Apra una riga di **Magazzino** per vedere **Dov'è** quell'articolo (o quel lott
 - I luoghi su uno scaffale sommano sempre la quantità mostrata in alto.
 - In un giorno passato la merce in viaggio non è mostrata; i pezzi sì, dal giorno in cui sono seguiti (un pezzo fatto prima non ha storico prima).
 - Tocchi un luogo che tiene un lotto per vedere **Tutti i movimenti** di quel lotto, dalla consegna con cui è arrivato fino alla sua uscita; il pulsante cronologia di un pezzo mostra **Tutti i movimenti di questo pezzo**. Un documento che non può vedere è indicato con il suo tipo, mai omesso.
+- **Cercare un codice di tracciabilità** (il pulsante codice in alto in **Magazzino**) accetta un codice di lotto come ricevuto, il codice sull'etichetta di un lotto o l'etichetta di un pezzo, digitato o scansionato. Elenca i lotti e i pezzi che lo portano e le vendite che li hanno presi. Un tocco su un lotto o un pezzo mostra tutti i suoi movimenti; un tocco su una vendita mostra ciò che quella riga dello scontrino ha preso: ogni lotto con la sua quantità, ogni pezzo con la sua etichetta. Uno scontrino non visibile è indicato dal suo tipo e non si apre. Se non si trova nulla, viene detto; una ricerca rifiutata o non riuscita lo dice e si può ripetere.
 
 <!-- anchor: user.money.stock.value -->
 ### Valore del magazzino e origine della merce
@@ -3344,6 +3400,29 @@ Un'azienda che Le fattura può darLe un codice, così che legga ciò che Le fatt
 - Pagare queste fatture da qui non è ancora previsto.
 
 **Vedere anche:** [Le Sue finanze in tutti gli spazi](#le-sue-finanze-in-tutti-gli-spazi)
+
+<!-- anchor: user.money.finances.standalone -->
+### Pagare fatture senza mese
+
+**Destinatari:** Membro
+
+Un'azienda Le ha emesso fatture che non appartengono ad alcun mese. Si pagano insieme, a parte.
+
+**Passaggi**
+
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money) e spunti le fatture senza mese da pagare. Appartengono a un'azienda e a una valuta.
+2. Una barra indica quante ne ha spuntate e il loro totale. Scelga **Paga** per pagare online, oppure **Ho pagato** se ha già pagato in altro modo.
+3. La conferma elenca le fatture e un solo totale. Confermi: si apre un pagamento oppure viene inviata una sola dichiarazione.
+
+**Da sapere**
+
+- Le fatture senza mese e quelle mensili non si pagano mai insieme: spuntato un tipo, l'altro non si può spuntare, e una riga lo dice. Se l'azienda rifiuta comunque una miscela, Lei ne è informato e non viene addebitato nulla.
+- L'importo è ciò che le fatture devono ancora. Se è cambiato, aggiorni e riprovi.
+- Se la risposta si è persa per strada, scelga di nuovo **Paga**: è lo stesso pagamento, ritrovato, mai un secondo. Un pagamento figura come pagato solo quando l'azienda lo ha ricevuto.
+- Il denaro è contabilizzato nel mese in cui arriva. Ciò che una fattura non assorbe resta un Suo credito presso l'azienda finché non viene assegnato.
+- Un'azienda il cui servizio di pagamento è troppo vecchio lo dice prima di inviare qualunque cosa.
+
+**Vedere anche:** [Le Sue finanze tra spazi](#le-sue-finanze-in-tutti-gli-spazi)
 
 <!-- anchor: user.money.businesses -->
 ### Le attività a colpo d'occhio
@@ -6804,7 +6883,7 @@ Ciò che sta attorno al lavoro di ogni giorno: il lato di prova di uno spazio e 
 
 In questo capitolo:
 - [Uno spazio ha due lati](#uno-spazio-ha-due-lati) · [Entrare in un lato](#entrare-nel-lato-reale-o-in-quello-di-prova) · [Uno spazio di prova](#a-che-cosa-serve-uno-spazio-di-prova) · [Chi può distribuire](#chi-può-distribuire-ed-entrare-in-produzione) · [Distribuire tra i lati](#distribuire-tra-i-due-lati) · [Situazione dello spazio e archivio dell'esercizio](#situazione-dello-spazio-e-archivio-dellesercizio)
-- [Il Suo server](#gestire-il-proprio-server)
+- [Il Suo server](#gestire-il-proprio-server) · [Quando un'installazione richiede un'app più recente](#quando-uninstallazione-richiede-unapp-più-recente) · [Pubblicare una nuova versione](#pubblicare-una-nuova-versione-prima-il-server)
 - [Assistenti](#assistenti-che-cosa-sono) · [Collegare un assistente](#collegare-un-assistente) · [Approvazioni](#approvazioni-e-conferme-per-gli-assistenti) · [Che cosa possono fare gli assistenti](#che-cosa-possono-fare-gli-assistenti-in-uno-spazio)
 - [Il registratore di attività](#il-registratore-di-attività-e-le-visite-guidate) · [Registrare un'attività](#registrare-unattività) · [Rivedere una registrazione](#rivedere-modificare-ed-esportare-una-registrazione) · [Creare una guida](#creare-una-guida-da-una-registrazione) · [Seguire una guida](#seguire-una-guida) · [Il menu circolare](#il-menu-circolare) · [Modificare una guida](#modificare-o-riparare-una-guida) · [Riservatezza delle registrazioni](#che-cosa-conserva-una-registrazione)
 - [Lo spazio dimostrativo](#lo-spazio-dimostrativo) · [Modalità ripresa](#modalità-ripresa)
@@ -6965,6 +7044,52 @@ Vuole i dati della Sua comunità su un server che controlla, oppure appartiene a
 - Un operatore può attivare gli assistenti per l'intera installazione — veda [Approvazioni](#approvazioni-e-conferme-per-gli-assistenti).
 
 **Vedi anche:** [Il Suo server](#il-suo-server)
+
+<!-- anchor: user.advanced.app-floor -->
+### Quando un'installazione richiede un'app più recente
+
+**Destinatari:** Operatore · Proprietario
+
+Un'installazione può stabilire che con essa si usi solo un'app più recente. Vuole sapere quando è giustificato e che cosa vedranno i Suoi tester e i membri.
+
+**Passaggi**
+
+1. Alzi la soglia solo quando un'app vecchia sarebbe sbagliata e non soltanto incompleta: una correzione di sicurezza o un cambio di significato dei dati salvati. Una funzione mancante non è un motivo.
+2. La alzi in una modifica a sé e solo dopo che l'app più recente è disponibile per tutti i tester e i membri per il periodo di supporto. I tester dell'installazione di riferimento sono bloccati non appena la soglia viene alzata.
+3. Dica prima alle persone quale app installare e dove: lo store da cui l'hanno installata, la pagina delle versioni o ricaricando l'app web.
+4. Poi apra l'app su un dispositivo più vecchio e verifichi che compaia **Questa app deve essere aggiornata**.
+
+**Da sapere**
+
+- Un'app sotto la soglia vede una sola schermata, **Questa app deve essere aggiornata**, con come aggiornare sulla sua piattaforma, **Controlla di nuovo**, **Impostazioni del server** ed **Esci**. Guida, privacy e demo restano aperte.
+- La soglia appartiene a una sola installazione: la stessa app continua a funzionare su tutte le altre installazioni della persona. Quando solo l'installazione di un'azienda rifiuta l'app, solo quell'azienda mostra la schermata, che offre allora anche **Torna a Io**; le Sue altre aziende restano aperte.
+- Se la soglia non si può leggere, l'app non è bloccata. Un rifiuto già letto resta finché una risposta più recente lo toglie, e l'app chiede di nuovo al rientro.
+- La soglia è una cortesia per le app che la conoscono, non un lucchetto: le regole su denaro e permessi le decide il server, qualunque sia l'app.
+
+**Vedi anche:** [Gestire il proprio server](#gestire-il-proprio-server) · [Piattaforme](#deskilo-sui-suoi-dispositivi)
+
+<!-- anchor: user.advanced.releases -->
+### Pubblicare una nuova versione: prima il server
+
+**Destinatari:** Operatore
+
+Lei gestisce un'installazione e sta arrivando una nuova versione dell'app. Il server viene sempre aggiornato prima dell'app, e un'app precedente non viene mai esclusa senza preavviso.
+
+**Passaggi**
+
+1. Aggiorni prima il server: applichi le sue nuove migrazioni, poi le sue funzioni. Per i membri non cambia nulla: un'app già installata continua a funzionare, perché il server aggiunge soltanto.
+2. Pubblichi l'app. Prima di ogni caricamento, il treno di rilascio legge l'installazione a cui consegna e si ferma, indicando le migrazioni mancanti, quando l'installazione è indietro, rifiuta la nuova app o non può essere letta. Una volta pubblicata l'app, la versione del server vi risulta *Aggiornato*, e un'app precedente indica *Il server è più recente di questa app: aggiorni l'app appena possibile*.
+3. Attenda il periodo di supporto: [Profili](https://fdittgen-png.github.io/deskilo/#/profiles) → **Impostazioni della piattaforma (valori predefiniti)** → **Versioni dell'app** → **Periodo di supporto delle app precedenti**. Decorre dal giorno in cui la nuova app è disponibile sul canale di distribuzione più lento, non dal giorno in cui è stata costruita: la revisione di uno store può richiedere giorni.
+4. Solo allora alzi l'app più vecchia accettata dall'installazione, in una migrazione a sé. Un'app al di sotto mostra **Questa app deve essere aggiornata** con il modo di aggiornarla sulla sua piattaforma; nulla di ciò che il membro ha inserito va perso.
+
+**Da sapere**
+
+- Un'app più recente del suo server indica *Serve un aggiornamento: questa app richiede lo schema …*. È il caso che l'ordine «prima il server» evita.
+- Per annullare un innalzamento, riabbassi l'app più vecchia accettata, o tolga il limite, in una nuova migrazione: un'app bloccata torna a funzionare al prossimo avvio o al ritorno in primo piano.
+- Il treno di rilascio legge soltanto l'installazione: non applica alcuna migrazione e non cambia chi può pubblicare.
+- Non alzi mai l'app più vecchia accettata nella migrazione che per prima richiede la nuova app: i tester di quell'installazione resterebbero bloccati appena viene applicata.
+
+**Vedi anche:** [Gestire il proprio server](#gestire-il-proprio-server)
 
 <!-- anchor: user.advanced.assistants -->
 ### Assistenti: che cosa sono

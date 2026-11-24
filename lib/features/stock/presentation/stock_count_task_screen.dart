@@ -11,8 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/format/decimal_input.dart';
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -30,6 +32,7 @@ import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_bulk_read_sheet.dart';
 import 'stock_config_text.dart';
+import 'stock_read_failed.dart';
 
 class StockCountTaskScreen extends ConsumerStatefulWidget {
   const StockCountTaskScreen({required this.taskId, super.key});
@@ -79,7 +82,7 @@ class _State extends ConsumerState<StockCountTaskScreen> {
       _scan.clear();
       await _countSheet(workspaceId, line, items[line.itemId]?.unit ?? '');
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the barcodes could not be read: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the barcodes could not be read', error: e, stackTrace: st);
       if (mounted) AppSnack.error(context, l10n.stockReadFailed);
     }
   }
@@ -117,7 +120,7 @@ class _State extends ConsumerState<StockCountTaskScreen> {
             answer = await ref.read(stockCycleCountsProvider).countByTagRead(workspaceId, requestId: requestId, taskId: widget.taskId, codes: codes);
             return null;
           } on Object catch (e, st) {
-            TraceLogger.instance.warn('stock', 'a bulk read was not counted: $e', stackTrace: st);
+            TraceLogger.instance.warn('stock', 'a bulk read was not counted', error: e, stackTrace: st);
             return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
           }
         },
@@ -139,6 +142,9 @@ class _State extends ConsumerState<StockCountTaskScreen> {
     final l10n = context.l10n;
     final fields = FormControllers({'observed': ''});
     final requestId = newRequestId();
+    final locale = appFormatOf(context).locale;
+    // what was counted, read in the member's format (1,5 or 1.5) and sent as the exact text the server reads
+    String? observed() => exactQuantityFromInput(fields.text('observed'), locale: locale).value?.text;
     CountLineResult? result;
     final done = await showAppFormSheet(
       context,
@@ -147,17 +153,15 @@ class _State extends ConsumerState<StockCountTaskScreen> {
         submitLabel: l10n.stockEditSave,
         submitKey: const ValueKey('stock-cycle-count-save'),
         onDispose: fields.dispose,
-        validate: () => RegExp(r'^[0-9]{1,12}([.,][0-9]{1,6})?$').hasMatch(fields.text('observed').trim())
-            ? const {}
-            : {'observed': stockReasonText(l10n, 'quantity_invalid')},
+        validate: () => observed() != null ? const {} : {'observed': stockReasonText(l10n, 'quantity_invalid')},
         onSubmit: () async {
           try {
             result = await ref
                 .read(stockCycleCountsProvider)
-                .countLine(workspaceId, line.lineId, fields.text('observed').trim().replaceAll(',', '.'), requestId);
+                .countLine(workspaceId, line.lineId, observed()!, requestId);
             return null;
           } on Object catch (e, st) {
-            TraceLogger.instance.warn('stock', 'a line was not counted: $e', stackTrace: st);
+            TraceLogger.instance.warn('stock', 'a line was not counted', error: e, stackTrace: st);
             return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
           }
         },
@@ -197,7 +201,7 @@ class _State extends ConsumerState<StockCountTaskScreen> {
             await ref.read(stockCycleCountsProvider).skipLine(workspaceId, line.lineId, fields.text('reason').trim(), requestId);
             return null;
           } on Object catch (e, st) {
-            TraceLogger.instance.warn('stock', 'a line was not skipped: $e', stackTrace: st);
+            TraceLogger.instance.warn('stock', 'a line was not skipped', error: e, stackTrace: st);
             return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
           }
         },
@@ -242,16 +246,7 @@ class _State extends ConsumerState<StockCountTaskScreen> {
         .watch(provider)
         .when(
           loading: () => const LoadingView(),
-          error: (_, _) => Center(
-            key: const ValueKey('stock-cycle-task-failed'),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(l10n.stockReadFailed),
-                TextButton(key: const ValueKey('stock-cycle-task-retry'), onPressed: () => ref.invalidate(provider), child: Text(l10n.identityConnectRetry)),
-              ],
-            ),
-          ),
+          error: (e, _) => StockReadFailed(keyName: 'stock-cycle-task', error: e, onRetry: () => ref.invalidate(provider)),
           data: (task) => ListView(
             padding: const EdgeInsets.all(AppSpacing.md),
             children: [

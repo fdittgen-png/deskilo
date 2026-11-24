@@ -7,6 +7,7 @@
 // outcome of the command and are worded here, the sheet staying open.
 import 'package:flutter/material.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/country_field.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -101,10 +102,12 @@ class _BillingCustomerForm {
         ? await commands.create(workspaceId, read(), capacity: stated)
         : await commands.save(workspaceId, saved, read(), capacity: stated);
     return switch (outcome) {
-      BillingSaved() => null,
-      BillingInvalid() => l10n.billingCustomerNameNeeded,
-      BillingRefused(:final kind) => _refusalText(l10n, kind),
-      BillingUnreached() => l10n.billingCustomerSaveFailed,
+      CommandDone() => null,
+      CommandRefused(refusal: Refusal(cause: BillingDraftInvalid())) =>
+        l10n.billingCustomerNameNeeded,
+      CommandRefused(refusal: Refusal(cause: final BillingCustomerRefusal r)) =>
+        _refusalText(l10n, r.kind),
+      _ => l10n.billingCustomerSaveFailed,
     };
   }
 

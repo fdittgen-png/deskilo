@@ -130,6 +130,22 @@ class AppFormat {
       : NumberFormat.decimalPatternDigits(locale: locale, decimalDigits: decimals)
           .format(value);
 
+  /// #4424 -- an exact quantity in the member's format locale, every digit it
+  /// holds and none added (`1.5` is `1,5` in fr_FR and de_DE, `1,234.5` in
+  /// en_US), with [unit] after it when one is given. No `double` in between:
+  /// the whole part is grouped by the locale and the fraction kept as stored.
+  String quantity(ExactQuantity value, {String? unit}) {
+    final text = value.text;
+    final negative = text.startsWith('-');
+    final body = negative ? text.substring(1) : text;
+    final dot = body.indexOf('.');
+    final format = NumberFormat.decimalPattern(locale);
+    final whole = format.format(int.parse(dot < 0 ? body : body.substring(0, dot)));
+    final number = dot < 0 ? whole : '$whole${format.symbols.DECIMAL_SEP}${body.substring(dot + 1)}';
+    final signed = negative ? '${format.symbols.MINUS_SIGN}$number' : number;
+    return unit == null || unit.isEmpty ? signed : '$signed $unit';
+  }
+
   /// A fraction as a percentage (`0.081` is `8.1 %`): the locale's percent
   /// pattern and the value's own precision, never a literal sign.
   String fractionPercent(num fraction) =>

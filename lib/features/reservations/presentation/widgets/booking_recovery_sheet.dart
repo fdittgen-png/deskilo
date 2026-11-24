@@ -86,7 +86,8 @@ class _BookingRecoverySheetState extends ConsumerState<BookingRecoverySheet> {
       if (!mounted) return;
       setState(() => _resumed = booked);
       ref.invalidate(unresolvedBookingIntentsProvider);
-    } on BookingOutcomeUnknown {
+    } on BookingOutcomeUnknown catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'reservations', 'booking_recovery_sheet: BookingOutcomeUnknown handled', error: e, stackTrace: st);
       // Lost again: the intent is still open, the sheet still says so.
       if (!mounted) return;
       setState(() => _check = null);

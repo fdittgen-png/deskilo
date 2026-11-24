@@ -134,6 +134,7 @@ Vous voulez retrouver une facture, voir si elle est payée et obtenir son PDF.
 - Touchez l'icône de paiement sur une facture en cours pour aller à **Paiements**.
 - Si la liste est vide, l'espace ne vous a pas encore facturé ; il facture un mois une fois celui-ci clôturé.
 - Les factures ne se modifient pas. Une facture erronée est marquée **Erronée** et remplacée par une nouvelle, et l'erronée disparaît de votre liste. Quand des factures sont regroupées en une seule, la facture regroupée les remplace dans votre liste.
+- Une ligne facturée à l'heure, au jour ou au poids (par exemple *1.5 h à 90 EUR*, ou *0.75 kg à 12.5 EUR pour 10 kg*) affiche sous son libellé la quantité exacte, son unité et le prix saisi, comme le PDF les imprime ; son montant est celui fixé à l'émission de la facture. Une ligne enregistrée par une version plus récente de l'application est affichée telle quelle et indique qu'elle ne peut pas être utilisée ici : mettez l'application à jour pour la traiter.
 
 **Voir aussi:** [Payer ce que vous devez](help:user.money.payments) · [Vos finances dans tous vos espaces](help:user.money.finances)
 
@@ -620,6 +621,30 @@ La liste montre chaque invitation comme invitée, en lecture, expirée ou termin
 
 **Voir aussi :** [Clients facturés](help:user.money.customers.billing)
 
+<!-- anchor: user.money.invoices.standalone -->
+### Une facture client sans mois
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous avez rendu un service à un client désigné aujourd'hui (une consultation, un cours, un livrable convenu) et vous voulez le facturer tout de suite, sans réservation, sans abonnement ni mois derrière. Il faut le droit d'émettre des factures et la fonction **Factures ponctuelles**.
+
+**Étapes**
+
+1. Ouvrez **Factures** et choisissez **Facture client sans mois**.
+2. Choisissez le client, puis la date de la prestation et l'échéance.
+3. Ajoutez les lignes : une description, une quantité, une unité et un prix. Choisir un article du catalogue est facultatif : une prestation ponctuelle s'écrit en toutes lettres.
+4. Choisissez **Vérifier la facture**. L'aperçu montre les montants et la taxe exactement comme ils seront émis, ou ce qui manque encore.
+5. Choisissez **Émettre la facture** pour confirmer. La facture est numérotée, conservée telle qu'émise et ouverte.
+
+**Bon à savoir**
+
+- La facture n'a pas de mois de facturation : une seconde facture distincte du même client le même mois est sa propre facture, et la facture mensuelle, s'il y en a une, reste intacte.
+- Les montants et la taxe sont toujours calculés par le serveur, jamais repris de l'écran ; le prix est dans la devise de l'établissement.
+- Votre brouillon reste tel quel quand vous redimensionnez la fenêtre ou qu'une vérification est refusée. Si la réponse à **Émettre la facture** n'arrive pas, la même confirmation n'émet jamais une seconde facture : cherchez-la à nouveau.
+- Modifier ensuite le catalogue ou le client ne change jamais une facture émise.
+
+**Voir aussi :** [Clients facturés](help:user.money.customers.billing) · [Payer des factures sans mois](help:user.money.finances.standalone)
+
 <!-- anchor: user.money.quotes -->
 ### Devis
 
@@ -777,6 +802,36 @@ Là où votre pays n'autorise pas encore la caisse, elle nomme l'opération manq
 
 Un article tracé indique d'où il a été pris. Quand vous vendez un article suivi par lot sans choisir de lot, la vente le prend dans les lots en stock, celui qui expire le premier d'abord et jamais un lot périmé ; sous la ligne vendue, la caisse affiche le code de chaque lot tel qu'il a été reçu, avec la quantité prise, par exemple **Lot SUP-A × 2 · Lot SUP-B × 1**, et chaque pièce par son étiquette. Si l'entreprise utilise un lecteur, scannez l'étiquette d'une pièce pour l'ajouter : la vente prend exactement les pièces scannées, et la même pièce deux fois est refusée. Ces identifiants de traçabilité sont figés avec le ticket : modifier plus tard un lot ou une étiquette ne change jamais un ticket déjà émis. Dans le stock, la traçabilité d'un lot ou d'une pièce indique le ticket qui l'a vendu.
 
+<!-- anchor: user.money.till-drawer -->
+### Ouvrir la caisse, compter et fermer
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous tenez un tiroir-caisse et voulez savoir que l'argent qu'il contient est juste en fin de journée.
+
+Ouvrez **Tiroir-caisse** dans le menu des ventes (il demande la fonction sessions de caisse et le droit d'émettre des factures ou de voir les finances). Chaque caisse de l'entreprise est listée avec son état. Une personne qui gère les sites ajoute une caisse avec **Ajouter une caisse** et peut la renommer ou la désactiver.
+
+Appuyez sur **Ouvrir la caisse**, saisissez le **Fond de caisse** (ou, si votre entreprise compte par coupure, la valeur de chaque billet ou pièce et leur nombre) et confirmez. Une caisse n'a qu'une session ouverte à la fois, et avec les sessions de caisse la caisse ne vend que sur une session ouverte : sans session ouverte, elle propose **Ouvrir la caisse** au lieu de vendre.
+
+**Entrée ou sortie d'espèces** enregistre l'argent mis dans le tiroir ou retiré, avec un **Motif** choisi dans la liste de votre entreprise. Une sortie au-delà de la limite de l'entreprise est enregistrée par une personne qui peut enregistrer des paiements sortants.
+
+**Compter et fermer** demande les **Espèces comptées dans le tiroir** et ce qui est **Déposé à la banque**. Quand l'entreprise compte à l'aveugle, les espèces attendues ne s'affichent pas avant le comptage ; une personne qui peut voir les finances les voit, ainsi que l'écart pendant la saisie. Un comptage qui diffère des espèces attendues ne se ferme qu'avec son motif, que la caisse demande. Après la fermeture, la caisse indique ce qui était attendu, ce qui a été compté et l'écart. Les paiements par carte sans réponse sont listés à part et jamais comptés comme espèces.
+
+**Clôture de la journée.** Une personne qui peut voir les finances ouvre **Clôture de la journée** depuis le tiroir-caisse et appuie sur **Clôturer la journée** quand chaque caisse est fermée (une caisse encore ouverte est nommée et refuse la clôture). Les sessions fermées du jour forment un rapport numéroté : chaque session avec l'attendu, le compté, l'écart et son motif, les encaissements par moyen de paiement et par taux de taxe, les espèces entrées et sorties, les remboursements et la plage des numéros de tickets. **Journées clôturées** liste les rapports déjà faits ; une journée clôturée ne change jamais. C'est le registre propre de l'entreprise ; le contenu légal qu'un pays demande à une clôture de journée vient avec son propre module.
+
+<!-- anchor: user.money.till-offline -->
+### Quand la caisse est hors ligne
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous vendez au comptoir et la connexion est perdue : vous voulez continuer à vendre et être sûr que rien ne se perd ni ne se compte deux fois.
+
+Activez **Vendre hors ligne, en espèces seulement** (elle suppose la fonction des sessions de caisse). Quand un appel au serveur reste sans réponse, la caisse indique **Hors ligne — espèces uniquement. Les ventes sont conservées sur cet appareil et envoyées au retour de la connexion.** et continue à vendre en espèces uniquement, aux prix qu'elle avait lors de sa dernière connexion ; un article dont l'appareil n'a pas le prix n'est pas vendu. Chaque vente est conservée sur l'appareil sous le numéro suivant de sa session de caisse ; le reçu porte **Enregistrée hors ligne** avec ce numéro et **Non signé. Il est envoyé au serveur au retour de la connexion.** : il n'a pas de numéro de reçu tant que le serveur ne l'a pas reçu.
+
+La caisse cherche d'elle-même sa connexion, et **Chercher la connexion maintenant** le fait aussitôt. Quand la connexion revient, les ventes sont envoyées dans l'ordre, chacune sous le numéro avec lequel elle a été faite : une vente déjà reçue n'est donc jamais comptée deux fois. La caisse indique alors combien ont été enregistrées et, pour chaque vente refusée par le serveur, pourquoi (par exemple le prix a changé au-delà de ce qui est permis, ou l'article n'est plus vendu) ; les espèces d'une vente refusée restent dans le comptage du tiroir. Si la session a été fermée entre-temps, la caisse dit : « La session a été fermée : ces ventes restent sur l'appareil pour un responsable. » Les ventes restent sur l'appareil jusqu'à ce qu'un responsable les ait traitées.
+
+Trois réglages de l'entreprise bornent ce qui est accepté : **Durée maximale hors ligne (minutes)**, **Nombre maximal de ventes hors ligne par session de caisse** et **Écart de prix toléré hors ligne (%)**. Si les données hors ligne de l'appareil sont illisibles, rien ne se vend hors ligne tant qu'un responsable n'a pas décidé ; **Supprimer les données hors ligne** les supprime après un avertissement, car les ventes non encore envoyées sont perdues définitivement.
+
 <!-- anchor: user.money.stock.rfid -->
 ### Puces RFID : une par lot ou une par pièce
 
@@ -850,6 +905,7 @@ Ouvrez une ligne du **Stock** pour voir **Où est-ce** pour cet article (ou ce l
 - Les emplacements sur une étagère s'additionnent toujours à la quantité affichée en haut.
 - À un jour passé, les marchandises en route ne sont pas montrées ; les pièces le sont, depuis le jour où elles sont suivies (une pièce faite avant n'a pas d'historique avant).
 - Touchez un emplacement qui tient un lot pour voir **Tous les mouvements** de ce lot, de la livraison par laquelle il est arrivé jusqu'à sa sortie ; le bouton chronologie d'une pièce montre **Tous les mouvements de cette pièce**. Un document que vous ne pouvez pas voir est nommé par son type, jamais omis.
+- **Retrouver un code de traçabilité** (le bouton code en haut du **Stock**) prend un code de lot tel que reçu, le code de l'étiquette d'un lot ou l'étiquette d'une pièce, saisi ou scanné. Il liste les lots et les pièces qui le portent et les ventes qui les ont pris. Touchez un lot ou une pièce pour tous ses mouvements ; touchez une vente pour voir ce que cette ligne de ticket a pris : chaque lot avec sa quantité, chaque pièce par son étiquette. Un ticket que vous ne pouvez pas voir est nommé par son type et ne s'ouvre pas. Si rien n'est trouvé, c'est dit ; une recherche refusée ou en échec le dit et peut être relancée.
 
 <!-- anchor: user.money.stock.value -->
 ### Valeur du stock et origine des marchandises
@@ -956,6 +1012,29 @@ Une entreprise qui vous facture peut vous remettre un code, pour que vous lisiez
 - Payer ces factures d'ici n'est pas encore proposé.
 
 **Voir aussi :** [Vos finances dans tous vos espaces](help:user.money.finances)
+
+<!-- anchor: user.money.finances.standalone -->
+### Payer des factures sans mois
+
+**Public:** Membre
+
+Une entreprise vous a émis des factures qui n'appartiennent à aucun mois. Elles se règlent ensemble, à part.
+
+**Étapes**
+
+1. Ouvrez [Mes finances](app:/money) et cochez les factures sans mois à payer. Elles relèvent d'une seule entreprise et d'une seule devise.
+2. Une barre indique combien vous en avez cochées et leur total. Choisissez **Payer** pour payer en ligne, ou **J’ai payé** si vous avez déjà payé autrement.
+3. La confirmation liste les factures et un seul total. Confirmez : un paiement en ligne s'ouvre, ou une seule déclaration est envoyée.
+
+**Bon à savoir**
+
+- Les factures sans mois et les factures mensuelles ne se règlent jamais ensemble : une fois un type coché, l'autre ne peut plus l'être, et une ligne le dit. Si l'entreprise refuse tout de même un mélange, vous en êtes informé et rien n'est débité.
+- Le montant est ce que les factures doivent encore. S'il a changé, actualisez et recommencez.
+- Si la réponse s'est perdue en route, choisissez à nouveau **Payer** : c'est le même paiement, retrouvé, jamais un second. Un paiement n'est affiché comme payé qu'une fois reçu par l'entreprise.
+- L'argent est comptabilisé le mois où il arrive. Ce qu'une facture ne prend pas reste votre crédit auprès de l'entreprise jusqu'à son affectation.
+- Une entreprise dont le service de paiement est trop ancien le dit avant tout envoi.
+
+**Voir aussi :** [Vos finances entre espaces](help:user.money.finances)
 
 <!-- anchor: user.money.businesses -->
 ### Vos activités en un coup d'œil

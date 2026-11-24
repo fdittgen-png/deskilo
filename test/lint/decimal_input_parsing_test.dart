@@ -27,6 +27,32 @@ void main() {
     );
   });
 
+  // #4425 -- nor by turning a comma into a dot by hand (which reads `1.234,5`
+  // as nothing and sends grouped input as typed), nor by a field that lets only
+  // digits and a dot be typed (a comma keyboard cannot type its decimal at all).
+  test('no screen or application file reads a decimal comma by hand', () {
+    final files = handWrittenDartFiles('lib').where(
+      (f) => RegExp(r'^lib/features/[^/]+/(presentation|application)/')
+          .hasMatch(f.path),
+    );
+    final hits = scanLines(files, _byHand);
+    expect(
+      hits,
+      isEmpty,
+      reason:
+          'read typed numbers with exactQuantityFromInput, decimalTextFromInput '
+          'or parseDecimalInput (lib/core/format):\n${hits.join('\n')}',
+    );
+  });
+
+  test('the hand shapes are seen', () {
+    expect(_byHand("final t = raw.trim().replaceAll(',', '.');"), isTrue);
+    expect(_byHand("x.replaceAll(',','.')"), isTrue);
+    expect(_byHand("inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],"), isTrue);
+    expect(_byHand("inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],"), isFalse);
+    expect(_byHand('final q = exactQuantityFromInput(raw, locale: locale);'), isFalse);
+  });
+
   test('the old amount parser is gone', () {
     final hits = scanLines(
       handWrittenDartFiles('lib'),
@@ -35,3 +61,8 @@ void main() {
     expect(hits, isEmpty, reason: hits.join('\n'));
   });
 }
+
+/// A decimal comma read by hand: replaced by a dot, or kept out of a field.
+bool _byHand(String line) =>
+    RegExp(r"replaceAll\(',',\s*'\.'\)").hasMatch(line) ||
+    line.contains(r"RegExp(r'[0-9.]')");

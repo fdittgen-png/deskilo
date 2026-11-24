@@ -9,7 +9,6 @@
 // with the app's own arithmetic (`vatSplit`), at the rate an issued
 // invoice would charge.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -69,10 +68,7 @@ class SetupVatStep extends ConsumerWidget {
 }
 
 /// A rate as the reader's locale writes it: 19, 5,5, 9.975.
-String _rate(BuildContext context, double percent) => percentText(
-  percent,
-  decimalSeparator: appFormatOf(context).numbers().symbols.DECIMAL_SEP,
-);
+String _rate(BuildContext context, double percent) => appFormatOf(context).ratePercent(percent);
 
 class _VatForm extends ConsumerStatefulWidget {
   const _VatForm({required this.step, required this.rates});
@@ -154,7 +150,7 @@ class _VatFormState extends ConsumerState<_VatForm> {
                 ? Icon(Icons.star, semanticLabel: l10n.vatRateDefaultTooltip)
                 : const Icon(Icons.star_border),
             title: Text(rate.label),
-            trailing: Text(l10n.setupGrowVatRate(_rate(context, rate.percent))),
+            trailing: Text(_rate(context, rate.percent)),
           ),
         if (usual.isNotEmpty)
           ValueListenableBuilder<bool>(
@@ -215,7 +211,7 @@ class _UsualRates extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 title: Text(rate.label),
                 trailing: Text(
-                  l10n.setupGrowVatRate(_rate(context, rate.percent)),
+                  _rate(context, rate.percent),
                 ),
               ),
             Text(l10n.setupGrowVatUsualNote, style: theme.textTheme.bodySmall),

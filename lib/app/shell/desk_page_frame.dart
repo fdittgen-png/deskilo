@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/trace/trace_logger.dart';
 import '../page_frame.dart';
 
 /// The widest a dialog stands on the desk: the 960 column it stood in
@@ -72,7 +73,8 @@ Widget framedOnDesk(Widget child) => Builder(
 String _pathOf(BuildContext context) {
   try {
     return GoRouterState.of(context).uri.path;
-  } on GoError {
+  } on GoError catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.info, 'app', 'desk_page_frame: GoError handled', error: e, stackTrace: st);
     return GoRouter.maybeOf(context)?.routeInformationProvider.value.uri.path ??
         '';
   }

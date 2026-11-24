@@ -18,11 +18,12 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  // The offline till (CS11): the till screen and the sync wire them in.
-  'lib/features/money/data/secure_offline_store.dart::SecureOfflineStore':
-      '#4373 — the till screen opens the secure store of the offline sales',
-  'lib/features/money/domain/till_offline_queue.dart::TillOfflineQueue':
-      '#4373 — the till screen records the offline sales in the queue',
+  // The registry as JSON and the keys a rows block writes: the generator's own checks read them (feature_registry_sql,
+  // feature_countries, feature_registry tests) while the registry moves to rows; #4396 removes them with its last table.
+  'lib/features/workspace/domain/feature_registry_sql.dart::featureRegistryJson':
+      '#4396 — removed when the registries are rows and the JSON body is gone',
+  'lib/features/workspace/domain/feature_registry_sql.dart::featureRegistryRowKeys':
+      '#4396 — removed when the registries are rows and the JSON body is gone',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':

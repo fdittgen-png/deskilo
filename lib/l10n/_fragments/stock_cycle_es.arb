@@ -33,7 +33,7 @@
   "stockCycleHistoryEmpty": "Todavía no se ha contado nada.",
   "stockCycleHistoryRow": "{item} · {place}",
   "stockCycleHistoryLast": "Último recuento el {date}",
-  "stockCycleHistoryAccuracy": "{count, plural, one{1 recuento} other{{count} recuentos}}, {percent} % exactos",
+  "stockCycleHistoryAccuracy": "{count, plural, one{1 recuento} other{{count} recuentos}}, {percent} exactos",
   "stockCycleTaskTitle": "Contar",
   "stockCycleScan": "Escanear o escribir un código de barras",
   "stockCycleScanWhich": "Varias líneas por contar tienen este código: elija la que está contando.",

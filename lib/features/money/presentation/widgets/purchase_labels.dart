@@ -9,8 +9,15 @@ String purchaseKindLabel(AppLocalizations l10n, PurchaseKind kind) =>
       PurchaseKind.memberReceipt => l10n.purchasesKindReceipt,
     };
 
-String purchaseStateLabel(AppLocalizations l10n, PurchaseState state) =>
+/// The words of a document's [state]; a state this app does not know is
+/// shown as the server's [wire] text (#3730).
+String purchaseStateLabel(
+  AppLocalizations l10n,
+  PurchaseState state, {
+  String wire = '',
+}) =>
     switch (state) {
+      PurchaseState.unknown => l10n.unknownWireValue(wire),
       PurchaseState.draft => l10n.purchasesStateDraft,
       PurchaseState.pending => l10n.purchasesStatePending,
       PurchaseState.approved => l10n.purchasesStateApproved,

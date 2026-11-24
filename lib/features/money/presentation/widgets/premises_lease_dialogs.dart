@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -38,7 +39,6 @@ class LeaseDateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final material = MaterialLocalizations.of(context);
     return OutlinedButton(
       key: ValueKey(fieldKey),
       onPressed: () async {
@@ -51,7 +51,7 @@ class LeaseDateButton extends StatelessWidget {
         if (d != null) onPicked(d);
       },
       child: Text(
-        '$label: ${value == null ? '–' : material.formatMediumDate(value!)}',
+        context.l10n.labelWithValue(label, value == null ? '–' : appFormatOf(context).dates(DateShape.date).format(value!)),
       ),
     );
   }

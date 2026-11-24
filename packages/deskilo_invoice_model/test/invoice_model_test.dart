@@ -12,9 +12,11 @@ void main() {
     expect(policy.standard, VatTaxPointRule.invoiceDate);
   });
 
-  test('an invoice kind reads its wire name and defaults to the whole month', () {
+  test('an invoice kind reads its wire name; none is the whole month, a newer one is unknown', () {
     expect(InvoiceKind.fromWire('usage'), InvoiceKind.usage);
-    expect(InvoiceKind.fromWire('nonsense'), InvoiceKind.full);
+    expect(InvoiceKind.fromWire(null), InvoiceKind.full);
+    expect(InvoiceKind.fromWire('nonsense'), InvoiceKind.unknown);
+    expect(InvoiceKind.fromWire('unknown'), InvoiceKind.unknown);
     expect(InvoiceKind.subscription.isInAdvance, isTrue);
   });
 }

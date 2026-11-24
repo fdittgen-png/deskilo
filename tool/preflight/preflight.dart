@@ -51,7 +51,7 @@ const List<({String command, String owns})> _order = [
   (command: 'flutter gen-l10n', owns: 'lib/l10n/app_localizations*.dart'),
   (
     command: 'dart run tool/build_feature_registry_sql.dart',
-    owns: 'the feature_registry() statement in the latest migration',
+    owns: 'the feature registry rows a new migration carries (never the function)',
   ),
   (
     command: 'dart run tool/build_process_catalogue.dart',

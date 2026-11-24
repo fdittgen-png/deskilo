@@ -34,6 +34,9 @@ const _lots = [
 
 /// The gift basket's lot expires this many days after the Demo's day.
 const _basketLife = 9;
+const _basketItem = 'demo-item-basket';
+const _basketName = 'Gift basket';
+const _basketLot = 'BASKET-1';
 
 class DemoStockExpiry implements StockExpiry {
   DemoStockExpiry(this._now, this._tags, {this.itemsOfGroup, this.horizonDays = 30});
@@ -48,6 +51,15 @@ class DemoStockExpiry implements StockExpiry {
   final int horizonDays;
 
   static DateTime _day(DateTime d) => DateTime(d.year, d.month, d.day);
+
+  /// The lots the Demo keeps with their dates, the gift basket's among them: what a lot code names (#4436).
+  List<({String itemId, String itemName, String lotCode, DateTime expiresOn})> lots() {
+    final today = _day(_now());
+    return [
+      for (final l in _lots) (itemId: l.itemId, itemName: l.itemName, lotCode: l.lot, expiresOn: _plus(today, l.offset)),
+      (itemId: _basketItem, itemName: _basketName, lotCode: _basketLot, expiresOn: _plus(today, _basketLife)),
+    ];
+  }
 
   /// [day] moved by [days] calendar days.
   static DateTime _plus(DateTime day, int days) => DateTime(day.year, day.month, day.day + days);
@@ -72,12 +84,12 @@ class DemoStockExpiry implements StockExpiry {
       ));
     }
     // the gift basket's five pieces, one lot, each with its tag
-    final pieces = [for (final t in await _tags.tags(workspaceId, const TagOwner.item('demo-item-basket'))) if (t.isPiece) t];
+    final pieces = [for (final t in await _tags.tags(workspaceId, const TagOwner.item(_basketItem))) if (t.isPiece) t];
     for (final t in pieces) {
       all.add(ExpiryRow(
-        itemId: 'demo-item-basket',
-        itemName: 'Gift basket',
-        lotCode: 'BASKET-1',
+        itemId: _basketItem,
+        itemName: _basketName,
+        lotCode: _basketLot,
         expiresOn: _plus(today, _basketLife),
         days: 0,
         quantity: ExactQuantity.parse('1'),

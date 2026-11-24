@@ -135,7 +135,7 @@ class _NewItemDraft {
       }
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a new item was not saved: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a new item was not saved', error: e, stackTrace: st);
       return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
     }
   }

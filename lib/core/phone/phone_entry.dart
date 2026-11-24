@@ -14,6 +14,8 @@
 // pure Dart with its own metadata (MIT).
 import 'package:phone_numbers_parser/phone_numbers_parser.dart' as parser;
 
+import '../trace/trace_logger.dart';
+
 /// Why a typed number has no validated form.
 enum PhoneProblem {
   /// A national number with no country to read it in.
@@ -95,7 +97,8 @@ PhoneEntry parsePhone(String typed, {String? country}) {
       extension: extension,
       country: parsed.isoCode.name,
     );
-  } on parser.PhoneNumberException {
+  } on parser.PhoneNumberException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'phone', 'phone_entry: PhoneNumberException handled', error: e, stackTrace: st);
     return refused(PhoneProblem.notValidForCountry);
   }
 }
