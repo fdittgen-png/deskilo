@@ -4,7 +4,7 @@
 -- not `immutable`; the rows are readable by a signed-in role and not writable by one; and a new feature is ONE row: the
 -- function and `feature_effective` see it at once, and a deleted row is gone. Rolled back.
 begin;
-select plan(14);
+select plan(15);
 
 create function pg_temp.as_auth(p_sql text) returns text language plpgsql as $f$
 declare v text;
@@ -38,6 +38,8 @@ select is((select count(*)::int from pg_proc p where p.pronamespace = 'public'::
               and p.prosrc ~ '\mfeature_registry\('), 0, 'no immutable function reads the registry');
 
 -- ── who reads and who writes ──
+select is((select string_agg(policyname, ',' order by policyname) from pg_policies where schemaname = 'public' and tablename = 'feature_registry_entries'),
+  'feature_registry_entries_select,mcp_delegated_deny,personal_native_session', 'the table carries its select policy and the two restrictive ones (a personal surface, 0564)');
 select is(pg_temp.as_auth('select count(*)::text from public.feature_registry_entries'), (select count(*)::text from public.feature_registry_entries),
   'a signed-in role reads the rows');
 select is(pg_temp.as_auth($$update public.feature_registry_entries set default_on = not default_on where feature_key = 'moneyTab'$$), 'ERR 42501',

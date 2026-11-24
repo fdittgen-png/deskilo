@@ -54,7 +54,7 @@ class LineTrack {
 
 /// The tracks of a snapshot (`[{kind, code, quantity, expires_on}, …]`). What cannot be read -- an unknown kind, a
 /// track without a code -- is left out, never guessed; anything that is not a list reads as none.
-List<LineTrack> lineTracksFromSnapshot(Object? snapshot) {
+List<LineTrack> _lineTracksFrom(Object? snapshot) {
   if (snapshot is! List) return const [];
   return [
     for (final t in snapshot)
@@ -73,7 +73,7 @@ List<LineTrack> lineTracksFromSnapshot(Object? snapshot) {
 Map<String, List<LineTrack>> lineTracksByLineId(Object? embedded) => {
   if (embedded is List)
     for (final row in embedded)
-      if (row is Map && '${row['line_id'] ?? ''}'.isNotEmpty) '${row['line_id']}': lineTracksFromSnapshot(row['tracks']),
+      if (row is Map && '${row['line_id'] ?? ''}'.isNotEmpty) '${row['line_id']}': _lineTracksFrom(row['tracks']),
 };
 
 /// What a printed line row carries for its tracks: `track_ids` (one text) and `tracks` (each `{kind, code, quantity,

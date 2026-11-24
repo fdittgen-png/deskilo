@@ -179,16 +179,21 @@ void main() {
   });
 
   test('the snapshot reads the kinds it knows and leaves out the rest', () {
-    final read = lineTracksFromSnapshot([
-      {'kind': 'lot', 'code': 'EARLY', 'quantity': '3', 'expires_on': '2026-12-01'},
-      {'kind': 'piece', 'code': 'SN-1'},
-      {'kind': 'pallet', 'code': 'P-1'},
-      {'kind': 'lot', 'code': ''},
-      'not a map',
-    ]);
+    final read = lineTracksByLineId([
+      {
+        'line_id': 'L-1',
+        'tracks': [
+          {'kind': 'lot', 'code': 'EARLY', 'quantity': '3', 'expires_on': '2026-12-01'},
+          {'kind': 'piece', 'code': 'SN-1'},
+          {'kind': 'pallet', 'code': 'P-1'},
+          {'kind': 'lot', 'code': ''},
+          'not a map',
+        ],
+      },
+    ])['L-1']!;
     expect(read.map((t) => t.text), ['EARLY ×3', 'SN-1']);
     expect(read.first.expiresOn, '2026-12-01');
-    expect(lineTracksFromSnapshot(null), isEmpty);
-    expect(lineTracksFromSnapshot({'kind': 'lot'}), isEmpty);
+    expect(lineTracksByLineId(null), isEmpty);
+    expect(lineTracksByLineId([{'line_id': 'L-1', 'tracks': {'kind': 'lot'}}])['L-1'], isEmpty);
   });
 }
