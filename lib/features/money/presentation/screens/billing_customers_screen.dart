@@ -12,11 +12,13 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/billing_customer.dart';
 import '../../providers/billing_customer_providers.dart';
+import '../widgets/billing_access_dialog.dart';
 import '../widgets/billing_customer_sheet.dart';
 import 'money_view_data.dart';
 
@@ -187,11 +189,30 @@ class _BillingCustomersScreenState
                     key: ValueKey('billing-customer-row-${p.subjectId}'),
                     title: Text(p.displayName),
                     subtitle: place.isEmpty ? null : Text(place),
-                    trailing: switch (p.capacity) {
-                      'business' => Text(l10n.billingCustomerBusiness),
-                      'consumer' => Text(l10n.billingCustomerConsumer),
-                      _ => null,
-                    },
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        switch (p.capacity) {
+                          'business' => Text(l10n.billingCustomerBusiness),
+                          'consumer' => Text(l10n.billingCustomerConsumer),
+                          _ => const SizedBox.shrink(),
+                        },
+                        // #4164 B2 — the customer's own account access.
+                        if (canManage)
+                          IconButton(
+                            key: ValueKey('billing-customer-access-${p.subjectId}'),
+                            tooltip: l10n.billingAccessAction,
+                            icon: const Icon(Icons.key_outlined),
+                            onPressed: () => showBillingAccessDialog(
+                              context,
+                              commands: ref.read(billingAccessCommandProvider),
+                              workspaceId: workspaceId,
+                              customer: p,
+                              now: ref.read(clockProvider).now,
+                            ),
+                          ),
+                      ],
+                    ),
                     onTap: canManage ? () => open(p) : null,
                   );
                 },

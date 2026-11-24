@@ -2862,6 +2862,18 @@ Abra **Ventas y cobros** y luego **Clientes facturados**. Aquí guarda las perso
 
 Elija **Añadir un cliente** e indique una empresa o un nombre, la dirección postal, el código de país, el número de IVA y un correo para la factura. El número de IVA solo se comprueba en su forma, nunca se verifica. **Facturado como** (empresa o particular) determina las menciones legales y el tratamiento fiscal; solo quien puede emitir facturas puede cambiarlo. Elija un cliente para editarlo. Si alguien más lo cambió desde que lo abrió, no se guarda nada y se le pide abrirlo de nuevo. Si no se puede leer la lista, reintente en lugar de darla por vacía. Cambiar un cliente nunca reescribe una factura ya emitida: cada una conserva el nombre y la dirección con los que se emitió.
 
+### Acceso por cuenta de un cliente facturado
+
+**Público:** Administrador/a · Propietario
+
+Abra **Ventas y cobros** y después **Clientes facturados**, y elija la llave junto a un cliente (**Acceso por cuenta**). Aquí permite que un cliente lea sus propias facturas desde su propia cuenta, sin hacerlo miembro. Necesita el derecho de gestionar los clientes facturados (#4164).
+
+Elija **Crear un código de invitación**. El código se muestra una sola vez, con su último día: entréguelo al cliente enseguida, porque no puede leerse de nuevo. El cliente lo introduce en **Usar un código de facturación**, en **Mis finanzas**, comprueba quién lo invita y acepta. Hasta entonces la invitación solo espera. Un código sirve para una cuenta; un cliente puede ser leído por varias cuentas, cada una invitada por separado, y una cuenta puede leer varios clientes: quien compra a título personal y para una empresa conserva dos deudores distintos.
+
+La lista muestra cada invitación como invitada, en lectura, caducada o terminada. **Terminar el acceso** detiene la lectura a partir de entonces; no se borra nada, las facturas y su historial siguen como están. El cliente nunca es miembro: del acceso no se deriva ninguna reserva, directorio, comunidad, rol ni plan. Si la lista no puede leerse, reintente en lugar de darla por vacía; si una respuesta no llega, elija de nuevo **Crear un código de invitación**: la misma solicitud da la misma invitación, nunca una segunda.
+
+**Véase también:** [Clientes facturados](help:user.money.customers.billing)
+
 ### Presupuestos
 
 **Público:** Administrador/a · Propietario
@@ -3140,6 +3152,28 @@ Pertenece a varios espacios y quiere ver todas sus facturas, pagos y recordatori
 - Desde la misma pantalla se accede al historial completo, al uso y a otros servidores.
 
 **Véase también:** [Sus facturas](help:user.money.invoices)
+
+### Facturas que una empresa emitió a su nombre como cliente
+
+**Público:** Miembro
+
+Una empresa que le factura puede darle un código para que lea lo que le factura desde su propia cuenta, sin unirse a ella.
+
+**Pasos**
+
+1. Abra [Mis finanzas](app:/money) y, en **Pendiente**, elija **Usar un código de facturación**.
+2. Introduzca el código y elija **Comprobar el código**. Verá qué empresa le invita y a nombre de quién emite sus facturas.
+3. Elija **Aceptar**. Las facturas aparecen en **Facturado como cliente**.
+
+**Conviene saber**
+
+- Una tarjeta por empresa y por deudor: quien compra a título personal y para una empresa tiene dos tarjetas, y dos deudores de una misma empresa nunca se suman. Los importes de monedas distintas tampoco se suman.
+- Estas facturas no se cuentan con lo que debe como miembro y no figuran en sus listas de miembro ni en sus exportaciones.
+- Un código que no puede usarse (erróneo, caducado, retirado o ya tomado por otra cuenta) recibe siempre la misma respuesta: pida uno nuevo a la empresa.
+- Aceptar no le hace miembro de la empresa. La empresa puede terminar el acceso, y usted también; al terminar no se borra nada.
+- Pagar estas facturas desde aquí aún no se ofrece.
+
+**Véase también:** [Sus finanzas en todos sus espacios](help:user.money.finances)
 
 ### Sus negocios de un vistazo
 

@@ -58,7 +58,7 @@ SupabaseClient _host(List<String> requests, {bool paymentsDown = false}) =>
   'sb_publishable_b',
   httpClient: MockClient((request) async {
     requests.add('${request.url.host}${request.url.path}');
-    if (request.url.path.endsWith('my_financial_activity')) {
+    if (request.url.path.endsWith('my_financial_activity_v2')) {
       if (paymentsDown) {
         return http.Response(
           jsonEncode({'message': 'down', 'code': 'XX000'}),
@@ -162,8 +162,8 @@ void main() {
       expect(origins, ['https://w-b.test']);
       expect(resolver.asked, ['ws-9']);
       expect(requests, [
-        'w-b.test/rest/v1/rpc/my_finance_overview',
-        'w-b.test/rest/v1/rpc/my_financial_activity',
+        'w-b.test/rest/v1/rpc/my_finance_overview_v2',
+        'w-b.test/rest/v1/rpc/my_financial_activity_v2',
       ]);
       expect(overview.invoices.single.currency, 'CHF');
       expect(overview.invoices.single.totalCents, 8000);
@@ -189,7 +189,7 @@ void main() {
         ),
       );
       await expectLater(reader.overview(_far), throwsA(anything));
-      expect(requests.last, 'w-b.test/rest/v1/rpc/my_financial_activity');
+      expect(requests.last, 'w-b.test/rest/v1/rpc/my_financial_activity_v2');
     });
 
     test('a host not connected here is refused, no resolver asked', () async {
