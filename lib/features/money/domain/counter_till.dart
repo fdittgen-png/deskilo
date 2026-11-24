@@ -143,35 +143,17 @@ class TillTender {
   Map<String, Object?> toJson() => {'kind': kind, 'amount_minor': amountMinor};
 }
 
-/// #4436 -- a track ID a goods line took: the lot code as received, or a piece's tag, frozen with the receipt.
-class TillTrack {
-  const TillTrack({required this.lineId, required this.kind, required this.code, required this.quantity});
-
-  final String lineId;
-
-  /// `lot` or `piece`.
-  final String kind;
-  final String code;
-  final num quantity;
-
-  factory TillTrack.fromJson(Object? json) {
-    final r = JsonReader.of(json, context: 'counter_line_tracks');
-    return TillTrack(lineId: r.string('line_id'), kind: r.string('track_kind'), code: r.string('track_code'), quantity: r.numeric('quantity'));
-  }
-}
-
-/// A sale made: its number, totals and the track IDs its goods lines took.
+/// A sale made: its number and totals.
 class TillSold {
-  const TillSold({required this.receiptId, required this.number, required this.totals, this.tracks = const []});
+  const TillSold({required this.receiptId, required this.number, required this.totals});
 
   final String receiptId;
   final String number;
   final TillTotals totals;
-  final List<TillTrack> tracks;
 
-  factory TillSold.fromJson(Object? json, {List<TillTrack> tracks = const []}) {
+  factory TillSold.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'counter_receipt_finalize');
-    return TillSold(receiptId: r.string('receipt_id'), number: r.string('number'), totals: TillTotals.fromJson(r.raw('totals')), tracks: tracks);
+    return TillSold(receiptId: r.string('receipt_id'), number: r.string('number'), totals: TillTotals.fromJson(r.raw('totals')));
   }
 }
 
