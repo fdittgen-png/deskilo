@@ -125,12 +125,11 @@ class _Plans extends ConsumerWidget {
 
   final String? workspaceId;
 
-  Future<void> _edit(BuildContext context, WidgetRef ref, String workspaceId, CountPlan? plan) => openStockSheet(
+  Future<void> _edit(BuildContext context, WidgetRef ref, String workspaceId, CountPlan? plan) => StockSheetOpener(ref).open(
     context,
-    ref,
     workspaceId,
     what: 'plan',
-    open: (choices) => showCountPlanSheet(
+    sheet: (choices) => showCountPlanSheet(
       context,
       ref.read(stockCycleCountsProvider),
       workspaceId: workspaceId,

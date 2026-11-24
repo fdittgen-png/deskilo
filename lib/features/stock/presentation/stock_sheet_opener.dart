@@ -14,30 +14,35 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../providers/stock_providers.dart';
 
-/// Reads the items and places of [workspaceId] together, then shows [open]
-/// with them; when it answers true, [reads] are asked again. [what] names the
-/// sheet in the trace when the reads failed.
-Future<void> openStockSheet(
-  BuildContext context,
-  WidgetRef ref,
-  String workspaceId, {
-  required String what,
-  required Future<bool> Function(StockSheetChoices choices) open,
-  List<ProviderOrFamily> reads = const [],
-}) async {
-  final choices = await guardRead<StockSheetChoices?>(
-    domain: 'stock',
-    message: 'the $what sheet could not read the stock',
-    read: () => ref.read(stockSheetChoicesProvider(workspaceId).future),
-    fallback: (_) {
-      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-      return null;
-    },
-  );
-  if (choices == null || !context.mounted) return;
-  if (await open(choices) && context.mounted) {
-    for (final p in reads) {
-      ref.invalidate(p);
+/// The opener of a stock page: [open] reads the items and places of a business together, then shows a sheet with them.
+class StockSheetOpener {
+  const StockSheetOpener(this._ref);
+
+  final WidgetRef _ref;
+
+  /// Reads the items and places of [workspaceId] together, then shows [sheet] with them; when it answers true,
+  /// [reads] are asked again. [what] names the sheet in the trace when the reads failed.
+  Future<void> open(
+    BuildContext context,
+    String workspaceId, {
+    required String what,
+    required Future<bool> Function(StockSheetChoices choices) sheet,
+    List<ProviderOrFamily> reads = const [],
+  }) async {
+    final choices = await guardRead<StockSheetChoices?>(
+      domain: 'stock',
+      message: 'the $what sheet could not read the stock',
+      read: () => _ref.read(stockSheetChoicesProvider(workspaceId).future),
+      fallback: (_) {
+        if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
+        return null;
+      },
+    );
+    if (choices == null || !context.mounted) return;
+    if (await sheet(choices) && context.mounted) {
+      for (final p in reads) {
+        _ref.invalidate(p);
+      }
     }
   }
 }

@@ -78,12 +78,11 @@ class StockTransfersScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _move(BuildContext context, WidgetRef ref, String workspaceId, {required bool takeOut}) => openStockSheet(
+  Future<void> _move(BuildContext context, WidgetRef ref, String workspaceId, {required bool takeOut}) => StockSheetOpener(ref).open(
     context,
-    ref,
     workspaceId,
     what: 'move',
-    open: (choices) => showStockMoveSheet(
+    sheet: (choices) => showStockMoveSheet(
       context,
       ref.read(stockOperationsProvider),
       workspaceId: workspaceId,
@@ -181,12 +180,11 @@ class _TransferCard extends ConsumerWidget {
     );
   }
 
-  Future<void> _receive(BuildContext context, WidgetRef ref) => openStockSheet(
+  Future<void> _receive(BuildContext context, WidgetRef ref) => StockSheetOpener(ref).open(
     context,
-    ref,
     workspaceId,
     what: 'receive',
-    open: (choices) => _showReceiveSheet(
+    sheet: (choices) => _showReceiveSheet(
       context,
       ref.read(stockOperationsProvider),
       workspaceId: workspaceId,

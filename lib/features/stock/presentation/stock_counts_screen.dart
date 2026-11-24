@@ -77,12 +77,11 @@ class StockCountsScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _count(BuildContext context, WidgetRef ref, String workspaceId) => openStockSheet(
+  Future<void> _count(BuildContext context, WidgetRef ref, String workspaceId) => StockSheetOpener(ref).open(
     context,
-    ref,
     workspaceId,
     what: 'count',
-    open: (choices) => _showCountSheet(
+    sheet: (choices) => _showCountSheet(
       context,
       ref.read(stockReversalsProvider),
       workspaceId: workspaceId,

@@ -79,7 +79,7 @@ void main() {
     },
   );
 
-  group('openStockSheet', () {
+  group('StockSheetOpener', () {
     Future<(WidgetRef, BuildContext)> pump(
       WidgetTester tester,
       _Reads reads,
@@ -106,12 +106,11 @@ void main() {
       final reads = _Reads();
       final (ref, context) = await pump(tester, reads);
       var opened = 0;
-      final asked = openStockSheet(
+      final asked = StockSheetOpener(ref).open(
         context,
-        ref,
         'ws-1',
         what: 'test',
-        open: (_) async {
+        sheet: (_) async {
           opened++;
           return true;
         },
@@ -135,12 +134,11 @@ void main() {
         await tester.pump();
         final asked = reads.itemsAsked;
 
-        await openStockSheet(
+        await StockSheetOpener(ref).open(
           context,
-          ref,
           'ws-1',
           what: 'test',
-          open: (_) async => false,
+          sheet: (_) async => false,
           reads: [stockItemsProvider('ws-1')],
         );
         await tester.pump();
@@ -151,12 +149,11 @@ void main() {
         );
 
         StockSheetChoices? given;
-        await openStockSheet(
+        await StockSheetOpener(ref).open(
           context,
-          ref,
           'ws-1',
           what: 'test',
-          open: (c) async {
+          sheet: (c) async {
             given = c;
             return true;
           },

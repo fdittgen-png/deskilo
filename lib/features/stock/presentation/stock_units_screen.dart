@@ -46,12 +46,11 @@ class _StockUnitsState extends ConsumerState<StockUnitsScreen> {
   /// The sheet reads the units again itself when one is made ([_read]).
   Future<void> _make(String workspaceId) {
     final l10n = context.l10n;
-    return openStockSheet(
+    return StockSheetOpener(ref).open(
       context,
-      ref,
       workspaceId,
       what: 'make unit',
-      open: (choices) async {
+      sheet: (choices) async {
         await showMakeUnitSheet(
           context,
           ref.read(stockHandlingUnitsProvider),

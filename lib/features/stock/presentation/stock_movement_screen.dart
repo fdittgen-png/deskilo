@@ -213,12 +213,11 @@ class _Reversals extends ConsumerWidget {
     _ => l10n.stockReversalKindCorrection,
   };
 
-  Future<void> _open(BuildContext context, WidgetRef ref, StockReversible allows, StockReturnKind kind) => openStockSheet(
+  Future<void> _open(BuildContext context, WidgetRef ref, StockReversible allows, StockReturnKind kind) => StockSheetOpener(ref).open(
     context,
-    ref,
     movement.workspaceId,
     what: 'return',
-    open: (choices) => showStockReversalSheet(
+    sheet: (choices) => showStockReversalSheet(
       context,
       ref.read(stockReversalsProvider),
       source: movement,

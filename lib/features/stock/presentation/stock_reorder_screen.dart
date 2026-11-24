@@ -151,12 +151,11 @@ class _PointsList extends ConsumerWidget {
 
   final String workspaceId;
 
-  Future<void> _edit(BuildContext context, WidgetRef ref, StockReorderPoint? point) => openStockSheet(
+  Future<void> _edit(BuildContext context, WidgetRef ref, StockReorderPoint? point) => StockSheetOpener(ref).open(
     context,
-    ref,
     workspaceId,
     what: 'reorder point',
-    open: (choices) => showStockReorderPointSheet(
+    sheet: (choices) => showStockReorderPointSheet(
       context,
       ref.read(stockReorderProvider),
       ref.read(stockConfigCommandsProvider),
