@@ -17,6 +17,7 @@ import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/directory_location.dart';
 import '../domain/public_workspace.dart';
+import '../domain/publication_draft.dart';
 import '../providers/directory_providers.dart';
 import '../providers/discovery_listing_providers.dart';
 import 'directory_pages.dart';
@@ -48,7 +49,11 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
   /// #3553 — the page as it reads back: its kinds and public services.
   PublicWorkspace? _offer;
   PublicationDraft? _draft;
-  final _facetChanges = ValueNotifier<Map<String, Object?>>({});
+
+  /// #4409 — the facets as edited, from [_draft].
+  final _facetChanges = ValueNotifier<PublicationDraft>(
+    const PublicationDraft(),
+  );
   final _hoursNote = TextEditingController();
 
   /// #3689 — the stored place, kept in the draft so every save carries it.
@@ -80,18 +85,18 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
             .read(publicationActionsProvider)
             .ownPage(workspace);
         if (!mounted || _workspace != workspace || _account != account) return;
-        final doc = Map<String, dynamic>.from(page['document'] as Map);
+        final draft = page.draft;
         setState(() {
           for (final field in _fields) {
-            _controllers[field]!.text = doc[field] as String? ?? '';
+            _controllers[field]!.text = draft.text(field) ?? '';
           }
-          _draft = PublicationDraft.fromPage(page);
-          _host = doc['host_type'] as String? ?? 'association';
-          _place.value = publicPlaceOf(doc);
-          _published = page['published'] == true;
-          _following = publicFollowing(page);
-          _offer = PublicWorkspace('', '', '', doc);
-          _facetChanges.value = {};
+          _draft = draft;
+          _host = draft.hostType ?? 'association';
+          _place.value = draft.place;
+          _published = page.published;
+          _following = page.following;
+          _offer = page.offer;
+          _facetChanges.value = draft;
           _hoursNote.text = _offer?.openingHours?.note ?? '';
           _loaded = true;
         });
@@ -111,7 +116,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     final account = _account;
     if (workspace == null) return;
     final l = context.l10n;
-    Map<String, dynamic>? preview;
+    PublicWorkspace? preview;
     setState(() => _busy = true);
     final ok = await runGuarded(
       context,
@@ -122,13 +127,17 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       action: () async {
         preview = await ref.read(publicationActionsProvider).savePage(
           workspace,
-          _draft!.patch({
-            'host_type': _host,
-            for (final entry in _controllers.entries)
-              entry.key: entry.value.text.trim(),
-            ...publicPlaceFields(_place.value),
-            ..._facetChanges.value,
-          }),
+          _draft!.diff(
+            _facetChanges.value
+                .copyWith(
+                  hostType: _host,
+                  texts: {
+                    for (final entry in _controllers.entries)
+                      entry.key: entry.value.text.trim(),
+                  },
+                )
+                .withPlace(_place.value),
+          ),
           following: _following,
           published: _published,
         );
@@ -136,17 +145,15 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     );
     if (!mounted || _workspace != workspace || _account != account) return;
     setState(() => _busy = false);
-    if (ok) {
-      _draft = PublicationDraft.fromPage({'document': preview});
-      _offer = PublicWorkspace(workspace, '', '', preview!);
-      _facetChanges.value = {};
+    final saved = preview;
+    if (ok && saved != null) {
+      _draft = PublicationDraft.fromDocument(saved.document);
+      _offer = saved;
+      _facetChanges.value = _draft!;
       ref.invalidate(discoveryListingProvider);
       await publicWorkspacePage.open<void>(
         context,
-        PublicWorkspaceView(
-          workspace: PublicWorkspace(workspace, '', '', preview!),
-          preview: true,
-        ),
+        PublicWorkspaceView(workspace: saved, preview: true),
       );
       // Refresh the publication flag after the routed preview returns, so a
       // workspace redirect cannot replace the push while it carries its page.
@@ -167,7 +174,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     final l = context.l10n;
     if (fields == null && !await _confirmResetAll(l)) return;
     if (!mounted) return;
-    Map<String, dynamic>? page;
+    OwnPublicPage? page;
     setState(() => _busy = true);
     await runGuarded(
       context,
@@ -186,16 +193,16 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       _busy = false;
       final answer = page;
       if (answer == null) return;
-      final doc = Map<String, dynamic>.from(answer['document'] as Map);
+      final draft = answer.draft;
       for (final field in fields ?? publicInheritedFields.toSet()) {
-        if (field == 'host_type') {
-          _host = doc['host_type'] as String? ?? _host;
+        if (field == publicHostField) {
+          _host = draft.hostType ?? _host;
         } else {
-          _controllers[field]?.text = doc[field] as String? ?? '';
+          _controllers[field]?.text = draft.text(field) ?? '';
         }
       }
-      _following = publicFollowing(answer);
-      _draft = PublicationDraft.fromPage(answer);
+      _following = answer.following;
+      _draft = draft;
     });
     if (page != null) ref.invalidate(discoveryListingProvider);
   }
@@ -287,7 +294,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     _busy = false;
     _place.value = null;
     _offer = null;
-    _facetChanges.value = {};
+    _facetChanges.value = const PublicationDraft();
     _hoursNote.clear();
     for (final c in _controllers.values) {
       c.clear();
@@ -364,15 +371,15 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                       ? null
                       : (v) {
                           if (v == null || v == _host) return;
-                          _override('host_type');
+                          _override(publicHostField);
                           setState(() => _host = v);
                         },
                 ),
-                _inheritance('host_type', l),
+                _inheritance(publicHostField, l),
                 for (final field in _fields)
                   _textField(field, labels[field]!),
                 _placeSection(),
-                PublicFacetsEditor(offer: _offer, changes: _facetChanges,
+                PublicFacetsEditor(offer: _offer, stored: _draft, draft: _facetChanges,
                   hoursController: _hoursNote, enabled: !_busy,
                   hasPlaces: effectiveFeatures(resolveEnabledFeatures(workspace!.featureFlags))
                       .contains(WorkspaceFeature.placeBooking)),

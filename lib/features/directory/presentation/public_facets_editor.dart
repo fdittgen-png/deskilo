@@ -9,6 +9,7 @@ import '../../../core/navigation/routes.dart';
 import '../../../core/ui/form_kit.dart';
 import '../domain/public_facets.dart';
 import '../domain/public_workspace.dart';
+import '../domain/publication_draft.dart';
 import 'public_facet_labels.dart';
 
 /// Only an edited field joins the patch; untouched unknown facts stay absent.
@@ -16,19 +17,25 @@ class PublicFacetsEditor extends StatelessWidget {
   const PublicFacetsEditor({
     super.key,
     required this.offer,
-    required this.changes,
+    required this.stored,
+    required this.draft,
     required this.hoursController,
     required this.hasPlaces,
     required this.enabled,
   });
   final PublicWorkspace? offer;
-  final ValueNotifier<Map<String, Object?>> changes;
+
+  /// The page as read: a facet equal to it shows what [offer] reads.
+  final PublicationDraft? stored;
+
+  /// The owner's edits, from [stored].
+  final ValueNotifier<PublicationDraft> draft;
   final TextEditingController hoursController;
   final bool hasPlaces, enabled;
 
   @override
   Widget build(BuildContext context) => ValueListenableBuilder(
-    valueListenable: changes,
+    valueListenable: draft,
     builder: (context, edits, _) {
       final l = context.l10n;
       return Column(
@@ -41,7 +48,7 @@ class PublicFacetsEditor extends StatelessWidget {
               anchor: HelpAnchor.workspacePublicPage,
             ),
           ),
-          for (final field in ['amenities', 'accessibility'])
+          for (final field in PublicFacets.fields)
             _choices(context, field, edits),
           _hours(context, edits),
         ],
@@ -52,9 +59,9 @@ class PublicFacetsEditor extends StatelessWidget {
   Widget _choices(
     BuildContext context,
     String field,
-    Map<String, Object?> edits,
+    PublicationDraft edits,
   ) => FormSection(
-    title: field == 'amenities'
+    title: field == PublicFacets.amenities
         ? context.l10n.publicPageFieldAmenities
         : context.l10n.publicPageFieldAccessibility,
     children: [
@@ -73,19 +80,16 @@ class PublicFacetsEditor extends StatelessWidget {
                   } else {
                     values.remove(id);
                   }
-                  changes.value = {
-                    ...edits,
-                    field: [
-                      for (final value in PublicFacets.ids(field))
-                        if (values.contains(value)) value,
-                    ],
-                  };
+                  draft.value = edits.withFacet(field, [
+                    for (final value in PublicFacets.ids(field))
+                      if (values.contains(value)) value,
+                  ]);
                 },
         ),
     ],
   );
 
-  Widget _hours(BuildContext context, Map<String, Object?> edits) =>
+  Widget _hours(BuildContext context, PublicationDraft edits) =>
       FormSection(
         title: context.l10n.publicPageFieldHours,
         children: [
@@ -110,16 +114,19 @@ class PublicFacetsEditor extends StatelessWidget {
               maxLines: 3,
               enabled: enabled,
               onChanged: (value) =>
-                  changes.value = {...edits, 'opening_hours': value},
+                  draft.value = edits.copyWith(hoursNote: value),
             ),
         ],
       );
 
-  List<String> _selected(String field, Map<String, Object?> edits) {
-    if (edits.containsKey(field)) {
-      return PublicFacets.read(field, edits[field]) ?? const [];
+  List<String> _selected(String field, PublicationDraft edits) {
+    final read = stored;
+    if (read == null || edits.facetDiffers(read, field)) {
+      return PublicFacets.read(field, edits.facet(field)) ?? const [];
     }
-    return (field == 'amenities' ? offer?.amenities : offer?.accessibility) ??
+    return (field == PublicFacets.amenities
+            ? offer?.amenities
+            : offer?.accessibility) ??
         const [];
   }
 }

@@ -132,7 +132,7 @@ class PublicWorkspaceView extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     PublicWorkspace workspace,
-    Map<String, Object?> contact,
+    PublicContact contact,
   ) async {
     if (await _connected(context, ref, SecondaryConnectAction.contact) ==
             _Connection.none ||
@@ -144,8 +144,8 @@ class PublicWorkspaceView extends ConsumerWidget {
         path: '/account-messages',
         queryParameters: {
           'source': workspace.source,
-          'recipient': contact['user_id'] as String,
-          'name': contact['name'] as String? ?? '',
+          'recipient': contact.userId,
+          'name': contact.name,
         },
       ).toString(),
     );
@@ -284,19 +284,19 @@ class PublicWorkspaceView extends ConsumerWidget {
                 if (hasPlan) link('plan_url', l.portalPublicPlan),
                 for (final contact in workspace.contacts)
                   ListTile(
-                    title: Text(contact['name'] as String? ?? ''),
+                    title: Text(contact.name),
                     subtitle: Text(
-                      contact['owner'] == true
+                      contact.owner
                           ? (l.portalOwner)
                           : (l.portalAdmin),
                     ),
                     trailing:
                         !withdrawn &&
-                            contact['available'] == true &&
-                            contact['user_id'] is String
+                            contact.available &&
+                            contact.userId != null
                         ? IconButton(
                             key: ValueKey(
-                              'public-workspace-chat-${contact['user_id']}',
+                              'public-workspace-chat-${contact.userId}',
                             ),
                             tooltip: l.portalChat,
                             icon: const Icon(Icons.chat_outlined),
