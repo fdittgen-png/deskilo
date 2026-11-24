@@ -30,7 +30,7 @@ export const adapters: Record<string, Adapter> = { [viesAdapter.id]: viesAdapter
 
 /** The most a request body may weigh: a workspace id and an identifier. A
  * protocol bound on the request's shape, not a choice. */
-export const MAX_BODY_BYTES = 2048;
+export const MAX_BODY_BYTES = 2048; // not-mirrored: the request size of the function
 
 /** The quota's window: the setting counts lookups per minute. */
 export const RATE_WINDOW_MS = 60_000;

@@ -14,8 +14,9 @@
 // application's input layer before it gets here.
 import 'accounting_amount.dart';
 
-/// Fractional digits of a stored quantity.
-const int _scale = 6;
+/// Fractional digits of a stored quantity: the ledger's `numeric(18, 6)`
+/// (#4419; pinned to the SQL by test/lint/mirrored_bounds_test.dart).
+const int exactQuantityScale = 6;
 
 /// The largest magnitude, in millionths: `999999999999.999999`.
 final BigInt _maxMicro = BigInt.parse('999999999999999999');
@@ -75,11 +76,11 @@ class ExactQuantity implements Comparable<ExactQuantity> {
       return refuse(ExactQuantityProblem.malformed);
     }
     final decimal = ExactDecimal.parse(text);
-    if (decimal.scale > _scale) {
+    if (decimal.scale > exactQuantityScale) {
       return refuse(ExactQuantityProblem.tooManyDecimals);
     }
     final micro =
-        decimal.units * BigInt.from(10).pow(_scale - decimal.scale);
+        decimal.units * BigInt.from(10).pow(exactQuantityScale - decimal.scale);
     if (micro.abs() > _maxMicro) return refuse(ExactQuantityProblem.outOfRange);
     return (value: ExactQuantity._(micro), problem: null);
   }
@@ -163,10 +164,10 @@ class ExactQuantity implements Comparable<ExactQuantity> {
   /// integer, one spelling of zero. Signatures and digests compare this.
   String get text {
     if (micro == BigInt.zero) return '0';
-    final digits = micro.abs().toString().padLeft(_scale + 1, '0');
-    final whole = digits.substring(0, digits.length - _scale);
+    final digits = micro.abs().toString().padLeft(exactQuantityScale + 1, '0');
+    final whole = digits.substring(0, digits.length - exactQuantityScale);
     final fraction = digits
-        .substring(digits.length - _scale)
+        .substring(digits.length - exactQuantityScale)
         .replaceFirst(RegExp(r'0+$'), '');
     final sign = micro.isNegative ? '-' : '';
     return fraction.isEmpty ? '$sign$whole' : '$sign$whole.$fraction';

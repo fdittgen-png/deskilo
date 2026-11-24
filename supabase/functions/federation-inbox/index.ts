@@ -38,7 +38,7 @@ export const ENVELOPE_HEADERS = [
 
 /// A status assertion is a few hundred bytes; the database refuses more
 /// than this too, so an oversized body is never read into it.
-export const MAX_BODY_BYTES = 16384;
+export const MAX_BODY_BYTES = 16384; // not-mirrored: the request size of the function
 
 const STATUS: Record<string, number> = {
   applied: 200,

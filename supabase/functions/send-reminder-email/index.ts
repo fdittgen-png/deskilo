@@ -39,12 +39,12 @@ import { type OrderMailResult, sendOrderViaResend } from "../_shared/resend.ts";
 import { logLine } from "../_shared/log.ts";
 import { ok, refuse, refuseDb } from "../_shared/respond.ts";
 import { guard } from "../_shared/serve.ts";
+import { MAIL_BODY_MAX_BYTES } from "../_shared/limits.ts";
 
 const FN = "send-reminder-email";
 
-/** The most a request body may weigh: the ids and the base64 PDF Resend
- * accepts (resend.ts bounds the PDF at 8 MB of base64). */
-export const MAX_BODY_BYTES = 8_100_000;
+/** The most a request body may weigh (_shared/limits.ts). */
+export const MAX_BODY_BYTES = MAIL_BODY_MAX_BYTES;
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const LANGUAGES = new Set(["en", "fr", "de", "es", "it"]);

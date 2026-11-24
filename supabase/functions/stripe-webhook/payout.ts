@@ -30,7 +30,7 @@ const STATUS: Record<string, string> = {
 
 /** The most pages of a payout's balance transactions read: a payout of more
  * than 100 x this many payments is not recorded in one event. */
-export const MAX_PAYOUT_PAGES = 20;
+export const MAX_PAYOUT_PAGES = 20; // not-mirrored: a run's own page budget against the provider
 
 export interface PayoutDeps {
   admin: () => SupabaseClient;

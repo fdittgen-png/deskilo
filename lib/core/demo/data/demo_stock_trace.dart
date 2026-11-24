@@ -188,7 +188,8 @@ class DemoStockTrace implements StockTraceReader {
       }
       // half away from zero, once: quantity (millionths) x unit cost (minor units) / 1e6
       final scaled = r.quantity.micro * BigInt.parse(cost);
-      final value = (scaled + BigInt.from(500000)) ~/ BigInt.from(1000000);
+      final unit = BigInt.from(10).pow(exactQuantityScale);
+      final value = (scaled + unit ~/ BigInt.two) ~/ unit;
       total += value;
       lines.add(ValuationLine(itemId: r.itemId, lotId: r.lotId, quantity: r.quantity, valueMinor: value.toInt()));
     }
