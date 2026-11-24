@@ -5,7 +5,7 @@
 -- business's session refused, an assistant refused, the feature off refused, the refused cash kept in the drawer figure. The two concurrent
 -- devices are proven by scripts/stock_transfer_race.sh (section S).
 begin;
-select plan(24);
+select plan(25);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -147,6 +147,7 @@ select is(left(pg_temp.run_as(pg_temp.u(2), format('select public.counter_offlin
 -- ── who may send ──
 select is(left(pg_temp.sync(4, current_setting('t.s')::uuid, current_setting('t.since')::timestamptz, '[' || pg_temp.osale(30, 7130, 5, '1.20', 120, 0) || ']'), 9), 'ERR DKN01', 'someone of another business is refused');
 select is(left(pg_temp.sync(1, current_setting('t.s')::uuid, current_setting('t.since')::timestamptz, '[' || pg_temp.osale(30, 7130, 5, '1.20', 120, 0) || ']', true), 9), 'ERR DKN01', 'an assistant session is refused');
+select is(left(pg_temp.sync(2, current_setting('t.s')::uuid, current_setting('t.since')::timestamptz, '[' || pg_temp.osale(30, 7130, 5, '1.20', 120, 0) || ']'), 9), 'ERR DKN01', 'a counter person who did not open the session sends nothing into it');
 select is(left(pg_temp.sync(1, current_setting('t.s')::uuid, current_setting('t.since')::timestamptz, '[' || pg_temp.osale(30, 7130, 5, '1.20', 120, 0) || ']', false, 106), 9), 'ERR DKG01', 'with the feature off it is refused');
 select is((select count(*)::int from public.counter_offline_sales where seq = 30), 0, 'a refused call records nothing');
 -- ── a session closed before the sync refuses its sales ──

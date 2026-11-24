@@ -198,7 +198,8 @@ begin
   -- two devices of one session sync one after the other; a close (for update) waits for this transaction
   perform pg_advisory_xact_lock(hashtextextended('counter_offline:' || p_session_id::text, 0));
   select * into v_sess from public.counter_till_sessions s where s.id = p_session_id and s.workspace_id = p_workspace_id for share;
-  if v_sess.id is null then
+  -- as a cash entry: into the session of whoever opened it, or by someone who may see the finances
+  if v_sess.id is null or (v_sess.opened_by_member_id is distinct from v_me and not public.has_permission(p_workspace_id, 'viewFinances')) then
     raise exception 'not allowed to send sales for this session' using errcode = 'DKN01';
   end if;
   v_max_minutes := coalesce((public.setting_value(p_workspace_id, 'counter.offline_max_minutes') #>> '{}')::int, 240);
