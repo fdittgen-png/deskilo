@@ -714,6 +714,10 @@ window.SETUP_REGISTRY={
   [
    "stockHandlingUnits",
    false
+  ],
+  [
+   "counterOfflineCash",
+   false
   ]
  ],
  "requires": {
@@ -841,7 +845,8 @@ window.SETUP_REGISTRY={
   "counterTillSessions": "counterReceipts",
   "stockTagReads": "stockTags",
   "stockExpiryReport": "stockManagement",
-  "stockHandlingUnits": "stockManagement"
+  "stockHandlingUnits": "stockManagement",
+  "counterOfflineCash": "counterTillSessions"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1573,7 +1578,8 @@ window.SETUP_PROCESSES=[
      "counterTillSessions",
      "stockTagReads",
      "stockExpiryReport",
-     "stockHandlingUnits"
+     "stockHandlingUnits",
+     "counterOfflineCash"
     ]
    }
   ]
@@ -2073,7 +2079,8 @@ window.SETUP_LEVELS={
       "counterTillSessions",
       "stockTagReads",
       "stockExpiryReport",
-      "stockHandlingUnits"
+      "stockHandlingUnits",
+      "counterOfflineCash"
      ],
      "needs": {
       "money": "invoices"

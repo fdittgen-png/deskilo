@@ -14,6 +14,7 @@ import 'finance_due.dart';
 import 'finance_hosts.dart';
 import 'finance_invoice.dart';
 
+export 'finance_billed.dart';
 export 'finance_due.dart';
 export 'finance_invoice.dart';
 
@@ -97,12 +98,17 @@ class FinanceOverview {
     this.hosts = const [],
     this.payments = const [],
     this.olderSettledLeftOut = false,
+    this.billed = const [],
   });
 
   /// The verified identity of a single reader answer, including an empty one.
   final String? sourceInstallation;
 
   final List<FinanceInvoice> invoices;
+
+  /// #4164 B2 (0911) — documents I read through a billing-access grant, never as a member: kept out of
+  /// [invoices] so nothing that counts, pays or exports what I owe as a member sees them ([billedGroups]).
+  final List<FinanceInvoice> billed;
 
   /// #3878 (0755) — an answer carries every document still owed or in my
   /// favour, and the settled ones by their newest page: true when older
@@ -149,6 +155,7 @@ class FinanceOverview {
     final mine = qualified();
     final theirs = other.qualified();
     final ids = {for (final i in mine.invoices) (i.networkId, i.id)};
+    final billedIds = {for (final i in billed) (i.networkId, i.id)};
     final reminderIds = {for (final r in mine.reminders) _reminderKey(r)};
     final paymentIds = {for (final p in payments) (p.networkId, p.id)};
     return FinanceOverview(
@@ -160,6 +167,7 @@ class FinanceOverview {
         final source = a.networkId.compareTo(b.networkId);
         return source != 0 ? source : a.id.compareTo(b.id);
       }),
+      billed: [...billed, for (final i in other.billed) if (billedIds.add((i.networkId, i.id))) i],
       reminders: [
         ...mine.reminders,
         for (final r in theirs.reminders)
@@ -196,6 +204,7 @@ class FinanceOverview {
       answered: answered, hosts: hosts, unavailableSources: unavailableSources,
       olderSettledLeftOut: olderSettledLeftOut,
       invoices: [for (final i in invoices) i.onInstallation(installationId)],
+      billed: [for (final i in billed) i.onInstallation(installationId)],
       payments: [for (final p in payments) p.onInstallation(installationId)],
       reminders: [for (final r in local.reminders)
         r.inWorkspace(r.workspaceId, installation: installationId)],
@@ -228,6 +237,7 @@ class FinanceOverview {
       FinanceOverview(
         sourceInstallation: sourceInstallation,
         invoices: invoices ?? this.invoices,
+        billed: billed,
         reminders: reminders ?? this.reminders,
         payments: payments ?? this.payments,
         unavailableSources: unavailableSources ?? this.unavailableSources,
@@ -283,6 +293,8 @@ class FinanceOverview {
       workspaceIds: {
         for (final i in answer?.invoices ?? const <FinanceInvoice>[])
           i.workspaceId,
+        for (final i in answer?.billed ?? const <FinanceInvoice>[])
+          i.workspaceId,
         for (final p in payments) p.workspaceId,
       },
       morePaymentsBefore: payments.length < activityPageSize
@@ -300,6 +312,7 @@ class FinanceOverview {
         : next.merge(
             FinanceOverview(
               invoices: answer.invoices,
+              billed: answer.billed,
               reminders: answer.reminders,
               payments: answer.payments,
               olderSettledLeftOut: answer.olderSettledLeftOut,
@@ -371,8 +384,21 @@ class FinanceOverview {
               : ids.contains((r.networkId!, r.invoiceId)))
             r,
       ],
-    );
+    )._withBilled([for (final i in billed) if (keep(i)) i]);
   }
+
+  /// The same documents, with [billed] in place of the billing-access ones.
+  FinanceOverview _withBilled(List<FinanceInvoice> billed) => FinanceOverview(
+        sourceInstallation: sourceInstallation,
+        invoices: invoices,
+        billed: billed,
+        reminders: reminders,
+        payments: payments,
+        unavailableSources: unavailableSources,
+        answered: answered,
+        hosts: hosts,
+        olderSettledLeftOut: olderSettledLeftOut,
+      );
 
   /// Production only: what Me counts. A development space holds test data
   /// and never enters a total.
@@ -453,10 +479,18 @@ class FinanceOverview {
 
   factory FinanceOverview.fromJson(Map<String, dynamic> j) {
     final r = JsonReader(j, context: 'my_finances');
+    final all = r.objects('invoices', (row) => FinanceInvoice.fromJson(row.json));
+    // #4164 B2 — a document read through a billing-access grant is kept apart
+    // from the first read: its reminders follow it, never my own list.
+    final billed = [for (final i in all) if (i.billingOnly) i];
+    final billedIds = {for (final i in billed) i.id};
     return FinanceOverview(
-      invoices: r.objects('invoices', (row) => FinanceInvoice.fromJson(row.json)),
-      reminders:
-          r.objects('reminders', (row) => FinanceReminder.fromJson(row.json)),
+      invoices: [for (final i in all) if (!i.billingOnly) i],
+      billed: billed,
+      reminders: [
+        for (final x in r.objects('reminders', (row) => FinanceReminder.fromJson(row.json)))
+          if (!billedIds.contains(x.invoiceId)) x,
+      ],
       olderSettledLeftOut: r.boolOr('settled_cut', fallback: false),
     ).qualified();
   }

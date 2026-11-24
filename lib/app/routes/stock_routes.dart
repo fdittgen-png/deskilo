@@ -21,6 +21,7 @@ import '../../features/stock/presentation/stock_reorder_screen.dart';
 import '../../features/stock/presentation/stock_screen.dart';
 import '../../features/stock/presentation/stock_settings_screen.dart';
 import '../../features/stock/presentation/stock_transfers_screen.dart';
+import '../../features/stock/presentation/stock_units_screen.dart';
 import '../../features/stock/presentation/stock_value_screen.dart';
 import '../../features/stock/presentation/stock_where_is_screen.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
@@ -51,6 +52,10 @@ List<RouteBase> stockRoutes(RouteEnv env) {
   );
   const expiryAccess = RouteAccess(
     features: [WorkspaceFeature.stockManagement, WorkspaceFeature.stockExpiryReport],
+    to: '/reserve',
+  );
+  const unitsAccess = RouteAccess(
+    features: [WorkspaceFeature.stockManagement, WorkspaceFeature.stockHandlingUnits],
     to: '/reserve',
   );
   return [
@@ -127,6 +132,12 @@ List<RouteBase> stockRoutes(RouteEnv env) {
           path: 'expiry',
           redirect: env.guard(expiryAccess),
           builder: (context, state) => const StockExpiryScreen(),
+        ),
+        // #4435 — the handling units: pallets, cartons and boxes moved with their whole content, repackaged, traceable.
+        GoRoute(
+          path: 'units',
+          redirect: env.guard(unitsAccess),
+          builder: (context, state) => const StockUnitsScreen(),
         ),
         GoRoute(
           path: 'movements/:id',

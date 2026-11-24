@@ -13,6 +13,7 @@ import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/presentation/item_group_assign_dialog.dart';
 import 'package:deskilo/features/stock/presentation/item_groups_screen.dart';
+import 'package:deskilo/features/stock/presentation/stock_item_editor.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
@@ -55,7 +56,7 @@ Future<DemoItemGroups> _open(WidgetTester tester, Size size, {Widget? home, bool
       itemGroupsProvider.overrideWithValue(groups),
       stockConfigCommandsProvider.overrideWithValue(config),
       myPermissionsProvider.overrideWithValue({WorkspacePermission.viewStock, WorkspacePermission.manageStock, if (finance) ...{WorkspacePermission.manageServices, WorkspacePermission.viewFinances}}),
-      vatRatesProvider.overrideWith((ref) async => const [VatRate(id: 'vat-std', label: 'Standard 20 %', percent: 20, isDefault: true), VatRate(id: 'vat-red', label: 'Reduced 5.5 %', percent: 5.5)]),
+      vatRatesProvider.overrideWith((ref) async => const [VatRate(id: 'vat-std', label: 'Standard 20 %', percent: 20, isDefault: true), VatRate(id: 'vat-red', label: 'Reduced 5.5 %', percent: 5.5), VatRate(id: 'demo-vat-20', label: 'Demo standard 20 %', percent: 20)]),
       enabledFeaturesSyncProvider.overrideWithValue({WorkspaceFeature.stockManagement, WorkspaceFeature.stockItemGroups}),
     ],
   );
@@ -268,6 +269,54 @@ void main() {
         await _tap(tester, 'item-group-use-tag_mode');
         expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.value, 'per_batch');
         expect(find.descendant(of: row, matching: find.textContaining('Drinks')), findsOneWidget);
+      });
+
+      testWidgets('a finance save on a group that moved meanwhile is refused in words, and a fresh sheet saves it', (tester) async {
+        final w = await _open(tester, size, finance: true);
+        final drinks = (await w.groups('ws-1')).firstWhere((g) => g.id == 'demo-group-drinks');
+        await tester.tap(find.byKey(const ValueKey('item-group-demo-group-drinks')));
+        await _frames(tester);
+        await tester.enterText(find.byKey(const ValueKey('item-group-margin')), '40');
+        await w.save('ws-1', requestId: 'r-moved', groupId: drinks.id, expectedRevision: drinks.revision, body: {'parameters': {'target_margin_bps': 1000}});
+        await _tap(tester, 'item-group-save');
+        expect(find.text(_en.stockEditStale), findsOneWidget);
+        expect((await w.groups('ws-1')).firstWhere((g) => g.id == 'demo-group-drinks').params['target_margin_bps'], 1000, reason: 'a refused save changes nothing');
+        Navigator.of(tester.element(find.byKey(const ValueKey('item-group-name')))).pop();
+        await _frames(tester);
+        ProviderScope.containerOf(tester.element(find.byType(Scaffold).first)).invalidate(itemGroupListProvider('ws-1'));
+        await _frames(tester);
+        await tester.tap(find.byKey(const ValueKey('item-group-demo-group-drinks')));
+        await _frames(tester);
+        await tester.enterText(find.byKey(const ValueKey('item-group-margin')), '40');
+        await _tap(tester, 'item-group-save');
+        expect((await w.groups('ws-1')).firstWhere((g) => g.id == 'demo-group-drinks').params['target_margin_bps'], 4000);
+      });
+
+      testWidgets('the item editor marks a setting the item keeps of its own against its group, and only that one', (tester) async {
+        final w = await _open(
+          tester,
+          size,
+          home: Consumer(
+            builder: (context, ref, _) => Scaffold(
+              body: TextButton(
+                key: const ValueKey('open'),
+                onPressed: () => showStockItemEditor(context, ref.read(stockConfigCommandsProvider), workspaceId: 'ws-1', itemId: 'demo-item-milk', itemName: 'Milk', options: (lots: true, keep: false, groups: ref.read(itemGroupsProvider))),
+                child: const Text('open'),
+              ),
+            ),
+          ),
+        );
+        await tester.tap(find.byKey(const ValueKey('open')));
+        await _frames(tester);
+        expect(find.byKey(const ValueKey('stock-item-own-tracking')), findsNothing, reason: 'the milk follows its group');
+        Navigator.of(tester.element(find.byType(Scaffold).last)).pop();
+        await _frames(tester);
+        final config = await ProviderScope.containerOf(tester.element(find.byType(Scaffold).first)).read(stockConfigCommandsProvider).item('ws-1', 'demo-item-milk');
+        await w.setOverride('ws-1', 'r-own', (itemId: 'demo-item-milk', expectedRevision: config!.revision, parameter: 'tracking', mode: 'set', value: 'lot'));
+        await tester.tap(find.byKey(const ValueKey('open')));
+        await _frames(tester);
+        expect(find.byKey(const ValueKey('stock-item-own-tracking')), findsOneWidget);
+        expect(find.text(_en.itemGroupOwn), findsOneWidget);
       });
 
       testWidgets('an item shows where each setting comes from, an own value goes back to the group, a move is previewed', (tester) async {

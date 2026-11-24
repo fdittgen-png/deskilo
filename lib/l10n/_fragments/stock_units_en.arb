@@ -1,0 +1,172 @@
+{
+  "stockUnitsTitle": "Handling units",
+  "@stockUnitsTitle": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsIntro": "A pallet, a carton or a box of your own: it moves with its whole content, and every lot and piece stays traceable.",
+  "@stockUnitsIntro": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsEmpty": "No unit yet. Make one from stock that is loose at a place.",
+  "@stockUnitsEmpty": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsReadFailed": "The units could not be read.",
+  "@stockUnitsReadFailed": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsAllPlaces": "All places",
+  "@stockUnitsAllPlaces": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitMake": "Make a unit",
+  "@stockUnitMake": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitCode": "Unit code",
+  "@stockUnitCode": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitLabelCode": "Supplier label (SSCC), if any",
+  "@stockUnitLabelCode": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKind": "Kind",
+  "@stockUnitKind": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindPallet": "Pallet",
+  "@stockUnitKindPallet": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindCarton": "Carton",
+  "@stockUnitKindCarton": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindCrate": "Crate",
+  "@stockUnitKindCrate": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindBox": "Box",
+  "@stockUnitKindBox": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindOther": "Other",
+  "@stockUnitKindOther": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitPlace": "Place",
+  "@stockUnitPlace": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitContent": "Content",
+  "@stockUnitContent": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitContentNone": "Nothing in it.",
+  "@stockUnitContentNone": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitMove": "Move",
+  "@stockUnitMove": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitMoveTo": "Move to",
+  "@stockUnitMoveTo": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitUnpack": "Unpack",
+  "@stockUnitUnpack": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitUnpackHint": "Its content stays where it is, loose.",
+  "@stockUnitUnpackHint": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepack": "Repack into boxes",
+  "@stockUnitRepack": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepackBoxes": "Number of boxes",
+  "@stockUnitRepackBoxes": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepackEach": "Quantity in each box",
+  "@stockUnitRepackEach": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepackItem": "What to repack",
+  "@stockUnitRepackItem": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitNestedIn": "In {unit}",
+  "@stockUnitNestedIn": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitMade": "{unit} made.",
+  "@stockUnitMade": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitMoved": "{unit} moved to {place}.",
+  "@stockUnitMoved": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitUnpacked": "{unit} unpacked.",
+  "@stockUnitUnpacked": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitRepacked": "{count, plural, one{1 box made.} other{{count} boxes made.}}",
+  "@stockUnitRepacked": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockUnitChangedNow": "The unit is at {place} now: read it again.",
+  "@stockUnitChangedNow": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitsChooseItem": "Choose an item",
+  "@stockUnitsChooseItem": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitLoose": "{quantity} loose here",
+  "@stockUnitLoose": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  }
+}

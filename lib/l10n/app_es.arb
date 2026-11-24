@@ -2928,6 +2928,44 @@
       }
     }
   },
+  "billingAccessAccept": "Aceptar",
+  "billingAccessAccepted": "Hecho. Las facturas que {business} emitió a su nombre aparecen ahora en sus finanzas, aparte de lo que debe como miembro.",
+  "billingAccessAction": "Acceso por cuenta",
+  "billingAccessActive": "Lee las facturas desde el {date}",
+  "billingAccessAlreadyHeld": "Ya tiene este acceso; aceptarlo de nuevo no cambia nada.",
+  "billingAccessCheck": "Comprobar el código",
+  "billingAccessCodeCopied": "Código copiado",
+  "billingAccessCodeCopy": "Copiar el código",
+  "billingAccessCodeOnce": "Entregue este código al cliente ahora. Se muestra una sola vez y no puede leerse de nuevo. Es válido hasta el {date}.",
+  "billingAccessCodeTitle": "Código de invitación",
+  "billingAccessCodeUnusable": "Este código no se puede usar. Puede ser erróneo, haber caducado, haberse retirado o estar ya tomado por otra cuenta. Pida uno nuevo a la empresa.",
+  "billingAccessEnter": "Usar un código de facturación",
+  "billingAccessEnterIntro": "Una empresa que le factura puede darle un código. Con él lee, desde su cuenta, las facturas emitidas a su nombre. No se convierte en miembro.",
+  "billingAccessEnterTitle": "Leer las facturas de una empresa",
+  "billingAccessExpired": "Invitación caducada el {date}",
+  "billingAccessFailed": "La respuesta no llegó. No se sabe que algo haya cambiado; inténtelo de nuevo.",
+  "billingAccessGroupOpen": "Pendiente: {amounts}",
+  "billingAccessGroupSettled": "Nada pendiente",
+  "billingAccessGroupTitle": "{business} · cuenta {ref}",
+  "billingAccessIntro": "Invite a este cliente a leer sus propias facturas desde su propia cuenta. No se convierte en miembro y no ve nada más de su negocio.",
+  "billingAccessInvite": "Crear un código de invitación",
+  "billingAccessInvited": "Invitado el {date}, aún sin aceptar",
+  "billingAccessLoadFailed": "No se pudieron leer las invitaciones. No es una lista vacía.",
+  "billingAccessNone": "Aún no hay invitaciones.",
+  "billingAccessNotACustomer": "Solo se puede invitar a un cliente facturado. No se cambió nada.",
+  "billingAccessNotAllowed": "No puede invitar a clientes a una cuenta aquí. No se cambió nada.",
+  "billingAccessPaymentSoon": "Pagar estas facturas desde aquí llegará con una actualización posterior.",
+  "billingAccessPreviewLine": "{business} le invita a leer las facturas emitidas a nombre de {name}.",
+  "billingAccessPreviewUnnamed": "{business} le invita a leer las facturas que emitió a su nombre.",
+  "billingAccessReasonTooLong": "El motivo es demasiado largo. Acórtelo; no se cambió nada.",
+  "billingAccessRequestReused": "Esta solicitud ya se usó para otra invitación. Cierre esta ventana y ábrala de nuevo; no se cambió nada.",
+  "billingAccessRevoke": "Terminar el acceso",
+  "billingAccessRevokeNote": "Terminar el acceso no borra nada: las facturas y su historial siguen como están.",
+  "billingAccessRevoked": "Acceso terminado el {date}",
+  "billingAccessSectionNote": "Facturas que una empresa emitió a su nombre, leídas con el acceso que le dio. No se cuentan con lo que debe como miembro.",
+  "billingAccessSectionTitle": "Facturado como cliente",
+  "billingAccessTitle": "Acceso por cuenta: {name}",
+  "billingAccessUnknownGrant": "Este acceso ya no existe. Cierre la lista y ábrala de nuevo; no se cambió nada.",
   "billingAddBand": "Añadir tramo",
   "billingAddLevel": "Añadir nivel",
   "billingAddPackage": "Añadir paquete",
@@ -2967,7 +3005,7 @@
   "billingCustomersAdd": "Añadir un cliente",
   "billingCustomersEmpty": "Aún no hay clientes facturados. Añada el primero para facturarle sin pedirle que cree una cuenta.",
   "billingCustomersLoadFailed": "No se pudieron leer los clientes. No es una lista vacía.",
-  "billingCustomersNoAccount": "Las personas y empresas a las que factura. No tienen cuenta y no ven nada de su negocio.",
+  "billingCustomersNoAccount": "Las personas y empresas a las que factura. No son miembros y no ven nada de su negocio, salvo que las invite a leer sus propias facturas desde su propia cuenta.",
   "billingCustomersRetry": "Reintentar",
   "billingCustomersSearch": "Buscar clientes",
   "billingCustomersTitle": "Clientes facturados",
@@ -7202,6 +7240,14 @@
   "featureConfigurationTransferDesc": "El archivo del espacio (XML) lleva toda la configuración — tarifas, identidad legal, reglas de reserva y validación, roles, diseños de documentos, sedes, días de cierre — y la importación la aplica, incluso en un espacio que ya tiene reservas. Desactivado: el archivo solo lleva ajustes y plano.",
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "featureCounterOfflineCashDesc": "Si se pierde la conexión, la caja sigue vendiendo en efectivo, guarda cada venta en el dispositivo y envía las ventas en orden cuando vuelve la conexión. Los demás medios de pago esperan la conexión.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  },
+  "featureCounterOfflineCashTitle": "Vender sin conexión, solo en efectivo",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
   },
   "featureCounterReceiptsDesc": "Una venta en el mostrador da un ticket inmutable, numerado una sola vez, con el cobro recibido. Solo se ofrece donde la operación del país está soportada, y dice claramente cuándo no lo está.",
   "featureCounterReceiptsTitle": "Tickets de caja",
@@ -16621,6 +16667,10 @@
   "refusalCounterEssentials": "A este ticket le falta algo o no es aceptable: no se numeró nada y no se cobró nada.",
   "refusalCounterGoods": "Aquí no se pueden vender ni recuperar mercancías: el libro de mercancías está desactivado, o no hay un lugar de donde tomarlas o donde devolverlas.",
   "refusalCounterNotOpen": "Este ticket ya no es un borrador abierto, o ya se emitió un ticket para la misma venta.",
+  "refusalCounterOfflineConflict": "Una venta enviada desde la caja con este número ya se recibió con otro contenido. No se registró nada de nuevo; consulte la lista de ventas sin conexión.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  },
   "refusalCounterTenderState": "Esta autorización de tarjeta sigue abierta, es desconocida o ya está resuelta: consulte al proveedor en lugar de pedirla otra vez.",
   "refusalCounterTenders": "Los cobros no saldan exactamente esta venta, o uno de ellos no se acepta aquí.",
   "refusalCounterTill": "La caja no está lista para esto: ábrala primero, o ya está abierta o cerrada.",
@@ -19107,6 +19157,18 @@
   "settingHintCounterCustomerlessSales": "Permitidas: se puede vender sin nombrar un cliente. Rechazadas: cada venta nombra uno. Una venta sin cliente nunca crea una cuenta, un miembro ni una suscripción.",
   "settingHintCounterDocumentChannel": "Compartido (mensaje o correo), impreso o ambos. El ticket es el mismo documento inmutable en todos los casos.",
   "settingHintCounterFiscalObligation": "Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.",
+  "settingHintCounterOfflineMaxMinutes": "Cuánto tiempo después de perder la conexión la caja aún se acepta una venta en efectivo hecha sin conexión al enviarla. Las posteriores se rechazan y se listan para el responsable.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflineMaxSales": "Cuántas ventas en efectivo hechas sin conexión acepta una sesión de caja. Las siguientes se rechazan y se listan.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflinePriceTolerance": "Cuánto, en porcentaje, puede diferir el precio de una venta sin conexión del precio del artículo al enviarla. 0 significa que el precio debe ser el mismo.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
   "settingHintCounterPaidOutLimit": "El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.",
   "settingHintDirectoryGeocoderUrl": "El servicio compatible con Photon que sitúa una dirección publicada en el mapa de descubrimiento: una dirección https en la internet pública, sin nombre de usuario, contraseña, consulta ni #. Déjelo vacío para usar la dirección con la que se construyó esta versión de la aplicación; si no, el servicio público Photon.",
   "settingHintDirectoryTileUrlTemplate": "El servidor de teselas con el que se dibuja el mapa de descubrimiento, con los marcadores z, x e y entre llaves en su dirección (se admite s entre llaves para un subdominio): https, en la internet pública, sin nombre de usuario, contraseña ni #. Déjelo vacío para usar el servidor de esta versión de la aplicación; si no, OpenStreetMap. Un nuevo host vuelve a preguntar a cada persona antes de cargar el mapa.",
@@ -19347,6 +19409,18 @@
   "settingLabelCounterCustomerlessSales": "Ventas sin cliente nombrado",
   "settingLabelCounterDocumentChannel": "Cómo sale el ticket del mostrador",
   "settingLabelCounterFiscalObligation": "Normas fiscales de las ventas en mostrador",
+  "settingLabelCounterOfflineMaxMinutes": "Tiempo máximo sin conexión (minutos)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflineMaxSales": "Máximo de ventas sin conexión por sesión de caja",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Diferencia de precio admitida sin conexión (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
+  },
   "settingLabelCounterPaidOutLimit": "Mayor salida sin autorización",
   "settingLabelDirectoryGeocoderUrl": "Servicio de búsqueda de direcciones",
   "settingLabelDirectoryTileUrlTemplate": "Servidor de teselas del mapa",
@@ -22123,6 +22197,39 @@
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockUnitChangedNow": "La unidad está ahora en {place}: léala de nuevo.",
+  "stockUnitCode": "Código de la unidad",
+  "stockUnitContent": "Contenido",
+  "stockUnitContentNone": "Nada dentro.",
+  "stockUnitKind": "Tipo",
+  "stockUnitKindBox": "Caja",
+  "stockUnitKindCarton": "Caja de cartón",
+  "stockUnitKindCrate": "Cajón",
+  "stockUnitKindOther": "Otro",
+  "stockUnitKindPallet": "Palé",
+  "stockUnitLabelCode": "Etiqueta del proveedor (SSCC), si la hay",
+  "stockUnitLoose": "{quantity} suelto aquí",
+  "stockUnitMade": "{unit} creada.",
+  "stockUnitMake": "Crear una unidad",
+  "stockUnitMove": "Mover",
+  "stockUnitMoveTo": "Mover a",
+  "stockUnitMoved": "{unit} movida a {place}.",
+  "stockUnitNestedIn": "En {unit}",
+  "stockUnitPlace": "Lugar",
+  "stockUnitRepack": "Reenvasar en cajas",
+  "stockUnitRepackBoxes": "Número de cajas",
+  "stockUnitRepackEach": "Cantidad por caja",
+  "stockUnitRepackItem": "Qué reenvasar",
+  "stockUnitRepacked": "{count, plural, one{1 caja creada.} other{{count} cajas creadas.}}",
+  "stockUnitUnpack": "Deshacer",
+  "stockUnitUnpackHint": "Su contenido se queda donde está, suelto.",
+  "stockUnitUnpacked": "{unit} deshecha.",
+  "stockUnitsAllPlaces": "Todos los lugares",
+  "stockUnitsChooseItem": "Elegir un artículo",
+  "stockUnitsEmpty": "Aún no hay unidades. Cree una con el stock suelto de un lugar.",
+  "stockUnitsIntro": "Un palé, una caja o un cajón propio: se mueve con todo su contenido, y cada lote y cada pieza sigue siendo trazable.",
+  "stockUnitsReadFailed": "No se pudieron leer las unidades.",
+  "stockUnitsTitle": "Unidades de manipulación",
   "stockValueBasis": "Un valor operativo de los movimientos registrados a su coste de lote registrado. No es un saldo contabilizado de existencias ni indica coste de ventas.",
   "stockValueComplete": "Cada artículo en existencias tiene un coste conocido.",
   "stockValueCutoff": "A {at}, calculado {calculated} a partir de {count, plural, one{un movimiento} other{{count} movimientos}}.",
@@ -23675,6 +23782,15 @@
   "tillOpReconcileTender": "conciliación de un pago con tarjeta",
   "tillOpSignFiscal": "firma de un ticket fiscal",
   "tillPayCash": "Cobrar en efectivo",
+  "tillPieceTwice": "La pieza {code} ya está en la cesta.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Calculando la cesta…",
   "tillQuantityHint": "Una cantidad exacta, por ejemplo 1 o 0,350.",
   "tillQuantityRefused": "Introduzca una cantidad superior a cero con un máximo de seis decimales.",
@@ -23685,10 +23801,40 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillScanUnknown": "{code} no es algo que venda esta caja.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillSoldTitle": "Vendido",
   "tillTaxIncluded": "de los cuales impuesto {amount}",
   "tillTitle": "Caja",
   "tillTotalDue": "Total a pagar: {amount}",
+  "tillTrackLot": "Lote {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Pieza {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tipAvailabilityClosure": "Para cerrar un día que nadie podrá reservar: toque «Añadir día de cierre» e indique un motivo si quiere.",
   "tipAvailabilityDays": "Para fijar los días de apertura: marca los días bajo «Días de apertura».",
   "tipAvailabilityGrid": "Para elegir cómo se dividen las reservas: escoge una «Granularidad de las reservas»: periodos libres, franjas, medias jornadas o jornadas completas.",
