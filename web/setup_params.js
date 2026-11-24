@@ -185,6 +185,8 @@ const PARAM_META=[
  ['stock.allowNegative','stockAllowNegative','bool',null,{needs:'stockManagement'}],
  // #4365 — whether goods are sold by weight (workspace setting stock.weighed_goods).
  ['stock.weighedGoods','stockWeighedGoods','bool',null,{needs:'stockManagement'}],
+ // #4433 — the place goods sold on an invoice leave from, by its code (workspace setting stock.invoice_sale_place).
+ ['stock.invoiceSalePlace','stockInvoiceSalePlace','text',null,{needs:'stockManagement'}],
  // #4293 — the character between the levels of a place address (workspace setting stock.address_separator).
  ['stock.addressSeparator','stockAddressSeparator','enum',()=>STOCK_SEP.map(x=>x[0]),{needs:'stockManagement'}],
  ['stock.tagGrace','stockTagGrace','enum',()=>STOCK_TAG_GRACE.map(x=>x[0]),{needs:'stockTags'}],['stock.repeatedScan','stockRepeatedScan','enum',()=>STOCK_REPEAT.map(x=>x[0]),{needs:'stockScanning'}],['stock.tagReadMax','stockTagReadMax','enum',()=>STOCK_TAG_READ.map(x=>x[0]),{needs:'stockTagReads'}],['stock.tagReadQuantity','stockTagReadQuantity','bool',null,{needs:'stockTagReads'}],

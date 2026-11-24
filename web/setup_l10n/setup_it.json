@@ -820,6 +820,8 @@
  "shopTypeCornerShop": "Negozio di quartiere",
  "stockWeighedGoods": "La merce si vende a peso",
  "stockWeighedGoodsHint": "Un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco).",
+ "stockInvoiceSalePlace": "Luogo da cui escono i beni venduti in fattura",
+ "stockInvoiceSalePlaceHint": "Il codice di un luogo con scorte, per esempio MAIN. All’emissione di una fattura che vende beni, escono da lì. Modificabile poi nelle impostazioni dello spazio.",
  "stockGroupTagMode": "Modalità etichetta predefinita degli articoli",
  "stockGroupTagModeHint": "Se un articolo che né un gruppo né un'impostazione propria riguarda porta un'etichetta RFID: nessuna, una etichetta che indica un lotto o una etichetta per unità (che richiede la tracciabilità per pezzo). Si imposta nelle impostazioni dell'app.",
  "stockGroupCountDays": "Ciclo di conteggio predefinito",

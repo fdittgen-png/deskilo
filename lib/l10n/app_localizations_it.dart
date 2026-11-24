@@ -32563,6 +32563,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Se un articolo che né un gruppo né un\'impostazione propria riguarda porta un\'etichetta RFID: nessuna, una etichetta che indica un lotto o una etichetta per unità (che richiede la tracciabilità per pezzo).';
 
   @override
+  String get settingHintStockInvoiceSalePlace =>
+      'Il codice di un luogo dell’attività che detiene scorte, per esempio MAIN. I beni venduti in fattura escono da lì all’emissione della fattura.';
+
+  @override
   String get settingHintStockPriceRounding =>
       'Come si arrotonda un prezzo di vendita proposto: al 0,05 o 0,10 più vicino, o a un prezzo che finisce per 0,99. Serve solo a proporre un prezzo.';
 
@@ -32973,6 +32977,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelStockGroupDefaultTagMode =>
       'Modalità etichetta predefinita degli articoli';
+
+  @override
+  String get settingLabelStockInvoiceSalePlace =>
+      'Luogo da cui escono i beni venduti in fattura';
 
   @override
   String get settingLabelStockPriceRounding => 'Arrotondamento dei prezzi';
@@ -35578,6 +35586,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get standaloneFactLines => 'almeno una riga';
 
   @override
+  String get standaloneFactSalePlace =>
+      'il luogo da cui si vende: indicare un luogo con scorte nelle impostazioni dell’attività';
+
+  @override
   String get standaloneFactSalesTax =>
       'questa attività aggiunge sales tax, non ancora supportata qui';
 
@@ -35611,7 +35623,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get standaloneFieldDescription => 'una descrizione';
 
   @override
+  String get standaloneFieldGoodsAbroad =>
+      'un acquirente del Paese dell’attività: i beni venduti all’estero non si fatturano ancora qui';
+
+  @override
+  String get standaloneFieldGoodsOff =>
+      'la gestione delle scorte, disattivata in questa attività';
+
+  @override
+  String get standaloneFieldItem => 'un articolo tenuto a scorta e in vendita';
+
+  @override
   String get standaloneFieldLineId => 'salvare di nuovo la bozza';
+
+  @override
+  String get standaloneFieldLot => 'un lotto di questo articolo';
+
+  @override
+  String get standaloneFieldPieces =>
+      'le etichette dei pezzi, come codici di etichetta';
 
   @override
   String get standaloneFieldPrice => 'un prezzo con al massimo sei decimali';
@@ -35621,11 +35651,32 @@ class AppLocalizationsIt extends AppLocalizations {
       'una quantità superiore a zero con al massimo sei decimali';
 
   @override
+  String get standaloneFieldStock =>
+      'beni che le scorte possono vendere così come inseriti';
+
+  @override
+  String get standaloneFieldStockExpired => 'un lotto non scaduto';
+
+  @override
+  String get standaloneFieldStockLot => 'un lotto presente di questo articolo';
+
+  @override
+  String get standaloneFieldStockPieces =>
+      'i pezzi venduti: un’etichetta per pezzo, ciascuna di un pezzo presente';
+
+  @override
+  String get standaloneFieldStockShort =>
+      'scorte sufficienti nel luogo da cui si vende';
+
+  @override
   String get standaloneFieldSupply =>
-      'un servizio (i beni non si fatturano ancora qui)';
+      'ciò che fornisce la riga: un servizio, un immobile o beni';
 
   @override
   String get standaloneFieldUnit => 'un’unità';
+
+  @override
+  String get standaloneFieldVariant => 'la variante dell’articolo';
 
   @override
   String get standaloneFieldVatRate => 'un’aliquota IVA definita dall’attività';
@@ -35654,7 +35705,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get standaloneInvoiceLineDescription => 'Descrizione';
 
   @override
+  String get standaloneInvoiceLineGoods => 'Venduto dalle scorte';
+
+  @override
   String get standaloneInvoiceLineGross => 'Il prezzo include l’imposta';
+
+  @override
+  String get standaloneInvoiceLineNoGoods => 'Nulla dalle scorte (un servizio)';
+
+  @override
+  String get standaloneInvoiceLinePieces => 'Etichette dei pezzi venduti';
+
+  @override
+  String get standaloneInvoiceLinePiecesHint =>
+      'Un’etichetta per pezzo, separate da virgole: questo articolo è tracciato pezzo per pezzo.';
 
   @override
   String get standaloneInvoiceLinePrice => 'Prezzo unitario';

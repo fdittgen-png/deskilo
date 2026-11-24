@@ -32615,6 +32615,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht).';
 
   @override
+  String get settingHintStockInvoiceSalePlace =>
+      'Der Code eines Orts des Unternehmens, der Bestand führt, zum Beispiel MAIN. Auf Rechnung verkaufte Waren gehen beim Ausstellen der Rechnung von dort ab.';
+
+  @override
   String get settingHintStockPriceRounding =>
       'Wie ein vorgeschlagener Verkaufspreis gerundet wird: auf 0,05 oder 0,10 oder auf einen Preis, der auf 0,99 endet. Sie dient nur dazu, einen Preis vorzuschlagen.';
 
@@ -33008,6 +33012,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelStockGroupDefaultTagMode =>
       'Standard-Etikettenmodus der Artikel';
+
+  @override
+  String get settingLabelStockInvoiceSalePlace =>
+      'Ort, von dem auf Rechnung verkaufte Waren abgehen';
 
   @override
   String get settingLabelStockPriceRounding => 'Preisrundung';
@@ -35629,6 +35637,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get standaloneFactLines => 'mindestens eine Position';
 
   @override
+  String get standaloneFactSalePlace =>
+      'der Ort, von dem verkauft wird: einen Ort mit Bestand in den Unternehmenseinstellungen festlegen';
+
+  @override
   String get standaloneFactSalesTax =>
       'dieser Betrieb erhebt Sales Tax, was hier noch nicht unterstützt wird';
 
@@ -35662,7 +35674,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get standaloneFieldDescription => 'eine Beschreibung';
 
   @override
+  String get standaloneFieldGoodsAbroad =>
+      'ein Käufer im Land des Unternehmens: ins Ausland verkaufte Waren werden hier noch nicht berechnet';
+
+  @override
+  String get standaloneFieldGoodsOff =>
+      'die Bestandsführung, die in diesem Unternehmen aus ist';
+
+  @override
+  String get standaloneFieldItem =>
+      'ein Artikel, der im Bestand geführt und verkauft wird';
+
+  @override
   String get standaloneFieldLineId => 'den Entwurf erneut zu speichern';
+
+  @override
+  String get standaloneFieldLot => 'eine Charge dieses Artikels';
+
+  @override
+  String get standaloneFieldPieces =>
+      'die Etiketten der Stücke als Etikettcodes';
 
   @override
   String get standaloneFieldPrice =>
@@ -35673,11 +35704,34 @@ class AppLocalizationsDe extends AppLocalizations {
       'eine Menge über null mit höchstens sechs Nachkommastellen';
 
   @override
+  String get standaloneFieldStock =>
+      'Waren, die der Bestand so verkaufen kann, wie sie erfasst sind';
+
+  @override
+  String get standaloneFieldStockExpired =>
+      'eine Charge, die nicht abgelaufen ist';
+
+  @override
+  String get standaloneFieldStockLot =>
+      'eine vorhandene Charge dieses Artikels';
+
+  @override
+  String get standaloneFieldStockPieces =>
+      'die verkauften Stücke: ein Etikett pro Stück, jedes von einem vorhandenen Stück';
+
+  @override
+  String get standaloneFieldStockShort =>
+      'genug Bestand am Ort, von dem verkauft wird';
+
+  @override
   String get standaloneFieldSupply =>
-      'eine Dienstleistung (Waren werden hier noch nicht berechnet)';
+      'was die Zeile liefert: eine Dienstleistung, eine Immobilie oder Waren';
 
   @override
   String get standaloneFieldUnit => 'eine Einheit';
+
+  @override
+  String get standaloneFieldVariant => 'die Variante des Artikels';
 
   @override
   String get standaloneFieldVatRate =>
@@ -35707,7 +35761,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get standaloneInvoiceLineDescription => 'Beschreibung';
 
   @override
+  String get standaloneInvoiceLineGoods => 'Aus dem Bestand verkauft';
+
+  @override
   String get standaloneInvoiceLineGross => 'Der Preis enthält die Steuer';
+
+  @override
+  String get standaloneInvoiceLineNoGoods =>
+      'Nichts aus dem Bestand (eine Dienstleistung)';
+
+  @override
+  String get standaloneInvoiceLinePieces => 'Etiketten der verkauften Stücke';
+
+  @override
+  String get standaloneInvoiceLinePiecesHint =>
+      'Ein Etikett pro Stück, durch Kommas getrennt: Dieser Artikel wird Stück für Stück geführt.';
 
   @override
   String get standaloneInvoiceLinePrice => 'Einzelpreis';

@@ -23,6 +23,8 @@ class StandaloneLine {
     this.baseQuantity = '1',
     this.supply = 'general',
     this.vatRateId,
+    this.itemId,
+    this.pieceTags = const [],
   });
 
   /// The line's own identity, kept across saves; null until the server gave it.
@@ -38,14 +40,25 @@ class StandaloneLine {
   final bool grossPrice;
   final String baseQuantity;
 
-  /// `general` or `property`: what the line supplies, for the place of supply.
+  /// `general` or `property`: what the line supplies, for the place of supply; `goods` for a line that sells a
+  /// stock item ([itemId], #4433).
   final String supply;
 
-  /// One of the business's own VAT rates; null takes its default.
+  /// One of the business's own VAT rates; null takes its default (for goods, the item's own rate first).
   final String? vatRateId;
 
+  /// #4433 -- the stock item a goods line sells; null for a service or property line.
+  final String? itemId;
+
+  /// #4433 -- the tags of the pieces a goods line sells, for an item tracked piece by piece; empty otherwise.
+  final List<String> pieceTags;
+
+  /// Whether the line sells goods from the stock.
+  bool get isGoods => itemId != null;
+
   /// The same line with only [description], [quantity], [unit] (code, label and UN/ECE code together), [unitPrice],
-  /// [grossPrice] or [vatRateId] changed: the supply kind and the base quantity it was read with are kept.
+  /// [grossPrice], [vatRateId] or the goods it sells ([goods]: the item, or none, and the piece tags) changed: the
+  /// base quantity it was read with is kept, and the supply kind unless the goods change it.
   StandaloneLine copyWith({
     String? description,
     String? quantity,
@@ -53,6 +66,7 @@ class StandaloneLine {
     String? unitPrice,
     bool? grossPrice,
     String? Function()? vatRateId,
+    ({String? itemId, List<String> tags})? goods,
   }) => StandaloneLine(
     lineId: lineId,
     description: description ?? this.description,
@@ -63,8 +77,14 @@ class StandaloneLine {
     unitPrice: unitPrice ?? this.unitPrice,
     grossPrice: grossPrice ?? this.grossPrice,
     baseQuantity: baseQuantity,
-    supply: supply,
+    supply: switch (goods) {
+      null => supply,
+      (itemId: final String _, tags: _) => 'goods',
+      _ => supply == 'goods' ? 'general' : supply,
+    },
     vatRateId: vatRateId == null ? this.vatRateId : vatRateId(),
+    itemId: goods == null ? itemId : goods.itemId,
+    pieceTags: goods == null ? pieceTags : (goods.itemId == null ? const [] : goods.tags),
   );
 
   Map<String, Object?> toWire() => {
@@ -77,6 +97,8 @@ class StandaloneLine {
     'base_quantity': baseQuantity,
     'supply': supply,
     if (vatRateId != null) 'vat_rate_id': vatRateId,
+    if (itemId != null) 'item_id': itemId,
+    if (pieceTags.isNotEmpty) 'units': [for (final t in pieceTags) {'tag': t}],
   };
 
   StandaloneLine withLineId(String? id) => StandaloneLine(
@@ -91,6 +113,8 @@ class StandaloneLine {
     baseQuantity: baseQuantity,
     supply: supply,
     vatRateId: vatRateId,
+    itemId: itemId,
+    pieceTags: pieceTags,
   );
 
   factory StandaloneLine.fromJson(JsonReader r) {
@@ -107,6 +131,11 @@ class StandaloneLine {
       baseQuantity: r.stringOr('base_quantity', '1'),
       supply: r.stringOr('supply', 'general'),
       vatRateId: r.stringOrNull('vat_rate_id'),
+      itemId: r.stringOrNull('item_id'),
+      pieceTags: [
+        for (final u in r.objects('units', (u) => u.stringOr('tag')))
+          if (u.isNotEmpty) u,
+      ],
     );
   }
 }

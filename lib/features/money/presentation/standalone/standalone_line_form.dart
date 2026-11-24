@@ -2,6 +2,8 @@
 //
 // #4165 (A2) -- one itemised line of the composer: the fields a person types
 // and chooses. Quantities and prices stay text; the server reads them exactly.
+// #4433 -- a line may sell an item kept in stock: it is then counted in the
+// item's own unit and, for an item tracked piece by piece, names its pieces.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,7 @@ import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../domain/invoice_goods.dart';
 import '../../domain/standalone_invoice.dart';
 
 /// The units the composer offers, by the UN/ECE code the structured invoice
@@ -43,9 +46,12 @@ class StandaloneLineForm {
       unit = (from ?? _newLine).unitCode,
       gross = (from ?? _newLine).grossPrice,
       rateId = from?.vatRateId,
+      itemId = from?.itemId,
+      goodsUnit = from != null && from.isGoods ? (code: from.unitCode, label: from.unitLabel, un: from.unEceCode) : null,
       description = TextEditingController(text: from?.description),
       quantity = TextEditingController(text: from?.quantity),
-      price = TextEditingController(text: from?.unitPrice);
+      price = TextEditingController(text: from?.unitPrice),
+      tags = TextEditingController(text: from?.pieceTags.join(', '));
 
   /// The line this form was opened with: what it does not edit (the supply kind, the base quantity) is kept as it was.
   final StandaloneLine? _from;
@@ -61,14 +67,31 @@ class StandaloneLineForm {
   String unit;
   bool gross;
   String? rateId;
+
+  /// #4433 -- the stock item the line sells, and the unit it is then counted in (the item's own); null for a service.
+  String? itemId;
+  ({String code, String label, String un})? goodsUnit;
   final TextEditingController description;
   final TextEditingController quantity;
   final TextEditingController price;
+
+  /// The tags of the pieces sold, for an item tracked piece by piece.
+  final TextEditingController tags;
+
+  /// Makes the line sell [item] (or nothing from the stock): its unit becomes the item's, and an empty description
+  /// takes the item's name.
+  void sell(InvoiceGoodsItem? item) {
+    itemId = item?.id;
+    goodsUnit = item == null ? null : (code: item.unit, label: item.unit, un: goodsUnitUnEce(item.unit));
+    if (item != null && description.text.trim().isEmpty) description.text = item.name;
+    if (item == null) tags.clear();
+  }
 
   void dispose() {
     description.dispose();
     quantity.dispose();
     price.dispose();
+    tags.dispose();
   }
 
   StandaloneLine toLine(BuildContext context) {
@@ -82,10 +105,12 @@ class StandaloneLineForm {
     return base.copyWith(
       description: description.text.trim(),
       quantity: decimalTextFromInput(quantity.text, locale: locale, grouping: false) ?? quantity.text.trim(),
-      unit: (code: unit, label: keep ? from.unitLabel : _unitLabel(context, unit), un: keep ? from.unEceCode : (listed.isEmpty ? '' : listed.first.un)),
+      unit: goodsUnit ??
+          (code: unit, label: keep ? from.unitLabel : _unitLabel(context, unit), un: keep ? from.unEceCode : (listed.isEmpty ? '' : listed.first.un)),
       unitPrice: decimalTextFromInput(price.text, locale: locale) ?? price.text.trim(),
       grossPrice: gross,
       vatRateId: () => rateId,
+      goods: (itemId: itemId, tags: itemId == null ? const <String>[] : pieceTagsOf(tags.text)),
     ).withLineId(lineId);
   }
 }
@@ -111,6 +136,8 @@ class StandaloneLineEditor extends StatelessWidget {
     required this.onChanged,
     required this.onRemove,
     this.enabled = true,
+    this.goods = const [],
+    this.pieces = false,
   });
 
   final int index;
@@ -120,9 +147,16 @@ class StandaloneLineEditor extends StatelessWidget {
   final VoidCallback? onRemove;
   final bool enabled;
 
+  /// #4433 -- the items kept in stock a line may sell; none offers no choice.
+  final List<InvoiceGoodsItem> goods;
+
+  /// Whether a line may name the pieces it sells (a standalone invoice; a quote names none).
+  final bool pieces;
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final sold = goods.where((g) => g.id == form.itemId).firstOrNull;
     return Card(
       key: ValueKey('standalone-line-$index'),
       child: Padding(
@@ -137,6 +171,28 @@ class StandaloneLineEditor extends StatelessWidget {
               enabled: enabled,
               onChanged: (_) => onChanged(),
             ),
+            if (goods.isNotEmpty || form.itemId != null) ...[
+              const FormGap(),
+              DropdownButtonFormField<String?>(
+                key: ValueKey('standalone-line-$index-goods'),
+                isExpanded: true,
+                initialValue: form.itemId,
+                decoration: InputDecoration(labelText: l.standaloneInvoiceLineGoods),
+                items: [
+                  DropdownMenuItem<String?>(child: Text(l.standaloneInvoiceLineNoGoods)),
+                  if (form.itemId != null && sold == null)
+                    DropdownMenuItem<String?>(value: form.itemId, child: Text(form.description.text)),
+                  for (final g in goods)
+                    DropdownMenuItem<String?>(value: g.id, child: Text(g.name, overflow: TextOverflow.ellipsis)),
+                ],
+                onChanged: enabled
+                    ? (v) {
+                        form.sell(goods.where((g) => g.id == v).firstOrNull);
+                        onChanged();
+                      }
+                    : null,
+              ),
+            ],
             const FormGap(),
             Row(
               children: [
@@ -151,7 +207,13 @@ class StandaloneLineEditor extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: DropdownButtonFormField<String>(
+                  child: switch (form.goodsUnit) {
+                    final g? => InputDecorator(
+                      key: ValueKey('standalone-line-$index-goods-unit'),
+                      decoration: InputDecoration(labelText: l.standaloneInvoiceLineUnit, enabled: false),
+                      child: Text(g.label),
+                    ),
+                    null => DropdownButtonFormField<String>(
                     key: ValueKey('standalone-line-$index-unit'),
                     initialValue: form.unit,
                     decoration: InputDecoration(labelText: l.standaloneInvoiceLineUnit),
@@ -170,9 +232,21 @@ class StandaloneLineEditor extends StatelessWidget {
                           }
                         : null,
                   ),
+                  },
                 ),
               ],
             ),
+            if (pieces && (sold?.byPiece ?? form.tags.text.isNotEmpty)) ...[
+              const FormGap(),
+              AppTextField(
+                key: ValueKey('standalone-line-$index-pieces'),
+                controller: form.tags,
+                label: l.standaloneInvoiceLinePieces,
+                helper: l.standaloneInvoiceLinePiecesHint,
+                enabled: enabled,
+                onChanged: (_) => onChanged(),
+              ),
+            ],
             const FormGap(),
             AppTextField(
               key: ValueKey('standalone-line-$index-price'),

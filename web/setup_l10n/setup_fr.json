@@ -820,6 +820,8 @@
  "shopTypeCornerShop": "Supérette",
  "stockWeighedGoods": "Les marchandises se vendent au poids",
  "stockWeighedGoodsHint": "Un nouvel article de stock est proposé en kilogrammes plutôt qu’en pièces (boucherie, boulangerie, comptoir d’épicerie).",
+ "stockInvoiceSalePlace": "Lieu d’où partent les biens vendus sur facture",
+ "stockInvoiceSalePlaceHint": "Le code d’un lieu qui détient du stock, par exemple MAIN. À l’émission d’une facture qui vend des biens, ils en partent. Modifiable ensuite dans les réglages de l’espace.",
  "stockGroupTagMode": "Mode d'étiquette par défaut des articles",
  "stockGroupTagModeHint": "Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce). Se règle dans les paramètres de l'app.",
  "stockGroupCountDays": "Cycle de comptage par défaut",

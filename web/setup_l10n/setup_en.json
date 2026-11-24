@@ -820,6 +820,8 @@
  "shopTypeCornerShop": "Corner shop",
  "stockWeighedGoods": "Goods are sold by weight",
  "stockWeighedGoodsHint": "A new stock item is proposed in kilograms instead of pieces (butcher, bakery, grocery counter).",
+ "stockInvoiceSalePlace": "Place goods sold on an invoice leave from",
+ "stockInvoiceSalePlaceHint": "The code of a place that holds stock, for example MAIN. When an invoice that sells goods is issued, they leave from there. You can change it later in the workspace settings.",
  "stockGroupTagMode": "Default tag mode of items",
  "stockGroupTagModeHint": "Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece). Set in the app's settings.",
  "stockGroupCountDays": "Default count cycle",
