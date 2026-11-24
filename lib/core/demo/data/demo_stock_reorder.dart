@@ -8,6 +8,7 @@
 // A draft is kept here, once per request: nothing is ordered, priced or sent.
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_config_commands.dart';
+import 'package:deskilo/features/stock/domain/stock_ledger.dart';
 import 'package:deskilo/features/stock/domain/stock_reorder.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
@@ -21,8 +22,6 @@ class DemoStockReorder implements StockReorder {
   final StockConfigCommands _config;
 
   static const _site = 'demo-place-main';
-
-  static final _quantity = RegExp(r'^[0-9]{1,12}(\.[0-9]{1,6})?$');
 
   /// The business's points, as the server holds them: the beans and the syrup are below theirs, the
   /// milk and the mugs above. Editable from the Reorder page (the server's rules).
@@ -53,19 +52,6 @@ class DemoStockReorder implements StockReorder {
 
   final _drafts = <String, ReplenishmentDraft>{};
 
-  Future<Set<String>> _siteTree() async {
-    final places = await _config.places(_workspaceId);
-    final out = {_site};
-    var grew = true;
-    while (grew) {
-      grew = false;
-      for (final p in places) {
-        if (p.parentId != null && out.contains(p.parentId) && out.add(p.id)) grew = true;
-      }
-    }
-    return out;
-  }
-
   @override
   Future<List<StockReorderPoint>> points(String workspaceId) async =>
       workspaceId == _workspaceId ? _points.values.toList() : const [];
@@ -84,10 +70,10 @@ class DemoStockReorder implements StockReorder {
     if (pointId != null && old == null) throw const StockConfigRefused('point', StockRefusal.malformed);
     if (old != null && old.revision != expectedRevision) throw const StockConfigStale();
     final (:item, :variant, :site) = await _targetOf(body, old);
-    final read = _quantityOf(body, 'reorder_point', old?.reorderPoint);
-    final quantity = _quantityOf(body, 'reorder_quantity', old?.reorderQuantity);
-    final target = _quantityOf(body, 'target_quantity', old?.targetQuantity);
-    final level = _checkRule(read, quantity, target);
+    final read = StockLedger.reorderQuantityOf(body, 'reorder_point', old?.reorderPoint);
+    final quantity = StockLedger.reorderQuantityOf(body, 'reorder_quantity', old?.reorderQuantity);
+    final target = StockLedger.reorderQuantityOf(body, 'target_quantity', old?.targetQuantity);
+    final level = StockLedger.reorderRule(read, quantity, target);
     if (_points.values.any((p) => p.itemId == item && p.variantId == variant && p.siteId == site && p.id != pointId)) {
       throw const StockConfigRefused('item_id', StockRefusal.pointTwice);
     }
@@ -118,39 +104,14 @@ class DemoStockReorder implements StockReorder {
     return (item: item, variant: variant, site: site);
   }
 
-  /// A quantity of the payload, read as the server reads it: absent keeps [fallback], empty clears.
-  static ExactQuantity? _quantityOf(Map<String, Object?> point, String key, ExactQuantity? fallback) {
-    if (!point.containsKey(key)) return fallback;
-    final text = (point[key] as String?)?.trim();
-    if (text == null || text.isEmpty) return null;
-    if (!_quantity.hasMatch(text)) throw StockConfigRefused(key, StockRefusal.quantityInvalid);
-    return ExactQuantity.parse(text);
-  }
-
-  /// The server's rules for what to order: a level, a quantity or a level to order up to (not both).
-  static ExactQuantity _checkRule(ExactQuantity? level, ExactQuantity? quantity, ExactQuantity? target) {
-    if (level == null) throw const StockConfigRefused('reorder_point', StockRefusal.quantityInvalid);
-    if (quantity != null && target != null) throw const StockConfigRefused('target_quantity', StockRefusal.quantityAndTarget);
-    if (quantity != null && quantity.compareTo(ExactQuantity.zero) <= 0) {
-      throw const StockConfigRefused('reorder_quantity', StockRefusal.quantityInvalid);
-    }
-    if (target != null && target.compareTo(level) <= 0) throw const StockConfigRefused('target_quantity', StockRefusal.targetBelowPoint);
-    return level;
-  }
-
   @override
   Future<List<StockLowRow>> low(String workspaceId, {String? siteId}) async {
     if (workspaceId != _workspaceId || (siteId != null && siteId != _site)) return const [];
-    final tree = await _siteTree();
-    final onHand = await _ledger.onHand();
     final rows = <StockLowRow>[];
     for (final p in _points.values) {
       final item = DemoStockLedger.items.where((i) => i.id == p.itemId).firstOrNull;
       if (item == null || !p.active || p.variantId != null || p.siteId != _site) continue;
-      var held = ExactQuantity.zero;
-      for (final r in onHand) {
-        if (r.itemId == item.id && r.variantId == null && tree.contains(r.locationId)) held = held + r.quantity;
-      }
+      final held = _ledger.core.heldInSite(item.id, _site);
       if (held.compareTo(p.reorderPoint) > 0) continue;
       final ExactQuantity? proposed = p.reorderQuantity ?? (p.targetQuantity == null ? null : p.targetQuantity! - held);
       rows.add(
