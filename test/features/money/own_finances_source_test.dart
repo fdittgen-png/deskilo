@@ -252,7 +252,7 @@ void main() {
   });
 
   test(
-    'the selected workspace repository runs my_finance_overview on the '
+    'the selected workspace repository runs my_finance_overview_v2 on the '
     'selected workspace\'s client — that installation answers, no other',
     () async {
       final requests = <String>[];
@@ -296,7 +296,7 @@ void main() {
       final overview = await container
           .read(selectedWorkspaceAccountActivityRepositoryProvider)
           .overview();
-      expect(requests, ['w.example/rest/v1/rpc/my_finance_overview']);
+      expect(requests, ['w.example/rest/v1/rpc/my_finance_overview_v2']);
       expect(overview.invoices.single.currency, 'CHF');
       expect(overview.invoices.single.networkId, 'inst-w:${overview.invoices.single.workspaceId}');
     },

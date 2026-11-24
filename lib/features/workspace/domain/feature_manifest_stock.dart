@@ -161,4 +161,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockManagement,
     defaultOn: false,
   ),
+  // #4373 — the till keeps selling for cash when it is offline, and the sales are sent once the connection returns. Asked for, under till sessions.
+  WorkspaceFeature.counterOfflineCash: FeatureManifestEntry(
+    feature: WorkspaceFeature.counterOfflineCash,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.counterTillSessions,
+    defaultOn: false,
+  ),
 };

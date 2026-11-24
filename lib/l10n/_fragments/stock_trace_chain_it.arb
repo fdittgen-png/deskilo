@@ -16,5 +16,7 @@
   "stockMoveReasonAdjustment": "Inventario rettificato",
   "stockMoveReasonOpening": "Giacenza iniziale",
   "stockMoveReasonReturnIn": "Reso dal cliente",
-  "stockMoveReasonReturnOut": "Reso al fornitore"
+  "stockMoveReasonReturnOut": "Reso al fornitore",
+  "stockChainPieceTitle": "Tutti i movimenti di questo pezzo",
+  "stockChainOpen": "Tutti i movimenti"
 }

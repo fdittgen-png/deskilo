@@ -2928,6 +2928,44 @@
       }
     }
   },
+  "billingAccessAccept": "Annehmen",
+  "billingAccessAccepted": "Erledigt. Die Rechnungen, die {business} auf Sie ausgestellt hat, erscheinen jetzt in Ihren Finanzen, getrennt von dem, was Sie als Mitglied schulden.",
+  "billingAccessAction": "Kontozugang",
+  "billingAccessActive": "Liest die Rechnungen seit {date}",
+  "billingAccessAlreadyHeld": "Sie haben diesen Zugang bereits; ihn erneut anzunehmen ändert nichts.",
+  "billingAccessCheck": "Code prüfen",
+  "billingAccessCodeCopied": "Code kopiert",
+  "billingAccessCodeCopy": "Code kopieren",
+  "billingAccessCodeOnce": "Geben Sie diesen Code jetzt an den Kunden weiter. Er wird nur einmal angezeigt und kann nicht erneut gelesen werden. Er gilt bis {date}.",
+  "billingAccessCodeTitle": "Einladungscode",
+  "billingAccessCodeUnusable": "Dieser Code kann nicht verwendet werden. Er ist vielleicht falsch, abgelaufen, zurückgezogen oder schon von einem anderen Konto angenommen. Fragen Sie den Betrieb nach einem neuen.",
+  "billingAccessEnter": "Rechnungscode verwenden",
+  "billingAccessEnterIntro": "Ein Betrieb, der Ihnen Rechnungen stellt, kann Ihnen einen Code geben. Damit lesen Sie in Ihrem Konto die auf Sie ausgestellten Rechnungen. Sie werden kein Mitglied.",
+  "billingAccessEnterTitle": "Rechnungen eines Betriebs lesen",
+  "billingAccessExpired": "Einladung abgelaufen am {date}",
+  "billingAccessFailed": "Die Antwort ist nicht angekommen. Es ist nichts als geändert bekannt; versuchen Sie es erneut.",
+  "billingAccessGroupOpen": "Noch offen: {amounts}",
+  "billingAccessGroupSettled": "Nichts offen",
+  "billingAccessGroupTitle": "{business} · Konto {ref}",
+  "billingAccessIntro": "Laden Sie diesen Kunden ein, seine eigenen Rechnungen in seinem eigenen Konto zu lesen. Er wird kein Mitglied und sieht nichts anderes von Ihrem Betrieb.",
+  "billingAccessInvite": "Einladungscode erstellen",
+  "billingAccessInvited": "Eingeladen am {date}, noch nicht angenommen",
+  "billingAccessLoadFailed": "Die Einladungen konnten nicht gelesen werden. Das ist keine leere Liste.",
+  "billingAccessNone": "Noch keine Einladung.",
+  "billingAccessNotACustomer": "Nur ein Rechnungskunde kann eingeladen werden. Nichts wurde geändert.",
+  "billingAccessNotAllowed": "Sie dürfen hier keine Kunden zu einem Konto einladen. Nichts wurde geändert.",
+  "billingAccessPaymentSoon": "Diese Rechnungen von hier aus zu bezahlen, folgt mit einem späteren Update.",
+  "billingAccessPreviewLine": "{business} lädt Sie ein, die auf {name} ausgestellten Rechnungen zu lesen.",
+  "billingAccessPreviewUnnamed": "{business} lädt Sie ein, die auf Sie ausgestellten Rechnungen zu lesen.",
+  "billingAccessReasonTooLong": "Der Grund ist zu lang. Kürzen Sie ihn; nichts wurde geändert.",
+  "billingAccessRequestReused": "Diese Anfrage wurde schon für eine andere Einladung verwendet. Schließen Sie dieses Fenster und öffnen Sie es erneut; nichts wurde geändert.",
+  "billingAccessRevoke": "Zugang beenden",
+  "billingAccessRevokeNote": "Das Beenden des Zugangs löscht nichts: Die Rechnungen und ihr Verlauf bleiben unverändert.",
+  "billingAccessRevoked": "Zugang beendet am {date}",
+  "billingAccessSectionNote": "Rechnungen, die ein Betrieb auf Sie ausgestellt hat, gelesen über den Zugang, den er Ihnen gegeben hat. Sie zählen nicht zu dem, was Sie als Mitglied schulden.",
+  "billingAccessSectionTitle": "Als Kunde in Rechnung gestellt",
+  "billingAccessTitle": "Kontozugang: {name}",
+  "billingAccessUnknownGrant": "Dieser Zugang existiert nicht mehr. Schließen Sie die Liste und öffnen Sie sie erneut; nichts wurde geändert.",
   "billingAddBand": "Band hinzufügen",
   "billingAddLevel": "Stufe hinzufügen",
   "billingAddPackage": "Paket hinzufügen",
@@ -2967,7 +3005,7 @@
   "billingCustomersAdd": "Kunden hinzufügen",
   "billingCustomersEmpty": "Noch keine Rechnungskunden. Legen Sie den ersten an, um ihm eine Rechnung zu stellen, ohne dass er ein Konto anlegen muss.",
   "billingCustomersLoadFailed": "Die Kunden konnten nicht gelesen werden. Das ist keine leere Liste.",
-  "billingCustomersNoAccount": "Die Personen und Unternehmen, denen Sie Rechnungen stellen. Sie haben kein Konto und sehen nichts von Ihrem Betrieb.",
+  "billingCustomersNoAccount": "Die Personen und Unternehmen, denen Sie Rechnungen stellen. Sie sind keine Mitglieder und sehen nichts von Ihrem Betrieb, es sei denn, Sie laden sie ein, ihre eigenen Rechnungen in ihrem eigenen Konto zu lesen.",
   "billingCustomersRetry": "Erneut versuchen",
   "billingCustomersSearch": "Kunden suchen",
   "billingCustomersTitle": "Rechnungskunden",
@@ -7202,6 +7240,14 @@
   "featureConfigurationTransferDesc": "Die Raumdatei (XML) trägt die gesamte Konfiguration — Tarife, rechtliche Identität, Buchungs- und Freigaberegeln, Rollen, Dokumentvorlagen, Standorte, Schließtage — und der Import wendet sie an, auch auf einen Raum, der schon Buchungen hat. Aus: die Datei trägt nur Einstellungen und Grundriss.",
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "featureCounterOfflineCashDesc": "Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  },
+  "featureCounterOfflineCashTitle": "Offline verkaufen, nur bar",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
   },
   "featureCounterReceiptsDesc": "Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.",
   "featureCounterReceiptsTitle": "Kassenbelege",
@@ -16633,6 +16679,10 @@
   "refusalCounterEssentials": "Für diesen Beleg fehlt etwas oder es ist nicht zulässig: Es wurde nichts nummeriert und nichts angenommen.",
   "refusalCounterGoods": "Waren können hier nicht verkauft oder zurückgenommen werden: Das Warenbuch ist aus, oder es gibt keinen Ort, von dem sie genommen oder an den sie zurückgelegt werden.",
   "refusalCounterNotOpen": "Dieser Beleg ist kein offener Entwurf mehr, oder für denselben Verkauf wurde schon ein Beleg ausgestellt.",
+  "refusalCounterOfflineConflict": "Ein von der Kasse unter dieser Nummer gesendeter Verkauf wurde bereits mit anderem Inhalt empfangen. Es wurde nichts erneut erfasst; sehen Sie in der Liste der Offline-Verkäufe nach.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  },
   "refusalCounterTenderState": "Diese Kartenfreigabe ist noch offen, unbekannt oder schon abgeschlossen: Fragen Sie beim Anbieter nach, statt erneut anzufragen.",
   "refusalCounterTenders": "Die Zahlungen begleichen diesen Verkauf nicht genau, oder eine davon wird hier nicht angenommen.",
   "refusalCounterTill": "Die Kasse ist dafür nicht bereit: Öffnen Sie sie zuerst, oder sie ist schon offen oder geschlossen.",
@@ -19134,6 +19184,18 @@
   "settingHintCounterCustomerlessSales": "Erlaubt: Ein Verkauf kann ohne Kundennamen erfolgen. Abgelehnt: Jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an.",
   "settingHintCounterDocumentChannel": "Geteilt (Nachricht oder Mail), gedruckt oder beides. Der Beleg ist in jedem Fall dasselbe unveränderliche Dokument.",
   "settingHintCounterFiscalObligation": "Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.",
+  "settingHintCounterOfflineMaxMinutes": "Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflineMaxSales": "Wie viele offline getätigte Barverkäufe eine Kassensitzung annimmt. Weitere werden abgelehnt und aufgelistet.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflinePriceTolerance": "Wie weit der Preis eines Offline-Verkaufs beim Senden in Prozent vom Preis des Artikels abweichen darf. 0 heißt: der Preis muss gleich sein.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
   "settingHintCounterPaidOutLimit": "Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.",
   "settingHintDirectoryGeocoderUrl": "Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.",
   "settingHintDirectoryTileUrlTemplate": "Der Kachelserver, aus dem die Entdecken-Karte gezeichnet wird, mit den Platzhaltern z, x und y in geschweiften Klammern in der Adresse (s in geschweiften Klammern für eine Subdomain ist erlaubt): https, im öffentlichen Internet, ohne Benutzername, Passwort oder #. Leer lassen, um den Server dieser App-Version zu verwenden, sonst OpenStreetMap. Ein neuer Host fragt jede Person erneut, bevor die Karte lädt.",
@@ -19374,6 +19436,18 @@
   "settingLabelCounterCustomerlessSales": "Verkäufe ohne genannten Kunden",
   "settingLabelCounterDocumentChannel": "Wie ein Kassenbeleg die Kasse verlässt",
   "settingLabelCounterFiscalObligation": "Steuerliche Vorgaben für Kassenverkäufe",
+  "settingLabelCounterOfflineMaxMinutes": "Längste Offline-Zeit (Minuten)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflineMaxSales": "Höchstzahl Offline-Verkäufe je Kassensitzung",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Erlaubte Preisabweichung offline (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
+  },
   "settingLabelCounterPaidOutLimit": "Größte Entnahme ohne Freigabe",
   "settingLabelDirectoryGeocoderUrl": "Adresssuchdienst",
   "settingLabelDirectoryTileUrlTemplate": "Kachelserver der Karte",
@@ -20936,6 +21010,8 @@
   "stockChainDelivery": "Lieferung {label} von {supplier}",
   "stockChainEmpty": "Keine weitere Bewegung erfasst.",
   "stockChainInvoice": "Rechnung {label}",
+  "stockChainOpen": "Alle Bewegungen",
+  "stockChainPieceTitle": "Alle Bewegungen dieses Stücks",
   "stockChainPieces": "{count, plural, one{{count} Stück} other{{count} Stück}}",
   "stockChainReceipt": "Beleg {label}",
   "stockChainTitle": "Alle Bewegungen dieser Charge",
@@ -22148,6 +22224,39 @@
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockUnitChangedNow": "Die Einheit ist jetzt bei {place}: Lesen Sie sie neu.",
+  "stockUnitCode": "Einheitencode",
+  "stockUnitContent": "Inhalt",
+  "stockUnitContentNone": "Nichts darin.",
+  "stockUnitKind": "Art",
+  "stockUnitKindBox": "Schachtel",
+  "stockUnitKindCarton": "Karton",
+  "stockUnitKindCrate": "Kiste",
+  "stockUnitKindOther": "Andere",
+  "stockUnitKindPallet": "Palette",
+  "stockUnitLabelCode": "Lieferantenetikett (SSCC), falls vorhanden",
+  "stockUnitLoose": "{quantity} lose hier",
+  "stockUnitMade": "{unit} angelegt.",
+  "stockUnitMake": "Einheit anlegen",
+  "stockUnitMove": "Bewegen",
+  "stockUnitMoveTo": "Bewegen nach",
+  "stockUnitMoved": "{unit} nach {place} bewegt.",
+  "stockUnitNestedIn": "In {unit}",
+  "stockUnitPlace": "Ort",
+  "stockUnitRepack": "In Kisten umpacken",
+  "stockUnitRepackBoxes": "Anzahl Kisten",
+  "stockUnitRepackEach": "Menge je Kiste",
+  "stockUnitRepackItem": "Was umgepackt wird",
+  "stockUnitRepacked": "{count, plural, one{1 Kiste angelegt.} other{{count} Kisten angelegt.}}",
+  "stockUnitUnpack": "Auspacken",
+  "stockUnitUnpackHint": "Der Inhalt bleibt, wo er ist, lose.",
+  "stockUnitUnpacked": "{unit} ausgepackt.",
+  "stockUnitsAllPlaces": "Alle Orte",
+  "stockUnitsChooseItem": "Artikel wählen",
+  "stockUnitsEmpty": "Noch keine Einheit. Legen Sie eine aus losem Bestand an einem Ort an.",
+  "stockUnitsIntro": "Eine Palette, ein Karton oder eine eigene Kiste: Sie bewegt sich mit ihrem ganzen Inhalt, und jede Charge und jedes Stück bleibt rückverfolgbar.",
+  "stockUnitsReadFailed": "Die Einheiten konnten nicht gelesen werden.",
+  "stockUnitsTitle": "Packeinheiten",
   "stockValueBasis": "Ein operativer Wert aus den erfassten Bewegungen zu den erfassten Chargenkosten. Er ist kein gebuchter Lagerbuchsaldo und nennt keinen Wareneinsatz.",
   "stockValueComplete": "Jeder vorrätige Artikel hat bekannte Kosten.",
   "stockValueCutoff": "Stand {at}, berechnet {calculated} aus {count, plural, one{einer Bewegung} other{{count} Bewegungen}}.",
@@ -23700,6 +23809,15 @@
   "tillOpReconcileTender": "Kartenzahlung abgleichen",
   "tillOpSignFiscal": "fiskalischen Beleg signieren",
   "tillPayCash": "Bar kassieren",
+  "tillPieceTwice": "Stück {code} ist schon im Warenkorb.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Warenkorb wird berechnet …",
   "tillQuantityHint": "Eine genaue Menge, zum Beispiel 1 oder 0,350.",
   "tillQuantityRefused": "Geben Sie eine Menge über null mit höchstens sechs Dezimalstellen ein.",
@@ -23710,10 +23828,40 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillScanUnknown": "{code} ist nichts, was diese Kasse verkauft.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillSoldTitle": "Verkauft",
   "tillTaxIncluded": "davon Steuer {amount}",
   "tillTitle": "Kasse",
   "tillTotalDue": "Zu zahlender Betrag: {amount}",
+  "tillTrackLot": "Charge {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Stück {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tipAvailabilityClosure": "Einen Tag schließen, den niemand buchen kann: auf „Schließtag hinzufügen“ tippen und bei Bedarf einen Grund angeben.",
   "tipAvailabilityDays": "Die Öffnungstage festlegen: die Wochentage unter „Geöffnete Wochentage“ an- oder abwählen.",
   "tipAvailabilityGrid": "Festlegen, wie Buchungen geteilt werden: eine „Buchungsraster“ wählen – freie Zeiträume, Slots, halbe oder ganze Tage.",

@@ -2995,6 +2995,19 @@ Open **Sales & collections** and then **Billing customers**. This is where you k
 
 Choose **Add a customer** and give a company or a name, the postal address, the country code, the VAT number and an e-mail address for the invoice. The VAT number is checked for its shape only, never verified. **Billed as** (business or person) decides the legal mentions and the tax treatment of what you invoice; only someone who may issue invoices can change it. Choose a customer to edit it. If someone else changed the customer since you opened it, nothing is saved and you are asked to open it again. If the list cannot be read, retry rather than treating it as empty. Changing a customer never rewrites an invoice already issued: each keeps the name and address it was issued with.
 
+<!-- anchor: user.money.customers.access -->
+### Account access for a billing customer
+
+**Audience:** Administrator · Owner
+
+Open **Sales & collections** and then **Billing customers**, and choose the key beside a customer (**Account access**). This is where you let a customer read their own invoices from their own account, without making them a member. You need the right to manage billing customers.
+
+Choose **Create an invitation code**. The code is shown once, with its last day: give it to the customer now, because it cannot be read again. The customer enters it in **Use a billing code** under **My finances**, checks who invites them and accepts. Until then the invitation only waits. A code can be used by one account; one customer can be read by several accounts, each invited on its own, and one account can read several customers, so a person buying personally and for a company keeps two separate debtors.
+
+The list shows each invitation as invited, reading, expired or ended. **End access** stops the reading from then on; nothing is erased, and the invoices and their history stay as they are. The customer is never a member: no booking, directory, community, role or plan follows from the access. If the list cannot be read, retry rather than treating it as empty; if an answer does not arrive, press **Create an invitation code** again: the same request gives the same invitation, never a second one.
+
+**See also:** [Billing customers](#billing-customers)
+
 <!-- anchor: user.money.quotes -->
 ### Quotes
 
@@ -3100,7 +3113,7 @@ You want to say once what a family of items has in common — how long it keeps,
 
 Open **Stock → Item groups** (it needs the *Item groups* feature under stock management). A group has a name, sits at the top or inside another group (one level of sub-groups, no more) and carries the settings you choose: **tracking**, **shelf life**, **tag mode**, **inventory unit**, **count every n days**, **minimum age** and **sold by weight**. A setting you leave *Not set* is not decided at this level.
 
-- **An item follows its group unless it keeps its own value.** The value in force is the item's own if it has one, else its sub-group's, else its group's. Open an item's **Group and inherited settings** (the folder icon on its line in **Stock → Items**) to see where each setting comes from (*From Drinks since 3 Dec* or *Own value*), to move it into another group, and to give an own value back with **Use the group's value**.
+- **An item follows its group unless it keeps its own value.** The value in force is the item's own if it has one, else its sub-group's, else its group's. Open an item's **Group and inherited settings** (the folder icon on its line in **Stock → Items**) to see where each setting comes from (*From Drinks since 3 Dec* or *Own value*), to move it into another group, and to give an own value back with **Use the group's value**. The item's own **Stock settings** (tracking, shelf life, inventory unit) say *Own value* beside a setting where the item keeps a value of its own against its group.
 - **Every change is previewed.** Saving a group first shows what the change reaches: *applies to 1, 1 keep their own value, 0 cannot be reached*. Nothing is applied until you save a second time; editing anything in between asks for a new preview. An item the change cannot reach (for example a unit on an item that already has movements) is listed, and the group's change still saves for the others.
 - **Proposals and prices.** A group can propose to a new item a **default purchase unit** with its factor (a number or a fraction such as 1/3), a **reorder point and quantity** and a **home zone**: they are copied into a new item as a starting point and reach no existing item. **VAT rate**, **supply class**, **price rounding** and **target margin on cost** are shown and set only by someone who may manage services and see the finances; for anyone else they are neither shown nor changed by a save.
 - **History.** The group's sheet lists every change with how many items it reached; an item's source line says since when.
@@ -3150,6 +3163,8 @@ Press **Take cash** and type the **Cash given** (or **Exact amount**). Less than
 
 Where your country does not yet allow the counter, the till says which operation is missing and offers nothing: nothing is numbered and nothing is taken. A goods line needs stock management on; a refusal of the server is shown in words. Card payments, discounts, refunds and returns are not part of this first till.
 
+A traced good names what it was taken from. When you sell an item tracked by lot without choosing a lot, the sale takes it from the lots on hand, the first to expire first and never an expired one; under the sold line the till shows each lot's code as received with the quantity taken from it, for example **Lot SUP-A × 2 · Lot SUP-B × 1**, and each piece by its tag. Where the business uses a scanner, scan a piece's tag to ring up that piece: the sale takes exactly the pieces scanned, and the same piece twice is refused. These track IDs are frozen with the receipt: changing a lot or a tag later never alters a receipt already issued. In the stock, the trace of a lot or a piece names the receipt that sold it.
+
 <!-- anchor: user.money.stock.rfid -->
 ### RFID tags: one per batch or one per piece
 
@@ -3166,6 +3181,23 @@ With the *Tags* feature on, an item carries a **tag mode**, set on its group and
 - A bulk read counts pieces only for per-piece items. For a per-batch item it counts batches and shows the lot's recorded quantity beside the count, never as a counted figure.
 - The mode of an item that already has tags cannot change until its tags are retired or its stock is zero; a group's change then skips the item and lists it as kept. A tag on a place always names one place.
 - A tag code is a UHF label (EPC, an SGTIN-96 is read as its GTIN and serial by the server) or an NFC chip, stored in upper-case hex and unique in the business across items, pieces and places. Binding and retiring need the right to manage the stock; reading needs the right to see it.
+
+<!-- anchor: user.money.stock.units -->
+### Handling units
+
+**Audience:** Administrator · Owner
+
+You want goods to travel in the pallet or carton they came in, or in boxes of your own, and still know where every lot and piece is.
+
+With the *Handling units* feature on, open **Stock → Handling units**. A unit has a code of your own (and the supplier's label when it came on a labelled pallet), a kind (pallet, carton, crate, box), a place and a content: items with their lot, quantity and pieces. The list shows the open units, at one place or everywhere.
+
+- **Make a unit.** Press *Make a unit*: its code, its kind, its place and what it holds. A unit claims only stock that is **loose** at that place (what the place holds minus what other units there already hold); asking for more is refused and says how much is loose.
+- **Move.** *Move* takes the whole content to another place in one request: every lot and piece keeps its own trace. If someone moved or unpacked the unit since you read it, the move is refused and you read it again.
+- **Unpack.** *Unpack* leaves the content where it is, loose, and the unit is no longer open.
+- **Repack into boxes.** *Repack into boxes* takes a quantity out of a unit and puts it into boxes of your own (a number of boxes, a quantity in each). What goes in is exactly what came out: the stock total never changes, and a lot followed through the repack is found on both sides. A repack happens at one place; move the new boxes afterwards.
+
+- Stock that is packed in a unit cannot be taken out loose: the server refuses and names the unit. Move or unpack the unit first.
+- How an item is traced is chosen per item (or inherited from its group): not traced, by batch (with an expiry date where set) or by piece (a tag per piece).
 
 <!-- anchor: user.money.stock.expiry -->
 ### The expiry report
@@ -3205,6 +3237,7 @@ Open any line of **Stock** to see **Where is it** for that item (or that lot): e
 - **Now** is what the stock holds at this moment; **On a day…** shows what it held when that day was over, replayed from the movements. Nothing is changed by looking.
 - The places on a shelf always add up to the quantity shown on top.
 - At a past day the goods on the road are not shown; the pieces are, from the day they are followed (a piece made before has no history before it).
+- Tap a place that holds a lot to see **Every movement of this lot**, from the delivery it came with to where it went out; the timeline button of a piece shows **Every movement of this piece**. A document you may not see is named by its kind, never left out.
 
 <!-- anchor: user.money.stock.value -->
 ### Stock value and where goods came from
@@ -3288,6 +3321,29 @@ You belong to several spaces and want all your invoices, payments and reminders 
 - Full history, usage and other servers are reachable from the same screen.
 
 **See also:** [Your invoices](#your-invoices)
+
+<!-- anchor: user.money.finances.billed -->
+### Invoices a business made out to you as a customer
+
+**Audience:** Member
+
+A business that invoices you can give you a code, so you read what it invoices you from your own account, without joining it.
+
+**Steps**
+
+1. Open [My finances](https://fdittgen-png.github.io/deskilo/#/money) and, under **Outstanding**, choose **Use a billing code**.
+2. Enter the code and choose **Check the code**. You see which business invites you and in whose name its invoices are made out.
+3. Choose **Accept**. The invoices appear under **Billed to you as a customer**.
+
+**Good to know**
+
+- One card per business and per debtor: a person buying personally and for a company has two cards, and two debtors of one business are never added together. Amounts of different currencies are never added either.
+- These invoices are not counted with what you owe as a member, and they are not in your member lists or exports.
+- A code that cannot be used (wrong, expired, withdrawn, or already taken by another account) always gets the same answer: ask the business for a new one.
+- Accepting makes you no member of the business. The business can end the access, and so can you; nothing is erased when it ends.
+- Paying these invoices from here is not offered yet.
+
+**See also:** [Your finances across spaces](#your-finances-across-spaces)
 
 <!-- anchor: user.money.businesses -->
 ### Your businesses at a glance

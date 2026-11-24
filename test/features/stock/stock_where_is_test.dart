@@ -4,10 +4,12 @@
 // that hold the mugs add up to what the item holds, the goods on the road say from where to where, the pieces of the gift
 // basket are listed with their tag, a past day is replayed from the movements (and says the pieces are not shown yet), and a
 // failed read says so and can be asked again. The read itself: the answer is parsed as it comes and balances.
+// #4432: a piece opens "Every movement of this piece", asked of the chain by the piece and nothing else.
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_tags.dart';
 import 'package:deskilo/core/demo/data/demo_stock_where_is.dart';
+import 'package:deskilo/features/stock/domain/stock_trace_chain.dart';
 import 'package:deskilo/features/stock/domain/stock_where_is.dart';
 import 'package:deskilo/features/stock/presentation/stock_where_is_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
@@ -30,6 +32,16 @@ class _Failing implements StockWhereIs {
   }
 }
 
+class _Chain implements StockTraceChainReader {
+  final asked = <String>[];
+
+  @override
+  Future<TraceChain> chain(String workspaceId, {String? lotId, String? pieceId, String? movementId}) async {
+    asked.add('lot=$lotId piece=$pieceId movement=$movementId');
+    return const TraceChain(subject: 'piece', steps: []);
+  }
+}
+
 Future<void> _frames(WidgetTester tester) async {
   await tester.pump();
   for (var i = 0; i < 8; i++) {
@@ -42,12 +54,16 @@ DemoStockWhereIs _demo() {
   return DemoStockWhereIs(DemoStockLedger('ws-1', config), DemoStockTags());
 }
 
-Future<void> _open(WidgetTester tester, StockWhereIs port, String itemId, Size size) async {
+Future<void> _open(WidgetTester tester, StockWhereIs port, String itemId, Size size, {_Chain? chain}) async {
   await pumpApp(
     tester,
     StockWhereIsScreen(itemId: itemId),
     size: size,
-    overrides: [...standardTestOverrides(), stockWhereIsProvider.overrideWithValue(port)],
+    overrides: [
+      ...standardTestOverrides(),
+      stockWhereIsProvider.overrideWithValue(port),
+      stockTraceChainReaderProvider.overrideWithValue(chain ?? _Chain()),
+    ],
   );
   await _frames(tester);
 }
@@ -76,6 +92,19 @@ void main() {
         expect(find.text(_en.stockWhereIsPieces), findsOneWidget);
         expect(find.byKey(const ValueKey('stock-where-piece-demo-piece-1')), findsOneWidget);
         expect(find.textContaining('E2801160600002054AF3E001'), findsOneWidget);
+      });
+
+      testWidgets('a piece opens every movement of that piece, asked by the piece alone', (tester) async {
+        final chain = _Chain();
+        await _open(tester, _demo(), 'demo-item-basket', size, chain: chain);
+        final open = find.byKey(const ValueKey('stock-where-piece-chain-demo-piece-1'));
+        await tester.ensureVisible(open);
+        await tester.tap(open);
+        await _frames(tester);
+        expect(find.byKey(const ValueKey('stock-chain-sheet')), findsOneWidget);
+        expect(find.text(_en.stockChainPieceTitle), findsOneWidget);
+        expect(chain.asked, ['lot=null piece=demo-piece-1 movement=null']);
+        expect(find.byKey(const ValueKey('stock-chain-empty')), findsOneWidget);
       });
 
       testWidgets('a failed read says so and asks again; it is never an empty list', (tester) async {

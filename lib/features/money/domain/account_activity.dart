@@ -48,6 +48,7 @@ class AccountActivity {
     this.installationId,
     this.amountCents,
     this.minutes,
+    this.financialSubjectId,
   });
   final String id,
       workspaceId,
@@ -74,7 +75,12 @@ class AccountActivity {
     status: status,
     amountCents: amountCents,
     minutes: minutes,
+    financialSubjectId: financialSubjectId,
   );
+
+  /// #4164 B2 (0911) — the financial subject the row belongs to (the
+  /// seller-local `members.id`); null from a host that does not name it.
+  final String? financialSubjectId;
 
   final DateTime occurredAt;
   final int? amountCents, minutes;
@@ -94,6 +100,7 @@ class AccountActivity {
       status: r.string('status'),
       amountCents: r.intOrNull('amount_cents'),
       minutes: r.intOrNull('minutes'),
+      financialSubjectId: r.stringOrNull('financial_subject_id'),
     );
   }
 }

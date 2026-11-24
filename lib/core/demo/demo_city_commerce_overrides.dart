@@ -90,6 +90,8 @@ List<Override> demoCityCommerceOverrides(DemoFixture fixture) {
     billingCustomerRepositoryProvider.overrideWith(
       (ref) => demoPickSpace(ref, demoMapSpaces(stores, (s) => s.billingCustomers)),
     ),
+    // #4164 B2 — the grants are the account's: one set, whichever space is open.
+    billingAccessRepositoryProvider.overrideWith((ref) => stores.home.billingAccess),
     // #4166 — each space reads its own customer quotes.
     customerQuoteRepositoryProvider.overrideWith((ref) {
       // #4291 — the Demo's quotes are as long-lived as its settings say.

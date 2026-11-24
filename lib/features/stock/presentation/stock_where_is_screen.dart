@@ -4,6 +4,7 @@
 // variant and lot, now or on a day chosen; the goods on the road with their from and to; what left to a customer or a loss
 // or came back, with the movement that moved it; the pieces with their place, state and tags. The real places add up to
 // what the item holds, and the screen says so. A failed read says so and can be asked again; it is never an empty list.
+// #4432: a place row with a lot, and a piece, open "Every movement" of that lot or piece.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,6 +20,7 @@ import '../../money/providers/business_day_provider.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_where_is.dart';
 import '../providers/stock_providers.dart';
+import 'stock_chain_section.dart';
 
 class StockWhereIsScreen extends ConsumerStatefulWidget {
   const StockWhereIsScreen({required this.itemId, this.lotId, super.key});
@@ -72,6 +74,7 @@ class _State extends ConsumerState<StockWhereIsScreen> {
           ),
           data: (a) => _Answer(
             answer: a,
+            workspaceId: workspaceId,
             at: _at,
             today: ref.watch(businessDayProvider),
             onDay: (read) => _day(read, ref.read(businessDayProvider)),
@@ -82,9 +85,10 @@ class _State extends ConsumerState<StockWhereIsScreen> {
 }
 
 class _Answer extends StatelessWidget {
-  const _Answer({required this.answer, required this.at, required this.today, required this.onDay, required this.onNow});
+  const _Answer({required this.answer, required this.workspaceId, required this.at, required this.today, required this.onDay, required this.onNow});
 
   final WhereIsAnswer answer;
+  final String workspaceId;
   final DateTime? at;
   final DateTime today;
   final ValueChanged<DateRead> onDay;
@@ -111,10 +115,10 @@ class _Answer extends StatelessWidget {
             const SizedBox(height: AppSpacing.sm),
             _DateChips(at: at, today: today, onDay: onDay, onNow: onNow),
             const SizedBox(height: AppSpacing.md),
-            ..._places(context, answer),
+            ..._places(context, answer, workspaceId),
             ..._transit(context, answer),
             ..._away(context, answer),
-            ..._pieces(context, answer, at),
+            ..._pieces(context, answer, at, workspaceId),
           ],
         ),
       ),
@@ -165,7 +169,7 @@ class _DateChips extends StatelessWidget {
   }
 }
 
-List<Widget> _places(BuildContext context, WhereIsAnswer answer) {
+List<Widget> _places(BuildContext context, WhereIsAnswer answer, String workspaceId) {
   final l10n = context.l10n;
   final real = answer.real.toList();
   return [
@@ -177,6 +181,7 @@ List<Widget> _places(BuildContext context, WhereIsAnswer answer) {
         title: Text(_placeTitle(p)),
         subtitle: Text(_what(context, p)),
         trailing: Text(l10n.stockQuantityWithUnit(p.quantity.text, answer.unit), style: Theme.of(context).textTheme.titleMedium),
+        onTap: p.lotId == null ? null : () => showStockChainSheet(context, workspaceId: workspaceId, lotId: p.lotId),
       ),
   ];
 }
@@ -223,7 +228,7 @@ List<Widget> _away(BuildContext context, WhereIsAnswer answer) {
   ];
 }
 
-List<Widget> _pieces(BuildContext context, WhereIsAnswer answer, DateTime? at) {
+List<Widget> _pieces(BuildContext context, WhereIsAnswer answer, DateTime? at, String workspaceId) {
   final l10n = context.l10n;
   final pieces = answer.pieces;
   if (pieces == null || pieces.isEmpty) return const [];
@@ -237,6 +242,12 @@ List<Widget> _pieces(BuildContext context, WhereIsAnswer answer, DateTime? at) {
         contentPadding: EdgeInsets.zero,
         title: Text(p.tags.isEmpty ? p.pieceId : p.tags.join(', ')),
         subtitle: Text('${p.locationCode} \u00b7 ${p.state}'),
+        trailing: IconButton(
+          key: ValueKey('stock-where-piece-chain-${p.pieceId}'),
+          tooltip: l10n.stockChainOpen,
+          icon: const Icon(Icons.timeline),
+          onPressed: () => showStockChainSheet(context, workspaceId: workspaceId, pieceId: p.pieceId),
+        ),
       ),
     if (answer.piecesMore) Text(l10n.stockWhereIsPiecesMore, key: const ValueKey('stock-where-pieces-more'), style: Theme.of(context).textTheme.bodySmall),
     if (at != null && known != null && at.isBefore(known))

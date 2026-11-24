@@ -29,6 +29,7 @@ import '../../providers/business_receivables_providers.dart';
 import '../../providers/finance_overview_provider.dart';
 import '../../providers/invoice_group_providers.dart';
 import '../my_finances_open.dart';
+import '../widgets/billed_section.dart';
 import '../widgets/business_detail_sheet.dart';
 import '../widgets/dev_label.dart';
 import '../widgets/finance_document_views.dart';
@@ -174,7 +175,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
                 Expanded(
                   child: TabBarView(
                     children: [
-                      _Outstanding(data: prod, dev: dev, partial: partial),
+                      _Outstanding(data: prod, dev: dev, partial: partial, billed: prod.billedGroups),
                       _Paid(data: prod, dev: dev, partial: partial),
                       _Payments(
                           filter: _filter,
@@ -201,9 +202,10 @@ Widget _empty(BuildContext context, String key, IconData icon, String none,
         title: partial ? context.l10n.financesNothingSoFar : none);
 
 class _Outstanding extends ConsumerWidget {
-  const _Outstanding({required this.data, required this.dev, required this.partial});
+  const _Outstanding({required this.data, required this.dev, required this.partial, required this.billed});
   final FinanceOverview data;
   final bool partial;
+  final List<BilledSubject> billed; // #4164 B2: invoiced to me as a customer, apart
 
   /// The development spaces' outstanding invoices, listed apart.
   final FinanceOverview dev;
@@ -237,6 +239,7 @@ class _Outstanding extends ConsumerWidget {
               onOpen: (i) => unawaited(
                   openMyInvoice(context, ref, i.target, i.id, i.workspaceName))),
         ],
+        BilledPart(groups: billed, now: now), // #4164 B2
       ],
     );
   }
