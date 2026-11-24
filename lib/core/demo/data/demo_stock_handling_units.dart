@@ -10,6 +10,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../features/stock/domain/handling_units.dart';
 import '../../../features/stock/domain/stock_config.dart';
 import '../../../features/stock/domain/stock_page.dart';
+import '../../codes/dk_code.dart';
 import 'demo_stock_ledger.dart';
 
 class _Line {
@@ -87,7 +88,7 @@ class DemoStockHandlingUnits implements StockHandlingUnits {
 
   _Unit _byId(String id) {
     final u = _units.where((x) => x.id == id).firstOrNull;
-    if (u == null) _refuse('DKG28', {'reason': 'unit_unknown', 'unit_id': id});
+    if (u == null) _refuse(DkCode.dkg28, {'reason': 'unit_unknown', 'unit_id': id});
     return u;
   }
 
@@ -116,8 +117,8 @@ class DemoStockHandlingUnits implements StockHandlingUnits {
   }
 
   _Unit _make(UnitDraft d) {
-    if (_units.any((u) => u.code.toLowerCase() == d.code.trim().toLowerCase())) _refuse('DKG29', {'code': d.code});
-    if (d.code.trim().isEmpty) _refuse('DKG28', {'reason': 'unit'});
+    if (_units.any((u) => u.code.toLowerCase() == d.code.trim().toLowerCase())) _refuse(DkCode.dkg29, {'code': d.code});
+    if (d.code.trim().isEmpty) _refuse(DkCode.dkg28, {'reason': 'unit'});
     final u = _Unit('demo-unit-${_next++}', d.code.trim(), d.kind, d.locationId, labelCode: d.labelCode, parent: d.parentUnitId);
     _units.add(u);
     for (final l in d.lines) {
@@ -143,7 +144,7 @@ class DemoStockHandlingUnits implements StockHandlingUnits {
   _Unit _open(String unitId, int revision) {
     final u = _byId(unitId);
     if (u.state != HandlingUnitState.open || u.revision != revision) {
-      _refuse('DKG27', {'unit_id': u.id, 'state': u.state.name, 'location_id': u.locationId, 'revision': u.revision});
+      _refuse(DkCode.dkg27, {'unit_id': u.id, 'state': u.state.name, 'location_id': u.locationId, 'revision': u.revision});
     }
     return u;
   }
@@ -153,7 +154,7 @@ class DemoStockHandlingUnits implements StockHandlingUnits {
     final known = _answers[requestId];
     if (known != null) return known as HandlingUnit;
     final u = _open(unitId, revision);
-    if (toLocationId == u.locationId) _refuse('DKG28', {'reason': 'same_place', 'location_id': toLocationId});
+    if (toLocationId == u.locationId) _refuse(DkCode.dkg28, {'reason': 'same_place', 'location_id': toLocationId});
     final moving = [u, for (final c in _units) if (c.parent == u.id && c.state == HandlingUnitState.open) c];
     for (final m in moving) {
       for (final l in m.lines) {
@@ -197,7 +198,7 @@ class DemoStockHandlingUnits implements StockHandlingUnits {
       if (s.unitId != null) {
         final u = _byId(s.unitId!);
         final l = u.lines.where((x) => x.itemId == s.line.itemId).firstOrNull;
-        if (l == null || l.quantity < q) _refuse('DKG28', {'reason': 'not_in_unit', 'unit_id': u.id});
+        if (l == null || l.quantity < q) _refuse(DkCode.dkg28, {'reason': 'not_in_unit', 'unit_id': u.id});
         taken.add((l, q));
       } else if (q > _loose(s.line.itemId, place)) {
         throw const StockNotEnough('not that much loose');
@@ -210,7 +211,7 @@ class DemoStockHandlingUnits implements StockHandlingUnits {
       }
     }
     for (final e in out.entries) {
-      if ((into[e.key] ?? ExactQuantity.zero) != e.value) _refuse('DKG28', {'reason': 'conservation', 'item_id': e.key});
+      if ((into[e.key] ?? ExactQuantity.zero) != e.value) _refuse(DkCode.dkg28, {'reason': 'conservation', 'item_id': e.key});
     }
     for (final (l, q) in taken) {
       l.quantity = l.quantity - q;

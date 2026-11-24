@@ -12,6 +12,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_trace_chain.dart';
 import '../providers/stock_providers.dart';
@@ -44,7 +45,7 @@ String? _documentText(AppLocalizations l10n, TraceDocument? d) {
 
 /// Opens the chain of a lot or of a piece (exactly one of them) in a sheet.
 Future<void> showStockChainSheet(BuildContext context, {required String workspaceId, String? lotId, String? pieceId}) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,

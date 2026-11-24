@@ -380,11 +380,7 @@ const List<RouteCoverage> routeCoverage = [
   // #2577 — the purchase and sales pages: doors to recorded screens.
   RouteCoverage('/money/purchases', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/purchases/doc/:id', CoverageStatus.planned, owner: '#1884'),
-  RouteCoverage(
-    '/money/purchases/approvals',
-    CoverageStatus.planned,
-    owner: '#1884',
-  ),
+  RouteCoverage('/money/purchases/approvals', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/suppliers', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/suppliers/:id', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/customers', CoverageStatus.planned, owner: '#1884'),
