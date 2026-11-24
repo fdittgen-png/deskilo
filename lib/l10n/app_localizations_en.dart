@@ -40709,6 +40709,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unblockAction => 'Unblock';
 
   @override
+  String get unknownWireInvoiceKind =>
+      'A kind this version of the app does not know';
+
+  @override
+  String unknownWireKindFeatures(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count features',
+      one: 'one feature',
+    );
+    return 'This kind also sets $_temp0 this version of the app does not know. Update the app to choose it.';
+  }
+
+  @override
+  String get unknownWireReadOnly =>
+      'This version of the app does not know what this record is: it can be read, not changed. Update the app to work on it.';
+
+  @override
+  String unknownWireValue(String value) {
+    return '$value (not known to this version of the app)';
+  }
+
+  @override
   String unreadableRowsNotice(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

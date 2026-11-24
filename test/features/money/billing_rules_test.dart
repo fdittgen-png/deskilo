@@ -104,9 +104,10 @@ void main() {
     test('every pre-0142 row reads as the whole-month document it is', () {
       expect(InvoiceKind.fromWire(null), InvoiceKind.full);
       expect(InvoiceKind.fromWire(''), InvoiceKind.full);
-      // And an unknown kind from a NEWER server degrades to full rather
-      // than throwing in a list the member is trying to read.
-      expect(InvoiceKind.fromWire('something_new'), InvoiceKind.full);
+      // #3730 — a kind from a NEWER server is read as unknown: never a
+      // throw in a list the member is reading, never a full invoice.
+      expect(InvoiceKind.fromWire('something_new'), InvoiceKind.unknown);
+      expect(InvoiceKind.issuable, isNot(contains(InvoiceKind.unknown)));
     });
 
     test('each wire value maps to itself', () {

@@ -52785,6 +52785,34 @@
   "@unblockAction": {
     "description": "Shown as a text in blocked people card (me)."
   },
+  "unknownWireInvoiceKind": "A kind this version of the app does not know",
+  "@unknownWireInvoiceKind": {
+    "description": "#3730 the kind of an invoice whose kind a newer server sent and this app does not know."
+  },
+  "unknownWireKindFeatures": "This kind also sets {count, plural, =1{one feature} other{{count} features}} this version of the app does not know. Update the app to choose it.",
+  "@unknownWireKindFeatures": {
+    "description": "#3730 the business kind chooser: the chosen kind's profile names features this app does not know, so saving it is refused.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+  "unknownWireReadOnly": "This version of the app does not know what this record is: it can be read, not changed. Update the app to work on it.",
+  "@unknownWireReadOnly": {
+    "description": "#3730 an action was asked on a record whose kind or state this app does not know; only reading is allowed."
+  },
+  "unknownWireValue": "{value} (not known to this version of the app)",
+  "@unknownWireValue": {
+    "description": "#3730 a status or kind sent by a newer server that this app does not know, shown as the server's own text.",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "future_locked"
+      }
+    }
+  },
   "unreadableRowsNotice": "{count, plural, one{1 entry could not be shown: this version of the app does not know it. Update the app to see it.} other{{count} entries could not be shown: this version of the app does not know them. Update the app to see them.}}",
   "@unreadableRowsNotice": {
     "description": "#3884 One line under a list: entries the server sent with a value this app version does not know are left out of the list, not shown wrongly.",

@@ -65494,6 +65494,30 @@ abstract class AppLocalizations {
   /// **'Unblock'**
   String get unblockAction;
 
+  /// #3730 the kind of an invoice whose kind a newer server sent and this app does not know.
+  ///
+  /// In en, this message translates to:
+  /// **'A kind this version of the app does not know'**
+  String get unknownWireInvoiceKind;
+
+  /// #3730 the business kind chooser: the chosen kind's profile names features this app does not know, so saving it is refused.
+  ///
+  /// In en, this message translates to:
+  /// **'This kind also sets {count, plural, =1{one feature} other{{count} features}} this version of the app does not know. Update the app to choose it.'**
+  String unknownWireKindFeatures(int count);
+
+  /// #3730 an action was asked on a record whose kind or state this app does not know; only reading is allowed.
+  ///
+  /// In en, this message translates to:
+  /// **'This version of the app does not know what this record is: it can be read, not changed. Update the app to work on it.'**
+  String get unknownWireReadOnly;
+
+  /// #3730 a status or kind sent by a newer server that this app does not know, shown as the server's own text.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} (not known to this version of the app)'**
+  String unknownWireValue(String value);
+
   /// #3884 One line under a list: entries the server sent with a value this app version does not know are left out of the list, not shown wrongly.
   ///
   /// In en, this message translates to:

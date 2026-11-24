@@ -197,6 +197,51 @@ void main() {
     );
   });
 
+  testWidgets('#3730 — an order in a state a newer server sent is read with '
+      'its text and allows nothing, even to a buyer', (tester) async {
+    final (orders, app) = await _app({WorkspacePermission.managePurchases});
+    final seeded = orders.orders.single;
+    orders.orders[0] = PurchaseOrder.fromJson({
+      'id': seeded.id,
+      'reference': seeded.reference,
+      'supplier_id': seeded.supplierId,
+      'supplier_name': seeded.supplierName,
+      'state': 'future_locked',
+      'currency': 'EUR',
+      'revision': 3,
+      'lines': [
+        {
+          'line_no': 1,
+          'description': 'Paper towels',
+          'quantity': 12,
+          'unit_price_cents': 150,
+        },
+      ],
+    });
+    expect(orders.orders.single.state, PurchaseOrderState.unknown);
+    expect(orders.orders.single.state.open, isFalse);
+    await tester.pumpWidget(app);
+    await _settle(tester);
+    await openOrder(tester, '2026-0001');
+
+    expect(tester.takeException(), isNull);
+    expect(
+      find.textContaining('future_locked', findRichText: true),
+      findsWidgets,
+    );
+    expect(
+      find.byKey(const ValueKey('purchase-order-print-2026-0001')),
+      findsOneWidget,
+    );
+    for (final action in const ['edit', 'sent', 'cancel', 'receive', 'email']) {
+      expect(
+        find.byKey(ValueKey('purchase-order-$action-2026-0001')),
+        findsNothing,
+        reason: 'an unknown state allows no $action',
+      );
+    }
+  });
+
   testWidgets('#3842 — an order opens beside the table at its own address; '
       'the form pushed over the list is never read as an order', (
     tester,

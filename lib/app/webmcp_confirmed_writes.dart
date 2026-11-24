@@ -276,7 +276,7 @@ Future<Map<String, Object?>> _issueCheck(
     throw const WebMcpRefused('validation_error', 'period must be YYYY-MM.');
   }
   final kind = input['kind'];
-  if (!InvoiceKind.values.any((k) => k.name == kind)) {
+  if (!InvoiceKind.issuable.any((k) => k.name == kind)) {
     throw const WebMcpRefused(
       'validation_error',
       'kind must be full, subscription or usage.',
@@ -304,7 +304,7 @@ Future<Map<String, Object?>> _issue(
       workspaceId: workspace!.id,
       memberId: input['member_id']! as String,
       period: period,
-      kind: InvoiceKind.values.byName(input['kind']! as String),
+      kind: InvoiceKind.issuable.asNameMap()[input['kind']]!,
       requestId: input['request_id']! as String,
     ),
   );

@@ -142,6 +142,7 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
       if (!entry.invoice.isVoided &&
           entry.invoice.settledByInvoiceId == null &&
           entry.invoice.kind != InvoiceKind.settlement &&
+          entry.invoice.kind != InvoiceKind.unknown &&
           entry.pendingMatch == null) {
         counts.update(entry.invoice.memberId, (n) => n + 1,
             ifAbsent: () => 1);

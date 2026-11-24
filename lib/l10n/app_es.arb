@@ -23816,6 +23816,10 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Desbloquear",
+  "unknownWireInvoiceKind": "Un tipo que esta versión de la aplicación no conoce",
+  "unknownWireKindFeatures": "Este tipo también ajusta {count, plural, =1{una función} other{{count} funciones}} que esta versión de la aplicación no conoce. Actualice la aplicación para elegirlo.",
+  "unknownWireReadOnly": "Esta versión de la aplicación no sabe qué es este registro: puede leerse, no modificarse. Actualice la aplicación para trabajar con él.",
+  "unknownWireValue": "{value} (desconocido para esta versión de la aplicación)",
   "unreadableRowsNotice": "{count, plural, one{No se pudo mostrar 1 entrada: esta versión de la aplicación no la conoce. Actualiza la aplicación para verla.} other{No se pudieron mostrar {count} entradas: esta versión de la aplicación no las conoce. Actualiza la aplicación para verlas.}}",
   "unsavedChangesBody": "Lo que ha cambiado en esta página todavía no está guardado.",
   "unsavedChangesDiscard": "Descartar los cambios",

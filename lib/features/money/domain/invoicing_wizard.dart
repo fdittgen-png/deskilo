@@ -76,6 +76,8 @@ bool lineBelongsTo(InvoiceLine line, InvoiceKind kind) => switch (kind) {
       InvoiceKind.subscription => line.kind == 'subscription',
       InvoiceKind.usage => line.kind != 'subscription',
       InvoiceKind.full || InvoiceKind.settlement => true,
+      // #3730 — a kind this app does not know claims no line.
+      InvoiceKind.unknown => false,
     };
 
 /// One member on the issue step: what would be issued, or what already
@@ -118,7 +120,11 @@ List<WizardIssueItem> issuePlan({
             i.memberId == member.id &&
             i.period == period &&
             !i.isVoided &&
-            (i.kind == kind || i.kind == InvoiceKind.full))
+            // #3730 — an invoice of a kind this app does not know may
+            // already charge the month: nothing is issued beside it.
+            (i.kind == kind ||
+                i.kind == InvoiceKind.full ||
+                i.kind == InvoiceKind.unknown))
         .firstOrNull;
     final preview = previews[member.id];
     final lines = [

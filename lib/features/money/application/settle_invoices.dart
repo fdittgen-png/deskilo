@@ -43,6 +43,8 @@ List<Invoice> settlementCandidates(
             !entry.invoice.isVoided &&
             entry.invoice.settledByInvoiceId == null &&
             entry.invoice.kind != InvoiceKind.settlement &&
+            // #3730 — a kind this app does not know is never regrouped.
+            entry.invoice.kind != InvoiceKind.unknown &&
             entry.pendingMatch == null)
           entry.invoice,
     ];

@@ -27,13 +27,20 @@ enum PeriodMovementWhat {
   moved('moved'),
   applied('applied'),
   freed('freed'),
-  allocated('allocated');
+  allocated('allocated'),
+
+  /// #3730 — a movement a newer server names and this app does not know:
+  /// the statement prints its label and amount with no word for it, never
+  /// "paid".
+  unknown('');
 
   const PeriodMovementWhat(this.wire);
   final String wire;
 
-  static PeriodMovementWhat of(String wire) =>
-      values.firstWhere((w) => w.wire == wire, orElse: () => paid);
+  static PeriodMovementWhat of(String wire) => values.firstWhere(
+    (w) => w != unknown && w.wire == wire,
+    orElse: () => unknown,
+  );
 }
 
 /// One movement: its effect on the balance (positive, the customer owes
