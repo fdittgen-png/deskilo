@@ -67,6 +67,7 @@ import 'data/demo_stock_reversals.dart';
 import 'data/demo_stock_tags.dart';
 import 'data/demo_stock_trace.dart';
 import 'data/demo_stock_trace_chain.dart';
+import 'data/demo_stock_track_find.dart';
 import 'data/demo_stock_where_is.dart';
 import 'data/demo_till.dart';
 import 'data/finance_kpi_repository.dart';
@@ -263,6 +264,20 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     ),
     tillPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
     tillOfflinePortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
+    // #4432 — the whole chain of a lot, from the business's own ledger; #4436 — and of a line its till sold, read
+    // backwards, and what carries a track ID: the lots, the pieces and those sales.
+    stockTraceChainReaderProvider.overrideWith(
+      (ref) => DemoStockTraceChain(stocks.of(ref).ledger, sold: () => demoPickSpace(ref, tills).soldLines),
+    ),
+    stockTrackFinderProvider.overrideWith(
+      (ref) => DemoStockTrackFind(
+        stocks.of(ref).ledger,
+        stocks.of(ref).expiry,
+        stocks.of(ref).tags,
+        sold: () => demoPickSpace(ref, tills).soldLines,
+        held: () => ref.read(myPermissionsProvider),
+      ),
+    ),
   ];
 }
 
@@ -332,8 +347,6 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
     ),
   ),
   // #4173 — and traces its goods to the orders they were put away from, and values them.
-  // #4432 — and the whole chain of a lot, from its own ledger.
-  stockTraceChainReaderProvider.overrideWith((ref) => DemoStockTraceChain(stocks.of(ref).ledger)),
   stockTraceReaderProvider.overrideWith(
     (ref) => DemoStockTrace(
       stocks.of(ref).id,
@@ -444,5 +457,7 @@ DemoSpaces<DemoTill> _demoTills(DemoFixture fixture) => demoSpacesOf(
     country: fixture.workspaces.workspaces.firstWhere((w) => w.id == key.id).countryCode,
     currency: key.currency,
     vatPercent: 20,
+    // #4436 -- a sale is kept with the Demo's day, so the trace finds it from the track IDs it took
+    clock: () => fixture.seededAt,
   ),
 );

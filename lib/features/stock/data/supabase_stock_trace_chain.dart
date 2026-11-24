@@ -12,13 +12,14 @@ class SupabaseStockTraceChain implements StockTraceChainReader {
   final SupabaseClient _client;
 
   @override
-  Future<TraceChain> chain(String workspaceId, {String? lotId, String? pieceId, String? movementId}) async =>
+  Future<TraceChain> chain(String workspaceId, {String? lotId, String? pieceId, String? movementId, String? counterLineId}) async =>
       TraceChain.fromJson(
         await StockRpc(_client).object('stock_trace_chain_v1', {
           'p_workspace_id': workspaceId,
           'p_lot_id': ?lotId,
           'p_piece_id': ?pieceId,
           'p_movement_id': ?movementId,
+          'p_counter_line_id': ?counterLineId,
         }),
       );
 }

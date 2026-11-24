@@ -46505,9 +46505,34 @@
       }
     }
   },
+  "stockChainSaleTitle": "What this sale took",
+  "@stockChainSaleTitle": {
+    "description": "#4436 G21 find by track ID"
+  },
   "stockChainTitle": "Every movement of this lot",
   "@stockChainTitle": {
     "description": "#4432 G18 trace chain"
+  },
+  "stockChainTookLot": "Lot {code} · {quantity}",
+  "@stockChainTookLot": {
+    "description": "#4436 G21 find by track ID",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockChainTookPiece": "Piece {tag}",
+  "@stockChainTookPiece": {
+    "description": "#4436 G21 find by track ID",
+    "placeholders": {
+      "tag": {
+        "type": "String"
+      }
+    }
   },
   "stockChainTruncated": "Only the first movements are shown.",
   "@stockChainTruncated": {
@@ -48989,6 +49014,64 @@
   "stockTraceTitle": "Where this came from",
   "@stockTraceTitle": {
     "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTrackFindExpires": "Expires {date}",
+  "@stockTrackFindExpires": {
+    "description": "#4436 G21 find by track ID",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTrackFindField": "Lot code or tag",
+  "@stockTrackFindField": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindHelper": "The lot code as received, the code on its label, or a piece's tag.",
+  "@stockTrackFindHelper": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindLots": "Lots",
+  "@stockTrackFindLots": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindNoSale": "No sale took it yet.",
+  "@stockTrackFindNoSale": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindNone": "Nothing in this business carries {code}.",
+  "@stockTrackFindNone": {
+    "description": "#4436 G21 find by track ID",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTrackFindPieces": "Pieces",
+  "@stockTrackFindPieces": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindRequired": "Type or scan a code first.",
+  "@stockTrackFindRequired": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindSales": "Sales that took it",
+  "@stockTrackFindSales": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindSubmit": "Find",
+  "@stockTrackFindSubmit": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindTitle": "Find a track ID",
+  "@stockTrackFindTitle": {
+    "description": "#4436 G21 find by track ID"
+  },
+  "stockTrackFindTruncated": "Only the first matches are shown.",
+  "@stockTrackFindTruncated": {
+    "description": "#4436 G21 find by track ID"
   },
   "stockTransferLine": "{item}: {left} {unit} on the way of {loaded}",
   "@stockTransferLine": {

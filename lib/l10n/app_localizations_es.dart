@@ -36145,7 +36145,20 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get stockChainSaleTitle => 'Lo que tomó esta venta';
+
+  @override
   String get stockChainTitle => 'Todos los movimientos de este lote';
+
+  @override
+  String stockChainTookLot(String code, String quantity) {
+    return 'Lote $code · $quantity';
+  }
+
+  @override
+  String stockChainTookPiece(String tag) {
+    return 'Pieza $tag';
+  }
 
   @override
   String get stockChainTruncated =>
@@ -38004,6 +38017,48 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockTraceTitle => 'De dónde viene';
+
+  @override
+  String stockTrackFindExpires(String date) {
+    return 'Caduca el $date';
+  }
+
+  @override
+  String get stockTrackFindField => 'Código de lote o etiqueta';
+
+  @override
+  String get stockTrackFindHelper =>
+      'El código del lote tal como se recibió, el código de su etiqueta o la etiqueta de una pieza.';
+
+  @override
+  String get stockTrackFindLots => 'Lotes';
+
+  @override
+  String get stockTrackFindNoSale => 'Ninguna venta lo ha tomado todavía.';
+
+  @override
+  String stockTrackFindNone(String code) {
+    return 'Nada en este negocio lleva $code.';
+  }
+
+  @override
+  String get stockTrackFindPieces => 'Piezas';
+
+  @override
+  String get stockTrackFindRequired => 'Escriba o escanee primero un código.';
+
+  @override
+  String get stockTrackFindSales => 'Ventas que lo tomaron';
+
+  @override
+  String get stockTrackFindSubmit => 'Buscar';
+
+  @override
+  String get stockTrackFindTitle => 'Buscar un código de trazabilidad';
+
+  @override
+  String get stockTrackFindTruncated =>
+      'Solo se muestran las primeras coincidencias.';
 
   @override
   String stockTransferLine(
