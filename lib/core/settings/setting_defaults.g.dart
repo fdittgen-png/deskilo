@@ -6,6 +6,8 @@
 // the registry's, read through `SettingsSet`.
 
 abstract final class SettingDefaults {
+  /// `apps.support_window_days`
+  static const int appsSupportWindowDays = 30;
   /// `assets.valuation_max_rows`
   static const int assetsValuationMaxRows = 2000;
   /// `bank.import_max_bytes`

@@ -41897,6 +41897,10 @@
   "@settingGroupBusiness": {
     "description": "Settings editor: the name of the group holding the business settings (#3549)."
   },
+  "settingGroupCompatibility": "App versions",
+  "@settingGroupCompatibility": {
+    "description": "#3732 Settings group: how long older app versions stay accepted by this installation"
+  },
   "settingGroupDirectory": "Member directory",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -41948,6 +41952,10 @@
   "settingGuardrailFallback": "Fixed by the software; it is shown so you know it exists.",
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
+  },
+  "settingHintAppsSupportWindowDays": "How many days an older app stays accepted after a newer one is available on the slowest channel you distribute it through. The oldest app this installation accepts is raised only once this many days have passed, so every member has time to update.",
+  "@settingHintAppsSupportWindowDays": {
+    "description": "#3732 Platform setting apps.support_window_days: what it decides, under its name"
   },
   "settingHintAssetsValuationMaxRows": "The most rows one batch of the accountant's valuations may carry, one row per asset. A larger file is refused as a whole; split it before importing.",
   "@settingHintAssetsValuationMaxRows": {
@@ -42396,6 +42404,10 @@
   "settingHistoryEmpty": "No stored version: the default applies.",
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
+  },
+  "settingLabelAppsSupportWindowDays": "Support window for older apps",
+  "@settingLabelAppsSupportWindowDays": {
+    "description": "#3732 Platform setting apps.support_window_days: its name in the settings editor"
   },
   "settingLabelAssetsValuationMaxRows": "Valuation rows per batch",
   "@settingLabelAssetsValuationMaxRows": {

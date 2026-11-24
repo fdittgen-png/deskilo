@@ -1,0 +1,15 @@
+{
+  "about": "The installation each release track ships to, read by the release train's installation gate (tool/release_gate.dart) before any upload. No release build passes a server of its own, so every track ships to the server the app compiles in: the hosted reference installation. A track that ships elsewhere changes its entry here and the build that targets it in the same change; test/tool/release_gate_test.dart holds the two together. The key is the publishable one the app ships.",
+  "tracks": {
+    "alpha": {
+      "installation": "reference",
+      "url": "https://zwzbynivewivvjmripeb.supabase.co",
+      "key": "sb_publishable_PqXoa0tyQTjsZCPD_LrEQw_P7LJtalL"
+    },
+    "production": {
+      "installation": "reference",
+      "url": "https://zwzbynivewivvjmripeb.supabase.co",
+      "key": "sb_publishable_PqXoa0tyQTjsZCPD_LrEQw_P7LJtalL"
+    }
+  }
+}

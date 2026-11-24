@@ -1,0 +1,6 @@
+{
+  "@@locale": "it",
+  "settingGroupCompatibility": "Versioni dell'app",
+  "settingLabelAppsSupportWindowDays": "Periodo di supporto delle app precedenti",
+  "settingHintAppsSupportWindowDays": "Quanti giorni un'app precedente resta accettata dopo che una più recente è disponibile sul canale di distribuzione più lento. L'app più vecchia accettata da questa installazione viene alzata solo trascorsi questi giorni, così ogni membro ha il tempo di aggiornarla."
+}

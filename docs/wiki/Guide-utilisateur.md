@@ -6883,7 +6883,7 @@ Ce qui entoure le travail de tous les jours : le côté test d'un espace et le c
 
 Dans ce chapitre :
 - [Un espace a deux côtés](#un-espace-a-deux-côtés) · [Entrer d'un côté](#entrer-côté-réel-ou-côté-test) · [Un espace de test](#à-quoi-sert-un-espace-de-test) · [Qui peut déployer](#qui-peut-déployer-et-entrer-en-production) · [Déployer entre les côtés](#déployer-entre-les-deux-côtés) · [Situation de l'espace et archive de l'exercice](#situation-de-lespace-et-archive-de-lexercice)
-- [Votre propre serveur](#faire-tourner-votre-propre-serveur) · [Quand une installation exige une application plus récente](#quand-une-installation-exige-une-application-plus-récente)
+- [Votre propre serveur](#faire-tourner-votre-propre-serveur) · [Quand une installation exige une application plus récente](#quand-une-installation-exige-une-application-plus-récente) · [Publier une nouvelle version](#publier-une-nouvelle-version--le-serveur-dabord)
 - [Les assistants](#les-assistants--ce-que-cest) · [Connecter un assistant](#connecter-un-assistant) · [Les autorisations](#autorisations-et-confirmations-pour-les-assistants) · [Ce que les assistants peuvent faire](#ce-que-les-assistants-peuvent-faire-dans-un-espace)
 - [L'enregistreur de tâches](#lenregistreur-de-tâches-et-les-visites-guidées) · [Enregistrer une tâche](#enregistrer-une-tâche) · [Relire un enregistrement](#relire-modifier-et-exporter-un-enregistrement) · [Créer un guide](#créer-un-guide-à-partir-dun-enregistrement) · [Suivre un guide](#suivre-un-guide) · [Le menu rond](#le-menu-rond) · [Modifier un guide](#modifier-ou-réparer-un-guide) · [Confidentialité des enregistrements](#ce-quun-enregistrement-conserve)
 - [L'espace de démonstration](#lespace-de-démonstration) · [Mode tournage](#mode-tournage)
@@ -7067,6 +7067,29 @@ Une installation peut indiquer que seule une application plus récente peut l'ut
 - Le seuil est une courtoisie pour les applications qui le connaissent, pas un verrou : les règles d'argent et de droits sont décidées par le serveur, quelle que soit l'application.
 
 **Voir aussi :** [Faire tourner votre propre serveur](#faire-tourner-votre-propre-serveur) · [Plateformes](#deskilo-sur-vos-appareils)
+
+<!-- anchor: user.advanced.releases -->
+### Publier une nouvelle version : le serveur d'abord
+
+**Public:** Opérateur·rice
+
+Vous exploitez une installation et une nouvelle version de l'application arrive. Le serveur est toujours mis à jour avant l'application, et une ancienne application n'est jamais écartée sans prévenir.
+
+**Étapes**
+
+1. Mettez d'abord le serveur à jour : appliquez ses nouvelles migrations, puis ses fonctions. Rien ne change pour les membres : une application déjà installée continue de fonctionner, car le serveur ne fait qu'ajouter.
+2. Publiez l'application. Avant tout envoi, le train de publication lit l'installation qu'il dessert et s'arrête, en nommant les migrations manquantes, quand l'installation est en retard, refuse la nouvelle application ou ne peut pas être lue. Une fois l'application publiée, la version du serveur y indique *À jour*, et une ancienne application indique *Le serveur est plus récent que cette app — mettez l'app à jour dès que possible*.
+3. Attendez le délai de prise en charge : [Profils](https://fdittgen-png.github.io/deskilo/#/profiles) → **Réglages de la plateforme (valeurs par défaut)** → **Versions de l'application** → **Délai de prise en charge des anciennes applications**. Il court à partir du jour où la nouvelle application est disponible sur le canal de distribution le plus lent, pas du jour où elle a été construite : l'examen d'un store peut prendre des jours.
+4. Seulement alors, relevez l'application la plus ancienne acceptée par l'installation, dans une migration à part. Une application en dessous affiche **Cette application doit être mise à jour** avec la façon de la mettre à jour sur sa plateforme ; rien de ce que le membre a saisi n'est perdu.
+
+**Bon à savoir**
+
+- Une application plus récente que son serveur indique *Mise à jour nécessaire : cette app a besoin du schéma …*. C'est le cas que l'ordre « le serveur d'abord » évite.
+- Pour annuler un relèvement, abaissez de nouveau l'application la plus ancienne acceptée, ou supprimez ce seuil, dans une nouvelle migration : une application bloquée refonctionne à son prochain démarrage ou à son retour au premier plan.
+- Le train de publication ne fait que lire l'installation : il n'applique aucune migration et ne change pas qui peut publier.
+- Ne relevez jamais l'application la plus ancienne acceptée dans la migration qui a besoin de la nouvelle application : les testeurs de cette installation seraient bloqués dès qu'elle est appliquée.
+
+**Voir aussi:** [Faire tourner votre propre serveur](#faire-tourner-votre-propre-serveur)
 
 <!-- anchor: user.advanced.assistants -->
 ### Les assistants : ce que c'est

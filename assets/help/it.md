@@ -6506,7 +6506,7 @@ Ciò che sta attorno al lavoro di ogni giorno: il lato di prova di uno spazio e 
 
 In questo capitolo:
 - [Uno spazio ha due lati](help:user.advanced.environments) · [Entrare in un lato](help:user.advanced.enter-environment) · [Uno spazio di prova](help:user.advanced.test-space) · [Chi può distribuire](help:user.advanced.deploy-permissions) · [Distribuire tra i lati](help:user.advanced.deploy) · [Situazione dello spazio e archivio dell'esercizio](help:user.advanced.status-archive)
-- [Il Suo server](help:user.advanced.own-server) · [Quando un'installazione richiede un'app più recente](help:user.advanced.app-floor)
+- [Il Suo server](help:user.advanced.own-server) · [Quando un'installazione richiede un'app più recente](help:user.advanced.app-floor) · [Pubblicare una nuova versione](help:user.advanced.releases)
 - [Assistenti](help:user.advanced.assistants) · [Collegare un assistente](help:user.advanced.assistants-connect) · [Approvazioni](help:user.advanced.assistants-approve) · [Che cosa possono fare gli assistenti](help:user.advanced.assistants-policy)
 - [Il registratore di attività](help:user.advanced.recorder) · [Registrare un'attività](help:user.advanced.recorder-record) · [Rivedere una registrazione](help:user.advanced.recorder-review) · [Creare una guida](help:user.advanced.guide-make) · [Seguire una guida](help:user.advanced.guide-play) · [Il menu circolare](help:user.advanced.guide-circle) · [Modificare una guida](help:user.advanced.guide-edit) · [Riservatezza delle registrazioni](help:user.advanced.recorder-privacy)
 - [Lo spazio dimostrativo](help:user.advanced.demo) · [Modalità ripresa](help:user.advanced.filming)
@@ -6682,6 +6682,28 @@ Un'installazione può stabilire che con essa si usi solo un'app più recente. Vu
 - La soglia è una cortesia per le app che la conoscono, non un lucchetto: le regole su denaro e permessi le decide il server, qualunque sia l'app.
 
 **Vedi anche:** [Gestire il proprio server](help:user.advanced.own-server) · [Piattaforme](help:user.advanced.platforms)
+
+### Pubblicare una nuova versione: prima il server
+
+**Destinatari:** Operatore
+
+Lei gestisce un'installazione e sta arrivando una nuova versione dell'app. Il server viene sempre aggiornato prima dell'app, e un'app precedente non viene mai esclusa senza preavviso.
+
+**Passaggi**
+
+1. Aggiorni prima il server: applichi le sue nuove migrazioni, poi le sue funzioni. Per i membri non cambia nulla: un'app già installata continua a funzionare, perché il server aggiunge soltanto.
+2. Pubblichi l'app. Prima di ogni caricamento, il treno di rilascio legge l'installazione a cui consegna e si ferma, indicando le migrazioni mancanti, quando l'installazione è indietro, rifiuta la nuova app o non può essere letta. Una volta pubblicata l'app, la versione del server vi risulta *Aggiornato*, e un'app precedente indica *Il server è più recente di questa app: aggiorni l'app appena possibile*.
+3. Attenda il periodo di supporto: [Profili](app:/profiles) → **Impostazioni della piattaforma (valori predefiniti)** → **Versioni dell'app** → **Periodo di supporto delle app precedenti**. Decorre dal giorno in cui la nuova app è disponibile sul canale di distribuzione più lento, non dal giorno in cui è stata costruita: la revisione di uno store può richiedere giorni.
+4. Solo allora alzi l'app più vecchia accettata dall'installazione, in una migrazione a sé. Un'app al di sotto mostra **Questa app deve essere aggiornata** con il modo di aggiornarla sulla sua piattaforma; nulla di ciò che il membro ha inserito va perso.
+
+**Da sapere**
+
+- Un'app più recente del suo server indica *Serve un aggiornamento: questa app richiede lo schema …*. È il caso che l'ordine «prima il server» evita.
+- Per annullare un innalzamento, riabbassi l'app più vecchia accettata, o tolga il limite, in una nuova migrazione: un'app bloccata torna a funzionare al prossimo avvio o al ritorno in primo piano.
+- Il treno di rilascio legge soltanto l'installazione: non applica alcuna migrazione e non cambia chi può pubblicare.
+- Non alzi mai l'app più vecchia accettata nella migrazione che per prima richiede la nuova app: i tester di quell'installazione resterebbero bloccati appena viene applicata.
+
+**Vedi anche:** [Gestire il proprio server](help:user.advanced.own-server)
 
 ### Assistenti: che cosa sono
 

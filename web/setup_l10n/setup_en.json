@@ -738,6 +738,8 @@
  "fedAnswerWaitHint": "How long a server waits for the answer to a signed message it sent to another server (an identity status, a membership) before it sends the same message again. At least 30 seconds; keep it below the identity status lifetime. Set in the app's settings.",
  "fedFactBatch": "Membership facts sent per minute",
  "fedFactBatchHint": "The most membership facts a workspace server sends to its personal home in one minute. A server renews each live relationship once per identity status refresh, so it keeps up with this number times the refresh seconds divided by 60 relationships (500 and 300 seconds: 2,500). Raise it when the instance doctor reports a delivery backlog. Set in the app's settings.",
+ "appSupportWindow": "Support window for older apps",
+ "appSupportWindowHint": "How many days an older app stays accepted after a newer one is available on the slowest channel you distribute it through. The oldest app the installation accepts is raised only after this window, so every member has time to update. Set in the app's settings.",
  "supLookupWait": "Supplier lookup wait",
  "supLookupWaitHint": "How long the server waits for the company registry (VIES) when someone looks up a supplier's VAT number, before it says the registry did not answer. Set in the app's settings.",
  "supLookupRate": "Supplier lookups per minute",

@@ -105,6 +105,9 @@ const DEFAULTS={
  // (platform setting federation.answer_wait_seconds), and how many membership facts it sends
  // per minute (platform setting federation.fact_drain_batch, #4327).
  federation:{retentionHours:'24',answerWait:'120',factBatch:'500'},
+ // #3732 — how many days an older app stays accepted after a newer one is available on the
+ // slowest channel (platform setting apps.support_window_days).
+ appSupport:{windowDays:'30'},
  // #4217 — how long after its first sending a checkout may be sent again under
  // its original request, per provider (platform settings payments.resend_window_*_minutes).
  paymentResend:{mollie:'50',paypal:'330',stripe:'1380'},

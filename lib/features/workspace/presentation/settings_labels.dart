@@ -338,6 +338,7 @@ String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) 
       'records' => l10n.settingGroupRecords,
       'business' => l10n.settingGroupBusiness,
       'region' => l10n.settingGroupRegion,
+      'compatibility' => l10n.settingGroupCompatibility,
       _ => group,
     };
 
@@ -398,12 +399,14 @@ String? settingRangeLabel(AppLocalizations l10n, SettingDefinition d) {
 }
 
 /// #4217 — the window to send a checkout again, per provider; #4325 — how long
-/// a prepared e-invoice may wait for its dispatch before the owner is told.
+/// a prepared e-invoice may wait for its dispatch before the owner is told;
+/// #3732 — how long an older app stays accepted (the installation's own).
 String _paymentSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'payments.resend_window_mollie_minutes' => l10n.settingLabelPaymentsResendWindowMollieMinutes,
       'payments.resend_window_paypal_minutes' => l10n.settingLabelPaymentsResendWindowPaypalMinutes,
       'payments.resend_window_stripe_minutes' => l10n.settingLabelPaymentsResendWindowStripeMinutes,
       'einvoice.stuck_attempt_minutes' => l10n.settingLabelEinvoiceStuckAttemptMinutes,
+      'apps.support_window_days' => l10n.settingLabelAppsSupportWindowDays,
       _ => key,
     };
 
@@ -412,5 +415,6 @@ String? _paymentSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'payments.resend_window_paypal_minutes' => l10n.settingHintPaymentsResendWindowPaypalMinutes,
       'payments.resend_window_stripe_minutes' => l10n.settingHintPaymentsResendWindowStripeMinutes,
       'einvoice.stuck_attempt_minutes' => l10n.settingHintEinvoiceStuckAttemptMinutes,
+      'apps.support_window_days' => l10n.settingHintAppsSupportWindowDays,
       _ => null,
     };

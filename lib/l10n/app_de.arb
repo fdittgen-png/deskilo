@@ -19081,6 +19081,7 @@
     "description": "#2486 settings: Settings group title."
   },
   "settingGroupBusiness": "Geschäft",
+  "settingGroupCompatibility": "App-Versionen",
   "settingGroupDirectory": "Mitgliederverzeichnis",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -19124,6 +19125,7 @@
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
   },
+  "settingHintAppsSupportWindowDays": "Wie viele Tage eine ältere App angenommen bleibt, nachdem eine neuere auf dem langsamsten Vertriebskanal verfügbar ist. Die älteste App, die diese Installation annimmt, wird erst angehoben, wenn so viele Tage vergangen sind, damit jedes Mitglied Zeit zum Aktualisieren hat.",
   "settingHintAssetsValuationMaxRows": "Die höchste Zeilenzahl eines Stapels der Bewertungen Ihres Steuerberaters, eine je Anlage. Eine größere Datei wird ganz abgelehnt; teilen Sie sie vor dem Import.",
   "@settingHintAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
@@ -19380,6 +19382,7 @@
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
   },
+  "settingLabelAppsSupportWindowDays": "Unterstützungsfrist für ältere Apps",
   "settingLabelAssetsValuationMaxRows": "Bewertungszeilen je Stapel",
   "@settingLabelAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"

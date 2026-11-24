@@ -6883,7 +6883,7 @@ The things around the everyday work: the test side of a space and the real one, 
 
 In this chapter:
 - [A space has two sides](#a-space-has-two-sides) · [Enter a side](#enter-the-real-side-or-the-test-side) · [A test space](#what-a-test-space-is-for) · [Who may deploy](#who-may-deploy-and-enter-production) · [Deploy between the sides](#deploy-between-the-two-sides) · [Workspace status and the year archive](#workspace-status-and-the-year-archive)
-- [Your own server](#run-your-own-server) · [When an installation requires a newer app](#when-an-installation-requires-a-newer-app)
+- [Your own server](#run-your-own-server) · [When an installation requires a newer app](#when-an-installation-requires-a-newer-app) · [Release a new version](#release-a-new-version-the-server-first)
 - [Assistants](#assistants-what-they-are) · [Connect an assistant](#connect-an-assistant) · [Approvals](#approvals-and-confirmations-for-assistants) · [What assistants may do](#what-assistants-may-do-in-a-workspace)
 - [The task recorder](#the-task-recorder-and-guided-tours) · [Record a task](#record-a-task) · [Review a recording](#review-edit-and-export-a-recording) · [Make a guide](#make-a-guide-from-a-recording) · [Follow a guide](#follow-a-guide) · [The circle menu](#the-circle-menu) · [Edit a guide](#edit-or-repair-a-guide) · [Privacy of recordings](#what-a-recording-keeps)
 - [The demo workspace](#the-demo-workspace) · [Filming mode](#filming-mode)
@@ -7067,6 +7067,29 @@ An installation can say that only a newer app may be used with it. You want to k
 - The floor is a courtesy to apps that know it, not a lock: money and permission rules are decided by the server whatever the app.
 
 **See also:** [Run your own server](#run-your-own-server) · [Platforms](#deskilo-on-your-devices)
+
+<!-- anchor: user.advanced.releases -->
+### Release a new version: the server first
+
+**Audience:** Operator
+
+You run an installation and a new version of the app is coming. The server is always updated before the app, and an older app is never shut out without warning.
+
+**Steps**
+
+1. Update the server first: apply its new migrations, then its functions. Nothing changes for members: an app already installed keeps working, because the server only adds.
+2. Publish the app. Before any upload, the release train reads the installation it ships to and stops, naming the missing migrations, when the installation is behind, refuses the new app or cannot be read. Once the app is out, the server's version reads *Up to date* in it, and an older app reads *The server is newer than this app — update the app when you can*.
+3. Wait the support window: [Profiles](https://fdittgen-png.github.io/deskilo/#/profiles) → **Platform settings (defaults)** → **App versions** → **Support window for older apps**. It counts from the day the new app is available on the slowest channel you distribute it through, not from the day it was built: a store review can take days.
+4. Only then raise the oldest app the installation accepts, in a migration of its own. An app below it shows **This app needs an update** with how to update on its platform; nothing the member entered is lost.
+
+**Good to know**
+
+- An app newer than its server reads *Needs an update: this app needs schema …*. That is the case the server-first order prevents.
+- To undo a raise, lower the oldest accepted app again, or remove it, in a new migration: a blocked app works again the next time it starts or comes back to the foreground.
+- The release train only reads the installation: it applies no migration and does not change who may publish.
+- Never raise the oldest accepted app in the migration that first needs the new app: testers on that installation would be blocked the moment it is applied.
+
+**See also:** [Run your own server](#run-your-own-server)
 
 <!-- anchor: user.advanced.assistants -->
 ### Assistants: what they are
