@@ -94,11 +94,11 @@ jobs:
           . "$RUNNER_TEMP/esp-idf/export.sh"
           python -m pip install -r firmware/till/tools/requirements.txt
           python -c 'import importlib.metadata; assert importlib.metadata.version("esptool") == "5.7.0"'
-          idf.py -C firmware/till -B build reconfigure build
+          idf.py -C firmware/till -B "$GITHUB_WORKSPACE/firmware/till/build" reconfigure build
           cmake -S firmware/till/tests/host -B "$RUNNER_TEMP/till-host" -G Ninja
           cmake --build "$RUNNER_TEMP/till-host"
           ctest --test-dir "$RUNNER_TEMP/till-host" --output-on-failure
-          idf.py -C firmware/till -B build size > firmware/till/build/size-report.txt
+          idf.py -C firmware/till -B "$GITHUB_WORKSPACE/firmware/till/build" size > firmware/till/build/size-report.txt
           git diff --exit-code -- firmware/till/dependencies.lock firmware/till/generated
           python3 firmware/till/tools/package.py --out firmware/till/dist/e32r40t-diagnostic
           python3 firmware/till/dist/e32r40t-diagnostic/flash.py --check

@@ -71,7 +71,7 @@ dart run tool/embedded_till_profile.dart \
 cmp contracts/embedded_till/v1/fixtures/profile_valid.json /tmp/profile.json
 
 # First install/source the pinned ESP-IDF using its official install.sh/export.sh.
-idf.py -C firmware/till -B build reconfigure build
+idf.py -C firmware/till -B "$PWD/firmware/till/build" reconfigure build
 cmake -S firmware/till/tests/host -B /tmp/deskilo-till-host -G Ninja
 cmake --build /tmp/deskilo-till-host
 ctest --test-dir /tmp/deskilo-till-host --output-on-failure
@@ -85,7 +85,7 @@ deliverable, commit all source changes, then **reconfigure and rebuild** so the
 image contains that commit:
 
 ```bash
-idf.py -C firmware/till -B build reconfigure build
+idf.py -C firmware/till -B "$PWD/firmware/till/build" reconfigure build
 python3 firmware/till/tools/package.py \
   --out firmware/till/dist/e32r40t-diagnostic
 python3 firmware/till/dist/e32r40t-diagnostic/flash.py --check
