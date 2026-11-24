@@ -14,7 +14,7 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/refusal_text.dart';
-import '../../../core/ui/app_sheet.dart';
+import '../../../core/ui/adaptive/task_surface.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_trace_chain.dart';
@@ -22,28 +22,17 @@ import '../domain/stock_track_find.dart';
 import '../providers/stock_providers.dart';
 import 'stock_chain_section.dart';
 
-/// Opens the search of [workspaceId] by track ID in a sheet.
+/// Opens the search of [workspaceId] by track ID: a sheet on a phone, a panel at the desk.
 Future<void> showStockTrackFindSheet(
   BuildContext context, {
   required String workspaceId,
-}) => showAppSheet<void>(
-  context: context,
-  isScrollControlled: true,
-  showDragHandle: true,
-  builder: (_) => SafeArea(
-    child: Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
-      child: SingleChildScrollView(
-        key: const ValueKey('stock-track-find-sheet'),
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.md,
-          0,
-          AppSpacing.md,
-          AppSpacing.md,
-        ),
-        child: StockTrackFind(workspaceId: workspaceId),
-      ),
-    ),
+}) => showTask<void>(
+  context,
+  size: TaskSize.standard,
+  builder: (_) => SingleChildScrollView(
+    key: const ValueKey('stock-track-find-sheet'),
+    padding: const EdgeInsets.all(AppSpacing.md),
+    child: StockTrackFind(workspaceId: workspaceId),
   ),
 );
 

@@ -73,6 +73,11 @@ class StockChainSection extends ConsumerWidget {
   final String? pieceId;
   final String? counterLineId;
 
+  String _title(AppLocalizations l10n) {
+    if (counterLineId != null) return l10n.stockChainSaleTitle;
+    return pieceId != null ? l10n.stockChainPieceTitle : l10n.stockChainTitle;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -103,19 +108,7 @@ class StockChainSection extends ConsumerWidget {
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // what a sold line took, as its receipt froze it: each lot with its quantity, each piece by its tag
-                for (final (i, t) in value.took.indexed)
-                  ListTile(
-                    key: ValueKey('stock-chain-took-$i'),
-                    contentPadding: EdgeInsets.zero,
-                    dense: true,
-                    leading: Icon(t.kind == 'piece' ? Icons.sell_outlined : Icons.inventory_2_outlined),
-                    title: Text(
-                      t.kind == 'piece'
-                          ? l10n.stockChainTookPiece(t.code)
-                          : l10n.stockChainTookLot(t.code, t.quantity?.text ?? ''),
-                    ),
-                  ),
+                for (final (i, t) in value.took.indexed) _TookTile(index: i, track: t),
                 for (final s in value.steps)
                   ListTile(
                     key: ValueKey('stock-chain-step-${s.movementId}'),
@@ -139,18 +132,32 @@ class StockChainSection extends ConsumerWidget {
         key: const ValueKey('stock-chain'),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            counterLineId != null
-                ? l10n.stockChainSaleTitle
-                : pieceId != null
-                ? l10n.stockChainPieceTitle
-                : l10n.stockChainTitle,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          Text(_title(l10n), style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: AppSpacing.sm),
           body,
         ],
       ),
+    );
+  }
+}
+
+/// What a sold line took, as its receipt froze it: a lot with its quantity, a piece by its tag.
+class _TookTile extends StatelessWidget {
+  const _TookTile({required this.index, required this.track});
+
+  final int index;
+  final TraceTrack track;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final piece = track.kind == 'piece';
+    return ListTile(
+      key: ValueKey('stock-chain-took-$index'),
+      contentPadding: EdgeInsets.zero,
+      dense: true,
+      leading: Icon(piece ? Icons.sell_outlined : Icons.inventory_2_outlined),
+      title: Text(piece ? l10n.stockChainTookPiece(track.code) : l10n.stockChainTookLot(track.code, track.quantity?.text ?? '')),
     );
   }
 }

@@ -850,6 +850,7 @@ Sind die Funktionen *Etiketten* und *Etikettenlesung* an, bietet eine Zähl-Aufg
 - Die Plätze im Regal ergeben immer die oben gezeigte Menge.
 - An einem vergangenen Tag wird Ware unterwegs nicht gezeigt; die Stücke schon, ab dem Tag, an dem sie verfolgt werden (ein früher entstandenes Stück hat davor keinen Verlauf).
 - Tippen Sie auf einen Platz mit einer Charge, um **Alle Bewegungen** dieser Charge zu sehen, von der Lieferung, mit der sie kam, bis zu ihrem Abgang; die Zeitleisten-Schaltfläche eines Stücks zeigt **Alle Bewegungen dieses Stücks**. Ein Beleg, den Sie nicht sehen dürfen, wird mit seiner Art genannt, nie weggelassen.
+- **Rückverfolgungscode suchen** (die Code-Schaltfläche oben im **Lager**) nimmt einen Chargencode wie geliefert, den Code auf dem Etikett einer Charge oder das Etikett eines Stücks, eingegeben oder gescannt. Sie listet die Chargen und Stücke, die ihn tragen, und die Verkäufe, die davon genommen haben. Tippen Sie auf eine Charge oder ein Stück für alle seine Bewegungen; tippen Sie auf einen Verkauf, um zu sehen, was diese Bonzeile genommen hat: jede Charge mit ihrer Menge, jedes Stück mit seinem Etikett. Ein Bon, den Sie nicht sehen dürfen, wird mit seiner Art genannt und öffnet sich nicht. Wird nichts gefunden, steht das da; eine abgelehnte oder fehlgeschlagene Suche sagt es und kann wiederholt werden.
 
 <!-- anchor: user.money.stock.value -->
 ### Lagerwert und Herkunft der Ware

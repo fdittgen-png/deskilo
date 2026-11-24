@@ -264,20 +264,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     ),
     tillPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
     tillOfflinePortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
-    // #4432 — the whole chain of a lot, from the business's own ledger; #4436 — and of a line its till sold, read
-    // backwards, and what carries a track ID: the lots, the pieces and those sales.
-    stockTraceChainReaderProvider.overrideWith(
-      (ref) => DemoStockTraceChain(stocks.of(ref).ledger, sold: () => demoPickSpace(ref, tills).soldLines),
-    ),
-    stockTrackFinderProvider.overrideWith(
-      (ref) => DemoStockTrackFind(
-        stocks.of(ref).ledger,
-        stocks.of(ref).expiry,
-        stocks.of(ref).tags,
-        sold: () => demoPickSpace(ref, tills).soldLines,
-        held: () => ref.read(myPermissionsProvider),
-      ),
-    ),
+    ..._stockTraceOverrides(stocks, tills),
   ];
 }
 
@@ -374,6 +361,23 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
       stocks.of(ref).tags,
       () => ref.read(myPermissionsProvider),
       (ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository).now,
+    ),
+  ),
+];
+
+/// #4432 — the whole chain of a lot, from the business's own ledger; #4436 — and of a line its till sold, read
+/// backwards, and what carries a track ID: the lots, the pieces and those sales.
+List<Override> _stockTraceOverrides(_DemoStocks stocks, DemoSpaces<DemoTill> tills) => [
+  stockTraceChainReaderProvider.overrideWith(
+    (ref) => DemoStockTraceChain(stocks.of(ref).ledger, sold: () => demoPickSpace(ref, tills).soldLines),
+  ),
+  stockTrackFinderProvider.overrideWith(
+    (ref) => DemoStockTrackFind(
+      stocks.of(ref).ledger,
+      stocks.of(ref).expiry,
+      stocks.of(ref).tags,
+      sold: () => demoPickSpace(ref, tills).soldLines,
+      held: () => ref.read(myPermissionsProvider),
     ),
   ),
 ];

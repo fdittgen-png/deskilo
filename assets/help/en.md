@@ -3093,7 +3093,7 @@ Open any line of **Stock** to see **Where is it** for that item (or that lot): e
 - The places on a shelf always add up to the quantity shown on top.
 - At a past day the goods on the road are not shown; the pieces are, from the day they are followed (a piece made before has no history before it).
 - Tap a place that holds a lot to see **Every movement of this lot**, from the delivery it came with to where it went out; the timeline button of a piece shows **Every movement of this piece**. A document you may not see is named by its kind, never left out.
-- **Find a track ID** (the code button at the top of **Stock**) takes a lot code as received, the code on a lot's label or a piece's tag, typed or scanned. It lists the lots and pieces that carry it and the sales that took them. Tap a lot or a piece for every movement of it; tap a sale to see what that receipt line took: each lot with its quantity, each piece by its tag. A receipt you may not see is named by its kind and does not open. Nothing found says so; a refused or failed search says so and can be tried again (#4436).
+- **Find a track ID** (the code button at the top of **Stock**) takes a lot code as received, the code on a lot's label or a piece's tag, typed or scanned. It lists the lots and pieces that carry it and the sales that took them. Tap a lot or a piece for every movement of it; tap a sale to see what that receipt line took: each lot with its quantity, each piece by its tag. A receipt you may not see is named by its kind and does not open. Nothing found says so; a refused or failed search says so and can be tried again.
 
 ### Stock value and where goods came from
 
