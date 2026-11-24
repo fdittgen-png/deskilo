@@ -102,7 +102,7 @@ begin
   end if;
   begin
     perform public.stock_to_inventory(v_item.id, nullif(p_line #>> '{unit,code}', ''), 1);
-  exception when others then
+  exception when sqlstate 'DKG02' or sqlstate 'DKG04' then
     v_missing := v_missing || (v_pre || 'unit');
   end;
   if cardinality(v_missing) > 0 then
@@ -320,7 +320,10 @@ begin
       perform public.stock_apply_lines(p_workspace_id, p_actor,
         md5('invoice_sale:' || p_invoice_id::text || ':' || v_line_id)::uuid, v_parts, 'sale', now(),
         jsonb_build_object('invoice_id', p_invoice_id), 'generic');
-    exception when others then
+    -- the refusals the stock path names; anything else is a fault and stops the issue
+    exception when sqlstate 'DKI01' or sqlstate 'DKG02' or sqlstate 'DKG03' or sqlstate 'DKG04' or sqlstate 'DKG05' or sqlstate 'DKG06'
+              or sqlstate 'DKG07' or sqlstate 'DKG11' or sqlstate 'DKG12' or sqlstate 'DKG22' or sqlstate 'DKG23' or sqlstate 'DKG25'
+              or sqlstate 'DKG26' then
       get stacked diagnostics v_state = returned_sqlstate, v_detail = pg_exception_detail;
       if v_state = 'DKI01' then
         raise;
@@ -480,17 +483,19 @@ declare
   v_actor_name text;
 begin
   select * into v_invoice from public.invoices where id = p_invoice_id;
-  if v_invoice.id is null then raise exception 'not a member'; end if;
+  if v_invoice.id is null then
+    raise exception 'not a member' using errcode = 'DKN01', detail = '{"reason": "invoice"}';
+  end if;
   v_actor := public.issuing_member(v_invoice.workspace_id);
   if exists (select 1 from public.invoice_matches
               where invoice_id = p_invoice_id) then
     raise exception 'invoice is matched' using errcode = 'DKI04';
   end if;
   if v_invoice.settled_by_invoice_id is not null then
-    raise exception 'invoice is settled';
+    raise exception 'invoice is settled' using errcode = 'DKI04', detail = '{"reason": "settled"}';
   end if;
   if v_invoice.voided_at is not null then
-    raise exception 'invoice already voided';
+    raise exception 'invoice already voided' using errcode = 'DKI03', detail = '{"reason": "voided"}';
   end if;
   select coalesce(display_name, '') into v_actor_name
     from public.profiles where id = v_actor.user_id;
@@ -507,4 +512,12 @@ end;
 $fn$;
 
 notify pgrst, 'reload schema';
+-- the restated commands keep their posture: members through their own checks, never anon
+revoke execute on function public.preview_standalone_invoice_v1(uuid, uuid, integer) from public, anon;
+grant execute on function public.preview_standalone_invoice_v1(uuid, uuid, integer) to authenticated;
+revoke execute on function public.issue_standalone_invoice_v1(uuid, uuid, integer, uuid) from public, anon;
+grant execute on function public.issue_standalone_invoice_v1(uuid, uuid, integer, uuid) to authenticated;
+revoke execute on function public.void_invoice(uuid) from public, anon;
+grant execute on function public.void_invoice(uuid) to authenticated;
+
 select public.set_deskilo_schema_version(942);

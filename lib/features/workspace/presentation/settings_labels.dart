@@ -341,31 +341,34 @@ String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) 
       _ => group,
     };
 
-String settingUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {
-      'seconds' => l10n.settingUnitSeconds,
-      'milliseconds' => l10n.settingUnitMilliseconds,
-      'minutes' => l10n.settingUnitMinutes,
-      'hours' => l10n.settingUnitHours,
-      'days' => l10n.settingUnitDays,
-      'months' => l10n.settingUnitMonths,
-      'quarters' => l10n.settingUnitQuarters,
-      'years' => l10n.settingUnitYears,
-      'currency units' => l10n.settingUnitCurrencyUnits,
-      'rows' => l10n.settingUnitRows,
-      'requests' => l10n.settingUnitRequests,
-      'attempts' => l10n.settingUnitAttempts,
-      'per hour' => l10n.settingUnitPerHour,
-      'per day' => l10n.settingUnitPerDay,
-      'entries' => l10n.settingUnitEntries,
-      'characters' => l10n.settingUnitCharacters,
-      'pages' => l10n.settingUnitPages,
-      'cards' => l10n.settingUnitCards,
-      'tags' => l10n.settingUnitTags,
-      'bytes' => l10n.settingUnitBytes,
-      'url' => l10n.settingUnitUrl,
-      'url template' => l10n.settingUnitUrlTemplate,
-      _ => unit,
-    };
+/// The name of each unit a setting is counted in; an unknown unit is shown as the server wrote it.
+final Map<String, String Function(AppLocalizations)> _unitLabels = {
+  'seconds': (l) => l.settingUnitSeconds,
+  'milliseconds': (l) => l.settingUnitMilliseconds,
+  'minutes': (l) => l.settingUnitMinutes,
+  'hours': (l) => l.settingUnitHours,
+  'days': (l) => l.settingUnitDays,
+  'months': (l) => l.settingUnitMonths,
+  'quarters': (l) => l.settingUnitQuarters,
+  'years': (l) => l.settingUnitYears,
+  'currency units': (l) => l.settingUnitCurrencyUnits,
+  'rows': (l) => l.settingUnitRows,
+  'place code': (l) => l.settingUnitPlaceCode,
+  'requests': (l) => l.settingUnitRequests,
+  'attempts': (l) => l.settingUnitAttempts,
+  'per hour': (l) => l.settingUnitPerHour,
+  'per day': (l) => l.settingUnitPerDay,
+  'entries': (l) => l.settingUnitEntries,
+  'characters': (l) => l.settingUnitCharacters,
+  'pages': (l) => l.settingUnitPages,
+  'cards': (l) => l.settingUnitCards,
+  'tags': (l) => l.settingUnitTags,
+  'bytes': (l) => l.settingUnitBytes,
+  'url': (l) => l.settingUnitUrl,
+  'url template': (l) => l.settingUnitUrlTemplate,
+};
+
+String settingUnitLabel(AppLocalizations l10n, String unit) => _unitLabels[unit]?.call(l10n) ?? unit;
 
 String settingProblemLabel(AppLocalizations l10n, SettingProblem p) => switch (p) {
       SettingProblem.notANumber => l10n.settingProblemNotANumber,

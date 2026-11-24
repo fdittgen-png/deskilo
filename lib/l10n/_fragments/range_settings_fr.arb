@@ -112,6 +112,7 @@
   "@settingHintAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
   },
+  "settingUnitPlaceCode": "code d’emplacement",
   "settingUnitRows": "lignes",
   "@settingUnitRows": {
     "description": "#2576 valuation settings"

@@ -52992,6 +52992,12 @@ abstract class AppLocalizations {
   /// **'per hour'**
   String get settingUnitPerHour;
 
+  /// #4433 the unit of the selling place setting: a place is named by its code
+  ///
+  /// In en, this message translates to:
+  /// **'place code'**
+  String get settingUnitPlaceCode;
+
   /// #2578 settings: unit of a count of quarters.
   ///
   /// In en, this message translates to:
@@ -65598,12 +65604,6 @@ abstract class AppLocalizations {
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
-  /// **'Card'**
-  String get tillDayTenderCard;
-
-  /// #4367 till sessions: the cash drawer
-  ///
-  /// In en, this message translates to:
   /// **'Cash'**
   String get tillDayTenderCash;
 
@@ -67049,7 +67049,7 @@ abstract class AppLocalizations {
   /// #3730 the business kind chooser: the chosen kind's profile names features this app does not know, so saving it is refused.
   ///
   /// In en, this message translates to:
-  /// **'This kind also sets {count, plural, =1{one feature} other{{count} features}} this version of the app does not know. Update the app to choose it.'**
+  /// **'This kind also sets {count, plural, one{one feature} other{{count} features}} this version of the app does not know. Update the app to choose it.'**
   String unknownWireKindFeatures(int count);
 
   /// #3730 an action was asked on a record whose kind or state this app does not know; only reading is allowed.

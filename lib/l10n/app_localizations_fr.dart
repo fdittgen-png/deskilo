@@ -33431,6 +33431,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingUnitPerHour => 'par heure';
 
   @override
+  String get settingUnitPlaceCode => 'code d’emplacement';
+
+  @override
   String get settingUnitQuarters => 'trimestres';
 
   @override
@@ -41297,9 +41300,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillDaySessions => 'Sessions';
 
   @override
-  String get tillDayTenderCard => 'Carte';
-
-  @override
   String get tillDayTenderCash => 'Espèces';
 
   @override
@@ -42250,7 +42250,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count fonctions',
-      one: 'une fonction',
+      one: '$count fonction',
     );
     return 'Ce type règle aussi $_temp0 que cette version de l\'application ne connaît pas. Mettez à jour l\'application pour le choisir.';
   }

@@ -266,9 +266,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     ..._hmrcOverrides(fixture),
     // #2578 — the payments behind the collected figure, from the same
     // matches the finance cards sum.
-    recordedPaymentsRepositoryProvider.overrideWith(
-      (ref) => demoPickSpace(ref, payments),
-    ),
+    recordedPaymentsRepositoryProvider.overrideWith((ref) => demoPickSpace(ref, payments)),
     ..._tillOverrides(tills, drawers),
     ..._stockTraceOverrides(stocks, tills),
   ];
