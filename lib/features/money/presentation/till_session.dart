@@ -245,7 +245,7 @@ class TillSession {
     _set(_now.copyWith(problem: () => null));
     try {
       final asked = await port.requestCard(workspaceId, requestId: attempt.requestId, receiptId: draft.receiptId, amountMinor: total).timeout(callTimeout);
-      _set(_now.copyWith(card: () => asked));
+      _set(_now.withCard(asked));
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'till card authorization not recorded', error: e, stackTrace: st);
       if (serverAnswered(e)) _cardAttempt = null;
@@ -276,7 +276,7 @@ class TillSession {
           await _finalize(draft, [TillTender(kind: 'card', amountMinor: card.amountMinor, tenderId: card.tenderId)]);
         case 'refused':
           _cardAttempt = null;
-          _set(_now.copyWith(card: () => null, problem: () => const TillCardDeclined()));
+          _set(_now.withCard(null).copyWith(problem: () => const TillCardDeclined()));
         default:
           _set(_now.withCardUnknown(value: true));
       }
@@ -320,7 +320,7 @@ class TillSession {
         TraceLogger.instance.warn('money', 'till sale ${sold.number} made after the till was closed');
         return;
       }
-      _set(_now.copyWith(sold: () => sold, change: () => _givenMinor - total, card: () => null).withUnconfirmed(value: false));
+      _set(_now.copyWith(sold: () => sold, change: () => _givenMinor - total).withCard(null).withUnconfirmed(value: false));
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'till sale not confirmed', error: e, stackTrace: st);
       final refusal = knownRefusalOf(e);

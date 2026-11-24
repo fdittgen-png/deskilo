@@ -5,6 +5,7 @@
 // and show it without importing the session back.
 import 'package:flutter/foundation.dart';
 
+import '../../../core/failure/app_failure.dart' show TypedRefusal;
 import '../domain/counter_till.dart';
 
 /// What the till shows: the basket, its price, a sale made, or the refusal of the last act.
@@ -43,7 +44,6 @@ class TillState {
     bool? busy,
     Object? Function()? problem,
     int? Function()? change,
-    TillCardAsked? Function()? card,
   }) => TillState(
     lines: lines ?? this.lines,
     draft: draft == null ? this.draft : draft(),
@@ -52,9 +52,13 @@ class TillState {
     problem: problem == null ? this.problem : problem(),
     change: change == null ? this.change : change(),
     unconfirmed: unconfirmed,
-    card: card == null ? this.card : card(),
+    card: card,
     cardUnknown: cardUnknown,
   );
+
+  /// The same state with the card asked of the terminal set (null: none asked).
+  TillState withCard(TillCardAsked? asked) =>
+      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: unconfirmed, card: asked, cardUnknown: cardUnknown);
 
   /// The same state with the terminal's answer marked as lost, or not.
   TillState withCardUnknown({required bool value}) =>
@@ -71,7 +75,7 @@ class TillCashShort implements Exception {
 }
 
 /// #4185 -- the terminal declined the card: nothing was taken, the sale is still to be paid.
-class TillCardDeclined implements Exception {
+class TillCardDeclined implements TypedRefusal {
   const TillCardDeclined();
 }
 

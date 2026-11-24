@@ -7,11 +7,15 @@
 // authorization whose answer was lost waits here, with its reference, for someone who may see the finances to settle it
 // (`counter_tender_resolve_v1`); a sale whose card was accepted is completed from here under the same receipt
 // (`counter_receipt_finalize_v1`), never charged a second time. Amounts are MINOR units; quantities exact decimal text.
+import 'dart:math' as math;
+
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
 import 'till_quantity.dart';
 
-const int _scale = 1000000;
+/// The decimals a quantity keeps, and its unit in that many places.
+const int _decimals = 6;
+final int _scale = math.pow(10, _decimals).toInt();
 
 /// The longest reason a correction or a return carries (the server holds it to the same length).
 const int counterReasonMaxLength = 200;
@@ -22,7 +26,7 @@ int counterQuantityUnits(String text) {
   final t = text.trim();
   if (!_shape.hasMatch(t)) return 0;
   final parts = t.split('.');
-  final fraction = (parts.length == 2 ? parts[1] : '').padRight(6, '0');
+  final fraction = (parts.length == 2 ? parts[1] : '').padRight(_decimals, '0');
   return int.parse(parts[0]) * _scale + int.parse(fraction);
 }
 
@@ -30,7 +34,7 @@ int counterQuantityUnits(String text) {
 String counterQuantityText(int units) {
   final u = units < 0 ? 0 : units;
   final whole = u ~/ _scale;
-  final fraction = (u % _scale).toString().padLeft(6, '0').replaceFirst(RegExp(r'0+$'), '');
+  final fraction = (u % _scale).toString().padLeft(_decimals, '0').replaceFirst(RegExp(r'0+$'), '');
   return fraction.isEmpty ? '$whole' : '$whole.$fraction';
 }
 

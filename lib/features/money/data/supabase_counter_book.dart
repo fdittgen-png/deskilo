@@ -18,8 +18,8 @@ class SupabaseCounterBook implements CounterBookPort {
   Future<Object?> _call(String fn, Map<String, Object?> params) async {
     try {
       return await _client.rpc<Object?>(fn, params: params);
-    } on PostgrestException catch (e, stack) {
-      TraceLogger.instance.warn('money', 'the counter book was refused: ${e.code}', stackTrace: stack);
+    } on Object catch (e, stack) {
+      TraceLogger.instance.warn('money', 'the counter book was refused', error: e, stackTrace: stack);
       rethrow;
     }
   }
@@ -122,8 +122,9 @@ class SupabaseCounterBook implements CounterBookPort {
         out[line] = (out[line] ?? 0) + counterQuantityUnits('${m['quantity'] ?? '0'}');
       }
       return out;
-    } on PostgrestException catch (e, stack) {
-      TraceLogger.instance.warn('money', 'the goods taken back are not readable here: ${e.code}', stackTrace: stack);
+    } on Object catch (e, stack) {
+      TraceLogger.instance.warn('money', 'the goods taken back are not readable here', error: e, stackTrace: stack);
+      // empty-ok: only the 'left to take back' hint is lost; the server bounds every return again
       return const {};
     }
   }
