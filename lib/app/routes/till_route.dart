@@ -18,6 +18,7 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 
+@visibleForTesting
 class TillRoute extends ConsumerWidget {
   const TillRoute({super.key});
 
@@ -40,8 +41,8 @@ class TillRoute extends ConsumerWidget {
 }
 
 /// #4367 — the cash drawer: the open business, its currency and whether the person manages the sites (they add the tills).
-class TillDrawerRoute extends ConsumerWidget {
-  const TillDrawerRoute({super.key});
+class _TillDrawerRoute extends ConsumerWidget {
+  const _TillDrawerRoute();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -52,8 +53,8 @@ class TillDrawerRoute extends ConsumerWidget {
 }
 
 /// #4367 — the day close: the open business and its currency; the route is open to whoever may see the finances.
-class TillDayRoute extends ConsumerWidget {
-  const TillDayRoute({super.key});
+class _TillDayRoute extends ConsumerWidget {
+  const _TillDayRoute();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -90,7 +91,7 @@ List<RouteBase> tillRoutes(RouteEnv env) => [
       redirect: env.guard(
         const RouteAccess(features: [WorkspaceFeature.counterTillSessions], to: '/till'),
       ),
-      builder: (context, state) => const TillDrawerRoute(),
+      builder: (context, state) => const _TillDrawerRoute(),
     ),
     // #4367 — the day close: the finances close the business day and read its report.
     GoRoute(
@@ -98,6 +99,6 @@ List<RouteBase> tillRoutes(RouteEnv env) => [
       redirect: env.guard(
         const RouteAccess(features: [WorkspaceFeature.counterTillSessions], to: '/till'),
       ),
-      builder: (context, state) => const TillDayRoute(),
+      builder: (context, state) => const _TillDayRoute(),
     ),
 ];
