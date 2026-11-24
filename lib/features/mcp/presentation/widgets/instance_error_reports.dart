@@ -124,7 +124,7 @@ class _ReportTile extends StatelessWidget {
     final facts = l10n.instanceErrorReportFacts(
       r.appVersion,
       r.platform,
-      appFormatOf(context).dateTime(r.reportedAt.toLocal()),
+      appFormatOf(context).dateTime(r.reportedAt),
     );
     return ExpansionTile(
       key: ValueKey('instance-error-report-${r.id}'),
