@@ -33,6 +33,7 @@ import '../domain/stock_drafts.dart';
 import '../domain/stock_tags.dart';
 import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
+import 'stock_read_failed.dart';
 import 'stock_screen_scan.dart';
 import 'stock_tags_dialog.dart';
 
@@ -218,19 +219,12 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
           future: _places,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Column(
-                key: const ValueKey('stock-places-failed'),
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(l10n.stockReadFailed),
-                  TextButton(
-                    key: const ValueKey('stock-places-retry'),
-                    onPressed: () => setState(() {
-                      _places = _read();
-                    }),
-                    child: Text(l10n.identityConnectRetry),
-                  ),
-                ],
+              return StockReadFailed(
+                keyName: 'stock-places',
+                error: snapshot.error!,
+                onRetry: () => setState(() {
+                  _places = _read();
+                }),
               );
             }
             final all = snapshot.data;

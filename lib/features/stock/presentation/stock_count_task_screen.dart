@@ -13,7 +13,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/format/decimal_input.dart';
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -23,15 +22,14 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/adaptive/task_surface.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
-import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_cycle_counts.dart';
 import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_bulk_read_sheet.dart';
 import 'stock_config_text.dart';
+import 'stock_page_shell.dart';
 import 'stock_read_failed.dart';
 
 class StockCountTaskScreen extends ConsumerStatefulWidget {
@@ -224,17 +222,15 @@ class _State extends ConsumerState<StockCountTaskScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.stockCycleTaskTitle),
-        actions: [HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockCycleCounts)],
-      ),
-      body: workspaceId == null ? const LoadingView() : _body(context, workspaceId),
+    return StockPageShell(
+      title: l10n.stockCycleTaskTitle,
+      anchor: HelpAnchor.moneyStockCycleCounts,
+      helpTopic: l10n.permModuleStock,
+      body: _body,
     );
   }
 
-  Widget _body(BuildContext context, String workspaceId) {
+  Widget _body(BuildContext context, WidgetRef ref, String workspaceId) {
     final l10n = context.l10n;
     final provider = stockCountTaskProvider((workspaceId: workspaceId, taskId: widget.taskId));
     final items = {for (final i in ref.watch(stockItemsProvider(workspaceId)).value ?? const <StockItem>[]) i.id: i}; // empty-ok: a name falls back to its id

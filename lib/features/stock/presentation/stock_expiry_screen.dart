@@ -11,19 +11,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
-import '../../../core/ui/kit/page_title.dart';
-import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_expiry.dart';
 import '../providers/stock_providers.dart';
-import 'stock_read_failed.dart';
+import 'stock_page_shell.dart';
 
 class StockExpiryScreen extends ConsumerStatefulWidget {
   const StockExpiryScreen({super.key});
@@ -59,25 +56,20 @@ class _StockExpiryState extends ConsumerState<StockExpiryScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.stockExpiryTitle),
-        actions: [HelpDot(l10n.stockExpiryTitle, anchor: HelpAnchor.moneyStockExpiry)],
+    return StockPageShell(
+      title: l10n.stockExpiryTitle,
+      anchor: HelpAnchor.moneyStockExpiry,
+      body: (context, ref, workspaceId) => ValueListenableBuilder<ExpiryQuery>(
+        valueListenable: _query,
+        builder: (context, query, _) => ListView(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          children: [
+            _Filters(workspaceId: workspaceId, query: query, horizon: _horizon, set: _set),
+            const FormGap(),
+            _Answer(workspaceId: workspaceId, query: query),
+          ],
+        ),
       ),
-      body: workspaceId == null
-          ? const LoadingView()
-          : ValueListenableBuilder<ExpiryQuery>(
-              valueListenable: _query,
-              builder: (context, query, _) => ListView(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                children: [
-                  _Filters(workspaceId: workspaceId, query: query, horizon: _horizon, set: _set),
-                  const FormGap(),
-                  _Answer(workspaceId: workspaceId, query: query),
-                ],
-              ),
-            ),
     );
   }
 }
@@ -160,15 +152,19 @@ class _Answer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = stockExpiryReportProvider((workspaceId: workspaceId, query: query));
-    return ref.watch(provider).when(
-      loading: () => const Padding(padding: EdgeInsets.all(AppSpacing.lg), child: LoadingView()),
-      error: (e, st) => StockReadFailed(keyName: 'stock-expiry', error: e, onRetry: () => ref.invalidate(provider)),
+    return StockRead(
+      keyName: 'stock-expiry',
+      value: ref.watch(provider),
+      onRetry: () => ref.invalidate(provider),
+      isEmpty: (report) => report.rows.isEmpty,
+      empty: context.l10n.stockExpiryNone,
+      emptyIcon: Icons.event_available_outlined,
       data: (report) => _Rows(report: report, query: query),
     );
   }
 }
 
-/// The rows of a read report, with its print button and the notice of a list that was cut.
+/// The rows of a read report that has rows, with its print button and the notice of a list that was cut.
 class _Rows extends ConsumerWidget {
   const _Rows({required this.report, required this.query});
 
@@ -178,7 +174,6 @@ class _Rows extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    if (report.rows.isEmpty) return Text(l10n.stockExpiryNone, key: const ValueKey('stock-expiry-empty'));
     final printer = ref.watch(stockExpiryPrinterProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

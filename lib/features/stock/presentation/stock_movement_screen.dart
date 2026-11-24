@@ -12,14 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_feature.dart';
@@ -30,6 +28,7 @@ import '../domain/stock_reversals.dart';
 import '../providers/stock_providers.dart';
 import 'stock_chain_section.dart';
 import 'stock_day.dart';
+import 'stock_page_shell.dart';
 import 'stock_place_text.dart';
 import 'stock_read_failed.dart';
 import 'stock_reversal_sheet.dart';
@@ -64,33 +63,28 @@ class StockMovementScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspace = ref.watch(currentWorkspaceProvider).value;
-    final provider = stockMovementProvider((
-      workspaceId: workspace?.id ?? '',
-      id: movementId,
-    ));
-    final movement = workspace == null ? null : ref.watch(provider);
     final held = ref.watch(myPermissionsProvider);
     final seesCost = held.contains(WorkspacePermission.viewFinances) ||
         held.contains(WorkspacePermission.managePurchases);
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.stockMovementTitle),
-        actions: [HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockReversals)],
-      ),
-      body: switch (movement) {
-        null => const LoadingView(),
-        AsyncLoading() => const LoadingView(),
-        AsyncError(:final error) => StockReadFailed(keyName: 'stock-movement', error: error, onRetry: () => ref.invalidate(provider)),
-        AsyncData(value: null) => Center(
-          key: const ValueKey('stock-movement-none'),
-          child: Text(l10n.stockMovementNotFound),
-        ),
-        AsyncData(:final value?) => _Detail(
-          movement: value,
-          seesCost: seesCost,
-          currency: workspace?.currencyCode ?? '',
-        ),
+    return StockPageShell(
+      title: l10n.stockMovementTitle,
+      anchor: HelpAnchor.moneyStockReversals,
+      helpTopic: l10n.permModuleStock,
+      body: (context, ref, workspaceId) {
+        final provider = stockMovementProvider((workspaceId: workspaceId, id: movementId));
+        return switch (ref.watch(provider)) {
+          AsyncLoading() => const LoadingView(),
+          AsyncError(:final error) => StockReadFailed(keyName: 'stock-movement', error: error, onRetry: () => ref.invalidate(provider)),
+          AsyncData(value: null) => Center(
+            key: const ValueKey('stock-movement-none'),
+            child: Text(l10n.stockMovementNotFound),
+          ),
+          AsyncData(:final value?) => _Detail(
+            movement: value,
+            seesCost: seesCost,
+            currency: ref.watch(currentWorkspaceProvider).value?.currencyCode ?? '',
+          ),
+        };
       },
     );
   }
@@ -185,14 +179,10 @@ class _Reversals extends ConsumerWidget {
         ),
         switch (allows) {
           AsyncLoading() => const Padding(padding: EdgeInsets.all(AppSpacing.md), child: LoadingView()),
-          AsyncError() => ListTile(
-            key: const ValueKey('stock-reversals-failed'),
-            title: Text(l10n.stockReadFailed),
-            trailing: TextButton(
-              key: const ValueKey('stock-reversals-retry'),
-              onPressed: () => ref.invalidate(stockReversibleProvider(key)),
-              child: Text(l10n.identityConnectRetry),
-            ),
+          AsyncError(:final error) => StockReadFailed(
+            keyName: 'stock-reversals',
+            error: error,
+            onRetry: () => ref.invalidate(stockReversibleProvider(key)),
           ),
           AsyncData(value: final a?) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -12,7 +12,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -20,7 +19,6 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -30,6 +28,7 @@ import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_cycle_plan_sheet.dart';
 import 'stock_day.dart';
+import 'stock_page_shell.dart';
 import 'stock_read_failed.dart';
 
 class StockCycleCountsScreen extends ConsumerWidget {
@@ -38,25 +37,23 @@ class StockCycleCountsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
     final manages = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
     final tabs = [
-      (l10n.stockCycleTabTasks, 'tasks', _Tasks(workspaceId: workspaceId)),
+      (l10n.stockCycleTabTasks, 'tasks', _Tasks.new),
       if (manages) ...[
-        (l10n.stockCycleTabPlans, 'plans', _Plans(workspaceId: workspaceId)),
-        (l10n.stockCycleTabHistory, 'history', _History(workspaceId: workspaceId)),
+        (l10n.stockCycleTabPlans, 'plans', _Plans.new),
+        (l10n.stockCycleTabHistory, 'history', _History.new),
       ],
     ];
     return DefaultTabController(
       length: tabs.length,
-      child: Scaffold(
-        appBar: AppBar(
-          title: PageTitle(l10n.stockCycleTitle),
-          actions: [HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockCycleCounts)],
-          // a counter who only counts has one page: no tabs to choose between
-          bottom: tabs.length < 2 ? null : TabBar(tabs: [for (final t in tabs) Tab(key: ValueKey('stock-cycle-tab-${t.$2}'), text: t.$1)]),
-        ),
-        body: workspaceId == null ? const LoadingView() : TabBarView(children: [for (final t in tabs) t.$3]),
+      child: StockPageShell(
+        title: l10n.stockCycleTitle,
+        anchor: HelpAnchor.moneyStockCycleCounts,
+        helpTopic: l10n.permModuleStock,
+        // a counter who only counts has one page: no tabs to choose between
+        bottom: tabs.length < 2 ? null : TabBar(tabs: [for (final t in tabs) Tab(key: ValueKey('stock-cycle-tab-${t.$2}'), text: t.$1)]),
+        body: (context, ref, workspaceId) => TabBarView(children: [for (final t in tabs) t.$3(workspaceId: workspaceId)]),
       ),
     );
   }

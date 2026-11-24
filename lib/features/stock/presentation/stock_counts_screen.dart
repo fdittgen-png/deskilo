@@ -15,7 +15,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/format/decimal_input.dart';
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -24,8 +23,7 @@ import '../../../core/trace/refusal_text.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
-import '../../../core/ui/kit/page_title.dart';
-import '../../../core/ui/loading_view.dart';
+import '../../../core/ui/kit/status_chip.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -36,7 +34,7 @@ import '../domain/stock_sites.dart';
 import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
 import 'stock_move_sheets.dart' show StockPickField;
-import 'stock_read_failed.dart';
+import 'stock_page_shell.dart';
 
 class StockCountsScreen extends ConsumerWidget {
   const StockCountsScreen({super.key});
@@ -44,46 +42,35 @@ class StockCountsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
     final held = ref.watch(myPermissionsProvider);
     final mayCount = held.contains(WorkspacePermission.manageStock);
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.stockCountsTitle),
-        actions: [
-          HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockReversals),
-          if (workspaceId != null)
-            IconButton(
-              key: const ValueKey('stock-counts-reload'),
-              icon: const Icon(Icons.refresh),
-              tooltip: l10n.overviewLayoutReload,
-              onPressed: () => ref.invalidate(stockCountsProvider(workspaceId)),
+    return StockPageShell(
+      title: l10n.stockCountsTitle,
+      anchor: HelpAnchor.moneyStockReversals,
+      helpTopic: l10n.permModuleStock,
+      reloadKey: const ValueKey('stock-counts-reload'),
+      reloads: (workspaceId) => [stockCountsProvider(workspaceId)],
+      body: (context, ref, workspaceId) => ListView(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        children: [
+          if (mayCount)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: FilledButton.icon(
+                key: const ValueKey('stock-count-open'),
+                icon: const Icon(Icons.fact_check_outlined),
+                label: Text(l10n.stockCountsOpen),
+                onPressed: () => _count(context, ref, workspaceId),
+              ),
             ),
+          const SizedBox(height: AppSpacing.md),
+          _Counts(
+            workspaceId: workspaceId,
+            mayApprove: held.contains(WorkspacePermission.approveStockAdjustments),
+            mayCancel: mayCount || held.contains(WorkspacePermission.approveStockAdjustments),
+          ),
         ],
       ),
-      body: workspaceId == null
-          ? const LoadingView()
-          : ListView(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              children: [
-                if (mayCount)
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: FilledButton.icon(
-                      key: const ValueKey('stock-count-open'),
-                      icon: const Icon(Icons.fact_check_outlined),
-                      label: Text(l10n.stockCountsOpen),
-                      onPressed: () => _count(context, ref, workspaceId),
-                    ),
-                  ),
-                const SizedBox(height: AppSpacing.md),
-                _Counts(
-                  workspaceId: workspaceId,
-                  mayApprove: held.contains(WorkspacePermission.approveStockAdjustments),
-                  mayCancel: mayCount || held.contains(WorkspacePermission.approveStockAdjustments),
-                ),
-              ],
-            ),
     );
   }
 
@@ -120,24 +107,26 @@ class _Counts extends ConsumerWidget {
     final counts = ref.watch(stockCountsProvider(workspaceId));
     final items = {for (final i in ref.watch(stockItemsProvider(workspaceId)).value ?? const <StockItem>[]) i.id: i}; // empty-ok: a count is named by its ids
     final places = {for (final p in ref.watch(stockPlaceConfigsProvider(workspaceId)).value ?? const <StockPlaceConfig>[]) p.id: p}; // empty-ok: a count is named by its ids
-    return counts.when(
-      loading: () => const LoadingView(),
-      error: (e, st) => StockReadFailed(keyName: 'stock-counts', error: e, onRetry: () => ref.invalidate(stockCountsProvider(workspaceId))),
-      data: (list) => list.isEmpty
-          ? Text(l10n.stockCountsEmpty, key: const ValueKey('stock-counts-empty'))
-          : Column(
-              children: [
-                for (final c in list)
-                  _CountTile(
-                    count: c,
-                    item: items[c.itemId],
-                    place: places[c.locationId],
-                    mayApprove: mayApprove,
-                    mayCancel: mayCancel,
-                    workspaceId: workspaceId,
-                  ),
-              ],
+    return StockRead<List<StockCountRow>>(
+      keyName: 'stock-counts',
+      value: counts,
+      onRetry: () => ref.invalidate(stockCountsProvider(workspaceId)),
+      isEmpty: (list) => list.isEmpty,
+      empty: l10n.stockCountsEmpty,
+      emptyIcon: Icons.fact_check_outlined,
+      data: (list) => Column(
+        children: [
+          for (final c in list)
+            _CountTile(
+              count: c,
+              item: items[c.itemId],
+              place: places[c.locationId],
+              mayApprove: mayApprove,
+              mayCancel: mayCancel,
+              workspaceId: workspaceId,
             ),
+        ],
+      ),
     );
   }
 }
@@ -185,15 +174,22 @@ class _CountTile extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: AppSpacing.xs),
-            Chip(
+            StatusChip(
               key: ValueKey('stock-count-state-${count.countId}'),
-              label: Text(switch (count.state) {
+              label: switch (count.state) {
                 StockCountState.recorded => l10n.stockCountsStateRecorded,
                 StockCountState.applied => l10n.stockCountsStateApplied,
                 StockCountState.rejected => l10n.stockCountsStateRejected,
                 StockCountState.cancelled => l10n.stockCountsStateCancelled,
                 StockCountState.unknown => l10n.stockStateUnknown,
-              }),
+              },
+              // waiting for a decision, posted, refused, or nothing to act on
+              tone: switch (count.state) {
+                StockCountState.recorded => StatusTone.warn,
+                StockCountState.applied => StatusTone.ok,
+                StockCountState.rejected => StatusTone.due,
+                StockCountState.cancelled || StockCountState.unknown => StatusTone.neutral,
+              },
             ),
             if (open && count.stale)
               Padding(

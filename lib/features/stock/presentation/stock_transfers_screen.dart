@@ -20,8 +20,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
-import '../../../core/ui/kit/page_title.dart';
-import '../../../core/ui/loading_view.dart';
+import '../../../core/ui/kit/status_chip.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
@@ -33,8 +32,8 @@ import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
 import 'stock_day.dart';
 import 'stock_move_sheets.dart';
+import 'stock_page_shell.dart';
 import 'stock_place_text.dart';
-import 'stock_read_failed.dart';
 
 class StockTransfersScreen extends ConsumerWidget {
   const StockTransfersScreen({super.key});
@@ -42,53 +41,41 @@ class StockTransfersScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
     final mayManage = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
     final takeOutOn = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockTakeOut);
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.stockTransfersTitle),
-        actions: [
-          if (workspaceId != null)
-            IconButton(
-              key: const ValueKey('stock-transfers-reload'),
-              icon: const Icon(Icons.refresh),
-              tooltip: l10n.overviewLayoutReload,
-              onPressed: () => ref.invalidate(openTransfersProvider(workspaceId)),
-            ),
-        ],
-      ),
-      body: workspaceId == null
-          ? const LoadingView()
-          : ListView(
-              padding: const EdgeInsets.all(AppSpacing.md),
+    return StockPageShell(
+      title: l10n.stockTransfersTitle,
+      reloadKey: const ValueKey('stock-transfers-reload'),
+      reloads: (workspaceId) => [openTransfersProvider(workspaceId)],
+      body: (context, ref, workspaceId) => ListView(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        children: [
+          if (mayManage)
+            Wrap(
+              spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.sm,
               children: [
-                if (mayManage)
-                  Wrap(
-                    spacing: AppSpacing.sm,
-                    runSpacing: AppSpacing.sm,
-                    children: [
-                      FilledButton.icon(
-                        key: const ValueKey('stock-move-open'),
-                        icon: const Icon(Icons.swap_horiz),
-                        label: Text(l10n.stockMoveOpen),
-                        onPressed: () => _move(context, ref, workspaceId, takeOut: false),
-                      ),
-                      if (takeOutOn)
-                        OutlinedButton.icon(
-                          key: const ValueKey('stock-takeout-open'),
-                          icon: const Icon(Icons.outbox_outlined),
-                          label: Text(l10n.stockTakeOutOpen),
-                          onPressed: () => _move(context, ref, workspaceId, takeOut: true),
-                        ),
-                    ],
+                FilledButton.icon(
+                  key: const ValueKey('stock-move-open'),
+                  icon: const Icon(Icons.swap_horiz),
+                  label: Text(l10n.stockMoveOpen),
+                  onPressed: () => _move(context, ref, workspaceId, takeOut: false),
+                ),
+                if (takeOutOn)
+                  OutlinedButton.icon(
+                    key: const ValueKey('stock-takeout-open'),
+                    icon: const Icon(Icons.outbox_outlined),
+                    label: Text(l10n.stockTakeOutOpen),
+                    onPressed: () => _move(context, ref, workspaceId, takeOut: true),
                   ),
-                const SizedBox(height: AppSpacing.md),
-                Text(l10n.stockTransfersOnTheWay, style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: AppSpacing.sm),
-                _OnTheWay(workspaceId: workspaceId, mayManage: mayManage),
               ],
             ),
+          const SizedBox(height: AppSpacing.md),
+          Text(l10n.stockTransfersOnTheWay, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: AppSpacing.sm),
+          _OnTheWay(workspaceId: workspaceId, mayManage: mayManage),
+        ],
+      ),
     );
   }
 
@@ -123,19 +110,17 @@ class _OnTheWay extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final transfers = ref.watch(openTransfersProvider(workspaceId));
-    return transfers.when(
-      loading: () => const LoadingView(),
-      error: (e, st) => StockReadFailed(keyName: 'stock-transfers', error: e, onRetry: () => ref.invalidate(openTransfersProvider(workspaceId))),
-      data: (list) => list.isEmpty
-          ? Padding(
-              key: const ValueKey('stock-transfers-empty'),
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: Text(l10n.stockTransfersEmpty),
-            )
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [for (final t in list) _TransferCard(transfer: t, workspaceId: workspaceId, mayManage: mayManage)],
-            ),
+    return StockRead<List<StockTransfer>>(
+      keyName: 'stock-transfers',
+      value: transfers,
+      onRetry: () => ref.invalidate(openTransfersProvider(workspaceId)),
+      isEmpty: (list) => list.isEmpty,
+      empty: l10n.stockTransfersEmpty,
+      emptyIcon: Icons.local_shipping_outlined,
+      data: (list) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [for (final t in list) _TransferCard(transfer: t, workspaceId: workspaceId, mayManage: mayManage)],
+      ),
     );
   }
 }
@@ -170,11 +155,11 @@ class _TransferCard extends ConsumerWidget {
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
-                Chip(
+                StatusChip(
                   key: ValueKey('stock-transfer-status-${transfer.id}'),
-                  label: Text(
-                    transfer.status == 'partly_received' ? l10n.stockTransferStatusPartly : l10n.stockTransfersOnTheWay,
-                  ),
+                  // part of the load arrived: something to finish; the rest is on its way
+                  label: transfer.status == 'partly_received' ? l10n.stockTransferStatusPartly : l10n.stockTransfersOnTheWay,
+                  tone: transfer.status == 'partly_received' ? StatusTone.warn : StatusTone.info,
                 ),
               ],
             ),

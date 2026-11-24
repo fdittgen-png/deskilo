@@ -14,15 +14,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/scan/scan_scope.dart';
 import '../../../core/text/collation.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/dropdown_field.dart';
+import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/form_kit.dart';
-import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
@@ -38,6 +37,8 @@ import 'stock_home_sheet.dart';
 import 'stock_item_add.dart';
 import 'stock_item_editor.dart';
 import 'stock_mapping_editor.dart';
+import 'stock_page_shell.dart';
+import 'stock_read_failed.dart';
 import 'stock_screen_scan.dart';
 import 'stock_tags_dialog.dart';
 import 'stock_variants_editor.dart';
@@ -51,28 +52,20 @@ class StockItemsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.stockItemsTitle),
-        actions: [HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockRegistry)],
+    return StockPageShell(
+      title: l10n.stockItemsTitle,
+      anchor: HelpAnchor.moneyStockRegistry,
+      helpTopic: l10n.permModuleStock,
+      reading: true,
+      body: (context, ref, workspaceId) => Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Text(l10n.stockItemsIntro, style: Theme.of(context).textTheme.bodyMedium),
+          ),
+          Expanded(child: _Items(workspaceId: workspaceId, addFirst: addFirst)),
+        ],
       ),
-      body: workspaceId == null
-          ? const LoadingView()
-          : Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 720),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(AppSpacing.md),
-                      child: Text(l10n.stockItemsIntro, style: Theme.of(context).textTheme.bodyMedium),
-                    ),
-                    Expanded(child: _Items(workspaceId: workspaceId, addFirst: addFirst)),
-                  ],
-                ),
-              ),
-            ),
     );
   }
 }
@@ -177,18 +170,11 @@ class _ItemsState extends ConsumerState<_Items> {
     final walk = ref.watch(stockRegistryWalkProvider(_filter));
     if (walk.error != null) {
       return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(l10n.stockReadFailed, key: const ValueKey('stock-items-failed')),
-            const FormGap(),
-            OutlinedButton(
-              key: const ValueKey('stock-items-retry'),
-              // the page that failed is asked again; the first, when nothing was read
-              onPressed: walk.rows.isEmpty ? _reload : () => unawaited(ref.read(stockRegistryWalkProvider(_filter).notifier).loadMore()),
-              child: Text(l10n.identityConnectRetry),
-            ),
-          ],
+        child: StockReadFailed(
+          keyName: 'stock-items',
+          error: walk.error!,
+          // the page that failed is asked again; the first, when nothing was read
+          onRetry: walk.rows.isEmpty ? _reload : () => unawaited(ref.read(stockRegistryWalkProvider(_filter).notifier).loadMore()),
         ),
       );
     }
@@ -250,12 +236,7 @@ class _ItemsState extends ConsumerState<_Items> {
           child: walk.loading && walk.rows.isEmpty
               ? const LoadingView()
               : shown.isEmpty
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    child: Text(l10n.stockItemsEmpty, key: const ValueKey('stock-items-empty'), textAlign: TextAlign.center),
-                  ),
-                )
+              ? EmptyState(key: const ValueKey('stock-items-empty'), icon: Icons.inventory_2_outlined, title: l10n.stockItemsEmpty)
               : ListView(
                   children: [
                     for (final r in shown)

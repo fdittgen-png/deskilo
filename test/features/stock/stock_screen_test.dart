@@ -203,7 +203,7 @@ void main() {
         await _open(tester, stock, size);
         expect(find.byKey(const ValueKey('stock-failed')), findsOneWidget);
         expect(find.byKey(const ValueKey('stock-empty')), findsNothing);
-        await tester.tap(find.text(_en.identityConnectRetry));
+        await tester.tap(find.byKey(const ValueKey('stock-retry')));
         await tester.pumpAndSettle();
         expect(find.text('1 kg'), findsOneWidget);
         expect(find.byKey(const ValueKey('stock-failed')), findsNothing);
@@ -221,7 +221,7 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.text('1 kg'), findsOneWidget);
         expect(find.byKey(const ValueKey('stock-more-failed')), findsOneWidget);
-        await tester.tap(find.text(_en.identityConnectRetry));
+        await tester.tap(find.byKey(const ValueKey('stock-more-retry')));
         await tester.pumpAndSettle();
         expect(find.text('3 piece'), findsOneWidget);
         expect(stock.asked.where((a) => (a.after as Map?)?['offset'] == 2).length, 2,
