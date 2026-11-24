@@ -13,6 +13,7 @@ import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/context_client_providers.dart';
 import 'package:deskilo/core/backend/personal_home.dart';
 import 'package:deskilo/core/backend/personal_home_providers.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/directory/data/supabase_public_discovery_repository.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -211,7 +212,7 @@ void main() {
       final legacy = _Server(
         const {},
         error: const {
-          'code': '42703',
+          'code': PgCode.undefinedColumn,
           'message':
               'column installation_identity.personal_home_kind does not exist',
         },
@@ -222,7 +223,7 @@ void main() {
       );
       final broken = _Server(
         const {},
-        error: const {'code': '42501', 'message': 'permission denied'},
+        error: const {'code': PgCode.insufficientPrivilege, 'message': 'permission denied'},
       );
       await expectLater(
         readPersonalHomeDeclaration(broken.client(_self)),

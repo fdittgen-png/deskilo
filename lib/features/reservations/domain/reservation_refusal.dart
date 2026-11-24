@@ -15,6 +15,7 @@
 // gate (`booking_gate.dart`), which foresees one before asking.
 import 'dart:convert';
 import '../../../core/codes/dk_code.dart';
+import '../../../core/codes/pg_code.dart';
 
 /// A refusal's kind: a code the server issues, or one of the legacy readings.
 enum ReservationRefusalKind {
@@ -96,7 +97,7 @@ class ReservationRefusal {
     final words = message ?? '';
     final other =
         code == DkCode.dkk26 ||
-        code == '23P01' ||
+        code == PgCode.exclusionViolation ||
         words.contains('already reserved');
     if (known) {
       final values = _detail(details);

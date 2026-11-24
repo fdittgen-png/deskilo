@@ -2,6 +2,7 @@
 //
 // #4146 — the Demo decides as the server does: a decision needs the right to
 // read the event (DKN01), the owner always decides.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/event_repository.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -46,7 +47,7 @@ void main() {
       await expectLater(
         repo.respond('expense-1', accept: true),
         throwsA(
-          isA<PostgrestException>().having((e) => e.code, 'code', 'DKN01'),
+          isA<PostgrestException>().having((e) => e.code, 'code', DkCode.dkn01),
         ),
       );
       expect(repo.decisions, isEmpty);

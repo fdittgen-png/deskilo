@@ -29,6 +29,13 @@ abstract final class PgCode {
   /// `unique_violation`.
   static const uniqueViolation = '23505';
 
+  /// `exclusion_violation`: an exclusion constraint (two bookings of one
+  /// place that overlap) refused the row.
+  static const exclusionViolation = '23P01';
+
+  /// `undefined_table`: the relation does not exist (a schema not installed).
+  static const undefinedTable = '42P01';
+
   /// `invalid_authorization_specification`.
   static const invalidAuthorization = '28000';
 

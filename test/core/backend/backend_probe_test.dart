@@ -13,6 +13,7 @@ import 'package:deskilo/core/backend/backend_key.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/backend_uri.dart';
 import 'package:deskilo/core/backend/schema_version.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
@@ -224,10 +225,10 @@ void main() {
       final table = <PostgrestException, BackendProbeResult>{
         pg('42P01', 'relation "workspaces" does not exist'):
             BackendProbeResult.schemaMissing,
-        pg('PGRST301', 'JWT expired'): BackendProbeResult.badKey,
+        pg(PgCode.pgrstJwtExpired, 'JWT expired'): BackendProbeResult.badKey,
         pg('401', 'Invalid API key'): BackendProbeResult.badKey,
         pg('403', 'permission denied'): BackendProbeResult.attention,
-        pg('42501', 'permission denied for table workspaces'):
+        pg(PgCode.insufficientPrivilege, 'permission denied for table workspaces'):
             BackendProbeResult.attention,
         pg('500', 'internal'): BackendProbeResult.attention,
         pg('502', '<html>bad gateway</html>'): BackendProbeResult.attention,
@@ -240,10 +241,10 @@ void main() {
         expect(r.reachable, ProbeFacet.yes);
         expect(r.usable, isFalse);
       }
-      final missing = classifyProbeError(pg('42P01'));
+      final missing = classifyProbeError(pg(PgCode.undefinedTable));
       expect(missing.schemaRecognised, ProbeFacet.no);
       expect(missing.keyAccepted, ProbeFacet.yes);
-      final refused = classifyProbeError(pg('PGRST301'));
+      final refused = classifyProbeError(pg(PgCode.pgrstJwtExpired));
       expect(refused.keyAccepted, ProbeFacet.no);
       expect(refused.schemaRecognised, ProbeFacet.unknown);
     });

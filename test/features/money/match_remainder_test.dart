@@ -4,6 +4,7 @@
 // the Demo's `matchInvoice` work on what is LEFT of a payment: the
 // resolution (exact, over, under) is derived from the remainder, a part may
 // be named, and a part above the remainder is refused as the SQL refuses it.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/i18n/money_format.dart';
 import 'package:deskilo/features/money/application/payment_candidates.dart';
 import 'package:deskilo/features/money/presentation/widgets/match_invoice_dialog.dart';
@@ -123,7 +124,7 @@ void main() {
           paymentLedgerId: paymentId,
           resolution: 'exact',
         ),
-        throwsRefusal('DKI06'),
+        throwsRefusal(DkCode.dki06),
         reason: 'the invoice already holds a part of this payment',
       );
     });

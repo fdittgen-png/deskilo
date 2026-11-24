@@ -13,6 +13,8 @@ import 'dart:convert';
 
 import 'package:deskilo/core/backend/connection_outcome.dart';
 import 'package:deskilo/core/backend/context_clients.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/features/reservations/data/host_my_reservation_actions.dart';
 import 'package:deskilo/features/reservations/data/host_my_reservations_repository.dart';
@@ -171,7 +173,7 @@ void main() {
   });
 
   test('a host without the command is unsupported', () async {
-    b.refusal = (status: 404, code: 'PGRST202', message: 'Could not find the function', details: null);
+    b.refusal = (status: 404, code: PgCode.pgrstFunctionNotFound, message: 'Could not find the function', details: null);
     await expectLater(
       actions().cancel(_row, _item),
       throwsA(isA<MyReservationsRefused>()
@@ -189,19 +191,19 @@ void main() {
         run(),
         throwsA(isA<ReservationRefused>()
             .having((e) => e.refusal.kind, 'kind', ReservationRefusalKind.coded)
-            .having((e) => e.refusal.code, 'code', 'DKK17')
+            .having((e) => e.refusal.code, 'code', DkCode.dkk17)
             .having((e) => e.refusal.minutes, 'minutes', 45)),
       );
     }
-    b.refusal = (status: 400, code: 'DKK18', message: 'x', details: null);
+    b.refusal = (status: 400, code: DkCode.dkk18, message: 'x', details: null);
     await expectLater(
       actions().checkIn(_row, _item),
-      throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK18')),
+      throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk18)),
     );
   });
 
   test('a code of no meaning keeps nothing of the host: an unknown refusal, still typed', () async {
-    b.refusal = (status: 400, code: 'P0001', message: 'not cancellable', details: null);
+    b.refusal = (status: 400, code: PgCode.raiseException, message: 'not cancellable', details: null);
     await expectLater(
       actions().cancel(_row, _item),
       throwsA(isA<ReservationRefused>()

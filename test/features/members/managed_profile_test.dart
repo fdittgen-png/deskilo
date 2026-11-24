@@ -7,6 +7,7 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -224,7 +225,7 @@ void main() {
         (tester) async {
       final workspace = _GatedIdentity()
         ..failWith = const PostgrestException(
-            message: 'not allowed to read this profile', code: 'DKN01');
+            message: 'not allowed to read this profile', code: DkCode.dkn01);
       await workspace.createManagedMember('ws-1', stored);
       await openEdit(tester, workspace, 'Anne DUPONT');
       workspace.gate.complete();

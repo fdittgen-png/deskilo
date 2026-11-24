@@ -6,6 +6,7 @@
 // only a draft edited, final states), the document's data, and the screen:
 // a buyer drafts, prints, marks sent and cancels; a finance reader only
 // reads and prints.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/purchase_order_report.dart';
@@ -168,7 +169,7 @@ void main() {
         await expectLater(
           repo.save('ws', 'r2', _draft(orderId: o.id, revision: 9)),
           throwsA(
-            isA<PostgrestException>().having((e) => e.code, 'code', '40001'),
+            isA<PostgrestException>().having((e) => e.code, 'code', PgCode.serializationFailure),
           ),
         );
         final sent = await repo.markSent('ws', o.id, o.revision, 'r3');

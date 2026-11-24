@@ -3,6 +3,7 @@
 // #4146 -- a decision on an event the caller may not read is refused by
 // respond_to_event with DKN01. In every language the app reads it as the
 // permission refusal, never as the server's English sentence.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/trace/refusal_text.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/widgets.dart';
@@ -11,7 +12,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 const _refusal = PostgrestException(
   message: 'you are not an eligible validator for this event',
-  code: 'DKN01',
+  code: DkCode.dkn01,
 );
 
 void main() {

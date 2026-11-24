@@ -9,6 +9,7 @@ import 'dart:ui' as ui;
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/nfc/nfc_uid_reader.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
@@ -319,7 +320,7 @@ void main() {
         'sb_publishable_test',
         httpClient: MockClient(
           (request) async => http.Response(
-            jsonEncode({'code': 'P0001', 'message': 'badge not recognized', 'details': null, 'hint': null}),
+            jsonEncode({'code': PgCode.raiseException, 'message': 'badge not recognized', 'details': null, 'hint': null}),
             400,
             request: request,
             headers: {'content-type': 'application/json'},

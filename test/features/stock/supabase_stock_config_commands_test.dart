@@ -7,6 +7,7 @@
 // nothing is reported saved that was not.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/stock/data/supabase_stock_config_commands.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
@@ -80,13 +81,13 @@ void main() {
   });
 
   test('a stale revision is a failure that says read again', () async {
-    final h = _with(400, {'code': 'DKG10', 'message': 'changed', 'details': null, 'hint': null});
+    final h = _with(400, {'code': DkCode.dkg10, 'message': 'changed', 'details': null, 'hint': null});
     await expectLater(h.commands.saveItem(_ws, _config, 'r'), throwsA(isA<StockConfigStale>()));
   });
 
   test('a content refusal names its field and its reason', () async {
     final h = _with(400, {
-      'code': 'DKG11',
+      'code': DkCode.dkg11,
       'message': 'not valid',
       'details': '{"field": "units[0].factor_den", "reason": "factor_invalid"}',
       'hint': null,
@@ -102,12 +103,12 @@ void main() {
   });
 
   test('an item in use keeps its unit and tracking: a failure, not a success', () async {
-    final h = _with(400, {'code': 'DKG08', 'message': 'kept', 'details': null, 'hint': null});
+    final h = _with(400, {'code': DkCode.dkg08, 'message': 'kept', 'details': null, 'hint': null});
     await expectLater(h.commands.saveItem(_ws, _config, 'r'), throwsA(isA<StockConfigInUse>()));
   });
 
   test('another failure is not swallowed', () async {
-    final h = _with(400, {'code': 'DKN01', 'message': 'not allowed', 'details': null, 'hint': null});
+    final h = _with(400, {'code': DkCode.dkn01, 'message': 'not allowed', 'details': null, 'hint': null});
     await expectLater(h.commands.saveItem(_ws, _config, 'r'), throwsA(isA<Refusal>().having((e) => e.code, 'code', 'DKN01')));
   });
 
@@ -128,7 +129,7 @@ void main() {
     expect(((body['p_variants']! as List).single as Map)['values'], {'d1': 'v1', 'd2': 'v2'});
 
     final bad = _with(400, {
-      'code': 'DKG11',
+      'code': DkCode.dkg11,
       'message': 'not valid',
       'details': '{"field": "variants[1].values", "reason": "variant_combination_duplicate"}',
       'hint': null,

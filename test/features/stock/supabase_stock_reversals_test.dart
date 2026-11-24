@@ -9,6 +9,7 @@
 // screen with its code.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/stock/data/supabase_stock_reversals.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
@@ -140,12 +141,12 @@ void main() {
   });
 
   test('a refusal of the server reaches the screen with its code', () async {
-    final h = _with((r) => _json(400, {'code': 'DKG17', 'message': 'only 4 can still be reversed', 'details': null, 'hint': null}));
+    final h = _with((r) => _json(400, {'code': DkCode.dkg17, 'message': 'only 4 can still be reversed', 'details': null, 'hint': null}));
     await expectLater(
       h.port.makeReturn(_ws, 'ret-1', StockReturnKind.customer, const [
         (lineId: 'l-1', sourceMovementId: 'mv-1', quantity: '9', locationId: 'p', note: ''),
       ], 'req-1'),
-      throwsA(isA<Refusal>().having((e) => e.code, 'code', 'DKG17')),
+      throwsA(isA<Refusal>().having((e) => e.code, 'code', DkCode.dkg17)),
     );
   });
 }

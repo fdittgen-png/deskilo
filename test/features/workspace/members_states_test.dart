@@ -7,6 +7,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/presentation/screens/members_screen.dart';
@@ -113,7 +114,7 @@ void main() {
   testWidgets('a refused read says access is missing, not that nobody is '
       'here', (tester) async {
     final (probe, _) = await _pump(tester);
-    probe.fail(const PostgrestException(message: 'rls', code: '42501'));
+    probe.fail(const PostgrestException(message: 'rls', code: PgCode.insufficientPrivilege));
     await tester.pump();
     expect(find.text(_en.readStateDenied), findsOneWidget);
     expect(find.text(_en.directoryEmpty), findsNothing);

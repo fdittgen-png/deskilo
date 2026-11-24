@@ -8,6 +8,7 @@
 // field.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/stock/data/supabase_stock_receiving_commands.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
@@ -110,7 +111,7 @@ void main() {
 
   test('an over-allocation is a refusal with its field and reason, and nothing is reported put away', () async {
     final h = _with(400, {
-      'code': 'DKG11',
+      'code': DkCode.dkg11,
       'message': 'not valid',
       'details': '{"field": "allocations[0].quantity", "reason": "over_allocated"}',
       'hint': null,

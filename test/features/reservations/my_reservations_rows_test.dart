@@ -9,6 +9,7 @@
 import 'dart:async';
 
 import 'package:deskilo/core/backend/bounded_reads.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/core/lifecycle/app_foreground.dart';
 import 'package:deskilo/core/time/clock.dart';
@@ -362,7 +363,7 @@ void main() {
         await _frames(tester);
         final banner = find.byKey(const ValueKey('my-reservation-failed-b1'));
         expect(banner, findsOneWidget);
-        final expected = code == 'DKK17' ? l10n.planCheckInNotYetError : l10n.planCheckInOverError;
+        final expected = code == DkCode.dkk17 ? l10n.planCheckInNotYetError : l10n.planCheckInOverError;
         expect(find.descendant(of: banner, matching: find.text(expected)), findsOneWidget,
             reason: 'the host\'s reason, worded in $language');
         expect(find.descendant(of: banner, matching: find.text(l10n.myReservationsActionFailed)), findsNothing,

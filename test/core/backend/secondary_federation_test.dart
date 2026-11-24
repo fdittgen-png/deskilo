@@ -13,6 +13,7 @@ import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
 import 'package:deskilo/core/backend/federation_handoff.dart';
 import 'package:deskilo/core/backend/secondary_federation.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -81,7 +82,7 @@ class _World {
     expect(request.url.origin, target, reason: 'nothing leaves the target');
     switch (request.url.path) {
       case '/rest/v1/rpc/public_network_descriptor':
-        return _json(request, {'code': 'PGRST202', 'message': 'nf'}, 404);
+        return _json(request, {'code': PgCode.pgrstFunctionNotFound, 'message': 'nf'}, 404);
       case '/rest/v1/rpc/public_identity_authority':
         // The first read is the check before the browser opens.
         final atCompletion = authorityReads++ > 0;

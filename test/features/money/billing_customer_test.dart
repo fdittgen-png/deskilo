@@ -5,6 +5,8 @@
 // outcomes) and its adapter over the real RPC names and wire shapes of 0821.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/fake_billing_customers.dart';
 import 'package:deskilo/features/money/application/billing_customer_commands.dart';
 import 'package:deskilo/features/money/data/supabase_billing_customer_repository.dart';
@@ -232,13 +234,13 @@ void main() {
         fail('no refusal');
       }
 
-      expect(await kindOf('DKN01'), BillingCustomerRefusalKind.notAllowed);
-      expect(await kindOf('DKU02'), BillingCustomerRefusalKind.notAllowed);
-      expect(await kindOf('DKU05'), BillingCustomerRefusalKind.stale);
-      expect(await kindOf('DKU04'), BillingCustomerRefusalKind.unknownCustomer);
-      expect(await kindOf('DKU03'), BillingCustomerRefusalKind.nameNeeded);
+      expect(await kindOf(DkCode.dkn01), BillingCustomerRefusalKind.notAllowed);
+      expect(await kindOf(DkCode.dku02), BillingCustomerRefusalKind.notAllowed);
+      expect(await kindOf(DkCode.dku05), BillingCustomerRefusalKind.stale);
+      expect(await kindOf(DkCode.dku04), BillingCustomerRefusalKind.unknownCustomer);
+      expect(await kindOf(DkCode.dku03), BillingCustomerRefusalKind.nameNeeded);
       expect(
-        await kindOf('42883'),
+        await kindOf(PgCode.undefinedFunction),
         isNull,
         reason: 'an older host: no function',
       );

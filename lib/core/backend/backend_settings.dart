@@ -482,7 +482,7 @@ Future<BackendProbeReport> probeBackend(
 BackendProbeReport classifyProbeError(PostgrestException e) {
   final code = e.code ?? '';
   final message = e.message.toLowerCase();
-  if (code == '42P01' || message.contains('does not exist')) {
+  if (code == PgCode.undefinedTable || message.contains('does not exist')) {
     return const BackendProbeReport(
       result: BackendProbeResult.schemaMissing,
       reachable: ProbeFacet.yes,

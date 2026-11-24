@@ -9,6 +9,7 @@
 //    and the repository enforces that same limit: with the Demo's two, a
 //    second place in the window is taken and a third refused; with one, the
 //    second is refused and the card says one.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
@@ -94,7 +95,7 @@ void main() {
         isA<ReservationRefused>().having(
           (e) => e.refusal.code,
           'code',
-          'DKK19',
+          DkCode.dkk19,
         ),
       ),
     );
@@ -111,7 +112,7 @@ void main() {
         isA<ReservationRefused>().having(
           (e) => e.refusal.code,
           'code',
-          'DKK19',
+          DkCode.dkk19,
         ),
       ),
     );
