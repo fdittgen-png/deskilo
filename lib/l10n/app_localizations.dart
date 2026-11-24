@@ -57797,10 +57797,10 @@ abstract class AppLocalizations {
   /// **'Every how many days'**
   String get stockCycleEveryDays;
 
-  /// #4295 cycle counts
+  /// #4295 cycle counts: how many counts and the share of them that was exact; percent arrives formatted with its own sign (AppFormat.ratePercent)
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, one{1 count} other{{count} counts}}, {percent} % exact'**
+  /// **'{count, plural, one{1 count} other{{count} counts}}, {percent} exact'**
   String stockCycleHistoryAccuracy(int count, String percent);
 
   /// #4295 cycle counts

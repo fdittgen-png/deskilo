@@ -36099,7 +36099,7 @@ class AppLocalizationsEn extends AppLocalizations {
       other: '$count counts',
       one: '1 count',
     );
-    return '$_temp0, $percent % exact';
+    return '$_temp0, $percent exact';
   }
 
   @override

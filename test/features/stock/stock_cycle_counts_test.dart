@@ -276,7 +276,7 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('stock-cycle-tab-history')));
         await _frames(tester);
         expect(find.byKey(const ValueKey('stock-cycle-history-i-beans-demo-place-main')), findsOneWidget);
-        expect(find.textContaining(_en.stockCycleHistoryAccuracy(4, '75')), findsOneWidget);
+        expect(find.textContaining(_en.stockCycleHistoryAccuracy(4, '75%')), findsOneWidget);
       });
 
       testWidgets('a new plan: a mistake is said under its field, then the scope and schedule are sent once', (tester) async {

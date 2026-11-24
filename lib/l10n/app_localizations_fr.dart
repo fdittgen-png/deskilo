@@ -36555,7 +36555,7 @@ class AppLocalizationsFr extends AppLocalizations {
       other: '$count comptages',
       one: '$count comptage',
     );
-    return '$_temp0, $percent % exacts';
+    return '$_temp0, $percent exacts';
   }
 
   @override
@@ -36604,10 +36604,10 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count jours',
-      one: '$count jour',
+      other: 'un intervalle de $count jours',
+      one: 'un intervalle de $count jour',
     );
-    return 'tous les $_temp0';
+    return '$_temp0';
   }
 
   @override

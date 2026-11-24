@@ -36398,7 +36398,7 @@ class AppLocalizationsEs extends AppLocalizations {
       other: '$count recuentos',
       one: '1 recuento',
     );
-    return '$_temp0, $percent % exactos';
+    return '$_temp0, $percent exactos';
   }
 
   @override

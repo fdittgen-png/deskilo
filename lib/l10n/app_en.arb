@@ -46857,9 +46857,9 @@
   "@stockCycleEveryDays": {
     "description": "#4295 cycle counts"
   },
-  "stockCycleHistoryAccuracy": "{count, plural, one{1 count} other{{count} counts}}, {percent} % exact",
+  "stockCycleHistoryAccuracy": "{count, plural, one{1 count} other{{count} counts}}, {percent} exact",
   "@stockCycleHistoryAccuracy": {
-    "description": "#4295 cycle counts",
+    "description": "#4295 cycle counts: how many counts and the share of them that was exact; percent arrives formatted with its own sign (AppFormat.ratePercent)",
     "placeholders": {
       "count": {
         "type": "int"

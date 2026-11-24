@@ -36435,7 +36435,7 @@ class AppLocalizationsIt extends AppLocalizations {
       other: '$count conteggi',
       one: '1 conteggio',
     );
-    return '$_temp0, $percent % esatti';
+    return '$_temp0, $percent esatti';
   }
 
   @override

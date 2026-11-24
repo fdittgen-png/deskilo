@@ -21132,7 +21132,7 @@
   "stockCycleCounted": "Contado.",
   "stockCycleCountedDifference": "Contado. Diferencia con lo registrado: {difference}",
   "stockCycleEveryDays": "Cada cuántos días",
-  "stockCycleHistoryAccuracy": "{count, plural, one{1 recuento} other{{count} recuentos}}, {percent} % exactos",
+  "stockCycleHistoryAccuracy": "{count, plural, one{1 recuento} other{{count} recuentos}}, {percent} exactos",
   "stockCycleHistoryEmpty": "Todavía no se ha contado nada.",
   "stockCycleHistoryLast": "Último recuento el {date}",
   "stockCycleHistoryRow": "{item} · {place}",

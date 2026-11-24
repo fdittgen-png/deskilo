@@ -249,7 +249,7 @@ class _History extends ConsumerWidget {
                         subtitle: Text(
                           [
                             if (r.lastCountedAt != null) l10n.stockCycleHistoryLast(appFormatOf(context).date(r.lastCountedAt!)),
-                            if (r.accuracyPercent != null) l10n.stockCycleHistoryAccuracy(r.counts, '${r.accuracyPercent}'),
+                            if (r.accuracyPercent != null) l10n.stockCycleHistoryAccuracy(r.counts, appFormatOf(context).ratePercent(r.accuracyPercent!)),
                           ].join(' · '),
                         ),
                       ),
