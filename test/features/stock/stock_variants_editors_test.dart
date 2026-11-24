@@ -11,6 +11,7 @@ import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/demo_stock_registry.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
+import 'package:deskilo/features/stock/domain/stock_drafts.dart';
 import 'package:deskilo/features/stock/domain/stock_variants.dart';
 import 'package:deskilo/features/stock/presentation/stock_items_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
@@ -145,7 +146,7 @@ void main() {
       throwsA(isA<StockConfigStale>()),
     );
     await expectLater(
-      config.saveMapping('ws-1', mapping: {'supplier_id': 'demo-supplier-1', 'item_id': 'demo-item-shirt', 'article_ref': 'A', 'purchase_unit': 'box'}, requestId: 'r'),
+      config.saveMapping('ws-1', mapping: const SupplierMappingDraft(supplierId: 'demo-supplier-1', itemId: 'demo-item-shirt', articleRef: 'A', purchaseUnit: 'box', active: true), requestId: 'r'),
       throwsA(isA<StockConfigRefused>().having((e) => e.reason, 'reason', 'unit_not_of_item')),
     );
     await expectLater(

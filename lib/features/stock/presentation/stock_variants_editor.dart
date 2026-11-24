@@ -399,7 +399,7 @@ class _DimensionDraft {
           values: [
             for (final v in values) StockDimensionValue(id: v.id, label: v.label.text.trim(), active: v.active),
           ],
-        ).toSave(),
+        ),
         requestId: requestId,
         dimensionId: dimension?.id,
         expectedRevision: dimension?.revision,

@@ -21,13 +21,13 @@ class SupabaseItemGroups implements ItemGroups {
   }
 
   @override
-  Future<GroupSaved> save(String workspaceId, {required String requestId, required String groupId, required int expectedRevision, required Map<String, Object?> body, bool apply = true}) async =>
+  Future<GroupSaved> save(String workspaceId, {required String requestId, required String groupId, required int expectedRevision, required ItemGroupDraft body, bool apply = true}) async =>
       GroupSaved.fromJson(await _call('item_group_save_v1', {
         'p_workspace_id': workspaceId,
         'p_request_id': requestId,
         'p_group_id': groupId,
         'p_expected_revision': expectedRevision,
-        'p_body': body,
+        'p_body': body.toJson(),
         'p_apply': apply,
       }));
 

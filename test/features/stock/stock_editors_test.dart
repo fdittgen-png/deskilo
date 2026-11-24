@@ -8,6 +8,7 @@
 import 'package:deskilo/features/stock/domain/stock_code_resolver.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_config_commands.dart';
+import 'package:deskilo/features/stock/domain/stock_drafts.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_queries.dart';
 import 'package:deskilo/features/stock/domain/stock_registry.dart';
@@ -125,9 +126,9 @@ class _Config implements StockConfigCommands {
   }
 
   @override
-  Future<StockSaved> savePlace(String workspaceId, {required Map<String, Object?> place, required String requestId, String? placeId, int? expectedRevision}) async {
+  Future<StockSaved> savePlace(String workspaceId, {required StockPlaceDraft place, required String requestId, String? placeId, int? expectedRevision}) async {
     if (failWith case final StockConfigFailure e) throw e;
-    savedPlaces.add((place: place, id: placeId, rev: expectedRevision));
+    savedPlaces.add((place: place.toJson(), id: placeId, rev: expectedRevision));
     return (id: placeId ?? 'p-new', revision: (expectedRevision ?? 0) + 1, replayed: false);
   }
 
@@ -140,11 +141,11 @@ class _Config implements StockConfigCommands {
   @override
   Future<List<SupplierItemMapping>> mappings(String workspaceId) async => const [];
   @override
-  Future<StockSaved> saveDimension(String workspaceId, {required Map<String, Object?> dimension, required String requestId, String? dimensionId, int? expectedRevision}) => throw UnimplementedError();
+  Future<StockSaved> saveDimension(String workspaceId, {required StockDimension dimension, required String requestId, String? dimensionId, int? expectedRevision}) => throw UnimplementedError();
   @override
   Future<StockSaved> saveVariants(String workspaceId, String itemId, {required List<StockVariant> variants, required int expectedRevision, required String requestId}) => throw UnimplementedError();
   @override
-  Future<StockSaved> saveMapping(String workspaceId, {required Map<String, Object?> mapping, required String requestId, String? mappingId, int? expectedRevision}) => throw UnimplementedError();
+  Future<StockSaved> saveMapping(String workspaceId, {required SupplierMappingDraft mapping, required String requestId, String? mappingId, int? expectedRevision}) => throw UnimplementedError();
 }
 
 /// Resolves the Tea's barcode the way the server does.

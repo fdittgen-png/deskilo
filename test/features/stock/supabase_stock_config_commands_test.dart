@@ -11,6 +11,7 @@ import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/stock/data/supabase_stock_config_commands.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
+import 'package:deskilo/features/stock/domain/stock_drafts.dart';
 import 'package:deskilo/features/stock/domain/stock_variants.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -71,11 +72,11 @@ void main() {
 
   test('a place is created with no id and no revision, and saved with both', () async {
     final h = _with(200, {'place_id': 'p-1', 'revision': 1, 'replayed': false});
-    await h.commands.savePlace(_ws, place: {'kind': 'shelf', 'code': 'S1'}, requestId: 'r');
+    await h.commands.savePlace(_ws, place: const StockPlaceDraft(kind: 'shelf', code: 'S1', name: 'Shelf 1', active: true, receivesFromSuppliers: true), requestId: 'r');
     var body = jsonDecode(h.sent.last.body) as Map<String, Object?>;
     expect(body['p_place_id'], isNull);
     expect(body['p_expected_revision'], isNull);
-    await h.commands.savePlace(_ws, place: {'name': 'x'}, requestId: 'r2', placeId: 'p-1', expectedRevision: 1);
+    await h.commands.savePlace(_ws, place: const StockPlaceDraft(kind: 'shelf', code: 'S1', name: 'x', active: true, receivesFromSuppliers: true), requestId: 'r2', placeId: 'p-1', expectedRevision: 1);
     body = jsonDecode(h.sent.last.body) as Map<String, Object?>;
     expect((body['p_place_id'], body['p_expected_revision']), ('p-1', 1));
   });
@@ -142,12 +143,12 @@ void main() {
 
   test('a dimension and a supplier mapping are explicit saves with their revisions', () async {
     final h = _with(200, {'dimension_id': 'd-1', 'revision': 1, 'replayed': false});
-    await h.commands.saveDimension(_ws, dimension: {'name': 'Colour'}, requestId: 'r');
+    await h.commands.saveDimension(_ws, dimension: const StockDimension(id: '', revision: 0, name: 'Colour', active: true, values: []), requestId: 'r');
     expect(h.sent.last.url.path, endsWith('/rpc/save_item_dimension_v1'));
     final m = _with(200, {'mapping_id': 'm-1', 'revision': 2, 'replayed': false});
     final saved = await m.commands.saveMapping(
       _ws,
-      mapping: {'supplier_id': 's', 'item_id': _item, 'article_ref': 'TX-100'},
+      mapping: const SupplierMappingDraft(supplierId: 's', itemId: _item, articleRef: 'TX-100', active: true),
       requestId: 'r',
       mappingId: 'm-1',
       expectedRevision: 1,

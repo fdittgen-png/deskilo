@@ -29,6 +29,7 @@ import '../domain/place_labels_pdf.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_check.dart';
 import '../domain/stock_config_commands.dart';
+import '../domain/stock_drafts.dart';
 import '../domain/stock_tags.dart';
 import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
@@ -362,16 +363,16 @@ class _PlaceDraft {
     try {
       await commands.savePlace(
         workspaceId,
-        place: {
-          'kind': kind,
-          'code': fields.text('code'),
-          'name': fields.text('name'),
-          'barcode': fields.text('barcode').isEmpty ? null : fields.text('barcode'),
-          'parent_id': isSite ? null : parent,
-          'active': active,
-          'receives_from_suppliers': !isSite || receives,
-          'pick_role': isSite ? null : role,
-        },
+        place: StockPlaceDraft(
+          kind: kind,
+          code: fields.text('code'),
+          name: fields.text('name'),
+          barcode: fields.text('barcode').isEmpty ? null : fields.text('barcode'),
+          parentId: isSite ? null : parent,
+          active: active,
+          receivesFromSuppliers: !isSite || receives,
+          pickRole: isSite ? null : role,
+        ),
         requestId: requestId,
         placeId: place?.id,
         expectedRevision: place?.revision,

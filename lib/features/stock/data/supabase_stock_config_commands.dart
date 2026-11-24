@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/data/server_names.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
+import '../domain/stock_drafts.dart';
 import '../domain/stock_variants.dart';
 import 'stock_rpc.dart';
 
@@ -100,7 +101,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
   @override
   Future<StockSaved> savePlace(
     String workspaceId, {
-    required Map<String, Object?> place,
+    required StockPlaceDraft place,
     required String requestId,
     String? placeId,
     int? expectedRevision,
@@ -109,7 +110,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
     'p_place_id': placeId,
     'p_expected_revision': expectedRevision,
     'p_request_id': requestId,
-    'p_place': place,
+    'p_place': place.toJson(),
   }, 'place_id');
 
   @override
@@ -218,7 +219,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
   @override
   Future<StockSaved> saveDimension(
     String workspaceId, {
-    required Map<String, Object?> dimension,
+    required StockDimension dimension,
     required String requestId,
     String? dimensionId,
     int? expectedRevision,
@@ -227,7 +228,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
     'p_dimension_id': dimensionId,
     'p_expected_revision': expectedRevision,
     'p_request_id': requestId,
-    'p_dimension': dimension,
+    'p_dimension': dimension.toSave(),
   }, 'dimension_id');
 
   @override
@@ -248,7 +249,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
   @override
   Future<StockSaved> saveMapping(
     String workspaceId, {
-    required Map<String, Object?> mapping,
+    required SupplierMappingDraft mapping,
     required String requestId,
     String? mappingId,
     int? expectedRevision,
@@ -257,7 +258,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
     'p_mapping_id': mappingId,
     'p_expected_revision': expectedRevision,
     'p_request_id': requestId,
-    'p_mapping': mapping,
+    'p_mapping': mapping.toJson(),
   }, 'mapping_id');
 
   Future<StockSaved> _save(

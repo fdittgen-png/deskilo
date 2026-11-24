@@ -28,7 +28,7 @@ class SupabaseStockReorder implements StockReorder {
   @override
   Future<StockSaved> savePoint(
     String workspaceId, {
-    required Map<String, Object?> point,
+    required StockReorderPointDraft point,
     required String requestId,
     String? pointId,
     int? expectedRevision,
@@ -41,7 +41,7 @@ class SupabaseStockReorder implements StockReorder {
           'p_point_id': pointId,
           'p_expected_revision': expectedRevision,
           'p_request_id': requestId,
-          'p_point': point,
+          'p_point': point.toJson(),
         },
       );
       final r = JsonReader.of(answer, context: 'save_stock_reorder_point_v1');

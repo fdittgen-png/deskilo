@@ -47,13 +47,13 @@ class _Reorder implements StockReorder {
   @override
   Future<StockSaved> savePoint(
     String workspaceId, {
-    required Map<String, Object?> point,
+    required StockReorderPointDraft point,
     required String requestId,
     String? pointId,
     int? expectedRevision,
   }) async {
     if (failSave case final StockConfigFailure e) throw e;
-    saved.add((point: point, id: pointId, rev: expectedRevision, request: requestId));
+    saved.add((point: point.toJson(), id: pointId, rev: expectedRevision, request: requestId));
     return (id: pointId ?? 'pt-new', revision: (expectedRevision ?? 0) + 1, replayed: false);
   }
 
