@@ -47,12 +47,20 @@ class DemoMemberAccountCommands implements MemberAccountCommands {
       memberId: memberId,
       amountCents: claim.amountCents,
       period: claim.standalone ? null : claim.period,
-      explicit: claim.standalone,
     );
+    if (claim.standalone) _spendOnlyByAllocations(id);
 
     // #3556 — the invoices it pays wait for the business's approval.
     _m.claims[id] = [...claim.invoiceIds];
     return id;
+  }
+
+  /// #4165 — a standalone declaration is spent only by the allocations that name it (0901): its event says so.
+  void _spendOnlyByAllocations(String eventId) {
+    final events = _m.eventRepository?.events;
+    final at = events?.indexWhere((e) => e.id == eventId) ?? -1;
+    if (events == null || at < 0) return;
+    events[at] = events[at].copyWith(payload: {...events[at].payload, 'allocation_mode': 'explicit'});
   }
 
   /// The pending declaration of exactly the invoices of [claim], if any.
@@ -121,7 +129,6 @@ class DemoMemberAccountCommands implements MemberAccountCommands {
     PaymentMethod? method,
     DateTime? paidOn,
     String? period,
-    bool explicit = false,
   }) async {
     _m.recordedPayments.add((
       amountCents: amountCents,
@@ -150,8 +157,6 @@ class DemoMemberAccountCommands implements MemberAccountCommands {
             'method': method?.wireName ?? '',
             'paid_on': isoDay(paidOn ?? now),
             'period': period ?? yearMonth(now.year, now.month),
-            // #4165 — spent only by its allocations (0901)
-            if (explicit) 'allocation_mode': 'explicit',
           },
           status: EventStatus.pending,
           createdAt: now,

@@ -370,8 +370,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     _m.paymentIntents[i] = _with(
       _m.paymentIntents[i],
       status: 'reversed',
-      reversedAt: _m.clock(),
-      reversalReason: reason,
+      reversal: (at: _m.clock(), reason: reason),
     );
   }
 
@@ -379,8 +378,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     PaymentIntent p, {
     required String status,
     String? captureId,
-    DateTime? reversedAt,
-    String? reversalReason,
+    ({DateTime at, String reason})? reversal,
     List<String>? claimedInvoiceIds,
     PaymentAllocationMode? allocationMode,
   }) => PaymentIntent(
@@ -396,8 +394,8 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     createdAt: p.createdAt,
     captureId: captureId ?? p.captureId,
     reference: p.reference,
-    reversedAt: reversedAt ?? p.reversedAt,
-    reversalReason: reversalReason ?? p.reversalReason,
+    reversedAt: reversal?.at ?? p.reversedAt,
+    reversalReason: reversal?.reason ?? p.reversalReason,
     reversalReviewedAt: p.reversalReviewedAt,
     allocationMode: allocationMode ?? p.allocationMode,
     system: p.system,

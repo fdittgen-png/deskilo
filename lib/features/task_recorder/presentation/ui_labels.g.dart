@@ -977,6 +977,7 @@ Map<String, _Getter> _part2() => {
   'claimRefusedMonthlyInStandalone': (l) => l.claimRefusedMonthlyInStandalone,
   'claimRefusedNotMyPayment': (l) => l.claimRefusedNotMyPayment,
   'coloursHexHint': (l) => l.coloursHexHint,
+  'commercialLineUnreadable': (l) => l.commercialLineUnreadable,
   'compareExport': (l) => l.compareExport,
   'compareTitle': (l) => l.compareTitle,
   'conversationSeeProfile': (l) => l.conversationSeeProfile,

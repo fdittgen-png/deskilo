@@ -86,16 +86,7 @@ class MoneyOnlinePayment {
       await _diagnostics(l10n, gateway, payment);
       return false;
     }
-    // #3556 — a function that does not take a claim would drop it and pay
-    // the account: a selection is not paid through it.
-    if (invoiceIds != null && !gateway.claims) {
-      AppSnack.error(_context, l10n.payOnlineClaimsUnsupported);
-      return false;
-    }
-    if (standalone && !gateway.standalone) {
-      AppSnack.error(_context, l10n.payOnlineStandaloneUnsupported);
-      return false;
-    }
+    if (_unsupported(l10n, gateway, invoiceIds: invoiceIds, standalone: standalone)) return false;
 
     // 2. Pick the provider (directly when only one is configured).
     final chosen = await _chooseProvider(gateway, l10n);
@@ -112,16 +103,7 @@ class MoneyOnlinePayment {
       l10n: l10n,
       payment: payment,
       provider: chosen,
-      order: standalone
-          ? InvoiceClaim.standalone(
-              amountCents: amountCents,
-              invoiceIds: invoiceIds ?? const [],
-            )
-          : InvoiceClaim(
-              period: period,
-              amountCents: amountCents,
-              invoiceIds: invoiceIds ?? const [],
-            ),
+      order: _claimOf(standalone, period, amountCents, invoiceIds ?? const []),
     );
     if (order == null || !_context.mounted || (captured != null && !captured.isCurrent())) return false;
     // #3556 — the function names how many invoices it took; another count
@@ -162,6 +144,23 @@ class MoneyOnlinePayment {
     await _ref.read(paymentApprovalProvider)(_context, order.approveUrl!);
     return true;
   }
+
+  /// #3556 — a function that does not take a claim would drop it and pay the account: a selection is not paid through
+  /// it; #4165 — nor are invoices without a month through a function that does not know them. Says so, and answers
+  /// whether the payment stops here.
+  bool _unsupported(AppLocalizations l10n, PaymentGatewayConfig gateway, {required List<String>? invoiceIds, required bool standalone}) {
+    final text = invoiceIds != null && !gateway.claims
+        ? l10n.payOnlineClaimsUnsupported
+        : (standalone && !gateway.standalone ? l10n.payOnlineStandaloneUnsupported : null);
+    if (text == null) return false;
+    AppSnack.error(_context, text);
+    return true;
+  }
+
+  /// The invoices a payment names: a month's, or those without one (#4165).
+  InvoiceClaim _claimOf(bool standalone, String period, int amountCents, List<String> invoiceIds) => standalone
+      ? InvoiceClaim.standalone(amountCents: amountCents, invoiceIds: invoiceIds)
+      : InvoiceClaim(period: period, amountCents: amountCents, invoiceIds: invoiceIds);
 
   /// The target of a payment; when the business's verified identity is not
   /// known yet (its context is loading or failed) that is said, with a way to
