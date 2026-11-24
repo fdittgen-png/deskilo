@@ -36,6 +36,18 @@
   "@refusalStockPieceWhere": {
     "description": "#4362 refusal"
   },
+  "refusalStockUnitChanged": "This unit changed since you read it: someone moved or unpacked it. Read it again.",
+  "@refusalStockUnitChanged": {
+    "description": "#4435 refusal"
+  },
+  "refusalStockUnitContent": "What the unit holds does not fit: the quantity, the lot, the piece or the place. Check the content.",
+  "@refusalStockUnitContent": {
+    "description": "#4435 refusal"
+  },
+  "refusalStockUnitCodeTaken": "This unit code is already used in this business. Choose another code.",
+  "@refusalStockUnitCodeTaken": {
+    "description": "#4435 refusal"
+  },
   "stockReasonHasTags": "Tags are bound here: retire them before the tag mode changes.",
   "@stockReasonHasTags": {
     "description": "#4362 reason"

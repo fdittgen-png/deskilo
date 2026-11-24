@@ -29350,6 +29350,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet article n\'a pas cette unité. Ajoutez l\'unité à l\'article, ou saisissez la quantité dans une unité qu\'il connaît.';
 
   @override
+  String get refusalStockUnitChanged =>
+      'Cette unité a changé depuis votre lecture : quelqu\'un l\'a déplacée ou défaite. Relisez-la.';
+
+  @override
+  String get refusalStockUnitCodeTaken =>
+      'Ce code d\'unité est déjà utilisé dans cette entreprise. Choisissez un autre code.';
+
+  @override
+  String get refusalStockUnitContent =>
+      'Le contenu de l\'unité ne convient pas : quantité, lot, pièce ou emplacement. Vérifiez le contenu.';
+
+  @override
   String get refusalStockVariant =>
       'Cet article a des variantes : indiquez laquelle (couleur, taille) déplacer, vendre ou compter. Rien n’a été modifié.';
 

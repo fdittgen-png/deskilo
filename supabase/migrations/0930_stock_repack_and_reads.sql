@@ -20,7 +20,7 @@
 create or replace function public.stock_hu_repack_v1(p_workspace_id uuid, p_request_id uuid, p_sources jsonb, p_targets jsonb)
 returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
-  v_me uuid := public.stock_hu_actor(p_workspace_id);
+  v_me uuid := public.stock_ops_actor(p_workspace_id);
   v_digest text;
   v_done jsonb;
   v_repack uuid;
@@ -45,6 +45,7 @@ declare
   v_serial boolean;
   v_diff record;
 begin
+  perform public.stock_hu_require(p_workspace_id);
   if p_request_id is null or coalesce(jsonb_typeof(p_sources), '') <> 'array' or coalesce(jsonb_typeof(p_targets), '') <> 'array'
      or jsonb_array_length(p_sources) not between 1 and 200 or jsonb_array_length(p_targets) not between 1 and 200 then
     perform public.refuse('DKG07', null, 'a repack has a request id, 1 to 200 sources and 1 to 200 targets');
@@ -296,5 +297,104 @@ end;
 $fn$;
 revoke execute on function public.stock_hu_lot_trace_v1(uuid, uuid, uuid) from public, anon;
 grant execute on function public.stock_hu_lot_trace_v1(uuid, uuid, uuid) to authenticated;
+
+-- ── exported with the business's records ─────────────────────────────────
+-- restates 0922
+create or replace function public.export_workspace_records(p_workspace_id uuid)
+returns jsonb language plpgsql stable security definer set search_path = public as $fn$
+declare
+  v_tables text[] := array[
+    -- configuration, readable (the XML stays the re-importable copy)
+    'sites', 'fee_bands', 'packages', 'credit_products', 'vat_rates',
+    'accessories', 'seat_accessories', 'closure_days', 'validation_policies',
+    'workspace_roles', 'workspace_role_members', 'workspace_field_definitions',
+    'workspace_field_values', 'number_sequences', 'charging_stations',
+    'plan_images', 'setting_values',
+    -- member accounts
+    'member_credits', 'member_credit_uses', 'price_negotiations',
+    'quota_extensions', 'usage_records', 'invoice_matches', 'invoice_reminders',
+    'invoice_dunning_holds', 'tax_exemption_certificates',
+    -- purchases, premises, assets, books
+    'suppliers', 'purchase_documents', 'purchase_lines', 'purchase_obligations',
+    'outgoing_payments', 'expense_schedules', 'expense_occurrences',
+    'expense_repartitions', 'premises_leases', 'lease_terms',
+    'lease_settlements', 'room_rentals', 'room_rental_fees', 'workspace_assets',
+    'asset_valuation_batches', 'asset_valuation_rows', 'book_profiles',
+    'book_accounts', 'book_mappings', 'book_periods', 'vat_declarations',
+    'einvoice_inbox',
+    -- people the space is accountable to
+    'guest_participations', 'rights_requests',
+    -- #3307 the orders to the suppliers
+    'purchase_orders', 'purchase_order_lines', 'purchase_order_sends',
+    'purchase_order_receipts', 'purchase_order_receipt_lines',
+    -- #3308 the passes the space sells and the passes it sold
+    'guest_pass_offers', 'guest_passes',
+    -- #3824 the goods ledger
+    'item_units', 'item_codes', 'stock_locations', 'stock_lots', 'stock_movements',
+    'stock_balances',
+    -- #4362 the tags bound to items, places and pieces, and the named pieces
+    'stock_tags', 'stock_tagged_units', 'stock_movement_units',
+    'stock_handling_units', 'stock_handling_unit_lines', 'stock_handling_unit_pieces', 'stock_movement_handling_units',
+    'stock_repacks', 'stock_repack_lines',
+    -- #4184 the counter's receipts, their lines and their tenders
+    'counter_receipts', 'counter_receipt_lines', 'counter_tenders', 'counter_refunds',
+    -- #4367 the tills, their sessions, the cash entries and the day closes
+    'counter_tills', 'counter_till_sessions', 'counter_cash_entries', 'counter_day_closes',
+    -- #4164 the billing identity of each customer the business invoices
+    'billing_parties',
+    -- #4166 the customer quotes, their revisions, the decisions the issuer recorded and
+    -- the conversions into invoices
+    'customer_quotes', 'customer_quote_revisions', 'customer_quote_decisions',
+    'customer_quote_conversions',
+    -- #4169 the variants and the supplier's article
+    'item_dimensions', 'item_dimension_values', 'item_variants', 'item_variant_values',
+    'supplier_item_mappings',
+    -- #4171 what was put away from a delivery
+    'stock_receipt_allocations',
+    -- #4170 the transfers between sites and what each loaded
+    'stock_transfers', 'stock_transfer_lines',
+    -- #4294 the reorder points
+    'stock_reorder_points', 'item_groups', 'item_group_history',
+    -- #4172 the returns, and what each line reversed
+    'stock_returns', 'stock_reversals',
+    -- #4172 the counts and their decisions
+    'stock_counts',
+    -- #4295 the plans, the tasks and their lines
+    'stock_count_plans', 'stock_count_tasks', 'stock_count_task_lines',
+    -- #4178 the engagements of the services ordered, their steps and the invoice
+    -- lines that billed a direct commitment
+    'service_fulfilments', 'service_fulfilment_transitions', 'service_fulfilment_invoice_links'];
+  v_left_out text[] := public.system_column_names() || array['workspace_id', 'source_xml'];
+  v_table text;
+  v_columns text[];
+  v_rows jsonb;
+  v_out jsonb := '[]'::jsonb;
+begin
+  if auth.uid() is null or not public.has_permission(p_workspace_id, 'exportData') then
+    raise exception 'only someone who may export this workspace''s data reads its records'
+      using errcode = 'DKN01';
+  end if;
+  foreach v_table in array v_tables loop
+    -- the sessions, their entries and the day closes carry the expected cash and the differences: the finances' to export
+    if v_table in ('counter_till_sessions', 'counter_cash_entries', 'counter_day_closes') and not public.has_permission(p_workspace_id, 'viewFinances') then
+      continue;
+    end if;
+    select array_agg(c.column_name::text order by c.ordinal_position) into v_columns
+      from information_schema.columns c
+     where c.table_schema = 'public' and c.table_name = v_table
+       and c.column_name <> all (v_left_out);
+    execute format(
+      'select coalesce(jsonb_agg(jsonb_build_array(%s) order by created_datetime), ''[]''::jsonb)
+         from public.%I where workspace_id = $1',
+      (select string_agg(format('%I', c), ', ') from unnest(v_columns) c), v_table)
+      into v_rows using p_workspace_id;
+    v_out := v_out || jsonb_build_array(jsonb_build_object(
+      'table', v_table, 'columns', to_jsonb(v_columns), 'rows', v_rows));
+  end loop;
+  return v_out;
+end;
+$fn$;
+revoke execute on function public.export_workspace_records(uuid) from public, anon;
+grant execute on function public.export_workspace_records(uuid) to authenticated;
 
 select public.set_deskilo_schema_version(930);

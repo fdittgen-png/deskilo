@@ -29312,6 +29312,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.';
 
   @override
+  String get refusalStockUnitChanged =>
+      'Diese Einheit hat sich seit dem Lesen geändert: jemand hat sie bewegt oder ausgepackt. Lesen Sie sie neu.';
+
+  @override
+  String get refusalStockUnitCodeTaken =>
+      'Dieser Einheitencode wird in diesem Betrieb bereits verwendet. Wählen Sie einen anderen Code.';
+
+  @override
+  String get refusalStockUnitContent =>
+      'Der Inhalt der Einheit passt nicht: Menge, Charge, Stück oder Ort. Prüfen Sie den Inhalt.';
+
+  @override
   String get refusalStockVariant =>
       'Dieser Artikel hat Varianten: Geben Sie an, welche (Farbe, Größe) bewegt, verkauft oder gezählt wird. Nichts wurde geändert.';
 

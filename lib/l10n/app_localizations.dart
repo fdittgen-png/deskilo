@@ -46554,6 +46554,24 @@ abstract class AppLocalizations {
   /// **'This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.'**
   String get refusalStockUnit;
 
+  /// #4435 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This unit changed since you read it: someone moved or unpacked it. Read it again.'**
+  String get refusalStockUnitChanged;
+
+  /// #4435 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This unit code is already used in this business. Choose another code.'**
+  String get refusalStockUnitCodeTaken;
+
+  /// #4435 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'What the unit holds does not fit: the quantity, the lot, the piece or the place. Check the content.'**
+  String get refusalStockUnitContent;
+
   /// #4169 (0837) DKG12: an item with variants moved, sold or counted without naming one.
   ///
   /// In en, this message translates to:

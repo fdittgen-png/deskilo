@@ -16712,6 +16712,9 @@
   "refusalStockTagBound": "Cette étiquette est déjà posée sur un autre article, lieu ou exemplaire. Retirez-la d'abord à cet endroit.",
   "refusalStockTagRetiredLately": "Cette étiquette a été retirée il y a peu et ne peut pas encore être associée de nouveau. Le délai d'attente est un réglage de l'entreprise.",
   "refusalStockUnit": "Cet article n'a pas cette unité. Ajoutez l'unité à l'article, ou saisissez la quantité dans une unité qu'il connaît.",
+  "refusalStockUnitChanged": "Cette unité a changé depuis votre lecture : quelqu'un l'a déplacée ou défaite. Relisez-la.",
+  "refusalStockUnitCodeTaken": "Ce code d'unité est déjà utilisé dans cette entreprise. Choisissez un autre code.",
+  "refusalStockUnitContent": "Le contenu de l'unité ne convient pas : quantité, lot, pièce ou emplacement. Vérifiez le contenu.",
   "refusalStockVariant": "Cet article a des variantes : indiquez laquelle (couleur, taille) déplacer, vendre ou compter. Rien n’a été modifié.",
   "@refusalStockVariant": {
     "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."

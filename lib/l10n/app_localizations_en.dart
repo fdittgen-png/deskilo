@@ -29020,6 +29020,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.';
 
   @override
+  String get refusalStockUnitChanged =>
+      'This unit changed since you read it: someone moved or unpacked it. Read it again.';
+
+  @override
+  String get refusalStockUnitCodeTaken =>
+      'This unit code is already used in this business. Choose another code.';
+
+  @override
+  String get refusalStockUnitContent =>
+      'What the unit holds does not fit: the quantity, the lot, the piece or the place. Check the content.';
+
+  @override
   String get refusalStockVariant =>
       'This item has variants: name which one (colour, size) to move, sell or count. Nothing was changed.';
 

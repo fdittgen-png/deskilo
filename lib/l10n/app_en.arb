@@ -38059,6 +38059,18 @@
   "@refusalStockUnit": {
     "description": "refusal DKG02 (#3824)"
   },
+  "refusalStockUnitChanged": "This unit changed since you read it: someone moved or unpacked it. Read it again.",
+  "@refusalStockUnitChanged": {
+    "description": "#4435 refusal"
+  },
+  "refusalStockUnitCodeTaken": "This unit code is already used in this business. Choose another code.",
+  "@refusalStockUnitCodeTaken": {
+    "description": "#4435 refusal"
+  },
+  "refusalStockUnitContent": "What the unit holds does not fit: the quantity, the lot, the piece or the place. Check the content.",
+  "@refusalStockUnitContent": {
+    "description": "#4435 refusal"
+  },
   "refusalStockVariant": "This item has variants: name which one (colour, size) to move, sell or count. Nothing was changed.",
   "@refusalStockVariant": {
     "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."

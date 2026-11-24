@@ -309,22 +309,53 @@ create index stock_repack_lines_lot on public.stock_repack_lines (workspace_id, 
 
 -- ── who reads, who writes ───────────────────────────────────────────────
 -- Read like the ledger (viewStock or manageStock, the feature on); written by the commands only. An assistant never reads or writes.
-do $rls$
-declare
-  t text;
-begin
-  foreach t in array array['stock_handling_units', 'stock_handling_unit_lines', 'stock_handling_unit_pieces',
-                           'stock_movement_handling_units', 'stock_repacks', 'stock_repack_lines'] loop
-    execute format('alter table public.%I enable row level security', t);
-    execute format('revoke all on public.%I from public, anon, authenticated', t);
-    execute format('grant select on public.%I to authenticated', t);
-    execute format($p$create policy %I on public.%I for select to authenticated
-      using (workspace_id in (select public.workspaces_permitting(array['viewStock', 'manageStock']))
-             and public.feature_effective(workspace_id, 'stockHandlingUnits'))$p$, t || '_select', t);
-    execute format($p$create policy mcp_delegated_deny on public.%I as restrictive for all to authenticated
-      using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated())$p$, t);
-  end loop;
-end;
-$rls$;
+alter table public.stock_handling_units enable row level security;
+revoke all on public.stock_handling_units from public, anon, authenticated;
+grant select on public.stock_handling_units to authenticated;
+create policy stock_handling_units_select on public.stock_handling_units for select to authenticated
+  using (workspace_id in (select public.workspaces_permitting(array['viewStock', 'manageStock']))
+         and public.feature_effective(workspace_id, 'stockHandlingUnits'));
+create policy mcp_delegated_deny on public.stock_handling_units as restrictive for all to authenticated
+  using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
+alter table public.stock_handling_unit_lines enable row level security;
+revoke all on public.stock_handling_unit_lines from public, anon, authenticated;
+grant select on public.stock_handling_unit_lines to authenticated;
+create policy stock_handling_unit_lines_select on public.stock_handling_unit_lines for select to authenticated
+  using (workspace_id in (select public.workspaces_permitting(array['viewStock', 'manageStock']))
+         and public.feature_effective(workspace_id, 'stockHandlingUnits'));
+create policy mcp_delegated_deny on public.stock_handling_unit_lines as restrictive for all to authenticated
+  using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
+alter table public.stock_handling_unit_pieces enable row level security;
+revoke all on public.stock_handling_unit_pieces from public, anon, authenticated;
+grant select on public.stock_handling_unit_pieces to authenticated;
+create policy stock_handling_unit_pieces_select on public.stock_handling_unit_pieces for select to authenticated
+  using (workspace_id in (select public.workspaces_permitting(array['viewStock', 'manageStock']))
+         and public.feature_effective(workspace_id, 'stockHandlingUnits'));
+create policy mcp_delegated_deny on public.stock_handling_unit_pieces as restrictive for all to authenticated
+  using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
+alter table public.stock_movement_handling_units enable row level security;
+revoke all on public.stock_movement_handling_units from public, anon, authenticated;
+grant select on public.stock_movement_handling_units to authenticated;
+create policy stock_movement_handling_units_select on public.stock_movement_handling_units for select to authenticated
+  using (workspace_id in (select public.workspaces_permitting(array['viewStock', 'manageStock']))
+         and public.feature_effective(workspace_id, 'stockHandlingUnits'));
+create policy mcp_delegated_deny on public.stock_movement_handling_units as restrictive for all to authenticated
+  using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
+alter table public.stock_repacks enable row level security;
+revoke all on public.stock_repacks from public, anon, authenticated;
+grant select on public.stock_repacks to authenticated;
+create policy stock_repacks_select on public.stock_repacks for select to authenticated
+  using (workspace_id in (select public.workspaces_permitting(array['viewStock', 'manageStock']))
+         and public.feature_effective(workspace_id, 'stockHandlingUnits'));
+create policy mcp_delegated_deny on public.stock_repacks as restrictive for all to authenticated
+  using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
+alter table public.stock_repack_lines enable row level security;
+revoke all on public.stock_repack_lines from public, anon, authenticated;
+grant select on public.stock_repack_lines to authenticated;
+create policy stock_repack_lines_select on public.stock_repack_lines for select to authenticated
+  using (workspace_id in (select public.workspaces_permitting(array['viewStock', 'manageStock']))
+         and public.feature_effective(workspace_id, 'stockHandlingUnits'));
+create policy mcp_delegated_deny on public.stock_repack_lines as restrictive for all to authenticated
+  using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 
 select public.set_deskilo_schema_version(928);

@@ -16,18 +16,16 @@
 -- reason, ...), DKG29 the code is taken (detail: code); the stock path's own DKG03/DKG25/DKG26 pass through.
 -- Whoever manages the stock acts; an assistant is refused (as for every stock command).
 
-create or replace function public.stock_hu_actor(p_workspace_id uuid)
-returns uuid language plpgsql stable security definer set search_path = public as $fn$
-declare
-  v_me uuid := public.stock_ops_actor(p_workspace_id);
+-- the feature is on in this business (the caller is checked by each command, directly, as the stock commands check it)
+create or replace function public.stock_hu_require(p_workspace_id uuid)
+returns void language plpgsql stable security definer set search_path = public as $fn$
 begin
   if not public.feature_effective(p_workspace_id, 'stockHandlingUnits') then
     perform public.refuse('DKG01', null, 'handling units are off in this business');
   end if;
-  return v_me;
 end;
 $fn$;
-revoke execute on function public.stock_hu_actor(uuid) from public, anon, authenticated;
+revoke execute on function public.stock_hu_require(uuid) from public, anon, authenticated;
 
 -- what of an item, variant and lot is loose at a place: the balance there minus what open units there hold
 create or replace function public.stock_hu_loose(p_workspace_id uuid, p_item uuid, p_variant uuid, p_lot uuid, p_location uuid, p_except uuid default null)
@@ -143,7 +141,7 @@ revoke execute on function public.stock_hu_json(uuid, uuid) from public, anon, a
 create or replace function public.stock_hu_make_v1(p_workspace_id uuid, p_request_id uuid, p_unit jsonb)
 returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
-  v_me uuid := public.stock_hu_actor(p_workspace_id);
+  v_me uuid := public.stock_ops_actor(p_workspace_id);
   v_digest text;
   v_done jsonb;
   v_loc uuid;
@@ -152,6 +150,7 @@ declare
   v_kind text;
   e jsonb;
 begin
+  perform public.stock_hu_require(p_workspace_id);
   if p_request_id is null or coalesce(jsonb_typeof(p_unit), '') <> 'object'
      or coalesce(jsonb_typeof(p_unit -> 'lines'), '') <> 'array' or jsonb_array_length(p_unit -> 'lines') not between 1 and 200 then
     perform public.refuse('DKG07', null, 'a unit has a request id and 1 to 200 lines');
@@ -218,7 +217,7 @@ revoke execute on function public.stock_hu_lock(uuid, uuid, int) from public, an
 create or replace function public.stock_hu_move_v1(p_workspace_id uuid, p_request_id uuid, p_unit_id uuid, p_to uuid, p_revision int)
 returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
-  v_me uuid := public.stock_hu_actor(p_workspace_id);
+  v_me uuid := public.stock_ops_actor(p_workspace_id);
   v_digest text;
   v_done jsonb;
   v_u public.stock_handling_units;
@@ -230,6 +229,7 @@ declare
   v_out jsonb;
   m jsonb;
 begin
+  perform public.stock_hu_require(p_workspace_id);
   if p_request_id is null or p_to is null then
     perform public.refuse('DKG07', null, 'a move has a request id and a place');
   end if;
@@ -287,11 +287,12 @@ grant execute on function public.stock_hu_move_v1(uuid, uuid, uuid, uuid, int) t
 create or replace function public.stock_hu_unpack_v1(p_workspace_id uuid, p_request_id uuid, p_unit_id uuid, p_revision int)
 returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
-  v_me uuid := public.stock_hu_actor(p_workspace_id);
+  v_me uuid := public.stock_ops_actor(p_workspace_id);
   v_digest text;
   v_done jsonb;
   v_u public.stock_handling_units;
 begin
+  perform public.stock_hu_require(p_workspace_id);
   if p_request_id is null then
     perform public.refuse('DKG07', null, 'an unpack has a request id');
   end if;
