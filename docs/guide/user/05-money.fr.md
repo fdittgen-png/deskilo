@@ -834,6 +834,7 @@ Ouvrez une ligne du **Stock** pour voir **Où est-ce** pour cet article (ou ce l
 - **Maintenant** est ce que le stock tient à cet instant ; **À une date…** montre ce qu'il tenait à la fin de ce jour, rejoué depuis les mouvements. Regarder ne change rien.
 - Les emplacements sur une étagère s'additionnent toujours à la quantité affichée en haut.
 - À un jour passé, les marchandises en route ne sont pas montrées ; les pièces le sont, depuis le jour où elles sont suivies (une pièce faite avant n'a pas d'historique avant).
+- Touchez un emplacement qui tient un lot pour voir **Tous les mouvements** de ce lot, de la livraison par laquelle il est arrivé jusqu'à sa sortie ; le bouton chronologie d'une pièce montre **Tous les mouvements de cette pièce**. Un document que vous ne pouvez pas voir est nommé par son type, jamais omis.
 
 <!-- anchor: user.money.stock.value -->
 ### Valeur du stock et origine des marchandises

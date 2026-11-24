@@ -57092,6 +57092,18 @@ abstract class AppLocalizations {
   /// #4432 G18 trace chain
   ///
   /// In en, this message translates to:
+  /// **'Every movement'**
+  String get stockChainOpen;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Every movement of this piece'**
+  String get stockChainPieceTitle;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
   /// **'{count, plural, one{{count} piece} other{{count} pieces}}'**
   String stockChainPieces(int count);
 

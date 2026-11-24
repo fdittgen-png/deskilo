@@ -90,5 +90,13 @@
   "stockMoveReasonReturnOut": "Returned to the supplier",
   "@stockMoveReasonReturnOut": {
     "description": "#4432 G18 trace chain"
+  },
+  "stockChainPieceTitle": "Every movement of this piece",
+  "@stockChainPieceTitle": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockChainOpen": "Every movement",
+  "@stockChainOpen": {
+    "description": "#4432 G18 trace chain"
   }
 }

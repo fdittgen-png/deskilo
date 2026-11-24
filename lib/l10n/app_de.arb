@@ -20909,6 +20909,8 @@
   "stockChainDelivery": "Lieferung {label} von {supplier}",
   "stockChainEmpty": "Keine weitere Bewegung erfasst.",
   "stockChainInvoice": "Rechnung {label}",
+  "stockChainOpen": "Alle Bewegungen",
+  "stockChainPieceTitle": "Alle Bewegungen dieses Stücks",
   "stockChainPieces": "{count, plural, one{{count} Stück} other{{count} Stück}}",
   "stockChainReceipt": "Beleg {label}",
   "stockChainTitle": "Alle Bewegungen dieser Charge",

@@ -16,5 +16,7 @@
   "stockMoveReasonAdjustment": "Inventaire ajusté",
   "stockMoveReasonOpening": "Stock d'ouverture",
   "stockMoveReasonReturnIn": "Retourné par le client",
-  "stockMoveReasonReturnOut": "Retourné au fournisseur"
+  "stockMoveReasonReturnOut": "Retourné au fournisseur",
+  "stockChainPieceTitle": "Tous les mouvements de cette pièce",
+  "stockChainOpen": "Tous les mouvements"
 }

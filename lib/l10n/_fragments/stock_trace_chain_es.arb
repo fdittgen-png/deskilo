@@ -16,5 +16,7 @@
   "stockMoveReasonAdjustment": "Recuento ajustado",
   "stockMoveReasonOpening": "Existencias iniciales",
   "stockMoveReasonReturnIn": "Devuelto por el cliente",
-  "stockMoveReasonReturnOut": "Devuelto al proveedor"
+  "stockMoveReasonReturnOut": "Devuelto al proveedor",
+  "stockChainPieceTitle": "Todos los movimientos de esta pieza",
+  "stockChainOpen": "Todos los movimientos"
 }

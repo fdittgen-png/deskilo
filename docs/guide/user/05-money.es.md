@@ -834,6 +834,7 @@ Abra una línea de **Stock** para ver **Dónde está** ese artículo (o ese lote
 - **Ahora** es lo que el stock tiene en este momento; **En un día…** muestra lo que tenía al acabar ese día, reconstruido desde los movimientos. Mirar no cambia nada.
 - Los lugares en un estante suman siempre la cantidad mostrada arriba.
 - En un día pasado no se muestra la mercancía en camino; las piezas sí, desde el día en que se siguen (una pieza hecha antes no tiene historial anterior).
+- Toque un lugar que tiene un lote para ver **Todos los movimientos** de ese lote, desde la entrega con la que llegó hasta su salida; el botón de cronología de una pieza muestra **Todos los movimientos de esta pieza**. Un documento que no puede ver se nombra por su tipo, nunca se omite.
 
 <!-- anchor: user.money.stock.value -->
 ### Valor de las existencias y origen de la mercancía
