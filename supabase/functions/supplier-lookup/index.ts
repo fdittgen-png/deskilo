@@ -16,6 +16,7 @@
 // server's settings (`purchase.supplier_lookup_timeout_seconds`,
 // `purchase.supplier_lookup_per_minute`), read with the same token.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
@@ -198,8 +199,8 @@ if (import.meta.main) {
   const deps: Deps = {
     caller: (authorization) =>
       createClient(
-        Deno.env.get("SUPABASE_URL")!,
-        Deno.env.get("SUPABASE_ANON_KEY")!,
+        readEnv(KEYS.supabaseUrl)!,
+        readEnv(KEYS.supabaseAnonKey)!,
         { global: { headers: { Authorization: authorization } } },
       ),
     limiter: new RateLimiter(),

@@ -15,6 +15,7 @@
 // never settles: the RPC is only ever called with the provider's own
 // amount, in the intent's currency.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import {
   attachableOrderId,
   captureIdOf,
@@ -98,10 +99,10 @@ export interface Deps {
 const defaultDeps: Deps = {
   admin: () =>
     createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      readEnv(KEYS.supabaseUrl)!,
+      readEnv(KEYS.supabaseServiceRoleKey)!,
     ),
-  env: (name) => Deno.env.get(name),
+  env: readEnv,
   fetch: (input, init) => fetch(input, init),
   allowTest: () => allowsTestPayments(),
 };
