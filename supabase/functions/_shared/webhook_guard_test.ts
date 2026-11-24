@@ -4,7 +4,6 @@
 // read is an error, a provider body is redacted to status and debug id.
 
 import {
-  assert,
   assertEquals,
   assertThrows,
 } from "jsr:@std/assert@1";

@@ -8,6 +8,7 @@
 import { assertEquals, assertThrows } from "jsr:@std/assert@1";
 import { amount, journalEntryPayload, PayloadRefusal, pennylaneLedger } from "./accounting_pennylane.ts";
 import { journalCodesOf, type Posting } from "./accounting_postings.ts";
+import { asFetch } from "./testing/as_fetch.ts";
 
 Deno.test("a payment's entry balances; an unbalanced one is refused", () => {
   const entry = {
@@ -133,7 +134,7 @@ Deno.test("a delivery is refused when the token reaches another company than the
 
 const journalAdapter = (journals: Record<string, string> | undefined, codes: [number, string][], sent: Record<string, unknown>[]) =>
   pennylaneLedger({
-    fetch: (async (input: string | URL | Request, init?: RequestInit) => {
+    fetch: asFetch((input: string | URL | Request, init?: RequestInit) => {
       const path = new URL(String(input)).pathname.replace(/^.*\/v2\//, "");
       if (path === "journals") {
         return Response.json({ items: codes.map(([id, code]) => ({ id, code })), has_more: false });
@@ -144,7 +145,7 @@ const journalAdapter = (journals: Record<string, string> | undefined, codes: [nu
         return Response.json({ ...body, id: 900 }, { status: 201 });
       }
       return Response.json({ items: [] });
-    }) as typeof fetch,
+    }),
     secrets: { access_token: "t" },
     tenant: "",
     targetId: "pennylane_api",

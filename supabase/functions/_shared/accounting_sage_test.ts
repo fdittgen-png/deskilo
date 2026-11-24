@@ -27,6 +27,7 @@ import {
 } from "./accounting_delivery.ts";
 import { type Posting, type PostingParty, postingSha256 } from "./accounting_postings.ts";
 import { CONTACT_REFERENCE_LENGTH, sageAccounting } from "./accounting_sage.ts";
+import { asFetch } from "./testing/as_fetch.ts";
 
 /** The rules of `record_accounting_delivery` the kit relies on. */
 class Log implements DeliveryStore {
@@ -105,7 +106,7 @@ function business(
   const st: { writes: number; limitAfter?: number } = { writes: 0, limitAfter: opts.limitAfter };
   let next = 100;
   const list = (items: Row[]) => Response.json({ $items: items, $next: null });
-  const fetcher = (async (input: string | URL | Request, init?: RequestInit) => {
+  const fetcher = asFetch((input: string | URL | Request, init?: RequestInit) => {
     const url = new URL(String(input));
     const method = init?.method ?? "GET";
     const headers = (init?.headers ?? {}) as Record<string, string>;
@@ -167,7 +168,7 @@ function business(
     held[path].push(row);
     if (++st.writes === opts.loseWrite) throw new TypeError("connection reset");
     return Response.json(row);
-  }) as typeof fetch;
+  });
   return { held, calls, st, fetcher };
 }
 

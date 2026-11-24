@@ -97,7 +97,7 @@ function cors(origin: string | null): Record<string, string> {
     : {};
 }
 
-function resourceUrl(req: Request): string {
+function resourceUrl(): string {
   // The canonical resource comes from configuration, never from Host.
   return env("DESKILO_MCP_RESOURCE") || `${env("SUPABASE_URL")}/functions/v1/deskilo-mcp`;
 }
@@ -107,10 +107,10 @@ function jsonResponse(body: unknown, status: number, headers: Record<string, str
   return answer(body, status, headers);
 }
 
-function unauthorized(req: Request, headers: Record<string, string>) {
+function unauthorized(headers: Record<string, string>) {
   return jsonResponse({ error: "unauthorized" }, 401, {
     ...headers,
-    "WWW-Authenticate": `Bearer resource_metadata="${resourceUrl(req)}${METADATA_PATH}"`,
+    "WWW-Authenticate": `Bearer resource_metadata="${resourceUrl()}${METADATA_PATH}"`,
   });
 }
 
@@ -676,7 +676,7 @@ export async function handle(req: Request): Promise<Response> {
     // the endpoint's own well-known path and its path-suffixed form; the
     // host's root well-known path is not routed to a function.
     return jsonResponse({
-      resource: resourceUrl(req),
+      resource: resourceUrl(),
       resource_name: "DesKilo",
       authorization_servers: [`${env("SUPABASE_URL")}/auth/v1`],
       bearer_methods_supported: ["header"],
@@ -696,7 +696,7 @@ export async function handle(req: Request): Promise<Response> {
   }
   const authorization = req.headers.get("Authorization") ?? "";
   if (!authorization.startsWith("Bearer ") || delegatedClient(authorization) === null) {
-    return unauthorized(req, headers);
+    return unauthorized(headers);
   }
   const controller = new AbortController();
   const signal = AbortSignal.any([controller.signal, req.signal]);
@@ -725,12 +725,12 @@ export async function handle(req: Request): Promise<Response> {
     });
     // #2393 — a forged, unsigned, foreign or expired bearer costs no Auth call.
     if (await verifyLocally(authorization.slice(7), env("SUPABASE_URL"), signal) === "invalid") {
-      return unauthorized(req, headers);
+      return unauthorized(headers);
     }
     signal.throwIfAborted();
     const { data: user, error: userError } = await db.auth.getUser(authorization.slice(7));
     signal.throwIfAborted();
-    if (userError || !user?.user) return unauthorized(req, headers);
+    if (userError || !user?.user) return unauthorized(headers);
     const structured = (req.headers.get("mcp-protocol-version") ?? STRUCTURED_SINCE) >= STRUCTURED_SINCE;
     const server = buildServer(db, installation, signal, structured);
     const transport = new WebStandardStreamableHTTPServerTransport({
