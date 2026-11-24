@@ -12589,6 +12589,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureStockExpiryReportTitle => 'El informe de caducidad';
 
   @override
+  String get featureStockHandlingUnitsDesc =>
+      'La mercancía se mueve en el palé o la caja en que llegó, o en las unidades reenvasadas de la tienda, y sigue siendo trazable a través del reenvasado.';
+
+  @override
+  String get featureStockHandlingUnitsTitle => 'Unidades de manipulación';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Agrupe artículos para compartir sus ajustes: seguimiento, caducidad, modo de etiqueta, unidades, IVA, caja y más. Un artículo hereda el valor de su grupo salvo que conserve el suyo; un cambio de grupo muestra a cuántos artículos llega antes de guardarse.';
 
@@ -29222,6 +29229,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalStockUnit =>
       'Este artículo no tiene esa unidad. Añada la unidad al artículo o indique la cantidad en una unidad que tenga.';
+
+  @override
+  String get refusalStockUnitChanged =>
+      'Esta unidad cambió desde que la leyó: alguien la movió o la deshizo. Léala de nuevo.';
+
+  @override
+  String get refusalStockUnitCodeTaken =>
+      'Este código de unidad ya se usa en esta empresa. Elija otro código.';
+
+  @override
+  String get refusalStockUnitContent =>
+      'El contenido de la unidad no encaja: cantidad, lote, pieza o lugar. Revise el contenido.';
 
   @override
   String get refusalStockVariant =>

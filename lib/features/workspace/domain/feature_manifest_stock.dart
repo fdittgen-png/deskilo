@@ -152,4 +152,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockManagement,
     defaultOn: false,
   ),
+  // #4435 — handling units: goods move in the pallet or carton they were received in, or in the store's own repackaged units,
+  // and stay traceable through the repack. Asked for, under stock management.
+  WorkspaceFeature.stockHandlingUnits: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockHandlingUnits,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
 };

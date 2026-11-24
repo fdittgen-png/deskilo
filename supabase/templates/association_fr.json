@@ -209,6 +209,7 @@
         "stockCounts": false,
         "stockCycleCounts": false,
         "stockExpiryReport": false,
+        "stockHandlingUnits": false,
         "stockItemGroups": false,
         "stockLots": false,
         "stockManagement": false,

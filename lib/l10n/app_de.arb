@@ -7822,6 +7822,14 @@
   "@featureStockExpiryReportTitle": {
     "description": "#4431 the expiry report feature: its name"
   },
+  "featureStockHandlingUnitsDesc": "Ware bewegt sich in der Palette oder dem Karton, in dem sie ankam, oder in den eigenen umgepackten Einheiten des Ladens und bleibt über das Umpacken rückverfolgbar.",
+  "@featureStockHandlingUnitsDesc": {
+    "description": "#4435 the handling units feature: what it does"
+  },
+  "featureStockHandlingUnitsTitle": "Packeinheiten",
+  "@featureStockHandlingUnitsTitle": {
+    "description": "#4435 the handling units feature: its name"
+  },
   "featureStockItemGroupsDesc": "Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht.",
   "featureStockItemGroupsTitle": "Artikelgruppen",
   "featureStockLotsDesc": "Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert.",
@@ -16716,6 +16724,9 @@
   "refusalStockTagBound": "Dieses Etikett ist bereits einem anderen Artikel, Ort oder Stück zugeordnet. Geben Sie es dort zuerst frei.",
   "refusalStockTagRetiredLately": "Dieses Etikett wurde erst kürzlich freigegeben und kann noch nicht erneut zugeordnet werden. Die Wartezeit ist eine Einstellung des Betriebs.",
   "refusalStockUnit": "Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.",
+  "refusalStockUnitChanged": "Diese Einheit hat sich seit dem Lesen geändert: jemand hat sie bewegt oder ausgepackt. Lesen Sie sie neu.",
+  "refusalStockUnitCodeTaken": "Dieser Einheitencode wird in diesem Betrieb bereits verwendet. Wählen Sie einen anderen Code.",
+  "refusalStockUnitContent": "Der Inhalt der Einheit passt nicht: Menge, Charge, Stück oder Ort. Prüfen Sie den Inhalt.",
   "refusalStockVariant": "Dieser Artikel hat Varianten: Geben Sie an, welche (Farbe, Größe) bewegt, verkauft oder gezählt wird. Nichts wurde geändert.",
   "@refusalStockVariant": {
     "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."
