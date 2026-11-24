@@ -370,6 +370,8 @@ void main() {
         .convert(setup.workspaceId, 'quote-1', draftRevision: 1, requestId: 'r1');
     expect(outcome, isA<CommandDone<QuoteConverted>>());
     expect((outcome as CommandDone<QuoteConverted>).value.replayed, isTrue);
+    // the number is the server's to say: a found invoice names none rather than an empty one
+    expect(outcome.value.number, isNull);
   });
 
   testWidgets('the editor offers the business\'s day as the issue date, not the device\'s', (tester) async {

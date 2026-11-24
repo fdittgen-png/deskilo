@@ -411,13 +411,15 @@ class QuoteConverted {
     final r = JsonReader.of(json, context: 'convert_customer_quote_v1');
     return QuoteConverted(
       invoiceId: r.string('invoice_id'),
-      number: r.stringOr('number'),
+      number: r.stringOrNull('number'),
       replayed: r.isTrue('replayed'),
     );
   }
 
   final String invoiceId;
-  final String number;
+
+  /// The invoice's number as the server answered, or null when the answer was lost and the invoice was found by its quote.
+  final String? number;
 
   /// True when the quote had already been converted: the answer is that invoice.
   final bool replayed;

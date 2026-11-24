@@ -298,9 +298,10 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
 
   List<Widget> _done(BuildContext context, QuoteConverted done) {
     final l10n = context.l10n;
+    final number = done.number;
     return [
       Text(
-        done.number.isEmpty ? l10n.quoteStatusConverted : l10n.quoteConvertDone(done.number),
+        number == null || number.isEmpty ? l10n.quoteStatusConverted : l10n.quoteConvertDone(number),
         key: const ValueKey('quote-convert-done'),
         style: Theme.of(context).textTheme.titleMedium,
       ),

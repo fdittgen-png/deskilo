@@ -122,7 +122,7 @@ class CustomerQuoteCommands {
     final invoiceId = now?.invoiceId;
     return invoiceId == null
         ? outcome
-        : CommandDone(QuoteConverted(invoiceId: invoiceId, number: '', replayed: true));
+        : CommandDone(QuoteConverted(invoiceId: invoiceId, number: null, replayed: true));
   }
 
   Future<CommandOutcome<void>> cancel(String workspaceId, String quoteId) =>
