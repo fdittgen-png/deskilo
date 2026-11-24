@@ -12181,6 +12181,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cada miembro elige en sus ajustes cómo navega la app: la barra inferior clásica con el botón redondo Reservar, o el menú como en la web. Desactivado: cada dispositivo conserva el valor por defecto de su plataforma.';
 
   @override
+  String featureNeedsNewerInstallation(String feature, String since) {
+    return 'Esta instalación es demasiado antigua para esta función. Necesita $feature desde el esquema $since; pida a quien gestiona el servidor que la actualice.';
+  }
+
+  @override
   String get featureNfcBadges => 'Credenciales RFID / NFC';
 
   @override
@@ -31786,6 +31791,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get schemaUpdateOperator =>
       'Si gestiona este servidor: aplique las migraciones que faltan con `dart run tool/instance.dart install --ref <proyecto>`. Solo se ejecuta lo que falta.';
+
+  @override
+  String schemaUpdateRunning(String version, String from, String to) {
+    return 'Esta instalación está en la versión $version: faltan las migraciones $from a $to.';
+  }
 
   @override
   String get schemaUpdateServer => 'Ajustes del servidor';

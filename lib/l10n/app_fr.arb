@@ -7550,6 +7550,18 @@
   "@featureNavigationStyleDesc": {
     "description": "#969 navigation style: featureNavigationStyleDesc"
   },
+  "featureNeedsNewerInstallation": "Cette installation est trop ancienne pour cette fonction. Elle a besoin de {feature} à partir du schéma {since} ; demandez à la personne qui gère le serveur de le mettre à jour.",
+  "@featureNeedsNewerInstallation": {
+    "description": "#3729 Note under a feature's switch, for an administrator: the installation hosting the workspace is older than the feature needs",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      },
+      "since": {
+        "type": "String"
+      }
+    }
+  },
   "featureNfcBadges": "Badges RFID / NFC",
   "featureNfcBadgesDesc": "Les membres pointent à une borne en approchant une carte RFID/NFC. Nécessite un appareil Android avec NFC.",
   "featureNfcSeatTagsDesc": "Un tag NFC/RFID physique sur une chaise mène à sa place comme la carte QR imprimée ; le champ se remplit en approchant la puce.",
@@ -18844,6 +18856,21 @@
   "schemaUpdateBody": "Cette application a besoin de la version {version} du schéma DesKilo, et le serveur auquel elle se connecte en exécute une plus ancienne. Tant que le serveur n'est pas mis à jour, l'application échouerait sans pouvoir expliquer pourquoi : elle s'arrête donc ici.",
   "schemaUpdateMember": "Sinon : prévenez la personne qui gère votre espace. Rien de ce que vous avez saisi n'est perdu.",
   "schemaUpdateOperator": "Si vous gérez ce serveur : appliquez les migrations manquantes avec `dart run tool/instance.dart install --ref <projet>`. Seul ce qui manque est exécuté.",
+  "schemaUpdateRunning": "Cette installation tourne en version {version} : il lui manque les migrations {from} à {to}.",
+  "@schemaUpdateRunning": {
+    "description": "#3729 For the person who runs the server, on the update screen: the schema the installation reports and the range of migrations it lacks",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "schemaUpdateServer": "Réglages du serveur",
   "schemaUpdateTitle": "Ce serveur doit être mis à jour",
   "searchActionInvite": "Inviter un membre",

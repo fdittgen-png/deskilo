@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/feature_lifecycle.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../../providers/workspace_schema_providers.dart';
 import 'feature_capability_list.dart';
 import 'feature_switch_flow.dart';
 
@@ -34,6 +35,7 @@ class FeatureSwitchList extends ConsumerWidget {
       rows: [for (final f in features) featureManifest[f]!],
       raw: raw,
       country: workspace.countryCode,
+      schema: ref.watch(currentWorkspaceSchemaProvider),
       onChanged: (feature, {required value}) => switchWorkspaceFeature(
         context,
         ref,

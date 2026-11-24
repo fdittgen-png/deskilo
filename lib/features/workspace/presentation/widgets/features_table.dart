@@ -21,11 +21,16 @@ class FeaturesTable extends StatelessWidget {
     required this.raw,
     required this.country,
     required this.onChanged,
+    this.schema,
   });
 
   /// The stored set (a child's saved choice survives its parent's off).
   final Set<WorkspaceFeature> raw;
   final String country;
+
+  /// #3729 — the schema of the installation hosting the workspace (null: not
+  /// established); a feature it is too old for is never switched on.
+  final int? schema;
   final void Function(WorkspaceFeature feature, {required bool value})
   onChanged;
 
@@ -113,14 +118,16 @@ class FeaturesTable extends StatelessWidget {
     FeatureManifestEntry e,
   ) {
     final on = raw.contains(e.feature);
-    final available = featureAvailableIn(e.availableIn, country);
+    final schemaNote = featureSchemaNote(l, e.feature, schema);
+    final available =
+        featureAvailableIn(e.availableIn, country) && schemaNote == null;
     return RecordAction(
       id: 'switch',
       label: on ? l.processSwitchOff : l.processSwitchOn,
       icon: on ? Icons.toggle_on_outlined : Icons.toggle_off_outlined,
       unavailable: available || on
           ? null
-          : featureAvailableNote(l, e.availableIn!),
+          : schemaNote ?? featureAvailableNote(l, e.availableIn!),
       onRun: (e) => onChanged(e.feature, value: !on),
     );
   }

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../l10n/app_localizations.dart';
 import '../domain/workspace_feature.dart';
+import 'feature_names.dart';
 
 /// What each switch on the Features screen actually does, in the
 /// reader's language (#146).
@@ -334,3 +335,20 @@ String featureAvailableNote(AppLocalizations l10n, Set<String> availableIn) =>
       for (final c in availableIn.toList()..sort())
         if (c == featureCountriesEu) l10n.featureCountriesEuName else c,
     ].join(', '));
+
+/// #3729 — why the installation hosting the workspace does not offer a
+/// feature: the feature, or the prerequisite of its chain, that needs a
+/// newer schema than it runs. Null when it is offered, or when the schema
+/// could not be established (no block, no false certainty).
+String? featureSchemaNote(
+  AppLocalizations l10n,
+  WorkspaceFeature feature,
+  int? schema,
+) {
+  final readiness = featureSchemaReadiness(feature, schema);
+  if (readiness.state != FeatureSchemaState.withheld) return null;
+  return l10n.featureNeedsNewerInstallation(
+    featureName(l10n, readiness.missing!),
+    '${readiness.missingSince}',
+  );
+}

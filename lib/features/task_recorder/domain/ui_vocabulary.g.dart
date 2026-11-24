@@ -3477,6 +3477,7 @@ const Set<String> uiKeys = {
   'schedule-unit',
   'scheduled-expenses-button',
   'schema-update',
+  'schema-update-missing',
   'schema-update-retry',
   'schema-update-server',
   'search-field',

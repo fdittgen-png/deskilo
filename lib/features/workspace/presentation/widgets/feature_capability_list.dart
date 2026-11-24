@@ -35,6 +35,7 @@ class FeatureCapabilityList extends StatelessWidget {
     required this.onChanged,
     this.assessments = featureAssessments,
     this.country,
+    this.schema,
     this.shrinkWrap = false,
     this.roomyTargets = false,
   });
@@ -58,6 +59,11 @@ class FeatureCapabilityList extends StatelessWidget {
 
   /// #2454 — the workspace's country; a feature not available in it says why.
   final String? country;
+
+  /// #3729 — the schema the installation hosting the workspace runs; a feature
+  /// it is too old for says why and is never offered for activation. Null:
+  /// not established, nothing is withheld.
+  final int? schema;
 
   /// Sized to its rows, inside a page that scrolls itself (the Stock settings).
   final bool shrinkWrap;
@@ -106,7 +112,9 @@ class FeatureCapabilityList extends StatelessWidget {
 
   Widget _tile(AppLocalizations l10n, FeatureManifestEntry entry) {
     final requires = entry.requires;
-    final available = featureAvailableIn(entry.availableIn, country);
+    final schemaNote = featureSchemaNote(l10n, entry.feature, schema);
+    final available =
+        featureAvailableIn(entry.availableIn, country) && schemaNote == null;
     return FeatureTile(
       key: ValueKey('feature-tile-${entry.feature.name}'),
       roomyTargets: roomyTargets,
@@ -132,8 +140,8 @@ class FeatureCapabilityList extends StatelessWidget {
       onChanged: available || raw.contains(entry.feature)
           ? (value) => onChanged(entry.feature, value: value)
           : null,
-      unavailableNote:
-          available ? null : featureAvailableNote(l10n, entry.availableIn!),
+      unavailableNote: schemaNote ??
+          (available ? null : featureAvailableNote(l10n, entry.availableIn!)),
     );
   }
 }

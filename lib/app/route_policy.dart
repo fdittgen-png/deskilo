@@ -120,6 +120,7 @@ class RouteFacts {
   const RouteFacts({
     required this.auth,
     this.schema = SchemaCompatibility.unknown,
+    this.hostSchema = SchemaCompatibility.unknown,
     this.appFloor = AppFloorVerdict.unknown,
     this.privacy = PrivacyFact.accepted,
     this.workspaces = WorkspacesFact.some,
@@ -132,6 +133,12 @@ class RouteFacts {
 
   final AuthFact auth;
   final SchemaCompatibility schema;
+
+  /// #3729 — how the installation hosting the CURRENT workspace compares with
+  /// what this app needs. Judged on its own: a business on an old
+  /// installation closes its own routes, never the account's (Me, the
+  /// Server screen, the help) and never another installation's.
+  final SchemaCompatibility hostSchema;
 
   /// #3726 — how the installation's floor judges this app.
   final AppFloorVerdict appFloor;
@@ -155,6 +162,10 @@ class RouteFacts {
 enum RouteReason {
   schemaBehind,
   schemaCurrent,
+
+  /// #3729 — the installation hosting the workspace is older than the app
+  /// needs: the workspace's routes go to the notice, the account's stay.
+  hostSchemaBehind,
 
   /// #3726 — the installation accepts only newer apps.
   appBelowFloor,
@@ -260,6 +271,16 @@ RouteDecision? _schemaDecision(
   final path = request.location;
   final schemaGate = schemaGateRedirect(facts.schema, path);
   if (facts.schema != SchemaCompatibility.behind) {
+    if (facts.hostSchema == SchemaCompatibility.behind &&
+        !(path == '/demo' || demoEntry != null)) {
+      if (path == kSchemaUpdateRoute) return const RouteDecision.stay();
+      if (classifyRoute(path) == RouteClass.workspace) {
+        return const RouteDecision.go(
+          kSchemaUpdateRoute,
+          RouteReason.hostSchemaBehind,
+        );
+      }
+    }
     return schemaGate == null
         ? _appFloorDecision(request, facts, demoEntry)
         : RouteDecision.go(facts.home, RouteReason.schemaCurrent);

@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/backend/schema_version.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -10,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../domain/feature_lifecycle.dart';
 import '../../domain/feature_operation.dart';
 import '../../domain/workspace_feature.dart';
+import '../../providers/workspace_schema_providers.dart';
 import '../feature_help.dart';
 import '../feature_surface_labels.dart';
 import 'feature_maturity_badge.dart';
@@ -125,7 +125,7 @@ class FeatureTile extends ConsumerWidget {
     final confirmed = keepsWork &&
         serverKeepsExistingWork(
           entry.feature,
-          ref.watch(schemaCompatibilityProvider).value,
+          ref.watch(currentWorkspaceSchemaProvider),
         );
     final notes = [
       ?requiresLabel,

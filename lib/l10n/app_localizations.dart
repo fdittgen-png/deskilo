@@ -19696,6 +19696,12 @@ abstract class AppLocalizations {
   /// **'Each member picks in their settings how the app navigates: the classic bottom bar with the round Reserve button, or the menu the web uses. Off: every device keeps its platform\'s default.'**
   String get featureNavigationStyleDesc;
 
+  /// #3729 Note under a feature's switch, for an administrator: the installation hosting the workspace is older than the feature needs
+  ///
+  /// In en, this message translates to:
+  /// **'This installation is too old for this feature. It needs {feature} from schema {since}; ask whoever runs the server to update it.'**
+  String featureNeedsNewerInstallation(String feature, String since);
+
   /// Feature switch: RFID/NFC card check-in at a kiosk (0046)
   ///
   /// In en, this message translates to:
@@ -50651,6 +50657,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'If you run this server: apply the missing migrations with `dart run tool/instance.dart install --ref <project>`. Only what is missing runs.'**
   String get schemaUpdateOperator;
+
+  /// #3729 For the person who runs the server, on the update screen: the schema the installation reports and the range of migrations it lacks
+  ///
+  /// In en, this message translates to:
+  /// **'This installation runs version {version}, so migrations {from} to {to} are missing.'**
+  String schemaUpdateRunning(String version, String from, String to);
 
   /// #1312 Button opening Settings → Server
   ///

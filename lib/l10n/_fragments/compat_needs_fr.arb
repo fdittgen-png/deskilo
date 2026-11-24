@@ -1,0 +1,30 @@
+{
+  "@@locale": "fr",
+  "featureNeedsNewerInstallation": "Cette installation est trop ancienne pour cette fonction. Elle a besoin de {feature} à partir du schéma {since} ; demandez à la personne qui gère le serveur de le mettre à jour.",
+  "@featureNeedsNewerInstallation": {
+    "description": "#3729 Note under a feature's switch, for an administrator: the installation hosting the workspace is older than the feature needs",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      },
+      "since": {
+        "type": "String"
+      }
+    }
+  },
+  "schemaUpdateRunning": "Cette installation tourne en version {version} : il lui manque les migrations {from} à {to}.",
+  "@schemaUpdateRunning": {
+    "description": "#3729 For the person who runs the server, on the update screen: the schema the installation reports and the range of migrations it lacks",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  }
+}

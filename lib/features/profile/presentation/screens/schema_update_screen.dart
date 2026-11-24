@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/backend/installation_schema.dart';
 import '../../../../core/backend/schema_version.dart';
 import '../../../../core/instance/schema_compatibility.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -33,6 +34,12 @@ class SchemaUpdateScreen extends ConsumerWidget {
     final body = l10n.schemaUpdateBody(requiredSchemaVersion);
     final operator = l10n.schemaUpdateOperator;
     final member = l10n.schemaUpdateMember;
+    // #3729 — what the installation hosting the workspace reports, and the
+    // migrations it lacks, for whoever runs it. Only when it answered.
+    final hosted = ref.watch(installationSchemaMemoryProvider).lastBehind;
+    final running = hosted != null && hosted.answered && hosted.number != null
+        ? hosted.number
+        : null;
     return Scaffold(
       key: const ValueKey('schema-update'),
       body: SafeArea(
@@ -52,13 +59,29 @@ class SchemaUpdateScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.md),
             Text(body, style: theme.textTheme.bodyLarge),
             const SizedBox(height: AppSpacing.md),
+            if (running != null && running < appNeedsSchemaVersion) ...[
+              Text(
+                l10n.schemaUpdateRunning(
+                  '$running',
+                  '${running + 1}',
+                  '$appNeedsSchemaVersion',
+                ),
+                key: const ValueKey('schema-update-missing'),
+                style: theme.textTheme.bodyMedium,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
             Text(operator, style: theme.textTheme.bodyMedium),
             const SizedBox(height: AppSpacing.sm),
             Text(member, style: theme.textTheme.bodyMedium),
             const SizedBox(height: AppSpacing.lg),
             FilledButton.icon(
               key: const ValueKey('schema-update-retry'),
-              onPressed: () => ref.invalidate(schemaCompatibilityProvider),
+              onPressed: () {
+                ref
+                  ..invalidate(schemaCompatibilityProvider)
+                  ..invalidate(workspaceSchemaProvider);
+              },
               icon: const Icon(Icons.refresh),
               label: Text(l10n.invoiceIssueCheckAgain),
             ),
