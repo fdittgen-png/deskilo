@@ -50,6 +50,10 @@ alter table public.trace_reports enable row level security;
 drop policy if exists mcp_delegated_deny on public.trace_reports;
 create policy mcp_delegated_deny on public.trace_reports as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
+drop policy if exists personal_native_session on public.trace_reports;
+create policy personal_native_session on public.trace_reports as restrictive for all to public
+  using ((select public.personal_native_session()))
+  with check ((select public.personal_native_session()));
 revoke all on public.trace_reports from public, anon, authenticated;
 
 create or replace function public.submit_trace_report_v1(

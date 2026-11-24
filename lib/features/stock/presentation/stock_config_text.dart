@@ -157,7 +157,7 @@ String stockProblemText(AppLocalizations l10n, Object error, {StockSubject subje
       StockUnitRefused(code: DkCode.dkg27) => l10n.refusalStockUnitChanged,
       StockUnitRefused(code: DkCode.dkg29) => l10n.refusalStockUnitCodeTaken,
       StockUnitRefused() => l10n.refusalStockUnitContent,
-      StockTagRefused(code: DkCode.dkg22, :final detail) => l10n.stockTagBoundElsewhere('${detail['owner'] ?? ''}'),
+      StockTagRefused(code: DkCode.dkg22, :final owner) => l10n.stockTagBoundElsewhere(owner),
       StockTagRefused(code: DkCode.dkg23) => l10n.stockTagRetiredLately,
       StockTagRefused(code: DkCode.dkg24) => l10n.stockTagOnPiece,
       StockTagRefused(code: DkCode.dkg25) => l10n.refusalStockNamePieces,

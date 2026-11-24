@@ -4,7 +4,7 @@
 #   lib/features/stock/** -- the stock lane (StockRefusal);
 #   lib/features/money/**/*till*, *counter* -- the till lane;
 #   customer_quote_editor_screen, standalone_invoice_screen, standalone_line_form -- the document composer lane.
-# total 1075 in 171 files
+# total 948 in 167 files
 1 lib/core/demo/presentation/demo_setup_card.dart
 3 lib/features/auth/presentation/screens/linked_accounts_screen.dart
 2 lib/features/calendar/presentation/screens/calendar_screen.dart
@@ -112,11 +112,8 @@
 1 lib/features/stock/presentation/item_group_assign_dialog.dart
 1 lib/features/stock/presentation/item_group_sheet.dart
 34 lib/features/stock/presentation/item_group_text.dart
-6 lib/features/stock/presentation/measure_unit_text.dart
 10 lib/features/stock/presentation/purchase_order_putaway.dart
-1 lib/features/stock/presentation/put_away_tags.dart
 10 lib/features/stock/presentation/stock_chain_section.dart
-97 lib/features/stock/presentation/stock_config_text.dart
 1 lib/features/stock/presentation/stock_item_editor.dart
 2 lib/features/stock/presentation/stock_movement_screen.dart
 8 lib/features/stock/presentation/stock_place_editor.dart
@@ -135,7 +132,6 @@
 2 lib/features/workspace/presentation/bi_print_strings_l10n.dart
 18 lib/features/workspace/presentation/business_kind_names.dart
 2 lib/features/workspace/presentation/member_customer_capacity.dart
-23 lib/features/workspace/presentation/process_names.dart
 3 lib/features/workspace/presentation/report_editor/bi_report_charts.dart
 2 lib/features/workspace/presentation/report_editor/bi_report_labels.dart
 11 lib/features/workspace/presentation/report_editor/bi_report_properties.dart

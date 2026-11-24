@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../l10n/app_localizations.dart';
-import '../data/external_hosts.dart';
+import '../links/external_hosts.dart';
 
 /// #751 — the consent the app asks for before anything else, and shows
 /// again on demand (Settings → Privacy & data, the in-app help, the

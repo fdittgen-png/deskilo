@@ -68,7 +68,7 @@ class StockReads {
   Future<bool> tagsEachPiece(String workspaceId, String itemId) async {
     final groups = _groups;
     if (groups == null) return false;
-    return (await groups.effective(workspaceId, itemId)).params['tag_mode']?.value == 'per_unit';
+    return (await groups.effective(workspaceId, itemId)).tagsEachPiece;
   }
 
   /// The business's dimensions (colour, size).

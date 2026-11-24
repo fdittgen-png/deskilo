@@ -7,6 +7,7 @@ import 'commercial_line_snapshot.dart';
 import 'invoice_clauses.dart';
 import 'invoice_kind.dart';
 import 'invoice_line_snapshot.dart';
+import 'invoice_maturity.dart';
 import 'line_track.dart';
 import 'match_resolution.dart';
 import 'vat_rate.dart';
@@ -441,8 +442,8 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     settles: [
       for (final source in (row['settles'] as List? ?? const [])) SettledSource.fromSnapshot(source as Map),
     ],
-    dueOn: _maturityDueOn(row['invoice_maturities']),
-    maturityBasis: _maturityOf(row['invoice_maturities'])?['basis'] as String?,
+    dueOn: maturityDueOn(row['invoice_maturities']),
+    maturityBasis: maturityOf(row['invoice_maturities'])?['basis'] as String?,
     lineTracks: lineTracksByLineId(row['invoice_line_tracks']),
     legalSnapshot: switch (row['legal_snapshot']) {
       final Map<dynamic, dynamic> json => json.cast<String, Object?>(),
@@ -493,18 +494,6 @@ sealed class Invoice with _$Invoice implements SystemStamped {
         ),
     ],
   );
-}
-
-/// #1913 — the embedded `invoice_maturities` row (an object, on older servers a list of one or nothing).
-Map<Object?, Object?>? _maturityOf(Object? embedded) => switch (embedded) {
-  final Map<Object?, Object?> map => map,
-  final List<Object?> list when list.isNotEmpty && list.first is Map => list.first! as Map<Object?, Object?>,
-  _ => null,
-};
-
-DateTime? _maturityDueOn(Object? embedded) {
-  final day = DateTime.tryParse('${_maturityOf(embedded)?['due_on'] ?? ''}');
-  return day == null ? null : DateTime(day.year, day.month, day.day);
 }
 
 /// The breakdown the documents render, one entry per rate: the SNAPSHOT wins

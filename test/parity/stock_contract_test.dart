@@ -9,6 +9,7 @@
 // `jsonb_build_object('field', ..., 'reason', '...')`.
 import 'dart:io';
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/stock/domain/stock_refusal.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -19,7 +20,7 @@ final _call = RegExp(
 );
 final _patched = RegExp(r"stock_config_refuse\([^;]*?,\s*''([a-z0-9_]+)''\s*\)");
 final _detail = RegExp(
-  r"errcode\s*=\s*'DKG11'\s*,\s*detail\s*=\s*jsonb_build_object\('field',\s*[^,]+,\s*'reason',\s*'([a-z0-9_]+)'",
+  r"errcode\s*=\s*'" + DkCode.dkg11 + r"'\s*,\s*detail\s*=\s*jsonb_build_object\('field',\s*[^,]+,\s*'reason',\s*'([a-z0-9_]+)'",
 );
 
 /// The reasons [sql] can refuse with (comments left out).
@@ -86,7 +87,7 @@ void main() {
     expect(refusalReasonsIn("perform public.stock_config_refuse(format('lines[%s]', v_no - 1), 'reason_places');"), {'reason_places'});
     expect(refusalReasonsIn("E'perform public.stock_config_refuse(''tracking'', ''tags_off'');'"), {'tags_off'});
     expect(
-      refusalReasonsIn("raise exception 'x' using errcode = 'DKG11',\n detail = jsonb_build_object('field', 'parent_id', 'reason', 'depth')::text;"),
+      refusalReasonsIn("raise exception 'x' using errcode = '${DkCode.dkg11}',\n detail = jsonb_build_object('field', 'parent_id', 'reason', 'depth')::text;"),
       {'depth'},
     );
     expect(refusalReasonsIn('select 1'), isEmpty);

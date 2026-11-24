@@ -131,6 +131,7 @@ class _TransferCard extends ConsumerWidget {
     final l10n = context.l10n;
     final day = appFormatOf(context).dates(DateShape.numeric).format(stockDayOf(ref, transfer.loadedAt));
     final addresses = ref.watch(stockAddressesProvider(workspaceId));
+    final partly = transfer.status == 'partly_received';
     return Card(
       key: ValueKey('stock-transfer-${transfer.id}'),
       child: Padding(
@@ -152,8 +153,8 @@ class _TransferCard extends ConsumerWidget {
                 StatusChip(
                   key: ValueKey('stock-transfer-status-${transfer.id}'),
                   // part of the load arrived: something to finish; the rest is on its way
-                  label: transfer.status == 'partly_received' ? l10n.stockTransferStatusPartly : l10n.stockTransfersOnTheWay,
-                  tone: transfer.status == 'partly_received' ? StatusTone.warn : StatusTone.info,
+                  label: partly ? l10n.stockTransferStatusPartly : l10n.stockTransfersOnTheWay,
+                  tone: partly ? StatusTone.warn : StatusTone.info,
                 ),
               ],
             ),
