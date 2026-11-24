@@ -23,9 +23,9 @@ import '../domain/counter_receipt_document.dart';
 import '../providers/till_providers.dart';
 
 /// The frozen rate as a person reads it in the language (`20 %`, `5,5 %`); a rate that is not a number is shown as written.
-String _rate(AppFormat format, String percent) {
-  final rate = num.tryParse(percent);
-  return rate == null ? percent : format.ratePercent(rate);
+String _rate(AppFormat format, CounterReceiptTax tax) {
+  final rate = tax.rate;
+  return rate == null ? tax.percent : format.ratePercent(rate);
 }
 
 /// The lines of [doc] as words, one per line of the document, in the order a receipt prints them.
@@ -38,7 +38,7 @@ List<String> _counterReceiptLines(AppLocalizations l10n, AppFormat format, Count
     if (doc.issuedAt != null) format.dateTime(doc.issuedAt!),
     if (corrects != null) l10n.tillReceiptCorrects(corrects.number),
     for (final l in doc.lines) l10n.tillReceiptLine(l.label, l.quantity, l.unit, money.formatMinor(l.grossMinor)),
-    for (final t in doc.taxBreakdown) l10n.tillReceiptTaxLine(_rate(format, t.percent), money.formatMinor(t.taxMinor), money.formatMinor(t.netMinor)),
+    for (final t in doc.taxBreakdown) l10n.tillReceiptTaxLine(_rate(format, t), money.formatMinor(t.taxMinor), money.formatMinor(t.netMinor)),
     l10n.tillReceiptTotal(money.formatMinor(doc.totals.grossMinor)),
     if (op.specification.isNotEmpty) l10n.tillReceiptIssuedUnder(op.specification, op.specificationVersion),
   ];
