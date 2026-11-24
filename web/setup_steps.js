@@ -271,7 +271,7 @@ const STEPS=[
   if(on('stockManagement'))k.push(checkbox(T('stockAllowNegative'),T('stockAllowNegativeHint'),S.stock.allowNegative,v=>set('stock.allowNegative',v)));
   // #4293 — how a place address (site, zone, aisle, bay, shelf) is written.
   // #4365 — goods sold by weight: a new item is proposed in kilograms.
-  if(on('stockManagement'))k.push(checkbox(T('stockWeighedGoods'),T('stockWeighedGoodsHint'),S.stock.weighedGoods,v=>set('stock.weighedGoods',v)));
+  if(on('stockManagement'))k.push(checkbox(T('stockWeighedGoods'),T('stockWeighedGoodsHint'),S.stock.weighedGoods,v=>set('stock.weighedGoods',v)),input(T('stockInvoiceSalePlace'),'stock.invoiceSalePlace',T('stockInvoiceSalePlaceHint'),'text','MAIN','services')); // #4433
   if(on('stockManagement'))k.push(selectEl(T('stockAddressSeparator'),'stock.addressSeparator',opts(STOCK_SEP),T('stockAddressSeparatorHint'),null,'services'));
   if(on('stockTags'))k.push(selectEl(T('stockTagGrace'),'stock.tagGrace',opts(STOCK_TAG_GRACE),T('stockTagGraceHint'),null,'services'));
   if(on('stockScanning'))k.push(selectEl(T('stockRepeatedScan'),'stock.repeatedScan',opts(STOCK_REPEAT),T('stockRepeatedScanHint'),null,'services'));

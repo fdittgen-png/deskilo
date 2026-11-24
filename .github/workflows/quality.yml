@@ -1373,6 +1373,8 @@ jobs:
           bash scripts/stock_receipt_race.sh "$DB_URL"
           # #4170 — opposing multi-item transfers never deadlock; the last stock is taken once.
           bash scripts/stock_transfer_race.sh "$DB_URL"
+          # #4433 — two invoices taking the last piece at once: one sells it, the other waits and is refused.
+          bash scripts/invoice_goods_race.sh "$DB_URL"
 
       # #1329 — the feature-flag write compares its read-set and merges
       # under ONE row lock. Two real sessions prove there is no window

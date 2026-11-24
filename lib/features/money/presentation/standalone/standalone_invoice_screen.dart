@@ -21,6 +21,7 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../application/issue_standalone_invoice.dart';
+import '../../domain/invoice_goods.dart';
 import '../../domain/standalone_invoice.dart';
 import '../../providers/business_day_provider.dart';
 import '../../providers/money_providers.dart'
@@ -199,7 +200,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
         padding: const EdgeInsets.all(16),
         children: [
           ..._header(context, locked),
-          ..._linesSection(context, locked),
+          ..._linesSection(context, workspaceId, locked),
           ..._status(context),
           const FormGap(),
           _actions(context, workspaceId, locked),
@@ -287,9 +288,15 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
     ];
   }
 
-  List<Widget> _linesSection(BuildContext context, bool locked) {
+  List<Widget> _linesSection(BuildContext context, String workspaceId, bool locked) {
     final l = context.l10n;
     final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: the rates only offer a choice; none leaves the business's default
+    // #4433 -- with the goods ledger on, a line may sell an item kept in stock, and name its pieces where they are tagged
+    final keys = ref.watch(enabledFeatureKeysProvider);
+    final goods = featureOn(keys, 'stockManagement', byDefault: false)
+        ? ref.watch(invoiceGoodsItemsProvider(workspaceId)).value ?? const <InvoiceGoodsItem>[] // empty-ok: the items only offer a choice; none leaves every line a service
+        : const <InvoiceGoodsItem>[];
+    final pieces = featureOn(keys, 'stockTags', byDefault: false);
     return [
       Text(l.standaloneInvoiceLines, style: Theme.of(context).textTheme.titleMedium?.strong),
       for (final (i, line) in _lines.indexed)
@@ -298,6 +305,8 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
           index: i,
           form: line,
           rates: rates,
+          goods: goods,
+          pieces: pieces,
           enabled: !locked,
           onChanged: _edited,
           onRemove: _lines.length > 1

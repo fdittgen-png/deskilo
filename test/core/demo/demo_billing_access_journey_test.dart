@@ -12,6 +12,13 @@ import 'package:deskilo/features/money/domain/billing_access.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+/// #4168 — the account also holds a grant of Kessler Conseil (Lindner
+/// Beratung); this journey is the head business's.
+List<BilledSubject> _head(FinanceOverview o) => [
+  for (final g in o.billedGroups)
+    if (g.workspaceId == demoFirstSpaceId) g,
+];
+
 void main() {
   late DemoFixture fixture;
 
@@ -20,7 +27,7 @@ void main() {
   test('the account already reads the invoices of Hanna Weiss, apart from '
       'what it owes as a member', () {
     final overview = demoFinanceOverview(fixture);
-    final groups = overview.billedGroups;
+    final groups = _head(overview);
     expect(groups.map((g) => g.subjectId), ['demo-customer-weiss']);
     expect(
       groups.single.invoices.map((i) => i.number),
@@ -44,12 +51,12 @@ void main() {
       'req-1',
     );
     expect(
-      demoFinanceOverview(fixture).billedGroups,
+      _head(demoFinanceOverview(fixture)),
       hasLength(1),
       reason: 'an invitation alone grants nothing',
     );
     await access.accept(invitation.code);
-    final groups = demoFinanceOverview(fixture).billedGroups;
+    final groups = _head(demoFinanceOverview(fixture));
     expect(groups.map((g) => g.subjectId), [
       'demo-customer-nordlicht',
       'demo-customer-weiss',
@@ -71,7 +78,7 @@ void main() {
     )).single;
     expect(grant.stateAt(fixture.seededAt), BillingGrantState.active);
     await access.revoke(grant.id, reason: 'moved');
-    expect(demoFinanceOverview(fixture).billedGroups, isEmpty);
+    expect(_head(demoFinanceOverview(fixture)), isEmpty);
     final after = (await access.grantsOf(
       demoFirstSpaceId,
       'demo-customer-weiss',

@@ -27,6 +27,8 @@ StandaloneLine frozenQuoteLine(JsonReader r) {
     grossPrice: price?.stringOr('basis') == 'gross',
     baseQuantity: price?.stringOr('base_quantity', '1') ?? '1',
     supply: r.stringOr('supply', 'general'),
+    // #4433 -- a goods line keeps the item it sells beside the frozen facts
+    itemId: r.objectOrNull('stock')?.stringOrNull('item_id'),
   );
 }
 

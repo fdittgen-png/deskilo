@@ -7022,6 +7022,20 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String commercialLineMeasure(String quantity, String price) {
+    return '$quantity à $price';
+  }
+
+  @override
+  String commercialLineMeasurePer(String quantity, String price, String base) {
+    return '$quantity à $price pour $base';
+  }
+
+  @override
+  String get commercialLineUnreadable =>
+      'Enregistré par une version plus récente : ces données sont affichées telles quelles et ne peuvent pas être utilisées ici';
+
+  @override
   String get commonCancel => 'Annuler';
 
   @override
@@ -32836,6 +32850,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce).';
 
   @override
+  String get settingHintStockInvoiceSalePlace =>
+      'Le code d’un lieu de l’entreprise qui détient du stock, par exemple MAIN. Les biens vendus sur facture en partent à l’émission de la facture.';
+
+  @override
   String get settingHintStockPriceRounding =>
       'Comment un prix de vente proposé est arrondi : au 0,05 ou 0,10 le plus proche, ou à un prix qui finit par 0,99. Il ne sert qu\'à proposer un prix.';
 
@@ -33252,6 +33270,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelStockGroupDefaultTagMode =>
       'Mode d\'étiquette par défaut des articles';
+
+  @override
+  String get settingLabelStockInvoiceSalePlace =>
+      'Lieu d’où partent les biens vendus sur facture';
 
   @override
   String get settingLabelStockPriceRounding => 'Arrondi des prix';
@@ -35880,6 +35902,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get standaloneFactLines => 'au moins une ligne';
 
   @override
+  String get standaloneFactSalePlace =>
+      'le lieu d’où partent les ventes : indiquez un lieu qui détient du stock dans les réglages de l’entreprise';
+
+  @override
   String get standaloneFactSalesTax =>
       'cette entreprise ajoute une taxe de vente, ce qui n’est pas encore pris en charge ici';
 
@@ -35912,7 +35938,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get standaloneFieldDescription => 'une description';
 
   @override
+  String get standaloneFieldGoodsAbroad =>
+      'un acheteur du pays de l’entreprise : les biens vendus à l’étranger ne se facturent pas encore ici';
+
+  @override
+  String get standaloneFieldGoodsOff =>
+      'la gestion des stocks, désactivée dans cette entreprise';
+
+  @override
+  String get standaloneFieldItem => 'un article tenu en stock et en vente';
+
+  @override
   String get standaloneFieldLineId => 'enregistrer à nouveau le brouillon';
+
+  @override
+  String get standaloneFieldLot => 'un lot de cet article';
+
+  @override
+  String get standaloneFieldPieces =>
+      'les étiquettes des pièces, en codes d’étiquette';
 
   @override
   String get standaloneFieldPrice => 'un prix avec six décimales au plus';
@@ -35922,11 +35966,32 @@ class AppLocalizationsFr extends AppLocalizations {
       'une quantité supérieure à zéro, avec six décimales au plus';
 
   @override
+  String get standaloneFieldStock =>
+      'des biens que le stock peut vendre tels que saisis';
+
+  @override
+  String get standaloneFieldStockExpired => 'un lot qui n’est pas périmé';
+
+  @override
+  String get standaloneFieldStockLot => 'un lot présent de cet article';
+
+  @override
+  String get standaloneFieldStockPieces =>
+      'les pièces vendues : une étiquette par pièce, chacune d’une pièce présente';
+
+  @override
+  String get standaloneFieldStockShort =>
+      'assez en stock au lieu d’où partent les ventes';
+
+  @override
   String get standaloneFieldSupply =>
-      'une prestation de services (les biens ne se facturent pas encore ici)';
+      'ce que fournit la ligne : une prestation, un bien immobilier ou des biens';
 
   @override
   String get standaloneFieldUnit => 'une unité';
+
+  @override
+  String get standaloneFieldVariant => 'la variante de l’article';
 
   @override
   String get standaloneFieldVatRate => 'un taux de TVA défini par l’entreprise';
@@ -35955,7 +36020,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get standaloneInvoiceLineDescription => 'Description';
 
   @override
+  String get standaloneInvoiceLineGoods => 'Vendu depuis le stock';
+
+  @override
   String get standaloneInvoiceLineGross => 'Le prix est TTC';
+
+  @override
+  String get standaloneInvoiceLineNoGoods => 'Rien du stock (une prestation)';
+
+  @override
+  String get standaloneInvoiceLinePieces => 'Étiquettes des pièces vendues';
+
+  @override
+  String get standaloneInvoiceLinePiecesHint =>
+      'Une étiquette par pièce, séparées par des virgules : cet article est suivi pièce par pièce.';
 
   @override
   String get standaloneInvoiceLinePrice => 'Prix unitaire';

@@ -1,0 +1,75 @@
+{
+  "@@locale": "de",
+  "settingLabelStockInvoiceSalePlace": "Ort, von dem auf Rechnung verkaufte Waren abgehen",
+  "@settingLabelStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
+  },
+  "settingHintStockInvoiceSalePlace": "Der Code eines Orts des Unternehmens, der Bestand führt, zum Beispiel MAIN. Auf Rechnung verkaufte Waren gehen beim Ausstellen der Rechnung von dort ab.",
+  "@settingHintStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
+  },
+  "standaloneInvoiceLineGoods": "Aus dem Bestand verkauft",
+  "@standaloneInvoiceLineGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineGoods"
+  },
+  "standaloneInvoiceLineNoGoods": "Nichts aus dem Bestand (eine Dienstleistung)",
+  "@standaloneInvoiceLineNoGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineNoGoods"
+  },
+  "standaloneInvoiceLinePieces": "Etiketten der verkauften Stücke",
+  "@standaloneInvoiceLinePieces": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePieces"
+  },
+  "standaloneInvoiceLinePiecesHint": "Ein Etikett pro Stück, durch Kommas getrennt: Dieser Artikel wird Stück für Stück geführt.",
+  "@standaloneInvoiceLinePiecesHint": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePiecesHint"
+  },
+  "standaloneFieldItem": "ein Artikel, der im Bestand geführt und verkauft wird",
+  "@standaloneFieldItem": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldItem"
+  },
+  "standaloneFieldVariant": "die Variante des Artikels",
+  "@standaloneFieldVariant": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldVariant"
+  },
+  "standaloneFieldLot": "eine Charge dieses Artikels",
+  "@standaloneFieldLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldLot"
+  },
+  "standaloneFieldPieces": "die Etiketten der Stücke als Etikettcodes",
+  "@standaloneFieldPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldPieces"
+  },
+  "standaloneFieldGoodsOff": "die Bestandsführung, die in diesem Unternehmen aus ist",
+  "@standaloneFieldGoodsOff": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsOff"
+  },
+  "standaloneFieldGoodsAbroad": "ein Käufer im Land des Unternehmens: ins Ausland verkaufte Waren werden hier noch nicht berechnet",
+  "@standaloneFieldGoodsAbroad": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsAbroad"
+  },
+  "standaloneFieldStockShort": "genug Bestand am Ort, von dem verkauft wird",
+  "@standaloneFieldStockShort": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockShort"
+  },
+  "standaloneFieldStockPieces": "die verkauften Stücke: ein Etikett pro Stück, jedes von einem vorhandenen Stück",
+  "@standaloneFieldStockPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockPieces"
+  },
+  "standaloneFieldStockLot": "eine vorhandene Charge dieses Artikels",
+  "@standaloneFieldStockLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockLot"
+  },
+  "standaloneFieldStockExpired": "eine Charge, die nicht abgelaufen ist",
+  "@standaloneFieldStockExpired": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockExpired"
+  },
+  "standaloneFieldStock": "Waren, die der Bestand so verkaufen kann, wie sie erfasst sind",
+  "@standaloneFieldStock": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStock"
+  },
+  "standaloneFactSalePlace": "der Ort, von dem verkauft wird: einen Ort mit Bestand in den Unternehmenseinstellungen festlegen",
+  "@standaloneFactSalePlace": {
+    "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
+  }
+}

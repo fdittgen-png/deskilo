@@ -135,7 +135,7 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('stock-move-submit')));
         await _settle(tester);
         expect(w.ledger.balance('demo-item-mugs', 'demo-place-main').text, '33');
-        expect(w.ledger.balance('demo-item-mugs', 'demo-place-shelf').text, '15');
+        expect(w.ledger.balance('demo-item-mugs', 'demo-place-shelf').text, '13', reason: '12 on the shelf less the 2 sold, and the 3 that moved');
 
         await tester.tap(find.byKey(const ValueKey('stock-move-open')));
         await _settle(tester);
@@ -163,7 +163,7 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('stock-move-submit')));
         await _settle(tester);
         expect(find.text(_en.refusalStockNotEnough), findsOneWidget);
-        expect(w.ledger.balance('demo-item-mugs', 'demo-place-shelf').text, '12', reason: 'nothing moved');
+        expect(w.ledger.balance('demo-item-mugs', 'demo-place-shelf').text, '10', reason: 'nothing moved: the 12 shelved less the 2 sold');
       });
 
       testWidgets('a mistake is said under its field before anything is sent', (tester) async {

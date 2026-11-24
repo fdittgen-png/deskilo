@@ -129,7 +129,7 @@ select is((select (vat_totals -> 0 ->> 'net_cents') || '/' || (vat_totals -> 0 -
 -- ── refusals before a number ──
 select set_config('d.c', (pg_temp.save(jsonb_build_array(pg_temp.line('1', '10', 'net', 'goods')))) ->> 'draft_id', false);
 select is(public.preview_standalone_invoice_v1(pg_temp.u(101), current_setting('d.c')::uuid, 1) -> 'missing',
-  '["line_1_supply"]'::jsonb, 'goods is refused, never read as a service');
+  '["line_1_goods_off"]'::jsonb, 'goods with the goods ledger off are refused, never read as a service (#4433)');
 select set_config('d.e', (pg_temp.save(jsonb_build_array(pg_temp.line('0.0000001', '10')))) ->> 'draft_id', false);
 select is(public.preview_standalone_invoice_v1(pg_temp.u(101), current_setting('d.e')::uuid, 1) -> 'missing',
   '["line_1_quantity"]'::jsonb, 'a quantity with a seventh decimal is refused, not rounded');

@@ -4104,6 +4104,9 @@
   },
   "comingSoon": "Demnächst verfügbar",
   "commaPair": "{first}, {second}",
+  "commercialLineMeasure": "{quantity} zu {price}",
+  "commercialLineMeasurePer": "{quantity} zu {price} je {base}",
+  "commercialLineUnreadable": "Von einer neueren Version erfasst: diese Angaben werden unverändert gezeigt und können hier nicht verwendet werden",
   "commonCancel": "Abbrechen",
   "commonClose": "Schließen",
   "commonCopy": "Kopieren",
@@ -19322,6 +19325,10 @@
   },
   "settingHintStockGroupDefaultCountDays": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. 0 heißt nicht geplant.",
   "settingHintStockGroupDefaultTagMode": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht).",
+  "settingHintStockInvoiceSalePlace": "Der Code eines Orts des Unternehmens, der Bestand führt, zum Beispiel MAIN. Auf Rechnung verkaufte Waren gehen beim Ausstellen der Rechnung von dort ab.",
+  "@settingHintStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
+  },
   "settingHintStockPriceRounding": "Wie ein vorgeschlagener Verkaufspreis gerundet wird: auf 0,05 oder 0,10 oder auf einen Preis, der auf 0,99 endet. Sie dient nur dazu, einen Preis vorzuschlagen.",
   "settingHintStockRepeatedScan": "Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr zur Zeile hinzufügen oder die Menge erfragen.",
   "settingHintStockTagReadMaxTags": "Wie viele verschiedene Etiketten eine Massenlesung behält, bevor sie keine weiteren annimmt. Dieselbe Etikette, mehrfach gelesen, zählt einmal.",
@@ -19574,6 +19581,10 @@
   },
   "settingLabelStockGroupDefaultCountDays": "Standard-Zählzyklus (Tage)",
   "settingLabelStockGroupDefaultTagMode": "Standard-Etikettenmodus der Artikel",
+  "settingLabelStockInvoiceSalePlace": "Ort, von dem auf Rechnung verkaufte Waren abgehen",
+  "@settingLabelStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
+  },
   "settingLabelStockPriceRounding": "Preisrundung",
   "settingLabelStockRepeatedScan": "Ein erneut gescannter Code",
   "settingLabelStockTagReadMaxTags": "Höchstzahl Etiketten je Massenlesung",
@@ -20675,6 +20686,10 @@
   "@standaloneFactLines": {
     "description": "#4165 standalone invoice composer: standaloneFactLines"
   },
+  "standaloneFactSalePlace": "der Ort, von dem verkauft wird: einen Ort mit Bestand in den Unternehmenseinstellungen festlegen",
+  "@standaloneFactSalePlace": {
+    "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
+  },
   "standaloneFactSalesTax": "dieser Betrieb erhebt Sales Tax, was hier noch nicht unterstützt wird",
   "@standaloneFactSalesTax": {
     "description": "#4165 standalone invoice composer: standaloneFactSalesTax"
@@ -20715,9 +20730,29 @@
   "@standaloneFieldDescription": {
     "description": "#4165 standalone invoice composer: standaloneFieldDescription"
   },
+  "standaloneFieldGoodsAbroad": "ein Käufer im Land des Unternehmens: ins Ausland verkaufte Waren werden hier noch nicht berechnet",
+  "@standaloneFieldGoodsAbroad": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsAbroad"
+  },
+  "standaloneFieldGoodsOff": "die Bestandsführung, die in diesem Unternehmen aus ist",
+  "@standaloneFieldGoodsOff": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsOff"
+  },
+  "standaloneFieldItem": "ein Artikel, der im Bestand geführt und verkauft wird",
+  "@standaloneFieldItem": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldItem"
+  },
   "standaloneFieldLineId": "den Entwurf erneut zu speichern",
   "@standaloneFieldLineId": {
     "description": "#4165 standalone invoice composer: standaloneFieldLineId"
+  },
+  "standaloneFieldLot": "eine Charge dieses Artikels",
+  "@standaloneFieldLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldLot"
+  },
+  "standaloneFieldPieces": "die Etiketten der Stücke als Etikettcodes",
+  "@standaloneFieldPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldPieces"
   },
   "standaloneFieldPrice": "ein Preis mit höchstens sechs Nachkommastellen",
   "@standaloneFieldPrice": {
@@ -20727,13 +20762,37 @@
   "@standaloneFieldQuantity": {
     "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
   },
-  "standaloneFieldSupply": "eine Dienstleistung (Waren werden hier noch nicht berechnet)",
+  "standaloneFieldStock": "Waren, die der Bestand so verkaufen kann, wie sie erfasst sind",
+  "@standaloneFieldStock": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStock"
+  },
+  "standaloneFieldStockExpired": "eine Charge, die nicht abgelaufen ist",
+  "@standaloneFieldStockExpired": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockExpired"
+  },
+  "standaloneFieldStockLot": "eine vorhandene Charge dieses Artikels",
+  "@standaloneFieldStockLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockLot"
+  },
+  "standaloneFieldStockPieces": "die verkauften Stücke: ein Etikett pro Stück, jedes von einem vorhandenen Stück",
+  "@standaloneFieldStockPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockPieces"
+  },
+  "standaloneFieldStockShort": "genug Bestand am Ort, von dem verkauft wird",
+  "@standaloneFieldStockShort": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockShort"
+  },
+  "standaloneFieldSupply": "was die Zeile liefert: eine Dienstleistung, eine Immobilie oder Waren",
   "@standaloneFieldSupply": {
     "description": "#4165 standalone invoice composer: standaloneFieldSupply"
   },
   "standaloneFieldUnit": "eine Einheit",
   "@standaloneFieldUnit": {
     "description": "#4165 standalone invoice composer: standaloneFieldUnit"
+  },
+  "standaloneFieldVariant": "die Variante des Artikels",
+  "@standaloneFieldVariant": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldVariant"
   },
   "standaloneFieldVatRate": "ein vom Betrieb festgelegter Steuersatz",
   "@standaloneFieldVatRate": {
@@ -20772,9 +20831,25 @@
   "@standaloneInvoiceLineDescription": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineDescription"
   },
+  "standaloneInvoiceLineGoods": "Aus dem Bestand verkauft",
+  "@standaloneInvoiceLineGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineGoods"
+  },
   "standaloneInvoiceLineGross": "Der Preis enthält die Steuer",
   "@standaloneInvoiceLineGross": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineGross"
+  },
+  "standaloneInvoiceLineNoGoods": "Nichts aus dem Bestand (eine Dienstleistung)",
+  "@standaloneInvoiceLineNoGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineNoGoods"
+  },
+  "standaloneInvoiceLinePieces": "Etiketten der verkauften Stücke",
+  "@standaloneInvoiceLinePieces": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePieces"
+  },
+  "standaloneInvoiceLinePiecesHint": "Ein Etikett pro Stück, durch Kommas getrennt: Dieser Artikel wird Stück für Stück geführt.",
+  "@standaloneInvoiceLinePiecesHint": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePiecesHint"
   },
   "standaloneInvoiceLinePrice": "Einzelpreis",
   "@standaloneInvoiceLinePrice": {

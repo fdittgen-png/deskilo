@@ -1,0 +1,75 @@
+{
+  "@@locale": "fr",
+  "settingLabelStockInvoiceSalePlace": "Lieu d’où partent les biens vendus sur facture",
+  "@settingLabelStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
+  },
+  "settingHintStockInvoiceSalePlace": "Le code d’un lieu de l’entreprise qui détient du stock, par exemple MAIN. Les biens vendus sur facture en partent à l’émission de la facture.",
+  "@settingHintStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
+  },
+  "standaloneInvoiceLineGoods": "Vendu depuis le stock",
+  "@standaloneInvoiceLineGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineGoods"
+  },
+  "standaloneInvoiceLineNoGoods": "Rien du stock (une prestation)",
+  "@standaloneInvoiceLineNoGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineNoGoods"
+  },
+  "standaloneInvoiceLinePieces": "Étiquettes des pièces vendues",
+  "@standaloneInvoiceLinePieces": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePieces"
+  },
+  "standaloneInvoiceLinePiecesHint": "Une étiquette par pièce, séparées par des virgules : cet article est suivi pièce par pièce.",
+  "@standaloneInvoiceLinePiecesHint": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePiecesHint"
+  },
+  "standaloneFieldItem": "un article tenu en stock et en vente",
+  "@standaloneFieldItem": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldItem"
+  },
+  "standaloneFieldVariant": "la variante de l’article",
+  "@standaloneFieldVariant": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldVariant"
+  },
+  "standaloneFieldLot": "un lot de cet article",
+  "@standaloneFieldLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldLot"
+  },
+  "standaloneFieldPieces": "les étiquettes des pièces, en codes d’étiquette",
+  "@standaloneFieldPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldPieces"
+  },
+  "standaloneFieldGoodsOff": "la gestion des stocks, désactivée dans cette entreprise",
+  "@standaloneFieldGoodsOff": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsOff"
+  },
+  "standaloneFieldGoodsAbroad": "un acheteur du pays de l’entreprise : les biens vendus à l’étranger ne se facturent pas encore ici",
+  "@standaloneFieldGoodsAbroad": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsAbroad"
+  },
+  "standaloneFieldStockShort": "assez en stock au lieu d’où partent les ventes",
+  "@standaloneFieldStockShort": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockShort"
+  },
+  "standaloneFieldStockPieces": "les pièces vendues : une étiquette par pièce, chacune d’une pièce présente",
+  "@standaloneFieldStockPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockPieces"
+  },
+  "standaloneFieldStockLot": "un lot présent de cet article",
+  "@standaloneFieldStockLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockLot"
+  },
+  "standaloneFieldStockExpired": "un lot qui n’est pas périmé",
+  "@standaloneFieldStockExpired": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockExpired"
+  },
+  "standaloneFieldStock": "des biens que le stock peut vendre tels que saisis",
+  "@standaloneFieldStock": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStock"
+  },
+  "standaloneFactSalePlace": "le lieu d’où partent les ventes : indiquez un lieu qui détient du stock dans les réglages de l’entreprise",
+  "@standaloneFactSalePlace": {
+    "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
+  }
+}

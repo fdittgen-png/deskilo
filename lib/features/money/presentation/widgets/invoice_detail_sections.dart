@@ -15,6 +15,7 @@ import '../invoice_journey.dart';
 import '../invoice_status.dart';
 import '../report_strings_l10n.dart';
 import 'einvoice_receipt_line.dart';
+import 'invoice_line_measure.dart';
 import 'sent_einvoice_download.dart';
 
 /// The parts of the invoice sheet below the header: what the document
@@ -85,13 +86,25 @@ class InvoiceDetailSections {
           child: Row(
             children: [
               Expanded(
-                child: Text(
-                  invoiceLineText(
-                    reportStringsOf(l10n, formatLocale: appFormatOf(context).locale),
-                    position,
-                    association: association,
-                    period: invoice.period,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      invoiceLineText(
+                        reportStringsOf(l10n, formatLocale: appFormatOf(context).locale),
+                        position,
+                        association: association,
+                        period: invoice.period,
+                      ),
+                    ),
+                    // #4162 -- an issued commercial line's exact measure.
+                    if (invoiceLineMeasureText(l10n, position) case final measure?)
+                      Text(
+                        measure,
+                        key: ValueKey('invoice-detail-line-measure-$i'),
+                        style: theme.textTheme.bodySmall,
+                      ),
+                  ],
                 ),
               ),
               const SizedBox(width: AppSpacing.sm),
