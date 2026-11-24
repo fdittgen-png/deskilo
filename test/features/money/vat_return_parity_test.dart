@@ -582,8 +582,6 @@ void main() {
       ];
       final amounts = vatTaxPointLedger(
         invoices,
-        matches: const {},
-        instalments: const {},
         basis: vatTaxPointBasis('FR', null, reference: ActiveTaxReference.current),
         dayOf: WorkspaceTime.dateOf,
         reference: ActiveTaxReference.current,

@@ -156,32 +156,21 @@ Future<void> _openSheet(WidgetTester tester, Size size) async {
 }
 
 Future<void> _expectMeasures(WidgetTester tester) async {
-  Finder measure(int i) =>
-      find.byKey(ValueKey('invoice-detail-line-measure-$i'));
-  await tester.scrollUntilVisible(
-    find.byKey(const ValueKey('invoice-detail-line-3')),
-    120,
-    scrollable: find.byType(Scrollable).last,
-  );
-  expect(
-    find.descendant(of: measure(0), matching: find.text('1.5 h at 90 EUR')),
-    findsOneWidget,
-  );
-  expect(
-    find.descendant(
-      of: measure(1),
-      matching: find.text('0.75 kg at 12.5 EUR per 10 kg'),
-    ),
-    findsOneWidget,
-  );
-  expect(
-    find.descendant(
-      of: measure(2),
-      matching: find.textContaining('2.25 · Recorded by a newer version'),
-    ),
-    findsOneWidget,
-  );
-  expect(measure(3), findsNothing, reason: 'a legacy line shows no measure');
+  // The lines are built lazily: each is brought into view before it is read.
+  Future<String?> measureOf(int i) async {
+    await tester.scrollUntilVisible(
+      find.byKey(ValueKey('invoice-detail-line-$i')),
+      120,
+      scrollable: find.byType(Scrollable).last,
+    );
+    final found = find.byKey(ValueKey('invoice-detail-line-measure-$i'));
+    return found.evaluate().isEmpty ? null : tester.widget<Text>(found).data;
+  }
+
+  expect(await measureOf(0), '1.5 h at 90 EUR');
+  expect(await measureOf(1), '0.75 kg at 12.5 EUR per 10 kg');
+  expect(await measureOf(2), contains('2.25 · Recorded by a newer version'));
+  expect(await measureOf(3), isNull, reason: 'a legacy line shows no measure');
   expect(tester.takeException(), isNull);
 }
 

@@ -191,9 +191,6 @@ void main() {
     );
     final declared = vatTaxPointLedger(
       [invoice],
-      matches: const {},
-      instalments: const {},
-      basis: VatTaxPointBasis.invoiceDate,
       dayOf: (d) => DateTime(d.year, d.month, d.day),
       reference: ActiveTaxReference.current,
     );
