@@ -65625,6 +65625,18 @@ abstract class AppLocalizations {
   /// **'Day to close: {date}'**
   String tillDayToday(String date);
 
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'no fiscal register obligation'**
+  String get tillDeclarationNone;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'a fiscal register is required'**
+  String get tillDeclarationRegister;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -66344,11 +66356,153 @@ abstract class AppLocalizations {
   /// **'Quantity sold'**
   String get tillQuantityTitle;
 
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'The registry allows it, but nothing in the app carries it yet.'**
+  String get tillReadinessAdapterMissing;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Country {country}, declared case: {declaration}'**
+  String tillReadinessCase(String country, String declaration);
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed by a tax professional.'**
+  String get tillReadinessConfirmed;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Proof: {evidence}'**
+  String tillReadinessEvidence(String evidence);
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'A sale needs a connection: the till does not sell offline, and a sale whose answer was lost waits to be confirmed.'**
+  String get tillReadinessOffline;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Counter readiness and settings'**
+  String get tillReadinessOpen;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Counter settings'**
+  String get tillReadinessSettings;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Rests on: {specification} ({version}), in force since {date}'**
+  String tillReadinessSpecification(
+    String specification,
+    String version,
+    String date,
+  );
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Supported'**
+  String get tillReadinessSupported;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Counter readiness'**
+  String get tillReadinessTitle;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Not available'**
+  String get tillReadinessUnavailable;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet confirmed by a tax professional.'**
+  String get tillReadinessUnconfirmed;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'The registry names no counter operation for {country}: nothing is supported, and the till sells nothing.'**
+  String tillReadinessUnknownCountry(String country);
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'Corrects receipt {number}'**
+  String tillReceiptCorrects(String number);
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'The amounts of this receipt do not agree with each other. It is shown as it was frozen; tell your administrator.'**
+  String get tillReceiptDisagrees;
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'Issued under: {specification} ({version})'**
+  String tillReceiptIssuedUnder(String specification, String version);
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: {quantity} {unit}'**
+  String tillReceiptLine(String label, String quantity, String unit);
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
   /// **'Receipt {number}'**
   String tillReceiptNumber(String number);
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'No receipt printer is connected to the app: print from the share sheet.'**
+  String get tillReceiptPrintNote;
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'Share the receipt'**
+  String get tillReceiptShare;
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'Show the receipt'**
+  String get tillReceiptShow;
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'VAT {percent} %: {tax} on {net}'**
+  String tillReceiptTaxLine(String percent, String tax, String net);
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'Total {amount}'**
+  String tillReceiptTotal(String amount);
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'This receipt was written by a newer version of DesKilo: update the app to read it.'**
+  String get tillReceiptUnreadable;
 
   /// #4366 the till
   ///

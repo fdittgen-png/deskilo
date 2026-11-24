@@ -2,9 +2,12 @@
 //
 // #4366 -- the till talks to the open workspace's server. Composed here, where both features are, so the money feature
 // does not import the workspace for it.
+import 'package:flutter/widgets.dart' show Key;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show Consumer;
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../core/backend/auth_secret_store.dart';
+import '../core/settings/settings.dart' show SettingScope;
 import '../features/money/data/secure_offline_store.dart';
 import '../features/money/data/supabase_counter_offline.dart';
 import '../features/money/data/supabase_counter_till.dart';
@@ -13,9 +16,11 @@ import '../features/money/domain/till_drawer.dart';
 import '../features/money/providers/till_drawer_providers.dart';
 import '../features/money/providers/till_providers.dart';
 import '../features/workspace/domain/workspace_feature.dart';
+import '../features/workspace/domain/workspace_permission.dart';
+import '../features/workspace/presentation/widgets/settings_editor.dart';
 import '../features/workspace/providers/operation_context_providers.dart';
 import '../features/workspace/providers/settings_providers.dart';
-import '../features/workspace/providers/workspace_providers.dart' show enabledFeaturesSyncProvider;
+import '../features/workspace/providers/workspace_providers.dart' show enabledFeaturesSyncProvider, myPermissionsProvider;
 
 /// Puts the live till in a scope's overrides (main.dart).
 final Override tillPortFromApp = tillPortProvider.overrideWith(
@@ -58,3 +63,22 @@ final Override tillOfflineEnabledFromApp = tillOfflineEnabledProvider.overrideWi
   final features = ref.watch(enabledFeaturesSyncProvider);
   return features.contains(WorkspaceFeature.counterTillSessions) && features.contains(WorkspaceFeature.counterOfflineCash);
 });
+
+/// #4184 -- how the business's counter receipts leave the counter, read from its settings (`counter.document_channel`).
+final Override counterDocumentChannelFromApp = counterDocumentChannelProvider.overrideWith((ref, workspaceId) {
+  final value = ref.watch(settingsSetProvider(workspaceId)).value?.effective['counter.document_channel'];
+  return value is String ? value : 'share';
+});
+
+/// #4184 -- the counter's settings are edited in the registry editor, by whoever may change the workspace's settings.
+final Override counterSettingsEditorFromApp = counterSettingsEditorProvider.overrideWithValue(
+  (workspaceId) => Consumer(
+    builder: (context, ref, _) => SettingsEditor(
+      key: const Key('counter-readiness-settings'),
+      scope: SettingScope.workspace,
+      workspaceId: workspaceId,
+      keyPrefix: 'counter.',
+      canEdit: ref.watch(myPermissionsProvider).contains(WorkspacePermission.workspaceSettings),
+    ),
+  ),
+);

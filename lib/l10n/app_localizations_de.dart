@@ -41253,6 +41253,12 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get tillDeclarationNone => 'keine Pflicht zu einer Fiskalkasse';
+
+  @override
+  String get tillDeclarationRegister => 'eine Fiskalkasse ist vorgeschrieben';
+
+  @override
   String get tillDrawerAddTill => 'Kasse hinzufügen';
 
   @override
@@ -41714,9 +41720,106 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillQuantityTitle => 'Verkaufte Menge';
 
   @override
+  String get tillReadinessAdapterMissing =>
+      'Das Register erlaubt es, aber noch trägt nichts in der App es.';
+
+  @override
+  String tillReadinessCase(String country, String declaration) {
+    return 'Land $country, erklärter Fall: $declaration';
+  }
+
+  @override
+  String get tillReadinessConfirmed => 'Von einer Steuerberatung bestätigt.';
+
+  @override
+  String tillReadinessEvidence(String evidence) {
+    return 'Nachweis: $evidence';
+  }
+
+  @override
+  String get tillReadinessOffline =>
+      'Ein Verkauf braucht eine Verbindung: Die Kasse verkauft nicht offline, und ein Verkauf, dessen Antwort verloren ging, wartet auf seine Bestätigung.';
+
+  @override
+  String get tillReadinessOpen => 'Kassenbereitschaft und Einstellungen';
+
+  @override
+  String get tillReadinessSettings => 'Kasseneinstellungen';
+
+  @override
+  String tillReadinessSpecification(
+    String specification,
+    String version,
+    String date,
+  ) {
+    return 'Grundlage: $specification ($version), gültig seit $date';
+  }
+
+  @override
+  String get tillReadinessSupported => 'Unterstützt';
+
+  @override
+  String get tillReadinessTitle => 'Kassenbereitschaft';
+
+  @override
+  String get tillReadinessUnavailable => 'Nicht verfügbar';
+
+  @override
+  String get tillReadinessUnconfirmed =>
+      'Noch nicht von einer Steuerberatung bestätigt.';
+
+  @override
+  String tillReadinessUnknownCountry(String country) {
+    return 'Das Register nennt für $country keinen Kassenvorgang: nichts ist unterstützt, und die Kasse verkauft nichts.';
+  }
+
+  @override
+  String tillReceiptCorrects(String number) {
+    return 'Berichtigt Beleg $number';
+  }
+
+  @override
+  String get tillReceiptDisagrees =>
+      'Die Beträge dieses Belegs stimmen nicht miteinander überein. Er wird gezeigt, wie er festgeschrieben wurde; sagen Sie es Ihrer Verwaltung.';
+
+  @override
+  String tillReceiptIssuedUnder(String specification, String version) {
+    return 'Ausgestellt nach: $specification ($version)';
+  }
+
+  @override
+  String tillReceiptLine(String label, String quantity, String unit) {
+    return '$label: $quantity $unit';
+  }
+
+  @override
   String tillReceiptNumber(String number) {
     return 'Beleg $number';
   }
+
+  @override
+  String get tillReceiptPrintNote =>
+      'Mit der App ist kein Belegdrucker verbunden: Drucken Sie über das Teilen-Menü.';
+
+  @override
+  String get tillReceiptShare => 'Beleg teilen';
+
+  @override
+  String get tillReceiptShow => 'Beleg anzeigen';
+
+  @override
+  String tillReceiptTaxLine(String percent, String tax, String net) {
+    return 'MwSt. $percent %: $tax auf $net';
+  }
+
+  @override
+  String tillReceiptTotal(String amount) {
+    return 'Summe $amount';
+  }
+
+  @override
+  String get tillReceiptUnreadable =>
+      'Dieser Beleg wurde von einer neueren Version von DesKilo geschrieben: Aktualisieren Sie die App, um ihn zu lesen.';
 
   @override
   String tillRemoveLine(String name) {
