@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/format/decimal_input.dart';
+import '../../../core/i18n/app_format.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -38,7 +40,7 @@ Future<bool> showStockReorderPointSheet(
   StockReorderPoint? point,
 }) {
   final l10n = context.l10n;
-  final draft = _PointDraft(choices.items, choices.places, choices.separator, point, Localizations.localeOf(context).toString());
+  final draft = _PointDraft(choices.items, choices.places, choices.separator, point, appFormatOf(context));
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -54,7 +56,7 @@ Future<bool> showStockReorderPointSheet(
 }
 
 class _PointDraft {
-  _PointDraft(this.items, List<StockPlaceConfig> places, this.separator, this.point, this.locale)
+  _PointDraft(this.items, List<StockPlaceConfig> places, this.separator, this.point, this.format)
     : sites = [
         for (final p in stockRealPlaces(places))
           if (p.parentId == null) p,
@@ -65,15 +67,20 @@ class _PointDraft {
       upTo = point?.targetQuantity != null,
       active = point?.active ?? true,
       fields = FormControllers({
-        'level': point?.reorderPoint.text ?? '',
-        'value': point?.targetQuantity?.text ?? point?.reorderQuantity?.text ?? '',
+        'level': point == null ? '' : format.quantity(point.reorderPoint, grouped: false),
+        'value': switch (point?.targetQuantity ?? point?.reorderQuantity) {
+          final q? => format.quantity(q, grouped: false),
+          null => '',
+        },
       });
 
   final List<StockItem> items;
   final List<StockPlaceConfig> sites;
   final String separator;
   final StockReorderPoint? point;
-  final String locale;
+  /// The member's format: what the fields are written and read in.
+  final AppFormat format;
+  String get locale => format.locale;
   final FormControllers fields;
 
   /// One per sheet: a retry of the same save answers once.
@@ -123,7 +130,7 @@ class _PointDraft {
     try {
       await reorder.savePoint(
         workspaceId,
-        point: reorderPointPayload(
+        point: StockReorderPointDraft(
           target: isNew ? (item: item, variant: variant, site: site) : null,
           point: _dot('level'),
           value: value,

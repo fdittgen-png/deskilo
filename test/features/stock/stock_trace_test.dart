@@ -388,7 +388,7 @@ void main() {
     expect(t.purchase.state, TraceState.linked);
     expect(t.purchase.billsTruncated, isTrue);
     expect(t.purchase.bills.single.obligations.single.settlementState, TraceState.unavailable);
-    expect(TraceState.of('nonsense'), TraceState.notLinked);
+    expect(TraceState.of('nonsense'), TraceState.unknown, reason: 'a state this app does not know is no guess (#4401)');
     final v = StockValuation.fromJson({
       'cutoff': '2026-03-04T12:00:00Z',
       'calculated_at': '2026-03-04T12:01:00Z',

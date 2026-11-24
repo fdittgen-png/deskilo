@@ -8,6 +8,7 @@ import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_config_commands.dart';
 import 'package:deskilo/features/stock/domain/stock_registry.dart';
 import 'package:deskilo/features/stock/domain/stock_service_creator.dart';
+import 'package:deskilo/features/stock/domain/workspace_units.dart';
 import 'package:deskilo/features/stock/presentation/stock_item_new_sheet.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
@@ -101,6 +102,7 @@ Future<(_Creator, _Commands, _Registry)> _open(WidgetTester tester, Size size, {
               separator: '-',
               currency: 'EUR',
               unit: weighed ? 'kg' : 'piece',
+              units: pickableUnits(builtInUnits, unitsOn: false),
             ),
           ),
           child: const Text('open'),

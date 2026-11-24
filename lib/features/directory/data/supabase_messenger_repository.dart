@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/account_group.dart';
@@ -471,10 +472,10 @@ class SupabaseMessengerRepository with SupabaseInboxPages implements MessengerRe
             ? const <String>{}
             : {
                 for (final row
-                    in await client
-                        .from(ServerTable.members)
+                    in await fetchAllPages(table: ServerTable.members, build: () => client.from(ServerTable.members)
                         .select('id')
-                        .eq('user_id', user))
+                        .eq('user_id', user)
+                        .order('id', ascending: true)))
                   row['id'] as String,
               };
         final rows = await client

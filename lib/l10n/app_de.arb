@@ -7939,6 +7939,14 @@
   "featureUiAnimationsTitle": "Oberflächen-Animationen",
   "featureUniqueMonogramsDesc": "Ein Avatar ohne Foto zeigt Initialen, die zu genau einem Mitglied gehören: Anfangsbuchstabe von Vor- und Nachname, bei einer Kollision ein weiterer Buchstabe, Zahlen erst als letzter Ausweg. Aus: nur der erste Buchstabe, gleich für alle, die ihn teilen.",
   "featureUniqueMonogramsTitle": "Eindeutige Avatar-Initialen",
+  "featureUnitsOfMeasureDesc": "Inhaber und Administratoren pflegen die eigenen Maßeinheiten des Betriebs und ihre Umrechnungen (1 km = 1000 m, 1 kg = 1000 g). Artikel, Angebote und Rechnungen werden darin gemessen. Die Standardeinheiten sind immer vorhanden; mit dieser Option erscheint die Seite, auf der sie gepflegt werden.",
+  "@featureUnitsOfMeasureDesc": {
+    "description": "#4442 feature description"
+  },
+  "featureUnitsOfMeasureTitle": "Maßeinheiten",
+  "@featureUnitsOfMeasureTitle": {
+    "description": "#4442 feature name"
+  },
   "featureUsageInvoicesDesc": "Ist ein Monat vorbei, wird getrennt berechnet, was er über das Abo hinaus gekostet hat — Mehrverbrauch, Zubehör, Leistungen. Aus: Das bleibt auf der Monatsrechnung.",
   "featureUsageInvoicesTitle": "Monatsabschluss-Rechnungen",
   "featureUsageRecordsDesc": "Jede gezählte Buchung hinterlässt einen Satz: das gebuchte Fenster, die tatsächliche Anwesenheit und was davon berechnet wird. Eine Buchung, zu der niemand kam, wird voll berechnet. Wer früher geht, kann darum bitten, die ungenutzte Zeit nicht zu berechnen — entschieden wird das von jemand anderem. Aus: keine Sätze, keine Korrektur.",
@@ -13195,6 +13203,134 @@
   "meWelcomeSubtitle": "Wonach suchen Sie?",
   "meWelcomeTitle": "Willkommen, {name}",
   "meWhereSpacesLive": "Wo meine Orte liegen",
+  "measureDimensionArea": "Fläche",
+  "@measureDimensionArea": {
+    "description": "#4442 dimension: area"
+  },
+  "measureDimensionCount": "Anzahl",
+  "@measureDimensionCount": {
+    "description": "#4442 dimension: counting"
+  },
+  "measureDimensionLength": "Länge",
+  "@measureDimensionLength": {
+    "description": "#4442 dimension: length"
+  },
+  "measureDimensionMass": "Masse",
+  "@measureDimensionMass": {
+    "description": "#4442 dimension: mass"
+  },
+  "measureDimensionTime": "Zeit",
+  "@measureDimensionTime": {
+    "description": "#4442 dimension: time"
+  },
+  "measureDimensionVolume": "Volumen",
+  "@measureDimensionVolume": {
+    "description": "#4442 dimension: volume"
+  },
+  "measureReasonDimension": "Wählen Sie, was diese Einheit misst.",
+  "@measureReasonDimension": {
+    "description": "#4442 refusal: no dimension chosen"
+  },
+  "measureReasonEce": "Ein UN/ECE-Code besteht aus zwei oder drei Großbuchstaben oder Ziffern.",
+  "@measureReasonEce": {
+    "description": "#4442 refusal: the UN/ECE code is malformed"
+  },
+  "measureReasonFixed": "Diese Einheit ist fest und kann weder geändert noch entfernt werden.",
+  "@measureReasonFixed": {
+    "description": "#4442 refusal: a fixed unit"
+  },
+  "measureReasonInUse": "Diese Einheit wird verwendet, ihre Größe und ihr Faktor können sich nicht mehr ändern. Legen Sie stattdessen eine neue Einheit an.",
+  "@measureReasonInUse": {
+    "description": "#4442 refusal: a unit in use keeps its factor"
+  },
+  "measureReasonInexact": "Das Ergebnis lässt sich mit sechs Nachkommastellen nicht exakt schreiben.",
+  "@measureReasonInexact": {
+    "description": "#4442 refusal: a conversion that six decimals cannot hold"
+  },
+  "measureReasonName": "Eine neue Einheit braucht eine Bezeichnung.",
+  "@measureReasonName": {
+    "description": "#4442 refusal: a new unit needs a name"
+  },
+  "measureUnitArchive": "Archivieren",
+  "@measureUnitArchive": {
+    "description": "#4442 action: archive an unused unit"
+  },
+  "measureUnitArchivedTag": "Archiviert",
+  "@measureUnitArchivedTag": {
+    "description": "#4442 tag on an archived unit"
+  },
+  "measureUnitBuiltIn": "Standard",
+  "@measureUnitBuiltIn": {
+    "description": "#4442 tag on a built-in unit"
+  },
+  "measureUnitCodeField": "Einheitencode",
+  "@measureUnitCodeField": {
+    "description": "#4442 field: the code of a unit"
+  },
+  "measureUnitCodeHelp": "Kleinbuchstaben, Ziffern und Unterstriche. Er kann später nicht mehr geändert werden.",
+  "@measureUnitCodeHelp": {
+    "description": "#4442 helper of the code field"
+  },
+  "measureUnitDimensionField": "Sie misst",
+  "@measureUnitDimensionField": {
+    "description": "#4442 field: what a unit measures"
+  },
+  "measureUnitEceField": "UN/ECE-Code (für E-Rechnungen)",
+  "@measureUnitEceField": {
+    "description": "#4442 field: the UN/ECE code of a unit"
+  },
+  "measureUnitEdit": "Einheit bearbeiten",
+  "@measureUnitEdit": {
+    "description": "#4442 edit sheet title"
+  },
+  "measureUnitFactorField": "Eine Einheit entspricht",
+  "@measureUnitFactorField": {
+    "description": "#4442 field: how many base units one unit is"
+  },
+  "measureUnitFactorHelp": "Gezählt in {base}, der Basiseinheit der Messgröße: 1000 für ein km, 0,001 für ein mm.",
+  "@measureUnitFactorHelp": {
+    "description": "#4442 helper of the factor field",
+    "placeholders": {
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureUnitLine": "1 {unit} = {value} {base}",
+  "@measureUnitLine": {
+    "description": "#4442 a unit's conversion line, e.g. 1 km = 1000 m",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureUnitNameField": "Ihre Bezeichnung der Einheit",
+  "@measureUnitNameField": {
+    "description": "#4442 field: the business's own word for a unit"
+  },
+  "measureUnitNew": "Neue Einheit",
+  "@measureUnitNew": {
+    "description": "#4442 new unit action"
+  },
+  "measureUnitRestore": "Wieder anzeigen",
+  "@measureUnitRestore": {
+    "description": "#4442 action: show an archived unit again"
+  },
+  "measureUnitsIntro": "Die Einheiten, in denen Ihre Artikel, Angebote und Rechnungen gemessen werden, und ihre Umrechnung: 1 km = 1000 m. Die Standardeinheiten sind immer da; ergänzen Sie eigene, etwa eine Kabeltrommel zu 50 m.",
+  "@measureUnitsIntro": {
+    "description": "#4442 what the screen is for"
+  },
+  "measureUnitsSubtitle": "Eigene Einheiten und ihre Umrechnung",
+  "@measureUnitsSubtitle": {
+    "description": "#4442 the row in the workspace settings"
+  },
   "memberAccountTitle": "Mein Konto",
   "@memberAccountTitle": {
     "description": "#1598 member account menu: memberAccountTitle"
@@ -22090,6 +22226,7 @@
   "@stockSettingsValues": {
     "description": "the stock pages and group (#4299)"
   },
+  "stockStateUnknown": "Dieser App unbekannt",
   "stockStoredLabel": "Gespeichert",
   "stockTabMovements": "Bewegungen",
   "stockTabOnHand": "Bestand",
@@ -23839,6 +23976,8 @@
   "tillDayTenderOther": "Sonstige",
   "tillDayTitle": "Tagesabschluss",
   "tillDayToday": "Abzuschließender Tag: {date}",
+  "tillDeclarationNone": "keine Pflicht zu einer Fiskalkasse",
+  "tillDeclarationRegister": "eine Fiskalkasse ist vorgeschrieben",
   "tillDrawerAddTill": "Kasse hinzufügen",
   "tillDrawerAmountInvalid": "Geben Sie einen Betrag ein.",
   "tillDrawerAmountZero": "Der Betrag muss größer als null sein.",
@@ -24086,7 +24225,30 @@
   "tillQuantityHint": "Eine genaue Menge, zum Beispiel 1 oder 0,350.",
   "tillQuantityRefused": "Geben Sie eine Menge über null mit höchstens sechs Dezimalstellen ein.",
   "tillQuantityTitle": "Verkaufte Menge",
+  "tillReadinessAdapterMissing": "Das Register erlaubt es, aber noch trägt nichts in der App es.",
+  "tillReadinessCase": "Land {country}, erklärter Fall: {declaration}",
+  "tillReadinessConfirmed": "Von einer Steuerberatung bestätigt.",
+  "tillReadinessEvidence": "Nachweis: {evidence}",
+  "tillReadinessOffline": "Ein Verkauf braucht eine Verbindung: Die Kasse verkauft nicht offline, und ein Verkauf, dessen Antwort verloren ging, wartet auf seine Bestätigung.",
+  "tillReadinessOpen": "Kassenbereitschaft und Einstellungen",
+  "tillReadinessSettings": "Kasseneinstellungen",
+  "tillReadinessSpecification": "Grundlage: {specification} ({version}), gültig seit {date}",
+  "tillReadinessSupported": "Unterstützt",
+  "tillReadinessTitle": "Kassenbereitschaft",
+  "tillReadinessUnavailable": "Nicht verfügbar",
+  "tillReadinessUnconfirmed": "Noch nicht von einer Steuerberatung bestätigt.",
+  "tillReadinessUnknownCountry": "Das Register nennt für {country} keinen Kassenvorgang: nichts ist unterstützt, und die Kasse verkauft nichts.",
+  "tillReceiptCorrects": "Berichtigt Beleg {number}",
+  "tillReceiptDisagrees": "Die Beträge dieses Belegs stimmen nicht miteinander überein. Er wird gezeigt, wie er festgeschrieben wurde; sagen Sie es Ihrer Verwaltung.",
+  "tillReceiptIssuedUnder": "Ausgestellt nach: {specification} ({version})",
+  "tillReceiptLine": "{label}: {quantity} {unit}",
   "tillReceiptNumber": "Beleg {number}",
+  "tillReceiptPrintNote": "Mit der App ist kein Belegdrucker verbunden: Drucken Sie über das Teilen-Menü.",
+  "tillReceiptShare": "Beleg teilen",
+  "tillReceiptShow": "Beleg anzeigen",
+  "tillReceiptTaxLine": "MwSt. {percent} %: {tax} auf {net}",
+  "tillReceiptTotal": "Summe {amount}",
+  "tillReceiptUnreadable": "Dieser Beleg wurde von einer neueren Version von DesKilo geschrieben: Aktualisieren Sie die App, um ihn zu lesen.",
   "tillRemoveLine": "{name} aus dem Warenkorb nehmen",
   "tillRetry": "Erneut versuchen",
   "@tillRetry": {

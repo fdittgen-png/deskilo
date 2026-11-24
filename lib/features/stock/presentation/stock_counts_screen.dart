@@ -192,6 +192,7 @@ class _CountTile extends ConsumerWidget {
                 StockCountState.applied => l10n.stockCountsStateApplied,
                 StockCountState.rejected => l10n.stockCountsStateRejected,
                 StockCountState.cancelled => l10n.stockCountsStateCancelled,
+                StockCountState.unknown => l10n.stockStateUnknown,
               }),
             ),
             if (open && count.stale)

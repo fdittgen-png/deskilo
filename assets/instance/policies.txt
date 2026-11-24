@@ -664,6 +664,8 @@ public.workspace_template_grants.workspace_template_grants_read
 public.workspace_templates.mcp_delegated_deny
 public.workspace_templates.personal_native_session
 public.workspace_templates.workspace_templates_read
+public.workspace_units.mcp_delegated_deny
+public.workspace_units.workspace_units_select
 public.workspaces.mcp_delegated_deny
 public.workspaces.personal_native_session
 public.workspaces.workspaces_delete

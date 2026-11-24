@@ -73,19 +73,20 @@ class DemoStockReorder implements StockReorder {
   @override
   Future<StockSaved> savePoint(
     String workspaceId, {
-    required Map<String, Object?> point,
+    required StockReorderPointDraft point,
     required String requestId,
     String? pointId,
     int? expectedRevision,
   }) async {
+    final body = point.toJson();
     if (workspaceId != _workspaceId) throw const StockConfigRefused('item_id', 'item_foreign');
     final old = pointId == null ? null : _points[pointId];
     if (pointId != null && old == null) throw const StockConfigRefused('point', 'malformed');
     if (old != null && old.revision != expectedRevision) throw const StockConfigStale();
-    final (:item, :variant, :site) = await _targetOf(point, old);
-    final read = _quantityOf(point, 'reorder_point', old?.reorderPoint);
-    final quantity = _quantityOf(point, 'reorder_quantity', old?.reorderQuantity);
-    final target = _quantityOf(point, 'target_quantity', old?.targetQuantity);
+    final (:item, :variant, :site) = await _targetOf(body, old);
+    final read = _quantityOf(body, 'reorder_point', old?.reorderPoint);
+    final quantity = _quantityOf(body, 'reorder_quantity', old?.reorderQuantity);
+    final target = _quantityOf(body, 'target_quantity', old?.targetQuantity);
     final level = _checkRule(read, quantity, target);
     if (_points.values.any((p) => p.itemId == item && p.variantId == variant && p.siteId == site && p.id != pointId)) {
       throw const StockConfigRefused('item_id', 'point_twice');
@@ -94,7 +95,7 @@ class DemoStockReorder implements StockReorder {
     final revision = (old?.revision ?? 0) + 1;
     _points[id] = StockReorderPoint(
       id: id, revision: revision, itemId: item, variantId: variant, siteId: site, reorderPoint: level,
-      reorderQuantity: quantity, targetQuantity: target, active: point['active'] as bool? ?? old?.active ?? true,
+      reorderQuantity: quantity, targetQuantity: target, active: body['active'] as bool? ?? old?.active ?? true,
     );
     return (id: id, revision: revision, replayed: false);
   }

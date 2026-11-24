@@ -104,7 +104,7 @@ class StockChainSection extends ConsumerWidget {
                     key: ValueKey('stock-chain-step-${s.movementId}'),
                     contentPadding: EdgeInsets.zero,
                     selected: s.movementId == movementId,
-                    title: Text('${stockMoveReasonText(l10n, s.reason)} · ${s.fromCode} → ${s.toCode} · ${s.quantity.text}'),
+                    title: Text('${stockMoveReasonText(l10n, s.reason)} · ${s.fromCode} → ${s.toCode} · ${appFormatOf(context).quantity(s.quantity)}'),
                     subtitle: Text([
                       fmt.date(s.at),
                       if (s.pieces != null && s.pieces! > 0) l10n.stockChainPieces(s.pieces!),
@@ -147,7 +147,7 @@ class _TookTile extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       dense: true,
       leading: Icon(piece ? Icons.sell_outlined : Icons.inventory_2_outlined),
-      title: Text(piece ? l10n.stockChainTookPiece(track.code) : l10n.stockChainTookLot(track.code, track.quantity?.text ?? '')),
+      title: Text(piece ? l10n.stockChainTookPiece(track.code) : l10n.stockChainTookLot(track.code, switch (track.quantity) { final q? => appFormatOf(context).quantity(q), null => '' })),
     );
   }
 }

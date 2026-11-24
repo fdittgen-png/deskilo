@@ -1,0 +1,7 @@
+# #4446: list reads of a data layer that nothing bounds yet (test/lint/bounded_reads_test.dart), one line per
+# read as "path table". The server cuts such a read at its max_rows without a word. The file only shrinks:
+# a read moved onto fetchAllPages (a list that grows with the business) or fetchConfigurationList (a
+# configuration list) leaves it. Left: the till drawer, which belongs to the till workstream.
+lib/features/money/data/supabase_till_drawer.dart 'counter_day_closes'
+lib/features/money/data/supabase_till_drawer.dart 'counter_till_sessions'
+lib/features/money/data/supabase_till_drawer.dart 'counter_tills'

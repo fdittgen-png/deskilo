@@ -4,6 +4,7 @@
 // and the two guarded, idempotent saves. A save that changes nothing throws a
 // [StockConfigFailure]; it never reports success.
 import 'stock_config.dart';
+import 'stock_drafts.dart';
 import 'stock_variants.dart';
 
 abstract interface class StockConfigCommands {
@@ -25,7 +26,7 @@ abstract interface class StockConfigCommands {
   /// read at [expectedRevision].
   Future<StockSaved> savePlace(
     String workspaceId, {
-    required Map<String, Object?> place,
+    required StockPlaceDraft place,
     required String requestId,
     String? placeId,
     int? expectedRevision,
@@ -47,7 +48,7 @@ abstract interface class StockConfigCommands {
   /// read at [expectedRevision].
   Future<StockSaved> saveDimension(
     String workspaceId, {
-    required Map<String, Object?> dimension,
+    required StockDimension dimension,
     required String requestId,
     String? dimensionId,
     int? expectedRevision,
@@ -66,7 +67,7 @@ abstract interface class StockConfigCommands {
   /// Maps a supplier's article to an item, by an explicit save.
   Future<StockSaved> saveMapping(
     String workspaceId, {
-    required Map<String, Object?> mapping,
+    required SupplierMappingDraft mapping,
     required String requestId,
     String? mappingId,
     int? expectedRevision,

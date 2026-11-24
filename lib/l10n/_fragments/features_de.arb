@@ -373,5 +373,13 @@
   "featureCounterOfflineCashDesc": "Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung.",
   "@featureCounterOfflineCashDesc": {
     "description": "#4373 feature description"
+  },
+  "featureUnitsOfMeasureTitle": "Maßeinheiten",
+  "@featureUnitsOfMeasureTitle": {
+    "description": "#4442 feature name"
+  },
+  "featureUnitsOfMeasureDesc": "Inhaber und Administratoren pflegen die eigenen Maßeinheiten des Betriebs und ihre Umrechnungen (1 km = 1000 m, 1 kg = 1000 g). Artikel, Angebote und Rechnungen werden darin gemessen. Die Standardeinheiten sind immer vorhanden; mit dieser Option erscheint die Seite, auf der sie gepflegt werden.",
+  "@featureUnitsOfMeasureDesc": {
+    "description": "#4442 feature description"
   }
 }

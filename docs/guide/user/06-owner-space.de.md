@@ -599,6 +599,32 @@ Sie möchten, dass Ihre Rechnungen und Briefe auf dem Papier gedruckt werden, da
 
 **Siehe auch:** [Land](help:user.workspace.settings.country)
 
+<!-- anchor: user.workspace.settings.units -->
+### Maßeinheiten
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Ihre Artikel, Angebote und Rechnungen werden in Einheiten gemessen, und manche Einheiten rechnen sich in andere um: 1 km sind 1000 m. Jeder Betrieb beginnt mit den üblichen Einheiten (Stück, g, kg, ml, cl, l, mm, cm, m, km, m², min, h); eigene ergänzen Sie selbst, etwa eine Kabeltrommel zu 50 m.
+
+<!-- image: user-workspace-settings--units -->
+
+**Schritte**
+
+1. Schalten Sie **Maßeinheiten** unter **Funktionen** ein (sie ist aus, bis Sie sie verlangen).
+2. Tippen Sie in [Maßeinheiten](app:/settings/units) auf **Neue Einheit**.
+3. Füllen Sie **Einheitencode** (er lässt sich später nicht mehr ändern), **Ihre Bezeichnung der Einheit**, **Sie misst** und **Eine Einheit entspricht** in der Basiseinheit der Messgröße aus: 1000 für ein km in m, 0,001 für ein mm.
+4. Optional tragen Sie **UN/ECE-Code (für E-Rechnungen)** ein, den E-Rechnungen mitführen (KMT für ein km).
+5. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Eine Standardeinheit behält ihre Größe und ihren Faktor; Sie können ihr eine eigene Bezeichnung geben.
+- Eine Einheit in Verwendung (ein darin gezählter Artikel, eine Lagerbewegung, ein Angebot oder eine Rechnungszeile) behält Größe und Faktor für immer: Eine Korrektur ist eine neue Einheit. Eine Einheit, die niemand verwendet, lässt sich archivieren (**Archivieren**) und wieder anzeigen (**Wieder anzeigen**).
+- Eine Umrechnung ist exakt: 2,5 km sind 2500 m. Zwei Arten von Einheiten rechnen sich nie um, und ein Ergebnis, das sechs Nachkommastellen nicht fassen, wird abgelehnt, nie gerundet.
+- Nur Inhaber und Administratoren mit der Berechtigung, die Einstellungen des Workspace zu ändern, pflegen die Einheiten.
+
+**Siehe auch:** [Papier der Dokumente](help:user.workspace.settings.paper)
+
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organisation
 

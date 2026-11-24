@@ -16872,6 +16872,14 @@
   "@featureUniqueMonogramsTitle": {
     "description": "Shown as a text in feature names (workspace)."
   },
+  "featureUnitsOfMeasureDesc": "The owner and the admins keep the business's own units of measure and their conversions (1 km = 1000 m, 1 kg = 1000 g). Items, quotes and invoices are measured in them. The built-in units are always there; switching this on adds the screen to maintain them.",
+  "@featureUnitsOfMeasureDesc": {
+    "description": "#4442 feature description"
+  },
+  "featureUnitsOfMeasureTitle": "Units of measure",
+  "@featureUnitsOfMeasureTitle": {
+    "description": "#4442 feature name"
+  },
   "featureUsageInvoicesDesc": "Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.",
   "@featureUsageInvoicesDesc": {
     "description": "Shown as a text in feature copy (workspace)."
@@ -29426,6 +29434,134 @@
   "meWhereSpacesLive": "Where my places live",
   "@meWhereSpacesLive": {
     "description": "Row in Me opening the connected servers."
+  },
+  "measureDimensionArea": "Area",
+  "@measureDimensionArea": {
+    "description": "#4442 dimension: area"
+  },
+  "measureDimensionCount": "Count",
+  "@measureDimensionCount": {
+    "description": "#4442 dimension: counting"
+  },
+  "measureDimensionLength": "Length",
+  "@measureDimensionLength": {
+    "description": "#4442 dimension: length"
+  },
+  "measureDimensionMass": "Mass",
+  "@measureDimensionMass": {
+    "description": "#4442 dimension: mass"
+  },
+  "measureDimensionTime": "Time",
+  "@measureDimensionTime": {
+    "description": "#4442 dimension: time"
+  },
+  "measureDimensionVolume": "Volume",
+  "@measureDimensionVolume": {
+    "description": "#4442 dimension: volume"
+  },
+  "measureReasonDimension": "Choose what this unit measures.",
+  "@measureReasonDimension": {
+    "description": "#4442 refusal: no dimension chosen"
+  },
+  "measureReasonEce": "A UN/ECE code is two or three capital letters or digits.",
+  "@measureReasonEce": {
+    "description": "#4442 refusal: the UN/ECE code is malformed"
+  },
+  "measureReasonFixed": "This unit is fixed and cannot be changed or removed.",
+  "@measureReasonFixed": {
+    "description": "#4442 refusal: a fixed unit"
+  },
+  "measureReasonInUse": "This unit is in use, so its dimension and factor can no longer change. Make a new unit instead.",
+  "@measureReasonInUse": {
+    "description": "#4442 refusal: a unit in use keeps its factor"
+  },
+  "measureReasonInexact": "The result cannot be written exactly with six decimals.",
+  "@measureReasonInexact": {
+    "description": "#4442 refusal: a conversion that six decimals cannot hold"
+  },
+  "measureReasonName": "A new unit needs a name.",
+  "@measureReasonName": {
+    "description": "#4442 refusal: a new unit needs a name"
+  },
+  "measureUnitArchive": "Archive",
+  "@measureUnitArchive": {
+    "description": "#4442 action: archive an unused unit"
+  },
+  "measureUnitArchivedTag": "Archived",
+  "@measureUnitArchivedTag": {
+    "description": "#4442 tag on an archived unit"
+  },
+  "measureUnitBuiltIn": "Built in",
+  "@measureUnitBuiltIn": {
+    "description": "#4442 tag on a built-in unit"
+  },
+  "measureUnitCodeField": "Unit code",
+  "@measureUnitCodeField": {
+    "description": "#4442 field: the code of a unit"
+  },
+  "measureUnitCodeHelp": "Lower case letters, digits and underscores. It cannot change later.",
+  "@measureUnitCodeHelp": {
+    "description": "#4442 helper of the code field"
+  },
+  "measureUnitDimensionField": "It measures",
+  "@measureUnitDimensionField": {
+    "description": "#4442 field: what a unit measures"
+  },
+  "measureUnitEceField": "UN/ECE code (for e-invoices)",
+  "@measureUnitEceField": {
+    "description": "#4442 field: the UN/ECE code of a unit"
+  },
+  "measureUnitEdit": "Edit unit",
+  "@measureUnitEdit": {
+    "description": "#4442 edit sheet title"
+  },
+  "measureUnitFactorField": "One unit equals",
+  "@measureUnitFactorField": {
+    "description": "#4442 field: how many base units one unit is"
+  },
+  "measureUnitFactorHelp": "Counted in {base}, the base unit of what it measures: 1000 for a km, 0.001 for a mm.",
+  "@measureUnitFactorHelp": {
+    "description": "#4442 helper of the factor field",
+    "placeholders": {
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureUnitLine": "1 {unit} = {value} {base}",
+  "@measureUnitLine": {
+    "description": "#4442 a unit's conversion line, e.g. 1 km = 1000 m",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureUnitNameField": "Your name for the unit",
+  "@measureUnitNameField": {
+    "description": "#4442 field: the business's own word for a unit"
+  },
+  "measureUnitNew": "New unit",
+  "@measureUnitNew": {
+    "description": "#4442 new unit action"
+  },
+  "measureUnitRestore": "Show again",
+  "@measureUnitRestore": {
+    "description": "#4442 action: show an archived unit again"
+  },
+  "measureUnitsIntro": "The units your items, quotes and invoices are measured in, and how they convert: 1 km = 1000 m. The built-in units are always there; add your own, such as a cable drum of 50 m.",
+  "@measureUnitsIntro": {
+    "description": "#4442 what the screen is for"
+  },
+  "measureUnitsSubtitle": "Your own units and how they convert",
+  "@measureUnitsSubtitle": {
+    "description": "#4442 the row in the workspace settings"
   },
   "memberAccountTitle": "My account",
   "@memberAccountTitle": {
@@ -48828,6 +48964,10 @@
   "@stockSettingsValues": {
     "description": "the stock pages and group (#4299)"
   },
+  "stockStateUnknown": "Not known to this app",
+  "@stockStateUnknown": {
+    "description": "#4401 a state, scope or kind a newer server sent that this app does not know: shown instead of a guess"
+  },
   "stockStoredLabel": "Stored",
   "@stockStoredLabel": {
     "description": "#4161 the quantity as stored, in the inventory unit"
@@ -53013,6 +53153,14 @@
       }
     }
   },
+  "tillDeclarationNone": "no fiscal register obligation",
+  "@tillDeclarationNone": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillDeclarationRegister": "a fiscal register is required",
+  "@tillDeclarationRegister": {
+    "description": "#4184 the counter readiness"
+  },
   "tillDrawerAddTill": "Add a till",
   "@tillDrawerAddTill": {
     "description": "#4367 till sessions: the cash drawer"
@@ -53609,6 +53757,127 @@
   "@tillQuantityTitle": {
     "description": "#4366 the till"
   },
+  "tillReadinessAdapterMissing": "The registry allows it, but nothing in the app carries it yet.",
+  "@tillReadinessAdapterMissing": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessCase": "Country {country}, declared case: {declaration}",
+  "@tillReadinessCase": {
+    "description": "#4184 the counter readiness",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "declaration": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReadinessConfirmed": "Confirmed by a tax professional.",
+  "@tillReadinessConfirmed": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessEvidence": "Proof: {evidence}",
+  "@tillReadinessEvidence": {
+    "description": "#4184 the counter readiness",
+    "placeholders": {
+      "evidence": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReadinessOffline": "A sale needs a connection: the till does not sell offline, and a sale whose answer was lost waits to be confirmed.",
+  "@tillReadinessOffline": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessOpen": "Counter readiness and settings",
+  "@tillReadinessOpen": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessSettings": "Counter settings",
+  "@tillReadinessSettings": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessSpecification": "Rests on: {specification} ({version}), in force since {date}",
+  "@tillReadinessSpecification": {
+    "description": "#4184 the counter readiness",
+    "placeholders": {
+      "specification": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReadinessSupported": "Supported",
+  "@tillReadinessSupported": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessTitle": "Counter readiness",
+  "@tillReadinessTitle": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessUnavailable": "Not available",
+  "@tillReadinessUnavailable": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessUnconfirmed": "Not yet confirmed by a tax professional.",
+  "@tillReadinessUnconfirmed": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessUnknownCountry": "The registry names no counter operation for {country}: nothing is supported, and the till sells nothing.",
+  "@tillReadinessUnknownCountry": {
+    "description": "#4184 the counter readiness",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReceiptCorrects": "Corrects receipt {number}",
+  "@tillReceiptCorrects": {
+    "description": "#4184 the counter receipt document",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReceiptDisagrees": "The amounts of this receipt do not agree with each other. It is shown as it was frozen; tell your administrator.",
+  "@tillReceiptDisagrees": {
+    "description": "#4184 the counter receipt document"
+  },
+  "tillReceiptIssuedUnder": "Issued under: {specification} ({version})",
+  "@tillReceiptIssuedUnder": {
+    "description": "#4184 the counter receipt document",
+    "placeholders": {
+      "specification": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReceiptLine": "{label}: {quantity} {unit}",
+  "@tillReceiptLine": {
+    "description": "#4184 the counter receipt document",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
   "tillReceiptNumber": "Receipt {number}",
   "@tillReceiptNumber": {
     "description": "#4366 the till",
@@ -53617,6 +53886,46 @@
         "type": "String"
       }
     }
+  },
+  "tillReceiptPrintNote": "No receipt printer is connected to the app: print from the share sheet.",
+  "@tillReceiptPrintNote": {
+    "description": "#4184 the counter receipt document"
+  },
+  "tillReceiptShare": "Share the receipt",
+  "@tillReceiptShare": {
+    "description": "#4184 the counter receipt document"
+  },
+  "tillReceiptShow": "Show the receipt",
+  "@tillReceiptShow": {
+    "description": "#4184 the counter receipt document"
+  },
+  "tillReceiptTaxLine": "VAT {percent} %: {tax} on {net}",
+  "@tillReceiptTaxLine": {
+    "description": "#4184 the counter receipt document",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      },
+      "tax": {
+        "type": "String"
+      },
+      "net": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReceiptTotal": "Total {amount}",
+  "@tillReceiptTotal": {
+    "description": "#4184 the counter receipt document",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReceiptUnreadable": "This receipt was written by a newer version of DesKilo: update the app to read it.",
+  "@tillReceiptUnreadable": {
+    "description": "#4184 the counter receipt document"
   },
   "tillRemoveLine": "Take {name} out of the basket",
   "@tillRemoveLine": {

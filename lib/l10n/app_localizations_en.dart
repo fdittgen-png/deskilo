@@ -12825,6 +12825,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureUniqueMonogramsTitle => 'Distinct avatar initials';
 
   @override
+  String get featureUnitsOfMeasureDesc =>
+      'The owner and the admins keep the business\'s own units of measure and their conversions (1 km = 1000 m, 1 kg = 1000 g). Items, quotes and invoices are measured in them. The built-in units are always there; switching this on adds the screen to maintain them.';
+
+  @override
+  String get featureUnitsOfMeasureTitle => 'Units of measure';
+
+  @override
   String get featureUsageInvoicesDesc =>
       'Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.';
 
@@ -22346,6 +22353,100 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meWhereSpacesLive => 'Where my places live';
+
+  @override
+  String get measureDimensionArea => 'Area';
+
+  @override
+  String get measureDimensionCount => 'Count';
+
+  @override
+  String get measureDimensionLength => 'Length';
+
+  @override
+  String get measureDimensionMass => 'Mass';
+
+  @override
+  String get measureDimensionTime => 'Time';
+
+  @override
+  String get measureDimensionVolume => 'Volume';
+
+  @override
+  String get measureReasonDimension => 'Choose what this unit measures.';
+
+  @override
+  String get measureReasonEce =>
+      'A UN/ECE code is two or three capital letters or digits.';
+
+  @override
+  String get measureReasonFixed =>
+      'This unit is fixed and cannot be changed or removed.';
+
+  @override
+  String get measureReasonInUse =>
+      'This unit is in use, so its dimension and factor can no longer change. Make a new unit instead.';
+
+  @override
+  String get measureReasonInexact =>
+      'The result cannot be written exactly with six decimals.';
+
+  @override
+  String get measureReasonName => 'A new unit needs a name.';
+
+  @override
+  String get measureUnitArchive => 'Archive';
+
+  @override
+  String get measureUnitArchivedTag => 'Archived';
+
+  @override
+  String get measureUnitBuiltIn => 'Built in';
+
+  @override
+  String get measureUnitCodeField => 'Unit code';
+
+  @override
+  String get measureUnitCodeHelp =>
+      'Lower case letters, digits and underscores. It cannot change later.';
+
+  @override
+  String get measureUnitDimensionField => 'It measures';
+
+  @override
+  String get measureUnitEceField => 'UN/ECE code (for e-invoices)';
+
+  @override
+  String get measureUnitEdit => 'Edit unit';
+
+  @override
+  String get measureUnitFactorField => 'One unit equals';
+
+  @override
+  String measureUnitFactorHelp(String base) {
+    return 'Counted in $base, the base unit of what it measures: 1000 for a km, 0.001 for a mm.';
+  }
+
+  @override
+  String measureUnitLine(String unit, String value, String base) {
+    return '1 $unit = $value $base';
+  }
+
+  @override
+  String get measureUnitNameField => 'Your name for the unit';
+
+  @override
+  String get measureUnitNew => 'New unit';
+
+  @override
+  String get measureUnitRestore => 'Show again';
+
+  @override
+  String get measureUnitsIntro =>
+      'The units your items, quotes and invoices are measured in, and how they convert: 1 km = 1000 m. The built-in units are always there; add your own, such as a cable drum of 50 m.';
+
+  @override
+  String get measureUnitsSubtitle => 'Your own units and how they convert';
 
   @override
   String get memberAccountTitle => 'My account';
@@ -37558,6 +37659,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockSettingsValues => 'Stock rules';
 
   @override
+  String get stockStateUnknown => 'Not known to this app';
+
+  @override
   String get stockStoredLabel => 'Stored';
 
   @override
@@ -40712,6 +40816,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tillDeclarationNone => 'no fiscal register obligation';
+
+  @override
+  String get tillDeclarationRegister => 'a fiscal register is required';
+
+  @override
   String get tillDrawerAddTill => 'Add a till';
 
   @override
@@ -41167,9 +41277,106 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillQuantityTitle => 'Quantity sold';
 
   @override
+  String get tillReadinessAdapterMissing =>
+      'The registry allows it, but nothing in the app carries it yet.';
+
+  @override
+  String tillReadinessCase(String country, String declaration) {
+    return 'Country $country, declared case: $declaration';
+  }
+
+  @override
+  String get tillReadinessConfirmed => 'Confirmed by a tax professional.';
+
+  @override
+  String tillReadinessEvidence(String evidence) {
+    return 'Proof: $evidence';
+  }
+
+  @override
+  String get tillReadinessOffline =>
+      'A sale needs a connection: the till does not sell offline, and a sale whose answer was lost waits to be confirmed.';
+
+  @override
+  String get tillReadinessOpen => 'Counter readiness and settings';
+
+  @override
+  String get tillReadinessSettings => 'Counter settings';
+
+  @override
+  String tillReadinessSpecification(
+    String specification,
+    String version,
+    String date,
+  ) {
+    return 'Rests on: $specification ($version), in force since $date';
+  }
+
+  @override
+  String get tillReadinessSupported => 'Supported';
+
+  @override
+  String get tillReadinessTitle => 'Counter readiness';
+
+  @override
+  String get tillReadinessUnavailable => 'Not available';
+
+  @override
+  String get tillReadinessUnconfirmed =>
+      'Not yet confirmed by a tax professional.';
+
+  @override
+  String tillReadinessUnknownCountry(String country) {
+    return 'The registry names no counter operation for $country: nothing is supported, and the till sells nothing.';
+  }
+
+  @override
+  String tillReceiptCorrects(String number) {
+    return 'Corrects receipt $number';
+  }
+
+  @override
+  String get tillReceiptDisagrees =>
+      'The amounts of this receipt do not agree with each other. It is shown as it was frozen; tell your administrator.';
+
+  @override
+  String tillReceiptIssuedUnder(String specification, String version) {
+    return 'Issued under: $specification ($version)';
+  }
+
+  @override
+  String tillReceiptLine(String label, String quantity, String unit) {
+    return '$label: $quantity $unit';
+  }
+
+  @override
   String tillReceiptNumber(String number) {
     return 'Receipt $number';
   }
+
+  @override
+  String get tillReceiptPrintNote =>
+      'No receipt printer is connected to the app: print from the share sheet.';
+
+  @override
+  String get tillReceiptShare => 'Share the receipt';
+
+  @override
+  String get tillReceiptShow => 'Show the receipt';
+
+  @override
+  String tillReceiptTaxLine(String percent, String tax, String net) {
+    return 'VAT $percent %: $tax on $net';
+  }
+
+  @override
+  String tillReceiptTotal(String amount) {
+    return 'Total $amount';
+  }
+
+  @override
+  String get tillReceiptUnreadable =>
+      'This receipt was written by a newer version of DesKilo: update the app to read it.';
 
   @override
   String tillRemoveLine(String name) {

@@ -9,6 +9,7 @@ import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/demo_till.dart';
+import 'package:deskilo/core/share/text_sharer.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/providers/till_providers.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
@@ -71,7 +72,11 @@ class _FlakyReadiness extends DemoTill {
       ++reads == 1 ? Future.error(const PostgrestException(message: 'down', code: '08006')) : super.readiness(workspaceId);
 }
 
+/// What the till handed to the share sheet.
+final _shared = <String>[];
+
 Future<void> _open(WidgetTester tester, TillPort till, Size size, {Future<List<StockItem>> Function()? items}) async {
+  _shared.clear();
   final config = DemoStockConfigCommands('ws-1');
   final ledger = DemoStockLedger('ws-1', config);
   await pumpApp(
@@ -82,6 +87,7 @@ Future<void> _open(WidgetTester tester, TillPort till, Size size, {Future<List<S
       ...standardTestOverrides(),
       stockQueriesProvider.overrideWithValue(items == null ? DemoStockQueries(ledger) : _Items(ledger, items)),
       tillPortProvider.overrideWithValue(till),
+      textSharerProvider.overrideWithValue((text) async => _shared.add(text)),
     ],
   );
   await _settle(tester);
@@ -169,6 +175,46 @@ void main() {
         await _open(tester, DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20, ready: false), size);
         expect(find.byKey(const ValueKey('till-not-ready')), findsOneWidget);
         expect(find.text(_en.tillNotReady('${_en.tillOpIssueReceipt}, ${_en.tillOpReconcileTender}')), findsOneWidget);
+        expect(find.byKey(const ValueKey('till-key-demo-item-milk')), findsNothing);
+      });
+
+      testWidgets('#4184 the sale made shows its frozen receipt, which is shared as the same words', (tester) async {
+        await _open(tester, _ready(), size);
+        await _tap(tester, 'till-key-demo-item-milk');
+        await _tap(tester, 'till-pay');
+        await _tap(tester, 'till-cash-exact');
+        await _tap(tester, 'till-show-receipt');
+        expect(find.byKey(const ValueKey('counter-receipt')), findsOneWidget);
+        expect(find.textContaining(_en.tillReceiptTotal('€2.10')), findsOneWidget);
+        expect(find.textContaining('Code général des impôts'), findsOneWidget);
+        expect(find.byKey(const ValueKey('counter-receipt-disagrees')), findsNothing);
+        await tester.ensureVisible(find.byKey(const ValueKey('counter-receipt-share')));
+        await _tap(tester, 'counter-receipt-share');
+        expect(_shared.single, contains(_en.tillReceiptNumber('R-00001')));
+        expect(_shared.single, contains(_en.tillReceiptTotal('€2.10')));
+      });
+
+      testWidgets('#4184 the readiness shows the supported path with its specification, proof and no confirmation', (tester) async {
+        await _open(tester, _ready(), size);
+        await _tap(tester, 'till-readiness');
+        expect(find.byKey(const ValueKey('counter-readiness-sheet')), findsOneWidget);
+        expect(find.text(_en.tillReadinessCase('FR', _en.tillDeclarationNone)), findsOneWidget);
+        expect(find.byKey(const ValueKey('counter-readiness-issue_receipt-supported')), findsOneWidget);
+        expect(find.textContaining('pgTAP 520'), findsOneWidget);
+        expect(find.text(_en.tillReadinessUnconfirmed), findsWidgets);
+      });
+
+      testWidgets('#4184 Italy is unavailable and says why, with the specification it rests on', (tester) async {
+        await _open(tester, DemoTill(country: 'IT', currency: 'EUR', vatPercent: 22), size);
+        expect(find.byKey(const ValueKey('till-not-ready')), findsOneWidget);
+        expect(find.byKey(const ValueKey('counter-readiness-issue_receipt-unavailable')), findsOneWidget);
+        expect(find.textContaining('Decreto legislativo 127/2015'), findsWidgets);
+        expect(find.byKey(const ValueKey('till-key-demo-item-milk')), findsNothing);
+      });
+
+      testWidgets('#4184 a country the registry does not name supports nothing and says so', (tester) async {
+        await _open(tester, DemoTill(country: 'GB', currency: 'GBP', vatPercent: 20), size);
+        expect(find.text(_en.tillReadinessUnknownCountry('GB')), findsOneWidget);
         expect(find.byKey(const ValueKey('till-key-demo-item-milk')), findsNothing);
       });
 

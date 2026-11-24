@@ -228,7 +228,7 @@ abstract interface class StockReorder {
   /// refusal is a `StockConfigRefused` naming the field and the reason.
   Future<StockSaved> savePoint(
     String workspaceId, {
-    required Map<String, Object?> point,
+    required StockReorderPointDraft point,
     required String requestId,
     String? pointId,
     int? expectedRevision,
@@ -276,23 +276,33 @@ Map<String, String> checkReorderPoint({required String point, required String va
 /// The item, variant and site of a reorder point, as named when it is made.
 typedef StockPointTarget = ({String? item, String? variant, String? site});
 
-/// The payload of `save_stock_reorder_point_v1`. A new point ([target] given) names its item, variant
-/// and site (the point's own site, a business field of the point: not the row's stamp); a point that
-/// exists keeps them. [value] is read as a quantity to order, or as a level to order up to when
-/// [upTo]; empty: the point only flags.
-Map<String, Object?> reorderPointPayload({
-  required StockPointTarget? target,
-  required String point,
-  required String value,
-  required bool upTo,
-  required bool active,
-}) {
-  const siteKey = 'site_id';
-  return {
-    if (target != null) ...{'item_id': target.item, 'variant_id': target.variant, siteKey: target.site},
-    'reorder_point': point,
-    'reorder_quantity': !upTo && value.isNotEmpty ? value : null,
-    'target_quantity': upTo && value.isNotEmpty ? value : null,
-    'active': active,
-  };
+/// A reorder point as it is saved (`save_stock_reorder_point_v1`). A new point ([target] given) names its item,
+/// variant and site (the point's own site, a business field of the point: not the row's stamp); a point that exists
+/// keeps them. [value] is read as a quantity to order, or as a level to order up to when [upTo]; empty: the point
+/// only flags.
+class StockReorderPointDraft {
+  const StockReorderPointDraft({
+    required this.target,
+    required this.point,
+    required this.value,
+    required this.upTo,
+    required this.active,
+  });
+
+  final StockPointTarget? target;
+  final String point;
+  final String value;
+  final bool upTo;
+  final bool active;
+
+  Map<String, Object?> toJson() {
+    const siteKey = 'site_id';
+    return {
+      if (target case final t?) ...{'item_id': t.item, 'variant_id': t.variant, siteKey: t.site},
+      'reorder_point': point,
+      'reorder_quantity': !upTo && value.isNotEmpty ? value : null,
+      'target_quantity': upTo && value.isNotEmpty ? value : null,
+      'active': active,
+    };
+  }
 }

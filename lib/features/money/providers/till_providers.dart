@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:flutter/widgets.dart' show SizedBox, Widget;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/ids/request_id.dart';
+import '../domain/counter_receipt_document.dart';
 import '../domain/counter_till.dart';
 import '../domain/till_offline.dart';
 import '../domain/till_offline_queue.dart';
@@ -15,6 +17,12 @@ final tillPortProvider = Provider<TillPort>((ref) => throw UnimplementedError('t
 /// screen opens: a country's operation can move between two shifts.
 final tillReadinessProvider = FutureProvider.autoDispose.family<TillReadiness, String>(
   (ref, workspaceId) => ref.watch(tillPortProvider).readiness(workspaceId),
+  retry: (_, _) => null,
+);
+
+/// #4184 -- a finalized receipt as its frozen document, through the versioned reader.
+final counterReceiptProvider = FutureProvider.autoDispose.family<CounterReceiptDocument, ({String workspaceId, String receiptId})>(
+  (ref, key) => ref.watch(tillPortProvider).receipt(key.workspaceId, key.receiptId),
   retry: (_, _) => null,
 );
 
@@ -44,3 +52,11 @@ final tillOfflineQueueProvider = Provider.family<TillOfflineQueue, String>(
 /// #4373 -- whether this business's till may go on selling for cash when the connection is lost (`counterOfflineCash` on, under
 /// till sessions). Off until the app wires it from the business's features (`tillOfflineEnabledFromApp`).
 final tillOfflineEnabledProvider = Provider<bool>((ref) => false);
+
+/// #4184 -- how a counter receipt leaves the counter (`counter.document_channel`: `share`, `print` or `both`). The app wires it from
+/// the business's settings (`counterDocumentChannelFromApp`); `share` stands where nothing is wired.
+final counterDocumentChannelProvider = Provider.family<String, String>((ref, workspaceId) => 'share');
+
+/// #4184 -- the editor of the counter's settings (`counter.*`), shown beside the readiness: the registry editor every setting is
+/// changed in. The app wires it (`counterSettingsEditorFromApp`), so the money feature does not import the workspace.
+final counterSettingsEditorProvider = Provider<Widget Function(String workspaceId)>((ref) => (_) => const SizedBox.shrink());

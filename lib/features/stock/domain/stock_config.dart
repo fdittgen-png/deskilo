@@ -137,6 +137,12 @@ class StockPlaceConfig {
   /// A virtual place (supplier, customer, loss, opening) is the server's.
   final bool virtual;
 
+  /// The place goods on their way between sites are in: a real place, but no address of a shelf.
+  bool get inTransit => kind == 'in_transit';
+
+  /// A place a person can put goods at and find them again: not the server's, not the road.
+  bool get isAddressable => !virtual && !inTransit;
+
   /// A site only: whether goods are put away here from a supplier (false: by transfer only).
   final bool receivesFromSuppliers;
 

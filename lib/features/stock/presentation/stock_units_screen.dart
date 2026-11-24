@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -229,7 +230,7 @@ class _UnitContent extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             title: Text(l.itemName),
             subtitle: Text([if (l.lotCode.isNotEmpty) l.lotCode, for (final p in l.pieces) if (p.tag.isNotEmpty) p.tag].join(' · ')),
-            trailing: Text('${l.quantity.text} ${l.unit}'),
+            trailing: Text('${appFormatOf(context).quantity(l.quantity)} ${l.unit}'),
           ),
         for (final c in d.children) ListTile(contentPadding: EdgeInsets.zero, title: Text(c.code), subtitle: Text(l10n.stockUnitNestedIn(d.unit.code))),
       ],

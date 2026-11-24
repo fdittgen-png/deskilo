@@ -20866,6 +20866,18 @@ abstract class AppLocalizations {
   /// **'Distinct avatar initials'**
   String get featureUniqueMonogramsTitle;
 
+  /// #4442 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'The owner and the admins keep the business\'s own units of measure and their conversions (1 km = 1000 m, 1 kg = 1000 g). Items, quotes and invoices are measured in them. The built-in units are always there; switching this on adds the screen to maintain them.'**
+  String get featureUnitsOfMeasureDesc;
+
+  /// #4442 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Units of measure'**
+  String get featureUnitsOfMeasureTitle;
+
   /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
@@ -35625,6 +35637,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Where my places live'**
   String get meWhereSpacesLive;
+
+  /// #4442 dimension: area
+  ///
+  /// In en, this message translates to:
+  /// **'Area'**
+  String get measureDimensionArea;
+
+  /// #4442 dimension: counting
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get measureDimensionCount;
+
+  /// #4442 dimension: length
+  ///
+  /// In en, this message translates to:
+  /// **'Length'**
+  String get measureDimensionLength;
+
+  /// #4442 dimension: mass
+  ///
+  /// In en, this message translates to:
+  /// **'Mass'**
+  String get measureDimensionMass;
+
+  /// #4442 dimension: time
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get measureDimensionTime;
+
+  /// #4442 dimension: volume
+  ///
+  /// In en, this message translates to:
+  /// **'Volume'**
+  String get measureDimensionVolume;
+
+  /// #4442 refusal: no dimension chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what this unit measures.'**
+  String get measureReasonDimension;
+
+  /// #4442 refusal: the UN/ECE code is malformed
+  ///
+  /// In en, this message translates to:
+  /// **'A UN/ECE code is two or three capital letters or digits.'**
+  String get measureReasonEce;
+
+  /// #4442 refusal: a fixed unit
+  ///
+  /// In en, this message translates to:
+  /// **'This unit is fixed and cannot be changed or removed.'**
+  String get measureReasonFixed;
+
+  /// #4442 refusal: a unit in use keeps its factor
+  ///
+  /// In en, this message translates to:
+  /// **'This unit is in use, so its dimension and factor can no longer change. Make a new unit instead.'**
+  String get measureReasonInUse;
+
+  /// #4442 refusal: a conversion that six decimals cannot hold
+  ///
+  /// In en, this message translates to:
+  /// **'The result cannot be written exactly with six decimals.'**
+  String get measureReasonInexact;
+
+  /// #4442 refusal: a new unit needs a name
+  ///
+  /// In en, this message translates to:
+  /// **'A new unit needs a name.'**
+  String get measureReasonName;
+
+  /// #4442 action: archive an unused unit
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get measureUnitArchive;
+
+  /// #4442 tag on an archived unit
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get measureUnitArchivedTag;
+
+  /// #4442 tag on a built-in unit
+  ///
+  /// In en, this message translates to:
+  /// **'Built in'**
+  String get measureUnitBuiltIn;
+
+  /// #4442 field: the code of a unit
+  ///
+  /// In en, this message translates to:
+  /// **'Unit code'**
+  String get measureUnitCodeField;
+
+  /// #4442 helper of the code field
+  ///
+  /// In en, this message translates to:
+  /// **'Lower case letters, digits and underscores. It cannot change later.'**
+  String get measureUnitCodeHelp;
+
+  /// #4442 field: what a unit measures
+  ///
+  /// In en, this message translates to:
+  /// **'It measures'**
+  String get measureUnitDimensionField;
+
+  /// #4442 field: the UN/ECE code of a unit
+  ///
+  /// In en, this message translates to:
+  /// **'UN/ECE code (for e-invoices)'**
+  String get measureUnitEceField;
+
+  /// #4442 edit sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Edit unit'**
+  String get measureUnitEdit;
+
+  /// #4442 field: how many base units one unit is
+  ///
+  /// In en, this message translates to:
+  /// **'One unit equals'**
+  String get measureUnitFactorField;
+
+  /// #4442 helper of the factor field
+  ///
+  /// In en, this message translates to:
+  /// **'Counted in {base}, the base unit of what it measures: 1000 for a km, 0.001 for a mm.'**
+  String measureUnitFactorHelp(String base);
+
+  /// #4442 a unit's conversion line, e.g. 1 km = 1000 m
+  ///
+  /// In en, this message translates to:
+  /// **'1 {unit} = {value} {base}'**
+  String measureUnitLine(String unit, String value, String base);
+
+  /// #4442 field: the business's own word for a unit
+  ///
+  /// In en, this message translates to:
+  /// **'Your name for the unit'**
+  String get measureUnitNameField;
+
+  /// #4442 new unit action
+  ///
+  /// In en, this message translates to:
+  /// **'New unit'**
+  String get measureUnitNew;
+
+  /// #4442 action: show an archived unit again
+  ///
+  /// In en, this message translates to:
+  /// **'Show again'**
+  String get measureUnitRestore;
+
+  /// #4442 what the screen is for
+  ///
+  /// In en, this message translates to:
+  /// **'The units your items, quotes and invoices are measured in, and how they convert: 1 km = 1000 m. The built-in units are always there; add your own, such as a cable drum of 50 m.'**
+  String get measureUnitsIntro;
+
+  /// #4442 the row in the workspace settings
+  ///
+  /// In en, this message translates to:
+  /// **'Your own units and how they convert'**
+  String get measureUnitsSubtitle;
 
   /// #1598 member account menu: memberAccountTitle
   ///
@@ -60191,6 +60371,12 @@ abstract class AppLocalizations {
   /// **'Stock rules'**
   String get stockSettingsValues;
 
+  /// #4401 a state, scope or kind a newer server sent that this app does not know: shown instead of a guess
+  ///
+  /// In en, this message translates to:
+  /// **'Not known to this app'**
+  String get stockStateUnknown;
+
   /// #4161 the quantity as stored, in the inventory unit
   ///
   /// In en, this message translates to:
@@ -65481,6 +65667,18 @@ abstract class AppLocalizations {
   /// **'Day to close: {date}'**
   String tillDayToday(String date);
 
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'no fiscal register obligation'**
+  String get tillDeclarationNone;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'a fiscal register is required'**
+  String get tillDeclarationRegister;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -66200,11 +66398,153 @@ abstract class AppLocalizations {
   /// **'Quantity sold'**
   String get tillQuantityTitle;
 
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'The registry allows it, but nothing in the app carries it yet.'**
+  String get tillReadinessAdapterMissing;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Country {country}, declared case: {declaration}'**
+  String tillReadinessCase(String country, String declaration);
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed by a tax professional.'**
+  String get tillReadinessConfirmed;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Proof: {evidence}'**
+  String tillReadinessEvidence(String evidence);
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'A sale needs a connection: the till does not sell offline, and a sale whose answer was lost waits to be confirmed.'**
+  String get tillReadinessOffline;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Counter readiness and settings'**
+  String get tillReadinessOpen;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Counter settings'**
+  String get tillReadinessSettings;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Rests on: {specification} ({version}), in force since {date}'**
+  String tillReadinessSpecification(
+    String specification,
+    String version,
+    String date,
+  );
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Supported'**
+  String get tillReadinessSupported;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Counter readiness'**
+  String get tillReadinessTitle;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Not available'**
+  String get tillReadinessUnavailable;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet confirmed by a tax professional.'**
+  String get tillReadinessUnconfirmed;
+
+  /// #4184 the counter readiness
+  ///
+  /// In en, this message translates to:
+  /// **'The registry names no counter operation for {country}: nothing is supported, and the till sells nothing.'**
+  String tillReadinessUnknownCountry(String country);
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'Corrects receipt {number}'**
+  String tillReceiptCorrects(String number);
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'The amounts of this receipt do not agree with each other. It is shown as it was frozen; tell your administrator.'**
+  String get tillReceiptDisagrees;
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'Issued under: {specification} ({version})'**
+  String tillReceiptIssuedUnder(String specification, String version);
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: {quantity} {unit}'**
+  String tillReceiptLine(String label, String quantity, String unit);
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
   /// **'Receipt {number}'**
   String tillReceiptNumber(String number);
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'No receipt printer is connected to the app: print from the share sheet.'**
+  String get tillReceiptPrintNote;
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'Share the receipt'**
+  String get tillReceiptShare;
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'Show the receipt'**
+  String get tillReceiptShow;
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'VAT {percent} %: {tax} on {net}'**
+  String tillReceiptTaxLine(String percent, String tax, String net);
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'Total {amount}'**
+  String tillReceiptTotal(String amount);
+
+  /// #4184 the counter receipt document
+  ///
+  /// In en, this message translates to:
+  /// **'This receipt was written by a newer version of DesKilo: update the app to read it.'**
+  String get tillReceiptUnreadable;
 
   /// #4366 the till
   ///

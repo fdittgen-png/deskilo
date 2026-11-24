@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../domain/accessory.dart';
 import '../domain/accessory_repository.dart';
 
@@ -26,12 +27,18 @@ class SupabaseAccessoryRepository implements AccessoryRepository {
     String workspaceId, {
     bool includeInactive = false,
   }) async {
-    var query =
-        _client.from('accessories').select().eq('workspace_id', workspaceId);
-    if (!includeInactive) query = query.eq('active', true);
-    final rows = await query
-        .order('sort_order', ascending: true)
-        .order('name', ascending: true);
+    final rows = await fetchConfigurationList(
+      table: 'accessories',
+      build: () {
+        var query =
+            _client.from('accessories').select().eq('workspace_id', workspaceId);
+        if (!includeInactive) query = query.eq('active', true);
+        return query
+            .order('sort_order', ascending: true)
+            .order('name', ascending: true)
+            .order('id', ascending: true);
+      },
+    );
     return rows.map(_accessoryFromRow).toList();
   }
 
@@ -86,10 +93,12 @@ class SupabaseAccessoryRepository implements AccessoryRepository {
   Future<Map<String, Set<String>>> fetchSeatAccessories(
     String workspaceId,
   ) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'seat_accessories', build: () => _client
         .from('seat_accessories')
         .select('seat_id, accessory_id')
-        .eq('workspace_id', workspaceId);
+        .eq('workspace_id', workspaceId)
+        .order('seat_id', ascending: true)
+        .order('accessory_id', ascending: true));
     final result = <String, Set<String>>{};
     for (final row in rows) {
       result

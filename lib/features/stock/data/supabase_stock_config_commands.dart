@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/data/server_names.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
+import '../domain/stock_drafts.dart';
 import '../domain/stock_variants.dart';
 import 'stock_rpc.dart';
 
@@ -18,30 +19,26 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
 
   final SupabaseClient _client;
 
+  /// #4401 -- one call: the item with its units and its codes, through the foreign keys.
   @override
   Future<StockItemConfig?> item(String workspaceId, String itemId) async {
-    final rows = await _client
-        .from(ServerTable.services)
-        .select(
-          'id, stock_revision, stockable, purchasable, sellable, '
-          'inventory_unit, tracking, shelf_life_days',
-        )
-        .eq('workspace_id', workspaceId)
-        .eq('id', itemId);
-    if (rows.isEmpty) return null;
-    final r = JsonReader.of(rows.first, context: 'services');
-    final units = await _client
-        .from('item_units')
-        .select('unit, factor_num, factor_den, default_purchase, default_sale')
-        .eq('workspace_id', workspaceId)
-        .eq('item_id', itemId)
-        .order('unit');
-    final codes = await _client
-        .from('item_codes')
-        .select('code, kind, unit')
-        .eq('workspace_id', workspaceId)
-        .eq('item_id', itemId)
-        .order('code');
+    final row = await StockRpc(_client).guard(
+      'services',
+      () => _client
+          .from(ServerTable.services)
+          .select(
+            'id, stock_revision, stockable, purchasable, sellable, inventory_unit, tracking, shelf_life_days, '
+            'item_units!item_units_workspace_id_item_id_fkey(unit, factor_num, factor_den, default_purchase, default_sale), '
+            'item_codes!item_codes_workspace_id_item_id_fkey(code, kind, unit)',
+          )
+          .eq('workspace_id', workspaceId)
+          .eq('id', itemId)
+          .order('unit', referencedTable: 'item_units', ascending: true)
+          .order('code', referencedTable: 'item_codes', ascending: true)
+          .maybeSingle(),
+    );
+    if (row == null) return null;
+    final r = JsonReader.of(row, context: 'services');
     return StockItemConfig(
       itemId: r.string('id'),
       revision: r.integer('stock_revision'),
@@ -51,26 +48,27 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
       inventoryUnit: r.string('inventory_unit'),
       tracking: r.stringOr('tracking', 'none'),
       shelfLifeDays: r.intOrNull('shelf_life_days'),
-      units: [for (final u in units) StockUnitDraft.fromJson(u)],
-      codes: [for (final c in codes) StockCodeDraft.fromJson(c)],
+      units: r.objects('item_units', (u) => StockUnitDraft.fromJson(u.json)),
+      codes: r.objects('item_codes', (c) => StockCodeDraft.fromJson(c.json)),
     );
   }
 
   @override
   Future<List<StockPlaceConfig>> places(String workspaceId) async {
-    final kinds = await _client.from('stock_location_kinds').select('key, virtual');
+    final kinds = await StockRpc(_client).rows('stock_location_kinds', () => _client.from('stock_location_kinds').select('key, virtual').order('key', ascending: true));
     final virtual = {
       for (final k in kinds)
         if (JsonReader.of(k, context: 'stock_location_kinds').boolOr('virtual', fallback: false))
           JsonReader.of(k, context: 'stock_location_kinds').string('key'),
     };
-    final rows = await _client
+    final rows = await StockRpc(_client).rows('stock_locations', () => _client
         .from(ServerTable.stockLocations)
         .select(
           'id, revision, kind, code, name, barcode, parent_id, active, receives_from_suppliers, pick_role, address_path',
         )
         .eq('workspace_id', workspaceId)
-        .order('code');
+        .order('code', ascending: true)
+        .order('id', ascending: true));
     return [
       for (final row in rows)
         StockPlaceConfig.fromJson({
@@ -96,7 +94,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
   @override
   Future<StockSaved> savePlace(
     String workspaceId, {
-    required Map<String, Object?> place,
+    required StockPlaceDraft place,
     required String requestId,
     String? placeId,
     int? expectedRevision,
@@ -105,21 +103,23 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
     'p_place_id': placeId,
     'p_expected_revision': expectedRevision,
     'p_request_id': requestId,
-    'p_place': place,
+    'p_place': place.toJson(),
   }, 'place_id');
 
   @override
   Future<List<StockDimension>> dimensions(String workspaceId) async {
-    final dimensions = await _client
+    final dimensions = await StockRpc(_client).rows('item_dimensions', () => _client
         .from('item_dimensions')
         .select('id, revision, name, active')
         .eq('workspace_id', workspaceId)
-        .order('name');
-    final values = await _client
+        .order('name', ascending: true)
+        .order('id', ascending: true));
+    final values = await StockRpc(_client).rows('item_dimension_values', () => _client
         .from('item_dimension_values')
         .select('id, dimension_id, label, active')
         .eq('workspace_id', workspaceId)
-        .order('label');
+        .order('label', ascending: true)
+        .order('id', ascending: true));
     return [
       for (final d in dimensions)
         () {
@@ -141,12 +141,13 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
 
   @override
   Future<List<StockVariant>> variants(String workspaceId, String itemId) async {
-    final rows = await _client
+    final rows = await StockRpc(_client).rows('item_variants', () => _client
         .from('item_variants')
         .select('id, price_cents, active, item_variant_values(dimension_id, value_id)')
         .eq('workspace_id', workspaceId)
         .eq('item_id', itemId)
-        .order('canonical');
+        .order('canonical', ascending: true)
+        .order('id', ascending: true));
     final dims = await dimensions(workspaceId);
     String labelOf(Map<String, String> values) {
       final parts = <(String, String)>[
@@ -182,11 +183,12 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
 
   @override
   Future<List<StockSupplierRef>> suppliers(String workspaceId) async {
-    final rows = await _client
+    final rows = await StockRpc(_client).pages('suppliers', () => _client
         .from(ServerTable.suppliers)
         .select('id, name')
         .eq('workspace_id', workspaceId)
-        .order('name');
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return [
       for (final row in rows)
         () {
@@ -198,18 +200,19 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
 
   @override
   Future<List<SupplierItemMapping>> mappings(String workspaceId) async {
-    final rows = await _client
+    final rows = await StockRpc(_client).rows('supplier_item_mappings', () => _client
         .from('supplier_item_mappings')
         .select('id, revision, supplier_id, item_id, variant_id, article_ref, purchase_unit, active')
         .eq('workspace_id', workspaceId)
-        .order('article_ref');
+        .order('article_ref', ascending: true)
+        .order('id', ascending: true));
     return [for (final row in rows) SupplierItemMapping.fromJson(row)];
   }
 
   @override
   Future<StockSaved> saveDimension(
     String workspaceId, {
-    required Map<String, Object?> dimension,
+    required StockDimension dimension,
     required String requestId,
     String? dimensionId,
     int? expectedRevision,
@@ -218,7 +221,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
     'p_dimension_id': dimensionId,
     'p_expected_revision': expectedRevision,
     'p_request_id': requestId,
-    'p_dimension': dimension,
+    'p_dimension': dimension.toSave(),
   }, 'dimension_id');
 
   @override
@@ -239,7 +242,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
   @override
   Future<StockSaved> saveMapping(
     String workspaceId, {
-    required Map<String, Object?> mapping,
+    required SupplierMappingDraft mapping,
     required String requestId,
     String? mappingId,
     int? expectedRevision,
@@ -248,7 +251,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
     'p_mapping_id': mappingId,
     'p_expected_revision': expectedRevision,
     'p_request_id': requestId,
-    'p_mapping': mapping,
+    'p_mapping': mapping.toJson(),
   }, 'mapping_id');
 
   Future<StockSaved> _save(

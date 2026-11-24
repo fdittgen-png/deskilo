@@ -25,7 +25,7 @@ Future<bool> showStockHomeSheet(
   final l10n = context.l10n;
   final choices = [
     for (final p in places)
-      if (!p.virtual && p.active && p.kind != 'in_transit') p,
+      if (p.isAddressable && p.active) p,
   ]..sort((a, b) => a.addressPath.compareTo(b.addressPath));
   var home = row.homeLocationId;
   final requestId = newRequestId();
