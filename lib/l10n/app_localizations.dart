@@ -51408,6 +51408,12 @@ abstract class AppLocalizations {
   /// **'Business'**
   String get settingGroupBusiness;
 
+  /// #3732 Settings group: how long older app versions stay accepted by this installation
+  ///
+  /// In en, this message translates to:
+  /// **'App versions'**
+  String get settingGroupCompatibility;
+
   /// #2486 settings: Settings group title.
   ///
   /// In en, this message translates to:
@@ -51485,6 +51491,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fixed by the software; it is shown so you know it exists.'**
   String get settingGuardrailFallback;
+
+  /// #3732 Platform setting apps.support_window_days: what it decides, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'How many days an older app stays accepted after a newer one is available on the slowest channel you distribute it through. The oldest app this installation accepts is raised only once this many days have passed, so every member has time to update.'**
+  String get settingHintAppsSupportWindowDays;
 
   /// #2576 valuation settings
   ///
@@ -52157,6 +52169,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No stored version: the default applies.'**
   String get settingHistoryEmpty;
+
+  /// #3732 Platform setting apps.support_window_days: its name in the settings editor
+  ///
+  /// In en, this message translates to:
+  /// **'Support window for older apps'**
+  String get settingLabelAppsSupportWindowDays;
 
   /// #2576 valuation settings
   ///

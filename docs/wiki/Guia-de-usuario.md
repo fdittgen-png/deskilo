@@ -2522,6 +2522,7 @@ Quiere encontrar una factura, ver si está pagada y obtener su PDF.
 - Pulse el icono de pago en una factura abierta para ir a **Pagos**.
 - Si la lista está vacía, el espacio todavía no le ha facturado; factura un mes cuando lo cierra.
 - Las facturas no se pueden editar. Una factura equivocada se marca como **Errónea** y se sustituye por una nueva; la errónea desaparece de su lista. Cuando varias facturas se agrupan en una, la factura agrupada las sustituye en su lista.
+- Una línea facturada por horas, por días o por peso (por ejemplo *1.5 h a 90 EUR*, o *0.75 kg a 12.5 EUR por 10 kg*) muestra bajo su concepto la cantidad exacta, su unidad y el precio introducido, tal como los imprime el PDF; su importe es el fijado al emitir la factura. Una línea registrada por una versión más reciente de la aplicación se muestra tal cual e indica que no se puede usar aquí: actualice la aplicación para trabajar con ella.
 
 **Véase también:** [Pague lo que debe](#pague-lo-que-debe) · [Sus finanzas en todos sus espacios](#sus-finanzas-en-todos-sus-espacios)
 
@@ -6868,7 +6869,7 @@ Lo que rodea al trabajo diario: la cara de pruebas de un espacio y la real, los 
 
 En este capítulo:
 - [Un espacio tiene dos caras](#un-espacio-tiene-dos-caras) · [Entre en una cara](#entre-en-la-cara-real-o-en-la-de-pruebas) · [Un espacio de prueba](#para-qué-sirve-un-espacio-de-prueba) · [Quién puede desplegar](#quién-puede-desplegar-y-entrar-en-producción) · [Despliegue entre las caras](#despliegue-entre-las-dos-caras) · [Situación del espacio y archivo del ejercicio](#situación-del-espacio-y-archivo-del-ejercicio)
-- [Su propio servidor](#gestione-su-propio-servidor) · [Cuando una instalación exige una aplicación más reciente](#cuando-una-instalación-exige-una-aplicación-más-reciente)
+- [Su propio servidor](#gestione-su-propio-servidor) · [Cuando una instalación exige una aplicación más reciente](#cuando-una-instalación-exige-una-aplicación-más-reciente) · [Publicar una nueva versión](#publicar-una-nueva-versión-primero-el-servidor)
 - [Asistentes](#asistentes-qué-son) · [Conecte un asistente](#conecte-un-asistente) · [Aprobaciones](#aprobaciones-y-confirmaciones-de-los-asistentes) · [Qué pueden hacer los asistentes](#qué-pueden-hacer-los-asistentes-en-un-espacio)
 - [El grabador de tareas](#el-grabador-de-tareas-y-las-visitas-guiadas) · [Grabe una tarea](#grabe-una-tarea) · [Revise una grabación](#revise-edite-y-exporte-una-grabación) · [Cree una guía](#cree-una-guía-a-partir-de-una-grabación) · [Siga una guía](#siga-una-guía) · [El menú circular](#el-menú-circular) · [Edite una guía](#edite-o-repare-una-guía) · [Privacidad de las grabaciones](#qué-conserva-una-grabación)
 - [El espacio de demostración](#el-espacio-de-demostración) · [Modo grabación](#modo-grabación)
@@ -7052,6 +7053,29 @@ Una instalación puede indicar que solo se use con ella una aplicación más rec
 - El mínimo es una cortesía para las aplicaciones que lo conocen, no un cerrojo: las reglas de dinero y permisos las decide el servidor, sea cual sea la aplicación.
 
 **Véase también:** [Gestione su propio servidor](#gestione-su-propio-servidor) · [Plataformas](#deskilo-en-sus-dispositivos)
+
+<!-- anchor: user.advanced.releases -->
+### Publicar una nueva versión: primero el servidor
+
+**Público:** Operador/a
+
+Usted gestiona una instalación y llega una nueva versión de la aplicación. El servidor siempre se actualiza antes que la aplicación, y una aplicación antigua nunca queda fuera sin aviso.
+
+**Pasos**
+
+1. Actualice primero el servidor: aplique sus nuevas migraciones y después sus funciones. Para los miembros no cambia nada: una aplicación ya instalada sigue funcionando, porque el servidor solo añade.
+2. Publique la aplicación. Antes de cualquier subida, el tren de publicación lee la instalación a la que entrega y se detiene, nombrando las migraciones que faltan, cuando la instalación va por detrás, rechaza la nueva aplicación o no se puede leer. Una vez publicada la aplicación, la versión del servidor indica en ella *Actualizado*, y una aplicación antigua indica *El servidor es más reciente que esta app: actualice la app cuando pueda*.
+3. Espere el plazo de soporte: [Perfiles](https://fdittgen-png.github.io/deskilo/#/profiles) → **Ajustes de la plataforma (valores por defecto)** → **Versiones de la aplicación** → **Plazo de soporte de las aplicaciones antiguas**. Cuenta desde el día en que la nueva aplicación está disponible en el canal de distribución más lento, no desde el día en que se construyó: la revisión de una tienda puede tardar días.
+4. Solo entonces eleve la aplicación más antigua que acepta la instalación, en una migración propia. Una aplicación por debajo muestra **Esta aplicación necesita una actualización** con cómo actualizarla en su plataforma; no se pierde nada de lo que el miembro introdujo.
+
+**Conviene saber**
+
+- Una aplicación más reciente que su servidor indica *Necesita una actualización: esta app necesita el esquema …*. Es el caso que evita el orden «primero el servidor».
+- Para deshacer una elevación, vuelva a bajar la aplicación más antigua aceptada, o quite el límite, en una nueva migración: una aplicación bloqueada vuelve a funcionar en su próximo inicio o al volver al primer plano.
+- El tren de publicación solo lee la instalación: no aplica ninguna migración ni cambia quién puede publicar.
+- Nunca eleve la aplicación más antigua aceptada en la migración que necesita la nueva aplicación: los probadores de esa instalación quedarían bloqueados en cuanto se aplique.
+
+**Véase también:** [Gestione su propio servidor](#gestione-su-propio-servidor)
 
 <!-- anchor: user.advanced.assistants -->
 ### Asistentes: qué son

@@ -2522,6 +2522,7 @@ Sie möchten eine Rechnung finden, sehen, ob sie bezahlt ist, und ihr PDF erhalt
 - Tippen Sie bei einer offenen Rechnung auf das Zahlungssymbol, um zu **Zahlungen** zu gelangen.
 - Ist die Liste leer, hat der Workspace Ihnen noch nichts in Rechnung gestellt; er stellt einen Monat nach dem Abschluss in Rechnung.
 - Rechnungen lassen sich nicht bearbeiten. Eine falsche Rechnung wird als **Fehlerhaft** markiert und durch eine neue ersetzt; die fehlerhafte verschwindet aus Ihrer Liste. Werden Rechnungen zu einer zusammengefasst, ersetzt die zusammengefasste Rechnung sie in Ihrer Liste.
+- Eine Position nach Stunden, Tagen oder Gewicht (zum Beispiel *1.5 h zu 90 EUR* oder *0.75 kg zu 12.5 EUR je 10 kg*) zeigt unter ihrer Bezeichnung die genaue Menge, ihre Einheit und den erfassten Preis, so wie das PDF sie druckt; ihr Betrag ist der bei der Ausstellung festgelegte. Eine Position, die eine neuere Version der App erfasst hat, wird unverändert gezeigt und sagt, dass sie hier nicht verwendet werden kann: Aktualisieren Sie die App, um damit zu arbeiten.
 
 **Siehe auch:** [Offenes bezahlen](#offenes-bezahlen) · [Ihre Finanzen in allen Workspaces](#ihre-finanzen-in-allen-workspaces)
 
@@ -6868,7 +6869,7 @@ Das, was die tägliche Arbeit umgibt: die Testseite eines Space und die echte, A
 
 In diesem Kapitel:
 - [Ein Space hat zwei Seiten](#ein-space-hat-zwei-seiten) · [Eine Seite betreten](#die-echte-oder-die-testseite-betreten) · [Ein Testspace](#wofür-ein-testspace-da-ist) · [Wer ausrollen darf](#wer-ausrollen-und-in-die-produktion-darf) · [Zwischen den Seiten ausrollen](#zwischen-den-beiden-seiten-ausrollen) · [Status des Workspace und das Jahresarchiv](#status-des-workspace-und-das-jahresarchiv)
-- [Ihr eigener Server](#einen-eigenen-server-betreiben) · [Wenn eine Installation eine neuere App verlangt](#wenn-eine-installation-eine-neuere-app-verlangt)
+- [Ihr eigener Server](#einen-eigenen-server-betreiben) · [Wenn eine Installation eine neuere App verlangt](#wenn-eine-installation-eine-neuere-app-verlangt) · [Eine neue Version veröffentlichen](#eine-neue-version-veröffentlichen-zuerst-der-server)
 - [Assistenten](#assistenten-was-sie-sind) · [Einen Assistenten verbinden](#einen-assistenten-verbinden) · [Freigaben](#freigaben-und-bestätigungen-für-assistenten) · [Was Assistenten dürfen](#was-assistenten-in-einem-workspace-dürfen)
 - [Der Aufgabenrekorder](#der-aufgabenrekorder-und-geführte-touren) · [Eine Aufgabe aufzeichnen](#eine-aufgabe-aufzeichnen) · [Eine Aufzeichnung prüfen](#eine-aufzeichnung-prüfen-bearbeiten-und-exportieren) · [Eine Anleitung erstellen](#aus-einer-aufzeichnung-eine-anleitung-erstellen) · [Einer Anleitung folgen](#einer-anleitung-folgen) · [Das Kreismenü](#das-kreismenü) · [Eine Anleitung bearbeiten](#eine-anleitung-bearbeiten-oder-reparieren) · [Datenschutz der Aufzeichnungen](#was-eine-aufzeichnung-behält)
 - [Der Demo-Workspace](#der-demo-workspace) · [Aufnahmemodus](#aufnahmemodus)
@@ -7052,6 +7053,29 @@ Eine Installation kann festlegen, dass nur eine neuere App mit ihr benutzt werde
 - Die Untergrenze ist ein Entgegenkommen an Apps, die sie kennen, keine Sperre: Geld- und Berechtigungsregeln entscheidet der Server, egal welche App anfragt.
 
 **Siehe auch:** [Einen eigenen Server betreiben](#einen-eigenen-server-betreiben) · [Plattformen](#deskilo-auf-ihren-geräten)
+
+<!-- anchor: user.advanced.releases -->
+### Eine neue Version veröffentlichen: zuerst der Server
+
+**Zielgruppe:** Betreiber:in
+
+Sie betreiben eine Installation, und eine neue Version der App kommt. Der Server wird immer vor der App aktualisiert, und eine ältere App wird nie ohne Vorwarnung ausgesperrt.
+
+**Schritte**
+
+1. Aktualisieren Sie zuerst den Server: Wenden Sie seine neuen Migrationen an, danach seine Funktionen. Für die Mitglieder ändert sich nichts: Eine bereits installierte App arbeitet weiter, denn der Server fügt nur hinzu.
+2. Veröffentlichen Sie die App. Vor jedem Upload liest der Release-Zug die Installation, an die er ausliefert, und hält an, mit den fehlenden Migrationen, wenn die Installation zurückliegt, die neue App ablehnt oder nicht gelesen werden kann. Ist die App erschienen, zeigt sie für die Serverversion *Aktuell*, und eine ältere App zeigt *Der Server ist neuer als diese App — aktualisieren Sie die App, sobald Sie können*.
+3. Warten Sie die Unterstützungsfrist ab: [Profile](https://fdittgen-png.github.io/deskilo/#/profiles) → **Plattform-Einstellungen (Standardwerte)** → **App-Versionen** → **Unterstützungsfrist für ältere Apps**. Sie zählt ab dem Tag, an dem die neue App auf dem langsamsten Vertriebskanal verfügbar ist, nicht ab dem Tag, an dem sie gebaut wurde: Eine Store-Prüfung kann Tage dauern.
+4. Erst dann heben Sie die älteste App an, die die Installation annimmt, in einer eigenen Migration. Eine App darunter zeigt **Diese App braucht ein Update** mit dem Weg zum Update auf ihrer Plattform; nichts, was das Mitglied eingegeben hat, geht verloren.
+
+**Gut zu wissen**
+
+- Eine App, die neuer als ihr Server ist, zeigt *Aktualisierung nötig: diese App braucht Schema …*. Genau das verhindert die Reihenfolge „zuerst der Server“.
+- Um eine Anhebung rückgängig zu machen, senken Sie die älteste angenommene App in einer neuen Migration wieder ab oder entfernen die Grenze: Eine gesperrte App arbeitet beim nächsten Start oder bei der Rückkehr in den Vordergrund wieder.
+- Der Release-Zug liest die Installation nur: Er wendet keine Migration an und ändert nicht, wer veröffentlichen darf.
+- Heben Sie die älteste angenommene App nie in der Migration an, die die neue App als erste braucht: Die Tester dieser Installation wären gesperrt, sobald sie angewendet ist.
+
+**Siehe auch:** [Einen eigenen Server betreiben](#einen-eigenen-server-betreiben)
 
 <!-- anchor: user.advanced.assistants -->
 ### Assistenten: was sie sind

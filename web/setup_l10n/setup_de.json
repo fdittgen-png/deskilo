@@ -738,6 +738,8 @@
  "fedAnswerWaitHint": "Wie lange ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server (einen Identitätsstatus, eine Mitgliedschaft) wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30 Sekunden; unter der Gültigkeit des Identitätsstatus halten. Wird in den Einstellungen der App festgelegt.",
  "fedFactBatch": "Mitgliedschaftsfakten pro Minute",
  "fedFactBatchHint": "Die höchste Zahl an Mitgliedschaftsfakten, die ein Arbeitsbereichs-Server in einer Minute an sein persönliches Zuhause sendet. Ein Server erneuert jede lebende Beziehung einmal je Aktualisierung des Identitätsstatus; er schafft höchstens diese Zahl mal die Aktualisierungssekunden geteilt durch 60 Beziehungen (500 und 300 Sekunden: 2.500). Erhöhen Sie sie, wenn der Instanz-Doktor einen Sendestau meldet. Einstellbar in den Einstellungen der App.",
+ "appSupportWindow": "Unterstützungsfrist für ältere Apps",
+ "appSupportWindowHint": "Wie viele Tage eine ältere App angenommen bleibt, nachdem eine neuere auf dem langsamsten Vertriebskanal verfügbar ist. Die älteste App, die die Installation annimmt, wird erst nach dieser Frist angehoben, damit jedes Mitglied Zeit zum Aktualisieren hat. Einstellbar in den Einstellungen der App.",
  "supLookupWait": "Wartezeit der Lieferantensuche",
  "supLookupWaitHint": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, wenn jemand die USt-IdNr. eines Lieferanten sucht, bevor er meldet, dass das Register nicht geantwortet hat. Wird in den Einstellungen der App festgelegt.",
  "supLookupRate": "Lieferantensuchen pro Minute",

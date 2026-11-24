@@ -19081,6 +19081,7 @@
     "description": "#2486 settings: Settings group title."
   },
   "settingGroupBusiness": "Attività",
+  "settingGroupCompatibility": "Versioni dell'app",
   "settingGroupDirectory": "Elenco dei membri",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -19124,6 +19125,7 @@
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
   },
+  "settingHintAppsSupportWindowDays": "Quanti giorni un'app precedente resta accettata dopo che una più recente è disponibile sul canale di distribuzione più lento. L'app più vecchia accettata da questa installazione viene alzata solo trascorsi questi giorni, così ogni membro ha il tempo di aggiornarla.",
   "settingHintAssetsValuationMaxRows": "Il numero massimo di righe di un lotto di valutazioni del commercialista, una per bene. Un file più grande è rifiutato per intero; lo divida prima di importare.",
   "@settingHintAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
@@ -19380,6 +19382,7 @@
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
   },
+  "settingLabelAppsSupportWindowDays": "Periodo di supporto delle app precedenti",
   "settingLabelAssetsValuationMaxRows": "Righe di valutazione per lotto",
   "@settingLabelAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"

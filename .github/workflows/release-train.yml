@@ -51,6 +51,11 @@ name: Release · Train (all platforms)
 # each leg checked out a branch NAME at its own start (the Android leg
 # `master` whatever was asked): a push to master while the train was
 # running put two different commits in one train, labelled as one.
+#
+# #3732 K5 — server first. Between `resolve` and the legs, the
+# `installation` job reads the installation the track ships to and every
+# leg needs it: an installation that is behind, refuses the candidate, or
+# cannot be read stops the train before any upload, and the report says so.
 
 on:
   workflow_dispatch:
@@ -130,8 +135,61 @@ jobs:
             echo "- **Track:** $TRACK"
           } >> "$GITHUB_STEP_SUMMARY"
 
-  android:
+  # Server first: the installation the track ships to (named in
+  # contracts/release/installations.json of the candidate) is read before
+  # anything is uploaded. Its schema version must reach what the pinned
+  # candidate needs and its app floor must accept the candidate. Three
+  # answers — ready, behind, not verified — and only "ready" lets a leg
+  # start: behind names the missing migrations, and a timeout, a refusal or
+  # a body that is not a number is "not verified", never "ready". The
+  # requirement is read from the candidate's own tree, never from the branch
+  # as it is now. Read-only: two public functions, as anon, no secret.
+  installation:
+    # Starts with the job id, so the report finds its log when it fails.
+    name: installation ready for the candidate
     needs: [resolve]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      verdict: ${{ steps.gate.outputs.verdict }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.resolve.outputs.sha }}
+          persist-credentials: false
+      - name: The checkout is the candidate
+        env:
+          CANDIDATE: ${{ needs.resolve.outputs.sha }}
+        run: |
+          set -euo pipefail
+          head=$(git rev-parse HEAD)
+          if [ "$head" != "$CANDIDATE" ]; then
+            echo "::error::checked out $head, the candidate is $CANDIDATE"
+            exit 1
+          fi
+      - uses: dart-lang/setup-dart@2286a0c042b44434fe26d292bbce8d34f7ec662b # v1
+        with:
+          sdk: "3.13.4" # the Dart of Flutter 3.47.5 (#3473; pinned by workflow_pins_test)
+      - name: Read the installation the track ships to
+        id: gate
+        env:
+          TRACK: ${{ inputs.track }}
+        run: |
+          set +e
+          dart tool/release_gate.dart --track "$TRACK" --root . \
+            --summary "$GITHUB_STEP_SUMMARY"
+          code=$?
+          case "$code" in
+            0) echo "verdict=ready" >> "$GITHUB_OUTPUT" ;;
+            1) echo "verdict=behind" >> "$GITHUB_OUTPUT" ;;
+            *) echo "verdict=not-verified" >> "$GITHUB_OUTPUT" ;;
+          esac
+          exit "$code"
+
+  android:
+    needs: [resolve, installation]
     uses: ./.github/workflows/play-internal.yml
     with:
       source_sha: ${{ needs.resolve.outputs.sha }}
@@ -142,7 +200,7 @@ jobs:
     secrets: inherit
 
   apple:
-    needs: [resolve]
+    needs: [resolve, installation]
     uses: ./.github/workflows/ios-testflight.yml
     with:
       source_sha: ${{ needs.resolve.outputs.sha }}
@@ -156,21 +214,21 @@ jobs:
     secrets: inherit
 
   macos:
-    needs: [resolve]
+    needs: [resolve, installation]
     uses: ./.github/workflows/macos-app.yml
     with:
       source_sha: ${{ needs.resolve.outputs.sha }}
     secrets: inherit
 
   windows:
-    needs: [resolve]
+    needs: [resolve, installation]
     uses: ./.github/workflows/windows-msi.yml
     with:
       source_sha: ${{ needs.resolve.outputs.sha }}
     secrets: inherit
 
   web:
-    needs: [resolve]
+    needs: [resolve, installation]
     uses: ./.github/workflows/web.yml
     with:
       source_sha: ${{ needs.resolve.outputs.sha }}
@@ -182,7 +240,7 @@ jobs:
   # issue + e-mail. A train that quietly half-ships is worse than one
   # that fails loudly.
   report:
-    needs: [resolve, android, apple, macos, windows, web]
+    needs: [resolve, installation, android, apple, macos, windows, web]
     if: ${{ always() }}
     runs-on: ubuntu-latest
     env:
@@ -191,6 +249,8 @@ jobs:
       HAS_SMTP: ${{ secrets.SMTP_HOST != '' && secrets.SMTP_USERNAME != ''
         && secrets.SMTP_PASSWORD != '' && secrets.NOTIFY_EMAIL_TO != '' }}
       RESULT_RESOLVE: ${{ needs.resolve.result }}
+      RESULT_INSTALLATION: ${{ needs.installation.result }}
+      GATE_VERDICT: ${{ needs.installation.outputs.verdict }}
       CANDIDATE: ${{ needs.resolve.outputs.sha }}
       RESULT_ANDROID: ${{ needs.android.result }}
       RESULT_APPLE: ${{ needs.apple.result }}
@@ -205,6 +265,7 @@ jobs:
           set -euo pipefail
           declare -A results=(
             [resolve]="$RESULT_RESOLVE"
+            [installation]="$RESULT_INSTALLATION"
             [android]="$RESULT_ANDROID" [apple]="$RESULT_APPLE"
             [macos]="$RESULT_MACOS" [windows]="$RESULT_WINDOWS"
             [web]="$RESULT_WEB"
@@ -217,11 +278,13 @@ jobs:
             echo
             echo "Candidate: \`${CANDIDATE:-unresolved}\`"
             echo
+            echo "Installation: ${GATE_VERDICT:-not read}"
+            echo
             echo "| Leg | Result |"
             echo "| --- | --- |"
             # Anything but success is a leg that did not ship: a leg
             # SKIPPED because the candidate never resolved included.
-            for leg in resolve android apple macos windows web; do
+            for leg in resolve installation android apple macos windows web; do
               r="${results[$leg]}"
               icon="✅"
               if [ "$r" = "failure" ]; then icon="❌"; fi

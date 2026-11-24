@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "settingGroupCompatibility": "App versions",
+  "@settingGroupCompatibility": {
+    "description": "#3732 Settings group: how long older app versions stay accepted by this installation"
+  },
+  "settingLabelAppsSupportWindowDays": "Support window for older apps",
+  "@settingLabelAppsSupportWindowDays": {
+    "description": "#3732 Platform setting apps.support_window_days: its name in the settings editor"
+  },
+  "settingHintAppsSupportWindowDays": "How many days an older app stays accepted after a newer one is available on the slowest channel you distribute it through. The oldest app this installation accepts is raised only once this many days have passed, so every member has time to update.",
+  "@settingHintAppsSupportWindowDays": {
+    "description": "#3732 Platform setting apps.support_window_days: what it decides, under its name"
+  }
+}

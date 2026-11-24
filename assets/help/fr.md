@@ -2416,6 +2416,7 @@ Vous voulez retrouver une facture, voir si elle est payée et obtenir son PDF.
 - Touchez l'icône de paiement sur une facture en cours pour aller à **Paiements**.
 - Si la liste est vide, l'espace ne vous a pas encore facturé ; il facture un mois une fois celui-ci clôturé.
 - Les factures ne se modifient pas. Une facture erronée est marquée **Erronée** et remplacée par une nouvelle, et l'erronée disparaît de votre liste. Quand des factures sont regroupées en une seule, la facture regroupée les remplace dans votre liste.
+- Une ligne facturée à l'heure, au jour ou au poids (par exemple *1.5 h à 90 EUR*, ou *0.75 kg à 12.5 EUR pour 10 kg*) affiche sous son libellé la quantité exacte, son unité et le prix saisi, comme le PDF les imprime ; son montant est celui fixé à l'émission de la facture. Une ligne enregistrée par une version plus récente de l'application est affichée telle quelle et indique qu'elle ne peut pas être utilisée ici : mettez l'application à jour pour la traiter.
 
 **Voir aussi:** [Payer ce que vous devez](help:user.money.payments) · [Vos finances dans tous vos espaces](help:user.money.finances)
 
@@ -6492,7 +6493,7 @@ Ce qui entoure le travail de tous les jours : le côté test d'un espace et le c
 
 Dans ce chapitre :
 - [Un espace a deux côtés](help:user.advanced.environments) · [Entrer d'un côté](help:user.advanced.enter-environment) · [Un espace de test](help:user.advanced.test-space) · [Qui peut déployer](help:user.advanced.deploy-permissions) · [Déployer entre les côtés](help:user.advanced.deploy) · [Situation de l'espace et archive de l'exercice](help:user.advanced.status-archive)
-- [Votre propre serveur](help:user.advanced.own-server) · [Quand une installation exige une application plus récente](help:user.advanced.app-floor)
+- [Votre propre serveur](help:user.advanced.own-server) · [Quand une installation exige une application plus récente](help:user.advanced.app-floor) · [Publier une nouvelle version](help:user.advanced.releases)
 - [Les assistants](help:user.advanced.assistants) · [Connecter un assistant](help:user.advanced.assistants-connect) · [Les autorisations](help:user.advanced.assistants-approve) · [Ce que les assistants peuvent faire](help:user.advanced.assistants-policy)
 - [L'enregistreur de tâches](help:user.advanced.recorder) · [Enregistrer une tâche](help:user.advanced.recorder-record) · [Relire un enregistrement](help:user.advanced.recorder-review) · [Créer un guide](help:user.advanced.guide-make) · [Suivre un guide](help:user.advanced.guide-play) · [Le menu rond](help:user.advanced.guide-circle) · [Modifier un guide](help:user.advanced.guide-edit) · [Confidentialité des enregistrements](help:user.advanced.recorder-privacy)
 - [L'espace de démonstration](help:user.advanced.demo) · [Mode tournage](help:user.advanced.filming)
@@ -6668,6 +6669,28 @@ Une installation peut indiquer que seule une application plus récente peut l'ut
 - Le seuil est une courtoisie pour les applications qui le connaissent, pas un verrou : les règles d'argent et de droits sont décidées par le serveur, quelle que soit l'application.
 
 **Voir aussi :** [Faire tourner votre propre serveur](help:user.advanced.own-server) · [Plateformes](help:user.advanced.platforms)
+
+### Publier une nouvelle version : le serveur d'abord
+
+**Public:** Opérateur·rice
+
+Vous exploitez une installation et une nouvelle version de l'application arrive. Le serveur est toujours mis à jour avant l'application, et une ancienne application n'est jamais écartée sans prévenir.
+
+**Étapes**
+
+1. Mettez d'abord le serveur à jour : appliquez ses nouvelles migrations, puis ses fonctions. Rien ne change pour les membres : une application déjà installée continue de fonctionner, car le serveur ne fait qu'ajouter.
+2. Publiez l'application. Avant tout envoi, le train de publication lit l'installation qu'il dessert et s'arrête, en nommant les migrations manquantes, quand l'installation est en retard, refuse la nouvelle application ou ne peut pas être lue. Une fois l'application publiée, la version du serveur y indique *À jour*, et une ancienne application indique *Le serveur est plus récent que cette app — mettez l'app à jour dès que possible*.
+3. Attendez le délai de prise en charge : [Profils](app:/profiles) → **Réglages de la plateforme (valeurs par défaut)** → **Versions de l'application** → **Délai de prise en charge des anciennes applications**. Il court à partir du jour où la nouvelle application est disponible sur le canal de distribution le plus lent, pas du jour où elle a été construite : l'examen d'un store peut prendre des jours.
+4. Seulement alors, relevez l'application la plus ancienne acceptée par l'installation, dans une migration à part. Une application en dessous affiche **Cette application doit être mise à jour** avec la façon de la mettre à jour sur sa plateforme ; rien de ce que le membre a saisi n'est perdu.
+
+**Bon à savoir**
+
+- Une application plus récente que son serveur indique *Mise à jour nécessaire : cette app a besoin du schéma …*. C'est le cas que l'ordre « le serveur d'abord » évite.
+- Pour annuler un relèvement, abaissez de nouveau l'application la plus ancienne acceptée, ou supprimez ce seuil, dans une nouvelle migration : une application bloquée refonctionne à son prochain démarrage ou à son retour au premier plan.
+- Le train de publication ne fait que lire l'installation : il n'applique aucune migration et ne change pas qui peut publier.
+- Ne relevez jamais l'application la plus ancienne acceptée dans la migration qui a besoin de la nouvelle application : les testeurs de cette installation seraient bloqués dès qu'elle est appliquée.
+
+**Voir aussi:** [Faire tourner votre propre serveur](help:user.advanced.own-server)
 
 ### Les assistants : ce que c'est
 

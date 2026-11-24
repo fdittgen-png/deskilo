@@ -32296,6 +32296,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingGroupBusiness => 'Negocio';
 
   @override
+  String get settingGroupCompatibility => 'Versiones de la aplicación';
+
+  @override
   String get settingGroupDirectory => 'Directorio de miembros';
 
   @override
@@ -32334,6 +32337,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingGuardrailFallback =>
       'Fijado por el software; se muestra para que sepa que existe.';
+
+  @override
+  String get settingHintAppsSupportWindowDays =>
+      'Cuántos días sigue aceptada una aplicación antigua después de que haya una más reciente disponible en el canal de distribución más lento. La aplicación más antigua que acepta esta instalación solo se eleva cuando han pasado esos días, para que cada miembro tenga tiempo de actualizarla.';
 
   @override
   String get settingHintAssetsValuationMaxRows =>
@@ -32781,6 +32788,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingHistoryEmpty =>
       'Ninguna versión guardada: se aplica el valor por defecto.';
+
+  @override
+  String get settingLabelAppsSupportWindowDays =>
+      'Plazo de soporte de las aplicaciones antiguas';
 
   @override
   String get settingLabelAssetsValuationMaxRows =>

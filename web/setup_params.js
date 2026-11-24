@@ -72,6 +72,8 @@ const FED_RETENTION=[['1','optOneHour'],['6','optHours',{n:6}],['24','optHours',
 // #4327 — the membership facts a server sends per minute (platform setting
 // federation.fact_drain_batch): 50..2000.
 const FED_FACT_BATCH=[['100','optEntries',{n:100}],['250','optEntries',{n:250}],['500','optEntries',{n:500}],['1000','optEntries',{n:1000}],['2000','optEntries',{n:2000}]];
+// #3732 — the support window of older apps (platform setting apps.support_window_days): 1..365 days.
+const APP_SUPPORT_WINDOW=[['7','optDays',{n:7}],['14','optDays',{n:14}],['30','optDaysDefault',{n:30}],['60','optDays',{n:60}],['90','optDays',{n:90}],['180','optDays',{n:180}]];
 const FED_ANSWER_WAIT=[['30','optSeconds',{n:30}],['60','optOneMinute'],['120','optMinutes',{n:2}],['300','optMinutes',{n:5}],['600','optMinutes',{n:10}]];
 // #2863 — the supplier lookup (platform settings
 // purchase.supplier_lookup_timeout_seconds 3..30 s and
@@ -181,6 +183,7 @@ const PARAM_META=[
  ['federation.retentionHours','fedRetention','enum',()=>FED_RETENTION.map(x=>x[0])],
  ['federation.answerWait','fedAnswerWait','enum',()=>FED_ANSWER_WAIT.map(x=>x[0])],
  ['federation.factBatch','fedFactBatch','enum',()=>FED_FACT_BATCH.map(x=>x[0])],
+ ['appSupport.windowDays','appSupportWindow','enum',()=>APP_SUPPORT_WINDOW.map(x=>x[0])],
  ['inbox.pageSize','inboxPageSize','enum',()=>INBOX_PAGE.map(x=>x[0])],
  ['bi.detailPageSize','biDetailPageSize','enum',()=>BI_DETAIL_PAGE.map(x=>x[0]),{needs:'moneyTab'}],
  ['badgeSecurity.failureLimit','badgeFailureLimit','num',{min:1,max:50}],

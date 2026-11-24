@@ -19081,6 +19081,7 @@
     "description": "#2486 settings: Settings group title."
   },
   "settingGroupBusiness": "Negocio",
+  "settingGroupCompatibility": "Versiones de la aplicación",
   "settingGroupDirectory": "Directorio de miembros",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -19124,6 +19125,7 @@
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
   },
+  "settingHintAppsSupportWindowDays": "Cuántos días sigue aceptada una aplicación antigua después de que haya una más reciente disponible en el canal de distribución más lento. La aplicación más antigua que acepta esta instalación solo se eleva cuando han pasado esos días, para que cada miembro tenga tiempo de actualizarla.",
   "settingHintAssetsValuationMaxRows": "El mayor número de filas de un lote de valoraciones del contable, una por bien. Un archivo mayor se rechaza entero; divídalo antes de importar.",
   "@settingHintAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
@@ -19380,6 +19382,7 @@
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
   },
+  "settingLabelAppsSupportWindowDays": "Plazo de soporte de las aplicaciones antiguas",
   "settingLabelAssetsValuationMaxRows": "Filas de valoración por lote",
   "@settingLabelAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"

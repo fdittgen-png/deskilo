@@ -324,6 +324,7 @@
   "user.advanced.status-archive": "Situación del espacio y archivo del ejercicio",
   "user.advanced.own-server": "Gestione su propio servidor",
   "user.advanced.app-floor": "Cuando una instalación exige una aplicación más reciente",
+  "user.advanced.releases": "Publicar una nueva versión: primero el servidor",
   "user.advanced.assistants": "Asistentes: qué son",
   "user.advanced.assistants-connect": "Conecte un asistente",
   "user.advanced.assistants-approve": "Aprobaciones y confirmaciones de los asistentes",

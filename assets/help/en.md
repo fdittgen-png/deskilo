@@ -2416,6 +2416,7 @@ You want to find an invoice, see whether it is paid and get its PDF.
 - Tap the payment icon on an open invoice to go to **Payments**.
 - If the list is empty, the workspace has not invoiced you yet; it invoices a month once it closes.
 - Invoices cannot be edited. A wrong invoice is marked **Erroneous** and replaced by a new one, and the erroneous one leaves your list. When invoices are regrouped into one, the regrouped invoice replaces them in your list.
+- A line invoiced by the hour, the day or a weight (for example *1.5 h at 90 EUR*, or *0.75 kg at 12.5 EUR per 10 kg*) shows under its label the exact quantity, its unit and the price it was entered at, as the PDF prints them; its amount is the one fixed when the invoice was issued. A line recorded by a newer version of the app is shown as written and says it cannot be used here: update the app to work with it.
 
 **See also:** [Pay what you owe](help:user.money.payments) · [Your finances across spaces](help:user.money.finances)
 
@@ -6492,7 +6493,7 @@ The things around the everyday work: the test side of a space and the real one, 
 
 In this chapter:
 - [A space has two sides](help:user.advanced.environments) · [Enter a side](help:user.advanced.enter-environment) · [A test space](help:user.advanced.test-space) · [Who may deploy](help:user.advanced.deploy-permissions) · [Deploy between the sides](help:user.advanced.deploy) · [Workspace status and the year archive](help:user.advanced.status-archive)
-- [Your own server](help:user.advanced.own-server) · [When an installation requires a newer app](help:user.advanced.app-floor)
+- [Your own server](help:user.advanced.own-server) · [When an installation requires a newer app](help:user.advanced.app-floor) · [Release a new version](help:user.advanced.releases)
 - [Assistants](help:user.advanced.assistants) · [Connect an assistant](help:user.advanced.assistants-connect) · [Approvals](help:user.advanced.assistants-approve) · [What assistants may do](help:user.advanced.assistants-policy)
 - [The task recorder](help:user.advanced.recorder) · [Record a task](help:user.advanced.recorder-record) · [Review a recording](help:user.advanced.recorder-review) · [Make a guide](help:user.advanced.guide-make) · [Follow a guide](help:user.advanced.guide-play) · [The circle menu](help:user.advanced.guide-circle) · [Edit a guide](help:user.advanced.guide-edit) · [Privacy of recordings](help:user.advanced.recorder-privacy)
 - [The demo workspace](help:user.advanced.demo) · [Filming mode](help:user.advanced.filming)
@@ -6668,6 +6669,28 @@ An installation can say that only a newer app may be used with it. You want to k
 - The floor is a courtesy to apps that know it, not a lock: money and permission rules are decided by the server whatever the app.
 
 **See also:** [Run your own server](help:user.advanced.own-server) · [Platforms](help:user.advanced.platforms)
+
+### Release a new version: the server first
+
+**Audience:** Operator
+
+You run an installation and a new version of the app is coming. The server is always updated before the app, and an older app is never shut out without warning.
+
+**Steps**
+
+1. Update the server first: apply its new migrations, then its functions. Nothing changes for members: an app already installed keeps working, because the server only adds.
+2. Publish the app. Before any upload, the release train reads the installation it ships to and stops, naming the missing migrations, when the installation is behind, refuses the new app or cannot be read. Once the app is out, the server's version reads *Up to date* in it, and an older app reads *The server is newer than this app — update the app when you can*.
+3. Wait the support window: [Profiles](app:/profiles) → **Platform settings (defaults)** → **App versions** → **Support window for older apps**. It counts from the day the new app is available on the slowest channel you distribute it through, not from the day it was built: a store review can take days.
+4. Only then raise the oldest app the installation accepts, in a migration of its own. An app below it shows **This app needs an update** with how to update on its platform; nothing the member entered is lost.
+
+**Good to know**
+
+- An app newer than its server reads *Needs an update: this app needs schema …*. That is the case the server-first order prevents.
+- To undo a raise, lower the oldest accepted app again, or remove it, in a new migration: a blocked app works again the next time it starts or comes back to the foreground.
+- The release train only reads the installation: it applies no migration and does not change who may publish.
+- Never raise the oldest accepted app in the migration that first needs the new app: testers on that installation would be blocked the moment it is applied.
+
+**See also:** [Run your own server](help:user.advanced.own-server)
 
 ### Assistants: what they are
 
