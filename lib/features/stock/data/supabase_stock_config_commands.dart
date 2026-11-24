@@ -19,33 +19,26 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
 
   final SupabaseClient _client;
 
+  /// #4401 -- one call: the item with its units and its codes, through the foreign keys.
   @override
   Future<StockItemConfig?> item(String workspaceId, String itemId) async {
-    final rows = await StockRpc(_client).rows('services', () => _client
-        .from(ServerTable.services)
-        .select(
-          'id, stock_revision, stockable, purchasable, sellable, '
-          'inventory_unit, tracking, shelf_life_days',
-        )
-        .eq('workspace_id', workspaceId)
-        .eq('id', itemId)
-        .order('id', ascending: true));
-    if (rows.isEmpty) return null;
-    final r = JsonReader.of(rows.first, context: 'services');
-    final units = await StockRpc(_client).rows('item_units', () => _client
-        .from('item_units')
-        .select('unit, factor_num, factor_den, default_purchase, default_sale')
-        .eq('workspace_id', workspaceId)
-        .eq('item_id', itemId)
-        .order('unit', ascending: true)
-        .order('id', ascending: true));
-    final codes = await StockRpc(_client).rows('item_codes', () => _client
-        .from('item_codes')
-        .select('code, kind, unit')
-        .eq('workspace_id', workspaceId)
-        .eq('item_id', itemId)
-        .order('code', ascending: true)
-        .order('id', ascending: true));
+    final row = await StockRpc(_client).guard(
+      'services',
+      () => _client
+          .from(ServerTable.services)
+          .select(
+            'id, stock_revision, stockable, purchasable, sellable, inventory_unit, tracking, shelf_life_days, '
+            'item_units!item_units_workspace_id_item_id_fkey(unit, factor_num, factor_den, default_purchase, default_sale), '
+            'item_codes!item_codes_workspace_id_item_id_fkey(code, kind, unit)',
+          )
+          .eq('workspace_id', workspaceId)
+          .eq('id', itemId)
+          .order('unit', referencedTable: 'item_units', ascending: true)
+          .order('code', referencedTable: 'item_codes', ascending: true)
+          .maybeSingle(),
+    );
+    if (row == null) return null;
+    final r = JsonReader.of(row, context: 'services');
     return StockItemConfig(
       itemId: r.string('id'),
       revision: r.integer('stock_revision'),
@@ -55,8 +48,8 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
       inventoryUnit: r.string('inventory_unit'),
       tracking: r.stringOr('tracking', 'none'),
       shelfLifeDays: r.intOrNull('shelf_life_days'),
-      units: [for (final u in units) StockUnitDraft.fromJson(u)],
-      codes: [for (final c in codes) StockCodeDraft.fromJson(c)],
+      units: r.objects('item_units', (u) => StockUnitDraft.fromJson(u.json)),
+      codes: r.objects('item_codes', (c) => StockCodeDraft.fromJson(c.json)),
     );
   }
 

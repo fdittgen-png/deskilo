@@ -2,7 +2,6 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/server_names.dart';
 import '../domain/stock_operations.dart';
 import 'stock_rpc.dart';
 
@@ -17,78 +16,45 @@ class SupabaseStockOperations implements StockOperations {
 
   final SupabaseClient _client;
 
+  /// #4401 -- one call: the open transfers with their two places and their lines, each line with its item, through
+  /// the foreign keys (paged over the transfers; a transfer's lines come whole, ordered by id).
   @override
   Future<List<StockTransfer>> openTransfers(String workspaceId) async {
-    final transfers = await StockRpc(_client).pages('stock_transfers', () => _client
-        .from('stock_transfers')
-        .select('id, from_location_id, to_location_id, status, revision, created_datetime')
-        .eq('workspace_id', workspaceId)
-        .neq('status', 'received')
-        .order('created_datetime', ascending: true)
-        .order('id', ascending: true));
-    if (transfers.isEmpty) return const [];
-    final heads = [for (final t in transfers) JsonReader.of(t, context: 'stock_transfers')];
-    final lines = [
-      for (final l in await StockRpc(_client).pages('stock_transfer_lines', () => _client
-          .from('stock_transfer_lines')
-          .select('id, transfer_id, item_id, variant_id, lot_id, loaded::text, received::text')
+    final transfers = await StockRpc(_client).pages(
+      'stock_transfers',
+      () => _client
+          .from('stock_transfers')
+          .select(
+            'id, from_location_id, to_location_id, status, revision, created_datetime, '
+            'from_place:stock_locations!stock_transfers_workspace_id_from_location_id_fkey(code), '
+            'to_place:stock_locations!stock_transfers_workspace_id_to_location_id_fkey(code), '
+            'stock_transfer_lines(id, item_id, variant_id, lot_id, loaded::text, received::text, '
+            'services!stock_transfer_lines_workspace_id_item_id_fkey(name, inventory_unit))',
+          )
           .eq('workspace_id', workspaceId)
-          .inFilter('transfer_id', [for (final h in heads) h.string('id')])
-          .order('id', ascending: true)))
-        JsonReader.of(l, context: 'stock_transfer_lines'),
-    ];
-    final items = {
-      for (final i in await StockRpc(_client).rows('services', () => _client
-          .from(ServerTable.services)
-          .select('id, name, inventory_unit')
-          .eq('workspace_id', workspaceId)
-          .inFilter('id', {for (final l in lines) l.string('item_id')}.toList())
-          .order('id', ascending: true)))
-        ..._byId(JsonReader.of(i, context: 'services')),
-    };
-    final codes = {
-      for (final p in await StockRpc(_client).rows('stock_locations', () => _client
-          .from(ServerTable.stockLocations)
-          .select('id, code')
-          .eq('workspace_id', workspaceId)
-          .inFilter('id', {
-            for (final h in heads) ...[h.string('from_location_id'), h.string('to_location_id')],
-          }.toList())
-          .order('id', ascending: true)))
-        ..._codeById(JsonReader.of(p, context: 'stock_locations')),
-    };
-    return [for (final h in heads) _transfer(h, lines, items, codes)];
-  }
-
-  Map<String, JsonReader> _byId(JsonReader r) => {r.string('id'): r};
-
-  Map<String, String> _codeById(JsonReader r) => {r.string('id'): r.string('code')};
-
-  StockTransfer _transfer(
-    JsonReader t,
-    List<JsonReader> lines,
-    Map<String, JsonReader> items,
-    Map<String, String> codes,
-  ) {
-    final id = t.string('id');
-    return StockTransfer(
-      id: id,
-      fromLocationId: t.string('from_location_id'),
-      fromCode: codes[t.string('from_location_id')] ?? '',
-      toLocationId: t.string('to_location_id'),
-      toCode: codes[t.string('to_location_id')] ?? '',
-      status: t.string('status'),
-      loadedAt: DateTime.parse(t.string('created_datetime')),
-      revision: t.integer('revision'),
-      lines: [
-        for (final raw in lines)
-          if (raw.string('transfer_id') == id) _line(raw, items),
-      ],
+          .neq('status', 'received')
+          .order('id', referencedTable: 'stock_transfer_lines', ascending: true)
+          .order('created_datetime', ascending: true)
+          .order('id', ascending: true),
     );
+    return [for (final t in transfers) _transfer(JsonReader.of(t, context: 'stock_transfers'))];
   }
 
-  StockTransferLine _line(JsonReader r, Map<String, JsonReader> items) {
-    final item = items[r.string('item_id')];
+  StockTransfer _transfer(JsonReader t) => StockTransfer(
+    id: t.string('id'),
+    fromLocationId: t.string('from_location_id'),
+    fromCode: t.objectOrNull('from_place')?.stringOr('code') ?? '',
+    toLocationId: t.string('to_location_id'),
+    toCode: t.objectOrNull('to_place')?.stringOr('code') ?? '',
+    status: t.string('status'),
+    loadedAt: DateTime.parse(t.string('created_datetime')),
+    revision: t.integer('revision'),
+    lines: t.objects('stock_transfer_lines', _line),
+  );
+
+  StockTransferLine _line(JsonReader r) {
+    // the item a line moves, embedded; one the reader may not see comes back empty and is named by its id
+    final item = r.objectOrNull('services');
     return StockTransferLine(
       id: r.string('id'),
       itemId: r.string('item_id'),

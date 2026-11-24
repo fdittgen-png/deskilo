@@ -125,44 +125,45 @@ void main() {
     );
   });
 
-  test('the transfers on their way are read with exact quantities, their places and their lines', () async {
+  test('the transfers on their way are read in one call with exact quantities, their places and their lines (#4401)', () async {
     final h = _with((r) {
-      final path = r.url.path;
-      if (path.endsWith('/stock_transfers')) {
-        return _json(200, [
-          {
-            'id': 't-1',
-            'from_location_id': 'p-main',
-            'to_location_id': 'p-branch',
-            'status': 'partly_received',
-            'revision': 2,
-            'created_datetime': '2026-11-20T10:00:00+00:00',
-          },
-        ]);
-      }
-      if (path.endsWith('/stock_transfer_lines')) {
-        return _json(200, [
-          {'id': 'l-1', 'transfer_id': 't-1', 'item_id': 'i-1', 'variant_id': null, 'lot_id': null, 'loaded': '6.000000', 'received': '2.500000'},
-        ]);
-      }
-      if (path.endsWith('/services')) {
-        return _json(200, [
-          {'id': 'i-1', 'name': 'Mugs', 'inventory_unit': 'piece'},
-        ]);
-      }
+      expect(r.url.path, endsWith('/stock_transfers'), reason: 'one call: the places, lines and items come embedded');
       return _json(200, [
-        {'id': 'p-main', 'code': 'MAIN'},
-        {'id': 'p-branch', 'code': 'BRANCH'},
+        {
+          'id': 't-1',
+          'from_location_id': 'p-main',
+          'to_location_id': 'p-branch',
+          'status': 'partly_received',
+          'revision': 2,
+          'created_datetime': '2026-11-20T10:00:00+00:00',
+          'from_place': {'code': 'MAIN'},
+          'to_place': {'code': 'BRANCH'},
+          'stock_transfer_lines': [
+            {
+              'id': 'l-1',
+              'item_id': 'i-1',
+              'variant_id': null,
+              'lot_id': null,
+              'loaded': '6.000000',
+              'received': '2.500000',
+              'services': {'name': 'Mugs', 'inventory_unit': 'piece'},
+            },
+            {'id': 'l-2', 'item_id': 'i-hidden', 'variant_id': null, 'lot_id': null, 'loaded': '1', 'received': '0', 'services': null},
+          ],
+        },
       ]);
     });
     final transfers = await h.operations.openTransfers(_ws);
     final t = transfers.single;
     expect((t.fromCode, t.toCode, t.status, t.revision), ('MAIN', 'BRANCH', 'partly_received', 2));
-    final line = t.lines.single;
+    final line = t.lines.first;
     expect((line.itemName, line.unit, line.loaded.text, line.received.text, line.inTransit.text), ('Mugs', 'piece', '6', '2.5', '3.5'));
-    final lineRead = h.sent.firstWhere((r) => r.url.path.endsWith('/stock_transfer_lines'));
-    expect(lineRead.url.queryParameters['select'], contains('loaded::text'), reason: 'read as text, never through a double');
-    expect(lineRead.url.queryParameters['transfer_id'], 'in.("t-1")');
+    expect((t.lines.last.itemId, t.lines.last.itemName), ('i-hidden', ''), reason: 'an item the reader may not see keeps its line');
+    final read = h.sent.first.url.queryParameters;
+    expect(read['select'], contains('loaded::text'), reason: 'read as text, never through a double');
+    expect(read['select'], contains('stock_transfers_workspace_id_from_location_id_fkey'), reason: 'each place by its own key');
+    expect(read['stock_transfer_lines.order'], 'id.asc.nullslast');
+    expect(h.sent.where((r) => (int.tryParse(r.url.queryParameters['offset'] ?? '0') ?? 0) == 0), hasLength(1), reason: 'one call (and the empty page that ends it)');
   });
 
   test('no transfer on its way is an empty list after one read', () async {

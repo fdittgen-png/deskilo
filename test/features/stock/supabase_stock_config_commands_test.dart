@@ -157,4 +157,29 @@ void main() {
     final body = jsonDecode(m.sent.single.body) as Map<String, Object?>;
     expect((body['p_mapping_id'], body['p_expected_revision']), ('m-1', 1));
   });
+
+  test('an item is read in one call, with its units and codes embedded and ordered (#4401)', () async {
+    final h = _with(200, {
+      'id': _item,
+      'stock_revision': 3,
+      'stockable': true,
+      'purchasable': true,
+      'sellable': true,
+      'inventory_unit': 'piece',
+      'tracking': 'none',
+      'shelf_life_days': null,
+      'item_units': [
+        {'unit': 'box', 'factor_num': 12, 'factor_den': 1, 'default_purchase': true, 'default_sale': false},
+      ],
+      'item_codes': [
+        {'code': '3017620422003', 'kind': 'ean13', 'unit': 'box'},
+      ],
+    });
+    final item = await h.commands.item(_ws, _item);
+    expect(h.sent, hasLength(1), reason: 'one call, not three');
+    expect((item!.revision, item.units.single.unit, item.units.single.factorNum, item.codes.single.code), (3, 'box', 12, '3017620422003'));
+    final asked = h.sent.single.url.queryParameters;
+    expect(asked['select'], allOf(contains('item_units!item_units_workspace_id_item_id_fkey('), contains('item_codes!item_codes_workspace_id_item_id_fkey(')));
+    expect((asked['item_units.order'], asked['item_codes.order']), ('unit.asc.nullslast', 'code.asc.nullslast'));
+  });
 }
