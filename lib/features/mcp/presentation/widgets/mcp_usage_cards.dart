@@ -6,6 +6,7 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../domain/mcp_usage.dart';
 import '../../providers/mcp_providers.dart';
 import '../mcp_operation_labels.dart';
@@ -40,9 +41,10 @@ class McpWorkspaceUsageCard extends ConsumerWidget {
             const SizedBox(height: AppSpacing.sm),
             usage.when(
               loading: () => const LinearProgressIndicator(),
-              error: (e, _) => Text(
-                key: const ValueKey('mcp-usage-workspace-unavailable'),
-                l10n.mcpUsageUnavailable,
+              error: (e, _) => ReadFailureBanner(
+                error: e,
+                onRetry: () =>
+                    ref.invalidate(mcpWorkspaceUsageProvider(workspaceId)),
               ),
               data: (u) => Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -91,9 +93,9 @@ class McpMyUsageSection extends ConsumerWidget {
         const SizedBox(height: AppSpacing.sm),
         usage.when(
           loading: () => const LinearProgressIndicator(),
-          error: (e, _) => Text(
-            key: const ValueKey('mcp-usage-mine-unavailable'),
-            l10n.mcpUsageUnavailable,
+          error: (e, _) => ReadFailureBanner(
+            error: e,
+            onRetry: () => ref.invalidate(myMcpUsageProvider),
           ),
           data: (clients) => clients.isEmpty
               ? Column(

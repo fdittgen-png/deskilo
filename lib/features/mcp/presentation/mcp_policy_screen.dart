@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
-import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -91,11 +91,16 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
                   loading: () => const LoadingView(),
                   error: (e, _) => Padding(
                     padding: AppSpacing.gutterAll,
-                    child: InlineBanner(
-                      key: const ValueKey('mcp-policy-unavailable'),
-                      icon: Icons.cloud_off_outlined,
-                      text:
-                          l10n.mcpPolicyUnavailable,
+                    child: ReadFailureBanner(
+                      error: e,
+                      onRetry: () {
+                        ref.invalidate(activeMcpTargetProvider);
+                        if (target != null) {
+                          ref.invalidate(
+                            mcpPolicyProvider(target.workspace(workspaceId)),
+                          );
+                        }
+                      },
                     ),
                   ),
                   data: (policy) => McpPolicyFormView(

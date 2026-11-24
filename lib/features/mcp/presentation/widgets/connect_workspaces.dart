@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../auth/domain/database_capabilities.dart';
 import '../../../auth/providers/auth_providers.dart';
@@ -14,18 +14,6 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/connect_checklist.dart';
 import '../../providers/assistant_setup_providers.dart';
 import '../../providers/mcp_providers.dart';
-
-/// The "could not ask the server" line of the Connect page.
-class ConnectUnavailable extends StatelessWidget {
-  const ConnectUnavailable({super.key});
-
-  @override
-  Widget build(BuildContext context) => InlineBanner(
-    key: const ValueKey('mcp-connect-unavailable'),
-    icon: Icons.cloud_off_outlined,
-    text: context.l10n.mcpNextUnavailable,
-  );
-}
 
 /// #2145 — every workspace of this installation the person belongs
 /// to, each with its own state: one is never the stand-in for another.
@@ -47,7 +35,10 @@ class ConnectWorkspaces extends ConsumerWidget {
     final offered = options?.value;
     return mine.when(
       loading: () => const LoadingView(),
-      error: (_, _) => const ConnectUnavailable(),
+      error: (e, _) => ReadFailureBanner(
+        error: e,
+        onRetry: () => ref.invalidate(myWorkspacesProvider),
+      ),
       data: (list) {
         final rows = deriveWorkspaceRows(
           workspaces: [
