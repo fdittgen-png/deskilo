@@ -37,6 +37,17 @@ class LineTrack {
   /// The lot's expiry day (`yyyy-MM-dd`), '' where it has none.
   final String expiresOn;
 
+  @override
+  bool operator ==(Object other) =>
+      other is LineTrack &&
+      other.kind == kind &&
+      other.code == code &&
+      other.quantity == quantity &&
+      other.expiresOn == expiresOn;
+
+  @override
+  int get hashCode => Object.hash(kind, code, quantity, expiresOn);
+
   /// The words a document prints for it: `LOT-7 ×3` for a lot taken in a quantity, the bare code otherwise.
   String get text => kind == LineTrackKind.lot && quantity.isNotEmpty ? '$code ×$quantity' : code;
 }

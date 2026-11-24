@@ -193,7 +193,7 @@ class _CiiWriter {
         ..element('ram:SpecifiedTradeProduct', nest: () {
           ram('Name', input.lineText(line));
           // #4436 -- BG-32: the lot and the pieces a goods line took, as item attributes (BT-160, BT-161)
-          for (final t in input.lineTracks[line.commercialLineId] ?? const <LineTrack>[]) {
+          for (final t in invoice.lineTracks[line.commercialLineId] ?? const <LineTrack>[]) {
             builder.element('ram:ApplicableProductCharacteristic', nest: () {
               ram('Description', t.kind == LineTrackKind.lot ? 'Lot' : 'Serial number');
               ram('Value', t.code);

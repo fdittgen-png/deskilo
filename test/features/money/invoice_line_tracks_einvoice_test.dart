@@ -64,7 +64,7 @@ InvoiceLine _line([Map<String, Object?>? facts]) => invoiceLineFromSnapshot(<Str
   'commercial': facts ?? _facts(),
 });
 
-Invoice _invoice(List<InvoiceLine> lines, {int total = 1080}) => Invoice(
+Invoice _invoice(List<InvoiceLine> lines, {int total = 1080, Map<String, List<LineTrack>> tracks = const {}}) => Invoice(
   id: 'inv-1',
   workspaceId: 'ws-1',
   memberId: 'm1',
@@ -81,9 +81,10 @@ Invoice _invoice(List<InvoiceLine> lines, {int total = 1080}) => Invoice(
   issuerName: 'Flo',
   signature: 'f' * 64,
   sellerParty: _seller,
+  lineTracks: tracks,
 );
 
-EInvoiceInput _input(Invoice invoice, {Map<String, List<LineTrack>> tracks = const {}}) => EInvoiceInput(
+EInvoiceInput _input(Invoice invoice) => EInvoiceInput(
   paymentReferenceRules: installedPaymentReferenceRules,
   nationalRules: installedNationalInvoiceRules,
   invoice: invoice,
@@ -91,7 +92,6 @@ EInvoiceInput _input(Invoice invoice, {Map<String, List<LineTrack>> tracks = con
   buyer: _buyer,
   lineText: (l) => l.label,
   reference: ActiveTaxReference.current,
-  lineTracks: tracks,
 );
 
 
@@ -116,7 +116,7 @@ void main() {
   const expected = [('Lot', 'EARLY'), ('Lot', 'LATE'), ('Serial number', 'E28068940000401561D68F01')];
 
   test('CII: each track ID is an item attribute of its line, after the name', () {
-    final doc = XmlDocument.parse(buildInvoiceCii(_input(_invoice([_line()]), tracks: _tracks)));
+    final doc = XmlDocument.parse(buildInvoiceCii(_input(_invoice([_line()], tracks: _tracks))));
     expect(_attributes(doc, cii: true), expected);
     final product = doc.findAllElements('SpecifiedTradeProduct', namespace: '*').single;
     expect(product.childElements.map((e) => e.name.local), [
@@ -128,7 +128,7 @@ void main() {
   });
 
   test('UBL: each track ID is an item attribute of its line, after the tax category', () {
-    final doc = XmlDocument.parse(buildInvoiceUbl(_input(_invoice([_line()]), tracks: _tracks)));
+    final doc = XmlDocument.parse(buildInvoiceUbl(_input(_invoice([_line()], tracks: _tracks))));
     expect(_attributes(doc, cii: false), expected);
     final item = doc.findAllElements('Item', namespace: '*').single;
     expect(item.childElements.map((e) => e.name.local).toList(), [
@@ -142,15 +142,40 @@ void main() {
 
   test('a line without tracks, or tracks of another line, carries no attribute', () {
     for (final tracks in [const <String, List<LineTrack>>{}, const {'L-2': [LineTrack(kind: LineTrackKind.lot, code: 'X')]}]) {
-      expect(_attributes(XmlDocument.parse(buildInvoiceCii(_input(_invoice([_line()]), tracks: tracks))), cii: true), isEmpty);
-      expect(_attributes(XmlDocument.parse(buildInvoiceUbl(_input(_invoice([_line()]), tracks: tracks))), cii: false), isEmpty);
+      expect(_attributes(XmlDocument.parse(buildInvoiceCii(_input(_invoice([_line()], tracks: tracks)))), cii: true), isEmpty);
+      expect(_attributes(XmlDocument.parse(buildInvoiceUbl(_input(_invoice([_line()], tracks: tracks)))), cii: false), isEmpty);
     }
   });
 
   test('a legacy line (no line id) carries none even when tracks are given', () {
     final legacy = invoiceLineFromSnapshot(<String, Object?>{'kind': 'service', 'label': 'Rent', 'quantity': 1, 'amount_cents': 1080, 'vat_percent': 20});
-    final doc = XmlDocument.parse(buildInvoiceCii(_input(_invoice([legacy]), tracks: _tracks)));
+    final doc = XmlDocument.parse(buildInvoiceCii(_input(_invoice([legacy], tracks: _tracks))));
     expect(_attributes(doc, cii: true), isEmpty);
+  });
+
+  test('the invoice register embeds the frozen tracks of each line, and an invoice without any has none', () {
+    Map<String, dynamic> row(Object? embedded) => {
+      'id': 'i1', 'workspace_id': 'ws-1', 'member_id': 'm1', 'number': 'F-1', 'issued_at': '2026-09-01T10:00:00Z',
+      'period': '2026-09', 'title': 'T', 'lines': const <dynamic>[], 'total_cents': 0, 'currency': 'EUR',
+      'member_name': 'M', 'member_address': '', 'workspace_name': 'W', 'workspace_address': '', 'issuer_name': 'O',
+      'signature': 'abc', 'invoice_line_tracks': embedded,
+    };
+    final invoice = Invoice.fromRow(row([
+      {
+        'line_id': 'L-1',
+        'tracks': [
+          {'kind': 'lot', 'code': 'EARLY', 'quantity': '3'},
+          {'kind': 'piece', 'code': 'SN-1'},
+        ],
+      },
+      {'line_id': '', 'tracks': <dynamic>[]},
+    ]));
+    expect(invoice.lineTracks.keys, ['L-1']);
+    expect(invoice.lineTracks['L-1']!.map((t) => t.text), ['EARLY ×3', 'SN-1']);
+    expect(Invoice.fromRow(row(null)).lineTracks, isEmpty);
+    expect(Invoice.fromRow(row(<dynamic>[])).lineTracks, isEmpty);
+    expect(Invoice.fromRow(row([{'line_id': 'L-1', 'tracks': <dynamic>[]}])), isNot(equals(invoice)),
+        reason: 'the tracks are part of what an invoice is');
   });
 
   test('the snapshot reads the kinds it knows and leaves out the rest', () {

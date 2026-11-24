@@ -391,7 +391,7 @@ class _UblWriter {
           });
         });
         // #4436 -- BG-32: the lot and the pieces a goods line took, as item attributes (BT-160, BT-161)
-        for (final t in input.lineTracks[line.commercialLineId] ?? const <LineTrack>[]) {
+        for (final t in invoice.lineTracks[line.commercialLineId] ?? const <LineTrack>[]) {
           builder.element('cac:AdditionalItemProperty', nest: () {
             cbc('Name', t.kind == LineTrackKind.lot ? 'Lot' : 'Serial number');
             cbc('Value', t.code);

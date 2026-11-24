@@ -7,6 +7,7 @@ import 'commercial_line_snapshot.dart';
 import 'invoice_clauses.dart';
 import 'invoice_kind.dart';
 import 'invoice_line_snapshot.dart';
+import 'line_track.dart';
 import 'vat_rate.dart';
 
 part 'invoice.freezed.dart';
@@ -336,6 +337,10 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     /// workspace's current term, the way such documents always printed.
     DateTime? dueOn,
 
+    /// #4436 (0945) — the track IDs frozen on the goods lines, by the line's stable id (`commercial.line_id`): the
+    /// lots and pieces a line took. Read from the embedded `invoice_line_tracks`; empty on an invoice without any.
+    @Default(<String, List<LineTrack>>{}) Map<String, List<LineTrack>> lineTracks,
+
     /// #1913 — on what basis [dueOn] was frozen: `document_term`,
     /// `default_term` (the unagreed default; needs review) or `unknown`.
     String? maturityBasis,
@@ -436,6 +441,7 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     ],
     dueOn: _maturityDueOn(row['invoice_maturities']),
     maturityBasis: _maturityOf(row['invoice_maturities'])?['basis'] as String?,
+    lineTracks: _lineTracksOf(row['invoice_line_tracks']),
     legalSnapshot: switch (row['legal_snapshot']) {
       final Map<dynamic, dynamic> json => json.cast<String, Object?>(),
       _ => null,
@@ -495,6 +501,14 @@ Map<Object?, Object?>? _maturityOf(Object? embedded) => switch (embedded) {
         list.first! as Map<Object?, Object?>,
       _ => null,
     };
+
+/// #4436 -- the embedded `invoice_line_tracks` rows (`[{line_id, tracks}]`) as the tracks by line id.
+Map<String, List<LineTrack>> _lineTracksOf(Object? embedded) => {
+  if (embedded is List)
+    for (final row in embedded)
+      if (row is Map && '${row['line_id'] ?? ''}'.isNotEmpty)
+        '${row['line_id']}': lineTracksFromSnapshot(row['tracks']),
+};
 
 DateTime? _maturityDueOn(Object? embedded) {
   final raw = _maturityOf(embedded)?['due_on'] as String?;
