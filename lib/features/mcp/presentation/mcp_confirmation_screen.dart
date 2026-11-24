@@ -310,8 +310,5 @@ String _featureChanges(AppLocalizations l10n, Map<String, Object?> target) {
   ].join('\n');
 }
 
-/// A share the assistant asks for, as a rate in the member's format; what is no number is shown as it came.
-String _share(AppFormat format, Object? raw) {
-  final value = num.tryParse('$raw');
-  return value == null ? '$raw' : format.ratePercent(value);
-}
+/// A share the assistant asks for (a JSON number), as a rate in the member's format; anything else as it came.
+String _share(AppFormat format, Object? raw) => raw is num ? format.ratePercent(raw) : '$raw';
