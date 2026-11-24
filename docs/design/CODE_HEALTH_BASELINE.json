@@ -639,6 +639,231 @@
       "lib/features/workspace/presentation/widgets/badge_manager_dialog.dart": 1,
 
       "lib/features/workspace/presentation/widgets/feature_capability_list.dart": 1
+    },
+    "inlineRoute": {
+      "lib/app/house/house_prices.dart": 1,
+
+      "lib/app/shell/shell_app_bar.dart": 3,
+
+      "lib/app/shell/shell_destinations.dart": 2,
+
+      "lib/app/shell/shell_drawer.dart": 1,
+
+      "lib/features/auth/presentation/screens/app_update_screen.dart": 2,
+
+      "lib/features/auth/presentation/widgets/auth_form_sections.dart": 2,
+
+      "lib/features/auth/presentation/widgets/federation_handoff_panel.dart": 1,
+
+      "lib/features/calendar/presentation/screens/calendar_hub_screen.dart": 2,
+
+      "lib/features/directory/presentation/account_messenger_screen.dart": 2,
+
+      "lib/features/directory/presentation/messenger/inbox_header.dart": 1,
+
+      "lib/features/directory/presentation/public_facets_editor.dart": 1,
+
+      "lib/features/directory/presentation/public_offer_preview.dart": 1,
+
+      "lib/features/directory/presentation/public_workspace_view.dart": 1,
+
+      "lib/features/directory/presentation/setup_public_page_step.dart": 1,
+
+      "lib/features/editor/presentation/screens/editor_screen.dart": 1,
+
+      "lib/features/editor/presentation/widgets/seat_properties_sheet.dart": 1,
+
+      "lib/features/events/presentation/widgets/setup_approvals_step.dart": 1,
+
+      "lib/features/mcp/presentation/assistant_setup_screen.dart": 2,
+
+      "lib/features/mcp/presentation/widgets/assistant_setup_parts.dart": 1,
+
+      "lib/features/mcp/presentation/widgets/connect_checklist_card.dart": 3,
+
+      "lib/features/mcp/presentation/widgets/connect_workspaces.dart": 1,
+
+      "lib/features/mcp/presentation/widgets/mcp_access_status_card.dart": 1,
+
+      "lib/features/mcp/presentation/widgets/mcp_consent_parts.dart": 1,
+
+      "lib/features/mcp/presentation/widgets/mcp_my_requests_section.dart": 1,
+
+      "lib/features/mcp/presentation/widgets/mcp_settings_tiles.dart": 5,
+
+      "lib/features/me/presentation/me_home_tab.dart": 1,
+
+      "lib/features/me/presentation/me_shell.dart": 1,
+
+      "lib/features/me/presentation/personal_first_visit.dart": 2,
+
+      "lib/features/me/presentation/personal_overview.dart": 2,
+
+      "lib/features/me/presentation/personal_overview_attention.dart": 1,
+
+      "lib/features/me/presentation/personal_overview_sections.dart": 1,
+
+      "lib/features/me/presentation/personal_space_card.dart": 1,
+
+      "lib/features/me/presentation/personal_space_compact_row.dart": 1,
+
+      "lib/features/me/presentation/personal_spaces_view.dart": 2,
+
+      "lib/features/members/presentation/screens/managed_profile_screen.dart": 1,
+
+      "lib/features/members/presentation/widgets/member_admin_tiles.dart": 1,
+
+      "lib/features/money/presentation/engagements/follow_line_button.dart": 1,
+
+      "lib/features/money/presentation/invoice_einvoice_actions.dart": 1,
+
+      "lib/features/money/presentation/invoicing/invoicing_home_screen.dart": 3,
+
+      "lib/features/money/presentation/screens/account_activity_screen.dart": 1,
+
+      "lib/features/money/presentation/screens/accounting_sign_in_return_screen.dart": 2,
+
+      "lib/features/money/presentation/screens/accounting_status.dart": 2,
+
+      "lib/features/money/presentation/screens/customer_quote_editor_screen.dart": 1,
+
+      "lib/features/money/presentation/screens/customer_quote_screen.dart": 4,
+
+      "lib/features/money/presentation/screens/customer_quotes_screen.dart": 2,
+
+      "lib/features/money/presentation/screens/invoices_screen.dart": 1,
+
+      "lib/features/money/presentation/screens/legal_identity_screen.dart": 2,
+
+      "lib/features/money/presentation/screens/money_action_set.dart": 9,
+
+      "lib/features/money/presentation/screens/money_online_payment.dart": 1,
+
+      "lib/features/money/presentation/screens/purchase_orders_screen.dart": 1,
+
+      "lib/features/money/presentation/screens/service_fulfilments_screen.dart": 1,
+
+      "lib/features/money/presentation/screens/vat_declarations_screen.dart": 1,
+
+      "lib/features/money/presentation/screens/vat_screen.dart": 1,
+
+      "lib/features/money/presentation/till_drawer/till_drawer_screen.dart": 1,
+
+      "lib/features/money/presentation/till_screen.dart": 1,
+
+      "lib/features/money/presentation/widgets/documents_face.dart": 1,
+
+      "lib/features/money/presentation/widgets/einvoice_gaps_warning.dart": 1,
+
+      "lib/features/money/presentation/widgets/invoice_missing_banner.dart": 1,
+
+      "lib/features/money/presentation/widgets/money_attention_body.dart": 1,
+
+      "lib/features/money/presentation/widgets/setup_documents_step.dart": 1,
+
+      "lib/features/money/presentation/widgets/setup_einvoicing_step.dart": 1,
+
+      "lib/features/money/presentation/widgets/setup_legal_identity_step.dart": 1,
+
+      "lib/features/money/presentation/widgets/setup_online_payments_step.dart": 1,
+
+      "lib/features/money/presentation/widgets/setup_pricing_step.dart": 1,
+
+      "lib/features/money/presentation/widgets/setup_reminders_step.dart": 1,
+
+      "lib/features/money/presentation/widgets/setup_services_step.dart": 1,
+
+      "lib/features/money/presentation/widgets/setup_vat_step.dart": 1,
+
+      "lib/features/plan/presentation/widgets/setup_places_step.dart": 2,
+
+      "lib/features/profile/presentation/screens/consent_screen.dart": 1,
+
+      "lib/features/profile/presentation/screens/new_instance_screen.dart": 1,
+
+      "lib/features/profile/presentation/screens/privacy_screen.dart": 3,
+
+      "lib/features/profile/presentation/screens/profiles_screen.dart": 2,
+
+      "lib/features/profile/presentation/screens/schema_update_screen.dart": 2,
+
+      "lib/features/profile/presentation/screens/settings_screen.dart": 4,
+
+      "lib/features/profile/presentation/widgets/account_settings_tiles.dart": 2,
+
+      "lib/features/profile/presentation/widgets/backend_how_to.dart": 1,
+
+      "lib/features/profile/presentation/widgets/backend_settings_tile.dart": 1,
+
+      "lib/features/profile/presentation/widgets/settings_advanced_section.dart": 1,
+
+      "lib/features/profile/presentation/widgets/settings_workspace_sections.dart": 18,
+
+      "lib/features/reservations/presentation/screens/period_reservations_screen.dart": 1,
+
+      "lib/features/reservations/presentation/screens/reference_link_screen.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/getting_started_card.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/reservation_detail_actions.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/space_sheet_tiles.dart": 1,
+
+      "lib/features/stock/presentation/stock_chain_section.dart": 1,
+
+      "lib/features/stock/presentation/stock_cycle_counts_screen.dart": 1,
+
+      "lib/features/stock/presentation/stock_document_goods_block.dart": 1,
+
+      "lib/features/stock/presentation/stock_first_run.dart": 2,
+
+      "lib/features/stock/presentation/stock_screen.dart": 2,
+
+      "lib/features/workspace/presentation/report_editor/bi_report_editor_screen.dart": 1,
+
+      "lib/features/workspace/presentation/screens/bi_screen.dart": 1,
+
+      "lib/features/workspace/presentation/screens/inbox_screen.dart": 1,
+
+      "lib/features/workspace/presentation/screens/members_screen.dart": 4,
+
+      "lib/features/workspace/presentation/screens/nfc_config_screen.dart": 1,
+
+      "lib/features/workspace/presentation/screens/pending_approval_screen.dart": 1,
+
+      "lib/features/workspace/presentation/screens/roles_screen.dart": 2,
+
+      "lib/features/workspace/presentation/screens/setup_guide_screen.dart": 2,
+
+      "lib/features/workspace/presentation/screens/workspace_overview_screen.dart": 2,
+
+      "lib/features/workspace/presentation/screens/workspace_settings_parameters.dart": 3,
+
+      "lib/features/workspace/presentation/screens/workspace_settings_screen.dart": 2,
+
+      "lib/features/workspace/presentation/widgets/application_requests_entry.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/bi_report_section.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/conversation_thread.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/invitation_join_panel.dart": 2,
+
+      "lib/features/workspace/presentation/widgets/note_record_open.dart": 2,
+
+      "lib/features/workspace/presentation/widgets/settings_editor.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/setup_hours_step.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/setup_look_step.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/setup_member_rights_step.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/setup_new_members_step.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/setup_no_invoicing_banner.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/setup_resume_banner.dart": 1
     }
   },
   "functions": [
@@ -658,6 +883,7 @@
     {"id":"lib/core/demo/data/finance_kpi_repository.dart#DemoFinanceKpiRepository.summary(String workspaceId,{required String fromMonth,required String toMonth})","cog":26,"cyc":25,"len":74,"params":3},
     {"id":"lib/core/demo/data/guest_pass_repository.dart#FakeGuestPassRepository.saveOffer(String workspaceId,{String? id,required String name,required GuestPassUnit unit,required int priceCents,String? vatRateId,bool active})","cog":4,"cyc":6,"len":26,"params":7},
     {"id":"lib/core/demo/data/mcp_admin_repository.dart#FakeMcpAdminRepository.savePolicy({required String workspaceId,required int expectedRevision,required String mutationId,required bool enabled,required Set<String> operations,required String targetCeiling,required Set<String> optionalFields})","cog":1,"cyc":2,"len":41,"params":7},
+    {"id":"lib/core/demo/data/money/demo_commercial_terms_repository.dart#DemoCommercialTerms.createService(String workspaceId,{required String name,required int priceCents,String? vatRateId,SupplyClass supplyClass,ServiceDetails details,String? requestId})","cog":0,"cyc":2,"len":26,"params":7},
     {"id":"lib/core/demo/data/money/demo_commercial_terms_repository.dart#DemoCommercialTerms.proposePriceNegotiation({required String memberId,int? feeCents,int? overageFeeCents,double? discountPercent,String note,DateTime? validFrom,int? subscriptionPct,Map<String, Map<String, int>> items})","cog":0,"cyc":3,"len":39,"params":8},
     {"id":"lib/core/demo/data/money/demo_einvoice_transmissions.dart#DemoEInvoiceTransmissions.sendEInvoice({required String workspaceId,required String invoiceId,required String fileName,required String mimeType,required List<int> bytes,String environment,String destination,String format,String receiverScheme,String receiverId})","cog":1,"cyc":2,"len":38,"params":10},
     {"id":"lib/core/demo/data/money/demo_expense_repository.dart#DemoExpenses.distributeExpense({required String workspaceId,required String title,required int amountCents,required RepartitionMethod method,required String period,required List<RepartitionShare> shares,String? sourceEventId})","cog":11,"cyc":9,"len":49,"params":7},
@@ -672,6 +898,7 @@
     {"id":"lib/core/demo/data/money_repository.dart#FakeMoneyRepository.distributeExpense({required String workspaceId,required String title,required int amountCents,required RepartitionMethod method,required String period,required List<RepartitionShare> shares,String? sourceEventId})","cog":0,"cyc":1,"len":1,"params":7},
     {"id":"lib/core/demo/data/money_repository.dart#FakeMoneyRepository.recordPayment({required String workspaceId,required String memberId,required int amountCents,String note,PaymentMethod? method,DateTime? paidOn,String? period})","cog":0,"cyc":1,"len":1,"params":7},
     {"id":"lib/core/demo/data/money_repository.dart#FakeMoneyRepository.sendEInvoice({required String workspaceId,required String invoiceId,required String fileName,required String mimeType,required List<int> bytes,String environment,String destination,String format,String receiverScheme,String receiverId})","cog":0,"cyc":1,"len":1,"params":10},
+    {"id":"lib/core/demo/data/money_repository.dart#FakeMoneyRepository.createService(String workspaceId,{required String name,required int priceCents,String? vatRateId,SupplyClass supplyClass,ServiceDetails details,String? requestId})","cog":0,"cyc":1,"len":1,"params":7},
     {"id":"lib/core/demo/data/money_repository.dart#FakeMoneyRepository.createExpenseSchedule({required String workspaceId,required String title,required int amountCents,required DateTime startsOn,required ScheduleUnit unit,int every,int? repeatCount,DateTime? endsOn,String description})","cog":0,"cyc":1,"len":1,"params":9},
     {"id":"lib/core/demo/data/money_repository.dart#FakeMoneyRepository.createPaymentOrder({required PaymentProvider provider,required String workspaceId,required String memberId,required int amountCents,required String currencyCode,required String period,String? requestId})","cog":0,"cyc":1,"len":1,"params":7},
     {"id":"lib/core/demo/data/purchase_repository.dart#FakePurchaseRepository._demoClaim(String id,String member,int amount,String category,{int paid,List<SettlementAllocation> allocations,DateTime? received})","cog":0,"cyc":1,"len":32,"params":7},
@@ -727,6 +954,7 @@
     {"id":"lib/features/money/application/schedule_expense.dart#ExpenseSchedules.schedule({required String workspaceId,required String title,required int? amountCents,required DateTime startsOn,required ScheduleUnit unit,int every,int? repeatCount,DateTime? endsOn,ScheduleDetails details})","cog":3,"cyc":4,"len":36,"params":9},
     {"id":"lib/features/money/application/send_reminder.dart#sendReminder({required InvoiceCommands repository,required FileSharer share,required String invoiceId,required int level,required Uint8List bytes,required String fileName,required String message})","cog":0,"cyc":1,"len":26,"params":7},
     {"id":"lib/features/money/data/supabase_book_profile_repository.dart#SupabaseBookProfileRepository.saveBookMapping({required String workspaceId,required String issuerSiteId,required BookRole role,required String accountId,required DateTime effectiveFrom,required int expectedRevision,String? qualifier})","cog":4,"cyc":4,"len":30,"params":7},
+    {"id":"lib/features/money/data/supabase_commercial_terms_repository.dart#SupabaseCommercialTermsRepository.createService(String workspaceId,{required String name,required int priceCents,String? vatRateId,SupplyClass supplyClass,ServiceDetails details,String? requestId})","cog":1,"cyc":4,"len":29,"params":7},
     {"id":"lib/features/money/data/supabase_commercial_terms_repository.dart#SupabaseCommercialTermsRepository.proposePriceNegotiation({required String memberId,int? feeCents,int? overageFeeCents,double? discountPercent,String note,DateTime? validFrom,int? subscriptionPct,Map<String, Map<String, int>> items})","cog":0,"cyc":1,"len":23,"params":8},
     {"id":"lib/features/money/data/supabase_einvoice_transmissions.dart#SupabaseEInvoiceTransmissions.sendEInvoice({required String workspaceId,required String invoiceId,required String fileName,required String mimeType,required List<int> bytes,String environment,String destination,String format,String receiverScheme,String receiverId})","cog":4,"cyc":5,"len":39,"params":10},
     {"id":"lib/features/money/data/supabase_expense_repository.dart#SupabaseExpenseRepository.distributeExpense({required String workspaceId,required String title,required int amountCents,required RepartitionMethod method,required String period,required List<RepartitionShare> shares,String? sourceEventId})","cog":1,"cyc":2,"len":24,"params":7},
@@ -739,6 +967,7 @@
     {"id":"lib/features/money/data/supabase_money_repository.dart#SupabaseMoneyRepository.createInvoice({required String workspaceId,required String memberId,required String period,String? replacesId,bool detailed,InvoiceKind kind,String buyerReference,String purchaseOrder,String correctionReason})","cog":0,"cyc":1,"len":1,"params":9},
     {"id":"lib/features/money/data/supabase_money_repository.dart#SupabaseMoneyRepository.recordPayment({required String workspaceId,required String memberId,required int amountCents,String note,PaymentMethod? method,DateTime? paidOn,String? period})","cog":0,"cyc":1,"len":1,"params":7},
     {"id":"lib/features/money/data/supabase_money_repository.dart#SupabaseMoneyRepository.createExpenseSchedule({required String workspaceId,required String title,required int amountCents,required DateTime startsOn,required ScheduleUnit unit,int every,int? repeatCount,DateTime? endsOn,String description})","cog":0,"cyc":1,"len":1,"params":9},
+    {"id":"lib/features/money/data/supabase_money_repository.dart#SupabaseMoneyRepository.createService(String workspaceId,{required String name,required int priceCents,String? vatRateId,SupplyClass supplyClass,ServiceDetails details,String? requestId})","cog":0,"cyc":1,"len":1,"params":7},
     {"id":"lib/features/money/data/supabase_money_repository.dart#SupabaseMoneyRepository.sendEInvoice({required String workspaceId,required String invoiceId,required String fileName,required String mimeType,required List<int> bytes,String environment,String destination,String format,String receiverScheme,String receiverId})","cog":0,"cyc":1,"len":1,"params":10},
     {"id":"lib/features/money/data/supabase_money_repository.dart#SupabaseMoneyRepository.createPaymentOrder({required PaymentProvider provider,required String workspaceId,required String memberId,required int amountCents,required String currencyCode,required String period,String? requestId})","cog":0,"cyc":1,"len":1,"params":7},
     {"id":"lib/features/money/data/supabase_payment_gateway_repository.dart#SupabasePaymentGatewayRepository.createPaymentOrder({required PaymentProvider provider,required String workspaceId,required String memberId,required int amountCents,required String currencyCode,required String period,String? requestId})","cog":0,"cyc":1,"len":18,"params":7},
