@@ -11669,6 +11669,378 @@ abstract class AppLocalizations {
   /// **'Only {held} of the {asked} asked for is here. Nothing was sold.'**
   String counterLotsShort(String held, String asked);
 
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'As printed on the terminal\'s journal or slip (optional).'**
+  String get counterSaleAnswerRefHint;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Terminal\'s transaction reference'**
+  String get counterSaleAnswerRefLabel;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'At most {left}.'**
+  String counterSaleAtMost(String left);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get counterSaleCardAccepted;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Key in the amount on the payment terminal with the reference {reference}, then record what the terminal answered.'**
+  String counterSaleCardAskedHint(String reference);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Card on the terminal: {amount}'**
+  String counterSaleCardAskedTitle(String amount);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'The terminal declined the card: nothing was taken. Take another payment.'**
+  String get counterSaleCardDeclined;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'No answer'**
+  String get counterSaleCardNoAnswer;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Declined'**
+  String get counterSaleCardRefused;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'The card\'s answer is not settled here. Do not ask the card again: the sale waits in Receipts, where someone who may see the finances records the terminal\'s answer from its journal (reference {reference}) and completes it once.'**
+  String counterSaleCardWaiting(String reference);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the sale'**
+  String get counterSaleComplete;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Sale {number} completed.'**
+  String counterSaleCompleted(String number);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Correct this sale'**
+  String get counterSaleCorrect;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'A correction is a new receipt that credits the sale; the sale itself never changes. It gives no money back and takes no goods back: those are separate steps.'**
+  String get counterSaleCorrectHint;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: quantity to credit (at most {left})'**
+  String counterSaleCorrectLineLabel(String label, String left);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Name the quantity of at least one line.'**
+  String get counterSaleCorrectNothing;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get counterSaleCorrectReason;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Issue the correction'**
+  String get counterSaleCorrectSubmit;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Correction of {number}'**
+  String counterSaleCorrectTitle(String number);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Correction {number} issued.'**
+  String counterSaleCorrected(String number);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Correction {number} of {original}'**
+  String counterSaleCorrection(String number, String original);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Unfinished sale of {amount}'**
+  String counterSaleDraft(String amount);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Issued'**
+  String get counterSaleIssuedTitle;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} left to correct'**
+  String counterSaleLeft(String quantity);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Receipts'**
+  String get counterSaleOpenReceipts;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Take card'**
+  String get counterSalePayCard;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'An exact quantity above zero, with at most six decimals.'**
+  String get counterSaleQuantityInvalid;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Reason: {reason}'**
+  String counterSaleReasonShown(String reason);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'No receipt yet. A sale made at the till appears here.'**
+  String get counterSaleReceiptsEmpty;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Counter receipts'**
+  String get counterSaleReceiptsTitle;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Reconcile'**
+  String get counterSaleReconcile;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Record the terminal\'s answer'**
+  String get counterSaleRecordAnswer;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Terminal reference {reference}'**
+  String counterSaleReference(String reference);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Give money back'**
+  String get counterSaleRefund;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Amount (at most {left})'**
+  String counterSaleRefundAmount(String left);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Money given back.'**
+  String get counterSaleRefundDone;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'An amount above zero.'**
+  String get counterSaleRefundInvalid;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Give back'**
+  String get counterSaleRefundSubmit;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Money back against {number}'**
+  String counterSaleRefundTitle(String number);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded {refunded} of {total}'**
+  String counterSaleRefunded(String refunded, String total);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Take goods back'**
+  String get counterSaleReturn;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Goods taken back into stock.'**
+  String get counterSaleReturnDone;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: quantity back in stock (at most {left})'**
+  String counterSaleReturnLineLabel(String label, String left);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Take back'**
+  String get counterSaleReturnSubmit;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Goods back against {number}'**
+  String counterSaleReturnTitle(String number);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Sale {number}'**
+  String counterSaleSale(String number);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Share the receipt'**
+  String get counterSaleShare;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt'**
+  String get counterSaleShareTitle;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'accepted'**
+  String get counterSaleStateAccepted;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'accepted for an offer that changed: to reconcile'**
+  String get counterSaleStateReconcile;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'declined'**
+  String get counterSaleStateRefused;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'asked, no answer recorded'**
+  String get counterSaleStateRequested;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'answer unknown'**
+  String get counterSaleStateUnknown;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'of which tax {amount}'**
+  String counterSaleTax(String amount);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Tax included'**
+  String get counterSaleTaxLabel;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get counterSaleTenderCard;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get counterSaleTenderCash;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'{kind} {amount}: {state}'**
+  String counterSaleTenderLine(String kind, String amount, String state);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get counterSaleTenderOther;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Total {amount}'**
+  String counterSaleTotal(String amount);
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get counterSaleTotalLabel;
+
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a card answer'**
+  String get counterSaleWaitingTitle;
+
   /// #2454 country change
   ///
   /// In en, this message translates to:

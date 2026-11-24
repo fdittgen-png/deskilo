@@ -3098,6 +3098,16 @@ La caisse cherche d'elle-même sa connexion, et **Chercher la connexion maintena
 
 Trois réglages de l'entreprise bornent ce qui est accepté : **Durée maximale hors ligne (minutes)**, **Nombre maximal de ventes hors ligne par session de caisse** et **Écart de prix toléré hors ligne (%)**. Si les données hors ligne de l'appareil sont illisibles, rien ne se vend hors ligne tant qu'un responsable n'a pas décidé ; **Supprimer les données hors ligne** les supprime après un avertissement, car les ventes non encore envoyées sont perdues définitivement.
 
+### Tickets et réponses de carte à la caisse
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous encaissez par carte au comptoir, ou une vente doit être corrigée après coup, et vous voulez voir ce que la caisse a fait et ce qui attend encore.
+
+**Encaisser par carte** demande le total au terminal ; la réponse du terminal décide de la vente : **Acceptée** la conclut, **Refusée** laisse le panier à payer autrement, et **Pas de réponse** laisse la vente sous **En attente d'une réponse de carte** dans les **Tickets de caisse** (ouverts par **Tickets** depuis la caisse), où la carte n'est jamais redemandée. Qui peut voir les finances enregistre ce que le terminal a affiché, et la vente est conclue une seule fois.
+
+Les **Tickets de caisse** listent ce que la caisse a fait. **Corriger cette vente** émet une correction comme un nouveau ticket qui cite l'original, pour la quantité de chaque ligne indiquée (au plus ce qu'il reste à la ligne) avec un **Motif**. **Rembourser** rend le montant d'une correction (au plus ce qu'elle crédite) et les articles repris sont enregistrés contre elle ; rien n'est jamais rendu deux fois.
+
 ### Puces RFID : une par lot ou une par pièce
 
 **Public:** Administrateur·rice · Propriétaire

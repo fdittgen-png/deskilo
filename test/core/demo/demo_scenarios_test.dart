@@ -36,6 +36,7 @@ import 'package:deskilo/core/demo/data/demo_stock_registry.dart';
 import 'package:deskilo/core/demo/data/demo_stock_reorder.dart';
 import 'package:deskilo/core/demo/data/demo_stock_reversals.dart';
 import 'package:deskilo/core/demo/data/demo_stock_tags.dart';
+import 'package:deskilo/core/demo/data/demo_till.dart';
 import 'package:deskilo/core/demo/data/demo_workspace_units.dart';
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
@@ -71,6 +72,7 @@ import 'package:deskilo/features/money/domain/bank/bank_match.dart';
 import 'package:deskilo/features/money/domain/billing_customer.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
+import 'package:deskilo/features/money/domain/counter_book.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
 import 'package:deskilo/features/money/domain/einvoice_inbox.dart';
 import 'package:deskilo/features/money/domain/lease_commitment.dart';
@@ -327,6 +329,45 @@ int _switchOnlyCount(Iterable<_Scenario> scenarios) =>
     scenarios.where((s) => s.kind == _Kind.toggle).length;
 
 /// One scenario per feature, grouped as the process catalogue groups them.
+/// #4185 — the counter's book: a sale whose card answer was lost waits in the receipts; the terminal's answer is recorded and
+/// the sale is completed once; a correction credits part of it, money is given back and goods taken back against the
+/// correction, each bounded by what it credits.
+Future<bool> _counterBookJourney(_World w) async {
+    final till = DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20)..seed();
+    var book = await till.book(demoFirstSpaceId);
+    final waiting = book.waiting.single;
+    final card = waiting.openAuthorizations.single;
+    await till.resolveTender(demoFirstSpaceId, requestId: 'r1', tenderId: card.id, outcome: 'accepted', providerRef: 'T-881');
+    book = await till.book(demoFirstSpaceId);
+    final number = await till.complete(demoFirstSpaceId, requestId: 'r2', receiptId: waiting.id,
+        expectedRevision: waiting.revision, tenderIds: book.byId(waiting.id)!.settlingCardTenders);
+    final again = await till.complete(demoFirstSpaceId, requestId: 'r2', receiptId: waiting.id,
+        expectedRevision: waiting.revision, tenderIds: const []);
+    book = await till.book(demoFirstSpaceId);
+    final cashSale = book.issued.firstWhere((r) => r.number == 'R-00001');
+    final milk = cashSale.lines.first;
+    final correction = await till.correct(demoFirstSpaceId, requestId: 'r3', originalId: cashSale.id,
+        lines: [CounterBookQuantity(lineId: milk.id, quantity: '1')], reason: 'spilt');
+    book = await till.book(demoFirstSpaceId);
+    final credit = book.issued.firstWhere((r) => r.number == correction);
+    await till.refund(demoFirstSpaceId, requestId: 'r4', correctionId: credit.id,
+        parts: [CounterRefundPart(kind: 'cash', amountMinor: credit.totalMinor)]);
+    await till.returnGoods(demoFirstSpaceId, requestId: 'r5', correctionId: credit.id,
+        lines: [CounterBookQuantity(lineId: credit.lines.single.id, quantity: '1')]);
+    try {
+      await till.refund(demoFirstSpaceId, requestId: 'r6', correctionId: credit.id,
+          parts: const [CounterRefundPart(kind: 'other', amountMinor: 1)]);
+      return false;
+    } on PostgrestException catch (e) {
+      book = await till.book(demoFirstSpaceId);
+      return e.code == DkCode.dkl08 &&
+          number == again &&
+          book.waiting.isEmpty &&
+          book.leftOf(milk) == '1' &&
+          book.byId(credit.id)!.refundLeftMinor == 0;
+    }
+}
+
 final Map<WorkspaceFeature, _Scenario> _scenarios = {
   // ── workspaceAccess / people ──────────────────────────────────────────
   WorkspaceFeature.membersDirectory: _state(
@@ -1805,8 +1846,9 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   // #4184 — a sale at the counter: rung up, priced by the server, paid in cash and numbered.
   WorkspaceFeature.counterReceipts: _action(
     _owner,
-    'Ada rings up a litre of milk at the counter, takes the cash and the sale is numbered',
-    (_) => tillSaleJourney(),
+    'Ada rings up a litre of milk at the counter, takes the cash and the sale is numbered; then settles a lost card answer once, '
+    'corrects a sale, gives money and goods back, each bounded by what it credits',
+    (w) async => await tillSaleJourney() && await _counterBookJourney(w),
   ),
   // #4367 — the cash drawer: open with a float, sell, pay out, count and close.
   WorkspaceFeature.counterTillSessions: _action(

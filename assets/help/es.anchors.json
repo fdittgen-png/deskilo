@@ -142,6 +142,7 @@
   "user.money.till": "Caja",
   "user.money.till-drawer": "Abrir la caja, contar y cerrar",
   "user.money.till-offline": "Cuando la caja está sin conexión",
+  "user.money.till.receipts": "Tickets y respuestas de tarjeta en la caja",
   "user.money.stock.rfid": "Etiquetas RFID: una por lote o una por pieza",
   "user.money.stock.units": "Unidades de manipulación",
   "user.money.stock.expiry": "El informe de caducidad",

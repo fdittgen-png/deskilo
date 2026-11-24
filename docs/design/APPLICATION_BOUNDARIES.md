@@ -128,6 +128,7 @@ Mutual pairs are only the shortest cycles; a component is a set of features that
 
 The budget line of `test/lint/file_length_test.dart`. A file here is not necessarily wrong; it is where a decomposition would pay, and the budgets there say what each one costs today.
 
+- `lib/core/demo/data/demo_till.dart`
 - `lib/core/demo/data/reservation_repository.dart`
 - `lib/features/calendar/presentation/screens/calendar_hub_screen.dart`
 - `lib/features/directory/presentation/messenger/context_thread_screen.dart`

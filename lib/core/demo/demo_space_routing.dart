@@ -23,6 +23,7 @@ import '../../features/me/providers/me_providers.dart' show myReservationsSource
 import '../../features/money/domain/hmrc_submission.dart';
 import '../../features/money/domain/till_drawer.dart' show DrawerSettings;
 import '../../features/money/providers/bank_statement_providers.dart';
+import '../../features/money/providers/counter_book_providers.dart';
 import '../../features/money/providers/credit_move_providers.dart';
 import '../../features/money/providers/credit_providers.dart';
 import '../../features/money/providers/guest_pass_providers.dart';
@@ -463,10 +464,11 @@ List<Override> _hmrcOverrides(DemoFixture fixture) => [
   ),
 ];
 
-/// #4366 — each space's till: its own counter, its own numbers.
-/// The till's ports: its sales, its drawer (following the business's settings and the person's rights) and its offline sales.
+/// #4366 — each space's till: its own counter, its own numbers (#4185: the reference business opens its book with a cash
+/// sale and a sale whose card answer was lost). The till's ports: its sales, its drawer (following the business's settings and the person's rights) and its offline sales.
 List<Override> _tillOverrides(DemoSpaces<DemoTill> tills, DemoSpaces<DemoTillDrawer> drawers) => [
     tillPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
+    counterBookPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
     // #4367 — the drawer follows the business's settings and the person's rights, as the server does.
     tillDrawerPortProvider.overrideWith((ref) {
       return demoPickSpace<DemoTillDrawer>(ref, drawers)
@@ -480,16 +482,14 @@ List<Override> _tillOverrides(DemoSpaces<DemoTill> tills, DemoSpaces<DemoTillDra
     tillOfflinePortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
 ];
 
-DemoSpaces<DemoTill> _demoTills(DemoFixture fixture, DemoSpaces<DemoTillDrawer> drawers) => demoSpacesOf(
-  (key) => DemoTill(
+DemoSpaces<DemoTill> _demoTills(DemoFixture fixture, DemoSpaces<DemoTillDrawer> drawers) => demoSpacesOf((key) {
+  final till = DemoTill(
     drawer: drawers.at(key),
     country: fixture.workspaces.workspaces.firstWhere((w) => w.id == key.id).countryCode,
-    currency: key.currency,
-    vatPercent: 20,
-    // #4436 -- a sale is kept with the Demo's day, so the trace finds it from the track IDs it took
-    clock: () => fixture.seededAt,
-  ),
-);
+    currency: key.currency, vatPercent: 20, clock: () => fixture.seededAt, // #4436 -- a sale is kept with the Demo's day, so the trace finds it from its track IDs
+  );
+  return key == DemoSpaceKey.home ? (till..seed()) : till;
+});
 
 /// #4367 — the drawer's settings as the business has them.
 DrawerSettings _drawerSettingsOf(SettingsSet settings) => DrawerSettings(

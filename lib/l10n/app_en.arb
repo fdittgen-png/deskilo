@@ -9720,6 +9720,382 @@
       }
     }
   },
+  "counterSaleAnswerRefHint": "As printed on the terminal's journal or slip (optional).",
+  "@counterSaleAnswerRefHint": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleAnswerRefLabel": "Terminal's transaction reference",
+  "@counterSaleAnswerRefLabel": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleAtMost": "At most {left}.",
+  "@counterSaleAtMost": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleCardAccepted": "Accepted",
+  "@counterSaleCardAccepted": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleCardAskedHint": "Key in the amount on the payment terminal with the reference {reference}, then record what the terminal answered.",
+  "@counterSaleCardAskedHint": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleCardAskedTitle": "Card on the terminal: {amount}",
+  "@counterSaleCardAskedTitle": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleCardDeclined": "The terminal declined the card: nothing was taken. Take another payment.",
+  "@counterSaleCardDeclined": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleCardNoAnswer": "No answer",
+  "@counterSaleCardNoAnswer": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleCardRefused": "Declined",
+  "@counterSaleCardRefused": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleCardWaiting": "The card's answer is not settled here. Do not ask the card again: the sale waits in Receipts, where someone who may see the finances records the terminal's answer from its journal (reference {reference}) and completes it once.",
+  "@counterSaleCardWaiting": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleComplete": "Complete the sale",
+  "@counterSaleComplete": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleCompleted": "Sale {number} completed.",
+  "@counterSaleCompleted": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleCorrect": "Correct this sale",
+  "@counterSaleCorrect": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleCorrectHint": "A correction is a new receipt that credits the sale; the sale itself never changes. It gives no money back and takes no goods back: those are separate steps.",
+  "@counterSaleCorrectHint": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleCorrectLineLabel": "{label}: quantity to credit (at most {left})",
+  "@counterSaleCorrectLineLabel": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleCorrectNothing": "Name the quantity of at least one line.",
+  "@counterSaleCorrectNothing": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleCorrectReason": "Reason",
+  "@counterSaleCorrectReason": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleCorrectSubmit": "Issue the correction",
+  "@counterSaleCorrectSubmit": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleCorrectTitle": "Correction of {number}",
+  "@counterSaleCorrectTitle": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleCorrected": "Correction {number} issued.",
+  "@counterSaleCorrected": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleCorrection": "Correction {number} of {original}",
+  "@counterSaleCorrection": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "original": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleDraft": "Unfinished sale of {amount}",
+  "@counterSaleDraft": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleIssuedTitle": "Issued",
+  "@counterSaleIssuedTitle": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleLeft": "{quantity} left to correct",
+  "@counterSaleLeft": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleOpenReceipts": "Receipts",
+  "@counterSaleOpenReceipts": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSalePayCard": "Take card",
+  "@counterSalePayCard": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleQuantityInvalid": "An exact quantity above zero, with at most six decimals.",
+  "@counterSaleQuantityInvalid": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleReasonShown": "Reason: {reason}",
+  "@counterSaleReasonShown": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleReceiptsEmpty": "No receipt yet. A sale made at the till appears here.",
+  "@counterSaleReceiptsEmpty": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleReceiptsTitle": "Counter receipts",
+  "@counterSaleReceiptsTitle": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleReconcile": "Reconcile",
+  "@counterSaleReconcile": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleRecordAnswer": "Record the terminal's answer",
+  "@counterSaleRecordAnswer": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleReference": "Terminal reference {reference}",
+  "@counterSaleReference": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleRefund": "Give money back",
+  "@counterSaleRefund": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleRefundAmount": "Amount (at most {left})",
+  "@counterSaleRefundAmount": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleRefundDone": "Money given back.",
+  "@counterSaleRefundDone": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleRefundInvalid": "An amount above zero.",
+  "@counterSaleRefundInvalid": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleRefundSubmit": "Give back",
+  "@counterSaleRefundSubmit": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleRefundTitle": "Money back against {number}",
+  "@counterSaleRefundTitle": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleRefunded": "Refunded {refunded} of {total}",
+  "@counterSaleRefunded": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "refunded": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleReturn": "Take goods back",
+  "@counterSaleReturn": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleReturnDone": "Goods taken back into stock.",
+  "@counterSaleReturnDone": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleReturnLineLabel": "{label}: quantity back in stock (at most {left})",
+  "@counterSaleReturnLineLabel": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleReturnSubmit": "Take back",
+  "@counterSaleReturnSubmit": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleReturnTitle": "Goods back against {number}",
+  "@counterSaleReturnTitle": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleSale": "Sale {number}",
+  "@counterSaleSale": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleShare": "Share the receipt",
+  "@counterSaleShare": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleShareTitle": "Receipt",
+  "@counterSaleShareTitle": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleStateAccepted": "accepted",
+  "@counterSaleStateAccepted": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleStateReconcile": "accepted for an offer that changed: to reconcile",
+  "@counterSaleStateReconcile": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleStateRefused": "declined",
+  "@counterSaleStateRefused": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleStateRequested": "asked, no answer recorded",
+  "@counterSaleStateRequested": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleStateUnknown": "answer unknown",
+  "@counterSaleStateUnknown": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleTax": "of which tax {amount}",
+  "@counterSaleTax": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleTaxLabel": "Tax included",
+  "@counterSaleTaxLabel": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleTenderCard": "Card",
+  "@counterSaleTenderCard": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleTenderCash": "Cash",
+  "@counterSaleTenderCash": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleTenderLine": "{kind} {amount}: {state}",
+  "@counterSaleTenderLine": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "state": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleTenderOther": "Other",
+  "@counterSaleTenderOther": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleTotal": "Total {amount}",
+  "@counterSaleTotal": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "counterSaleTotalLabel": "Total",
+  "@counterSaleTotalLabel": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
+  "counterSaleWaitingTitle": "Waiting for a card answer",
+  "@counterSaleWaitingTitle": {
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
+  },
   "countryChangeBody": "In {country} these features are not available and stop working: {features}. Their switches are kept: they return if you change the country back.",
   "@countryChangeBody": {
     "description": "#2454 country change",

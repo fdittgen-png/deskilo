@@ -9,6 +9,8 @@
 
       "lib/core/backend/secondary_federation.dart": 528,
 
+      "lib/core/demo/data/demo_till.dart": 654,
+
       "lib/core/demo/data/messenger_repository.dart": 590,
 
       "lib/core/demo/data/money_repository.dart": 522,

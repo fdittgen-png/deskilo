@@ -142,6 +142,7 @@
   "user.money.till": "Caisse",
   "user.money.till-drawer": "Ouvrir la caisse, compter et fermer",
   "user.money.till-offline": "Quand la caisse est hors ligne",
+  "user.money.till.receipts": "Tickets et réponses de carte à la caisse",
   "user.money.stock.rfid": "Puces RFID : une par lot ou une par pièce",
   "user.money.stock.units": "Unités de manutention",
   "user.money.stock.expiry": "Le rapport de péremption",

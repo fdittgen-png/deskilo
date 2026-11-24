@@ -7482,6 +7482,245 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get counterSaleAnswerRefHint =>
+      'Telle qu\'imprimée sur le journal ou le ticket du terminal (facultatif).';
+
+  @override
+  String get counterSaleAnswerRefLabel =>
+      'Référence de transaction du terminal';
+
+  @override
+  String counterSaleAtMost(String left) {
+    return 'Au plus $left.';
+  }
+
+  @override
+  String get counterSaleCardAccepted => 'Acceptée';
+
+  @override
+  String counterSaleCardAskedHint(String reference) {
+    return 'Saisissez le montant sur le terminal de paiement avec la référence $reference, puis indiquez ce que le terminal a répondu.';
+  }
+
+  @override
+  String counterSaleCardAskedTitle(String amount) {
+    return 'Carte sur le terminal : $amount';
+  }
+
+  @override
+  String get counterSaleCardDeclined =>
+      'Le terminal a refusé la carte : rien n\'a été encaissé. Prenez un autre paiement.';
+
+  @override
+  String get counterSaleCardNoAnswer => 'Pas de réponse';
+
+  @override
+  String get counterSaleCardRefused => 'Refusée';
+
+  @override
+  String counterSaleCardWaiting(String reference) {
+    return 'La réponse de la carte n\'est pas réglée ici. Ne redemandez pas la carte : la vente attend dans Tickets, où une personne autorisée à voir les finances indique la réponse du terminal d\'après son journal (référence $reference) et la termine une seule fois.';
+  }
+
+  @override
+  String get counterSaleComplete => 'Terminer la vente';
+
+  @override
+  String counterSaleCompleted(String number) {
+    return 'Vente $number terminée.';
+  }
+
+  @override
+  String get counterSaleCorrect => 'Corriger cette vente';
+
+  @override
+  String get counterSaleCorrectHint =>
+      'Une correction est un nouveau ticket qui crédite la vente ; la vente elle-même ne change jamais. Elle ne rembourse rien et ne reprend aucune marchandise : ce sont des étapes distinctes.';
+
+  @override
+  String counterSaleCorrectLineLabel(String label, String left) {
+    return '$label : quantité à créditer (au plus $left)';
+  }
+
+  @override
+  String get counterSaleCorrectNothing =>
+      'Indiquez la quantité d\'au moins une ligne.';
+
+  @override
+  String get counterSaleCorrectReason => 'Motif';
+
+  @override
+  String get counterSaleCorrectSubmit => 'Émettre la correction';
+
+  @override
+  String counterSaleCorrectTitle(String number) {
+    return 'Correction de $number';
+  }
+
+  @override
+  String counterSaleCorrected(String number) {
+    return 'Correction $number émise.';
+  }
+
+  @override
+  String counterSaleCorrection(String number, String original) {
+    return 'Correction $number de $original';
+  }
+
+  @override
+  String counterSaleDraft(String amount) {
+    return 'Vente non terminée de $amount';
+  }
+
+  @override
+  String get counterSaleIssuedTitle => 'Émis';
+
+  @override
+  String counterSaleLeft(String quantity) {
+    return '$quantity restant à corriger';
+  }
+
+  @override
+  String get counterSaleOpenReceipts => 'Tickets';
+
+  @override
+  String get counterSalePayCard => 'Encaisser par carte';
+
+  @override
+  String get counterSaleQuantityInvalid =>
+      'Une quantité exacte supérieure à zéro, avec au plus six décimales.';
+
+  @override
+  String counterSaleReasonShown(String reason) {
+    return 'Motif : $reason';
+  }
+
+  @override
+  String get counterSaleReceiptsEmpty =>
+      'Aucun ticket pour l\'instant. Une vente faite à la caisse apparaît ici.';
+
+  @override
+  String get counterSaleReceiptsTitle => 'Tickets de caisse';
+
+  @override
+  String get counterSaleReconcile => 'Rapprocher';
+
+  @override
+  String get counterSaleRecordAnswer => 'Indiquer la réponse du terminal';
+
+  @override
+  String counterSaleReference(String reference) {
+    return 'Référence terminal $reference';
+  }
+
+  @override
+  String get counterSaleRefund => 'Rembourser';
+
+  @override
+  String counterSaleRefundAmount(String left) {
+    return 'Montant (au plus $left)';
+  }
+
+  @override
+  String get counterSaleRefundDone => 'Remboursement enregistré.';
+
+  @override
+  String get counterSaleRefundInvalid => 'Un montant supérieur à zéro.';
+
+  @override
+  String get counterSaleRefundSubmit => 'Rembourser';
+
+  @override
+  String counterSaleRefundTitle(String number) {
+    return 'Remboursement sur $number';
+  }
+
+  @override
+  String counterSaleRefunded(String refunded, String total) {
+    return 'Remboursé $refunded sur $total';
+  }
+
+  @override
+  String get counterSaleReturn => 'Reprendre la marchandise';
+
+  @override
+  String get counterSaleReturnDone => 'Marchandise remise en stock.';
+
+  @override
+  String counterSaleReturnLineLabel(String label, String left) {
+    return '$label : quantité remise en stock (au plus $left)';
+  }
+
+  @override
+  String get counterSaleReturnSubmit => 'Reprendre';
+
+  @override
+  String counterSaleReturnTitle(String number) {
+    return 'Marchandise reprise sur $number';
+  }
+
+  @override
+  String counterSaleSale(String number) {
+    return 'Vente $number';
+  }
+
+  @override
+  String get counterSaleShare => 'Partager le ticket';
+
+  @override
+  String get counterSaleShareTitle => 'Ticket';
+
+  @override
+  String get counterSaleStateAccepted => 'acceptée';
+
+  @override
+  String get counterSaleStateReconcile =>
+      'acceptée pour une offre qui a changé : à rapprocher';
+
+  @override
+  String get counterSaleStateRefused => 'refusée';
+
+  @override
+  String get counterSaleStateRequested =>
+      'demandée, aucune réponse enregistrée';
+
+  @override
+  String get counterSaleStateUnknown => 'réponse inconnue';
+
+  @override
+  String counterSaleTax(String amount) {
+    return 'dont taxe $amount';
+  }
+
+  @override
+  String get counterSaleTaxLabel => 'Dont taxe';
+
+  @override
+  String get counterSaleTenderCard => 'Carte';
+
+  @override
+  String get counterSaleTenderCash => 'Espèces';
+
+  @override
+  String counterSaleTenderLine(String kind, String amount, String state) {
+    return '$kind $amount : $state';
+  }
+
+  @override
+  String get counterSaleTenderOther => 'Autre';
+
+  @override
+  String counterSaleTotal(String amount) {
+    return 'Total $amount';
+  }
+
+  @override
+  String get counterSaleTotalLabel => 'Total';
+
+  @override
+  String get counterSaleWaitingTitle => 'En attente d\'une réponse de carte';
+
+  @override
   String countryChangeBody(String country, String features) {
     return 'En $country, ces fonctionnalités ne sont pas disponibles et cessent de fonctionner : $features. Leurs interrupteurs sont conservés : elles reviennent si vous remettez le pays d\'origine.';
   }

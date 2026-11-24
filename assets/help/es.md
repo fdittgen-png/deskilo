@@ -3098,6 +3098,16 @@ La caja vuelve a buscar la conexión sola, y **Buscar la conexión ahora** lo ha
 
 Tres ajustes del negocio acotan lo que se acepta: **Tiempo máximo sin conexión (minutos)**, **Máximo de ventas sin conexión por sesión de caja** y **Diferencia de precio admitida sin conexión (%)**. Si los datos sin conexión del dispositivo no se pueden leer, no se vende nada sin conexión hasta que un responsable decida; **Descartar los datos sin conexión** los descarta tras una advertencia, porque las ventas aún no enviadas se pierden para siempre.
 
+### Tickets y respuestas de tarjeta en la caja
+
+**Público:** Administrador/a · Propietario
+
+Cobra con tarjeta en el mostrador, o una venta debe corregirse después, y quiere ver lo que ha hecho la caja y lo que sigue pendiente.
+
+**Cobrar con tarjeta** pide el total al terminal; la respuesta del terminal decide la venta: **Aceptada** la completa, **Rechazada** deja la cesta para pagarla de otro modo y **Sin respuesta** deja la venta en **A la espera de una respuesta de tarjeta** dentro de **Tickets de caja** (se abre con **Tickets** desde la caja), donde la tarjeta no se vuelve a pedir. Quien puede ver las finanzas registra lo que mostró el terminal y la venta se completa una sola vez.
+
+**Tickets de caja** lista lo que hizo la caja. **Corregir esta venta** emite una corrección como un ticket nuevo que cita el original, por la cantidad de cada línea indicada (como máximo lo que le queda a la línea) con un **Motivo**. **Devolver dinero** devuelve el importe de una corrección (como máximo lo que abona) y los artículos devueltos se registran contra ella; nada se devuelve dos veces.
+
 ### Etiquetas RFID: una por lote o una por pieza
 
 **Público:** Administrador/a · Propietario

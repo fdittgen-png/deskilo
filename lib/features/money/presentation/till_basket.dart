@@ -12,6 +12,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/form_kit.dart';
 import '../domain/counter_till.dart';
 import '../domain/till_offline.dart';
+import 'till_card_panel.dart';
 import 'till_offline_mode.dart';
 import 'till_offline_panel.dart';
 import 'till_session.dart';
@@ -31,6 +32,8 @@ class TillBasket extends StatelessWidget {
     this.onSendOffline,
     this.onDiscardOffline,
     this.onReceipt,
+    this.onCard,
+    this.onCardAnswer,
   });
 
   final TillState state;
@@ -47,6 +50,12 @@ class TillBasket extends StatelessWidget {
   final VoidCallback? onDiscardOffline;
   /// #4184 -- opens the frozen document of the sale just made.
   final void Function(String receiptId)? onReceipt;
+
+  /// #4185 -- asks the terminal for the total by card; null where the till takes no card.
+  final VoidCallback? onCard;
+
+  /// #4185 -- records the terminal's answer to the card asked: `accepted`, `refused` or `unknown`.
+  final void Function(String outcome)? onCardAnswer;
 
   @override
   Widget build(BuildContext context) {
@@ -85,23 +94,28 @@ class TillBasket extends StatelessWidget {
         const Divider(height: 1),
         Padding(
           padding: const EdgeInsets.all(AppSpacing.md),
-          child: sold != null
-              ? _Sold(
-                  sold: sold,
-                  change: state.change,
-                  money: money,
-                  offlineSale: offline.sale,
-                  onNext: state.busy ? null : onNext,
-                  // a sale recorded offline has no frozen document until the server has received it
-                  onReceipt: onReceipt == null || offline.sale != null ? null : () => onReceipt!(sold.receiptId),
-                )
-              : state.unconfirmed
-              ? _Unconfirmed(state: state, onConfirm: onConfirm)
-              : _Footer(state: state, money: money, offline: offline.active, onPay: onPay, onRetry: onRetry),
+          child: _bottom(sold, money),
         ),
       ],
     );
   }
+
+  /// What the fixed bottom of the basket shows: the sale made, its answer awaited, the card asked, or the footer to pay.
+  Widget _bottom(TillSold? sold, MoneyFormat money) => sold != null
+                ? _Sold(
+                    sold: sold,
+                    change: state.change,
+                    money: money,
+                    offlineSale: offline.sale,
+                    onNext: state.busy ? null : onNext,
+                    // a sale recorded offline has no frozen document until the server has received it
+                    onReceipt: onReceipt == null || offline.sale != null ? null : () => onReceipt!(sold.receiptId),
+                  )
+                : state.unconfirmed
+                ? _Unconfirmed(state: state, onConfirm: onConfirm)
+                : state.card != null
+                ? TillCardPanel(state: state, money: money, onAnswer: onCardAnswer, onNext: onNext)
+                : _Footer(state: state, money: money, offline: offline.active, onPay: onPay, onRetry: onRetry, onCard: offline.active ? null : onCard);
 }
 
 class _Line extends StatelessWidget {
@@ -177,7 +191,7 @@ class _Unconfirmed extends StatelessWidget {
 }
 
 class _Footer extends StatelessWidget {
-  const _Footer({required this.state, required this.money, required this.offline, required this.onPay, required this.onRetry});
+  const _Footer({required this.state, required this.money, required this.offline, required this.onPay, required this.onRetry, required this.onCard});
 
   final TillState state;
   final MoneyFormat money;
@@ -186,6 +200,7 @@ class _Footer extends StatelessWidget {
   final bool offline;
   final VoidCallback onPay;
   final VoidCallback onRetry;
+  final VoidCallback? onCard;
 
   @override
   Widget build(BuildContext context) {
@@ -221,6 +236,15 @@ class _Footer extends StatelessWidget {
           onPressed: draft == null || state.busy ? null : onPay,
           child: Text(l10n.tillPayCash),
         ),
+        if (onCard != null) ...[
+          const FormGap.small(),
+          OutlinedButton(
+            key: const ValueKey('till-pay-card'),
+            style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(56)),
+            onPressed: draft == null || state.busy ? null : onCard,
+            child: Text(l10n.counterSalePayCard),
+          ),
+        ],
       ],
     );
   }

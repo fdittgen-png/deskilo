@@ -14,6 +14,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/scan/scan_scope.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/time/clock.dart';
@@ -60,6 +61,13 @@ class TillScreen extends ConsumerWidget {
       appBar: AppBar(
         title: PageTitle(context.l10n.tillTitle),
         actions: [
+          // #4185 -- the receipts the till made: share, correct, give back, take back, settle a card
+          IconButton(
+            key: const ValueKey('till-receipts'),
+            tooltip: context.l10n.counterSaleOpenReceipts,
+            icon: const Icon(Icons.receipt_long_outlined),
+            onPressed: () => context.push(Routes.tillReceipts),
+          ),
           if (workspaceId != null)
             IconButton(
               key: const ValueKey('till-readiness'),
@@ -415,6 +423,8 @@ class _TillState extends ConsumerState<_Till> {
               offline: offline,
               onSendOffline: () => unawaited(_session.reconnect(force: true)),
               onDiscardOffline: () => unawaited(_discardOffline()),
+              onCard: () => unawaited(_session.payCard()),
+              onCardAnswer: (outcome) => unawaited(_session.cardAnswer(outcome)),
               onReceipt: (id) => unawaited(showCounterReceiptSheet(context, workspaceId: widget.workspaceId, receiptId: id)),
             ),
           ),
