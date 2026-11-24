@@ -92,13 +92,13 @@ void main() {
 
   test('a value the server names reaches the words', () {
     final en = lookupAppLocalizations(const Locale('en'));
-    expect(_words(en, 'DKK08', '{"days" : 45}'), en.bookingHorizonError(45));
+    expect(_words(en, DkCode.dkk08, '{"days" : 45}'), en.bookingHorizonError(45));
     expect(
-      _words(en, 'DKK09', '{"minutes" : 30}'),
+      _words(en, DkCode.dkk09, '{"minutes" : 30}'),
       en.bookingTooShortError(30),
     );
-    expect(_words(en, 'DKK06', '{"minutes" : 20}'), en.planSlotError(20));
-    expect(_words(en, 'DKK34', '{"days" : 120}'), en.bookingSeriesTooLong(120));
+    expect(_words(en, DkCode.dkk06, '{"minutes" : 20}'), en.planSlotError(20));
+    expect(_words(en, DkCode.dkk34, '{"days" : 120}'), en.bookingSeriesTooLong(120));
     // A detail already decoded reads the same.
     expect(_words(en, DkCode.dkk10, {'minutes': 240}), en.bookingTooLongError(240));
     // No DETAIL, or one that is not JSON: the screen's own grid, else 15.
@@ -122,28 +122,28 @@ void main() {
     notNumbers.forEach((name, json) {
       test('minutes as $name keeps the screen\'s grid', () {
         expect(
-          _words(en, 'DKK06', '{"minutes": $json}', stepMinutes: 30),
+          _words(en, DkCode.dkk06, '{"minutes": $json}', stepMinutes: 30),
           en.planSlotError(30),
         );
         expect(
-          _words(en, 'DKK09', '{"minutes": $json}'),
+          _words(en, DkCode.dkk09, '{"minutes": $json}'),
           en.bookingTooShortError(0),
         );
       });
       test('days as $name is absent', () {
         expect(
-          _words(en, 'DKK08', '{"days": $json}'),
+          _words(en, DkCode.dkk08, '{"days": $json}'),
           en.bookingHorizonError(0),
         );
       });
     });
 
     test('a whole number written as a double keeps its meaning', () {
-      expect(_words(en, 'DKK06', '{"minutes": 45.0}'), en.planSlotError(45));
+      expect(_words(en, DkCode.dkk06, '{"minutes": 45.0}'), en.planSlotError(45));
       expect(_words(en, DkCode.dkk06, {'minutes': 45.0}), en.planSlotError(45));
       // ... and a fraction is not a duration.
       expect(
-        _words(en, 'DKK06', '{"minutes": 45.5}', stepMinutes: 30),
+        _words(en, DkCode.dkk06, '{"minutes": 45.5}', stepMinutes: 30),
         en.planSlotError(30),
       );
     });
