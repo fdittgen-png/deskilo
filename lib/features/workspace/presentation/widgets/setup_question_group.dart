@@ -6,7 +6,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/setup_levels.dart';
-import '../../providers/business_kind_providers.dart';
+import '../../providers/business_shape_provider.dart';
 
 /// One collapsible group of the setup questions (#3317): each question with
 /// a business example (#3283), its yes/no switch and its "Not sure yet".
@@ -46,7 +46,7 @@ class SetupQuestionGroup extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     // #4223 — a business whose kind keeps places off reads its own examples.
-    final hasPlaces = !ref.watch(keepsPlacesOffProvider);
+    final hasPlaces = ref.watch(businessShapeProvider).places;
     String question(String key) =>
         l10n.setupQuestionFor(key, hasPlaces: hasPlaces);
     return Card(

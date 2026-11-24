@@ -22,7 +22,7 @@ import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/booking_granularity.dart';
 import '../../domain/closure_day.dart';
 import '../../domain/workspace_feature.dart';
-import '../../providers/business_kind_providers.dart';
+import '../../providers/business_shape_provider.dart';
 import '../../providers/workspace_providers.dart';
 import '../screens/availability_actions.dart';
 import '../screens/availability_sections.dart';
@@ -40,7 +40,7 @@ class SetupHoursStep extends ConsumerWidget {
     // #446: off = the 8:00–17:00 defaults, as on the availability screen.
     // #4223 — a business whose kind keeps places off has no half-day windows
     // to set: its page is its open days and its closures.
-    final placesOff = ref.watch(keepsPlacesOffProvider);
+    final placesOff = !ref.watch(businessShapeProvider).places;
     final workingHoursOn =
         features.contains(WorkspaceFeature.workingHours) && !placesOff;
     final workHours = ref.watch(workHoursProvider).value ?? WorkHours.defaults;
