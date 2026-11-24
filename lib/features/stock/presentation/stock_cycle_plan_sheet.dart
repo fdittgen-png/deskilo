@@ -13,7 +13,7 @@ import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
@@ -117,24 +117,25 @@ class _PlanDraft {
 
   Future<String?> submit(BuildContext context, AppLocalizations l10n, StockCycleCounts counts, String workspaceId) async {
     final threshold = scope == CountScope.highValue && fields.text('threshold').trim().isNotEmpty ? _threshold(context) : null;
-    try {
-      await counts.savePlan(workspaceId, (
-        planId: _id,
-        requestId: requestId,
-        name: fields.text('name').trim(),
-        scope: scope,
-        locationIds: scope == CountScope.places ? places.toList() : const [],
-        itemIds: scope == CountScope.items ? items.toList() : const [],
-        nextDueOn: due,
-        active: active,
-        highValueMinor: threshold,
-        intervalDays: repeating ? int.parse(fields.text('every').trim()) : null,
-      ));
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a count plan was not saved', error: e, stackTrace: st);
-      return stockSaveProblem(l10n, e);
-    }
+    return guardSave(
+      domain: 'stock',
+      message: 'a count plan was not saved',
+      action: () async {
+        await counts.savePlan(workspaceId, (
+          planId: _id,
+          requestId: requestId,
+          name: fields.text('name').trim(),
+          scope: scope,
+          locationIds: scope == CountScope.places ? places.toList() : const [],
+          itemIds: scope == CountScope.items ? items.toList() : const [],
+          nextDueOn: due,
+          active: active,
+          highValueMinor: threshold,
+          intervalDays: repeating ? int.parse(fields.text('every').trim()) : null,
+        ));
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
   }
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {

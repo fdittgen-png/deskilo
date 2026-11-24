@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../workspace/presentation/business_kind_names.dart';
 import '../domain/public_workspace.dart';
@@ -73,7 +74,7 @@ class PublicOfferPreview extends StatelessWidget {
             ),
           TextButton(
             key: const ValueKey('public-page-offer-edit'),
-            onPressed: () => context.push('/services'),
+            onPressed: () => context.push(Routes.services),
             child: Text(l10n.portalOfferEdit),
           ),
         ],

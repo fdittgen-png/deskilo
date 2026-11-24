@@ -15,6 +15,7 @@
 // on, they are removed through the Storage API so the stored file goes with
 // its metadata, and a file that could not be removed is named and left.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { sameSecret } from "../_shared/same_secret.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
@@ -56,10 +57,10 @@ export type Deps = {
 const defaultDeps: Deps = {
   service: () =>
     createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      readEnv(KEYS.supabaseUrl)!,
+      readEnv(KEYS.supabaseServiceRoleKey)!,
     ) as unknown as Db,
-  env: (name) => Deno.env.get(name),
+  env: readEnv,
   now: () => Date.now(),
 };
 

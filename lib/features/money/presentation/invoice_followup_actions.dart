@@ -308,7 +308,7 @@ Future<void> matchInvoiceToPayment(
   final dueCents =
       existing != null &&
           !existing.pending &&
-          existing.resolution == 'under_accepted' &&
+          existing.settles == MatchResolution.underAccepted &&
           existing.writeoffAt == null
       ? invoice.totalCents - existing.paidCents
       : invoice.totalCents;
@@ -347,7 +347,7 @@ Future<void> matchInvoiceToPayment(
             .matchInvoice(
               invoiceId: invoice.id,
               paymentLedgerId: choice.paymentLedgerId,
-              resolution: choice.resolution,
+              resolution: choice.resolution.wire,
               note: choice.note,
             );
       } catch (e, st) {

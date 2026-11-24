@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -59,7 +60,7 @@ class SetupMemberRightsStep extends ConsumerWidget {
         applied: member.containsAll(memberEssentials),
         canApply: canApply,
         onApply: () => _apply(context, ref),
-        onOpenRoles: rolesOn ? () => context.push('/roles') : null,
+        onOpenRoles: rolesOn ? () => context.push(Routes.roles) : null,
       ),
       preview: _MemberCanDo(granted: member),
     );

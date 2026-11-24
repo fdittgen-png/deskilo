@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -141,7 +142,7 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
                 title: Text(l10n.kioskDevicesTitle),
                 subtitle: Text(l10n.kioskDevicesEntryHint),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => unawaited(context.push('/badge-kiosks')),
+                onTap: () => unawaited(context.push(Routes.badgeKiosks)),
               ),
             ),
           ],

@@ -126,7 +126,7 @@ void main() {
       expect(knownRefusalText(englishL10n, kept), contains('Nothing was deleted'));
       // The code is the server's: the migration still raises it.
       final sql = File('supabase/migrations/0604_retention_disposition.sql').readAsStringSync();
-      expect(sql, contains("errcode = 'DKE01'"));
+      expect(sql, contains("errcode = '${DkCode.dke01}'"));
     });
 
     test('a bank statement explains its own refusals (#2380, DKB01-03)', () {
@@ -154,7 +154,7 @@ void main() {
       final raised = Directory('supabase/migrations')
           .listSync()
           .whereType<File>()
-          .any((f) => f.readAsStringSync().contains("errcode = 'DKV01'"));
+          .any((f) => f.readAsStringSync().contains("errcode = '${DkCode.dkv01}'"));
       expect(raised, isTrue);
     });
 

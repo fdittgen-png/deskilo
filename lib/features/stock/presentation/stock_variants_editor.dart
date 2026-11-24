@@ -16,12 +16,13 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/stock_reads.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_check.dart';
 import '../domain/stock_config_commands.dart';
@@ -37,18 +38,20 @@ Future<bool> showStockVariantsEditor(
   required String itemName,
 }) async {
   final l10n = context.l10n;
-  final StockItemConfig? item;
-  final List<StockDimension> dimensions;
-  final List<StockVariant> variants;
-  try {
-    item = await commands.item(workspaceId, itemId);
-    dimensions = await commands.dimensions(workspaceId);
-    variants = await commands.variants(workspaceId, itemId);
-  } on Object catch (e, st) {
-    TraceLogger.instance.error('stock', 'the variants of an item could not be read', error: e, stackTrace: st);
-    if (context.mounted) AppSnack.error(context, l10n.stockReadFailed);
-    return false;
-  }
+  final read = await guardRead<(StockItemConfig?, List<StockDimension>, List<StockVariant>)?>(
+    domain: 'stock',
+    message: 'the variants of an item could not be read',
+    read: () async {
+      final read = await StockReads(commands).variantsOf(workspaceId, itemId);
+      return (read.item, read.dimensions, read.variants);
+    },
+    fallback: (_) {
+      if (context.mounted) AppSnack.error(context, l10n.stockReadFailed);
+      return null;
+    },
+  );
+  if (read == null) return false;
+  final (item, dimensions, variants) = read;
   if (item == null || !context.mounted) return false;
   final draft = _VariantsDraft(commands, workspaceId, item, dimensions, variants, appFormatOf(context));
   return showAppFormSheet(
@@ -116,29 +119,30 @@ class _VariantsDraft {
     for (final e in checkStockVariants([
       for (final r in rows) (values: r.values, priceCents: r.priceCents),
     ]).entries)
-      e.key: stockReasonText(l10n, e.value),
+      e.key: stockRefusalText(l10n, e.value),
     for (final (i, r) in rows.indexed)
       if (r.priceProblem case final problem?)
         'variants[$i].price_cents': amountInputProblemText(l10n, problem, currency: format.currencyCode),
   };
 
   Future<String?> save(AppLocalizations l10n) async {
-    try {
-      await commands.saveVariants(
-        workspaceId,
-        item.itemId,
-        variants: [
-          for (final r in rows)
-            StockVariant(id: r.id, values: r.values, priceCents: r.priceCents, active: r.active, label: ''),
-        ],
-        expectedRevision: item.revision,
-        requestId: requestId,
-      );
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the variants of an item were not saved', error: e, stackTrace: st);
-      return stockSaveProblem(l10n, e);
-    }
+    return guardSave(
+      domain: 'stock',
+      message: 'the variants of an item were not saved',
+      action: () async {
+        await commands.saveVariants(
+          workspaceId,
+          item.itemId,
+          variants: [
+            for (final r in rows)
+              StockVariant(id: r.id, values: r.values, priceCents: r.priceCents, active: r.active, label: ''),
+          ],
+          expectedRevision: item.revision,
+          requestId: requestId,
+        );
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
   }
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {
@@ -166,11 +170,12 @@ class _VariantsDraft {
             key: const ValueKey('stock-dimensions-manage'),
             onPressed: () async {
               await _showStockDimensions(context, commands, workspaceId: workspaceId);
-              try {
-                dimensions = await commands.dimensions(workspaceId);
-              } on Object catch (e, st) {
-                TraceLogger.instance.error('stock', 'the dimensions could not be read again', error: e, stackTrace: st);
-              }
+              dimensions = await guardRead(
+                domain: 'stock',
+                message: 'the dimensions could not be read again',
+                read: () => StockReads(commands).dimensions(workspaceId),
+                fallback: (_) => dimensions,
+              );
               refresh();
             },
             child: Text(l10n.stockDimensionsManage),
@@ -275,13 +280,13 @@ class _DimensionsSheet extends StatefulWidget {
 }
 
 class _DimensionsSheetState extends State<_DimensionsSheet> {
-  late Future<List<StockDimension>> _dimensions = widget.commands.dimensions(widget.workspaceId);
+  late Future<List<StockDimension>> _dimensions = StockReads(widget.commands).dimensions(widget.workspaceId);
 
   Future<void> _edit(StockDimension? dimension) async {
     final saved = await _showDimensionEditor(context, widget.commands, workspaceId: widget.workspaceId, dimension: dimension);
     if (saved && mounted) {
       setState(() {
-        _dimensions = widget.commands.dimensions(widget.workspaceId);
+        _dimensions = StockReads(widget.commands).dimensions(widget.workspaceId);
       });
     }
   }
@@ -389,42 +394,43 @@ class _DimensionDraft {
   }
 
   FieldErrors validate(AppLocalizations l10n) {
-    final errors = <String, String>{};
-    if (name.text.trim().isEmpty || name.text.trim().length > 60) errors['name'] = 'name_malformed';
+    final errors = <String, StockRefusal>{};
+    if (name.text.trim().isEmpty || name.text.trim().length > 60) errors['name'] = StockRefusal.nameMalformed;
     final seen = <String>{};
     for (var i = 0; i < values.length; i++) {
       final label = values[i].label.text.trim();
       if (label.isEmpty || label.length > 60) {
-        errors['values[$i].label'] = 'name_malformed';
+        errors['values[$i].label'] = StockRefusal.nameMalformed;
       } else if (!seen.add(label)) {
-        errors['values[$i].label'] = 'name_duplicate';
+        errors['values[$i].label'] = StockRefusal.nameDuplicate;
       }
     }
-    return {for (final e in errors.entries) e.key: stockReasonText(l10n, e.value)};
+    return {for (final e in errors.entries) e.key: stockRefusalText(l10n, e.value)};
   }
 
   Future<String?> save(AppLocalizations l10n, StockConfigCommands commands, String workspaceId) async {
-    try {
-      await commands.saveDimension(
-        workspaceId,
-        dimension: StockDimension(
-          id: dimension?.id ?? '',
-          revision: dimension?.revision ?? 0,
-          name: name.text.trim(),
-          active: active,
-          values: [
-            for (final v in values) StockDimensionValue(id: v.id, label: v.label.text.trim(), active: v.active),
-          ],
-        ),
-        requestId: requestId,
-        dimensionId: dimension?.id,
-        expectedRevision: dimension?.revision,
-      );
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a dimension was not saved', error: e, stackTrace: st);
-      return stockSaveProblem(l10n, e);
-    }
+    return guardSave(
+      domain: 'stock',
+      message: 'a dimension was not saved',
+      action: () async {
+        await commands.saveDimension(
+          workspaceId,
+          dimension: StockDimension(
+            id: dimension?.id ?? '',
+            revision: dimension?.revision ?? 0,
+            name: name.text.trim(),
+            active: active,
+            values: [
+              for (final v in values) StockDimensionValue(id: v.id, label: v.label.text.trim(), active: v.active),
+            ],
+          ),
+          requestId: requestId,
+          dimensionId: dimension?.id,
+          expectedRevision: dimension?.revision,
+        );
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
   }
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {

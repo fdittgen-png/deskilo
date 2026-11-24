@@ -1,0 +1,10 @@
+{
+  "@@locale": "it",
+  "instanceErrorReports": "Segnalazioni di errore",
+  "instanceErrorReportsHint": "Ciò che le app hanno inviato quando qualcosa è andato storto, dalle più recenti. I membri di un'azienda non le vedono mai.",
+  "instanceErrorReportsNone": "Non è arrivata alcuna segnalazione di errore.",
+  "instanceErrorReportsOlder": "Segnalazioni precedenti",
+  "instanceErrorReportFacts": "{version} · {platform} · {time}",
+  "instanceErrorReportCode": "Codice {code}",
+  "instanceErrorReportStack": "Stack, oscurato dall'app"
+}

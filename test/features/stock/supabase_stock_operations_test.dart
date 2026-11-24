@@ -121,7 +121,7 @@ void main() {
     }));
     await expectLater(
       refused.operations.load(_ws, 'p', const [StockLineDraft(itemId: 'i-1', quantity: '1', fromLocationId: 'a')], 'req-7'),
-      throwsA(isA<StockConfigRefused>().having((e) => (e.field, e.reason), 'field and reason', ('to_location_id', 'same_site'))),
+      throwsA(isA<StockConfigRefused>().having((e) => (e.field, e.reason), 'field and reason', ('to_location_id', StockRefusal.sameSite))),
     );
   });
 

@@ -8,14 +8,16 @@
 // meanwhile is refused. A group nothing uses can be deleted here.
 import 'dart:convert';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/format/decimal_input.dart';
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
@@ -27,6 +29,8 @@ import '../domain/stock_service_creator.dart';
 import '../domain/workspace_units.dart';
 import 'item_group_text.dart';
 import 'measure_unit_text.dart';
+import 'stock_config_text.dart';
+import 'stock_quantity_field.dart';
 
 /// The units a group may set for its items (the registry's units of count, mass and volume).
 
@@ -44,7 +48,7 @@ Future<bool> showItemGroupSheet(
   GroupChoices choices = const (places: <StockPlaceConfig>[], vat: <StockVatChoice>[], finance: false, units: <WorkspaceUnit>[]),
 }) {
   final l10n = context.l10n;
-  final draft = _GroupDraft(port, workspaceId, group, groups, choices, appFormatOf(context).locale);
+  final draft = _GroupDraft(port, workspaceId, group, groups, choices, appFormatOf(context));
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -59,8 +63,16 @@ Future<bool> showItemGroupSheet(
   );
 }
 
+/// A quantity the server holds as text, shown in the member's own format without grouping (as a quantity field reads it
+/// back); a text that is no quantity is shown as it is.
+String _shownQuantity(AppFormat format, Object? held) {
+  if (held == null) return '';
+  final value = ExactQuantity.tryParse('$held').value;
+  return value == null ? '$held' : format.quantity(value, grouped: false);
+}
+
 class _GroupDraft {
-  _GroupDraft(this.port, this.workspaceId, this.group, this.groups, this.choices, this.locale)
+  _GroupDraft(this.port, this.workspaceId, this.group, this.groups, this.choices, this.format)
     : _id = group?.id ?? newRequestId(),
       parentId = group?.parentId,
       tracking = group?.params['tracking'] as String?,
@@ -80,8 +92,8 @@ class _GroupDraft {
         'factor': group?.params['default_purchase_factor_num'] == null
             ? ''
             : purchaseFactorText((group!.params['default_purchase_factor_num']! as num).toInt(), ((group.params['default_purchase_factor_den'] ?? 1) as num).toInt()),
-        'reorderPoint': '${group?.params['reorder_point_default'] ?? ''}',
-        'reorderQty': '${group?.params['reorder_quantity_default'] ?? ''}',
+        'reorderPoint': _shownQuantity(format, group?.params['reorder_point_default']),
+        'reorderQty': _shownQuantity(format, group?.params['reorder_quantity_default']),
         'margin': group?.params['target_margin_bps'] == null ? '' : percentOfMarginBps((group!.params['target_margin_bps']! as num).toInt()),
       });
 
@@ -90,7 +102,8 @@ class _GroupDraft {
   final ItemGroup? group;
   final List<ItemGroup> groups;
   final GroupChoices choices;
-  final String locale;
+  final AppFormat format;
+  String get locale => format.locale;
 
   List<StockPlaceConfig> get places => choices.places;
   List<StockVatChoice> get vatChoices => choices.vat;
@@ -120,7 +133,7 @@ class _GroupDraft {
   /// A decimal typed with the member's own separators, as the dot-decimal text the server reads; null when empty or not one.
   String? _decimal(String key) {
     if (fields.text(key).isEmpty) return null;
-    final text = decimalTextFromInput(fields.text(key), locale: locale, grouping: false);
+    final text = stockQuantityOf(fields.text(key), locale: locale).value?.text;
     // a numeric(18,6): at most six decimals, never rounded
     return text != null && RegExp(r'^[0-9]{1,12}(\.[0-9]{1,6})?$').hasMatch(text) ? text : null;
   }
@@ -172,25 +185,29 @@ class _GroupDraft {
 
   Future<String?> submit(AppLocalizations l10n) async {
     final now = jsonEncode(body());
-    try {
-      if (_preview == null || _previewOf != now) {
-        final preview = await port.save(workspaceId, requestId: requestId, groupId: _id, expectedRevision: group?.revision ?? 0, body: body(), apply: false);
-        _previewOf = now;
-        _preview = preview;
-        // nothing is reached: there is nothing to confirm
-        if (preview.impact.isEmpty && preview.skipped.isEmpty) return await _apply(l10n);
-        return l10n.itemGroupConfirm;
-      }
-      return await _apply(l10n);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'an item group was not saved', error: e, stackTrace: st);
-      return itemGroupProblem(l10n, e);
-    }
+    String? confirm;
+    final problem = await guardSave(
+      domain: 'stock',
+      message: 'an item group was not saved',
+      action: () async {
+        if (_preview == null || _previewOf != now) {
+          final preview = await port.save(workspaceId, requestId: requestId, groupId: _id, expectedRevision: group?.revision ?? 0, body: body(), apply: false);
+          _previewOf = now;
+          _preview = preview;
+          // nothing is reached: there is nothing to confirm
+          if (preview.impact.isEmpty && preview.skipped.isEmpty) return _apply();
+          confirm = l10n.itemGroupConfirm;
+          return;
+        }
+        await _apply();
+      },
+      problem: (e) => stockProblemText(l10n, e, subject: StockSubject.group),
+    );
+    return problem ?? confirm;
   }
 
-  Future<String?> _apply(AppLocalizations l10n) async {
+  Future<void> _apply() async {
     await port.save(workspaceId, requestId: requestId, groupId: _id, expectedRevision: group?.revision ?? 0, body: body());
-    return null;
   }
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {
@@ -300,23 +317,19 @@ class _GroupDraft {
       const FormGap(),
       AppTextField(key: const ValueKey('item-group-factor'), controller: fields['factor'], fieldKey: 'factor', label: l10n.itemGroupPurchaseFactor, onChanged: (_) => _preview = null),
       const FormGap(),
-      AppTextField(
+      StockQuantityField(
         key: const ValueKey('item-group-reorder-point'),
         controller: fields['reorderPoint'],
         fieldKey: 'reorderPoint',
         label: l10n.itemGroupReorderPoint,
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         onChanged: (_) => _preview = null,
       ),
       const FormGap(),
-      AppTextField(
+      StockQuantityField(
         key: const ValueKey('item-group-reorder-qty'),
         controller: fields['reorderQty'],
         fieldKey: 'reorderQty',
         label: l10n.itemGroupReorderQty,
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         onChanged: (_) => _preview = null,
       ),
       const FormGap(),
@@ -391,14 +404,17 @@ class _GroupDraft {
   Future<void> _delete(BuildContext context) async {
     final l10n = context.l10n;
     final navigator = Navigator.of(context);
-    try {
-      await port.delete(workspaceId, requestId: newRequestId(), groupId: group!.id, expectedRevision: group!.revision);
-      if (context.mounted) AppSnack.info(context, l10n.itemGroupDeleted);
-      navigator.pop(true);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'an item group was not deleted', error: e, stackTrace: st);
-      if (context.mounted) AppSnack.error(context, itemGroupProblem(l10n, e));
-    }
+    final problem = await guardSave(
+      domain: 'stock',
+      message: 'an item group was not deleted',
+      action: () async {
+        await port.delete(workspaceId, requestId: newRequestId(), groupId: group!.id, expectedRevision: group!.revision);
+        if (context.mounted) AppSnack.info(context, l10n.itemGroupDeleted);
+        navigator.pop(true);
+      },
+      problem: (e) => stockProblemText(l10n, e, subject: StockSubject.group),
+    );
+    if (problem != null && context.mounted) AppSnack.error(context, problem);
   }
 }
 

@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/settings/settings.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -102,7 +103,7 @@ class SettingsEditor extends ConsumerWidget {
                 key: const ValueKey('settings-stock-open'),
                 onPressed: () {
                   Navigator.of(context).maybePop();
-                  context.go('/stock/settings');
+                  context.go(Routes.stockSettings);
                 },
                 child: Text(l10n.stockSettingsOpen),
               ),

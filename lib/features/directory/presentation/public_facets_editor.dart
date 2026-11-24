@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/ui/form_kit.dart';
 import '../domain/public_facets.dart';
 import '../domain/public_workspace.dart';
@@ -96,7 +97,7 @@ class PublicFacetsEditor extends StatelessWidget {
             ),
             TextButton(
               key: const ValueKey('public-hours-edit-availability'),
-              onPressed: !enabled ? null : () => context.push('/availability'),
+              onPressed: !enabled ? null : () => context.push(Routes.availability),
               child: Text(context.l10n.publicPageHoursEdit),
             ),
           ] else

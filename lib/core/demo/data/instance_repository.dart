@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/workspace/domain/instance_responsibles.dart';
+import '../../../features/workspace/domain/instance_trace_report.dart';
 
 /// #1829 — in-memory instance owner and delegates for tests and Demo
 /// (where nobody is named: the visitor is not a Deskilo account).
@@ -33,4 +34,13 @@ class FakeInstanceRepository implements InstanceRepository {
     claims++;
     return true;
   }
+
+  /// #4416 — the reports the installation holds, newest first.
+  final traceReportRows = <InstanceTraceReport>[];
+
+  @override
+  Future<List<InstanceTraceReport>> traceReports({DateTime? before}) async => [
+    for (final r in traceReportRows)
+      if (before == null || r.reportedAt.isBefore(before)) r,
+  ].take(traceReportsPageSize).toList();
 }

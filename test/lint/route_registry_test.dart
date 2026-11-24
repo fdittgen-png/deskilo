@@ -16,6 +16,8 @@
 //  2. A RouteRule in lib/app/route_classes.dart
 //     (route_policy_registry_test).
 //  3. The Features screen itself stays ungated — always reachable.
+import 'dart:io';
+
 import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -177,5 +179,38 @@ void main() {
         reason: '$p lands on $landing',
       );
     }
+  });
+
+  // #4422 — a screen names the page it opens by a `Routes` symbol; a
+  // symbol whose path the router no longer registers is a dead link.
+  testWidgets('every Routes symbol names a route the router registers', (
+    tester,
+  ) async {
+    final app = await bootRouter(tester);
+    final registered = registeredRoutePaths(app.router.configuration.routes);
+    final source = File(
+      'lib/core/navigation/routes.dart',
+    ).readAsStringSync();
+    expect(routeSymbolLocations(source), isNotEmpty);
+    expect(
+      unregisteredRouteSymbols(source, registered),
+      isEmpty,
+      reason: 'these Routes symbols name no registered route — rename '
+          'the symbol with the route, or delete it',
+    );
+  });
+
+  test('a Routes symbol without a registered route is found', () {
+    const fixture = '''
+  static const settings = '/settings?tab=me';
+  static const gone = '/no-such-page';
+  static String thing(String id) => '/things/\$id';
+  static String other(String id) =>
+      '/others/\${Uri.encodeComponent(id)}/edit';
+''';
+    expect(
+      unregisteredRouteSymbols(fixture, ['/settings', '/things/:id']),
+      ['gone', 'other'],
+    );
   });
 }

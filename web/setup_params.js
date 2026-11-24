@@ -74,6 +74,11 @@ const FED_RETENTION=[['1','optOneHour'],['6','optHours',{n:6}],['24','optHours',
 const FED_FACT_BATCH=[['100','optEntries',{n:100}],['250','optEntries',{n:250}],['500','optEntries',{n:500}],['1000','optEntries',{n:1000}],['2000','optEntries',{n:2000}]];
 // #3732 — the support window of older apps (platform setting apps.support_window_days): 1..365 days.
 const APP_SUPPORT_WINDOW=[['7','optDays',{n:7}],['14','optDays',{n:14}],['30','optDaysDefault',{n:30}],['60','optDays',{n:60}],['90','optDays',{n:90}],['180','optDays',{n:180}]];
+// #4416 — the error reports apps send to this installation (platform settings trace.*): per person and hour 0..600,
+// the size cap 1024..262144 bytes, the retention 1..365 days.
+const TRACE_PER_HOUR=[['0','optReportsOff'],['5','optPerHour',{n:5}],['10','optPerHour',{n:10}],['20','optPerHourDefault',{n:20}],['60','optPerHour',{n:60}]];
+const TRACE_MAX_BYTES=[['4096','optKilobytes',{n:4}],['16384','optKilobytesDefault',{n:16}],['65536','optKilobytes',{n:64}],['262144','optKilobytes',{n:256}]];
+const TRACE_RETENTION=[['7','optDays',{n:7}],['14','optDays',{n:14}],['30','optDaysDefault',{n:30}],['90','optDays',{n:90}],['365','optOneYear']];
 const FED_ANSWER_WAIT=[['30','optSeconds',{n:30}],['60','optOneMinute'],['120','optMinutes',{n:2}],['300','optMinutes',{n:5}],['600','optMinutes',{n:10}]];
 // #2863 — the supplier lookup (platform settings
 // purchase.supplier_lookup_timeout_seconds 3..30 s and
@@ -184,6 +189,9 @@ const PARAM_META=[
  ['federation.answerWait','fedAnswerWait','enum',()=>FED_ANSWER_WAIT.map(x=>x[0])],
  ['federation.factBatch','fedFactBatch','enum',()=>FED_FACT_BATCH.map(x=>x[0])],
  ['appSupport.windowDays','appSupportWindow','enum',()=>APP_SUPPORT_WINDOW.map(x=>x[0])],
+ ['traceReports.perHour','traceReportsPerHour','enum',()=>TRACE_PER_HOUR.map(x=>x[0])],
+ ['traceReports.maxBytes','traceReportMaxBytes','enum',()=>TRACE_MAX_BYTES.map(x=>x[0])],
+ ['traceReports.retentionDays','traceReportRetention','enum',()=>TRACE_RETENTION.map(x=>x[0])],
  ['inbox.pageSize','inboxPageSize','enum',()=>INBOX_PAGE.map(x=>x[0])],
  ['bi.detailPageSize','biDetailPageSize','enum',()=>BI_DETAIL_PAGE.map(x=>x[0]),{needs:'moneyTab'}],
  ['badgeSecurity.failureLimit','badgeFailureLimit','num',{min:1,max:50}],

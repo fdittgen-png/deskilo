@@ -13,6 +13,7 @@ import '../../../../core/demo/presentation/demo_entry_sheet.dart';
 import '../../../../core/demo/presentation/demo_environment.dart';
 import '../../../../core/demo/presentation/demo_setup_card.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/async_read_body.dart';
@@ -156,7 +157,7 @@ class _SetupGuideBody extends ConsumerWidget {
                 icon: const Icon(Icons.fact_check_outlined),
                 label: Text(l10n.setupLaunchLink),
                 onPressed: () async {
-                  await context.push('/setup/launch');
+                  await context.push(Routes.setupLaunch);
                   await reload();
                 },
               ),
@@ -311,7 +312,7 @@ Future<void> _openLevels(
   BuildContext context,
   Future<void> Function() reload,
 ) async {
-  await context.push('/setup/levels');
+  await context.push(Routes.setupLevels);
   await reload();
 }
 

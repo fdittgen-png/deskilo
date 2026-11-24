@@ -12,15 +12,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/time/clock.dart';
-import '../../../core/trace/trace_logger.dart';
-import '../../../core/ui/app_snack.dart';
-import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -30,7 +26,9 @@ import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_cycle_plan_sheet.dart';
 import 'stock_day.dart';
+import 'stock_page_shell.dart';
 import 'stock_read_failed.dart';
+import 'stock_sheet_opener.dart';
 
 class StockCycleCountsScreen extends ConsumerWidget {
   const StockCycleCountsScreen({super.key});
@@ -38,25 +36,23 @@ class StockCycleCountsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
     final manages = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
     final tabs = [
-      (l10n.stockCycleTabTasks, 'tasks', _Tasks(workspaceId: workspaceId)),
+      (l10n.stockCycleTabTasks, 'tasks', _Tasks.new),
       if (manages) ...[
-        (l10n.stockCycleTabPlans, 'plans', _Plans(workspaceId: workspaceId)),
-        (l10n.stockCycleTabHistory, 'history', _History(workspaceId: workspaceId)),
+        (l10n.stockCycleTabPlans, 'plans', _Plans.new),
+        (l10n.stockCycleTabHistory, 'history', _History.new),
       ],
     ];
     return DefaultTabController(
       length: tabs.length,
-      child: Scaffold(
-        appBar: AppBar(
-          title: PageTitle(l10n.stockCycleTitle),
-          actions: [HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockCycleCounts)],
-          // a counter who only counts has one page: no tabs to choose between
-          bottom: tabs.length < 2 ? null : TabBar(tabs: [for (final t in tabs) Tab(key: ValueKey('stock-cycle-tab-${t.$2}'), text: t.$1)]),
-        ),
-        body: workspaceId == null ? const LoadingView() : TabBarView(children: [for (final t in tabs) t.$3]),
+      child: StockPageShell(
+        title: l10n.stockCycleTitle,
+        anchor: HelpAnchor.moneyStockCycleCounts,
+        helpTopic: l10n.permModuleStock,
+        // a counter who only counts has one page: no tabs to choose between
+        bottom: tabs.length < 2 ? null : TabBar(tabs: [for (final t in tabs) Tab(key: ValueKey('stock-cycle-tab-${t.$2}'), text: t.$1)]),
+        body: (context, ref, workspaceId) => TabBarView(children: [for (final t in tabs) t.$3(workspaceId: workspaceId)]),
       ),
     );
   }
@@ -129,30 +125,25 @@ class _Plans extends ConsumerWidget {
 
   final String? workspaceId;
 
-  Future<void> _edit(BuildContext context, WidgetRef ref, String workspaceId, CountPlan? plan) async {
-    try {
-      final items = await ref.read(stockItemsProvider(workspaceId).future);
-      final places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
-      if (!context.mounted) return;
-      final saved = await showCountPlanSheet(
-        context,
-        ref.read(stockCycleCountsProvider),
-        workspaceId: workspaceId,
-        choices: (
-          items: [for (final i in items) i],
-          places: places,
-          separator: ref.read(stockAddressSeparatorProvider),
-          currency: ref.read(currentWorkspaceProvider).value?.currencyCode ?? '',
-        ),
-        today: isoDay(stockDayOf(ref, ref.read(clockProvider).now())),
-        plan: plan,
-      );
-      if (saved) ref.invalidate(stockCountPlansProvider(workspaceId));
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the plan sheet could not read what it needs', error: e, stackTrace: st);
-      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-    }
-  }
+  Future<void> _edit(BuildContext context, WidgetRef ref, String workspaceId, CountPlan? plan) => StockSheetOpener(ref).open(
+    context,
+    workspaceId,
+    what: 'plan',
+    sheet: (choices) => showCountPlanSheet(
+      context,
+      ref.read(stockCycleCountsProvider),
+      workspaceId: workspaceId,
+      choices: (
+        items: choices.items,
+        places: choices.places,
+        separator: choices.separator,
+        currency: ref.read(currentWorkspaceProvider).value?.currencyCode ?? '',
+      ),
+      today: isoDay(stockDayOf(ref, ref.read(clockProvider).now())),
+      plan: plan,
+    ),
+    reads: [stockCountPlansProvider(workspaceId)],
+  );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

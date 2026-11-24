@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/navigation/routes.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
@@ -49,26 +50,26 @@ List<Widget> workspaceSettingsTiles(
       ListTile(key: const ValueKey('settings-reports'),
         leading: const Icon(Icons.summarize_outlined),
         title: Text(l10n.uxReportsTitle),
-        onTap: () => context.push('/reports')),
+        onTap: () => context.push(Routes.reports)),
     if (perms.contains(WorkspacePermission.workspaceSettings))
       ListTile(key: const ValueKey('settings-workspace-sections-workspace-settings-title'),
         leading: const Icon(Icons.business_outlined),
         title: Text(l10n.workspaceSettingsTitle),
-        onTap: () => context.push('/workspace-settings'),
+        onTap: () => context.push(Routes.workspaceSettings),
       ),
     if (_onPlaces(features, perms, WorkspacePermission.workspaceSettings))
       ListTile(
         key: const ValueKey('settings-workspace-sections-availability-title'),
         leading: const Icon(Icons.event_busy_outlined),
         title: Text(l10n.availabilityTitle),
-        onTap: () => context.push('/availability'),
+        onTap: () => context.push(Routes.availability),
       ),
     if (_moneyMay(perms, features, WorkspacePermission.manageBilling))
       ListTile(
         key: const ValueKey('settings-workspace-sections-billing-title'),
         leading: const Icon(Icons.payments_outlined),
         title: Text(l10n.billingTitle),
-        onTap: () => context.push('/billing'),
+        onTap: () => context.push(Routes.billing),
       ),
     if (perms.contains(WorkspacePermission.manageServices) &&
         features.contains(WorkspaceFeature.services))
@@ -76,7 +77,7 @@ List<Widget> workspaceSettingsTiles(
         key: const ValueKey('settings-workspace-sections-services-title'),
         leading: const Icon(Icons.local_cafe_outlined),
         title: Text(l10n.servicesTitle),
-        onTap: () => context.push('/services'),
+        onTap: () => context.push(Routes.services),
       ),
     // Accessory catalog (#167): owner AND admins, per the epic #163
     // decision. The screen still gates its actions on canAdminister, so
@@ -91,7 +92,7 @@ List<Widget> workspaceSettingsTiles(
         key: const ValueKey('settings-workspace-sections-accessories-title'),
         leading: const Icon(Icons.devices_other_outlined),
         title: Text(l10n.accessoriesTitle),
-        onTap: () => context.push('/accessories'),
+        onTap: () => context.push(Routes.accessories),
       ),
     // #2301: invoice operations and Reports have distinct destinations.
     if (perms.contains(WorkspacePermission.viewFinances) &&
@@ -100,7 +101,7 @@ List<Widget> workspaceSettingsTiles(
         key: const ValueKey('settings-billing-reports'),
         leading: const Icon(Icons.receipt_long_outlined),
         title: Text(l10n.featureInvoicing),
-        onTap: () => context.push('/invoices'),
+        onTap: () => context.push(Routes.invoices),
       ),
     // #925 — one screen for every number series.
     if (perms.contains(WorkspacePermission.manageBilling) &&
@@ -113,7 +114,7 @@ List<Widget> workspaceSettingsTiles(
           l10n.numberSequencesSubtitle,
         ),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-        onTap: () => context.push('/settings/number-sequences'),
+        onTap: () => context.push(Routes.settingsNumberSequences),
       ),
     // #486 — the manual payment methods members see on an unpaid statement.
     if (_moneyMay(perms, features, WorkspacePermission.manageIntegrations))
@@ -121,14 +122,14 @@ List<Widget> workspaceSettingsTiles(
         key: const ValueKey('settings-payment-methods'),
         leading: const Icon(Icons.account_balance_wallet_outlined),
         title: Text(l10n.paymentInstructionsTitle),
-        onTap: () => context.push('/payment-methods'),
+        onTap: () => context.push(Routes.paymentMethods),
       ),
     if (perms.contains(WorkspacePermission.manageValidation))
       ListTile(
         key: const ValueKey('settings-workspace-sections-validation-title'),
         leading: const Icon(Icons.fact_check_outlined),
         title: Text(l10n.validationTitle),
-        onTap: () => context.push('/validation'),
+        onTap: () => context.push(Routes.validation),
       ),
     // The Features entry is always reachable to whoever configures the
     // space, so a module switched off can be switched back on (#146).
@@ -137,7 +138,7 @@ List<Widget> workspaceSettingsTiles(
         key: const ValueKey('settings-workspace-sections-features-title'),
         leading: const Icon(Icons.toggle_on_outlined),
         title: Text(l10n.featuresTitle),
-        onTap: () => context.push('/features'),
+        onTap: () => context.push(Routes.features),
       ),
   ];
 
@@ -150,7 +151,7 @@ List<Widget> workspaceSettingsTiles(
         key: const ValueKey('settings-workspace-sections-members-title'),
         leading: const Icon(Icons.group_outlined),
         title: Text(l10n.membersTitle),
-        onTap: () => context.push('/members'),
+        onTap: () => context.push(Routes.members),
       ),
     if (perms.contains(WorkspacePermission.manageIntegrations) &&
         features.contains(WorkspaceFeature.onlinePayments))
@@ -158,7 +159,7 @@ List<Widget> workspaceSettingsTiles(
         key: const ValueKey('settings-workspace-sections-pay-config-title'),
         leading: const Icon(Icons.credit_card_outlined),
         title: Text(l10n.payConfigTitle),
-        onTap: () => context.push('/payment-config'),
+        onTap: () => context.push(Routes.paymentConfig),
       ),
     if (perms.contains(WorkspacePermission.operateKiosk) &&
         features.contains(WorkspaceFeature.nfcBadges))
@@ -166,7 +167,7 @@ List<Widget> workspaceSettingsTiles(
         key: const ValueKey('settings-workspace-sections-nfc-config-title'),
         leading: const Icon(Icons.contactless_outlined),
         title: Text(l10n.nfcConfigTitle),
-        onTap: () => context.push('/nfc-config'),
+        onTap: () => context.push(Routes.nfcConfig),
       ),
     // #945 — the workspace's sites, for those who manage them.
     if (perms.contains(WorkspacePermission.manageSites) &&
@@ -177,14 +178,14 @@ List<Widget> workspaceSettingsTiles(
         title: Text(l10n.featureMultiSite),
         subtitle: Text(l10n.sitesSubtitle),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-        onTap: () => context.push('/settings/sites'),
+        onTap: () => context.push(Routes.settingsSites),
       ),
     if (perms.contains(WorkspacePermission.manageConfiguration))
       ListTile(
         key: const ValueKey('settings-workspace-sections-workspace-code-title'),
         leading: const Icon(Icons.qr_code_2),
         title: Text(l10n.workspaceCodeTitle),
-        onTap: () => context.push('/workspace-code'),
+        onTap: () => context.push(Routes.workspaceCode),
       ),
   ];
 
@@ -196,7 +197,7 @@ List<Widget> workspaceSettingsTiles(
         key: const ValueKey('settings-roles'),
         leading: const Icon(Icons.admin_panel_settings_outlined),
         title: Text(l10n.rolesTitle),
-        onTap: () => context.push('/roles'),
+        onTap: () => context.push(Routes.roles),
       ),
     // #990 — deploying between the two sides of the pair: the question the
     // /deployment route asks, word for word.
@@ -207,7 +208,7 @@ List<Widget> workspaceSettingsTiles(
         key: const ValueKey('settings-deployment'),
         leading: const Icon(Icons.rocket_launch_outlined),
         title: Text(l10n.deploymentTitle),
-        onTap: () => context.push('/deployment'),
+        onTap: () => context.push(Routes.deployment),
       ),
     // #917 — is this space real? Owner-only, as
     // `set_workspace_environment` is.

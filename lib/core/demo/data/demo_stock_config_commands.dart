@@ -165,7 +165,7 @@ class DemoStockConfigCommands implements StockConfigCommands {
   @override
   Future<StockSaved> saveItem(String workspaceId, StockItemConfig config, String requestId) async {
     final old = _mine(workspaceId) ? await item(workspaceId, config.itemId) : null;
-    if (old == null) throw const StockConfigRefused('item_id', 'item_foreign');
+    if (old == null) throw const StockConfigRefused('item_id', StockRefusal.itemForeign);
     if (old.revision != config.revision) throw const StockConfigStale();
     // The first movement fixed the tracking of the shop's goods.
     if (config.tracking != old.tracking && _withHistory.contains(config.itemId)) throw const StockConfigInUse();
@@ -193,6 +193,40 @@ class DemoStockConfigCommands implements StockConfigCommands {
     return (id: config.itemId, revision: revision, replayed: false);
   }
 
+  /// #4402 -- what a new item needs beside its stock settings: a service of the Demo's catalogue and a home in its
+  /// registry, wired by the Demo's kit. Without them a new item is refused as a malformed request.
+  ({
+    Future<String> Function(String name, int priceCents, String? vatRateId, String requestId) service,
+    Future<void> Function(String itemId, String placeId, String requestId) home,
+  })? newItems;
+
+  /// The items made by request id: a retry answers the item it first made.
+  final Map<String, StockSaved> _made = {};
+
+  @override
+  Future<StockSaved> createItem(String workspaceId, NewStockItemDraft draft, String requestId) async {
+    final steps = newItems;
+    if (!_mine(workspaceId) || steps == null) throw const StockConfigRefused('request', StockRefusal.malformed);
+    if (_made[requestId] case final done?) return (id: done.id, revision: done.revision, replayed: true);
+    // the server makes the three in one transaction: what it would refuse is refused before anything is made
+    if (draft.homeLocationId case final home?) {
+      final place = _places[home];
+      if (place == null || place.virtual || !place.active) throw const StockConfigRefused('home_location_id', StockRefusal.homeInvalid);
+    }
+    final id = await steps.service(draft.name, draft.priceCents, draft.vatRateId, '$requestId:service');
+    final saved = await saveItem(
+      workspaceId,
+      StockItemConfig(
+        itemId: id, revision: (await item(workspaceId, id))?.revision ?? 1, stockable: true, purchasable: true, sellable: true,
+        inventoryUnit: draft.inventoryUnit, tracking: 'none', shelfLifeDays: null, units: const [],
+        codes: [if (draft.barcode case final code?) StockCodeDraft(code: code, kind: 'own')],
+      ),
+      '$requestId:settings',
+    );
+    if (draft.homeLocationId case final home?) await steps.home(id, home, '$requestId:home');
+    return _made[requestId] = (id: id, revision: saved.revision, replayed: false);
+  }
+
   @override
   Future<StockSaved> savePlace(
     String workspaceId, {
@@ -202,9 +236,9 @@ class DemoStockConfigCommands implements StockConfigCommands {
     int? expectedRevision,
   }) async {
     final body = place.toJson();
-    if (!_mine(workspaceId)) throw const StockConfigRefused('place', 'location_parent_foreign');
+    if (!_mine(workspaceId)) throw const StockConfigRefused('place', StockRefusal.locationParentForeign);
     final old = placeId == null ? null : _places[placeId];
-    if (placeId != null && old == null) throw const StockConfigRefused('place', 'location_parent_foreign');
+    if (placeId != null && old == null) throw const StockConfigRefused('place', StockRefusal.locationParentForeign);
     if (old != null && old.revision != expectedRevision) throw const StockConfigStale();
     final (:code, :parentId, :kind, :pick) = _checkedPlace(body, old, placeId);
     final id = placeId ?? 'demo-place-new-${_next++}';
@@ -237,15 +271,15 @@ class DemoStockConfigCommands implements StockConfigCommands {
     final parentId = place.containsKey('parent_id') ? place['parent_id'] as String? : old?.parentId;
     final kind = place['kind'] as String? ?? old?.kind ?? 'shelf';
     if (_places.values.any((p) => p.code == code && p.parentId == parentId && p.id != placeId)) {
-      throw const StockConfigRefused('code', 'code_duplicate');
+      throw const StockConfigRefused('code', StockRefusal.codeDuplicate);
     }
     if (parentId != null && parentId == placeId) {
-      throw const StockConfigRefused('parent_id', 'location_cycle');
+      throw const StockConfigRefused('parent_id', StockRefusal.locationCycle);
     }
     _checkLevel(kind, old, parentId);
     final pick = place.containsKey('pick_role') ? place['pick_role'] as String? : old?.pickRole;
     if (pick != null && pick != 'picking' && pick != 'reserve') {
-      throw const StockConfigRefused('pick_role', 'pick_role_unknown');
+      throw const StockConfigRefused('pick_role', StockRefusal.pickRoleUnknown);
     }
     return (code: code, parentId: parentId, kind: kind, pick: pick);
   }
@@ -255,9 +289,9 @@ class DemoStockConfigCommands implements StockConfigCommands {
     final level = stockKindLevel(kind);
     if (level == null || (old != null && kind == old.kind && parentId == old.parentId)) return;
     if (parentId == null) {
-      if (level != 1) throw const StockConfigRefused('parent_id', 'level_parent_missing');
+      if (level != 1) throw const StockConfigRefused('parent_id', StockRefusal.levelParentMissing);
     } else if (stockKindLevel(_places[parentId]?.kind ?? '') != level - 1) {
-      throw const StockConfigRefused('parent_id', 'level_parent_wrong');
+      throw const StockConfigRefused('parent_id', StockRefusal.levelParentWrong);
     }
   }
 
@@ -329,19 +363,19 @@ class DemoStockConfigCommands implements StockConfigCommands {
   }) async {
     final body = dimension.toSave();
     final old = dimensionId == null ? null : _dimensions[dimensionId];
-    if (dimensionId != null && old == null) throw const StockConfigRefused('request', 'malformed');
+    if (dimensionId != null && old == null) throw const StockConfigRefused('request', StockRefusal.malformed);
     if (old != null && old.revision != expectedRevision) throw const StockConfigStale();
     final name = (body['name'] as String? ?? old?.name ?? '').trim();
-    if (name.isEmpty || name.length > 60) throw const StockConfigRefused('name', 'name_malformed');
+    if (name.isEmpty || name.length > 60) throw const StockConfigRefused('name', StockRefusal.nameMalformed);
     if (_dimensions.values.any((d) => d.name == name && d.id != dimensionId)) {
-      throw const StockConfigRefused('name', 'name_duplicate');
+      throw const StockConfigRefused('name', StockRefusal.nameDuplicate);
     }
     final raw = (body['values'] as List?) ?? const [];
     final values = <StockDimensionValue>[];
     for (var i = 0; i < raw.length; i++) {
       final v = StockDimensionValue.fromJson(raw[i]);
-      if (v.label.trim().isEmpty) throw StockConfigRefused('values[$i].label', 'name_malformed');
-      if (values.any((x) => x.label == v.label.trim())) throw StockConfigRefused('values[$i].label', 'name_duplicate');
+      if (v.label.trim().isEmpty) throw StockConfigRefused('values[$i].label', StockRefusal.nameMalformed);
+      if (values.any((x) => x.label == v.label.trim())) throw StockConfigRefused('values[$i].label', StockRefusal.nameDuplicate);
       values.add(StockDimensionValue(id: v.id ?? 'demo-val-${_next++}', label: v.label.trim(), active: v.active));
     }
     final id = dimensionId ?? 'demo-dim-${_next++}';
@@ -361,21 +395,21 @@ class DemoStockConfigCommands implements StockConfigCommands {
     required String requestId,
   }) async {
     final item = _mine(workspaceId) ? _items[itemId] : null;
-    if (item == null) throw const StockConfigRefused('item_id', 'item_foreign');
+    if (item == null) throw const StockConfigRefused('item_id', StockRefusal.itemForeign);
     if (item.revision != expectedRevision) throw const StockConfigStale();
     final seen = <String>{};
     final saved = <StockVariant>[];
     for (var i = 0; i < variants.length; i++) {
       final v = variants[i];
-      if (v.values.isEmpty) throw StockConfigRefused('variants[$i].values', 'variant_values_missing');
-      if ((v.priceCents ?? 0) < 0) throw StockConfigRefused('variants[$i].price_cents', 'price_invalid');
+      if (v.values.isEmpty) throw StockConfigRefused('variants[$i].values', StockRefusal.variantValuesMissing);
+      if ((v.priceCents ?? 0) < 0) throw StockConfigRefused('variants[$i].price_cents', StockRefusal.priceInvalid);
       for (final e in v.values.entries) {
         if (_dimensions[e.key]?.values.any((x) => x.id == e.value) != true) {
-          throw StockConfigRefused('variants[$i].values', 'value_foreign');
+          throw StockConfigRefused('variants[$i].values', StockRefusal.valueForeign);
         }
       }
       final canonical = (v.values.entries.toList()..sort((a, b) => a.key.compareTo(b.key))).map((e) => '${e.key}:${e.value}').join(',');
-      if (!seen.add(canonical)) throw StockConfigRefused('variants[$i].values', 'variant_combination_duplicate');
+      if (!seen.add(canonical)) throw StockConfigRefused('variants[$i].values', StockRefusal.variantCombinationDuplicate);
       saved.add(StockVariant(
         id: v.id ?? 'demo-variant-${_next++}', values: v.values, priceCents: v.priceCents,
         active: v.active, label: _labelOf(v.values),
@@ -410,7 +444,7 @@ class DemoStockConfigCommands implements StockConfigCommands {
   }) async {
     final body = mapping.toJson();
     final old = mappingId == null ? null : _mappings[mappingId];
-    if (mappingId != null && old == null) throw const StockConfigRefused('request', 'malformed');
+    if (mappingId != null && old == null) throw const StockConfigRefused('request', StockRefusal.malformed);
     if (old != null && old.revision != expectedRevision) throw const StockConfigStale();
     final supplier = body['supplier_id'] as String? ?? old?.supplierId;
     final itemId = body['item_id'] as String? ?? old?.itemId;
@@ -430,16 +464,16 @@ class DemoStockConfigCommands implements StockConfigCommands {
   /// What the server refuses of a supplier article, in the order it refuses it.
   Future<void> _checkMapping(String workspaceId, String? mappingId, String? supplier, String? itemId, String ref, String? unit) async {
     if (supplier == null || !(await suppliers(workspaceId)).any((s) => s.id == supplier)) {
-      throw const StockConfigRefused('supplier_id', 'supplier_foreign');
+      throw const StockConfigRefused('supplier_id', StockRefusal.supplierForeign);
     }
     final item = itemId == null ? null : _items[itemId];
-    if (item == null) throw const StockConfigRefused('item_id', 'item_foreign');
-    if (ref.isEmpty || ref.length > 80) throw const StockConfigRefused('article_ref', 'code_malformed');
+    if (item == null) throw const StockConfigRefused('item_id', StockRefusal.itemForeign);
+    if (ref.isEmpty || ref.length > 80) throw const StockConfigRefused('article_ref', StockRefusal.codeMalformed);
     if (unit != null && !item.units.any((u) => u.unit == unit)) {
-      throw const StockConfigRefused('purchase_unit', 'unit_not_of_item');
+      throw const StockConfigRefused('purchase_unit', StockRefusal.unitNotOfItem);
     }
     if (_mappings.values.any((m) => m.supplierId == supplier && m.articleRef == ref && m.id != mappingId)) {
-      throw const StockConfigRefused('article_ref', 'mapping_duplicate');
+      throw const StockConfigRefused('article_ref', StockRefusal.mappingDuplicate);
     }
   }
 }

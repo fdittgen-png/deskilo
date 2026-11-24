@@ -19,7 +19,7 @@ import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
@@ -29,19 +29,18 @@ import '../domain/put_away_progress.dart';
 import '../domain/stock_code_resolver.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_receiving.dart';
+import '../domain/stock_refusal.dart';
 import '../domain/stock_scan_session.dart';
 import '../providers/stock_providers.dart';
 import 'put_away_context.dart';
 import 'put_away_tags.dart';
 import 'stock_config_text.dart';
+import 'stock_quantity_field.dart';
 import 'stock_scan_bar.dart';
 import 'stock_scan_feed.dart';
 import 'stock_scan_hint.dart';
 
 export 'put_away_context.dart' show PutAwayContext, PutAwayServices, loadPutAwayContext;
-
-/// A typed quantity, read exactly as the person typed it (no grouping; `.` or `,`).
-ExactQuantity? _exact(String text) => exactQuantityFromInput(text, grouping: false).value;
 
 class _Part {
   _Part(this.line, String quantity)
@@ -135,8 +134,8 @@ class PutAwayDraft {
   /// The put-away may not exceed what the delivery being recorded brings.
   FieldErrors validateAgainst(AppLocalizations l10n, Map<int, double> delivered) => {
     for (final p in _parts)
-      if ((_exact(_quantityOf(p, delivered)) ?? ExactQuantity.zero) > exactOfReceived(delivered[p.line.lineNo] ?? 0))
-        'putaway-${p.line.lineNo}-qty': stockReasonText(l10n, 'over_allocated'),
+      if ((_quantityOf(p, delivered) ?? ExactQuantity.zero) > exactOfReceived(delivered[p.line.lineNo] ?? 0))
+        'putaway-${p.line.lineNo}-qty': stockRefusalText(l10n, StockRefusal.overAllocated),
     ..._tagErrors(l10n, delivered),
   };
 
@@ -151,7 +150,7 @@ class PutAwayDraft {
   /// whole number of pieces (the quantity's own check says so).
   int? _neededTags(_Part p, Map<int, double>? delivered) {
     if (!context.perUnit.contains(p.line.lineNo)) return null;
-    final q = _exact(_quantityOf(p, delivered));
+    final q = _quantityOf(p, delivered);
     if (q == null || q.isNegative) return null;
     return piecesOf(context.items[p.line.lineNo]!, p.line.unit, q);
   }
@@ -186,13 +185,14 @@ class PutAwayDraft {
 
   /// Records the put-away; scans wait while it is in flight. Null when done, else what to say.
   Future<String?> submit(AppLocalizations l10n, PutAwayServices services, {required String workspaceId, required String receiptId}) async {
+    scanner?.pause();
     try {
-      scanner?.pause();
-      await services.commands.putAway(workspaceId, receiptId, toAllocations(), requestId);
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a put-away was not recorded', error: e, stackTrace: st);
-      return putAwayProblem(l10n, e);
+      return await guardSave(
+        domain: 'stock',
+        message: 'a put-away was not recorded',
+        action: () => services.commands.putAway(workspaceId, receiptId, toAllocations(), requestId),
+        problem: (e) => putAwayProblem(l10n, e),
+      );
     } finally {
       scanner?.resume();
     }
@@ -253,15 +253,18 @@ class PutAwayDraft {
 
   /// The quantity of a part: what was typed, or (empty, while recording a
   /// delivery) everything that delivery brings of the line.
-  String _quantityOf(_Part p, Map<int, double>? delivered) {
+  ExactQuantity? _quantityOf(_Part p, Map<int, double>? delivered) {
     final typed = p.qty.text.trim();
-    return typed.isEmpty && followsDelivery ? exactOfReceived(delivered?[p.line.lineNo] ?? 0).text : typed;
+    return typed.isEmpty && followsDelivery ? exactOfReceived(delivered?[p.line.lineNo] ?? 0) : _typed(typed);
   }
+
+  /// A typed quantity, read exactly in the member's own format (the format the remaining quantity is shown in).
+  ExactQuantity? _typed(String text) => stockQuantityOrNull(text, locale: format.locale);
 
   /// [delivered]: the delivery being recorded, by line number.
   List<PutAwayAllocation> toAllocations({Map<int, double>? delivered}) => [
     for (final p in _parts)
-      if (_exact(_quantityOf(p, delivered)) case final q? when q > ExactQuantity.zero)
+      if (_quantityOf(p, delivered) case final q? when q > ExactQuantity.zero)
         PutAwayAllocation(
           lineNo: p.line.lineNo,
           quantity: q.text,
@@ -288,11 +291,11 @@ class PutAwayDraft {
     final errors = <String, String>{};
     for (final p in _parts) {
       if (followsDelivery && p.qty.text.trim().isEmpty) continue;
-      final q = _exact(p.qty.text);
+      final q = _typed(p.qty.text);
       if (q == null || q.isNegative || q > p.line.remaining) {
-        errors['putaway-${p.line.lineNo}-qty'] = stockReasonText(l10n, q == null || q.isNegative ? 'quantity_invalid' : 'over_allocated');
+        errors['putaway-${p.line.lineNo}-qty'] = stockRefusalText(l10n, q == null || q.isNegative ? StockRefusal.quantityInvalid : StockRefusal.overAllocated);
       }
-      if (p.place == null && q != null && q > ExactQuantity.zero) errors['putaway-${p.line.lineNo}-place'] = stockReasonText(l10n, 'location_foreign');
+      if (p.place == null && q != null && q > ExactQuantity.zero) errors['putaway-${p.line.lineNo}-place'] = l10n.stockRequiredPlace;
     }
     if (!followsDelivery) errors.addAll(_tagErrors(l10n, null));
     return errors;
@@ -323,15 +326,13 @@ class PutAwayDraft {
     final foreign = order.currency != this.context.currency;
     return [
       Text(p.line.description, style: Theme.of(context).textTheme.titleSmall),
-      AppTextField(
+      StockQuantityField(
         key: ValueKey('putaway-$n-qty'),
         controller: p.qty,
         focusNode: p.focus,
         fieldKey: 'putaway-$n-qty',
         label: l10n.stockPutAwayQuantity(p.line.unit.isEmpty ? item.inventoryUnit : p.line.unit),
         helper: followsDelivery ? l10n.stockPutAwayAll : null,
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
       ),
       KeyedSubtree(
         // a scan sets the place from outside: the field starts again from it

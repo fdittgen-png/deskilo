@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
@@ -35,7 +36,7 @@ class SetupNoInvoicingBanner extends ConsumerWidget {
       ),
       actionLabel: l10n.setupGuideLevelsLink,
       onAction: () async {
-        await context.push('/setup/levels');
+        await context.push(Routes.setupLevels);
         await reload();
       },
     );

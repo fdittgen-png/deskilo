@@ -106,3 +106,13 @@ fileLength lib/core/demo/data/money_repository.dart // #4165 the Demo's standalo
 fileLength lib/features/task_recorder/domain/coverage_manifest.dart // #4165 one route row of the composer; the manifest is one list by design
 fileLength lib/features/workspace/domain/feature_manifest_part3.dart // #4165 one manifest entry of the standaloneInvoicing feature; the part is one map by design
 setState lib/features/money/presentation/standalone/standalone_invoice_screen.dart // #4165 the composer holds one draft, its checked revision, its request id and its outcome on one screen; a controller is the next step
+inlineRoute lib/features/stock/presentation/stock_chain_section.dart // #4422 owned by the stock lane while its v2.2 work is open; Routes symbols for the stock paths come with that lane
+inlineRoute lib/features/stock/presentation/stock_cycle_counts_screen.dart // #4422 owned by the stock lane while its v2.2 work is open; Routes symbols for the stock paths come with that lane
+inlineRoute lib/features/stock/presentation/stock_document_goods_block.dart // #4422 owned by the stock lane while its v2.2 work is open; Routes symbols for the stock paths come with that lane
+inlineRoute lib/features/stock/presentation/stock_first_run.dart // #4422 owned by the stock lane while its v2.2 work is open; Routes symbols for the stock paths come with that lane
+inlineRoute lib/features/stock/presentation/stock_screen.dart // #4422 owned by the stock lane while its v2.2 work is open; Routes symbols for the stock paths come with that lane
+inlineRoute lib/features/money/presentation/till_screen.dart // #4422 owned by the till lane while its v2.2 work is open
+inlineRoute lib/features/money/presentation/till_drawer/till_drawer_screen.dart // #4422 owned by the till lane while its v2.2 work is open
+inlineRoute lib/features/money/presentation/screens/customer_quote_editor_screen.dart // #4422 owned by the quote and invoice editor lane (#4405) while it is open
+inlineRoute lib/features/calendar/presentation/screens/calendar_hub_screen.dart // #4422 at its file-length budget: the Routes import is one line more; swept when the file is split
+inlineRoute lib/features/money/presentation/screens/vat_declarations_screen.dart // #4422 at the 500-line default: the Routes import is one line more; swept when the file is split

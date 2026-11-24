@@ -17,6 +17,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_trace.dart';
 import '../providers/stock_providers.dart';
+import 'stock_read_failed.dart';
 
 /// The goods put away against the [kind] (`order` or `bill`) document [id] of [workspaceId].
 class StockDocumentGoodsBlock extends ConsumerWidget {
@@ -37,14 +38,10 @@ class StockDocumentGoodsBlock extends ConsumerWidget {
     final items = {for (final i in ref.watch(stockItemsProvider(workspaceId)).value ?? const <StockItem>[]) i.id: i}; // empty-ok: a name falls back to its id
     final Widget body;
     if (walk.error != null) {
-      body = Row(
-        key: const ValueKey('stock-goods-failed'),
-        children: [
-          Flexible(child: Text(l10n.stockReadFailed)),
-          TextButton(key: const ValueKey('stock-goods-retry'), onPressed: () => unawaited(walk.rows.isEmpty ? ref.read(provider.notifier).reload() : ref.read(provider.notifier).loadMore()),
-            child: Text(l10n.identityConnectRetry),
-          ),
-        ],
+      body = StockReadFailed(
+        keyName: 'stock-goods',
+        error: walk.error!,
+        onRetry: () => unawaited(walk.rows.isEmpty ? ref.read(provider.notifier).reload() : ref.read(provider.notifier).loadMore()),
       );
     } else if (walk.loading && walk.rows.isEmpty) {
       body = const LinearProgressIndicator();

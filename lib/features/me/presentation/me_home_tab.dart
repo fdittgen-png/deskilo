@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
@@ -171,7 +172,7 @@ class MeHomeTab extends ConsumerWidget {
               if (spaces.isNotEmpty)
                 TextButton(
                   key: const ValueKey('me-home-manage'),
-                  onPressed: () => context.push('/profiles'),
+                  onPressed: () => context.push(Routes.profiles),
                   child: Text(l10n.meManageSpaces),
                 ),
               const SizedBox(height: AppSpacing.xl),

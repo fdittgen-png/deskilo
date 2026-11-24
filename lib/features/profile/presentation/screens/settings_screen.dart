@@ -20,6 +20,7 @@ import '../../../../core/i18n/country_names.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/navigation/navigation_style.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/phone/phone_entry.dart';
 import '../../../../core/privacy/recording_banner.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -184,7 +185,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             key: const ValueKey('settings-space-back-to-me'),
             leading: const Icon(Icons.switch_account_outlined),
             title: Text(l10n.spaceBackToMe),
-            onTap: () => context.go('/me'),
+            onTap: () => context.go(Routes.me),
           ),
           SettingsTaskSection(id: 'account', title: labels.settingsSectionAccount,
             children: spaceAccountTiles(context, ref)),
@@ -229,7 +230,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               key: const ValueKey('settings-what-you-can-do'),
               leading: const Icon(Icons.verified_user_outlined),
               title: Text(l10n.whatYouCanDoTitle),
-              onTap: () => context.push('/settings/what-you-can-do'),
+              onTap: () => context.push(Routes.settingsWhatYouCanDo),
             ),
           // #662 — the member's own half of badge sign-in: the card and
           // the PIN are two halves of one credential of THIS membership,
@@ -346,7 +347,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               subtitle: Text(myMember.paymentTerms == null
                   ? (l10n.paymentTermsInherited)
                   : (l10n.paymentTermsOverridden)),
-              onTap: () => context.push('/settings/payment-terms'),
+              onTap: () => context.push(Routes.settingsPaymentTerms),
             ),
           // #500 — the document library: everyone sees it (their role
           // filters the content server-side).
@@ -355,7 +356,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               key: const ValueKey('settings-documents'),
               leading: const Icon(Icons.folder_open_outlined),
               title: Text(l10n.featureDocuments),
-              onTap: () => context.push('/documents'),
+              onTap: () => context.push(Routes.documents),
             ),
           // Kiosk escape hatch (0056, field report: "cannot be undone"):
           // a profile flagged as kiosk reverts ITSELF to a regular

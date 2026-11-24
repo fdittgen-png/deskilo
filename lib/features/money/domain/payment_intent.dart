@@ -22,6 +22,32 @@ enum PaymentAllocationMode {
 /// app started and what became of it. Admin-readable for diagnostics and
 /// for the payments tab of the data export (#395) — the ONLINE third of
 /// confirmed / unconfirmed / online.
+/// #4418 -- where an online payment attempt stands, decoded once from the
+/// `payment_intents.status` text (0045, #3905).
+enum PaymentIntentStatus {
+  created('created'),
+  captured('captured'),
+  failed('failed'),
+  reversed('reversed'),
+
+  /// A status a newer server sent and this app does not know (#3730): the
+  /// attempt is neither paid nor failed, and no action is offered on it.
+  unknown('');
+
+  const PaymentIntentStatus(this.wire);
+
+  /// The name the server stores.
+  final String wire;
+
+  /// [raw] as this app reads it; a value it does not know is [unknown].
+  static PaymentIntentStatus fromWire(String? raw) {
+    for (final s in values) {
+      if (s != unknown && s.wire == raw) return s;
+    }
+    return unknown;
+  }
+}
+
 class PaymentIntent implements SystemStamped {
   const PaymentIntent({
     required this.id,
@@ -87,7 +113,11 @@ class PaymentIntent implements SystemStamped {
 
   /// #3925 — a reversal nobody has looked at yet: the books may still need
   /// correcting.
-  bool get awaitsReview => status == 'reversed' && reversalReviewedAt == null;
+  /// [status] decoded.
+  PaymentIntentStatus get state => PaymentIntentStatus.fromWire(status);
+
+  bool get awaitsReview =>
+      state == PaymentIntentStatus.reversed && reversalReviewedAt == null;
 
   /// #3925 — the amount the provider reversed, in minor units of
   /// [currency], read from [reversalReason]: its last two words are the

@@ -27,6 +27,7 @@ import '../providers/mcp_providers.dart';
 import 'eligibility_review_screen.dart' show SecondFactorSheet;
 import 'widgets/instance_assistant_sections.dart';
 import 'widgets/instance_console_sections.dart';
+import 'widgets/instance_error_reports.dart';
 import 'widgets/instance_grant_dialog.dart';
 
 class InstanceAssistantsScreen extends ConsumerStatefulWidget {
@@ -260,6 +261,9 @@ class _InstanceAssistantsScreenState
                 const Divider(height: AppSpacing.xl),
                 InstanceClientsSection(o: o, busy: _busy, change: _change),
                 InstanceLoopbackSwitch(o: o, busy: _busy, change: _change),
+                const Divider(height: AppSpacing.xl),
+                // #4416 — what the apps sent when something went wrong.
+                const InstanceErrorReportsTile(),
               ],
             ),
     );

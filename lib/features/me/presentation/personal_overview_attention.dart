@@ -14,6 +14,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
@@ -243,7 +244,7 @@ class _AttentionRow extends ConsumerWidget {
           item.application!.label ?? l10n.meRefUnnamed,
         ),
         null,
-        () => context.push('/applications'),
+        () => context.push(Routes.applications),
       ),
       AttentionKind.conversation => (
         Icons.forum_outlined,

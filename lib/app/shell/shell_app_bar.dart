@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/l10n/context_l10n.dart';
 import '../../core/l10n/lexicon.dart';
+import '../../core/navigation/routes.dart';
 import '../../core/shortcuts/shortcut_scope.dart';
 import '../../core/ui/kit/row_menu.dart';
 import '../../features/events/providers/attention_providers.dart';
@@ -141,7 +142,7 @@ List<ShellBarControl> shellBarControls(
         rank: _ShellBarRank.editor,
         icon: Icons.design_services_outlined,
         label: l10n.editorOpenTooltip,
-        onPressed: () => context.push('/editor'),
+        onPressed: () => context.push(Routes.editor),
       ),
     // #707 — the bell is back, as a SHORTCUT: it opens the inbox
     // on its Événements face rather than a screen of its own. That
@@ -168,7 +169,7 @@ List<ShellBarControl> shellBarControls(
         );
         // The /events path lands on the alerts (the calendar's Alerts view
         // when the hub holds them).
-        void open() => context.go('/events');
+        void open() => context.go(Routes.events);
         return ShellBarControl(
           id: shellEventsBellId,
           rank: _ShellBarRank.inbox.index,
@@ -204,7 +205,7 @@ List<ShellBarControl> shellBarControls(
       rank: _ShellBarRank.settings,
       icon: accountMenu ? Icons.account_circle_outlined : Icons.settings_outlined,
       label: settingsLabel,
-      onPressed: () => context.push('/settings'),
+      onPressed: () => context.push(Routes.settings),
     ),
     ShellBarControl(
       id: 'shell-back-to-me',

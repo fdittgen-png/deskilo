@@ -253,10 +253,6 @@
       }
     }
   },
-  "memberMoneyUnavailable": "Money could not be loaded. Pull to refresh.",
-  "@memberMoneyUnavailable": {
-    "description": "#709 - the money section of a profile could not be read"
-  },
   "inboxAlertsTab": "Alerts",
   "@inboxAlertsTab": {
     "description": "Shown as a text in shell tabs (app), and 1 other place."

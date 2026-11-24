@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/failure/app_failure.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -65,7 +66,7 @@ class _CustomerQuoteScreenState extends ConsumerState<CustomerQuoteScreen> {
         _ => l10n.quoteUnreached,
       };
     });
-    if (leave && outcome is CommandDone) context.go('/money/quotes');
+    if (leave && outcome is CommandDone) context.go(Routes.moneyQuotes);
   }
 
   /// The answer sheet, or the conversion sheet; the quote is read again after
@@ -96,7 +97,7 @@ class _CustomerQuoteScreenState extends ConsumerState<CustomerQuoteScreen> {
         title: PageTitle(l10n.quotesTitle),
         leading: BackButton(
           key: const ValueKey('quote-back'),
-          onPressed: () => context.go('/money/quotes'),
+          onPressed: () => context.go(Routes.moneyQuotes),
         ),
       ),
       body: id == null
@@ -329,7 +330,7 @@ class _Content extends ConsumerWidget {
           if (quote.invoiceId != null)
             FilledButton(
               key: const ValueKey('quote-open-invoice'),
-              onPressed: () => context.go('/invoices/${quote.invoiceId}'),
+              onPressed: () => context.go(Routes.invoice(quote.invoiceId!)),
               child: Text(l10n.quoteConvertOpenInvoice),
             ),
           if (draft == null && quote.status == QuoteStatus.sent) ...[
@@ -359,7 +360,7 @@ class _Content extends ConsumerWidget {
     return [
       OutlinedButton(
         key: const ValueKey('quote-edit'),
-        onPressed: busy ? null : () => context.go('/money/quotes/${quote.id}/edit'),
+        onPressed: busy ? null : () => context.go(Routes.moneyQuoteEdit(quote.id)),
         child: Text(l10n.quoteEditDraft),
       ),
       FilledButton(

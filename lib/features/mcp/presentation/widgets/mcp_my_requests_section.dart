@@ -13,6 +13,7 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/reference_when.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/status_chip.dart';
@@ -52,7 +53,7 @@ class McpMyRequestsSection extends ConsumerWidget {
     final reader = appFormatOf(context);
     final title = Theme.of(context).textTheme.titleMedium;
     Future<void> open(ActionConfirmation c) async {
-      await context.push('/mcp/confirm/${Uri.encodeComponent(c.id)}');
+      await context.push(Routes.mcpConfirm(c.id));
       ref.invalidate(myActionConfirmationsProvider);
     }
 

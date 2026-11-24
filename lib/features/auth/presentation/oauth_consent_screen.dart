@@ -8,6 +8,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
@@ -99,7 +100,7 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
         loading: () => const LoadingView(),
         error: (e, st) => Padding(
           padding: AppSpacing.gutterAll,
-          child: _unavailable(l10n),
+          child: ReadFailureBanner(key: const ValueKey('identity-consent-unavailable'), error: e, onRetry: _retry),
         ),
         data: (request) {
           if (request.context.purpose != OAuthConsentPurpose.identityFederation) {
@@ -158,6 +159,8 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
       ),
     );
   }
+
+  void _retry() => ref.invalidate(oauthConsentProvider(widget.authorizationId));
 
   Widget _unavailable(AppLocalizations l10n) => InlineBanner(
     key: const ValueKey('identity-consent-unavailable'),
