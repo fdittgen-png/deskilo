@@ -82,7 +82,9 @@ needs the deployment entity registry (reference.md "Flags").
 
 ## 2. Code
 - AGENT_RULES "Coding rules" apply. `domain/` is pure Dart (no Flutter, no l10n) — the CLI imports it.
-- `catch (e, st)` + TraceLogger; `// trace-exempt:` marker when rethrowing.
+- `catch (e, st)` + TraceLogger; `// trace-exempt: <reason>` marker when rethrowing.
+  A `} on T {` clause is held too: per-area ceilings in `no_silent_catch_test` (#4410)
+  for untraced clauses and for markers, down only.
 - **Strings.** `lib/l10n/app_<locale>.arb` is GENERATED — edit
   `lib/l10n/_fragments/<topic>_<locale>.arb` ×5, then
   `dart run tool/build_arb.dart && flutter gen-l10n` and commit both outputs (CI's

@@ -5,3 +5,12 @@ analyzer:
     strict-casts: true
     strict-inference: true
     strict-raw-types: true
+
+# #4410 -- the error-handling rules the app holds (analysis_options.yaml).
+linter:
+  rules:
+    - avoid_print
+    - unawaited_futures
+    - only_throw_errors
+    - avoid_catches_without_on_clauses
+    - empty_catches
