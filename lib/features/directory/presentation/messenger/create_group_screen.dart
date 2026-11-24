@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/page_bar.dart';
-import '../../domain/account_rows.dart';
+import '../../domain/account_rows_from_json.dart';
 import '../../domain/messenger.dart';
 import '../../providers/directory_providers.dart';
 import '../../providers/messenger_providers.dart';
