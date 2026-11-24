@@ -2936,7 +2936,6 @@
   "billingAccessCheck": "Code prüfen",
   "billingAccessCodeCopied": "Code kopiert",
   "billingAccessCodeCopy": "Code kopieren",
-  "billingAccessCodeField": "Code",
   "billingAccessCodeOnce": "Geben Sie diesen Code jetzt an den Kunden weiter. Er wird nur einmal angezeigt und kann nicht erneut gelesen werden. Er gilt bis {date}.",
   "billingAccessCodeTitle": "Einladungscode",
   "billingAccessCodeUnusable": "Dieser Code kann nicht verwendet werden. Er ist vielleicht falsch, abgelaufen, zurückgezogen oder schon von einem anderen Konto angenommen. Fragen Sie den Betrieb nach einem neuen.",
@@ -7244,6 +7243,14 @@
   "featureConfigurationTransferDesc": "Die Raumdatei (XML) trägt die gesamte Konfiguration — Tarife, rechtliche Identität, Buchungs- und Freigaberegeln, Rollen, Dokumentvorlagen, Standorte, Schließtage — und der Import wendet sie an, auch auf einen Raum, der schon Buchungen hat. Aus: die Datei trägt nur Einstellungen und Grundriss.",
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "featureCounterOfflineCashDesc": "Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  },
+  "featureCounterOfflineCashTitle": "Offline verkaufen, nur bar",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
   },
   "featureCounterReceiptsDesc": "Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.",
   "featureCounterReceiptsTitle": "Kassenbelege",
@@ -16663,6 +16670,10 @@
   "refusalCounterEssentials": "Für diesen Beleg fehlt etwas oder es ist nicht zulässig: Es wurde nichts nummeriert und nichts angenommen.",
   "refusalCounterGoods": "Waren können hier nicht verkauft oder zurückgenommen werden: Das Warenbuch ist aus, oder es gibt keinen Ort, von dem sie genommen oder an den sie zurückgelegt werden.",
   "refusalCounterNotOpen": "Dieser Beleg ist kein offener Entwurf mehr, oder für denselben Verkauf wurde schon ein Beleg ausgestellt.",
+  "refusalCounterOfflineConflict": "Ein von der Kasse unter dieser Nummer gesendeter Verkauf wurde bereits mit anderem Inhalt empfangen. Es wurde nichts erneut erfasst; sehen Sie in der Liste der Offline-Verkäufe nach.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  },
   "refusalCounterTenderState": "Diese Kartenfreigabe ist noch offen, unbekannt oder schon abgeschlossen: Fragen Sie beim Anbieter nach, statt erneut anzufragen.",
   "refusalCounterTenders": "Die Zahlungen begleichen diesen Verkauf nicht genau, oder eine davon wird hier nicht angenommen.",
   "refusalCounterTill": "Die Kasse ist dafür nicht bereit: Öffnen Sie sie zuerst, oder sie ist schon offen oder geschlossen.",
@@ -19149,6 +19160,18 @@
   "settingHintCounterCustomerlessSales": "Erlaubt: Ein Verkauf kann ohne Kundennamen erfolgen. Abgelehnt: Jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an.",
   "settingHintCounterDocumentChannel": "Geteilt (Nachricht oder Mail), gedruckt oder beides. Der Beleg ist in jedem Fall dasselbe unveränderliche Dokument.",
   "settingHintCounterFiscalObligation": "Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.",
+  "settingHintCounterOfflineMaxMinutes": "Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflineMaxSales": "Wie viele offline getätigte Barverkäufe eine Kassensitzung annimmt. Weitere werden abgelehnt und aufgelistet.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflinePriceTolerance": "Wie weit der Preis eines Offline-Verkaufs beim Senden in Prozent vom Preis des Artikels abweichen darf. 0 heißt: der Preis muss gleich sein.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
   "settingHintCounterPaidOutLimit": "Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.",
   "settingHintDirectoryGeocoderUrl": "Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.",
   "settingHintDirectoryTileUrlTemplate": "Der Kachelserver, aus dem die Entdecken-Karte gezeichnet wird, mit den Platzhaltern z, x und y in geschweiften Klammern in der Adresse (s in geschweiften Klammern für eine Subdomain ist erlaubt): https, im öffentlichen Internet, ohne Benutzername, Passwort oder #. Leer lassen, um den Server dieser App-Version zu verwenden, sonst OpenStreetMap. Ein neuer Host fragt jede Person erneut, bevor die Karte lädt.",
@@ -19302,6 +19325,10 @@
   },
   "settingHintStockGroupDefaultCountDays": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. 0 heißt nicht geplant.",
   "settingHintStockGroupDefaultTagMode": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht).",
+  "settingHintStockInvoiceSalePlace": "Der Code eines Orts des Unternehmens, der Bestand führt, zum Beispiel MAIN. Auf Rechnung verkaufte Waren gehen beim Ausstellen der Rechnung von dort ab.",
+  "@settingHintStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
+  },
   "settingHintStockPriceRounding": "Wie ein vorgeschlagener Verkaufspreis gerundet wird: auf 0,05 oder 0,10 oder auf einen Preis, der auf 0,99 endet. Sie dient nur dazu, einen Preis vorzuschlagen.",
   "settingHintStockRepeatedScan": "Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr zur Zeile hinzufügen oder die Menge erfragen.",
   "settingHintStockTagReadMaxTags": "Wie viele verschiedene Etiketten eine Massenlesung behält, bevor sie keine weiteren annimmt. Dieselbe Etikette, mehrfach gelesen, zählt einmal.",
@@ -19389,6 +19416,18 @@
   "settingLabelCounterCustomerlessSales": "Verkäufe ohne genannten Kunden",
   "settingLabelCounterDocumentChannel": "Wie ein Kassenbeleg die Kasse verlässt",
   "settingLabelCounterFiscalObligation": "Steuerliche Vorgaben für Kassenverkäufe",
+  "settingLabelCounterOfflineMaxMinutes": "Längste Offline-Zeit (Minuten)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflineMaxSales": "Höchstzahl Offline-Verkäufe je Kassensitzung",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Erlaubte Preisabweichung offline (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
+  },
   "settingLabelCounterPaidOutLimit": "Größte Entnahme ohne Freigabe",
   "settingLabelDirectoryGeocoderUrl": "Adresssuchdienst",
   "settingLabelDirectoryTileUrlTemplate": "Kachelserver der Karte",
@@ -19542,6 +19581,10 @@
   },
   "settingLabelStockGroupDefaultCountDays": "Standard-Zählzyklus (Tage)",
   "settingLabelStockGroupDefaultTagMode": "Standard-Etikettenmodus der Artikel",
+  "settingLabelStockInvoiceSalePlace": "Ort, von dem auf Rechnung verkaufte Waren abgehen",
+  "@settingLabelStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
+  },
   "settingLabelStockPriceRounding": "Preisrundung",
   "settingLabelStockRepeatedScan": "Ein erneut gescannter Code",
   "settingLabelStockTagReadMaxTags": "Höchstzahl Etiketten je Massenlesung",
@@ -20643,6 +20686,10 @@
   "@standaloneFactLines": {
     "description": "#4165 standalone invoice composer: standaloneFactLines"
   },
+  "standaloneFactSalePlace": "der Ort, von dem verkauft wird: einen Ort mit Bestand in den Unternehmenseinstellungen festlegen",
+  "@standaloneFactSalePlace": {
+    "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
+  },
   "standaloneFactSalesTax": "dieser Betrieb erhebt Sales Tax, was hier noch nicht unterstützt wird",
   "@standaloneFactSalesTax": {
     "description": "#4165 standalone invoice composer: standaloneFactSalesTax"
@@ -20683,9 +20730,29 @@
   "@standaloneFieldDescription": {
     "description": "#4165 standalone invoice composer: standaloneFieldDescription"
   },
+  "standaloneFieldGoodsAbroad": "ein Käufer im Land des Unternehmens: ins Ausland verkaufte Waren werden hier noch nicht berechnet",
+  "@standaloneFieldGoodsAbroad": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsAbroad"
+  },
+  "standaloneFieldGoodsOff": "die Bestandsführung, die in diesem Unternehmen aus ist",
+  "@standaloneFieldGoodsOff": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsOff"
+  },
+  "standaloneFieldItem": "ein Artikel, der im Bestand geführt und verkauft wird",
+  "@standaloneFieldItem": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldItem"
+  },
   "standaloneFieldLineId": "den Entwurf erneut zu speichern",
   "@standaloneFieldLineId": {
     "description": "#4165 standalone invoice composer: standaloneFieldLineId"
+  },
+  "standaloneFieldLot": "eine Charge dieses Artikels",
+  "@standaloneFieldLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldLot"
+  },
+  "standaloneFieldPieces": "die Etiketten der Stücke als Etikettcodes",
+  "@standaloneFieldPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldPieces"
   },
   "standaloneFieldPrice": "ein Preis mit höchstens sechs Nachkommastellen",
   "@standaloneFieldPrice": {
@@ -20695,13 +20762,37 @@
   "@standaloneFieldQuantity": {
     "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
   },
-  "standaloneFieldSupply": "eine Dienstleistung (Waren werden hier noch nicht berechnet)",
+  "standaloneFieldStock": "Waren, die der Bestand so verkaufen kann, wie sie erfasst sind",
+  "@standaloneFieldStock": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStock"
+  },
+  "standaloneFieldStockExpired": "eine Charge, die nicht abgelaufen ist",
+  "@standaloneFieldStockExpired": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockExpired"
+  },
+  "standaloneFieldStockLot": "eine vorhandene Charge dieses Artikels",
+  "@standaloneFieldStockLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockLot"
+  },
+  "standaloneFieldStockPieces": "die verkauften Stücke: ein Etikett pro Stück, jedes von einem vorhandenen Stück",
+  "@standaloneFieldStockPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockPieces"
+  },
+  "standaloneFieldStockShort": "genug Bestand am Ort, von dem verkauft wird",
+  "@standaloneFieldStockShort": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockShort"
+  },
+  "standaloneFieldSupply": "was die Zeile liefert: eine Dienstleistung, eine Immobilie oder Waren",
   "@standaloneFieldSupply": {
     "description": "#4165 standalone invoice composer: standaloneFieldSupply"
   },
   "standaloneFieldUnit": "eine Einheit",
   "@standaloneFieldUnit": {
     "description": "#4165 standalone invoice composer: standaloneFieldUnit"
+  },
+  "standaloneFieldVariant": "die Variante des Artikels",
+  "@standaloneFieldVariant": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldVariant"
   },
   "standaloneFieldVatRate": "ein vom Betrieb festgelegter Steuersatz",
   "@standaloneFieldVatRate": {
@@ -20740,9 +20831,25 @@
   "@standaloneInvoiceLineDescription": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineDescription"
   },
+  "standaloneInvoiceLineGoods": "Aus dem Bestand verkauft",
+  "@standaloneInvoiceLineGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineGoods"
+  },
   "standaloneInvoiceLineGross": "Der Preis enthält die Steuer",
   "@standaloneInvoiceLineGross": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineGross"
+  },
+  "standaloneInvoiceLineNoGoods": "Nichts aus dem Bestand (eine Dienstleistung)",
+  "@standaloneInvoiceLineNoGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineNoGoods"
+  },
+  "standaloneInvoiceLinePieces": "Etiketten der verkauften Stücke",
+  "@standaloneInvoiceLinePieces": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePieces"
+  },
+  "standaloneInvoiceLinePiecesHint": "Ein Etikett pro Stück, durch Kommas getrennt: Dieser Artikel wird Stück für Stück geführt.",
+  "@standaloneInvoiceLinePiecesHint": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePiecesHint"
   },
   "standaloneInvoiceLinePrice": "Einzelpreis",
   "@standaloneInvoiceLinePrice": {
@@ -22169,7 +22276,6 @@
   "stockUnitCode": "Einheitencode",
   "stockUnitContent": "Inhalt",
   "stockUnitContentNone": "Nichts darin.",
-  "stockUnitItem": "Artikel",
   "stockUnitKind": "Art",
   "stockUnitKindBox": "Schachtel",
   "stockUnitKindCarton": "Karton",
@@ -22185,7 +22291,6 @@
   "stockUnitMoved": "{unit} nach {place} bewegt.",
   "stockUnitNestedIn": "In {unit}",
   "stockUnitPlace": "Ort",
-  "stockUnitQuantity": "Menge",
   "stockUnitRepack": "In Kisten umpacken",
   "stockUnitRepackBoxes": "Anzahl Kisten",
   "stockUnitRepackEach": "Menge je Kiste",
@@ -23752,6 +23857,15 @@
   "tillOpReconcileTender": "Kartenzahlung abgleichen",
   "tillOpSignFiscal": "fiskalischen Beleg signieren",
   "tillPayCash": "Bar kassieren",
+  "tillPieceTwice": "Stück {code} ist schon im Warenkorb.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Warenkorb wird berechnet …",
   "tillQuantityHint": "Eine genaue Menge, zum Beispiel 1 oder 0,350.",
   "tillQuantityRefused": "Geben Sie eine Menge über null mit höchstens sechs Dezimalstellen ein.",
@@ -23762,10 +23876,40 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillScanUnknown": "{code} ist nichts, was diese Kasse verkauft.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillSoldTitle": "Verkauft",
   "tillTaxIncluded": "davon Steuer {amount}",
   "tillTitle": "Kasse",
   "tillTotalDue": "Zu zahlender Betrag: {amount}",
+  "tillTrackLot": "Charge {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Stück {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tipAvailabilityClosure": "Einen Tag schließen, den niemand buchen kann: auf „Schließtag hinzufügen“ tippen und bei Bedarf einen Grund angeben.",
   "tipAvailabilityDays": "Die Öffnungstage festlegen: die Wochentage unter „Geöffnete Wochentage“ an- oder abwählen.",
   "tipAvailabilityGrid": "Festlegen, wie Buchungen geteilt werden: eine „Buchungsraster“ wählen – freie Zeiträume, Slots, halbe oder ganze Tage.",

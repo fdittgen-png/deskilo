@@ -4995,9 +4995,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billingAccessCodeCopy => 'Copy the code';
 
   @override
-  String get billingAccessCodeField => 'Code';
-
-  @override
   String billingAccessCodeOnce(String date) {
     return 'Give this code to the customer now. It is shown only once and cannot be read again. It is valid until $date.';
   }
@@ -11737,6 +11734,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.';
+
+  @override
+  String get featureCounterOfflineCashDesc =>
+      'When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.';
+
+  @override
+  String get featureCounterOfflineCashTitle => 'Selling offline, cash only';
 
   @override
   String get featureCounterReceiptsDesc =>
@@ -29042,6 +29046,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This receipt is no longer an open draft, or a receipt was already issued for the same sale.';
 
   @override
+  String get refusalCounterOfflineConflict =>
+      'A sale sent from the till under this number was already received with other content. Nothing was recorded again; look at the list of offline sales.';
+
+  @override
   String get refusalCounterTenderState =>
       'This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.';
 
@@ -32175,6 +32183,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.';
 
   @override
+  String get settingHintCounterOfflineMaxMinutes =>
+      'How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.';
+
+  @override
+  String get settingHintCounterOfflineMaxSales =>
+      'How many cash sales made offline one till session accepts. Further sales are refused and listed for the owner.';
+
+  @override
+  String get settingHintCounterOfflinePriceTolerance =>
+      'How far, in percent, the price of an offline sale may differ from the item\'s price when the sale is sent. 0 means the price must be the same.';
+
+  @override
   String get settingHintCounterPaidOutLimit =>
       'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.';
 
@@ -32451,6 +32471,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece).';
 
   @override
+  String get settingHintStockInvoiceSalePlace =>
+      'The code of a place of the business that holds stock, for example MAIN. Goods sold on an invoice leave from there when the invoice is issued.';
+
+  @override
   String get settingHintStockPriceRounding =>
       'How a proposed sale price is rounded: to the nearest 0.05 or 0.10, or to a price ending in 0.99. It is used only to propose a price.';
 
@@ -32582,6 +32606,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Fiscal rules for counter sales';
+
+  @override
+  String get settingLabelCounterOfflineMaxMinutes =>
+      'Longest offline period (minutes)';
+
+  @override
+  String get settingLabelCounterOfflineMaxSales =>
+      'Most offline sales per till session';
+
+  @override
+  String get settingLabelCounterOfflinePriceTolerance =>
+      'Price difference allowed offline (%)';
 
   @override
   String get settingLabelCounterPaidOutLimit =>
@@ -32829,6 +32865,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelStockGroupDefaultTagMode =>
       'Default tag mode of items';
+
+  @override
+  String get settingLabelStockInvoiceSalePlace =>
+      'Place goods sold on an invoice leave from';
 
   @override
   String get settingLabelStockPriceRounding => 'Price rounding';
@@ -35414,6 +35454,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get standaloneFactLines => 'at least one line';
 
   @override
+  String get standaloneFactSalePlace =>
+      'the place goods are sold from: set a place that holds stock in the business settings';
+
+  @override
   String get standaloneFactSalesTax =>
       'this business adds sales tax, which is not supported here yet';
 
@@ -35446,7 +35490,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get standaloneFieldDescription => 'a description';
 
   @override
+  String get standaloneFieldGoodsAbroad =>
+      'a buyer in this business’s country: goods sold abroad are not invoiced here yet';
+
+  @override
+  String get standaloneFieldGoodsOff =>
+      'the goods ledger, which is off in this business';
+
+  @override
+  String get standaloneFieldItem => 'an item kept in stock and on sale';
+
+  @override
   String get standaloneFieldLineId => 'saving the draft again';
+
+  @override
+  String get standaloneFieldLot => 'a lot of this item';
+
+  @override
+  String get standaloneFieldPieces => 'the tags of the pieces, as tag codes';
 
   @override
   String get standaloneFieldPrice => 'a price with at most six decimals';
@@ -35456,11 +35517,31 @@ class AppLocalizationsEn extends AppLocalizations {
       'a quantity above zero with at most six decimals';
 
   @override
+  String get standaloneFieldStock => 'goods the stock can sell as entered';
+
+  @override
+  String get standaloneFieldStockExpired => 'a lot that has not expired';
+
+  @override
+  String get standaloneFieldStockLot => 'a lot of this item that is there';
+
+  @override
+  String get standaloneFieldStockPieces =>
+      'the pieces sold: one tag per piece, each of a piece that is there';
+
+  @override
+  String get standaloneFieldStockShort =>
+      'enough on hand at the place goods are sold from';
+
+  @override
   String get standaloneFieldSupply =>
-      'a service (goods are not invoiced here yet)';
+      'what the line supplies: a service, property or goods';
 
   @override
   String get standaloneFieldUnit => 'a unit';
+
+  @override
+  String get standaloneFieldVariant => 'the variant of the item';
 
   @override
   String get standaloneFieldVatRate => 'a VAT rate the business has set';
@@ -35489,7 +35570,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get standaloneInvoiceLineDescription => 'Description';
 
   @override
+  String get standaloneInvoiceLineGoods => 'Sold from stock';
+
+  @override
   String get standaloneInvoiceLineGross => 'The price includes tax';
+
+  @override
+  String get standaloneInvoiceLineNoGoods => 'Nothing from stock (a service)';
+
+  @override
+  String get standaloneInvoiceLinePieces => 'Tags of the pieces sold';
+
+  @override
+  String get standaloneInvoiceLinePiecesHint =>
+      'One tag per piece, separated by commas: this item is tracked piece by piece.';
 
   @override
   String get standaloneInvoiceLinePrice => 'Unit price';
@@ -37742,9 +37836,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockUnitContentNone => 'Nothing in it.';
 
   @override
-  String get stockUnitItem => 'Item';
-
-  @override
   String get stockUnitKind => 'Kind';
 
   @override
@@ -37796,9 +37887,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockUnitPlace => 'Place';
-
-  @override
-  String get stockUnitQuantity => 'Quantity';
 
   @override
   String get stockUnitRepack => 'Repack into boxes';
@@ -40543,6 +40631,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillPayCash => 'Take cash';
 
   @override
+  String tillPieceTwice(String code) {
+    return 'Piece $code is already in the basket.';
+  }
+
+  @override
   String get tillPricing => 'Pricing the basket…';
 
   @override
@@ -40569,6 +40662,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillRetry => 'Try again';
 
   @override
+  String tillScanUnknown(String code) {
+    return '$code is not something this till sells.';
+  }
+
+  @override
   String get tillSoldTitle => 'Sold';
 
   @override
@@ -40582,6 +40680,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String tillTotalDue(String amount) {
     return 'Total to pay: $amount';
+  }
+
+  @override
+  String tillTrackLot(String code, String quantity) {
+    return 'Lot $code × $quantity';
+  }
+
+  @override
+  String tillTrackPiece(String code) {
+    return 'Piece $code';
   }
 
   @override

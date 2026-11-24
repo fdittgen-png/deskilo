@@ -106,11 +106,8 @@ class FinanceOverview {
 
   final List<FinanceInvoice> invoices;
 
-  /// #4164 B2 (0911) — the documents of the financial subjects I read through
-  /// a billing-access grant, never as a member: a customer's own account of a
-  /// business that invoices them. They are kept out of [invoices] on purpose,
-  /// so nothing that counts, groups, pays or exports what I owe as a member
-  /// ever sees them; [billedGroups] shows them apart.
+  /// #4164 B2 (0911) — documents I read through a billing-access grant, never as a member: kept out of
+  /// [invoices] so nothing that counts, pays or exports what I owe as a member sees them ([billedGroups]).
   final List<FinanceInvoice> billed;
 
   /// #3878 (0755) — an answer carries every document still owed or in my
@@ -170,11 +167,7 @@ class FinanceOverview {
         final source = a.networkId.compareTo(b.networkId);
         return source != 0 ? source : a.id.compareTo(b.id);
       }),
-      billed: [
-        ...billed,
-        for (final i in other.billed)
-          if (billedIds.add((i.networkId, i.id))) i,
-      ],
+      billed: [...billed, for (final i in other.billed) if (billedIds.add((i.networkId, i.id))) i],
       reminders: [
         ...mine.reminders,
         for (final r in theirs.reminders)

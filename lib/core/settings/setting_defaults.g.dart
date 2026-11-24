@@ -66,6 +66,12 @@ abstract final class SettingDefaults {
   static const String counterDocumentChannel = 'share';
   /// `counter.fiscal_obligation`
   static const String counterFiscalObligation = 'register_required';
+  /// `counter.offline_max_minutes`
+  static const int counterOfflineMaxMinutes = 240;
+  /// `counter.offline_max_sales`
+  static const int counterOfflineMaxSales = 200;
+  /// `counter.offline_price_tolerance_percent`
+  static const int counterOfflinePriceTolerancePercent = 0;
   /// `counter.paid_out_limit_minor`
   static const int counterPaidOutLimitMinor = 0;
   /// `directory.geocoder_url`
@@ -204,6 +210,8 @@ abstract final class SettingDefaults {
   static const int stockGroupDefaultCountDays = 0;
   /// `stock.group_default_tag_mode`
   static const String stockGroupDefaultTagMode = 'none';
+  /// `stock.invoice_sale_place`
+  static const String stockInvoiceSalePlace = 'MAIN';
   /// `stock.price_rounding`
   static const String stockPriceRounding = 'none';
   /// `stock.repeated_scan`

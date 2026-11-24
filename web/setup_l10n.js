@@ -33,6 +33,17 @@ window.SETUP_L10N={
    "optOneYear": "1 year",
    "optYears": "{n} years",
    "optMinutes": "{n} minutes",
+   "optMinutesDefault": "{n} minutes (default)",
+   "optSales": "{n} sales",
+   "optSalesDefault": "{n} sales (default)",
+   "optPercent": "{n} %",
+   "optPercentDefault": "{n} % (default)",
+   "counterOfflineMinutes": "Offline sales: longest offline period",
+   "counterOfflineMinutesHint": "How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Set in the app's settings.",
+   "counterOfflineSales": "Offline sales: most per till session",
+   "counterOfflineSalesHint": "How many cash sales made offline one till session accepts. Set in the app's settings.",
+   "counterOfflineTolerance": "Offline sales: price difference allowed",
+   "counterOfflineToleranceHint": "How far, in percent, the price of an offline sale may differ from the item's price when the sale is sent. Set in the app's settings.",
    "optMinutesDefaultMin": "{n} minutes (default min.)",
    "optOneHour": "1 hour",
    "optHourAndHalf": "1 h 30",
@@ -825,6 +836,8 @@ window.SETUP_L10N={
    "shopTypeCornerShop": "Corner shop",
    "stockWeighedGoods": "Goods are sold by weight",
    "stockWeighedGoodsHint": "A new stock item is proposed in kilograms instead of pieces (butcher, bakery, grocery counter).",
+   "stockInvoiceSalePlace": "Place goods sold on an invoice leave from",
+   "stockInvoiceSalePlaceHint": "The code of a place that holds stock, for example MAIN. When an invoice that sells goods is issued, they leave from there. You can change it later in the workspace settings.",
    "stockGroupTagMode": "Default tag mode of items",
    "stockGroupTagModeHint": "Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece). Set in the app's settings.",
    "stockGroupCountDays": "Default count cycle",
@@ -1586,6 +1599,10 @@ window.SETUP_L10N={
    "stockHandlingUnits": [
     "Handling units",
     "Goods move in the pallet or carton they were received in, or in the store's own repackaged units, and stay traceable through the repack."
+   ],
+   "counterOfflineCash": [
+    "Selling offline, cash only",
+    "When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection."
    ]
   },
   "process": {
@@ -2016,6 +2033,17 @@ window.SETUP_L10N={
    "optOneYear": "1 an",
    "optYears": "{n} ans",
    "optMinutes": "{n} minutes",
+   "optMinutesDefault": "{n} minutes (défaut)",
+   "optSales": "{n} ventes",
+   "optSalesDefault": "{n} ventes (défaut)",
+   "optPercent": "{n} %",
+   "optPercentDefault": "{n} % (défaut)",
+   "counterOfflineMinutes": "Ventes hors ligne : durée maximale",
+   "counterOfflineMinutesHint": "Combien de temps après la perte de connexion de la caisse une vente en espèces faite hors ligne est encore acceptée à l'envoi. Réglé dans les paramètres de l'app.",
+   "counterOfflineSales": "Ventes hors ligne : nombre maximal par session",
+   "counterOfflineSalesHint": "Combien de ventes en espèces faites hors ligne une session de caisse accepte. Réglé dans les paramètres de l'app.",
+   "counterOfflineTolerance": "Ventes hors ligne : écart de prix toléré",
+   "counterOfflineToleranceHint": "De combien, en pourcentage, le prix d'une vente hors ligne peut différer du prix de l'article à l'envoi. Réglé dans les paramètres de l'app.",
    "optMinutesDefaultMin": "{n} minutes (défaut min.)",
    "optOneHour": "1 heure",
    "optHourAndHalf": "1 h 30",
@@ -2808,6 +2836,8 @@ window.SETUP_L10N={
    "shopTypeCornerShop": "Supérette",
    "stockWeighedGoods": "Les marchandises se vendent au poids",
    "stockWeighedGoodsHint": "Un nouvel article de stock est proposé en kilogrammes plutôt qu’en pièces (boucherie, boulangerie, comptoir d’épicerie).",
+   "stockInvoiceSalePlace": "Lieu d’où partent les biens vendus sur facture",
+   "stockInvoiceSalePlaceHint": "Le code d’un lieu qui détient du stock, par exemple MAIN. À l’émission d’une facture qui vend des biens, ils en partent. Modifiable ensuite dans les réglages de l’espace.",
    "stockGroupTagMode": "Mode d'étiquette par défaut des articles",
    "stockGroupTagModeHint": "Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce). Se règle dans les paramètres de l'app.",
    "stockGroupCountDays": "Cycle de comptage par défaut",
@@ -3569,6 +3599,10 @@ window.SETUP_L10N={
    "stockHandlingUnits": [
     "Unités de manutention",
     "Les marchandises circulent dans la palette ou le carton où elles sont arrivées, ou dans les unités reconditionnées du magasin, et restent traçables à travers le reconditionnement."
+   ],
+   "counterOfflineCash": [
+    "Vendre hors ligne, en espèces seulement",
+    "Quand la connexion est perdue, la caisse continue de vendre en espèces, enregistre chaque vente sur l'appareil et envoie les ventes dans l'ordre au retour de la connexion. Les autres moyens de paiement attendent la connexion."
    ]
   },
   "process": {
@@ -3999,6 +4033,17 @@ window.SETUP_L10N={
    "optOneYear": "1 Jahr",
    "optYears": "{n} Jahre",
    "optMinutes": "{n} Minuten",
+   "optMinutesDefault": "{n} Minuten (Standard)",
+   "optSales": "{n} Verkäufe",
+   "optSalesDefault": "{n} Verkäufe (Standard)",
+   "optPercent": "{n} %",
+   "optPercentDefault": "{n} % (Standard)",
+   "counterOfflineMinutes": "Offline-Verkäufe: längste Offline-Zeit",
+   "counterOfflineMinutesHint": "Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. In den Einstellungen der App festgelegt.",
+   "counterOfflineSales": "Offline-Verkäufe: Höchstzahl je Kassensitzung",
+   "counterOfflineSalesHint": "Wie viele offline getätigte Barverkäufe eine Kassensitzung annimmt. In den Einstellungen der App festgelegt.",
+   "counterOfflineTolerance": "Offline-Verkäufe: erlaubte Preisabweichung",
+   "counterOfflineToleranceHint": "Wie weit der Preis eines Offline-Verkaufs beim Senden in Prozent vom Preis des Artikels abweichen darf. In den Einstellungen der App festgelegt.",
    "optMinutesDefaultMin": "{n} Minuten (Standard-Minimum)",
    "optOneHour": "1 Stunde",
    "optHourAndHalf": "1 h 30",
@@ -4791,6 +4836,8 @@ window.SETUP_L10N={
    "shopTypeCornerShop": "Späti",
    "stockWeighedGoods": "Ware wird nach Gewicht verkauft",
    "stockWeighedGoodsHint": "Ein neuer Lagerartikel wird in Kilogramm statt in Stück vorgeschlagen (Metzgerei, Bäckerei, Theke).",
+   "stockInvoiceSalePlace": "Ort, von dem auf Rechnung verkaufte Waren abgehen",
+   "stockInvoiceSalePlaceHint": "Der Code eines Orts mit Bestand, zum Beispiel MAIN. Wird eine Rechnung über Waren ausgestellt, gehen sie von dort ab. Später in den Workspace-Einstellungen änderbar.",
    "stockGroupTagMode": "Standard-Etikettenmodus der Artikel",
    "stockGroupTagModeHint": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht). Einstellbar in den Einstellungen der App.",
    "stockGroupCountDays": "Standard-Zählzyklus",
@@ -5552,6 +5599,10 @@ window.SETUP_L10N={
    "stockHandlingUnits": [
     "Packeinheiten",
     "Ware bewegt sich in der Palette oder dem Karton, in dem sie ankam, oder in den eigenen umgepackten Einheiten des Ladens und bleibt über das Umpacken rückverfolgbar."
+   ],
+   "counterOfflineCash": [
+    "Offline verkaufen, nur bar",
+    "Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung."
    ]
   },
   "process": {
@@ -5982,6 +6033,17 @@ window.SETUP_L10N={
    "optOneYear": "1 año",
    "optYears": "{n} años",
    "optMinutes": "{n} minutos",
+   "optMinutesDefault": "{n} minutos (por defecto)",
+   "optSales": "{n} ventas",
+   "optSalesDefault": "{n} ventas (por defecto)",
+   "optPercent": "{n} %",
+   "optPercentDefault": "{n} % (por defecto)",
+   "counterOfflineMinutes": "Ventas sin conexión: tiempo máximo",
+   "counterOfflineMinutesHint": "Cuánto tiempo después de perder la conexión la caja aún se acepta una venta en efectivo hecha sin conexión al enviarla. Se define en los ajustes de la app.",
+   "counterOfflineSales": "Ventas sin conexión: máximo por sesión",
+   "counterOfflineSalesHint": "Cuántas ventas en efectivo hechas sin conexión acepta una sesión de caja. Se define en los ajustes de la app.",
+   "counterOfflineTolerance": "Ventas sin conexión: diferencia de precio admitida",
+   "counterOfflineToleranceHint": "Cuánto, en porcentaje, puede diferir el precio de una venta sin conexión del precio del artículo al enviarla. Se define en los ajustes de la app.",
    "optMinutesDefaultMin": "{n} minutos (mín. predeterminado)",
    "optOneHour": "1 hora",
    "optHourAndHalf": "1 h 30",
@@ -6774,6 +6836,8 @@ window.SETUP_L10N={
    "shopTypeCornerShop": "Tienda de barrio",
    "stockWeighedGoods": "Las mercancías se venden al peso",
    "stockWeighedGoodsHint": "Un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador).",
+   "stockInvoiceSalePlace": "Lugar del que salen los bienes vendidos en factura",
+   "stockInvoiceSalePlaceHint": "El código de un lugar con existencias, por ejemplo MAIN. Al emitir una factura que vende bienes, salen de allí. Se puede cambiar después en los ajustes del espacio.",
    "stockGroupTagMode": "Modo de etiqueta por defecto de los artículos",
    "stockGroupTagModeHint": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza). Se ajusta en los ajustes de la app.",
    "stockGroupCountDays": "Ciclo de recuento por defecto",
@@ -7535,6 +7599,10 @@ window.SETUP_L10N={
    "stockHandlingUnits": [
     "Unidades de manipulación",
     "La mercancía se mueve en el palé o la caja en que llegó, o en las unidades reenvasadas de la tienda, y sigue siendo trazable a través del reenvasado."
+   ],
+   "counterOfflineCash": [
+    "Vender sin conexión, solo en efectivo",
+    "Si se pierde la conexión, la caja sigue vendiendo en efectivo, guarda cada venta en el dispositivo y envía las ventas en orden cuando vuelve la conexión. Los demás medios de pago esperan la conexión."
    ]
   },
   "process": {
@@ -7965,6 +8033,17 @@ window.SETUP_L10N={
    "optOneYear": "1 anno",
    "optYears": "{n} anni",
    "optMinutes": "{n} minuti",
+   "optMinutesDefault": "{n} minuti (predefinito)",
+   "optSales": "{n} vendite",
+   "optSalesDefault": "{n} vendite (predefinito)",
+   "optPercent": "{n} %",
+   "optPercentDefault": "{n} % (predefinito)",
+   "counterOfflineMinutes": "Vendite offline: durata massima",
+   "counterOfflineMinutesHint": "Per quanto tempo dopo la perdita della connessione una vendita in contanti fatta offline è ancora accettata all'invio. Impostato nelle impostazioni dell'app.",
+   "counterOfflineSales": "Vendite offline: massimo per sessione",
+   "counterOfflineSalesHint": "Quante vendite in contanti fatte offline accetta una sessione di cassa. Impostato nelle impostazioni dell'app.",
+   "counterOfflineTolerance": "Vendite offline: differenza di prezzo ammessa",
+   "counterOfflineToleranceHint": "Di quanto, in percentuale, il prezzo di una vendita offline può differire dal prezzo dell'articolo all'invio. Impostato nelle impostazioni dell'app.",
    "optMinutesDefaultMin": "{n} minuti (min. predefinito)",
    "optOneHour": "1 ora",
    "optHourAndHalf": "1 h 30",
@@ -8757,6 +8836,8 @@ window.SETUP_L10N={
    "shopTypeCornerShop": "Negozio di quartiere",
    "stockWeighedGoods": "La merce si vende a peso",
    "stockWeighedGoodsHint": "Un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco).",
+   "stockInvoiceSalePlace": "Luogo da cui escono i beni venduti in fattura",
+   "stockInvoiceSalePlaceHint": "Il codice di un luogo con scorte, per esempio MAIN. All’emissione di una fattura che vende beni, escono da lì. Modificabile poi nelle impostazioni dello spazio.",
    "stockGroupTagMode": "Modalità etichetta predefinita degli articoli",
    "stockGroupTagModeHint": "Se un articolo che né un gruppo né un'impostazione propria riguarda porta un'etichetta RFID: nessuna, una etichetta che indica un lotto o una etichetta per unità (che richiede la tracciabilità per pezzo). Si imposta nelle impostazioni dell'app.",
    "stockGroupCountDays": "Ciclo di conteggio predefinito",
@@ -9518,6 +9599,10 @@ window.SETUP_L10N={
    "stockHandlingUnits": [
     "Unità di movimentazione",
     "Le merci si spostano nel bancale o nel cartone in cui sono arrivate, o nelle unità riconfezionate del negozio, e restano tracciabili attraverso il riconfezionamento."
+   ],
+   "counterOfflineCash": [
+    "Vendere offline, solo in contanti",
+    "Quando la connessione cade, la cassa continua a vendere in contanti, registra ogni vendita sul dispositivo e invia le vendite in ordine al ritorno della connessione. Gli altri metodi di pagamento attendono la connessione."
    ]
   },
   "process": {

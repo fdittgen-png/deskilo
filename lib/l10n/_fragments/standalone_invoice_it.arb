@@ -225,7 +225,7 @@
   "@standaloneFieldBasis": {
     "description": "#4165 standalone invoice composer: standaloneFieldBasis"
   },
-  "standaloneFieldSupply": "un servizio (i beni non si fatturano ancora qui)",
+  "standaloneFieldSupply": "ciò che fornisce la riga: un servizio, un immobile o beni",
   "@standaloneFieldSupply": {
     "description": "#4165 standalone invoice composer: standaloneFieldSupply"
   },

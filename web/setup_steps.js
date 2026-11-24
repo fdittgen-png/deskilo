@@ -271,7 +271,7 @@ const STEPS=[
   if(on('stockManagement'))k.push(checkbox(T('stockAllowNegative'),T('stockAllowNegativeHint'),S.stock.allowNegative,v=>set('stock.allowNegative',v)));
   // #4293 — how a place address (site, zone, aisle, bay, shelf) is written.
   // #4365 — goods sold by weight: a new item is proposed in kilograms.
-  if(on('stockManagement'))k.push(checkbox(T('stockWeighedGoods'),T('stockWeighedGoodsHint'),S.stock.weighedGoods,v=>set('stock.weighedGoods',v)));
+  if(on('stockManagement'))k.push(checkbox(T('stockWeighedGoods'),T('stockWeighedGoodsHint'),S.stock.weighedGoods,v=>set('stock.weighedGoods',v)),input(T('stockInvoiceSalePlace'),'stock.invoiceSalePlace',T('stockInvoiceSalePlaceHint'),'text','MAIN','services')); // #4433
   if(on('stockManagement'))k.push(selectEl(T('stockAddressSeparator'),'stock.addressSeparator',opts(STOCK_SEP),T('stockAddressSeparatorHint'),null,'services'));
   if(on('stockTags'))k.push(selectEl(T('stockTagGrace'),'stock.tagGrace',opts(STOCK_TAG_GRACE),T('stockTagGraceHint'),null,'services'));
   if(on('stockScanning'))k.push(selectEl(T('stockRepeatedScan'),'stock.repeatedScan',opts(STOCK_REPEAT),T('stockRepeatedScanHint'),null,'services'));
@@ -283,6 +283,8 @@ const STEPS=[
   // #4295 — cycle counts: when a place's holding is high value, and when an open task is overdue.
   if(on('stockCycleCounts'))k.push(selectEl(T('stockCycleHighValue'),'stock.cycleHighValue',opts(STOCK_CYCLE_VALUE),T('stockCycleHighValueHint'),null,'services'),selectEl(T('stockCycleOverdue'),'stock.cycleOverdue',opts(STOCK_CYCLE_OVERDUE),T('stockCycleOverdueHint'),null,'services'));
   // #4431 — the expiry report: how far ahead it looks when none is named.
+  // #4373 — selling offline: the limits the sales are checked against.
+  if(on('counterOfflineCash'))k.push(selectEl(T('counterOfflineMinutes'),'counter.offlineMinutes',opts(COUNTER_OFFLINE_MINUTES),T('counterOfflineMinutesHint'),null,'services'),selectEl(T('counterOfflineSales'),'counter.offlineSales',opts(COUNTER_OFFLINE_SALES),T('counterOfflineSalesHint'),null,'services'),selectEl(T('counterOfflineTolerance'),'counter.offlineTolerance',opts(COUNTER_OFFLINE_TOLERANCE),T('counterOfflineToleranceHint'),null,'services'));
   if(on('stockExpiryReport'))k.push(selectEl(T('stockExpiryHorizon'),'stock.expiryHorizon',opts(STOCK_EXPIRY_HORIZON),T('stockExpiryHorizonHint'),null,'services'));
   if(!vatCol&&on('services'))k.push(dep(registered()?T('servicesVatHiddenFeature',{feature:quoted(featureTitle('vatManagement'))}):T('servicesVatHiddenNotSubject'),registered()?'features':'legal'));
   return k},

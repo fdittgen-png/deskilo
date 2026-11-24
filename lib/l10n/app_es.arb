@@ -2936,7 +2936,6 @@
   "billingAccessCheck": "Comprobar el código",
   "billingAccessCodeCopied": "Código copiado",
   "billingAccessCodeCopy": "Copiar el código",
-  "billingAccessCodeField": "Código",
   "billingAccessCodeOnce": "Entregue este código al cliente ahora. Se muestra una sola vez y no puede leerse de nuevo. Es válido hasta el {date}.",
   "billingAccessCodeTitle": "Código de invitación",
   "billingAccessCodeUnusable": "Este código no se puede usar. Puede ser erróneo, haber caducado, haberse retirado o estar ya tomado por otra cuenta. Pida uno nuevo a la empresa.",
@@ -7244,6 +7243,14 @@
   "featureConfigurationTransferDesc": "El archivo del espacio (XML) lleva toda la configuración — tarifas, identidad legal, reglas de reserva y validación, roles, diseños de documentos, sedes, días de cierre — y la importación la aplica, incluso en un espacio que ya tiene reservas. Desactivado: el archivo solo lleva ajustes y plano.",
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "featureCounterOfflineCashDesc": "Si se pierde la conexión, la caja sigue vendiendo en efectivo, guarda cada venta en el dispositivo y envía las ventas en orden cuando vuelve la conexión. Los demás medios de pago esperan la conexión.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  },
+  "featureCounterOfflineCashTitle": "Vender sin conexión, solo en efectivo",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
   },
   "featureCounterReceiptsDesc": "Una venta en el mostrador da un ticket inmutable, numerado una sola vez, con el cobro recibido. Solo se ofrece donde la operación del país está soportada, y dice claramente cuándo no lo está.",
   "featureCounterReceiptsTitle": "Tickets de caja",
@@ -16663,6 +16670,10 @@
   "refusalCounterEssentials": "A este ticket le falta algo o no es aceptable: no se numeró nada y no se cobró nada.",
   "refusalCounterGoods": "Aquí no se pueden vender ni recuperar mercancías: el libro de mercancías está desactivado, o no hay un lugar de donde tomarlas o donde devolverlas.",
   "refusalCounterNotOpen": "Este ticket ya no es un borrador abierto, o ya se emitió un ticket para la misma venta.",
+  "refusalCounterOfflineConflict": "Una venta enviada desde la caja con este número ya se recibió con otro contenido. No se registró nada de nuevo; consulte la lista de ventas sin conexión.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  },
   "refusalCounterTenderState": "Esta autorización de tarjeta sigue abierta, es desconocida o ya está resuelta: consulte al proveedor en lugar de pedirla otra vez.",
   "refusalCounterTenders": "Los cobros no saldan exactamente esta venta, o uno de ellos no se acepta aquí.",
   "refusalCounterTill": "La caja no está lista para esto: ábrala primero, o ya está abierta o cerrada.",
@@ -19149,6 +19160,18 @@
   "settingHintCounterCustomerlessSales": "Permitidas: se puede vender sin nombrar un cliente. Rechazadas: cada venta nombra uno. Una venta sin cliente nunca crea una cuenta, un miembro ni una suscripción.",
   "settingHintCounterDocumentChannel": "Compartido (mensaje o correo), impreso o ambos. El ticket es el mismo documento inmutable en todos los casos.",
   "settingHintCounterFiscalObligation": "Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.",
+  "settingHintCounterOfflineMaxMinutes": "Cuánto tiempo después de perder la conexión la caja aún se acepta una venta en efectivo hecha sin conexión al enviarla. Las posteriores se rechazan y se listan para el responsable.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflineMaxSales": "Cuántas ventas en efectivo hechas sin conexión acepta una sesión de caja. Las siguientes se rechazan y se listan.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflinePriceTolerance": "Cuánto, en porcentaje, puede diferir el precio de una venta sin conexión del precio del artículo al enviarla. 0 significa que el precio debe ser el mismo.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
   "settingHintCounterPaidOutLimit": "El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.",
   "settingHintDirectoryGeocoderUrl": "El servicio compatible con Photon que sitúa una dirección publicada en el mapa de descubrimiento: una dirección https en la internet pública, sin nombre de usuario, contraseña, consulta ni #. Déjelo vacío para usar la dirección con la que se construyó esta versión de la aplicación; si no, el servicio público Photon.",
   "settingHintDirectoryTileUrlTemplate": "El servidor de teselas con el que se dibuja el mapa de descubrimiento, con los marcadores z, x e y entre llaves en su dirección (se admite s entre llaves para un subdominio): https, en la internet pública, sin nombre de usuario, contraseña ni #. Déjelo vacío para usar el servidor de esta versión de la aplicación; si no, OpenStreetMap. Un nuevo host vuelve a preguntar a cada persona antes de cargar el mapa.",
@@ -19302,6 +19325,10 @@
   },
   "settingHintStockGroupDefaultCountDays": "Cada cuántos días se propone para un recuento cíclico un artículo que ni un grupo ni un ajuste propio contempla. 0 significa sin programar.",
   "settingHintStockGroupDefaultTagMode": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza).",
+  "settingHintStockInvoiceSalePlace": "El código de un lugar de la empresa que tiene existencias, por ejemplo MAIN. Los bienes vendidos en factura salen de allí al emitir la factura.",
+  "@settingHintStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
+  },
   "settingHintStockPriceRounding": "Cómo se redondea un precio de venta propuesto: al 0,05 o 0,10 más cercano, o a un precio que termina en 0,99. Solo sirve para proponer un precio.",
   "settingHintStockRepeatedScan": "Qué hace una hoja de mercancías cuando se escanea otra vez el mismo código: añadir uno más a la línea o preguntar la cantidad.",
   "settingHintStockTagReadMaxTags": "Cuántas etiquetas distintas conserva una lectura masiva antes de no aceptar más. La misma etiqueta leída varias veces cuenta una vez.",
@@ -19389,6 +19416,18 @@
   "settingLabelCounterCustomerlessSales": "Ventas sin cliente nombrado",
   "settingLabelCounterDocumentChannel": "Cómo sale el ticket del mostrador",
   "settingLabelCounterFiscalObligation": "Normas fiscales de las ventas en mostrador",
+  "settingLabelCounterOfflineMaxMinutes": "Tiempo máximo sin conexión (minutos)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflineMaxSales": "Máximo de ventas sin conexión por sesión de caja",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Diferencia de precio admitida sin conexión (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
+  },
   "settingLabelCounterPaidOutLimit": "Mayor salida sin autorización",
   "settingLabelDirectoryGeocoderUrl": "Servicio de búsqueda de direcciones",
   "settingLabelDirectoryTileUrlTemplate": "Servidor de teselas del mapa",
@@ -19542,6 +19581,10 @@
   },
   "settingLabelStockGroupDefaultCountDays": "Ciclo de recuento por defecto (días)",
   "settingLabelStockGroupDefaultTagMode": "Modo de etiqueta por defecto de los artículos",
+  "settingLabelStockInvoiceSalePlace": "Lugar del que salen los bienes vendidos en factura",
+  "@settingLabelStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
+  },
   "settingLabelStockPriceRounding": "Redondeo de precios",
   "settingLabelStockRepeatedScan": "Un código escaneado de nuevo",
   "settingLabelStockTagReadMaxTags": "Máximo de etiquetas por lectura masiva",
@@ -20643,6 +20686,10 @@
   "@standaloneFactLines": {
     "description": "#4165 standalone invoice composer: standaloneFactLines"
   },
+  "standaloneFactSalePlace": "el lugar del que se vende: indique un lugar con existencias en los ajustes de la empresa",
+  "@standaloneFactSalePlace": {
+    "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
+  },
   "standaloneFactSalesTax": "esta empresa añade impuesto de ventas, que aquí aún no se admite",
   "@standaloneFactSalesTax": {
     "description": "#4165 standalone invoice composer: standaloneFactSalesTax"
@@ -20683,9 +20730,29 @@
   "@standaloneFieldDescription": {
     "description": "#4165 standalone invoice composer: standaloneFieldDescription"
   },
+  "standaloneFieldGoodsAbroad": "un comprador del país de la empresa: los bienes vendidos al extranjero aún no se facturan aquí",
+  "@standaloneFieldGoodsAbroad": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsAbroad"
+  },
+  "standaloneFieldGoodsOff": "la gestión de existencias, desactivada en esta empresa",
+  "@standaloneFieldGoodsOff": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsOff"
+  },
+  "standaloneFieldItem": "un artículo con existencias y a la venta",
+  "@standaloneFieldItem": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldItem"
+  },
   "standaloneFieldLineId": "guardar de nuevo el borrador",
   "@standaloneFieldLineId": {
     "description": "#4165 standalone invoice composer: standaloneFieldLineId"
+  },
+  "standaloneFieldLot": "un lote de este artículo",
+  "@standaloneFieldLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldLot"
+  },
+  "standaloneFieldPieces": "las etiquetas de las piezas, como códigos de etiqueta",
+  "@standaloneFieldPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldPieces"
   },
   "standaloneFieldPrice": "un precio con seis decimales como máximo",
   "@standaloneFieldPrice": {
@@ -20695,13 +20762,37 @@
   "@standaloneFieldQuantity": {
     "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
   },
-  "standaloneFieldSupply": "un servicio (los bienes aún no se facturan aquí)",
+  "standaloneFieldStock": "bienes que las existencias pueden vender tal como se han introducido",
+  "@standaloneFieldStock": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStock"
+  },
+  "standaloneFieldStockExpired": "un lote que no esté caducado",
+  "@standaloneFieldStockExpired": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockExpired"
+  },
+  "standaloneFieldStockLot": "un lote presente de este artículo",
+  "@standaloneFieldStockLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockLot"
+  },
+  "standaloneFieldStockPieces": "las piezas vendidas: una etiqueta por pieza, cada una de una pieza presente",
+  "@standaloneFieldStockPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockPieces"
+  },
+  "standaloneFieldStockShort": "suficientes existencias en el lugar del que se vende",
+  "@standaloneFieldStockShort": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockShort"
+  },
+  "standaloneFieldSupply": "lo que suministra la línea: un servicio, un inmueble o bienes",
   "@standaloneFieldSupply": {
     "description": "#4165 standalone invoice composer: standaloneFieldSupply"
   },
   "standaloneFieldUnit": "una unidad",
   "@standaloneFieldUnit": {
     "description": "#4165 standalone invoice composer: standaloneFieldUnit"
+  },
+  "standaloneFieldVariant": "la variante del artículo",
+  "@standaloneFieldVariant": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldVariant"
   },
   "standaloneFieldVatRate": "un tipo de IVA definido por la empresa",
   "@standaloneFieldVatRate": {
@@ -20740,9 +20831,25 @@
   "@standaloneInvoiceLineDescription": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineDescription"
   },
+  "standaloneInvoiceLineGoods": "Vendido de las existencias",
+  "@standaloneInvoiceLineGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineGoods"
+  },
   "standaloneInvoiceLineGross": "El precio incluye el impuesto",
   "@standaloneInvoiceLineGross": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineGross"
+  },
+  "standaloneInvoiceLineNoGoods": "Nada de las existencias (un servicio)",
+  "@standaloneInvoiceLineNoGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineNoGoods"
+  },
+  "standaloneInvoiceLinePieces": "Etiquetas de las piezas vendidas",
+  "@standaloneInvoiceLinePieces": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePieces"
+  },
+  "standaloneInvoiceLinePiecesHint": "Una etiqueta por pieza, separadas por comas: este artículo se sigue pieza por pieza.",
+  "@standaloneInvoiceLinePiecesHint": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePiecesHint"
   },
   "standaloneInvoiceLinePrice": "Precio unitario",
   "@standaloneInvoiceLinePrice": {
@@ -22169,7 +22276,6 @@
   "stockUnitCode": "Código de la unidad",
   "stockUnitContent": "Contenido",
   "stockUnitContentNone": "Nada dentro.",
-  "stockUnitItem": "Artículo",
   "stockUnitKind": "Tipo",
   "stockUnitKindBox": "Caja",
   "stockUnitKindCarton": "Caja de cartón",
@@ -22185,7 +22291,6 @@
   "stockUnitMoved": "{unit} movida a {place}.",
   "stockUnitNestedIn": "En {unit}",
   "stockUnitPlace": "Lugar",
-  "stockUnitQuantity": "Cantidad",
   "stockUnitRepack": "Reenvasar en cajas",
   "stockUnitRepackBoxes": "Número de cajas",
   "stockUnitRepackEach": "Cantidad por caja",
@@ -23752,6 +23857,15 @@
   "tillOpReconcileTender": "conciliación de un pago con tarjeta",
   "tillOpSignFiscal": "firma de un ticket fiscal",
   "tillPayCash": "Cobrar en efectivo",
+  "tillPieceTwice": "La pieza {code} ya está en la cesta.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Calculando la cesta…",
   "tillQuantityHint": "Una cantidad exacta, por ejemplo 1 o 0,350.",
   "tillQuantityRefused": "Introduzca una cantidad superior a cero con un máximo de seis decimales.",
@@ -23762,10 +23876,40 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillScanUnknown": "{code} no es algo que venda esta caja.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillSoldTitle": "Vendido",
   "tillTaxIncluded": "de los cuales impuesto {amount}",
   "tillTitle": "Caja",
   "tillTotalDue": "Total a pagar: {amount}",
+  "tillTrackLot": "Lote {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Pieza {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tipAvailabilityClosure": "Para cerrar un día que nadie podrá reservar: toque «Añadir día de cierre» e indique un motivo si quiere.",
   "tipAvailabilityDays": "Para fijar los días de apertura: marca los días bajo «Días de apertura».",
   "tipAvailabilityGrid": "Para elegir cómo se dividen las reservas: escoge una «Granularidad de las reservas»: periodos libres, franjas, medias jornadas o jornadas completas.",

@@ -7844,12 +7844,6 @@ abstract class AppLocalizations {
   /// the billing access of a customer to their own invoices (#4164)
   ///
   /// In en, this message translates to:
-  /// **'Code'**
-  String get billingAccessCodeField;
-
-  /// the billing access of a customer to their own invoices (#4164)
-  ///
-  /// In en, this message translates to:
   /// **'Give this code to the customer now. It is shown only once and cannot be read again. It is valid until {date}.'**
   String billingAccessCodeOnce(String date);
 
@@ -19035,6 +19029,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.'**
   String get featureConfigurationTransferDesc;
+
+  /// #4373 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.'**
+  String get featureCounterOfflineCashDesc;
+
+  /// #4373 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Selling offline, cash only'**
+  String get featureCounterOfflineCashTitle;
 
   /// #4184 feature description
   ///
@@ -46590,6 +46596,12 @@ abstract class AppLocalizations {
   /// **'This receipt is no longer an open draft, or a receipt was already issued for the same sale.'**
   String get refusalCounterNotOpen;
 
+  /// #4373 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'A sale sent from the till under this number was already received with other content. Nothing was recorded again; look at the list of offline sales.'**
+  String get refusalCounterOfflineConflict;
+
   /// #4185 refusal
   ///
   /// In en, this message translates to:
@@ -51606,6 +51618,24 @@ abstract class AppLocalizations {
   /// **'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.'**
   String get settingHintCounterFiscalObligation;
 
+  /// #4373 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.'**
+  String get settingHintCounterOfflineMaxMinutes;
+
+  /// #4373 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How many cash sales made offline one till session accepts. Further sales are refused and listed for the owner.'**
+  String get settingHintCounterOfflineMaxSales;
+
+  /// #4373 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How far, in percent, the price of an offline sale may differ from the item\'s price when the sale is sent. 0 means the price must be the same.'**
+  String get settingHintCounterOfflinePriceTolerance;
+
   /// #4367 setting label/hint or refusal
   ///
   /// In en, this message translates to:
@@ -52020,6 +52050,12 @@ abstract class AppLocalizations {
   /// **'Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece).'**
   String get settingHintStockGroupDefaultTagMode;
 
+  /// #4433 goods sold on an invoice: settingHintStockInvoiceSalePlace
+  ///
+  /// In en, this message translates to:
+  /// **'The code of a place of the business that holds stock, for example MAIN. Goods sold on an invoice leave from there when the invoice is issued.'**
+  String get settingHintStockInvoiceSalePlace;
+
   /// #4361 setting label/hint
   ///
   /// In en, this message translates to:
@@ -52253,6 +52289,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fiscal rules for counter sales'**
   String get settingLabelCounterFiscalObligation;
+
+  /// #4373 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Longest offline period (minutes)'**
+  String get settingLabelCounterOfflineMaxMinutes;
+
+  /// #4373 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Most offline sales per till session'**
+  String get settingLabelCounterOfflineMaxSales;
+
+  /// #4373 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Price difference allowed offline (%)'**
+  String get settingLabelCounterOfflinePriceTolerance;
 
   /// #4367 setting label/hint or refusal
   ///
@@ -52667,6 +52721,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Default tag mode of items'**
   String get settingLabelStockGroupDefaultTagMode;
+
+  /// #4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace
+  ///
+  /// In en, this message translates to:
+  /// **'Place goods sold on an invoice leave from'**
+  String get settingLabelStockInvoiceSalePlace;
 
   /// #4361 setting label/hint
   ///
@@ -56735,6 +56795,12 @@ abstract class AppLocalizations {
   /// **'at least one line'**
   String get standaloneFactLines;
 
+  /// #4433 goods sold on an invoice: standaloneFactSalePlace
+  ///
+  /// In en, this message translates to:
+  /// **'the place goods are sold from: set a place that holds stock in the business settings'**
+  String get standaloneFactSalePlace;
+
   /// #4165 standalone invoice composer: standaloneFactSalesTax
   ///
   /// In en, this message translates to:
@@ -56795,11 +56861,41 @@ abstract class AppLocalizations {
   /// **'a description'**
   String get standaloneFieldDescription;
 
+  /// #4433 goods sold on an invoice: standaloneFieldGoodsAbroad
+  ///
+  /// In en, this message translates to:
+  /// **'a buyer in this business’s country: goods sold abroad are not invoiced here yet'**
+  String get standaloneFieldGoodsAbroad;
+
+  /// #4433 goods sold on an invoice: standaloneFieldGoodsOff
+  ///
+  /// In en, this message translates to:
+  /// **'the goods ledger, which is off in this business'**
+  String get standaloneFieldGoodsOff;
+
+  /// #4433 goods sold on an invoice: standaloneFieldItem
+  ///
+  /// In en, this message translates to:
+  /// **'an item kept in stock and on sale'**
+  String get standaloneFieldItem;
+
   /// #4165 standalone invoice composer: standaloneFieldLineId
   ///
   /// In en, this message translates to:
   /// **'saving the draft again'**
   String get standaloneFieldLineId;
+
+  /// #4433 goods sold on an invoice: standaloneFieldLot
+  ///
+  /// In en, this message translates to:
+  /// **'a lot of this item'**
+  String get standaloneFieldLot;
+
+  /// #4433 goods sold on an invoice: standaloneFieldPieces
+  ///
+  /// In en, this message translates to:
+  /// **'the tags of the pieces, as tag codes'**
+  String get standaloneFieldPieces;
 
   /// #4165 standalone invoice composer: standaloneFieldPrice
   ///
@@ -56813,10 +56909,40 @@ abstract class AppLocalizations {
   /// **'a quantity above zero with at most six decimals'**
   String get standaloneFieldQuantity;
 
+  /// #4433 goods sold on an invoice: standaloneFieldStock
+  ///
+  /// In en, this message translates to:
+  /// **'goods the stock can sell as entered'**
+  String get standaloneFieldStock;
+
+  /// #4433 goods sold on an invoice: standaloneFieldStockExpired
+  ///
+  /// In en, this message translates to:
+  /// **'a lot that has not expired'**
+  String get standaloneFieldStockExpired;
+
+  /// #4433 goods sold on an invoice: standaloneFieldStockLot
+  ///
+  /// In en, this message translates to:
+  /// **'a lot of this item that is there'**
+  String get standaloneFieldStockLot;
+
+  /// #4433 goods sold on an invoice: standaloneFieldStockPieces
+  ///
+  /// In en, this message translates to:
+  /// **'the pieces sold: one tag per piece, each of a piece that is there'**
+  String get standaloneFieldStockPieces;
+
+  /// #4433 goods sold on an invoice: standaloneFieldStockShort
+  ///
+  /// In en, this message translates to:
+  /// **'enough on hand at the place goods are sold from'**
+  String get standaloneFieldStockShort;
+
   /// #4165 standalone invoice composer: standaloneFieldSupply
   ///
   /// In en, this message translates to:
-  /// **'a service (goods are not invoiced here yet)'**
+  /// **'what the line supplies: a service, property or goods'**
   String get standaloneFieldSupply;
 
   /// #4165 standalone invoice composer: standaloneFieldUnit
@@ -56824,6 +56950,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'a unit'**
   String get standaloneFieldUnit;
+
+  /// #4433 goods sold on an invoice: standaloneFieldVariant
+  ///
+  /// In en, this message translates to:
+  /// **'the variant of the item'**
+  String get standaloneFieldVariant;
 
   /// #4165 standalone invoice composer: standaloneFieldVatRate
   ///
@@ -56873,11 +57005,35 @@ abstract class AppLocalizations {
   /// **'Description'**
   String get standaloneInvoiceLineDescription;
 
+  /// #4433 goods sold on an invoice: standaloneInvoiceLineGoods
+  ///
+  /// In en, this message translates to:
+  /// **'Sold from stock'**
+  String get standaloneInvoiceLineGoods;
+
   /// #4165 standalone invoice composer: standaloneInvoiceLineGross
   ///
   /// In en, this message translates to:
   /// **'The price includes tax'**
   String get standaloneInvoiceLineGross;
+
+  /// #4433 goods sold on an invoice: standaloneInvoiceLineNoGoods
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing from stock (a service)'**
+  String get standaloneInvoiceLineNoGoods;
+
+  /// #4433 goods sold on an invoice: standaloneInvoiceLinePieces
+  ///
+  /// In en, this message translates to:
+  /// **'Tags of the pieces sold'**
+  String get standaloneInvoiceLinePieces;
+
+  /// #4433 goods sold on an invoice: standaloneInvoiceLinePiecesHint
+  ///
+  /// In en, this message translates to:
+  /// **'One tag per piece, separated by commas: this item is tracked piece by piece.'**
+  String get standaloneInvoiceLinePiecesHint;
 
   /// #4165 standalone invoice composer: standaloneInvoiceLinePrice
   ///
@@ -60487,12 +60643,6 @@ abstract class AppLocalizations {
   /// #4435 handling units
   ///
   /// In en, this message translates to:
-  /// **'Item'**
-  String get stockUnitItem;
-
-  /// #4435 handling units
-  ///
-  /// In en, this message translates to:
   /// **'Kind'**
   String get stockUnitKind;
 
@@ -60579,12 +60729,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Place'**
   String get stockUnitPlace;
-
-  /// #4435 handling units
-  ///
-  /// In en, this message translates to:
-  /// **'Quantity'**
-  String get stockUnitQuantity;
 
   /// #4435 handling units
   ///
@@ -65254,6 +65398,12 @@ abstract class AppLocalizations {
   /// **'Take cash'**
   String get tillPayCash;
 
+  /// #4436 the till: a piece scanned a second time into the same basket
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {code} is already in the basket.'**
+  String tillPieceTwice(String code);
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -65296,6 +65446,12 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get tillRetry;
 
+  /// #4436 the till: a scanned code that names nothing the till rings up
+  ///
+  /// In en, this message translates to:
+  /// **'{code} is not something this till sells.'**
+  String tillScanUnknown(String code);
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -65319,6 +65475,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total to pay: {amount}'**
   String tillTotalDue(String amount);
+
+  /// #4436 the till: a lot a sold line took, its code as received and the quantity taken from it
+  ///
+  /// In en, this message translates to:
+  /// **'Lot {code} × {quantity}'**
+  String tillTrackLot(String code, String quantity);
+
+  /// #4436 the till: a piece a sold line took, named by its tag
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {code}'**
+  String tillTrackPiece(String code);
 
   /// Tip (#2313) on the availability surface: a scenario "To …: …".
   ///
