@@ -32824,7 +32824,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingHintTraceReportsPerHour =>
-      'Combien de rapports d\'erreur un appareil peut envoyer à cette installation en une heure. Les rapports suivants de cette heure sont abandonnés, jamais mis en attente. 0 désactive les rapports d\'erreur pour tous les appareils.';
+      'Combien de rapports d\'erreur une personne peut envoyer à cette installation en une heure, tous ses appareils confondus. Les rapports suivants de cette heure sont abandonnés, jamais mis en attente. 0 désactive les rapports d\'erreur pour tout le monde.';
 
   @override
   String get settingHintVatViesEvidenceDays =>
@@ -33260,7 +33260,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingLabelTraceReportsPerHour =>
-      'Rapports d\'erreur par appareil et par heure';
+      'Rapports d\'erreur par personne et par heure';
 
   @override
   String get settingLabelVatViesEvidenceDays =>

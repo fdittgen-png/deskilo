@@ -42303,7 +42303,7 @@
   "@settingHintTraceReportRetentionDays": {
     "description": "#4416 Platform setting trace.report_retention_days: what it decides, under its name"
   },
-  "settingHintTraceReportsPerHour": "How many error reports one device may send to this installation in an hour. Further reports in that hour are dropped, never queued. 0 turns error reports off for every device.",
+  "settingHintTraceReportsPerHour": "How many error reports one person may send to this installation in an hour, from all their devices together. Further reports in that hour are dropped, never queued. 0 turns error reports off for everybody.",
   "@settingHintTraceReportsPerHour": {
     "description": "#4416 Platform setting trace.reports_per_hour: what it decides, under its name"
   },
@@ -42767,7 +42767,7 @@
   "@settingLabelTraceReportRetentionDays": {
     "description": "#4416 Platform setting trace.report_retention_days: its name in the settings editor"
   },
-  "settingLabelTraceReportsPerHour": "Error reports per device and hour",
+  "settingLabelTraceReportsPerHour": "Error reports per person and hour",
   "@settingLabelTraceReportsPerHour": {
     "description": "#4416 Platform setting trace.reports_per_hour: its name in the settings editor"
   },

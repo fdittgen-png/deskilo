@@ -19309,7 +19309,7 @@
   "settingHintStockWeighedGoods": "Activé : un nouvel article de stock est proposé en kilogrammes plutôt qu’en pièces (boucherie, boulangerie, comptoir d’épicerie). Tout article peut garder une autre unité.",
   "settingHintTraceReportMaxBytes": "Le plus grand rapport d'erreur que cette installation accepte. L'application raccourcit la pile du rapport avant l'envoi ; un rapport encore trop grand est abandonné.",
   "settingHintTraceReportRetentionDays": "Combien de jours cette installation conserve un rapport d'erreur. Les rapports plus anciens sont supprimés à l'arrivée d'un nouveau.",
-  "settingHintTraceReportsPerHour": "Combien de rapports d'erreur un appareil peut envoyer à cette installation en une heure. Les rapports suivants de cette heure sont abandonnés, jamais mis en attente. 0 désactive les rapports d'erreur pour tous les appareils.",
+  "settingHintTraceReportsPerHour": "Combien de rapports d'erreur une personne peut envoyer à cette installation en une heure, tous ses appareils confondus. Les rapports suivants de cette heure sont abandonnés, jamais mis en attente. 0 désactive les rapports d'erreur pour tout le monde.",
   "settingHintVatViesEvidenceDays": "Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19569,7 +19569,7 @@
   "settingLabelStockWeighedGoods": "Les marchandises se vendent au poids",
   "settingLabelTraceReportMaxBytes": "Taille maximale d'un rapport d'erreur",
   "settingLabelTraceReportRetentionDays": "Durée de conservation des rapports d'erreur",
-  "settingLabelTraceReportsPerHour": "Rapports d'erreur par appareil et par heure",
+  "settingLabelTraceReportsPerHour": "Rapports d'erreur par personne et par heure",
   "settingLabelVatViesEvidenceDays": "Fraîcheur du contrôle du numéro de TVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"

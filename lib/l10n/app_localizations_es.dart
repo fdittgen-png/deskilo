@@ -32684,7 +32684,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingHintTraceReportsPerHour =>
-      'Cuántos informes de error puede enviar un dispositivo a esta instalación en una hora. Los siguientes de esa hora se descartan, nunca se ponen en cola. 0 desactiva los informes de error para todos los dispositivos.';
+      'Cuántos informes de error puede enviar una persona a esta instalación en una hora, sumando todos sus dispositivos. Los siguientes de esa hora se descartan, nunca se ponen en cola. 0 desactiva los informes de error para todos.';
 
   @override
   String get settingHintVatViesEvidenceDays =>
@@ -33125,7 +33125,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelTraceReportsPerHour =>
-      'Informes de error por dispositivo y hora';
+      'Informes de error por persona y hora';
 
   @override
   String get settingLabelVatViesEvidenceDays =>

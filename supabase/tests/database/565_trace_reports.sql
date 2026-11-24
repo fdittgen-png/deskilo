@@ -4,7 +4,7 @@
 -- answer, never raise; reports past the retention are deleted when a new one arrives; only the installation's
 -- operator reads them. Rolled back.
 begin;
-select plan(22);
+select plan(26);
 
 create function pg_temp.u(n int) returns uuid language sql immutable as $$
   select ('00000000-0000-4000-8000-00004416' || lpad(n::text, 4, '0'))::uuid;
@@ -34,12 +34,12 @@ $$;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-       'trace' || n || '@example.test', '', now(), now(), now() from generate_series(1, 2) n;
+       'trace' || n || '@example.test', '', now(), now(), now() from generate_series(1, 3) n;
 insert into public.platform_admins (user_id) values (pg_temp.u(2));
 
 -- ── the settings: the installation's, bounded, with their defaults ──
 select is((select (default_value, min_value, max_value, unit)::text from public.setting_definitions
-            where key = 'trace.reports_per_hour'), '(20,0,600,"per hour")', 'reports per device and hour: 20, 0..600');
+            where key = 'trace.reports_per_hour'), '(20,0,600,"per hour")', 'reports per person and hour: 20, 0..600');
 select is((select (default_value, min_value, max_value, unit)::text from public.setting_definitions
             where key = 'trace.report_max_bytes'), '(16384,1024,262144,bytes)', 'the size cap: 16384 bytes, 1024..262144');
 select is((select (default_value, min_value, max_value, unit)::text from public.setting_definitions
@@ -67,21 +67,26 @@ select is(pg_temp.send(1, 'device-aaaa-1', repeat('x', 16385)), 'too_large', 'a 
 insert into public.setting_values (scope, key, value) values ('platform', 'trace.report_max_bytes', '20000');
 select is(pg_temp.send(1, 'device-aaaa-1', repeat('x', 16385)), 'stored', 'the cap is the installation''s setting');
 
--- ── the hourly budget, per device ──
+-- ── the hourly budget: the person's, whatever device id the app names ──
 insert into public.setting_values (scope, key, value) values ('platform', 'trace.reports_per_hour', '3');
 select is(pg_temp.send(1, 'device-aaaa-1'), 'stored', 'the third report of the hour is stored');
 select is(pg_temp.send(1, 'device-aaaa-1'), 'rate_limited', 'the fourth is answered over budget, not stored');
 select is((select count(*)::int from public.trace_reports where device_id = 'device-aaaa-1'), 3,
-  'the device holds three reports of this hour');
-select is(pg_temp.send(1, 'device-bbbb-2'), 'stored', 'another device has its own budget');
+  'three reports of this hour are kept');
+select is(pg_temp.send(3, 'device-ffff-1'), 'stored', 'another person''s first report is stored');
+select is(pg_temp.send(3, 'device-ffff-2'), 'stored', 'the second, from a second device id, too');
+select is(pg_temp.send(3, 'device-ffff-3'), 'stored', 'the third, from a third device id, too');
+select is(pg_temp.send(3, 'device-ffff-4'), 'rate_limited',
+  'a made-up device id for each report does not reset the person''s budget');
+select is(pg_temp.send(2, 'device-bbbb-2'), 'stored', 'a person who has not spent the budget still gets through');
 update public.setting_values set value = '0' where scope = 'platform' and key = 'trace.reports_per_hour';
-select is(pg_temp.send(1, 'device-cccc-3'), 'rate_limited', '0 turns error reports off');
+select is(pg_temp.send(2, 'device-cccc-3'), 'rate_limited', '0 turns error reports off');
 update public.setting_values set value = '3' where scope = 'platform' and key = 'trace.reports_per_hour';
 
 -- ── the retention ──
 insert into public.trace_reports (device_id, app_version, platform, failure_type, reported_at)
 values ('device-old-0001', '2.1.0', 'ios', 'TypeError', now() - make_interval(days => 31));
-select pg_temp.send(1, 'device-dddd-4');
+select pg_temp.send(2, 'device-dddd-4');
 select is((select count(*)::int from public.trace_reports where device_id = 'device-old-0001'), 0,
   'a report past the retention is gone once a new one arrives');
 

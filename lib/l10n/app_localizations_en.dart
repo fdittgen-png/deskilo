@@ -32449,7 +32449,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingHintTraceReportsPerHour =>
-      'How many error reports one device may send to this installation in an hour. Further reports in that hour are dropped, never queued. 0 turns error reports off for every device.';
+      'How many error reports one person may send to this installation in an hour, from all their devices together. Further reports in that hour are dropped, never queued. 0 turns error reports off for everybody.';
 
   @override
   String get settingHintVatViesEvidenceDays =>
@@ -32855,7 +32855,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelTraceReportsPerHour =>
-      'Error reports per device and hour';
+      'Error reports per person and hour';
 
   @override
   String get settingLabelVatViesEvidenceDays => 'VAT-number check freshness';

@@ -1,8 +1,8 @@
 {
   "@@locale": "it",
   "settingGroupDiagnostics": "Segnalazioni di errore",
-  "settingLabelTraceReportsPerHour": "Segnalazioni di errore per dispositivo e ora",
-  "settingHintTraceReportsPerHour": "Quante segnalazioni di errore un dispositivo può inviare a questa installazione in un'ora. Le successive di quell'ora vengono scartate, mai messe in coda. 0 disattiva le segnalazioni di errore per tutti i dispositivi.",
+  "settingLabelTraceReportsPerHour": "Segnalazioni di errore per persona e ora",
+  "settingHintTraceReportsPerHour": "Quante segnalazioni di errore una persona può inviare a questa installazione in un'ora, da tutti i suoi dispositivi insieme. Le successive di quell'ora vengono scartate, mai messe in coda. 0 disattiva le segnalazioni di errore per tutti.",
   "settingLabelTraceReportMaxBytes": "Dimensione massima di una segnalazione di errore",
   "settingHintTraceReportMaxBytes": "La segnalazione di errore più grande che questa installazione accetta. L'app accorcia lo stack della segnalazione prima dell'invio; una segnalazione ancora più grande viene scartata.",
   "settingLabelTraceReportRetentionDays": "Conservare le segnalazioni di errore per",

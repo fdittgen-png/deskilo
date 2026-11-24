@@ -51999,7 +51999,7 @@ abstract class AppLocalizations {
   /// #4416 Platform setting trace.reports_per_hour: what it decides, under its name
   ///
   /// In en, this message translates to:
-  /// **'How many error reports one device may send to this installation in an hour. Further reports in that hour are dropped, never queued. 0 turns error reports off for every device.'**
+  /// **'How many error reports one person may send to this installation in an hour, from all their devices together. Further reports in that hour are dropped, never queued. 0 turns error reports off for everybody.'**
   String get settingHintTraceReportsPerHour;
 
   /// #2487 retention settings
@@ -52695,7 +52695,7 @@ abstract class AppLocalizations {
   /// #4416 Platform setting trace.reports_per_hour: its name in the settings editor
   ///
   /// In en, this message translates to:
-  /// **'Error reports per device and hour'**
+  /// **'Error reports per person and hour'**
   String get settingLabelTraceReportsPerHour;
 
   /// #2487 retention settings

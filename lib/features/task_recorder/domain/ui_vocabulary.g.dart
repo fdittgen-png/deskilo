@@ -4510,6 +4510,7 @@ const Set<String> uiKeys = {
   'timezone-search',
   'to-collect',
   'tpl-tiny',
+  'trace-report',
   'turn-on',
   'uk-inv-001',
   'uk-inv-002',

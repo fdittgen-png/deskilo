@@ -32775,7 +32775,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingHintTraceReportsPerHour =>
-      'Wie viele Fehlerberichte ein Gerät in einer Stunde an diese Installation senden darf. Weitere Berichte in dieser Stunde werden verworfen, nie zurückgestellt. 0 schaltet Fehlerberichte für alle Geräte ab.';
+      'Wie viele Fehlerberichte eine Person in einer Stunde an diese Installation senden darf, über alle ihre Geräte zusammen. Weitere Berichte in dieser Stunde werden verworfen, nie zurückgestellt. 0 schaltet Fehlerberichte für alle ab.';
 
   @override
   String get settingHintVatViesEvidenceDays =>
@@ -33198,7 +33198,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelTraceReportsPerHour =>
-      'Fehlerberichte pro Gerät und Stunde';
+      'Fehlerberichte pro Person und Stunde';
 
   @override
   String get settingLabelVatViesEvidenceDays =>

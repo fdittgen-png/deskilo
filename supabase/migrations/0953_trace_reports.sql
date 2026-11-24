@@ -8,12 +8,14 @@
 --                               failure's type and code, the scrubbed stack). No typed value, token, e-mail or name
 --                               is ever a column; the app redacts the stack as the support bundle does.
 --   submit_trace_report_v1      the one way in. A signed-in person only, never an assistant's delegated session
---                               (DKN01). A malformed device id, too large or over the device's hourly budget is an
+--                               (DKN01). A malformed device id, too large or over the person's hourly budget is an
 --                               answer ('malformed', 'too_large', 'rate_limited'), not an error: the app drops it.
+--                               The budget is the signed-in person's (created_by_user), never the device id's: the
+--                               app names the device, so a made-up id per report must not reset it.
 --   instance_trace_reports_v1   the one way out: the installation's operator reads the newest reports. A business
 --                               member never sees them.
 --   The one refusal carries a code the app maps: DKN01 (nobody signed in, or an assistant's session).
---   trace.reports_per_hour      0..600 per device and hour (0 turns reports off), platform scope, default 20.
+--   trace.reports_per_hour      0..600 per person and hour (0 turns reports off), platform scope, default 20.
 --   trace.report_max_bytes      1024..262144 bytes per report, default 16384.
 --   trace.report_retention_days 1..365 days, default 30; older reports are deleted when a new one arrives.
 
@@ -22,7 +24,7 @@ insert into public.setting_definitions
   (key, type, default_value, min_value, max_value, unit, group_key, scopes,
    edit_permission, floor_value, editable, choices, source, note)
 values
-('trace.reports_per_hour', 'int', '20'::jsonb, 0, 600, 'per hour', 'diagnostics', array['platform'], 'workspaceSettings', null, true, null, 'error reports (#4416)', 'How many error reports one device may send to this installation in an hour. Further reports in that hour are dropped, never queued or retried. 0 turns error reports off for every device.'),
+('trace.reports_per_hour', 'int', '20'::jsonb, 0, 600, 'per hour', 'diagnostics', array['platform'], 'workspaceSettings', null, true, null, 'error reports (#4416)', 'How many error reports one signed-in person may send to this installation in an hour, from all their devices together. Further reports in that hour are dropped, never queued or retried. 0 turns error reports off for everybody.'),
 ('trace.report_max_bytes', 'int', '16384'::jsonb, 1024, 262144, 'bytes', 'diagnostics', array['platform'], 'workspaceSettings', null, true, null, 'error reports (#4416)', 'The largest error report this installation accepts: its type, code, versions and the redacted stack together. A larger report is dropped; the app cuts its stack to fit before it sends.'),
 ('trace.report_retention_days', 'int', '30'::jsonb, 1, 365, 'days', 'diagnostics', array['platform'], 'workspaceSettings', null, true, null, 'error reports (#4416)', 'How many days this installation keeps an error report. Older reports are deleted when a new one arrives.')
 on conflict (key) do nothing;
@@ -40,7 +42,7 @@ create table if not exists public.trace_reports (
   stack text not null default ''
 );
 select public.ensure_system_columns('trace_reports');
-create index if not exists trace_reports_device_time on public.trace_reports (device_id, reported_at desc);
+create index if not exists trace_reports_sender_time on public.trace_reports (created_by_user, reported_at desc);
 create index if not exists trace_reports_time on public.trace_reports (reported_at);
 
 alter table public.trace_reports enable row level security;
@@ -78,10 +80,10 @@ begin
        || coalesce(p_failure_code, '') || coalesce(p_stack, '')) > v_max_bytes then
     return 'too_large';
   end if;
-  -- One device's reports are counted one at a time: two at once never both slip under the budget.
-  perform pg_advisory_xact_lock(hashtextextended('trace_reports:' || p_device_id, 0));
+  -- One person's reports are counted one at a time: two at once never both slip under the budget.
+  perform pg_advisory_xact_lock(hashtextextended('trace_reports:' || auth.uid()::text, 0));
   select count(*) into v_recent from public.trace_reports
-   where device_id = p_device_id and reported_at > now() - make_interval(hours => 1);
+   where created_by_user = auth.uid() and reported_at > now() - make_interval(hours => 1);
   if v_recent >= v_per_hour then
     return 'rate_limited';
   end if;

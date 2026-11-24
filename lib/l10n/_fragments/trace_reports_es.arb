@@ -1,8 +1,8 @@
 {
   "@@locale": "es",
   "settingGroupDiagnostics": "Informes de error",
-  "settingLabelTraceReportsPerHour": "Informes de error por dispositivo y hora",
-  "settingHintTraceReportsPerHour": "Cuántos informes de error puede enviar un dispositivo a esta instalación en una hora. Los siguientes de esa hora se descartan, nunca se ponen en cola. 0 desactiva los informes de error para todos los dispositivos.",
+  "settingLabelTraceReportsPerHour": "Informes de error por persona y hora",
+  "settingHintTraceReportsPerHour": "Cuántos informes de error puede enviar una persona a esta instalación en una hora, sumando todos sus dispositivos. Los siguientes de esa hora se descartan, nunca se ponen en cola. 0 desactiva los informes de error para todos.",
   "settingLabelTraceReportMaxBytes": "Tamaño máximo de un informe de error",
   "settingHintTraceReportMaxBytes": "El mayor informe de error que acepta esta instalación. La app acorta la pila del informe antes de enviarlo; un informe que siga siendo mayor se descarta.",
   "settingLabelTraceReportRetentionDays": "Conservar los informes de error durante",

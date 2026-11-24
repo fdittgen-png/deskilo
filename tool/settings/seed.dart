@@ -2167,7 +2167,7 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       editable: true,
       choices: null,
       source: 'error reports (#4416)',
-      note: 'How many error reports one device may send to this installation in an hour. Further reports in that hour are dropped, never queued or retried. 0 turns error reports off for every device.',
+      note: 'How many error reports one signed-in person may send to this installation in an hour, from all their devices together. Further reports in that hour are dropped, never queued or retried. 0 turns error reports off for everybody.',
     ),
   ),
   (
