@@ -6,6 +6,8 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
+import 'workspace_feature.dart';
+
 /// One kind of business.
 @immutable
 class BusinessKind {
@@ -16,6 +18,9 @@ class BusinessKind {
     this.profileVersion = 1,
     this.profileDigest = '',
   });
+
+  /// Whether this kind proposes [feature] off (its profile says `false` for it): the kind keeps it off.
+  bool keepsOff(WorkspaceFeature feature) => profile[feature.name] == false;
 
   /// A row of public.business_kinds; a non-boolean profile value is skipped.
   factory BusinessKind.fromJson(Map<String, Object?> row) {

@@ -333,7 +333,7 @@ class _NextCard extends ConsumerWidget {
     final demoOn = features.contains(WorkspaceFeature.demoMode);
     // #3547 — a business without places is told what it does, not what a
     // place, a membership or a locker costs.
-    final hasPlaces = features.contains(WorkspaceFeature.placeBooking);
+    final hasPlaces = ref.watch(businessShapeProvider).places;
     return Card(
       key: const ValueKey('setup-guide-next'),
       color: theme.colorScheme.primaryContainer,
@@ -428,9 +428,7 @@ class _StepTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final hasPlaces = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.placeBooking);
+    final hasPlaces = ref.watch(businessShapeProvider).places;
     final waitsFor = step.blockedBy.isEmpty
         ? null
         : l10n.setupGuideWaitsFor(

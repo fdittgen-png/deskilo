@@ -106,9 +106,6 @@ class _Choice {
       kinds.where((k) => k.code == kind).firstOrNull ??
       BusinessKind(code: kind, sortOrder: 0);
 
-  /// Whether the chosen kind switches the places off.
-  bool get withoutPlaces =>
-      kinds.any((k) => k.code == kind && k.profile['placeBooking'] == false);
 
   List<String> get moreKinds => [
     for (final k in kinds)
@@ -170,7 +167,7 @@ List<Widget> _fields(
     },
   ),
   // #3550 — a kind without places is told what this version does not do yet.
-  if (choice.withoutPlaces)
+  if (choice.chosen.keepsOff(WorkspaceFeature.placeBooking))
     Text(
       l10n.businessKindNoBookingYet,
       key: const ValueKey('business-kind-no-booking-yet'),

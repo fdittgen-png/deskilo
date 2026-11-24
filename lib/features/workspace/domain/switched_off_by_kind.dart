@@ -23,5 +23,5 @@ bool switchedOffByKind(
   BusinessProfile profile,
   List<BusinessKind> kinds,
 ) => kinds.any(
-  (kind) => kind.code == profile.kind && kind.profile[feature.name] == false,
+  (kind) => kind.code == profile.kind && kind.keepsOff(feature),
 );
