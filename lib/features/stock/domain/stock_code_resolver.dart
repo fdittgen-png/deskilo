@@ -64,6 +64,7 @@ class StockCodeResolution {
     this.lotId,
     this.lotCode,
     this.tagBound = false,
+    this.tagOwnerKind,
     this.knownProduct = false,
   });
 
@@ -79,6 +80,7 @@ class StockCodeResolution {
       lotId = null,
       lotCode = null,
       tagBound = false,
+      tagOwnerKind = null,
       knownProduct = false;
 
   final ScannedKind kind;
@@ -98,6 +100,12 @@ class StockCodeResolution {
   final String? lotId;
   final String? lotCode;
   final bool tagBound;
+
+  /// #4436 -- what a bound tag is on (`item`, `variant`, `lot`, `unit`, `place` or `piece`), when the server says.
+  final String? tagOwnerKind;
+
+  /// A bound tag on one piece: a sale of it names that piece.
+  bool get isPieceTag => kind == ScannedKind.tag && tagBound && tagOwnerKind == 'piece';
 
   /// An SGTIN whose GTIN is one of the business's item codes but whose tag is not bound yet.
   final bool knownProduct;
@@ -135,6 +143,7 @@ class StockCodeResolution {
       lotId: l?.stringOrNull('id'),
       lotCode: l?.stringOrNull('code'),
       tagBound: t?.boolOr('bound', fallback: false) ?? false,
+      tagOwnerKind: t?.stringOrNull('owner_kind'),
       knownProduct: r.boolOr('known_product', fallback: false),
     );
   }

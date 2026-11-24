@@ -52309,6 +52309,15 @@
   "@tillPayCash": {
     "description": "#4366 the till"
   },
+  "tillPieceTwice": "Piece {code} is already in the basket.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Pricing the basket…",
   "@tillPricing": {
     "description": "#4366 the till"
@@ -52347,6 +52356,15 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillScanUnknown": "{code} is not something this till sells.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillSoldTitle": "Sold",
   "@tillSoldTitle": {
     "description": "#4366 the till"
@@ -52369,6 +52387,27 @@
     "description": "#4366 the till",
     "placeholders": {
       "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackLot": "Lot {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Piece {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
         "type": "String"
       }
     }

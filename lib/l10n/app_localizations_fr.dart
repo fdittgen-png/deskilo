@@ -40791,6 +40791,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillPayCash => 'Encaisser en espèces';
 
   @override
+  String tillPieceTwice(String code) {
+    return 'La pièce $code est déjà dans le panier.';
+  }
+
+  @override
   String get tillPricing => 'Calcul du panier…';
 
   @override
@@ -40817,6 +40822,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillRetry => 'Réessayer';
 
   @override
+  String tillScanUnknown(String code) {
+    return '$code n\'est pas un article vendu à cette caisse.';
+  }
+
+  @override
   String get tillSoldTitle => 'Vendu';
 
   @override
@@ -40830,6 +40840,16 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String tillTotalDue(String amount) {
     return 'Total à payer: $amount';
+  }
+
+  @override
+  String tillTrackLot(String code, String quantity) {
+    return 'Lot $code × $quantity';
+  }
+
+  @override
+  String tillTrackPiece(String code) {
+    return 'Pièce $code';
   }
 
   @override
