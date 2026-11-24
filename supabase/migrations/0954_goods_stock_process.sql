@@ -7,7 +7,7 @@
 -- (dart run tool/build_template_field_registry_sql.dart), so the registry names the process a template reader files
 -- each of them under.
 --
--- restates 0916 (template_field_registry(); the fixer's 0951 edit adds unitsOfMeasure to it, so this file is the later definer)
+-- restates 0953 (template_field_registry())
 create or replace function public.template_field_registry()
 returns jsonb
 language sql
