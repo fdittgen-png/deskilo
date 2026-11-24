@@ -23,6 +23,7 @@ import '../../domain/customer_quote.dart';
 import '../../providers/business_day_provider.dart';
 import '../../providers/customer_quote_providers.dart';
 import '../../providers/standalone_invoice_providers.dart';
+import '../standalone/standalone_missing_text.dart';
 import 'quote_text.dart';
 
 /// The conversion sheet of an accepted quote.
@@ -263,14 +264,15 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
         l10n.quoteConvertAccepted(money.formatMinor(prep.acceptedTotalCents)),
         key: const ValueKey('quote-convert-accepted'),
       ),
-      Text(
-        l10n.quoteConvertWouldBe(money.formatMinor(prep.wouldBeTotalCents)),
-        key: const ValueKey('quote-convert-would-be'),
-      ),
+      if (prep.wouldBeTotalCents case final would?)
+        Text(
+          l10n.quoteConvertWouldBe(money.formatMinor(would)),
+          key: const ValueKey('quote-convert-would-be'),
+        ),
       if (!prep.issuable) ...[
         const FormGap(),
         Text(
-          l10n.quoteConvertMissing(prep.missing.join(', ')),
+          l10n.quoteConvertMissing(standaloneMissingList(l10n, prep.missing)),
           key: const ValueKey('quote-convert-missing'),
         ),
       ],
@@ -296,9 +298,10 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
 
   List<Widget> _done(BuildContext context, QuoteConverted done) {
     final l10n = context.l10n;
+    final number = done.number;
     return [
       Text(
-        done.number.isEmpty ? l10n.quoteStatusConverted : l10n.quoteConvertDone(done.number),
+        number == null || number.isEmpty ? l10n.quoteStatusConverted : l10n.quoteConvertDone(number),
         key: const ValueKey('quote-convert-done'),
         style: Theme.of(context).textTheme.titleMedium,
       ),

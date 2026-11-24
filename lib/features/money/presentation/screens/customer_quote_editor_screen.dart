@@ -9,31 +9,24 @@
 // lost answer are each said, never swallowed.
 import 'dart:async';
 
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/failure/app_failure.dart';
-import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/theme/app_typography.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/billing_customer.dart';
 import '../../domain/customer_quote.dart';
-import '../../domain/invoice_goods.dart';
 import '../../domain/standalone_invoice.dart';
 import '../../providers/billing_customer_providers.dart';
 import '../../providers/business_day_provider.dart';
 import '../../providers/customer_quote_providers.dart';
-import '../../providers/line_units_provider.dart';
-import '../../providers/money_providers.dart' show vatRatesProvider;
-import '../../providers/standalone_invoice_providers.dart' show invoiceGoodsItemsProvider;
 import '../quotes/quote_text.dart';
-import '../standalone/standalone_line_form.dart';
+import '../standalone/document_composer.dart';
 import 'money_view_data.dart';
 
 class CustomerQuoteEditorScreen extends ConsumerStatefulWidget {
@@ -52,13 +45,7 @@ class CustomerQuoteEditorScreen extends ConsumerStatefulWidget {
 class _QuoteForm extends ChangeNotifier {
   _QuoteForm(this.quoteId);
 
-  final reference = TextEditingController();
-  final order = TextEditingController();
-  final notes = TextEditingController();
-  final List<StandaloneLineForm> lines = [StandaloneLineForm()];
-  String? customer;
-  DateTime? issuedOn;
-  DateTime? validUntil;
+  final doc = CommercialDocumentDraft();
   String? quoteId;
   int? version;
   int? revision;
@@ -75,47 +62,35 @@ class _QuoteForm extends ChangeNotifier {
     loaded = true;
     final draft = quote.draft;
     if (draft == null) return;
-    customer = quote.subjectId;
-    issuedOn = draft.issuedOn;
-    validUntil = draft.validUntil;
-    reference.text = draft.buyerReference;
-    order.text = draft.purchaseOrder;
-    notes.text = draft.notes;
+    doc
+      ..subject = quote.subjectId
+      ..startDate = draft.issuedOn
+      ..endDate = draft.validUntil;
+    doc.reference.text = draft.buyerReference;
+    doc.order.text = draft.purchaseOrder;
+    doc.notes.text = draft.notes;
     version = draft.draftVersion;
     revision = draft.revision;
-    for (final l in lines) {
-      l.dispose();
-    }
-    lines
-      ..clear()
-      ..addAll([
-        for (final line in draft.lines) StandaloneLineForm(from: line),
-        if (draft.lines.isEmpty) StandaloneLineForm(),
-      ]);
+    doc.replaceLines(draft.lines);
   }
 
   QuoteDraftInput? input(BuildContext context) {
-    final subject = customer;
+    final subject = doc.subject;
     if (subject == null) return null;
     return QuoteDraftInput(
       subjectId: subject,
-      issuedOn: issuedOn,
-      validUntil: validUntil,
-      buyerReference: reference.text.trim(),
-      purchaseOrder: order.text.trim(),
-      notes: notes.text.trim(),
-      lines: [for (final l in lines) l.toLine(context)],
+      issuedOn: doc.startDate,
+      validUntil: doc.endDate,
+      buyerReference: doc.reference.text.trim(),
+      purchaseOrder: doc.order.text.trim(),
+      notes: doc.notes.text.trim(),
+      lines: doc.toLines(context),
     );
   }
 
   @override
   void dispose() {
-    reference.dispose();
-    order.dispose();
-    notes.dispose();
-    for (final l in lines) {
-      l.dispose();
-    }
+    doc.dispose();
     super.dispose();
   }
 }
@@ -152,7 +127,7 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
           ..version = value.version
           ..revision = value.revision;
         final read = await commands.read(workspaceId, value.quoteId);
-        attachLineIds(_form.lines, read?.draft?.lines ?? const <StandaloneLine>[]);
+        _form.doc.takeLineIds(read?.draft?.lines ?? const <StandaloneLine>[]);
         ref.invalidate(customerQuotesProvider(workspaceId));
         return true;
       case CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)):
@@ -276,109 +251,32 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
     final locked = _form.busy;
     // empty-ok: no customer list means nothing to choose and the form says so
     final customers = ref.watch(billingCustomersProvider(workspaceId)).value ?? const <BillingParty>[]; // empty-ok: no customer list means nothing to choose
-    // empty-ok: the rates only offer a choice; none leaves the business's default
-    final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: the rates only offer a choice
-    // #4433 -- with the goods ledger on, a quote line may offer an item kept in stock (its pieces are named on the invoice)
-    final goods = featureOn(ref.watch(enabledFeatureKeysProvider), 'stockManagement', byDefault: false)
-        ? ref.watch(invoiceGoodsItemsProvider(workspaceId)).value ?? const <InvoiceGoodsItem>[] // empty-ok: the items only offer a choice; none leaves every line a service
-        : const <InvoiceGoodsItem>[];
     final today = ref.watch(businessDayProvider);
     final validity = ref.watch(quoteValidityProvider);
+    final doc = _form.doc;
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        if (customers.isEmpty)
-          Text(l10n.quoteNoCustomers, key: const ValueKey('quote-no-customers'))
-        else
-          DropdownButtonFormField<String>(
-            key: const ValueKey('quote-customer'),
-            isExpanded: true,
-            initialValue: _form.customer,
-            decoration: InputDecoration(labelText: l10n.invoicingColCustomer),
-            hint: Text(l10n.quoteChooseCustomer),
-            items: [
-              for (final c in customers)
-                DropdownMenuItem(
-                  value: c.subjectId,
-                  child: Text(c.displayName, overflow: TextOverflow.ellipsis),
-                ),
-            ],
-            onChanged: locked
-                ? null
-                : (v) => _form
-                    ..customer = v
-                    ..changed(),
+        DocumentComposer(
+          workspaceId: workspaceId,
+          draft: doc,
+          words: DocumentComposerWords(
+            keyPrefix: 'quote',
+            customerHint: l10n.quoteChooseCustomer,
+            startLabel: l10n.quoteFieldIssuedOn,
+            startKey: 'quote-issued-on',
+            endLabel: l10n.quoteFieldValidUntil,
+            endKey: 'quote-valid-until',
+            referenceLabel: l10n.quoteFieldReference,
+            orderLabel: l10n.quoteFieldOrder,
+            notesLabel: l10n.quoteFieldNotes,
+            noCustomers: l10n.quoteNoCustomers,
           ),
-        const FormGap(),
-        AppDateField(
-          key: const ValueKey('quote-issued-on'),
-          label: l10n.quoteFieldIssuedOn,
-          value: _form.issuedOn ?? today,
-          enabled: !locked,
-          onChanged: (d) => _form
-            ..issuedOn = d.date
-            ..changed(),
-        ),
-        const FormGap(),
-        AppDateField(
-          key: const ValueKey('quote-valid-until'),
-          label: l10n.quoteFieldValidUntil,
-          value: _form.validUntil ?? validity.defaultEnd(_form.issuedOn ?? today),
-          enabled: !locked,
-          onChanged: (d) => _form
-            ..validUntil = d.date
-            ..changed(),
-        ),
-        const FormGap(),
-        AppTextField(
-          key: const ValueKey('quote-reference'),
-          controller: _form.reference,
-          label: l10n.quoteFieldReference,
-          enabled: !locked,
-        ),
-        const FormGap(),
-        AppTextField(
-          key: const ValueKey('quote-order'),
-          controller: _form.order,
-          label: l10n.quoteFieldOrder,
-          enabled: !locked,
-        ),
-        const FormGap(),
-        AppTextField(
-          key: const ValueKey('quote-notes'),
-          controller: _form.notes,
-          label: l10n.quoteFieldNotes,
-          enabled: !locked,
-        ),
-        const FormGap(),
-        Text(l10n.standaloneInvoiceLines, style: Theme.of(context).textTheme.titleMedium?.strong),
-        for (final (i, line) in _form.lines.indexed)
-          StandaloneLineEditor(
-            key: ValueKey('quote-line-editor-$i'),
-            index: i,
-            form: line,
-            rates: rates,
-            goods: goods,
-            units: ref.watch(lineUnitsProvider(workspaceId)),
-            enabled: !locked,
-            onChanged: _form.changed,
-            onRemove: _form.lines.length > 1
-                ? () {
-                    _form.lines.removeAt(i).dispose();
-                    _form.changed();
-                  }
-                : null,
-          ),
-        TextButton.icon(
-          key: const ValueKey('quote-add-line'),
-          onPressed: locked
-              ? null
-              : () {
-                  _form.lines.add(StandaloneLineForm());
-                  _form.changed();
-                },
-          icon: const Icon(Icons.add),
-          label: Text(l10n.standaloneInvoiceAddLine),
+          customers: [for (final c in customers) (id: c.subjectId, name: c.displayName)],
+          startShown: doc.startDate ?? today,
+          endShown: doc.endDate ?? validity.defaultEnd(doc.startDate ?? today),
+          locked: locked,
+          onChanged: _form.changed,
         ),
         Text(l10n.quoteAmountsOnSend, key: const ValueKey('quote-amounts-on-send')),
         if (_form.said != null) ...[
@@ -392,14 +290,14 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
           children: [
             OutlinedButton(
               key: const ValueKey('quote-save-draft'),
-              onPressed: locked || _form.customer == null
+              onPressed: locked || _form.doc.subject == null
                   ? null
                   : () => unawaited(_saveDraft(workspaceId)),
               child: Text(l10n.quoteSaveDraft),
             ),
             FilledButton(
               key: const ValueKey('quote-send-now'),
-              onPressed: locked || _form.customer == null
+              onPressed: locked || _form.doc.subject == null
                   ? null
                   : () => unawaited(_send(workspaceId)),
               child: Text(l10n.quoteSend),
