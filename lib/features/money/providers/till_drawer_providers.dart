@@ -24,9 +24,9 @@ final drawerExpectedProvider = FutureProvider.autoDispose.family<DrawerCash?, ({
   (ref, key) async {
     try {
       return await ref.watch(tillDrawerPortProvider).expected(key.workspaceId, sessionId: key.sessionId);
-    } on Object catch (e) {
+    } on Object catch (e, st) {
       if (serverErrorCode(e) == DkCode.dkn01) return null;
-      rethrow;
+      Error.throwWithStackTrace(e, st);
     }
   },
   retry: (_, _) => null,

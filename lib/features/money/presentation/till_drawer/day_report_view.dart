@@ -19,7 +19,7 @@ Future<void> showDayReport(BuildContext context, DayReport report, {required Str
         title: Text(c.l10n.tillDayReportTitle(report.number)),
         leading: IconButton(key: const ValueKey('day-report-close'), tooltip: MaterialLocalizations.of(c).closeButtonTooltip, icon: const Icon(Icons.close), onPressed: () => Navigator.of(c).pop()),
       ),
-      body: DayReportView(report: report, currency: currency),
+      body: _DayReportView(report: report, currency: currency),
     ),
   ),
 );
@@ -31,8 +31,8 @@ String _tenderName(AppLocalizations l10n, String kind) => switch (kind) {
 };
 
 /// The report as a scrolling column of figures.
-class DayReportView extends StatelessWidget {
-  const DayReportView({super.key, required this.report, required this.currency});
+class _DayReportView extends StatelessWidget {
+  const _DayReportView({required this.report, required this.currency});
 
   final DayReport report;
   final String currency;

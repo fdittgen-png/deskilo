@@ -7,14 +7,13 @@ import 'dart:convert';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
 import '../../../../core/codes/dk_code.dart';
-import '../../../../core/data/server_error.dart';
 import '../../../../core/trace/refusal_text.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/till_drawer_rules.dart';
 
 /// The `reason` the server puts in the detail of a till refusal, or null when it gives none.
-String? drawerRefusalReason(Object error) {
-  final raw = serverErrorDetails(error);
+String? _drawerRefusalReason(Object error) {
+  final raw = refusalCodeOf(error).details;
   if (raw == null) return null;
   try {
     return JsonReader.of(jsonDecode(raw), context: 'till_refusal').stringOrNull('reason');
@@ -24,21 +23,9 @@ String? drawerRefusalReason(Object error) {
   }
 }
 
-/// The signed difference the server gives with a refused close, in minor units, to someone who may see it.
-int? drawerRefusalDifference(Object error) {
-  final raw = serverErrorDetails(error);
-  if (raw == null) return null;
-  try {
-    final text = JsonReader.of(jsonDecode(raw), context: 'till_refusal').stringOrNull('difference_minor');
-    return text == null ? null : int.tryParse(text);
-  } on Object {
-    return null;
-  }
-}
-
 /// The name of the till a refusal names (`name` in its detail), or empty.
-String drawerRefusalName(Object error) {
-  final raw = serverErrorDetails(error);
+String _drawerRefusalName(Object error) {
+  final raw = refusalCodeOf(error).details;
   if (raw == null) return '';
   try {
     return JsonReader.of(jsonDecode(raw), context: 'till_refusal').stringOr('name');
@@ -48,12 +35,12 @@ String drawerRefusalName(Object error) {
 }
 
 /// Whether [error] says the count differs and needs its reason.
-bool drawerAsksDifferenceReason(Object error) => serverErrorCode(error) == DkCode.dkl13 && drawerRefusalReason(error) == 'difference_reason';
+bool drawerAsksDifferenceReason(Object error) => refusalCodeOf(error).code == DkCode.dkl13 && _drawerRefusalReason(error) == 'difference_reason';
 
 /// The specific words of a till refusal, or null when the code and reason have none of their own.
 String? drawerRefusalText(AppLocalizations l10n, Object error) {
-  final code = serverErrorCode(error);
-  final reason = drawerRefusalReason(error);
+  final code = refusalCodeOf(error).code;
+  final reason = _drawerRefusalReason(error);
   return switch ((code, reason)) {
     (DkCode.dkl12, 'till_open_first') => l10n.tillDrawerRefusalOpenFirst,
     (DkCode.dkl12, 'already_open') => l10n.tillDrawerRefusalAlreadyOpen,
@@ -64,7 +51,7 @@ String? drawerRefusalText(AppLocalizations l10n, Object error) {
     (DkCode.dkl13, 'reason_unknown') => l10n.tillDrawerRefusalReasonUnknown,
     (DkCode.dkl13, 'above_limit') => l10n.tillDrawerRefusalAboveLimit,
     (DkCode.dkl13, 'difference_reason') => l10n.tillDrawerRefusalDifference,
-    (DkCode.dkl14, 'till_open') => l10n.tillDayRefusalTillOpen(drawerRefusalName(error)),
+    (DkCode.dkl14, 'till_open') => l10n.tillDayRefusalTillOpen(_drawerRefusalName(error)),
     (DkCode.dkl14, 'day_closed') => l10n.tillDayRefusalClosed,
     (DkCode.dkl14, 'nothing_to_close') => l10n.tillDayRefusalNothing,
     (DkCode.dkl14, 'future') => l10n.tillDayRefusalFuture,
@@ -76,7 +63,7 @@ String? drawerRefusalText(AppLocalizations l10n, Object error) {
 String drawerProblemText(AppLocalizations l10n, Object problem) => drawerRefusalText(l10n, problem) ?? knownRefusalText(l10n, problem) ?? l10n.tillDrawerFailed;
 
 /// What a problem with a typed value says under its field.
-String drawerFieldText(AppLocalizations l10n, DrawerProblem problem) => switch (problem) {
+String _drawerFieldText(AppLocalizations l10n, DrawerProblem problem) => switch (problem) {
   DrawerProblem.nameMissing => l10n.tillDrawerNameMissing,
   DrawerProblem.amountInvalid => l10n.tillDrawerAmountInvalid,
   DrawerProblem.amountZero => l10n.tillDrawerAmountZero,
@@ -88,5 +75,5 @@ String drawerFieldText(AppLocalizations l10n, DrawerProblem problem) => switch (
 
 /// The problems of a form as [FieldErrors]: the field's key, then the words.
 Map<String, String> drawerFieldErrors(AppLocalizations l10n, Map<DrawerField, DrawerProblem> problems) => {
-  for (final e in problems.entries) e.key.name: drawerFieldText(l10n, e.value),
+  for (final e in problems.entries) e.key.name: _drawerFieldText(l10n, e.value),
 };
