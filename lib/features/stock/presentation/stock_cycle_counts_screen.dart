@@ -17,8 +17,6 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/time/clock.dart';
-import '../../../core/trace/trace_logger.dart';
-import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -30,6 +28,7 @@ import 'stock_cycle_plan_sheet.dart';
 import 'stock_day.dart';
 import 'stock_page_shell.dart';
 import 'stock_read_failed.dart';
+import 'stock_sheet_opener.dart';
 
 class StockCycleCountsScreen extends ConsumerWidget {
   const StockCycleCountsScreen({super.key});
@@ -126,30 +125,26 @@ class _Plans extends ConsumerWidget {
 
   final String? workspaceId;
 
-  Future<void> _edit(BuildContext context, WidgetRef ref, String workspaceId, CountPlan? plan) async {
-    try {
-      final items = await ref.read(stockItemsProvider(workspaceId).future);
-      final places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
-      if (!context.mounted) return;
-      final saved = await showCountPlanSheet(
-        context,
-        ref.read(stockCycleCountsProvider),
-        workspaceId: workspaceId,
-        choices: (
-          items: [for (final i in items) i],
-          places: places,
-          separator: ref.read(stockAddressSeparatorProvider),
-          currency: ref.read(currentWorkspaceProvider).value?.currencyCode ?? '',
-        ),
-        today: isoDay(stockDayOf(ref, ref.read(clockProvider).now())),
-        plan: plan,
-      );
-      if (saved) ref.invalidate(stockCountPlansProvider(workspaceId));
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the plan sheet could not read what it needs', error: e, stackTrace: st);
-      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-    }
-  }
+  Future<void> _edit(BuildContext context, WidgetRef ref, String workspaceId, CountPlan? plan) => openStockSheet(
+    context,
+    ref,
+    workspaceId,
+    what: 'plan',
+    open: (choices) => showCountPlanSheet(
+      context,
+      ref.read(stockCycleCountsProvider),
+      workspaceId: workspaceId,
+      choices: (
+        items: choices.items,
+        places: choices.places,
+        separator: choices.separator,
+        currency: ref.read(currentWorkspaceProvider).value?.currencyCode ?? '',
+      ),
+      today: isoDay(stockDayOf(ref, ref.read(clockProvider).now())),
+      plan: plan,
+    ),
+    reads: [stockCountPlansProvider(workspaceId)],
+  );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

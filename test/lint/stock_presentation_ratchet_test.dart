@@ -39,7 +39,7 @@ const _ceilings = <String, int>{
   'hand-built pages': 0,
   'connect wording as retry': 0,
   'plain chips as status': 0,
-  'on Object catch': 52,
+  'on Object catch': 47,
 };
 
 Map<String, int> _measure() => {

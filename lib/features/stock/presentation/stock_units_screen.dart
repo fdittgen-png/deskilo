@@ -24,6 +24,7 @@ import '../providers/stock_providers.dart';
 import 'handling_unit_sheets.dart';
 import 'stock_config_text.dart';
 import 'stock_page_shell.dart';
+import 'stock_sheet_opener.dart';
 
 class StockUnitsScreen extends ConsumerStatefulWidget {
   const StockUnitsScreen({super.key});
@@ -42,20 +43,27 @@ class _StockUnitsState extends ConsumerState<StockUnitsScreen> {
     if (unitId != null) ref.invalidate(handlingUnitProvider((workspaceId: workspaceId, unitId: unitId)));
   }
 
-  Future<void> _make(String workspaceId) async {
+  /// The sheet reads the units again itself when one is made ([_read]).
+  Future<void> _make(String workspaceId) {
     final l10n = context.l10n;
-    final places = _real(await ref.read(stockPlaceConfigsProvider(workspaceId).future));
-    final items = await ref.read(stockItemsProvider(workspaceId).future);
-    if (!mounted) return;
-    await showMakeUnitSheet(
+    return openStockSheet(
       context,
-      ref.read(stockHandlingUnitsProvider),
-      workspaceId: workspaceId,
-      places: places,
-      items: items,
-      onDone: (made) async {
-        _read(workspaceId);
-        if (mounted) _told(l10n.stockUnitMade(made.code));
+      ref,
+      workspaceId,
+      what: 'make unit',
+      open: (choices) async {
+        await showMakeUnitSheet(
+          context,
+          ref.read(stockHandlingUnitsProvider),
+          workspaceId: workspaceId,
+          places: _real(choices.places),
+          items: choices.items,
+          onDone: (made) async {
+            _read(workspaceId);
+            if (mounted) _told(l10n.stockUnitMade(made.code));
+          },
+        );
+        return false;
       },
     );
   }

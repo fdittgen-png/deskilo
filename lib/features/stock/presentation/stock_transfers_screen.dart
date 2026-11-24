@@ -18,7 +18,6 @@ import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/kit/status_chip.dart';
 import '../../../l10n/app_localizations.dart';
@@ -34,6 +33,7 @@ import 'stock_day.dart';
 import 'stock_move_sheets.dart';
 import 'stock_page_shell.dart';
 import 'stock_place_text.dart';
+import 'stock_sheet_opener.dart';
 
 class StockTransfersScreen extends ConsumerWidget {
   const StockTransfersScreen({super.key});
@@ -79,25 +79,21 @@ class StockTransfersScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _move(BuildContext context, WidgetRef ref, String workspaceId, {required bool takeOut}) async {
-    try {
-      final items = await ref.read(stockItemsProvider(workspaceId).future);
-      final places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
-      if (!context.mounted) return;
-      final done = await showStockMoveSheet(
-        context,
-        ref.read(stockOperationsProvider),
-        workspaceId: workspaceId,
-        items: items,
-        places: places,
-        takeOut: takeOut,
-      );
-      if (done) ref.invalidate(openTransfersProvider(workspaceId));
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the move sheet could not read the stock', error: e, stackTrace: st);
-      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-    }
-  }
+  Future<void> _move(BuildContext context, WidgetRef ref, String workspaceId, {required bool takeOut}) => openStockSheet(
+    context,
+    ref,
+    workspaceId,
+    what: 'move',
+    open: (choices) => showStockMoveSheet(
+      context,
+      ref.read(stockOperationsProvider),
+      workspaceId: workspaceId,
+      items: choices.items,
+      places: choices.places,
+      takeOut: takeOut,
+    ),
+    reads: [openTransfersProvider(workspaceId)],
+  );
 }
 
 class _OnTheWay extends ConsumerWidget {
@@ -186,24 +182,21 @@ class _TransferCard extends ConsumerWidget {
     );
   }
 
-  Future<void> _receive(BuildContext context, WidgetRef ref) async {
-    try {
-      final places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
-      if (!context.mounted) return;
-      final done = await _showReceiveSheet(
-        context,
-        ref.read(stockOperationsProvider),
-        workspaceId: workspaceId,
-        transfer: transfer,
-        places: places,
-        separator: ref.read(stockAddressSeparatorProvider),
-      );
-      if (done) ref.invalidate(openTransfersProvider(workspaceId));
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the receive sheet could not read the places', error: e, stackTrace: st);
-      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-    }
-  }
+  Future<void> _receive(BuildContext context, WidgetRef ref) => openStockSheet(
+    context,
+    ref,
+    workspaceId,
+    what: 'receive',
+    open: (choices) => _showReceiveSheet(
+      context,
+      ref.read(stockOperationsProvider),
+      workspaceId: workspaceId,
+      transfer: transfer,
+      places: choices.places,
+      separator: choices.separator,
+    ),
+    reads: [openTransfersProvider(workspaceId)],
+  );
 }
 
 /// Receives what arrived of [transfer], all or in part; true when done.

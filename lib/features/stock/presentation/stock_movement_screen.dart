@@ -15,8 +15,6 @@ import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/trace_logger.dart';
-import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_feature.dart';
@@ -31,6 +29,7 @@ import 'stock_page_shell.dart';
 import 'stock_place_text.dart';
 import 'stock_read_failed.dart';
 import 'stock_reversal_sheet.dart';
+import 'stock_sheet_opener.dart';
 import 'stock_trace_section.dart';
 
 class StockMovementScreen extends ConsumerWidget {
@@ -214,27 +213,23 @@ class _Reversals extends ConsumerWidget {
     _ => l10n.stockReversalKindCorrection,
   };
 
-  Future<void> _open(BuildContext context, WidgetRef ref, StockReversible allows, StockReturnKind kind) async {
-    try {
-      final places = await ref.read(stockPlaceConfigsProvider(movement.workspaceId).future);
-      if (!context.mounted) return;
-      final done = await showStockReversalSheet(
-        context,
-        ref.read(stockReversalsProvider),
-        source: movement,
-        allows: allows,
-        kind: kind,
-        places: places,
-      );
-      if (done) {
-        ref
-          ..invalidate(stockReversibleProvider((workspaceId: movement.workspaceId, movementId: movement.id)))
-          ..invalidate(stockMovementsWalkProvider)
-          ..invalidate(stockOnHandWalkProvider);
-      }
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the return sheet could not read the stock', error: e, stackTrace: st);
-      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-    }
-  }
+  Future<void> _open(BuildContext context, WidgetRef ref, StockReversible allows, StockReturnKind kind) => openStockSheet(
+    context,
+    ref,
+    movement.workspaceId,
+    what: 'return',
+    open: (choices) => showStockReversalSheet(
+      context,
+      ref.read(stockReversalsProvider),
+      source: movement,
+      allows: allows,
+      kind: kind,
+      places: choices.places,
+    ),
+    reads: [
+      stockReversibleProvider((workspaceId: movement.workspaceId, movementId: movement.id)),
+      stockMovementsWalkProvider,
+      stockOnHandWalkProvider,
+    ],
+  );
 }

@@ -25,6 +25,7 @@ import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
 import 'stock_page_shell.dart';
 import 'stock_reorder_point_sheet.dart';
+import 'stock_sheet_opener.dart';
 
 class StockReorderScreen extends ConsumerWidget {
   const StockReorderScreen({super.key});
@@ -150,30 +151,21 @@ class _PointsList extends ConsumerWidget {
 
   final String workspaceId;
 
-  Future<void> _edit(BuildContext context, WidgetRef ref, StockReorderPoint? point) async {
-    try {
-      final items = await ref.read(stockItemsProvider(workspaceId).future);
-      final places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
-      if (!context.mounted) return;
-      final saved = await showStockReorderPointSheet(
-        context,
-        ref.read(stockReorderProvider),
-        ref.read(stockConfigCommandsProvider),
-        workspaceId: workspaceId,
-        choices: (items: [for (final i in items) i], places: places, separator: ref.read(stockAddressSeparatorProvider)),
-        point: point,
-      );
-      if (saved) {
-        ref
-          ..invalidate(stockReorderPointsProvider(workspaceId))
-          ..invalidate(stockLowProvider(workspaceId))
-          ..invalidate(stockReplenishmentProvider(workspaceId));
-      }
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the reorder point sheet could not read what it needs', error: e, stackTrace: st);
-      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-    }
-  }
+  Future<void> _edit(BuildContext context, WidgetRef ref, StockReorderPoint? point) => openStockSheet(
+    context,
+    ref,
+    workspaceId,
+    what: 'reorder point',
+    open: (choices) => showStockReorderPointSheet(
+      context,
+      ref.read(stockReorderProvider),
+      ref.read(stockConfigCommandsProvider),
+      workspaceId: workspaceId,
+      choices: choices,
+      point: point,
+    ),
+    reads: [stockReorderPointsProvider(workspaceId), stockLowProvider(workspaceId), stockReplenishmentProvider(workspaceId)],
+  );
 
   String _rule(BuildContext context, AppLocalizations l10n, StockReorderPoint p, String unit) {
     if (p.targetQuantity != null) return l10n.stockReorderRuleTarget(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(p.targetQuantity!), unit));

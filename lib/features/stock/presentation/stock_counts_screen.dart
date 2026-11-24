@@ -35,6 +35,7 @@ import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
 import 'stock_move_sheets.dart' show StockPickField;
 import 'stock_page_shell.dart';
+import 'stock_sheet_opener.dart';
 
 class StockCountsScreen extends ConsumerWidget {
   const StockCountsScreen({super.key});
@@ -74,24 +75,20 @@ class StockCountsScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _count(BuildContext context, WidgetRef ref, String workspaceId) async {
-    try {
-      final items = await ref.read(stockItemsProvider(workspaceId).future);
-      final places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
-      if (!context.mounted) return;
-      final done = await _showCountSheet(
-        context,
-        ref.read(stockReversalsProvider),
-        workspaceId: workspaceId,
-        items: items,
-        places: places,
-      );
-      if (done) ref.invalidate(stockCountsProvider(workspaceId));
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the count sheet could not read the stock', error: e, stackTrace: st);
-      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-    }
-  }
+  Future<void> _count(BuildContext context, WidgetRef ref, String workspaceId) => openStockSheet(
+    context,
+    ref,
+    workspaceId,
+    what: 'count',
+    open: (choices) => _showCountSheet(
+      context,
+      ref.read(stockReversalsProvider),
+      workspaceId: workspaceId,
+      items: choices.items,
+      places: choices.places,
+    ),
+    reads: [stockCountsProvider(workspaceId)],
+  );
 }
 
 class _Counts extends ConsumerWidget {
