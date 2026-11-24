@@ -64657,6 +64657,191 @@ abstract class AppLocalizations {
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
+  /// **'{label}: {amount}'**
+  String tillDayAmountLine(String label, String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Sales by tax rate'**
+  String get tillDayByRate;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Takings by tender'**
+  String get tillDayByTender;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Corrections: {amount}'**
+  String tillDayCorrections(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Total difference of the drawers: {amount}'**
+  String tillDayDifferences(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Gathers the closed sessions of the tills into one numbered report. Every till must be closed first.'**
+  String get tillDayHelp;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'{number} · {date}'**
+  String tillDayItem(String number, String date);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'No day has been closed yet.'**
+  String get tillDayNone;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Close the day'**
+  String get tillDayOpen;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash paid in: {amount}'**
+  String tillDayPaidIn(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash paid out: {amount}'**
+  String tillDayPaidOut(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Closed days'**
+  String get tillDayPast;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'{rate}%: net {net}, tax {tax}, gross {gross}'**
+  String tillDayRateLine(String rate, String net, String tax, String gross);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Receipts {first} to {last}'**
+  String tillDayReceiptRange(String first, String last);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Refunds: {amount}'**
+  String tillDayRefunds(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'This day is already closed.'**
+  String get tillDayRefusalClosed;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'A day cannot be closed before it has begun.'**
+  String get tillDayRefusalFuture;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'No session was closed on this day: there is nothing to close.'**
+  String get tillDayRefusalNothing;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The till {name} is still open. Count and close it first.'**
+  String tillDayRefusalTillOpen(String name);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Business day: {date}'**
+  String tillDayReportDate(String date);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Day report {number}'**
+  String tillDayReportTitle(String number);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Sales: {amount}'**
+  String tillDaySalesTotal(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'{till}: expected {expected}, counted {counted}, difference {difference}'**
+  String tillDaySessionLine(
+    String till,
+    String expected,
+    String counted,
+    String difference,
+  );
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Reason: {reason}'**
+  String tillDaySessionReason(String reason);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get tillDaySessions;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get tillDayTenderCard;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get tillDayTenderCash;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get tillDayTenderOther;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Day close'**
+  String get tillDayTitle;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Day to close: {date}'**
+  String tillDayToday(String date);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
   /// **'Add a till'**
   String get tillDrawerAddTill;
 

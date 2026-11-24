@@ -6,6 +6,8 @@
 // the screens use. Amounts are MINOR units; a denomination is the value of one note or coin in minor units, counted.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
+import 'till_day.dart';
+
 /// One session of a till, open: the float it started with and who opened it.
 class DrawerSession {
   const DrawerSession({required this.id, required this.tillId, required this.floatMinor, required this.openedByMemberId});
@@ -227,4 +229,14 @@ abstract interface class TillDrawerPort {
     String? differenceReason,
     required int bankedMinor,
   });
+
+  /// The days closed so far, the latest first (the finances read them).
+  Future<List<DayCloseRow>> dayCloses(String workspaceId);
+
+  /// Closes [businessDate] (`YYYY-MM-DD`) for the business, [siteId] null meaning every site: the report of the day. Refused
+  /// (DKL14) while a till is open, when the day is closed already or when no session was closed on it.
+  Future<DayReport> closeDay(String workspaceId, {required String requestId, String? siteId, required String businessDate});
+
+  /// A close read back.
+  Future<DayReport> dayReport(String workspaceId, {required String dayCloseId});
 }

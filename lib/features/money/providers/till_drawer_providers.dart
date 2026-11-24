@@ -5,6 +5,7 @@ import '../../../core/codes/dk_code.dart';
 import '../../../core/data/server_error.dart';
 import '../../../core/settings/settings.dart';
 import '../../workspace/providers/settings_providers.dart';
+import '../domain/till_day.dart';
 import '../domain/till_drawer.dart';
 
 /// #4367 -- the cash drawer's server: tills, sessions, cash entries and the count. The app wires the live one
@@ -42,3 +43,9 @@ final drawerSettingsProvider = FutureProvider.autoDispose<DrawerSettings>((ref) 
     paidOutLimitMinor: settings.read<int>('counter.paid_out_limit_minor'),
   );
 }, retry: (_, _) => null);
+
+/// #4367 -- the days closed so far, the latest first; the finances read them.
+final dayClosesProvider = FutureProvider.autoDispose.family<List<DayCloseRow>, String>(
+  (ref, workspaceId) => ref.watch(tillDrawerPortProvider).dayCloses(workspaceId),
+  retry: (_, _) => null,
+);

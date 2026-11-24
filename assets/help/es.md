@@ -3024,6 +3024,8 @@ Pulse **Abrir la caja**, escriba el **Fondo del cajón** (o, si su negocio cuent
 
 **Contar y cerrar** pide el **Efectivo contado en el cajón** y lo que se **Lleva al banco**. Cuando el negocio cuenta a ciegas, el efectivo esperado no se muestra antes del recuento; quien puede ver las finanzas lo ve, y la diferencia mientras escribe. Un recuento que difiere del efectivo esperado solo se cierra con su motivo, que la caja pide. Tras el cierre, la caja dice lo esperado, lo contado y la diferencia. Los pagos con tarjeta sin respuesta se listan aparte y nunca cuentan como efectivo.
 
+**Cierre del día.** Quien puede ver las finanzas abre **Cierre del día** desde el cajón de caja y pulsa **Cerrar el día** cuando cada caja está cerrada (una caja aún abierta se nombra y rechaza el cierre). Las sesiones cerradas del día forman un informe numerado: cada sesión con lo esperado, lo contado, la diferencia y su motivo, los cobros por medio de pago y por tipo de impuesto, el efectivo entrado y salido, los reembolsos y el rango de números de tickets. **Días cerrados** lista los informes ya hechos; un día cerrado no se cambia nunca. Es el registro propio del negocio; el contenido legal que un país exige al cierre del día llega con su propio módulo.
+
 ### Etiquetas RFID: una por lote o una por pieza
 
 **Público:** Administrador/a · Propietario

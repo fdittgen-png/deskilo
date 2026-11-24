@@ -4,6 +4,7 @@
 // a till with its float, sells for cash on it, pays money out, counts the drawer and closes it, once exact and once with a
 // difference that is closed only with its reason. Shared by the scenario checklist and the journey test.
 import 'package:deskilo/features/money/domain/counter_till.dart';
+import 'package:deskilo/features/money/domain/till_day.dart';
 import 'package:deskilo/features/money/domain/till_drawer.dart';
 import 'package:deskilo/features/money/providers/till_drawer_providers.dart';
 import 'package:deskilo/features/money/providers/till_providers.dart';
@@ -19,6 +20,9 @@ typedef TillDrawerFacts = ({
   DrawerClosed short,
   String? refusedWithout,
   bool saleNeededOpenTill,
+  String? dayRefusedWhileOpen,
+  DayReport day,
+  String? dayRefusedAgain,
 });
 
 Future<TillDrawerFacts> tillDrawerFacts() => withDemoSession((fixture, outbox, c) async {
@@ -58,6 +62,12 @@ Future<TillDrawerFacts> tillDrawerFacts() => withDemoSession((fixture, outbox, c
   } on PostgrestException catch (e) {
     refused = e.code;
   }
+  String? dayWhileOpen;
+  try {
+    await drawer.closeDay(ws, requestId: 'j-day-0', businessDate: '2026-11-23');
+  } on PostgrestException catch (e) {
+    dayWhileOpen = e.code;
+  }
   final short = await drawer.closeSession(
     ws,
     requestId: 'j-close-3',
@@ -66,7 +76,23 @@ Future<TillDrawerFacts> tillDrawerFacts() => withDemoSession((fixture, outbox, c
     differenceReason: 'a coin was lost',
     bankedMinor: 0,
   );
-  return (expectedBeforeClose: cash.expectedMinor, exact: exact, short: short, refusedWithout: refused, saleNeededOpenTill: needed);
+  final day = await drawer.closeDay(ws, requestId: 'j-day', businessDate: '2026-11-23');
+  String? again;
+  try {
+    await drawer.closeDay(ws, requestId: 'j-day-2', businessDate: '2026-11-23');
+  } on PostgrestException catch (e) {
+    again = e.code;
+  }
+  return (
+    expectedBeforeClose: cash.expectedMinor,
+    exact: exact,
+    short: short,
+    refusedWithout: refused,
+    saleNeededOpenTill: needed,
+    dayRefusedWhileOpen: dayWhileOpen,
+    day: day,
+    dayRefusedAgain: again,
+  );
 });
 
 /// The scenario check: the exact close has no difference, the short one is refused without a reason and closed with it.
@@ -76,7 +102,11 @@ Future<bool> tillDrawerJourney() async {
       f.exact.differenceMinor == 0 &&
       f.exact.expectedMinor == f.expectedBeforeClose &&
       f.refusedWithout == 'DKL13' &&
-      f.short.differenceMinor == -100;
+      f.short.differenceMinor == -100 &&
+      f.dayRefusedWhileOpen == 'DKL14' &&
+      f.day.sessions.length == 2 &&
+      f.day.differencesMinor == -100 &&
+      f.dayRefusedAgain == 'DKL14';
 }
 
 /// A cash sale at the counter: the receipt is numbered and its total is the milk's price.

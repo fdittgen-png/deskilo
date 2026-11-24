@@ -3024,6 +3024,8 @@ Appuyez sur **Ouvrir la caisse**, saisissez le **Fond de caisse** (ou, si votre 
 
 **Compter et fermer** demande les **Espèces comptées dans le tiroir** et ce qui est **Déposé à la banque**. Quand l'entreprise compte à l'aveugle, les espèces attendues ne s'affichent pas avant le comptage ; une personne qui peut voir les finances les voit, ainsi que l'écart pendant la saisie. Un comptage qui diffère des espèces attendues ne se ferme qu'avec son motif, que la caisse demande. Après la fermeture, la caisse indique ce qui était attendu, ce qui a été compté et l'écart. Les paiements par carte sans réponse sont listés à part et jamais comptés comme espèces.
 
+**Clôture de la journée.** Une personne qui peut voir les finances ouvre **Clôture de la journée** depuis le tiroir-caisse et appuie sur **Clôturer la journée** quand chaque caisse est fermée (une caisse encore ouverte est nommée et refuse la clôture). Les sessions fermées du jour forment un rapport numéroté : chaque session avec l'attendu, le compté, l'écart et son motif, les encaissements par moyen de paiement et par taux de taxe, les espèces entrées et sorties, les remboursements et la plage des numéros de tickets. **Journées clôturées** liste les rapports déjà faits ; une journée clôturée ne change jamais. C'est le registre propre de l'entreprise ; le contenu légal qu'un pays demande à une clôture de journée vient avec son propre module.
+
 ### Puces RFID : une par lot ou une par pièce
 
 **Public:** Administrateur·rice · Propriétaire

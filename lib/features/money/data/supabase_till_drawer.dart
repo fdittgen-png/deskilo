@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/trace/trace_logger.dart';
+import '../domain/till_day.dart';
 import '../domain/till_drawer.dart';
 
 /// #4367 -- the till sessions' commands and the table reads behind the port. A refusal is thrown as the server sent it
@@ -96,4 +97,23 @@ class SupabaseTillDrawer implements TillDrawerPort {
     'p_difference_reason': differenceReason,
     'p_banked_minor': bankedMinor,
   }));
+
+  @override
+  Future<List<DayCloseRow>> dayCloses(String workspaceId) async {
+    final rows = await _client.from('counter_day_closes').select('id, number, business_date').eq('workspace_id', workspaceId).order('business_date', ascending: false);
+    return [for (final r in rows) DayCloseRow.fromJson(r)];
+  }
+
+  @override
+  Future<DayReport> closeDay(String workspaceId, {required String requestId, String? siteId, required String businessDate}) async =>
+      DayReport.fromJson(await _call('counter_day_close_v1', {
+        'p_workspace_id': workspaceId,
+        'p_request_id': requestId,
+        'p_site_id': siteId,
+        'p_business_date': businessDate,
+      }));
+
+  @override
+  Future<DayReport> dayReport(String workspaceId, {required String dayCloseId}) async =>
+      DayReport.fromJson(await _call('counter_day_report_v1', {'p_workspace_id': workspaceId, 'p_day_close_id': dayCloseId}));
 }

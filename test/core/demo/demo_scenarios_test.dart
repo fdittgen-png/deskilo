@@ -1728,7 +1728,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   // #4367 — the cash drawer: open with a float, sell, pay out, count and close.
   WorkspaceFeature.counterTillSessions: _action(
     _owner,
-    'Ada opens the front counter with a 100.00 float, sells for cash, pays 5.00 out, counts the drawer and closes it; a '
+    'Ada opens the front counter with a 100.00 float, sells for cash, pays 5.00 out, counts the drawer and closes it, closes the day; a '
     'short count at the market stall closes only with its reason',
     (_) => tillDrawerJourney(),
   ),

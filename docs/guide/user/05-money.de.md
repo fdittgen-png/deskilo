@@ -777,6 +777,8 @@ Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade**
 
 **Zählen und schließen** fragt nach dem **Im Fach gezählten Bargeld** und dem, was **Zur Bank gebracht** wird. Zählt der Betrieb blind, wird das erwartete Bargeld vor dem Zählen nicht angezeigt; wer die Finanzen sehen darf, sieht es und beim Eintippen die Differenz. Eine Zählung, die vom erwarteten Bargeld abweicht, wird nur mit ihrem Grund geschlossen, den die Kasse erfragt. Nach dem Schließen nennt die Kasse das Erwartete, das Gezählte und die Differenz. Unbeantwortete Kartenzahlungen stehen getrennt und zählen nie als Bargeld.
 
+**Tagesabschluss.** Wer die Finanzen sehen darf, öffnet **Tagesabschluss** in der Kassenschublade und tippt auf **Tag abschließen**, sobald jede Kasse geschlossen ist (eine noch offene Kasse wird genannt und verweigert den Abschluss). Die geschlossenen Sitzungen des Tages werden zu einem nummerierten Bericht: jede Sitzung mit Erwartetem, Gezähltem, Differenz und Grund, die Einnahmen nach Zahlungsart und Steuersatz, das ein- und entnommene Bargeld, die Erstattungen und der Bereich der Belegnummern. **Abgeschlossene Tage** listet die bereits erstellten Berichte; ein abgeschlossener Tag wird nie geändert. Das ist die eigene Aufzeichnung des Betriebs; den rechtlichen Inhalt, den ein Land vom Tagesabschluss verlangt, liefert ein eigenes Modul.
+
 <!-- anchor: user.money.stock.rfid -->
 ### RFID-Tags: eines pro Charge oder eines pro Stück
 

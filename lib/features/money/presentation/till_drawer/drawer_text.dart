@@ -36,6 +36,17 @@ int? drawerRefusalDifference(Object error) {
   }
 }
 
+/// The name of the till a refusal names (`name` in its detail), or empty.
+String drawerRefusalName(Object error) {
+  final raw = serverErrorDetails(error);
+  if (raw == null) return '';
+  try {
+    return JsonReader.of(jsonDecode(raw), context: 'till_refusal').stringOr('name');
+  } on Object {
+    return '';
+  }
+}
+
 /// Whether [error] says the count differs and needs its reason.
 bool drawerAsksDifferenceReason(Object error) => serverErrorCode(error) == DkCode.dkl13 && drawerRefusalReason(error) == 'difference_reason';
 
@@ -53,6 +64,10 @@ String? drawerRefusalText(AppLocalizations l10n, Object error) {
     (DkCode.dkl13, 'reason_unknown') => l10n.tillDrawerRefusalReasonUnknown,
     (DkCode.dkl13, 'above_limit') => l10n.tillDrawerRefusalAboveLimit,
     (DkCode.dkl13, 'difference_reason') => l10n.tillDrawerRefusalDifference,
+    (DkCode.dkl14, 'till_open') => l10n.tillDayRefusalTillOpen(drawerRefusalName(error)),
+    (DkCode.dkl14, 'day_closed') => l10n.tillDayRefusalClosed,
+    (DkCode.dkl14, 'nothing_to_close') => l10n.tillDayRefusalNothing,
+    (DkCode.dkl14, 'future') => l10n.tillDayRefusalFuture,
     _ => null,
   };
 }

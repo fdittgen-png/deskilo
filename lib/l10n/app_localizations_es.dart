@@ -40501,6 +40501,136 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillConfirmSale => 'Confirmar la venta';
 
   @override
+  String tillDayAmountLine(String label, String amount) {
+    return '$label: $amount';
+  }
+
+  @override
+  String get tillDayByRate => 'Ventas por tipo de impuesto';
+
+  @override
+  String get tillDayByTender => 'Cobros por medio de pago';
+
+  @override
+  String tillDayCorrections(String amount) {
+    return 'Correcciones: $amount';
+  }
+
+  @override
+  String tillDayDifferences(String amount) {
+    return 'Diferencia total de los cajones: $amount';
+  }
+
+  @override
+  String get tillDayHelp =>
+      'Reúne las sesiones cerradas de las cajas en un informe numerado. Antes debe cerrarse cada caja.';
+
+  @override
+  String tillDayItem(String number, String date) {
+    return '$number · $date';
+  }
+
+  @override
+  String get tillDayNone => 'Todavía no se ha cerrado ningún día.';
+
+  @override
+  String get tillDayOpen => 'Cerrar el día';
+
+  @override
+  String tillDayPaidIn(String amount) {
+    return 'Efectivo entrado: $amount';
+  }
+
+  @override
+  String tillDayPaidOut(String amount) {
+    return 'Efectivo salido: $amount';
+  }
+
+  @override
+  String get tillDayPast => 'Días cerrados';
+
+  @override
+  String tillDayRateLine(String rate, String net, String tax, String gross) {
+    return '$rate %: neto $net, impuesto $tax, bruto $gross';
+  }
+
+  @override
+  String tillDayReceiptRange(String first, String last) {
+    return 'Tickets $first a $last';
+  }
+
+  @override
+  String tillDayRefunds(String amount) {
+    return 'Reembolsos: $amount';
+  }
+
+  @override
+  String get tillDayRefusalClosed => 'Este día ya está cerrado.';
+
+  @override
+  String get tillDayRefusalFuture =>
+      'Un día no puede cerrarse antes de empezar.';
+
+  @override
+  String get tillDayRefusalNothing =>
+      'No se cerró ninguna sesión este día: no hay nada que cerrar.';
+
+  @override
+  String tillDayRefusalTillOpen(String name) {
+    return 'La caja $name sigue abierta. Cuéntela y ciérrela primero.';
+  }
+
+  @override
+  String tillDayReportDate(String date) {
+    return 'Día de actividad: $date';
+  }
+
+  @override
+  String tillDayReportTitle(String number) {
+    return 'Informe del día $number';
+  }
+
+  @override
+  String tillDaySalesTotal(String amount) {
+    return 'Ventas: $amount';
+  }
+
+  @override
+  String tillDaySessionLine(
+    String till,
+    String expected,
+    String counted,
+    String difference,
+  ) {
+    return '$till: esperado $expected, contado $counted, diferencia $difference';
+  }
+
+  @override
+  String tillDaySessionReason(String reason) {
+    return 'Motivo: $reason';
+  }
+
+  @override
+  String get tillDaySessions => 'Sesiones';
+
+  @override
+  String get tillDayTenderCard => 'Tarjeta';
+
+  @override
+  String get tillDayTenderCash => 'Efectivo';
+
+  @override
+  String get tillDayTenderOther => 'Otro';
+
+  @override
+  String get tillDayTitle => 'Cierre del día';
+
+  @override
+  String tillDayToday(String date) {
+    return 'Día a cerrar: $date';
+  }
+
+  @override
   String get tillDrawerAddTill => 'Añadir una caja';
 
   @override

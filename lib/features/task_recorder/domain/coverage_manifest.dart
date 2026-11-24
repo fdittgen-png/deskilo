@@ -406,6 +406,7 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/stock/settings', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/till', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/till/drawer', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/till/day', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes/:id', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes/:id/edit', CoverageStatus.planned, owner: '#1884'),

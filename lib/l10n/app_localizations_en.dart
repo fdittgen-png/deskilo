@@ -40171,6 +40171,136 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillConfirmSale => 'Confirm the sale';
 
   @override
+  String tillDayAmountLine(String label, String amount) {
+    return '$label: $amount';
+  }
+
+  @override
+  String get tillDayByRate => 'Sales by tax rate';
+
+  @override
+  String get tillDayByTender => 'Takings by tender';
+
+  @override
+  String tillDayCorrections(String amount) {
+    return 'Corrections: $amount';
+  }
+
+  @override
+  String tillDayDifferences(String amount) {
+    return 'Total difference of the drawers: $amount';
+  }
+
+  @override
+  String get tillDayHelp =>
+      'Gathers the closed sessions of the tills into one numbered report. Every till must be closed first.';
+
+  @override
+  String tillDayItem(String number, String date) {
+    return '$number · $date';
+  }
+
+  @override
+  String get tillDayNone => 'No day has been closed yet.';
+
+  @override
+  String get tillDayOpen => 'Close the day';
+
+  @override
+  String tillDayPaidIn(String amount) {
+    return 'Cash paid in: $amount';
+  }
+
+  @override
+  String tillDayPaidOut(String amount) {
+    return 'Cash paid out: $amount';
+  }
+
+  @override
+  String get tillDayPast => 'Closed days';
+
+  @override
+  String tillDayRateLine(String rate, String net, String tax, String gross) {
+    return '$rate%: net $net, tax $tax, gross $gross';
+  }
+
+  @override
+  String tillDayReceiptRange(String first, String last) {
+    return 'Receipts $first to $last';
+  }
+
+  @override
+  String tillDayRefunds(String amount) {
+    return 'Refunds: $amount';
+  }
+
+  @override
+  String get tillDayRefusalClosed => 'This day is already closed.';
+
+  @override
+  String get tillDayRefusalFuture =>
+      'A day cannot be closed before it has begun.';
+
+  @override
+  String get tillDayRefusalNothing =>
+      'No session was closed on this day: there is nothing to close.';
+
+  @override
+  String tillDayRefusalTillOpen(String name) {
+    return 'The till $name is still open. Count and close it first.';
+  }
+
+  @override
+  String tillDayReportDate(String date) {
+    return 'Business day: $date';
+  }
+
+  @override
+  String tillDayReportTitle(String number) {
+    return 'Day report $number';
+  }
+
+  @override
+  String tillDaySalesTotal(String amount) {
+    return 'Sales: $amount';
+  }
+
+  @override
+  String tillDaySessionLine(
+    String till,
+    String expected,
+    String counted,
+    String difference,
+  ) {
+    return '$till: expected $expected, counted $counted, difference $difference';
+  }
+
+  @override
+  String tillDaySessionReason(String reason) {
+    return 'Reason: $reason';
+  }
+
+  @override
+  String get tillDaySessions => 'Sessions';
+
+  @override
+  String get tillDayTenderCard => 'Card';
+
+  @override
+  String get tillDayTenderCash => 'Cash';
+
+  @override
+  String get tillDayTenderOther => 'Other';
+
+  @override
+  String get tillDayTitle => 'Day close';
+
+  @override
+  String tillDayToday(String date) {
+    return 'Day to close: $date';
+  }
+
+  @override
   String get tillDrawerAddTill => 'Add a till';
 
   @override

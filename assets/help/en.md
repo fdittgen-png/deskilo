@@ -3024,6 +3024,8 @@ Press **Open the till**, type the **Float in the drawer** (or, when your busines
 
 **Count and close** asks for the **Cash counted in the drawer** and what is **Taken to the bank**. When the business counts blind, the expected cash is not shown before the count; someone who may see the finances sees it, and the difference as they type. A count that differs from the expected cash is closed only with its reason, which the till asks for. After the close the till says what was expected, what was counted and the difference. Card payments still unanswered are listed apart and never counted as cash.
 
+**Day close.** Someone who may see the finances opens **Day close** from the till drawer and presses **Close the day** once every till is closed (a till still open is named and refuses it). The day's closed sessions become one numbered report: each session with what was expected, counted, the difference and its reason, the takings by tender and by tax rate, the cash paid in and out, the refunds and the range of receipt numbers. **Closed days** lists the reports already made; a closed day is never changed. This is the business's own record; the legal content a country asks of a day close comes with its own module.
+
 ### RFID tags: one per batch or one per piece
 
 **Audience:** Administrator · Owner

@@ -29,6 +29,16 @@ void main() {
     expect(f.exact.bankedMinor, 5000);
     expect(f.refusedWithout, 'DKL13');
     expect(f.short.differenceMinor, -100);
+    // the day: refused while a till is open, then one report with both sessions, and a second close of the day is refused
+    expect(f.dayRefusedWhileOpen, 'DKL14');
+    expect(f.day.sessions.map((x) => x.till), ['Front counter', 'Market stall']);
+    expect(f.day.differencesMinor, -100);
+    expect(f.day.salesTotalMinor, 210);
+    expect(f.day.salesByTender, {'cash': 210});
+    expect(f.day.paidOutMinor, 500);
+    expect(f.day.firstReceipt, f.day.lastReceipt);
+    expect(f.day.sessions.last.differenceReason, 'a coin was lost');
+    expect(f.dayRefusedAgain, 'DKL14');
     expect(await tillDrawerJourney(), isTrue);
   });
 

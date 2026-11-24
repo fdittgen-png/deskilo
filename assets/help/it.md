@@ -3024,6 +3024,8 @@ Premere **Aprire la cassa**, digitare il **Fondo cassa nel cassetto** (o, se l'a
 
 **Contare e chiudere** chiede i **Contanti contati nel cassetto** e quanto viene **Portato in banca**. Quando l'attività conta alla cieca, i contanti attesi non vengono mostrati prima del conteggio; chi può vedere le finanze li vede, insieme alla differenza mentre digita. Un conteggio che differisce dai contanti attesi si chiude solo con il suo motivo, che la cassa richiede. Dopo la chiusura la cassa indica quanto era atteso, quanto è stato contato e la differenza. I pagamenti con carta senza risposta sono elencati a parte e mai contati come contanti.
 
+**Chiusura della giornata.** Chi può vedere le finanze apre **Chiusura della giornata** dal cassetto di cassa e preme **Chiudere la giornata** quando ogni cassa è chiusa (una cassa ancora aperta viene indicata e rifiuta la chiusura). Le sessioni chiuse della giornata diventano un rapporto numerato: ogni sessione con atteso, contato, differenza e motivo, gli incassi per mezzo di pagamento e per aliquota, i contanti versati e prelevati, i rimborsi e l'intervallo dei numeri degli scontrini. **Giornate chiuse** elenca i rapporti già fatti; una giornata chiusa non cambia mai. È la registrazione propria dell'attività; il contenuto legale che un paese richiede alla chiusura della giornata arriva con un proprio modulo.
+
 ### Tag RFID: uno per lotto o uno per pezzo
 
 **Destinatari:** Amministratore · Proprietario

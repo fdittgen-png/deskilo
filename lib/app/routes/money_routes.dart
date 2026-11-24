@@ -101,6 +101,14 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
       ),
       builder: (context, state) => const TillDrawerRoute(),
     ),
+    // #4367 — the day close: the finances close the business day and read its report.
+    GoRoute(
+      path: '/till/day',
+      redirect: env.guard(
+        const RouteAccess(features: [WorkspaceFeature.counterTillSessions], to: '/till'),
+      ),
+      builder: (context, state) => const TillDayRoute(),
+    ),
     GoRoute(
       path: '/invoices',
       redirect: env.guard(

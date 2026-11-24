@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/money/domain/counter_till.dart';
+import '../../features/money/presentation/till_drawer/till_day_screen.dart';
 import '../../features/money/presentation/till_drawer/till_drawer_screen.dart';
 import '../../features/money/presentation/till_screen.dart';
 import '../../features/stock/providers/stock_providers.dart';
@@ -35,6 +36,17 @@ class TillDrawerRoute extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final manages = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageSites);
-    return TillDrawerScreen(workspaceId: workspace?.id, currency: workspace?.currencyCode ?? '', canManage: manages);
+    return TillDrawerScreen(workspaceId: workspace?.id, currency: workspace?.currencyCode ?? '', canManage: manages, canCloseDay: ref.watch(myPermissionsProvider).contains(WorkspacePermission.viewFinances));
+  }
+}
+
+/// #4367 — the day close: the open business and its currency; the route is open to whoever may see the finances.
+class TillDayRoute extends ConsumerWidget {
+  const TillDayRoute({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final workspace = ref.watch(currentWorkspaceProvider).value;
+    return TillDayScreen(workspaceId: workspace?.id, currency: workspace?.currencyCode ?? '');
   }
 }

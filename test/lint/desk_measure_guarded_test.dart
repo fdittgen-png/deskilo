@@ -28,6 +28,7 @@ const _notGuardedYet = <String, String>{
   '/stock/cycle-counts': '#4295 tabs of lists and a plan sheet: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/stock/cycle-counts/:taskId': '#4295 a list of lines and two sheets: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/till': '#4366 a basket beside its keys and two dialogs: its widget tests measure it at phone, tablet and desk widths; joins the guards when the till has a Demo business to walk',
+  '/till/day': '#4367 a list of closed days and a full-screen report: its widget tests measure it at phone and desk widths; joins the guards with the till',
   '/till/drawer': '#4367 a list of cards and four sheets: its widget tests measure it at phone and desk widths; joins the guards with the till',
   '/stock/transfers': '#4170 a list of cards: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   // A record at its address under a guarded list.

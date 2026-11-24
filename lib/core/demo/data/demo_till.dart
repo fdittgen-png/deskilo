@@ -106,7 +106,7 @@ class DemoTill implements TillPort {
     final sold = TillSold(receiptId: receiptId, number: 'R-${(++_sales).toString().padLeft(5, '0')}', totals: draft.totals);
     _drafts.remove(receiptId);
     final till = _tillOf.remove(receiptId);
-    if (till != null) drawer?.recordCashSale(till, tenders.where((t) => t.kind == 'cash').fold(0, (a, t) => a + t.amountMinor));
+    if (till != null) drawer?.recordCashSale(till, tenders.where((t) => t.kind == 'cash').fold(0, (a, t) => a + t.amountMinor), number: sold.number);
     return _done[requestId] = sold;
   }
 }

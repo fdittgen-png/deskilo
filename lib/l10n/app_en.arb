@@ -52184,6 +52184,233 @@
   "@tillConfirmSale": {
     "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
   },
+  "tillDayAmountLine": "{label}: {amount}",
+  "@tillDayAmountLine": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayByRate": "Sales by tax rate",
+  "@tillDayByRate": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayByTender": "Takings by tender",
+  "@tillDayByTender": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayCorrections": "Corrections: {amount}",
+  "@tillDayCorrections": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayDifferences": "Total difference of the drawers: {amount}",
+  "@tillDayDifferences": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayHelp": "Gathers the closed sessions of the tills into one numbered report. Every till must be closed first.",
+  "@tillDayHelp": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayItem": "{number} · {date}",
+  "@tillDayItem": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayNone": "No day has been closed yet.",
+  "@tillDayNone": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayOpen": "Close the day",
+  "@tillDayOpen": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayPaidIn": "Cash paid in: {amount}",
+  "@tillDayPaidIn": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayPaidOut": "Cash paid out: {amount}",
+  "@tillDayPaidOut": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayPast": "Closed days",
+  "@tillDayPast": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayRateLine": "{rate}%: net {net}, tax {tax}, gross {gross}",
+  "@tillDayRateLine": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "net": {
+        "type": "String"
+      },
+      "tax": {
+        "type": "String"
+      },
+      "gross": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayReceiptRange": "Receipts {first} to {last}",
+  "@tillDayReceiptRange": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayRefunds": "Refunds: {amount}",
+  "@tillDayRefunds": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayRefusalClosed": "This day is already closed.",
+  "@tillDayRefusalClosed": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayRefusalFuture": "A day cannot be closed before it has begun.",
+  "@tillDayRefusalFuture": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayRefusalNothing": "No session was closed on this day: there is nothing to close.",
+  "@tillDayRefusalNothing": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayRefusalTillOpen": "The till {name} is still open. Count and close it first.",
+  "@tillDayRefusalTillOpen": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayReportDate": "Business day: {date}",
+  "@tillDayReportDate": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDayReportTitle": "Day report {number}",
+  "@tillDayReportTitle": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDaySalesTotal": "Sales: {amount}",
+  "@tillDaySalesTotal": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDaySessionLine": "{till}: expected {expected}, counted {counted}, difference {difference}",
+  "@tillDaySessionLine": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "till": {
+        "type": "String"
+      },
+      "expected": {
+        "type": "String"
+      },
+      "counted": {
+        "type": "String"
+      },
+      "difference": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDaySessionReason": "Reason: {reason}",
+  "@tillDaySessionReason": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDaySessions": "Sessions",
+  "@tillDaySessions": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayTenderCard": "Card",
+  "@tillDayTenderCard": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayTenderCash": "Cash",
+  "@tillDayTenderCash": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayTenderOther": "Other",
+  "@tillDayTenderOther": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayTitle": "Day close",
+  "@tillDayTitle": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDayToday": "Day to close: {date}",
+  "@tillDayToday": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "tillDrawerAddTill": "Add a till",
   "@tillDrawerAddTill": {
     "description": "#4367 till sessions: the cash drawer"

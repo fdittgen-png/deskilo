@@ -6,6 +6,7 @@
 // is closed with its reason; a request id answers the same act again.
 import 'dart:convert';
 
+import 'package:deskilo/features/money/domain/till_day.dart';
 import 'package:deskilo/features/money/domain/till_drawer.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
@@ -38,6 +39,11 @@ class _Session {
   int cashSales = 0;
   int cashRefunds = 0;
   bool closed = false;
+  bool inDayClose = false;
+  final List<String> receipts = [];
+  int counted = 0;
+  int banked = 0;
+  String reason = '';
 
   int _sum(String kind) => entries.where((e) => e.kind == kind).fold(0, (a, e) => a + e.amount);
 
@@ -82,7 +88,12 @@ class DemoTillDrawer implements TillDrawerPort {
   bool hasOpenSession(String tillId) => _openOn(tillId) != null;
 
   /// A cash sale of [amountMinor] made on [tillId]'s open session.
-  void recordCashSale(String tillId, int amountMinor) => _openOn(tillId)?.cashSales += amountMinor;
+  void recordCashSale(String tillId, int amountMinor, {String number = ''}) {
+    final s = _openOn(tillId);
+    if (s == null) return;
+    s.cashSales += amountMinor;
+    if (number.isNotEmpty) s.receipts.add(number);
+  }
 
   DrawerTill _view(DrawerTill t) {
     final s = _openOn(t.id);
@@ -202,7 +213,11 @@ class DemoTillDrawer implements TillDrawerPort {
     if (difference != 0 && (differenceReason ?? '').trim().isEmpty) {
       throw _refused(DkCode.dkl13, 'a difference is closed with its reason', reason: 'difference_reason', more: canSeeFinances() ? {'difference_minor': '$difference'} : const {});
     }
-    s.closed = true;
+    s
+      ..closed = true
+      ..counted = countedMinor
+      ..banked = bankedMinor
+      ..reason = (differenceReason ?? '').trim();
     return _answered[requestId] = DrawerClosed(
           sessionId: s.id,
           expectedMinor: s.expected,
@@ -211,5 +226,71 @@ class DemoTillDrawer implements TillDrawerPort {
           bankedMinor: bankedMinor,
           unresolvedCardMinor: 0,
         );
+  }
+
+  final List<(String, DayReport)> _closes = [];
+
+  @override
+  Future<List<DayCloseRow>> dayCloses(String workspaceId) async {
+    if (!canSeeFinances()) throw _refused(DkCode.dkn01, 'not allowed to see the finances of the counter');
+    final rows = [for (final (_, r) in _closes) DayCloseRow(id: r.dayCloseId, number: r.number, businessDate: r.businessDate)];
+    return rows.reversed.toList();
+  }
+
+  /// The report of the closed sessions not yet in a close. Its sales by tax rate stay empty here: the Demo's till keeps the
+  /// cash taken per session, not the tax breakdown of each receipt.
+  @override
+  Future<DayReport> closeDay(String workspaceId, {required String requestId, String? siteId, required String businessDate}) async {
+    if (_answered[requestId] != null) return _replayed(requestId);
+    if (!canSeeFinances()) throw _refused(DkCode.dkn01, 'not allowed to see the finances of the counter');
+    if (_closes.any((c) => c.$2.businessDate == businessDate)) throw _refused(DkCode.dkl14, 'this day is already closed', reason: 'day_closed');
+    for (final t in _tills) {
+      if (_openOn(t.id) != null) throw _refused(DkCode.dkl14, 'a till is still open', reason: 'till_open', more: {'till_id': t.id, 'name': t.name});
+    }
+    final sessions = _sessions.values.where((s) => s.closed && !s.inDayClose).toList();
+    if (sessions.isEmpty) throw _refused(DkCode.dkl14, 'nothing to close on this day', reason: 'nothing_to_close');
+    final sold = sessions.fold<int>(0, (a, s) => a + s.cashSales);
+    final numbers = [for (final s in sessions) ...s.receipts];
+    final report = DayReport(
+      dayCloseId: _id('day'),
+      number: 'DC-${(_closes.length + 1).toString().padLeft(4, '0')}',
+      businessDate: businessDate,
+      sessions: [
+        for (final s in sessions)
+          DaySession(
+            till: _tills.firstWhere((t) => t.id == s.tillId).name,
+            floatMinor: s.floatMinor,
+            expectedMinor: s.expected,
+            countedMinor: s.counted,
+            differenceMinor: s.counted - s.expected,
+            differenceReason: s.reason,
+            bankedMinor: s.banked,
+            unresolvedCardMinor: 0,
+          ),
+      ],
+      differencesMinor: sessions.fold(0, (a, s) => a + s.counted - s.expected),
+      salesByRate: const [],
+      salesByTender: sold == 0 ? const {} : {'cash': sold},
+      salesTotalMinor: sold,
+      firstReceipt: numbers.isEmpty ? '' : numbers.first,
+      lastReceipt: numbers.isEmpty ? '' : numbers.last,
+      correctionsMinor: 0,
+      refunds: const {},
+      paidInMinor: sessions.fold(0, (a, s) => a + s._sum('paid_in')),
+      paidOutMinor: sessions.fold(0, (a, s) => a + s._sum('paid_out')),
+    );
+    for (final s in sessions) {
+      s.inDayClose = true;
+    }
+    _closes.add((businessDate, report));
+    return _answered[requestId] = report;
+  }
+
+  @override
+  Future<DayReport> dayReport(String workspaceId, {required String dayCloseId}) async {
+    if (!canSeeFinances()) throw _refused(DkCode.dkn01, 'not allowed to read the day report');
+    final found = _closes.where((c) => c.$2.dayCloseId == dayCloseId).firstOrNull;
+    if (found == null) throw _refused(DkCode.dkl14, 'not a day close of this business', reason: 'day_unknown');
+    return found.$2;
   }
 }

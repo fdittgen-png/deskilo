@@ -5,6 +5,7 @@
 // close it. The expected cash is the server's: while the drawer is counted blind the counter is not given it.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
@@ -24,12 +25,15 @@ import 'till_edit_sheet.dart';
 
 /// The drawer screen. [canManage] is whether the person may add and edit tills (the sites' managers).
 class TillDrawerScreen extends ConsumerWidget {
-  const TillDrawerScreen({super.key, required this.workspaceId, required this.currency, required this.canManage});
+  const TillDrawerScreen({super.key, required this.workspaceId, required this.currency, required this.canManage, this.canCloseDay = false});
 
   /// The open business; null while it is being read.
   final String? workspaceId;
   final String currency;
   final bool canManage;
+
+  /// Whether the person may see the finances, and so close the day.
+  final bool canCloseDay;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,7 +42,10 @@ class TillDrawerScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.tillDrawerTitle),
-        actions: [HelpDot(l10n.tillDrawerTitle, anchor: HelpAnchor.moneyTillDrawer)],
+        actions: [
+          if (canCloseDay)
+            TextButton(key: const ValueKey('drawer-day-close'), onPressed: () => context.push('/till/day'), child: Text(l10n.tillDayTitle)),
+          HelpDot(l10n.tillDrawerTitle, anchor: HelpAnchor.moneyTillDrawer)],
       ),
       floatingActionButton: canManage && workspaceId != null
           ? FloatingActionButton.extended(
