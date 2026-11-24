@@ -65,6 +65,7 @@ import 'data/demo_stock_reorder.dart';
 import 'data/demo_stock_reversals.dart';
 import 'data/demo_stock_tags.dart';
 import 'data/demo_stock_trace.dart';
+import 'data/demo_stock_trace_chain.dart';
 import 'data/demo_stock_where_is.dart';
 import 'data/demo_till.dart';
 import 'data/finance_kpi_repository.dart';
@@ -327,6 +328,8 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
     ),
   ),
   // #4173 — and traces its goods to the orders they were put away from, and values them.
+  // #4432 — and the whole chain of a lot, from its own ledger.
+  stockTraceChainReaderProvider.overrideWith((ref) => DemoStockTraceChain(stocks.of(ref).ledger)),
   stockTraceReaderProvider.overrideWith(
     (ref) => DemoStockTrace(
       stocks.of(ref).id,

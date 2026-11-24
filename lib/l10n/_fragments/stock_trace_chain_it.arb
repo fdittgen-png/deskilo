@@ -1,0 +1,20 @@
+{
+  "@@locale": "it",
+  "stockChainTitle": "Tutti i movimenti di questo lotto",
+  "stockChainEmpty": "Nessun altro movimento registrato.",
+  "stockChainTruncated": "Sono mostrati solo i primi movimenti.",
+  "stockChainPieces": "{count, plural, one{{count} pezzo} other{{count} pezzi}}",
+  "stockChainDelivery": "Consegna {label} da {supplier}",
+  "stockChainReceipt": "Scontrino {label}",
+  "stockChainInvoice": "Fattura {label}",
+  "stockChainUnavailable": "Un documento che non è consultabile",
+  "stockMoveReasonReceipt": "Ricevuto",
+  "stockMoveReasonTransfer": "Spostato",
+  "stockMoveReasonSale": "Venduto",
+  "stockMoveReasonLoss": "Eliminato",
+  "stockMoveReasonConsumption": "Consumato",
+  "stockMoveReasonAdjustment": "Inventario rettificato",
+  "stockMoveReasonOpening": "Giacenza iniziale",
+  "stockMoveReasonReturnIn": "Reso dal cliente",
+  "stockMoveReasonReturnOut": "Reso al fornitore"
+}

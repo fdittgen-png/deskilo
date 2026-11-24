@@ -20,6 +20,7 @@ import '../data/supabase_stock_reorder.dart';
 import '../data/supabase_stock_reversals.dart';
 import '../data/supabase_stock_tags.dart';
 import '../data/supabase_stock_trace.dart';
+import '../data/supabase_stock_trace_chain.dart';
 import '../data/supabase_stock_where_is.dart';
 import '../domain/item_groups.dart';
 import '../domain/stock_code_resolver.dart';
@@ -37,8 +38,8 @@ import '../domain/stock_reversals.dart';
 import '../domain/stock_service_creator.dart';
 import '../domain/stock_tags.dart';
 import '../domain/stock_trace.dart';
+import '../domain/stock_trace_chain.dart';
 import '../domain/stock_where_is.dart';
-
 import '../presentation/stock_expiry_printer.dart';
 
 /// #4161 -- the stock reads of the selected business. The Demo and the tests
@@ -198,6 +199,17 @@ final stockScanAddsOneProvider = Provider<bool>((ref) {
 /// business. The Demo and the tests replace it.
 final stockTraceReaderProvider = Provider<StockTraceReader>(
   (ref) => SupabaseStockTrace(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// #4432 -- the whole chain of a lot or a piece (0923).
+final stockTraceChainReaderProvider = Provider<StockTraceChainReader>(
+  (ref) => SupabaseStockTraceChain(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// #4432 -- the chain of the lot (or, without a lot, the pieces) a movement belongs to.
+final stockMovementChainProvider = FutureProvider.autoDispose.family<TraceChain, ({String workspaceId, String movementId})>(
+  (ref, key) => ref.watch(stockTraceChainReaderProvider).chain(key.workspaceId, movementId: key.movementId),
+  retry: (_, _) => null,
 );
 
 /// #4173 -- the trace of one movement.

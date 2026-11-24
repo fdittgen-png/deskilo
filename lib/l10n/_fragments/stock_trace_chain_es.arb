@@ -1,0 +1,20 @@
+{
+  "@@locale": "es",
+  "stockChainTitle": "Todos los movimientos de este lote",
+  "stockChainEmpty": "No hay otro movimiento registrado.",
+  "stockChainTruncated": "Solo se muestran los primeros movimientos.",
+  "stockChainPieces": "{count, plural, one{{count} pieza} other{{count} piezas}}",
+  "stockChainDelivery": "Entrega {label} de {supplier}",
+  "stockChainReceipt": "Ticket {label}",
+  "stockChainInvoice": "Factura {label}",
+  "stockChainUnavailable": "Un documento que no puede consultar",
+  "stockMoveReasonReceipt": "Recibido",
+  "stockMoveReasonTransfer": "Trasladado",
+  "stockMoveReasonSale": "Vendido",
+  "stockMoveReasonLoss": "Dado de baja",
+  "stockMoveReasonConsumption": "Consumido",
+  "stockMoveReasonAdjustment": "Recuento ajustado",
+  "stockMoveReasonOpening": "Existencias iniciales",
+  "stockMoveReasonReturnIn": "Devuelto por el cliente",
+  "stockMoveReasonReturnOut": "Devuelto al proveedor"
+}

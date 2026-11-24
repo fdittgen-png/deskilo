@@ -35999,6 +35999,46 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockCameraTitle => 'Kamera-Scanner';
 
   @override
+  String stockChainDelivery(String label, String supplier) {
+    return 'Lieferung $label von $supplier';
+  }
+
+  @override
+  String get stockChainEmpty => 'Keine weitere Bewegung erfasst.';
+
+  @override
+  String stockChainInvoice(String label) {
+    return 'Rechnung $label';
+  }
+
+  @override
+  String stockChainPieces(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Stück',
+      one: '$count Stück',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String stockChainReceipt(String label) {
+    return 'Beleg $label';
+  }
+
+  @override
+  String get stockChainTitle => 'Alle Bewegungen dieser Charge';
+
+  @override
+  String get stockChainTruncated =>
+      'Nur die ersten Bewegungen werden angezeigt.';
+
+  @override
+  String get stockChainUnavailable =>
+      'Ein Dokument, das Sie nicht sehen dürfen';
+
+  @override
   String get stockCostLabel => 'Kosten je Einheit';
 
   @override
@@ -36636,6 +36676,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String stockMoveQuantity(String unit) {
     return 'Menge ($unit)';
   }
+
+  @override
+  String get stockMoveReasonAdjustment => 'Bestand korrigiert';
+
+  @override
+  String get stockMoveReasonConsumption => 'Verbraucht';
+
+  @override
+  String get stockMoveReasonLoss => 'Abgeschrieben';
+
+  @override
+  String get stockMoveReasonOpening => 'Anfangsbestand';
+
+  @override
+  String get stockMoveReasonReceipt => 'Eingegangen';
+
+  @override
+  String get stockMoveReasonReturnIn => 'Vom Kunden zurückgegeben';
+
+  @override
+  String get stockMoveReasonReturnOut => 'An den Lieferanten zurückgegeben';
+
+  @override
+  String get stockMoveReasonSale => 'Verkauft';
+
+  @override
+  String get stockMoveReasonTransfer => 'Umgelagert';
 
   @override
   String get stockMoveSameSite =>
