@@ -11,6 +11,7 @@ import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/demo/demo_space_routing.dart' show kDemoInstallationId;
 import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/me/domain/workspace_export.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
@@ -24,6 +25,8 @@ import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/hmrc_outcomes.dart';
 
 const _client = HmrcClientValues(
   browserJsUserAgent: 'Demo',
@@ -91,8 +94,8 @@ void main() {
       client: _client,
       recoveryMarker: marker,
     );
-    expect(outcome, isA<HmrcFiled>());
-    final filed = outcome as HmrcFiled;
+    expect(outcome, isHmrcFiled);
+    final filed = filedOf(outcome);
     expect(filed.demo, isTrue);
     expect(filed.receipt.formBundleNumber, startsWith('DEMO-'));
     final after = _prepared(f);
@@ -101,7 +104,7 @@ void main() {
     expect(f.secondSpace.money.vatDeclarations.map((d) => (d.id, d.status)).toList(), deBefore);
     // Once: the filed return is not submitted again.
     final again = await f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
-    expect(again, isA<HmrcRefused>());
+    expect(again, isHmrcRefused);
   });
 
   test('nothing is sent before HMRC is connected', () async {
@@ -109,7 +112,7 @@ void main() {
     final d = _prepared(f);
     final marker = (await f.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
     final outcome = await f.london.hmrc.submit(declarationId: d.id, connectionId: 'demo-hmrc-connection', boxes: _boxes(d), client: _client, recoveryMarker: marker);
-    expect((outcome as HmrcRefused).refusal, HmrcRefusal.notConnected);
+    expect(refusedOf(outcome).refusal, HmrcRefusal.notConnected);
     expect(_prepared(f).isPrepared, isTrue);
   });
 
@@ -119,7 +122,7 @@ void main() {
     final d = _prepared(f);
     final marker = (await f.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
     final outcome = await f.london.hmrc.submit(declarationId: d.id, connectionId: 'demo-hmrc-connection', boxes: _boxes(d), client: _client, recoveryMarker: marker);
-    expect((outcome as HmrcRefused).refusal, HmrcRefusal.notAllowed);
+    expect(refusedOf(outcome).refusal, HmrcRefusal.notAllowed);
     expect(_prepared(f).isPrepared, isTrue);
   });
 
@@ -130,7 +133,7 @@ void main() {
     final marker = (await f.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
     final sent = {..._boxes(d), 'totalValueSalesExVAT': _boxes(d)['totalValueSalesExVAT']! + 1};
     final outcome = await f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: sent, client: _client, recoveryMarker: marker);
-    expect((outcome as HmrcRefused).refusal, HmrcRefusal.figuresDiffer);
+    expect(refusedOf(outcome).refusal, HmrcRefusal.figuresDiffer);
     expect(_prepared(f).isPrepared, isTrue);
   });
 
@@ -142,7 +145,7 @@ void main() {
     final extra = f.london.money.invoices.first;
     f.london.money.invoices.add(extra.copyWith(id: 'uk-inv-late', number: 'CY-late'));
     final outcome = await f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
-    expect((outcome as HmrcRefused).refusal, HmrcRefusal.figuresDiffer);
+    expect(refusedOf(outcome).refusal, HmrcRefusal.figuresDiffer);
     expect(_prepared(f).isPrepared, isTrue);
   });
 
@@ -153,7 +156,7 @@ void main() {
     final early = DemoHmrcRepository(money: f.london.money, workspaces: f.london.workspaces, today: d.periodStart);
     await early.startConnect(demoLondonSpaceId, demoLondonSiteId);
     final outcome = await early.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
-    expect((outcome as HmrcRefused).code, 'TAX_PERIOD_NOT_ENDED');
+    expect(refusedOf(outcome).code, 'TAX_PERIOD_NOT_ENDED');
     expect(_prepared(f).isPrepared, isTrue);
   });
 
@@ -164,8 +167,8 @@ void main() {
     final marker = (await f.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
     final first = f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
     final second = f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
-    expect(((await second) as HmrcRefused).refusal, HmrcRefusal.inFlight);
-    expect(await first, isA<HmrcFiled>());
+    expect(refusedOf(await second).refusal, HmrcRefusal.inFlight);
+    expect(await first, isHmrcFiled);
   });
 
   test('an unconfirmed answer files nothing and invents no receipt; a retry is a new decision', () async {
@@ -174,40 +177,40 @@ void main() {
       money: f.london.money,
       workspaces: f.london.workspaces,
       today: f.seededAt,
-      script: (attempt) => attempt == 1 ? const HmrcUnconfirmed(code: 'TIMEOUT') : null,
+      script: (attempt) => attempt == 1 ? hmrcUnconfirmed(code: 'TIMEOUT') : null,
     );
     final connection = (await scripted.startConnect(demoLondonSpaceId, demoLondonSiteId), (await scripted.state(demoLondonSpaceId)).connection!).$2;
     final d = _prepared(f);
     final first = await scripted.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
-    expect(first, isA<HmrcUnconfirmed>());
+    expect(first, isHmrcUnconfirmed);
     expect(_prepared(f).isPrepared, isTrue);
     expect(_prepared(f).submittedReceipt, isEmpty);
     final refused = await scripted.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
-    expect(refused, isA<HmrcUnconfirmed>());
+    expect(refused, isHmrcUnconfirmed);
     final marker = (await scripted.state(demoLondonSpaceId)).recoveryMarkers[d.id];
     final second = await scripted.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
-    expect(second, isA<HmrcFiled>());
+    expect(second, isHmrcFiled);
   });
 
   test('an old check cannot recover a later unconfirmed Demo attempt', () async {
     final f = DemoFixture.build();
     final scripted = DemoHmrcRepository(
       money: f.london.money, workspaces: f.london.workspaces, today: f.seededAt,
-      script: (attempt) => attempt <= 2 ? const HmrcUnconfirmed(code: 'TIMEOUT') : null,
+      script: (attempt) => attempt <= 2 ? hmrcUnconfirmed(code: 'TIMEOUT') : null,
     );
     await scripted.startConnect(demoLondonSpaceId, demoLondonSiteId);
     final connection = (await scripted.state(demoLondonSpaceId)).connection!;
     final d = _prepared(f);
-    Future<HmrcOutcome> submit([String? marker]) => scripted.submit(
+    Future<CommandOutcome<HmrcFiling>> submit([String? marker]) => scripted.submit(
       declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
-    expect(await submit(), isA<HmrcUnconfirmed>());
+    expect(await submit(), isHmrcUnconfirmed);
     final firstMarker = (await scripted.state(demoLondonSpaceId)).recoveryMarkers[d.id];
-    expect(await submit(firstMarker), isA<HmrcUnconfirmed>());
+    expect(await submit(firstMarker), isHmrcUnconfirmed);
     final secondMarker = (await scripted.state(demoLondonSpaceId)).recoveryMarkers[d.id];
     expect(secondMarker, isNot(firstMarker));
-    expect(await submit(firstMarker), isA<HmrcUnconfirmed>());
+    expect(await submit(firstMarker), isHmrcUnconfirmed);
     expect(_prepared(f).isPrepared, isTrue);
-    expect(await submit(secondMarker), isA<HmrcFiled>());
+    expect(await submit(secondMarker), isHmrcFiled);
   });
 
   test('a submit that completes after the persona changed files nothing', () async {
@@ -217,7 +220,7 @@ void main() {
     final marker = (await f.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
     final pending = f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
     f.becomePersona(DemoPersona.admin);
-    expect(((await pending) as HmrcRefused).refusal, HmrcRefusal.notAllowed);
+    expect(refusedOf(await pending).refusal, HmrcRefusal.notAllowed);
     expect(_prepared(f).isPrepared, isTrue);
   });
 

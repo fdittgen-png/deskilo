@@ -10,6 +10,7 @@ import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -63,13 +64,13 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
   /// before the return can be submitted again: never a blind second post.
   bool _checkedAtHmrc = false;
   String? _checkedMarker;
-  HmrcOutcome? _outcome;
+  CommandOutcome<HmrcFiling>? _outcome;
 
   /// Runs one action with the buttons off and its outcome (if any) shown:
   /// the single place the sheet's busy state changes.
   Future<void> _run(
-    Future<HmrcOutcome?> Function() action, {
-    required HmrcOutcome onError,
+    Future<CommandOutcome<HmrcFiling>?> Function() action, {
+    required CommandOutcome<HmrcFiling> onError,
   }) async {
     if (_busy) return;
     setState(() {
@@ -78,7 +79,7 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
       _checkedAtHmrc = false;
       _checkedMarker = null;
     });
-    HmrcOutcome? outcome;
+    CommandOutcome<HmrcFiling>? outcome;
     try {
       outcome = await action();
     } on Object catch (e, st) {
@@ -91,12 +92,13 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
       _busy = false;
       _outcome = outcome;
     });
-    if (outcome is HmrcUnconfirmed ||
-        (outcome is HmrcRefused &&
-            (outcome.refusal == HmrcRefusal.alreadySubmitted || outcome.refusal == HmrcRefusal.inFlight))) {
+    final refusal = hmrcRefusalOf(outcome)?.refusal;
+    if (outcome is CommandUnreached ||
+        refusal == HmrcRefusal.alreadySubmitted ||
+        refusal == HmrcRefusal.inFlight) {
       ref.invalidate(hmrcStateProvider(widget.declaration.workspaceId));
     }
-    if (outcome is HmrcFiled || outcome is HmrcAcceptedNotRecorded) {
+    if (hmrcFilingOf(outcome) != null) {
       ref.invalidate(vatDeclarationsProvider);
     }
   }
@@ -112,7 +114,7 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
       );
       ref.invalidate(hmrcStateProvider(widget.declaration.workspaceId));
       return null;
-    }, onError: const HmrcRefused(HmrcRefusal.notAllowed));
+    }, onError: hmrcRefused(HmrcRefusal.notAllowed));
   }
 
   Future<void> _submit(HmrcConnection connection, HmrcClientValues client) {
@@ -127,7 +129,7 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
         ),
         // The port never throws; if something still does, the post may have
         // left: unconfirmed.
-        onError: const HmrcUnconfirmed(code: 'CLIENT'),
+        onError: hmrcUnconfirmed(code: 'CLIENT'),
       );
   }
 
@@ -199,10 +201,12 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
   bool _awaitingCheck(HmrcState s) =>
       (!_checkedAtHmrc || _checkedMarker == null ||
           _checkedMarker != (s.recoveryMarkers[widget.declaration.id] ?? '')) &&
-      (_outcome is HmrcUnconfirmed ||
-          (_outcome is HmrcRefused &&
-              [HmrcRefusal.alreadySubmitted, HmrcRefusal.inFlight].contains((_outcome! as HmrcRefused).refusal)) ||
-          (_outcome is! HmrcFiled && s.unconfirmedDeclarationIds.contains(widget.declaration.id)));
+      (_outcome is CommandUnreached ||
+          [HmrcRefusal.alreadySubmitted, HmrcRefusal.inFlight].contains(hmrcRefusalOf(_outcome)?.refusal) ||
+          (!_filed && s.unconfirmedDeclarationIds.contains(widget.declaration.id)));
+
+  /// Filed and recorded here.
+  bool get _filed => hmrcFilingOf(_outcome)?.recorded ?? false;
 
   Widget _body(AppLocalizations l10n, HmrcState s, HmrcClientValues values) {
     final connection = s.connection;
@@ -245,7 +249,7 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
             FilledButton(
               key: const ValueKey('hmrc-submit'),
               onPressed:
-                  _busy || _outcome is HmrcFiled || _awaitingCheck(s)
+                  _busy || _filed || _awaitingCheck(s)
                   ? null
                   : () => _submit(connection, values),
               child: Text(l10n.hmrcSubmitNow),
@@ -265,20 +269,22 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
     );
   }
 
-  Widget _outcomeBanner(AppLocalizations l10n, HmrcOutcome outcome) {
-    final (icon, text) = switch (outcome) {
-      HmrcFiled(:final receipt, :final demo) => (
+  Widget _outcomeBanner(AppLocalizations l10n, CommandOutcome<HmrcFiling> outcome) {
+    final refused = hmrcRefusalOf(outcome);
+    final (icon, text) = switch (hmrcFilingOf(outcome)) {
+      HmrcFiling(:final receipt, :final demo, recorded: true) => (
         Icons.check_circle_outline,
         demo
             ? l10n.hmrcFiledDemo(receipt.formBundleNumber)
             : l10n.hmrcFiled(receipt.formBundleNumber),
       ),
-      HmrcAcceptedNotRecorded(:final receipt) => (
+      HmrcFiling(:final receipt) => (
         Icons.warning_amber_outlined,
         l10n.hmrcAcceptedNotRecorded(receipt.formBundleNumber),
       ),
-      HmrcUnconfirmed() => (Icons.help_outline, l10n.hmrcUnconfirmed),
-      HmrcRefused(:final refusal) => (Icons.block, _refusalText(l10n, refusal)),
+      null when refused != null =>
+        (Icons.block, _refusalText(l10n, refused.refusal)),
+      null => (Icons.help_outline, l10n.hmrcUnconfirmed),
     };
     return InlineBanner(
       key: const ValueKey('hmrc-outcome'),
