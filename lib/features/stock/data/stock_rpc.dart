@@ -8,11 +8,37 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/trace/trace_logger.dart';
 import 'stock_refusals.dart';
 
+/// A list read found more rows than [StockRpc.listCap]: it is refused, never shown cut short as if it were
+/// the whole list.
+class StockListTooLong implements Exception {
+  const StockListTooLong(this.what, this.cap);
+
+  final String what;
+  final int cap;
+
+  @override
+  String toString() => 'StockListTooLong($what: more than $cap rows)';
+}
+
 /// The stock functions and reads behind the ports, called through one helper.
 class StockRpc {
   const StockRpc(this._client);
 
   final SupabaseClient _client;
+
+  /// #4401 -- the most rows a list read of configuration takes (places, items, units, codes, variants, mappings,
+  /// points, plans, allocations): far above what one business holds, and a bound, so no read is unbounded. A page of
+  /// the ledger is read by its own paged function, never by this.
+  static const int listCap = 5000;
+
+  /// [query]'s rows, at most [listCap]: a longer list is a [StockListTooLong], never silently cut. A refusal
+  /// becomes its typed failure as every call through [guard] does.
+  Future<List<Map<String, dynamic>>> rows(String what, PostgrestTransformBuilder<PostgrestList> query) =>
+      guard(what, () async {
+        final rows = await query.limit(listCap + 1);
+        if (rows.length > listCap) throw StockListTooLong(what, listCap);
+        return rows;
+      });
 
   /// Runs [read]: a refusal of the server is logged once at warn as "[what] was refused" and thrown as
   /// its typed failure; anything else (a lost connection, a defect) is logged once at error and

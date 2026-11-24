@@ -116,4 +116,38 @@ void main() {
     expect(entry.level, TraceLevel.warn);
     expect(entry.error, isNotNull);
   });
+
+  // #4401 -- a list read is bounded: it asks for one row more than the cap, and a list longer than the cap is
+  // refused, never shown cut short; a refusal of the read becomes its typed failure like every call.
+  test('a list read asks for at most one row over the cap, and a longer list is refused, not cut', () async {
+    Uri? asked;
+    final client = SupabaseClient(
+      'http://localhost',
+      'anon',
+      httpClient: MockClient((request) async {
+        asked = request.url;
+        final n = int.parse(request.url.queryParameters['limit']!);
+        return http.Response(jsonEncode([for (var i = 0; i < n; i++) {'id': '$i'}]), 200,
+            headers: {'content-type': 'application/json'}, request: request);
+      }),
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+    );
+    await expectLater(
+      StockRpc(client).rows('stock_transfers', client.from('stock_transfers').select('id')),
+      throwsA(isA<StockListTooLong>().having((e) => e.cap, 'cap', StockRpc.listCap)),
+    );
+    expect(asked!.queryParameters['limit'], '${StockRpc.listCap + 1}');
+  });
+
+  test('a list within the cap is returned whole', () async {
+    final client = SupabaseClient(
+      'http://localhost',
+      'anon',
+      httpClient: MockClient((request) async => http.Response(jsonEncode([{'id': 'a'}, {'id': 'b'}]), 200,
+          headers: {'content-type': 'application/json'}, request: request)),
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+    );
+    final rows = await StockRpc(client).rows('stock_transfers', client.from('stock_transfers').select('id'));
+    expect(rows.map((r) => r['id']), ['a', 'b']);
+  });
 }
