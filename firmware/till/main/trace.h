@@ -8,6 +8,7 @@
 #define TRACE_LINES 40
 #define TRACE_WIDTH 100
 
+void trace_init(void);   // first thing in app_main, before any task reads the ring
 void trace(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 // The ring, oldest first, one "   12s text" line each; returns the length written.
 int trace_dump(char *out, int cap);

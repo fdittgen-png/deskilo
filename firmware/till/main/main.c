@@ -373,6 +373,7 @@ static void refresh_cb(lv_timer_t *t) {
 }
 
 void app_main(void) {
+    trace_init();
     ESP_ERROR_CHECK(cfg_load());
     ESP_ERROR_CHECK(board_init());
     lv_init();
