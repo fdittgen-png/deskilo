@@ -226,6 +226,18 @@ final class StockTagRefused extends StockConfigFailure {
   final String code;
   final Map<String, Object?> detail;
 
+  static const _ownerKey = 'owner';
+  static const _unitKey = 'unit';
+
+  /// What the tag is bound to, when the server said it (DKG22); empty otherwise.
+  String get owner => '${detail[_ownerKey] ?? ''}';
+
+  /// The place of the piece among the line's tags, when the server named it.
+  int? get piece {
+    final unit = detail[_unitKey];
+    return unit is int ? unit : null;
+  }
+
   @override
   String toString() => 'StockTagRefused($code)';
 }

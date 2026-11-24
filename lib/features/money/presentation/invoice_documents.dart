@@ -138,6 +138,12 @@ Future<void> warmLetterDocProviders(WidgetRef ref, String docId) async {
     }
   }
 
+  Future<void> floorPlans() => quiet(() async {
+    for (final level in await ref.read(levelsProvider.future)) {
+      await ref.read(floorPlanProvider(level.id).future);
+    }
+  });
+
   await quiet(() => ref.read(invoicePdfTemplateProvider.future));
   final document = ReportDocument.fromId(docId);
   if (document == ReportDocument.agreement) {
@@ -145,12 +151,7 @@ Future<void> warmLetterDocProviders(WidgetRef ref, String docId) async {
     await quiet(() => ref.read(servicesProvider.future));
     await quiet(() => ref.read(packagesProvider.future));
     await quiet(() => ref.read(accessoriesProvider().future));
-    await quiet(() async {
-      final levels = await ref.read(levelsProvider.future);
-      for (final level in levels) {
-        await ref.read(floorPlanProvider(level.id).future);
-      }
-    });
+    await floorPlans();
   } else if (document == ReportDocument.payments) {
     await quiet(() => ref.read(myLedgerProvider.future));
     await quiet(() => ref.read(eventsProvider.future));
@@ -159,12 +160,7 @@ Future<void> warmLetterDocProviders(WidgetRef ref, String docId) async {
     await quiet(() => ref.read(feeBandsProvider.future));
     await quiet(() => ref.read(servicesProvider.future));
     await quiet(() => ref.read(openWeekdaysProvider.future));
-    await quiet(() async {
-      final levels = await ref.read(levelsProvider.future);
-      for (final level in levels) {
-        await ref.read(floorPlanProvider(level.id).future);
-      }
-    });
+    await floorPlans();
   }
   await quiet(() => ref.read(memberNamesProvider.future));
 }

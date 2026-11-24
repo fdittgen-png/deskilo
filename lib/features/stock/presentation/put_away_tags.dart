@@ -66,8 +66,8 @@ class PieceTags {
 String putAwayProblem(AppLocalizations l10n, Object e) {
   if (e is! StockTagRefused) return stockProblemText(l10n, e);
   final text = stockProblemText(l10n, e, subject: StockSubject.tag);
-  final unit = e.detail['unit'];
-  return unit is int ? l10n.stockPutAwayPieceProblem(unit, text) : text;
+  final unit = e.piece;
+  return unit != null ? l10n.stockPutAwayPieceProblem(unit, text) : text;
 }
 
 /// The fields of one line's tags: how many are read of how many, the next tag, and each tag read.

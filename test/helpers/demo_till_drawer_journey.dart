@@ -3,6 +3,7 @@
 // #4367 — the journey of the till's cash drawer in the reference business, through the Demo's own ports: the owner opens
 // a till with its float, sells for cash on it, pays money out, counts the drawer and closes it, once exact and once with a
 // difference that is closed only with its reason. Shared by the scenario checklist and the journey test.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/domain/till_day.dart';
 import 'package:deskilo/features/money/domain/till_drawer.dart';
@@ -39,7 +40,7 @@ Future<TillDrawerFacts> tillDrawerFacts() => withDemoSession((fixture, outbox, c
   try {
     await till.draft(ws, requestId: 'j-draft-0', lines: milk, tillId: front.id);
   } on PostgrestException catch (e) {
-    needed = e.code == 'DKL12';
+    needed = e.code == DkCode.dkl12;
   }
 
   final opened = await drawer.openSession(ws, requestId: 'j-open', tillId: front.id, floatMinor: 10000);
@@ -99,12 +100,12 @@ Future<bool> tillDrawerJourney() async {
   return f.saleNeededOpenTill &&
       f.exact.differenceMinor == 0 &&
       f.exact.expectedMinor == f.expectedBeforeClose &&
-      f.refusedWithout == 'DKL13' &&
+      f.refusedWithout == DkCode.dkl13 &&
       f.short.differenceMinor == -100 &&
-      f.dayRefusedWhileOpen == 'DKL14' &&
+      f.dayRefusedWhileOpen == DkCode.dkl14 &&
       f.day.sessions.length == 2 &&
       f.day.differencesMinor == -100 &&
-      f.dayRefusedAgain == 'DKL14';
+      f.dayRefusedAgain == DkCode.dkl14;
 }
 
 /// A cash sale at the counter: the receipt is numbered and its total is the milk's price.

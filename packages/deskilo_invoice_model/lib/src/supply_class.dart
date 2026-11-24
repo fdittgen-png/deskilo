@@ -38,9 +38,13 @@ enum SupplyClass {
 }
 
 /// #4441 — a place-of-supply rule was asked for a supply class this app
-/// does not know: no rule is picked.
-final class UnknownSupplyClass implements Exception {
+/// does not know: no rule is picked. An [Error], not an exception: the package cannot name the app's
+/// failure types, and asking a rule for a class nobody can read is a state to stop on, never a result.
+final class UnknownSupplyClass implements Error {
   const UnknownSupplyClass();
+
+  @override
+  StackTrace? get stackTrace => null;
 
   @override
   String toString() => 'UnknownSupplyClass';

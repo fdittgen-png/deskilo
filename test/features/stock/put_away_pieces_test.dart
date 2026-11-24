@@ -5,6 +5,7 @@
 // refused under the field, the quantity follows the tags, and the put-away carries the tags to the server
 // (0889 `units`). A piece the server refuses is named by its place among the tags, the tags read stay in the
 // sheet, and the retry goes under the same request id. At phone and desk width.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
@@ -219,7 +220,7 @@ void main() {
         final receiving = await _openPutAway(tester, size, '12');
         await _read(tester, '04aa0001');
         await _read(tester, '04aa0002');
-        receiving.refuseNext = const StockTagRefused('DKG22', {'allocation': 0, 'unit': 2, 'owner': 'Shelf A'});
+        receiving.refuseNext = const StockTagRefused(DkCode.dkg22, {'allocation': 0, 'unit': 2, 'owner': 'Shelf A'});
         await _tap(tester, 'putaway-confirm');
         expect(find.text(_en.stockPutAwayPieceProblem(2, _en.stockTagBoundElsewhere('Shelf A'))), findsOneWidget);
         expect(find.byKey(const ValueKey('putaway-1-tag-04AA0002')), findsOneWidget, reason: 'the tags read are kept');

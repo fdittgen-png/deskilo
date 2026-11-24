@@ -110,7 +110,7 @@ void main() {
 
   test('another failure is not swallowed', () async {
     final h = _with(400, {'code': DkCode.dkn01, 'message': 'not allowed', 'details': null, 'hint': null});
-    await expectLater(h.commands.saveItem(_ws, _config, 'r'), throwsA(isA<Refusal>().having((e) => e.code, 'code', 'DKN01')));
+    await expectLater(h.commands.saveItem(_ws, _config, 'r'), throwsA(isA<Refusal>().having((e) => e.code, 'code', DkCode.dkn01)));
   });
 
   test('the variants of an item are saved complete, at the item revision, and a duplicate combination is a refusal', () async {
