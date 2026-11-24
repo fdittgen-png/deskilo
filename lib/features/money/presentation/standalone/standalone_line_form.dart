@@ -110,8 +110,7 @@ class StandaloneLineForm {
       unitPrice: decimalTextFromInput(price.text, locale: locale) ?? price.text.trim(),
       grossPrice: gross,
       vatRateId: () => rateId,
-      goods: (itemId: itemId, tags: itemId == null ? const <String>[] : pieceTagsOf(tags.text)),
-    ).withLineId(lineId);
+    ).withGoods((itemId: itemId, tags: itemId == null ? const <String>[] : pieceTagsOf(tags.text))).withLineId(lineId);
   }
 }
 

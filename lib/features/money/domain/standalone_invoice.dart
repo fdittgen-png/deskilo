@@ -57,8 +57,8 @@ class StandaloneLine {
   bool get isGoods => itemId != null;
 
   /// The same line with only [description], [quantity], [unit] (code, label and UN/ECE code together), [unitPrice],
-  /// [grossPrice], [vatRateId] or the goods it sells ([goods]: the item, or none, and the piece tags) changed: the
-  /// base quantity it was read with is kept, and the supply kind unless the goods change it.
+  /// [grossPrice] or [vatRateId] changed: the base quantity it was read with, the supply kind and the goods it sells are
+  /// kept ([withGoods] changes those).
   StandaloneLine copyWith({
     String? description,
     String? quantity,
@@ -66,7 +66,6 @@ class StandaloneLine {
     String? unitPrice,
     bool? grossPrice,
     String? Function()? vatRateId,
-    ({String? itemId, List<String> tags})? goods,
   }) => StandaloneLine(
     lineId: lineId,
     description: description ?? this.description,
@@ -77,14 +76,28 @@ class StandaloneLine {
     unitPrice: unitPrice ?? this.unitPrice,
     grossPrice: grossPrice ?? this.grossPrice,
     baseQuantity: baseQuantity,
-    supply: switch (goods) {
-      null => supply,
-      (itemId: final String _, tags: _) => 'goods',
-      _ => supply == 'goods' ? 'general' : supply,
-    },
+    supply: supply,
     vatRateId: vatRateId == null ? this.vatRateId : vatRateId(),
-    itemId: goods == null ? itemId : goods.itemId,
-    pieceTags: goods == null ? pieceTags : (goods.itemId == null ? const [] : goods.tags),
+    itemId: itemId,
+    pieceTags: pieceTags,
+  );
+
+  /// The same line selling [goods] (the item, or none, and the piece tags): the supply kind follows the item, and a line
+  /// given back to the free text drops its pieces.
+  StandaloneLine withGoods(({String? itemId, List<String> tags}) goods) => StandaloneLine(
+    lineId: lineId,
+    description: description,
+    quantity: quantity,
+    unitCode: unitCode,
+    unitLabel: unitLabel,
+    unEceCode: unEceCode,
+    unitPrice: unitPrice,
+    grossPrice: grossPrice,
+    baseQuantity: baseQuantity,
+    supply: goods.itemId != null ? 'goods' : (supply == 'goods' ? 'general' : supply),
+    vatRateId: vatRateId,
+    itemId: goods.itemId,
+    pieceTags: goods.itemId == null ? const [] : goods.tags,
   );
 
   Map<String, Object?> toWire() => {
