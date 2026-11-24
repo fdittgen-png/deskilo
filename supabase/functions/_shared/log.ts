@@ -79,6 +79,14 @@ export function describeError(error: unknown): { type: string; message: string }
   if (error instanceof Error) {
     return { type: keep(String(error.name)), message: keep(String(error.message)) };
   }
+  // A database client's error is a plain object with a code and a message.
+  if (error !== null && typeof error === "object" && typeof (error as { message?: unknown }).message === "string") {
+    const code = (error as { code?: unknown }).code;
+    return {
+      type: typeof code === "string" && code !== "" ? keep(code) : "object",
+      message: keep((error as { message: string }).message),
+    };
+  }
   let text: string;
   try {
     text = String(error);

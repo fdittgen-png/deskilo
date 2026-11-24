@@ -162,3 +162,11 @@ Deno.test("#4412 a database refusal says its own sentence only for a DK code", a
   const raw = await refuseDb({ code: "42P01", message: 'relation "x" does not exist' }, 400).json();
   assertEquals(raw, { error: "refused", code: "42P01" });
 });
+
+Deno.test("#4412 a database client's error is described by its code and message", () => {
+  assertEquals(describeError({ code: "42501", message: "permission denied" }), {
+    type: "42501",
+    message: "permission denied",
+  });
+  assertEquals(describeError({ message: "no rows" }).type, "object");
+});

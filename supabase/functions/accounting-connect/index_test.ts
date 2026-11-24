@@ -7,6 +7,7 @@
 // connection.
 import { assert, assertEquals } from "jsr:@std/assert@1";
 import { type Deps, handle } from "./index.ts";
+import { guard } from "../_shared/serve.ts";
 
 const WS = "11111111-1111-4111-8111-111111111111";
 const SITE = "22222222-2222-4222-8222-222222222222";
@@ -922,3 +923,35 @@ Deno.test("the sign-in records who started it", async () => {
   assertEquals(w.vault.oauth_state_by, "user-1");
 });
 
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+Deno.test("#4412 accounting-connect: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  const boom = () => {
+    throw new Error("service role key sb_secret_xyz is wrong");
+  };
+  try {
+    const request = post(start);
+    request.headers.set("x-request-id", "r-acc");
+    const answer = await guard("accounting-connect", (req) =>
+      handle(req, {
+        caller: boom,
+        service: boom,
+        userOf: () => Promise.reject(new Error("service role key sb_secret_xyz is wrong")),
+        env: (name) =>
+          ({
+            ACCOUNTING_PENNYLANE_API_CLIENT_ID: "app-id",
+            ACCOUNTING_PENNYLANE_API_CLIENT_SECRET: "app-secret",
+            DESKILO_APP_URL: "https://app.test/deskilo/",
+          } as Record<string, string>)[name],
+        redirectUri: "https://x.test/functions/v1/accounting-connect",
+      }))(request);
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-acc" });
+    assertEquals(/secret|sb_|wrong/i.test(text), false);
+  } finally {
+    console.error = saved;
+  }
+});
