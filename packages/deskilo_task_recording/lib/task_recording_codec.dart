@@ -127,6 +127,7 @@ RecordingDecodeResult decodeRecordingText(
   try {
     json = jsonDecode(text);
   } on FormatException {
+    // trace-exempt: text that is not JSON is the notJson issue the reader shows
     return const RecordingDecodeResult(null, [
       RecordingIssue(RecordingIssueCode.notJson, r'$'),
     ]);
