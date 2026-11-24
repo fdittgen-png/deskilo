@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "target": "esp32",
+  "esp_idf": {
+    "tag": "v6.1.1",
+    "commit": "051e4c4eb20346e043cdd47bc388fde75ff8af63",
+    "repository": "https://github.com/espressif/esp-idf.git",
+    "tools_manifest_sha256": "aa4269374b34b2e53838f3cc0c8fe05cd34d4251dba3fa2e978ce285bc167b86"
+  },
+  "compiler": {
+    "name": "xtensa-esp-elf",
+    "version": "esp-15.2.0_20251204",
+    "linux_amd64_archive": {
+      "sha256": "3d50f5cd5f173acfd524e07c1cd69bc99585731a415ca2e5bce879997fe602b8",
+      "size": 180530004,
+      "url": "https://github.com/espressif/crosstool-NG/releases/download/esp-15.2.0_20251204/xtensa-esp-elf-15.2.0_20251204-x86_64-linux-gnu.tar.xz"
+    }
+  },
+  "reference_build_tools": {
+    "python": "3.12.14",
+    "cmake": "3.31.6",
+    "ninja_package": "1.11.1.4",
+    "esptool": "5.7.0",
+    "idf_component_manager": "3.1.2"
+  },
+  "component_lock": "dependencies.lock",
+  "board_profile": "lcdwiki_e32r40t",
+  "flash_bytes": 4194304,
+  "psram_required": false,
+  "physical_qualification": "NOT RUN"
+}

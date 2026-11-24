@@ -1,0 +1,10 @@
+{
+  "profile_id": "00000000-0000-0000-0000-000000000101",
+  "revision": 1,
+  "currency": "EUR",
+  "minor_digits": 2,
+  "keys": [
+    {"id": "00000000-0000-0000-0000-000000000201", "name": "Café", "unit": "cup", "gross_minor": "120"},
+    {"id": "00000000-0000-0000-0000-000000000202", "name": "Baguette", "unit": "unit", "gross_minor": "135"}
+  ]
+}

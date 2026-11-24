@@ -41817,6 +41817,111 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get tillTerminalBoard => 'Carte';
+
+  @override
+  String get tillTerminalCalibrationUnsaved =>
+      'Étalonnage temporaire ; à refaire après redémarrage';
+
+  @override
+  String get tillTerminalCheckTls => 'Vérifier HTTPS';
+
+  @override
+  String get tillTerminalClockFailed =>
+      'Échec de la synchronisation de l\'horloge';
+
+  @override
+  String get tillTerminalContract => 'Profil du terminal';
+
+  @override
+  String get tillTerminalContractInvalid => 'Profil de diagnostic refusé';
+
+  @override
+  String get tillTerminalContractValid => 'Profil de diagnostic vérifié';
+
+  @override
+  String get tillTerminalDiagnostics => 'Diagnostic matériel';
+
+  @override
+  String get tillTerminalDrawerDisabled => 'Commande du tiroir désactivée';
+
+  @override
+  String get tillTerminalFirmware => 'Micrologiciel';
+
+  @override
+  String get tillTerminalHeapFree => 'Mémoire libre';
+
+  @override
+  String get tillTerminalHeapLargest => 'Plus grand bloc libre';
+
+  @override
+  String get tillTerminalHeapMinimum => 'Minimum de mémoire libre';
+
+  @override
+  String get tillTerminalHttpsFailed => 'Échec de la vérification HTTPS';
+
+  @override
+  String get tillTerminalHttpsNotConfigured => 'Cible HTTPS non configurée';
+
+  @override
+  String get tillTerminalHttpsPassed => 'Certificat HTTPS vérifié';
+
+  @override
+  String get tillTerminalHttpsPending => 'Vérification HTTPS';
+
+  @override
+  String get tillTerminalLanguage => 'Langue';
+
+  @override
+  String get tillTerminalMemory => 'Mémoire';
+
+  @override
+  String get tillTerminalNetwork => 'Réseau';
+
+  @override
+  String get tillTerminalNetworkConnecting => 'Connexion au Wi-Fi';
+
+  @override
+  String get tillTerminalNetworkFailed => 'Échec de la connexion Wi-Fi';
+
+  @override
+  String get tillTerminalNetworkNotConfigured => 'Wi-Fi non configuré';
+
+  @override
+  String get tillTerminalNetworkReady => 'Wi-Fi connecté';
+
+  @override
+  String get tillTerminalNotCommissioned => 'Mise en service à effectuer';
+
+  @override
+  String get tillTerminalReady => 'Diagnostic prêt';
+
+  @override
+  String get tillTerminalRestart => 'Redémarrer';
+
+  @override
+  String get tillTerminalStorageUnavailable =>
+      'Stockage indisponible ; réseau désactivé';
+
+  @override
+  String get tillTerminalTitle => 'Terminal Deskilo';
+
+  @override
+  String get tillTerminalTouchAccepted => 'Calibration tactile enregistrée';
+
+  @override
+  String get tillTerminalTouchCalibration => 'Calibrer le tactile';
+
+  @override
+  String get tillTerminalTouchFailed => 'Échec de la calibration. Réessayez.';
+
+  @override
+  String get tillTerminalTouchTarget => 'Touchez chaque cible';
+
+  @override
+  String get tillTerminalTouchTest => 'Tester le tactile';
+
+  @override
   String get tillTitle => 'Caisse';
 
   @override

@@ -1,0 +1,10 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Generated at configure time from the shared profile fixture.
+#include "terminal_contract.hpp"
+namespace deskilo::terminal {
+namespace {
+constexpr unsigned char profile[] = { @TERMINAL_PROFILE_BYTES@ 0 };
+}
+const char* diagnostic_profile_json() { return reinterpret_cast<const char*>(profile); }
+std::size_t diagnostic_profile_size() { return sizeof(profile) - 1; }
+}

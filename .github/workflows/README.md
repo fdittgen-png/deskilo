@@ -52,6 +52,7 @@ is fixed, not rerun.
 | CI · Dictionary refresh | `dictionary-refresh.yml` | after a merge to master, regenerates `docs/database/dictionary.json` and its renderings from the migration replay and keeps one auto-merging pull request, so a migration PR pays no CI round for the data dictionary (#2088) |
 | CI · Android boot check | `android-boot.yml` | installs the shrunk release APK on an emulator and proves it stays alive |
 | CI · F-Droid no-GMS audit | `fdroid-foss.yml` | proves the libre flavour carries no Google dependency |
+| CI · Till firmware | `till-firmware.yml` | builds the pinned E32R40T diagnostic, validates the shared profile and translations, runs native tests, and packages flash images with source identity; physical board qualification stays separate |
 | CI · E-invoice validators | `einvoice-validate.yml` | builds one sample per e-invoice format and runs the official validators on it at pinned versions — KoSIT (EN 16931, XRechnung, Peppol BIS), Mustang (Factur-X), the SdI and KSeF schemas (#2358) |
 | CI · SAF-T schemas | `saft-validate.yml` | builds one SAF-T Financial sample per profile and reads each against the schema its authority publishes, shipped under `test/fixtures/saft/` and pinned by SHA-256 — Norway 1.30, Luxembourg FAIA 2.01 (#2379) |
 | Nightly · Journey latency benchmark | `perf-bench.yml` | runs `tool/bench` on the large workload and gates its SHAPE — round trips, elements, frames, the retry budget. The wall clock is reported, never gated, and the record declares what is not measured at all |

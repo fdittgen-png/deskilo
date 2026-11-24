@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:deskilo:embedded-till:diagnostic-profile:1",
+  "title": "Deskilo embedded till diagnostic profile v1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol",
+    "board_id",
+    "width",
+    "height",
+    "profile_id",
+    "revision",
+    "mode",
+    "financial_actions_enabled",
+    "required_capabilities",
+    "currency",
+    "minor_digits",
+    "pages"
+  ],
+  "properties": {
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "major",
+        "minor"
+      ],
+      "properties": {
+        "major": {
+          "const": 1
+        },
+        "minor": {
+          "const": 0
+        }
+      }
+    },
+    "board_id": {
+      "const": "lcdwiki_e32r40t"
+    },
+    "width": {
+      "const": 480
+    },
+    "height": {
+      "const": 320
+    },
+    "profile_id": {
+      "$ref": "#/$defs/uuid"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "mode": {
+      "const": "diagnostic"
+    },
+    "financial_actions_enabled": {
+      "const": false
+    },
+    "required_capabilities": {
+      "type": "array",
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "profile.v1",
+          "diagnostics"
+        ]
+      }
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "minLength": 3,
+      "maxLength": 3
+    },
+    "minor_digits": {
+      "enum": [
+        0,
+        2,
+        3
+      ]
+    },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": {
+        "$ref": "#/$defs/page"
+      }
+    }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "minLength": 36,
+      "maxLength": 36
+    },
+    "page": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "number",
+        "keys"
+      ],
+      "properties": {
+        "number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "keys": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/key"
+          }
+        }
+      }
+    },
+    "key": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id",
+        "label",
+        "unit",
+        "quantity"
+      ],
+      "properties": {
+        "item_id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+$",
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+$",
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "quantity": {
+          "type": "string",
+          "pattern": "^[0-9]{1,12}(\\.[0-9]{1,6})?$",
+          "not": {
+            "pattern": "[^0-9.]"
+          }
+        },
+        "gross_minor": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,18})$",
+          "not": {
+            "pattern": "[^0-9]"
+          }
+        }
+      }
+    }
+  },
+  "$comment": "Consumers also enforce 16384 UTF-8 payload bytes, 96/32 UTF-8 label/unit bytes, depth 12, unique object keys/item IDs, sequential page numbers, positive quantity and signed64 amount range. Bootstrap profiles cannot authorize financial operations."
+}

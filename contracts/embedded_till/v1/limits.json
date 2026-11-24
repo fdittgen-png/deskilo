@@ -1,0 +1,16 @@
+{
+  "protocol_major": 1,
+  "protocol_minor": 0,
+  "board_id": "lcdwiki_e32r40t",
+  "width": 480,
+  "height": 320,
+  "request_bytes": 8192,
+  "response_bytes": 16384,
+  "keys_per_page": 8,
+  "pages": 12,
+  "label_bytes": 96,
+  "unit_bytes": 32,
+  "depth": 12,
+  "capabilities": ["profile.v1", "diagnostics"],
+  "financial_actions_enabled": false
+}

@@ -41769,6 +41769,112 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get tillTerminalBoard => 'Platine';
+
+  @override
+  String get tillTerminalCalibrationUnsaved =>
+      'Kalibrierung nur vorübergehend; nach Neustart wiederholen';
+
+  @override
+  String get tillTerminalCheckTls => 'HTTPS prüfen';
+
+  @override
+  String get tillTerminalClockFailed => 'Zeitsynchronisierung fehlgeschlagen';
+
+  @override
+  String get tillTerminalContract => 'Terminalprofil';
+
+  @override
+  String get tillTerminalContractInvalid => 'Diagnoseprofil abgelehnt';
+
+  @override
+  String get tillTerminalContractValid => 'Diagnoseprofil geprüft';
+
+  @override
+  String get tillTerminalDiagnostics => 'Hardwarediagnose';
+
+  @override
+  String get tillTerminalDrawerDisabled => 'Schubladenausgang deaktiviert';
+
+  @override
+  String get tillTerminalFirmware => 'Firmware';
+
+  @override
+  String get tillTerminalHeapFree => 'Freier Speicher';
+
+  @override
+  String get tillTerminalHeapLargest => 'Größter freier Block';
+
+  @override
+  String get tillTerminalHeapMinimum => 'Minimal freier Speicher';
+
+  @override
+  String get tillTerminalHttpsFailed => 'HTTPS-Prüfung fehlgeschlagen';
+
+  @override
+  String get tillTerminalHttpsNotConfigured => 'HTTPS-Ziel nicht konfiguriert';
+
+  @override
+  String get tillTerminalHttpsPassed => 'HTTPS-Zertifikat geprüft';
+
+  @override
+  String get tillTerminalHttpsPending => 'HTTPS wird geprüft';
+
+  @override
+  String get tillTerminalLanguage => 'Sprache';
+
+  @override
+  String get tillTerminalMemory => 'Speicher';
+
+  @override
+  String get tillTerminalNetwork => 'Netzwerk';
+
+  @override
+  String get tillTerminalNetworkConnecting =>
+      'WLAN-Verbindung wird hergestellt';
+
+  @override
+  String get tillTerminalNetworkFailed => 'WLAN-Verbindung fehlgeschlagen';
+
+  @override
+  String get tillTerminalNetworkNotConfigured => 'WLAN nicht konfiguriert';
+
+  @override
+  String get tillTerminalNetworkReady => 'WLAN verbunden';
+
+  @override
+  String get tillTerminalNotCommissioned => 'Noch nicht in Betrieb genommen';
+
+  @override
+  String get tillTerminalReady => 'Diagnose bereit';
+
+  @override
+  String get tillTerminalRestart => 'Neu starten';
+
+  @override
+  String get tillTerminalStorageUnavailable =>
+      'Speicher nicht verfügbar; Netzwerk deaktiviert';
+
+  @override
+  String get tillTerminalTitle => 'Deskilo-Terminal';
+
+  @override
+  String get tillTerminalTouchAccepted => 'Touch-Kalibrierung gespeichert';
+
+  @override
+  String get tillTerminalTouchCalibration => 'Touchscreen kalibrieren';
+
+  @override
+  String get tillTerminalTouchFailed =>
+      'Kalibrierung fehlgeschlagen. Erneut versuchen.';
+
+  @override
+  String get tillTerminalTouchTarget => 'Jedes Ziel antippen';
+
+  @override
+  String get tillTerminalTouchTest => 'Touchscreen testen';
+
+  @override
   String get tillTitle => 'Kasse';
 
   @override

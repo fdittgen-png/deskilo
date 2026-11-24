@@ -41293,6 +41293,110 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tillTerminalBoard => 'Board';
+
+  @override
+  String get tillTerminalCalibrationUnsaved =>
+      'Calibration is temporary; repeat after restart';
+
+  @override
+  String get tillTerminalCheckTls => 'Check HTTPS';
+
+  @override
+  String get tillTerminalClockFailed => 'Clock synchronization failed';
+
+  @override
+  String get tillTerminalContract => 'Terminal profile';
+
+  @override
+  String get tillTerminalContractInvalid => 'Diagnostic profile rejected';
+
+  @override
+  String get tillTerminalContractValid => 'Diagnostic profile verified';
+
+  @override
+  String get tillTerminalDiagnostics => 'Hardware diagnostics';
+
+  @override
+  String get tillTerminalDrawerDisabled => 'Drawer output disabled';
+
+  @override
+  String get tillTerminalFirmware => 'Firmware';
+
+  @override
+  String get tillTerminalHeapFree => 'Free heap';
+
+  @override
+  String get tillTerminalHeapLargest => 'Largest free block';
+
+  @override
+  String get tillTerminalHeapMinimum => 'Minimum free heap';
+
+  @override
+  String get tillTerminalHttpsFailed => 'HTTPS verification failed';
+
+  @override
+  String get tillTerminalHttpsNotConfigured => 'HTTPS target not configured';
+
+  @override
+  String get tillTerminalHttpsPassed => 'HTTPS certificate verified';
+
+  @override
+  String get tillTerminalHttpsPending => 'Verifying HTTPS';
+
+  @override
+  String get tillTerminalLanguage => 'Language';
+
+  @override
+  String get tillTerminalMemory => 'Memory';
+
+  @override
+  String get tillTerminalNetwork => 'Network';
+
+  @override
+  String get tillTerminalNetworkConnecting => 'Connecting to Wi-Fi';
+
+  @override
+  String get tillTerminalNetworkFailed => 'Wi-Fi connection failed';
+
+  @override
+  String get tillTerminalNetworkNotConfigured => 'Wi-Fi not configured';
+
+  @override
+  String get tillTerminalNetworkReady => 'Wi-Fi connected';
+
+  @override
+  String get tillTerminalNotCommissioned => 'Not commissioned';
+
+  @override
+  String get tillTerminalReady => 'Diagnostics ready';
+
+  @override
+  String get tillTerminalRestart => 'Restart';
+
+  @override
+  String get tillTerminalStorageUnavailable =>
+      'Storage unavailable; network disabled';
+
+  @override
+  String get tillTerminalTitle => 'Deskilo terminal';
+
+  @override
+  String get tillTerminalTouchAccepted => 'Touch calibration saved';
+
+  @override
+  String get tillTerminalTouchCalibration => 'Calibrate touch';
+
+  @override
+  String get tillTerminalTouchFailed => 'Calibration failed. Try again.';
+
+  @override
+  String get tillTerminalTouchTarget => 'Tap each target';
+
+  @override
+  String get tillTerminalTouchTest => 'Test touch';
+
+  @override
   String get tillTitle => 'Till';
 
   @override

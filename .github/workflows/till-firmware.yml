@@ -1,0 +1,119 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: CI · Till firmware
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    paths:
+      - 'firmware/till/**'
+      - 'contracts/embedded_till/**'
+      - 'lib/features/money/domain/embedded_till*.dart'
+      - 'lib/features/money/domain/counter_till.dart'
+      - 'lib/features/money/domain/till_quantity.dart'
+      - 'lib/l10n/_fragments/**'
+      - 'tool/build_till_l10n.dart'
+      - 'tool/embedded_till_profile.dart'
+      - 'test/tool/till_l10n_test.dart'
+      - '.flutter-version'
+      - 'pubspec.yaml'
+      - 'pubspec.lock'
+      - 'packages/deskilo_money_kernel/**'
+      - '.github/actions/source-identity/**'
+      - '.github/workflows/till-firmware.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'firmware/till/**'
+      - 'contracts/embedded_till/**'
+      - 'lib/features/money/domain/embedded_till*.dart'
+      - 'lib/features/money/domain/counter_till.dart'
+      - 'lib/features/money/domain/till_quantity.dart'
+      - 'lib/l10n/_fragments/**'
+      - 'tool/build_till_l10n.dart'
+      - 'tool/embedded_till_profile.dart'
+      - 'test/tool/till_l10n_test.dart'
+      - '.flutter-version'
+      - 'pubspec.yaml'
+      - 'pubspec.lock'
+      - 'packages/deskilo_money_kernel/**'
+      - '.github/actions/source-identity/**'
+      - '.github/workflows/till-firmware.yml'
+
+concurrency:
+  group: till-firmware-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  FLUTTER_VERSION: "3.47.5"
+  FLUTTER_SUPPRESS_ANALYTICS: 'true'
+  CI: 'true'
+
+jobs:
+  diagnostic:
+    name: till · diagnostic firmware
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: ./.github/actions/source-identity
+        with:
+          sha: ${{ github.event.pull_request.head.sha || github.sha }}
+          leg: till
+          flavor: e32r40t-diagnostic
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - name: Verify the producer and generated resources
+        run: |
+          set -euo pipefail
+          flutter pub get --enforce-lockfile
+          dart run tool/build_till_l10n.dart --check
+          flutter test test/tool/till_l10n_test.dart
+          dart run firmware/till/tests/host/terminal_contract_test.dart
+          dart run tool/embedded_till_profile.dart contracts/embedded_till/v1/fixtures/profile_source.json "$RUNNER_TEMP/profile.json"
+          cmp contracts/embedded_till/v1/fixtures/profile_valid.json "$RUNNER_TEMP/profile.json"
+          python3 -m unittest discover -s firmware/till/tools -p 'test_*.py' -v
+      - name: Install the pinned ESP-IDF toolchain
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch v6.1.1 --recursive --shallow-submodules https://github.com/espressif/esp-idf.git "$RUNNER_TEMP/esp-idf"
+          test "$(git -C "$RUNNER_TEMP/esp-idf" rev-parse HEAD)" = 051e4c4eb20346e043cdd47bc388fde75ff8af63
+          export IDF_TOOLS_PATH="$RUNNER_TEMP/idf-tools"
+          "$RUNNER_TEMP/esp-idf/install.sh" esp32
+      - name: Build and verify the native consumer
+        run: |
+          set -euo pipefail
+          export IDF_TOOLS_PATH="$RUNNER_TEMP/idf-tools"
+          . "$RUNNER_TEMP/esp-idf/export.sh"
+          python -m pip install -r firmware/till/tools/requirements.txt
+          python -c 'import importlib.metadata; assert importlib.metadata.version("esptool") == "5.7.0"'
+          idf.py -C firmware/till -B build reconfigure build
+          cmake -S firmware/till/tests/host -B "$RUNNER_TEMP/till-host" -G Ninja
+          cmake --build "$RUNNER_TEMP/till-host"
+          ctest --test-dir "$RUNNER_TEMP/till-host" --output-on-failure
+          idf.py -C firmware/till -B build size > firmware/till/build/size-report.txt
+          git diff --exit-code -- firmware/till/dependencies.lock firmware/till/generated
+          python3 firmware/till/tools/package.py --out firmware/till/dist/e32r40t-diagnostic
+          python3 firmware/till/dist/e32r40t-diagnostic/flash.py --check
+      - name: Upload the flash package and build evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: e32r40t-diagnostic-${{ github.event.pull_request.head.sha || github.sha }}
+          if-no-files-found: error
+          retention-days: 30
+          path: |
+            firmware/till/dist/e32r40t-diagnostic/
+            firmware/till/build/deskilo_till.elf
+            firmware/till/build/deskilo_till.map
+            firmware/till/build/size-report.txt
+            firmware/till/build/flasher_args.json
+            firmware/till/build/project_description.json
+            firmware/till/toolchain.lock.json
+            firmware/till/dependencies.lock

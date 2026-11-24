@@ -41631,6 +41631,111 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get tillTerminalBoard => 'Placa';
+
+  @override
+  String get tillTerminalCalibrationUnsaved =>
+      'Calibración temporal; repetir después de reiniciar';
+
+  @override
+  String get tillTerminalCheckTls => 'Comprobar HTTPS';
+
+  @override
+  String get tillTerminalClockFailed => 'La sincronización del reloj falló';
+
+  @override
+  String get tillTerminalContract => 'Perfil del terminal';
+
+  @override
+  String get tillTerminalContractInvalid => 'Perfil de diagnóstico rechazado';
+
+  @override
+  String get tillTerminalContractValid => 'Perfil de diagnóstico verificado';
+
+  @override
+  String get tillTerminalDiagnostics => 'Diagnóstico del equipo';
+
+  @override
+  String get tillTerminalDrawerDisabled => 'Salida del cajón desactivada';
+
+  @override
+  String get tillTerminalFirmware => 'Firmware';
+
+  @override
+  String get tillTerminalHeapFree => 'Memoria libre';
+
+  @override
+  String get tillTerminalHeapLargest => 'Mayor bloque libre';
+
+  @override
+  String get tillTerminalHeapMinimum => 'Mínimo de memoria libre';
+
+  @override
+  String get tillTerminalHttpsFailed => 'La verificación HTTPS falló';
+
+  @override
+  String get tillTerminalHttpsNotConfigured => 'Destino HTTPS sin configurar';
+
+  @override
+  String get tillTerminalHttpsPassed => 'Certificado HTTPS verificado';
+
+  @override
+  String get tillTerminalHttpsPending => 'Verificando HTTPS';
+
+  @override
+  String get tillTerminalLanguage => 'Idioma';
+
+  @override
+  String get tillTerminalMemory => 'Memoria';
+
+  @override
+  String get tillTerminalNetwork => 'Red';
+
+  @override
+  String get tillTerminalNetworkConnecting => 'Conectando al Wi-Fi';
+
+  @override
+  String get tillTerminalNetworkFailed => 'La conexión Wi-Fi falló';
+
+  @override
+  String get tillTerminalNetworkNotConfigured => 'Wi-Fi sin configurar';
+
+  @override
+  String get tillTerminalNetworkReady => 'Wi-Fi conectado';
+
+  @override
+  String get tillTerminalNotCommissioned => 'Pendiente de puesta en servicio';
+
+  @override
+  String get tillTerminalReady => 'Diagnóstico preparado';
+
+  @override
+  String get tillTerminalRestart => 'Reiniciar';
+
+  @override
+  String get tillTerminalStorageUnavailable =>
+      'Almacenamiento no disponible; red desactivada';
+
+  @override
+  String get tillTerminalTitle => 'Terminal Deskilo';
+
+  @override
+  String get tillTerminalTouchAccepted => 'Calibración táctil guardada';
+
+  @override
+  String get tillTerminalTouchCalibration => 'Calibrar pantalla táctil';
+
+  @override
+  String get tillTerminalTouchFailed =>
+      'La calibración falló. Inténtelo de nuevo.';
+
+  @override
+  String get tillTerminalTouchTarget => 'Toque cada objetivo';
+
+  @override
+  String get tillTerminalTouchTest => 'Probar pantalla táctil';
+
+  @override
   String get tillTitle => 'Caja';
 
   @override

@@ -1,0 +1,54 @@
+[
+  {
+    "file": "profile_valid.json",
+    "expected": "ok"
+  },
+  {
+    "file": "profile_wrong_major.json",
+    "expected": "unsupported_protocol"
+  },
+  {
+    "file": "profile_wrong_board.json",
+    "expected": "unsupported_board"
+  },
+  {
+    "file": "profile_financial_enabled.json",
+    "expected": "financial_action_forbidden"
+  },
+  {
+    "file": "profile_required_cash.json",
+    "expected": "unsupported_capability"
+  },
+  {
+    "file": "profile_money_overflow.json",
+    "expected": "invalid_money"
+  },
+  {
+    "file": "profile_numeric_money.json",
+    "expected": "invalid_money"
+  },
+  {
+    "file": "profile_zero_quantity.json",
+    "expected": "invalid_quantity"
+  },
+  {
+    "file": "profile_duplicate_item.json",
+    "expected": "invalid_profile"
+  },
+  {
+    "file": "profile_utf8_label_too_long.json",
+    "expected": "invalid_profile"
+  },
+  {
+    "file": "profile_currency_newline.json",
+    "expected": "invalid_profile"
+  },
+  {
+    "file": "profile_uuid_newline.json",
+    "expected": "invalid_profile"
+  },
+  {
+    "file": "profile_revision_integral.json",
+    "expected": "ok"
+  }
+]

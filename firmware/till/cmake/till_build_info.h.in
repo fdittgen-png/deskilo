@@ -1,0 +1,5 @@
+#pragma once
+namespace deskilo::till {
+inline constexpr const char* source_revision = "@TILL_SOURCE_REVISION@";
+inline constexpr bool source_dirty = @TILL_SOURCE_DIRTY@;
+}

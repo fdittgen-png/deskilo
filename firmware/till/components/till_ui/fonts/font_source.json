@@ -1,0 +1,17 @@
+{
+  "font": "DejaVu Sans 2.37",
+  "source_url": "https://dejavu-fonts.github.io/",
+  "source_sha256": "57f73e11f51999432bf7ab22ce55b6f945d5eca1bf824404cfa9ec2e3718c84e",
+  "converter": "lv_font_conv@1.5.3",
+  "size_px": 16,
+  "bits_per_pixel": 4,
+  "ranges": [
+    "0020-00FF",
+    "0152-0153",
+    "2019",
+    "20AC"
+  ],
+  "compression": false,
+  "prefilter": false,
+  "output": "till_font_16.c"
+}

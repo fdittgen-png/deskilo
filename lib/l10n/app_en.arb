@@ -53765,6 +53765,142 @@
       }
     }
   },
+  "tillTerminalBoard": "Board",
+  "@tillTerminalBoard": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalCalibrationUnsaved": "Calibration is temporary; repeat after restart",
+  "@tillTerminalCalibrationUnsaved": {
+    "description": "Hardware diagnostic recovery status when nonvolatile storage is unavailable. Network remains disabled and calibration cannot persist across a restart."
+  },
+  "tillTerminalCheckTls": "Check HTTPS",
+  "@tillTerminalCheckTls": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalClockFailed": "Clock synchronization failed",
+  "@tillTerminalClockFailed": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalContract": "Terminal profile",
+  "@tillTerminalContract": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalContractInvalid": "Diagnostic profile rejected",
+  "@tillTerminalContractInvalid": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalContractValid": "Diagnostic profile verified",
+  "@tillTerminalContractValid": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalDiagnostics": "Hardware diagnostics",
+  "@tillTerminalDiagnostics": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalDrawerDisabled": "Drawer output disabled",
+  "@tillTerminalDrawerDisabled": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalFirmware": "Firmware",
+  "@tillTerminalFirmware": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalHeapFree": "Free heap",
+  "@tillTerminalHeapFree": {
+    "description": "Hardware diagnostic label for ESP32 heap measurements."
+  },
+  "tillTerminalHeapLargest": "Largest free block",
+  "@tillTerminalHeapLargest": {
+    "description": "Hardware diagnostic label for ESP32 heap measurements."
+  },
+  "tillTerminalHeapMinimum": "Minimum free heap",
+  "@tillTerminalHeapMinimum": {
+    "description": "Hardware diagnostic label for ESP32 heap measurements."
+  },
+  "tillTerminalHttpsFailed": "HTTPS verification failed",
+  "@tillTerminalHttpsFailed": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalHttpsNotConfigured": "HTTPS target not configured",
+  "@tillTerminalHttpsNotConfigured": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalHttpsPassed": "HTTPS certificate verified",
+  "@tillTerminalHttpsPassed": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalHttpsPending": "Verifying HTTPS",
+  "@tillTerminalHttpsPending": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalLanguage": "Language",
+  "@tillTerminalLanguage": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalMemory": "Memory",
+  "@tillTerminalMemory": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalNetwork": "Network",
+  "@tillTerminalNetwork": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalNetworkConnecting": "Connecting to Wi-Fi",
+  "@tillTerminalNetworkConnecting": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalNetworkFailed": "Wi-Fi connection failed",
+  "@tillTerminalNetworkFailed": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalNetworkNotConfigured": "Wi-Fi not configured",
+  "@tillTerminalNetworkNotConfigured": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalNetworkReady": "Wi-Fi connected",
+  "@tillTerminalNetworkReady": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalNotCommissioned": "Not commissioned",
+  "@tillTerminalNotCommissioned": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalReady": "Diagnostics ready",
+  "@tillTerminalReady": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalRestart": "Restart",
+  "@tillTerminalRestart": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalStorageUnavailable": "Storage unavailable; network disabled",
+  "@tillTerminalStorageUnavailable": {
+    "description": "Hardware diagnostic recovery status when nonvolatile storage is unavailable. Network remains disabled and calibration cannot persist across a restart."
+  },
+  "tillTerminalTitle": "Deskilo terminal",
+  "@tillTerminalTitle": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalTouchAccepted": "Touch calibration saved",
+  "@tillTerminalTouchAccepted": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalTouchCalibration": "Calibrate touch",
+  "@tillTerminalTouchCalibration": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalTouchFailed": "Calibration failed. Try again.",
+  "@tillTerminalTouchFailed": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalTouchTarget": "Tap each target",
+  "@tillTerminalTouchTarget": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
+  "tillTerminalTouchTest": "Test touch",
+  "@tillTerminalTouchTest": {
+    "description": "Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer."
+  },
   "tillTitle": "Till",
   "@tillTitle": {
     "description": "#4366 the till"

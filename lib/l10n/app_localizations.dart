@@ -66404,6 +66404,210 @@ abstract class AppLocalizations {
   /// **'of which tax {amount}'**
   String tillTaxIncluded(String amount);
 
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Board'**
+  String get tillTerminalBoard;
+
+  /// Hardware diagnostic recovery status when nonvolatile storage is unavailable. Network remains disabled and calibration cannot persist across a restart.
+  ///
+  /// In en, this message translates to:
+  /// **'Calibration is temporary; repeat after restart'**
+  String get tillTerminalCalibrationUnsaved;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Check HTTPS'**
+  String get tillTerminalCheckTls;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Clock synchronization failed'**
+  String get tillTerminalClockFailed;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Terminal profile'**
+  String get tillTerminalContract;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnostic profile rejected'**
+  String get tillTerminalContractInvalid;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnostic profile verified'**
+  String get tillTerminalContractValid;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware diagnostics'**
+  String get tillTerminalDiagnostics;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Drawer output disabled'**
+  String get tillTerminalDrawerDisabled;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware'**
+  String get tillTerminalFirmware;
+
+  /// Hardware diagnostic label for ESP32 heap measurements.
+  ///
+  /// In en, this message translates to:
+  /// **'Free heap'**
+  String get tillTerminalHeapFree;
+
+  /// Hardware diagnostic label for ESP32 heap measurements.
+  ///
+  /// In en, this message translates to:
+  /// **'Largest free block'**
+  String get tillTerminalHeapLargest;
+
+  /// Hardware diagnostic label for ESP32 heap measurements.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum free heap'**
+  String get tillTerminalHeapMinimum;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'HTTPS verification failed'**
+  String get tillTerminalHttpsFailed;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'HTTPS target not configured'**
+  String get tillTerminalHttpsNotConfigured;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'HTTPS certificate verified'**
+  String get tillTerminalHttpsPassed;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying HTTPS'**
+  String get tillTerminalHttpsPending;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get tillTerminalLanguage;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Memory'**
+  String get tillTerminalMemory;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Network'**
+  String get tillTerminalNetwork;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting to Wi-Fi'**
+  String get tillTerminalNetworkConnecting;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Wi-Fi connection failed'**
+  String get tillTerminalNetworkFailed;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Wi-Fi not configured'**
+  String get tillTerminalNetworkNotConfigured;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Wi-Fi connected'**
+  String get tillTerminalNetworkReady;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Not commissioned'**
+  String get tillTerminalNotCommissioned;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnostics ready'**
+  String get tillTerminalReady;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get tillTerminalRestart;
+
+  /// Hardware diagnostic recovery status when nonvolatile storage is unavailable. Network remains disabled and calibration cannot persist across a restart.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage unavailable; network disabled'**
+  String get tillTerminalStorageUnavailable;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Deskilo terminal'**
+  String get tillTerminalTitle;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Touch calibration saved'**
+  String get tillTerminalTouchAccepted;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Calibrate touch'**
+  String get tillTerminalTouchCalibration;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Calibration failed. Try again.'**
+  String get tillTerminalTouchFailed;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap each target'**
+  String get tillTerminalTouchTarget;
+
+  /// Label or status in the embedded till's hardware diagnostics. This build cannot transact or actuate the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Test touch'**
+  String get tillTerminalTouchTest;
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
