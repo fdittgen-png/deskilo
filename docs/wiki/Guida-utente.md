@@ -6983,7 +6983,7 @@ Un'installazione può stabilire che con essa si usi solo un'app più recente. Vu
 **Da sapere**
 
 - Un'app sotto la soglia vede una sola schermata, **Questa app deve essere aggiornata**, con come aggiornare sulla sua piattaforma, **Controlla di nuovo**, **Impostazioni del server** ed **Esci**. Guida, privacy e demo restano aperte.
-- La soglia appartiene a una sola installazione: la stessa app continua a funzionare su tutte le altre installazioni della persona.
+- La soglia appartiene a una sola installazione: la stessa app continua a funzionare su tutte le altre installazioni della persona. Quando solo l'installazione di un'azienda rifiuta l'app, solo quell'azienda mostra la schermata, che offre allora anche **Torna a Io**; le Sue altre aziende restano aperte.
 - Se la soglia non si può leggere, l'app non è bloccata. Un rifiuto già letto resta finché una risposta più recente lo toglie, e l'app chiede di nuovo al rientro.
 - La soglia è una cortesia per le app che la conoscono, non un lucchetto: le regole su denaro e permessi le decide il server, qualunque sia l'app.
 

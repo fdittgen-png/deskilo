@@ -6983,7 +6983,7 @@ Eine Installation kann festlegen, dass nur eine neuere App mit ihr benutzt werde
 **Gut zu wissen**
 
 - Eine App unter der Untergrenze sieht einen einzigen Bildschirm, **Diese App braucht ein Update**, mit dem Weg zum Update auf ihrer Plattform, **Erneut prüfen**, **Server-Einstellungen** und **Abmelden**. Hilfe, Datenschutz und die Demo bleiben offen.
-- Die Untergrenze gehört zu einer Installation: Dieselbe App arbeitet auf allen anderen Installationen der Person weiter.
+- Die Untergrenze gehört zu einer Installation: Dieselbe App arbeitet auf allen anderen Installationen der Person weiter. Lehnt nur die Installation eines Unternehmens die App ab, zeigt nur dieses Unternehmen den Bildschirm, der dann auch **Zurück zu Ich** anbietet; Ihre anderen Unternehmen bleiben offen.
 - Lässt sich die Untergrenze nicht lesen, wird die App nicht gesperrt. Eine bereits gelesene Ablehnung bleibt, bis eine neuere Antwort sie aufhebt, und die App fragt bei der Rückkehr erneut.
 - Die Untergrenze ist ein Entgegenkommen an Apps, die sie kennen, keine Sperre: Geld- und Berechtigungsregeln entscheidet der Server, egal welche App anfragt.
 

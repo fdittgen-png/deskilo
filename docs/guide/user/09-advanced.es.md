@@ -186,7 +186,7 @@ Una instalación puede indicar que solo se use con ella una aplicación más rec
 **Conviene saber**
 
 - Una aplicación por debajo del mínimo ve una sola pantalla, **Esta aplicación necesita una actualización**, con cómo actualizar en su plataforma, **Comprobar de nuevo**, **Ajustes del servidor** y **Cerrar sesión**. La ayuda, la privacidad y la demo siguen abiertas.
-- El mínimo pertenece a una instalación: la misma aplicación sigue funcionando en todas las demás instalaciones de la persona.
+- El mínimo pertenece a una instalación: la misma aplicación sigue funcionando en todas las demás instalaciones de la persona. Cuando solo la instalación de una empresa rechaza la aplicación, solo esa empresa muestra la pantalla, que entonces ofrece también **Volver a Yo**; sus demás empresas siguen abiertas.
 - Si no se puede leer el mínimo, la aplicación no se bloquea. Un rechazo ya leído se mantiene hasta que una respuesta más reciente lo levante, y la aplicación vuelve a preguntar al regresar.
 - El mínimo es una cortesía para las aplicaciones que lo conocen, no un cerrojo: las reglas de dinero y permisos las decide el servidor, sea cual sea la aplicación.
 

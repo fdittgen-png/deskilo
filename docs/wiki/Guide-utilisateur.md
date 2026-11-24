@@ -6983,7 +6983,7 @@ Une installation peut indiquer que seule une application plus récente peut l'ut
 **Bon à savoir**
 
 - Une application sous le seuil voit un seul écran, **Cette application doit être mise à jour**, avec la façon de la mettre à jour sur sa plateforme, **Vérifier à nouveau**, **Réglages du serveur** et **Se déconnecter**. L'aide, la confidentialité et la démo restent ouvertes.
-- Le seuil appartient à une seule installation : la même application continue de fonctionner sur toutes les autres installations de la personne.
+- Le seuil appartient à une seule installation : la même application continue de fonctionner sur toutes les autres installations de la personne. Quand seule l'installation d'une entreprise refuse l'application, seule cette entreprise affiche l'écran, qui propose alors aussi **Retour à Moi** ; vos autres entreprises restent ouvertes.
 - Si le seuil ne peut pas être lu, l'application n'est pas bloquée. Un refus déjà lu reste en place jusqu'à ce qu'une réponse plus récente le lève, et l'application redemande au retour.
 - Le seuil est une courtoisie pour les applications qui le connaissent, pas un verrou : les règles d'argent et de droits sont décidées par le serveur, quelle que soit l'application.
 

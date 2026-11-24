@@ -186,7 +186,7 @@ An installation can say that only a newer app may be used with it. You want to k
 **Good to know**
 
 - An app below the floor sees one screen, **This app needs an update**, with how to update on its platform, **Check again**, **Server settings** and **Sign out**. Help, privacy and the demo stay open.
-- The floor belongs to one installation: the same app keeps working on every other installation the person uses.
+- The floor belongs to one installation: the same app keeps working on every other installation the person uses. When only the installation of one business refuses the app, only that business shows the screen, which then also offers **Back to Me**; your other businesses stay open.
 - If the floor cannot be read, the app is not blocked. A refusal that was already read stays until a newer answer lifts it, and the app asks again when you return to it.
 - The floor is a courtesy to apps that know it, not a lock: money and permission rules are decided by the server whatever the app.
 
