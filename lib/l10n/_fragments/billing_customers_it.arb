@@ -5,7 +5,7 @@
   "featureBillingCustomersTitle": "Clienti fatturati",
   "featureBillingCustomersDesc": "Si tengono le persone e le aziende a cui si fattura, con o senza account: il nome e l'indirizzo con cui sono fatturate, i loro numeri fiscali e un contatto per la fattura. Non sono membri e non vedono nulla dell'attività. Disattivato: si fattura ai membri come prima.",
   "billingCustomersTitle": "Clienti fatturati",
-  "billingCustomersNoAccount": "Le persone e le aziende a cui si fattura. Non hanno un account e non vedono nulla dell'attività.",
+  "billingCustomersNoAccount": "Le persone e le aziende a cui si fattura. Non sono membri e non vedono nulla dell'attività, a meno che non le si inviti a leggere le proprie fatture dal proprio account.",
   "billingCustomersEmpty": "Nessun cliente fatturato per ora. Si aggiunga il primo per fatturargli senza chiedergli di creare un account.",
   "billingCustomersAdd": "Aggiungere un cliente",
   "billingCustomersSearch": "Cercare un cliente",

@@ -111,6 +111,7 @@ List<NavGroup> navGroupsOf(
       'drawer-stock-value',
       'drawer-stock-cycle-counts',
       'drawer-stock-expiry',
+      'drawer-stock-units',
       'drawer-stock-groups',
       'drawer-stock-items',
       'drawer-stock-places',

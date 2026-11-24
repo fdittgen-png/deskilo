@@ -29,6 +29,6 @@ class DemoStockTraceChain implements StockTraceChainReader {
           ),
     ]..sort((a, b) => a.at.compareTo(b.at));
     final code = moves.where((m) => m.lotId == lot).firstOrNull?.lotCode;
-    return TraceChain(subject: lotId != null ? 'lot' : 'movement', lotCode: code, steps: steps);
+    return TraceChain(subject: lotId != null ? 'lot' : (pieceId != null ? 'piece' : 'movement'), lotCode: code, steps: steps);
   }
 }

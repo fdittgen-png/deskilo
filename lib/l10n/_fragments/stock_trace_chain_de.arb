@@ -16,5 +16,7 @@
   "stockMoveReasonAdjustment": "Bestand korrigiert",
   "stockMoveReasonOpening": "Anfangsbestand",
   "stockMoveReasonReturnIn": "Vom Kunden zurückgegeben",
-  "stockMoveReasonReturnOut": "An den Lieferanten zurückgegeben"
+  "stockMoveReasonReturnOut": "An den Lieferanten zurückgegeben",
+  "stockChainPieceTitle": "Alle Bewegungen dieses Stücks",
+  "stockChainOpen": "Alle Bewegungen"
 }

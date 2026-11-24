@@ -1,27 +1,27 @@
 {
-  "about": "The web build's size budget (#3622): the ONE place the numbers live. tool/web/size_budget_check.mjs compares a request trace (tool/web/first_load_trace.mjs) and the build folder with them; web.yml runs it after the build it already makes. Every ceiling is the value measured on master on 2026-11-12 (Flutter 3.47.5, flutter build web --release --no-web-resources-cdn --pwa-strategy=none) rounded up; it only falls. The first-load and settled ceilings were raised on 2026-11-14 (measured 8500193): the application code is one unit until it is split by area (#3828), so every feature adds to the first download; they fall again with that split. The deployment and on-demand ceilings were raised on 2026-11-15 (measured 118501371 and 40914686): three days of pages, strings in five languages and guide texts had used the half per cent of headroom they were set with. To RAISE one: change the number here in the PR that needs it and give the reason in that PR's text; a raise with no reason is a review finding. To LOWER one: do it in the PR that made the build smaller. The deployment ceiling was raised on 2026-11-21 (measured 120041820, #4169): the stock editors, variants and lots added their pages and strings in five languages to the deployed files; the first load stayed under its ceiling. On 2026-11-22 every ceiling was set about 2 % above the build of #4306 (first load and settled 8807664, on demand 41542320, deployment 120301587): ceilings with almost no room turned ordinary feature pull requests red; the room is kept at about 2 %, and a pull request that uses it up raises the ceiling with its reason.",
+  "about": "The web build's size budget (#3622): the ONE place the numbers live. tool/web/size_budget_check.mjs compares a request trace (tool/web/first_load_trace.mjs) and the build folder with them; web.yml runs it after the build it already makes. Every ceiling is the value measured on master on 2026-11-12 (Flutter 3.47.5, flutter build web --release --no-web-resources-cdn --pwa-strategy=none) rounded up; it only falls. The first-load and settled ceilings were raised on 2026-11-14 (measured 8500193): the application code is one unit until it is split by area (#3828), so every feature adds to the first download; they fall again with that split. The deployment and on-demand ceilings were raised on 2026-11-15 (measured 118501371 and 40914686): three days of pages, strings in five languages and guide texts had used the half per cent of headroom they were set with. To RAISE one: change the number here in the PR that needs it and give the reason in that PR's text; a raise with no reason is a review finding. To LOWER one: do it in the PR that made the build smaller. The deployment ceiling was raised on 2026-11-21 (measured 120041820, #4169): the stock editors, variants and lots added their pages and strings in five languages to the deployed files; the first load stayed under its ceiling. On 2026-11-22 every ceiling was set about 2 % above the build of #4306 (first load and settled 8807664, on demand 41542320, deployment 120301587): ceilings with almost no room turned ordinary feature pull requests red; the room is kept at about 2 %, and a pull request that uses it up raises the ceiling with its reason. On 2026-11-24 every ceiling was set about 2 % above the build of the fourth v2.2 merge (first load 9008319, settled 9019445, on demand 42336303, deployment 122624151): the expiry report, where is it, the trace timeline, handling units, item group finance values and billing-only customers added code to the one application unit (#3828 splits it) and pages, strings and guide texts in five languages.",
   "budgets": {
     "first_load_wire_bytes": {
-      "max": 9000000,
-      "measured": 8500193,
+      "max": 9190000,
+      "measured": 9008319,
       "measures": "Bytes on the wire (gzip for text, raw for images) of every request a cold browser makes until Flutter shows its first frame: index, bootstrap, canvaskit engine (2.1 MB), main.dart.js (6.0 MB), fonts, the manifest and the few assets the first screen reads. The first download a visitor waits for.",
       "raise": "Only when a feature genuinely belongs in the first frame; say in the PR why it cannot load on demand."
     },
     "settled_wire_bytes": {
-      "max": 9000000,
-      "measured": 8500193,
+      "max": 9200000,
+      "measured": 9019445,
       "measures": "The same trace up to three quiet seconds after the first frame: what the first screen has fetched once the app is idle. Equal to the first-load number today because nothing is fetched after the first frame without a click.",
       "raise": "Only when something is prefetched on purpose; say what and why in the PR."
     },
     "on_demand_asset_bytes": {
-      "max": 42400000,
-      "measured": 41531070,
+      "max": 43200000,
+      "measured": 42336303,
       "measures": "Raw size of build/web/assets/assets: the declared pubspec assets (help images, help texts, the instance bundle, demo data) that are fetched only when a screen reads them. Not part of the first download; this keeps them from growing unseen.",
       "raise": "A new guide image or help text raises it by its own size; state the size and the guide in the PR. Raised to 41600000 (measured 41531070) for the stock refusal texts and the guide pages of #4170 and #4171."
     },
     "deployment_bytes": {
-      "max": 122700000,
-      "measured": 120041820,
+      "max": 125100000,
+      "measured": 122624151,
       "measures": "Raw size of every file in build/web, the whole deployment the static host stores and serves.",
       "raise": "Only with the reason in the PR text; a larger deployment with a flat first load needs a one-line explanation of what was added."
     }

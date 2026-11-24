@@ -18,6 +18,7 @@
 --     signed (the country's signing is decided elsewhere; nothing here claims compliance).
 --   * `counter_session_cash` is restated whole: the cash of a REFUSED offline sale is in the drawer, so it is part of the expected cash and
 --     is listed apart (`offline_refused_cash_minor`).
+--     A session already closed takes no new sale at all, not even a refused one (DKL12, the whole call): its counted figures never move.
 --   * `export_workspace_records` is restated whole: the table joins the business's export, the finances' to export.
 --   Off (the feature `counterOfflineCash`): the sync and the list are refused (DKG01).
 
@@ -241,8 +242,9 @@ begin
     v_reason := null;
     v_total := null;
     v_draft := null;
+    -- a closed session is counted: nothing new is recorded against it, not even a refusal whose cash would change its figures
     if v_sess.state <> 'open' then
-      v_reason := 'session';
+      raise exception 'open the till first' using errcode = 'DKL12', detail = '{"reason": "session"}';
     elsif v_at > now() then
       v_reason := 'clock';
     elsif v_at < v_sess.opened_at or p_offline_since < v_sess.opened_at then

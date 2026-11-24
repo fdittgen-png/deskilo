@@ -28,18 +28,6 @@ const _notForTheApp = <String, String>{
       'a payment claim naming a standalone invoice: the app offers no payment '
       'of one until the payment part of #4165 (B), where its words are '
       'mapped; the refusal is the server\'s guard for any other caller (0820)',
-  'DKH01':
-      'a billing-access code that cannot be used: the app offers the customer invitation in #4164 B2, where its '
-      'words are mapped; the refusal is the server\'s guard for any other caller (0910)',
-  'DKH02':
-      'a billing-access invitation for a member: the seller\'s invitation screen arrives in #4164 B2 and offers it '
-      'for billing customers only; the refusal is the server\'s guard (0910)',
-  'DKH03':
-      'revoking an unknown grant: the B2 screens name only grants they listed; the server\'s guard (0910)',
-  'DKH04':
-      'a revocation reason over 500 characters: the B2 form limits the field to that width; the server\'s guard (0910)',
-  'DKH05':
-      'a request id reused for another invitation: the app draws a fresh id per invitation; the server\'s guard (0910)',
   'DKC16':
       'a standalone payment naming a monthly invoice: the app offers no '
       'standalone payment until the client part of #4165 (B2), where its '
@@ -82,7 +70,7 @@ const _notForTheApp = <String, String>{
 
 /// #4415 -- RATCHET: how many codes a person never meets in the app. A new
 /// refusal arrives with its words; this list only shortens.
-const _notForTheAppCeiling = 20;
+const _notForTheAppCeiling = 15;
 
 final _raised = RegExp(
   r"errcode\s*=\s*'(DK[A-Z0-9]{3})'"

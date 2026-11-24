@@ -66,7 +66,8 @@ insert into public.services (id, workspace_id, name, price_cents, active, invent
   (pg_temp.u(302), pg_temp.u(101), 'Mug', 400, true, 'piece', 'none', true, null),
   (pg_temp.u(303), pg_temp.u(101), 'Basket', 1000, true, 'piece', 'serial', true, 'per_unit');
 
--- honey: an expired lot (OLD) and two good ones, SUP-A first to expire; three baskets of lot SUP-P; ten mugs
+-- honey: an expired lot (OLD) and two good ones, SUP-A first to expire; three baskets of lot SUP-P; ten mugs with a cost lot
+-- that has no code (as a delivery makes it): a cost lot is no track ID
 do $s$ begin
   perform pg_temp.mv(1001, format('[{"item_id": "%s", "quantity": "10", "from": "%s", "to": "%s", "expired_ack": true, "new_lot": {"code": "OLD", "expires_on": "2020-01-01", "total_cost_minor": 100}},
                                     {"item_id": "%s", "quantity": "2", "from": "%s", "to": "%s", "new_lot": {"code": "SUP-A", "expires_on": "2090-01-01", "total_cost_minor": 100}},
@@ -74,11 +75,11 @@ do $s$ begin
     pg_temp.u(301), pg_temp.loc('supplier'), pg_temp.loc('MAIN'), pg_temp.u(301), pg_temp.loc('supplier'), pg_temp.loc('MAIN'),
     pg_temp.u(301), pg_temp.loc('supplier'), pg_temp.loc('MAIN')));
   perform pg_temp.mv(1002, format('[{"item_id": "%s", "quantity": "3", "from": "%s", "to": "%s", "units": [{"tag": "E28068940000401561D6CC01"}, {"tag": "E28068940000401561D6CC02"}, {"tag": "E28068940000401561D6CC03"}], "new_lot": {"code": "SUP-P", "total_cost_minor": 300}},
-                                    {"item_id": "%s", "quantity": "10", "from": "%s", "to": "%s"}]',
+                                    {"item_id": "%s", "quantity": "10", "from": "%s", "to": "%s", "new_lot": {"code": "", "total_cost_minor": 400}}]',
     pg_temp.u(303), pg_temp.loc('supplier'), pg_temp.loc('MAIN'), pg_temp.u(302), pg_temp.loc('supplier'), pg_temp.loc('MAIN')));
 end $s$;
 
-select is((select count(*)::int from public.stock_lots where workspace_id = pg_temp.u(101)), 4, 'the fixture: four lots received');
+select is((select count(*)::int from public.stock_lots where workspace_id = pg_temp.u(101)), 5, 'the fixture: five lots received');
 
 -- ── a lot-tracked item sold without a lot ──
 select set_config('t.s1', pg_temp.sell(1100, format('[{"item_id": "%s", "quantity": "3"}]', pg_temp.u(301)), 1500), false);

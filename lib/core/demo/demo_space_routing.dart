@@ -60,6 +60,7 @@ import 'data/demo_stock_code_resolver.dart';
 import 'data/demo_stock_config_commands.dart';
 import 'data/demo_stock_cycle_counts.dart';
 import 'data/demo_stock_expiry.dart';
+import 'data/demo_stock_handling_units.dart';
 import 'data/demo_stock_ledger.dart';
 import 'data/demo_stock_operations.dart';
 import 'data/demo_stock_queries.dart';
@@ -321,6 +322,8 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
   stockCodeResolverProvider.overrideWith((ref) => stocks.of(ref).codeResolver),
   // #4363 — and keeps tags (an NFC chip on a shelf and on the mugs) in memory.
   stockTagsStoreProvider.overrideWith((ref) => stocks.of(ref).tags),
+  // #4435 — and keeps handling units (a pallet and a carton at the main store) over that same ledger.
+  stockHandlingUnitsProvider.overrideWith((ref) => stocks.of(ref).units),
   // #4431 — the expiry report answers from the lots the Demo keeps with their dates.
   stockExpiryProvider.overrideWith((ref) => stocks.of(ref).expiry),
   // #4171 — and receives the deliveries of its orders into that stock.
@@ -404,6 +407,7 @@ class _DemoStock {
       nameOf: (item) async => DemoStockLedger.items.where((i) => i.id == item).firstOrNull?.name,
     );
     codeResolver = DemoStockCodeResolver(id, config, registry, tags);
+    units = DemoStockHandlingUnits(ledger);
     expiry = DemoStockExpiry(now, tags, itemsOfGroup: (item, group) async => (await itemGroups.effective(id, item)).groupId == group);
   }
 
@@ -418,6 +422,7 @@ class _DemoStock {
   late final DemoItemGroups itemGroups;
   late final DemoStockTags tags;
   late final DemoStockExpiry expiry;
+  late final DemoStockHandlingUnits units;
   late final DemoStockCodeResolver codeResolver;
 }
 

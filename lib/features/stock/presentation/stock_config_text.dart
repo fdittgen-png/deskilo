@@ -2,6 +2,7 @@
 //
 // #4169 (B1) -- the words of a refusal: the server's reason, said in the
 // reader's language under the field it names.
+import '../../../core/codes/dk_code.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
 
@@ -117,6 +118,9 @@ String stockSaveProblem(AppLocalizations l10n, Object error) => switch (error) {
   StockConfigStale() => l10n.stockEditStale,
   StockConfigInUse() => l10n.stockEditInUse,
   StockNotEnough() => l10n.refusalStockNotEnough,
+  StockUnitRefused(code: DkCode.dkg27) => l10n.refusalStockUnitChanged,
+  StockUnitRefused(code: DkCode.dkg29) => l10n.refusalStockUnitCodeTaken,
+  StockUnitRefused() => l10n.refusalStockUnitContent,
   StockConfigRefused(:final reason) => stockReasonText(l10n, reason),
   _ => l10n.stockEditNotSaved,
 };

@@ -40,6 +40,8 @@ as $fn$
               from public.stock_movements m
               join public.stock_lots l on l.id = m.lot_id and l.workspace_id = p_workspace_id
              where m.workspace_id = p_workspace_id and m.id = any (coalesce(p_movements, array[]::uuid[]))
+               -- a cost lot of an untracked item has no code: it is no track ID, and is never frozen as one
+               and coalesce(nullif(l.lot_code, ''), l.label_code) is not null
              group by l.id) x), '[]'::jsonb)
   || case when public.feature_effective(p_workspace_id, 'stockTags') then coalesce((
     select jsonb_agg(jsonb_strip_nulls(jsonb_build_object('kind', 'piece', 'piece_id', z.id, 'code', z.code, 'lot_id', z.lot_id))

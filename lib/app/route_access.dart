@@ -64,6 +64,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/stock/cycle-counts/:taskId': {_P.countStock, _P.manageStock},
   // #4431 — the expiry report reads like the stock (the server asks the same: it is the stock's own read).
   '/stock/expiry': {_P.viewStock, _P.manageStock},
+  '/stock/units': {_P.viewStock, _P.manageStock},
   // #4361 — the item groups read like the stock; changing one is for who manages it (the server asks the same).
   '/stock/groups': {_P.viewStock, _P.manageStock},
   // #4299 — the item registry and the places read like the stock; its settings

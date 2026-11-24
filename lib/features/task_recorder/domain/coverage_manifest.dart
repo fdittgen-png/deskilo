@@ -374,11 +374,7 @@ const List<RouteCoverage> routeCoverage = [
   // #2577 — the purchase and sales pages: doors to recorded screens.
   RouteCoverage('/money/purchases', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/purchases/doc/:id', CoverageStatus.planned, owner: '#1884'),
-  RouteCoverage(
-    '/money/purchases/approvals',
-    CoverageStatus.planned,
-    owner: '#1884',
-  ),
+  RouteCoverage('/money/purchases/approvals', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/suppliers', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/suppliers/:id', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/customers', CoverageStatus.planned, owner: '#1884'),
@@ -395,6 +391,7 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/stock/cycle-counts', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/cycle-counts/:taskId', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/expiry', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/stock/units', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/items', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/places', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/settings', CoverageStatus.planned, owner: '#1884'),
