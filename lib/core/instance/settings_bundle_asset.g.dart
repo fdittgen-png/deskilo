@@ -66,4 +66,4 @@ final class SettingsBundleLoaderProvider
 }
 
 String _$settingsBundleLoaderHash() =>
-    r'c915f80671b281c54d54f0fe85c6e6db3708b33f';
+    r'302f6cc50e405205e522ed419368504b704a143f';
