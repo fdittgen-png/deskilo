@@ -152,7 +152,9 @@ select is(left(pg_temp.sync(1, current_setting('t.s')::uuid, current_setting('t.
 select is((select count(*)::int from public.counter_offline_sales where seq = 30), 0, 'a refused call records nothing');
 -- ── a session closed before the sync refuses its sales ──
 select set_config('t.cl', pg_temp.sclose(1, 7140, current_setting('t.s')::uuid, 0, 'x'), false);
-select is(pg_temp.f(pg_temp.sync(1, current_setting('t.s')::uuid, current_setting('t.since')::timestamptz, '[' || pg_temp.osale(40, 7141, 5, '1.20', 120, 0) || ']'), 'refused'), '1', 'a sale of a session closed meanwhile is refused (session)');
+select is(left(pg_temp.sync(1, current_setting('t.s')::uuid, current_setting('t.since')::timestamptz, '[' || pg_temp.osale(40, 7141, 5, '1.20', 120, 0) || ']'), 9)
+          || ' ' || (select count(*) from public.counter_offline_sales where seq = 40)::text,
+  'ERR DKL12 0', 'a session closed meanwhile takes no new sale, not even a refused one: its counted cash never moves');
 
 select * from finish();
 rollback;
