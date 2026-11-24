@@ -27,7 +27,7 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
         .select()
         .eq('workspace_id', workspaceId)
         .order('from_pct', ascending: true)
-        .order('id'));
+        .order('id', ascending: true));
     return rows
         .map(
           (row) => FeeBand(
@@ -170,7 +170,7 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
             .select()
             .eq('workspace_id', workspaceId);
         if (!includeInactive) query = query.eq('active', true);
-        return query.order('days', ascending: true).order('id');
+        return query.order('days', ascending: true).order('id', ascending: true);
       },
     );
     return rows.map(Package.fromRow).toList();

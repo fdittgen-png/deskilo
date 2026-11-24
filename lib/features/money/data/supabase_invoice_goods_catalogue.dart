@@ -19,8 +19,8 @@ class SupabaseInvoiceGoodsCatalogue implements InvoiceGoodsCatalogue {
         .eq('workspace_id', workspaceId)
         .eq('stockable', true)
         .eq('active', true)
-        .order('name')
-        .order('id'));
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return [for (final row in rows) InvoiceGoodsItem.fromJson(row)];
   }
 }

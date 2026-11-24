@@ -20,7 +20,7 @@ mixin SupabaseBadges implements BadgeRepository {
         .select()
         .eq('workspace_id', workspaceId)
         .order('created_at', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return rows.map(MemberBadge.fromRow).toList();
   }
 

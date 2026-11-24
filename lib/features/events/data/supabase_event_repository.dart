@@ -184,7 +184,7 @@ class SupabaseEventRepository implements EventRepository {
         .from('validation_policies')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('id'));
+        .order('id', ascending: true));
     return rows.map(_policyFromRow).toList();
   }
 

@@ -21,8 +21,8 @@ class SupabaseInvoiceGroupRepository implements InvoiceGroupRepository {
     final rows = await fetchConfigurationList(table: _groups, build: () => _client
         .from(_groups)
         .select('id, name, items:$_items(network_id, invoice_id, label)')
-        .order('name')
-        .order('id'));
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return [for (final row in rows) InvoiceGroup.fromJson(row)];
   }
 

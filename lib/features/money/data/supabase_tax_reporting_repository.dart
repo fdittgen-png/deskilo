@@ -19,7 +19,7 @@ class SupabaseTaxReportingRepository implements TaxReportingRepository {
         .select()
         .eq('workspace_id', workspaceId)
         .order('period_start', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return rows.map(VatDeclaration.fromRow).toList();
   }
 
@@ -64,7 +64,7 @@ class SupabaseTaxReportingRepository implements TaxReportingRepository {
         .select()
         .eq('workspace_id', workspaceId)
         .order('percent', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return rows.map(VatRate.fromRow).toList();
   }
 

@@ -41,7 +41,7 @@ class SupabaseSalesTaxRepository implements SalesTaxRepository {
         .select('id, kind, state, number, valid_from, valid_to')
         .eq('member_id', memberId)
         .order('valid_from', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return [for (final row in rows) TaxExemptionCertificate.fromRow(row)];
   }
 

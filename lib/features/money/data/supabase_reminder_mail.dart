@@ -56,7 +56,7 @@ class SupabaseReminderMail implements ReminderMail {
           ReminderMailState.pending.wire,
         ])
         .order('created_datetime', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return [for (final row in rows) ReminderMailSend.fromJson(row)];
   }
 

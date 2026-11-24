@@ -16,9 +16,9 @@ class SupabaseCreditRepository implements CreditRepository {
         .from('credit_products')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('sort_order')
-        .order('name')
-        .order('id'));
+        .order('sort_order', ascending: true)
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return [
       for (final row in rows)
         CreditProduct.fromRow(Map<String, dynamic>.from(row as Map)),

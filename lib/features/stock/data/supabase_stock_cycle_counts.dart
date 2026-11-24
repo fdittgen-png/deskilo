@@ -26,8 +26,8 @@ class SupabaseStockCycleCounts implements StockCycleCounts {
           .from('stock_count_plans')
           .select('id, name, scope_kind, location_ids, item_ids, high_value_minor, interval_days, next_due_on, active')
           .eq('workspace_id', workspaceId)
-          .order('next_due_on')
-          .order('id'),
+          .order('next_due_on', ascending: true)
+          .order('id', ascending: true),
     );
     return [for (final row in rows) CountPlan.fromRow(row)];
   }

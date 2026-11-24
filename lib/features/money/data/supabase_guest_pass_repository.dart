@@ -21,8 +21,8 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
         .from('guest_pass_offers')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('name')
-        .order('id'));
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return [for (final r in rows) GuestPassOffer.fromJson(r)];
   }
 
@@ -35,7 +35,7 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
         )
         .eq('workspace_id', workspaceId)
         .order('sold_at', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return [for (final r in rows) GuestPassRecord.fromJson(r)];
   }
 
@@ -45,8 +45,8 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
         .from(ServerTable.seats)
         .select('id, name, desks(offices(levels(name)))')
         .eq('workspace_id', workspaceId)
-        .order('name')
-        .order('id'));
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     String level(Map<String, Object?> r) {
       final desk = JsonReader.orEmpty(r).objectOrAbsent('desks');
       return desk.objectOrAbsent('offices').objectOrAbsent('levels').stringOr('name');

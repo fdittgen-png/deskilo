@@ -98,8 +98,8 @@ class SupabaseBookPeriodRepository implements BookPeriodRepository {
         .eq('workspace_id', workspaceId)
         .lte('period_from', isoDay(to))
         .gte('period_to', isoDay(from))
-        .order('exported_at')
-        .order('id'));
+        .order('exported_at', ascending: false)
+        .order('id', ascending: true));
     return [for (final r in rows) BookExport.fromJson(r)];
   }
 }

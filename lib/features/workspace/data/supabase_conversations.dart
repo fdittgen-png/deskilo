@@ -69,8 +69,8 @@ mixin SupabaseConversations {
     final rows = await fetchAllPages(table: 'conversation_participants', build: () => conversationClient.from('conversation_participants')
         .select()
         .eq('conversation_id', conversationId)
-        .order('joined_at')
-        .order('member_id'));
+        .order('joined_at', ascending: true)
+        .order('member_id', ascending: true));
     return [
       for (final row in rows)
         ConversationParticipant.fromRow(Map<String, dynamic>.from(row)),

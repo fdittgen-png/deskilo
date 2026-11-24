@@ -151,7 +151,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
           'id, user_id, managed_identity, managed_name, member_number, home_site_id',
         )
         .eq('workspace_id', workspaceId)
-        .order('id'));
+        .order('id', ascending: true));
     // #887 — a managed member has no profile: its name is the identity
     // the admin typed (company when the person is nameless).
     String managedName(Map<String, dynamic> r) => managedDisplayName(r);
@@ -215,7 +215,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
         .select()
         .eq('workspace_id', workspaceId)
         .order('joined_at', ascending: true)
-        .order('id'));
+        .order('id', ascending: true));
     return rows.map(memberFromRow).toList();
   }
 
@@ -229,7 +229,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
         .eq('workspace_id', workspaceId)
         .order('due_on', ascending: true)
         .order('seq', ascending: true)
-        .order('id'));
+        .order('id', ascending: true));
     return rows.map(MemberTermChange.fromRow).toList();
   }
 
@@ -297,7 +297,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
         .select('member_id, period, invoices!inner(voided_at)')
         .eq('workspace_id', workspaceId)
         .isFilter('invoices.voided_at', null)
-        .order('id'));
+        .order('id', ascending: true));
     final months = <String, Set<DateTime>>{};
     for (final row in rows) {
       final period = DateTime.parse('${row['period'] as String}-01');
@@ -448,7 +448,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
   Future<List<Member>> fetchMyMembers() async {
     final userId = client.auth.currentUser?.id;
     if (userId == null) return const [];
-    final rows = await fetchAllPages(table: ServerTable.members, build: () => client.from(ServerTable.members).select().eq('user_id', userId).order('id'));
+    final rows = await fetchAllPages(table: ServerTable.members, build: () => client.from(ServerTable.members).select().eq('user_id', userId).order('id', ascending: true));
     return rows.map(memberFromRow).toList();
   }
 

@@ -200,7 +200,7 @@ class HostMyReservationsRepository implements MyReservationsRepository {
           .from(ServerTable.workspaces)
           .select('id, timezone')
           .inFilter('id', ids)
-          .order('id'));
+          .order('id', ascending: true));
       return {
         for (final row in rows)
           if (row['id'] is String && row['timezone'] is String)

@@ -24,8 +24,8 @@ class SupabaseStockOperations implements StockOperations {
         .select('id, from_location_id, to_location_id, status, revision, created_datetime')
         .eq('workspace_id', workspaceId)
         .neq('status', 'received')
-        .order('created_datetime')
-        .order('id'));
+        .order('created_datetime', ascending: true)
+        .order('id', ascending: true));
     if (transfers.isEmpty) return const [];
     final heads = [for (final t in transfers) JsonReader.of(t, context: 'stock_transfers')];
     final lines = [
@@ -34,7 +34,7 @@ class SupabaseStockOperations implements StockOperations {
           .select('id, transfer_id, item_id, variant_id, lot_id, loaded::text, received::text')
           .eq('workspace_id', workspaceId)
           .inFilter('transfer_id', [for (final h in heads) h.string('id')])
-          .order('id')))
+          .order('id', ascending: true)))
         JsonReader.of(l, context: 'stock_transfer_lines'),
     ];
     final items = {
@@ -43,7 +43,7 @@ class SupabaseStockOperations implements StockOperations {
           .select('id, name, inventory_unit')
           .eq('workspace_id', workspaceId)
           .inFilter('id', {for (final l in lines) l.string('item_id')}.toList())
-          .order('id')))
+          .order('id', ascending: true)))
         ..._byId(JsonReader.of(i, context: 'services')),
     };
     final codes = {
@@ -54,7 +54,7 @@ class SupabaseStockOperations implements StockOperations {
           .inFilter('id', {
             for (final h in heads) ...[h.string('from_location_id'), h.string('to_location_id')],
           }.toList())
-          .order('id')))
+          .order('id', ascending: true)))
         ..._codeById(JsonReader.of(p, context: 'stock_locations')),
     };
     return [for (final h in heads) _transfer(h, lines, items, codes)];

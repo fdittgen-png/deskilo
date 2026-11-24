@@ -32,7 +32,7 @@ class SupabaseBillingAccessRepository implements BillingAccessRepository {
             .eq('workspace_id', workspaceId)
             .eq('financial_subject_id', subjectId)
             .order('invited_at', ascending: false)
-            .order('id'),
+            .order('id', ascending: true),
       ),
     );
     return [for (final row in rows) BillingAccessGrant.fromJson(row)];
@@ -49,7 +49,7 @@ class SupabaseBillingAccessRepository implements BillingAccessRepository {
         .select('financial_subject_id')
         .eq('principal_user_id', me)
         .filter('revoked_at', 'is', null)
-        .order('id'));
+        .order('id', ascending: true));
     return {for (final r in rows) r['financial_subject_id'] as String};
   }
 

@@ -19,7 +19,7 @@ class SupabaseDocumentNumbering implements DocumentNumbering {
         .from('number_sequences')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('journal'));
+        .order('journal', ascending: true));
     final byJournal = {
       for (final r in rows) r['journal'] as String: NumberSequence.fromDb(r),
     };

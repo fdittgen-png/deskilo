@@ -76,7 +76,7 @@ class SupabaseMemberAccountQueries implements MemberAccountQueries {
         .select()
         .eq('member_id', memberId)
         .order('created_at', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return _counted(rows, ledgerArea(memberId), memberId);
   }
 

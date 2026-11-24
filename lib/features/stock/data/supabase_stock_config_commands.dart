@@ -29,7 +29,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
         )
         .eq('workspace_id', workspaceId)
         .eq('id', itemId)
-        .order('id'));
+        .order('id', ascending: true));
     if (rows.isEmpty) return null;
     final r = JsonReader.of(rows.first, context: 'services');
     final units = await StockRpc(_client).rows('item_units', () => _client
@@ -37,15 +37,15 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
         .select('unit, factor_num, factor_den, default_purchase, default_sale')
         .eq('workspace_id', workspaceId)
         .eq('item_id', itemId)
-        .order('unit')
-        .order('id'));
+        .order('unit', ascending: true)
+        .order('id', ascending: true));
     final codes = await StockRpc(_client).rows('item_codes', () => _client
         .from('item_codes')
         .select('code, kind, unit')
         .eq('workspace_id', workspaceId)
         .eq('item_id', itemId)
-        .order('code')
-        .order('id'));
+        .order('code', ascending: true)
+        .order('id', ascending: true));
     return StockItemConfig(
       itemId: r.string('id'),
       revision: r.integer('stock_revision'),
@@ -62,7 +62,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
 
   @override
   Future<List<StockPlaceConfig>> places(String workspaceId) async {
-    final kinds = await StockRpc(_client).rows('stock_location_kinds', () => _client.from('stock_location_kinds').select('key, virtual').order('key'));
+    final kinds = await StockRpc(_client).rows('stock_location_kinds', () => _client.from('stock_location_kinds').select('key, virtual').order('key', ascending: true));
     final virtual = {
       for (final k in kinds)
         if (JsonReader.of(k, context: 'stock_location_kinds').boolOr('virtual', fallback: false))
@@ -74,8 +74,8 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
           'id, revision, kind, code, name, barcode, parent_id, active, receives_from_suppliers, pick_role, address_path',
         )
         .eq('workspace_id', workspaceId)
-        .order('code')
-        .order('id'));
+        .order('code', ascending: true)
+        .order('id', ascending: true));
     return [
       for (final row in rows)
         StockPlaceConfig.fromJson({
@@ -119,14 +119,14 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
         .from('item_dimensions')
         .select('id, revision, name, active')
         .eq('workspace_id', workspaceId)
-        .order('name')
-        .order('id'));
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     final values = await StockRpc(_client).rows('item_dimension_values', () => _client
         .from('item_dimension_values')
         .select('id, dimension_id, label, active')
         .eq('workspace_id', workspaceId)
-        .order('label')
-        .order('id'));
+        .order('label', ascending: true)
+        .order('id', ascending: true));
     return [
       for (final d in dimensions)
         () {
@@ -153,8 +153,8 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
         .select('id, price_cents, active, item_variant_values(dimension_id, value_id)')
         .eq('workspace_id', workspaceId)
         .eq('item_id', itemId)
-        .order('canonical')
-        .order('id'));
+        .order('canonical', ascending: true)
+        .order('id', ascending: true));
     final dims = await dimensions(workspaceId);
     String labelOf(Map<String, String> values) {
       final parts = <(String, String)>[
@@ -194,8 +194,8 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
         .from(ServerTable.suppliers)
         .select('id, name')
         .eq('workspace_id', workspaceId)
-        .order('name')
-        .order('id'));
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return [
       for (final row in rows)
         () {
@@ -211,8 +211,8 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
         .from('supplier_item_mappings')
         .select('id, revision, supplier_id, item_id, variant_id, article_ref, purchase_unit, active')
         .eq('workspace_id', workspaceId)
-        .order('article_ref')
-        .order('id'));
+        .order('article_ref', ascending: true)
+        .order('id', ascending: true));
     return [for (final row in rows) SupplierItemMapping.fromJson(row)];
   }
 

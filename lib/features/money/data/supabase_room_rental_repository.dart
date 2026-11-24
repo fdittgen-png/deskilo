@@ -30,8 +30,8 @@ class SupabaseRoomRentalRepository implements RoomRentalRepository {
         .select('id, name')
         .eq('workspace_id', workspaceId)
         .eq('active', true)
-        .order('name')
-        .order('id'));
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return [
       for (final r in rows)
         RoomPlan(id: r['id'] as String, name: r['name'] as String),

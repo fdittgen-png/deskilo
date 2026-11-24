@@ -22,7 +22,7 @@ class SupabasePurchaseOrderRepository implements PurchaseOrderRepository {
         .eq('workspace_id', workspaceId)
         .order('year', ascending: false)
         .order('number', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return [for (final row in rows) PurchaseOrder.fromJson(row)];
   }
 
@@ -89,7 +89,7 @@ class SupabasePurchaseOrderRepository implements PurchaseOrderRepository {
         .select()
         .eq('workspace_id', workspaceId)
         .order('created_datetime', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return [for (final row in rows) PurchaseOrderSend.fromJson(row)];
   }
 
@@ -183,7 +183,7 @@ class SupabasePurchaseOrderRepository implements PurchaseOrderRepository {
         .eq('workspace_id', workspaceId)
         .order('received_on', ascending: false)
         .order('created_datetime', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return [for (final row in rows) PurchaseOrderReceipt.fromJson(row)];
   }
 

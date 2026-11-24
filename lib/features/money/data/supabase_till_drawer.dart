@@ -23,7 +23,7 @@ class SupabaseTillDrawer implements TillDrawerPort {
 
   @override
   Future<List<DrawerTill>> tills(String workspaceId) async {
-    final tills = await _client.from('counter_tills').select('id, name, active, site_id').eq('workspace_id', workspaceId).order('name');
+    final tills = await _client.from('counter_tills').select('id, name, active, site_id').eq('workspace_id', workspaceId).order('name', ascending: true);
     final sessions = await _client
         .from('counter_till_sessions')
         .select('id, till_id, float_minor, opened_by_member_id')

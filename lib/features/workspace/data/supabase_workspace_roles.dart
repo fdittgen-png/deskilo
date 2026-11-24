@@ -20,7 +20,7 @@ class SupabaseWorkspaceRoles implements WorkspaceRolesRepository {
         .from('workspace_roles')
         .select('id, key, permissions, names, sort_order, active, builtin')
         .eq('workspace_id', workspaceId)
-        .order('id'));
+        .order('id', ascending: true));
     return [
       for (final row in rows as List)
         () {
@@ -53,7 +53,7 @@ class SupabaseWorkspaceRoles implements WorkspaceRolesRepository {
         .from('workspace_role_members')
         .select('member_id')
         .eq('role_id', roleId)
-        .order('id'));
+        .order('id', ascending: true));
     return [
       for (final row in rows as List)
         '${Map<String, dynamic>.from(row as Map)['member_id']}',
@@ -66,7 +66,7 @@ class SupabaseWorkspaceRoles implements WorkspaceRolesRepository {
         .from('workspace_role_members')
         .select('member_id, role_id')
         .eq('workspace_id', workspaceId)
-        .order('id'));
+        .order('id', ascending: true));
     final out = <String, Set<String>>{};
     for (final row in rows as List) {
       final map = Map<String, dynamic>.from(row as Map);

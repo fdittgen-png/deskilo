@@ -65,8 +65,8 @@ class SupabaseStockQueries implements StockQueries {
         .select('id, code, name')
         .eq('workspace_id', workspaceId)
         .eq('active', true)
-        .order('code')
-        .order('id'));
+        .order('code', ascending: true)
+        .order('id', ascending: true));
     return [for (final row in rows) StockPlace.fromJson(row)];
   }
 
@@ -77,8 +77,8 @@ class SupabaseStockQueries implements StockQueries {
         .select('id, name, inventory_unit, active')
         .eq('workspace_id', workspaceId)
         .eq('stockable', true)
-        .order('name')
-        .order('id'));
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return [for (final row in rows) StockItem.fromJson(row)];
   }
 
@@ -90,8 +90,8 @@ class SupabaseStockQueries implements StockQueries {
         .eq('workspace_id', workspaceId)
         .eq('stockable', false)
         .eq('active', true)
-        .order('name')
-        .order('id'));
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return [for (final row in rows) StockItem.fromJson(row)];
   }
 

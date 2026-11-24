@@ -34,7 +34,7 @@ class SupabaseChargingStationRepository implements ChargingStationRepository {
         .from('charging_stations')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('id'));
+        .order('id', ascending: true));
     return {for (final row in rows) row['seat_id'] as String: _fromRow(row)};
   }
 

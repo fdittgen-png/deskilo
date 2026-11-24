@@ -139,9 +139,9 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
         .from('workspace_documents')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('category')
-        .order('title')
-        .order('id'));
+        .order('category', ascending: true)
+        .order('title', ascending: true)
+        .order('id', ascending: true));
     return [for (final row in rows) WorkspaceDocument.fromRow(row)];
   }
 

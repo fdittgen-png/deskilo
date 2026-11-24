@@ -171,7 +171,7 @@ mixin SupabaseBookingRules implements BookingRulesRepository {
         .select()
         .eq('workspace_id', workspaceId)
         .order('day', ascending: true)
-        .order('id'));
+        .order('id', ascending: true));
     return rows.map(_closureDayFromRow).toList();
   }
 

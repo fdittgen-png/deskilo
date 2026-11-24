@@ -20,8 +20,8 @@ class SupabaseSupplierRepository implements SupplierRepository {
           'status, bank_revision',
         )
         .eq('workspace_id', workspaceId)
-        .order('supplier_number')
-        .order('id'));
+        .order('supplier_number', ascending: true)
+        .order('id', ascending: true));
     return [for (final r in rows) Supplier.fromRow(r)];
   }
 
@@ -34,8 +34,8 @@ class SupabaseSupplierRepository implements SupplierRepository {
         )
         .eq('workspace_id', workspaceId)
         .eq('status', 'open')
-        .order('created_datetime')
-        .order('id'));
+        .order('created_datetime', ascending: true)
+        .order('id', ascending: true));
     return [for (final r in rows) SupplierReview.fromRow(r)];
   }
 
@@ -53,7 +53,7 @@ class SupabaseSupplierRepository implements SupplierRepository {
         .eq('workspace_id', workspaceId)
         .eq('supplier_id', supplierId)
         .order('revision', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return [for (final r in rows) SupplierBankRevision.fromRow(r)];
   }
 

@@ -475,7 +475,7 @@ class SupabaseMessengerRepository with SupabaseInboxPages implements MessengerRe
                     in await fetchAllPages(table: ServerTable.members, build: () => client.from(ServerTable.members)
                         .select('id')
                         .eq('user_id', user)
-                        .order('id')))
+                        .order('id', ascending: true)))
                   row['id'] as String,
               };
         final rows = await client

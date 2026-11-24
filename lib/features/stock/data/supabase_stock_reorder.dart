@@ -20,8 +20,8 @@ class SupabaseStockReorder implements StockReorder {
         .from('stock_reorder_points')
         .select('id, revision, item_id, variant_id, site_id, reorder_point::text, reorder_quantity::text, target_quantity::text, active')
         .eq('workspace_id', workspaceId)
-        .order('created_datetime')
-        .order('id'));
+        .order('created_datetime', ascending: true)
+        .order('id', ascending: true));
     return [for (final row in rows) StockReorderPoint.fromJson(row)];
   }
 

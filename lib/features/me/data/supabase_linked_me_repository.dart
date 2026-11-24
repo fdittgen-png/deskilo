@@ -39,11 +39,11 @@ class SupabaseLinkedMeRepository implements LinkedMeRepository {
     if (user == null) return const <LinkedSpace>[];
     // RLS answers with the spaces this account may read there; the
     // membership rows say how it stands in each.
-    final spaces = await fetchConfigurationList(table: ServerTable.workspaces, build: () => client.from(ServerTable.workspaces).select().order('id'));
+    final spaces = await fetchConfigurationList(table: ServerTable.workspaces, build: () => client.from(ServerTable.workspaces).select().order('id', ascending: true));
     final members = await fetchAllPages(table: ServerTable.members, build: () => client.from(ServerTable.members)
         .select('workspace_id, status, is_owner, is_admin')
         .eq('user_id', user)
-        .order('id'));
+        .order('id', ascending: true));
     final byWorkspace = {
       for (final m in members) m['workspace_id'] as String: m,
     };

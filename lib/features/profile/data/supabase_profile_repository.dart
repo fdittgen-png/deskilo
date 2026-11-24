@@ -148,7 +148,7 @@ class SupabaseProfileRepository implements ProfileRepository {
         .select()
         .eq('workspace_id', workspaceId)
         .order('received_at', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return [
       for (final row in rows as List)
         RightsRequest.fromJson(

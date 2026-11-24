@@ -33,7 +33,7 @@ class SupabaseDunningRepository implements DunningRepository {
         .select('invoice_id, reason')
         .eq('workspace_id', workspaceId)
         .isFilter('released_at', null)
-        .order('id'));
+        .order('id', ascending: true));
     return {
       for (final row in rows)
         row['invoice_id'] as String: row['reason'] as String,

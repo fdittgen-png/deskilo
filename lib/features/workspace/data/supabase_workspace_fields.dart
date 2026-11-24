@@ -28,7 +28,7 @@ class SupabaseWorkspaceFields implements WorkspaceFieldsRepository {
             'workspace_field_options(id, key, sort_order, active, '
             'workspace_field_option_labels(locale, label))')
         .eq('workspace_id', workspaceId)
-        .order('id'));
+        .order('id', ascending: true));
 
     final fields = <WorkspaceField>[];
     for (final row in rows as List) {
@@ -102,7 +102,7 @@ class SupabaseWorkspaceFields implements WorkspaceFieldsRepository {
             'boolean_value, workspace_field_definitions(key, type), '
             'workspace_field_value_options(workspace_field_options(key))')
         .eq('member_id', memberId)
-        .order('id'));
+        .order('id', ascending: true));
 
     final answers = <String, Object?>{};
     for (final row in rows as List) {

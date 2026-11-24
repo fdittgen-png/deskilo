@@ -47,7 +47,7 @@ class SupabaseExpenseRepository implements ExpenseRepository {
         .select()
         .eq('workspace_id', workspaceId)
         .order('created_at', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return [
       for (final row in rows)
         ExpenseRepartition.fromJson(Map<String, dynamic>.from(row as Map)),
@@ -63,7 +63,7 @@ class SupabaseExpenseRepository implements ExpenseRepository {
         .select()
         .eq('workspace_id', workspaceId)
         .order('created_at', ascending: false)
-        .order('id'));
+        .order('id', ascending: true));
     return [
       for (final r in rows as List)
         ExpenseSchedule.fromDb(r as Map<String, dynamic>),
@@ -142,8 +142,8 @@ class SupabaseExpenseRepository implements ExpenseRepository {
         .select('*, expense_schedules!inner(title, amount_cents, origin)')
         .eq('workspace_id', workspaceId)
         .eq('expense_schedules.origin', 'member_outlay')
-        .order('due_on')
-        .order('id'));
+        .order('due_on', ascending: true)
+        .order('id', ascending: true));
     return [
       for (final r in rows as List)
         ExpenseOccurrence.fromDb(r as Map<String, dynamic>),

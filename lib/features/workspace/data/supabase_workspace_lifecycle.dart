@@ -20,7 +20,7 @@ mixin SupabaseWorkspaceLifecycle on SupabaseWorkspaceRows
     implements WorkspaceLifecycleRepository {
   @override
   Future<List<Workspace>> fetchMyWorkspaces() async {
-    final rows = await fetchConfigurationList(table: ServerTable.workspaces, build: () => client.from(ServerTable.workspaces).select().order('id'));
+    final rows = await fetchConfigurationList(table: ServerTable.workspaces, build: () => client.from(ServerTable.workspaces).select().order('id', ascending: true));
     return rows.map(workspaceFromRow).toList();
   }
 

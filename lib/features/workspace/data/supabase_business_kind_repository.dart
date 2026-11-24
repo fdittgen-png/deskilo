@@ -23,8 +23,8 @@ class SupabaseBusinessKindRepository implements BusinessKindRepository {
           .from('business_kinds')
           .select('code, sort_order, feature_profile, profile_version, profile_digest')
           .eq('active', true)
-          .order('sort_order')
-          .order('code'));
+          .order('sort_order', ascending: true)
+          .order('code', ascending: true));
       return [for (final r in rows) BusinessKind.fromJson(r)];
     } on PostgrestException catch (e, st) {
       // 42703: a server from before 0834 has no profile version or digest: read
@@ -40,8 +40,8 @@ class SupabaseBusinessKindRepository implements BusinessKindRepository {
           .from('business_kinds')
           .select('code, sort_order, feature_profile')
           .eq('active', true)
-          .order('sort_order')
-          .order('code'));
+          .order('sort_order', ascending: true)
+          .order('code', ascending: true));
       return [for (final r in rows) BusinessKind.fromJson(r)];
     }
   }

@@ -22,9 +22,9 @@ mixin SupabaseSites implements SiteRepository {
         .select()
         .eq('workspace_id', workspaceId)
         .order('is_default', ascending: false)
-        .order('sort_order')
-        .order('name')
-        .order('id'));
+        .order('sort_order', ascending: true)
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return rows.map((r) => Site.fromRow(Map<String, dynamic>.from(r))).toList();
   }
 

@@ -33,7 +33,7 @@ class SupabasePurchaseRepository implements PurchaseRepository {
           )
           .eq('workspace_id', workspaceId)
           .order('created_datetime', ascending: false)
-          .order('id'),
+          .order('id', ascending: true),
     );
     return [for (final r in rows) PurchaseSummary.fromRow(r)];
   }
@@ -290,16 +290,16 @@ class SupabasePurchaseRepository implements PurchaseRepository {
         .from(ServerTable.sites)
         .select('id, name')
         .eq('workspace_id', workspaceId)
-        .order('sort_order')
-        .order('name')
-        .order('id'));
+        .order('sort_order', ascending: true)
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     final levels = await fetchConfigurationList(table: ServerTable.levels, build: () => _client
         .from(ServerTable.levels)
         .select('id, name, offices(id, name)')
         .eq('workspace_id', workspaceId)
-        .order('sort_order')
-        .order('name')
-        .order('id'));
+        .order('sort_order', ascending: true)
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     PurchasePlace place(String kind, Object? row) {
       final r = JsonReader.of(row, context: kind);
       return PurchasePlace(kind: kind, id: r.string('id'), name: r.string('name'));
@@ -363,8 +363,8 @@ class SupabasePurchaseRepository implements PurchaseRepository {
         .from('exchange_rate_sources')
         .select('code')
         .eq('active', true)
-        .order('sort_order')
-        .order('code'));
+        .order('sort_order', ascending: true)
+        .order('code', ascending: true));
     return [
       for (final r in rows)
         JsonReader(r, context: 'exchange_rate_sources').string('code'),

@@ -24,8 +24,8 @@ class SupabaseStockReceivingCommands implements StockReceivingCommands {
         )
         .eq('workspace_id', workspaceId)
         .eq('receipt_id', receiptId)
-        .order('part')
-        .order('id'));
+        .order('part', ascending: true)
+        .order('id', ascending: true));
     return [for (final row in rows) ReceiptAllocation.fromJson(row)];
   }
 
@@ -40,8 +40,8 @@ class SupabaseStockReceivingCommands implements StockReceivingCommands {
         )
         .eq('workspace_id', workspaceId)
         .eq('purchase_order_receipts.order_id', orderId)
-        .order('created_datetime')
-        .order('id'));
+        .order('created_datetime', ascending: true)
+        .order('id', ascending: true));
     return [for (final row in rows) ReceiptAllocation.fromJson(row)];
   }
 

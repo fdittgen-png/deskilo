@@ -24,9 +24,9 @@ mixin SupabaseWorkspaceTemplates {
     final rows = await fetchConfigurationList(table: 'workspace_templates', build: () => client
         .from('workspace_templates')
         .select()
-        .order('visibility')
-        .order('name')
-        .order('id'));
+        .order('visibility', ascending: true)
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return [
       for (final row in rows)
         WorkspaceTemplate.fromRow(Map<String, dynamic>.from(row as Map)),

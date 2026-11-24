@@ -36,7 +36,7 @@ class SupabaseAccessoryRepository implements AccessoryRepository {
         return query
             .order('sort_order', ascending: true)
             .order('name', ascending: true)
-            .order('id');
+            .order('id', ascending: true);
       },
     );
     return rows.map(_accessoryFromRow).toList();
@@ -97,8 +97,8 @@ class SupabaseAccessoryRepository implements AccessoryRepository {
         .from('seat_accessories')
         .select('seat_id, accessory_id')
         .eq('workspace_id', workspaceId)
-        .order('seat_id')
-        .order('accessory_id'));
+        .order('seat_id', ascending: true)
+        .order('accessory_id', ascending: true));
     final result = <String, Set<String>>{};
     for (final row in rows) {
       result
