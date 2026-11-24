@@ -8,7 +8,7 @@
 // A draft is kept here, once per request: nothing is ordered, priced or sent.
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_config_commands.dart';
-import 'package:deskilo/features/stock/domain/stock_ledger.dart';
+import 'package:deskilo/features/stock/domain/stock_ledger_rules.dart';
 import 'package:deskilo/features/stock/domain/stock_reorder.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
@@ -70,10 +70,10 @@ class DemoStockReorder implements StockReorder {
     if (pointId != null && old == null) throw const StockConfigRefused('point', StockRefusal.malformed);
     if (old != null && old.revision != expectedRevision) throw const StockConfigStale();
     final (:item, :variant, :site) = await _targetOf(body, old);
-    final read = StockLedger.reorderQuantityOf(body, 'reorder_point', old?.reorderPoint);
-    final quantity = StockLedger.reorderQuantityOf(body, 'reorder_quantity', old?.reorderQuantity);
-    final target = StockLedger.reorderQuantityOf(body, 'target_quantity', old?.targetQuantity);
-    final level = StockLedger.reorderRule(read, quantity, target);
+    final read = StockLedgerRules.reorderQuantityOf(body, 'reorder_point', old?.reorderPoint);
+    final quantity = StockLedgerRules.reorderQuantityOf(body, 'reorder_quantity', old?.reorderQuantity);
+    final target = StockLedgerRules.reorderQuantityOf(body, 'target_quantity', old?.targetQuantity);
+    final level = StockLedgerRules.reorderRule(read, quantity, target);
     if (_points.values.any((p) => p.itemId == item && p.variantId == variant && p.siteId == site && p.id != pointId)) {
       throw const StockConfigRefused('item_id', StockRefusal.pointTwice);
     }

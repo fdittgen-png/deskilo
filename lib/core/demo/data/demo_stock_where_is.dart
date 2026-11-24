@@ -4,6 +4,7 @@
 // are the ONE Demo ledger's movements replayed (now, or up to a date), the goods on the road are its open transfers, the
 // pieces are the tags of its gift basket. Another Demo business keeps none.
 import 'package:deskilo/features/stock/domain/stock_config.dart';
+import 'package:deskilo/features/stock/domain/stock_ledger_rules.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_where_is.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';

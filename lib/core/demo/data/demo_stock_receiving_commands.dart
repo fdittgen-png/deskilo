@@ -11,6 +11,7 @@ import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/purchase_order_receipt.dart';
 import 'package:deskilo/features/stock/domain/put_away_progress.dart' show exactOfReceived;
 import 'package:deskilo/features/stock/domain/stock_config.dart';
+import 'package:deskilo/features/stock/domain/stock_ledger_rules.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 

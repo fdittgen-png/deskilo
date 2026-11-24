@@ -22,6 +22,7 @@ import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_ledger.dart';
 import 'package:deskilo/features/stock/domain/stock_operations.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
+import 'package:deskilo/features/stock/domain/stock_reversal_book.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
@@ -125,6 +126,7 @@ class StockScenarioWorld {
   }
 
   late final StockLedger ledger;
+  late final StockReversalBook book = StockReversalBook(ledger);
   final Map<String, String> _first = {};
   final Map<String, String> _transfers = {};
 
@@ -184,14 +186,14 @@ class StockScenarioWorld {
         ledger.takeOut(StockTakeOutReason.values.byName(s.arg), _lines(s.spec));
       case 'return':
         final [kind, source] = s.arg.split(':');
-        ledger.makeReturn('return-${s.id}', StockReturnKind.values.byName(kind), [
+        book.makeReturn('return-${s.id}', StockReturnKind.values.byName(kind), [
           (lineId: 'line-${s.id}', sourceMovementId: _first[source]!, quantity: t[0], locationId: t.length > 1 ? t[1] : null, note: ''),
         ]);
       case 'count':
-        ledger.recordCount((countId: 'count-${s.id}', itemId: t[0], locationId: t[1], observed: t[2], requestId: s.id, variantId: null, lotId: null, reason: ''),
+        book.recordCount((countId: 'count-${s.id}', itemId: t[0], locationId: t[1], observed: t[2], requestId: s.id, variantId: null, lotId: null, reason: ''),
             author: 'me');
         if (s.arg.isNotEmpty) ledger.transferInSite(_lines(s.arg));
-        ledger.decideCount('count-${s.id}', StockCountDecision.apply, decider: 'me');
+        book.decideCount('count-${s.id}', StockCountDecision.apply, decider: 'me');
       default:
         throw ArgumentError(s.kind);
     }

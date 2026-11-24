@@ -62,6 +62,8 @@ const _notYetProven = <String, String>{
 /// The domain files the Demo's stock fakes delegate their rules to (#4403): a reason they give is the Demo's.
 const _delegates = [
   'lib/features/stock/domain/stock_ledger.dart',
+  'lib/features/stock/domain/stock_ledger_rules.dart',
+  'lib/features/stock/domain/stock_reversal_book.dart',
   'lib/features/stock/domain/stock_count_tasks.dart',
   'lib/features/stock/domain/handling_unit_book.dart',
   'lib/features/stock/domain/stock_config_check.dart',

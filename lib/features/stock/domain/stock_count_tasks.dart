@@ -8,7 +8,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../core/codes/dk_code.dart';
 import 'stock_cycle_counts.dart';
-import 'stock_ledger.dart';
+import 'stock_reversal_book.dart';
 
 final _day = RegExp(r'^\d{4}-\d{2}-\d{2}$');
 final _quantity = RegExp(r'^[0-9]{1,12}(\.[0-9]{1,6})?$');

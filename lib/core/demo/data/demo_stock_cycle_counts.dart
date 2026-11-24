@@ -9,9 +9,9 @@
 // every line is counted or skipped. Nothing leaves the process.
 import 'package:deskilo/features/stock/domain/stock_count_tasks.dart';
 import 'package:deskilo/features/stock/domain/stock_cycle_counts.dart';
-import 'package:deskilo/features/stock/domain/stock_ledger.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_registry.dart';
+import 'package:deskilo/features/stock/domain/stock_reversal_book.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -50,8 +50,8 @@ class DemoStockCycleCounts implements StockCycleCounts {
     await _seed();
     try {
       return await run();
-    } on StockCodeRefused catch (e) {
-      throw _refused(e.code, e.message);
+    } on StockCodeRefused catch (e, st) {
+      Error.throwWithStackTrace(_refused(e.code, e.message), st);
     }
   }
 
