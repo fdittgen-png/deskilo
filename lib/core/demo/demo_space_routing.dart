@@ -262,6 +262,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
       (ref) => demoPickSpace(ref, payments),
     ),
     tillPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
+    tillOfflinePortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
   ];
 }
 

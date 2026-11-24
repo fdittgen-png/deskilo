@@ -7,11 +7,11 @@
 import 'package:deskilo/features/money/domain/billing_access.dart';
 import 'package:deskilo/features/money/domain/billing_customer.dart';
 
-/// How long an invitation's code can be used (the server's default, 0910) and
-/// how long ago the seeded grant was invited and accepted.
-const _inviteValidity = Duration(days: 14);
-const _seedInvitedAgo = Duration(days: 30);
-const _seedAcceptedAfter = Duration(days: 1);
+import 'demo_billing_access_constants.dart';
+
+const _inviteValidity = demoInviteValidity;
+const _seedInvitedAgo = demoSeedInvitedAgo;
+const _seedAcceptedAfter = demoSeedAcceptedAfter;
 
 class FakeBillingAccessRepository implements BillingAccessRepository {
   FakeBillingAccessRepository({

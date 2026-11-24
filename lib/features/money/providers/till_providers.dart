@@ -2,6 +2,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/counter_till.dart';
+import '../domain/till_offline.dart';
 import '../presentation/till_session.dart';
 
 /// #4366 -- the till's server: readiness, a priced draft and the one command that makes the sale. The app wires the
@@ -22,3 +23,7 @@ final tillSessionProvider = Provider.family<TillSession, String>((ref, workspace
   ref.onDispose(session.dispose);
   return session;
 });
+
+/// #4373 -- the server side of the offline sales (`counter_offline_sync_v1`, `counter_offline_list_v1`). The app wires the live
+/// one (`tillPortFromApp`'s sibling); the Demo and the tests replace it.
+final tillOfflinePortProvider = Provider<TillOfflinePort>((ref) => throw UnimplementedError('the offline till port is wired by the app'));

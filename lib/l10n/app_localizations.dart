@@ -7844,12 +7844,6 @@ abstract class AppLocalizations {
   /// the billing access of a customer to their own invoices (#4164)
   ///
   /// In en, this message translates to:
-  /// **'Code'**
-  String get billingAccessCodeField;
-
-  /// the billing access of a customer to their own invoices (#4164)
-  ///
-  /// In en, this message translates to:
   /// **'Give this code to the customer now. It is shown only once and cannot be read again. It is valid until {date}.'**
   String billingAccessCodeOnce(String date);
 
@@ -19017,6 +19011,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.'**
   String get featureConfigurationTransferDesc;
+
+  /// #4373 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.'**
+  String get featureCounterOfflineCashDesc;
+
+  /// #4373 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Selling offline, cash only'**
+  String get featureCounterOfflineCashTitle;
 
   /// #4184 feature description
   ///
@@ -46572,6 +46578,12 @@ abstract class AppLocalizations {
   /// **'This receipt is no longer an open draft, or a receipt was already issued for the same sale.'**
   String get refusalCounterNotOpen;
 
+  /// #4373 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'A sale sent from the till under this number was already received with other content. Nothing was recorded again; look at the list of offline sales.'**
+  String get refusalCounterOfflineConflict;
+
   /// #4185 refusal
   ///
   /// In en, this message translates to:
@@ -51588,6 +51600,24 @@ abstract class AppLocalizations {
   /// **'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.'**
   String get settingHintCounterFiscalObligation;
 
+  /// #4373 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.'**
+  String get settingHintCounterOfflineMaxMinutes;
+
+  /// #4373 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How many cash sales made offline one till session accepts. Further sales are refused and listed for the owner.'**
+  String get settingHintCounterOfflineMaxSales;
+
+  /// #4373 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How far, in percent, the price of an offline sale may differ from the item\'s price when the sale is sent. 0 means the price must be the same.'**
+  String get settingHintCounterOfflinePriceTolerance;
+
   /// #4367 setting label/hint or refusal
   ///
   /// In en, this message translates to:
@@ -52235,6 +52265,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fiscal rules for counter sales'**
   String get settingLabelCounterFiscalObligation;
+
+  /// #4373 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Longest offline period (minutes)'**
+  String get settingLabelCounterOfflineMaxMinutes;
+
+  /// #4373 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Most offline sales per till session'**
+  String get settingLabelCounterOfflineMaxSales;
+
+  /// #4373 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Price difference allowed offline (%)'**
+  String get settingLabelCounterOfflinePriceTolerance;
 
   /// #4367 setting label/hint or refusal
   ///
@@ -60469,12 +60517,6 @@ abstract class AppLocalizations {
   /// #4435 handling units
   ///
   /// In en, this message translates to:
-  /// **'Item'**
-  String get stockUnitItem;
-
-  /// #4435 handling units
-  ///
-  /// In en, this message translates to:
   /// **'Kind'**
   String get stockUnitKind;
 
@@ -60561,12 +60603,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Place'**
   String get stockUnitPlace;
-
-  /// #4435 handling units
-  ///
-  /// In en, this message translates to:
-  /// **'Quantity'**
-  String get stockUnitQuantity;
 
   /// #4435 handling units
   ///
@@ -65236,6 +65272,12 @@ abstract class AppLocalizations {
   /// **'Take cash'**
   String get tillPayCash;
 
+  /// #4436 the till: a piece scanned a second time into the same basket
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {code} is already in the basket.'**
+  String tillPieceTwice(String code);
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -65278,6 +65320,12 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get tillRetry;
 
+  /// #4436 the till: a scanned code that names nothing the till rings up
+  ///
+  /// In en, this message translates to:
+  /// **'{code} is not something this till sells.'**
+  String tillScanUnknown(String code);
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -65301,6 +65349,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total to pay: {amount}'**
   String tillTotalDue(String amount);
+
+  /// #4436 the till: a lot a sold line took, its code as received and the quantity taken from it
+  ///
+  /// In en, this message translates to:
+  /// **'Lot {code} × {quantity}'**
+  String tillTrackLot(String code, String quantity);
+
+  /// #4436 the till: a piece a sold line took, named by its tag
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {code}'**
+  String tillTrackPiece(String code);
 
   /// Tip (#2313) on the availability surface: a scenario "To …: …".
   ///

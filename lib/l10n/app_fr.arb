@@ -2936,7 +2936,6 @@
   "billingAccessCheck": "Vérifier le code",
   "billingAccessCodeCopied": "Code copié",
   "billingAccessCodeCopy": "Copier le code",
-  "billingAccessCodeField": "Code",
   "billingAccessCodeOnce": "Remettez ce code au client maintenant. Il n'est affiché qu'une fois et ne peut plus être relu. Il est valable jusqu'au {date}.",
   "billingAccessCodeTitle": "Code d'invitation",
   "billingAccessCodeUnusable": "Ce code est inutilisable. Il peut être erroné, expiré, retiré ou déjà pris par un autre compte. Demandez-en un nouveau à l'entreprise.",
@@ -7241,6 +7240,14 @@
   "featureConfigurationTransferDesc": "Le fichier de l'espace (XML) emporte toute la configuration — tarifs, identité légale, règles de réservation et de validation, rôles, maquettes de documents, sites, jours de fermeture — et l'import l'applique, même sur un espace qui a déjà des réservations. Désactivé : le fichier n'emporte que les réglages et le plan.",
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "featureCounterOfflineCashDesc": "Quand la connexion est perdue, la caisse continue de vendre en espèces, enregistre chaque vente sur l'appareil et envoie les ventes dans l'ordre au retour de la connexion. Les autres moyens de paiement attendent la connexion.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  },
+  "featureCounterOfflineCashTitle": "Vendre hors ligne, en espèces seulement",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
   },
   "featureCounterReceiptsDesc": "Une vente au comptoir donne un ticket immuable, numéroté une seule fois, avec le règlement reçu. Il n'est proposé que là où l'opération du pays est prise en charge, et dit clairement quand elle ne l'est pas.",
   "featureCounterReceiptsTitle": "Tickets de caisse",
@@ -16660,6 +16667,10 @@
   "refusalCounterEssentials": "Il manque quelque chose à ce ticket ou ce n'est pas acceptable : rien n'a été numéroté et rien n'a été encaissé.",
   "refusalCounterGoods": "Les marchandises ne peuvent pas être vendues ou reprises ici : le registre des marchandises est désactivé, ou il n'y a pas de lieu d'où les prendre ou où les remettre.",
   "refusalCounterNotOpen": "Ce ticket n'est plus un brouillon ouvert, ou un ticket a déjà été émis pour la même vente.",
+  "refusalCounterOfflineConflict": "Une vente envoyée par la caisse sous ce numéro a déjà été reçue avec un autre contenu. Rien n'a été enregistré de nouveau ; consultez la liste des ventes hors ligne.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  },
   "refusalCounterTenderState": "Cette autorisation par carte est encore ouverte, inconnue ou déjà réglée : interrogez le prestataire au lieu de redemander.",
   "refusalCounterTenders": "Les règlements ne soldent pas exactement cette vente, ou l'un d'eux n'est pas pris en charge ici.",
   "refusalCounterTill": "La caisse n'est pas prête pour cela : ouvrez-la d'abord, ou elle est déjà ouverte ou fermée.",
@@ -19146,6 +19157,18 @@
   "settingHintCounterCustomerlessSales": "Autorisées : une vente peut se faire sans nommer de client. Refusées : chaque vente en nomme un. Une vente sans client ne crée jamais de compte, de membre ni d'abonnement.",
   "settingHintCounterDocumentChannel": "Partagé (message ou courriel), imprimé, ou les deux. Le ticket est le même document immuable dans tous les cas.",
   "settingHintCounterFiscalObligation": "Ce que vous déclarez sur les règles fiscales d'une vente au comptoir : aucune signifie qu'aucune obligation fiscale de caisse ne s'applique à votre entreprise (votre propre déclaration, inscrite sur chaque ticket) ; caisse requise signifie qu'une obligation s'applique. Un ticket n'est émis que là où l'opération de votre pays est prise en charge dans le cas que vous déclarez.",
+  "settingHintCounterOfflineMaxMinutes": "Combien de temps après la perte de connexion de la caisse une vente en espèces faite hors ligne est encore acceptée à l'envoi. Les ventes plus tardives sont refusées et listées pour le gérant.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflineMaxSales": "Combien de ventes en espèces faites hors ligne une session de caisse accepte. Les suivantes sont refusées et listées pour le gérant.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflinePriceTolerance": "De combien, en pourcentage, le prix d'une vente hors ligne peut différer du prix de l'article à l'envoi. 0 signifie que le prix doit être identique.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
   "settingHintCounterPaidOutLimit": "Le plus grand montant, en unités mineures de la devise de l'entreprise (centimes), d'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.",
   "settingHintDirectoryGeocoderUrl": "Le service compatible Photon qui place une adresse publiée sur la carte de découverte : une adresse https sur l'internet public, sans nom d'utilisateur, mot de passe, requête ni #. Laissez vide pour utiliser l'adresse avec laquelle cette version de l'application a été construite, sinon le service public Photon.",
   "settingHintDirectoryTileUrlTemplate": "Le serveur de tuiles qui dessine la carte de découverte, avec les marqueurs z, x et y entre accolades dans son adresse (s entre accolades pour un sous-domaine est permis) : https, sur l'internet public, sans nom d'utilisateur, mot de passe ni #. Laissez vide pour utiliser le serveur de cette version de l'application, sinon OpenStreetMap. Un nouvel hôte redemande l'accord de chacun avant que la carte ne se charge.",
@@ -19386,6 +19409,18 @@
   "settingLabelCounterCustomerlessSales": "Ventes sans client nommé",
   "settingLabelCounterDocumentChannel": "Comment le ticket quitte le comptoir",
   "settingLabelCounterFiscalObligation": "Règles fiscales des ventes au comptoir",
+  "settingLabelCounterOfflineMaxMinutes": "Durée maximale hors ligne (minutes)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflineMaxSales": "Nombre maximal de ventes hors ligne par session de caisse",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Écart de prix toléré hors ligne (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
+  },
   "settingLabelCounterPaidOutLimit": "Plus grand retrait sans autorisation",
   "settingLabelDirectoryGeocoderUrl": "Service de recherche d'adresse",
   "settingLabelDirectoryTileUrlTemplate": "Serveur de tuiles de la carte",
@@ -22166,7 +22201,6 @@
   "stockUnitCode": "Code de l'unité",
   "stockUnitContent": "Contenu",
   "stockUnitContentNone": "Rien dedans.",
-  "stockUnitItem": "Article",
   "stockUnitKind": "Genre",
   "stockUnitKindBox": "Boîte",
   "stockUnitKindCarton": "Carton",
@@ -22182,12 +22216,11 @@
   "stockUnitMoved": "{unit} déplacée vers {place}.",
   "stockUnitNestedIn": "Dans {unit}",
   "stockUnitPlace": "Emplacement",
-  "stockUnitQuantity": "Quantité",
   "stockUnitRepack": "Reconditionner en boîtes",
   "stockUnitRepackBoxes": "Nombre de boîtes",
   "stockUnitRepackEach": "Quantité par boîte",
   "stockUnitRepackItem": "Ce qu'il faut reconditionner",
-  "stockUnitRepacked": "{count, plural, one{1 boîte créée.} other{{count} boîtes créées.}}",
+  "stockUnitRepacked": "{count, plural, one{{count} boîte créée.} other{{count} boîtes créées.}}",
   "stockUnitUnpack": "Défaire",
   "stockUnitUnpackHint": "Son contenu reste où il est, en vrac.",
   "stockUnitUnpacked": "{unit} défaite.",
@@ -23749,6 +23782,15 @@
   "tillOpReconcileTender": "rapprochement d'un paiement par carte",
   "tillOpSignFiscal": "signature d'un ticket fiscal",
   "tillPayCash": "Encaisser en espèces",
+  "tillPieceTwice": "La pièce {code} est déjà dans le panier.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Calcul du panier…",
   "tillQuantityHint": "Une quantité exacte, par exemple 1 ou 0,350.",
   "tillQuantityRefused": "Saisissez une quantité supérieure à zéro, avec au plus six décimales.",
@@ -23759,10 +23801,40 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillScanUnknown": "{code} n'est pas un article vendu à cette caisse.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillSoldTitle": "Vendu",
   "tillTaxIncluded": "dont taxe {amount}",
   "tillTitle": "Caisse",
   "tillTotalDue": "Total à payer: {amount}",
+  "tillTrackLot": "Lot {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Pièce {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tipAvailabilityClosure": "Pour fermer un jour que personne ne pourra réserver : touchez « Ajouter un jour de fermeture » et indiquez une raison si vous voulez.",
   "tipAvailabilityDays": "Pour fixer vos jours d’ouverture : cochez les jours sous « Jours d'ouverture ».",
   "tipAvailabilityGrid": "Pour choisir le découpage des réservations : choisissez une « Granularité des réservations » — périodes libres, créneaux, demi-journées ou journées.",

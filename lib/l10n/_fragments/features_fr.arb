@@ -365,5 +365,13 @@
     "description": "#4435 the handling units feature: what it does"
   },
   "featureStockTagReadsTitle": "Lecture de nombreuses étiquettes",
-  "featureStockTagReadsDesc": "Un lecteur UHF en mode clavier lit de nombreuses étiquettes d'un coup pour recevoir, déplacer et compter : les étiquettes sont rassemblées, dédoublonnées et résolues, et rien n'est envoyé avant la confirmation de l'utilisateur."
+  "featureStockTagReadsDesc": "Un lecteur UHF en mode clavier lit de nombreuses étiquettes d'un coup pour recevoir, déplacer et compter : les étiquettes sont rassemblées, dédoublonnées et résolues, et rien n'est envoyé avant la confirmation de l'utilisateur.",
+  "featureCounterOfflineCashTitle": "Vendre hors ligne, en espèces seulement",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
+  },
+  "featureCounterOfflineCashDesc": "Quand la connexion est perdue, la caisse continue de vendre en espèces, enregistre chaque vente sur l'appareil et envoie les ventes dans l'ordre au retour de la connexion. Les autres moyens de paiement attendent la connexion.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  }
 }

@@ -3022,6 +3022,8 @@ Appuyez sur **Encaisser en espèces** et saisissez les **Espèces remises** (ou 
 
 Là où votre pays n'autorise pas encore la caisse, elle nomme l'opération manquante et ne propose rien : rien n'est numéroté ni encaissé. Une ligne de marchandise demande la gestion de stock ; un refus du serveur est dit en mots. Paiements par carte, remises, remboursements et retours ne font pas partie de cette première caisse.
 
+Un article tracé indique d'où il a été pris. Quand vous vendez un article suivi par lot sans choisir de lot, la vente le prend dans les lots en stock, celui qui expire le premier d'abord et jamais un lot périmé ; sous la ligne vendue, la caisse affiche le code de chaque lot tel qu'il a été reçu, avec la quantité prise, par exemple **Lot SUP-A × 2 · Lot SUP-B × 1**, et chaque pièce par son étiquette. Si l'entreprise utilise un lecteur, scannez l'étiquette d'une pièce pour l'ajouter : la vente prend exactement les pièces scannées, et la même pièce deux fois est refusée. Ces identifiants de traçabilité sont figés avec le ticket : modifier plus tard un lot ou une étiquette ne change jamais un ticket déjà émis. Dans le stock, la traçabilité d'un lot ou d'une pièce indique le ticket qui l'a vendu.
+
 ### Puces RFID : une par lot ou une par pièce
 
 **Public:** Administrateur·rice · Propriétaire

@@ -5025,9 +5025,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get billingAccessCodeCopy => 'Copiare il codice';
 
   @override
-  String get billingAccessCodeField => 'Codice';
-
-  @override
   String billingAccessCodeOnce(String date) {
     return 'Consegni subito questo codice al cliente. Viene mostrato una sola volta e non può essere riletto. È valido fino al $date.';
   }
@@ -11810,6 +11807,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'Il file dello spazio (XML) porta l\'intera configurazione — tariffe, identità legale, regole di prenotazione e convalida, ruoli, layout dei documenti, sedi, giorni di chiusura — e l\'importazione la applica, anche su uno spazio che ha già prenotazioni. Disattivato: il file porta solo impostazioni e planimetria.';
+
+  @override
+  String get featureCounterOfflineCashDesc =>
+      'Quando la connessione cade, la cassa continua a vendere in contanti, registra ogni vendita sul dispositivo e invia le vendite in ordine al ritorno della connessione. Gli altri metodi di pagamento attendono la connessione.';
+
+  @override
+  String get featureCounterOfflineCashTitle =>
+      'Vendere offline, solo in contanti';
 
   @override
   String get featureCounterReceiptsDesc =>
@@ -29271,6 +29276,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo scontrino non è più una bozza aperta, oppure per la stessa vendita ne è già stato emesso uno.';
 
   @override
+  String get refusalCounterOfflineConflict =>
+      'Una vendita inviata dalla cassa con questo numero è già stata ricevuta con un altro contenuto. Non è stato registrato nulla di nuovo; consultate l\'elenco delle vendite offline.';
+
+  @override
   String get refusalCounterTenderState =>
       'Questa autorizzazione della carta è ancora aperta, sconosciuta o già conclusa: chieda al fornitore invece di richiederla di nuovo.';
 
@@ -32440,6 +32449,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ciò che dichiara sulle regole fiscali di una vendita al banco: nessuna significa che al Suo esercizio non si applica alcun obbligo fiscale di registratore (una Sua dichiarazione, annotata su ogni scontrino); registratore richiesto significa che si applica. Lo scontrino è emesso solo dove l\'operazione del Suo paese è supportata nel caso dichiarato.';
 
   @override
+  String get settingHintCounterOfflineMaxMinutes =>
+      'Per quanto tempo dopo la perdita della connessione una vendita in contanti fatta offline è ancora accettata all\'invio. Le vendite successive sono rifiutate ed elencate per il titolare.';
+
+  @override
+  String get settingHintCounterOfflineMaxSales =>
+      'Quante vendite in contanti fatte offline accetta una sessione di cassa. Le successive sono rifiutate ed elencate.';
+
+  @override
+  String get settingHintCounterOfflinePriceTolerance =>
+      'Di quanto, in percentuale, il prezzo di una vendita offline può differire dal prezzo dell\'articolo all\'invio. 0 significa che il prezzo deve essere identico.';
+
+  @override
   String get settingHintCounterPaidOutLimit =>
       'L\'importo massimo, in unità minori della valuta dell\'attività (centesimi), di un prelievo dal cassetto senza qualcuno che possa registrare pagamenti in uscita. 0 significa nessun limite.';
 
@@ -32855,6 +32876,18 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Regole fiscali delle vendite al banco';
+
+  @override
+  String get settingLabelCounterOfflineMaxMinutes =>
+      'Durata massima offline (minuti)';
+
+  @override
+  String get settingLabelCounterOfflineMaxSales =>
+      'Massimo di vendite offline per sessione di cassa';
+
+  @override
+  String get settingLabelCounterOfflinePriceTolerance =>
+      'Differenza di prezzo ammessa offline (%)';
 
   @override
   String get settingLabelCounterPaidOutLimit =>
@@ -38081,9 +38114,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockUnitContentNone => 'Niente dentro.';
 
   @override
-  String get stockUnitItem => 'Articolo';
-
-  @override
   String get stockUnitKind => 'Tipo';
 
   @override
@@ -38136,9 +38166,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockUnitPlace => 'Luogo';
-
-  @override
-  String get stockUnitQuantity => 'Quantità';
 
   @override
   String get stockUnitRepack => 'Riconfeziona in scatole';
@@ -40916,6 +40943,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillPayCash => 'Incassare in contanti';
 
   @override
+  String tillPieceTwice(String code) {
+    return 'Il pezzo $code è già nel carrello.';
+  }
+
+  @override
   String get tillPricing => 'Calcolo del carrello…';
 
   @override
@@ -40943,6 +40975,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillRetry => 'Riprova';
 
   @override
+  String tillScanUnknown(String code) {
+    return '$code non è un articolo venduto da questa cassa.';
+  }
+
+  @override
   String get tillSoldTitle => 'Venduto';
 
   @override
@@ -40956,6 +40993,16 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String tillTotalDue(String amount) {
     return 'Totale da pagare: $amount';
+  }
+
+  @override
+  String tillTrackLot(String code, String quantity) {
+    return 'Lotto $code × $quantity';
+  }
+
+  @override
+  String tillTrackPiece(String code) {
+    return 'Pezzo $code';
   }
 
   @override
