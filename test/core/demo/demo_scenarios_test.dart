@@ -1371,7 +1371,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     (w) async {
       final config = DemoStockConfigCommands(demoFirstSpaceId);
       final ledger = DemoStockLedger(demoFirstSpaceId, config);
-      final operations = DemoStockOperations(ledger, config);
+      final operations = DemoStockOperations(ledger);
       final main = (await config.places(demoFirstSpaceId)).firstWhere((p) => p.code == 'MAIN').id;
       await operations.takeOut(demoFirstSpaceId, StockTakeOutReason.loss, [
         StockLineDraft(itemId: 'demo-item-mugs', quantity: '1', fromLocationId: main),

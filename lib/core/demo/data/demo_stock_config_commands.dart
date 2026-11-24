@@ -162,6 +162,10 @@ class DemoStockConfigCommands implements StockConfigCommands {
   Future<List<StockPlaceConfig>> places(String workspaceId) async =>
       _mine(workspaceId) ? _places.values.toList() : const [];
 
+  /// #4403 -- the places and the packaging units, as the stock ledger reads them (in memory, no wait).
+  Map<String, StockPlaceConfig> get placeMap => _places;
+  List<StockUnitDraft> unitsOf(String itemId) => _items[itemId]?.units ?? const [];
+
   @override
   Future<StockSaved> saveItem(String workspaceId, StockItemConfig config, String requestId) async {
     final old = _mine(workspaceId) ? await item(workspaceId, config.itemId) : null;

@@ -13,6 +13,7 @@
 // source that holds less than asked refuses the whole command and moves
 // nothing, as the server does. Another Demo business keeps no ledger.
 import 'package:deskilo/features/stock/domain/stock_config.dart';
+import 'package:deskilo/features/stock/domain/stock_ledger.dart';
 import 'package:deskilo/features/stock/domain/stock_operations.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show LineTrack, LineTrackKind;
@@ -37,12 +38,8 @@ const _shelf = 'demo-place-shelf';
 const _branch = 'demo-place-branch';
 const _transit = 'demo-place-transit';
 const _supplier = 'demo-place-supplier';
-const _loss = 'demo-place-loss';
 // #4433 -- the customer: goods sold on an invoice go there.
 const _customer = 'demo-place-customer';
-
-/// The server's own places that hold nothing: goods come from and go to them.
-const _untracked = {_supplier, _loss, _customer};
 
 /// One movement of the Demo's story: the item, what was stored and entered,
 /// the reason, how long ago, where to, and from where (a supplier when none).
@@ -74,51 +71,23 @@ const _stories = <_Story>[
 /// on the machine's calendar.
 final _anchor = DateTime.utc(2026, 11);
 
-/// One movement to book on the ledger: [quantity] (inventory unit) of [item]
-/// from [from] to [to], with what the person entered beside it.
-class DemoStockPost {
-  const DemoStockPost({
-    required this.item,
-    required this.quantity,
-    required this.from,
-    required this.to,
-    required this.reason,
-    this.lotId,
-    this.lotCode,
-    this.variantId,
-    this.entered,
-    this.enteredUnit,
-    this.at,
-    this.id,
-    this.causes = const {},
-  });
+/// #4403 -- one movement to book on the ledger: the domain's own.
+typedef DemoStockPost = StockPost;
 
-  final StockItem item;
-  final ExactQuantity quantity;
-  final String from;
-  final String to;
-  final String reason;
-  final String? lotId;
-  final String? lotCode;
-  final String? variantId;
-  final ExactQuantity? entered;
-  final String? enteredUnit;
-
-  /// When it happened; the ledger's clock when null.
-  final DateTime? at;
-
-  /// The movement's own address; a fresh one when null.
-  final String? id;
-
-  /// What caused it, by kind (`invoice`, ...), as the ledger links it.
-  final Map<String, String> causes;
-}
-
-/// The in-memory goods ledger of the reference business.
+/// The in-memory goods ledger of the reference business: the domain's [StockLedger], seeded with the story and
+/// reading the places and units of the Demo's configuration.
 class DemoStockLedger implements DemoInvoiceGoods {
-  DemoStockLedger(this.workspaceId, this._config, [DateTime Function()? now, this.candidates]) : _now = now ?? (() => _anchor) {
+  DemoStockLedger(this.workspaceId, this._config, [DateTime Function()? now, this.candidates]) {
+    core = StockLedger(
+      workspaceId,
+      items: () => itemList,
+      places: () => _config.placeMap,
+      units: _config.unitsOf,
+      clock: now ?? (() => _anchor),
+      prefix: 'demo',
+    );
     for (final s in _stories.reversed) {
-      _book(
+      core.book(
         DemoStockPost(
           id: 'demo-stock-movement-${s.n}',
           item: s.item,
@@ -132,7 +101,7 @@ class DemoStockLedger implements DemoInvoiceGoods {
         ),
       );
     }
-    _transfers.add(
+    core.addTransfer(
       StockTransfer(
         id: 'demo-transfer-1',
         fromLocationId: _main,
@@ -159,10 +128,9 @@ class DemoStockLedger implements DemoInvoiceGoods {
   /// The business that keeps the shop stock.
   final String workspaceId;
   final DemoStockConfigCommands _config;
-  final DateTime Function() _now;
 
-  /// What a retried request id answered.
-  final Map<String, StockCommandResult> answers = {};
+  /// The ledger every Demo stock fake reads and writes.
+  late final StockLedger core;
 
   static const items = [_beans, _milk, _mugs, _syrup, _shirt, _basket, _apples];
 
@@ -172,122 +140,31 @@ class DemoStockLedger implements DemoInvoiceGoods {
   /// The shop's items and the ones its owner has started keeping since.
   List<StockItem> get itemList => [...items, ...?candidates?.added];
 
-  final Map<String, ExactQuantity> _balances = {};
-  final Map<String, ({StockItem item, String place, String? lotId, String? lotCode})> _keys = {};
-  final List<StockMovementRow> _movements = [];
-  final List<StockTransfer> _transfers = [];
-  int _next = 100;
-
   bool mine(String id) => id == workspaceId;
-
-  /// The Demo's day (its own clock, read once per use).
-  DateTime get today => _now();
-
-  /// A fresh movement number; the first ones belong to the story.
-  int nextNumber() => _next++;
-
-  /// The movements, newest first.
-  List<StockMovementRow> get movements => List.unmodifiable(_movements);
-
-  StockItem? itemOf(String id) => itemList.where((i) => i.id == id).firstOrNull;
-
-  /// What an item holds at one place (and lot), exactly.
-  ExactQuantity balance(String itemId, String place, {String? lotId}) =>
-      _balances[_key(itemId, place, lotId)] ?? ExactQuantity.zero;
-
-  String _key(String itemId, String place, String? lotId) => '$itemId|$place|${lotId ?? ''}';
+  DateTime get today => core.today;
+  List<StockMovementRow> get movements => core.movements;
+  List<StockTransfer> get openTransfers => core.openTransfers;
+  StockItem? itemOf(String id) => core.itemOf(id);
+  ExactQuantity balance(String itemId, String place, {String? lotId}) => core.balance(itemId, place, lotId: lotId);
 
   /// The places with their kind and whether they are virtual, by id.
-  Future<Map<String, StockPlaceConfig>> placeConfigs() => _places();
-
-  Future<Map<String, StockPlaceConfig>> _places() async =>
-      {for (final p in await _config.places(workspaceId)) p.id: p};
+  Future<Map<String, StockPlaceConfig>> placeConfigs() async => {for (final p in await _config.places(workspaceId)) p.id: p};
 
   /// The rows the Stock screen reads: what is on hand where, items in the
   /// order of the catalogue, places in the order they were first used.
-  Future<List<StockOnHandRow>> onHand({String? itemId, String? locationId}) async {
-    final places = await _places();
-    final rows = <StockOnHandRow>[];
-    for (final e in _keys.entries) {
-      final quantity = _balances[e.key] ?? ExactQuantity.zero;
-      final k = e.value;
-      if (quantity == ExactQuantity.zero) continue;
-      if (itemId != null && k.item.id != itemId) continue;
-      if (locationId != null && k.place != locationId) continue;
-      final place = places[k.place];
-      rows.add(
-        StockOnHandRow(
-          workspaceId: workspaceId,
-          itemId: k.item.id,
-          itemName: k.item.name,
-          lotId: k.lotId,
-          lotCode: k.lotCode,
-          locationId: k.place,
-          locationCode: place?.code ?? '',
-          locationName: place?.name ?? '',
-          quantity: quantity,
-          unit: k.item.unit,
-        ),
-      );
-    }
-    final order = {for (var i = 0; i < items.length; i++) items[i].id: i};
-    return [
-      for (final (_, r) in ([for (var i = 0; i < rows.length; i++) (i, rows[i])]..sort((a, b) {
-            final c = (order[a.$2.itemId] ?? 99).compareTo(order[b.$2.itemId] ?? 99);
-            return c != 0 ? c : a.$1.compareTo(b.$1);
-          })))
-        r,
-    ];
-  }
+  Future<List<StockOnHandRow>> onHand({String? itemId, String? locationId}) async =>
+      core.onHand(itemId: itemId, locationId: locationId, order: [for (final i in items) i.id]);
 
   /// The places a filter can name: every active place, the road included.
   Future<List<StockPlace>> filterPlaces() async => [
-    for (final p in (await _places()).values)
+    for (final p in (await placeConfigs()).values)
       if (p.active) StockPlace(id: p.id, code: p.code, name: p.name),
   ];
 
   /// Books [p] on the ledger. A real place or the road that holds less than
   /// asked refuses it, whole; a supplier or an opening place is the server's
   /// and holds whatever.
-  Future<StockMovementRow> post(DemoStockPost p) async {
-    final places = await _places();
-    final source = places[p.from];
-    if ((source != null && !source.virtual) || p.from == _transit) {
-      final held = balance(p.item.id, p.from, lotId: p.lotId);
-      if (held < p.quantity) {
-        throw StockNotEnough('${held.text} of ${p.quantity.text} are there');
-      }
-    }
-    return _book(p);
-  }
-
-  StockMovementRow _book(DemoStockPost p) {
-    _add(p.item, p.from, p.lotId, p.lotCode, -p.quantity);
-    _add(p.item, p.to, p.lotId, p.lotCode, p.quantity);
-    final row = StockMovementRow(
-      workspaceId: workspaceId,
-      id: p.id ?? 'demo-stock-movement-${nextNumber()}',
-      itemId: p.item.id,
-      itemName: p.item.name,
-      lotId: p.lotId,
-      lotCode: p.lotCode,
-      fromLocationId: p.from,
-      fromLocationCode: _codeOf(p.from),
-      toLocationId: p.to,
-      toLocationCode: _codeOf(p.to),
-      quantity: p.quantity,
-      unit: p.item.unit,
-      enteredQuantity: p.entered ?? p.quantity,
-      enteredUnit: p.enteredUnit ?? p.item.unit,
-      occurredAt: p.at ?? _now(),
-      reason: p.reason,
-      unitCost: null,
-      causes: p.causes,
-      variantId: p.variantId,
-    );
-    _movements.insert(0, row);
-    return row;
-  }
+  Future<StockMovementRow> post(DemoStockPost p) async => core.post(p);
 
   @override
   bool sells(String itemId) => itemOf(itemId) != null;
@@ -303,35 +180,18 @@ class DemoStockLedger implements DemoInvoiceGoods {
       final item = itemOf(l.itemId)!;
       var left = l.quantity;
       // the lots the main store holds, in the order they were received; what they do not hold leaves the loose stock
-      for (final lot in _lotsAt(item.id, _main)) {
+      for (final lot in core.lotsAt(item.id, _main)) {
         if (!(ExactQuantity.zero < left)) break;
         final part = lot.quantity < left ? lot.quantity : left;
-        _book(DemoStockPost(item: item, quantity: part, from: _main, to: _customer, reason: 'sale', lotId: lot.id, lotCode: lot.code, causes: {'invoice': invoiceId}));
+        core.book(DemoStockPost(item: item, quantity: part, from: _main, to: _customer, reason: 'sale', lotId: lot.id, lotCode: lot.code, causes: {'invoice': invoiceId}));
         (took[l.n] ??= []).add(LineTrack(kind: LineTrackKind.lot, code: lot.code, quantity: part.text));
         left = left - part;
       }
       if (ExactQuantity.zero < left) {
-        _book(DemoStockPost(item: item, quantity: left, from: _main, to: _customer, reason: 'sale', causes: {'invoice': invoiceId}));
+        core.book(DemoStockPost(item: item, quantity: left, from: _main, to: _customer, reason: 'sale', causes: {'invoice': invoiceId}));
       }
     }
     return took;
-  }
-
-  /// The lots of [itemId] with something at [place], as received (a lot without a code is no track ID and is not here).
-  List<({String id, String code, ExactQuantity quantity})> _lotsAt(String itemId, String place) => [
-    for (final MapEntry(:key, :value) in _keys.entries)
-      if (value.item.id == itemId && value.place == place && value.lotId != null && (value.lotCode ?? '').isNotEmpty &&
-          ExactQuantity.zero < (_balances[key] ?? ExactQuantity.zero))
-        (id: value.lotId!, code: value.lotCode!, quantity: _balances[key]!),
-  ];
-
-  /// What [itemId] holds at [place] in all, loose or in a lot.
-  ExactQuantity _held(String itemId, String place) {
-    var total = ExactQuantity.zero;
-    for (final MapEntry(:key, :value) in _keys.entries) {
-      if (value.item.id == itemId && value.place == place) total = total + (_balances[key] ?? ExactQuantity.zero);
-    }
-    return total;
   }
 
   /// The index of the first of [lines] the main store does not hold (an unknown item included), or null.
@@ -341,47 +201,8 @@ class DemoStockLedger implements DemoInvoiceGoods {
     for (final (i, l) in lines.indexed) {
       final total = (wanted[l.itemId] ?? ExactQuantity.zero) + l.quantity;
       wanted[l.itemId] = total;
-      if (itemOf(l.itemId) == null || _held(l.itemId, _main) < total) return i;
+      if (itemOf(l.itemId) == null || core.held(l.itemId, _main) < total) return i;
     }
     return null;
   }
-
-  void _add(StockItem item, String place, String? lotId, String? lotCode, ExactQuantity delta) {
-    final k = _key(item.id, place, lotId);
-    if (_untracked.contains(place)) return;
-    _keys.putIfAbsent(k, () => (item: item, place: place, lotId: lotId, lotCode: lotCode));
-    _balances[k] = (_balances[k] ?? ExactQuantity.zero) + delta;
-  }
-
-  /// The code a place is read by; the seeded places are known by id.
-  String _codeOf(String id) => switch (id) {
-    _main => 'MAIN',
-    _shelf => 'SHELF-A',
-    _branch => 'BRANCH',
-    _transit => 'TRANSIT',
-    _supplier => 'SUPPLIER',
-    _loss => 'LOSS',
-    _customer => 'CUSTOMER',
-    _ => _extra[id] ?? id,
-  };
-
-  final Map<String, String> _extra = {};
-
-  /// Tells the ledger the code of a place the owner created.
-  void learnPlace(String id, String code) => _extra[id] = code;
-
-  /// The transfers not fully received, oldest first.
-  List<StockTransfer> get openTransfers => [for (final t in _transfers) if (t.open) t];
-
-  StockTransfer? transfer(String id) => _transfers.where((t) => t.id == id).firstOrNull;
-
-  void addTransfer(StockTransfer t) => _transfers.add(t);
-
-  void replaceTransfer(StockTransfer t) {
-    final i = _transfers.indexWhere((x) => x.id == t.id);
-    if (i >= 0) _transfers[i] = t;
-  }
-
-  String nextTransferId() => 'demo-transfer-${_next++}';
-  String nextLineId() => 'demo-transfer-line-${_next++}';
 }
