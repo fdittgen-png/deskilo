@@ -18,13 +18,7 @@ import 'action_registry.dart';
 enum CoverageStatus { recorded, recorder, excluded, planned }
 
 class RouteCoverage {
-  const RouteCoverage(
-    this.route,
-    this.status, {
-    this.category,
-    this.owner,
-    this.selfOpening = false,
-  });
+  const RouteCoverage(this.route, this.status, {this.category, this.owner, this.selfOpening = false});
 
   /// The route pattern as the router registers it (`:name` = a segment).
   final String route;

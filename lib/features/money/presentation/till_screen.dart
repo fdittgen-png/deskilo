@@ -20,8 +20,6 @@ import '../../../core/ui/adaptive/window_class.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../workspace/domain/workspace_feature.dart';
-import '../../workspace/providers/workspace_providers.dart' show enabledFeaturesSyncProvider;
 import '../domain/counter_till.dart';
 import '../domain/till_drawer.dart';
 import '../providers/till_drawer_providers.dart';
@@ -103,7 +101,7 @@ class _SessionGate extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final sessions = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.counterTillSessions);
+    final sessions = ref.watch(tillSessionsEnabledProvider);
     if (!sessions) return _Till(key: ValueKey('till-$workspaceId'), workspaceId: workspaceId, keys: keys, scan: scan);
     return ref
         .watch(tillDrawerProvider(workspaceId))

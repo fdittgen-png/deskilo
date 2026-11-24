@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/codes/dk_code.dart';
 import '../../../core/data/server_error.dart';
-import '../../../core/settings/settings.dart';
-import '../../workspace/providers/settings_providers.dart';
 import '../domain/till_day.dart';
 import '../domain/till_drawer.dart';
 
@@ -33,16 +31,16 @@ final drawerExpectedProvider = FutureProvider.autoDispose.family<DrawerCash?, ({
 );
 
 /// #4367 -- how this business counts its drawer: by denomination or in total, the reasons of a cash entry and the largest
-/// paid-out without a second person. The registry default stands where the business set nothing.
-final drawerSettingsProvider = FutureProvider.autoDispose<DrawerSettings>((ref) async {
-  final SettingsSet settings = await ref.watch(currentSettingsProvider.future);
-  return DrawerSettings(
-    blindCount: settings.read<bool>('counter.blind_count'),
-    byDenomination: settings.read<bool>('counter.count_by_denomination'),
-    reasons: DrawerSettings.reasonsOf(settings.read<String>('counter.cash_reasons')),
-    paidOutLimitMinor: settings.read<int>('counter.paid_out_limit_minor'),
-  );
-}, retry: (_, _) => null);
+/// paid-out without a second person. The app wires it from the business's settings (`drawerSettingsFromApp`, where the registry
+/// default stands for what the business set nothing of); the Demo and the tests replace it.
+final drawerSettingsProvider = FutureProvider.autoDispose<DrawerSettings>(
+  (ref) => throw UnimplementedError('the drawer settings are wired by the app'),
+  retry: (_, _) => null,
+);
+
+/// #4367 -- whether the business runs till sessions (a sale needs an open session on its till). Off until the app wires it from
+/// the business's features (`tillSessionsFromApp`): a business that does not run them sells as before, on no till.
+final tillSessionsEnabledProvider = Provider<bool>((ref) => false);
 
 /// #4367 -- the days closed so far, the latest first; the finances read them.
 final dayClosesProvider = FutureProvider.autoDispose.family<List<DayCloseRow>, String>(

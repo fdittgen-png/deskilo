@@ -12,8 +12,6 @@ import 'package:deskilo/core/demo/data/demo_till_drawer.dart';
 import 'package:deskilo/features/money/providers/till_drawer_providers.dart';
 import 'package:deskilo/features/money/providers/till_providers.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
-import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
-import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -39,7 +37,7 @@ Future<void> _open(WidgetTester tester, DemoTillDrawer drawer, Size size) async 
       stockQueriesProvider.overrideWithValue(DemoStockQueries(ledger)),
       tillPortProvider.overrideWithValue(DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20, drawer: drawer)),
       tillDrawerPortProvider.overrideWithValue(drawer),
-      enabledFeaturesSyncProvider.overrideWithValue({WorkspaceFeature.counterReceipts, WorkspaceFeature.counterTillSessions}),
+      tillSessionsEnabledProvider.overrideWithValue(true),
     ],
   );
   await _settle(tester);
