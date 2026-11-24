@@ -104,7 +104,7 @@ class StockTransfersScreen extends ConsumerWidget {
       );
       if (done) ref.invalidate(openTransfersProvider(workspaceId));
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the move sheet could not read the stock: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the move sheet could not read the stock', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
     }
   }
@@ -222,7 +222,7 @@ class _TransferCard extends ConsumerWidget {
       );
       if (done) ref.invalidate(openTransfersProvider(workspaceId));
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the receive sheet could not read the places: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the receive sheet could not read the places', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
     }
   }
@@ -305,7 +305,7 @@ class _ReceiveDraft {
       ], requestId);
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'goods were not received: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'goods were not received', error: e, stackTrace: st);
       return stockSaveProblem(l10n, e);
     }
   }

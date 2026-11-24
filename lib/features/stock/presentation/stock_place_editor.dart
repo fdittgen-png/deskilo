@@ -17,6 +17,7 @@ import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/scan/scan_scope.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/dropdown_field.dart';
@@ -148,22 +149,27 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
       AppSnack.info(context, l10n.stockPlacesLabelsNone);
       return;
     }
-    try {
-      final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
-      final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
-      final bytes = await buildPlaceLabelsPdf(
-        labels: labels,
-        baseFont: pw.Font.ttf(regular),
-        boldFont: pw.Font.ttf(bold),
-      );
-      if (!mounted) return;
-      final delivery = await deliverFile(context, ref, bytes: bytes, fileName: 'deskilo-place-labels.pdf');
-      if (!mounted) return;
-      announceFileDelivery(context, delivery, retry: () => unawaited(_printLabels(shown, separator)));
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the place labels were not made: $e', stackTrace: st);
-      if (mounted) AppSnack.error(context, l10n.commonSaveFailed);
-    }
+    // #4411 -- the shared guarded path: traced at error, and a lost
+    // connection or a known refusal said in its own words.
+    await runGuarded(
+      context,
+      domain: 'stock',
+      message: 'the place labels were not made',
+      errorText: l10n.commonSaveFailed,
+      action: () async {
+        final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
+        final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
+        final bytes = await buildPlaceLabelsPdf(
+          labels: labels,
+          baseFont: pw.Font.ttf(regular),
+          boldFont: pw.Font.ttf(bold),
+        );
+        if (!mounted) return;
+        final delivery = await deliverFile(context, ref, bytes: bytes, fileName: 'deskilo-place-labels.pdf');
+        if (!mounted) return;
+        announceFileDelivery(context, delivery, retry: () => unawaited(_printLabels(shown, separator)));
+      },
+    );
   }
 
   // read at the time, so a read that cannot be made is the page's own failure
@@ -371,7 +377,7 @@ class _PlaceDraft {
       );
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a place was not saved: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a place was not saved', error: e, stackTrace: st);
       return stockSaveProblem(l10n, e);
     }
   }

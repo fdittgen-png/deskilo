@@ -6,6 +6,7 @@
 import 'dart:convert';
 
 import 'package:deskilo/core/demo/data/demo_stock_tags.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/stock/data/supabase_stock_cycle_counts.dart';
 import 'package:deskilo/features/stock/data/supabase_stock_tags.dart';
 import 'package:deskilo/features/stock/domain/stock_bulk_read.dart';
@@ -88,7 +89,7 @@ void main() {
     );
     await expectLater(
       port.countByTagRead(_ws, requestId: 'r', taskId: 't', codes: ['A']),
-      throwsA(isA<PostgrestException>().having((e) => e.code, 'code', 'DKG19')),
+      throwsA(isA<Refusal>().having((e) => e.code, 'code', 'DKG19')),
     );
   });
 

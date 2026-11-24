@@ -186,7 +186,7 @@ class PutAwayDraft {
       await services.commands.putAway(workspaceId, receiptId, toAllocations(), requestId);
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a put-away was not recorded: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a put-away was not recorded', error: e, stackTrace: st);
       return putAwayProblem(l10n, e);
     } finally {
       scanner?.resume();

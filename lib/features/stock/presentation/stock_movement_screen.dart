@@ -276,7 +276,7 @@ class _Reversals extends ConsumerWidget {
           ..invalidate(stockOnHandWalkProvider);
       }
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the return sheet could not read the stock: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the return sheet could not read the stock', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
     }
   }

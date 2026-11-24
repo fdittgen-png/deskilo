@@ -219,7 +219,7 @@ class _PointsList extends ConsumerWidget {
           ..invalidate(stockReplenishmentProvider(workspaceId));
       }
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the reorder point sheet could not read what it needs: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the reorder point sheet could not read what it needs', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
     }
   }
@@ -317,7 +317,7 @@ class _GroupCardState extends ConsumerState<_GroupCard> {
       AppSnack.success(context, l10n.stockReorderDraftCreated(draft.number ?? ''));
       ref.invalidate(stockReplenishmentProvider(widget.workspaceId));
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a replenishment draft was not made: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a replenishment draft was not made', error: e, stackTrace: st);
       if (mounted) AppSnack.error(context, stockSaveProblem(l10n, e));
     } finally {
       if (mounted) setState(() => _busy = false);

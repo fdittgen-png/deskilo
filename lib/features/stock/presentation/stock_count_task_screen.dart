@@ -79,7 +79,7 @@ class _State extends ConsumerState<StockCountTaskScreen> {
       _scan.clear();
       await _countSheet(workspaceId, line, items[line.itemId]?.unit ?? '');
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the barcodes could not be read: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the barcodes could not be read', error: e, stackTrace: st);
       if (mounted) AppSnack.error(context, l10n.stockReadFailed);
     }
   }
@@ -117,7 +117,7 @@ class _State extends ConsumerState<StockCountTaskScreen> {
             answer = await ref.read(stockCycleCountsProvider).countByTagRead(workspaceId, requestId: requestId, taskId: widget.taskId, codes: codes);
             return null;
           } on Object catch (e, st) {
-            TraceLogger.instance.warn('stock', 'a bulk read was not counted: $e', stackTrace: st);
+            TraceLogger.instance.warn('stock', 'a bulk read was not counted', error: e, stackTrace: st);
             return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
           }
         },
@@ -157,7 +157,7 @@ class _State extends ConsumerState<StockCountTaskScreen> {
                 .countLine(workspaceId, line.lineId, fields.text('observed').trim().replaceAll(',', '.'), requestId);
             return null;
           } on Object catch (e, st) {
-            TraceLogger.instance.warn('stock', 'a line was not counted: $e', stackTrace: st);
+            TraceLogger.instance.warn('stock', 'a line was not counted', error: e, stackTrace: st);
             return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
           }
         },
@@ -197,7 +197,7 @@ class _State extends ConsumerState<StockCountTaskScreen> {
             await ref.read(stockCycleCountsProvider).skipLine(workspaceId, line.lineId, fields.text('reason').trim(), requestId);
             return null;
           } on Object catch (e, st) {
-            TraceLogger.instance.warn('stock', 'a line was not skipped: $e', stackTrace: st);
+            TraceLogger.instance.warn('stock', 'a line was not skipped', error: e, stackTrace: st);
             return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
           }
         },

@@ -39,7 +39,7 @@ class StockItemAdd {
     try {
       candidates = await _ref.read(stockQueriesProvider).unstocked(workspaceId);
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the services that may become items could not be read: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the services that may become items could not be read', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, l10n.stockReadFailed);
       return false;
     }
@@ -124,7 +124,7 @@ class StockItemAdd {
         ),
       );
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the new item sheet could not read what it needs: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the new item sheet could not read what it needs', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
       return false;
     }

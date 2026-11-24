@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/backend/backend_uri.dart';
 import '../../features/auth/presentation/screens/app_update_screen.dart';
+import '../../features/auth/presentation/screens/schema_update_screen.dart';
 import '../../features/me/presentation/me_data_tab.dart';
 import '../../features/me/providers/personal_shell_providers.dart';
 import '../../features/profile/presentation/screens/backend_screen.dart';
@@ -16,7 +17,6 @@ import '../../features/profile/presentation/screens/new_instance_screen.dart';
 import '../../features/profile/presentation/screens/personal_info_screen.dart';
 import '../../features/profile/presentation/screens/privacy_screen.dart';
 import '../../features/profile/presentation/screens/profiles_screen.dart';
-import '../../features/profile/presentation/screens/schema_update_screen.dart';
 import '../../features/profile/presentation/screens/settings_screen.dart';
 import '../../features/profile/presentation/widgets/regional_formats_section.dart';
 import '../../features/workspace/domain/workspace_feature.dart';

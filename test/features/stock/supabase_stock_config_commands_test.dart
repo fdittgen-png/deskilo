@@ -7,6 +7,7 @@
 // nothing is reported saved that was not.
 import 'dart:convert';
 
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/stock/data/supabase_stock_config_commands.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_variants.dart';
@@ -107,7 +108,7 @@ void main() {
 
   test('another failure is not swallowed', () async {
     final h = _with(400, {'code': 'DKN01', 'message': 'not allowed', 'details': null, 'hint': null});
-    await expectLater(h.commands.saveItem(_ws, _config, 'r'), throwsA(isA<PostgrestException>()));
+    await expectLater(h.commands.saveItem(_ws, _config, 'r'), throwsA(isA<Refusal>().having((e) => e.code, 'code', 'DKN01')));
   });
 
   test('the variants of an item are saved complete, at the item revision, and a duplicate combination is a refusal', () async {

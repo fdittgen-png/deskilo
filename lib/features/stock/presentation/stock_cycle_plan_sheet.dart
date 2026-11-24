@@ -126,7 +126,7 @@ class _PlanDraft {
       ));
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a count plan was not saved: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a count plan was not saved', error: e, stackTrace: st);
       return stockSaveProblem(l10n, e);
     }
   }

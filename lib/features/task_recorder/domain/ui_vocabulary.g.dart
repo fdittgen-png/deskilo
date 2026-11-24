@@ -6755,6 +6755,7 @@ const Set<String> uiCommandMessages = {
   'template inspection failed',
   'template visibility failed',
   'template workbook export failed',
+  'the place labels were not made',
   'twin creation failed',
   'unblock failed',
   'undo backend switch failed',

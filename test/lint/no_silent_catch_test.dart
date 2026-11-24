@@ -120,6 +120,40 @@ const _untracedOnCeiling = <String, int>{
   'packages/deskilo_task_recording': 2,
 };
 
+/// #4411 -- `TraceLogger.instance.warn(` inside a catch body that does not
+/// pass `error:`: the exception is written into the message, so the redactor
+/// and the network classification never see it. Per area, down only; stock
+/// is at 0 and absent.
+const _warnWithoutErrorCeiling = <String, int>{
+  'app': 3,
+  'core': 17,
+  'features/auth': 2,
+  'features/directory': 2,
+  'features/events': 1,
+  'features/mcp': 2,
+  'features/money': 12,
+  'features/profile': 1,
+  'features/reservations': 1,
+  'features/task_recorder': 42,
+  'features/workspace': 6,
+};
+
+/// The `TraceLogger.instance.warn(` calls of [body] that pass no `error:`.
+int warnsWithoutError(String body) {
+  var n = 0;
+  for (final m in RegExp(r'TraceLogger\.instance\.warn\(').allMatches(body)) {
+    var depth = 0;
+    for (var k = m.end - 1; k < body.length; k++) {
+      if (body[k] == '(') depth++;
+      if (body[k] == ')' && --depth == 0) {
+        if (!body.substring(m.end, k).contains('error:')) n++;
+        break;
+      }
+    }
+  }
+  return n;
+}
+
 /// `// trace-exempt:` markers per area. Down only.
 const _exemptCeiling = <String, int>{
   'core': 51,
@@ -230,6 +264,35 @@ int? g(String s) {
         isEmpty,
         reason: 'debugPrint writes past lib/core/trace/redaction.dart: '
             'log through TraceLogger instead.\n${hits.join('\n')}',
+      );
+    });
+
+    test('#4411 -- a warn in a catch passes its error, and the rest only fall',
+        () {
+      expect(warnsWithoutError("TraceLogger.instance.warn('a', 'b: \$e');"), 1);
+      expect(
+        warnsWithoutError(
+          "TraceLogger.instance.warn('a', 'b', error: e, stackTrace: st);",
+        ),
+        0,
+      );
+      final clause = RegExp(r'\bcatch\s*\(|\}\s*on\s+[\w.<>?, ]+\{');
+      final hits = <(String, int)>[];
+      for (final f in _scanned()) {
+        final content = f.readAsStringSync();
+        for (final m in clause.allMatches(content)) {
+          hits.add((
+            f.path,
+            warnsWithoutError(_catchBlockBody(content, m.start + 1) ?? ''),
+          ));
+        }
+      }
+      final actual = _perArea(hits);
+      expect(
+        _ratchet(actual, _warnWithoutErrorCeiling),
+        isEmpty,
+        reason: 'pass the exception as error: (and stackTrace:), not in the '
+            'message; lower the area when one was fixed.\n$actual',
       );
     });
 

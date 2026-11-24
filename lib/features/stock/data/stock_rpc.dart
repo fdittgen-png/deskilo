@@ -14,14 +14,18 @@ class StockRpc {
 
   final SupabaseClient _client;
 
-  /// Runs [read]: a refusal of the server is logged once as "[what] was refused" and thrown as its
-  /// typed failure; anything else is rethrown as it came. [pieces]: the command names pieces (#4379).
+  /// Runs [read]: a refusal of the server is logged once at warn as "[what] was refused" and thrown as
+  /// its typed failure; anything else (a lost connection, a defect) is logged once at error and
+  /// rethrown as it came (#4411). [pieces]: the command names pieces (#4379).
   Future<T> guard<T>(String what, Future<T> Function() read, {bool pieces = false}) async {
     try {
       return await read();
     } on PostgrestException catch (e, stack) {
-      TraceLogger.instance.warn('stock', '$what was refused: ${e.code}', stackTrace: stack);
+      TraceLogger.instance.warn('stock', '$what was refused: ${e.code}', error: e, stackTrace: stack);
       throwStockFailure(e, stack, pieces: pieces);
+    } on Object catch (e, stack) {
+      TraceLogger.instance.error('stock', '$what failed', error: e, stackTrace: stack);
+      rethrow;
     }
   }
 

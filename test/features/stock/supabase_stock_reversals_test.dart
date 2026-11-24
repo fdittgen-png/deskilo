@@ -9,6 +9,7 @@
 // screen with its code.
 import 'dart:convert';
 
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/stock/data/supabase_stock_reversals.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -144,7 +145,7 @@ void main() {
       h.port.makeReturn(_ws, 'ret-1', StockReturnKind.customer, const [
         (lineId: 'l-1', sourceMovementId: 'mv-1', quantity: '9', locationId: 'p', note: ''),
       ], 'req-1'),
-      throwsA(isA<PostgrestException>().having((e) => e.code, 'code', 'DKG17')),
+      throwsA(isA<Refusal>().having((e) => e.code, 'code', 'DKG17')),
     );
   });
 }

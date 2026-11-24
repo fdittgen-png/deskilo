@@ -8,8 +8,8 @@ import '../../../../core/backend/schema_version.dart';
 import '../../../../core/instance/schema_compatibility.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../auth/providers/auth_providers.dart';
-import '../../../auth/providers/sign_out.dart';
+import '../../providers/auth_providers.dart';
+import '../../providers/sign_out.dart';
 
 /// #1312 — the server this device uses runs an older DesKilo schema than
 /// this app needs.

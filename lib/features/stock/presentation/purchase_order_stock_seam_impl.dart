@@ -144,7 +144,7 @@ class _ReceiptPutAway implements ReceiptPutAway {
       );
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a delivery and its put-away were not recorded: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a delivery and its put-away were not recorded', error: e, stackTrace: st);
       return stockSaveProblem(l10n, e);
     }
   }

@@ -162,7 +162,7 @@ class _MoveDraft {
       }
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'goods were not moved: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'goods were not moved', error: e, stackTrace: st);
       return stockSaveProblem(l10n, e);
     } finally {
       scanner?.resume();

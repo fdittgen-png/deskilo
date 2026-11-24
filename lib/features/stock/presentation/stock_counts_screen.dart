@@ -99,7 +99,7 @@ class StockCountsScreen extends ConsumerWidget {
       );
       if (done) ref.invalidate(stockCountsProvider(workspaceId));
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the count sheet could not read the stock: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the count sheet could not read the stock', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
     }
   }
@@ -248,7 +248,7 @@ class _CountTile extends ConsumerWidget {
         ..invalidate(stockOnHandWalkProvider)
         ..invalidate(stockMovementsWalkProvider);
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a count was not decided: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a count was not decided', error: e, stackTrace: st);
       // a stale or decided count is read again: what the screen shows follows the server
       ref.invalidate(stockCountsProvider(workspaceId));
       if (context.mounted) AppSnack.error(context, knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e));
@@ -317,7 +317,7 @@ class _CountDraft {
       ));
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a count was not recorded: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a count was not recorded', error: e, stackTrace: st);
       return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
     }
   }

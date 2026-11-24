@@ -120,7 +120,7 @@ class _VariantsDraft {
       );
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the variants of an item were not saved: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the variants of an item were not saved', error: e, stackTrace: st);
       return stockSaveProblem(l10n, e);
     }
   }
@@ -406,7 +406,7 @@ class _DimensionDraft {
       );
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a dimension was not saved: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a dimension was not saved', error: e, stackTrace: st);
       return stockSaveProblem(l10n, e);
     }
   }
