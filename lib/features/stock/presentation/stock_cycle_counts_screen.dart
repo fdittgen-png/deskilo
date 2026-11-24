@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -63,7 +64,7 @@ class StockCycleCountsScreen extends ConsumerWidget {
 
 String _day(BuildContext context, String iso) {
   final at = DateTime.tryParse(iso);
-  return at == null ? iso : MaterialLocalizations.of(context).formatMediumDate(at);
+  return at == null ? iso : appFormatOf(context).dates(DateShape.date).format(at);
 }
 
 /// A read that failed says so and can be asked again.
@@ -247,7 +248,7 @@ class _History extends ConsumerWidget {
                         title: Text(l10n.stockCycleHistoryRow(items[r.itemId]?.name ?? r.itemId, places[r.locationId] ?? r.locationId)),
                         subtitle: Text(
                           [
-                            if (r.lastCountedAt != null) l10n.stockCycleHistoryLast(MaterialLocalizations.of(context).formatMediumDate(r.lastCountedAt!)),
+                            if (r.lastCountedAt != null) l10n.stockCycleHistoryLast(appFormatOf(context).date(r.lastCountedAt!)),
                             if (r.accuracyPercent != null) l10n.stockCycleHistoryAccuracy(r.counts, '${r.accuracyPercent}'),
                           ].join(' · '),
                         ),

@@ -13,6 +13,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/app_format.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -122,8 +124,7 @@ class _Detail extends ConsumerWidget {
     final l10n = context.l10n;
     final m = movement;
     final addresses = ref.watch(stockAddressesProvider(m.workspaceId));
-    final day = MaterialLocalizations.of(context)
-        .formatFullDate(stockDayOf(ref, m.occurredAt));
+    final day = appFormatOf(context).dates(DateShape.fullDate).format(stockDayOf(ref, m.occurredAt));
     final cost = !seesCost
         ? l10n.stockCostNotShown
         : m.unitCost == null

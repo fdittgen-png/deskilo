@@ -12,6 +12,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/format/decimal_input.dart';
+import '../../../core/i18n/app_format.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -157,7 +159,7 @@ class _TransferCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final day = MaterialLocalizations.of(context).formatCompactDate(stockDayOf(ref, transfer.loadedAt));
+    final day = appFormatOf(context).dates(DateShape.numeric).format(stockDayOf(ref, transfer.loadedAt));
     final addresses = ref.watch(stockAddressesProvider(workspaceId));
     return Card(
       key: ValueKey('stock-transfer-${transfer.id}'),

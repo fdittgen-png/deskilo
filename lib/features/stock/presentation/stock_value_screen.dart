@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -80,8 +81,8 @@ class _Value extends ConsumerWidget {
     final items = {for (final i in ref.watch(stockItemsProvider(workspaceId)).value ?? const <StockItem>[]) i.id: i}; // empty-ok: a name falls back to its id
     String name(String id) => items[id]?.name ?? id;
     String unit(String id) => items[id]?.unit ?? '';
-    final dates = MaterialLocalizations.of(context);
-    String stamp(DateTime at) => dates.formatMediumDate(stockDayOf(ref, at));
+    final dates = appFormatOf(context).dates(DateShape.date);
+    String stamp(DateTime at) => dates.format(stockDayOf(ref, at));
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.md),
       children: [

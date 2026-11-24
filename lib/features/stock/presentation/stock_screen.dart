@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/i18n/app_format.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/kit/page_title.dart';
@@ -223,7 +225,7 @@ class _MovementsList extends ConsumerWidget {
     final provider = stockMovementsWalkProvider(_filtersOf(workspaceId, view));
     final addresses = ref.watch(stockAddressesProvider(workspaceId));
     final walk = ref.watch(provider);
-    final day = MaterialLocalizations.of(context);
+    final day = appFormatOf(context).dates(DateShape.numeric);
     return _Walk<StockMovementRow>(
       walk: walk,
       emptyText: view.filtered ? l10n.stockEmptyFiltered : l10n.stockMovementsEmpty,
@@ -234,7 +236,7 @@ class _MovementsList extends ConsumerWidget {
         title: Text(m.itemLabel),
         subtitle: Text(
           '${addresses[m.fromLocationId] ?? m.fromLocationCode} → ${addresses[m.toLocationId] ?? m.toLocationCode} · '
-          '${day.formatCompactDate(stockDayOf(ref, m.occurredAt))}',
+          '${day.format(stockDayOf(ref, m.occurredAt))}',
         ),
         trailing: Text(
           l10n.stockQuantityWithUnit(m.quantity.text, m.unit),
