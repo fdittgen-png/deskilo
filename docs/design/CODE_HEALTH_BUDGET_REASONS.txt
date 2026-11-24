@@ -143,7 +143,6 @@ rawMaxWidth lib/features/money/presentation/till_drawer/day_report_view.dart // 
 rawMaxWidth lib/features/money/presentation/till_drawer/till_day_screen.dart // #4421 owned by the till lane while its v2.2 work is open
 rawMaxWidth lib/features/money/presentation/till_drawer/till_drawer_screen.dart // #4421 owned by the till lane while its v2.2 work is open
 rawMaxWidth lib/features/money/presentation/till_screen.dart // #4421 owned by the till lane while its v2.2 work is open
-rawMaxWidth lib/features/stock/presentation/item_groups_screen.dart // #4421 owned by the stock lane while its v2.2 work is open
 rawMaxWidth lib/features/stock/presentation/stock_bulk_read_sheet.dart // #4421 owned by the stock lane while its v2.2 work is open
 rawMaxWidth lib/features/stock/presentation/stock_first_run.dart // #4421 owned by the stock lane while its v2.2 work is open
 rawMaxWidth lib/features/stock/presentation/stock_screen.dart // #4421 owned by the stock lane while its v2.2 work is open
