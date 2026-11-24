@@ -24,4 +24,9 @@ List<SettingDefinition> _parseSettingsBundle(String json) {
 /// stands on. A canned list in tests.
 @Riverpod(keepAlive: true)
 Future<List<SettingDefinition>> Function() settingsBundleLoader(Ref ref) =>
-    () async => _parseSettingsBundle(await rootBundle.loadString(_settingsAssetPath));
+    () async {
+      // `loadString` decodes a string of more than 50 KB in an isolate, which takes real time the app and its tests did not count on
+      // once the registry crossed that size (#4431 did): the bytes are decoded here, in the same turn, as they were before.
+      final data = await rootBundle.load(_settingsAssetPath);
+      return _parseSettingsBundle(utf8.decode(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes)));
+    };
