@@ -24173,6 +24173,10 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Sblocca",
+  "unknownWireInvoiceKind": "Un tipo che questa versione dell'app non conosce",
+  "unknownWireKindFeatures": "Questo tipo imposta anche {count, plural, =1{una funzione} other{{count} funzioni}} che questa versione dell'app non conosce. Aggiorni l'app per sceglierlo.",
+  "unknownWireReadOnly": "Questa versione dell'app non sa che cosa sia questo record: si può leggere, non modificare. Aggiorni l'app per lavorarci.",
+  "unknownWireValue": "{value} (sconosciuto a questa versione dell'app)",
   "unreadableRowsNotice": "{count, plural, one{1 voce non è stata mostrata: questa versione dell'app non la conosce. Aggiorna l'app per vederla.} other{{count} voci non sono state mostrate: questa versione dell'app non le conosce. Aggiorna l'app per vederle.}}",
   "unsavedChangesBody": "Le modifiche fatte in questa pagina non sono ancora salvate.",
   "unsavedChangesDiscard": "Scarta le modifiche",

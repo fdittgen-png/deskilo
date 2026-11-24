@@ -42022,6 +42022,30 @@ class AppLocalizationsDe extends AppLocalizations {
   String get unblockAction => 'Blockierung aufheben';
 
   @override
+  String get unknownWireInvoiceKind =>
+      'Eine Art, die diese App-Version nicht kennt';
+
+  @override
+  String unknownWireKindFeatures(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Funktionen',
+      one: 'eine Funktion',
+    );
+    return 'Diese Art stellt außerdem $_temp0 ein, die diese App-Version nicht kennt. Aktualisieren Sie die App, um sie zu wählen.';
+  }
+
+  @override
+  String get unknownWireReadOnly =>
+      'Diese App-Version weiß nicht, was dieser Eintrag ist: Er kann gelesen, aber nicht geändert werden. Aktualisieren Sie die App, um damit zu arbeiten.';
+
+  @override
+  String unknownWireValue(String value) {
+    return '$value (dieser App-Version nicht bekannt)';
+  }
+
+  @override
   String unreadableRowsNotice(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

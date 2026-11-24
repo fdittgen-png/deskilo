@@ -250,6 +250,13 @@ class _ProposalView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // #3730 — a profile naming features this app does not know is
+        // explained and never applied.
+        if (!proposal.applicable)
+          Text(
+            l10n.unknownWireKindFeatures(proposal.unknownKeys.length),
+            key: const ValueKey('business-kind-unknown-features'),
+          ),
         if (on.isNotEmpty)
           _Sentence(
             id: 'on',
@@ -389,6 +396,12 @@ class BusinessKindTile extends ConsumerWidget {
     AppLocalizations l10n,
     _Choice choice,
   ) async {
+    // #3730 — refused before anything is written: the app cannot write
+    // what the chosen kind's profile means.
+    final proposal = choice.proposal;
+    if (!proposal.applicable) {
+      return l10n.unknownWireKindFeatures(proposal.unknownKeys.length);
+    }
     try {
       await _saveShopType(ref, choice);
       final outcome = await ref

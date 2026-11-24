@@ -10,8 +10,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
-| `lib/core/demo/data/demo_stock_config_commands.dart:274` | label | Red | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/data/demo_stock_config_commands.dart:275` | label | Blue | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/data/demo_stock_config_commands.dart:279` | label | Red | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/data/demo_stock_config_commands.dart:280` | label | Blue | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:57` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:69` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:81` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
@@ -24,7 +24,7 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:97` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:106` | title | House rules | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:113` | title | Printing and workspace guide | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_freelancer_seed.dart:223` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_freelancer_seed.dart:229` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_french_reporting_seed.dart:48` | title | Welcome kit and day pass | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_french_reporting_seed.dart:50` | label | Welcome kit | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_french_reporting_seed.dart:51` | label | Day pass | core/demo | KEEP_NON_UI_LITERAL |

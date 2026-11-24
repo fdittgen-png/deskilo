@@ -139,10 +139,7 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
         const <OpenInvoiceEntry>[];
     final counts = <String, int>{};
     for (final entry in open) {
-      if (!entry.invoice.isVoided &&
-          entry.invoice.settledByInvoiceId == null &&
-          entry.invoice.kind != InvoiceKind.settlement &&
-          entry.pendingMatch == null) {
+      if (mayRegroup(entry.invoice, entry.pendingMatch)) {
         counts.update(entry.invoice.memberId, (n) => n + 1,
             ifAbsent: () => 1);
       }

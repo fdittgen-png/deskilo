@@ -24173,6 +24173,10 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Débloquer",
+  "unknownWireInvoiceKind": "Un type que cette version de l'application ne connaît pas",
+  "unknownWireKindFeatures": "Ce type règle aussi {count, plural, =1{une fonction} other{{count} fonctions}} que cette version de l'application ne connaît pas. Mettez à jour l'application pour le choisir.",
+  "unknownWireReadOnly": "Cette version de l'application ne sait pas ce qu'est cet enregistrement : il peut être lu, pas modifié. Mettez à jour l'application pour le traiter.",
+  "unknownWireValue": "{value} (inconnu de cette version de l'application)",
   "unreadableRowsNotice": "{count, plural, one{{count} entrée n'a pas pu être affichée : cette version de l'application ne la connaît pas. Mettez l'application à jour pour la voir.} other{{count} entrées n'ont pas pu être affichées : cette version de l'application ne les connaît pas. Mettez l'application à jour pour les voir.}}",
   "unsavedChangesBody": "Ce que vous avez modifié sur cette page n'est pas encore enregistré.",
   "unsavedChangesDiscard": "Abandonner les modifications",

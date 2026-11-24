@@ -19,16 +19,24 @@ enum PurchaseOrderState {
   sent('sent'),
   partlyReceived('partly_received'),
   received('received'),
-  cancelled('cancelled');
+  cancelled('cancelled'),
+
+  /// #3730 — a state a newer server sent and this app does not know: the
+  /// order is read (its text is kept in [PurchaseOrder.stateWire]) and
+  /// allows nothing — never an editable draft.
+  unknown('');
 
   const PurchaseOrderState(this.wire);
   final String wire;
 
-  static PurchaseOrderState of(String wire) =>
-      values.firstWhere((s) => s.wire == wire, orElse: () => draft);
+  static PurchaseOrderState of(String wire) => values.firstWhere(
+    (s) => s != unknown && s.wire == wire,
+    orElse: () => unknown,
+  );
 
-  /// Still open: sent, partly received, or a draft.
-  bool get open => this != received && this != cancelled;
+  /// Still open: sent, partly received, or a draft. An unknown state is
+  /// not open: nothing is cancelled on a guess.
+  bool get open => this == draft || this == sent || this == partlyReceived;
 }
 
 /// One line: a catalogue item or free text, how many, in what unit, at what
@@ -96,6 +104,7 @@ class PurchaseOrder {
     this.cancelledAt,
     this.cancelReason = '',
     this.createdAt,
+    this.stateWire = '',
   });
 
   /// Reads `purchase_order_json` (0681) and a table row with its lines and
@@ -114,6 +123,7 @@ class PurchaseOrder {
       supplierName:
           r.stringOrNull('supplier_name') ?? supplier?.stringOr('name') ?? '',
       state: PurchaseOrderState.of(r.stringOr('state', 'draft')),
+      stateWire: r.stringOr('state', 'draft'),
       currency: r.stringOr('currency'),
       revision: r.integer('revision'),
       lines: lines,
@@ -137,6 +147,10 @@ class PurchaseOrder {
   final String supplierId;
   final String supplierName;
   final PurchaseOrderState state;
+
+  /// The state as the server wrote it: what an [PurchaseOrderState.unknown]
+  /// order shows ('' for an order built here).
+  final String stateWire;
   final String currency;
   final int revision;
   final List<PurchaseOrderLine> lines;

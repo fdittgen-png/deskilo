@@ -19,6 +19,7 @@ class BusinessKindProposal {
     required this.switchesOn,
     required this.switchesOff,
     required this.flags,
+    this.unknownKeys = const [],
   });
 
   /// Features that become effective, in registry order.
@@ -32,14 +33,24 @@ class BusinessKindProposal {
   /// feature it switches on, the parents that feature needs.
   final Map<String, bool> flags;
 
+  /// #3730 — the profile's keys this app does not know, in profile order.
+  /// Leaving them out would change what confirming means (the server
+  /// records the whole profile as reviewed), so a proposal with any is
+  /// shown but never applied ([applicable]).
+  final List<String> unknownKeys;
+
+  /// Whether confirming may write this proposal: every key is known.
+  bool get applicable => unknownKeys.isEmpty;
+
   /// Whether choosing the kind changes nothing that works today.
-  bool get isEmpty => switchesOn.isEmpty && switchesOff.isEmpty;
+  bool get isEmpty =>
+      switchesOn.isEmpty && switchesOff.isEmpty && unknownKeys.isEmpty;
 }
 
 /// The proposal of a kind whose [profile] maps flag keys to on/off, for a
 /// workspace whose stored flags resolve to [raw]. A key the registry does
-/// not know is ignored (the server refuses one in a profile; an old client
-/// meeting a newer flag skips it).
+/// not know is never written: it is named in
+/// [BusinessKindProposal.unknownKeys] and the proposal is not applicable.
 BusinessKindProposal proposalFor({
   required Map<String, bool> profile,
   required Set<WorkspaceFeature> raw,
@@ -47,9 +58,13 @@ BusinessKindProposal proposalFor({
 }) {
   final byKey = WorkspaceFeature.values.asNameMap();
   final flags = <String, bool>{};
+  final unknownKeys = <String>[];
   for (final entry in profile.entries) {
     final feature = byKey[entry.key];
-    if (feature == null) continue;
+    if (feature == null) {
+      unknownKeys.add(entry.key);
+      continue;
+    }
     flags[feature.dbKey] = entry.value;
     if (entry.value) {
       for (final parent in requirementChain(feature)) {
@@ -74,5 +89,6 @@ BusinessKindProposal proposalFor({
         if (before.contains(f) && !after.contains(f)) f,
     ],
     flags: flags,
+    unknownKeys: unknownKeys,
   );
 }

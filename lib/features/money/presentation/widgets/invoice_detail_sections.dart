@@ -53,6 +53,7 @@ class InvoiceDetailSections {
               InvoiceKind.usage => Icons.receipt_long_outlined,
               InvoiceKind.settlement => Icons.merge_outlined,
               InvoiceKind.full => Icons.description_outlined,
+              InvoiceKind.unknown => Icons.help_outline,
             },
             size: 16,
             color: theme.colorScheme.primary,

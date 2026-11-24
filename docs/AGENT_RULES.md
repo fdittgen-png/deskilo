@@ -859,7 +859,11 @@ migration after it keeps an older app right:
 Anything stored or exchanged with a version of its own gets a row in that
 record's table, with what its reader does with a higher version (refuse,
 ignore, show generically); reading an unknown or missing value as a known
-one is not allowed.
+one is not allowed. A server value becomes an enum with an explicit
+`unknown` that keeps the raw text and allows no action (K3, #3730):
+`test/lint/unknown_wire_value_test.dart` refuses `values.byName` in the
+domain, data and package layers and lets the fallbacks to a known state
+only fall; `wire_switch_throw_test.dart` counts the throwing ones.
 
 **The gate this feeds has no feature flag.** A server older than the app
 sends every route to `/server-update` (`lib/app/schema_gate.dart`); the

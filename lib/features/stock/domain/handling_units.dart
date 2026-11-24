@@ -22,10 +22,16 @@ enum HandlingUnitKind {
 enum HandlingUnitState {
   open,
   unpacked,
-  retired;
+  retired,
 
-  static HandlingUnitState of(String? wire) =>
-      HandlingUnitState.values.firstWhere((s) => s.name == wire, orElse: () => HandlingUnitState.open);
+  /// A state a newer server sent and this app does not know: the unit is listed and allows nothing (it is not [open], so it
+  /// is neither moved nor unpacked on a guess). Never sent as a filter.
+  unknown;
+
+  static HandlingUnitState of(String? wire) => HandlingUnitState.values.firstWhere(
+    (s) => s != unknown && s.name == wire,
+    orElse: () => HandlingUnitState.unknown,
+  );
 }
 
 /// One unit as the lists and the commands answer it. [revision] is what a move or an unpack names: a unit that changed since

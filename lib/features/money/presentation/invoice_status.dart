@@ -162,6 +162,7 @@ String invoiceKindLabel(AppLocalizations l10n, InvoiceKind kind) =>
       InvoiceKind.settlement =>
         l10n.invoiceKindSettlement,
       InvoiceKind.full => l10n.invoiceKindFull,
+      InvoiceKind.unknown => l10n.unknownWireInvoiceKind,
     };
 
 /// #831 — the number of the settlement [invoice] was regrouped into,

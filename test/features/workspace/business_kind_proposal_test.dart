@@ -58,9 +58,12 @@ void main() {
     expect(p.isEmpty, isTrue);
   });
 
-  test('an unknown key is ignored, never written', () {
+  test('#3730 — an unknown key is never written, and the proposal is not '
+      'applicable', () {
     final p = proposalFor(profile: const {'noSuchFlag': true}, raw: _fresh);
     expect(p.flags, isEmpty);
-    expect(p.isEmpty, isTrue);
+    expect(p.unknownKeys, ['noSuchFlag']);
+    expect(p.applicable, isFalse);
+    expect(p.isEmpty, isFalse);
   });
 }

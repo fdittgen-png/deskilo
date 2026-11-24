@@ -28,11 +28,14 @@ import 'purchase_order_receipt_actions.dart';
 import 'purchase_order_send_actions.dart';
 import 'purchase_order_sheet.dart';
 
-/// The words of an order's [state].
+/// The words of an order's [state]; a state this app does not know is
+/// shown as the server's [wire] text (#3730).
 String purchaseOrderStateLabel(
   AppLocalizations l10n,
-  PurchaseOrderState state,
-) => switch (state) {
+  PurchaseOrderState state, {
+  String wire = '',
+}) => switch (state) {
+  PurchaseOrderState.unknown => l10n.unknownWireValue(wire),
   PurchaseOrderState.draft => l10n.purchasesStateDraft,
   PurchaseOrderState.sent => l10n.purchaseOrderStateSent,
   PurchaseOrderState.partlyReceived => l10n.purchaseOrderStatePartlyReceived,
@@ -200,9 +203,20 @@ class PurchaseOrderDetails extends ConsumerWidget {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-            Chip(
-              key: ValueKey('purchase-order-state-${order.reference}'),
-              label: Text(purchaseOrderStateLabel(l10n, order.state)),
+            // A state's words may be long (a state this app does not
+            // know is said with its text, #3730): the chip gives way.
+            Flexible(
+              child: Chip(
+                key: ValueKey('purchase-order-state-${order.reference}'),
+                label: Text(
+                  purchaseOrderStateLabel(
+                    l10n,
+                    order.state,
+                    wire: order.stateWire,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
           ],
         ),

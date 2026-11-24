@@ -148,12 +148,18 @@ Future<void> runInvoiceAction(
   Invoice invoice, {
   required String countryCode,
 }) {
+  final reading = action == InvoiceAction.quickView ||
+      action == InvoiceAction.downloadPdf ||
+      action == InvoiceAction.sharePdf;
+  // #3730 — an invoice of a kind this app does not know is read and
+  // printed; nothing is done to it on a guess.
+  if (invoice.kind == InvoiceKind.unknown && !reading) {
+    AppSnack.info(context, context.l10n.unknownWireReadOnly, replace: true);
+    return Future.value();
+  }
   // #831 — a regrouped source is documentation: reading and the
   // stamped PDF stay, every operation happens on the settlement.
-  if (invoice.isFolded &&
-      action != InvoiceAction.quickView &&
-      action != InvoiceAction.downloadPdf &&
-      action != InvoiceAction.sharePdf) {
+  if (invoice.isFolded && !reading) {
     final l10n = context.l10n;
     AppSnack.info(
       context,

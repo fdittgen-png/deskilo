@@ -41,10 +41,16 @@ enum PurchaseState {
   pending,
   approved,
   rejected,
-  cancelled;
+  cancelled,
+
+  /// #3730 — a state a newer server sent and this app does not know: the
+  /// document is read (its text is kept in [PurchaseSummary.stateWire]) and
+  /// allows nothing — never an editable draft, never one waiting for a
+  /// decision.
+  unknown;
 
   static PurchaseState of(String? s) =>
-      values.firstWhere((v) => v.name == s, orElse: () => draft);
+      values.firstWhere((v) => v != unknown && v.name == s, orElse: () => unknown);
 }
 
 /// One line of a document. A null `taxCents` is "the document did not say",
@@ -152,6 +158,7 @@ class PurchaseSummary {
     required this.category,
     required this.reference,
     required this.currency,
+    this.stateWire = '',
     this.grossCents = 0,
     this.receivedOn,
     this.originalDate,
@@ -189,6 +196,7 @@ class PurchaseSummary {
       id: r.string('id'),
       kind: PurchaseKind.of(r.stringOrNull('kind')),
       state: PurchaseState.of(r.stringOrNull('state')),
+      stateWire: r.stringOr('state'),
       category: r.stringOr('category'),
       reference: r.stringOr('original_reference'),
       currency: r.stringOr('currency'),
@@ -205,6 +213,10 @@ class PurchaseSummary {
   final String? supplierId;
   final PurchaseKind kind;
   final PurchaseState state;
+
+  /// The state as the server wrote it: what an [PurchaseState.unknown]
+  /// document shows ('' for one built here).
+  final String stateWire;
   final String category;
   final String reference;
   final String currency;

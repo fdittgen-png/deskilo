@@ -50,7 +50,11 @@ class PurchaseStatusChips extends StatelessWidget {
         chip(
           'purchase-chip-approval',
           Icons.fact_check_outlined,
-          purchaseStateLabel(l10n, detail.summary.state),
+          purchaseStateLabel(
+            l10n,
+            detail.summary.state,
+            wire: detail.summary.stateWire,
+          ),
         ),
         chip(
           'purchase-chip-settlement',

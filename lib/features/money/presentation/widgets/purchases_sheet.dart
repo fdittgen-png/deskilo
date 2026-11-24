@@ -198,7 +198,7 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
           ),
           subtitle: Text(
             [
-              purchaseStateLabel(l10n, p.state),
+              purchaseStateLabel(l10n, p.state, wire: p.stateWire),
               if (p.category.isNotEmpty) p.category,
             ].join(' · '),
           ),
