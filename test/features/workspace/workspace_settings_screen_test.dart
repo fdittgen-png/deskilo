@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/ui/async_read_body.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
@@ -657,7 +658,7 @@ void main() {
       final workspace = await open(tester);
       workspace.gate.completeError(Exception('offline'));
       await tester.pumpAndSettle();
-      expect(find.textContaining('could not be read'), findsOneWidget);
+      expect(find.byType(ReadFailureBanner), findsOneWidget);
 
       // Saving over a FAILED read sends nothing either.
       await saveAnUnrelatedField(tester);

@@ -3,9 +3,8 @@
 // #4447 -- every server read names the direction of its order. postgrest's `order(column, {ascending = false})`
 // sorts descending by default, so `.order('name')` listed Z to A and `.order('sort_order')` put the place ranked
 // first last, while the code read as ascending. An `.order(` without `ascending:` is counted, and the count is 0.
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// The lines of [source] holding an `.order(` call whose arguments do not name `ascending:`.
 List<int> undirectedOrders(String source) {
@@ -31,12 +30,9 @@ List<int> undirectedOrders(String source) {
 void main() {
   test('every order of a server read names its direction', () {
     final hits = [
-      for (final f in Directory(
-        'lib',
-      ).listSync(recursive: true).whereType<File>())
-        if (f.path.endsWith('.dart') && !f.path.endsWith('.g.dart'))
-          for (final line in undirectedOrders(f.readAsStringSync()))
-            '${f.path}:$line',
+      for (final f in handWrittenDartFiles('lib'))
+        for (final line in undirectedOrders(f.readAsStringSync()))
+          '${f.path}:$line',
     ];
     expect(
       hits,

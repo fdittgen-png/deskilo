@@ -6,12 +6,13 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
+import '../../../core/failure/app_failure.dart';
 import '../../../core/trace/trace_logger.dart';
 import 'stock_refusals.dart';
 
 /// A list read found more rows than [StockRpc.listCap]: it is refused, never shown cut short as if it were
 /// the whole list.
-class StockListTooLong implements Exception {
+class StockListTooLong implements TypedRefusal {
   const StockListTooLong(this.what, this.cap);
 
   final String what;
@@ -35,7 +36,7 @@ class StockRpc {
 
   /// Every row of a configuration list [build] selects, page by page (`fetchAllPages`: ended by an empty page,
   /// never by the server's own row cap), refused as [StockListTooLong] past [listCap].
-  Future<List<Map<String, dynamic>>> rows(String what, PostgrestTransformBuilder<PostgrestList> Function() build) =>
+  Future<PostgrestList> rows(String what, PostgrestTransformBuilder<PostgrestList> Function() build) =>
       guard(what, () async {
         try {
           return await fetchAllPages(table: what, build: build, maxRows: listCap);
@@ -47,7 +48,7 @@ class StockRpc {
   /// Every row of a list that grows with the business [build] selects, page by page, with no cap of its own
   /// (`fetchAllPages`' safety ceiling only). [build] orders by a unique key last, so no row repeats or is skipped
   /// between pages.
-  Future<List<Map<String, dynamic>>> pages(String what, PostgrestTransformBuilder<PostgrestList> Function() build) =>
+  Future<PostgrestList> pages(String what, PostgrestTransformBuilder<PostgrestList> Function() build) =>
       guard(what, () => fetchAllPages(table: what, build: build));
 
   /// Runs [read]: a refusal of the server is logged once at warn as "[what] was refused" and thrown as

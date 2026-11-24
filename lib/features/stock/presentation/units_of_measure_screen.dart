@@ -14,6 +14,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -53,17 +54,11 @@ class UnitsOfMeasureScreen extends ConsumerWidget {
           onEdit: (u) => _edit(context, ref, workspaceId, value, u),
           onArchive: (u) => _archive(context, ref, workspaceId, u),
         ),
-        AsyncError() => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(l10n.stockUnitsReadFailed),
-              TextButton(
-                key: const ValueKey('measure-units-retry'),
-                onPressed: () => ref.invalidate(workspaceUnitListProvider(workspaceId!)),
-                child: Text(l10n.identityConnectRetry),
-              ),
-            ],
+        AsyncError(:final error) => Center(
+          child: ReadFailureBanner(
+            error: error,
+            onRetry: () => ref.invalidate(workspaceUnitListProvider(workspaceId!)),
+            retryKey: const ValueKey('measure-units-retry'),
           ),
         ),
         _ => const LoadingView(),

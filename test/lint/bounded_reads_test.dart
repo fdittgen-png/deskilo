@@ -10,6 +10,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 const _baselinePath = 'docs/design/BOUNDED_READS_BASELINE.txt';
 
@@ -63,10 +64,8 @@ List<String> unboundedReads(String source) {
 }
 
 List<String> _found() => [
-  for (final f in Directory('lib').listSync(recursive: true).whereType<File>())
-    if (f.path.endsWith('.dart') &&
-        f.path.contains('/data/') &&
-        !f.path.endsWith('.g.dart'))
+  for (final f in handWrittenDartFiles('lib'))
+    if (f.path.contains('/data/'))
       for (final table in unboundedReads(f.readAsStringSync()))
         '${f.path} $table',
 ]..sort();

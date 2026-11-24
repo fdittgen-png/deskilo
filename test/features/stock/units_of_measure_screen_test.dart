@@ -5,6 +5,7 @@
 // (the fields name their own problem); a built-in takes a word of the business's own but not another factor; an unused unit is
 // archived and shown again, a used one is refused in words; a failed read says so and reads again.
 import 'package:deskilo/core/demo/data/demo_workspace_units.dart';
+import 'package:deskilo/core/ui/async_read_body.dart';
 import 'package:deskilo/core/ui/form_kit.dart';
 import 'package:deskilo/features/stock/domain/workspace_units.dart';
 import 'package:deskilo/features/stock/presentation/units_of_measure_screen.dart';
@@ -165,7 +166,7 @@ void main() {
 
       testWidgets('a failed read says so, and reads again', (tester) async {
         await _open(tester, size, wrap: _Flaky.new);
-        expect(find.text(_en.stockUnitsReadFailed), findsOneWidget);
+        expect(find.byType(ReadFailureBanner), findsOneWidget);
         await tester.tap(find.byKey(const ValueKey('measure-units-retry')));
         await _frames(tester);
         expect(find.byKey(const ValueKey('measure-dimension-length')), findsOneWidget);

@@ -41320,8 +41320,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String tillReceiptLine(String label, String quantity, String unit) {
-    return '$label: $quantity $unit';
+  String tillReceiptLine(
+    String label,
+    String quantity,
+    String unit,
+    String amount,
+  ) {
+    return '$label: $quantity $unit  $amount';
   }
 
   @override
@@ -41341,7 +41346,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String tillReceiptTaxLine(String percent, String tax, String net) {
-    return 'VAT $percent %: $tax on $net';
+    return 'VAT $percent: $tax on $net';
   }
 
   @override
