@@ -8,6 +8,8 @@
 //     month recorded is told to the caller, which takes it out of its
 //     selection (the selection is the page's, never kept beyond it), so a
 //     refusal of a later month keeps only what is still to declare;
+//   * declare, for invoices without a month (#4165): ONE declaration of the
+//     whole selection, under a request id that survives a lost answer;
 //   * withdraw: an online payment's claim, or (#4140) takes back a declared
 //     one the business has not decided;
 //   * enter: the business of a selection, before its payment flow runs.
@@ -50,7 +52,16 @@ class FinanceSelectionCommands {
   Future<FinanceCommandTarget?> capture(FinanceSelection selection) async {
     final target = selection.invoices.firstOrNull?.target;
     if (target == null || selection.invoices.any((i) => i.target != target)) return null;
-    return enter(target);
+    final captured = await enter(target);
+    // #4165 — invoices without a month are paid by their financial subject:
+    // the one this account acts as there. Another subject's are not paid
+    // through this entry (a billing grant has its own, later); nothing is
+    // sent for a debtor the account is not.
+    if (captured != null && selection.isStandalone && selection.subjectId != captured.memberId) {
+      captured.release();
+      return null;
+    }
+    return captured;
   }
 
   Future<bool> declare(FinanceSelection selection, {
@@ -59,6 +70,16 @@ class FinanceSelectionCommands {
     final captured = await capture(selection);
     if (captured == null) return false;
     try {
+      if (selection.isStandalone) {
+        if (!captured.isCurrent()) return false;
+        await captured.commands.declareInvoicesPaid(
+          workspaceId: captured.target.workspaceId, memberId: captured.memberId,
+          claim: InvoiceClaim.standalone(amountCents: selection.cents,
+            invoiceIds: [for (final i in selection.standaloneInvoices) i.id]),
+        );
+        onRecorded?.call((period: '', invoices: selection.invoices, cents: selection.cents));
+        return true;
+      }
       for (final month in selection.months) {
         if (!captured.isCurrent()) return false;
         await captured.commands.declareInvoicesPaid(

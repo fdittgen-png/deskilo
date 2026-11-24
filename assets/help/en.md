@@ -2874,6 +2874,29 @@ The list shows each invitation as invited, reading, expired or ended. **End acce
 
 **See also:** [Billing customers](help:user.money.customers.billing)
 
+### A customer invoice without a month
+
+**Audience:** Administrator · Owner
+
+You have done a job for a named customer today (a consultation, a lesson, an agreed deliverable) and want to invoice it now, without a booking, a subscription or a month behind it. You need the right to issue invoices and the **Standalone invoices** feature.
+
+**Steps**
+
+1. Open **Invoices** and choose **A customer invoice without a month**.
+2. Choose the customer, then the service date and the due date.
+3. Add the lines: a description, a quantity, a unit and a price. Choosing an item from the catalogue is optional, so an ad hoc service can be written in words.
+4. Choose **Check the invoice**. The preview shows the amounts and the tax exactly as they will be issued, or what is still missing.
+5. Choose **Issue the invoice** to confirm. The invoice is numbered, kept as issued and opened.
+
+**Good to know**
+
+- The invoice has no billing month: a second, separate invoice of the same customer in the same month is its own invoice, and the monthly invoice, if there is one, is untouched.
+- Amounts and tax are always computed by the server, never taken from the screen; the price is in the business's currency.
+- Your draft stays as it is when you resize the window or a check is refused. If an answer to **Issue the invoice** does not arrive, the same confirmation never issues a second invoice: look it up again.
+- Changing the catalogue or the customer afterwards never changes an issued invoice.
+
+**See also:** [Billing customers](help:user.money.customers.billing) · [Paying invoices without a month](help:user.money.finances.standalone)
+
 ### Quotes
 
 **Audience:** Administrator · Owner
@@ -3189,6 +3212,28 @@ A business that invoices you can give you a code, so you read what it invoices y
 - A code that cannot be used (wrong, expired, withdrawn, or already taken by another account) always gets the same answer: ask the business for a new one.
 - Accepting makes you no member of the business. The business can end the access, and so can you; nothing is erased when it ends.
 - Paying these invoices from here is not offered yet.
+
+**See also:** [Your finances across spaces](help:user.money.finances)
+
+### Paying invoices without a month
+
+**Audience:** Member
+
+A business issued you invoices that belong to no month. They are paid together, on their own.
+
+**Steps**
+
+1. Open [My finances](app:/money) and tick the invoices without a month you want to pay. They belong to one business and one currency.
+2. A bar shows how many you ticked and their total. Choose **Pay** to pay online, or **I have paid** if you already paid another way.
+3. The confirmation lists the invoices and one total. Confirm: one checkout opens, or one declaration is sent.
+
+**Good to know**
+
+- Invoices without a month and monthly invoices are never paid together: once you tick one kind, the other cannot be ticked, and a line says so. If the business refuses a mix anyway, you are told so and nothing is charged.
+- The amount is what the invoices still owe. If it changed, refresh and try again.
+- If the answer was lost on the way, choose **Pay** again: it is the same payment, found again, never a second one. A payment is shown as paid only once the business has received it.
+- The money is posted in the month it arrives. What an invoice does not take stays your credit with that business until it is allocated.
+- A business whose payment service is too old says so before anything is sent.
 
 **See also:** [Your finances across spaces](help:user.money.finances)
 

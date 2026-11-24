@@ -29,6 +29,11 @@ abstract final class HelpAnchor {
   static const moneyBillingAccess = 'user.money.customers.access';
   static const moneyBilledToYou = 'user.money.finances.billed';
 
+  /// #4165 — a customer invoice without a month: issued by the business,
+  /// paid by the customer apart from monthly invoices.
+  static const moneyStandaloneInvoice = 'user.money.invoices.standalone';
+  static const moneyStandalonePayment = 'user.money.finances.standalone';
+
   /// #4166 — the customer quotes: an offer to a billing customer, sent and
   /// amended as revisions.
   static const moneyQuotes = 'user.money.quotes';

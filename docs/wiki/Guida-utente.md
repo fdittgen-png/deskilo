@@ -3008,6 +3008,30 @@ L'elenco mostra ogni invito come invitato, in lettura, scaduto o terminato. **Te
 
 **Vedere anche:** [Clienti fatturati](#clienti-fatturati)
 
+<!-- anchor: user.money.invoices.standalone -->
+### Una fattura cliente senza mese
+
+**Destinatari:** Amministratore · Proprietario
+
+Oggi ha reso un servizio a un cliente indicato (una consulenza, una lezione, un risultato concordato) e vuole fatturarlo subito, senza prenotazione, abbonamento o mese alle spalle. Servono il diritto di emettere fatture e la funzione **Fatture singole**.
+
+**Passaggi**
+
+1. Apra **Fatture** e scelga **Fattura cliente senza mese**.
+2. Scelga il cliente, poi la data della prestazione e la scadenza.
+3. Aggiunga le righe: una descrizione, una quantità, un'unità e un prezzo. Scegliere un articolo dal catalogo è facoltativo; una prestazione occasionale si scrive a parole.
+4. Scelga **Verificare la fattura**. L'anteprima mostra importi e imposta esattamente come saranno emessi, oppure ciò che manca ancora.
+5. Scelga **Emettere la fattura** per confermare. La fattura viene numerata, conservata così come emessa e aperta.
+
+**Da sapere**
+
+- La fattura non ha un mese di fatturazione: una seconda fattura distinta dello stesso cliente nello stesso mese è una fattura a sé, e la fattura mensile, se c'è, resta intatta.
+- Importi e imposta li calcola sempre il server, mai presi dalla schermata; il prezzo è nella valuta dell'attività.
+- La bozza resta com'è quando si ridimensiona la finestra o una verifica viene rifiutata. Se la risposta a **Emettere la fattura** non arriva, la stessa conferma non emette mai una seconda fattura: la si cerchi di nuovo.
+- Modificare poi il catalogo o il cliente non cambia mai una fattura emessa.
+
+**Vedere anche:** [Clienti fatturati](#clienti-fatturati) · [Pagare fatture senza mese](#pagare-fatture-senza-mese)
+
 <!-- anchor: user.money.quotes -->
 ### Preventivi
 
@@ -3342,6 +3366,29 @@ Un'azienda che Le fattura può darLe un codice, così che legga ciò che Le fatt
 - Pagare queste fatture da qui non è ancora previsto.
 
 **Vedere anche:** [Le Sue finanze in tutti gli spazi](#le-sue-finanze-in-tutti-gli-spazi)
+
+<!-- anchor: user.money.finances.standalone -->
+### Pagare fatture senza mese
+
+**Destinatari:** Membro
+
+Un'azienda Le ha emesso fatture che non appartengono ad alcun mese. Si pagano insieme, a parte.
+
+**Passaggi**
+
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money) e spunti le fatture senza mese da pagare. Appartengono a un'azienda e a una valuta.
+2. Una barra indica quante ne ha spuntate e il loro totale. Scelga **Paga** per pagare online, oppure **Ho pagato** se ha già pagato in altro modo.
+3. La conferma elenca le fatture e un solo totale. Confermi: si apre un pagamento oppure viene inviata una sola dichiarazione.
+
+**Da sapere**
+
+- Le fatture senza mese e quelle mensili non si pagano mai insieme: spuntato un tipo, l'altro non si può spuntare, e una riga lo dice. Se l'azienda rifiuta comunque una miscela, Lei ne è informato e non viene addebitato nulla.
+- L'importo è ciò che le fatture devono ancora. Se è cambiato, aggiorni e riprovi.
+- Se la risposta si è persa per strada, scelga di nuovo **Paga**: è lo stesso pagamento, ritrovato, mai un secondo. Un pagamento figura come pagato solo quando l'azienda lo ha ricevuto.
+- Il denaro è contabilizzato nel mese in cui arriva. Ciò che una fattura non assorbe resta un Suo credito presso l'azienda finché non viene assegnato.
+- Un'azienda il cui servizio di pagamento è troppo vecchio lo dice prima di inviare qualunque cosa.
+
+**Vedere anche:** [Le Sue finanze tra spazi](#le-sue-finanze-in-tutti-gli-spazi)
 
 <!-- anchor: user.money.businesses -->
 ### Le attività a colpo d'occhio

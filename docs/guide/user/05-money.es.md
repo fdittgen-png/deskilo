@@ -620,6 +620,30 @@ La lista muestra cada invitación como invitada, en lectura, caducada o terminad
 
 **Véase también:** [Clientes facturados](help:user.money.customers.billing)
 
+<!-- anchor: user.money.invoices.standalone -->
+### Una factura de cliente sin mes
+
+**Público:** Administrador/a · Propietario
+
+Hoy ha prestado un servicio a un cliente concreto (una consulta, una clase, un entregable acordado) y quiere facturarlo ya, sin reserva, suscripción ni mes detrás. Necesita el derecho de emitir facturas y la función **Facturas independientes**.
+
+**Pasos**
+
+1. Abra **Facturas** y elija **Factura de cliente sin mes**.
+2. Elija el cliente, después la fecha del servicio y el vencimiento.
+3. Añada las líneas: una descripción, una cantidad, una unidad y un precio. Elegir un artículo del catálogo es opcional; un servicio puntual se escribe con palabras.
+4. Elija **Revisar la factura**. La vista previa muestra los importes y el impuesto exactamente como se emitirán, o lo que aún falta.
+5. Elija **Emitir la factura** para confirmar. La factura se numera, se guarda tal como se emitió y se abre.
+
+**Conviene saber**
+
+- La factura no tiene mes de facturación: una segunda factura distinta del mismo cliente el mismo mes es una factura propia, y la factura mensual, si la hay, queda intacta.
+- Los importes y el impuesto los calcula siempre el servidor, nunca se toman de la pantalla; el precio está en la moneda del negocio.
+- Su borrador se conserva al cambiar el tamaño de la ventana o si se rechaza una comprobación. Si la respuesta a **Emitir la factura** no llega, la misma confirmación nunca emite una segunda factura: búsquela de nuevo.
+- Cambiar después el catálogo o el cliente nunca modifica una factura emitida.
+
+**Véase también:** [Clientes facturados](help:user.money.customers.billing) · [Pagar facturas sin mes](help:user.money.finances.standalone)
+
 <!-- anchor: user.money.quotes -->
 ### Presupuestos
 
@@ -954,6 +978,29 @@ Una empresa que le factura puede darle un código para que lea lo que le factura
 - Pagar estas facturas desde aquí aún no se ofrece.
 
 **Véase también:** [Sus finanzas en todos sus espacios](help:user.money.finances)
+
+<!-- anchor: user.money.finances.standalone -->
+### Pagar facturas sin mes
+
+**Público:** Miembro
+
+Una empresa le ha emitido facturas que no pertenecen a ningún mes. Se pagan juntas, aparte.
+
+**Pasos**
+
+1. Abra [Mis finanzas](app:/money) y marque las facturas sin mes que quiere pagar. Son de una empresa y una moneda.
+2. Una barra indica cuántas ha marcado y su total. Elija **Pagar** para pagar en línea, o **He pagado** si ya pagó de otra manera.
+3. La confirmación enumera las facturas y un único total. Confirme: se abre un pago o se envía una sola declaración.
+
+**Conviene saber**
+
+- Las facturas sin mes y las mensuales no se pagan nunca juntas: una vez marcado un tipo, no se puede marcar el otro, y una línea lo dice. Si la empresa rechaza igualmente una mezcla, se le informa y no se cobra nada.
+- El importe es lo que las facturas aún deben. Si cambió, actualice e inténtelo de nuevo.
+- Si la respuesta se perdió por el camino, elija **Pagar** otra vez: es el mismo pago, encontrado de nuevo, nunca un segundo. Un pago solo figura como pagado cuando la empresa lo ha recibido.
+- El dinero se contabiliza en el mes en que llega. Lo que una factura no toma sigue siendo su crédito en la empresa hasta que se asigne.
+- Una empresa cuyo servicio de pago es demasiado antiguo lo dice antes de enviar nada.
+
+**Véase también:** [Sus finanzas entre espacios](help:user.money.finances)
 
 <!-- anchor: user.money.businesses -->
 ### Sus negocios de un vistazo

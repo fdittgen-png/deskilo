@@ -6823,6 +6823,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wählen Sie die Rechnungen, die diese Zahlung begleicht.';
 
   @override
+  String get claimRefusedMonthlyInStandalone =>
+      'Monatsrechnungen werden mit ihrem Monat bezahlt, getrennt von Rechnungen ohne Monat. Es wurde nichts belastet.';
+
+  @override
   String get claimRefusedMonths =>
       'Eine Zahlung begleicht die Rechnungen eines Monats. Es wurde nichts belastet.';
 
@@ -6853,6 +6857,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get claimRefusedRequestChanged =>
       'Diese Zahlung wurde bereits anders gemeldet. Prüfen Sie die gemeldeten Zahlungen und versuchen Sie es erneut.';
+
+  @override
+  String get claimRefusedStandaloneInMonthly =>
+      'Eine Rechnung ohne Monat wird für sich bezahlt, getrennt von Monatsrechnungen. Es wurde nichts belastet.';
 
   @override
   String get claimRefusedWithdrawn =>
@@ -13722,6 +13730,14 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get financesSelectionOnlyMonthly =>
+      'Monatsrechnungen werden mit ihrem Monat bezahlt, getrennt von Rechnungen ohne Monat.';
+
+  @override
+  String get financesSelectionOnlyStandalone =>
+      'Rechnungen ohne Monat werden zusammen bezahlt, getrennt von Monatsrechnungen.';
+
+  @override
   String financesSelectionSummary(int count, String amount) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -13738,6 +13754,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String financesSourceUnavailable(String host) {
     return 'Die Dokumente von $host konnten gerade nicht gelesen werden; angezeigt wird, was aus Ihren anderen Räumen stammt.';
+  }
+
+  @override
+  String financesStandaloneTotal(String amount) {
+    return 'Gesamt: $amount';
   }
 
   @override
@@ -25161,6 +25182,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get payOnlineReversedTitle => 'Online-Zahlung rückgängig gemacht';
+
+  @override
+  String get payOnlineStandaloneUnsupported =>
+      'Der Zahlungsdienst dieses Betriebs muss aktualisiert werden, bevor Rechnungen ohne Monat online bezahlt werden können.';
 
   @override
   String get payOnlineStartAgain =>

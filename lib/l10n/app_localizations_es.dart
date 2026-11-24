@@ -6809,6 +6809,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get claimRefusedEmpty => 'Elija las facturas que paga este pago.';
 
   @override
+  String get claimRefusedMonthlyInStandalone =>
+      'Las facturas mensuales se pagan con su mes, aparte de las facturas sin mes. No se ha cobrado nada.';
+
+  @override
   String get claimRefusedMonths =>
       'Un pago es para las facturas de un mes. No se ha cobrado nada.';
 
@@ -6838,6 +6842,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get claimRefusedRequestChanged =>
       'Este pago ya se envió con otros datos. Compruebe los pagos declarados y vuelva a intentarlo.';
+
+  @override
+  String get claimRefusedStandaloneInMonthly =>
+      'Una factura sin mes se paga por separado, aparte de las facturas mensuales. No se ha cobrado nada.';
 
   @override
   String get claimRefusedWithdrawn =>
@@ -13691,6 +13699,14 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get financesSelectionOnlyMonthly =>
+      'Las facturas mensuales se pagan con su mes, aparte de las facturas sin mes.';
+
+  @override
+  String get financesSelectionOnlyStandalone =>
+      'Las facturas sin mes se pagan juntas, aparte de las facturas mensuales.';
+
+  @override
   String financesSelectionSummary(int count, String amount) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -13707,6 +13723,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String financesSourceUnavailable(String host) {
     return 'No se pudieron leer los documentos de $host por ahora; lo que se muestra procede de sus otros espacios.';
+  }
+
+  @override
+  String financesStandaloneTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -25087,6 +25108,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get payOnlineReversedTitle => 'Pago en línea revertido';
+
+  @override
+  String get payOnlineStandaloneUnsupported =>
+      'El servicio de pago de este negocio debe actualizarse antes de poder pagar en línea facturas sin mes.';
 
   @override
   String get payOnlineStartAgain =>

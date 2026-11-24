@@ -269,6 +269,7 @@ class _ExcelExport {
     [
       'state', 'member', 'amount', 'currency', 'period', 'occurred_on',
       'recorded_at', 'description', 'provider', 'order_id', 'reversed_at', 'reversal_reason',
+      'allocation',
     ],
     for (final entry in ledger)
       if (isExportedPayment(entry))
@@ -276,7 +277,7 @@ class _ExcelExport {
           'confirmed', memberName[entry.memberId],
           major(entry.amountCents), workspace.currencyCode, entry.period,
           _day(entry.occurredOn), _at(entry.createdAt), entry.description, null,
-          null, null, null,
+          null, null, null, entry.allocationMode,
         ],
     for (final event in pendingEvents)
       if (event.type == EventType.payment)
@@ -286,12 +287,14 @@ class _ExcelExport {
           workspace.currencyCode,
           event.payload['period'], null, _at(event.createdAt),
           event.payload['note'], null, null, null, null,
+          event.payload['allocation_mode'] ?? 'legacy',
         ],
     for (final intent in paymentIntents)
       [
         'online (${intent.status})', memberName[intent.memberId],
         major(intent.amountCents), workspace.currencyCode, intent.period,
         null, _at(intent.createdAt), null, intent.provider, intent.orderId, _at(intent.reversedAt), intent.reversalReason,
+        intent.allocationMode.wire,
       ],
   ]);
 
@@ -427,6 +430,7 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
       [
         'id', 'member', 'kind', 'category', 'amount', 'signed_amount',
         'currency', 'period', 'occurred_on', 'recorded_at', 'description',
+        'allocation',
       ],
       for (final e in d.ledger)
         [
@@ -434,7 +438,7 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
           major(e.amountCents),
           major(exportedSignedCents(e)),
           d.workspace.currencyCode, e.period, _day(e.occurredOn), _at(e.createdAt),
-          e.description,
+          e.description, e.allocationMode,
         ],
     ]),
     XlsxSheet(name: 'Events', rows: [

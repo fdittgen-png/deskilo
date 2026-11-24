@@ -8,6 +8,7 @@ import 'package:deskilo/features/money/domain/payment_provider.dart';
 import 'package:deskilo/features/money/domain/payment_test_check.dart';
 import 'package:deskilo/features/money/domain/settlement_fetch.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show yearMonth;
 
 import '../money_repository.dart';
 import 'demo_member_account_commands.dart' show checkDemoClaim;
@@ -59,6 +60,10 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
 
   bool takesContinuations = true;
 
+  /// #4165 — false: a payment function older than the invoices without a
+  /// month (its probe does not say `standalone`).
+  bool takesStandalone = true;
+
   @override
   Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId) async =>
       List.of(_m.paymentIntents);
@@ -82,6 +87,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
         missing: _m.paymentMissing,
         claims: takesClaims,
         continuations: takesContinuations,
+        standalone: takesStandalone,
       );
 
   @override
@@ -166,10 +172,24 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     if (unreachable) {
       throw const PaymentGatewayException(503, 'provider not reachable');
     }
-    // the claim is refused as the server refuses it (0797)
-    checkDemoClaim(_m, memberId: memberId, claim: claim, currency: currencyCode);
+    // #4165 — a standalone payment names its request id, and has no month:
+    // the intent's period is bookkeeping, the month it was opened.
+    if (claim.standalone && requestId == null) {
+      throw const PaymentGatewayException(400, 'invalid_request');
+    }
+    final period = claim.standalone ? yearMonth(_m.clock().year, _m.clock().month) : claim.period;
+    // a retried request is the payment it already opened: answered as it was,
+    // never refused for holding its own invoices (the replay of 0797)
+    final replay = requestId == null ? null : _m.paymentIntents
+        .where((p) => p.requestId == requestId && p.status == 'created').firstOrNull;
+    if (replay == null) {
+      // the claim is refused as the server refuses it (0797, 0901)
+      checkDemoClaim(_m, memberId: memberId, claim: claim, currency: currencyCode);
+    }
     requestIds.add(requestId);
-    if (loseNextAnswer) {
+    // an answer lost before the order was made leaves nothing behind; one
+    // lost after it (the stand-in's) leaves the order, found again by its id
+    if (loseNextAnswer && !standIn) {
       loseNextAnswer = false;
       throw const PaymentGatewayException(503, 'the answer was lost');
     }
@@ -179,7 +199,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
       memberId: memberId,
       amountCents: claim.amountCents,
       currencyCode: currencyCode,
-      period: claim.period,
+      period: period,
       requestId: requestId,
     );
     // #3556 — the invoices this payment names are in it until it is paid,
@@ -189,8 +209,13 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
       final at = _m.paymentIntents.indexWhere((p) => p.orderId == order);
       if (at >= 0) {
         _m.paymentIntents[at] = _with(_m.paymentIntents[at],
-            status: _m.paymentIntents[at].status, claimedInvoiceIds: [...claim.invoiceIds]);
+            status: _m.paymentIntents[at].status, claimedInvoiceIds: [...claim.invoiceIds],
+            allocationMode: claim.standalone ? PaymentAllocationMode.explicit : null);
       }
+    }
+    if (loseNextAnswer) {
+      loseNextAnswer = false;
+      throw const PaymentGatewayException(503, 'the answer was lost');
     }
     return PaymentOrderStart(
       approveUrl: start.approveUrl,
@@ -357,6 +382,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     DateTime? reversedAt,
     String? reversalReason,
     List<String>? claimedInvoiceIds,
+    PaymentAllocationMode? allocationMode,
   }) => PaymentIntent(
     id: p.id,
     requestId: p.requestId, currency: p.currency,
@@ -373,6 +399,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     reversedAt: reversedAt ?? p.reversedAt,
     reversalReason: reversalReason ?? p.reversalReason,
     reversalReviewedAt: p.reversalReviewedAt,
+    allocationMode: allocationMode ?? p.allocationMode,
     system: p.system,
   );
 
@@ -380,6 +407,9 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
   /// of the period, oldest first: what `apply_payment_to_invoices` does.
   Future<void> _settle(PaymentIntent intent) async {
     final now = _m.clock();
+    // #4165 — an explicit payment is posted in the month it arrived and is
+    // spent only by the allocations that name it (0901)
+    final explicit = intent.allocationMode == PaymentAllocationMode.explicit;
     final ledgerId = 'demo-online-${intent.id}';
     _m.ledger.add(
       LedgerEntry(
@@ -389,9 +419,10 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
         category: LedgerCategory.payment,
         amountCents: intent.amountCents,
         description: 'Online payment ${intent.reference}',
-        period: intent.period,
+        period: explicit ? yearMonth(now.year, now.month) : intent.period,
         createdAt: now,
         occurredOn: now,
+        allocationMode: intent.allocationMode.wire,
       ),
     );
     // #3556 — a payment that named its invoices is applied to them alone
@@ -403,7 +434,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
       for (final inv in _m.invoices)
         if (inv.memberId == intent.memberId &&
             (claim == null || claim.contains(inv.id)) &&
-            inv.period == intent.period &&
+            (explicit ? inv.period == null : inv.period == intent.period) &&
             inv.totalCents > 0 &&
             !inv.isVoided &&
             inv.currency == _m.invoiceCommands.currency)

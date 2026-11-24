@@ -62,6 +62,7 @@ class SupabasePaymentGatewayRepository implements PaymentGatewayRepository {
       missing: missing,
       claims: data['claims'] == true,
       continuations: data['continuations'] == true,
+      standalone: data['standalone'] == true,
     );
   }
 
@@ -161,7 +162,9 @@ class SupabasePaymentGatewayRepository implements PaymentGatewayRepository {
     'member_id': memberId,
     'amount_cents': claim.amountCents,
     'currency': currencyCode,
-    'period': claim.period,
+    // #4165 — a payment of invoices without a month names none and asks
+    // the function to date it (it requires the request id and the invoices).
+    if (claim.standalone) 'standalone': true else 'period': claim.period,
     'request_id': ?requestId,
     'invoice_ids': claim.invoiceIds,
   });

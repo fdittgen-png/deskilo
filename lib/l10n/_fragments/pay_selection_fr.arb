@@ -50,5 +50,11 @@
   "financesTakeBackTitle": "Retirer cette déclaration ?",
   "financesTakeBackBody": "Vous avez déclaré avoir payé {invoices}. Une fois retirée, l’entreprise n’a plus à la confirmer et ces factures peuvent être payées à nouveau.",
   "financesTakenBack": "Déclaration retirée. Ses factures peuvent être payées à nouveau.",
-  "financesTakeBackFailed": "La déclaration n’a pas pu être retirée. Réessayez."
+  "financesTakeBackFailed": "La déclaration n’a pas pu être retirée. Réessayez.",
+  "financesSelectionOnlyStandalone": "Les factures sans mois se règlent ensemble, séparément des factures mensuelles.",
+  "financesSelectionOnlyMonthly": "Les factures mensuelles se règlent avec leur mois, séparément des factures sans mois.",
+  "financesStandaloneTotal": "Total : {amount}",
+  "payOnlineStandaloneUnsupported": "Le service de paiement de cet établissement doit être mis à jour avant que des factures sans mois puissent être payées en ligne.",
+  "claimRefusedStandaloneInMonthly": "Une facture sans mois se règle seule, séparément des factures mensuelles. Rien n'a été débité.",
+  "claimRefusedMonthlyInStandalone": "Les factures mensuelles se règlent avec leur mois, séparément des factures sans mois. Rien n'a été débité."
 }

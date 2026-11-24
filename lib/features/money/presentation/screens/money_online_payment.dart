@@ -57,14 +57,19 @@ class MoneyOnlinePayment {
   /// still owe and refuses any other amount). True once the payment is
   /// with its provider (or was paid already); false when it was not
   /// started — refused, failed or left — so a selection stays as it was.
+  ///
+  /// #4165 — [standalone]: [invoiceIds] are invoices without a month, paid as
+  /// one payment of their financial subject ([period] is not read); the
+  /// payment function must say it takes them.
   Future<bool> pay(
     int amountCents,
     String period, {
     List<String>? invoiceIds,
     FinanceCommandTarget? captured,
+    bool standalone = false,
   }) async {
     final l10n = _context.l10n;
-    final payment = _paymentOrSay(captured, amountCents, period, invoiceIds);
+    final payment = _paymentOrSay(captured, amountCents, period, invoiceIds, standalone);
     if (payment == null || amountCents <= 0 || (captured != null && !captured.isCurrent())) return false;
     final trace = TraceLogger.instance;
 
@@ -87,6 +92,10 @@ class MoneyOnlinePayment {
       AppSnack.error(_context, l10n.payOnlineClaimsUnsupported);
       return false;
     }
+    if (standalone && !gateway.standalone) {
+      AppSnack.error(_context, l10n.payOnlineStandaloneUnsupported);
+      return false;
+    }
 
     // 2. Pick the provider (directly when only one is configured).
     final chosen = await _chooseProvider(gateway, l10n);
@@ -103,11 +112,16 @@ class MoneyOnlinePayment {
       l10n: l10n,
       payment: payment,
       provider: chosen,
-      order: InvoiceClaim(
-        period: period,
-        amountCents: amountCents,
-        invoiceIds: invoiceIds ?? const [],
-      ),
+      order: standalone
+          ? InvoiceClaim.standalone(
+              amountCents: amountCents,
+              invoiceIds: invoiceIds ?? const [],
+            )
+          : InvoiceClaim(
+              period: period,
+              amountCents: amountCents,
+              invoiceIds: invoiceIds ?? const [],
+            ),
     );
     if (order == null || !_context.mounted || (captured != null && !captured.isCurrent())) return false;
     // #3556 — the function names how many invoices it took; another count
@@ -157,6 +171,7 @@ class MoneyOnlinePayment {
     int amountCents,
     String period,
     List<String>? invoiceIds,
+    bool standalone,
   ) {
     final payment = _payment(captured);
     if (payment != null || captured != null || amountCents <= 0) return payment;
@@ -167,7 +182,7 @@ class MoneyOnlinePayment {
           label: l10n.commonRetry,
           onPressed: () {
             if (_context.mounted) {
-              unawaited(pay(amountCents, period, invoiceIds: invoiceIds));
+              unawaited(pay(amountCents, period, invoiceIds: invoiceIds, standalone: standalone));
             }
           },
         ));
@@ -254,7 +269,7 @@ class MoneyOnlinePayment {
     // (#3556; none: a payment of the account)
     required InvoiceClaim order,
   }) async {
-    final InvoiceClaim(:period, :amountCents, :invoiceIds) = order;
+    final InvoiceClaim(:period, :amountCents, :invoiceIds, :standalone) = order;
     final workspaceId = payment.workspaceId;
     final memberId = payment.memberId;
     PaymentOrderStart? start;
@@ -272,7 +287,9 @@ class MoneyOnlinePayment {
         try {
           final claimed = invoiceIds.isNotEmpty;
           start = await payment.requests.run(payment.financeKey, memberId, provider,
-              claimed ? PaymentRequestIds.forClaim(period, invoiceIds) : period,
+              claimed
+                  ? PaymentRequestIds.forClaim(standalone ? 'standalone' : period, invoiceIds)
+                  : period,
               amountCents, (id) => claimed
                   ? repo.createClaimOrder(
                       provider: provider, workspaceId: workspaceId,

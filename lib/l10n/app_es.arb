@@ -3970,6 +3970,7 @@
   "claimRefusedCurrency": "Una de estas facturas está en otra moneda que la de los pagos del negocio. No se ha cobrado nada.",
   "claimRefusedDecided": "La empresa ya ha decidido sobre este pago.",
   "claimRefusedEmpty": "Elija las facturas que paga este pago.",
+  "claimRefusedMonthlyInStandalone": "Las facturas mensuales se pagan con su mes, aparte de las facturas sin mes. No se ha cobrado nada.",
   "claimRefusedMonths": "Un pago es para las facturas de un mes. No se ha cobrado nada.",
   "claimRefusedNotMyPayment": "Este pago no le corresponde retirarlo.",
   "claimRefusedNotProcessing": "Este pago ya no está en curso. Actualice para ver en qué estado está.",
@@ -3978,6 +3979,7 @@
   "claimRefusedOther": "El negocio rechazó estas facturas para este pago. Actualice y vuelva a intentarlo.",
   "claimRefusedOtherMonth": "Estas facturas son de otro mes que este pago. No se ha cobrado nada.",
   "claimRefusedRequestChanged": "Este pago ya se envió con otros datos. Compruebe los pagos declarados y vuelva a intentarlo.",
+  "claimRefusedStandaloneInMonthly": "Una factura sin mes se paga por separado, aparte de las facturas mensuales. No se ha cobrado nada.",
   "claimRefusedWithdrawn": "Retiró este pago. Vuelva a seleccionar las facturas para pagarlas.",
   "coOwnerAction": "Copropiedad",
   "coOwnerActivate": "Promover a propietario ahora",
@@ -8503,6 +8505,8 @@
   "financesSelectionInvoiceAmount": "{number} · {amount}",
   "financesSelectionMonthAmount": "{month}: {amount}",
   "financesSelectionOneBusiness": "Un pago es para un solo negocio en una sola moneda: {business}.",
+  "financesSelectionOnlyMonthly": "Las facturas mensuales se pagan con su mes, aparte de las facturas sin mes.",
+  "financesSelectionOnlyStandalone": "Las facturas sin mes se pagan juntas, aparte de las facturas mensuales.",
   "financesSelectionSummary": "{count, plural, one{1 factura seleccionada · {amount}} other{{count} facturas seleccionadas · {amount}}}",
   "financesShowAmount": "Mostrar el importe",
   "financesSourceUnavailable": "No se pudieron leer los documentos de {host} por ahora; lo que se muestra procede de sus otros espacios.",
@@ -8514,6 +8518,7 @@
       }
     }
   },
+  "financesStandaloneTotal": "Total: {amount}",
   "financesStateClosed": "Cerrada",
   "@financesStateClosed": {
     "description": "Me › Finances"
@@ -14361,6 +14366,7 @@
   "payOnlineReversedDetail": "El pago {reference} ({amount} con {provider}) fue revertido por el proveedor (un reembolso o una disputa). La empresa corrige su saldo.",
   "payOnlineReversedPartDetail": "Del pago {reference} ({amount} con {provider}), el proveedor revirtió {reversed} (un reembolso o una disputa). La empresa corrige su saldo.",
   "payOnlineReversedTitle": "Pago en línea revertido",
+  "payOnlineStandaloneUnsupported": "El servicio de pago de este negocio debe actualizarse antes de poder pagar en línea facturas sin mes.",
   "payOnlineStartAgain": "Este pago ya no se puede continuar. Vuelva a iniciar el pago.",
   "payOnlineTestKeys": "El pago en línea no está disponible: el proveedor de pagos está configurado con credenciales de prueba. La empresa debe introducir sus claves reales.",
   "paymentAccountNumberLabel": "Número de cuenta",

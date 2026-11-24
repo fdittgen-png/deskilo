@@ -3970,6 +3970,7 @@
   "claimRefusedCurrency": "Una di queste fatture è in una valuta diversa da quella dei pagamenti dell’attività. Non è stato addebitato nulla.",
   "claimRefusedDecided": "L’azienda ha già deciso su questo pagamento.",
   "claimRefusedEmpty": "Scelga le fatture che questo pagamento salda.",
+  "claimRefusedMonthlyInStandalone": "Le fatture mensili si pagano con il loro mese, separatamente dalle fatture senza mese. Non è stato addebitato nulla.",
   "claimRefusedMonths": "Un pagamento salda le fatture di un solo mese. Non è stato addebitato nulla.",
   "claimRefusedNotMyPayment": "Questo pagamento non spetta a Lei ritirarlo.",
   "claimRefusedNotProcessing": "Questo pagamento non è più in corso. Aggiorni per vedere a che punto è.",
@@ -3978,6 +3979,7 @@
   "claimRefusedOther": "L’attività ha rifiutato queste fatture per questo pagamento. Aggiorni e riprovi.",
   "claimRefusedOtherMonth": "Queste fatture sono di un mese diverso da questo pagamento. Non è stato addebitato nulla.",
   "claimRefusedRequestChanged": "Questo pagamento è già stato inviato con altri dati. Controlli i pagamenti dichiarati e riprovi.",
+  "claimRefusedStandaloneInMonthly": "Una fattura senza mese si paga da sola, separatamente dalle fatture mensili. Non è stato addebitato nulla.",
   "claimRefusedWithdrawn": "Ha ritirato questo pagamento. Selezioni di nuovo le fatture per pagarle.",
   "coOwnerAction": "Comproprietà",
   "coOwnerActivate": "Promuovi a proprietario ora",
@@ -8503,6 +8505,8 @@
   "financesSelectionInvoiceAmount": "{number} · {amount}",
   "financesSelectionMonthAmount": "{month}: {amount}",
   "financesSelectionOneBusiness": "Un pagamento è per una sola attività in una sola valuta: {business}.",
+  "financesSelectionOnlyMonthly": "Le fatture mensili si pagano con il loro mese, separatamente dalle fatture senza mese.",
+  "financesSelectionOnlyStandalone": "Le fatture senza mese si pagano insieme, separatamente dalle fatture mensili.",
   "financesSelectionSummary": "{count, plural, one{1 fattura selezionata · {amount}} other{{count} fatture selezionate · {amount}}}",
   "financesShowAmount": "Mostra l'importo",
   "financesSourceUnavailable": "I documenti di {host} non sono stati letti per ora; quanto mostrato proviene dai Suoi altri spazi.",
@@ -8514,6 +8518,7 @@
       }
     }
   },
+  "financesStandaloneTotal": "Totale: {amount}",
   "financesStateClosed": "Chiusa",
   "@financesStateClosed": {
     "description": "Me › Finances"
@@ -14361,6 +14366,7 @@
   "payOnlineReversedDetail": "Il pagamento {reference} ({amount} tramite {provider}) è stato stornato dal fornitore (un rimborso o una contestazione). L'azienda corregge il suo saldo.",
   "payOnlineReversedPartDetail": "Del pagamento {reference} ({amount} tramite {provider}), il fornitore ha stornato {reversed} (un rimborso o una contestazione). L'azienda corregge il suo saldo.",
   "payOnlineReversedTitle": "Pagamento online stornato",
+  "payOnlineStandaloneUnsupported": "Il servizio di pagamento di questa attività deve essere aggiornato prima che le fatture senza mese possano essere pagate online.",
   "payOnlineStartAgain": "Questo pagamento non può più essere proseguito. Avvii di nuovo il pagamento.",
   "payOnlineTestKeys": "Il pagamento online non è disponibile: il fornitore di pagamento è configurato con credenziali di prova. L'azienda deve inserire le sue chiavi reali.",
   "paymentAccountNumberLabel": "Numero di conto",

@@ -1764,7 +1764,8 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     _owner,
     'Ada invoices 1.5 hours at 80.00 to a customer with no booking behind it: '
     'the preview and the issued invoice state the exact quantity, and the same '
-    'request never issues twice',
+    'request never issues twice, and its customer declares it paid in one '
+    'declaration apart from the monthly ones',
     (_) => standaloneInvoiceJourney(),
   ),
 };

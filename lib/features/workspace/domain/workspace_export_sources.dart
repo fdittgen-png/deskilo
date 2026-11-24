@@ -257,6 +257,8 @@ const List<ExportSource> workspaceExportSources = [
       'occurred_on',
       'created_at',
       'description',
+      // #4165 — how the entry is spent: by the month rules or only by its allocations.
+      'allocation_mode',
     },
   ),
   ExportSource(
@@ -279,6 +281,8 @@ const List<ExportSource> workspaceExportSources = [
       // #3905 — a reversal at the provider, when and why.
       'reversed_at',
       'reversal_reason',
+      // #4165 — how the payment is spent: by the month rules or only by its allocations.
+      'allocation_mode',
     },
   ),
   ExportSource(

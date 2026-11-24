@@ -12,6 +12,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/features/enabled_feature_keys.dart';
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -211,6 +213,12 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
   /// The title, and the way out: back to the invoices, the draft left behind.
   AppBar _bar(BuildContext context) => AppBar(
     title: PageTitle(context.l10n.invoiceCreate),
+    actions: [
+      HelpDot(
+        context.l10n.standaloneInvoiceMore,
+        anchor: HelpAnchor.moneyStandaloneInvoice,
+      ),
+    ],
     leading: CloseButton(
       key: const ValueKey('standalone-close'),
       onPressed: () => context.go(invoicesPath),

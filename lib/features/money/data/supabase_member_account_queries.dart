@@ -146,6 +146,7 @@ class SupabaseMemberAccountQueries implements MemberAccountQueries {
       occurredOn: row['occurred_on'] == null
           ? null
           : DateTime.parse(row['occurred_on'] as String),
+      allocationMode: row['allocation_mode'] as String? ?? 'legacy',
     );
   }
 }

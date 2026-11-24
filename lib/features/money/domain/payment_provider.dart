@@ -27,7 +27,13 @@ class PaymentGatewayConfig {
     this.missing = const {},
     this.claims = false,
     this.continuations = false,
+    this.standalone = false,
   });
+
+  /// #4165 — the function opens a payment of invoices without a month
+  /// (`standalone: true` in its probe); an older one would read the missing
+  /// month as an error, so such a selection is not paid through it.
+  final bool standalone;
 
   /// #3556 — the business's payment function takes a payment's claim of
   /// invoices; an older one does not say, and a selection is not paid
