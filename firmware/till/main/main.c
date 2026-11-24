@@ -144,6 +144,8 @@ static void tick(void *arg) { lv_tick_inc(2); }
 static void key_cb(lv_event_t *e) { cmd_t c = {CMD_TAP, (int)(intptr_t)lv_event_get_user_data(e)}; xQueueSend(s_cmd, &c, 0); }
 static void next_cb(lv_event_t *e) { cmd_t c = {CMD_NEXT, 0}; xQueueSend(s_cmd, &c, 0); }
 
+static const char *or_unset(const char *v) { return v[0] ? v : "(not set)"; }
+
 static void close_settings_cb(lv_event_t *e) { lv_obj_del(s_settings); s_settings = NULL; }
 static void clear_cb(lv_event_t *e) { cfg_erase(); esp_restart(); }
 static void open_settings_cb(lv_event_t *e) {
@@ -153,7 +155,7 @@ static void open_settings_cb(lv_event_t *e) {
     lv_obj_center(s_settings);
     lv_obj_t *t = lv_label_create(s_settings);
     lv_label_set_text_fmt(t, "Settings\nRole:      %s\nWi-Fi:     %s\nCompany:   %s\nUser:      %s\nSession:   %s",
-        g_cfg.role, g_cfg.ssid, g_cfg.workspace_name, g_cfg.email[0] ? "signed in" : "none", g_cfg.refresh[0] ? "kept" : "missing");
+        or_unset(g_cfg.role), or_unset(g_cfg.ssid), or_unset(g_cfg.workspace_name), or_unset(g_cfg.email), g_cfg.refresh[0] ? "kept" : "(not set)");
     lv_obj_set_style_text_font(t, &lv_font_montserrat_16, 0);
     lv_obj_align(t, LV_ALIGN_TOP_LEFT, 0, 0);
     lv_obj_t *b1 = lv_btn_create(s_settings);

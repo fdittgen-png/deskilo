@@ -12,7 +12,7 @@ It signs the user in with Deskilo (email and password), keeps ONLY the refresh t
 (workspace) and the till, writes them into the board's NVS partition and flashes it. A temporary bring-up path: the enrolled, cashier-leased
 terminal (E03, #4454) replaces it. Use a dedicated cashier account, one sign-in per board (the server rotates refresh tokens).
 """
-import argparse, csv, getpass, json, os, re, shutil, subprocess, sys, tempfile, urllib.request, urllib.error
+import argparse, glob, csv, getpass, json, os, re, shutil, subprocess, sys, tempfile, urllib.request, urllib.error
 
 NVS_OFFSET, NVS_SIZE = 0x9000, 0x6000
 DEFAULT_URL = "https://zwzbynivewivvjmripeb.supabase.co"
@@ -44,6 +44,19 @@ def check(rows):
             sys.exit(f"{k} is not an id")
         if k == "url" and not v.startswith("https://"):
             sys.exit("the server must be https://")
+
+
+def esp_tools():
+    """ESP-IDF and its Python (which has esptool), found without `export.sh`: $IDF_PATH, else ~/esp/esp-idf."""
+    idf = os.environ.get("IDF_PATH") or os.path.expanduser("~/esp/esp-idf")
+    if not os.path.isfile(os.path.join(idf, "components/nvs_flash/nvs_partition_generator/nvs_partition_gen.py")):
+        sys.exit(f"ESP-IDF not found at {idf}: set IDF_PATH")
+    py = os.environ.get("IDF_PYTHON_ENV_PATH")
+    py = os.path.join(py, "bin", "python") if py else None
+    if not py or not os.path.isfile(py):
+        envs = sorted(glob.glob(os.path.expanduser("~/.espressif/python_env/idf*_env/bin/python")))
+        py = envs[-1] if envs else sys.executable
+    return idf, py
 
 
 def pick(title, rows, label):
@@ -93,6 +106,7 @@ def main():
     a = ap.parse_args()
     if not a.anon:
         sys.exit("--anon (or SUPABASE_ANON_KEY) is required")
+    esp_tools()   # before any question: a missing tool is said first, not after the sign-in
     ssid = input("Wi-Fi name: ").strip()
     wpass = getpass.getpass("Wi-Fi password: ")
     email = input("Deskilo user (email): ").strip()
@@ -121,10 +135,10 @@ def main():
             for k, v in rows:
                 w.writerow([k, "data", "string", v])
         binf = os.path.join(work, "nvs.bin")
-        idf = os.path.expandvars("$IDF_PATH")
+        idf, py = esp_tools()
         gen = os.path.join(idf, "components/nvs_flash/nvs_partition_generator/nvs_partition_gen.py")
-        subprocess.check_call([sys.executable, gen, "generate", src, binf, hex(NVS_SIZE)])
-        subprocess.check_call([sys.executable, "-m", "esptool", "--chip", "esp32", "--port", a.port, "--baud", "460800", "write_flash", hex(NVS_OFFSET), binf])
+        subprocess.check_call([py, gen, "generate", src, binf, hex(NVS_SIZE)])
+        subprocess.check_call([py, "-m", "esptool", "--chip", "esp32", "--port", a.port, "--baud", "460800", "write_flash", hex(NVS_OFFSET), binf])
     except BaseException:
         try:   # the board did not get the session: the server forgets it
             call(a.url, a.anon, "/auth/v1/logout", {}, token=token)

@@ -9,7 +9,7 @@
 
 static const char *TAG = "board";
 #define LCD_HOST SPI2_HOST
-#define LCD_CLOCK_HZ (40 * 1000 * 1000)
+#define LCD_CLOCK_HZ (26 * 1000 * 1000)   // 40 MHz left one board's panel black; 26 MHz is inside every unit's margin
 #define TOUCH_CLOCK_HZ (2 * 1000 * 1000)
 // 4-line SPI: 8-bit commands, DC on IO2. Partial buffers are 480 x 32 pixels x 2 bytes = 30 KiB each, so one transfer is bounded.
 #define MAX_TRANSFER (BOARD_LCD_W * 32 * 2)
@@ -90,7 +90,7 @@ bool board_touch(int *x, int *y) {
     int sx = 0, sy = 0;
     for (int i = 0; i < 4; i++) { sx += xpt_read(0xD0); sy += xpt_read(0x90); }
     sx /= 4; sy /= 4;
-    *x = scale(sy, BOARD_LCD_W);
+    *x = BOARD_LCD_W - 1 - scale(sy, BOARD_LCD_W);   // the panel's X runs right to left against the touch
     *y = BOARD_LCD_H - 1 - scale(sx, BOARD_LCD_H);
     return true;
 }
