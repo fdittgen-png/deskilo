@@ -15,6 +15,7 @@
 --  (g) the cash given of a refused sale stayed in the drawer count unbounded: given minus change may not exceed what the sale's own lines
 --      price to (plus the tolerance), otherwise the whole call is refused (DKL02).
 
+-- audience: all row readers
 alter table public.counter_offline_sales add column device_id uuid not null default '00000000-0000-0000-0000-000000000000';
 alter table public.counter_offline_sales drop constraint counter_offline_sales_workspace_id_till_session_id_seq_key;
 alter table public.counter_offline_sales add constraint counter_offline_sales_session_device_seq_key unique (workspace_id, till_session_id, device_id, seq);
@@ -63,6 +64,7 @@ revoke execute on function public.counter_offline_body_total(uuid, jsonb, int) f
 
 -- the sequence numbers missing between the recorded ones of each of [p_devices], as one list of numbers
 drop function if exists public.counter_offline_gaps(uuid);
+-- restates 0937
 create or replace function public.counter_offline_gaps(p_session_id uuid, p_devices uuid[])
 returns jsonb language sql stable security definer set search_path = public as $fn$
   select coalesce(jsonb_agg(distinct g.n order by g.n), '[]'::jsonb)
