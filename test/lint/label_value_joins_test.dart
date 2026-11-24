@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4429 -- a label and its value on one line are joined by the language
-// (`l10n.labelledValue(label, value)`: `Total : 12 €` in French), never by a
+// (`l10n.labelWithValue(label, value)`: `Total : 12 €` in French), never by a
 // literal `': '` after an interpolation in a screen. The scan of
 // `sentence_joins` sees a translated read beside a value; this one sees the
 // label that comes through a helper. The files that join a label to a value
@@ -40,7 +40,7 @@ void main() {
       hits,
       isEmpty,
       reason:
-          'join them with l10n.labelledValue(label, value):\n${hits.join('\n')}',
+          'join them with l10n.labelWithValue(label, value):\n${hits.join('\n')}',
     );
   });
 
@@ -48,7 +48,7 @@ void main() {
     expect(_join.hasMatch(r"Text('${fact.label}: ${fact.value}')"), isTrue);
     expect(_join.hasMatch(r"'${words.uxBookingFor}: $person'"), isTrue);
     expect(
-      _join.hasMatch('l10n.labelledValue(fact.label, fact.value)'),
+      _join.hasMatch('l10n.labelWithValue(fact.label, fact.value)'),
       isFalse,
     );
   });

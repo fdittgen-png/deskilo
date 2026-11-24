@@ -19937,11 +19937,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String labelledValue(String label, String value) {
-    return '$label: $value';
-  }
-
-  @override
   String languageAvailableHint(String fallback) {
     return 'DesKilo è disponibile nelle lingue seguenti. Su un dispositivo impostato in un\'altra lingua, viene mostrato in $fallback.';
   }

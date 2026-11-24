@@ -57,10 +57,10 @@ String itemGroupValueText(AppLocalizations l10n, String param, Object? value) {
 /// A group's own settings in one line.
 String itemGroupSummary(AppLocalizations l10n, ItemGroup g) => [
   for (final p in itemGroupEditable)
-    if (g.params[p] != null) l10n.labelledValue(itemGroupParamLabel(l10n, p), itemGroupValueText(l10n, p, g.params[p])),
+    if (g.params[p] != null) l10n.labelWithValue(itemGroupParamLabel(l10n, p), itemGroupValueText(l10n, p, g.params[p])),
   for (final p in itemGroupProposals)
     // the factor is one number: its numerator speaks for the pair
-    if (g.params[p] != null && p != 'default_purchase_factor_den') l10n.labelledValue(itemGroupParamLabel(l10n, p), _proposalText(l10n, g, p)),
+    if (g.params[p] != null && p != 'default_purchase_factor_den') l10n.labelWithValue(itemGroupParamLabel(l10n, p), _proposalText(l10n, g, p)),
 ].join(' · ');
 
 /// A proposal of [g] as a person reads it: the factor as one number or a fraction, the home zone as set.

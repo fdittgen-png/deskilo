@@ -39,7 +39,7 @@ String? invoiceLineMeasureText(AppLocalizations l10n, InvoiceLine line) {
 String? invoiceLineTracksText(AppLocalizations l10n, List<LineTrack> tracks) {
   String part(String title, LineTrackKind kind) {
     final of = [for (final t in tracks) if (t.kind == kind) t.text];
-    return of.isEmpty ? '' : l10n.labelledValue(title, of.join(', '));
+    return of.isEmpty ? '' : l10n.labelWithValue(title, of.join(', '));
   }
 
   final text = [part(l10n.stockLotTitle, LineTrackKind.lot), part(l10n.stockWhereIsPieces, LineTrackKind.piece)].where((p) => p.isNotEmpty).join(' · ');

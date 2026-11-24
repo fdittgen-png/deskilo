@@ -26032,18 +26032,6 @@
       }
     }
   },
-  "labelledValue": "{label}: {value}",
-  "@labelledValue": {
-    "description": "#4429 a label and its value on one line, the way the language joins them (French puts a space before the colon)",
-    "placeholders": {
-      "label": {
-        "type": "String"
-      },
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "languageAvailableHint": "DesKilo is available in the languages below. A device set to any other language shows it in {fallback}.",
   "@languageAvailableHint": {
     "description": "Text in the app-language dialog saying which languages exist; fallback is the name of the language a device in another language sees",

@@ -11856,7 +11856,6 @@
   "kitScrollBack": "Scorri indietro",
   "kitScrollForward": "Scorri avanti",
   "labelWithValue": "{label}: {value}",
-  "labelledValue": "{label}: {value}",
   "languageAvailableHint": "DesKilo è disponibile nelle lingue seguenti. Su un dispositivo impostato in un'altra lingua, viene mostrato in {fallback}.",
   "languageNameCS": "Ceco",
   "@languageNameCS": {

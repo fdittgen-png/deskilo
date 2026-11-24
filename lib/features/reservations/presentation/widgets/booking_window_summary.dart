@@ -55,9 +55,9 @@ class BookingWindowSummary extends StatelessWidget {
       ?cue,
       dates,
       ?period,
-      words.labelledValue(words.uxWorkspaceTime, '$hours ($zone)'),
+      words.labelWithValue(words.uxWorkspaceTime, '$hours ($zone)'),
       if (personalZone.isNotEmpty)
-        words.labelledValue(
+        words.labelWithValue(
           words.uxDeviceTime,
           '${format.dateTime(window.start)}–${format.time(window.end)} ($personalZone)',
         ),

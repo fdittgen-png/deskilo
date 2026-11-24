@@ -11856,7 +11856,6 @@
   "kitScrollBack": "Faire défiler en arrière",
   "kitScrollForward": "Faire défiler en avant",
   "labelWithValue": "{label} : {value}",
-  "labelledValue": "{label} : {value}",
   "languageAvailableHint": "DesKilo existe dans les langues ci-dessous. Sur un appareil réglé dans une autre langue, il s'affiche en {fallback}.",
   "languageNameCS": "Tchèque",
   "@languageNameCS": {

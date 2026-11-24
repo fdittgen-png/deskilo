@@ -11856,7 +11856,6 @@
   "kitScrollBack": "Zurück scrollen",
   "kitScrollForward": "Weiter scrollen",
   "labelWithValue": "{label}: {value}",
-  "labelledValue": "{label}: {value}",
   "languageAvailableHint": "DesKilo gibt es in den folgenden Sprachen. Auf einem Gerät in einer anderen Sprache erscheint es auf {fallback}.",
   "languageNameCS": "Tschechisch",
   "@languageNameCS": {
