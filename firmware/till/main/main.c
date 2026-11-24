@@ -11,12 +11,14 @@
 #include "esp_log.h"
 #include "esp_system.h"
 #include "esp_timer.h"
+#include "esp_app_desc.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 #include "freertos/semphr.h"
 #include "freertos/task.h"
 #include "lvgl.h"
 #include "net.h"
+#include "trace.h"
 
 static const char *TAG = "till";
 #define BUF_LINES 32   // one partial buffer: 480 x 32 x 2 bytes = 30 KiB (two buffers, 60 KiB of the 520 KB SRAM)
@@ -38,13 +40,28 @@ typedef struct {
 static shared_t S;
 static SemaphoreHandle_t s_lock;
 static QueueHandle_t s_cmd;
-enum { CMD_TAP, CMD_NEXT };
+enum { CMD_TAP, CMD_NEXT, CMD_REPORT };
 typedef struct { int kind; int index; } cmd_t;
 static basket_line_t s_basket[MAX_PRODUCTS];
 static int s_basket_n;
 
 static void with_lock(void (*fn)(void *), void *arg) { xSemaphoreTake(s_lock, portMAX_DELAY); fn(arg); S.version++; xSemaphoreGive(s_lock); }
 static void set_status_fn(void *a) { snprintf(S.status, sizeof S.status, "%s", (const char *)a); }
+// A failure is traced and, once Deskilo is reachable, reported to it -- at most one report per kind every ten minutes,
+// inside the installation's hourly budget (trace.reports_per_hour).
+static void fail(const char *kind, const char *why) {
+    static struct { char kind[24]; int64_t at; } sent[6];
+    trace("%s: %s", kind, why);
+    int64_t now = esp_timer_get_time(), free_slot = -1;
+    for (int i = 0; i < 6; i++) {
+        if (!strcmp(sent[i].kind, kind)) { if (now - sent[i].at < 600LL * 1000000) return; sent[i].at = now; free_slot = -2; break; }
+        if (!sent[i].kind[0] && free_slot == -1) free_slot = i;
+    }
+    if (free_slot >= 0) { snprintf(sent[free_slot].kind, sizeof sent[free_slot].kind, "%s", kind); sent[free_slot].at = now; }
+    char type[48];
+    snprintf(type, sizeof type, "till.%s", kind);
+    api_report(g_cfg.role, type, api_last_code());
+}
 static void set_status(const char *t) { with_lock(set_status_fn, (void *)t); }
 
 // ---- money ----
@@ -73,11 +90,15 @@ static void add_to_basket(const char *id) {
 static void net_task(void *arg) {
     static roll_t roll;
     static product_t prods[MAX_PRODUCTS];
-    char why[96] = "";
+    char why[96] = "", seen_receipt[40] = "x";   // "x": the first answer is always traced
+    int seen_revision = -1;
+    trace("start: role %s, firmware %s", g_cfg.role, esp_app_get_description()->version);
     set_status("Wi-Fi ...");
-    if (net_connect(g_cfg.ssid, g_cfg.wifi_pass) != ESP_OK) { set_status("Wi-Fi or time failed: check Settings"); vTaskDelete(NULL); }
+    if (net_connect(g_cfg.ssid, g_cfg.wifi_pass) != ESP_OK) { trace("Wi-Fi or time failed"); set_status("Wi-Fi or time failed: check Settings"); vTaskDelete(NULL); }
+    trace("Wi-Fi up");
     set_status("Signing in ...");
-    if (!api_sign_in(why, sizeof why)) { set_status(why); vTaskDelete(NULL); }
+    if (!api_sign_in(why, sizeof why)) { trace("%s", why); set_status(why); vTaskDelete(NULL); }   // no session: nothing to report with
+    trace("signed in");
     xSemaphoreTake(s_lock, portMAX_DELAY); S.online = true; xSemaphoreGive(s_lock);
     if (!strcmp(g_cfg.role, "till")) {
         int n = api_products(prods, MAX_PRODUCTS, why, sizeof why);
@@ -86,19 +107,29 @@ static void net_task(void *arg) {
         snprintf(S.status, sizeof S.status, "%s", n < 0 ? why : (n == 0 ? "No product is for sale in this company" : "Choose a product"));
         S.version++;
         xSemaphoreGive(s_lock);
+        if (n < 0) fail("products", why); else trace("%d products", n);
     } else set_status("Waiting for a receipt ...");
     TickType_t last_refresh = xTaskGetTickCount();
     for (;;) {
         cmd_t c;
         bool got = xQueueReceive(s_cmd, &c, strcmp(g_cfg.role, "roll") == 0 ? pdMS_TO_TICKS(1500) : pdMS_TO_TICKS(1000)) == pdTRUE;
         if (xTaskGetTickCount() - last_refresh > pdMS_TO_TICKS(40 * 60 * 1000)) { if (api_sign_in(why, sizeof why)) last_refresh = xTaskGetTickCount(); }
+        if (got && c.kind == CMD_REPORT) { set_status(api_report(g_cfg.role, "till.traces_sent", "") ? "Traces sent to Deskilo" : "Traces not sent"); continue; }
         if (!strcmp(g_cfg.role, "roll")) {
             bool ok = api_roll(&roll, why, sizeof why);
             xSemaphoreTake(s_lock, portMAX_DELAY);
+            bool changed = ok ? (strcmp(seen_receipt, roll.receipt_id) || seen_revision != roll.revision) : (seen_receipt[0] != 0 || why[0]);
             if (ok) { S.roll = roll; S.has_roll = true; snprintf(S.status, sizeof S.status, "Receipt %.8s  rev %d", roll.receipt_id, roll.revision); }
             else { S.has_roll = false; snprintf(S.status, sizeof S.status, "%s", why[0] ? why : "Waiting for a receipt ..."); }
             S.version++;
             xSemaphoreGive(s_lock);
+            if (changed) {
+                if (ok) trace("receipt %.8s rev %d: %d lines", roll.receipt_id, roll.revision, roll.n);
+                else if (why[0]) fail("roll", why);
+                else trace("no open receipt");
+                snprintf(seen_receipt, sizeof seen_receipt, "%s", ok ? roll.receipt_id : "");
+                seen_revision = ok ? roll.revision : 0;
+            }
             continue;
         }
         if (!got) continue;
@@ -107,6 +138,7 @@ static void net_task(void *arg) {
             api_reset_draft();
             memset(&roll, 0, sizeof roll);
             xSemaphoreTake(s_lock, portMAX_DELAY); S.roll = roll; S.has_roll = false; snprintf(S.status, sizeof S.status, "Next customer"); S.version++; xSemaphoreGive(s_lock);
+            trace("next customer");
             continue;
         }
         product_t p;
@@ -121,6 +153,7 @@ static void net_task(void *arg) {
         else snprintf(S.status, sizeof S.status, "%s", why);
         S.version++;
         xSemaphoreGive(s_lock);
+        if (ok) trace("%.30s added: receipt %.8s rev %d", p.name, roll.receipt_id, roll.revision); else fail("draft", why);
     }
 }
 
@@ -145,6 +178,62 @@ static void key_cb(lv_event_t *e) { cmd_t c = {CMD_TAP, (int)(intptr_t)lv_event_
 static void next_cb(lv_event_t *e) { cmd_t c = {CMD_NEXT, 0}; xQueueSend(s_cmd, &c, 0); }
 
 static const char *or_unset(const char *v) { return v[0] ? v : "(not set)"; }
+
+// ---- the trace box: the newest lines on the screen; a tap shows them all and can send them to Deskilo ----
+static lv_obj_t *s_trace_box, *s_trace_label, *s_traces;
+static void close_traces_cb(lv_event_t *e) { lv_obj_del(s_traces); s_traces = NULL; }
+static void send_traces_cb(lv_event_t *e) { cmd_t c = {CMD_REPORT, 0}; xQueueSend(s_cmd, &c, 0); close_traces_cb(e); }
+static void open_traces_cb(lv_event_t *e) {
+    if (s_traces) return;
+    static char all[TRACE_LINES * TRACE_WIDTH];
+    trace_dump(all, sizeof all);
+    s_traces = lv_obj_create(lv_scr_act());
+    lv_obj_set_size(s_traces, 472, 312);
+    lv_obj_center(s_traces);
+    lv_obj_t *list = lv_obj_create(s_traces);
+    lv_obj_set_size(list, 448, 236);
+    lv_obj_align(list, LV_ALIGN_TOP_LEFT, 0, 0);
+    lv_obj_t *t = lv_label_create(list);
+    lv_obj_set_width(t, 420);
+    lv_label_set_long_mode(t, LV_LABEL_LONG_WRAP);
+    lv_obj_set_style_text_font(t, &lv_font_montserrat_14, 0);
+    lv_label_set_text(t, all[0] ? all : "(no trace yet)");
+    lv_obj_scroll_to_y(list, LV_COORD_MAX, LV_ANIM_OFF);   // the newest at hand
+    lv_obj_t *b1 = lv_btn_create(s_traces);
+    lv_obj_align(b1, LV_ALIGN_BOTTOM_LEFT, 0, 0);
+    lv_obj_add_event_cb(b1, close_traces_cb, LV_EVENT_CLICKED, NULL);
+    lv_label_set_text(lv_label_create(b1), "Close");
+    lv_obj_t *b2 = lv_btn_create(s_traces);
+    lv_obj_align(b2, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
+    lv_obj_add_event_cb(b2, send_traces_cb, LV_EVENT_CLICKED, NULL);
+    lv_label_set_text(lv_label_create(b2), "Send to Deskilo");
+}
+static void build_trace_box(int y, int h) {
+    s_trace_box = lv_obj_create(lv_scr_act());
+    lv_obj_set_size(s_trace_box, 464, h);
+    lv_obj_align(s_trace_box, LV_ALIGN_TOP_LEFT, 8, y);
+    lv_obj_set_style_bg_color(s_trace_box, lv_color_hex(0x0B0F14), 0);
+    lv_obj_set_style_border_color(s_trace_box, lv_color_hex(0x334455), 0);
+    lv_obj_set_style_pad_all(s_trace_box, 3, 0);
+    lv_obj_clear_flag(s_trace_box, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_add_flag(s_trace_box, LV_OBJ_FLAG_CLICKABLE);
+    lv_obj_add_event_cb(s_trace_box, open_traces_cb, LV_EVENT_CLICKED, NULL);
+    s_trace_label = lv_label_create(s_trace_box);
+    lv_obj_set_width(s_trace_label, 452);
+    lv_label_set_long_mode(s_trace_label, LV_LABEL_LONG_CLIP);
+    lv_obj_set_style_text_font(s_trace_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_color(s_trace_label, lv_color_hex(0x8FA3B8), 0);
+    lv_label_set_text(s_trace_label, "");
+}
+static void trace_box_cb(lv_timer_t *t) {
+    static uint32_t seen = UINT32_MAX;
+    uint32_t v = trace_version();
+    if (!s_trace_label || v == seen) return;
+    seen = v;
+    char tail[3 * TRACE_WIDTH];
+    trace_tail(tail, sizeof tail, lv_obj_get_height(s_trace_box) > 52 ? 3 : 2);
+    lv_label_set_text(s_trace_label, tail);
+}
 
 static void close_settings_cb(lv_event_t *e) { lv_obj_del(s_settings); s_settings = NULL; }
 static void clear_cb(lv_event_t *e) { cfg_erase(); esp_restart(); }
@@ -208,6 +297,7 @@ static void build_till(void) {
         lv_obj_set_style_text_align(l, LV_TEXT_ALIGN_CENTER, 0);
         lv_obj_center(l);
     }
+    build_trace_box(198, 58);
     s_basket_label = lv_label_create(scr);
     lv_obj_set_style_text_color(s_basket_label, lv_color_white(), 0);
     lv_obj_set_style_text_font(s_basket_label, &lv_font_montserrat_28, 0);
@@ -224,11 +314,12 @@ static void build_roll(void) {
     build_common("Receipt");
     lv_obj_t *scr = lv_scr_act();
     s_roll_list = lv_obj_create(scr);
-    lv_obj_set_size(s_roll_list, 464, 210);
+    lv_obj_set_size(s_roll_list, 464, 158);
     lv_obj_align(s_roll_list, LV_ALIGN_TOP_LEFT, 8, 46);
     lv_obj_set_style_bg_color(s_roll_list, lv_color_hex(0xFAF7EE), 0);
     lv_obj_set_style_text_color(s_roll_list, lv_color_hex(0x202020), 0);
     lv_obj_set_flex_flow(s_roll_list, LV_FLEX_FLOW_COLUMN);
+    build_trace_box(210, 46);
     s_total = lv_label_create(scr);
     lv_obj_set_style_text_color(s_total, lv_color_white(), 0);
     lv_obj_set_style_text_font(s_total, &lv_font_montserrat_28, 0);
@@ -306,11 +397,14 @@ void app_main(void) {
     if (!cfg_complete()) {
         build_common("DesKilo Kasse");
         lv_label_set_text(s_status, "Not set up: run tools/till_provision.py");
+        build_trace_box(60, 58);
+        trace("not set up: no settings on this board");
     } else {
         if (!strcmp(g_cfg.role, "till")) build_till(); else build_roll();
         lv_timer_create(refresh_cb, 200, NULL);
         xTaskCreatePinnedToCore(net_task, "net", 12288, NULL, 4, NULL, 0);
     }
+    lv_timer_create(trace_box_cb, 300, NULL);
     board_backlight(true);
     ESP_LOGI(TAG, "up (%s): free heap %lu", g_cfg.role[0] ? g_cfg.role : "no settings", (unsigned long)esp_get_free_heap_size());
     for (;;) {

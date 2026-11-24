@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "net.h"
+#include "trace.h"
+#include "esp_app_desc.h"
+#include "esp_mac.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -65,9 +68,26 @@ bool net_online(void) { return s_up; }
 static void say(char *why, int cap, const char *fmt, int a) { if (why) snprintf(why, cap, fmt, a); }
 
 // One HTTPS call to the Deskilo server; the answer is left in s_resp. Returns the HTTP status, or -1 when the call itself failed.
+static char s_last_code[24];
+// Keeps the server's refusal code (DKG01, PGRST..., or the HTTP status) and traces it with the server's message, cut short.
+static void remember_refusal(int status, const char *path) {
+    cJSON *j = cJSON_Parse(s_resp);
+    const cJSON *code = j ? cJSON_GetObjectItem(j, "code") : NULL, *msg = j ? cJSON_GetObjectItem(j, "message") : NULL;
+    if (!msg && j) msg = cJSON_GetObjectItem(j, "error_description");
+    if (cJSON_IsString(code)) snprintf(s_last_code, sizeof s_last_code, "%s", code->valuestring);
+    else snprintf(s_last_code, sizeof s_last_code, "%d", status);
+    const char *q = strchr(path, '?');
+    int n = q ? (int)(q - path) : (int)strlen(path);   // the endpoint only: the query names the company
+    trace("%.*s -> %d %s %.50s", n > 40 ? 40 : n, path, status, s_last_code, cJSON_IsString(msg) ? msg->valuestring : "");
+    cJSON_Delete(j);
+}
+
 static int http(esp_http_client_method_t m, const char *path, const char *body, bool bearer) {
-    char url[200];
-    snprintf(url, sizeof url, "%s%s", g_cfg.url, path);
+    static char url[640];   // the server (95) and the longest query (the roll's, ~300) with room to spare
+    if (snprintf(url, sizeof url, "%s%s", g_cfg.url, path) >= (int)sizeof url) {
+        ESP_LOGE(TAG, "request address too long, not sent");
+        return -1;
+    }
     esp_http_client_config_t c = {.url = url, .method = m, .crt_bundle_attach = esp_crt_bundle_attach, .timeout_ms = 15000, .buffer_size = 2048, .buffer_size_tx = 2048};
     esp_http_client_handle_t h = esp_http_client_init(&c);
     if (!h) return -1;
@@ -87,11 +107,15 @@ static int http(esp_http_client_method_t m, const char *path, const char *body, 
             int total = 0, r;
             while (total < RESP_MAX - 1 && (r = esp_http_client_read(h, s_resp + total, RESP_MAX - 1 - total)) > 0) total += r;
             s_resp[total] = 0;
+            if (status >= 400) remember_refusal(status, path);
         }
     }
     esp_http_client_cleanup(h);
+    if (status < 0) { snprintf(s_last_code, sizeof s_last_code, "no answer"); trace("%.40s: no answer from Deskilo", path); }
     return status;
 }
+
+const char *api_last_code(void) { return s_last_code; }
 
 bool api_sign_in(char *why, int cap) {
     char body[260];
@@ -139,6 +163,12 @@ static void uuid4(char *out) {
 }
 
 static void copy(char *d, size_t cap, const cJSON *s);
+// Amounts come as a decimal string ("1000") or a number: both read as minor units.
+static int minor_of(const cJSON *v) {
+    if (cJSON_IsNumber(v)) return (int)v->valuedouble;
+    if (cJSON_IsString(v)) return atoi(v->valuestring);
+    return 0;
+}
 void api_reset_draft(void) { s_receipt[0] = 0; s_revision = 0; }
 
 static void copy(char *d, size_t cap, const cJSON *s) { if (cJSON_IsString(s)) { strncpy(d, s->valuestring, cap - 1); d[cap - 1] = 0; }
@@ -175,7 +205,7 @@ bool api_draft(const basket_line_t *b, int n, roll_t *out, char *why, int cap) {
     s_revision = out->revision;
     const cJSON *tot = cJSON_GetObjectItem(j, "totals");
     const cJSON *gross = tot ? cJSON_GetObjectItem(tot, "gross_minor") : NULL;
-    out->total_minor = cJSON_IsNumber(gross) ? (int)gross->valuedouble : 0;
+    out->total_minor = minor_of(gross);
     copy(out->currency, sizeof out->currency, tot ? cJSON_GetObjectItem(tot, "currency") : NULL);
     const cJSON *ls = cJSON_GetObjectItem(j, "lines"), *l;
     cJSON_ArrayForEach(l, ls) {
@@ -183,7 +213,7 @@ bool api_draft(const basket_line_t *b, int n, roll_t *out, char *why, int cap) {
         roll_line_t *r = &out->lines[out->n++];
         copy(r->label, sizeof r->label, cJSON_GetObjectItem(l, "label"));
         const cJSON *a = cJSON_GetObjectItem(l, "amount_cents"), *c = cJSON_GetObjectItem(l, "commercial");
-        r->gross_minor = cJSON_IsNumber(a) ? (int)a->valuedouble : 0;
+        r->gross_minor = minor_of(a);
         copy(r->qty, sizeof r->qty, c ? cJSON_GetObjectItem(c, "quantity") : NULL);
     }
     cJSON_Delete(j);
@@ -215,4 +245,29 @@ bool api_roll(roll_t *out, char *why, int cap) {
     }
     cJSON_Delete(j);
     return true;
+}
+
+bool api_report(const char *role, const char *failure_type, const char *failure_code) {
+    static char stack[3000];
+    trace_dump(stack, sizeof stack);
+    uint8_t mac[6] = {0};
+    esp_read_mac(mac, ESP_MAC_WIFI_STA);
+    char device[32], platform[40];
+    snprintf(device, sizeof device, "e32r40t-%02x%02x%02x%02x%02x%02x", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+    snprintf(platform, sizeof platform, "esp32-e32r40t %s", role);
+    cJSON *b = cJSON_CreateObject();
+    cJSON_AddStringToObject(b, "p_device_id", device);
+    cJSON_AddStringToObject(b, "p_app_version", esp_app_get_description()->version);
+    cJSON_AddNullToObject(b, "p_schema_version");
+    cJSON_AddStringToObject(b, "p_platform", platform);
+    cJSON_AddStringToObject(b, "p_failure_type", failure_type);
+    if (failure_code && failure_code[0]) cJSON_AddStringToObject(b, "p_failure_code", failure_code); else cJSON_AddNullToObject(b, "p_failure_code");
+    cJSON_AddStringToObject(b, "p_stack", stack);
+    char *body = cJSON_PrintUnformatted(b);
+    cJSON_Delete(b);
+    if (!body) return false;
+    int st = http(HTTP_METHOD_POST, "/rest/v1/rpc/submit_trace_report_v1", body, true);
+    cJSON_free(body);
+    trace("trace report %s: %d %.20s", failure_type, st, st == 200 ? s_resp : "");
+    return st == 200;
 }

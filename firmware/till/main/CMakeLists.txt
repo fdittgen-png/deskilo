@@ -1,1 +1,1 @@
-idf_component_register(SRCS "main.c" "board.c" "cfg.c" "net.c" INCLUDE_DIRS "." PRIV_REQUIRES driver esp_lcd esp_driver_gpio esp_driver_spi esp_system nvs_flash esp_wifi esp_event esp_netif esp_http_client esp-tls mbedtls json lwip esp_timer)
+idf_component_register(SRCS "main.c" "board.c" "cfg.c" "net.c" "trace.c" INCLUDE_DIRS "." PRIV_REQUIRES driver esp_lcd esp_driver_gpio esp_driver_spi esp_system nvs_flash esp_wifi esp_event esp_netif esp_http_client esp-tls mbedtls json lwip esp_timer esp_app_format)

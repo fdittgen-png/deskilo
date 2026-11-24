@@ -29,3 +29,7 @@ bool api_draft(const basket_line_t *b, int n, roll_t *out, char *why, int cap);
 void api_reset_draft(void);                                   // the next customer: the next basket starts a new draft
 // Reads the newest open draft of the company into [out]; false with [why] empty when there is none.
 bool api_roll(roll_t *out, char *why, int cap);
+// The server's refusal code of the last failed call (DKG01, a PostgREST code or the HTTP status).
+const char *api_last_code(void);
+// Sends the trace ring to Deskilo as a trace report of this board; the installation's operator reads it in the app.
+bool api_report(const char *role, const char *failure_type, const char *failure_code);
