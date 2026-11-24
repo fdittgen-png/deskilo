@@ -157,6 +157,7 @@ class WhereIsAnswer {
     this.transit,
     this.pieces,
     this.piecesMore = false,
+    this.piecesKnownFrom,
   });
 
   factory WhereIsAnswer.fromJson(Object? json) {
@@ -174,6 +175,7 @@ class WhereIsAnswer {
       transit: r.raw('transit') is List ? [for (final t in r.requiredList('transit')) WhereIsTransit.fromJson(t)] : null,
       pieces: r.raw('pieces') is List ? [for (final p in r.requiredList('pieces')) WhereIsPiece.fromJson(p)] : null,
       piecesMore: r.boolOr('pieces_more', fallback: false),
+      piecesKnownFrom: r.dateTimeOrNull('pieces_known_from'),
     );
   }
 
@@ -193,9 +195,12 @@ class WhereIsAnswer {
   /// The goods in transit with their from and to; null at a past date (a transfer does not keep its past states).
   final List<WhereIsTransit>? transit;
 
-  /// The tagged pieces; null at a past date (it waits for the movement-piece link).
+  /// The tagged pieces: now, or at a past date replayed from the movement-piece link.
   final List<WhereIsPiece>? pieces;
   final bool piecesMore;
+
+  /// Since when the movement-piece link is kept: a piece made before has no history before it.
+  final DateTime? piecesKnownFrom;
 
   /// The places on a shelf (not virtual).
   Iterable<WhereIsPlace> get real => places.where((p) => !p.isVirtual);

@@ -53,12 +53,17 @@
   "@stockWhereIsPieces": {
     "description": "#4434 where is it"
   },
-  "stockWhereIsPiecesPast": "The pieces of a past day are not shown yet: they come from the movements of each piece.",
-  "@stockWhereIsPiecesPast": {
-    "description": "#4434 where is it"
-  },
   "stockWhereIsPiecesMore": "Only the first 200 pieces are shown.",
   "@stockWhereIsPiecesMore": {
     "description": "#4434 where is it"
+  },
+  "stockWhereIsPiecesFrom": "Pieces are followed from {date} on: a piece made before has no history before that day.",
+  "@stockWhereIsPiecesFrom": {
+    "description": "#4434 where is it",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   }
 }

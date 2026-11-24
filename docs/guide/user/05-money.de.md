@@ -816,7 +816,7 @@ Sind die Funktionen *Etiketten* und *Etikettenlesung* an, bietet eine Zähl-Aufg
 
 - **Jetzt** ist, was das Lager in diesem Moment hält; **An einem Tag…** zeigt, was es am Ende dieses Tages hielt, aus den Bewegungen nachgerechnet. Ansehen ändert nichts.
 - Die Plätze im Regal ergeben immer die oben gezeigte Menge.
-- An einem vergangenen Tag werden Ware unterwegs und Stücke noch nicht gezeigt.
+- An einem vergangenen Tag wird Ware unterwegs nicht gezeigt; die Stücke schon, ab dem Tag, an dem sie verfolgt werden (ein früher entstandenes Stück hat davor keinen Verlauf).
 
 <!-- anchor: user.money.stock.value -->
 ### Lagerwert und Herkunft der Ware

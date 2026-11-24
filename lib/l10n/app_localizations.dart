@@ -60331,14 +60331,14 @@ abstract class AppLocalizations {
   /// #4434 where is it
   ///
   /// In en, this message translates to:
-  /// **'Only the first 200 pieces are shown.'**
-  String get stockWhereIsPiecesMore;
+  /// **'Pieces are followed from {date} on: a piece made before has no history before that day.'**
+  String stockWhereIsPiecesFrom(String date);
 
   /// #4434 where is it
   ///
   /// In en, this message translates to:
-  /// **'The pieces of a past day are not shown yet: they come from the movements of each piece.'**
-  String get stockWhereIsPiecesPast;
+  /// **'Only the first 200 pieces are shown.'**
+  String get stockWhereIsPiecesMore;
 
   /// #4434 where is it
   ///

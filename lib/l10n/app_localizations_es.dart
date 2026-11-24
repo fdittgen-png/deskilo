@@ -37950,12 +37950,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockWhereIsPieces => 'Piezas';
 
   @override
-  String get stockWhereIsPiecesMore =>
-      'Solo se muestran las primeras 200 piezas.';
+  String stockWhereIsPiecesFrom(String date) {
+    return 'Las piezas se siguen desde el $date: una pieza hecha antes no tiene historial anterior a ese día.';
+  }
 
   @override
-  String get stockWhereIsPiecesPast =>
-      'Las piezas de un día pasado aún no se muestran: salen de los movimientos de cada pieza.';
+  String get stockWhereIsPiecesMore =>
+      'Solo se muestran las primeras 200 piezas.';
 
   @override
   String get stockWhereIsTitle => 'Dónde está';

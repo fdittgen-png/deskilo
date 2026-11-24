@@ -3330,7 +3330,6 @@ Map<String, _Getter> _part7() => {
   'stockReversalSupplierOpen': (l) => l.stockReversalSupplierOpen,
   'stockTagReasonReplaced': (l) => l.stockTagReasonReplaced,
   'stockTransfersTitle': (l) => l.stockTransfersTitle,
-  'stockWhereIsPiecesPast': (l) => l.stockWhereIsPiecesPast,
   'supplierLookupRetry': (l) => l.supplierLookupRetry,
   'suppliersLoadMore': (l) => l.suppliersLoadMore,
   'taskExportFieldTime': (l) => l.taskExportFieldTime,

@@ -10,6 +10,6 @@
   "stockWhereIsTransitLine": "Da {from} a {to}",
   "stockWhereIsAway": "Uscito o venuto dall'esterno",
   "stockWhereIsPieces": "Pezzi",
-  "stockWhereIsPiecesPast": "I pezzi di un giorno passato non sono ancora mostrati: vengono dai movimenti di ogni pezzo.",
-  "stockWhereIsPiecesMore": "Sono mostrati solo i primi 200 pezzi."
+  "stockWhereIsPiecesMore": "Sono mostrati solo i primi 200 pezzi.",
+  "stockWhereIsPiecesFrom": "I pezzi sono seguiti dal {date}: un pezzo fatto prima non ha storico prima di quel giorno."
 }

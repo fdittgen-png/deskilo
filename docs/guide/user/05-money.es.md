@@ -816,7 +816,7 @@ Abra una línea de **Stock** para ver **Dónde está** ese artículo (o ese lote
 
 - **Ahora** es lo que el stock tiene en este momento; **En un día…** muestra lo que tenía al acabar ese día, reconstruido desde los movimientos. Mirar no cambia nada.
 - Los lugares en un estante suman siempre la cantidad mostrada arriba.
-- En un día pasado aún no se muestran la mercancía en camino ni las piezas.
+- En un día pasado no se muestra la mercancía en camino; las piezas sí, desde el día en que se siguen (una pieza hecha antes no tiene historial anterior).
 
 <!-- anchor: user.money.stock.value -->
 ### Valor de las existencias y origen de la mercancía

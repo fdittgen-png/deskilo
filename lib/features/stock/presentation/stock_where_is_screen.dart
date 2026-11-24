@@ -226,15 +226,8 @@ List<Widget> _away(BuildContext context, WhereIsAnswer answer) {
 List<Widget> _pieces(BuildContext context, WhereIsAnswer answer, DateTime? at) {
   final l10n = context.l10n;
   final pieces = answer.pieces;
-  if (pieces == null) {
-    return at == null
-        ? const []
-        : [
-            _Heading(l10n.stockWhereIsPieces),
-            Text(l10n.stockWhereIsPiecesPast, key: const ValueKey('stock-where-pieces-past'), style: Theme.of(context).textTheme.bodySmall),
-          ];
-  }
-  if (pieces.isEmpty) return const [];
+  if (pieces == null || pieces.isEmpty) return const [];
+  final known = answer.piecesKnownFrom;
   return [
     _Heading(l10n.stockWhereIsPieces),
     for (final p in pieces)
@@ -246,6 +239,8 @@ List<Widget> _pieces(BuildContext context, WhereIsAnswer answer, DateTime? at) {
         subtitle: Text('${p.locationCode} \u00b7 ${p.state}'),
       ),
     if (answer.piecesMore) Text(l10n.stockWhereIsPiecesMore, key: const ValueKey('stock-where-pieces-more'), style: Theme.of(context).textTheme.bodySmall),
+    if (at != null && known != null && at.isBefore(known))
+      Text(l10n.stockWhereIsPiecesFrom(appFormatOf(context).date(known)), key: const ValueKey('stock-where-pieces-from'), style: Theme.of(context).textTheme.bodySmall),
   ];
 }
 

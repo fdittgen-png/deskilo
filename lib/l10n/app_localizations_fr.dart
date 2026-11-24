@@ -38114,12 +38114,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockWhereIsPieces => 'Pièces';
 
   @override
-  String get stockWhereIsPiecesMore =>
-      'Seules les 200 premières pièces sont montrées.';
+  String stockWhereIsPiecesFrom(String date) {
+    return 'Les pièces sont suivies à partir du $date : une pièce faite avant n\'a pas d\'historique avant ce jour.';
+  }
 
   @override
-  String get stockWhereIsPiecesPast =>
-      'Les pièces d\'un jour passé ne sont pas encore montrées : elles viennent des mouvements de chaque pièce.';
+  String get stockWhereIsPiecesMore =>
+      'Seules les 200 premières pièces sont montrées.';
 
   @override
   String get stockWhereIsTitle => 'Où est-ce';
