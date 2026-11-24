@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/loading_view.dart';
-import '../domain/account_rows.dart';
+import '../domain/account_rows_from_json.dart';
 import '../providers/directory_providers.dart';
 
 /// #1824 — the account messenger's two lists, ONE SERVER each, so every

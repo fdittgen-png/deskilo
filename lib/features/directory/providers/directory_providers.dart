@@ -10,7 +10,7 @@ import '../data/supabase_account_contact_repository.dart';
 import '../data/supabase_directory_participant_repository.dart';
 import '../data/supabase_public_discovery_repository.dart';
 import '../data/supabase_publication_repository.dart';
-import '../domain/account_rows.dart';
+import '../domain/account_rows_from_json.dart';
 import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
 

@@ -7,7 +7,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/account_group.dart';
-import '../../domain/account_rows.dart';
+import '../../domain/account_rows_from_json.dart';
 import '../../providers/directory_providers.dart';
 import '../../providers/message_marks_providers.dart';
 import '../../providers/messenger_providers.dart';
