@@ -164,6 +164,10 @@ final itemGroupsProvider = Provider<ItemGroups>(
   (ref) => SupabaseItemGroups(ref.watch(selectedWorkspaceClientProvider)),
 );
 
+/// The item groups when the business has them on, else null: what an item's editor reads to mark an own value.
+ItemGroups? itemGroupsIfOn(WidgetRef ref) =>
+    ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockItemGroups) ? ref.read(itemGroupsProvider) : null;
+
 /// #4361 -- the groups of [workspaceId], for the screens.
 final itemGroupListProvider = FutureProvider.autoDispose.family<List<ItemGroup>, String>(
   (ref, workspaceId) => ref.watch(itemGroupsProvider).groups(workspaceId),
