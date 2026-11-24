@@ -15,6 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -106,7 +107,7 @@ class _NotEditable extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           FilledButton(
             key: const ValueKey('bi-editor-to-analytics'),
-            onPressed: () => context.go('/bi'),
+            onPressed: () => context.go(Routes.bi),
             child: Text(l10n.biTitle),
           ),
         ],

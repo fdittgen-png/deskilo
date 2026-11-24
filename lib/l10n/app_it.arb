@@ -4196,7 +4196,6 @@
   "consentRightsBody": "Accesso, rettifica, esportazione (art. 20), cancellazione (art. 17) e opposizione — ciascuno è un pulsante in Impostazioni → Privacy e dati. Per il resto: fdittgen@gmail.com. Può revocare questo consenso in qualsiasi momento lasciando lo spazio e cancellando i suoi dati.",
   "consentRightsTitle": "I suoi diritti",
   "consentTitle": "I suoi dati, i suoi diritti",
-  "consentUnavailable": "Impossibile caricare il suo account, quindi non c’è ancora nulla da accettare.",
   "consentVersion": "Versione",
   "consentVersionNumber": "Versione {version}",
   "consentWhatBody": "Il suo account (e-mail, nome visualizzato, password cifrata), il suo profilo come lo compila (foto, stato, indirizzo, numero WhatsApp — ciascuno facoltativo), e ciò che fa in uno spazio: prenotazioni e check-in, messaggi, spese e consumi, il suo abbonamento, fatture e pagamenti. Tutto è conservato sul server su cui gira il suo spazio: sul server di riferimento condiviso, nell'UE (Supabase, eu-central-1); su un server che una comunità gestisce da sé, dove il suo operatore ha scelto. Impostazioni → Privacy e dati mostra l'informativa di quel server: chi lo gestisce, dove sono i dati e chi li riceve.",
@@ -9318,6 +9317,13 @@
   "instanceEnrolRun": "Iscrivere presso questa casa personale",
   "instanceEnrolSame": "Un'installazione non si iscrive da sola.",
   "instanceEnrolUnreadable": "Questo progetto non risponde ancora come un'installazione Deskilo. Installi prima lo schema.",
+  "instanceErrorReportCode": "Codice {code}",
+  "instanceErrorReportFacts": "{version} · {platform} · {time}",
+  "instanceErrorReportStack": "Stack, oscurato dall'app",
+  "instanceErrorReports": "Segnalazioni di errore",
+  "instanceErrorReportsHint": "Ciò che le app hanno inviato quando qualcosa è andato storto, dalle più recenti. I membri di un'azienda non le vedono mai.",
+  "instanceErrorReportsNone": "Non è arrivata alcuna segnalazione di errore.",
+  "instanceErrorReportsOlder": "Segnalazioni precedenti",
   "instanceFamilyChatgpt": "ChatGPT",
   "instanceFamilyClaude": "Claude",
   "instanceFamilyLoopback": "Assistente desktop o da riga di comando",
@@ -12719,10 +12725,6 @@
   "@managedProfileHandOverHint": {
     "description": "#887 managed profiles: managedProfileHandOverHint"
   },
-  "managedProfileIdentityUnavailable": "Non è stato possibile leggere questi dati, quindi non c'è ancora nulla da modificare. Non è stato cambiato nulla.",
-  "@managedProfileIdentityUnavailable": {
-    "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
-  },
   "managedProfileIntro": "Questa persona non ha ancora un account. Lei prenota, fattura e gestisce per conto suo; le consegni il profilo quando entra.",
   "@managedProfileIntro": {
     "description": "#887 managed profiles: managedProfileIntro"
@@ -13397,10 +13399,6 @@
   "memberMoneySettled": "Nulla in sospeso.",
   "@memberMoneySettled": {
     "description": "#704 - the money section of a member profile"
-  },
-  "memberMoneyUnavailable": "Impossibile caricare le finanze. Trascini per aggiornare.",
-  "@memberMoneyUnavailable": {
-    "description": "#709 - the money section of a profile could not be read"
   },
   "memberMonthInProgress": "Questo mese",
   "@memberMonthInProgress": {
@@ -14632,7 +14630,6 @@
   "pendingNotUpdated": "Stato non aggiornato — server non raggiungibile. La sua richiesta resta invariata.",
   "pendingStillWaiting": "Ancora in attesa di approvazione.",
   "periodReservationsEmpty": "Nessuna prenotazione in questi mesi.",
-  "periodReservationsFailed": "Non è stato possibile leggere le prenotazioni.",
   "periodReservationsLevel": "Solo su {level}",
   "periodReservationsTitle": "Prenotazioni di {period}",
   "periodReservationsUnknownLevel": "Questo non è un livello di questo spazio.",
@@ -15247,7 +15244,6 @@
   "privacyAdminIncidentTitle": "Registra un incidente sui dati",
   "privacyAdminIntro": "Le richieste dei membri sui loro dati personali e gli incidenti che registra. Ogni richiesta riceve risposta entro un mese di calendario.",
   "privacyAdminKind": "Tipo di richiesta",
-  "privacyAdminLoadFailed": "Impossibile leggere le richieste.",
   "privacyAdminMember": "Membro",
   "privacyAdminOpenTile": "Dati personali e richieste di diritti",
   "privacyAdminOutcomeKind": "Cosa è successo ai dati",
@@ -15312,6 +15308,9 @@
       }
     }
   },
+  "privacyErrorReports": "Inviare le segnalazioni di errore",
+  "privacyErrorReportsFailed": "Non è stato possibile salvare la scelta su questo dispositivo.",
+  "privacyErrorReportsHint": "Quando l'app registra un errore, una segnalazione senza i Suoi dati va all'installazione a cui ha effettuato l'accesso, perché il suo operatore possa correggerlo.",
   "privacyExport": "Esporta i miei dati",
   "@privacyExport": {
     "description": "#719 - privacy & data"
@@ -15476,6 +15475,8 @@
   "processFeatureWaiting": "Attiva, in attesa di {feature}",
   "processFilterAll": "Tutti",
   "processFilterEmpty": "Nessun processo corrisponde a questo filtro.",
+  "processGoodsStock": "Merci e magazzino",
+  "processGoodsStockDesc": "Tenere, spostare, contare e tracciare le merci vendute.",
   "processHeldBack": "{count, plural, one{1 funzionalità è attiva ma attende un prerequisito disattivato} other{{count} funzionalità sono attive ma attendono un prerequisito disattivato}}",
   "processInProcess": "in {process}",
   "processIntegrations": "Integrazioni e automazione",
@@ -15590,7 +15591,6 @@
     "description": "#974 profiles site: profilesSitePick"
   },
   "profilesTitle": "Profili",
-  "profilesUnavailable": "Impossibile caricare i suoi spazi di lavoro.",
   "provenanceFromTemplate": "Dal modello «{name}»",
   "provenanceProductDefault": "Valore predefinito del prodotto",
   "provenanceResetToDefault": "Ripristina il valore predefinito",
@@ -19153,6 +19153,7 @@
   },
   "settingGroupBusiness": "Attività",
   "settingGroupCompatibility": "Versioni dell'app",
+  "settingGroupDiagnostics": "Segnalazioni di errore",
   "settingGroupDirectory": "Elenco dei membri",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -19441,6 +19442,9 @@
   "settingHintStockTagReadUnitAsQuantity": "In uno spostamento di massa, l'etichetta su un pezzo di un articolo non tracciato pezzo per pezzo viene aggiunta come quantità 1 di quell'articolo. Disattivato: tale etichetta viene esclusa ed elencata.",
   "settingHintStockTagRebindGraceDays": "Quanti giorni dopo il ritiro un codice di etichetta può essere associato di nuovo. 0 significa subito. Un'etichetta in uso non è mai associata due volte.",
   "settingHintStockWeighedGoods": "Attivo: un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco). Ogni articolo può avere un’altra unità.",
+  "settingHintTraceReportMaxBytes": "La segnalazione di errore più grande che questa installazione accetta. L'app accorcia lo stack della segnalazione prima dell'invio; una segnalazione ancora più grande viene scartata.",
+  "settingHintTraceReportRetentionDays": "Per quanti giorni questa installazione conserva una segnalazione di errore. Le segnalazioni più vecchie vengono eliminate all'arrivo di una nuova.",
+  "settingHintTraceReportsPerHour": "Quante segnalazioni di errore una persona può inviare a questa installazione in un'ora, da tutti i suoi dispositivi insieme. Le successive di quell'ora vengono scartate, mai messe in coda. 0 disattiva le segnalazioni di errore per tutti.",
   "settingHintVatViesEvidenceDays": "Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19698,6 +19702,9 @@
   "settingLabelStockTagReadUnitAsQuantity": "Un pezzo letto in uno spostamento conta come uno del suo articolo",
   "settingLabelStockTagRebindGraceDays": "Giorni prima di riutilizzare un'etichetta ritirata",
   "settingLabelStockWeighedGoods": "La merce si vende a peso",
+  "settingLabelTraceReportMaxBytes": "Dimensione massima di una segnalazione di errore",
+  "settingLabelTraceReportRetentionDays": "Conservare le segnalazioni di errore per",
+  "settingLabelTraceReportsPerHour": "Segnalazioni di errore per persona e ora",
   "settingLabelVatViesEvidenceDays": "Validità del controllo della partita IVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -20508,7 +20515,6 @@
   "setupStepLeave": "Esci",
   "setupStepLeaveMessage": "Le risposte non sono ancora applicate. Restano salvate come bozza e le ritrovi qui quando torni.",
   "setupStepLeaveTitle": "Lasciare questo passo?",
-  "setupStepLoadFailed": "Non è stato possibile caricare questo passaggio. Riprovi più tardi.",
   "setupStepNext": "Passo successivo",
   "@setupStepNext": {
     "description": "#3076 — on a step page of the guide: goes on to the next step still to do."
@@ -22532,6 +22538,14 @@
   "subprocessReportDesignDesc": "Progettare rapporti e gestirne testi e impaginazioni.",
   "subprocessReservations": "Prenotare postazioni e spazi",
   "subprocessReservationsDesc": "Prenotare posti o interi spazi secondo le regole.",
+  "subprocessStockControl": "Conteggi e rifornimento",
+  "subprocessStockControlDesc": "Contare le giacenze, pianificare i conteggi ciclici e riordinare per tempo.",
+  "subprocessStockItems": "Articoli e unità",
+  "subprocessStockItemsDesc": "Articoli, gruppi di articoli, unità di misura e unità di movimentazione.",
+  "subprocessStockMovements": "Ricezione e movimenti",
+  "subprocessStockMovementsDesc": "Ricevere le consegne, prelevare merci e gestire i resi.",
+  "subprocessStockTracking": "Tracciabilità",
+  "subprocessStockTrackingDesc": "Lotti, scadenza, scansione ed etichette che tracciano ogni pezzo.",
   "subprocessStructure": "Struttura dello spazio",
   "subprocessStructureDesc": "Gestire sedi e disponibilità degli elementi della planimetria.",
   "subprocessTax": "Gestione dell’IVA",
@@ -22939,6 +22953,7 @@
   "supplyClassLabel": "Luogo della prestazione",
   "supplyClassProperty": "Connesso ai locali",
   "supplyClassPropertyMeaning": "Tassato dove si trovano i locali.",
+  "supplyClassUnknown": "Una classe che quest'app non conosce ancora: resta come l'ha il server",
   "supportChanged": "Il contesto è cambiato. Prepari una nuova anteprima.",
   "supportDay": "Ultime 24 ore",
   "supportDemo": "Demo: contesto locale simulato",

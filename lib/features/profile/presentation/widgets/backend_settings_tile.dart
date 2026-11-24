@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/ui/help_row.dart';
 
 /// #780 — the Settings row that opens the Server screen: which Supabase
@@ -31,7 +32,7 @@ class BackendSettingsTile extends ConsumerWidget {
                 ? (l10n.backendServerDefault(endpoint.host))
                 : (l10n.backendServerCustom(endpoint.host)),
       ),
-      onTap: () => context.push('/server'),
+      onTap: () => context.push(Routes.server),
     );
   }
 }

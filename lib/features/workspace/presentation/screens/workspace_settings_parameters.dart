@@ -10,6 +10,7 @@ import '../../../../core/i18n/country_names.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/workspace_locale_fields.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/settings/settings.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/help_row.dart';
@@ -187,7 +188,7 @@ class WorkspaceParameterTiles {
                     title: l10n.paymentInstructionsTitle,
                     subtitle: Text(l10n.paymentMethodsSubtitle),
                     trailing: const Icon(Icons.chevron_right),
-                    onTap: () => context.push('/payment-methods'),
+                    onTap: () => context.push(Routes.paymentMethods),
                   ),
                   // 0069 — the legal identity the e-invoice needs lives
                   // on its own screen: the regime decides which fields
@@ -199,7 +200,7 @@ class WorkspaceParameterTiles {
                     title: l10n.legalIdentityTitle,
                     subtitle: Text(l10n.legalIdentitySubtitle),
                     trailing: const Icon(Icons.chevron_right),
-                    onTap: () => context.push('/legal-identity'),
+                    onTap: () => context.push(Routes.legalIdentity),
                   ),
                   ..._billingTools(l10n),
                   const SizedBox(height: 24),
@@ -394,7 +395,7 @@ class WorkspaceParameterTiles {
                     title: l10n.uxReportsTitle,
                     subtitle: Text(l10n.uxReportsHint),
                     trailing: const Icon(Icons.chevron_right),
-                    onTap: () => context.push('/reports')),
+                    onTap: () => context.push(Routes.reports)),
                   if (ref
                       .watch(enabledFeaturesSyncProvider)
                       .contains(WorkspaceFeature.invoicing))

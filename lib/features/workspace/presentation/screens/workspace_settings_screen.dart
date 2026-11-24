@@ -10,6 +10,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -116,7 +117,7 @@ class _WorkspaceSettingsScreenState
                   const AdminVisibilityTile(),
                   const BusinessKindTile(), // #3549
                   if((ref.watch(myMemberProvider).value?.actsAsOwner??false)&&ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.organisation)&&ref.watch(currentWorkspaceProvider).value!=null)ListTile(key: const ValueKey('workspace-settings-organisation'), title:Text(l10n.organisationTitle),leading:const Icon(Icons.account_tree_outlined),onTap:()=>OrganisationSheet.openAndEnter(context, ref, ref.read(currentWorkspaceProvider).value!)), // #4006, #4005
-                  if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(key: const ValueKey('workspace-settings-portal-publication'), title:Text(l10n.portalPublication),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
+                  if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(key: const ValueKey('workspace-settings-portal-publication'), title:Text(l10n.portalPublication),leading:const Icon(Icons.public),onTap:()=>context.push(Routes.settingsPublicPage)),
                   ...setupReadinessCards(workspace.id), // #1636 #1656
                   ...WorkspaceParameterTiles(this, _form, _update,
                       helpTopic: helpTopic,
@@ -173,7 +174,7 @@ class _WorkspaceSettingsScreenState
                       title: Text(l10n.libraryTitle),
                       subtitle: Text(l10n.librarySave),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context.push('/library'),
+                      onTap: () => context.push(Routes.library),
                     ),
                   // #164 — versioned XML snapshot of settings + floor
                   // plan; the whole screen is owner-only already.

@@ -108,6 +108,9 @@ const DEFAULTS={
  // #3732 — how many days an older app stays accepted after a newer one is available on the
  // slowest channel (platform setting apps.support_window_days).
  appSupport:{windowDays:'30'},
+ // #4416 — the error reports apps send (platform settings trace.reports_per_hour, trace.report_max_bytes,
+ // trace.report_retention_days).
+ traceReports:{perHour:'20',maxBytes:'16384',retentionDays:'30'},
  // #4217 — how long after its first sending a checkout may be sent again under
  // its original request, per provider (platform settings payments.resend_window_*_minutes).
  paymentResend:{mollie:'50',paypal:'330',stripe:'1380'},

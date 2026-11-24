@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accounting_connection.dart'
@@ -83,7 +84,7 @@ class MoneyActionSet {
         icon: Icons.receipt_long_outlined,
         title: l10n.featureInvoicing,
         subtitle: l10n.uxNavSales,
-        onTap: () => context.push('/invoices'),
+        onTap: () => context.push(Routes.invoices),
       ),
       status: managementTile(
         on: data.statusToolOn,
@@ -91,7 +92,7 @@ class MoneyActionSet {
         icon: Icons.account_balance_outlined,
         title: l10n.statusTitle,
         subtitle: l10n.statusSubtitle,
-        onTap: () => context.push('/money/status'),
+        onTap: () => context.push(Routes.moneyStatus),
       ),
       // #2577 — the purchase and the sales side, each on its own page.
       purchasesHub: managementTile(
@@ -100,7 +101,7 @@ class MoneyActionSet {
         icon: Icons.shopping_cart_outlined,
         title: l10n.hubPurchasesTitle,
         subtitle: l10n.hubPurchasesSubtitle,
-        onTap: () => context.push('/money/purchases'),
+        onTap: () => context.push(Routes.moneyPurchases),
       ),
       cashHub: managementTile(
         on: (data.statusToolOn || data.purchasesOn) &&
@@ -109,7 +110,7 @@ class MoneyActionSet {
         icon: Icons.account_balance_wallet_outlined,
         title: l10n.hubCashTitle,
         subtitle: l10n.hubCashSubtitle,
-        onTap: () => context.push('/money/cash'),
+        onTap: () => context.push(Routes.moneyCash),
       ),
       // The books, the tax and the identity: the page's own gate, so the
       // classic bar without a drawer reaches it too.
@@ -121,7 +122,7 @@ class MoneyActionSet {
         icon: Icons.menu_book_outlined,
         title: l10n.hubAccountingTitle,
         subtitle: l10n.hubAccountingSubtitle,
-        onTap: () => context.push('/money/accounting'),
+        onTap: () => context.push(Routes.moneyAccounting),
       ),
       salesHub: managementTile(
         on: data.invoicingOn && (data.member?.isAdmin ?? false),
@@ -129,7 +130,7 @@ class MoneyActionSet {
         icon: Icons.sell_outlined,
         title: l10n.bookReportJournalSales,
         subtitle: l10n.hubSalesSubtitle,
-        onTap: () => context.push('/invoices'),
+        onTap: () => context.push(Routes.invoices),
       ),
       wizard: managementTile(
         on: data.repartitionWizardOn,
@@ -137,7 +138,7 @@ class MoneyActionSet {
         icon: Icons.pie_chart_outline,
         title: l10n.repartitionWizardTitle,
         subtitle: l10n.repartitionWizardSubtitle,
-        onTap: () => context.push('/money/repartition-wizard'),
+        onTap: () => context.push(Routes.moneyRepartitionWizard),
       ),
     );
   }
@@ -208,7 +209,7 @@ class MoneyActionSet {
     return [
       if (data.statusToolOn)
         door('cash-hub-in-out', Icons.account_balance_outlined,
-            l10n.cashHubInOut, () => context.push('/money/status')),
+            l10n.cashHubInOut, () => context.push(Routes.moneyStatus)),
       if (data.purchasesOn && workspace != null)
         door('cash-hub-to-pay', Icons.outbox_outlined, l10n.cashHubToPay,
             () => showPurchasesSheet(
@@ -305,7 +306,7 @@ class MoneyActionSet {
       if (data.suppliersOn && data.workspace != null)
         OutlinedButton.icon(
           key: const ValueKey('suppliers-button'),
-          onPressed: () => context.push('/money/suppliers'),
+          onPressed: () => context.push(Routes.moneySuppliers),
           icon: const Icon(Icons.storefront_outlined),
           label: fitted(l10n.bookRoleSuppliers),
         ),

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../events/providers/attention_providers.dart';
 import '../../../events/providers/notification_filter_providers.dart';
@@ -26,7 +27,7 @@ class MoneyAttentionBody extends ConsumerWidget {
             errorText: words.uxFinanceAlertsFailed,
             action: () => ref.read(notificationFilterProvider.notifier).showFinance())) { return; }
           if (!context.mounted) return;
-          context.go('/events');
+          context.go(Routes.events);
         }),
       Expanded(child: child),
     ]);

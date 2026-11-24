@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../core/navigation/routes.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import 'shell_branch.dart';
@@ -92,14 +93,14 @@ List<ShellNav> shellNavFor(
       const ShellNav(
         'overview',
         ShellBranch.messages,
-        location: '/workspace-overview',
+        location: Routes.workspaceOverview,
       ),
     if (branches.contains(ShellBranch.directory))
       const ShellNav('directory', ShellBranch.directory),
     if (branches.contains(ShellBranch.money))
       const ShellNav('money', ShellBranch.money),
     if (branches.contains(ShellBranch.messages))
-      const ShellNav('messages', ShellBranch.messages, location: '/messages'),
+      const ShellNav('messages', ShellBranch.messages, location: Routes.messages),
     if (branches.contains(ShellBranch.calendar))
       const ShellNav('calendar', ShellBranch.calendar),
   ];

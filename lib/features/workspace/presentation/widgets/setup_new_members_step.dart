@@ -12,6 +12,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -166,7 +167,7 @@ class _SetupNewMembersStepState extends ConsumerState<SetupNewMembersStep> {
             alignment: AlignmentDirectional.centerStart,
             child: TextButton(
               key: const ValueKey('setup-new-members-questions'),
-              onPressed: () => context.push('/settings/questions'),
+              onPressed: () => context.push(Routes.settingsQuestions),
               child: Text(l10n.setupNewMembersEditQuestions),
             ),
           ),

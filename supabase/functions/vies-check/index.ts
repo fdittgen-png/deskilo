@@ -14,6 +14,7 @@
 // which blocks the reverse charge instead of silently charging domestic
 // VAT.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { REFUSED_CODE } from "../_shared/webhook_guard.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
@@ -103,8 +104,8 @@ export async function handle(req: Request): Promise<Response> {
     return refuse("workspace_id and member_id required", 400);
   }
 
-  const url = Deno.env.get("SUPABASE_URL")!;
-  const caller = createClient(url, Deno.env.get("SUPABASE_ANON_KEY")!, {
+  const url = readEnv(KEYS.supabaseUrl)!;
+  const caller = createClient(url, readEnv(KEYS.supabaseAnonKey)!, {
     global: {
       headers: { Authorization: req.headers.get("Authorization") ?? "" },
     },
@@ -124,7 +125,7 @@ export async function handle(req: Request): Promise<Response> {
   }
 
   const outcome = await askVies(s);
-  const admin = createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+  const admin = createClient(url, readEnv(KEYS.supabaseServiceRoleKey)!);
   const { data: recorded, error: recordError } = await admin.rpc(
     "record_vies_check",
     {

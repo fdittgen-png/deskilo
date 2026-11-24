@@ -349,12 +349,13 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
     try {
       final l10nSync = context.l10n;
       final ({List<int> bytes, String fileName}) pdf;
-      if (editorDoc == 'invoice' || editorDoc == 'proforma') {
+      final document = ReportDocument.fromId(editorDoc);
+      if (document.isInvoiceDocument) {
         final invoicePdf = await buildInvoicePdfFile(
           context,
-          invoices.first, InvoicePdfFileOptions(reference: reference, proforma: editorDoc == 'proforma',
+          invoices.first, InvoicePdfFileOptions(reference: reference, proforma: document == ReportDocument.proforma,
           copy: true,
-          template: editorDoc == 'proforma'
+          template: document == ReportDocument.proforma
               ? InvoicePdfTemplate(proforma: editorCurrentBands)
               : InvoicePdfTemplate(
                   header: editorCurrentBands.header,
@@ -367,7 +368,7 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
           reportImage: (name) =>
               ref.read(reportImageBytesProvider(name).future)));
         pdf = (bytes: invoicePdf.bytes, fileName: invoicePdf.fileName);
-      } else if (editorDoc == 'statement' ||
+      } else if (document == ReportDocument.statement ||
           reportKindById(editorDoc, reminderLevels: editorReminderLevels)?.slot
               is ReportDocSlot) {
         // The letter documents: my own live data, or the sample.

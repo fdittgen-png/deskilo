@@ -23,6 +23,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/house/house_prices.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/dashboard_grid.dart';
@@ -164,7 +165,7 @@ class _WorkspaceOverviewScreenState
               alignment: AlignmentDirectional.centerStart,
               child: TextButton.icon(
                 key: const ValueKey('overview-all-indicators'),
-                onPressed: () => context.push('/bi'),
+                onPressed: () => context.push(Routes.bi),
                 icon: const Icon(Icons.insights_outlined),
                 label: Text(l10n.overviewAllIndicators),
               ),
@@ -389,7 +390,7 @@ class _IndicatorTile extends ConsumerWidget {
       label: view.title(l10n),
       figure: value,
       note: l10n.overviewThisMonth,
-      onTap: () => context.push('/bi'),
+      onTap: () => context.push(Routes.bi),
     );
   }
 }

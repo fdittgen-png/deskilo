@@ -5,6 +5,7 @@
 // resolves the payment_intents row → workspace → that workspace's Stripe
 // webhook secret (table first, env fallback). Settlement is idempotent.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { stripeFeeOf } from "../_shared/provider_settlement.ts";
 import { attachOrder, INTENT_KEY, intentIdOf, provisionalIntent } from "../_shared/provisional_intent.ts";
@@ -56,10 +57,10 @@ export interface Deps {
 const defaultDeps: Deps = {
   admin: () =>
     createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      readEnv(KEYS.supabaseUrl)!,
+      readEnv(KEYS.supabaseServiceRoleKey)!,
     ),
-  env: (name) => Deno.env.get(name),
+  env: readEnv,
   nowS: () => Date.now() / 1000,
   fetch: (input, init) => fetch(input, init),
 };

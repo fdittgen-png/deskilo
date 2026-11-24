@@ -16,6 +16,7 @@
 // carries `first_outcome`, what the first delivery decided: the sender books
 // a retry of a refused event as refused, never as delivered (#2563).
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { describeError, logLine } from "../_shared/log.ts";
 import { ok } from "../_shared/respond.ts";
@@ -73,8 +74,8 @@ export interface Deps {
 const defaultDeps: Deps = {
   admin: () =>
     createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      readEnv(KEYS.supabaseUrl)!,
+      readEnv(KEYS.supabaseServiceRoleKey)!,
     ),
 };
 

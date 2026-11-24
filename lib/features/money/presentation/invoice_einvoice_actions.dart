@@ -17,6 +17,7 @@ import '../../../core/files/file_names.dart';
 import '../../../core/jurisdiction/installed_invoice_rules.dart';
 import '../../../core/jurisdiction/installed_payment_slips.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/share/file_sharer.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/guarded.dart';
@@ -226,7 +227,7 @@ Future<void> exportEInvoice(
     );
     if (export == null || !context.mounted) return;
     if (export == EInvoiceExport.fixIdentity) {
-      unawaited(context.push('/legal-identity'));
+      unawaited(context.push(Routes.legalIdentity));
       return;
     }
     if (export == EInvoiceExport.send || export == EInvoiceExport.sendCustomer) {

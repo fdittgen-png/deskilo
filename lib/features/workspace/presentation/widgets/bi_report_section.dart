@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../domain/bi_modules.dart';
@@ -88,7 +89,7 @@ class BiReportSection extends ConsumerWidget {
               icon: const Icon(Icons.edit_outlined),
               label: Text(context.l10n.biEditorOpen),
               // push: Back (and the editor's Close) return to this page.
-              onPressed: () => context.push('/bi/report/${editing.id}'),
+              onPressed: () => context.push(Routes.biReport(editing.id)),
             ),
           ),
         if (editing != null)

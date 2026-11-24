@@ -7287,10 +7287,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get consentTitle => 'I suoi dati, i suoi diritti';
 
   @override
-  String get consentUnavailable =>
-      'Impossibile caricare il suo account, quindi non c’è ancora nulla da accettare.';
-
-  @override
   String get consentVersion => 'Versione';
 
   @override
@@ -16092,6 +16088,37 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo progetto non risponde ancora come un\'installazione Deskilo. Installi prima lo schema.';
 
   @override
+  String instanceErrorReportCode(String code) {
+    return 'Codice $code';
+  }
+
+  @override
+  String instanceErrorReportFacts(
+    String version,
+    String platform,
+    String time,
+  ) {
+    return '$version · $platform · $time';
+  }
+
+  @override
+  String get instanceErrorReportStack => 'Stack, oscurato dall\'app';
+
+  @override
+  String get instanceErrorReports => 'Segnalazioni di errore';
+
+  @override
+  String get instanceErrorReportsHint =>
+      'Ciò che le app hanno inviato quando qualcosa è andato storto, dalle più recenti. I membri di un\'azienda non le vedono mai.';
+
+  @override
+  String get instanceErrorReportsNone =>
+      'Non è arrivata alcuna segnalazione di errore.';
+
+  @override
+  String get instanceErrorReportsOlder => 'Segnalazioni precedenti';
+
+  @override
   String get instanceFamilyChatgpt => 'ChatGPT';
 
   @override
@@ -20919,10 +20946,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Genera un codice personale legato a questo profilo. Chi lo riscatta prende il profilo — prenotazioni, fatture, abbonamento — appena Lei approva l\'adesione.';
 
   @override
-  String get managedProfileIdentityUnavailable =>
-      'Non è stato possibile leggere questi dati, quindi non c\'è ancora nulla da modificare. Non è stato cambiato nulla.';
-
-  @override
   String get managedProfileIntro =>
       'Questa persona non ha ancora un account. Lei prenota, fattura e gestisce per conto suo; le consegni il profilo quando entra.';
 
@@ -22714,10 +22737,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get memberMoneySettled => 'Nulla in sospeso.';
-
-  @override
-  String get memberMoneyUnavailable =>
-      'Impossibile caricare le finanze. Trascini per aggiornare.';
 
   @override
   String get memberMonthInProgress => 'Questo mese';
@@ -25465,10 +25484,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get periodReservationsEmpty => 'Nessuna prenotazione in questi mesi.';
 
   @override
-  String get periodReservationsFailed =>
-      'Non è stato possibile leggere le prenotazioni.';
-
-  @override
   String periodReservationsLevel(String level) {
     return 'Solo su $level';
   }
@@ -26755,9 +26770,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get privacyAdminKind => 'Tipo di richiesta';
 
   @override
-  String get privacyAdminLoadFailed => 'Impossibile leggere le richieste.';
-
-  @override
   String get privacyAdminMember => 'Membro';
 
   @override
@@ -26821,6 +26833,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String privacyErasedIn(String space) {
     return 'I Suoi dati in $space sono cancellati. Ciò che lo spazio deve conservare resta per il suo periodo di conservazione; le altre installazioni non sono interessate.';
   }
+
+  @override
+  String get privacyErrorReports => 'Inviare le segnalazioni di errore';
+
+  @override
+  String get privacyErrorReportsFailed =>
+      'Non è stato possibile salvare la scelta su questo dispositivo.';
+
+  @override
+  String get privacyErrorReportsHint =>
+      'Quando l\'app registra un errore, una segnalazione senza i Suoi dati va all\'installazione a cui ha effettuato l\'accesso, perché il suo operatore possa correggerlo.';
 
   @override
   String get privacyExport => 'Esporta i miei dati';
@@ -27080,6 +27103,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get processFilterEmpty =>
       'Nessun processo corrisponde a questo filtro.';
+
+  @override
+  String get processGoodsStock => 'Merci e magazzino';
+
+  @override
+  String get processGoodsStockDesc =>
+      'Tenere, spostare, contare e tracciare le merci vendute.';
 
   @override
   String processHeldBack(int count) {
@@ -27348,10 +27378,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get profilesTitle => 'Profili';
-
-  @override
-  String get profilesUnavailable =>
-      'Impossibile caricare i suoi spazi di lavoro.';
 
   @override
   String provenanceFromTemplate(String name) {
@@ -32331,6 +32357,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingGroupCompatibility => 'Versioni dell\'app';
 
   @override
+  String get settingGroupDiagnostics => 'Segnalazioni di errore';
+
+  @override
   String get settingGroupDirectory => 'Elenco dei membri';
 
   @override
@@ -32811,6 +32840,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Attivo: un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco). Ogni articolo può avere un’altra unità.';
 
   @override
+  String get settingHintTraceReportMaxBytes =>
+      'La segnalazione di errore più grande che questa installazione accetta. L\'app accorcia lo stack della segnalazione prima dell\'invio; una segnalazione ancora più grande viene scartata.';
+
+  @override
+  String get settingHintTraceReportRetentionDays =>
+      'Per quanti giorni questa installazione conserva una segnalazione di errore. Le segnalazioni più vecchie vengono eliminate all\'arrivo di una nuova.';
+
+  @override
+  String get settingHintTraceReportsPerHour =>
+      'Quante segnalazioni di errore una persona può inviare a questa installazione in un\'ora, da tutti i suoi dispositivi insieme. Le successive di quell\'ora vengono scartate, mai messe in coda. 0 disattiva le segnalazioni di errore per tutti.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.';
 
@@ -33238,6 +33279,18 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingLabelStockWeighedGoods => 'La merce si vende a peso';
+
+  @override
+  String get settingLabelTraceReportMaxBytes =>
+      'Dimensione massima di una segnalazione di errore';
+
+  @override
+  String get settingLabelTraceReportRetentionDays =>
+      'Conservare le segnalazioni di errore per';
+
+  @override
+  String get settingLabelTraceReportsPerHour =>
+      'Segnalazioni di errore per persona e ora';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -35336,10 +35389,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupStepLeaveTitle => 'Lasciare questo passo?';
-
-  @override
-  String get setupStepLoadFailed =>
-      'Non è stato possibile caricare questo passaggio. Riprovi più tardi.';
 
   @override
   String get setupStepNext => 'Passo successivo';
@@ -38632,6 +38681,34 @@ class AppLocalizationsIt extends AppLocalizations {
       'Prenotare posti o interi spazi secondo le regole.';
 
   @override
+  String get subprocessStockControl => 'Conteggi e rifornimento';
+
+  @override
+  String get subprocessStockControlDesc =>
+      'Contare le giacenze, pianificare i conteggi ciclici e riordinare per tempo.';
+
+  @override
+  String get subprocessStockItems => 'Articoli e unità';
+
+  @override
+  String get subprocessStockItemsDesc =>
+      'Articoli, gruppi di articoli, unità di misura e unità di movimentazione.';
+
+  @override
+  String get subprocessStockMovements => 'Ricezione e movimenti';
+
+  @override
+  String get subprocessStockMovementsDesc =>
+      'Ricevere le consegne, prelevare merci e gestire i resi.';
+
+  @override
+  String get subprocessStockTracking => 'Tracciabilità';
+
+  @override
+  String get subprocessStockTrackingDesc =>
+      'Lotti, scadenza, scansione ed etichette che tracciano ogni pezzo.';
+
+  @override
   String get subprocessStructure => 'Struttura dello spazio';
 
   @override
@@ -38971,6 +39048,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get supplyClassPropertyMeaning => 'Tassato dove si trovano i locali.';
+
+  @override
+  String get supplyClassUnknown =>
+      'Una classe che quest\'app non conosce ancora: resta come l\'ha il server';
 
   @override
   String get supportChanged =>

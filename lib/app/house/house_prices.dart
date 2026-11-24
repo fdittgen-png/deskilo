@@ -24,6 +24,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/format/amount_input.dart';
 import '../../core/i18n/country_names.dart';
 import '../../core/l10n/context_l10n.dart';
+import '../../core/navigation/routes.dart';
 import '../../core/ui/adaptive/task_surface.dart';
 import '../../core/ui/form_kit.dart';
 import '../../core/ui/master_data_field.dart';
@@ -94,7 +95,7 @@ class HousePricesCard extends ConsumerWidget {
                   taxed ? Icons.check_circle : Icons.radio_button_unchecked,
                 ),
                 title: Text(l10n.houseSetRates(country)),
-                onTap: () => context.push('/setup/step/vat'),
+                onTap: () => context.push(Routes.setupStep('vat')),
               ),
             ListTile(
               key: const ValueKey('house-prices-name'),

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../failure/app_failure.dart';
 import 'redaction.dart';
 
 part 'trace_logger.g.dart';
@@ -35,6 +37,9 @@ bool isTransientNetworkFailure(Object? error) {
   return marks.any(text.contains);
 }
 
+/// The code of a [Refusal], or null.
+String? _refusalCodeOf(Object error) => error is Refusal ? error.code : null;
+
 /// One diagnostic event captured by [TraceLogger] (#144).
 class TraceEntry {
   const TraceEntry({
@@ -44,6 +49,8 @@ class TraceEntry {
     required this.message,
     this.error,
     this.stack,
+    this.errorType,
+    this.errorCode,
   });
 
   final DateTime ts;
@@ -52,7 +59,14 @@ class TraceEntry {
   final String message;
   final String? error;
   final String? stack;
+
+  /// #4416 — the error's kind (its runtime type) and the code it carried (a
+  /// refusal's, a database error's): what an error report may say of it,
+  /// where [error] is its text and may quote a person's data.
+  final String? errorType;
+  final String? errorCode;
 }
+
 
 /// Always-on, cheap error/warning trace with a bounded in-memory ring
 /// buffer and lazy append-to-file persistence (#144).
@@ -65,7 +79,14 @@ class TraceLogger {
     this._directoryProvider,
     this.capacity = 500,
     this.maxFileBytes = 512 * 1024,
+    this.errorCodeOf = _refusalCodeOf,
   });
+
+  /// #4416 — the code an error carried (a refusal's, a database answer's),
+  /// never its sentence. A plain logger reads a [Refusal]'s; the app's reads
+  /// the database's too (`createAppTraceLogger`): this file stays free of the
+  /// server client, so the command-line tools that reach it still run.
+  final String? Function(Object error) errorCodeOf;
 
   /// Global fallback for call sites without a Riverpod ref (main-zone
   /// hooks, repositories). Set during bootstrap; defaults to a
@@ -81,6 +102,7 @@ class TraceLogger {
 
   final List<TraceEntry> _buffer = [];
   final _changes = StreamController<void>.broadcast();
+  final _added = StreamController<TraceEntry>.broadcast();
 
   /// Serializes file appends/rotations/clears; also lets tests await IO.
   Future<void> _io = Future.value();
@@ -93,6 +115,9 @@ class TraceLogger {
 
   /// Fires after every mutation (new entry or clear) — for the UI.
   Stream<void> get changes => _changes.stream;
+
+  /// #4416 — every entry as it is recorded, for the error reporter.
+  Stream<TraceEntry> get added => _added.stream;
 
   /// Completes when all file writes issued so far have settled.
   Future<void> flush() => _io;
@@ -112,12 +137,15 @@ class TraceLogger {
       message: message,
       error: error?.toString(),
       stack: stackTrace?.toString(),
+      errorType: error?.runtimeType.toString(),
+      errorCode: error == null ? null : errorCodeOf(error),
     );
     _buffer.add(entry);
     if (_buffer.length > capacity) {
       _buffer.removeRange(0, _buffer.length - capacity);
     }
     _changes.add(null);
+    _added.add(entry);
     _enqueue(() => _append(entry));
   }
 

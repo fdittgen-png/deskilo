@@ -14,7 +14,6 @@
   "setupInvitePreviewTitle": "L’invito, come lo ricevono i Suoi membri",
   "setupInvitePreviewNote": "Ogni invito che invia porta un proprio codice monouso al posto dell’ID dello spazio.",
   "setupInviteShareFailed": "Non è stato possibile condividere il codice QR. Riprovi.",
-  "setupStepLoadFailed": "Non è stato possibile caricare questo passaggio. Riprovi più tardi.",
   "setupBasicsSaveFailed": "Non è stato possibile salvare i dati di base. Riprovi.",
   "setupBasicsPreviewDate": "La data di oggi",
   "setupBasicsPreviewTime": "L’ora attuale",

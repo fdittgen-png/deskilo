@@ -9506,10 +9506,6 @@
   "@consentTitle": {
     "description": "Shown as the text in help tips (core), and 2 other places."
   },
-  "consentUnavailable": "Your account could not be loaded, so there is nothing to accept yet.",
-  "@consentUnavailable": {
-    "description": "Banner on the consent screen when the profile could not be fetched (#1650): a retry replaces the acceptance form"
-  },
   "consentVersion": "Version",
   "@consentVersion": {
     "description": "Shown as the text in consent screen (profile), and 1 other place."
@@ -21022,6 +21018,50 @@
   "@instanceEnrolUnreadable": {
     "description": "#2562 C2a enrolment: instanceEnrolUnreadable"
   },
+  "instanceErrorReportCode": "Code {code}",
+  "@instanceErrorReportCode": {
+    "description": "#4416 Instance console: the code the error carried",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceErrorReportFacts": "{version} · {platform} · {time}",
+  "@instanceErrorReportFacts": {
+    "description": "#4416 Instance console: one report's app version, platform and time",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "platform": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceErrorReportStack": "Stack, redacted by the app",
+  "@instanceErrorReportStack": {
+    "description": "#4416 Instance console: heading of a report's stack"
+  },
+  "instanceErrorReports": "Error reports",
+  "@instanceErrorReports": {
+    "description": "#4416 Instance console: the error reports apps sent to this installation, its row and sheet title"
+  },
+  "instanceErrorReportsHint": "What the apps sent when something went wrong, newest first. Members of a business never see them.",
+  "@instanceErrorReportsHint": {
+    "description": "#4416 Instance console: under the error reports row"
+  },
+  "instanceErrorReportsNone": "No error report has arrived.",
+  "@instanceErrorReportsNone": {
+    "description": "#4416 Instance console: the list is empty"
+  },
+  "instanceErrorReportsOlder": "Older reports",
+  "@instanceErrorReportsOlder": {
+    "description": "#4416 Instance console: reads the next page of older reports"
+  },
   "instanceFamilyChatgpt": "ChatGPT",
   "@instanceFamilyChatgpt": {
     "description": "#2145 assistant onboarding: instanceFamilyChatgpt"
@@ -27357,10 +27397,6 @@
   "@managedProfileHandOverHint": {
     "description": "#887 managed profiles: managedProfileHandOverHint"
   },
-  "managedProfileIdentityUnavailable": "These details could not be read, so there is nothing to edit yet. Nothing has been changed.",
-  "@managedProfileIdentityUnavailable": {
-    "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
-  },
   "managedProfileIntro": "This person has no account yet. You book, invoice and manage for them; hand the profile over when they join.",
   "@managedProfileIntro": {
     "description": "#887 managed profiles: managedProfileIntro"
@@ -29669,10 +29705,6 @@
   "memberMoneySettled": "Nothing outstanding.",
   "@memberMoneySettled": {
     "description": "#704 - the money section of a member profile"
-  },
-  "memberMoneyUnavailable": "Money could not be loaded. Pull to refresh.",
-  "@memberMoneyUnavailable": {
-    "description": "#709 - the money section of a profile could not be read"
   },
   "memberMonthInProgress": "This month",
   "@memberMonthInProgress": {
@@ -33310,10 +33342,6 @@
   "@periodReservationsEmpty": {
     "description": "#2578 the bookings behind the capacity figure"
   },
-  "periodReservationsFailed": "The bookings could not be read.",
-  "@periodReservationsFailed": {
-    "description": "#2578 the bookings behind the capacity figure"
-  },
   "periodReservationsLevel": "On {level} only",
   "@periodReservationsLevel": {
     "description": "#2580 the bookings behind the capacity figure, narrowed to one level",
@@ -34925,10 +34953,6 @@
   "@privacyAdminKind": {
     "description": "Shown as the label of a field in privacy admin sheets (members), and 1 other place."
   },
-  "privacyAdminLoadFailed": "The requests could not be read.",
-  "@privacyAdminLoadFailed": {
-    "description": "Shown as the text in privacy admin screen (members)."
-  },
   "privacyAdminMember": "Member",
   "@privacyAdminMember": {
     "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
@@ -35020,6 +35044,18 @@
         "type": "String"
       }
     }
+  },
+  "privacyErrorReports": "Send error reports",
+  "@privacyErrorReports": {
+    "description": "#4416 Privacy switch: send the errors the app records to the installation"
+  },
+  "privacyErrorReportsFailed": "The choice could not be saved on this device.",
+  "@privacyErrorReportsFailed": {
+    "description": "#4416 Privacy switch: the switch could not be stored"
+  },
+  "privacyErrorReportsHint": "When the app records an error, a report without your data goes to the installation you are signed in to, so its operator can fix it.",
+  "@privacyErrorReportsHint": {
+    "description": "#4416 Privacy switch: what is sent and where, under its name"
   },
   "privacyExport": "Export my data",
   "@privacyExport": {
@@ -35348,6 +35384,14 @@
   "processFilterEmpty": "No process matches this filter.",
   "@processFilterEmpty": {
     "description": "#1327 the process-first overview of the Features screen"
+  },
+  "processGoodsStock": "Goods & stock",
+  "@processGoodsStock": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "processGoodsStockDesc": "Keep, move, count and trace the goods the business sells.",
+  "@processGoodsStockDesc": {
+    "description": "Shown as the text in process names (workspace)."
   },
   "processHeldBack": "{count, plural, one{1 feature is on but waits for a switched-off prerequisite} other{{count} features are on but wait for a switched-off prerequisite}}",
   "@processHeldBack": {
@@ -35687,10 +35731,6 @@
   "profilesTitle": "Profiles",
   "@profilesTitle": {
     "description": "Profile switcher screen (#89): one profile per workspace membership"
-  },
-  "profilesUnavailable": "Your workspaces could not be loaded.",
-  "@profilesUnavailable": {
-    "description": "Banner on the Profiles screen when the membership list could not be fetched (#1650); paired with commonRetry"
   },
   "provenanceFromTemplate": "From template «{name}»",
   "@provenanceFromTemplate": {
@@ -41931,6 +41971,10 @@
   "@settingGroupCompatibility": {
     "description": "#3732 Settings group: how long older app versions stay accepted by this installation"
   },
+  "settingGroupDiagnostics": "Error reports",
+  "@settingGroupDiagnostics": {
+    "description": "#4416 Settings group: the error reports apps send to this installation"
+  },
   "settingGroupDirectory": "Member directory",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -42423,6 +42467,18 @@
   "@settingHintStockWeighedGoods": {
     "description": "#4365 G16 the shop business kind"
   },
+  "settingHintTraceReportMaxBytes": "The largest error report this installation accepts. The app shortens the report's stack to fit before it sends; a report still larger is dropped.",
+  "@settingHintTraceReportMaxBytes": {
+    "description": "#4416 Platform setting trace.report_max_bytes: what it decides, under its name"
+  },
+  "settingHintTraceReportRetentionDays": "How many days this installation keeps an error report. Older reports are deleted when a new one arrives.",
+  "@settingHintTraceReportRetentionDays": {
+    "description": "#4416 Platform setting trace.report_retention_days: what it decides, under its name"
+  },
+  "settingHintTraceReportsPerHour": "How many error reports one person may send to this installation in an hour, from all their devices together. Further reports in that hour are dropped, never queued. 0 turns error reports off for everybody.",
+  "@settingHintTraceReportsPerHour": {
+    "description": "#4416 Platform setting trace.reports_per_hour: what it decides, under its name"
+  },
   "settingHintVatViesEvidenceDays": "Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -42874,6 +42930,18 @@
   "settingLabelStockWeighedGoods": "Goods are sold by weight",
   "@settingLabelStockWeighedGoods": {
     "description": "#4365 G16 the shop business kind"
+  },
+  "settingLabelTraceReportMaxBytes": "Largest error report",
+  "@settingLabelTraceReportMaxBytes": {
+    "description": "#4416 Platform setting trace.report_max_bytes: its name in the settings editor"
+  },
+  "settingLabelTraceReportRetentionDays": "Error reports kept for",
+  "@settingLabelTraceReportRetentionDays": {
+    "description": "#4416 Platform setting trace.report_retention_days: its name in the settings editor"
+  },
+  "settingLabelTraceReportsPerHour": "Error reports per person and hour",
+  "@settingLabelTraceReportsPerHour": {
+    "description": "#4416 Platform setting trace.reports_per_hour: its name in the settings editor"
   },
   "settingLabelVatViesEvidenceDays": "VAT-number check freshness",
   "@settingLabelVatViesEvidenceDays": {
@@ -45469,10 +45537,6 @@
   "setupStepLeaveTitle": "Leave this step?",
   "@setupStepLeaveTitle": {
     "description": "#3629 asked when leaving a setup step whose answers are a draft not applied yet."
-  },
-  "setupStepLoadFailed": "This step could not be loaded. Try again later.",
-  "@setupStepLoadFailed": {
-    "description": "#2870 setup steps: setupStepLoadFailed"
   },
   "setupStepNext": "Next step",
   "@setupStepNext": {
@@ -49837,6 +49901,38 @@
   "@subprocessReservationsDesc": {
     "description": "Shown as the text in process names (workspace)."
   },
+  "subprocessStockControl": "Counts and replenishment",
+  "@subprocessStockControl": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "subprocessStockControlDesc": "Count stock, schedule cycle counts and reorder in time.",
+  "@subprocessStockControlDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
+  "subprocessStockItems": "Items and units",
+  "@subprocessStockItems": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "subprocessStockItemsDesc": "Items, item groups, units of measure and handling units.",
+  "@subprocessStockItemsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
+  "subprocessStockMovements": "Receiving and movements",
+  "@subprocessStockMovements": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "subprocessStockMovementsDesc": "Receive deliveries, take goods out and handle returns.",
+  "@subprocessStockMovementsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
+  "subprocessStockTracking": "Traceability",
+  "@subprocessStockTracking": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "subprocessStockTrackingDesc": "Lots, expiry, scanning and tags that trace each piece.",
+  "@subprocessStockTrackingDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessStructure": "Space structure",
   "@subprocessStructure": {
     "description": "Shown as the title in process names (workspace)."
@@ -50310,6 +50406,10 @@
   "supplyClassPropertyMeaning": "Taxed where the premises are.",
   "@supplyClassPropertyMeaning": {
     "description": "#3864 place of supply: what the premises choice means"
+  },
+  "supplyClassUnknown": "A class this app does not know yet: kept as the server has it",
+  "@supplyClassUnknown": {
+    "description": "#4441 Service sheet: a supply class from a newer server, shown read-only and kept"
   },
   "supportChanged": "The context changed. Prepare a new preview.",
   "@supportChanged": {

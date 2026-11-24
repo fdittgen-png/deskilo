@@ -37,6 +37,7 @@ import 'shell/layer_chrome.dart';
 import 'shell/window_title.dart';
 import 'switcher_cover_host.dart';
 import 'theme.dart';
+import 'trace_reporting_wiring.dart';
 
 /// The composition root: the real app, or the demonstration space
 /// wrapped around it (#1379).
@@ -69,7 +70,8 @@ class DeskiloApp extends ConsumerWidget {
       // #2478 — the VAT functions run on the installation's reference data.
       ..watch(activeTaxReferenceProvider)
       // #2559 C2 — a tapped notification opens only what it may.
-      ..watch(notificationTapRoutingProvider);
+      ..watch(notificationTapRoutingProvider)
+      ..watch(traceReportingProvider); // #4416 errors reach the installation as allowed
     // Motion pass (#611): the `uiAnimations` flag decides route
     // transitions (baked into the theme) and, via [MotionSettings] in
     // the builder, every in-app animation. Watching the feature set here

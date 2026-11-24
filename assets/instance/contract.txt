@@ -2694,6 +2694,14 @@ constraint tax_reference.tax_reference_pkey PRIMARY KEY (id)
 constraint tax_reference.tax_reference_shape CHECK (tax_reference_valid(domain, value))
 constraint tax_reference.tax_reference_source_check CHECK ((btrim(source) <> ''::text))
 constraint tax_reference.tax_reference_version UNIQUE (domain, country, key, valid_from)
+constraint trace_reports.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint trace_reports.trace_reports_app_version_check CHECK (((char_length(app_version) >= 1) AND (char_length(app_version) <= 40)))
+constraint trace_reports.trace_reports_device_id_check CHECK ((device_id ~ '^[A-Za-z0-9_-]{8,64}$'::text))
+constraint trace_reports.trace_reports_failure_code_check CHECK ((char_length(failure_code) <= 80))
+constraint trace_reports.trace_reports_failure_type_check CHECK (((char_length(failure_type) >= 1) AND (char_length(failure_type) <= 120)))
+constraint trace_reports.trace_reports_pkey PRIMARY KEY (id)
+constraint trace_reports.trace_reports_platform_check CHECK (((char_length(platform) >= 1) AND (char_length(platform) <= 40)))
+constraint trace_reports.trace_reports_schema_version_check CHECK ((schema_version >= 0))
 constraint usage_records.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint usage_records.system_company_present CHECK ((company_id IS NOT NULL))
 constraint usage_records.usage_records_basis_check CHECK ((basis = ANY (ARRAY['reserved'::text, 'corrected'::text])))
@@ -3487,6 +3495,7 @@ routine public.instance_set_mcp_client(p_client_id text, p_active boolean) -> js
 routine public.instance_set_mcp_endpoint(p_url text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d917d45a5261
 routine public.instance_set_mcp_loopback_clients(p_enabled boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a9abc223f17d
 routine public.instance_set_mcp_runtime(p_enabled boolean, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:00484ee8582c
+routine public.instance_trace_reports_v1(p_limit integer, p_before timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:afb607629efa
 routine public.invitation_preview(p_code text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0fc4c09e55ef
 routine public.invitation_state(p_code text) -> jsonb | function | definer | stable | exec:service_role | body:acc7d077ddfe
 routine public.invoice_customer_email(p_invoice_id uuid) -> text | function | definer | stable | exec:service_role | body:f9c3c1aafda2
@@ -4658,6 +4667,7 @@ routine public.subdivision_code(p text) -> text | function | invoker | immutable
 routine public.submit_expense(p_workspace_id uuid, p_amount_cents integer, p_category text, p_description text, p_supply jsonb, p_vat jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8896fc904a9c
 routine public.submit_purchase_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6ef3046564a5
 routine public.submit_rights_request(p_workspace_id uuid, p_kind text, p_details text, p_client_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c27732997f52
+routine public.submit_trace_report_v1(p_device_id text, p_app_version text, p_schema_version integer, p_platform text, p_failure_type text, p_failure_code text, p_stack text) -> text | function | definer | volatile | exec:authenticated,service_role | body:8584c15cec6b
 routine public.supplier_backfill(p_workspace_id uuid) -> integer | function | definer | volatile | exec:service_role | body:fea258b2c4f8
 routine public.supplier_balances_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7ea99246303e
 routine public.supplier_guard(p_workspace_id uuid) -> uuid | function | definer | volatile | exec:service_role | body:bc6e9123a7cd
@@ -4687,7 +4697,7 @@ routine public.tell_owners_kiosk_device(p_workspace_id uuid, p_change text, p_de
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:a02dbf863328
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:ecac5a5db6a0
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:41d51bce65a7
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
@@ -5340,6 +5350,7 @@ trigger supplier_review_candidates.zz_system_columns_stamp CREATE TRIGGER zz_sys
 trigger suppliers.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.suppliers FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger tax_exemption_certificates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.tax_exemption_certificates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger tax_reference.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.tax_reference FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger trace_reports.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.trace_reports FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger usage_records.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.usage_records FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger validation_policies.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.validation_policies REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger validation_policies.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.validation_policies FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

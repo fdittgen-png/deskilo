@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/backend/schema_version.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/instance_responsibles.dart';
+import '../domain/instance_trace_report.dart';
 
 /// #1829 — the instance owner and their delegates (0314). A server older
 /// than 0314 answers "nobody is named" and refuses every change, never an
@@ -63,5 +64,19 @@ class SupabaseInstanceRepository implements InstanceRepository {
     'claim_instance_ownership',
     (j) => j is Map && j['status'] == 'claimed',
     false,
+  );
+
+  @override
+  Future<List<InstanceTraceReport>> traceReports({DateTime? before}) => _call(
+    'instance_trace_reports_v1',
+    (j) => [
+      for (final row in (j as List?) ?? const [])
+        InstanceTraceReport.fromJson(Map<String, Object?>.from(row as Map)),
+    ],
+    const [],
+    params: {
+      'p_limit': traceReportsPageSize,
+      'p_before': before?.toUtc().toIso8601String(),
+    },
   );
 }

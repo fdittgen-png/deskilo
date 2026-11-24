@@ -16,6 +16,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -383,7 +384,7 @@ class _Catalogue extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         TextButton(
           key: const ValueKey('setup-pricing-open-billing'),
-          onPressed: () => context.push('/billing'),
+          onPressed: () => context.push(Routes.billing),
           child: Text(l10n.setupPricingOpenBilling),
         ),
       ],

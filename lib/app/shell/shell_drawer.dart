@@ -15,6 +15,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/navigation_style.dart';
+import '../../core/navigation/routes.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../features/events/providers/attention_providers.dart';
 import '../../features/money/domain/bank/bank_records.dart';
@@ -204,7 +205,7 @@ class ShellDrawer extends ConsumerWidget {
     final groups = menu.groups;
     void backToMe() {
       if (!permanent) Navigator.of(context).pop();
-      context.go('/me');
+      context.go(Routes.me);
     }
 
     // Every badge opens the content it counts (#1306 S3): the events

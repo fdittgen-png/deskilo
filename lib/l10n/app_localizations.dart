@@ -11399,12 +11399,6 @@ abstract class AppLocalizations {
   /// **'Your data, your rights'**
   String get consentTitle;
 
-  /// Banner on the consent screen when the profile could not be fetched (#1650): a retry replaces the acceptance form
-  ///
-  /// In en, this message translates to:
-  /// **'Your account could not be loaded, so there is nothing to accept yet.'**
-  String get consentUnavailable;
-
   /// Shown as the text in consent screen (profile), and 1 other place.
   ///
   /// In en, this message translates to:
@@ -25615,6 +25609,48 @@ abstract class AppLocalizations {
   /// **'This project does not answer as a Deskilo installation yet. Install the schema first.'**
   String get instanceEnrolUnreadable;
 
+  /// #4416 Instance console: the code the error carried
+  ///
+  /// In en, this message translates to:
+  /// **'Code {code}'**
+  String instanceErrorReportCode(String code);
+
+  /// #4416 Instance console: one report's app version, platform and time
+  ///
+  /// In en, this message translates to:
+  /// **'{version} · {platform} · {time}'**
+  String instanceErrorReportFacts(String version, String platform, String time);
+
+  /// #4416 Instance console: heading of a report's stack
+  ///
+  /// In en, this message translates to:
+  /// **'Stack, redacted by the app'**
+  String get instanceErrorReportStack;
+
+  /// #4416 Instance console: the error reports apps sent to this installation, its row and sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Error reports'**
+  String get instanceErrorReports;
+
+  /// #4416 Instance console: under the error reports row
+  ///
+  /// In en, this message translates to:
+  /// **'What the apps sent when something went wrong, newest first. Members of a business never see them.'**
+  String get instanceErrorReportsHint;
+
+  /// #4416 Instance console: the list is empty
+  ///
+  /// In en, this message translates to:
+  /// **'No error report has arrived.'**
+  String get instanceErrorReportsNone;
+
+  /// #4416 Instance console: reads the next page of older reports
+  ///
+  /// In en, this message translates to:
+  /// **'Older reports'**
+  String get instanceErrorReportsOlder;
+
   /// #2145 assistant onboarding: instanceFamilyChatgpt
   ///
   /// In en, this message translates to:
@@ -32974,12 +33010,6 @@ abstract class AppLocalizations {
   /// **'Mints a personal code bound to this profile. Whoever redeems it takes the profile over — reservations, invoices, subscription — once you approve the membership.'**
   String get managedProfileHandOverHint;
 
-  /// #1561 shown when the managed identity could not be read, so the form is not offered
-  ///
-  /// In en, this message translates to:
-  /// **'These details could not be read, so there is nothing to edit yet. Nothing has been changed.'**
-  String get managedProfileIdentityUnavailable;
-
   /// #887 managed profiles: managedProfileIntro
   ///
   /// In en, this message translates to:
@@ -35943,12 +35973,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing outstanding.'**
   String get memberMoneySettled;
-
-  /// #709 - the money section of a profile could not be read
-  ///
-  /// In en, this message translates to:
-  /// **'Money could not be loaded. Pull to refresh.'**
-  String get memberMoneyUnavailable;
 
   /// #704 - the money section of a member profile
   ///
@@ -40358,12 +40382,6 @@ abstract class AppLocalizations {
   /// **'No booking in these months.'**
   String get periodReservationsEmpty;
 
-  /// #2578 the bookings behind the capacity figure
-  ///
-  /// In en, this message translates to:
-  /// **'The bookings could not be read.'**
-  String get periodReservationsFailed;
-
   /// #2580 the bookings behind the capacity figure, narrowed to one level
   ///
   /// In en, this message translates to:
@@ -42458,12 +42476,6 @@ abstract class AppLocalizations {
   /// **'Kind of request'**
   String get privacyAdminKind;
 
-  /// Shown as the text in privacy admin screen (members).
-  ///
-  /// In en, this message translates to:
-  /// **'The requests could not be read.'**
-  String get privacyAdminLoadFailed;
-
   /// Shown as the text in privacy admin sheets (members), and 1 other place.
   ///
   /// In en, this message translates to:
@@ -42571,6 +42583,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your data in {space} is erased. What the space must keep stays for its retention period; other installations are not affected.'**
   String privacyErasedIn(String space);
+
+  /// #4416 Privacy switch: send the errors the app records to the installation
+  ///
+  /// In en, this message translates to:
+  /// **'Send error reports'**
+  String get privacyErrorReports;
+
+  /// #4416 Privacy switch: the switch could not be stored
+  ///
+  /// In en, this message translates to:
+  /// **'The choice could not be saved on this device.'**
+  String get privacyErrorReportsFailed;
+
+  /// #4416 Privacy switch: what is sent and where, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'When the app records an error, a report without your data goes to the installation you are signed in to, so its operator can fix it.'**
+  String get privacyErrorReportsHint;
 
   /// #719 - privacy & data
   ///
@@ -42967,6 +42997,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No process matches this filter.'**
   String get processFilterEmpty;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Goods & stock'**
+  String get processGoodsStock;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Keep, move, count and trace the goods the business sells.'**
+  String get processGoodsStockDesc;
 
   /// #1327 the process-first overview of the Features screen
   ///
@@ -43381,12 +43423,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profiles'**
   String get profilesTitle;
-
-  /// Banner on the Profiles screen when the membership list could not be fetched (#1650); paired with commonRetry
-  ///
-  /// In en, this message translates to:
-  /// **'Your workspaces could not be loaded.'**
-  String get profilesUnavailable;
 
   /// #1307 S4 provenance chip
   ///
@@ -51414,6 +51450,12 @@ abstract class AppLocalizations {
   /// **'App versions'**
   String get settingGroupCompatibility;
 
+  /// #4416 Settings group: the error reports apps send to this installation
+  ///
+  /// In en, this message translates to:
+  /// **'Error reports'**
+  String get settingGroupDiagnostics;
+
   /// #2486 settings: Settings group title.
   ///
   /// In en, this message translates to:
@@ -52152,6 +52194,24 @@ abstract class AppLocalizations {
   /// **'On: a new stock item is proposed in kilograms instead of pieces (a butcher, a bakery, a grocery counter). Any item can still be given another unit.'**
   String get settingHintStockWeighedGoods;
 
+  /// #4416 Platform setting trace.report_max_bytes: what it decides, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'The largest error report this installation accepts. The app shortens the report\'s stack to fit before it sends; a report still larger is dropped.'**
+  String get settingHintTraceReportMaxBytes;
+
+  /// #4416 Platform setting trace.report_retention_days: what it decides, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'How many days this installation keeps an error report. Older reports are deleted when a new one arrives.'**
+  String get settingHintTraceReportRetentionDays;
+
+  /// #4416 Platform setting trace.reports_per_hour: what it decides, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'How many error reports one person may send to this installation in an hour, from all their devices together. Further reports in that hour are dropped, never queued. 0 turns error reports off for everybody.'**
+  String get settingHintTraceReportsPerHour;
+
   /// #2487 retention settings
   ///
   /// In en, this message translates to:
@@ -52829,6 +52889,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Goods are sold by weight'**
   String get settingLabelStockWeighedGoods;
+
+  /// #4416 Platform setting trace.report_max_bytes: its name in the settings editor
+  ///
+  /// In en, this message translates to:
+  /// **'Largest error report'**
+  String get settingLabelTraceReportMaxBytes;
+
+  /// #4416 Platform setting trace.report_retention_days: its name in the settings editor
+  ///
+  /// In en, this message translates to:
+  /// **'Error reports kept for'**
+  String get settingLabelTraceReportRetentionDays;
+
+  /// #4416 Platform setting trace.reports_per_hour: its name in the settings editor
+  ///
+  /// In en, this message translates to:
+  /// **'Error reports per person and hour'**
+  String get settingLabelTraceReportsPerHour;
 
   /// #2487 retention settings
   ///
@@ -55996,12 +56074,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Leave this step?'**
   String get setupStepLeaveTitle;
-
-  /// #2870 setup steps: setupStepLoadFailed
-  ///
-  /// In en, this message translates to:
-  /// **'This step could not be loaded. Try again later.'**
-  String get setupStepLoadFailed;
 
   /// #3076 — on a step page of the guide: goes on to the next step still to do.
   ///
@@ -61375,6 +61447,54 @@ abstract class AppLocalizations {
   /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
+  /// **'Counts and replenishment'**
+  String get subprocessStockControl;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Count stock, schedule cycle counts and reorder in time.'**
+  String get subprocessStockControlDesc;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Items and units'**
+  String get subprocessStockItems;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Items, item groups, units of measure and handling units.'**
+  String get subprocessStockItemsDesc;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Receiving and movements'**
+  String get subprocessStockMovements;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Receive deliveries, take goods out and handle returns.'**
+  String get subprocessStockMovementsDesc;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Traceability'**
+  String get subprocessStockTracking;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Lots, expiry, scanning and tags that trace each piece.'**
+  String get subprocessStockTrackingDesc;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
   /// **'Space structure'**
   String get subprocessStructure;
 
@@ -61947,6 +62067,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Taxed where the premises are.'**
   String get supplyClassPropertyMeaning;
+
+  /// #4441 Service sheet: a supply class from a newer server, shown read-only and kept
+  ///
+  /// In en, this message translates to:
+  /// **'A class this app does not know yet: kept as the server has it'**
+  String get supplyClassUnknown;
 
   /// Shown as the text in support bundle screen (help).
   ///

@@ -7,9 +7,11 @@ import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../plan/domain/level.dart';
@@ -99,11 +101,10 @@ class EditorScreen extends ConsumerWidget {
             ),
           ),
         AsyncData(value: final levels) => _LevelList(levels: levels),
-        AsyncError() => Center(
-            child: Text(
-              l10n.workspaceGenericError,
-            ),
-          ),
+        AsyncError(:final error) => ReadFailureBanner(
+          error: error,
+          onRetry: () => ref.invalidate(levelsProvider),
+        ),
         _ => const LoadingView(),
         }),
       ]),
@@ -175,7 +176,7 @@ class _LevelList extends ConsumerWidget {
                 ? (l10n.editorLevelBookableOn)
                 : (l10n.editorLevelBookableOff),
           ),
-          onTap: () => context.push('/editor/level/${level.id}'),
+          onTap: () => context.push(Routes.editorLevel(level.id)),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

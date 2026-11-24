@@ -57,6 +57,5 @@
       }
     }
   },
-  "privacyAdminOpenTile": "Dati personali e richieste di diritti",
-  "privacyAdminLoadFailed": "Impossibile leggere le richieste."
+  "privacyAdminOpenTile": "Dati personali e richieste di diritti"
 }

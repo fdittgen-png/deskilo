@@ -21,6 +21,7 @@
 // one that cannot be read is left too and named with its reason in the run's
 // record (payment_reconciliation_finish_v1).
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { sameSecret } from "../_shared/same_secret.ts";
 import { allowsTestPayments } from "../_shared/test_payments.ts";
@@ -69,10 +70,10 @@ export type Deps = {
 const defaultDeps: Deps = {
   service: () =>
     createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      readEnv(KEYS.supabaseUrl)!,
+      readEnv(KEYS.supabaseServiceRoleKey)!,
     ) as unknown as Db,
-  env: (name) => Deno.env.get(name),
+  env: readEnv,
   fetch: (input, init) => fetch(input, init),
   now: () => Date.now(),
 };
