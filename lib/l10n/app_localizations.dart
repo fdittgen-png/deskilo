@@ -11699,7 +11699,7 @@ abstract class AppLocalizations {
   /// **'Key in the amount on the payment terminal with the reference {reference}, then record what the terminal answered.'**
   String counterSaleCardAskedHint(String reference);
 
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the amount arrives formatted (AppFormat money)
   ///
   /// In en, this message translates to:
   /// **'Card on the terminal: {amount}'**
@@ -11735,7 +11735,7 @@ abstract class AppLocalizations {
   /// **'Complete the sale'**
   String get counterSaleComplete;
 
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued
   ///
   /// In en, this message translates to:
   /// **'Sale {number} completed.'**
@@ -11777,25 +11777,25 @@ abstract class AppLocalizations {
   /// **'Issue the correction'**
   String get counterSaleCorrectSubmit;
 
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued
   ///
   /// In en, this message translates to:
   /// **'Correction of {number}'**
   String counterSaleCorrectTitle(String number);
 
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued
   ///
   /// In en, this message translates to:
   /// **'Correction {number} issued.'**
   String counterSaleCorrected(String number);
 
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued
   ///
   /// In en, this message translates to:
   /// **'Correction {number} of {original}'**
   String counterSaleCorrection(String number, String original);
 
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the amount arrives formatted (AppFormat money)
   ///
   /// In en, this message translates to:
   /// **'Unfinished sale of {amount}'**
@@ -11807,7 +11807,7 @@ abstract class AppLocalizations {
   /// **'Issued'**
   String get counterSaleIssuedTitle;
 
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the quantity arrives formatted (AppFormat)
   ///
   /// In en, this message translates to:
   /// **'{quantity} left to correct'**
@@ -11830,12 +11830,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An exact quantity above zero, with at most six decimals.'**
   String get counterSaleQuantityInvalid;
-
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
-  ///
-  /// In en, this message translates to:
-  /// **'Reason: {reason}'**
-  String counterSaleReasonShown(String reason);
 
   /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
   ///
@@ -11897,7 +11891,7 @@ abstract class AppLocalizations {
   /// **'Give back'**
   String get counterSaleRefundSubmit;
 
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued
   ///
   /// In en, this message translates to:
   /// **'Money back against {number}'**
@@ -11933,13 +11927,13 @@ abstract class AppLocalizations {
   /// **'Take back'**
   String get counterSaleReturnSubmit;
 
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued
   ///
   /// In en, this message translates to:
   /// **'Goods back against {number}'**
   String counterSaleReturnTitle(String number);
 
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued
   ///
   /// In en, this message translates to:
   /// **'Sale {number}'**
@@ -11956,12 +11950,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Receipt'**
   String get counterSaleShareTitle;
-
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
-  ///
-  /// In en, this message translates to:
-  /// **'accepted'**
-  String get counterSaleStateAccepted;
 
   /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
   ///
@@ -11987,7 +11975,7 @@ abstract class AppLocalizations {
   /// **'answer unknown'**
   String get counterSaleStateUnknown;
 
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the amount arrives formatted (AppFormat money)
   ///
   /// In en, this message translates to:
   /// **'of which tax {amount}'**
@@ -12002,16 +11990,10 @@ abstract class AppLocalizations {
   /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
   ///
   /// In en, this message translates to:
-  /// **'Card'**
-  String get counterSaleTenderCard;
-
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
-  ///
-  /// In en, this message translates to:
   /// **'Cash'**
   String get counterSaleTenderCash;
 
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the amount arrives formatted (AppFormat money)
   ///
   /// In en, this message translates to:
   /// **'{kind} {amount}: {state}'**
@@ -12023,7 +12005,7 @@ abstract class AppLocalizations {
   /// **'Other'**
   String get counterSaleTenderOther;
 
-  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns
+  /// #4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the amount arrives formatted (AppFormat money)
   ///
   /// In en, this message translates to:
   /// **'Total {amount}'**

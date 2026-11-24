@@ -7572,11 +7572,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine genaue Menge über null mit höchstens sechs Nachkommastellen.';
 
   @override
-  String counterSaleReasonShown(String reason) {
-    return 'Grund: $reason';
-  }
-
-  @override
   String get counterSaleReceiptsEmpty =>
       'Noch kein Beleg. Ein an der Kasse gemachter Verkauf erscheint hier.';
 
@@ -7652,9 +7647,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get counterSaleShareTitle => 'Beleg';
 
   @override
-  String get counterSaleStateAccepted => 'angenommen';
-
-  @override
   String get counterSaleStateReconcile =>
       'für ein geändertes Angebot angenommen: abzustimmen';
 
@@ -7674,9 +7666,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get counterSaleTaxLabel => 'Enthaltene Steuer';
-
-  @override
-  String get counterSaleTenderCard => 'Karte';
 
   @override
   String get counterSaleTenderCash => 'Bar';

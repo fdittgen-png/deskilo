@@ -105,13 +105,13 @@ String _tenderState(AppLocalizations l10n, CounterBookTender t) {
     TenderState.requested => l10n.counterSaleStateRequested,
     TenderState.unknown => l10n.counterSaleStateUnknown,
     TenderState.refused => l10n.counterSaleStateRefused,
-    TenderState.recorded || TenderState.accepted => l10n.counterSaleStateAccepted,
+    TenderState.recorded || TenderState.accepted => l10n.invoiceSendStatusAccepted,
   };
 }
 
 String _tenderKind(AppLocalizations l10n, CounterBookTender t) => switch (t.tenderKind) {
   TenderKind.cash => l10n.counterSaleTenderCash,
-  TenderKind.card => l10n.counterSaleTenderCard,
+  TenderKind.card => l10n.paymentMethodCard,
   TenderKind.other => l10n.counterSaleTenderOther,
   TenderKind.unknown => t.kind,
 };
@@ -223,7 +223,7 @@ class _Receipt extends ConsumerWidget {
           children: [
             Text(_title(l10n, book, r, money), style: theme.textTheme.titleMedium),
             Text('${l10n.counterSaleTotal(money.formatMinor(r.totalMinor))} · ${l10n.counterSaleTax(money.formatMinor(r.taxMinor))}'),
-            if (r.reason.isNotEmpty) Text(l10n.counterSaleReasonShown(r.reason)),
+            if (r.reason.isNotEmpty) Text(l10n.tillDaySessionReason(r.reason)),
             const SizedBox(height: AppSpacing.sm),
             for (final line in r.lines) ...[
               Text('${line.quantity} ${line.unit} ${line.label} · ${money.formatMinor(line.grossMinor)}'),
