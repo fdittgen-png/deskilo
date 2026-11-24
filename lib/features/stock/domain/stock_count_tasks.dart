@@ -49,7 +49,7 @@ class CountTaskBook {
     }
   }
 
-  bool hasTask(String taskId) => _lines.containsKey(taskId);
+  bool _hasTask(String taskId) => _lines.containsKey(taskId);
 
   /// The tasks, newest first, of [state] when one is named.
   List<CountTaskSummary> summaries({CountTaskState? state}) => [
@@ -74,7 +74,7 @@ class CountTaskBook {
 
   /// The pending lines of [taskId], refused when the task is no longer open (0873:412).
   List<CountTaskLine> openLines(String taskId) {
-    if (!hasTask(taskId)) throw const StockCodeRefused(DkCode.dkg04, 'not a task of this business');
+    if (!_hasTask(taskId)) throw const StockCodeRefused(DkCode.dkg04, 'not a task of this business');
     if (_state[taskId] != CountTaskState.open) throw const StockCodeRefused(DkCode.dkg19, 'this task is no longer open');
     return [for (final l in _lines[taskId]!) if (l.state == CountLineState.pending) l];
   }

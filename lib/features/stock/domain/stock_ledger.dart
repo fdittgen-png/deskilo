@@ -106,7 +106,7 @@ class StockLedger {
   final DateTime Function() _now;
 
   /// What a retried request id answered.
-  final Map<String, StockCommandResult> answers = {};
+  final Map<String, StockCommandResult> _answers = {};
 
   final Map<String, ExactQuantity> _balances = {};
   final Map<String, _Key> _keys = {};
@@ -118,9 +118,6 @@ class StockLedger {
 
   /// The ledger's day (its own clock, read once per use).
   DateTime get today => _now();
-
-  /// A fresh number; the first ones belong to whoever seeded the ledger.
-  int nextNumber() => _next++;
 
   /// The movements, newest first.
   List<StockMovementRow> get movements => List.unmodifiable(_movements);
@@ -155,7 +152,7 @@ class StockLedger {
 
   /// A place that holds goods: a real one or the road. The supplier, the customer, the loss and the opening place
   /// are the server's and hold whatever (0747 stock_place_is_virtual; the in-transit place is counted, 0847:743).
-  static bool holds(StockPlaceConfig p) => !p.virtual || p.inTransit;
+  static bool _holds(StockPlaceConfig p) => !p.virtual || p.inTransit;
 
   String _placeOfKind(String kind) => _places().values.firstWhere((p) => p.kind == kind).id;
 
@@ -195,7 +192,7 @@ class StockLedger {
     _add(p.item, p.to, p.lotId, p.lotCode, p.quantity);
     final row = StockMovementRow(
       workspaceId: workspaceId,
-      id: p.id ?? '$prefix-stock-movement-${nextNumber()}',
+      id: p.id ?? '$prefix-stock-movement-${_next++}',
       itemId: p.item.id,
       itemName: p.item.name,
       lotId: p.lotId,
@@ -222,7 +219,7 @@ class StockLedger {
   /// the balance never goes below zero, DKG03).
   StockMovementRow post(StockPost p) {
     final source = _places()[p.from];
-    if (source != null && holds(source)) {
+    if (source != null && _holds(source)) {
       final held = balance(p.item.id, p.from, lotId: p.lotId);
       if (held < p.quantity) throw StockNotEnough('${held.text} of ${p.quantity.text} are there');
     }
@@ -231,7 +228,7 @@ class StockLedger {
 
   void _add(StockItem item, String place, String? lotId, String? lotCode, ExactQuantity delta) {
     final config = _places()[place];
-    if (config != null && !holds(config)) return;
+    if (config != null && !_holds(config)) return;
     final k = _key(item.id, place, lotId);
     _keys.putIfAbsent(k, () => (item: item, place: place, lotId: lotId, lotCode: lotCode));
     _balances[k] = (_balances[k] ?? ExactQuantity.zero) + delta;
@@ -291,7 +288,7 @@ class StockLedger {
   /// What [requestId] answered, or [run]'s answer kept for it: a retried request does nothing twice (0847
   /// purchase_request_begin).
   StockCommandResult once(String requestId, StockCommandResult Function() run) =>
-      answers[requestId] ??= run();
+      _answers[requestId] ??= run();
 
   /// A quantity as the server reads it: up to twelve digits and six decimals, above zero (0847:511, 0847:835).
   static ExactQuantity quantityOf(String text, String field) {
