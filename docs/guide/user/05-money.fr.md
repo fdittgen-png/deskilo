@@ -134,6 +134,7 @@ Vous voulez retrouver une facture, voir si elle est payée et obtenir son PDF.
 - Touchez l'icône de paiement sur une facture en cours pour aller à **Paiements**.
 - Si la liste est vide, l'espace ne vous a pas encore facturé ; il facture un mois une fois celui-ci clôturé.
 - Les factures ne se modifient pas. Une facture erronée est marquée **Erronée** et remplacée par une nouvelle, et l'erronée disparaît de votre liste. Quand des factures sont regroupées en une seule, la facture regroupée les remplace dans votre liste.
+- Une ligne facturée à l'heure, au jour ou au poids (par exemple *1.5 h à 90 EUR*, ou *0.75 kg à 12.5 EUR pour 10 kg*) affiche sous son libellé la quantité exacte, son unité et le prix saisi, comme le PDF les imprime ; son montant est celui fixé à l'émission de la facture. Une ligne enregistrée par une version plus récente de l'application est affichée telle quelle et indique qu'elle ne peut pas être utilisée ici : mettez l'application à jour pour la traiter.
 
 **Voir aussi:** [Payer ce que vous devez](help:user.money.payments) · [Vos finances dans tous vos espaces](help:user.money.finances)
 

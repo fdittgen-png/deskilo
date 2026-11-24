@@ -831,6 +831,8 @@
  "shopTypeCornerShop": "Späti",
  "stockWeighedGoods": "Ware wird nach Gewicht verkauft",
  "stockWeighedGoodsHint": "Ein neuer Lagerartikel wird in Kilogramm statt in Stück vorgeschlagen (Metzgerei, Bäckerei, Theke).",
+ "stockInvoiceSalePlace": "Ort, von dem auf Rechnung verkaufte Waren abgehen",
+ "stockInvoiceSalePlaceHint": "Der Code eines Orts mit Bestand, zum Beispiel MAIN. Wird eine Rechnung über Waren ausgestellt, gehen sie von dort ab. Später in den Workspace-Einstellungen änderbar.",
  "stockGroupTagMode": "Standard-Etikettenmodus der Artikel",
  "stockGroupTagModeHint": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht). Einstellbar in den Einstellungen der App.",
  "stockGroupCountDays": "Standard-Zählzyklus",

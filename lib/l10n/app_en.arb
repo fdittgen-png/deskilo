@@ -9103,6 +9103,37 @@
       }
     }
   },
+  "commercialLineMeasure": "{quantity} at {price}",
+  "@commercialLineMeasure": {
+    "description": "#4162 an issued commercial line in the invoice sheet: its exact quantity with its unit, at the price entered (e.g. '1.5 h at 90 EUR')",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "commercialLineMeasurePer": "{quantity} at {price} per {base}",
+  "@commercialLineMeasurePer": {
+    "description": "#4162 the same, for a price quoted for more than one unit (e.g. '30 kg at 12.5 EUR per 10 kg')",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "commercialLineUnreadable": "Recorded by a newer version: these facts are shown as written and cannot be used here",
+  "@commercialLineUnreadable": {
+    "description": "#4162 an issued line whose facts this version of the app cannot interpret: shown, never used"
+  },
   "commonCancel": "Cancel",
   "@commonCancel": {
     "description": "Generic cancel action in dialogs"
@@ -42270,6 +42301,10 @@
   "@settingHintStockGroupDefaultTagMode": {
     "description": "#4361 setting label/hint"
   },
+  "settingHintStockInvoiceSalePlace": "The code of a place of the business that holds stock, for example MAIN. Goods sold on an invoice leave from there when the invoice is issued.",
+  "@settingHintStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
+  },
   "settingHintStockPriceRounding": "How a proposed sale price is rounded: to the nearest 0.05 or 0.10, or to a price ending in 0.99. It is used only to propose a price.",
   "@settingHintStockPriceRounding": {
     "description": "#4361 setting label/hint"
@@ -42713,6 +42748,10 @@
   "settingLabelStockGroupDefaultTagMode": "Default tag mode of items",
   "@settingLabelStockGroupDefaultTagMode": {
     "description": "#4361 setting label/hint"
+  },
+  "settingLabelStockInvoiceSalePlace": "Place goods sold on an invoice leave from",
+  "@settingLabelStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
   },
   "settingLabelStockPriceRounding": "Price rounding",
   "@settingLabelStockPriceRounding": {
@@ -45995,6 +46034,10 @@
   "@standaloneFactLines": {
     "description": "#4165 standalone invoice composer: standaloneFactLines"
   },
+  "standaloneFactSalePlace": "the place goods are sold from: set a place that holds stock in the business settings",
+  "@standaloneFactSalePlace": {
+    "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
+  },
   "standaloneFactSalesTax": "this business adds sales tax, which is not supported here yet",
   "@standaloneFactSalesTax": {
     "description": "#4165 standalone invoice composer: standaloneFactSalesTax"
@@ -46035,9 +46078,29 @@
   "@standaloneFieldDescription": {
     "description": "#4165 standalone invoice composer: standaloneFieldDescription"
   },
+  "standaloneFieldGoodsAbroad": "a buyer in this business’s country: goods sold abroad are not invoiced here yet",
+  "@standaloneFieldGoodsAbroad": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsAbroad"
+  },
+  "standaloneFieldGoodsOff": "the goods ledger, which is off in this business",
+  "@standaloneFieldGoodsOff": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsOff"
+  },
+  "standaloneFieldItem": "an item kept in stock and on sale",
+  "@standaloneFieldItem": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldItem"
+  },
   "standaloneFieldLineId": "saving the draft again",
   "@standaloneFieldLineId": {
     "description": "#4165 standalone invoice composer: standaloneFieldLineId"
+  },
+  "standaloneFieldLot": "a lot of this item",
+  "@standaloneFieldLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldLot"
+  },
+  "standaloneFieldPieces": "the tags of the pieces, as tag codes",
+  "@standaloneFieldPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldPieces"
   },
   "standaloneFieldPrice": "a price with at most six decimals",
   "@standaloneFieldPrice": {
@@ -46047,13 +46110,37 @@
   "@standaloneFieldQuantity": {
     "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
   },
-  "standaloneFieldSupply": "a service (goods are not invoiced here yet)",
+  "standaloneFieldStock": "goods the stock can sell as entered",
+  "@standaloneFieldStock": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStock"
+  },
+  "standaloneFieldStockExpired": "a lot that has not expired",
+  "@standaloneFieldStockExpired": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockExpired"
+  },
+  "standaloneFieldStockLot": "a lot of this item that is there",
+  "@standaloneFieldStockLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockLot"
+  },
+  "standaloneFieldStockPieces": "the pieces sold: one tag per piece, each of a piece that is there",
+  "@standaloneFieldStockPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockPieces"
+  },
+  "standaloneFieldStockShort": "enough on hand at the place goods are sold from",
+  "@standaloneFieldStockShort": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockShort"
+  },
+  "standaloneFieldSupply": "what the line supplies: a service, property or goods",
   "@standaloneFieldSupply": {
     "description": "#4165 standalone invoice composer: standaloneFieldSupply"
   },
   "standaloneFieldUnit": "a unit",
   "@standaloneFieldUnit": {
     "description": "#4165 standalone invoice composer: standaloneFieldUnit"
+  },
+  "standaloneFieldVariant": "the variant of the item",
+  "@standaloneFieldVariant": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldVariant"
   },
   "standaloneFieldVatRate": "a VAT rate the business has set",
   "@standaloneFieldVatRate": {
@@ -46092,9 +46179,25 @@
   "@standaloneInvoiceLineDescription": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineDescription"
   },
+  "standaloneInvoiceLineGoods": "Sold from stock",
+  "@standaloneInvoiceLineGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineGoods"
+  },
   "standaloneInvoiceLineGross": "The price includes tax",
   "@standaloneInvoiceLineGross": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineGross"
+  },
+  "standaloneInvoiceLineNoGoods": "Nothing from stock (a service)",
+  "@standaloneInvoiceLineNoGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineNoGoods"
+  },
+  "standaloneInvoiceLinePieces": "Tags of the pieces sold",
+  "@standaloneInvoiceLinePieces": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePieces"
+  },
+  "standaloneInvoiceLinePiecesHint": "One tag per piece, separated by commas: this item is tracked piece by piece.",
+  "@standaloneInvoiceLinePiecesHint": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePiecesHint"
   },
   "standaloneInvoiceLinePrice": "Unit price",
   "@standaloneInvoiceLinePrice": {

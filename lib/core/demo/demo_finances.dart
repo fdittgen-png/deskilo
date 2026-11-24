@@ -34,18 +34,74 @@ FinanceOverview demoFinanceOverview(DemoFixture fixture) {
       if (key != DemoSpaceKey.twin)
         _overviewOf(fixture.space(key).money, fixture.actor.memberId, names, zones),
   ];
+  final held = fixture.stores.home.billingAccess.heldGrants;
   return FinanceOverview(
     invoices: [for (final p in parts) ...p.invoices],
     reminders: [for (final p in parts) ...p.reminders],
     // #4164 B2 — the documents of the subjects the account holds a grant for.
-    billed: demoBilledInvoices(
-      now: fixture.seededAt,
-      held: fixture.stores.home.billingAccess.heldSubjects,
-      workspaceName: names[demoFirstSpaceId] ?? '',
-      timezone: zones[demoFirstSpaceId],
-    ),
+    billed: [
+      ...demoBilledInvoices(
+        now: fixture.seededAt,
+        held: {
+          for (final g in held)
+            if (g.workspaceId == demoFirstSpaceId) g.subjectId,
+        },
+        workspaceName: names[demoFirstSpaceId] ?? '',
+        timezone: zones[demoFirstSpaceId],
+      ),
+      // #4168 — another business's grants read that business's own invoices,
+      // the very rows its owner issued, so the two sides never disagree.
+      for (final key in DemoSpaceKey.values)
+        if (key != DemoSpaceKey.home && key != DemoSpaceKey.twin)
+          for (final g in held)
+            if (g.workspaceId == key.id)
+              ..._billedOf(fixture.space(key).money, g.subjectId, names, zones),
+    ],
   );
 }
+
+/// The invoices [subject] owes [money]'s business, as a billing-grant row
+/// (`access: billing_grant`): apart from the account's own and otherwise the
+/// very row the business's member reads, payable on the same terms (open, in
+/// no claim), since `my_finance_overview_v2` decides that per invoice, not per
+/// access.
+List<FinanceInvoice> _billedOf(
+  FakeMoneyRepository money,
+  String subject,
+  Map<String, String> names,
+  Map<String, String> zones,
+) => [
+  for (final i in _overviewOf(money, subject, names, zones).invoices)
+    FinanceInvoice(
+      id: i.id,
+      workspaceId: i.workspaceId,
+      workspaceName: i.workspaceName,
+      number: i.number,
+      issuedAt: i.issuedAt,
+      dueOn: i.dueOn,
+      totalCents: i.totalCents,
+      paidCents: i.paidCents,
+      currency: i.currency,
+      state: i.state,
+      reminderCount: i.reminderCount,
+      lastReminderAt: i.lastReminderAt,
+      stillDueCents: i.stillDueCents,
+      awaitingCents: i.awaitingCents,
+      period: i.period,
+      inPayment: i.inPayment,
+      claimPaymentId: i.claimPaymentId,
+      claimCanContinue: i.claimCanContinue,
+      claimPaymentState: i.claimPaymentState,
+      claimEventId: i.claimEventId,
+      claimHandedAt: i.claimHandedAt,
+      claimSettling: i.claimSettling,
+      paymentReceived: i.paymentReceived,
+      payable: i.payable,
+      timezone: i.timezone,
+      financialSubjectId: subject,
+      billingOnly: true,
+    ),
+];
 
 FinanceOverview _overviewOf(
   FakeMoneyRepository money,

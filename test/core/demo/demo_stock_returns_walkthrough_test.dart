@@ -2,9 +2,10 @@
 //
 // #4173 (B3) -- the end of the goods walkthrough, through the real routed app at a phone and a desk width, by the
 // screens: from the Demo's delivery of 54 mugs, three are taken out, one of them is put back by a correction (the take-out's
-// page; a customer return needs a sale, which the Demo's shop does not make yet), four go back to the supplier (the delivery's page), and a count of the beans corrects the book. After
-// every step each place's quantity equals the signed sum of its movements, and the movements list says what
-// each was (a take-out, a return, an adjustment). No payment is made by a return: the sheet says so.
+// page), four go back to the supplier (the delivery's page), one of the two mugs the shop sold from its shelf comes back
+// from the customer to the shelf (the sale's page), and a count of the beans corrects the book. After every step each
+// place's quantity equals the signed sum of its movements, and the movements list says what each was (a take-out, a
+// correction, a supplier return, a customer return, an adjustment). No payment is made by a return: the sheet says so.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/demo/demo_link.dart';
@@ -75,7 +76,7 @@ Future<String> _quantity(ProviderContainer c, String item, String place) async {
 
 void main() {
   for (final (name, size) in [('phone', const Size(390, 2400)), ('desk', const Size(1440, 2400))]) {
-    testWidgets('on a $name: a take-out, a correction, a supplier return and a count, each reconciled', (tester) async {
+    testWidgets('on a $name: a take-out, a correction, a supplier return, a customer return and a count, each reconciled', (tester) async {
       final container = await _open(tester, size);
       final router = container.read(routerProvider);
       await _reconciled(container);
@@ -113,6 +114,31 @@ void main() {
       expect(find.textContaining(_en.stockReversalKindSupplier), findsOneWidget);
       await _reconciled(container);
 
+      // one of the two mugs sold from the shelf comes back from the customer, to the shelf: the sale's page
+      expect(await _quantity(container, 'demo-item-mugs', 'demo-place-shelf'), '10');
+      router.go('/stock/movements/demo-stock-movement-9');
+      await _frames(tester);
+      expect(find.text(_en.stockReversalCustomerOpen), findsOneWidget, reason: 'a sale is returned by its customer');
+      await _tap(tester, find.byKey(const ValueKey('stock-reversal-open')));
+      expect(find.byKey(const ValueKey('stock-reversal-no-money')), findsOneWidget, reason: 'a customer return refunds nothing');
+      await _choose(tester, 'stock-move-place', 'SHELF-A · Shelf A');
+      await tester.enterText(find.byKey(const ValueKey('stock-reversal-quantity')), '1');
+      await _tap(tester, find.byKey(const ValueKey('stock-reversal-submit')));
+      expect(await _quantity(container, 'demo-item-mugs', 'demo-place-shelf'), '11');
+      expect(await _quantity(container, 'demo-item-mugs', 'demo-place-main'), '30', reason: 'the return names the shelf, not the store');
+      expect(find.textContaining(_en.stockReversalKindCustomer), findsOneWidget);
+      final customerReturn = (await container.read(stockQueriesProvider).movementsPage(demoFirstSpaceId, limit: 1)).rows.single;
+      expect(
+        (customerReturn.reason, customerReturn.fromLocationId, customerReturn.toLocationId, customerReturn.quantity.text),
+        ('return_in', 'demo-place-customer', 'demo-place-shelf', '1'),
+      );
+      await _reconciled(container);
+      router.go('/stock/movements');
+      await _frames(tester);
+      final returnTile = find.byKey(ValueKey('stock-movement-${customerReturn.id}'));
+      expect(returnTile, findsOneWidget, reason: 'the movements list shows the return first');
+      expect(find.descendant(of: returnTile, matching: find.textContaining('CUSTOMER →')), findsOneWidget);
+
       // a count of the beans corrects the book
       router.go('/stock/counts');
       await _frames(tester);
@@ -128,7 +154,7 @@ void main() {
       await _reconciled(container);
 
       final reasons = [for (final StockMovementRow m in (await container.read(stockQueriesProvider).movementsPage(demoFirstSpaceId, limit: 6)).rows) m.reason];
-      expect(reasons, containsAll(['adjustment', 'return_out']));
+      expect(reasons, containsAll(['adjustment', 'return_out', 'return_in']));
       expect(reasons.where((r) => r == 'consumption' || r == 'correction' || r == 'return_in').length, greaterThanOrEqualTo(1));
     });
   }

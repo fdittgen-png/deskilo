@@ -3,8 +3,9 @@
 // #4170 (B) -- the Demo's ONE goods ledger. The reference business keeps a
 // small shop stock (beans by the kilogram, oat milk by the litre, mugs, a syrup
 // received in thirds of a litre) at a main store with a shelf and at a branch
-// shop, with the movements behind each figure and one transfer already on its
-// way. The Stock screen's reads, a delivery put away from a purchase order and
+// shop, with the movements behind each figure, one transfer already on its way
+// and one sale of two mugs from the shelf to a customer (#4173: the movement a
+// customer return reverses). The Stock screen's reads, a delivery put away from a purchase order and
 // the transfer and take-out commands all read and write THIS object, so what
 // one does is what the others show: a put-away raises the figure the Stock
 // screen reads, a transfer moves it between the places and through the
@@ -18,6 +19,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'demo_stock_candidates.dart';
 import 'demo_stock_config_commands.dart';
+import 'money/demo_standalone_invoice_commands.dart' show DemoInvoiceGoods;
 
 const _beans = StockItem(id: 'demo-item-beans', name: 'Coffee beans', unit: 'kg');
 const _milk = StockItem(id: 'demo-item-milk', name: 'Oat milk', unit: 'l');
@@ -35,9 +37,11 @@ const _branch = 'demo-place-branch';
 const _transit = 'demo-place-transit';
 const _supplier = 'demo-place-supplier';
 const _loss = 'demo-place-loss';
+// #4433 -- the customer: goods sold on an invoice go there.
+const _customer = 'demo-place-customer';
 
 /// The server's own places that hold nothing: goods come from and go to them.
-const _untracked = {_supplier, _loss};
+const _untracked = {_supplier, _loss, _customer};
 
 /// One movement of the Demo's story: the item, what was stored and entered,
 /// the reason, how long ago, where to, and from where (a supplier when none).
@@ -55,6 +59,7 @@ typedef _Story = ({
 
 const _stories = <_Story>[
   (n: 8, item: _mugs, stored: '6', enteredUnit: 'piece', entered: '6', reason: 'transfer', daysAgo: 0, to: _transit, from: _main),
+  (n: 9, item: _mugs, stored: '2', enteredUnit: 'piece', entered: '2', reason: 'sale', daysAgo: 2, to: _customer, from: _shelf),
   (n: 7, item: _syrup, stored: '0.333333', enteredUnit: 'third', entered: '1', reason: 'receipt', daysAgo: 3, to: _main, from: null),
   (n: 6, item: _syrup, stored: '0.333333', enteredUnit: 'third', entered: '1', reason: 'receipt', daysAgo: 4, to: _main, from: null),
   (n: 5, item: _syrup, stored: '0.333333', enteredUnit: 'third', entered: '1', reason: 'receipt', daysAgo: 5, to: _main, from: null),
@@ -84,6 +89,7 @@ class DemoStockPost {
     this.enteredUnit,
     this.at,
     this.id,
+    this.causes = const {},
   });
 
   final StockItem item;
@@ -102,10 +108,13 @@ class DemoStockPost {
 
   /// The movement's own address; a fresh one when null.
   final String? id;
+
+  /// What caused it, by kind (`invoice`, ...), as the ledger links it.
+  final Map<String, String> causes;
 }
 
 /// The in-memory goods ledger of the reference business.
-class DemoStockLedger {
+class DemoStockLedger implements DemoInvoiceGoods {
   DemoStockLedger(this.workspaceId, this._config, [DateTime Function()? now, this.candidates]) : _now = now ?? (() => _anchor) {
     for (final s in _stories.reversed) {
       _book(
@@ -272,11 +281,37 @@ class DemoStockLedger {
       occurredAt: p.at ?? _now(),
       reason: p.reason,
       unitCost: null,
-      causes: const {},
+      causes: p.causes,
       variantId: p.variantId,
     );
     _movements.insert(0, row);
     return row;
+  }
+
+  @override
+  bool sells(String itemId) => itemOf(itemId) != null;
+
+  /// #4433 -- the goods an issued invoice sells leave the main store for the customer, one sale per line, linked to the
+  /// invoice. A line the main store cannot serve refuses them all and moves nothing, as the server does.
+  @override
+  Future<void> sellOnInvoice(String invoiceId, List<({String itemId, ExactQuantity quantity})> lines) async {
+    final short = shortLine(lines);
+    if (short != null) throw StockNotEnough('line ${short + 1}');
+    for (final l in lines) {
+      _book(DemoStockPost(item: itemOf(l.itemId)!, quantity: l.quantity, from: _main, to: _customer, reason: 'sale', causes: {'invoice': invoiceId}));
+    }
+  }
+
+  /// The index of the first of [lines] the main store does not hold (an unknown item included), or null.
+  @override
+  int? shortLine(List<({String itemId, ExactQuantity quantity})> lines) {
+    final wanted = <String, ExactQuantity>{};
+    for (final (i, l) in lines.indexed) {
+      final total = (wanted[l.itemId] ?? ExactQuantity.zero) + l.quantity;
+      wanted[l.itemId] = total;
+      if (itemOf(l.itemId) == null || balance(l.itemId, _main) < total) return i;
+    }
+    return null;
   }
 
   void _add(StockItem item, String place, String? lotId, String? lotCode, ExactQuantity delta) {
@@ -294,6 +329,7 @@ class DemoStockLedger {
     _transit => 'TRANSIT',
     _supplier => 'SUPPLIER',
     _loss => 'LOSS',
+    _customer => 'CUSTOMER',
     _ => _extra[id] ?? id,
   };
 

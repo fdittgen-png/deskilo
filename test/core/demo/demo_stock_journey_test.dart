@@ -95,7 +95,7 @@ void main() {
     await _settle(tester);
     expect(find.text('32.5 kg'), findsOneWidget, reason: '12.5 kg and the 20 kg that were put away');
     expect(find.text('30 piece'), findsOneWidget, reason: '36 mugs less the 6 that moved');
-    expect(find.text('18 piece'), findsOneWidget, reason: '12 on the shelf and the 6 that moved there');
+    expect(find.text('16 piece'), findsOneWidget, reason: '12 on the shelf less the 2 sold, and the 6 that moved there');
     expect(find.text('TRANSIT'), findsNothing, reason: 'the in-transit place is a place of its own, not a filter');
     expect(find.textContaining('TRANSIT'), findsOneWidget, reason: 'the 6 mugs loaded for the branch are on the way, and the screen says where');
     expect(find.text('6 piece'), findsOneWidget);

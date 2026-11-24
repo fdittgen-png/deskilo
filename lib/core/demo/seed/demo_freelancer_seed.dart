@@ -38,6 +38,12 @@ import '../demo_space_ids.dart';
 
 const _name = 'Kessler Conseil';
 
+/// The customer who is a person in her own name, and the one that is a
+/// business run by the practice's owner: each reads its own invoices through
+/// a grant the business issued (demo_billing_access_seed.dart).
+const demoKesslerChiaraId = 'kessler-customer-chiara';
+const demoKesslerLindnerId = 'kessler-customer-lindner';
+
 /// The customers, none of them with an account here.
 const _customers = <BillingParty>[
   BillingParty(
@@ -53,7 +59,7 @@ const _customers = <BillingParty>[
     ),
   ),
   BillingParty(
-    subjectId: 'kessler-customer-chiara',
+    subjectId: demoKesslerChiaraId,
     revision: 1,
     capacity: 'consumer',
     draft: BillingPartyDraft(
@@ -66,7 +72,7 @@ const _customers = <BillingParty>[
     ),
   ),
   BillingParty(
-    subjectId: 'kessler-customer-lindner',
+    subjectId: demoKesslerLindnerId,
     revision: 1,
     capacity: 'business',
     draft: BillingPartyDraft(
@@ -284,13 +290,15 @@ void seedFreelancerInvoices(FakeMoneyRepository money, DateTime today) {
     );
   }
 
-  issue('kessler-a2', 'KC-2026-0002', 'kessler-customer-chiara', 'Coaching session', 5000, daysAgo: 20);
-  issue('kessler-a3', 'KC-2026-0003', 'kessler-customer-lindner', 'Workshop preparation', 9000, daysAgo: 9, paid: true);
+  issue('kessler-a2', 'KC-2026-0002', demoKesslerChiaraId, 'Coaching session', 5000, daysAgo: 20);
+  issue('kessler-a3', 'KC-2026-0003', demoKesslerLindnerId, 'Workshop preparation', 9000, daysAgo: 9, paid: true);
   // Chiara declared her payment of the EUR 60.00 invoice; Bruno has not
   // confirmed it yet: a pending payment event of hers (what the invoicing home
   // counts "to confirm") and the claim on the invoice it names (0797), so it is
-  // owed but no longer "to collect".
-  const declaredId = 'kessler-declared-a2';
+  // owed but no longer "to collect". Its id is a declaration's (the
+  // `evt-payment-` the Demo's own declarations take), so Me reads it as the
+  // event she may take back and drops the claim once Bruno decides it.
+  const declaredId = 'evt-payment-kessler-a2';
   final declaredOn = today.subtract(const Duration(days: 2));
   money.eventRepository?.events.add(
     WorkspaceEvent(
@@ -298,8 +306,8 @@ void seedFreelancerInvoices(FakeMoneyRepository money, DateTime today) {
       workspaceId: demoFreelancerSpaceId,
       type: EventType.payment,
       action: EventAction.submitted,
-      actorMemberId: 'kessler-customer-chiara',
-      subjectMemberId: 'kessler-customer-chiara',
+      actorMemberId: demoKesslerChiaraId,
+      subjectMemberId: demoKesslerChiaraId,
       payload: {
         'amount_cents': 6000,
         'note': '',

@@ -76,6 +76,7 @@ import 'data/demo_till.dart';
 import 'data/demo_till_drawer.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
+import 'data/money/demo_invoice_goods_catalogue.dart';
 import 'data/money/demo_invoice_issue_drafts.dart';
 import 'data/money/demo_invoice_original_repository.dart';
 import 'data/money/demo_settlement_reviews.dart';
@@ -286,8 +287,10 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
   ),
   invoiceCommandsProvider.overrideWith((ref) => money(ref).invoiceCommands),
   standaloneInvoiceCommandsProvider.overrideWith(
-    (ref) => money(ref).standaloneInvoiceCommands,
+    // #4433 -- and sells goods from the business's own goods ledger
+    (ref) => money(ref).standaloneInvoiceCommands..goods = stocks.of(ref).ledger,
   ), // #4165
+  invoiceGoodsCatalogueProvider.overrideWith((ref) => DemoInvoiceGoodsCatalogue(stocks.of(ref).ledger)),
   taxReportingRepositoryProvider.overrideWith(
     (ref) => money(ref).taxReporting,
   ),
