@@ -12,6 +12,7 @@
 // read (the sales in it would be lost): it refuses to go on until someone decides.
 import 'dart:convert';
 
+import '../../../core/trace/trace_logger.dart';
 import 'till_offline.dart';
 import 'till_quantity.dart';
 
@@ -257,6 +258,7 @@ class TillOfflineQueue {
         try {
           await _syncLane(lane, port, workspaceId, minorDigits, results, gaps);
         } on Object catch (e, st) {
+          TraceLogger.instance.warn('money', 'the offline sales of a session could not be sent', error: e, stackTrace: st);
           failure ??= e;
           failureTrace ??= st;
         }
