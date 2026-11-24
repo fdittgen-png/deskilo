@@ -14,7 +14,7 @@ import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/ui/kit/page_title.dart';
+import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -24,7 +24,9 @@ import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_day.dart';
 import 'stock_first_run.dart';
+import 'stock_page_shell.dart';
 import 'stock_place_text.dart';
+import 'stock_read_failed.dart';
 import 'stock_track_find_sheet.dart';
 
 class StockScreen extends ConsumerWidget {
@@ -37,71 +39,63 @@ class StockScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
     final view = ref.watch(stockViewProvider);
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(tab == StockTab.onHand ? l10n.permModuleStock : l10n.stockTabMovements),
-        actions: [
-          // #4436 -- what carries a track ID, for whom the server lets read the stock
-          if (workspaceId != null && _readsStock(ref.watch(myPermissionsProvider)))
-            IconButton(
-              key: const ValueKey('stock-track-find-open'),
-              icon: const Icon(Icons.qr_code_2),
-              tooltip: l10n.stockTrackFindTitle,
-              onPressed: () => showStockTrackFindSheet(context, workspaceId: workspaceId),
+    final readsStock = _readsStock(ref.watch(myPermissionsProvider));
+    return StockPageShell(
+      title: tab == StockTab.onHand ? l10n.permModuleStock : l10n.stockTabMovements,
+      actions: (context, workspaceId) => [
+        // #4436 -- what carries a track ID, for whom the server lets read the stock
+        if (readsStock)
+          IconButton(
+            key: const ValueKey('stock-track-find-open'),
+            icon: const Icon(Icons.qr_code_2),
+            tooltip: l10n.stockTrackFindTitle,
+            onPressed: () => showStockTrackFindSheet(context, workspaceId: workspaceId),
+          ),
+      ],
+      reloadKey: const ValueKey('stock-reload'),
+      reloads: (workspaceId) {
+        final filters = _filtersOf(workspaceId, view);
+        return [
+          stockOnHandWalkProvider(filters),
+          stockMovementsWalkProvider(filters),
+          stockItemsProvider(workspaceId),
+          stockPlacesProvider(workspaceId),
+        ];
+      },
+      body: (context, ref, workspaceId) => Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SegmentedButton<StockTab>(
+              key: const ValueKey('stock-tabs'),
+              showSelectedIcon: false,
+              segments: [
+                ButtonSegment(
+                  value: StockTab.onHand,
+                  label: Text(l10n.stockTabOnHand),
+                ),
+                ButtonSegment(
+                  value: StockTab.movements,
+                  label: Text(l10n.stockTabMovements),
+                ),
+              ],
+              selected: {tab},
+              onSelectionChanged: (s) =>
+                  context.go(s.first == StockTab.movements ? '/stock/movements' : '/stock'),
             ),
-          if (workspaceId != null)
-            IconButton(
-              key: const ValueKey('stock-reload'),
-              icon: const Icon(Icons.refresh),
-              tooltip: l10n.overviewLayoutReload,
-              onPressed: () {
-                final filters = _filtersOf(workspaceId, view);
-                ref
-                  ..invalidate(stockOnHandWalkProvider(filters))
-                  ..invalidate(stockMovementsWalkProvider(filters))
-                  ..invalidate(stockItemsProvider(workspaceId))
-                  ..invalidate(stockPlacesProvider(workspaceId));
-              },
+            const SizedBox(height: AppSpacing.md),
+            _Filters(workspaceId: workspaceId, view: view),
+            const SizedBox(height: AppSpacing.md),
+            Expanded(
+              child: tab == StockTab.onHand
+                  ? _OnHandList(workspaceId: workspaceId, view: view)
+                  : _MovementsList(workspaceId: workspaceId, view: view),
             ),
-        ],
+          ],
+        ),
       ),
-      body: workspaceId == null
-          ? const LoadingView()
-          : Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SegmentedButton<StockTab>(
-                    key: const ValueKey('stock-tabs'),
-                    showSelectedIcon: false,
-                    segments: [
-                      ButtonSegment(
-                        value: StockTab.onHand,
-                        label: Text(l10n.stockTabOnHand),
-                      ),
-                      ButtonSegment(
-                        value: StockTab.movements,
-                        label: Text(l10n.stockTabMovements),
-                      ),
-                    ],
-                    selected: {tab},
-                    onSelectionChanged: (s) =>
-                        context.go(s.first == StockTab.movements ? '/stock/movements' : '/stock'),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  _Filters(workspaceId: workspaceId, view: view),
-                  const SizedBox(height: AppSpacing.md),
-                  Expanded(
-                    child: tab == StockTab.onHand
-                        ? _OnHandList(workspaceId: workspaceId, view: view)
-                        : _MovementsList(workspaceId: workspaceId, view: view),
-                  ),
-                ],
-              ),
-            ),
     );
   }
 }
@@ -274,39 +268,18 @@ class _Walk<T> extends StatelessWidget {
     final l10n = context.l10n;
     if (walk.isFirstLoad) return const LoadingView();
     if (walk.failedFirst) {
-      return Column(
-        key: const ValueKey('stock-failed'),
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(l10n.stockReadFailed),
-          TextButton(
-            key: const ValueKey('stock-retry'),
-            onPressed: onRetry,
-            child: Text(l10n.identityConnectRetry),
-          ),
-        ],
-      );
+      return StockReadFailed(keyName: 'stock', error: walk.error!, onRetry: onRetry);
     }
     if (walk.rows.isEmpty && walk.complete) {
-      return empty ?? Center(key: const ValueKey('stock-empty'), child: Text(emptyText));
+      return empty ?? EmptyState(key: const ValueKey('stock-empty'), icon: Icons.inventory_2_outlined, title: emptyText);
     }
     return ListView(
       children: [
         for (final row in walk.rows) tile(row),
         if (walk.error != null)
           Padding(
-            key: const ValueKey('stock-more-failed'),
             padding: const EdgeInsets.all(AppSpacing.md),
-            child: Column(
-              children: [
-                Text(l10n.stockReadFailed),
-                TextButton(
-                  key: const ValueKey('stock-more-retry'),
-                  onPressed: onRetry,
-                  child: Text(l10n.identityConnectRetry),
-                ),
-              ],
-            ),
+            child: StockReadFailed(keyName: 'stock-more', error: walk.error!, onRetry: onRetry),
           )
         else if (walk.loading)
           const Padding(

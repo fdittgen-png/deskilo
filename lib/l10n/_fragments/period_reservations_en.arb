@@ -12,10 +12,6 @@
   "@periodReservationsEmpty": {
     "description": "#2578 the bookings behind the capacity figure"
   },
-  "periodReservationsFailed": "The bookings could not be read.",
-  "@periodReservationsFailed": {
-    "description": "#2578 the bookings behind the capacity figure"
-  },
   "periodReservationsUnnamed": "(unnamed place)",
   "@periodReservationsUnnamed": {
     "description": "#2578 the bookings behind the capacity figure"

@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:deskilo/core/ui/async_read_body.dart';
 import 'package:deskilo/features/money/domain/supplier_balance.dart';
 import 'package:deskilo/features/money/presentation/widgets/supplier_balance_line.dart';
 import 'package:deskilo/features/money/providers/supplier_balance_provider.dart';
@@ -57,7 +58,7 @@ void main() {
       expect(find.textContaining('Outstanding:'), findsNothing);
       refresh.completeError(StateError('offline'));
       await tester.pumpAndSettle();
-      expect(find.text('Balance unavailable'), findsOneWidget);
+      expect(find.byType(ReadFailureBanner), findsOneWidget);
       expect(find.text('No outstanding balance'), findsNothing);
     },
   );
@@ -134,7 +135,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Balance unavailable'), findsOneWidget);
+    expect(find.byType(ReadFailureBanner), findsOneWidget);
     expect(find.text('No outstanding balance'), findsNothing);
   });
 }

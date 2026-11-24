@@ -9,18 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/date_field.dart';
-import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../money/providers/business_day_provider.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_where_is.dart';
 import '../providers/stock_providers.dart';
 import 'stock_chain_section.dart';
+import 'stock_page_shell.dart';
 import 'stock_read_failed.dart';
 
 class StockWhereIsScreen extends ConsumerStatefulWidget {
@@ -46,17 +44,14 @@ class _State extends ConsumerState<StockWhereIsScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.stockWhereIsTitle),
-        actions: [HelpDot(l10n.stockWhereIsTitle, anchor: HelpAnchor.moneyStockWhereIs)],
-      ),
-      body: workspaceId == null ? const LoadingView() : _body(context, workspaceId),
+    return StockPageShell(
+      title: l10n.stockWhereIsTitle,
+      anchor: HelpAnchor.moneyStockWhereIs,
+      body: _body,
     );
   }
 
-  Widget _body(BuildContext context, String workspaceId) {
+  Widget _body(BuildContext context, WidgetRef ref, String workspaceId) {
     final provider = stockWhereIsAnswerProvider((workspaceId: workspaceId, itemId: widget.itemId, lotId: widget.lotId, at: _at));
     return ref
         .watch(provider)

@@ -740,6 +740,12 @@
  "fedFactBatchHint": "Il numero massimo di fatti di appartenenza che un server di spazi invia al proprio domicilio personale in un minuto. Un server rinnova ogni relazione attiva una volta per aggiornamento dello stato di identità: regge al massimo questo numero per i secondi di aggiornamento divisi per 60 relazioni (500 e 300 secondi: 2.500). Lo aumenti quando il medico dell'istanza segnala un ritardo di invio. Si imposta nelle impostazioni dell'app.",
  "appSupportWindow": "Periodo di supporto delle app precedenti",
  "appSupportWindowHint": "Quanti giorni un'app precedente resta accettata dopo che una più recente è disponibile sul canale di distribuzione più lento. L'app più vecchia accettata dall'installazione viene alzata solo dopo questo periodo, così ogni membro ha il tempo di aggiornarla. Si imposta nelle impostazioni dell'app.",
+ "traceReportsPerHour": "Segnalazioni di errore per persona e ora",
+ "traceReportsPerHourHint": "Quante segnalazioni di errore una persona connessa può inviare a questa installazione in un'ora, da tutti i suoi dispositivi insieme. Le successive di quell'ora vengono scartate. Nessuna disattiva le segnalazioni di errore. Si imposta nelle impostazioni dell'app.",
+ "traceReportMaxBytes": "Dimensione massima di una segnalazione di errore",
+ "traceReportMaxBytesHint": "La segnalazione di errore più grande che questa installazione accetta; l'app accorcia lo stack di una segnalazione perché ci stia. Si imposta nelle impostazioni dell'app.",
+ "traceReportRetention": "Conservare le segnalazioni di errore per",
+ "traceReportRetentionHint": "Per quanto tempo questa installazione conserva una segnalazione di errore prima di eliminarla. Si imposta nelle impostazioni dell'app.",
  "supLookupWait": "Attesa della ricerca fornitore",
  "supLookupWaitHint": "Quanto il server attende il registro delle imprese (VIES) quando qualcuno cerca la partita IVA di un fornitore, prima di indicare che il registro non ha risposto. Si imposta nelle impostazioni dell'app.",
  "supLookupRate": "Ricerche fornitore al minuto",
@@ -882,5 +888,10 @@
  "counterPaidOutLimitHint": "Un prelievo oltre questo richiede qualcuno che possa registrare pagamenti in uscita. Si imposta nelle impostazioni dell'app.",
  "counterCashReasons": "Motivi di entrate e uscite di contante",
  "counterCashReasonsHint": "Separati da virgole, per esempio resto, spesa, altro. Si imposta nelle impostazioni dell'app.",
- "optNoLimit": "Nessun limite"
+ "optNoLimit": "Nessun limite",
+ "optPerHour": "{n} all'ora",
+ "optPerHourDefault": "{n} all'ora (predefinito)",
+ "optKilobytes": "{n} KB",
+ "optKilobytesDefault": "{n} KB (predefinito)",
+ "optReportsOff": "Nessuna (segnalazioni di errore disattivate)"
 }

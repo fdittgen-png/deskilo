@@ -1,0 +1,13 @@
+{
+  "@@locale": "fr",
+  "settingGroupDiagnostics": "Rapports d'erreur",
+  "settingLabelTraceReportsPerHour": "Rapports d'erreur par personne et par heure",
+  "settingHintTraceReportsPerHour": "Combien de rapports d'erreur une personne peut envoyer à cette installation en une heure, tous ses appareils confondus. Les rapports suivants de cette heure sont abandonnés, jamais mis en attente. 0 désactive les rapports d'erreur pour tout le monde.",
+  "settingLabelTraceReportMaxBytes": "Taille maximale d'un rapport d'erreur",
+  "settingHintTraceReportMaxBytes": "Le plus grand rapport d'erreur que cette installation accepte. L'application raccourcit la pile du rapport avant l'envoi ; un rapport encore trop grand est abandonné.",
+  "settingLabelTraceReportRetentionDays": "Durée de conservation des rapports d'erreur",
+  "settingHintTraceReportRetentionDays": "Combien de jours cette installation conserve un rapport d'erreur. Les rapports plus anciens sont supprimés à l'arrivée d'un nouveau.",
+  "privacyErrorReports": "Envoyer les rapports d'erreur",
+  "privacyErrorReportsHint": "Quand l'application enregistre une erreur, un rapport sans vos données part vers l'installation à laquelle vous êtes connecté, pour que son opérateur puisse la corriger.",
+  "privacyErrorReportsFailed": "Le choix n'a pas pu être enregistré sur cet appareil."
+}

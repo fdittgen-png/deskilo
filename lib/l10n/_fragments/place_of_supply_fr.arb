@@ -76,5 +76,6 @@
         "type": "int"
       }
     }
-  }
+  },
+  "supplyClassUnknown": "Une catégorie que cette application ne connaît pas encore : conservée telle que le serveur l'a"
 }

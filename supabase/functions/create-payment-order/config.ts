@@ -4,6 +4,7 @@
 // deny-all `payment_credentials` table, read through the privileged client
 // the handler passes in); deployment-wide env vars are the fallback.
 
+import { env as readEnv } from "../_shared/config.ts";
 import type { SupabaseClient } from "npm:@supabase/supabase-js@2";
 import type { Provider, ProviderConfig } from "./types.ts";
 
@@ -62,7 +63,7 @@ export async function effectiveConfig(
   admin: SupabaseClient,
   workspaceId: string,
   provider: Provider,
-  env: (name: string) => string | undefined = (n) => Deno.env.get(n),
+  env: (name: string) => string | undefined = readEnv,
 ): Promise<ProviderConfig> {
   const { data, error } = await admin
     .from("payment_credentials")

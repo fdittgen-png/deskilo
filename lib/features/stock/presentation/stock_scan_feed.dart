@@ -9,7 +9,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../domain/stock_code_resolver.dart';
 import '../domain/stock_scan_session.dart';
 
@@ -102,15 +102,20 @@ class StockScanFeed extends ChangeNotifier {
         final scan = _queue.removeAt(0);
         final code = scan.code;
         final fromTag = _fromTag.remove(code);
-        try {
-          final answer = await resolver.resolve(workspaceId, code);
-          if (_closed) return;
+        final answer = await guardRead<StockCodeResolution?>(
+          domain: 'stock',
+          message: 'a scanned code could not be resolved',
+          read: () => resolver.resolve(workspaceId, code),
+          fallback: (e) {
+            problem = e;
+            return null;
+          },
+        );
+        if (_closed) return;
+        if (answer != null) {
           problem = null;
           last = session.apply(answer, placeAllowed: placeAllowed, itemAllowed: itemAllowed, fromTag: fromTag, gs1: scan.gs1);
           onResult(last!);
-        } on Object catch (e, st) {
-          TraceLogger.instance.warn('stock', 'a scanned code could not be resolved', error: e, stackTrace: st);
-          problem = e;
         }
         if (!_closed) notifyListeners();
       }

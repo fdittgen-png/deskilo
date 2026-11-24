@@ -6,12 +6,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/push/push_opt_out.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/trace/trace_report_device.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/help_row.dart';
 import '../../application/privacy_choices.dart';
 import '../../domain/privacy_notice.dart';
 import '../../providers/profile_providers.dart';
@@ -95,6 +98,35 @@ class SpaceNoticeTile extends ConsumerWidget {
     AppSnack.success(
       context,
       l10n.privacySpaceNoticeRead,
+    );
+  }
+}
+
+/// #4416 — whether the errors the app records go to the installation the
+/// person is signed in to (on by default, kept on this device only).
+class ErrorReportsTile extends ConsumerWidget {
+  const ErrorReportsTile({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final on = ref.watch(traceReportsSwitchProvider).value ?? true;
+    return HelpRow.toggle(
+      key: const ValueKey('privacy-error-reports'),
+      leading: const Icon(Icons.bug_report_outlined),
+      title: l10n.privacyErrorReports,
+      topic: l10n.helpHintPrivacyTopic,
+      anchor: HelpAnchor.privacyErrorReports,
+      subtitle: Text(l10n.privacyErrorReportsHint),
+      value: on,
+      onChanged: (on) => runGuarded(
+        context,
+        domain: 'privacy',
+        message: 'error reports switch failed',
+        errorText: l10n.privacyErrorReportsFailed,
+        action: () =>
+            ref.read(traceReportsSwitchProvider.notifier).set(on: on),
+      ),
     );
   }
 }

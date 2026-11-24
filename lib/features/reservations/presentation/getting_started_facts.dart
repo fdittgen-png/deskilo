@@ -4,7 +4,7 @@ import '../application/getting_started_hint.dart';
 
 /// Preserve uncertainty and cached-value freshness when adapting hub facts.
 Fact<T> factOf<T>(AsyncValue<T> value) {
-  if (value.hasError) return const Fact.offline();
+  if (value.hasError) return const Fact.offline(); // #4414 kept: a fact's state
   if (value.isLoading && !value.hasValue) return const Fact.loading();
   if (!value.hasValue) return const Fact.loading();
   return value.isLoading ? Fact.refreshing(value.value as T)

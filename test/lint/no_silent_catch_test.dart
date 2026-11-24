@@ -109,7 +109,6 @@ List<File> _scanned() => [
 const _untracedOnCeiling = <String, int>{
   // the two detail readers of presentation/till_drawer/drawer_text.dart
   'features/money': 0,
-  'packages/deskilo_task_recording': 2,
 };
 
 /// #4411 -- `TraceLogger.instance.warn(` inside a catch body that does not
@@ -157,6 +156,7 @@ const _exemptCeiling = <String, int>{
   'features/money': 28,
   'features/reservations': 13,
   'features/workspace': 32,
+  'packages/deskilo_task_recording': 2,
   'packages/deskilo_tax_reference': 2,
 };
 

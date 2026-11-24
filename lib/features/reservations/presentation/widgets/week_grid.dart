@@ -8,6 +8,7 @@ import '../../../../core/i18n/week_start.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/half_day_windows.dart';
@@ -201,7 +202,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     final planAsync = ref.watch(floorPlanProvider(level.id));
     return switch (planAsync) {
       AsyncData(value: final plan) => _grid(context, [(null, plan)]),
-      AsyncError() => const WeekGridEmptyHint(),
+      AsyncError(:final error) => ReadFailureBanner(error: error, onRetry: () => ref.invalidate(floorPlanProvider(level.id))),
       _ => const LoadingView(),
     };
   }
@@ -220,6 +221,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
       switch (planAsync) {
         case AsyncData(value: final plan):
           plans.add((level, plan));
+        // #4414 kept: one level's failed plan leaves only that level out
         case AsyncError():
           break; // Skipped, like a level with nothing to show.
         default:

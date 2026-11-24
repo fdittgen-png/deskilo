@@ -24,14 +24,15 @@
 // attacker learns which tags are real. The distinction lives in the
 // attempt log, which nothing outside the service role can read.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { describeError, logLine } from "../_shared/log.ts";
 import { guard } from "../_shared/serve.ts";
 import { handle } from "./handler.ts";
 
 const supabase = createClient(
-  Deno.env.get("SUPABASE_URL")!,
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+  readEnv(KEYS.supabaseUrl)!,
+  readEnv(KEYS.supabaseServiceRoleKey)!,
 );
 
 // #4412 -- whatever the handler throws is the envelope, never its words.

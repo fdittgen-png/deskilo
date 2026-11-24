@@ -11,6 +11,7 @@ import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../plan/domain/level.dart';
@@ -100,11 +101,10 @@ class EditorScreen extends ConsumerWidget {
             ),
           ),
         AsyncData(value: final levels) => _LevelList(levels: levels),
-        AsyncError() => Center(
-            child: Text(
-              l10n.workspaceGenericError,
-            ),
-          ),
+        AsyncError(:final error) => ReadFailureBanner(
+          error: error,
+          onRetry: () => ref.invalidate(levelsProvider),
+        ),
         _ => const LoadingView(),
         }),
       ]),

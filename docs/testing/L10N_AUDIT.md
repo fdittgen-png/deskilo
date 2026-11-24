@@ -10,8 +10,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
-| `lib/core/demo/data/demo_stock_config_commands.dart:284` | label | Red | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/data/demo_stock_config_commands.dart:285` | label | Blue | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/data/demo_stock_config_commands.dart:318` | label | Red | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/data/demo_stock_config_commands.dart:319` | label | Blue | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:57` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:69` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:81` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
@@ -73,19 +73,19 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/diagnostics/doctor_english.dart:174` | title | Sign-in codes last longer than an hour | core/diagnostics | KEEP_NON_UI_LITERAL |
 | `lib/core/diagnostics/doctor_english.dart:178` | title | Passwords may be shorter than ${n(2)} characters | core/diagnostics | KEEP_NON_UI_LITERAL |
 | `lib/core/diagnostics/doctor_english.dart:182` | title | A password change does not ask to sign in again | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:14` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:15` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:16` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:17` | label | Ireland (eu-west-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:18` | label | London (eu-west-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:19` | label | Stockholm (eu-north-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:20` | label | Virginia (us-east-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:21` | label | California (us-west-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:22` | label | Canada (ca-central-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:23` | label | Singapore (ap-southeast-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:24` | label | Tokyo (ap-northeast-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:25` | label | Sydney (ap-southeast-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:26` | label | São Paulo (sa-east-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:15` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:16` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:17` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:18` | label | Ireland (eu-west-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:19` | label | London (eu-west-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:20` | label | Stockholm (eu-north-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:21` | label | Virginia (us-east-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:22` | label | California (us-west-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:23` | label | Canada (ca-central-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:24` | label | Singapore (ap-southeast-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:25` | label | Tokyo (ap-northeast-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:26` | label | Sydney (ap-southeast-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:27` | label | São Paulo (sa-east-1) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/features/money/presentation/widgets/report_texts_panel.dart:186` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
 | `packages/deskilo_jurisdiction_ca/lib/src/ca_archive.dart:35` | document lines (list item) | Nothing declares these records kept in Canada (ETA s.286,  | deskilo_jurisdiction_ca/lib | KEEP_NON_UI_LITERAL |
 | `packages/deskilo_jurisdiction_ca/lib/src/ca_archive.dart:36` | document lines (list item) | ITA s.230). | deskilo_jurisdiction_ca/lib | KEEP_NON_UI_LITERAL |

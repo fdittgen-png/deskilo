@@ -147,11 +147,11 @@ void main() {
     );
     await expectLater(
       config.saveMapping('ws-1', mapping: const SupplierMappingDraft(supplierId: 'demo-supplier-1', itemId: 'demo-item-shirt', articleRef: 'A', purchaseUnit: 'box', active: true), requestId: 'r'),
-      throwsA(isA<StockConfigRefused>().having((e) => e.reason, 'reason', 'unit_not_of_item')),
+      throwsA(isA<StockConfigRefused>().having((e) => e.reason, 'reason', StockRefusal.unitNotOfItem)),
     );
     await expectLater(
       config.saveVariants('ws-1', 'demo-item-shirt', variants: const [StockVariant(id: null, values: {'demo-dim-colour': 'demo-val-m'}, priceCents: null, active: true, label: '')], expectedRevision: 1, requestId: 'r'),
-      throwsA(isA<StockConfigRefused>().having((e) => e.reason, 'reason', 'value_foreign')),
+      throwsA(isA<StockConfigRefused>().having((e) => e.reason, 'reason', StockRefusal.valueForeign)),
     );
   });
 }

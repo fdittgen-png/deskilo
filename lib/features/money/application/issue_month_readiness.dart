@@ -12,6 +12,7 @@
 import '../../../core/trace/trace_logger.dart';
 import '../domain/einvoice_channel_check.dart';
 import '../domain/invoice_issue_draft.dart';
+import '../domain/invoice_missing.dart';
 
 /// How many customers are read at once: a courtesy to the server, not a
 /// setting.
@@ -46,8 +47,11 @@ final class ReadinessMissing extends LineReadiness {
 bool isBusinessEssential(String key) =>
     key.startsWith('seller_') ||
     key.startsWith('vat_') ||
-    key == 'exemption_reason' ||
-    key == 'invoice_feature_disabled';
+    switch (InvoiceMissing.fromWire(key)) {
+      InvoiceMissing.exemptionReason ||
+      InvoiceMissing.invoiceFeatureDisabled => true,
+      _ => false,
+    };
 
 /// What the review list knows of its customers.
 class MonthReadiness {

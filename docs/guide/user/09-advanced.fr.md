@@ -8,7 +8,7 @@ Ce qui entoure le travail de tous les jours : le côté test d'un espace et le c
 Dans ce chapitre :
 - [Un espace a deux côtés](help:user.advanced.environments) · [Entrer d'un côté](help:user.advanced.enter-environment) · [Un espace de test](help:user.advanced.test-space) · [Qui peut déployer](help:user.advanced.deploy-permissions) · [Déployer entre les côtés](help:user.advanced.deploy) · [Situation de l'espace et archive de l'exercice](help:user.advanced.status-archive)
 - [Votre propre serveur](help:user.advanced.own-server) · [Quand une installation exige une application plus récente](help:user.advanced.app-floor) · [Publier une nouvelle version](help:user.advanced.releases)
-- [Les assistants](help:user.advanced.assistants) · [Connecter un assistant](help:user.advanced.assistants-connect) · [Les autorisations](help:user.advanced.assistants-approve) · [Ce que les assistants peuvent faire](help:user.advanced.assistants-policy)
+- [Les assistants](help:user.advanced.assistants) · [Connecter un assistant](help:user.advanced.assistants-connect) · [Les autorisations](help:user.advanced.assistants-approve) · [Ce que les assistants peuvent faire](help:user.advanced.assistants-policy) · [Rapports d'erreur](help:user.advanced.error-reports)
 - [L'enregistreur de tâches](help:user.advanced.recorder) · [Enregistrer une tâche](help:user.advanced.recorder-record) · [Relire un enregistrement](help:user.advanced.recorder-review) · [Créer un guide](help:user.advanced.guide-make) · [Suivre un guide](help:user.advanced.guide-play) · [Le menu rond](help:user.advanced.guide-circle) · [Modifier un guide](help:user.advanced.guide-edit) · [Confidentialité des enregistrements](help:user.advanced.recorder-privacy)
 - [L'espace de démonstration](help:user.advanced.demo) · [Mode tournage](help:user.advanced.filming)
 - [Les plateformes](help:user.advanced.platforms) · [Détails pour l'assistance](help:user.advanced.support) · [Quand quelque chose ne fonctionne pas](help:user.advanced.troubleshooting)
@@ -307,6 +307,29 @@ Vous décidez quels services un espace propose aux assistants.
 - C'est réservé aux personnes qui détiennent la permission d'intégrations ; les propriétaires l'ont toujours.
 
 **Voir aussi:** [Un interrupteur de fonctionnalité](help:user.features.switch)
+
+<!-- anchor: user.advanced.error-reports -->
+### Rapports d'erreur
+
+**Public:** Opérateur·rice
+
+Vous exploitez l'installation et voulez voir ce qui s'est mal passé dans les applications qui y sont connectées.
+
+<!-- image: user-advanced-error-reports -->
+
+**Étapes**
+
+1. Ouvrez [Installation : assistants](app:/installation/assistants).
+2. Touchez **Rapports d'erreur**. Les plus récents viennent en premier.
+3. Touchez un rapport pour lire sa pile, masquée par l'application. **Rapports plus anciens** lit les suivants.
+
+**Bon à savoir**
+
+- Un rapport indique l'endroit de l'application et le type d'erreur, son code, la version de l'application, la plateforme et l'heure. Il ne contient jamais ce qu'une personne a saisi, une adresse e-mail, un nom ou une clé.
+- Seul l'opérateur de l'installation les lit ; les entreprises de l'installation ne les voient jamais.
+- Dans les paramètres, **Rapports d'erreur par personne et par heure**, **Taille maximale d'un rapport d'erreur** et **Durée de conservation des rapports d'erreur** fixent combien en arrivent, leur taille et leur durée. Chaque personne peut désactiver les rapports sur son appareil.
+
+**Voir aussi:** [Envoyer les rapports d'erreur](help:user.privacy.error-reports)
 
 <!-- anchor: user.advanced.recorder -->
 ### L'enregistreur de tâches et les visites guidées

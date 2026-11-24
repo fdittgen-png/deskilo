@@ -59,10 +59,6 @@
   "@setupInviteShareFailed": {
     "description": "#2870 setup steps: setupInviteShareFailed"
   },
-  "setupStepLoadFailed": "This step could not be loaded. Try again later.",
-  "@setupStepLoadFailed": {
-    "description": "#2870 setup steps: setupStepLoadFailed"
-  },
   "setupBasicsSaveFailed": "The basics could not be saved. Try again.",
   "@setupBasicsSaveFailed": {
     "description": "#2870 setup steps: setupBasicsSaveFailed"

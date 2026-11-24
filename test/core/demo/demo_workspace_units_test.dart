@@ -17,7 +17,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 const _ws = 'ws-1';
 
-Matcher _refused(String field, String reason) =>
+Matcher _refused(String field, StockRefusal reason) =>
     isA<StockConfigRefused>().having((e) => e.field, 'field', field).having((e) => e.reason, 'reason', reason);
 
 void main() {
@@ -62,17 +62,17 @@ void main() {
 
   test('a malformed unit is refused by field and reason', () async {
     Future<void> save(MeasureUnitDraft d) => units.save(_ws, requestId: next(), draft: d);
-    expect(save(const MeasureUnitDraft(code: 'Bad Code', label: 'x', dimension: UnitDimension.length, factorNum: 1)), throwsA(_refused('code', 'code_malformed')));
-    expect(save(const MeasureUnitDraft(code: 'bad', label: 'x', factorNum: 1)), throwsA(_refused('dimension', 'dimension_invalid')));
-    expect(save(const MeasureUnitDraft(code: 'bad', label: 'x', dimension: UnitDimension.length, factorNum: 0)), throwsA(_refused('factor', 'factor_invalid')));
-    expect(save(const MeasureUnitDraft(code: 'bad', dimension: UnitDimension.length, factorNum: 1)), throwsA(_refused('label', 'label_required')));
-    expect(save(MeasureUnitDraft(code: 'bad', label: 'x' * 41, dimension: UnitDimension.length, factorNum: 1)), throwsA(_refused('label', 'too_long')));
+    expect(save(const MeasureUnitDraft(code: 'Bad Code', label: 'x', dimension: UnitDimension.length, factorNum: 1)), throwsA(_refused('code', StockRefusal.codeMalformed)));
+    expect(save(const MeasureUnitDraft(code: 'bad', label: 'x', factorNum: 1)), throwsA(_refused('dimension', StockRefusal.dimensionInvalid)));
+    expect(save(const MeasureUnitDraft(code: 'bad', label: 'x', dimension: UnitDimension.length, factorNum: 0)), throwsA(_refused('factor', StockRefusal.factorInvalid)));
+    expect(save(const MeasureUnitDraft(code: 'bad', dimension: UnitDimension.length, factorNum: 1)), throwsA(_refused('label', StockRefusal.labelRequired)));
+    expect(save(MeasureUnitDraft(code: 'bad', label: 'x' * 41, dimension: UnitDimension.length, factorNum: 1)), throwsA(_refused('label', StockRefusal.tooLong)));
     expect(save(const MeasureUnitDraft(code: 'bad', label: 'x', dimension: UnitDimension.length, factorNum: 1, unEceCode: 'toolong')),
-        throwsA(_refused('un_ece_code', 'ece_invalid')));
+        throwsA(_refused('un_ece_code', StockRefusal.eceInvalid)));
   });
 
   test('a built-in keeps its factor but takes a word of the business\'s own, and gives it back', () async {
-    await expectLater(units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'km', factorNum: 999)), throwsA(_refused('factor', 'registry_unit')));
+    await expectLater(units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'km', factorNum: 999)), throwsA(_refused('factor', StockRefusal.registryUnit)));
     final named = await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'km', label: 'Kilometre'));
     expect([named.label, named.factorNum], ['Kilometre', 1000]);
     final back = await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'km', clearLabel: true));
@@ -82,16 +82,16 @@ void main() {
   test('a used unit keeps its dimension and factor, may be renamed, and cannot be archived', () async {
     await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 50));
     units.usedBy = (workspaceId, code) => code == 'drum';
-    await expectLater(units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'drum', factorNum: 60)), throwsA(_refused('factor', 'unit_in_use')));
+    await expectLater(units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'drum', factorNum: 60)), throwsA(_refused('factor', StockRefusal.unitInUse)));
     expect((await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'drum', label: 'Drum of cable'))).label, 'Drum of cable');
-    await expectLater(units.archive(_ws, requestId: next(), code: 'drum', archived: true), throwsA(_refused('archived', 'unit_in_use')));
+    await expectLater(units.archive(_ws, requestId: next(), code: 'drum', archived: true), throwsA(_refused('archived', StockRefusal.unitInUse)));
   });
 
   test('one code keeps one meaning: a code an item already uses for its packaging cannot be a unit', () async {
     units.packages = (workspaceId, code) => code == 'box';
     await expectLater(
       units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'box', label: 'Box', dimension: UnitDimension.count, factorNum: 6)),
-      throwsA(_refused('code', 'code_duplicate')),
+      throwsA(_refused('code', StockRefusal.codeDuplicate)),
     );
     expect((await units.units(_ws)).map((u) => u.code), isNot(contains('box')));
     expect((await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'crate', label: 'Crate', dimension: UnitDimension.count, factorNum: 6))).code, 'crate');
@@ -103,7 +103,7 @@ void main() {
     expect((await units.units(_ws)).firstWhere((u) => u.code == 'drum').archived, isTrue);
     await units.archive(_ws, requestId: next(), code: 'drum', archived: false);
     expect((await units.units(_ws)).firstWhere((u) => u.code == 'drum').archived, isFalse);
-    await expectLater(units.archive(_ws, requestId: next(), code: 'ghost', archived: true), throwsA(_refused('unit', 'unit_unknown')));
+    await expectLater(units.archive(_ws, requestId: next(), code: 'ghost', archived: true), throwsA(_refused('unit', StockRefusal.unitUnknown)));
   });
 
   test('the Demo\'s overrides answer the port: the provider lists the built-ins of the business it is asked about', () async {

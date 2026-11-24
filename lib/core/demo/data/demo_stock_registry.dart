@@ -105,13 +105,14 @@ class DemoStockRegistry implements StockRegistry {
     required String? placeId,
     required String requestId,
   }) async {
-    if (workspaceId != _workspaceId || !catalogue.containsKey(itemId)) {
-      throw const StockConfigRefused('item', 'not_an_item');
+    // an item of the catalogue, or a service made an item in this session (#4402)
+    if (workspaceId != _workspaceId || (!catalogue.containsKey(itemId) && (await _config.item(workspaceId, itemId))?.stockable != true)) {
+      throw const StockConfigRefused('item', StockRefusal.itemUnknown);
     }
     if (placeId != null) {
       final place = (await _places()).where((p) => p.id == placeId).firstOrNull;
       if (place == null || place.virtual || !place.active) {
-        throw const StockConfigRefused('home_location_id', 'home_invalid');
+        throw const StockConfigRefused('home_location_id', StockRefusal.homeInvalid);
       }
     }
     _homes[itemId] = placeId;

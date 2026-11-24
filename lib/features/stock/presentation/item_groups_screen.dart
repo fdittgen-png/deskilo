@@ -8,12 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/trace_logger.dart';
-import '../../../core/ui/kit/page_title.dart';
-import '../../../core/ui/loading_view.dart';
+import '../../../core/trace/guarded.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/item_groups.dart';
@@ -23,6 +20,7 @@ import '../providers/stock_providers.dart';
 import '../providers/workspace_units_providers.dart';
 import 'item_group_sheet.dart';
 import 'item_group_text.dart';
+import 'stock_page_shell.dart';
 
 class ItemGroupsScreen extends ConsumerWidget {
   const ItemGroupsScreen({super.key});
@@ -30,35 +28,17 @@ class ItemGroupsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
     final mayManage = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.itemGroupsTitle),
-        actions: [HelpDot(l10n.itemGroupsTitle, anchor: HelpAnchor.moneyStockGroups)],
+    return StockPageShell(
+      title: l10n.itemGroupsTitle,
+      anchor: HelpAnchor.moneyStockGroups,
+      reading: true,
+      body: (context, ref, workspaceId) => StockRead(
+        keyName: 'item-groups',
+        value: ref.watch(itemGroupListProvider(workspaceId)),
+        onRetry: () => ref.invalidate(itemGroupListProvider(workspaceId)),
+        data: (groups) => _GroupList(workspaceId: workspaceId, groups: groups, mayManage: mayManage),
       ),
-      body: workspaceId == null
-          ? const LoadingView()
-          : Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 720),
-                child: ref.watch(itemGroupListProvider(workspaceId)).when(
-                  loading: () => const LoadingView(),
-                  error: (_, _) => Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(l10n.itemGroupFailed, key: const ValueKey('item-groups-failed')),
-                      TextButton(
-                        key: const ValueKey('item-groups-retry'),
-                        onPressed: () => ref.invalidate(itemGroupListProvider(workspaceId)),
-                        child: Text(l10n.identityConnectRetry),
-                      ),
-                    ],
-                  ),
-                  data: (groups) => _GroupList(workspaceId: workspaceId, groups: groups, mayManage: mayManage),
-                ),
-              ),
-            ),
     );
   }
 }
@@ -72,12 +52,12 @@ class _GroupList extends ConsumerWidget {
 
   Future<void> _open(BuildContext context, WidgetRef ref, ItemGroup? group) async {
     // the home zones are a choice, not a need: a failed read opens the sheet without them
-    var places = const <StockPlaceConfig>[];
-    try {
-      places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the places could not be read for a group', error: e, stackTrace: st);
-    }
+    final places = await guardRead(
+      domain: 'stock',
+      message: 'the places could not be read for a group',
+      read: () => ref.read(stockPlaceConfigsProvider(workspaceId).future),
+      fallback: (_) => const <StockPlaceConfig>[],
+    );
     // what an item costs or sells for: only for someone who may manage services AND see the finances
     final held = ref.read(myPermissionsProvider);
     final finance = held.contains(WorkspacePermission.manageServices) && held.contains(WorkspacePermission.viewFinances);

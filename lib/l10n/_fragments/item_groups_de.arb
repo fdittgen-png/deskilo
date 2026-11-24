@@ -108,7 +108,6 @@
   "itemGroupReasonInUse": "Diese Gruppe wird von Artikeln verwendet: Verschieben Sie sie zuerst.",
   "itemGroupReasonHasSubgroups": "Diese Gruppe hat Untergruppen: Löschen Sie sie zuerst.",
   "itemGroupReasonGroupUnknown": "Diese Gruppe gibt es nicht.",
-  "itemGroupReasonNameDuplicate": "Eine andere Gruppe hat schon diesen Namen.",
   "itemGroupReasonNotOverridable": "Für diese Einstellung gibt es keinen eigenen Wert.",
   "itemGroupReasonHasMovements": "es hat schon Bewegungen",
   "itemGroupFailed": "Die Artikelgruppen konnten nicht gelesen werden."

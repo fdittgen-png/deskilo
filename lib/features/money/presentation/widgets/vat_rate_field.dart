@@ -126,12 +126,21 @@ class SupplyClassField extends ConsumerWidget {
     }
     final l10n =
         context.l10n;
+    // #4441 — a class this app does not know is shown as such and kept: it
+    // is not offered, and no other class stands in for it.
+    if (value == SupplyClass.unknown) {
+      return InputDecorator(
+        key: const ValueKey('supply-class-unknown'),
+        decoration: InputDecoration(labelText: l10n.supplyClassLabel),
+        child: Text(l10n.supplyClassUnknown),
+      );
+    }
     return DropdownButtonFormField<SupplyClass>(
       key: const ValueKey('supply-class-field'),
       initialValue: value,
       isExpanded: true,
       selectedItemBuilder: (context) => [
-        for (final supply in SupplyClass.values)
+        for (final supply in _offered)
           Text(_label(l10n, supply), overflow: TextOverflow.ellipsis),
       ],
       decoration: InputDecoration(
@@ -140,7 +149,7 @@ class SupplyClassField extends ConsumerWidget {
         helperMaxLines: 5,
       ),
       items: [
-        for (final supply in SupplyClass.values)
+        for (final supply in _offered)
           DropdownMenuItem(
             value: supply,
             child: Column(
@@ -153,6 +162,7 @@ class SupplyClassField extends ConsumerWidget {
                   switch (supply) {
                     SupplyClass.property => l10n.supplyClassPropertyMeaning,
                     SupplyClass.general => l10n.supplyClassGeneralMeaning,
+                    SupplyClass.unknown => l10n.supplyClassUnknown,
                   },
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
@@ -164,9 +174,13 @@ class SupplyClassField extends ConsumerWidget {
     );
   }
 
+  /// The classes a person may choose: never one this app does not know.
+  static const _offered = [SupplyClass.property, SupplyClass.general];
+
   static String _label(AppLocalizations l10n, SupplyClass supply) =>
       switch (supply) {
         SupplyClass.property => l10n.supplyClassProperty,
         SupplyClass.general => l10n.supplyClassGeneral,
+        SupplyClass.unknown => l10n.supplyClassUnknown,
       };
 }

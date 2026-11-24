@@ -143,18 +143,26 @@ String _line(
 ) => [
   entry.reference,
   entry.description,
-  switch (entry.status) {
-    'created' => l10n.payOnlinePendingTitle,
-    'failed' => l10n.payOnlineFailedTitle,
-    'reversed' => l10n.payOnlineReversedTitle,
-    'confirmed' => l10n.accountPaymentConfirmed,
-    'awaiting_match' => l10n.accountPaymentAwaitingMatch,
-    'voided' => l10n.accountInvoiceVoided,
-    'regrouped' => l10n.accountInvoiceRegrouped,
-    _ => '',
-  },
+  activityStatusText(l10n, entry.state),
   personalFormatOf(context).dates(DateShape.date).format(personalFormatOf(context).wall(entry.occurredAt)),
   if (entry.amountCents case final amount?)
     personalFormatOf(context).moneyNamed(entry.currency).formatMinor(amount),
   if (entry.minutes case final minutes?) l10n.accountUsageMinutes(minutes),
 ].where((s) => s.isNotEmpty).join(' · ');
+
+/// #4418 -- the words of an activity row's status, the one mapping the
+/// account screen and a provider's rows share. An unknown status has no
+/// words: the row is shown without one.
+String activityStatusText(AppLocalizations l10n, ActivityStatus status) =>
+    switch (status) {
+      ActivityStatus.created => l10n.payOnlinePendingTitle,
+      ActivityStatus.failed => l10n.payOnlineFailedTitle,
+      ActivityStatus.reversed => l10n.payOnlineReversedTitle,
+      ActivityStatus.confirmed => l10n.accountPaymentConfirmed,
+      ActivityStatus.awaitingMatch => l10n.accountPaymentAwaitingMatch,
+      ActivityStatus.voided => l10n.accountInvoiceVoided,
+      ActivityStatus.regrouped => l10n.accountInvoiceRegrouped,
+      ActivityStatus.issued => l10n.accountInvoiceIssued,
+      ActivityStatus.corrected => l10n.accountUsageCorrected,
+      ActivityStatus.unknown => '',
+    };
