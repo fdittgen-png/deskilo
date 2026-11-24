@@ -53872,7 +53872,7 @@
   },
   "tillReceiptCorrects": "Corrects receipt {number}",
   "@tillReceiptCorrects": {
-    "description": "#4184 the counter receipt document",
+    "description": "#4184 the counter receipt document; the number is a reference",
     "placeholders": {
       "number": {
         "type": "String"
@@ -53895,9 +53895,9 @@
       }
     }
   },
-  "tillReceiptLine": "{label}: {quantity} {unit}",
+  "tillReceiptLine": "{label}: {quantity} {unit}  {amount}",
   "@tillReceiptLine": {
-    "description": "#4184 the counter receipt document",
+    "description": "#4184 the counter receipt document; quantity and amount arrive formatted",
     "placeholders": {
       "label": {
         "type": "String"
@@ -53906,6 +53906,9 @@
         "type": "String"
       },
       "unit": {
+        "type": "String"
+      },
+      "amount": {
         "type": "String"
       }
     }
@@ -53931,9 +53934,9 @@
   "@tillReceiptShow": {
     "description": "#4184 the counter receipt document"
   },
-  "tillReceiptTaxLine": "VAT {percent} %: {tax} on {net}",
+  "tillReceiptTaxLine": "VAT {percent}: {tax} on {net}",
   "@tillReceiptTaxLine": {
-    "description": "#4184 the counter receipt document",
+    "description": "#4184 the counter receipt document; percent, tax and net arrive formatted",
     "placeholders": {
       "percent": {
         "type": "String"
@@ -53948,7 +53951,7 @@
   },
   "tillReceiptTotal": "Total {amount}",
   "@tillReceiptTotal": {
-    "description": "#4184 the counter receipt document",
+    "description": "#4184 the counter receipt document; amount arrives formatted",
     "placeholders": {
       "amount": {
         "type": "String"

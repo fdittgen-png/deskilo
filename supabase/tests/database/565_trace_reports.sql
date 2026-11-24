@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4416 (0953): an error report reaches the installation through submit_trace_report_v1 only: a signed-in person,
+-- #4416 (0956): an error report reaches the installation through submit_trace_report_v1 only: a signed-in person,
 -- never an assistant's session; the device's hourly budget and the size cap are the installation's settings and
 -- answer, never raise; reports past the retention are deleted when a new one arrives; only the installation's
 -- operator reads them. Rolled back.
@@ -28,7 +28,7 @@ end $f$;
 create function pg_temp.send(n int, p_device text, p_stack text default 'at main (app.dart:1)') returns text
 language sql as $$
   select pg_temp.as_user(n, format(
-    $q$select public.submit_trace_report_v1(%L, '2.2.0', 953, 'android', 'StateError', 'DKN01', %L)$q$,
+    $q$select public.submit_trace_report_v1(%L, '2.2.0', 956, 'android', 'StateError', 'DKN01', %L)$q$,
     p_device, p_stack))
 $$;
 
@@ -60,7 +60,7 @@ select is(pg_temp.send(1, 'bad id'), 'malformed', 'a malformed device id is answ
 select is(pg_temp.send(1, 'device-aaaa-1'), 'stored', 'a signed-in person''s report is stored');
 select is((select (app_version, schema_version, platform, failure_type, failure_code, created_by_user)::text
              from public.trace_reports where device_id = 'device-aaaa-1'),
-  format('(2.2.0,953,android,StateError,DKN01,%s)', pg_temp.u(1)), 'with its versions, platform, type, code and sender');
+  format('(2.2.0,956,android,StateError,DKN01,%s)', pg_temp.u(1)), 'with its versions, platform, type, code and sender');
 
 -- ── the size cap ──
 select is(pg_temp.send(1, 'device-aaaa-1', repeat('x', 16385)), 'too_large', 'a report over the cap is answered, not stored');

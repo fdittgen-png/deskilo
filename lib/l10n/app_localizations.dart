@@ -66504,7 +66504,7 @@ abstract class AppLocalizations {
   /// **'The registry names no counter operation for {country}: nothing is supported, and the till sells nothing.'**
   String tillReadinessUnknownCountry(String country);
 
-  /// #4184 the counter receipt document
+  /// #4184 the counter receipt document; the number is a reference
   ///
   /// In en, this message translates to:
   /// **'Corrects receipt {number}'**
@@ -66522,11 +66522,16 @@ abstract class AppLocalizations {
   /// **'Issued under: {specification} ({version})'**
   String tillReceiptIssuedUnder(String specification, String version);
 
-  /// #4184 the counter receipt document
+  /// #4184 the counter receipt document; quantity and amount arrive formatted
   ///
   /// In en, this message translates to:
-  /// **'{label}: {quantity} {unit}'**
-  String tillReceiptLine(String label, String quantity, String unit);
+  /// **'{label}: {quantity} {unit}  {amount}'**
+  String tillReceiptLine(
+    String label,
+    String quantity,
+    String unit,
+    String amount,
+  );
 
   /// #4366 the till
   ///
@@ -66552,13 +66557,13 @@ abstract class AppLocalizations {
   /// **'Show the receipt'**
   String get tillReceiptShow;
 
-  /// #4184 the counter receipt document
+  /// #4184 the counter receipt document; percent, tax and net arrive formatted
   ///
   /// In en, this message translates to:
-  /// **'VAT {percent} %: {tax} on {net}'**
+  /// **'VAT {percent}: {tax} on {net}'**
   String tillReceiptTaxLine(String percent, String tax, String net);
 
-  /// #4184 the counter receipt document
+  /// #4184 the counter receipt document; amount arrives formatted
   ///
   /// In en, this message translates to:
   /// **'Total {amount}'**

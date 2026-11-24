@@ -7,6 +7,8 @@ import 'package:deskilo/features/stock/domain/workspace_units.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/unit_conversion.dart';
+
 const _km = WorkspaceUnit(code: 'km', dimension: UnitDimension.length, factorNum: 1000, factorDen: 1, builtIn: true);
 const _m = WorkspaceUnit(code: 'm', dimension: UnitDimension.length, factorNum: 1, factorDen: 1, builtIn: true);
 const _mm = WorkspaceUnit(code: 'mm', dimension: UnitDimension.length, factorNum: 1, factorDen: 1000, builtIn: true);

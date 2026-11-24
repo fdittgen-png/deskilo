@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4416 — an error report as the installation's operator reads it
-// (`instance_trace_reports_v1`, 0953): what the app sent, nothing more.
+// (`instance_trace_reports_v1`, 0956): what the app sent, nothing more.
 
 /// How many reports the operator's list reads at a time.
 const int traceReportsPageSize = 50;

@@ -11,10 +11,10 @@ import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../../stock/domain/workspace_units.dart';
-import '../../../stock/presentation/measure_unit_text.dart';
 import '../../domain/invoice_goods.dart';
+import '../../domain/line_unit.dart';
 import '../../domain/standalone_invoice.dart';
+import 'line_unit_text.dart';
 
 /// The units the composer offers, by the UN/ECE code the structured invoice
 /// needs: the registry of billing units belongs to the goods work (#4169).
@@ -59,10 +59,10 @@ class StandaloneLineForm {
   final StandaloneLine? _from;
 
   /// #4442 -- the business's own units the line may also be sold in (kilometres, a drum of cable): set by the editor that shows them.
-  List<WorkspaceUnit> offered = const [];
+  List<LineUnit> offered = const [];
 
   /// The units the business adds to the four of the composer (a piece and an hour are already there).
-  List<WorkspaceUnit> get extraUnits => [
+  List<LineUnit> get extraUnits => [
     for (final u in offered)
       if (u.code != 'piece' && u.code != 'h') u,
   ];
@@ -120,7 +120,7 @@ class StandaloneLineForm {
       unit: goodsUnit ??
           (
             code: unit,
-            label: keep ? from.unitLabel : (own == null ? _unitLabel(context, unit) : measureUnitName(context.l10n, own)),
+            label: keep ? from.unitLabel : (own == null ? _unitLabel(context, unit) : lineUnitName(context.l10n, code: own.code, label: own.label)),
             un: keep ? from.unEceCode : (own?.unEceCode ?? (listed.isEmpty ? '' : listed.first.un)),
           ),
       unitPrice: decimalTextFromInput(price.text, locale: locale) ?? price.text.trim(),
@@ -170,7 +170,7 @@ class StandaloneLineEditor extends StatelessWidget {
   final bool pieces;
 
   /// #4442 -- the business's own units a free line may also be sold in; none while the feature is off.
-  final List<WorkspaceUnit> units;
+  final List<LineUnit> units;
 
   /// What the line is counted in: the item's own unit on a goods line, else the units to pick from.
   Widget _unitField(BuildContext context) {
@@ -188,7 +188,7 @@ class StandaloneLineEditor extends StatelessWidget {
         items: [
           if (form.unlistedUnit case final u?) DropdownMenuItem(value: u.code, child: Text(u.label)),
           for (final u in standaloneUnits) DropdownMenuItem(value: u.code, child: Text(_unitLabel(context, u.code))),
-          for (final u in form.extraUnits) DropdownMenuItem(value: u.code, child: Text(measureUnitName(l, u))),
+          for (final u in form.extraUnits) DropdownMenuItem(value: u.code, child: Text(lineUnitName(l, code: u.code, label: u.label))),
         ],
         onChanged: enabled
             ? (v) {

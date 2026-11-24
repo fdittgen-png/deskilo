@@ -9,7 +9,6 @@
 // The conversion is exact, as the server's `workspace_unit_convert` is: through the base unit, never through a double; two
 // dimensions never convert; an answer six decimals cannot hold is refused, not rounded.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import 'package:meta/meta.dart';
 
 /// What a unit measures. Units of one dimension convert to each other; units of two never do.
 enum UnitDimension {
@@ -141,30 +140,6 @@ abstract interface class WorkspaceUnits {
 
   /// Hides or shows a unit that is no longer used (`workspace_unit_archive_v1`).
   Future<void> archive(String workspaceId, {required String requestId, required String code, required bool archived});
-}
-
-/// Why a quantity has no value in another unit.
-@visibleForTesting
-enum UnitConversionProblem {
-  /// Two dimensions: a length is not a mass.
-  differentDimensions,
-
-  /// The answer has more than six decimals: it is refused, never rounded.
-  notExact,
-
-  /// The answer is beyond what a quantity can hold.
-  outOfRange,
-}
-
-/// [quantity] of [from] as a quantity of [to], exactly (no screen reads it yet: the Settings > Units screen does): `quantity x from / to` through the dimension's base unit.
-@visibleForTesting
-({ExactQuantity? value, UnitConversionProblem? problem}) convertUnit(ExactQuantity quantity, WorkspaceUnit from, WorkspaceUnit to) {
-  if (from.dimension != to.dimension) return (value: null, problem: UnitConversionProblem.differentDimensions);
-  final numerator = quantity.micro * BigInt.from(from.factorNum) * BigInt.from(to.factorDen);
-  final denominator = BigInt.from(from.factorDen) * BigInt.from(to.factorNum);
-  if (numerator.remainder(denominator) != BigInt.zero) return (value: null, problem: UnitConversionProblem.notExact);
-  final read = ExactQuantity.tryParse(_decimal(numerator ~/ denominator));
-  return read.value == null ? (value: null, problem: UnitConversionProblem.outOfRange) : (value: read.value, problem: null);
 }
 
 /// Millionths in one: a quantity holds six decimals.

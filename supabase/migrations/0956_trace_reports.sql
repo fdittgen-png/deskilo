@@ -118,4 +118,4 @@ grant execute on function public.instance_trace_reports_v1(integer, timestamptz)
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(953);
+select public.set_deskilo_schema_version(956);

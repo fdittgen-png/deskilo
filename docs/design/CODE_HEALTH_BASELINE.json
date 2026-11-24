@@ -138,7 +138,7 @@
 
       "lib/features/money/presentation/screens/vat_screen.dart": 7,
 
-      "lib/features/money/presentation/standalone/standalone_invoice_screen.dart": 12,
+      "lib/features/money/presentation/standalone/standalone_invoice_screen.dart": 10,
 
       "lib/features/money/presentation/widgets/billing_rules_dialog.dart": 6,
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4416 — the installation's door for error reports (`submit_trace_report_v1`,
-// 0953). Its answer is read; a refusal (an assistant's session, nobody signed
+// 0956). Its answer is read; a refusal (an assistant's session, nobody signed
 // in) arrives as the client's exception and the reporter drops the report.
 import 'package:supabase_flutter/supabase_flutter.dart';
 

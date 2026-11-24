@@ -64,7 +64,7 @@ TraceReport? _report(TraceEntry e, {int maxBytes = 16384}) => traceReportOf(
   e,
   deviceId: 'device-0123456789',
   appVersion: '2.2.0',
-  schemaVersion: 953,
+  schemaVersion: 956,
   platform: 'android',
   maxBytes: maxBytes,
 );
