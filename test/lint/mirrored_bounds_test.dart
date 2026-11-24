@@ -170,8 +170,8 @@ void main() {
         if (m.source != null) m.source!: RegExp(r'MAX_\w+|\w+_LIMIT').firstMatch(m.sql)!.group(0)!,
     };
     final unlisted = [
-      for (final f in Directory('supabase/functions').listSync(recursive: true).whereType<File>())
-        if (f.path.endsWith('.ts') && !f.path.endsWith('_test.ts'))
+      for (final f in filesWithExtension('supabase/functions', '.ts', recursive: true))
+        if (!f.path.endsWith('_test.ts'))
           for (final name in unlistedTsBounds(f.readAsStringSync()))
             if (mirrored[f.path.replaceAll('\\', '/')] != name) '${f.path}: $name',
     ];
