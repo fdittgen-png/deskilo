@@ -1,0 +1,8 @@
+# Name,   Type, SubType, Offset,   Size,    Flags
+# Two OTA slots inside the real 4 MB (E09 signs and rolls back into them); the journal gets its own data partition (E08).
+nvs,      data, nvs,     0x9000,   0x6000,
+otadata,  data, ota,     0xf000,   0x2000,
+phy_init, data, phy,     0x11000,  0x1000,
+ota_0,    app,  ota_0,   0x20000,  0x180000,
+ota_1,    app,  ota_1,   0x1a0000, 0x180000,
+journal,  data, 0x40,    0x320000, 0xC0000,
