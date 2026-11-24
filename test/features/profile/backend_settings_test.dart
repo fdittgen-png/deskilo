@@ -399,11 +399,11 @@ void main() {
             body: ServerFactsCard(endpoint: custom, isDefault: false),
           ), overrides: standardTestOverrides(
             schemaVersion:
-                const FixedSchemaVersionSource(requiredSchemaVersion - 1)));
+                const FixedSchemaVersionSource(appNeedsSchemaVersion - 1)));
       await tester.pumpAndSettle();
       expect(
           find.text(
-              'Needs an update: this app needs schema $requiredSchemaVersion'),
+              'Needs an update: this app needs schema $appNeedsSchemaVersion'),
           findsOneWidget);
       expect(find.textContaining('applies only what is missing'),
           findsOneWidget);

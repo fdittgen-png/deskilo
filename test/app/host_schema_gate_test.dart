@@ -141,9 +141,16 @@ void main() {
       tester,
       const FixedInstallationSchemaSource(number: appNeedsSchemaVersion - 1),
     );
-    expect(find.byKey(const ValueKey('schema-update-sign-out')), findsOneWidget);
+    // The screen is a list: on a phone its last actions are built when
+    // scrolled to.
+    final list = find.byType(Scrollable).first;
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('schema-update-sign-out')),
+      200,
+      scrollable: list,
+    );
     final me = find.byKey(const ValueKey('schema-update-me'));
-    await tester.ensureVisible(me);
+    await tester.scrollUntilVisible(me, -200, scrollable: list);
     await tester.tap(me);
     await tester.pumpAndSettle();
     expect(find.byKey(_update), findsNothing, reason: 'Me is the account\'s');

@@ -22,7 +22,7 @@ void main() {
   group('the global schema gate is unchanged by the lifecycle', () {
     test('a server behind this app blocks; one ahead of it does not', () {
       expect(
-        compareSchema(requiredSchemaVersion - 1),
+        compareSchema(appNeedsSchemaVersion - 1),
         SchemaCompatibility.behind,
       );
       expect(compareSchema(null), SchemaCompatibility.behind);

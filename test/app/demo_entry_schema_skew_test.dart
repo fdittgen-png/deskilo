@@ -23,7 +23,7 @@ void main() {
             overrides: standardTestOverrides(
               auth: signedIn ? FakeAuthRepository.signedIn() : null,
               schemaVersion: const FixedSchemaVersionSource(
-                requiredSchemaVersion - 1,
+                appNeedsSchemaVersion - 1,
               ),
             ),
             child: const DeskiloApp(),
