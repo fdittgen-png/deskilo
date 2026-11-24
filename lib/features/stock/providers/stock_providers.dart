@@ -11,6 +11,8 @@ import '../data/supabase_item_groups.dart';
 import '../data/supabase_stock_code_resolver.dart';
 import '../data/supabase_stock_config_commands.dart';
 import '../data/supabase_stock_cycle_counts.dart';
+import '../data/supabase_stock_expiry.dart';
+import '../data/supabase_stock_handling_units.dart';
 import '../data/supabase_stock_operations.dart';
 import '../data/supabase_stock_queries.dart';
 import '../data/supabase_stock_receiving_commands.dart';
@@ -19,11 +21,15 @@ import '../data/supabase_stock_reorder.dart';
 import '../data/supabase_stock_reversals.dart';
 import '../data/supabase_stock_tags.dart';
 import '../data/supabase_stock_trace.dart';
+import '../data/supabase_stock_trace_chain.dart';
+import '../data/supabase_stock_where_is.dart';
+import '../domain/handling_units.dart';
 import '../domain/item_groups.dart';
 import '../domain/stock_code_resolver.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_cycle_counts.dart';
+import '../domain/stock_expiry.dart';
 import '../domain/stock_operations.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_queries.dart';
@@ -34,6 +40,9 @@ import '../domain/stock_reversals.dart';
 import '../domain/stock_service_creator.dart';
 import '../domain/stock_tags.dart';
 import '../domain/stock_trace.dart';
+import '../domain/stock_trace_chain.dart';
+import '../domain/stock_where_is.dart';
+import '../presentation/stock_expiry_printer.dart';
 
 /// #4161 -- the stock reads of the selected business. The Demo and the tests
 /// replace it.
@@ -155,6 +164,10 @@ final itemGroupsProvider = Provider<ItemGroups>(
   (ref) => SupabaseItemGroups(ref.watch(selectedWorkspaceClientProvider)),
 );
 
+/// The item groups when the business has them on, else null: what an item's editor reads to mark an own value.
+ItemGroups? itemGroupsIfOn(WidgetRef ref) =>
+    ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockItemGroups) ? ref.read(itemGroupsProvider) : null;
+
 /// #4361 -- the groups of [workspaceId], for the screens.
 final itemGroupListProvider = FutureProvider.autoDispose.family<List<ItemGroup>, String>(
   (ref, workspaceId) => ref.watch(itemGroupsProvider).groups(workspaceId),
@@ -192,6 +205,21 @@ final stockScanAddsOneProvider = Provider<bool>((ref) {
 /// business. The Demo and the tests replace it.
 final stockTraceReaderProvider = Provider<StockTraceReader>(
   (ref) => SupabaseStockTrace(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// #4432 -- the whole chain of a lot or a piece (0923).
+final stockTraceChainReaderProvider = Provider<StockTraceChainReader>(
+  (ref) => SupabaseStockTraceChain(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// #4432 -- the chain of the lot (or, without a lot, the pieces) a movement belongs to.
+/// The subject is exactly one of a movement, a lot or a piece.
+final stockMovementChainProvider =
+    FutureProvider.autoDispose.family<TraceChain, ({String workspaceId, String? movementId, String? lotId, String? pieceId})>(
+  (ref, key) => ref
+      .watch(stockTraceChainReaderProvider)
+      .chain(key.workspaceId, movementId: key.movementId, lotId: key.lotId, pieceId: key.pieceId),
+  retry: (_, _) => null,
 );
 
 /// #4173 -- the trace of one movement.
@@ -299,6 +327,29 @@ final stockCountsProvider = FutureProvider.autoDispose
 /// the money feature); null where nothing is wired, which offers no "new item".
 final stockServiceCreatorProvider = Provider<StockServiceCreator?>((ref) => null);
 
+/// #4434 -- "where is it": the port, and one answer for an item (and a lot), now or as of a date.
+final stockWhereIsProvider = Provider<StockWhereIs>((ref) => SupabaseStockWhereIs(ref.watch(selectedWorkspaceClientProvider)));
+
+/// What to look at: an item, perhaps one of its lots, now (no date) or at [at].
+typedef _WhereIsQuery = ({String workspaceId, String itemId, String? lotId, DateTime? at});
+
+final stockWhereIsAnswerProvider = FutureProvider.autoDispose.family<WhereIsAnswer, _WhereIsQuery>(
+  (ref, q) => ref.watch(stockWhereIsProvider).whereIs(q.workspaceId, q.itemId, lotId: q.lotId, at: q.at),
+);
+
+/// #4431 -- the expiry report of the selected business, read from the server (the Demo answers from its own lots).
+final stockExpiryProvider = Provider<StockExpiry>((ref) => SupabaseStockExpiry(ref.watch(selectedWorkspaceClientProvider)));
+
+/// #4431 -- the expiry report of one question, read again when the question changes.
+final stockExpiryReportProvider = FutureProvider.autoDispose.family<ExpiryReport, ({String workspaceId, ExpiryQuery query})>(
+  (ref, key) => ref.watch(stockExpiryProvider).report(key.workspaceId, key.query),
+  retry: (_, _) => null,
+);
+
+/// #4431 -- the printing of the expiry report through the report engine, wired by the app (the stock never imports the money
+/// feature); null where nothing is wired, which offers no print.
+final stockExpiryPrinterProvider = Provider<StockExpiryPrinter?>((ref) => null);
+
 /// #4364 -- whether bulk reading is on (`stockTagReads`): the counts and the moves offer "Read many tags".
 final stockTagReadsProvider = Provider<bool>((ref) => ref.watch(stockTagsProvider) && ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockTagReads));
 
@@ -309,3 +360,18 @@ final stockTagReadMaxProvider = Provider<int>((ref) {
       ? settings.read<int>('stock.tag_read_max_tags')
       : SettingDefaults.stockTagReadMaxTags;
 });
+
+/// #4435 -- the handling units of the selected business, read and acted on through the server (the Demo answers from its own ledger).
+final stockHandlingUnitsProvider = Provider<StockHandlingUnits>((ref) => SupabaseStockHandlingUnits(ref.watch(selectedWorkspaceClientProvider)));
+
+/// #4435 -- the open units of one business, at one place or everywhere, read again after a command.
+final handlingUnitListProvider = FutureProvider.autoDispose.family<HandlingUnitPage, ({String workspaceId, String? locationId})>(
+  (ref, key) => ref.watch(stockHandlingUnitsProvider).page(key.workspaceId, locationId: key.locationId),
+  retry: (_, _) => null,
+);
+
+/// #4435 -- one unit with its content.
+final handlingUnitProvider = FutureProvider.autoDispose.family<HandlingUnitDetail?, ({String workspaceId, String unitId})>(
+  (ref, key) => ref.watch(stockHandlingUnitsProvider).unit(key.workspaceId, key.unitId),
+  retry: (_, _) => null,
+);

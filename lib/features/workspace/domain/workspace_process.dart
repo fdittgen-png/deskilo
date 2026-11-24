@@ -166,6 +166,12 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.counterTillSessions,
       // #4364
       WorkspaceFeature.stockTagReads,
+      // #4431
+      WorkspaceFeature.stockExpiryReport,
+      // #4435
+      WorkspaceFeature.stockHandlingUnits,
+      // #4373
+      WorkspaceFeature.counterOfflineCash,
     ]),
   ]),
   WorkspaceProcess('billingPayments', [

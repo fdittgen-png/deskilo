@@ -1,0 +1,22 @@
+{
+  "@@locale": "de",
+  "stockChainTitle": "Alle Bewegungen dieser Charge",
+  "stockChainEmpty": "Keine weitere Bewegung erfasst.",
+  "stockChainTruncated": "Nur die ersten Bewegungen werden angezeigt.",
+  "stockChainPieces": "{count, plural, one{{count} Stück} other{{count} Stück}}",
+  "stockChainDelivery": "Lieferung {label} von {supplier}",
+  "stockChainReceipt": "Beleg {label}",
+  "stockChainInvoice": "Rechnung {label}",
+  "stockChainUnavailable": "Ein Dokument, das Sie nicht sehen dürfen",
+  "stockMoveReasonReceipt": "Eingegangen",
+  "stockMoveReasonTransfer": "Umgelagert",
+  "stockMoveReasonSale": "Verkauft",
+  "stockMoveReasonLoss": "Abgeschrieben",
+  "stockMoveReasonConsumption": "Verbraucht",
+  "stockMoveReasonAdjustment": "Bestand korrigiert",
+  "stockMoveReasonOpening": "Anfangsbestand",
+  "stockMoveReasonReturnIn": "Vom Kunden zurückgegeben",
+  "stockMoveReasonReturnOut": "An den Lieferanten zurückgegeben",
+  "stockChainPieceTitle": "Alle Bewegungen dieses Stücks",
+  "stockChainOpen": "Alle Bewegungen"
+}

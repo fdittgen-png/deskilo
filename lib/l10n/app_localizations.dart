@@ -7793,6 +7793,234 @@ abstract class AppLocalizations {
   /// **'Subscription {month} {pct}'**
   String billSubscriptionMonth(String month, String pct);
 
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get billingAccessAccept;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Done. The invoices {business} made out to you now appear in your finances, apart from what you owe as a member.'**
+  String billingAccessAccepted(String business);
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Account access'**
+  String get billingAccessAction;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Reads the invoices since {date}'**
+  String billingAccessActive(String date);
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'You already hold this access; accepting it again changes nothing.'**
+  String get billingAccessAlreadyHeld;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Check the code'**
+  String get billingAccessCheck;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Code copied'**
+  String get billingAccessCodeCopied;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the code'**
+  String get billingAccessCodeCopy;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Give this code to the customer now. It is shown only once and cannot be read again. It is valid until {date}.'**
+  String billingAccessCodeOnce(String date);
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation code'**
+  String get billingAccessCodeTitle;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'This code cannot be used. It may be wrong, expired, withdrawn or already taken by another account. Ask the business for a new one.'**
+  String get billingAccessCodeUnusable;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Use a billing code'**
+  String get billingAccessEnter;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'A business that invoices you can give you a code. With it you read, from your own account, the invoices it made out to you. You do not become a member.'**
+  String get billingAccessEnterIntro;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Read the invoices of a business'**
+  String get billingAccessEnterTitle;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation expired on {date}'**
+  String billingAccessExpired(String date);
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'The answer did not arrive. Nothing is known to have changed; try again.'**
+  String get billingAccessFailed;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Still open: {amounts}'**
+  String billingAccessGroupOpen(String amounts);
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing open'**
+  String get billingAccessGroupSettled;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'{business} · account {ref}'**
+  String billingAccessGroupTitle(String business, String ref);
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Invite this customer to read their own invoices from their own account. The customer does not become a member and sees nothing else of your business.'**
+  String get billingAccessIntro;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Create an invitation code'**
+  String get billingAccessInvite;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Invited on {date}, not accepted yet'**
+  String billingAccessInvited(String date);
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'The invitations could not be read. This is not an empty list.'**
+  String get billingAccessLoadFailed;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'No invitation yet.'**
+  String get billingAccessNone;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Only a billing customer can be invited. Nothing was changed.'**
+  String get billingAccessNotACustomer;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'You may not invite customers to an account here. Nothing was changed.'**
+  String get billingAccessNotAllowed;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Paying these invoices from here comes with a later update.'**
+  String get billingAccessPaymentSoon;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'{business} invites you to read the invoices made out to {name}.'**
+  String billingAccessPreviewLine(String business, String name);
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'{business} invites you to read the invoices it made out to you.'**
+  String billingAccessPreviewUnnamed(String business);
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'The reason is too long. Shorten it; nothing was changed.'**
+  String get billingAccessReasonTooLong;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'This request was already used for another invitation. Close this window and open it again; nothing was changed.'**
+  String get billingAccessRequestReused;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'End access'**
+  String get billingAccessRevoke;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Ending access erases nothing: the invoices and their history stay as they are.'**
+  String get billingAccessRevokeNote;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Access ended on {date}'**
+  String billingAccessRevoked(String date);
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices a business made out to you, read through the access it gave you. They are not counted with what you owe as a member.'**
+  String get billingAccessSectionNote;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Billed to you as a customer'**
+  String get billingAccessSectionTitle;
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Account access: {name}'**
+  String billingAccessTitle(String name);
+
+  /// the billing access of a customer to their own invoices (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'This access no longer exists. Close the list and open it again; nothing was changed.'**
+  String get billingAccessUnknownGrant;
+
   /// Button splitting the last band into two
   ///
   /// In en, this message translates to:
@@ -8030,7 +8258,7 @@ abstract class AppLocalizations {
   /// the billing customers screen and editor (#4164)
   ///
   /// In en, this message translates to:
-  /// **'The people and businesses you invoice. They have no account and see nothing of your business.'**
+  /// **'The people and businesses you invoice. They are not members and see nothing of your business, unless you invite them to read their own invoices from their own account.'**
   String get billingCustomersNoAccount;
 
   /// the billing customers screen and editor (#4164)
@@ -18784,6 +19012,18 @@ abstract class AppLocalizations {
   /// **'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.'**
   String get featureConfigurationTransferDesc;
 
+  /// #4373 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.'**
+  String get featureCounterOfflineCashDesc;
+
+  /// #4373 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Selling offline, cash only'**
+  String get featureCounterOfflineCashTitle;
+
   /// #4184 feature description
   ///
   /// In en, this message translates to:
@@ -20343,6 +20583,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cycle counts'**
   String get featureStockCycleCountsTitle;
+
+  /// #4431 the expiry report feature: what it does
+  ///
+  /// In en, this message translates to:
+  /// **'Prints, at a date you choose, every lot or piece in stock that is expired at that date or expires after it, with a layout you can edit like the other reports.'**
+  String get featureStockExpiryReportDesc;
+
+  /// #4431 the expiry report feature: its name
+  ///
+  /// In en, this message translates to:
+  /// **'The expiry report'**
+  String get featureStockExpiryReportTitle;
+
+  /// #4435 the handling units feature: what it does
+  ///
+  /// In en, this message translates to:
+  /// **'Goods move in the pallet or carton they were received in, or in the store\'s own repackaged units, and stay traceable through the repack.'**
+  String get featureStockHandlingUnitsDesc;
+
+  /// #4435 the handling units feature: its name
+  ///
+  /// In en, this message translates to:
+  /// **'Handling units'**
+  String get featureStockHandlingUnitsTitle;
 
   /// #4361 feature description
   ///
@@ -46314,6 +46578,12 @@ abstract class AppLocalizations {
   /// **'This receipt is no longer an open draft, or a receipt was already issued for the same sale.'**
   String get refusalCounterNotOpen;
 
+  /// #4373 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'A sale sent from the till under this number was already received with other content. Nothing was recorded again; look at the list of offline sales.'**
+  String get refusalCounterOfflineConflict;
+
   /// #4185 refusal
   ///
   /// In en, this message translates to:
@@ -46529,6 +46799,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.'**
   String get refusalStockUnit;
+
+  /// #4435 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This unit changed since you read it: someone moved or unpacked it. Read it again.'**
+  String get refusalStockUnitChanged;
+
+  /// #4435 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This unit code is already used in this business. Choose another code.'**
+  String get refusalStockUnitCodeTaken;
+
+  /// #4435 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'What the unit holds does not fit: the quantity, the lot, the piece or the place. Check the content.'**
+  String get refusalStockUnitContent;
 
   /// #4169 (0837) DKG12: an item with variants moved, sold or counted without naming one.
   ///
@@ -47711,6 +47999,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace status'**
   String get reportDocStatus;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry report'**
+  String get reportDocStockExpiry;
 
   /// Report kind (#2376): the trial balance with its auxiliary balance
   ///
@@ -51306,6 +51600,24 @@ abstract class AppLocalizations {
   /// **'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.'**
   String get settingHintCounterFiscalObligation;
 
+  /// #4373 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.'**
+  String get settingHintCounterOfflineMaxMinutes;
+
+  /// #4373 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How many cash sales made offline one till session accepts. Further sales are refused and listed for the owner.'**
+  String get settingHintCounterOfflineMaxSales;
+
+  /// #4373 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How far, in percent, the price of an offline sale may differ from the item\'s price when the sale is sent. 0 means the price must be the same.'**
+  String get settingHintCounterOfflinePriceTolerance;
+
   /// #4367 setting label/hint or refusal
   ///
   /// In en, this message translates to:
@@ -51702,6 +52014,12 @@ abstract class AppLocalizations {
   /// **'How many days a cycle count task may stay open past its due date before the inbox says it is overdue.'**
   String get settingHintStockCycleCountOverdueDays;
 
+  /// #4431 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How many days after the reference date the expiry report looks ahead for what is about to expire, when no horizon is named when it is printed.'**
+  String get settingHintStockExpiryHorizonDays;
+
   /// #4361 setting label/hint
   ///
   /// In en, this message translates to:
@@ -51947,6 +52265,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fiscal rules for counter sales'**
   String get settingLabelCounterFiscalObligation;
+
+  /// #4373 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Longest offline period (minutes)'**
+  String get settingLabelCounterOfflineMaxMinutes;
+
+  /// #4373 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Most offline sales per till session'**
+  String get settingLabelCounterOfflineMaxSales;
+
+  /// #4373 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Price difference allowed offline (%)'**
+  String get settingLabelCounterOfflinePriceTolerance;
 
   /// #4367 setting label/hint or refusal
   ///
@@ -52343,6 +52679,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cycle count: overdue after'**
   String get settingLabelStockCycleCountOverdueDays;
+
+  /// #4431 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry report: look ahead'**
+  String get settingLabelStockExpiryHorizonDays;
 
   /// #4361 setting label/hint
   ///
@@ -57011,6 +57353,66 @@ abstract class AppLocalizations {
   /// **'Camera scanner'**
   String get stockCameraTitle;
 
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery {label} from {supplier}'**
+  String stockChainDelivery(String label, String supplier);
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'No other movement is recorded.'**
+  String get stockChainEmpty;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {label}'**
+  String stockChainInvoice(String label);
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Every movement'**
+  String get stockChainOpen;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Every movement of this piece'**
+  String get stockChainPieceTitle;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} piece} other{{count} pieces}}'**
+  String stockChainPieces(int count);
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt {label}'**
+  String stockChainReceipt(String label);
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Every movement of this lot'**
+  String get stockChainTitle;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Only the first movements are shown.'**
+  String get stockChainTruncated;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'A document you may not see'**
+  String get stockChainUnavailable;
+
   /// #4161 the cost per unit of a movement
   ///
   /// In en, this message translates to:
@@ -57725,6 +58127,108 @@ abstract class AppLocalizations {
   /// **'Entered'**
   String get stockEnteredLabel;
 
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get stockExpiryAny;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'The report is cut at {rows} rows: narrow the date, the place or the group.'**
+  String stockExpiryCut(String rows);
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Reference date'**
+  String get stockExpiryDate;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'in {days} d'**
+  String stockExpiryDaysAhead(String days);
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'{days} d past'**
+  String stockExpiryDaysPast(String days);
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Item group'**
+  String get stockExpiryGroup;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Look ahead (days)'**
+  String get stockExpiryHorizon;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Empty: the business\'s own setting.'**
+  String get stockExpiryHorizonHint;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in stock is expired or about to expire at this date.'**
+  String get stockExpiryNone;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get stockExpiryPlace;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Print the report'**
+  String get stockExpiryPrint;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'The expiry report could not be read.'**
+  String get stockExpiryReadFailed;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'What to list'**
+  String get stockExpiryScope;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Expired and expiring'**
+  String get stockExpiryScopeBoth;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get stockExpiryScopeExpired;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring'**
+  String get stockExpiryScopeExpiring;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry report'**
+  String get stockExpiryTitle;
+
   /// #4350 adding an item, and the first-run stock page
   ///
   /// In en, this message translates to:
@@ -57982,6 +58486,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Quantity ({unit})'**
   String stockMoveQuantity(String unit);
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Count adjusted'**
+  String get stockMoveReasonAdjustment;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Used'**
+  String get stockMoveReasonConsumption;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Written off'**
+  String get stockMoveReasonLoss;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Opening stock'**
+  String get stockMoveReasonOpening;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get stockMoveReasonReceipt;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Returned by the customer'**
+  String get stockMoveReasonReturnIn;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Returned to the supplier'**
+  String get stockMoveReasonReturnOut;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Sold'**
+  String get stockMoveReasonSale;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Moved'**
+  String get stockMoveReasonTransfer;
 
   /// #4170 transfers and take-out: a label or message
   ///
@@ -59932,6 +60490,204 @@ abstract class AppLocalizations {
   /// **'Transfers'**
   String get stockTransfersTitle;
 
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'The unit is at {place} now: read it again.'**
+  String stockUnitChangedNow(String place);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Unit code'**
+  String get stockUnitCode;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Content'**
+  String get stockUnitContent;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in it.'**
+  String get stockUnitContentNone;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Kind'**
+  String get stockUnitKind;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Box'**
+  String get stockUnitKindBox;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Carton'**
+  String get stockUnitKindCarton;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Crate'**
+  String get stockUnitKindCrate;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get stockUnitKindOther;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Pallet'**
+  String get stockUnitKindPallet;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier label (SSCC), if any'**
+  String get stockUnitLabelCode;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} loose here'**
+  String stockUnitLoose(String quantity);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'{unit} made.'**
+  String stockUnitMade(String unit);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Make a unit'**
+  String get stockUnitMake;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Move'**
+  String get stockUnitMove;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Move to'**
+  String get stockUnitMoveTo;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'{unit} moved to {place}.'**
+  String stockUnitMoved(String unit, String place);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'In {unit}'**
+  String stockUnitNestedIn(String unit);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get stockUnitPlace;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Repack into boxes'**
+  String get stockUnitRepack;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Number of boxes'**
+  String get stockUnitRepackBoxes;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity in each box'**
+  String get stockUnitRepackEach;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'What to repack'**
+  String get stockUnitRepackItem;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 box made.} other{{count} boxes made.}}'**
+  String stockUnitRepacked(int count);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Unpack'**
+  String get stockUnitUnpack;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Its content stays where it is, loose.'**
+  String get stockUnitUnpackHint;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'{unit} unpacked.'**
+  String stockUnitUnpacked(String unit);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'All places'**
+  String get stockUnitsAllPlaces;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an item'**
+  String get stockUnitsChooseItem;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'No unit yet. Make one from stock that is loose at a place.'**
+  String get stockUnitsEmpty;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'A pallet, a carton or a box of your own: it moves with its whole content, and every lot and piece stays traceable.'**
+  String get stockUnitsIntro;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'The units could not be read.'**
+  String get stockUnitsReadFailed;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Handling units'**
+  String get stockUnitsTitle;
+
   /// #4173 the goods trace and the stock value
   ///
   /// In en, this message translates to:
@@ -60051,6 +60807,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'When'**
   String get stockWhenLabel;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'Left or came from outside'**
+  String get stockWhereIsAway;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'Now'**
+  String get stockWhereIsNow;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'None of it is held at a place at this date.'**
+  String get stockWhereIsNowhere;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} in all'**
+  String stockWhereIsOnHand(String quantity);
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'Where is it'**
+  String get stockWhereIsOpen;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'On a day…'**
+  String get stockWhereIsPickDate;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'Pieces'**
+  String get stockWhereIsPieces;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'Pieces are followed from {date} on: a piece made before has no history before that day.'**
+  String stockWhereIsPiecesFrom(String date);
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'Only the first 200 pieces are shown.'**
+  String get stockWhereIsPiecesMore;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'Where is it'**
+  String get stockWhereIsTitle;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'On the road'**
+  String get stockWhereIsTransit;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'From {from} to {to}'**
+  String stockWhereIsTransitLine(String from, String to);
 
   /// Shown as the title in process names (workspace).
   ///
@@ -64444,6 +65272,12 @@ abstract class AppLocalizations {
   /// **'Take cash'**
   String get tillPayCash;
 
+  /// #4436 the till: a piece scanned a second time into the same basket
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {code} is already in the basket.'**
+  String tillPieceTwice(String code);
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -64486,6 +65320,12 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get tillRetry;
 
+  /// #4436 the till: a scanned code that names nothing the till rings up
+  ///
+  /// In en, this message translates to:
+  /// **'{code} is not something this till sells.'**
+  String tillScanUnknown(String code);
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -64509,6 +65349,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total to pay: {amount}'**
   String tillTotalDue(String amount);
+
+  /// #4436 the till: a lot a sold line took, its code as received and the quantity taken from it
+  ///
+  /// In en, this message translates to:
+  /// **'Lot {code} × {quantity}'**
+  String tillTrackLot(String code, String quantity);
+
+  /// #4436 the till: a piece a sold line took, named by its tag
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {code}'**
+  String tillTrackPiece(String code);
 
   /// Tip (#2313) on the availability surface: a scenario "To …: …".
   ///

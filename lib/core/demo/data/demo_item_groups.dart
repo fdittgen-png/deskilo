@@ -26,8 +26,8 @@ class _Group {
 
 class DemoItemGroups implements ItemGroups {
   DemoItemGroups(this._workspaceId, this._config, this._now) {
-    _groups['demo-group-drinks'] = _Group('demo-group-drinks', null, 'Drinks', {'tracking': 'lot', 'shelf_life_days': 180, 'count_every_days': 14});
-    _groups['demo-group-hot'] = _Group('demo-group-hot', 'demo-group-drinks', 'Hot drinks', {'shelf_life_days': 365});
+    _groups['demo-group-drinks'] = _Group('demo-group-drinks', null, 'Drinks', {'tracking': 'lot', 'shelf_life_days': 180, 'count_every_days': 14, 'vat_rate_id': 'demo-vat-20', 'supply_class': 'general', 'price_rounding': '0.05', 'target_margin_bps': 3500});
+    _groups['demo-group-hot'] = _Group('demo-group-hot', 'demo-group-drinks', 'Hot drinks', {'shelf_life_days': 365, 'price_rounding': '0.99', 'target_margin_bps': 4200});
     _groups['demo-group-home'] = _Group('demo-group-home', null, 'Homeware', {'tracking': 'none'});
     _member.addAll({'demo-item-milk': 'demo-group-drinks', 'demo-item-syrup': 'demo-group-drinks', 'demo-item-beans': 'demo-group-hot', 'demo-item-mugs': 'demo-group-home'});
     _own['demo-item-syrup'] = {'shelf_life_days': 365};

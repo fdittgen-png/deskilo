@@ -55,6 +55,8 @@ import 'data/demo_stock_candidates.dart';
 import 'data/demo_stock_code_resolver.dart';
 import 'data/demo_stock_config_commands.dart';
 import 'data/demo_stock_cycle_counts.dart';
+import 'data/demo_stock_expiry.dart';
+import 'data/demo_stock_handling_units.dart';
 import 'data/demo_stock_ledger.dart';
 import 'data/demo_stock_operations.dart';
 import 'data/demo_stock_queries.dart';
@@ -64,6 +66,8 @@ import 'data/demo_stock_reorder.dart';
 import 'data/demo_stock_reversals.dart';
 import 'data/demo_stock_tags.dart';
 import 'data/demo_stock_trace.dart';
+import 'data/demo_stock_trace_chain.dart';
+import 'data/demo_stock_where_is.dart';
 import 'data/demo_till.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
@@ -258,6 +262,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
       (ref) => demoPickSpace(ref, payments),
     ),
     tillPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
+    tillOfflinePortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
   ];
 }
 
@@ -312,6 +317,10 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
   stockCodeResolverProvider.overrideWith((ref) => stocks.of(ref).codeResolver),
   // #4363 — and keeps tags (an NFC chip on a shelf and on the mugs) in memory.
   stockTagsStoreProvider.overrideWith((ref) => stocks.of(ref).tags),
+  // #4435 — and keeps handling units (a pallet and a carton at the main store) over that same ledger.
+  stockHandlingUnitsProvider.overrideWith((ref) => stocks.of(ref).units),
+  // #4431 — the expiry report answers from the lots the Demo keeps with their dates.
+  stockExpiryProvider.overrideWith((ref) => stocks.of(ref).expiry),
   // #4171 — and receives the deliveries of its orders into that stock.
   stockReceivingCommandsProvider.overrideWith(
     (ref) => DemoStockReceivingCommands(
@@ -323,6 +332,8 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
     ),
   ),
   // #4173 — and traces its goods to the orders they were put away from, and values them.
+  // #4432 — and the whole chain of a lot, from its own ledger.
+  stockTraceChainReaderProvider.overrideWith((ref) => DemoStockTraceChain(stocks.of(ref).ledger)),
   stockTraceReaderProvider.overrideWith(
     (ref) => DemoStockTrace(
       stocks.of(ref).id,
@@ -338,6 +349,8 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
   stockReversalsProvider.overrideWith((ref) => stocks.of(ref).reversals),
   // #4361 — and keeps item groups: drinks (with hot drinks beneath) and homeware, the syrup keeping its own shelf life.
   itemGroupsProvider.overrideWith((ref) => stocks.of(ref).itemGroups),
+  // #4434 — and answers where an item is, now and on a past day, from that same ledger.
+  stockWhereIsProvider.overrideWith((ref) => DemoStockWhereIs(stocks.of(ref).ledger, stocks.of(ref).tags)),
   // #4295 — and keeps a cycle count plan for its high-value shelf, whose task counts into those same counts.
   stockCycleCountsProvider.overrideWith(
     (ref) => DemoStockCycleCounts(
@@ -389,6 +402,8 @@ class _DemoStock {
       nameOf: (item) async => DemoStockLedger.items.where((i) => i.id == item).firstOrNull?.name,
     );
     codeResolver = DemoStockCodeResolver(id, config, registry, tags);
+    units = DemoStockHandlingUnits(ledger);
+    expiry = DemoStockExpiry(now, tags, itemsOfGroup: (item, group) async => (await itemGroups.effective(id, item)).groupId == group);
   }
 
   /// The business this kit belongs to: what every command, trace and count of the kit is scoped to.
@@ -401,6 +416,8 @@ class _DemoStock {
   late final DemoStockReversals reversals;
   late final DemoItemGroups itemGroups;
   late final DemoStockTags tags;
+  late final DemoStockExpiry expiry;
+  late final DemoStockHandlingUnits units;
   late final DemoStockCodeResolver codeResolver;
 }
 

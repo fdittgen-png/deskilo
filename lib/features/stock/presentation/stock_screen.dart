@@ -190,6 +190,8 @@ class _OnHandList extends ConsumerWidget {
           l10n.stockQuantityWithUnit(row.quantity.text, row.unit),
           style: Theme.of(context).textTheme.titleMedium,
         ),
+        // #4434 -- where else the item is, and where it was on a past day
+        onTap: () => context.push('/stock/where/${row.itemId}${row.lotId == null ? '' : '?lot=${row.lotId}'}'),
       ),
     );
   }

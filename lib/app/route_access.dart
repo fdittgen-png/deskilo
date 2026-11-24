@@ -48,6 +48,8 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/stock': {_P.viewStock, _P.manageStock},
   '/stock/movements': {_P.viewStock, _P.manageStock},
   '/stock/movements/:id': {_P.viewStock, _P.manageStock},
+  // #4434 — where an item is: read like the stock, and the server asks the same.
+  '/stock/where/:itemId': {_P.viewStock, _P.manageStock},
   // #4170 — the goods on their way and the commands that move goods: seen with the stock, run with manageStock.
   '/stock/transfers': {_P.viewStock, _P.manageStock},
   // #4172 — the counts: seen by who sees the stock or approves, counted with manageStock, applied with the approval right.
@@ -60,6 +62,9 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   // #4295 — who counts (the right countStock implies nothing else) or manages the stock.
   '/stock/cycle-counts': {_P.countStock, _P.manageStock},
   '/stock/cycle-counts/:taskId': {_P.countStock, _P.manageStock},
+  // #4431 — the expiry report reads like the stock (the server asks the same: it is the stock's own read).
+  '/stock/expiry': {_P.viewStock, _P.manageStock},
+  '/stock/units': {_P.viewStock, _P.manageStock},
   // #4361 — the item groups read like the stock; changing one is for who manages it (the server asks the same).
   '/stock/groups': {_P.viewStock, _P.manageStock},
   // #4299 — the item registry and the places read like the stock; its settings

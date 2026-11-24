@@ -6516,6 +6516,219 @@
       }
     }
   },
+  "billingAccessAccept": "Accept",
+  "@billingAccessAccept": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessAccepted": "Done. The invoices {business} made out to you now appear in your finances, apart from what you owe as a member.",
+  "@billingAccessAccepted": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessAction": "Account access",
+  "@billingAccessAction": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessActive": "Reads the invoices since {date}",
+  "@billingAccessActive": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessAlreadyHeld": "You already hold this access; accepting it again changes nothing.",
+  "@billingAccessAlreadyHeld": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessCheck": "Check the code",
+  "@billingAccessCheck": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessCodeCopied": "Code copied",
+  "@billingAccessCodeCopied": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessCodeCopy": "Copy the code",
+  "@billingAccessCodeCopy": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessCodeOnce": "Give this code to the customer now. It is shown only once and cannot be read again. It is valid until {date}.",
+  "@billingAccessCodeOnce": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessCodeTitle": "Invitation code",
+  "@billingAccessCodeTitle": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessCodeUnusable": "This code cannot be used. It may be wrong, expired, withdrawn or already taken by another account. Ask the business for a new one.",
+  "@billingAccessCodeUnusable": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessEnter": "Use a billing code",
+  "@billingAccessEnter": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessEnterIntro": "A business that invoices you can give you a code. With it you read, from your own account, the invoices it made out to you. You do not become a member.",
+  "@billingAccessEnterIntro": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessEnterTitle": "Read the invoices of a business",
+  "@billingAccessEnterTitle": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessExpired": "Invitation expired on {date}",
+  "@billingAccessExpired": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessFailed": "The answer did not arrive. Nothing is known to have changed; try again.",
+  "@billingAccessFailed": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessGroupOpen": "Still open: {amounts}",
+  "@billingAccessGroupOpen": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "amounts": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessGroupSettled": "Nothing open",
+  "@billingAccessGroupSettled": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessGroupTitle": "{business} · account {ref}",
+  "@billingAccessGroupTitle": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      },
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessIntro": "Invite this customer to read their own invoices from their own account. The customer does not become a member and sees nothing else of your business.",
+  "@billingAccessIntro": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessInvite": "Create an invitation code",
+  "@billingAccessInvite": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessInvited": "Invited on {date}, not accepted yet",
+  "@billingAccessInvited": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessLoadFailed": "The invitations could not be read. This is not an empty list.",
+  "@billingAccessLoadFailed": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessNone": "No invitation yet.",
+  "@billingAccessNone": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessNotACustomer": "Only a billing customer can be invited. Nothing was changed.",
+  "@billingAccessNotACustomer": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessNotAllowed": "You may not invite customers to an account here. Nothing was changed.",
+  "@billingAccessNotAllowed": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessPaymentSoon": "Paying these invoices from here comes with a later update.",
+  "@billingAccessPaymentSoon": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessPreviewLine": "{business} invites you to read the invoices made out to {name}.",
+  "@billingAccessPreviewLine": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessPreviewUnnamed": "{business} invites you to read the invoices it made out to you.",
+  "@billingAccessPreviewUnnamed": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessReasonTooLong": "The reason is too long. Shorten it; nothing was changed.",
+  "@billingAccessReasonTooLong": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessRequestReused": "This request was already used for another invitation. Close this window and open it again; nothing was changed.",
+  "@billingAccessRequestReused": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessRevoke": "End access",
+  "@billingAccessRevoke": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessRevokeNote": "Ending access erases nothing: the invoices and their history stay as they are.",
+  "@billingAccessRevokeNote": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessRevoked": "Access ended on {date}",
+  "@billingAccessRevoked": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessSectionNote": "Invoices a business made out to you, read through the access it gave you. They are not counted with what you owe as a member.",
+  "@billingAccessSectionNote": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessSectionTitle": "Billed to you as a customer",
+  "@billingAccessSectionTitle": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessTitle": "Account access: {name}",
+  "@billingAccessTitle": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessUnknownGrant": "This access no longer exists. Close the list and open it again; nothing was changed.",
+  "@billingAccessUnknownGrant": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
   "billingAddBand": "Add band",
   "@billingAddBand": {
     "description": "Button splitting the last band into two"
@@ -6677,7 +6890,7 @@
   "@billingCustomersLoadFailed": {
     "description": "the billing customers screen and editor (#4164)"
   },
-  "billingCustomersNoAccount": "The people and businesses you invoice. They have no account and see nothing of your business.",
+  "billingCustomersNoAccount": "The people and businesses you invoice. They are not members and see nothing of your business, unless you invite them to read their own invoices from their own account.",
   "@billingCustomersNoAccount": {
     "description": "the billing customers screen and editor (#4164)"
   },
@@ -15328,6 +15541,14 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterOfflineCashDesc": "When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  },
+  "featureCounterOfflineCashTitle": "Selling offline, cash only",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
+  },
   "featureCounterReceiptsDesc": "A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country's operation is supported, and says plainly where it is not.",
   "@featureCounterReceiptsDesc": {
     "description": "#4184 feature description"
@@ -16416,6 +16637,22 @@
   "featureStockCycleCountsTitle": "Cycle counts",
   "@featureStockCycleCountsTitle": {
     "description": "#4295 feature name"
+  },
+  "featureStockExpiryReportDesc": "Prints, at a date you choose, every lot or piece in stock that is expired at that date or expires after it, with a layout you can edit like the other reports.",
+  "@featureStockExpiryReportDesc": {
+    "description": "#4431 the expiry report feature: what it does"
+  },
+  "featureStockExpiryReportTitle": "The expiry report",
+  "@featureStockExpiryReportTitle": {
+    "description": "#4431 the expiry report feature: its name"
+  },
+  "featureStockHandlingUnitsDesc": "Goods move in the pallet or carton they were received in, or in the store's own repackaged units, and stay traceable through the repack.",
+  "@featureStockHandlingUnitsDesc": {
+    "description": "#4435 the handling units feature: what it does"
+  },
+  "featureStockHandlingUnitsTitle": "Handling units",
+  "@featureStockHandlingUnitsTitle": {
+    "description": "#4435 the handling units feature: its name"
   },
   "featureStockItemGroupsDesc": "Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group's value unless it keeps its own; a change to a group shows how many items it reaches before it is saved.",
   "@featureStockItemGroupsDesc": {
@@ -37883,6 +38120,10 @@
   "@refusalCounterNotOpen": {
     "description": "#4185 refusal"
   },
+  "refusalCounterOfflineConflict": "A sale sent from the till under this number was already received with other content. Nothing was recorded again; look at the list of offline sales.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  },
   "refusalCounterTenderState": "This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.",
   "@refusalCounterTenderState": {
     "description": "#4185 refusal"
@@ -38042,6 +38283,18 @@
   "refusalStockUnit": "This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.",
   "@refusalStockUnit": {
     "description": "refusal DKG02 (#3824)"
+  },
+  "refusalStockUnitChanged": "This unit changed since you read it: someone moved or unpacked it. Read it again.",
+  "@refusalStockUnitChanged": {
+    "description": "#4435 refusal"
+  },
+  "refusalStockUnitCodeTaken": "This unit code is already used in this business. Choose another code.",
+  "@refusalStockUnitCodeTaken": {
+    "description": "#4435 refusal"
+  },
+  "refusalStockUnitContent": "What the unit holds does not fit: the quantity, the lot, the piece or the place. Check the content.",
+  "@refusalStockUnitContent": {
+    "description": "#4435 refusal"
   },
   "refusalStockVariant": "This item has variants: name which one (colour, size) to move, sell or count. Nothing was changed.",
   "@refusalStockVariant": {
@@ -38955,6 +39208,10 @@
   "reportDocStatus": "Workspace status",
   "@reportDocStatus": {
     "description": "#934 workspace status / repartition wizard: reportDocStatus"
+  },
+  "reportDocStockExpiry": "Expiry report",
+  "@reportDocStockExpiry": {
+    "description": "#4431 the expiry report"
   },
   "reportDocTrialBalance": "Trial balance",
   "@reportDocTrialBalance": {
@@ -41725,6 +41982,18 @@
   "@settingHintCounterFiscalObligation": {
     "description": "#4184 setting label/hint"
   },
+  "settingHintCounterOfflineMaxMinutes": "How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflineMaxSales": "How many cash sales made offline one till session accepts. Further sales are refused and listed for the owner.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflinePriceTolerance": "How far, in percent, the price of an offline sale may differ from the item's price when the sale is sent. 0 means the price must be the same.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
   "settingHintCounterPaidOutLimit": "The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.",
   "@settingHintCounterPaidOutLimit": {
     "description": "#4367 setting label/hint or refusal"
@@ -41989,6 +42258,10 @@
   "@settingHintStockCycleCountOverdueDays": {
     "description": "#4295 settings: Setting hint."
   },
+  "settingHintStockExpiryHorizonDays": "How many days after the reference date the expiry report looks ahead for what is about to expire, when no horizon is named when it is printed.",
+  "@settingHintStockExpiryHorizonDays": {
+    "description": "#4431 setting hint"
+  },
   "settingHintStockGroupDefaultCountDays": "Every how many days an item that no group and no own setting speaks for is proposed for a cycle count. 0 means not scheduled.",
   "@settingHintStockGroupDefaultCountDays": {
     "description": "#4361 setting label/hint"
@@ -42152,6 +42425,18 @@
   "settingLabelCounterFiscalObligation": "Fiscal rules for counter sales",
   "@settingLabelCounterFiscalObligation": {
     "description": "#4184 setting label/hint"
+  },
+  "settingLabelCounterOfflineMaxMinutes": "Longest offline period (minutes)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflineMaxSales": "Most offline sales per till session",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Price difference allowed offline (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
   },
   "settingLabelCounterPaidOutLimit": "Largest paid-out without approval",
   "@settingLabelCounterPaidOutLimit": {
@@ -42416,6 +42701,10 @@
   "settingLabelStockCycleCountOverdueDays": "Cycle count: overdue after",
   "@settingLabelStockCycleCountOverdueDays": {
     "description": "#4295 settings: Setting label."
+  },
+  "settingLabelStockExpiryHorizonDays": "Expiry report: look ahead",
+  "@settingLabelStockExpiryHorizonDays": {
+    "description": "#4431 setting label"
   },
   "settingLabelStockGroupDefaultCountDays": "Default count cycle (days)",
   "@settingLabelStockGroupDefaultCountDays": {
@@ -46165,6 +46454,69 @@
   "@stockCameraTitle": {
     "description": "#4360 G11 camera: stockCameraTitle"
   },
+  "stockChainDelivery": "Delivery {label} from {supplier}",
+  "@stockChainDelivery": {
+    "description": "#4432 G18 trace chain",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "stockChainEmpty": "No other movement is recorded.",
+  "@stockChainEmpty": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockChainInvoice": "Invoice {label}",
+  "@stockChainInvoice": {
+    "description": "#4432 G18 trace chain",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "stockChainOpen": "Every movement",
+  "@stockChainOpen": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockChainPieceTitle": "Every movement of this piece",
+  "@stockChainPieceTitle": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockChainPieces": "{count, plural, one{{count} piece} other{{count} pieces}}",
+  "@stockChainPieces": {
+    "description": "#4432 G18 trace chain",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockChainReceipt": "Receipt {label}",
+  "@stockChainReceipt": {
+    "description": "#4432 G18 trace chain",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "stockChainTitle": "Every movement of this lot",
+  "@stockChainTitle": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockChainTruncated": "Only the first movements are shown.",
+  "@stockChainTruncated": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockChainUnavailable": "A document you may not see",
+  "@stockChainUnavailable": {
+    "description": "#4432 G18 trace chain"
+  },
   "stockCostLabel": "Cost per unit",
   "@stockCostLabel": {
     "description": "#4161 the cost per unit of a movement"
@@ -46746,6 +47098,89 @@
   "@stockEnteredLabel": {
     "description": "#4161 the quantity and unit as entered"
   },
+  "stockExpiryAny": "Any",
+  "@stockExpiryAny": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryCut": "The report is cut at {rows} rows: narrow the date, the place or the group.",
+  "@stockExpiryCut": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDate": "Reference date",
+  "@stockExpiryDate": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDaysAhead": "in {days} d",
+  "@stockExpiryDaysAhead": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDaysPast": "{days} d past",
+  "@stockExpiryDaysPast": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryGroup": "Item group",
+  "@stockExpiryGroup": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizon": "Look ahead (days)",
+  "@stockExpiryHorizon": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizonHint": "Empty: the business's own setting.",
+  "@stockExpiryHorizonHint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryNone": "Nothing in stock is expired or about to expire at this date.",
+  "@stockExpiryNone": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPlace": "Place",
+  "@stockExpiryPlace": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPrint": "Print the report",
+  "@stockExpiryPrint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryReadFailed": "The expiry report could not be read.",
+  "@stockExpiryReadFailed": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScope": "What to list",
+  "@stockExpiryScope": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeBoth": "Expired and expiring",
+  "@stockExpiryScopeBoth": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpired": "Expired",
+  "@stockExpiryScopeExpired": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpiring": "Expiring",
+  "@stockExpiryScopeExpiring": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryTitle": "Expiry report",
+  "@stockExpiryTitle": {
+    "description": "#4431 the expiry report"
+  },
   "stockFirstRunBody": "Start with a place where goods are kept, then the items you keep. After that, receive a delivery or move goods in.",
   "@stockFirstRunBody": {
     "description": "#4350 adding an item, and the first-run stock page"
@@ -46948,6 +47383,42 @@
         "type": "String"
       }
     }
+  },
+  "stockMoveReasonAdjustment": "Count adjusted",
+  "@stockMoveReasonAdjustment": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonConsumption": "Used",
+  "@stockMoveReasonConsumption": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonLoss": "Written off",
+  "@stockMoveReasonLoss": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonOpening": "Opening stock",
+  "@stockMoveReasonOpening": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonReceipt": "Received",
+  "@stockMoveReasonReceipt": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonReturnIn": "Returned by the customer",
+  "@stockMoveReasonReturnIn": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonReturnOut": "Returned to the supplier",
+  "@stockMoveReasonReturnOut": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonSale": "Sold",
+  "@stockMoveReasonSale": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonTransfer": "Moved",
+  "@stockMoveReasonTransfer": {
+    "description": "#4432 G18 trace chain"
   },
   "stockMoveSameSite": "Both places are in one site: the goods move at once.",
   "@stockMoveSameSite": {
@@ -48602,6 +49073,176 @@
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockUnitChangedNow": "The unit is at {place} now: read it again.",
+  "@stockUnitChangedNow": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitCode": "Unit code",
+  "@stockUnitCode": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitContent": "Content",
+  "@stockUnitContent": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitContentNone": "Nothing in it.",
+  "@stockUnitContentNone": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKind": "Kind",
+  "@stockUnitKind": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindBox": "Box",
+  "@stockUnitKindBox": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindCarton": "Carton",
+  "@stockUnitKindCarton": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindCrate": "Crate",
+  "@stockUnitKindCrate": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindOther": "Other",
+  "@stockUnitKindOther": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindPallet": "Pallet",
+  "@stockUnitKindPallet": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitLabelCode": "Supplier label (SSCC), if any",
+  "@stockUnitLabelCode": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitLoose": "{quantity} loose here",
+  "@stockUnitLoose": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitMade": "{unit} made.",
+  "@stockUnitMade": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitMake": "Make a unit",
+  "@stockUnitMake": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitMove": "Move",
+  "@stockUnitMove": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitMoveTo": "Move to",
+  "@stockUnitMoveTo": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitMoved": "{unit} moved to {place}.",
+  "@stockUnitMoved": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitNestedIn": "In {unit}",
+  "@stockUnitNestedIn": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitPlace": "Place",
+  "@stockUnitPlace": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepack": "Repack into boxes",
+  "@stockUnitRepack": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepackBoxes": "Number of boxes",
+  "@stockUnitRepackBoxes": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepackEach": "Quantity in each box",
+  "@stockUnitRepackEach": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepackItem": "What to repack",
+  "@stockUnitRepackItem": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepacked": "{count, plural, one{1 box made.} other{{count} boxes made.}}",
+  "@stockUnitRepacked": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockUnitUnpack": "Unpack",
+  "@stockUnitUnpack": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitUnpackHint": "Its content stays where it is, loose.",
+  "@stockUnitUnpackHint": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitUnpacked": "{unit} unpacked.",
+  "@stockUnitUnpacked": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitsAllPlaces": "All places",
+  "@stockUnitsAllPlaces": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsChooseItem": "Choose an item",
+  "@stockUnitsChooseItem": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsEmpty": "No unit yet. Make one from stock that is loose at a place.",
+  "@stockUnitsEmpty": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsIntro": "A pallet, a carton or a box of your own: it moves with its whole content, and every lot and piece stays traceable.",
+  "@stockUnitsIntro": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsReadFailed": "The units could not be read.",
+  "@stockUnitsReadFailed": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsTitle": "Handling units",
+  "@stockUnitsTitle": {
+    "description": "#4435 handling units"
+  },
   "stockValueBasis": "An operational value from the recorded movements at their recorded lot costs. It is not a posted stock-book balance and states no cost of goods.",
   "@stockValueBasis": {
     "description": "#4173 the goods trace and the stock value"
@@ -48710,6 +49351,72 @@
   "stockWhenLabel": "When",
   "@stockWhenLabel": {
     "description": "#4161 when a movement happened"
+  },
+  "stockWhereIsAway": "Left or came from outside",
+  "@stockWhereIsAway": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsNow": "Now",
+  "@stockWhereIsNow": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsNowhere": "None of it is held at a place at this date.",
+  "@stockWhereIsNowhere": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsOnHand": "{quantity} in all",
+  "@stockWhereIsOnHand": {
+    "description": "#4434 where is it",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockWhereIsOpen": "Where is it",
+  "@stockWhereIsOpen": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsPickDate": "On a day…",
+  "@stockWhereIsPickDate": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsPieces": "Pieces",
+  "@stockWhereIsPieces": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsPiecesFrom": "Pieces are followed from {date} on: a piece made before has no history before that day.",
+  "@stockWhereIsPiecesFrom": {
+    "description": "#4434 where is it",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockWhereIsPiecesMore": "Only the first 200 pieces are shown.",
+  "@stockWhereIsPiecesMore": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsTitle": "Where is it",
+  "@stockWhereIsTitle": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsTransit": "On the road",
+  "@stockWhereIsTransit": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsTransitLine": "From {from} to {to}",
+  "@stockWhereIsTransitLine": {
+    "description": "#4434 where is it",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
   },
   "subprocessAttendance": "Attendance & usage",
   "@subprocessAttendance": {
@@ -51993,6 +52700,15 @@
   "@tillPayCash": {
     "description": "#4366 the till"
   },
+  "tillPieceTwice": "Piece {code} is already in the basket.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Pricing the basket…",
   "@tillPricing": {
     "description": "#4366 the till"
@@ -52031,6 +52747,15 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillScanUnknown": "{code} is not something this till sells.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillSoldTitle": "Sold",
   "@tillSoldTitle": {
     "description": "#4366 the till"
@@ -52053,6 +52778,27 @@
     "description": "#4366 the till",
     "placeholders": {
       "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackLot": "Lot {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Piece {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
         "type": "String"
       }
     }

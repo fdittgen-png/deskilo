@@ -2928,6 +2928,44 @@
       }
     }
   },
+  "billingAccessAccept": "Annehmen",
+  "billingAccessAccepted": "Erledigt. Die Rechnungen, die {business} auf Sie ausgestellt hat, erscheinen jetzt in Ihren Finanzen, getrennt von dem, was Sie als Mitglied schulden.",
+  "billingAccessAction": "Kontozugang",
+  "billingAccessActive": "Liest die Rechnungen seit {date}",
+  "billingAccessAlreadyHeld": "Sie haben diesen Zugang bereits; ihn erneut anzunehmen ändert nichts.",
+  "billingAccessCheck": "Code prüfen",
+  "billingAccessCodeCopied": "Code kopiert",
+  "billingAccessCodeCopy": "Code kopieren",
+  "billingAccessCodeOnce": "Geben Sie diesen Code jetzt an den Kunden weiter. Er wird nur einmal angezeigt und kann nicht erneut gelesen werden. Er gilt bis {date}.",
+  "billingAccessCodeTitle": "Einladungscode",
+  "billingAccessCodeUnusable": "Dieser Code kann nicht verwendet werden. Er ist vielleicht falsch, abgelaufen, zurückgezogen oder schon von einem anderen Konto angenommen. Fragen Sie den Betrieb nach einem neuen.",
+  "billingAccessEnter": "Rechnungscode verwenden",
+  "billingAccessEnterIntro": "Ein Betrieb, der Ihnen Rechnungen stellt, kann Ihnen einen Code geben. Damit lesen Sie in Ihrem Konto die auf Sie ausgestellten Rechnungen. Sie werden kein Mitglied.",
+  "billingAccessEnterTitle": "Rechnungen eines Betriebs lesen",
+  "billingAccessExpired": "Einladung abgelaufen am {date}",
+  "billingAccessFailed": "Die Antwort ist nicht angekommen. Es ist nichts als geändert bekannt; versuchen Sie es erneut.",
+  "billingAccessGroupOpen": "Noch offen: {amounts}",
+  "billingAccessGroupSettled": "Nichts offen",
+  "billingAccessGroupTitle": "{business} · Konto {ref}",
+  "billingAccessIntro": "Laden Sie diesen Kunden ein, seine eigenen Rechnungen in seinem eigenen Konto zu lesen. Er wird kein Mitglied und sieht nichts anderes von Ihrem Betrieb.",
+  "billingAccessInvite": "Einladungscode erstellen",
+  "billingAccessInvited": "Eingeladen am {date}, noch nicht angenommen",
+  "billingAccessLoadFailed": "Die Einladungen konnten nicht gelesen werden. Das ist keine leere Liste.",
+  "billingAccessNone": "Noch keine Einladung.",
+  "billingAccessNotACustomer": "Nur ein Rechnungskunde kann eingeladen werden. Nichts wurde geändert.",
+  "billingAccessNotAllowed": "Sie dürfen hier keine Kunden zu einem Konto einladen. Nichts wurde geändert.",
+  "billingAccessPaymentSoon": "Diese Rechnungen von hier aus zu bezahlen, folgt mit einem späteren Update.",
+  "billingAccessPreviewLine": "{business} lädt Sie ein, die auf {name} ausgestellten Rechnungen zu lesen.",
+  "billingAccessPreviewUnnamed": "{business} lädt Sie ein, die auf Sie ausgestellten Rechnungen zu lesen.",
+  "billingAccessReasonTooLong": "Der Grund ist zu lang. Kürzen Sie ihn; nichts wurde geändert.",
+  "billingAccessRequestReused": "Diese Anfrage wurde schon für eine andere Einladung verwendet. Schließen Sie dieses Fenster und öffnen Sie es erneut; nichts wurde geändert.",
+  "billingAccessRevoke": "Zugang beenden",
+  "billingAccessRevokeNote": "Das Beenden des Zugangs löscht nichts: Die Rechnungen und ihr Verlauf bleiben unverändert.",
+  "billingAccessRevoked": "Zugang beendet am {date}",
+  "billingAccessSectionNote": "Rechnungen, die ein Betrieb auf Sie ausgestellt hat, gelesen über den Zugang, den er Ihnen gegeben hat. Sie zählen nicht zu dem, was Sie als Mitglied schulden.",
+  "billingAccessSectionTitle": "Als Kunde in Rechnung gestellt",
+  "billingAccessTitle": "Kontozugang: {name}",
+  "billingAccessUnknownGrant": "Dieser Zugang existiert nicht mehr. Schließen Sie die Liste und öffnen Sie sie erneut; nichts wurde geändert.",
   "billingAddBand": "Band hinzufügen",
   "billingAddLevel": "Stufe hinzufügen",
   "billingAddPackage": "Paket hinzufügen",
@@ -2967,7 +3005,7 @@
   "billingCustomersAdd": "Kunden hinzufügen",
   "billingCustomersEmpty": "Noch keine Rechnungskunden. Legen Sie den ersten an, um ihm eine Rechnung zu stellen, ohne dass er ein Konto anlegen muss.",
   "billingCustomersLoadFailed": "Die Kunden konnten nicht gelesen werden. Das ist keine leere Liste.",
-  "billingCustomersNoAccount": "Die Personen und Unternehmen, denen Sie Rechnungen stellen. Sie haben kein Konto und sehen nichts von Ihrem Betrieb.",
+  "billingCustomersNoAccount": "Die Personen und Unternehmen, denen Sie Rechnungen stellen. Sie sind keine Mitglieder und sehen nichts von Ihrem Betrieb, es sei denn, Sie laden sie ein, ihre eigenen Rechnungen in ihrem eigenen Konto zu lesen.",
   "billingCustomersRetry": "Erneut versuchen",
   "billingCustomersSearch": "Kunden suchen",
   "billingCustomersTitle": "Rechnungskunden",
@@ -7203,6 +7241,14 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterOfflineCashDesc": "Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  },
+  "featureCounterOfflineCashTitle": "Offline verkaufen, nur bar",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
+  },
   "featureCounterReceiptsDesc": "Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.",
   "featureCounterReceiptsTitle": "Kassenbelege",
   "featureCounterTillSessionsDesc": "Eine Kasse mit ihrem Wechselgeld eröffnen, die Schublade beim Abschluss zählen und den Tag mit seinem Bericht abschließen. Ein Verkauf braucht eine geöffnete Kasse; das erwartete Bargeld wird aus dem Eingenommenen abgeleitet, nie eingetippt.",
@@ -7801,6 +7847,22 @@
   "featureStockCycleCountsTitle": "Permanente Inventur",
   "@featureStockCycleCountsTitle": {
     "description": "#4295 feature name"
+  },
+  "featureStockExpiryReportDesc": "Druckt zu einem gewählten Datum jede Charge oder jedes Stück im Bestand, die an diesem Datum abgelaufen sind oder danach ablaufen, mit einem Layout, das Sie wie die anderen Berichte bearbeiten können.",
+  "@featureStockExpiryReportDesc": {
+    "description": "#4431 the expiry report feature: what it does"
+  },
+  "featureStockExpiryReportTitle": "Der Verfallsbericht",
+  "@featureStockExpiryReportTitle": {
+    "description": "#4431 the expiry report feature: its name"
+  },
+  "featureStockHandlingUnitsDesc": "Ware bewegt sich in der Palette oder dem Karton, in dem sie ankam, oder in den eigenen umgepackten Einheiten des Ladens und bleibt über das Umpacken rückverfolgbar.",
+  "@featureStockHandlingUnitsDesc": {
+    "description": "#4435 the handling units feature: what it does"
+  },
+  "featureStockHandlingUnitsTitle": "Packeinheiten",
+  "@featureStockHandlingUnitsTitle": {
+    "description": "#4435 the handling units feature: its name"
   },
   "featureStockItemGroupsDesc": "Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht.",
   "featureStockItemGroupsTitle": "Artikelgruppen",
@@ -16605,6 +16667,10 @@
   "refusalCounterEssentials": "Für diesen Beleg fehlt etwas oder es ist nicht zulässig: Es wurde nichts nummeriert und nichts angenommen.",
   "refusalCounterGoods": "Waren können hier nicht verkauft oder zurückgenommen werden: Das Warenbuch ist aus, oder es gibt keinen Ort, von dem sie genommen oder an den sie zurückgelegt werden.",
   "refusalCounterNotOpen": "Dieser Beleg ist kein offener Entwurf mehr, oder für denselben Verkauf wurde schon ein Beleg ausgestellt.",
+  "refusalCounterOfflineConflict": "Ein von der Kasse unter dieser Nummer gesendeter Verkauf wurde bereits mit anderem Inhalt empfangen. Es wurde nichts erneut erfasst; sehen Sie in der Liste der Offline-Verkäufe nach.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  },
   "refusalCounterTenderState": "Diese Kartenfreigabe ist noch offen, unbekannt oder schon abgeschlossen: Fragen Sie beim Anbieter nach, statt erneut anzufragen.",
   "refusalCounterTenders": "Die Zahlungen begleichen diesen Verkauf nicht genau, oder eine davon wird hier nicht angenommen.",
   "refusalCounterTill": "Die Kasse ist dafür nicht bereit: Öffnen Sie sie zuerst, oder sie ist schon offen oder geschlossen.",
@@ -16696,6 +16762,9 @@
   "refusalStockTagBound": "Dieses Etikett ist bereits einem anderen Artikel, Ort oder Stück zugeordnet. Geben Sie es dort zuerst frei.",
   "refusalStockTagRetiredLately": "Dieses Etikett wurde erst kürzlich freigegeben und kann noch nicht erneut zugeordnet werden. Die Wartezeit ist eine Einstellung des Betriebs.",
   "refusalStockUnit": "Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.",
+  "refusalStockUnitChanged": "Diese Einheit hat sich seit dem Lesen geändert: jemand hat sie bewegt oder ausgepackt. Lesen Sie sie neu.",
+  "refusalStockUnitCodeTaken": "Dieser Einheitencode wird in diesem Betrieb bereits verwendet. Wählen Sie einen anderen Code.",
+  "refusalStockUnitContent": "Der Inhalt der Einheit passt nicht: Menge, Charge, Stück oder Ort. Prüfen Sie den Inhalt.",
   "refusalStockVariant": "Dieser Artikel hat Varianten: Geben Sie an, welche (Farbe, Größe) bewegt, verkauft oder gezählt wird. Nichts wurde geändert.",
   "@refusalStockVariant": {
     "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."
@@ -17241,6 +17310,10 @@
   "reportDocStatus": "Lage des Arbeitsbereichs",
   "@reportDocStatus": {
     "description": "#934 workspace status / repartition wizard: reportDocStatus"
+  },
+  "reportDocStockExpiry": "Verfallsbericht",
+  "@reportDocStockExpiry": {
+    "description": "#4431 the expiry report"
   },
   "reportDocTrialBalance": "Summen- und Saldenliste",
   "reportDocUsage": "Verbrauchsbericht",
@@ -19084,6 +19157,18 @@
   "settingHintCounterCustomerlessSales": "Erlaubt: Ein Verkauf kann ohne Kundennamen erfolgen. Abgelehnt: Jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an.",
   "settingHintCounterDocumentChannel": "Geteilt (Nachricht oder Mail), gedruckt oder beides. Der Beleg ist in jedem Fall dasselbe unveränderliche Dokument.",
   "settingHintCounterFiscalObligation": "Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.",
+  "settingHintCounterOfflineMaxMinutes": "Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflineMaxSales": "Wie viele offline getätigte Barverkäufe eine Kassensitzung annimmt. Weitere werden abgelehnt und aufgelistet.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflinePriceTolerance": "Wie weit der Preis eines Offline-Verkaufs beim Senden in Prozent vom Preis des Artikels abweichen darf. 0 heißt: der Preis muss gleich sein.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
   "settingHintCounterPaidOutLimit": "Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.",
   "settingHintDirectoryGeocoderUrl": "Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.",
   "settingHintDirectoryTileUrlTemplate": "Der Kachelserver, aus dem die Entdecken-Karte gezeichnet wird, mit den Platzhaltern z, x und y in geschweiften Klammern in der Adresse (s in geschweiften Klammern für eine Subdomain ist erlaubt): https, im öffentlichen Internet, ohne Benutzername, Passwort oder #. Leer lassen, um den Server dieser App-Version zu verwenden, sonst OpenStreetMap. Ein neuer Host fragt jede Person erneut, bevor die Karte lädt.",
@@ -19231,6 +19316,10 @@
   "settingHintStockAllowNegative": "Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft.",
   "settingHintStockCycleCountHighValueMinor": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Inventurplan ohne eigene Schwelle als hochwertig gilt.",
   "settingHintStockCycleCountOverdueDays": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor der Posteingang sie als überfällig meldet.",
+  "settingHintStockExpiryHorizonDays": "Wie viele Tage nach dem Stichtag der Verfallsbericht vorausschaut, was bald abläuft, wenn beim Drucken kein Horizont genannt wird.",
+  "@settingHintStockExpiryHorizonDays": {
+    "description": "#4431 setting hint"
+  },
   "settingHintStockGroupDefaultCountDays": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. 0 heißt nicht geplant.",
   "settingHintStockGroupDefaultTagMode": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht).",
   "settingHintStockPriceRounding": "Wie ein vorgeschlagener Verkaufspreis gerundet wird: auf 0,05 oder 0,10 oder auf einen Preis, der auf 0,99 endet. Sie dient nur dazu, einen Preis vorzuschlagen.",
@@ -19320,6 +19409,18 @@
   "settingLabelCounterCustomerlessSales": "Verkäufe ohne genannten Kunden",
   "settingLabelCounterDocumentChannel": "Wie ein Kassenbeleg die Kasse verlässt",
   "settingLabelCounterFiscalObligation": "Steuerliche Vorgaben für Kassenverkäufe",
+  "settingLabelCounterOfflineMaxMinutes": "Längste Offline-Zeit (Minuten)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflineMaxSales": "Höchstzahl Offline-Verkäufe je Kassensitzung",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Erlaubte Preisabweichung offline (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
+  },
   "settingLabelCounterPaidOutLimit": "Größte Entnahme ohne Freigabe",
   "settingLabelDirectoryGeocoderUrl": "Adresssuchdienst",
   "settingLabelDirectoryTileUrlTemplate": "Kachelserver der Karte",
@@ -19467,6 +19568,10 @@
   "settingLabelStockAllowNegative": "Bestand darf unter null fallen",
   "settingLabelStockCycleCountHighValueMinor": "Permanente Inventur: Schwelle für hohen Wert",
   "settingLabelStockCycleCountOverdueDays": "Permanente Inventur: überfällig nach",
+  "settingLabelStockExpiryHorizonDays": "Verfallsbericht: Vorausschau",
+  "@settingLabelStockExpiryHorizonDays": {
+    "description": "#4431 setting label"
+  },
   "settingLabelStockGroupDefaultCountDays": "Standard-Zählzyklus (Tage)",
   "settingLabelStockGroupDefaultTagMode": "Standard-Etikettenmodus der Artikel",
   "settingLabelStockPriceRounding": "Preisrundung",
@@ -20875,6 +20980,16 @@
   "stockCameraMisread": "Dieser Code wurde nicht sauber gelesen – scannen Sie erneut.",
   "stockCameraOpen": "Mit der Kamera scannen",
   "stockCameraTitle": "Kamera-Scanner",
+  "stockChainDelivery": "Lieferung {label} von {supplier}",
+  "stockChainEmpty": "Keine weitere Bewegung erfasst.",
+  "stockChainInvoice": "Rechnung {label}",
+  "stockChainOpen": "Alle Bewegungen",
+  "stockChainPieceTitle": "Alle Bewegungen dieses Stücks",
+  "stockChainPieces": "{count, plural, one{{count} Stück} other{{count} Stück}}",
+  "stockChainReceipt": "Beleg {label}",
+  "stockChainTitle": "Alle Bewegungen dieser Charge",
+  "stockChainTruncated": "Nur die ersten Bewegungen werden angezeigt.",
+  "stockChainUnavailable": "Ein Dokument, das Sie nicht sehen dürfen",
   "stockCostLabel": "Kosten je Einheit",
   "stockCostNotShown": "Kosten nicht angezeigt",
   "stockCostUnknown": "Kosten nicht erfasst",
@@ -21115,6 +21230,89 @@
   "stockEmpty": "Es ist noch nichts auf Lager.",
   "stockEmptyFiltered": "Zu diesen Filtern gibt es nichts.",
   "stockEnteredLabel": "Erfasst",
+  "stockExpiryAny": "Alle",
+  "@stockExpiryAny": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryCut": "Der Bericht ist bei {rows} Zeilen abgeschnitten: Datum, Lagerplatz oder Gruppe eingrenzen.",
+  "@stockExpiryCut": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDate": "Stichtag",
+  "@stockExpiryDate": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDaysAhead": "in {days} T.",
+  "@stockExpiryDaysAhead": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDaysPast": "vor {days} T.",
+  "@stockExpiryDaysPast": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryGroup": "Artikelgruppe",
+  "@stockExpiryGroup": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizon": "Vorausschau (Tage)",
+  "@stockExpiryHorizon": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizonHint": "Leer: die Einstellung des Betriebs.",
+  "@stockExpiryHorizonHint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryNone": "Zu diesem Datum ist nichts im Bestand abgelaufen oder läuft bald ab.",
+  "@stockExpiryNone": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPlace": "Lagerplatz",
+  "@stockExpiryPlace": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPrint": "Bericht drucken",
+  "@stockExpiryPrint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryReadFailed": "Der Verfallsbericht konnte nicht gelesen werden.",
+  "@stockExpiryReadFailed": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScope": "Was aufgelistet wird",
+  "@stockExpiryScope": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeBoth": "Abgelaufen und ablaufend",
+  "@stockExpiryScopeBoth": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpired": "Abgelaufen",
+  "@stockExpiryScopeExpired": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpiring": "Läuft ab",
+  "@stockExpiryScopeExpiring": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryTitle": "Verfallsbericht",
+  "@stockExpiryTitle": {
+    "description": "#4431 the expiry report"
+  },
   "stockFirstRunBody": "Beginnen Sie mit einem Ort, an dem Ware liegt, dann mit den Artikeln, die Sie führen. Danach nehmen Sie eine Lieferung an oder bewegen Ware ein.",
   "stockFirstRunItem": "Ersten Artikel hinzufügen",
   "stockFirstRunNext": "Nehmen Sie dann eine Lieferung einer Bestellung an oder bewegen Sie Ware über Bewegungen ein.",
@@ -21216,6 +21414,15 @@
       }
     }
   },
+  "stockMoveReasonAdjustment": "Bestand korrigiert",
+  "stockMoveReasonConsumption": "Verbraucht",
+  "stockMoveReasonLoss": "Abgeschrieben",
+  "stockMoveReasonOpening": "Anfangsbestand",
+  "stockMoveReasonReceipt": "Eingegangen",
+  "stockMoveReasonReturnIn": "Vom Kunden zurückgegeben",
+  "stockMoveReasonReturnOut": "An den Lieferanten zurückgegeben",
+  "stockMoveReasonSale": "Verkauft",
+  "stockMoveReasonTransfer": "Umgelagert",
   "stockMoveSameSite": "Beide Plätze liegen an einem Standort: die Ware wird sofort umgelagert.",
   "@stockMoveSameSite": {
     "description": "#4170 transfers and take-out: a label or message"
@@ -21990,6 +22197,39 @@
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockUnitChangedNow": "Die Einheit ist jetzt bei {place}: Lesen Sie sie neu.",
+  "stockUnitCode": "Einheitencode",
+  "stockUnitContent": "Inhalt",
+  "stockUnitContentNone": "Nichts darin.",
+  "stockUnitKind": "Art",
+  "stockUnitKindBox": "Schachtel",
+  "stockUnitKindCarton": "Karton",
+  "stockUnitKindCrate": "Kiste",
+  "stockUnitKindOther": "Andere",
+  "stockUnitKindPallet": "Palette",
+  "stockUnitLabelCode": "Lieferantenetikett (SSCC), falls vorhanden",
+  "stockUnitLoose": "{quantity} lose hier",
+  "stockUnitMade": "{unit} angelegt.",
+  "stockUnitMake": "Einheit anlegen",
+  "stockUnitMove": "Bewegen",
+  "stockUnitMoveTo": "Bewegen nach",
+  "stockUnitMoved": "{unit} nach {place} bewegt.",
+  "stockUnitNestedIn": "In {unit}",
+  "stockUnitPlace": "Ort",
+  "stockUnitRepack": "In Kisten umpacken",
+  "stockUnitRepackBoxes": "Anzahl Kisten",
+  "stockUnitRepackEach": "Menge je Kiste",
+  "stockUnitRepackItem": "Was umgepackt wird",
+  "stockUnitRepacked": "{count, plural, one{1 Kiste angelegt.} other{{count} Kisten angelegt.}}",
+  "stockUnitUnpack": "Auspacken",
+  "stockUnitUnpackHint": "Der Inhalt bleibt, wo er ist, lose.",
+  "stockUnitUnpacked": "{unit} ausgepackt.",
+  "stockUnitsAllPlaces": "Alle Orte",
+  "stockUnitsChooseItem": "Artikel wählen",
+  "stockUnitsEmpty": "Noch keine Einheit. Legen Sie eine aus losem Bestand an einem Ort an.",
+  "stockUnitsIntro": "Eine Palette, ein Karton oder eine eigene Kiste: Sie bewegt sich mit ihrem ganzen Inhalt, und jede Charge und jedes Stück bleibt rückverfolgbar.",
+  "stockUnitsReadFailed": "Die Einheiten konnten nicht gelesen werden.",
+  "stockUnitsTitle": "Packeinheiten",
   "stockValueBasis": "Ein operativer Wert aus den erfassten Bewegungen zu den erfassten Chargenkosten. Er ist kein gebuchter Lagerbuchsaldo und nennt keinen Wareneinsatz.",
   "stockValueComplete": "Jeder vorrätige Artikel hat bekannte Kosten.",
   "stockValueCutoff": "Stand {at}, berechnet {calculated} aus {count, plural, one{einer Bewegung} other{{count} Bewegungen}}.",
@@ -22033,6 +22273,18 @@
     }
   },
   "stockWhenLabel": "Wann",
+  "stockWhereIsAway": "Abgegangen oder von außen gekommen",
+  "stockWhereIsNow": "Jetzt",
+  "stockWhereIsNowhere": "An diesem Datum liegt nichts davon an einem Platz.",
+  "stockWhereIsOnHand": "{quantity} insgesamt",
+  "stockWhereIsOpen": "Wo ist es",
+  "stockWhereIsPickDate": "An einem Tag…",
+  "stockWhereIsPieces": "Stücke",
+  "stockWhereIsPiecesFrom": "Stücke werden ab dem {date} verfolgt: Ein früher entstandenes Stück hat davor keinen Verlauf.",
+  "stockWhereIsPiecesMore": "Nur die ersten 200 Stücke werden gezeigt.",
+  "stockWhereIsTitle": "Wo ist es",
+  "stockWhereIsTransit": "Unterwegs",
+  "stockWhereIsTransitLine": "Von {from} nach {to}",
   "subprocessAttendance": "Anwesenheit und Nutzung",
   "subprocessAttendanceDesc": "Anwesenheit erfassen und Check-ins am Tagesende abschließen.",
   "subprocessAvailability": "Öffnungstage und Zeiten",
@@ -23530,6 +23782,15 @@
   "tillOpReconcileTender": "Kartenzahlung abgleichen",
   "tillOpSignFiscal": "fiskalischen Beleg signieren",
   "tillPayCash": "Bar kassieren",
+  "tillPieceTwice": "Stück {code} ist schon im Warenkorb.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Warenkorb wird berechnet …",
   "tillQuantityHint": "Eine genaue Menge, zum Beispiel 1 oder 0,350.",
   "tillQuantityRefused": "Geben Sie eine Menge über null mit höchstens sechs Dezimalstellen ein.",
@@ -23540,10 +23801,40 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillScanUnknown": "{code} ist nichts, was diese Kasse verkauft.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillSoldTitle": "Verkauft",
   "tillTaxIncluded": "davon Steuer {amount}",
   "tillTitle": "Kasse",
   "tillTotalDue": "Zu zahlender Betrag: {amount}",
+  "tillTrackLot": "Charge {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Stück {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tipAvailabilityClosure": "Einen Tag schließen, den niemand buchen kann: auf „Schließtag hinzufügen“ tippen und bei Bedarf einen Grund angeben.",
   "tipAvailabilityDays": "Die Öffnungstage festlegen: die Wochentage unter „Geöffnete Wochentage“ an- oder abwählen.",
   "tipAvailabilityGrid": "Festlegen, wie Buchungen geteilt werden: eine „Buchungsraster“ wählen – freie Zeiträume, Slots, halbe oder ganze Tage.",

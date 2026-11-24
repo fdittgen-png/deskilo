@@ -6,6 +6,7 @@
 // "cost not shown", never shown a zero; a movement that is none (an id of
 // nothing, or of another business) says so, and a failed read can be asked
 // again.
+
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show exponentOf;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,6 +26,7 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_reversals.dart';
 import '../providers/stock_providers.dart';
+import 'stock_chain_section.dart';
 import 'stock_day.dart';
 import 'stock_place_text.dart';
 import 'stock_reversal_sheet.dart';
@@ -154,11 +156,12 @@ class _Detail extends ConsumerWidget {
           l10n.stockQuantityWithUnit(m.enteredQuantity.text, m.enteredUnit),
         ),
         row('when', l10n.stockWhenLabel, day),
-        row('reason', l10n.creditMoveReasonLabel, m.reason),
+        row('reason', l10n.creditMoveReasonLabel, stockMoveReasonText(l10n, m.reason)),
         row('cost', l10n.stockCostLabel, cost),
         _Reversals(movement: m),
         // #4173 — where it came from: the receipt, the order, the bills and their payments, as recorded.
         StockTraceSection(workspaceId: m.workspaceId, movementId: m.id),
+        StockChainSection(workspaceId: m.workspaceId, movementId: m.id),
       ],
     );
   }

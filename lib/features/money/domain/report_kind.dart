@@ -118,6 +118,8 @@ const List<ReportKind> fixedReportKinds = [
   ReportKind(id: 'customer_statement', slot: ReportDocSlot('customer_statement')),
   // #3839 — a customer's statement for a period, one currency each.
   ReportKind(id: 'customer_statement_period', slot: ReportDocSlot('customer_statement_period')),
+  // #4431 — the stock's expiry report, from the stock page.
+  ReportKind(id: 'stock_expiry', slot: ReportDocSlot('stock_expiry')),
   ReportKind(id: 'badges', slot: ReportDocSlot('badges')),
   ReportKind(id: 'space_codes', slot: ReportDocSlot('space_codes')),
 ];

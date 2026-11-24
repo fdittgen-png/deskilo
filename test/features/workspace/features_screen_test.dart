@@ -89,9 +89,11 @@ void main() {
     // #4170 — stockTakeOut: taking goods out is asked for.
     // #4294 — stockReorder: reorder points are asked for.
     // #4172 — stockReturns: returns and corrections are asked for; stockCounts: counts; stockCycleCounts: cycle counts.
+    // #4431 — stockExpiryReport: the expiry report is asked for; #4435 — stockHandlingUnits: handling units are asked for.
     // #4362 — stockTags: RFID tags are asked for; #4359 — stockScanning: scanning is asked for.
+    // #4373 — counterOfflineCash: selling offline is asked for.
     // #4364 — stockTagReads: reading many tags at once is asked for.
-    expect(onCount, featureManifest.length - 73);
+    expect(onCount, featureManifest.length - 76);
   });
 
   testWidgets(

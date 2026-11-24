@@ -1572,6 +1572,12 @@
       "capabilities": []
     },
     {
+      "key": "counterOfflineCash",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "counterReceipts",
       "maturity": "beta",
       "lifecycle": "active",
@@ -2297,6 +2303,18 @@
     },
     {
       "key": "stockCycleCounts",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "stockExpiryReport",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "stockHandlingUnits",
       "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []

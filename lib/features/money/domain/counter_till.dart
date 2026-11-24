@@ -58,7 +58,7 @@ class TillReadiness {
 
 /// A line of the basket as the till sends it: an item and an exact quantity; the server prices it.
 class TillLine {
-  const TillLine({required this.itemId, required this.name, required this.quantity, required this.unit});
+  const TillLine({required this.itemId, required this.name, required this.quantity, required this.unit, this.pieces = const []});
 
   final String itemId;
   final String name;
@@ -67,9 +67,48 @@ class TillLine {
   final String quantity;
   final String unit;
 
-  TillLine withQuantity(String q) => TillLine(itemId: itemId, name: name, quantity: q, unit: unit);
+  /// #4436 -- the tags of the pieces scanned into this line, for an item tracked piece by piece: the sale takes
+  /// exactly these pieces, and the server refuses a quantity that is not their number.
+  final List<String> pieces;
 
-  Map<String, Object?> toJson() => {'item_id': itemId, 'quantity': quantity};
+  TillLine withQuantity(String q) => TillLine(itemId: itemId, name: name, quantity: q, unit: unit, pieces: pieces);
+
+  /// The line with the piece tagged [tag] added: one more, named.
+  TillLine withPiece(String tag) =>
+      TillLine(itemId: itemId, name: name, quantity: '${pieces.length + 1}', unit: unit, pieces: [...pieces, tag]);
+
+  Map<String, Object?> toJson() => {
+    'item_id': itemId,
+    'quantity': quantity,
+    if (pieces.isNotEmpty) 'units': [for (final t in pieces) {'tag': t}],
+  };
+}
+
+/// #4436 -- what a code scanned at the till rings up: an item, one piece of an item by its tag, or nothing.
+sealed class TillScan {
+  const TillScan();
+}
+
+/// An item: one more of it, as a tap on its key.
+class TillScanItem extends TillScan {
+  const TillScanItem(this.key);
+
+  final TillKey key;
+}
+
+/// One piece of an item tracked piece by piece, by its tag: the sale takes that piece.
+class TillScanPiece extends TillScan {
+  const TillScanPiece(this.key, this.tag);
+
+  final TillKey key;
+  final String tag;
+}
+
+/// A code that names nothing the till sells.
+class TillScanUnknown extends TillScan {
+  const TillScanUnknown(this.code);
+
+  final String code;
 }
 
 /// The server sends totals as strings and per-line amounts as integers: both read as minor units.
@@ -143,17 +182,67 @@ class TillTender {
   Map<String, Object?> toJson() => {'kind': kind, 'amount_minor': amountMinor};
 }
 
+/// #4436 -- a track ID a goods line took: a lot (its code as received, the quantity taken from it, in the item's
+/// inventory unit) or a piece (its tag).
+class TillTrack {
+  const TillTrack({required this.kind, required this.code, this.quantity});
+
+  /// `lot` or `piece`.
+  final String kind;
+
+  /// The lot's code as received (else its label code), or the piece's tag; empty when the lot has no code.
+  final String code;
+
+  /// The quantity taken from a lot; null for a piece.
+  final String? quantity;
+
+  bool get isPiece => kind == 'piece';
+
+  factory TillTrack.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'counter_receipt_finalize.lines.tracks');
+    return TillTrack(kind: r.string('kind'), code: r.stringOr('code'), quantity: r.stringOrNull('quantity'));
+  }
+}
+
+/// #4436 -- what one goods line of a sale took, as the receipt froze it.
+class TillSoldLine {
+  const TillSoldLine({required this.lineNo, required this.tracks});
+
+  /// The line's place on the receipt, from 1: the basket's line of the same place.
+  final int lineNo;
+  final List<TillTrack> tracks;
+
+  factory TillSoldLine.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'counter_receipt_finalize.lines');
+    return TillSoldLine(lineNo: r.integer('line_no'), tracks: [for (final t in r.listOrAbsent('tracks')) TillTrack.fromJson(t)]);
+  }
+}
+
 /// A sale made: its number and totals.
 class TillSold {
-  const TillSold({required this.receiptId, required this.number, required this.totals});
+  const TillSold({required this.receiptId, required this.number, required this.totals, this.lines = const []});
 
   final String receiptId;
   final String number;
   final TillTotals totals;
 
+  /// #4436 -- the goods lines and the track IDs each took; a line that is not goods is not listed.
+  final List<TillSoldLine> lines;
+
+  /// The track IDs the basket's line [lineNo] (from 1) took; empty when it took none.
+  List<TillTrack> tracksOf(int lineNo) => [
+    for (final l in lines)
+      if (l.lineNo == lineNo) ...l.tracks,
+  ];
+
   factory TillSold.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'counter_receipt_finalize');
-    return TillSold(receiptId: r.string('receipt_id'), number: r.string('number'), totals: TillTotals.fromJson(r.raw('totals')));
+    return TillSold(
+      receiptId: r.string('receipt_id'),
+      number: r.string('number'),
+      totals: TillTotals.fromJson(r.raw('totals')),
+      lines: [for (final l in r.listOrAbsent('lines')) TillSoldLine.fromJson(l)],
+    );
   }
 }
 

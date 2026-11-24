@@ -19,9 +19,12 @@ import 'lint_sources.dart';
 /// guard it (or why it never draws a page of its own).
 const _notGuardedYet = <String, String>{
   '/app-update': '#3726 a notice with one way out, shown only when the installation refuses this app: test/app/app_floor_gate_test.dart draws it; it needs an installation floor above the app to open in a desk guard',
+  '/stock/where/:itemId': '#4434 the places of an item, the road, the documents and the pieces: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/stock/counts': '#4172 a list of cards: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/stock/reorder': '#4294 two lists of rows and cards: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/stock/value': '#4173 a total, a list of unpriced goods and a list of priced goods: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
+  '/stock/units': '#4435 a list and sheets: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
+  '/stock/expiry': '#4431 a filter form and a list of rows: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/stock/groups': '#4361 a list of groups and a sheet: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/stock/cycle-counts': '#4295 tabs of lists and a plan sheet: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/stock/cycle-counts/:taskId': '#4295 a list of lines and two sheets: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',

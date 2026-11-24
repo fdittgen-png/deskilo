@@ -24,6 +24,11 @@ abstract final class HelpAnchor {
   /// without an account.
   static const moneyBillingCustomers = 'user.money.customers.billing';
 
+  /// #4164 B2 — a billing customer's access to their own invoices: the
+  /// seller's invitation and the account's code.
+  static const moneyBillingAccess = 'user.money.customers.access';
+  static const moneyBilledToYou = 'user.money.finances.billed';
+
   /// #4166 — the customer quotes: an offer to a billing customer, sent and
   /// amended as revisions.
   static const moneyQuotes = 'user.money.quotes';
@@ -39,6 +44,9 @@ abstract final class HelpAnchor {
   static const moneyStockScanning = 'user.money.stock.scanning';
   static const moneyStockNfc = 'user.money.stock.nfc';
   static const moneyStockRfid = 'user.money.stock.rfid';
+  static const moneyStockWhereIs = 'user.money.stock.whereis';
+  static const moneyStockExpiry = 'user.money.stock.expiry';
+  static const moneyStockUnits = 'user.money.stock.units';
   static const moneyStockBulkRead = 'user.money.stock.bulkread';
   static const moneyTill = 'user.money.till';
 

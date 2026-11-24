@@ -348,6 +348,30 @@
   "featureCounterReceiptsDesc": "Una vendita al banco dà uno scontrino immutabile, numerato una sola volta, con il pagamento ricevuto. È offerto solo dove l'operazione del paese è supportata e dice chiaramente quando non lo è.",
   "featureCounterTillSessionsTitle": "Sessioni di cassa e chiusura della giornata",
   "featureCounterTillSessionsDesc": "Apra una cassa con il suo fondo, conti il cassetto alla chiusura e chiuda la giornata con il suo rapporto. Una vendita richiede una cassa aperta; il contante atteso si ricava da quanto incassato, mai digitato.",
+  "featureStockExpiryReportTitle": "Il rapporto di scadenza",
+  "featureStockExpiryReportDesc": "Stampa, a una data scelta, ogni lotto o pezzo in magazzino scaduto a quella data o che scade dopo, con un layout modificabile come gli altri rapporti.",
+  "@featureStockExpiryReportTitle": {
+    "description": "#4431 the expiry report feature: its name"
+  },
+  "@featureStockExpiryReportDesc": {
+    "description": "#4431 the expiry report feature: what it does"
+  },
+  "featureStockHandlingUnitsTitle": "Unità di movimentazione",
+  "featureStockHandlingUnitsDesc": "Le merci si spostano nel bancale o nel cartone in cui sono arrivate, o nelle unità riconfezionate del negozio, e restano tracciabili attraverso il riconfezionamento.",
+  "@featureStockHandlingUnitsTitle": {
+    "description": "#4435 the handling units feature: its name"
+  },
+  "@featureStockHandlingUnitsDesc": {
+    "description": "#4435 the handling units feature: what it does"
+  },
   "featureStockTagReadsTitle": "Lettura di molte etichette",
-  "featureStockTagReadsDesc": "Un lettore UHF in modalità tastiera legge molte etichette insieme per ricevere, spostare e contare: le etichette sono raccolte, deduplicate e risolte, e nulla viene inviato finché la persona non conferma."
+  "featureStockTagReadsDesc": "Un lettore UHF in modalità tastiera legge molte etichette insieme per ricevere, spostare e contare: le etichette sono raccolte, deduplicate e risolte, e nulla viene inviato finché la persona non conferma.",
+  "featureCounterOfflineCashTitle": "Vendere offline, solo in contanti",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
+  },
+  "featureCounterOfflineCashDesc": "Quando la connessione cade, la cassa continua a vendere in contanti, registra ogni vendita sul dispositivo e invia le vendite in ordine al ritorno della connessione. Gli altri metodi di pagamento attendono la connessione.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  }
 }

@@ -4997,6 +4997,156 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get billingAccessAccept => 'Aceptar';
+
+  @override
+  String billingAccessAccepted(String business) {
+    return 'Hecho. Las facturas que $business emitió a su nombre aparecen ahora en sus finanzas, aparte de lo que debe como miembro.';
+  }
+
+  @override
+  String get billingAccessAction => 'Acceso por cuenta';
+
+  @override
+  String billingAccessActive(String date) {
+    return 'Lee las facturas desde el $date';
+  }
+
+  @override
+  String get billingAccessAlreadyHeld =>
+      'Ya tiene este acceso; aceptarlo de nuevo no cambia nada.';
+
+  @override
+  String get billingAccessCheck => 'Comprobar el código';
+
+  @override
+  String get billingAccessCodeCopied => 'Código copiado';
+
+  @override
+  String get billingAccessCodeCopy => 'Copiar el código';
+
+  @override
+  String billingAccessCodeOnce(String date) {
+    return 'Entregue este código al cliente ahora. Se muestra una sola vez y no puede leerse de nuevo. Es válido hasta el $date.';
+  }
+
+  @override
+  String get billingAccessCodeTitle => 'Código de invitación';
+
+  @override
+  String get billingAccessCodeUnusable =>
+      'Este código no se puede usar. Puede ser erróneo, haber caducado, haberse retirado o estar ya tomado por otra cuenta. Pida uno nuevo a la empresa.';
+
+  @override
+  String get billingAccessEnter => 'Usar un código de facturación';
+
+  @override
+  String get billingAccessEnterIntro =>
+      'Una empresa que le factura puede darle un código. Con él lee, desde su cuenta, las facturas emitidas a su nombre. No se convierte en miembro.';
+
+  @override
+  String get billingAccessEnterTitle => 'Leer las facturas de una empresa';
+
+  @override
+  String billingAccessExpired(String date) {
+    return 'Invitación caducada el $date';
+  }
+
+  @override
+  String get billingAccessFailed =>
+      'La respuesta no llegó. No se sabe que algo haya cambiado; inténtelo de nuevo.';
+
+  @override
+  String billingAccessGroupOpen(String amounts) {
+    return 'Pendiente: $amounts';
+  }
+
+  @override
+  String get billingAccessGroupSettled => 'Nada pendiente';
+
+  @override
+  String billingAccessGroupTitle(String business, String ref) {
+    return '$business · cuenta $ref';
+  }
+
+  @override
+  String get billingAccessIntro =>
+      'Invite a este cliente a leer sus propias facturas desde su propia cuenta. No se convierte en miembro y no ve nada más de su negocio.';
+
+  @override
+  String get billingAccessInvite => 'Crear un código de invitación';
+
+  @override
+  String billingAccessInvited(String date) {
+    return 'Invitado el $date, aún sin aceptar';
+  }
+
+  @override
+  String get billingAccessLoadFailed =>
+      'No se pudieron leer las invitaciones. No es una lista vacía.';
+
+  @override
+  String get billingAccessNone => 'Aún no hay invitaciones.';
+
+  @override
+  String get billingAccessNotACustomer =>
+      'Solo se puede invitar a un cliente facturado. No se cambió nada.';
+
+  @override
+  String get billingAccessNotAllowed =>
+      'No puede invitar a clientes a una cuenta aquí. No se cambió nada.';
+
+  @override
+  String get billingAccessPaymentSoon =>
+      'Pagar estas facturas desde aquí llegará con una actualización posterior.';
+
+  @override
+  String billingAccessPreviewLine(String business, String name) {
+    return '$business le invita a leer las facturas emitidas a nombre de $name.';
+  }
+
+  @override
+  String billingAccessPreviewUnnamed(String business) {
+    return '$business le invita a leer las facturas que emitió a su nombre.';
+  }
+
+  @override
+  String get billingAccessReasonTooLong =>
+      'El motivo es demasiado largo. Acórtelo; no se cambió nada.';
+
+  @override
+  String get billingAccessRequestReused =>
+      'Esta solicitud ya se usó para otra invitación. Cierre esta ventana y ábrala de nuevo; no se cambió nada.';
+
+  @override
+  String get billingAccessRevoke => 'Terminar el acceso';
+
+  @override
+  String get billingAccessRevokeNote =>
+      'Terminar el acceso no borra nada: las facturas y su historial siguen como están.';
+
+  @override
+  String billingAccessRevoked(String date) {
+    return 'Acceso terminado el $date';
+  }
+
+  @override
+  String get billingAccessSectionNote =>
+      'Facturas que una empresa emitió a su nombre, leídas con el acceso que le dio. No se cuentan con lo que debe como miembro.';
+
+  @override
+  String get billingAccessSectionTitle => 'Facturado como cliente';
+
+  @override
+  String billingAccessTitle(String name) {
+    return 'Acceso por cuenta: $name';
+  }
+
+  @override
+  String get billingAccessUnknownGrant =>
+      'Este acceso ya no existe. Cierre la lista y ábrala de nuevo; no se cambió nada.';
+
+  @override
   String get billingAddBand => 'Añadir tramo';
 
   @override
@@ -5127,7 +5277,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get billingCustomersNoAccount =>
-      'Las personas y empresas a las que factura. No tienen cuenta y no ven nada de su negocio.';
+      'Las personas y empresas a las que factura. No son miembros y no ven nada de su negocio, salvo que las invite a leer sus propias facturas desde su propia cuenta.';
 
   @override
   String get billingCustomersRetry => 'Reintentar';
@@ -11648,6 +11798,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'El archivo del espacio (XML) lleva toda la configuración — tarifas, identidad legal, reglas de reserva y validación, roles, diseños de documentos, sedes, días de cierre — y la importación la aplica, incluso en un espacio que ya tiene reservas. Desactivado: el archivo solo lleva ajustes y plano.';
 
   @override
+  String get featureCounterOfflineCashDesc =>
+      'Si se pierde la conexión, la caja sigue vendiendo en efectivo, guarda cada venta en el dispositivo y envía las ventas en orden cuando vuelve la conexión. Los demás medios de pago esperan la conexión.';
+
+  @override
+  String get featureCounterOfflineCashTitle =>
+      'Vender sin conexión, solo en efectivo';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'Una venta en el mostrador da un ticket inmutable, numerado una sola vez, con el cobro recibido. Solo se ofrece donde la operación del país está soportada, y dice claramente cuándo no lo está.';
 
@@ -12575,6 +12733,20 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureStockCycleCountsTitle => 'Recuentos cíclicos';
+
+  @override
+  String get featureStockExpiryReportDesc =>
+      'Imprime, en una fecha elegida, cada lote o pieza en stock caducado en esa fecha o que caduca después, con un diseño editable como los demás informes.';
+
+  @override
+  String get featureStockExpiryReportTitle => 'El informe de caducidad';
+
+  @override
+  String get featureStockHandlingUnitsDesc =>
+      'La mercancía se mueve en el palé o la caja en que llegó, o en las unidades reenvasadas de la tienda, y sigue siendo trazable a través del reenvasado.';
+
+  @override
+  String get featureStockHandlingUnitsTitle => 'Unidades de manipulación';
 
   @override
   String get featureStockItemGroupsDesc =>
@@ -29067,6 +29239,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este ticket ya no es un borrador abierto, o ya se emitió un ticket para la misma venta.';
 
   @override
+  String get refusalCounterOfflineConflict =>
+      'Una venta enviada desde la caja con este número ya se recibió con otro contenido. No se registró nada de nuevo; consulte la lista de ventas sin conexión.';
+
+  @override
   String get refusalCounterTenderState =>
       'Esta autorización de tarjeta sigue abierta, es desconocida o ya está resuelta: consulte al proveedor en lugar de pedirla otra vez.';
 
@@ -29210,6 +29386,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalStockUnit =>
       'Este artículo no tiene esa unidad. Añada la unidad al artículo o indique la cantidad en una unidad que tenga.';
+
+  @override
+  String get refusalStockUnitChanged =>
+      'Esta unidad cambió desde que la leyó: alguien la movió o la deshizo. Léala de nuevo.';
+
+  @override
+  String get refusalStockUnitCodeTaken =>
+      'Este código de unidad ya se usa en esta empresa. Elija otro código.';
+
+  @override
+  String get refusalStockUnitContent =>
+      'El contenido de la unidad no encaja: cantidad, lote, pieza o lugar. Revise el contenido.';
 
   @override
   String get refusalStockVariant =>
@@ -29961,6 +30149,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reportDocStatus => 'Situación del espacio';
+
+  @override
+  String get reportDocStockExpiry => 'Informe de caducidad';
 
   @override
   String get reportDocTrialBalance => 'Balance de sumas y saldos';
@@ -32216,6 +32407,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.';
 
   @override
+  String get settingHintCounterOfflineMaxMinutes =>
+      'Cuánto tiempo después de perder la conexión la caja aún se acepta una venta en efectivo hecha sin conexión al enviarla. Las posteriores se rechazan y se listan para el responsable.';
+
+  @override
+  String get settingHintCounterOfflineMaxSales =>
+      'Cuántas ventas en efectivo hechas sin conexión acepta una sesión de caja. Las siguientes se rechazan y se listan.';
+
+  @override
+  String get settingHintCounterOfflinePriceTolerance =>
+      'Cuánto, en porcentaje, puede diferir el precio de una venta sin conexión del precio del artículo al enviarla. 0 significa que el precio debe ser el mismo.';
+
+  @override
   String get settingHintCounterPaidOutLimit =>
       'El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.';
 
@@ -32480,6 +32683,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de que la bandeja la declare vencida.';
 
   @override
+  String get settingHintStockExpiryHorizonDays =>
+      'Cuántos días después de la fecha de referencia mira el informe de caducidad lo que está por caducar, cuando no se indica un horizonte al imprimirlo.';
+
+  @override
   String get settingHintStockGroupDefaultCountDays =>
       'Cada cuántos días se propone para un recuento cíclico un artículo que ni un grupo ni un ajuste propio contempla. 0 significa sin programar.';
 
@@ -32629,6 +32836,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Normas fiscales de las ventas en mostrador';
+
+  @override
+  String get settingLabelCounterOfflineMaxMinutes =>
+      'Tiempo máximo sin conexión (minutos)';
+
+  @override
+  String get settingLabelCounterOfflineMaxSales =>
+      'Máximo de ventas sin conexión por sesión de caja';
+
+  @override
+  String get settingLabelCounterOfflinePriceTolerance =>
+      'Diferencia de precio admitida sin conexión (%)';
 
   @override
   String get settingLabelCounterPaidOutLimit => 'Mayor salida sin autorización';
@@ -32885,6 +33104,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelStockCycleCountOverdueDays =>
       'Recuento cíclico: vencido tras';
+
+  @override
+  String get settingLabelStockExpiryHorizonDays =>
+      'Informe de caducidad: horizonte';
 
   @override
   String get settingLabelStockGroupDefaultCountDays =>
@@ -35887,6 +36110,51 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockCameraTitle => 'Escáner de cámara';
 
   @override
+  String stockChainDelivery(String label, String supplier) {
+    return 'Entrega $label de $supplier';
+  }
+
+  @override
+  String get stockChainEmpty => 'No hay otro movimiento registrado.';
+
+  @override
+  String stockChainInvoice(String label) {
+    return 'Factura $label';
+  }
+
+  @override
+  String get stockChainOpen => 'Todos los movimientos';
+
+  @override
+  String get stockChainPieceTitle => 'Todos los movimientos de esta pieza';
+
+  @override
+  String stockChainPieces(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count piezas',
+      one: '$count pieza',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String stockChainReceipt(String label) {
+    return 'Ticket $label';
+  }
+
+  @override
+  String get stockChainTitle => 'Todos los movimientos de este lote';
+
+  @override
+  String get stockChainTruncated =>
+      'Solo se muestran los primeros movimientos.';
+
+  @override
+  String get stockChainUnavailable => 'Un documento que no puede consultar';
+
+  @override
   String get stockCostLabel => 'Coste por unidad';
 
   @override
@@ -36318,6 +36586,65 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockEnteredLabel => 'Introducido';
 
   @override
+  String get stockExpiryAny => 'Cualquiera';
+
+  @override
+  String stockExpiryCut(String rows) {
+    return 'El informe se corta en $rows filas: acote la fecha, el lugar o el grupo.';
+  }
+
+  @override
+  String get stockExpiryDate => 'Fecha de referencia';
+
+  @override
+  String stockExpiryDaysAhead(String days) {
+    return 'en $days d';
+  }
+
+  @override
+  String stockExpiryDaysPast(String days) {
+    return 'hace $days d';
+  }
+
+  @override
+  String get stockExpiryGroup => 'Grupo de artículos';
+
+  @override
+  String get stockExpiryHorizon => 'Horizonte (días)';
+
+  @override
+  String get stockExpiryHorizonHint => 'Vacío: el ajuste de la empresa.';
+
+  @override
+  String get stockExpiryNone =>
+      'En esta fecha nada del stock está caducado ni a punto de caducar.';
+
+  @override
+  String get stockExpiryPlace => 'Lugar';
+
+  @override
+  String get stockExpiryPrint => 'Imprimir el informe';
+
+  @override
+  String get stockExpiryReadFailed =>
+      'No se pudo leer el informe de caducidad.';
+
+  @override
+  String get stockExpiryScope => 'Qué listar';
+
+  @override
+  String get stockExpiryScopeBoth => 'Caducado y por caducar';
+
+  @override
+  String get stockExpiryScopeExpired => 'Caducado';
+
+  @override
+  String get stockExpiryScopeExpiring => 'Por caducar';
+
+  @override
+  String get stockExpiryTitle => 'Informe de caducidad';
+
+  @override
   String get stockFirstRunBody =>
       'Empiece por una ubicación donde se guarda la mercancía, luego los artículos que mantiene. Después, reciba una entrega o mueva mercancía.';
 
@@ -36464,6 +36791,33 @@ class AppLocalizationsEs extends AppLocalizations {
   String stockMoveQuantity(String unit) {
     return 'Cantidad ($unit)';
   }
+
+  @override
+  String get stockMoveReasonAdjustment => 'Recuento ajustado';
+
+  @override
+  String get stockMoveReasonConsumption => 'Consumido';
+
+  @override
+  String get stockMoveReasonLoss => 'Dado de baja';
+
+  @override
+  String get stockMoveReasonOpening => 'Existencias iniciales';
+
+  @override
+  String get stockMoveReasonReceipt => 'Recibido';
+
+  @override
+  String get stockMoveReasonReturnIn => 'Devuelto por el cliente';
+
+  @override
+  String get stockMoveReasonReturnOut => 'Devuelto al proveedor';
+
+  @override
+  String get stockMoveReasonSale => 'Vendido';
+
+  @override
+  String get stockMoveReasonTransfer => 'Trasladado';
 
   @override
   String get stockMoveSameSite =>
@@ -37702,6 +38056,127 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockTransfersTitle => 'Traslados';
 
   @override
+  String stockUnitChangedNow(String place) {
+    return 'La unidad está ahora en $place: léala de nuevo.';
+  }
+
+  @override
+  String get stockUnitCode => 'Código de la unidad';
+
+  @override
+  String get stockUnitContent => 'Contenido';
+
+  @override
+  String get stockUnitContentNone => 'Nada dentro.';
+
+  @override
+  String get stockUnitKind => 'Tipo';
+
+  @override
+  String get stockUnitKindBox => 'Caja';
+
+  @override
+  String get stockUnitKindCarton => 'Caja de cartón';
+
+  @override
+  String get stockUnitKindCrate => 'Cajón';
+
+  @override
+  String get stockUnitKindOther => 'Otro';
+
+  @override
+  String get stockUnitKindPallet => 'Palé';
+
+  @override
+  String get stockUnitLabelCode => 'Etiqueta del proveedor (SSCC), si la hay';
+
+  @override
+  String stockUnitLoose(String quantity) {
+    return '$quantity suelto aquí';
+  }
+
+  @override
+  String stockUnitMade(String unit) {
+    return '$unit creada.';
+  }
+
+  @override
+  String get stockUnitMake => 'Crear una unidad';
+
+  @override
+  String get stockUnitMove => 'Mover';
+
+  @override
+  String get stockUnitMoveTo => 'Mover a';
+
+  @override
+  String stockUnitMoved(String unit, String place) {
+    return '$unit movida a $place.';
+  }
+
+  @override
+  String stockUnitNestedIn(String unit) {
+    return 'En $unit';
+  }
+
+  @override
+  String get stockUnitPlace => 'Lugar';
+
+  @override
+  String get stockUnitRepack => 'Reenvasar en cajas';
+
+  @override
+  String get stockUnitRepackBoxes => 'Número de cajas';
+
+  @override
+  String get stockUnitRepackEach => 'Cantidad por caja';
+
+  @override
+  String get stockUnitRepackItem => 'Qué reenvasar';
+
+  @override
+  String stockUnitRepacked(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count cajas creadas.',
+      one: '1 caja creada.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockUnitUnpack => 'Deshacer';
+
+  @override
+  String get stockUnitUnpackHint => 'Su contenido se queda donde está, suelto.';
+
+  @override
+  String stockUnitUnpacked(String unit) {
+    return '$unit deshecha.';
+  }
+
+  @override
+  String get stockUnitsAllPlaces => 'Todos los lugares';
+
+  @override
+  String get stockUnitsChooseItem => 'Elegir un artículo';
+
+  @override
+  String get stockUnitsEmpty =>
+      'Aún no hay unidades. Cree una con el stock suelto de un lugar.';
+
+  @override
+  String get stockUnitsIntro =>
+      'Un palé, una caja o un cajón propio: se mueve con todo su contenido, y cada lote y cada pieza sigue siendo trazable.';
+
+  @override
+  String get stockUnitsReadFailed => 'No se pudieron leer las unidades.';
+
+  @override
+  String get stockUnitsTitle => 'Unidades de manipulación';
+
+  @override
   String get stockValueBasis =>
       'Un valor operativo de los movimientos registrados a su coste de lote registrado. No es un saldo contabilizado de existencias ni indica coste de ventas.';
 
@@ -37781,6 +38256,50 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockWhenLabel => 'Cuándo';
+
+  @override
+  String get stockWhereIsAway => 'Salido o venido de fuera';
+
+  @override
+  String get stockWhereIsNow => 'Ahora';
+
+  @override
+  String get stockWhereIsNowhere =>
+      'Nada de esto está en un lugar en esa fecha.';
+
+  @override
+  String stockWhereIsOnHand(String quantity) {
+    return '$quantity en total';
+  }
+
+  @override
+  String get stockWhereIsOpen => 'Dónde está';
+
+  @override
+  String get stockWhereIsPickDate => 'En un día…';
+
+  @override
+  String get stockWhereIsPieces => 'Piezas';
+
+  @override
+  String stockWhereIsPiecesFrom(String date) {
+    return 'Las piezas se siguen desde el $date: una pieza hecha antes no tiene historial anterior a ese día.';
+  }
+
+  @override
+  String get stockWhereIsPiecesMore =>
+      'Solo se muestran las primeras 200 piezas.';
+
+  @override
+  String get stockWhereIsTitle => 'Dónde está';
+
+  @override
+  String get stockWhereIsTransit => 'En camino';
+
+  @override
+  String stockWhereIsTransitLine(String from, String to) {
+    return 'De $from a $to';
+  }
 
   @override
   String get subprocessAttendance => 'Asistencia y uso';
@@ -40367,6 +40886,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillPayCash => 'Cobrar en efectivo';
 
   @override
+  String tillPieceTwice(String code) {
+    return 'La pieza $code ya está en la cesta.';
+  }
+
+  @override
   String get tillPricing => 'Calculando la cesta…';
 
   @override
@@ -40393,6 +40917,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillRetry => 'Reintentar';
 
   @override
+  String tillScanUnknown(String code) {
+    return '$code no es algo que venda esta caja.';
+  }
+
+  @override
   String get tillSoldTitle => 'Vendido';
 
   @override
@@ -40406,6 +40935,16 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String tillTotalDue(String amount) {
     return 'Total a pagar: $amount';
+  }
+
+  @override
+  String tillTrackLot(String code, String quantity) {
+    return 'Lote $code × $quantity';
+  }
+
+  @override
+  String tillTrackPiece(String code) {
+    return 'Pieza $code';
   }
 
   @override

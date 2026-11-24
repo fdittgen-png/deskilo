@@ -56,6 +56,7 @@ class TillBasket extends StatelessWidget {
                   itemBuilder: (context, i) => _Line(
                     line: state.lines[i],
                     priced: draft != null && i < draft.lines.length ? draft.lines[i] : null,
+                    tracks: sold?.tracksOf(i + 1) ?? const [],
                     money: money,
                     onQuantity: sold == null && !state.unconfirmed ? () => onQuantity(i) : null,
                     onRemove: sold == null && !state.unconfirmed ? () => onRemove(i) : null,
@@ -77,10 +78,13 @@ class TillBasket extends StatelessWidget {
 }
 
 class _Line extends StatelessWidget {
-  const _Line({required this.line, required this.priced, required this.money, required this.onQuantity, required this.onRemove});
+  const _Line({required this.line, required this.priced, required this.money, required this.onQuantity, required this.onRemove, this.tracks = const []});
 
   final TillLine line;
   final TillPricedLine? priced;
+
+  /// #4436 -- the track IDs the line took, once sold: the lots with their quantities, the pieces by their tags.
+  final List<TillTrack> tracks;
   final MoneyFormat money;
   final VoidCallback? onQuantity;
   final VoidCallback? onRemove;
@@ -91,7 +95,15 @@ class _Line extends StatelessWidget {
     return ListTile(
       key: ValueKey('till-line-${line.itemId}'),
       title: Text(line.name, maxLines: 2, overflow: TextOverflow.ellipsis),
-      subtitle: Text('${line.quantity} ${line.unit}'.trim()),
+      subtitle: tracks.isEmpty
+          ? Text('${line.quantity} ${line.unit}'.trim())
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${line.quantity} ${line.unit}'.trim()),
+                Text(tillTracksText(l10n, tracks), key: ValueKey('till-tracks-${line.itemId}')),
+              ],
+            ),
       onTap: onQuantity,
       trailing: Row(
         mainAxisSize: MainAxisSize.min,

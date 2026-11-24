@@ -16,6 +16,7 @@ import '../features/money/presentation/screens/tax_reference_screen.dart';
 import '../features/stock/presentation/purchase_order_stock_seam_impl.dart';
 import '../features/stock/presentation/stock_event_names.dart';
 import '../features/stock/providers/stock_providers.dart';
+import 'stock_expiry_print.dart';
 import 'stock_service_creator.dart';
 
 /// Puts the openers in a scope's overrides (main.dart, the demonstration,
@@ -31,6 +32,8 @@ final List<Override> featureSheetsFromApp = [
   purchaseOrderStockSeamProvider.overrideWithValue(const StockPurchaseOrderSeam()),
   // #4350 — a new item is made as a service, by the money feature's command (the stock never imports it).
   stockServiceCreatorProvider.overrideWith(MoneyStockServiceCreator.new),
+  // #4431 — the expiry report is printed by the report engine (the stock never imports it).
+  stockExpiryPrinterProvider.overrideWithValue(const MoneyStockExpiryPrinter()),
   // #4294 — the names the low-stock notice of the inbox reads (events never import the stock).
   eventNameSourcesProvider.overrideWithValue(const [stockEventNames]),
 ];

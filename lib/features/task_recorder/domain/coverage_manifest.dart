@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #1881 — the frozen coverage manifest: every route the router
-// registers, and what the task recorder does on it.
+// #1881 — the frozen coverage manifest: every route the router registers, and what the task recorder does on it.
 //
-//   recorded — instrumented: its own seams name the steps; recorder — the
-//   recorder's own screens, never recorded; excluded — a protected screen
+//   recorded — instrumented: its own seams name the steps; recorder — the recorder's own screens, never recorded; excluded — a protected screen
 //   (sign-in, payment, messages, providers, secrets, identity, operator):
 //   one marker, its category, nothing of its contents; planned — a form
 //   with no seams of its own YET, noted by the generic layer (#2142), its
@@ -382,11 +380,7 @@ const List<RouteCoverage> routeCoverage = [
   // #2577 — the purchase and sales pages: doors to recorded screens.
   RouteCoverage('/money/purchases', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/purchases/doc/:id', CoverageStatus.planned, owner: '#1884'),
-  RouteCoverage(
-    '/money/purchases/approvals',
-    CoverageStatus.planned,
-    owner: '#1884',
-  ),
+  RouteCoverage('/money/purchases/approvals', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/suppliers', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/suppliers/:id', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/customers', CoverageStatus.planned, owner: '#1884'),
@@ -399,8 +393,11 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/stock/transfers', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/counts', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/groups', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/stock/where/:itemId', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/cycle-counts', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/cycle-counts/:taskId', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/stock/expiry', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/stock/units', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/items', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/places', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/settings', CoverageStatus.planned, owner: '#1884'),

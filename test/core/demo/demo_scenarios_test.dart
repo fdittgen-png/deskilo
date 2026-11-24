@@ -25,6 +25,8 @@ import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
 import 'package:deskilo/core/demo/data/demo_stock_code_resolver.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_cycle_counts.dart';
+import 'package:deskilo/core/demo/data/demo_stock_expiry.dart';
+import 'package:deskilo/core/demo/data/demo_stock_handling_units.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_operations.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
@@ -76,9 +78,11 @@ import 'package:deskilo/features/money/domain/service_fulfilment.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/stock/domain/handling_units.dart';
 import 'package:deskilo/features/stock/domain/stock_code_resolver.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_cycle_counts.dart';
+import 'package:deskilo/features/stock/domain/stock_expiry.dart';
 import 'package:deskilo/features/stock/domain/stock_operations.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
@@ -1446,6 +1450,51 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       }
     },
   ),
+  // #4435 — handling units: a pallet moves with its whole content through the ledger, a second move with the revision someone
+  // else already used is refused and told where the unit is, an unpack leaves the content loose, a repack makes boxes of it, and a
+  // code is unique.
+  WorkspaceFeature.stockHandlingUnits: _action(
+    _owner,
+    'Ada moves the pallet of 30 mugs to Shelf A, a second move with the old revision is refused, and she repacks the carton of coffee into two boxes',
+    (w) async {
+      final ledger = DemoStockLedger(demoFirstSpaceId, DemoStockConfigCommands(demoFirstSpaceId));
+      final units = DemoStockHandlingUnits(ledger);
+      final page = await units.page(demoFirstSpaceId);
+      final pallet = page.rows.firstWhere((u) => u.code == 'PAL-001');
+      final moved = await units.move(demoFirstSpaceId, 'req-1', unitId: pallet.id, toLocationId: 'demo-place-shelf', revision: pallet.revision);
+      var refused = false;
+      try {
+        await units.move(demoFirstSpaceId, 'req-2', unitId: pallet.id, toLocationId: 'demo-place-main', revision: pallet.revision);
+      } on StockUnitRefused catch (e) {
+        refused = e.code == 'DKG27';
+      }
+      final carton = (await units.page(demoFirstSpaceId)).rows.firstWhere((u) => u.code == 'CT-001');
+      final boxes = await units.repack(
+        demoFirstSpaceId,
+        'req-3',
+        sources: [RepackSource(unitId: carton.id, revision: carton.revision, line: const UnitLineDraft(itemId: 'demo-item-beans', quantity: '10'))],
+        targets: [
+          for (final n in [1, 2])
+            UnitDraft(code: 'CT-001-$n', kind: HandlingUnitKind.box, locationId: carton.locationId, lines: const [UnitLineDraft(itemId: 'demo-item-beans', quantity: '5')]),
+        ],
+      );
+      return moved.locationId == 'demo-place-shelf' && ledger.balance('demo-item-mugs', 'demo-place-shelf').text == '42' && refused && boxes.length == 2;
+    },
+  ),
+  // #4431 — the expiry report: what expired and what is about to, by date, the five basket pieces one by one, and a place keeps
+  // its own.
+  WorkspaceFeature.stockExpiryReport: _action(
+    _owner,
+    'Ada reads what expired and what expires in the next 30 days: the milk lot that expired comes first, the gift basket is listed piece by piece, and a place keeps only what it holds',
+    (w) async {
+      final expiry = DemoStockExpiry(() => DateTime(2026, 5, 13), DemoStockTags());
+      final all = await expiry.report(demoFirstSpaceId, const ExpiryQuery());
+      final first = all.rows.first;
+      final pieces = all.rows.where((r) => r.isPiece).toList();
+      final main = await expiry.report(demoFirstSpaceId, const ExpiryQuery(locationId: 'demo-place-main'));
+      return first.lotCode == 'MILK-09' && first.days < 0 && pieces.length == 5 && pieces.every((p) => p.tag.isNotEmpty) && main.rows.every((r) => r.locationCode == 'MAIN');
+    },
+  ),
   // #4295 — the high-value shelf's plan made a task: counted blind (a counter is not told what the
   // ledger holds), a skip needs a reason, and every line counted or skipped completes the task.
   WorkspaceFeature.stockCycleCounts: _action(
@@ -1540,9 +1589,11 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   WorkspaceFeature.billingCustomers: _action(
     _owner,
     'Ada adds Studio Nord, a business with no account, to her billing '
-    'customers',
+    'customers, then invites Nordlicht GmbH to read its own invoices: the '
+    'code is accepted and the customer is held apart from the members',
     (w) async {
-      final customers = w.house(DemoSpaceKey.home).stores.billingCustomers;
+      final stores = w.house(DemoSpaceKey.home).stores;
+      final customers = stores.billingCustomers;
       final before = (await customers.fetch(demoFirstSpaceId)).length;
       await customers.create(
         demoFirstSpaceId,
@@ -1550,9 +1601,23 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         capacity: 'business',
       );
       final after = await customers.fetch(demoFirstSpaceId);
+      // #4164 B2 — the invitation, its acceptance and the customer's reads.
+      final access = stores.billingAccess;
+      final invitation = await access.invite(
+        demoFirstSpaceId,
+        'demo-customer-nordlicht',
+        'scenario-1',
+      );
+      final preview = await access.preview(invitation.code);
+      await access.accept(invitation.code);
       return before > 0 &&
           after.length == before + 1 &&
-          after.any((c) => c.displayName == 'Studio Nord');
+          after.any((c) => c.displayName == 'Studio Nord') &&
+          preview.billedAs == 'Nordlicht GmbH' &&
+          access.heldSubjects.containsAll({
+            'demo-customer-weiss',
+            'demo-customer-nordlicht',
+          });
     },
   ),
   // #4166 — the owner sends a quote to a billing customer: the first send takes

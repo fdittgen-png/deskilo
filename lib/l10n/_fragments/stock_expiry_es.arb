@@ -1,0 +1,89 @@
+{
+  "reportDocStockExpiry": "Informe de caducidad",
+  "@reportDocStockExpiry": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryTitle": "Informe de caducidad",
+  "@stockExpiryTitle": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpired": "Caducado",
+  "@stockExpiryScopeExpired": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpiring": "Por caducar",
+  "@stockExpiryScopeExpiring": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeBoth": "Caducado y por caducar",
+  "@stockExpiryScopeBoth": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScope": "Qué listar",
+  "@stockExpiryScope": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDate": "Fecha de referencia",
+  "@stockExpiryDate": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizon": "Horizonte (días)",
+  "@stockExpiryHorizon": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizonHint": "Vacío: el ajuste de la empresa.",
+  "@stockExpiryHorizonHint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPlace": "Lugar",
+  "@stockExpiryPlace": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryGroup": "Grupo de artículos",
+  "@stockExpiryGroup": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryAny": "Cualquiera",
+  "@stockExpiryAny": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPrint": "Imprimir el informe",
+  "@stockExpiryPrint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryNone": "En esta fecha nada del stock está caducado ni a punto de caducar.",
+  "@stockExpiryNone": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDaysPast": "hace {days} d",
+  "@stockExpiryDaysPast": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDaysAhead": "en {days} d",
+  "@stockExpiryDaysAhead": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryCut": "El informe se corta en {rows} filas: acote la fecha, el lugar o el grupo.",
+  "@stockExpiryCut": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryReadFailed": "No se pudo leer el informe de caducidad.",
+  "@stockExpiryReadFailed": {
+    "description": "#4431 the expiry report"
+  }
+}

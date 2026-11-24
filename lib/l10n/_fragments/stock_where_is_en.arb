@@ -1,0 +1,69 @@
+{
+  "@@locale": "en",
+  "stockWhereIsTitle": "Where is it",
+  "@stockWhereIsTitle": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsOpen": "Where is it",
+  "@stockWhereIsOpen": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsOnHand": "{quantity} in all",
+  "@stockWhereIsOnHand": {
+    "description": "#4434 where is it",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockWhereIsNow": "Now",
+  "@stockWhereIsNow": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsPickDate": "On a day…",
+  "@stockWhereIsPickDate": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsNowhere": "None of it is held at a place at this date.",
+  "@stockWhereIsNowhere": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsTransit": "On the road",
+  "@stockWhereIsTransit": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsTransitLine": "From {from} to {to}",
+  "@stockWhereIsTransitLine": {
+    "description": "#4434 where is it",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "stockWhereIsAway": "Left or came from outside",
+  "@stockWhereIsAway": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsPieces": "Pieces",
+  "@stockWhereIsPieces": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsPiecesMore": "Only the first 200 pieces are shown.",
+  "@stockWhereIsPiecesMore": {
+    "description": "#4434 where is it"
+  },
+  "stockWhereIsPiecesFrom": "Pieces are followed from {date} on: a piece made before has no history before that day.",
+  "@stockWhereIsPiecesFrom": {
+    "description": "#4434 where is it",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
+}

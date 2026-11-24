@@ -96,9 +96,7 @@ enum WorkspaceFeature {
   letterStandard,
   priceNegotiations,
 
-  /// #767 — recurring scheduled expenses (internet, phone, electricity): the schedule is validated
-  /// once, each due occurrence is presented to the member — matching amount lands settled, a
-  /// deviation explains itself and passes the expense validation.
+  /// #767 — recurring scheduled expenses (internet, phone, electricity): each due occurrence is presented to the member.
   scheduledExpenses,
 
   /// #793 — the avatar monogram identifies ONE member: the initials of the first and family name,
@@ -119,8 +117,7 @@ enum WorkspaceFeature {
   /// beyond the subscription. Off, the extras stay on the whole-month invoice.
   usageInvoices,
 
-  /// #804 — several open invoices regrouped into one the member pays,
-  /// with the originals kept and traceable.
+  /// #804 — several open invoices regrouped into one the member pays, the originals kept and traceable.
   invoiceSettlement,
 
   /// #812 — the journey of an invoice told as one process on every
@@ -447,7 +444,10 @@ enum WorkspaceFeature {
   stockScanning,
   counterReceipts,
   counterTillSessions,
-  stockTagReads;
+  stockTagReads,
+  stockExpiryReport,
+  stockHandlingUnits,
+  counterOfflineCash;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

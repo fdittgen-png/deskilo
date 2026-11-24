@@ -46,6 +46,8 @@
 #   (O) a card authorization answered while the sale is finalized: the finalize waits, then settles with the accepted tender.
 #   (P) two sessions open one till at once: one session, the other refused (DKL12).
 #   (Q) a sale finalized and the close of its session at once: the close waits for the sale and counts it.
+#   (S) two devices of one till session send the same offline sales at once (#4373): the second waits for the session's lock, then answers
+#       the first's results as replays; each sale is recorded once, with one receipt.
 # A holder that never took its lock, or a contender that never waited, fails the
 # script: nothing here can pass empty. A single pgTAP transaction cannot show a
 # race, so each contender is its own psql process on CI's disposable database.
@@ -695,12 +697,10 @@ wait_lock "transfer-race-bulk-move"
 wait "$holder21" || { echo "::error::the first bulk move failed: $(tr '\n' ' ' < "$scratch/holder21")" >&2; exit 1; }
 wait "$contender21" || true
 grep -qx moved "$scratch/holder21" || { echo "::error::the first bulk move did not complete: $(tr '\n' ' ' < "$scratch/holder21")" >&2; exit 1; }
-# refused either way: the pieces are no longer where it takes them from (DKG26) or the place no longer holds them (DKG03)
-grep -qE "DKG26|DKG03|not that much on hand" "$scratch/contender21" || { echo "::error::the second bulk move was not refused: $(tr '\n' ' ' < "$scratch/contender21")" >&2; exit 1; }
-# a piece refusal names the piece's new place (the quantity refusal, when it comes first, has none: #4364 follow-up)
-if grep -q "DKG26" "$scratch/contender21"; then
-  grep -q "\"place\"" "$scratch/contender21" || { echo "::error::the refusal does not name the new place: $(tr '\n' ' ' < "$scratch/contender21")" >&2; exit 1; }
-fi
+# refused for its pieces, naming where they went (0925: the pieces are asked before the quantity check tells DKG03)
+# psql prints the message, not the SQLSTATE: the piece refusal is read by its message text, its detail by its keys
+grep -q "a named piece is not where this movement takes it from" "$scratch/contender21" || { echo "::error::the second bulk move was not refused for its pieces (DKG26): $(tr '\n' ' ' < "$scratch/contender21")" >&2; exit 1; }
+grep -q "\"place\"" "$scratch/contender21" || { echo "::error::the refusal does not name the new place: $(tr '\n' ' ' < "$scratch/contender21")" >&2; exit 1; }
 expect "(R) the three pieces moved once" "$(q "select count(*) from public.stock_tagged_units where item_id = '$pitem' and location_id = '$shelf' and state = 'in_stock'")" "3"
 
 # (M) two operators finalize the same counter draft under different request ids: the second waits for the receipt's
@@ -857,5 +857,41 @@ wait "$contender20" || { echo "::error::the close failed: $(tr '\n' ' ' < "$scra
 grep -q "^sold " "$scratch/holder20" || { echo "::error::the sale did not complete: $(tr '\n' ' ' < "$scratch/holder20")" >&2; exit 1; }
 grep -qx "closed 11200" "$scratch/contender20" || { echo "::error::the close did not count the sale (expected 11200): $(tr '\n' ' ' < "$scratch/contender20")" >&2; exit 1; }
 expect "(Q) the sale is in the closed session" "$(q "select count(*) from public.counter_receipts where till_session_id = '$qsession' and state = 'finalized'")" "1"
+
+# (S) two devices of one till session send the same offline cash sales at once: the first holds the session's lock, the second waits,
+# then answers both sales as replays; two receipts and two received rows exist, not four.
+q "update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{\"counterOfflineCash\": true}' where id = '$ws'" >/dev/null
+sitem=$(q "insert into public.services (workspace_id, name, price_cents, active) values ('$ws', 'Race bread', 120, true) returning id" | head -1)
+ssession=$(psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "begin; select set_config('request.jwt.claims', '{\"sub\":\"$owner\",\"role\":\"authenticated\",\"aal\":\"aal2\"}', true); set local role authenticated; select (public.counter_session_open_v1('$ws', gen_random_uuid(), '$tillid', 5000, null)) ->> 'session_id'; commit;" | grep -E '^[0-9a-f-]{36}$' | head -1)
+[[ -n "$ssession" ]] || { echo "::error::the session for the offline sales was not opened" >&2; exit 1; }
+q "update public.counter_till_sessions set opened_at = now() - interval '3 hours' where id = '$ssession'" >/dev/null
+sreq1=$(uid); sreq2=$(uid)
+ssales="[{\"seq\": 1, \"request_id\": \"$sreq1\", \"occurred_at\": \"$(date -u -v-100M +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -d '100 minutes ago' +%Y-%m-%dT%H:%M:%SZ)\", \"cash_given_minor\": 200, \"change_minor\": 80, \"body\": {\"lines\": [{\"item_id\": \"$sitem\", \"quantity\": \"1\", \"unit_price\": \"1.20\"}]}}, {\"seq\": 2, \"request_id\": \"$sreq2\", \"occurred_at\": \"$(date -u -v-99M +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -d '99 minutes ago' +%Y-%m-%dT%H:%M:%SZ)\", \"cash_given_minor\": 120, \"change_minor\": 0, \"body\": {\"lines\": [{\"item_id\": \"$sitem\", \"quantity\": \"1\", \"unit_price\": \"1.20\"}]}}]"
+ssince=$(date -u -v-101M +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -d '101 minutes ago' +%Y-%m-%dT%H:%M:%SZ)
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder22" 2>&1 <<SQL &
+begin;
+$as_owner
+select 'sent ' || (public.counter_offline_sync_v1('$ws', '$ssession', '$ssince', '$ssales'::jsonb) ->> 'accepted');
+reset role;
+\\! touch '$scratch/ready22'
+select pg_sleep(4);
+commit;
+SQL
+holder22=$!
+wait_marker "$scratch/ready22" "$scratch/holder22"
+PGAPPNAME="transfer-race-offline" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender22" 2>&1 <<SQL &
+begin;
+$as_owner
+select 'replayed ' || (select count(*) from jsonb_array_elements(public.counter_offline_sync_v1('$ws', '$ssession', '$ssince', '$ssales'::jsonb) -> 'results') r where r ->> 'replayed' = 'true');
+commit;
+SQL
+contender22=$!
+wait_lock "transfer-race-offline"
+wait "$holder22" || { echo "::error::the first device failed: $(tr '\n' ' ' < "$scratch/holder22")" >&2; exit 1; }
+wait "$contender22" || { echo "::error::the second device failed: $(tr '\n' ' ' < "$scratch/contender22")" >&2; exit 1; }
+grep -qx "sent 2" "$scratch/holder22" || { echo "::error::the first device did not have both sales accepted: $(tr '\n' ' ' < "$scratch/holder22")" >&2; exit 1; }
+grep -qx "replayed 2" "$scratch/contender22" || { echo "::error::the second device did not get both as replays: $(tr '\n' ' ' < "$scratch/contender22")" >&2; exit 1; }
+expect "(S) each offline sale is one receipt" "$(q "select count(*) from public.counter_receipts where till_session_id = '$ssession' and state = 'finalized' and source_kind = 'offline_till'")" "2"
+expect "(S) and one received row" "$(q "select count(*) from public.counter_offline_sales where till_session_id = '$ssession' and state = 'accepted'")" "2"
 
 echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders; two put-aways cannot over-allocate a line; two sessions crossing a reorder point raise one alert"

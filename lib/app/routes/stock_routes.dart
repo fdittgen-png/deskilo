@@ -13,6 +13,7 @@ import '../../features/stock/presentation/stock_count_task_screen.dart';
 import '../../features/stock/presentation/stock_counts_screen.dart';
 import '../../features/stock/presentation/stock_cycle_counts_screen.dart';
 import '../../features/stock/presentation/stock_entry.dart';
+import '../../features/stock/presentation/stock_expiry_screen.dart';
 import '../../features/stock/presentation/stock_items_screen.dart';
 import '../../features/stock/presentation/stock_movement_screen.dart';
 import '../../features/stock/presentation/stock_places_screen.dart';
@@ -20,7 +21,9 @@ import '../../features/stock/presentation/stock_reorder_screen.dart';
 import '../../features/stock/presentation/stock_screen.dart';
 import '../../features/stock/presentation/stock_settings_screen.dart';
 import '../../features/stock/presentation/stock_transfers_screen.dart';
+import '../../features/stock/presentation/stock_units_screen.dart';
 import '../../features/stock/presentation/stock_value_screen.dart';
+import '../../features/stock/presentation/stock_where_is_screen.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../route_access.dart';
 import '../route_env.dart';
@@ -45,6 +48,14 @@ List<RouteBase> stockRoutes(RouteEnv env) {
   );
   const groupsAccess = RouteAccess(
     features: [WorkspaceFeature.stockManagement, WorkspaceFeature.stockItemGroups],
+    to: '/reserve',
+  );
+  const expiryAccess = RouteAccess(
+    features: [WorkspaceFeature.stockManagement, WorkspaceFeature.stockExpiryReport],
+    to: '/reserve',
+  );
+  const unitsAccess = RouteAccess(
+    features: [WorkspaceFeature.stockManagement, WorkspaceFeature.stockHandlingUnits],
     to: '/reserve',
   );
   return [
@@ -116,11 +127,29 @@ List<RouteBase> stockRoutes(RouteEnv env) {
           redirect: env.guard(groupsAccess),
           builder: (context, state) => const ItemGroupsScreen(),
         ),
+        // #4431 — the expiry report: what is expired at a date or expires after it, printed from the report engine.
+        GoRoute(
+          path: 'expiry',
+          redirect: env.guard(expiryAccess),
+          builder: (context, state) => const StockExpiryScreen(),
+        ),
+        // #4435 — the handling units: pallets, cartons and boxes moved with their whole content, repackaged, traceable.
+        GoRoute(
+          path: 'units',
+          redirect: env.guard(unitsAccess),
+          builder: (context, state) => const StockUnitsScreen(),
+        ),
         GoRoute(
           path: 'movements/:id',
           redirect: env.guard(access),
           builder: (context, state) =>
               StockMovementScreen(movementId: state.pathParameters['id'] ?? ''),
+        ),
+        // #4434 — where an item (or one of its lots) is, now or on a past day.
+        GoRoute(
+          path: 'where/:itemId',
+          redirect: env.guard(access),
+          builder: (context, state) => StockWhereIsScreen(itemId: state.pathParameters['itemId'] ?? '', lotId: state.uri.queryParameters['lot']),
         ),
       ],
     ),

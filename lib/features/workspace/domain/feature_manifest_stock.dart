@@ -139,4 +139,30 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockTags,
     defaultOn: false,
   ),
+  // #4431 — the expiry report: every lot or piece on hand that is expired at a chosen date or expires after it, printed from
+  // the report engine with a layout the business can edit. Asked for, under stock management.
+  WorkspaceFeature.stockExpiryReport: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockExpiryReport,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
+  // #4435 — handling units: goods move in the pallet or carton they were received in, or in the store's own repackaged units,
+  // and stay traceable through the repack. Asked for, under stock management.
+  WorkspaceFeature.stockHandlingUnits: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockHandlingUnits,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
+  // #4373 — the till keeps selling for cash when it is offline, and the sales are sent once the connection returns. Asked for, under till sessions.
+  WorkspaceFeature.counterOfflineCash: FeatureManifestEntry(
+    feature: WorkspaceFeature.counterOfflineCash,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.counterTillSessions,
+    defaultOn: false,
+  ),
 };

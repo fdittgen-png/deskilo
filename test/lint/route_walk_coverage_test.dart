@@ -27,9 +27,12 @@ const Map<String, String> _matrixRows = {
 /// The routes no walk renders, and why: the router's golden
 /// (test/app/fixtures/route_outcomes.golden) says where each one lands.
 const Map<String, String> _noLayoutOfItsOwn = {
+  '/stock/where/:itemId': '#4434 the places of an item and a date chip; its widget tests render it at phone and desk widths',
   '/stock/counts': '#4172 a list of cards and a sheet; its widget tests render it at phone and desk widths',
   '/stock/reorder': '#4294 two lists and a button; its widget tests render it at phone and desk widths',
   '/stock/value': '#4173 a total and two lists; its widget tests render it at phone and desk widths',
+  '/stock/units': '#4435 a list and sheets; widget tests render it at phone and desk',
+  '/stock/expiry': '#4431 a filter form and a list; widget tests render it at phone and desk',
   '/stock/groups': '#4361 a list of groups and a sheet; its widget tests render it at phone and desk widths',
   '/stock/cycle-counts': '#4295 tabs of lists and a sheet; its widget tests render it at phone and desk widths',
   '/stock/cycle-counts/:taskId': '#4295 a list of lines and two sheets; its widget tests render it at phone and desk widths',

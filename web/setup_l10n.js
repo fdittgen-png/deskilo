@@ -33,6 +33,17 @@ window.SETUP_L10N={
    "optOneYear": "1 year",
    "optYears": "{n} years",
    "optMinutes": "{n} minutes",
+   "optMinutesDefault": "{n} minutes (default)",
+   "optSales": "{n} sales",
+   "optSalesDefault": "{n} sales (default)",
+   "optPercent": "{n} %",
+   "optPercentDefault": "{n} % (default)",
+   "counterOfflineMinutes": "Offline sales: longest offline period",
+   "counterOfflineMinutesHint": "How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Set in the app's settings.",
+   "counterOfflineSales": "Offline sales: most per till session",
+   "counterOfflineSalesHint": "How many cash sales made offline one till session accepts. Set in the app's settings.",
+   "counterOfflineTolerance": "Offline sales: price difference allowed",
+   "counterOfflineToleranceHint": "How far, in percent, the price of an offline sale may differ from the item's price when the sale is sent. Set in the app's settings.",
    "optMinutesDefaultMin": "{n} minutes (default min.)",
    "optOneHour": "1 hour",
    "optHourAndHalf": "1 h 30",
@@ -812,6 +823,8 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own. Set in the app's settings.",
    "stockCycleOverdue": "Cycle count: overdue after",
    "stockCycleOverdueHint": "How many days a cycle count task may stay open past its due date before the inbox says it is overdue. Set in the app's settings.",
+   "stockExpiryHorizon": "Expiry report: look ahead",
+   "stockExpiryHorizonHint": "How many days after the reference date the expiry report looks ahead for what is about to expire. Set in the app's settings.",
    "optMinorUnits": "{n} (minor units)",
    "businessKind_shop": "Shop — buys, keeps in stock and sells goods",
    "businessShopType": "Type of shop",
@@ -1576,6 +1589,18 @@ window.SETUP_L10N={
    "stockTagReads": [
     "Reading many tags",
     "A UHF reader in keyboard mode reads many tags at once to receive, move and count: the tags are collected, de-duplicated and resolved, and nothing is sent until the user confirms."
+   ],
+   "stockExpiryReport": [
+    "The expiry report",
+    "Prints, at a date you choose, every lot or piece in stock that is expired at that date or expires after it, with a layout you can edit like the other reports."
+   ],
+   "stockHandlingUnits": [
+    "Handling units",
+    "Goods move in the pallet or carton they were received in, or in the store's own repackaged units, and stay traceable through the repack."
+   ],
+   "counterOfflineCash": [
+    "Selling offline, cash only",
+    "When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection."
    ]
   },
   "process": {
@@ -2006,6 +2031,17 @@ window.SETUP_L10N={
    "optOneYear": "1 an",
    "optYears": "{n} ans",
    "optMinutes": "{n} minutes",
+   "optMinutesDefault": "{n} minutes (défaut)",
+   "optSales": "{n} ventes",
+   "optSalesDefault": "{n} ventes (défaut)",
+   "optPercent": "{n} %",
+   "optPercentDefault": "{n} % (défaut)",
+   "counterOfflineMinutes": "Ventes hors ligne : durée maximale",
+   "counterOfflineMinutesHint": "Combien de temps après la perte de connexion de la caisse une vente en espèces faite hors ligne est encore acceptée à l'envoi. Réglé dans les paramètres de l'app.",
+   "counterOfflineSales": "Ventes hors ligne : nombre maximal par session",
+   "counterOfflineSalesHint": "Combien de ventes en espèces faites hors ligne une session de caisse accepte. Réglé dans les paramètres de l'app.",
+   "counterOfflineTolerance": "Ventes hors ligne : écart de prix toléré",
+   "counterOfflineToleranceHint": "De combien, en pourcentage, le prix d'une vente hors ligne peut différer du prix de l'article à l'envoi. Réglé dans les paramètres de l'app.",
    "optMinutesDefaultMin": "{n} minutes (défaut min.)",
    "optOneHour": "1 heure",
    "optHourAndHalf": "1 h 30",
@@ -2785,6 +2821,8 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan sans seuil propre. Réglé dans les paramètres de l’application.",
    "stockCycleOverdue": "Inventaire tournant : en retard après",
    "stockCycleOverdueHint": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant d’être dite en retard. Réglé dans les paramètres de l’application.",
+   "stockExpiryHorizon": "Rapport de péremption : horizon",
+   "stockExpiryHorizonHint": "Combien de jours après la date de référence le rapport de péremption regarde ce qui va bientôt périmer. Réglé dans les paramètres de l'app.",
    "optMinorUnits": "{n} (unités mineures)",
    "businessKind_shop": "Commerce — achète, tient en stock et vend des marchandises",
    "businessShopType": "Type de commerce",
@@ -3549,6 +3587,18 @@ window.SETUP_L10N={
    "stockTagReads": [
     "Lecture de nombreuses étiquettes",
     "Un lecteur UHF en mode clavier lit de nombreuses étiquettes d'un coup pour recevoir, déplacer et compter : les étiquettes sont rassemblées, dédoublonnées et résolues, et rien n'est envoyé avant la confirmation de l'utilisateur."
+   ],
+   "stockExpiryReport": [
+    "Le rapport de péremption",
+    "Imprime, à une date choisie, chaque lot ou pièce en stock périmé à cette date ou qui périme après, avec une mise en page modifiable comme les autres rapports."
+   ],
+   "stockHandlingUnits": [
+    "Unités de manutention",
+    "Les marchandises circulent dans la palette ou le carton où elles sont arrivées, ou dans les unités reconditionnées du magasin, et restent traçables à travers le reconditionnement."
+   ],
+   "counterOfflineCash": [
+    "Vendre hors ligne, en espèces seulement",
+    "Quand la connexion est perdue, la caisse continue de vendre en espèces, enregistre chaque vente sur l'appareil et envoie les ventes dans l'ordre au retour de la connexion. Les autres moyens de paiement attendent la connexion."
    ]
   },
   "process": {
@@ -3979,6 +4029,17 @@ window.SETUP_L10N={
    "optOneYear": "1 Jahr",
    "optYears": "{n} Jahre",
    "optMinutes": "{n} Minuten",
+   "optMinutesDefault": "{n} Minuten (Standard)",
+   "optSales": "{n} Verkäufe",
+   "optSalesDefault": "{n} Verkäufe (Standard)",
+   "optPercent": "{n} %",
+   "optPercentDefault": "{n} % (Standard)",
+   "counterOfflineMinutes": "Offline-Verkäufe: längste Offline-Zeit",
+   "counterOfflineMinutesHint": "Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. In den Einstellungen der App festgelegt.",
+   "counterOfflineSales": "Offline-Verkäufe: Höchstzahl je Kassensitzung",
+   "counterOfflineSalesHint": "Wie viele offline getätigte Barverkäufe eine Kassensitzung annimmt. In den Einstellungen der App festgelegt.",
+   "counterOfflineTolerance": "Offline-Verkäufe: erlaubte Preisabweichung",
+   "counterOfflineToleranceHint": "Wie weit der Preis eines Offline-Verkaufs beim Senden in Prozent vom Preis des Artikels abweichen darf. In den Einstellungen der App festgelegt.",
    "optMinutesDefaultMin": "{n} Minuten (Standard-Minimum)",
    "optOneHour": "1 Stunde",
    "optHourAndHalf": "1 h 30",
@@ -4758,6 +4819,8 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Plan ohne eigene Schwelle als hochwertig gilt. Einstellbar in den Einstellungen der App.",
    "stockCycleOverdue": "Permanente Inventur: überfällig nach",
    "stockCycleOverdueHint": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor sie als überfällig gemeldet wird. Einstellbar in den Einstellungen der App.",
+   "stockExpiryHorizon": "Verfallsbericht: Vorausschau",
+   "stockExpiryHorizonHint": "Wie viele Tage nach dem Stichtag der Verfallsbericht vorausschaut, was bald abläuft. In den Einstellungen der App festgelegt.",
    "optMinorUnits": "{n} (kleinste Einheit)",
    "businessKind_shop": "Laden — kauft, lagert und verkauft Ware",
    "businessShopType": "Art des Ladens",
@@ -5522,6 +5585,18 @@ window.SETUP_L10N={
    "stockTagReads": [
     "Viele Etiketten lesen",
     "Ein UHF-Lesegerät im Tastaturmodus liest viele Etiketten auf einmal zum Wareneingang, Umlagern und Zählen: Die Etiketten werden gesammelt, entdoppelt und aufgelöst, und nichts wird gesendet, bevor die Person bestätigt."
+   ],
+   "stockExpiryReport": [
+    "Der Verfallsbericht",
+    "Druckt zu einem gewählten Datum jede Charge oder jedes Stück im Bestand, die an diesem Datum abgelaufen sind oder danach ablaufen, mit einem Layout, das Sie wie die anderen Berichte bearbeiten können."
+   ],
+   "stockHandlingUnits": [
+    "Packeinheiten",
+    "Ware bewegt sich in der Palette oder dem Karton, in dem sie ankam, oder in den eigenen umgepackten Einheiten des Ladens und bleibt über das Umpacken rückverfolgbar."
+   ],
+   "counterOfflineCash": [
+    "Offline verkaufen, nur bar",
+    "Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung."
    ]
   },
   "process": {
@@ -5952,6 +6027,17 @@ window.SETUP_L10N={
    "optOneYear": "1 año",
    "optYears": "{n} años",
    "optMinutes": "{n} minutos",
+   "optMinutesDefault": "{n} minutos (por defecto)",
+   "optSales": "{n} ventas",
+   "optSalesDefault": "{n} ventas (por defecto)",
+   "optPercent": "{n} %",
+   "optPercentDefault": "{n} % (por defecto)",
+   "counterOfflineMinutes": "Ventas sin conexión: tiempo máximo",
+   "counterOfflineMinutesHint": "Cuánto tiempo después de perder la conexión la caja aún se acepta una venta en efectivo hecha sin conexión al enviarla. Se define en los ajustes de la app.",
+   "counterOfflineSales": "Ventas sin conexión: máximo por sesión",
+   "counterOfflineSalesHint": "Cuántas ventas en efectivo hechas sin conexión acepta una sesión de caja. Se define en los ajustes de la app.",
+   "counterOfflineTolerance": "Ventas sin conexión: diferencia de precio admitida",
+   "counterOfflineToleranceHint": "Cuánto, en porcentaje, puede diferir el precio de una venta sin conexión del precio del artículo al enviarla. Se define en los ajustes de la app.",
    "optMinutesDefaultMin": "{n} minutos (mín. predeterminado)",
    "optOneHour": "1 hora",
    "optHourAndHalf": "1 h 30",
@@ -6731,6 +6817,8 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo es de alto valor para un plan sin umbral propio. Se ajusta en los ajustes de la aplicación.",
    "stockCycleOverdue": "Recuento cíclico: vencido tras",
    "stockCycleOverdueHint": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de declararse vencida. Se ajusta en los ajustes de la aplicación.",
+   "stockExpiryHorizon": "Informe de caducidad: horizonte",
+   "stockExpiryHorizonHint": "Cuántos días después de la fecha de referencia mira el informe de caducidad lo que está por caducar. Se define en los ajustes de la app.",
    "optMinorUnits": "{n} (unidades menores)",
    "businessKind_shop": "Tienda — compra, guarda en stock y vende mercancías",
    "businessShopType": "Tipo de tienda",
@@ -7495,6 +7583,18 @@ window.SETUP_L10N={
    "stockTagReads": [
     "Lectura de muchas etiquetas",
     "Un lector UHF en modo teclado lee muchas etiquetas a la vez para recibir, mover y contar: las etiquetas se reúnen, se eliminan duplicados y se resuelven, y no se envía nada hasta que la persona confirma."
+   ],
+   "stockExpiryReport": [
+    "El informe de caducidad",
+    "Imprime, en una fecha elegida, cada lote o pieza en stock caducado en esa fecha o que caduca después, con un diseño editable como los demás informes."
+   ],
+   "stockHandlingUnits": [
+    "Unidades de manipulación",
+    "La mercancía se mueve en el palé o la caja en que llegó, o en las unidades reenvasadas de la tienda, y sigue siendo trazable a través del reenvasado."
+   ],
+   "counterOfflineCash": [
+    "Vender sin conexión, solo en efectivo",
+    "Si se pierde la conexión, la caja sigue vendiendo en efectivo, guarda cada venta en el dispositivo y envía las ventas en orden cuando vuelve la conexión. Los demás medios de pago esperan la conexión."
    ]
   },
   "process": {
@@ -7925,6 +8025,17 @@ window.SETUP_L10N={
    "optOneYear": "1 anno",
    "optYears": "{n} anni",
    "optMinutes": "{n} minuti",
+   "optMinutesDefault": "{n} minuti (predefinito)",
+   "optSales": "{n} vendite",
+   "optSalesDefault": "{n} vendite (predefinito)",
+   "optPercent": "{n} %",
+   "optPercentDefault": "{n} % (predefinito)",
+   "counterOfflineMinutes": "Vendite offline: durata massima",
+   "counterOfflineMinutesHint": "Per quanto tempo dopo la perdita della connessione una vendita in contanti fatta offline è ancora accettata all'invio. Impostato nelle impostazioni dell'app.",
+   "counterOfflineSales": "Vendite offline: massimo per sessione",
+   "counterOfflineSalesHint": "Quante vendite in contanti fatte offline accetta una sessione di cassa. Impostato nelle impostazioni dell'app.",
+   "counterOfflineTolerance": "Vendite offline: differenza di prezzo ammessa",
+   "counterOfflineToleranceHint": "Di quanto, in percentuale, il prezzo di una vendita offline può differire dal prezzo dell'articolo all'invio. Impostato nelle impostazioni dell'app.",
    "optMinutesDefaultMin": "{n} minuti (min. predefinito)",
    "optOneHour": "1 ora",
    "optHourAndHalf": "1 h 30",
@@ -8704,6 +8815,8 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo è di alto valore per un piano senza soglia propria. Si imposta nelle impostazioni dell’app.",
    "stockCycleOverdue": "Inventario ciclico: in ritardo dopo",
    "stockCycleOverdueHint": "Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima di essere dichiarato in ritardo. Si imposta nelle impostazioni dell’app.",
+   "stockExpiryHorizon": "Rapporto di scadenza: orizzonte",
+   "stockExpiryHorizonHint": "Quanti giorni dopo la data di riferimento il rapporto di scadenza guarda ciò che sta per scadere. Impostato nelle impostazioni dell'app.",
    "optMinorUnits": "{n} (unità minori)",
    "businessKind_shop": "Negozio — acquista, tiene a magazzino e vende merce",
    "businessShopType": "Tipo di negozio",
@@ -9468,6 +9581,18 @@ window.SETUP_L10N={
    "stockTagReads": [
     "Lettura di molte etichette",
     "Un lettore UHF in modalità tastiera legge molte etichette insieme per ricevere, spostare e contare: le etichette sono raccolte, deduplicate e risolte, e nulla viene inviato finché la persona non conferma."
+   ],
+   "stockExpiryReport": [
+    "Il rapporto di scadenza",
+    "Stampa, a una data scelta, ogni lotto o pezzo in magazzino scaduto a quella data o che scade dopo, con un layout modificabile come gli altri rapporti."
+   ],
+   "stockHandlingUnits": [
+    "Unità di movimentazione",
+    "Le merci si spostano nel bancale o nel cartone in cui sono arrivate, o nelle unità riconfezionate del negozio, e restano tracciabili attraverso il riconfezionamento."
+   ],
+   "counterOfflineCash": [
+    "Vendere offline, solo in contanti",
+    "Quando la connessione cade, la cassa continua a vendere in contanti, registra ogni vendita sul dispositivo e invia le vendite in ordine al ritorno della connessione. Gli altri metodi di pagamento attendono la connessione."
    ]
   },
   "process": {

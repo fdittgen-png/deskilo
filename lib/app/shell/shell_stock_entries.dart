@@ -67,6 +67,12 @@ extension StockEntries on DrawerEntries {
           () => go('/stock/cycle-counts'),
           route: '/stock/cycle-counts',
         ),
+      // #4431 — the expiry report, for who reads the stock.
+      if (features.contains(WorkspaceFeature.stockExpiryReport) && reads)
+        DrawerEntry('drawer-stock-expiry', Icons.event_busy_outlined, l10n.stockExpiryTitle, () => go('/stock/expiry'), route: '/stock/expiry'),
+      // #4435 — handling units, for who reads the stock.
+      if (features.contains(WorkspaceFeature.stockHandlingUnits) && reads)
+        DrawerEntry('drawer-stock-units', Icons.inventory_2_outlined, l10n.stockUnitsTitle, () => go('/stock/units'), route: '/stock/units'),
       // #4361 — item groups: shared settings, for who reads the stock.
       if (features.contains(WorkspaceFeature.stockItemGroups) && reads)
         DrawerEntry('drawer-stock-groups', Icons.folder_copy_outlined, l10n.itemGroupsTitle, () => go('/stock/groups'), route: '/stock/groups'),
