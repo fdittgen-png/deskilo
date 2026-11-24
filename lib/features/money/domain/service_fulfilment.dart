@@ -10,6 +10,8 @@ library;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/failure/app_failure.dart';
+
 /// The list the engagements are counted under when a row is left out.
 const fulfilmentsArea = 'service_fulfilments';
 
@@ -385,7 +387,7 @@ enum FulfilmentRefusalKind {
   notAllowed,
 }
 
-class FulfilmentRefusal implements Exception {
+class FulfilmentRefusal implements TypedRefusal {
   const FulfilmentRefusal(this.kind, {this.detail = ''});
 
   final FulfilmentRefusalKind kind;

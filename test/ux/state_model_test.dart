@@ -22,6 +22,7 @@
 import 'dart:async';
 
 import 'package:deskilo/core/cache/stale_reads.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/ui/inline_banner.dart';
 import 'package:deskilo/core/ui/loading_view.dart';
@@ -308,7 +309,7 @@ void main() {
       // `knownRefusalOf` reads the server's message, not a string.
       final repo = _Identity()
         ..failWith = const PostgrestException(
-            message: 'not allowed to read this profile', code: '42501');
+            message: 'not allowed to read this profile', code: PgCode.insufficientPrivilege);
       final read = await _read(repo);
 
       expect(read.refused, isTrue);

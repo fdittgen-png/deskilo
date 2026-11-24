@@ -21,6 +21,7 @@ import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
 import 'package:deskilo/core/backend/context_client_providers.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/directory/domain/discovery_paging.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:deskilo/features/directory/providers/discovery_listing_providers.dart';
@@ -75,7 +76,7 @@ class _Network extends http.BaseClient {
       case '/auth/v1/user':
         return _json(user('wa-user'));
       case '/rest/v1/rpc/public_network_descriptor':
-        return _json({'code': 'PGRST202', 'message': 'not found'}, 404);
+        return _json({'code': PgCode.pgrstFunctionNotFound, 'message': 'not found'}, 404);
       case '/rest/v1/installation_identity':
         return _json(
           origin == _p.url

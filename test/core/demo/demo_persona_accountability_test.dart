@@ -7,6 +7,7 @@
 // asserts the actor the act is recorded under, or the refusal the server
 // gives that persona. The matrix these rows prove is
 // docs/testing/DEMO_PERSONA_MATRIX.md.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/event_visibility.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
@@ -206,7 +207,7 @@ void main() {
       final theirs = _futureBookingOf(fixture, _chiara);
       await expectLater(
         repo.cancel(theirs.id),
-        throwsA(_bookingRefused(ReservationRefusalKind.coded, code: 'DKK29')),
+        throwsA(_bookingRefused(ReservationRefusalKind.coded, code: DkCode.dkk29)),
       );
       final mine = _futureBookingOf(fixture, _bruno);
       await repo.cancel(mine.id);
@@ -677,7 +678,7 @@ void main() {
       if (may) {
         await edit;
       } else {
-        await expectLater(edit, throwsRefusal('DKN01'));
+        await expectLater(edit, throwsRefusal(DkCode.dkn01));
       }
 
       fixture.becomePersona(DemoPersona.member);
@@ -695,7 +696,7 @@ void main() {
           'viewFinances',
           enabled: false,
         ),
-        throwsRefusal('DKN01'),
+        throwsRefusal(DkCode.dkn01),
       );
     });
   });

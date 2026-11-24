@@ -10,6 +10,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/public_network/data/public_network_client.dart';
 import 'package:deskilo/core/public_network/public_network_negotiator.dart';
 import 'package:deskilo/core/public_network/public_network_operations.dart';
@@ -80,7 +81,7 @@ void main() {
     expect(negotiatePublicOperation(s, register).version, 1);
     expect(
       (fixture('legacy_server_no_descriptor')['body'] as Map)['code'],
-      'PGRST202',
+      PgCode.pgrstFunctionNotFound,
     );
   });
 

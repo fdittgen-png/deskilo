@@ -7,6 +7,7 @@
 // and never a zero, a card the export cannot answer is left out and said,
 // and an answer about another workspace, format or without a digest is
 // refused. A later answer is another snapshot; the first keeps its values.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_definition.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_snapshot.dart';
@@ -229,7 +230,7 @@ void main() {
     test('an unanswered figure is a failure, never a zero, and the copy is partial', () {
       final s = fixtureSnapshot();
       final july = s.visuals.last.figures.first;
-      expect(july.failure, '22023');
+      expect(july.failure, PgCode.invalidParameterValue);
       expect(july.value, isNull);
       expect(s.partial, isTrue);
       expect(s.financial, isTrue);

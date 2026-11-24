@@ -14,13 +14,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../application/customer_quote_commands.dart';
 import '../../domain/billing_customer.dart';
 import '../../domain/customer_quote.dart';
 import '../../domain/invoice_goods.dart';
@@ -144,7 +144,7 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
     if (!mounted) return false;
     final l10n = context.l10n;
     switch (outcome) {
-      case QuoteDone(:final value):
+      case CommandDone(:final value):
         _form
           ..quoteId = value.quoteId
           ..version = value.version
@@ -153,11 +153,11 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
         attachLineIds(_form.lines, read?.draft?.lines ?? const <StandaloneLine>[]);
         ref.invalidate(customerQuotesProvider(workspaceId));
         return true;
-      case QuoteRefused(:final refusal):
+      case CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)):
         _form
           ..said = quoteRefusalText(l10n, refusal)
           ..changed();
-      case QuoteUnreached():
+      case _:
         _form
           ..said = l10n.quoteUnreached
           ..changed();
@@ -207,14 +207,14 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
       ..invalidate(customerQuotesProvider(workspaceId))
       ..invalidate(customerQuoteProvider((workspaceId: workspaceId, quoteId: id)));
     switch (outcome) {
-      case QuoteDone():
+      case CommandDone():
         context.go('/money/quotes/$id');
-      case QuoteRefused(:final refusal):
+      case CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)):
         _form
           ..busy = false
           ..said = quoteRefusalText(l10n, refusal)
           ..changed();
-      case QuoteUnreached():
+      case _:
         _form
           ..busy = false
           ..said = l10n.quoteUnreached

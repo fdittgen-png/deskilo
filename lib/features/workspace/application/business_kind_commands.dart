@@ -13,6 +13,7 @@
 // flags moved meanwhile: a saved kind is not a fully applied recipe.
 import '../../../core/ids/request_id.dart';
 import '../../../core/settings/settings.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/business_kind.dart';
 import '../domain/business_profile.dart';
 import '../domain/feature_flags_write.dart';
@@ -92,7 +93,8 @@ class BusinessKindCommands {
       return applied.flagsStage == 'refused'
           ? BusinessKindOutcome.kindSavedFlagsRefused
           : BusinessKindOutcome.applied;
-    } on BusinessKindApplyUnsupported {
+    } on BusinessKindApplyUnsupported catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'workspace', 'business_kind_commands: BusinessKindApplyUnsupported handled', error: e, stackTrace: st);
       // fall through to the earlier writers
     }
     final now = (await _kinds.kinds()).where((k) => k.code == kind).firstOrNull;
@@ -103,7 +105,8 @@ class BusinessKindCommands {
     if (flags.isEmpty) return BusinessKindOutcome.applied;
     try {
       await _workspaces.setFeatureFlags(workspaceId, flags, expected: expected);
-    } on FeatureFlagsConflict {
+    } on FeatureFlagsConflict catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'workspace', 'business_kind_commands: FeatureFlagsConflict handled', error: e, stackTrace: st);
       return BusinessKindOutcome.kindSavedFlagsRefused;
     }
     return BusinessKindOutcome.applied;

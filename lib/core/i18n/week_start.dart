@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:intl/intl.dart';
 
+import '../trace/trace_logger.dart';
 import 'app_format.dart';
 import 'format_prefs.dart';
 
@@ -26,7 +27,8 @@ int weekStartOf(AppFormat format) =>
 int _localeWeekStart(String locale) {
   try {
     return DateFormat.d(locale).dateSymbols.FIRSTDAYOFWEEK % 7 + 1;
-  } on Object {
+  } on Object catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'i18n', 'week_start: Object handled', error: e, stackTrace: st);
     // A locale `intl` has no symbols for reads as the platform default (ISO).
     return DateTime.monday;
   }

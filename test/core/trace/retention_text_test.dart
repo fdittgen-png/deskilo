@@ -4,6 +4,8 @@
 // every language; nothing else is mistaken for one.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/trace/retention_text.dart';
 import 'package:deskilo/core/vat/retention_assessment.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -26,7 +28,7 @@ void main() {
     final kept = retentionRefusalOf(
       PostgrestException(
         message: 'retention: ...',
-        code: 'DKE01',
+        code: DkCode.dke01,
         details: jsonEncode(review),
       ),
     );
@@ -34,14 +36,14 @@ void main() {
     expect(kept?.retainUntil, DateTime(2012, 12, 31));
     expect(kept?.reasons, ['fiscal_calendar_assumed', 'unconfirmed']);
     expect(
-      retentionRefusalOf(const PostgrestException(message: 'x', code: '42501')),
+      retentionRefusalOf(const PostgrestException(message: 'x', code: PgCode.insufficientPrivilege)),
       isNull,
     );
     expect(
       retentionRefusalOf(
         const PostgrestException(
           message: 'x',
-          code: 'DKE01',
+          code: DkCode.dke01,
           details: 'not json',
         ),
       ),

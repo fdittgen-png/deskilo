@@ -5,6 +5,7 @@
 // repository makes, the typed refusals, and the demo read's paging.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/finance_kpi_repository.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
@@ -194,8 +195,8 @@ void main() {
 
     test('a refusal is typed: 42501 forbidden, 55000 switched off', () async {
       for (final (code, matcher) in [
-        ('42501', isA<RecordedPaymentsForbidden>()),
-        ('55000', isA<RecordedPaymentsSwitchedOff>()),
+        (PgCode.insufficientPrivilege, isA<RecordedPaymentsForbidden>()),
+        (PgCode.objectNotInPrerequisiteState, isA<RecordedPaymentsSwitchedOff>()),
       ]) {
         final host = _Host({'code': code, 'message': 'refused'}, status: 403);
         await expectLater(
@@ -205,14 +206,14 @@ void main() {
         );
       }
       final other = _Host({
-        'code': '22023',
+        'code': PgCode.invalidParameterValue,
         'message': 'bad window',
       }, status: 400);
       await expectLater(
         SupabaseRecordedPaymentsRepository(other.client)
             .page('ws-1', from: DateTime(2025, 5, 31), to: DateTime(2025, 5)),
         throwsA(
-          isA<PostgrestException>().having((e) => e.code, 'code', '22023'),
+          isA<PostgrestException>().having((e) => e.code, 'code', PgCode.invalidParameterValue),
         ),
       );
     });

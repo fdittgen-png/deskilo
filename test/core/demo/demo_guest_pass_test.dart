@@ -6,6 +6,7 @@
 // record of origin guest, invoices the pass to the guest by name, files a
 // pending payment when the money was taken, and the same request never
 // sells twice; a persona without issueInvoices is refused.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/guest_pass_repository.dart';
 import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
@@ -163,7 +164,7 @@ void main() {
         guest: const {'first_name': 'No', 'last_name': 'Sale'},
         requestId: 'r-refused',
       ),
-      throwsA(isA<PostgrestException>().having((e) => e.code, 'code', '42501')),
+      throwsA(isA<PostgrestException>().having((e) => e.code, 'code', PgCode.insufficientPrivilege)),
     );
   });
 

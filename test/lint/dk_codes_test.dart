@@ -145,7 +145,8 @@ void main() {
       unread,
       isEmpty,
       reason:
-          'map the code to its words in the app (refusal_text.dart, '
+          'map the code to its words in the app (refusal_text.dart, a '
+          'feature table such as stock_refusal_words.dart, '
           'booking_error_text.dart), or name it in _notForTheApp with '
           'the reason a person never meets it there',
     );

@@ -13,6 +13,7 @@
 // must not grow a second copy back. The behavior half asks the fake —
 // whose kiosk path now goes through the same mirrored rule set.
 import 'dart:io';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/reservations/domain/walk_up_window.dart';
@@ -152,7 +153,7 @@ void main() {
             englishL10n,
             refused(
                 message: 'the booking lies entirely in the past',
-                code: 'DKK11'),
+                code: DkCode.dkk11),
             'fallback'),
         'This booking lies entirely in the past.',
       );
@@ -161,7 +162,7 @@ void main() {
             englishL10n,
             refused(
                 message: 'a walk-up check-in must start today',
-                code: 'DKK12'),
+                code: DkCode.dkk12),
             'fallback'),
         'A walk-up check-in must start today.',
       );
@@ -241,7 +242,7 @@ void main() {
           startsAt: _at(17),
           endsAt: DateTime(kTestNow.year, kTestNow.month, kTestNow.day + 1),
         ),
-        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK16')),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk16)),
       );
     });
   });
@@ -286,7 +287,7 @@ void main() {
           englishL10n,
           refused(
               message: 'a booking must end on the day it starts',
-              code: 'DKK13'),
+              code: DkCode.dkk13),
           'fallback',
         ),
         contains('ends on the day it starts'),

@@ -109,7 +109,7 @@ class StockScanFeed extends ChangeNotifier {
           last = session.apply(answer, placeAllowed: placeAllowed, itemAllowed: itemAllowed, fromTag: fromTag, gs1: scan.gs1);
           onResult(last!);
         } on Object catch (e, st) {
-          TraceLogger.instance.warn('stock', 'a scanned code could not be resolved: $e', stackTrace: st);
+          TraceLogger.instance.warn('stock', 'a scanned code could not be resolved', error: e, stackTrace: st);
           problem = e;
         }
         if (!_closed) notifyListeners();

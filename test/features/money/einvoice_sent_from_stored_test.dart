@@ -7,6 +7,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/money/domain/einvoice_transmissions.dart';
 import 'package:deskilo/features/money/presentation/widgets/einvoice_today_values.dart';
@@ -177,7 +178,7 @@ void main() {
     await tester.pumpWidget(
       _app(const SentEInvoiceDownload(invoiceId: 'inv-1'), [
         eInvoiceTransmissionsProvider.overrideWithValue(
-          _Sent(const PostgrestException(message: 'not intact', code: 'DKI09')),
+          _Sent(const PostgrestException(message: 'not intact', code: DkCode.dki09)),
         ),
         fileDeliveryModeProvider.overrideWithValue(FileDeliveryMode.direct),
         typedFileSaverProvider.overrideWithValue(({

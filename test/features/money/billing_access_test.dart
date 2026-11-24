@@ -5,7 +5,10 @@
 // a billing customer once per request id, the account previews and accepts a
 // code, an unusable code gets ONE answer, a revocation erases nothing, and a
 // failure that is not a refusal claims nothing.
+import 'dart:async';
+
 import 'package:deskilo/core/demo/data/fake_billing_access.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/application/billing_access_commands.dart';
 import 'package:deskilo/features/money/domain/billing_access.dart';
 import 'package:deskilo/features/money/domain/billing_customer.dart';
@@ -37,10 +40,10 @@ class _Clock {
   DateTime now() => at;
 }
 
-T _done<T>(BillingAccessOutcome<T> o) => (o as BillingAccessDone<T>).value;
+T _done<T>(CommandOutcome<T> o) => (o as CommandDone<T>).value;
 
-BillingAccessRefusalKind _refusedWith(BillingAccessOutcome<Object?> o) =>
-    (o as BillingAccessRefused<Object?>).kind;
+BillingAccessRefusalKind _refusedWith(CommandOutcome<Object?> o) =>
+    ((o as CommandRefused<Object?>).refusal.cause! as BillingAccessRefusal).kind;
 
 void main() {
   test('an invitation hands out its code; the same request answers the same '
@@ -141,7 +144,7 @@ void main() {
   test('an empty code is refused before anything is sent', () async {
     final (repo, commands, _) = _build();
     final outcome = await commands.preview('   ');
-    expect(outcome, isA<BillingAccessInvalid<BillingAccessPreview>>());
+    expect(_refusedWith(outcome), BillingAccessRefusalKind.codeUnusable);
     expect(repo.calls, isEmpty);
   });
 
@@ -153,7 +156,7 @@ void main() {
     expect(repo.heldSubjects, {'c-1'});
     expect(
       await commands.revoke(inv.grantId, reason: 'left'),
-      isA<BillingAccessDone<void>>(),
+      isA<CommandDone<void>>(),
     );
     expect(repo.heldSubjects, isEmpty);
     final grants = _done(await commands.grantsOf(_ws, 'c-1'));
@@ -168,8 +171,8 @@ void main() {
     );
     final tooLong = 'x' * (billingRevokeReasonMax + 1);
     expect(
-      await commands.revoke(inv.grantId, reason: tooLong),
-      isA<BillingAccessInvalid<void>>(),
+      _refusedWith(await commands.revoke(inv.grantId, reason: tooLong)),
+      BillingAccessRefusalKind.reasonTooLong,
     );
   });
 
@@ -177,10 +180,11 @@ void main() {
     'a failure that is not a refusal claims nothing and a retry recovers',
     () async {
       final (repo, commands, _) = _build();
-      repo.failNext = StateError('offline');
+      // #4413 -- a lost answer is a transport failure: not reached.
+      repo.failNext = TimeoutException('offline');
       expect(
         await commands.invite(_ws, 'c-1', 'r-1'),
-        isA<BillingAccessUnreached<BillingAccessInvitation>>(),
+        isA<CommandUnreached<BillingAccessInvitation>>(),
       );
       final retried = _done(await commands.invite(_ws, 'c-1', 'r-1'));
       expect(retried.code, isNotEmpty);

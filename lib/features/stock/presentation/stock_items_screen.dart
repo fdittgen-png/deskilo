@@ -141,7 +141,7 @@ class _ItemsState extends ConsumerState<_Items> {
         _loading = false;
       });
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the registry was not read: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the registry was not read', error: e, stackTrace: st);
       if (!mounted || generation != _generation) return;
       setState(() {
         _failed = true;

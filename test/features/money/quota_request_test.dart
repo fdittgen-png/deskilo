@@ -7,6 +7,7 @@
 // on My finances, the quota event in the feed, and the booking error
 // mapping when the server rejects a beyond-quota reservation.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -106,7 +107,7 @@ void main() {
         refused(
           // assert_member_quota's refusal (0031), coded by 0739.
           message: 'half-day quota exceeded — request additional half-days',
-          code: 'DKK02', // #3810: the code 0739 raises
+          code: DkCode.dkk02, // #3810: the code 0739 raises
         ),
       ),
     );

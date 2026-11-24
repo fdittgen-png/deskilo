@@ -6,6 +6,7 @@
 // received; a stale revision, a draft and a replay); a buyer records one on
 // the order's card, a finance reader only reads what arrived; the server's
 // answer and the deliveries parse.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
@@ -190,7 +191,7 @@ void main() {
       await expectLater(
         repo.recordReceipt('ws', 'r2', _delivery(sent, {1: 1})),
         throwsA(
-          isA<PostgrestException>().having((e) => e.code, 'code', '40001'),
+          isA<PostgrestException>().having((e) => e.code, 'code', PgCode.serializationFailure),
         ),
       );
       final (drafts, _) = await _orders(draft: true);

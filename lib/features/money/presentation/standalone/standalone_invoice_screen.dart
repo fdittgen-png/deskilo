@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
@@ -54,7 +55,9 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
   List<String> _missing = const [];
   bool _refused = false;
   String? _requestId;
-  StandaloneIssueUnknown? _unknown;
+  // The attempt whose answer did not come, kept to look for its receipt.
+  StandaloneIssueAttempt? _attempt;
+  CommandUnreached<StandaloneIssued>? _unknown;
 
   @override
   void dispose() {
@@ -140,6 +143,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
       requestId: _requestId ??= newRequestId(),
     );
     setState(() => _busy = true);
+    _attempt = attempt;
     final outcome = await ref.read(standaloneIssuanceProvider).issue(attempt);
     if (!mounted) return;
     _settle(outcome);
@@ -147,27 +151,29 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
 
   Future<void> _look() async {
     final unknown = _unknown;
-    if (unknown == null) return;
+    final attempt = _attempt;
+    if (unknown == null || attempt == null) return;
     setState(() => _busy = true);
-    final outcome = await ref.read(standaloneIssuanceProvider).look(unknown);
+    final outcome =
+        await ref.read(standaloneIssuanceProvider).look(attempt, unknown);
     if (!mounted) return;
     _settle(outcome);
   }
 
-  void _settle(StandaloneIssueOutcome outcome) {
+  void _settle(CommandOutcome<StandaloneIssued> outcome) {
     switch (outcome) {
-      case StandaloneIssuedOutcome(:final invoiceId):
+      case CommandDone(:final value):
         setState(() => _busy = false);
-        context.go('$invoicesPath/$invoiceId');
-      case StandaloneIssueRefused(:final error):
+        context.go('$invoicesPath/${value.invoiceId}');
+      case CommandRefused(:final refusal):
         setState(() {
           _busy = false;
           _unknown = null;
           _refused = true;
-          _missing = standaloneRefusalKeys(error);
+          _missing = standaloneRefusalKeys(refusal);
           _preview = null;
         });
-      case StandaloneIssueUnknown():
+      case CommandUnreached():
         setState(() {
           _busy = false;
           _unknown = outcome;

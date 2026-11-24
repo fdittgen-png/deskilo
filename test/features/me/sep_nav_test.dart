@@ -19,6 +19,7 @@ import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
 import 'package:deskilo/core/backend/context_client_providers.dart';
 import 'package:deskilo/core/backend/context_clients.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
@@ -64,7 +65,7 @@ class _Host {
         body = {'installation_id': 'inst-$name'};
       case '/rest/v1/rpc/public_network_descriptor':
         return http.Response(
-          jsonEncode({'code': 'PGRST202', 'message': 'not found'}),
+          jsonEncode({'code': PgCode.pgrstFunctionNotFound, 'message': 'not found'}),
           404,
           headers: {'content-type': 'application/json'},
           request: r,

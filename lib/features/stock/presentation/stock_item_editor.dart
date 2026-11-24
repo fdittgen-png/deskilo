@@ -108,7 +108,7 @@ Future<Set<String>> _ownValues(ItemGroups? groups, String workspaceId, String it
     if (effective.groupId == null) return const {};
     return {for (final e in effective.params.entries) if (e.value.own) e.key};
   } on Object catch (e, st) {
-    TraceLogger.instance.warn('stock', 'the own values of an item were not read for its editor: $e', stackTrace: st);
+    TraceLogger.instance.warn('stock', 'the own values of an item were not read for its editor', error: e, stackTrace: st);
     return const {};
   }
 }
@@ -183,7 +183,7 @@ class _ItemDraft {
       await commands.saveItem(workspaceId, current, requestId);
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the stock settings of an item were not saved: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the stock settings of an item were not saved', error: e, stackTrace: st);
       return stockSaveProblem(l10n, e);
     }
   }

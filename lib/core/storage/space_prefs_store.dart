@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../text/collation.dart';
+import '../trace/trace_logger.dart';
 
 /// How the spaces of Me › Home are sorted. [byHand] is the order the person
 /// set themselves.
@@ -247,7 +248,8 @@ class PrefsSpacePrefsStore implements SpacePrefsStore {
     if (raw == null) return SpacePrefs.empty;
     try {
       return SpacePrefs.fromJson(jsonDecode(raw));
-    } on FormatException {
+    } on FormatException catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'storage', 'space_prefs_store: FormatException handled', error: e, stackTrace: st);
       return SpacePrefs.empty;
     }
   }

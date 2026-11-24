@@ -18688,6 +18688,12 @@ abstract class AppLocalizations {
   /// **'Workspace'**
   String get exportValueNameWorkspace;
 
+  /// #4416 Shown in a release build where a part of a screen failed to build, instead of the framework's grey box. The failure is in the trace.
+  ///
+  /// In en, this message translates to:
+  /// **'This part could not be shown. Go back and open it again.'**
+  String get failedPartNotShown;
+
   /// Shown as a text in personal space card (me).
   ///
   /// In en, this message translates to:

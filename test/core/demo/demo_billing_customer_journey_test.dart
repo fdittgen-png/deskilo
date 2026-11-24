@@ -8,7 +8,7 @@
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
-import 'package:deskilo/features/money/application/billing_customer_commands.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/domain/billing_customer.dart';
 import 'package:deskilo/features/money/providers/billing_customer_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -60,7 +60,7 @@ void main() {
       ),
       capacity: 'business',
     );
-    expect(created, isA<BillingSaved>());
+    expect(created, isA<CommandDone<String>>());
     container.invalidate(billingCustomersProvider(id));
     final read = (await container.read(billingCustomersProvider(id).future))
         .firstWhere((c) => c.displayName == 'Studio Nord');
@@ -73,14 +73,14 @@ void main() {
         read,
         const BillingPartyDraft(company: 'Studio Nord', city: 'Hamburg'),
       ),
-      isA<BillingSaved>(),
+      isA<CommandDone<String>>(),
     );
     final stale = await commands.save(
       id,
       read,
       const BillingPartyDraft(company: 'Studio Nord', city: 'Bremen'),
     );
-    expect((stale as BillingRefused).kind, BillingCustomerRefusalKind.stale);
+    expect(((stale as CommandRefused<String>).refusal.cause! as BillingCustomerRefusal).kind, BillingCustomerRefusalKind.stale);
     container.invalidate(billingCustomersProvider(id));
     final now = (await container.read(billingCustomersProvider(id).future))
         .firstWhere((c) => c.subjectId == read.subjectId);

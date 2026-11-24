@@ -3,6 +3,7 @@
 // #4165 (A2) -- the standalone invoice as the application holds it: the
 // server's answers decoded exactly, and an issue sent ONCE whose lost answer
 // is looked up by the attempt's own request id in the attempt's own workspace.
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/application/issue_standalone_invoice.dart';
 import 'package:deskilo/features/money/domain/standalone_invoice.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -61,51 +62,52 @@ void main() {
   group('issuing once', () {
     test('the confirmed revision is sent under its request id, and the invoice is the answer', () async {
       final out = await issuance.issue(_attempt);
-      expect(out, isA<StandaloneIssuedOutcome>());
-      expect((out as StandaloneIssuedOutcome).invoiceId, 'inv-1');
-      expect(out.number, 'F-0001');
+      expect(out, isA<CommandDone<StandaloneIssued>>());
+      final issued = (out as CommandDone<StandaloneIssued>).value;
+      expect(issued.invoiceId, 'inv-1');
+      expect(issued.number, 'F-0001');
       expect(commands.sent, ['ws-1|d-1|3|req-1']);
     });
 
     test('a refusal in the server\'s words is a refusal, sent once', () async {
       commands.failWith = StateError('refused');
       final out = await issuance.issue(_attempt);
-      expect(out, isA<StandaloneIssueRefused>());
+      expect(out, isA<CommandRefused<StandaloneIssued>>());
       expect(commands.sent, hasLength(1));
     });
 
     test('a lost answer is unknown, never refused, and nothing is resent', () async {
       commands.failWith = const JsonShapeException('rpc', 'invoice_id', 'String', 'null');
       final out = await issuance.issue(_attempt);
-      expect(out, isA<StandaloneIssueUnknown>());
+      expect(out, isA<CommandUnreached<StandaloneIssued>>());
       expect(commands.sent, hasLength(1));
     });
   });
 
   group('looking for the answer', () {
-    Future<StandaloneIssueUnknown> lost() async {
+    Future<CommandUnreached<StandaloneIssued>> lost() async {
       commands.failWith = const JsonShapeException('rpc', 'invoice_id', 'String', 'null');
-      return (await issuance.issue(_attempt)) as StandaloneIssueUnknown;
+      return (await issuance.issue(_attempt)) as CommandUnreached<StandaloneIssued>;
     }
 
     test('no receipt is only "not observed": the attempt stays unknown', () async {
       final unknown = await lost();
-      expect(await issuance.look(unknown), same(unknown));
+      expect(await issuance.look(_attempt, unknown), same(unknown));
       expect(commands.sent, hasLength(1), reason: 'looking never writes');
     });
 
     test('the receipt of THAT request, in the attempt\'s own workspace, is the invoice', () async {
       final unknown = await lost();
       repo.invoiceReceipts['ws-1|req-1'] = 'inv-9';
-      final out = await issuance.look(unknown);
-      expect(out, isA<StandaloneIssuedOutcome>());
-      expect((out as StandaloneIssuedOutcome).invoiceId, 'inv-9');
+      final out = await issuance.look(_attempt, unknown);
+      expect(out, isA<CommandDone<StandaloneIssued>>());
+      expect((out as CommandDone<StandaloneIssued>).value.invoiceId, 'inv-9');
     });
 
     test('another workspace\'s receipt for the same request id is not this attempt\'s', () async {
       final unknown = await lost();
       repo.invoiceReceipts['ws-2|req-1'] = 'inv-other';
-      expect(await issuance.look(unknown), same(unknown));
+      expect(await issuance.look(_attempt, unknown), same(unknown));
     });
   });
 

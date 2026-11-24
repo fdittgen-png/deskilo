@@ -95,7 +95,7 @@ class _State extends ConsumerState<StockBulkReadSheet> {
     try {
       resolved = await ref.read(stockTagsStoreProvider).resolveCodes(widget.workspaceId, _session.codes);
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a bulk read could not be resolved: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a bulk read could not be resolved', error: e, stackTrace: st);
       problem = knownRefusalText(l10n, e) ?? l10n.stockReadFailed;
     }
     if (!mounted) return;

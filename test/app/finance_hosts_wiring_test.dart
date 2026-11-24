@@ -15,6 +15,7 @@ import 'package:deskilo/core/backend/context_client_providers.dart';
 import 'package:deskilo/core/backend/context_clients.dart';
 import 'package:deskilo/core/backend/operation_context.dart'
     show WorkspaceTarget;
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/features/money/application/finance_selection_commands.dart';
 import 'package:deskilo/features/money/providers/finance_selection_provider.dart';
@@ -57,7 +58,7 @@ class _Host {
       case '/rest/v1/rpc/public_network_descriptor':
         // an older server without the descriptor: connectable, as before
         return http.Response(
-          jsonEncode({'code': 'PGRST202', 'message': 'not found'}),
+          jsonEncode({'code': PgCode.pgrstFunctionNotFound, 'message': 'not found'}),
           404,
           headers: {'content-type': 'application/json'},
           request: r,

@@ -11662,6 +11662,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get exportValueNameWorkspace => 'Espace de travail';
 
   @override
+  String get failedPartNotShown =>
+      'Cette partie n\'a pas pu être affichée. Revenez en arrière et ouvrez-la de nouveau.';
+
+  @override
   String get favoriteKeptOnDeviceRefused =>
       'Gardé sur cet appareil uniquement : votre compte ne peut pas enregistrer ce lieu.';
 

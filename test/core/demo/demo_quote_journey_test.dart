@@ -8,7 +8,7 @@
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
-import 'package:deskilo/features/money/application/customer_quote_commands.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
 import 'package:deskilo/features/money/providers/customer_quote_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -44,12 +44,12 @@ void main() {
       revision: draft.draft!.revision,
       version: draft.draft!.draftVersion,
     );
-    expect((sentNow as QuoteDone<QuoteSent>).value.reference, 'QUO-0003');
+    expect((sentNow as CommandDone<QuoteSent>).value.reference, 'QUO-0003');
     final after = await container.read(customerQuoteRepositoryProvider).quote(id, draft.id);
     expect(after.current!.totals!.totalCents, 78000);
 
     final amended = await commands.amend(id, sent.id);
-    expect((amended as QuoteDone<QuoteSaved>).value.revision, 2);
+    expect((amended as CommandDone<QuoteSaved>).value.revision, 2);
     final again = await container.read(customerQuoteRepositoryProvider).quote(id, sent.id);
     expect(again.revisions.length, 2);
     // the first revision is untouched and still frozen
@@ -79,7 +79,7 @@ void main() {
       serviceDate: today,
       dueOn: today.add(const Duration(days: 14)),
     );
-    final preview = (prep as QuoteDone<QuoteConversionPrep>).value;
+    final preview = (prep as CommandDone<QuoteConversionPrep>).value;
     expect(preview.issuable, isTrue);
     expect(preview.contextChanged, isFalse);
     expect(preview.wouldBeTotalCents, preview.acceptedTotalCents);
@@ -95,8 +95,8 @@ void main() {
       draftRevision: preview.draftRevision,
       requestId: 'request-two',
     );
-    expect((first as QuoteDone<QuoteConverted>).value.replayed, isFalse);
-    expect((other as QuoteDone<QuoteConverted>).value.invoiceId, first.value.invoiceId);
+    expect((first as CommandDone<QuoteConverted>).value.replayed, isFalse);
+    expect((other as CommandDone<QuoteConverted>).value.invoiceId, first.value.invoiceId);
     expect(other.value.replayed, isTrue);
     final after = await container.read(customerQuoteRepositoryProvider).quote(id, accepted.id);
     expect(after.status, QuoteStatus.converted);

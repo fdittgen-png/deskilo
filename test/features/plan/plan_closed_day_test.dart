@@ -6,6 +6,7 @@
 // instead of "the seat may have just been taken".
 import 'dart:async';
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/theme/seat_state_colors.dart';
 import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -152,7 +153,7 @@ void main() {
     await pumpAvailabilityPlan(
       tester,
       reservations: ThrowingReservationRepository(
-        refused(message: _serverClosedMessage, code: 'DKK01'),
+        refused(message: _serverClosedMessage, code: DkCode.dkk01),
       ),
     );
 
@@ -196,7 +197,7 @@ void main() {
       'to the closed-day message', (tester) async {
     final now = kTestNow;
     final reservations = ThrowingReservationRepository(
-      refused(message: _serverClosedMessage, code: 'DKK01'),
+      refused(message: _serverClosedMessage, code: DkCode.dkk01),
     )..reservations.add(
         Reservation(
           id: 'res-mine',

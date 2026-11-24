@@ -13,6 +13,7 @@ import 'dart:typed_data';
 import 'package:meta/meta.dart';
 
 import '../../../core/share/file_sharer.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/invoice_commands.dart';
 import '../domain/reminder_mail.dart';
 import 'receivables.dart';
@@ -304,7 +305,8 @@ Future<ReminderHandled> shareQueuedReminder({
     return outcome is ReminderNotSent
         ? ReminderHandled.notRecorded
         : ReminderHandled.shared;
-  } on Object {
+  } on Object catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'money', 'reminder_queue: Object handled', error: e, stackTrace: st);
     return left ? ReminderHandled.sharedNotRecorded : ReminderHandled.failed;
   }
 }
@@ -319,7 +321,8 @@ Future<ReminderHandled> recordQueuedReminder({
   try {
     await repository.remindInvoice(line.invoiceId);
     return ReminderHandled.shared;
-  } on Object {
+  } on Object catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'money', 'reminder_queue: Object handled', error: e, stackTrace: st);
     return ReminderHandled.sharedNotRecorded;
   }
 }

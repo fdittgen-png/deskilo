@@ -10,6 +10,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/me/data/supabase_me_repository.dart';
 import 'package:deskilo/features/me/domain/personal_export.dart';
@@ -187,13 +188,13 @@ void main() {
             personalExportRefusalOf(
               PostgrestException(message: message, code: code),
             );
-        expect(of('PGRST202'), PersonalExportFailure.unsupported);
-        expect(of('42501'), PersonalExportFailure.forbidden);
+        expect(of(PgCode.pgrstFunctionNotFound), PersonalExportFailure.unsupported);
+        expect(of(PgCode.insufficientPrivilege), PersonalExportFailure.forbidden);
         expect(
-          of('P0001', 'identity_session_refused'),
+          of(PgCode.raiseException, 'identity_session_refused'),
           PersonalExportFailure.forbidden,
         );
-        expect(of('P0001', 'something else'), isNull);
+        expect(of(PgCode.raiseException, 'something else'), isNull);
         expect(of('57014'), isNull);
       },
     );

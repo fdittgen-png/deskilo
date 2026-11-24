@@ -32,7 +32,7 @@ Future<String?> _guard(AppLocalizations l10n, Future<void> Function() act) async
     await act();
     return null;
   } on StockConfigFailure catch (e, stack) {
-    TraceLogger.instance.warn('stock', 'a handling unit command was refused: $e', stackTrace: stack);
+    TraceLogger.instance.warn('stock', 'a handling unit command was refused', error: e, stackTrace: stack);
     return stockSaveProblem(l10n, e);
   }
 }

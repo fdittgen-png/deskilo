@@ -7119,6 +7119,7 @@
   "exportValueNameUsage": "Consumo",
   "exportValueNameW": "Ovest",
   "exportValueNameWorkspace": "Area di lavoro",
+  "failedPartNotShown": "Questa parte non può essere mostrata. Torni indietro e la apra di nuovo.",
   "favoriteKeptOnDeviceRefused": "Salvato solo su questo dispositivo: il Suo account non può salvare questo posto.",
   "favoriteKeptOnDeviceUnreachable": "Salvato solo su questo dispositivo: non è stato possibile raggiungere il Suo account. Riprovi più tardi.",
   "featureAccessorySupplements": "Supplementi accessori",

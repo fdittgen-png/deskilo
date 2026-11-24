@@ -18,6 +18,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import 'accountant_csv.dart';
 import 'accounting_connection.dart';
 import 'archive_bundle.dart' show kZipEntryTime;
@@ -336,7 +337,7 @@ AccountantHandoff buildAccountantHandoff({
         (AccountingAmount(currency, a) + AccountingAmount(currency, b)).minor;
     try {
       exponentOf(currency);
-    } on AccountingException {
+    } on AccountingException catch (e, st) { TraceLogger.instance.log(TraceLevel.debug, 'money', 'accountant_handoff: AccountingException handled', error: e, stackTrace: st);
       findings.add(
         HandoffFinding(HandoffFindingKind.unsupportedCurrency, invoice.number),
       );
@@ -354,7 +355,7 @@ AccountantHandoff buildAccountantHandoff({
         ..netMinor = net
         ..vatMinor = vat
         ..grossMinor = gross;
-    } on AccountingException {
+    } on AccountingException catch (e, st) { TraceLogger.instance.log(TraceLevel.debug, 'money', 'accountant_handoff: AccountingException handled', error: e, stackTrace: st);
       findings.add(
         HandoffFinding(HandoffFindingKind.amountOutOfRange, invoice.number),
       );
@@ -370,7 +371,7 @@ AccountantHandoff buildAccountantHandoff({
       } else {
         p.confirmedMinor = add(p.confirmedMinor, match.paidCents);
       }
-    } on AccountingException {
+    } on AccountingException catch (e, st) { TraceLogger.instance.log(TraceLevel.debug, 'money', 'accountant_handoff: AccountingException handled', error: e, stackTrace: st);
       findings.add(
         HandoffFinding(HandoffFindingKind.amountOutOfRange, invoice.number),
       );

@@ -2,6 +2,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart'
     show AuthException, AuthRetryableFetchException, PostgrestException;
 
+import '../failure/app_failure.dart';
+
 /// #1233 — the ONE place that knows what a server error is made of.
 ///
 /// `domain/` is meant to be pure Dart and `presentation/` is meant never
@@ -22,6 +24,8 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 String? serverErrorMessage(Object error) => switch (error) {
       PostgrestException(:final message) => message,
       AuthException(:final message) => message,
+      // #4411 -- a refusal already converted at its boundary says the same.
+      Refusal(:final message) => message,
       _ => null,
     };
 
@@ -32,13 +36,20 @@ bool isAuthError(Object error) => error is AuthException;
 /// #1305 — the database's own error code (`42501` insufficient privilege,
 /// `23505` unique violation…), or null when the failure did not come from
 /// the database.
-String? serverErrorCode(Object error) =>
-    error is PostgrestException ? error.code : null;
+String? serverErrorCode(Object error) => switch (error) {
+      PostgrestException(:final code) => code,
+      Refusal(:final code) => code,
+      TransportFailure(:final status?) => '$status',
+      _ => null,
+    };
 
 /// The `detail` the database attached to its error, or null: where a
 /// refusal carries what it refused over (#2571, a retention assessment).
-String? serverErrorDetails(Object error) =>
-    error is PostgrestException ? error.details?.toString() : null;
+String? serverErrorDetails(Object error) => switch (error) {
+      PostgrestException(:final details) => details?.toString(),
+      Refusal(:final details) => details,
+      _ => null,
+    };
 
 /// #1849 — an authentication failure that is only the network failing to
 /// answer (the SDK's own retryable-fetch class), not a refusal.

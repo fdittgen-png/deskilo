@@ -6,6 +6,7 @@
 // the server's fences (the mail configured, a recipient, one attempt that
 // may have left, the same attempt id replayed); and the screen sends a
 // draft and asks a person about an unconfirmed attempt.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/features/money/data/supabase_purchase_order_repository.dart';
@@ -203,7 +204,7 @@ void main() {
         await expectLater(
           repo.sendByEmail('ws', order, 'a2', _mail),
           throwsA(
-            isA<PostgrestException>().having((e) => e.code, 'code', '55000'),
+            isA<PostgrestException>().having((e) => e.code, 'code', PgCode.objectNotInPrerequisiteState),
           ),
         );
         // While it may be on its way, the order is neither marked sent by
@@ -215,7 +216,7 @@ void main() {
           await expectLater(
             write(),
             throwsA(
-              isA<PostgrestException>().having((e) => e.code, 'code', '55000'),
+              isA<PostgrestException>().having((e) => e.code, 'code', PgCode.objectNotInPrerequisiteState),
             ),
           );
         }
@@ -382,7 +383,7 @@ void _undecided() {
   test('the send function\'s 409 is an earlier e-mail to decide first', () {
     expect(
       SupabasePurchaseOrderRepository.sendFailureOf(
-        const FunctionException(status: 409, details: {'code': '55000'}),
+        const FunctionException(status: 409, details: {'code': PgCode.objectNotInPrerequisiteState}),
       ),
       isA<PurchaseOrderSendUndecided>(),
     );

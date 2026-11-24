@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+
+import '../../core/trace/trace_logger.dart';
 
 /// Best-effort Android screen pinning for kiosk mode: while pinned, the
 /// system blocks leaving the app (home/recents/notifications) — the pad
@@ -15,9 +16,9 @@ abstract final class KioskDevicePin {
     try {
       await _channel.invokeMethod<bool>('lock');
     } on Object catch (e, st) {
-      // trace-exempt: pinning is an extra hardening layer, not a
-      // requirement — absent channel (tests/desktop) is expected.
-      debugPrint('kiosk pin unavailable: $e\n$st');
+      // Pinning is an extra hardening layer, not a requirement: an absent
+      // channel (tests, desktop) is expected, so it is noted, not an error.
+      TraceLogger.instance.log(TraceLevel.debug, 'kiosk', 'pin unavailable', error: e, stackTrace: st);
     }
   }
 
@@ -25,8 +26,8 @@ abstract final class KioskDevicePin {
     try {
       await _channel.invokeMethod<bool>('unlock');
     } on Object catch (e, st) {
-      // trace-exempt: see pin().
-      debugPrint('kiosk unpin unavailable: $e\n$st');
+      // See pin().
+      TraceLogger.instance.log(TraceLevel.debug, 'kiosk', 'unpin unavailable', error: e, stackTrace: st);
     }
   }
 }

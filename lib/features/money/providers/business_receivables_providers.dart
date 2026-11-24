@@ -75,7 +75,8 @@ Future<BusinessReceivablesSource> _read(
       name,
       await repository.summary(target.workspaceId),
     );
-  } on BusinessReceivablesRefusal {
+  } on BusinessReceivablesRefusal catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'money', 'business_receivables_providers: BusinessReceivablesRefusal handled', error: e, stackTrace: st);
     return BusinessReceivablesRefused(target, name);
   } on Object catch (e, st) {
     TraceLogger.instance.warn(
@@ -143,7 +144,8 @@ Future<PayablesSection<T>> _section<T>(
 ) async {
   try {
     return PayablesAnswered(await read());
-  } on BusinessPayablesRefusal {
+  } on BusinessPayablesRefusal catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'money', 'business_receivables_providers: BusinessPayablesRefusal handled', error: e, stackTrace: st);
     return const PayablesRefused();
   } on Object catch (e, st) {
     TraceLogger.instance.warn(

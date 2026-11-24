@@ -222,7 +222,7 @@ StoredRecording recoverRecordingLog(
   final Object? head;
   try {
     head = jsonDecode(lines.first);
-  } on FormatException {
+  } on FormatException catch (e, st) { TraceLogger.instance.log(TraceLevel.debug, 'task_recorder', 'recorder_store: FormatException handled', error: e, stackTrace: st);
     return unreadable;
   }
   if (head is! Map ||
@@ -244,7 +244,7 @@ StoredRecording recoverRecordingLog(
     final Object? entry;
     try {
       entry = jsonDecode(line);
-    } on FormatException {
+    } on FormatException catch (e, st) { TraceLogger.instance.log(TraceLevel.debug, 'task_recorder', 'recorder_store: FormatException handled', error: e, stackTrace: st);
       truncated = true;
       break;
     }

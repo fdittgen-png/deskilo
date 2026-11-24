@@ -10,6 +10,7 @@
 //       → 1 (today's behavior, exactly).
 // Both pinned substrings the client maps survive verbatim.
 import 'dart:io';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_refusal.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
@@ -122,7 +123,7 @@ void main() {
           startsAt: kTestNow,
           endsAt: kTestNow.add(const Duration(hours: 2)),
         ),
-        _refuses('DKK19'),
+        _refuses(DkCode.dkk19),
       );
       expect(repo.reservations, hasLength(1));
     });
@@ -146,7 +147,7 @@ void main() {
           startsAt: kTestNow,
           endsAt: kTestNow.add(const Duration(hours: 2)),
         ),
-        _refuses('DKK19'),
+        _refuses(DkCode.dkk19),
       );
       expect(repo.reservations, hasLength(2),
           reason: 'the third overlap never lands');
@@ -167,7 +168,7 @@ void main() {
         if (allowance == 1) {
           await expectLater(
             repo.checkIn('res-next'),
-            _refuses('DKK20'),
+            _refuses(DkCode.dkk20),
           );
         } else {
           await repo.checkIn('res-next');

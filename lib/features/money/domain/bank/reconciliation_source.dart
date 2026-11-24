@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:xml/xml.dart';
 
+import '../../../../core/trace/trace_logger.dart';
 import 'bank_file.dart';
 import 'bank_records.dart';
 import 'bank_statement.dart';
@@ -125,9 +126,11 @@ BankStatement? _verifiedSource(
     source = fitBankStatement(
       parseBankFile(original, format: statement.format, limits: limits),
     );
-  } on BankFileException {
+  } on BankFileException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'money', 'reconciliation_source: BankFileException handled', error: e, stackTrace: st);
     return null;
-  } on FormatException {
+  } on FormatException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'money', 'reconciliation_source: FormatException handled', error: e, stackTrace: st);
     return null;
   }
   if (!_singleCamtBalanceScope(original, source)) return null;
@@ -200,11 +203,14 @@ bool _singleCamtBalanceScope(List<int> original, BankStatement source) {
       }
     }
     return true;
-  } on XmlException {
+  } on XmlException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'money', 'reconciliation_source: XmlException handled', error: e, stackTrace: st);
     return false;
-  } on BankFileException {
+  } on BankFileException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'money', 'reconciliation_source: BankFileException handled', error: e, stackTrace: st);
     return false;
-  } on FormatException {
+  } on FormatException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'money', 'reconciliation_source: FormatException handled', error: e, stackTrace: st);
     return false;
   }
 }

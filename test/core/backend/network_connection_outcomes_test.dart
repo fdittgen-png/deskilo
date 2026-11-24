@@ -17,6 +17,7 @@ import 'dart:io';
 import 'package:deskilo/core/backend/auth_secret_store.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -149,7 +150,7 @@ void main() {
         ConnectionFailureReason.expired,
       );
       expect(
-        r(const PostgrestException(message: 'JWT expired', code: 'PGRST301')),
+        r(const PostgrestException(message: 'JWT expired', code: PgCode.pgrstJwtExpired)),
         ConnectionFailureReason.expired,
       );
       expect(
@@ -163,7 +164,7 @@ void main() {
         ConnectionFailureReason.denied,
       );
       expect(
-        r(const PostgrestException(message: 'denied', code: '42501')),
+        r(const PostgrestException(message: 'denied', code: PgCode.insufficientPrivilege)),
         ConnectionFailureReason.denied,
       );
     });

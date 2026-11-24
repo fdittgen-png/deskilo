@@ -244,7 +244,8 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
       return await client.storage
           .from(ServerBucket.floorPlans)
           .download(SupabaseWorkspaceRepository.emblemPath(workspaceId));
-    } on StorageException {
+    } on StorageException catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'workspace', 'supabase_workspace_identity: StorageException handled', error: e, stackTrace: st);
       // No object, or not readable by this member: the app renders as it
       // always did. Not a fault worth surfacing (#1289).
       return null;

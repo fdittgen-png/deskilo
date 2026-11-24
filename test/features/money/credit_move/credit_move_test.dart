@@ -3,6 +3,7 @@
 // #2380 — a payment credit booked on the wrong member is moved, never
 // edited: the command sends only what can be right, the demo books what
 // 0688 books, and the member page offers the move to the role that bills.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/money/demo_credit_moves.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
@@ -211,7 +212,7 @@ void main() {
           requestId: 'r-2',
         ),
         throwsA(
-          isA<PostgrestException>().having((e) => e.code, 'code', '22023'),
+          isA<PostgrestException>().having((e) => e.code, 'code', PgCode.invalidParameterValue),
         ),
       );
     });
@@ -335,7 +336,7 @@ void main() {
       final repo = await pump(tester);
       repo.refusal = const PostgrestException(
         message: 'this credit pays an invoice: undo the match first',
-        code: '22023',
+        code: PgCode.invalidParameterValue,
       );
       await _tap(tester, find.byKey(const ValueKey('member-payment-move-c-1')));
       await _chooseBeaAndSend(tester);

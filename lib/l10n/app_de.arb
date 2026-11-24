@@ -7119,6 +7119,7 @@
   "exportValueNameUsage": "Nutzung",
   "exportValueNameW": "West",
   "exportValueNameWorkspace": "Arbeitsbereich",
+  "failedPartNotShown": "Dieser Teil konnte nicht angezeigt werden. Gehen Sie zurück und öffnen Sie ihn erneut.",
   "favoriteKeptOnDeviceRefused": "Nur auf diesem Gerät gespeichert: Ihr Konto kann diesen Ort nicht speichern.",
   "favoriteKeptOnDeviceUnreachable": "Nur auf diesem Gerät gespeichert: Ihr Konto war nicht erreichbar. Versuchen Sie es später erneut.",
   "featureAccessorySupplements": "Zubehör-Aufpreise",

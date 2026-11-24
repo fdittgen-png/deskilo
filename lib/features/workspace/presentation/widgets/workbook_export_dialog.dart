@@ -9,6 +9,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../application/template_workbook.dart';
 
@@ -98,7 +99,8 @@ class _WorkbookExportDialogState extends State<_WorkbookExportDialog> {
         if (mounted) setState(() => _progress = p);
       }, _cancel);
       outcome = _Outcome(path: path);
-    } on WorkbookCancelled {
+    } on WorkbookCancelled catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'workspace', 'workbook_export_dialog: WorkbookCancelled handled', error: e, stackTrace: st);
       outcome = const _Outcome(cancelled: true);
     } on Object catch (e, st) {
       // trace-exempt: handed to the caller, which reports it with context.

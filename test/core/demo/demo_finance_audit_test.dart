@@ -6,6 +6,7 @@
 // seeded rows (the invoice lines, the matches, the members), never read from
 // the code that produced them. The evidence matrix is
 // docs/testing/evidence/demo-audit-3292-finance.md.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
@@ -291,7 +292,7 @@ void main() {
             (i) => money.invoiceMatchesStore[i.id]?.resolution == 'exact');
         await expectLater(
           money.voidInvoice(paid.id),
-          throwsRefusal('DKI04'),
+          throwsRefusal(DkCode.dki04),
         );
       });
 
@@ -310,7 +311,7 @@ void main() {
               return money.invoices.singleWhere((i) => i.id == id);
             } on PostgrestException catch (e) {
               // DKI07: this member's period is already invoiced.
-              if (e.code != 'DKI07') rethrow;
+              if (e.code != DkCode.dki07) rethrow;
               continue;
             }
           }

@@ -70,7 +70,7 @@ class EntryIntentDraft {
     Object? decoded;
     try {
       decoded = jsonDecode(raw);
-    } on FormatException {
+    } on FormatException catch (e, st) { TraceLogger.instance.log(TraceLevel.info, 'app', 'entry_intents: FormatException handled', error: e, stackTrace: st);
       return null;
     }
     final json = decoded;

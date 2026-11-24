@@ -16,6 +16,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/form_scroll.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -46,7 +47,10 @@ class NumberSequencesScreen extends ConsumerWidget {
             for (final s in rows) NumberSequenceCard(sequence: s),
           ],
         ),
-        AsyncError(:final error) => Center(child: Text(error.toString())),
+        AsyncError(:final error) => ReadFailureBanner(
+          error: error,
+          onRetry: () => ref.invalidate(numberSequencesProvider),
+        ),
         _ => const LoadingView(),
       },
     );

@@ -13,6 +13,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../core/backend/auth_secret_store.dart';
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/invite_uri.dart';
 
 part 'pending_invitation.g.dart';
@@ -67,7 +68,8 @@ class PendingInvitations {
     final Object? json;
     try {
       json = jsonDecode(await _store.read() ?? 'null');
-    } on FormatException {
+    } on FormatException catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'workspace', 'pending_invitation: FormatException handled', error: e, stackTrace: st);
       await _store.write(null);
       return null;
     }

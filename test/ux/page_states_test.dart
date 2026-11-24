@@ -7,6 +7,7 @@
 // words of the shared primitive. The pages: members, documents, purchases,
 // invoices. Each state fails on a planted fault (the last test).
 import 'package:deskilo/core/cache/read_failure.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
@@ -26,7 +27,7 @@ import 'experience_guards.dart';
 enum _State { empty, failed, refused }
 
 Exception _error(_State state) => switch (state) {
-  _State.refused => const PostgrestException(message: 'denied', code: '42501'),
+  _State.refused => const PostgrestException(message: 'denied', code: PgCode.insufficientPrivilege),
   _ => Exception('the read failed'),
 };
 

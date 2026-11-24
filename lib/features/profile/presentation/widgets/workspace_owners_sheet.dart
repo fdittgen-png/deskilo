@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../workspace/domain/workspace_overview.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
@@ -18,13 +19,15 @@ Future<void> showWorkspaceOwnersSheet(
   WidgetRef ref,
   WorkspaceOverview workspace,
 ) {
-  final owners = ref
+  Future<List<WorkspaceOwner>> fetch() => ref
       .read(workspaceRepositoryProvider)
       .fetchWorkspaceOwners(workspace.id)
       .then((list) {
     // #970 — demo mode blurs the owners' names and addresses.
     return list;
   });
+  // The sheet's own read: Try again asks again, nothing outside it changes.
+  var owners = fetch();
   return showAppSheet<void>(
     context: context,
     showDragHandle: true,
@@ -43,11 +46,15 @@ Future<void> showWorkspaceOwnersSheet(
                 style: theme.textTheme.titleMedium,
               ),
               const SizedBox(height: AppSpacing.md),
+              StatefulBuilder(builder: (context, setSheetState) =>
               FutureBuilder<List<WorkspaceOwner>>(
                 future: owners,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
+                    return ReadFailureBanner(
+                      error: snapshot.error!,
+                      onRetry: () => setSheetState(() => owners = fetch()),
+                    );
                   }
                   if (!snapshot.hasData) {
                     return const Center(child: CircularProgressIndicator());
@@ -85,7 +92,7 @@ Future<void> showWorkspaceOwnersSheet(
                     ],
                   );
                 },
-              ),
+              )),
             ],
           ),
         ),

@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/ids/request_id.dart';
@@ -17,7 +18,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../application/service_fulfilment_commands.dart';
 import '../../domain/service_fulfilment.dart';
 import '../../providers/billing_customer_providers.dart';
 import '../../providers/service_fulfilment_providers.dart';
@@ -53,18 +53,18 @@ class _State extends ConsumerState<ServiceFulfilmentScreen> {
         .step(workspaceId, e, to: to, requestId: _pending.putIfAbsent(intent, newRequestId), reason: reason);
     if (!mounted) return;
     switch (outcome) {
-      case FulfilmentDone():
+      case CommandDone():
         _pending.remove(intent);
         _said = null;
         ref
           ..invalidate(serviceFulfilmentProvider((workspaceId: workspaceId, fulfilmentId: e.id)))
           ..invalidate(serviceFulfilmentsProvider(workspaceId));
-      case FulfilmentRefused(:final refusal):
+      case CommandRefused(refusal: Refusal(cause: final FulfilmentRefusal refusal)):
         _pending.remove(intent);
         _said = engagementRefusalText(l10n, refusal);
         // a stale or refused step is answered by what the engagement is now
         ref.invalidate(serviceFulfilmentProvider((workspaceId: workspaceId, fulfilmentId: e.id)));
-      case FulfilmentUnreached():
+      case _:
         _said = l10n.engagementUnreached; // the request identity is kept for the retry
     }
     setState(() => _busy = false);

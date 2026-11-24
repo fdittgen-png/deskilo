@@ -7119,6 +7119,7 @@
   "exportValueNameUsage": "Consommation",
   "exportValueNameW": "Ouest",
   "exportValueNameWorkspace": "Espace de travail",
+  "failedPartNotShown": "Cette partie n'a pas pu être affichée. Revenez en arrière et ouvrez-la de nouveau.",
   "favoriteKeptOnDeviceRefused": "Gardé sur cet appareil uniquement : votre compte ne peut pas enregistrer ce lieu.",
   "favoriteKeptOnDeviceUnreachable": "Gardé sur cet appareil uniquement : votre compte n’a pas pu être joint. Réessayez plus tard.",
   "featureAccessorySupplements": "Suppléments d'accessoires",

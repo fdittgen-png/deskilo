@@ -11534,6 +11534,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exportValueNameWorkspace => 'Workspace';
 
   @override
+  String get failedPartNotShown =>
+      'This part could not be shown. Go back and open it again.';
+
+  @override
   String get favoriteKeptOnDeviceRefused =>
       'Kept on this device only: your account cannot save this place.';
 

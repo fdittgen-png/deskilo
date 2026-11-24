@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/data/app_failure_from.dart';
 import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,8 +12,8 @@ import 'package:supabase_flutter/supabase_flutter.dart' show AuthRetryableFetchE
 
 void main() {
   test('a server refusal keeps its code, sentence and details', () {
-    final f = appFailureFrom(const PostgrestException(message: 'not an open draft', code: 'DKL04', details: 'r-1'));
-    expect(f, isA<Refusal>().having((r) => r.code, 'code', 'DKL04').having((r) => r.details, 'details', 'r-1'));
+    final f = appFailureFrom(const PostgrestException(message: 'not an open draft', code: DkCode.dkl04, details: 'r-1'));
+    expect(f, isA<Refusal>().having((r) => r.code, 'code', DkCode.dkl04).having((r) => r.details, 'details', 'r-1'));
   });
 
   test('a gateway status is a transport failure: the commit is unknown', () {
@@ -40,8 +41,8 @@ void main() {
   test('a command answers done, refused or unreached', () async {
     expect(await runCommand(() async => 7), isA<CommandDone<int>>().having((d) => d.value, 'value', 7));
     expect(
-      await runCommand<int>(() async => throw const PostgrestException(message: 'no', code: 'DKC07')),
-      isA<CommandRefused<int>>().having((r) => r.refusal.code, 'code', 'DKC07'),
+      await runCommand<int>(() async => throw const PostgrestException(message: 'no', code: DkCode.dkc07)),
+      isA<CommandRefused<int>>().having((r) => r.refusal.code, 'code', DkCode.dkc07),
     );
     expect(
       await runCommand<int>(() async => throw const SocketException('down')),
