@@ -11,8 +11,9 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/customer_quote.dart';
@@ -36,7 +37,7 @@ class CustomerQuotesScreen extends ConsumerWidget {
           if (canIssue && workspace != null)
             OutlinedButton.icon(
               key: const ValueKey('quote-new'),
-              onPressed: () => context.go('/money/quotes/new/edit'),
+              onPressed: () => context.go(Routes.moneyQuoteNew),
               icon: const Icon(Icons.add),
               label: Text(l10n.quotesNew),
             ),
@@ -77,26 +78,15 @@ class _Body extends ConsumerWidget {
         Expanded(
           child: quotes.when(
             loading: () => const LoadingView(),
-            error: (error, _) => Center(
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      error is QuoteRefusal
-                          ? quoteRefusalText(l10n, error)
-                          : l10n.quotesLoadFailed,
-                      textAlign: TextAlign.center,
-                    ),
-                    const FormGap(),
-                    OutlinedButton(
-                      key: const ValueKey('quotes-retry'),
-                      onPressed: () => ref.invalidate(customerQuotesProvider(workspaceId)),
-                      child: Text(l10n.quotesRetry),
-                    ),
-                  ],
-                ),
+            error: (error, _) => Padding(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              child: ReadFailureBanner(
+                error: error,
+                refusal: error is QuoteRefusal
+                    ? quoteRefusalText(l10n, error)
+                    : null,
+                retryKey: const ValueKey('quotes-retry'),
+                onRetry: () => ref.invalidate(customerQuotesProvider(workspaceId)),
               ),
             ),
             data: (all) => all.isEmpty
@@ -143,7 +133,7 @@ class _QuoteRow extends StatelessWidget {
         ].join(' · '),
       ),
       trailing: totals == null ? null : Text(quoteAmount(context, totals)),
-      onTap: () => context.go('/money/quotes/${quote.id}'),
+      onTap: () => context.go(Routes.moneyQuote(quote.id)),
     );
   }
 }

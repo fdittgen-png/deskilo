@@ -70,13 +70,19 @@ class SaveService {
       throw ArgumentError('the service draft has problems');
     }
     final vat = draft.vatRateId.isEmpty ? null : draft.vatRateId;
+    // #4441 — a class this app does not know is never sent: a new service is
+    // not made with it, and an edited one keeps the class the server has.
+    final known = draft.supplyClass == SupplyClass.unknown ? null : draft.supplyClass;
+    if (serviceId == null && known == null) {
+      throw ArgumentError('a service is not created with an unknown supply class');
+    }
     return serviceId == null
         ? _terms.createService(
             workspaceId,
             name: draft.name.trim(),
             priceCents: draft.priceCents!,
             vatRateId: vat,
-            supplyClass: draft.supplyClass,
+            supplyClass: known!,
             details: draft.details,
             requestId: requestId,
           )
@@ -87,7 +93,7 @@ class SaveService {
               priceCents: draft.priceCents,
               active: draft.active,
               vatRateId: draft.vatRateId,
-              supplyClass: draft.supplyClass,
+              supplyClass: known,
               details: draft.details,
             ),
           );

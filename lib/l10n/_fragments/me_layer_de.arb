@@ -48,7 +48,6 @@
   "visibilityPreviewSignedIn": "Alle Angemeldeten",
   "visibilityPreviewNobody": "Nur ich",
   "visibilityPreviewNothing": "Diese Personen sehen nichts von Ihnen.",
-  "visibilityPreviewFailed": "Die Vorschau konnte nicht geladen werden.",
   "visibilityPreviewCanWrite": "Kann ein Gespräch mit Ihnen beginnen",
   "visibilityPreviewCannotWrite": "Kann kein Gespräch mit Ihnen beginnen",
   "visibilityChosenCount": "{count, plural, one{Mitglieder von 1 ausgewähltem Ort} other{Mitglieder von {count} ausgewählten Orten}}",

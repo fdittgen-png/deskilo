@@ -13,8 +13,9 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/reference_when.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../core/ui/kit/todo_row.dart';
 import '../../../../core/ui/kit/two_line_row.dart';
@@ -33,10 +34,9 @@ class McpMyRequestsSection extends ConsumerWidget {
     if (read.hasError && !read.isLoading) {
       return Padding(
         padding: const EdgeInsets.only(bottom: AppSpacing.lg),
-        child: InlineBanner(
-          key: const ValueKey('mcp-requests-unavailable'),
-          icon: Icons.cloud_off_outlined,
-          text: l10n.mcpRequestsUnavailable,
+        child: ReadFailureBanner(
+          error: read.error!,
+          onRetry: () => ref.invalidate(myActionConfirmationsProvider),
         ),
       );
     }
@@ -53,7 +53,7 @@ class McpMyRequestsSection extends ConsumerWidget {
     final reader = appFormatOf(context);
     final title = Theme.of(context).textTheme.titleMedium;
     Future<void> open(ActionConfirmation c) async {
-      await context.push('/mcp/confirm/${Uri.encodeComponent(c.id)}');
+      await context.push(Routes.mcpConfirm(c.id));
       ref.invalidate(myActionConfirmationsProvider);
     }
 

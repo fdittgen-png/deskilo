@@ -21,6 +21,7 @@
 // one that cannot be read is left too and named with its reason in the run's
 // record (payment_reconciliation_finish_v1).
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { sameSecret } from "../_shared/same_secret.ts";
 import { allowsTestPayments } from "../_shared/test_payments.ts";
@@ -31,6 +32,11 @@ import {
   readerOf,
   type UnreadableReason,
 } from "./readers.ts";
+import { describeError, logLine } from "../_shared/log.ts";
+import { ok, refuse } from "../_shared/respond.ts";
+import { guard } from "../_shared/serve.ts";
+
+const FN = "payment-reconcile";
 
 export const RECONCILE_SECRET_HEADER = "x-deskilo-reconcile-secret";
 /** The most attempts of one business read per run. */
@@ -64,19 +70,14 @@ export type Deps = {
 const defaultDeps: Deps = {
   service: () =>
     createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      readEnv(KEYS.supabaseUrl)!,
+      readEnv(KEYS.supabaseServiceRoleKey)!,
     ) as unknown as Db,
-  env: (name) => Deno.env.get(name),
+  env: readEnv,
   fetch: (input, init) => fetch(input, init),
   now: () => Date.now(),
 };
 
-const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
 
 /** The database job's secret, or the exact service credential. */
 export function mayReconcile(
@@ -273,7 +274,7 @@ export async function handle(
   req: Request,
   deps: Deps = defaultDeps,
 ): Promise<Response> {
-  if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+  if (req.method !== "POST") return refuse("method_not_allowed", 405);
   const delegated = refuseDelegated(req);
   if (delegated) return delegated;
   if (
@@ -283,15 +284,15 @@ export async function handle(
       deps.env("SUPABASE_SERVICE_ROLE_KEY"),
     )
   ) {
-    return json({ error: "not allowed" }, 401);
+    return refuse("not allowed", 401);
   }
   const service = deps.service();
   const started = deps.now();
   // The run's marker is the database's clock, never this function's.
   const begun = await service.rpc("payment_reconciliation_begin_v1", {});
   if (begun.error || typeof begun.data !== "string") {
-    console.error("payment reconciliation could not begin");
-    return json({ error: "begin_failed" }, 500);
+    logLine("error", FN, "begin_failed", { error: begun.error ? describeError(begun.error) : "no marker" });
+    return refuse("begin_failed", 500);
   }
   const runStarted = begun.data;
   const runs: Row[] = [];
@@ -302,11 +303,8 @@ export async function handle(
       p_limit: MAX_INTENTS,
     });
     if (claimed.error) {
-      console.error(
-        "payment reconciliation claim failed",
-        String((claimed.error as Row).message ?? claimed.error),
-      );
-      return json({ error: "claim_failed", runs }, 500);
+      logLine("error", FN, "claim_failed", { error: describeError(claimed.error) });
+      return refuse("claim_failed", 500, undefined, { runs });
     }
     const one = ((claimed.data ?? []) as Claim[])[0];
     if (!one) break;
@@ -326,9 +324,7 @@ export async function handle(
     if (!kept) {
       // The lease ran out under this run: what it settled or ended stays (the
       // paths are exactly once); its record is not kept.
-      console.error("payment reconciliation record not kept", {
-        workspace: one.workspace_id,
-      });
+      logLine("error", FN, "record_not_kept", { workspace: one.workspace_id });
     }
     runs.push({
       workspace: one.workspace_id,
@@ -341,7 +337,10 @@ export async function handle(
       kept,
     });
   }
-  return json({ runs });
+  return ok({ runs });
 }
 
-if (import.meta.main) Deno.serve((req) => handle(req));
+/** The function as it is served: whatever [handle] throws is the envelope (#4412). */
+export const serve = (deps: Deps = defaultDeps) => guard(FN, (req) => handle(req, deps));
+
+if (import.meta.main) Deno.serve(serve());

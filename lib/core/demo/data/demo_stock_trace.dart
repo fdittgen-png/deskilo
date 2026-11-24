@@ -97,9 +97,9 @@ class DemoStockTrace implements StockTraceReader {
 
   @override
   Future<StockTraceAnswer> trace(String workspaceId, String movementId) async {
-    if (!_mine(workspaceId)) throw const StockConfigRefused('movement', 'malformed');
+    if (!_mine(workspaceId)) throw const StockConfigRefused('movement', StockRefusal.malformed);
     final m = await DemoStockQueries(_ledger).movement(workspaceId, movementId);
-    if (m == null) throw const StockConfigRefused('movement', 'malformed');
+    if (m == null) throw const StockConfigRefused('movement', StockRefusal.malformed);
     final link = await _orderOf(movementId);
     final bills = link == null ? const <TraceBill>[] : await _billsOf(link.orderId);
     return StockTraceAnswer(
@@ -140,13 +140,13 @@ class DemoStockTrace implements StockTraceReader {
     int limit = 50,
     Map<String, Object?>? after,
   }) async {
-    if (!_mine(workspaceId)) throw const StockConfigRefused('document', 'malformed');
+    if (!_mine(workspaceId)) throw const StockConfigRefused('document', StockRefusal.malformed);
     final orderId = switch (kind) {
       'order' => id,
       'bill' => _orders.billOrders[id],
       _ => null,
     };
-    if (orderId == null) return const DocumentGoods(state: TraceState.notLinked, rows: [], more: false);
+    if (orderId == null) return const DocumentGoods(state: TraceState.notLinked, rows: <DocumentGoodsRow>[], more: false);
     final allocations = await _receiving.allocationsOfOrder(workspaceId, orderId);
     final queries = DemoStockQueries(_ledger);
     final rows = <DocumentGoodsRow>[];
@@ -175,7 +175,7 @@ class DemoStockTrace implements StockTraceReader {
 
   @override
   Future<StockValuation> valuation(String workspaceId, {DateTime? at}) async {
-    if (!_mine(workspaceId)) throw const StockConfigRefused('workspace', 'malformed');
+    if (!_mine(workspaceId)) throw const StockConfigRefused('workspace', StockRefusal.malformed);
     final rows = await _ledger.onHand();
     final lines = <ValuationLine>[];
     final unknown = <String, ExactQuantity>{};

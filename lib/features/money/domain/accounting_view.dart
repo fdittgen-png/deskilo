@@ -60,8 +60,10 @@ Map<String, InvoiceMatch> _allocateSettlementPayment(
       invoiceId: source.invoiceId,
       paidCents: take,
       resolution: covered
-          ? (match.resolution == 'under_accepted' ? 'exact' : match.resolution)
-          : 'under_accepted',
+          ? (match.settles == MatchResolution.underAccepted
+                ? MatchResolution.exact.wire
+                : match.resolution)
+          : MatchResolution.underAccepted.wire,
       note: [
         if (match.note.isNotEmpty) match.note,
         'via ${settlement.number}',

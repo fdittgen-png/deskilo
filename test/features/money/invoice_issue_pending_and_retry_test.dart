@@ -3,6 +3,7 @@
 // A decision still pending is not an issued invoice, and an answer that is
 // lost after the commit is retried under the SAME request id, so the retry
 // returns the invoice already made instead of making a second one.
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/core/validation/pending_validation.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/domain/command_receipt.dart';
@@ -79,14 +80,15 @@ void main() {
       );
 
       final first = await issuance.issue(attempt);
-      expect(first, isA<InvoiceIssueUnknown>(), reason: 'not a success');
+      expect(first, isA<CommandUnreached<String>>(), reason: 'not a success');
       expect(money.invoices, hasLength(1), reason: 'the commit happened');
 
-      final again = await issuance.issue(first.attempt);
-      expect(again, isA<InvoiceIssued>());
+      // The same attempt, kept by the caller, is sent again.
+      final again = await issuance.issue(attempt);
+      expect(again, isA<CommandDone<String>>());
       expect(money.sentIds, ['req-retry', 'req-retry']);
       expect(
-        (again as InvoiceIssued).invoiceId,
+        (again as CommandDone<String>).value,
         money.invoices.single.id,
         reason: 'the retry returns the invoice already made',
       );

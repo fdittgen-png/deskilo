@@ -48,7 +48,6 @@
   "visibilityPreviewSignedIn": "Chiunque abbia effettuato l'accesso",
   "visibilityPreviewNobody": "Solo io",
   "visibilityPreviewNothing": "Non vedono nulla di Lei.",
-  "visibilityPreviewFailed": "Impossibile caricare l'anteprima.",
   "visibilityPreviewCanWrite": "Può iniziare una conversazione con Lei",
   "visibilityPreviewCannotWrite": "Non può iniziare una conversazione con Lei",
   "visibilityChosenCount": "{count, plural, one{Membri di 1 posto scelto} other{Membri di {count} posti scelti}}",

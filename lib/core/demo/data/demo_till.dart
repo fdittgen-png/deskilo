@@ -16,6 +16,7 @@ import 'package:deskilo/features/money/domain/till_offline.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../codes/dk_code.dart';
+import '../../jurisdiction/installed_invoice_mentions.dart';
 import 'demo_stock_registry.dart';
 import 'demo_till_drawer.dart';
 
@@ -27,6 +28,9 @@ PostgrestException _refused(String code, String message, {String? reason}) =>
 /// hand that expires first and is not expired yet (MILK-09 is past its date, so MILK-12; the expiry report's lots). The
 /// gift basket is tracked piece by piece: its pieces are of lot BASKET-1, and a sale names each piece scanned by its tag.
 const _tracedLots = <String, String>{'demo-item-milk': 'MILK-12', 'demo-item-basket': 'BASKET-1'};
+
+/// The Demo's bag of coffee beans, which the seeded book sells.
+const _beansName = 'Coffee beans';
 
 /// The prices of Demo items the stock registry does not carry (the T-shirt the variants are edited on), in cents.
 const _unstocked = <String, int>{'demo-item-shirt': 1900, 'demo-item-basket': 3900, 'demo-item-apples': 1800};
@@ -42,29 +46,31 @@ const _evidence = {
   'reconcile_tender': 'pgTAP 523 (tender states and reconciliation)',
 };
 
+/// The rows by the module id of the installed add-on that states the country's law: a country with no installed add-on has
+/// no row (the country is the one in the add-on's capability id, `invoice_mentions.IT`).
 const _registry = <String, _Row>{
-  'FR': (
+  'fr.invoice_mentions': (
     specification: 'Code général des impôts, annexe II, art. 242 nonies A (mentions des factures)',
     version: '2026-11',
     from: '2013-01-01',
     supported: true,
     note: '',
   ),
-  'DE': (
+  'de.invoice_mentions': (
     specification: 'Umsatzsteuer-Durchführungsverordnung, § 33 (Rechnungen über Kleinbeträge)',
     version: '2026-11',
     from: '2017-01-01',
     supported: true,
     note: '',
   ),
-  'ES': (
+  'es.invoice_mentions': (
     specification: 'Real Decreto 1619/2012, art. 4 y 7 (factura simplificada)',
     version: '2026-11',
     from: '2013-01-01',
     supported: true,
     note: '',
   ),
-  'IT': (
+  'it.invoice_mentions': (
     specification: 'Decreto legislativo 127/2015, art. 2 (memorizzazione e trasmissione telematica dei corrispettivi)',
     version: 'D.Lgs. 127/2015',
     from: '2020-01-01',
@@ -157,7 +163,12 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
   final Map<String, TillDraft> _answered = {};
   final Map<String, Map<String, Object?>> _frozen = {};
 
-  _Row? get _row => _registry[country];
+  _Row? get _row {
+    for (final addOn in installedInvoiceMentions) {
+      if (addOn.descriptor.capabilityId == 'invoice_mentions.$country') return _registry[addOn.descriptor.moduleId];
+    }
+    return null;
+  }
 
   bool get _supported => ready && (_row?.supported ?? false);
 
@@ -604,14 +615,14 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
     final milk = DemoStockRegistry.catalogue['demo-item-milk']!.$2;
     final beans = DemoStockRegistry.catalogue['demo-item-beans']!.$2;
     const sold = 'demo-receipt-seed-1';
-    final cash = _Rec(id: sold, kind: 'sale', lines: [line(sold, 1, 'Oat milk', '2', 'l', 2 * milk), line(sold, 2, 'Coffee beans', '1', 'kg', beans)], totals: totals(2 * milk + beans))
+    final cash = _Rec(id: sold, kind: 'sale', lines: [line(sold, 1, 'Oat milk', '2', 'l', 2 * milk), line(sold, 2, _beansName, '1', 'kg', beans)], totals: totals(2 * milk + beans))
       ..state = 'finalized'
       ..number = _number()
       ..finalizedAt = DateTime.utc(2026, 11, 23, 9);
     cash.tenders.add(CounterBookTender(id: 'demo-tender-${++_tenderSeq}', part: 1, kind: 'cash', amountMinor: 2 * milk + beans, state: 'accepted'));
     _book[sold] = cash;
     const open = 'demo-receipt-seed-2';
-    final waiting = _Rec(id: open, kind: 'sale', lines: [line(open, 1, 'Coffee beans', '1', 'kg', beans)], totals: totals(beans), revision: ++_revision);
+    final waiting = _Rec(id: open, kind: 'sale', lines: [line(open, 1, _beansName, '1', 'kg', beans)], totals: totals(beans), revision: ++_revision);
     final card = CounterBookTender(
       id: 'demo-tender-${++_tenderSeq}',
       part: 1,
@@ -627,7 +638,7 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
       receiptId: open,
       revision: waiting.revision,
       totals: waiting.totals,
-      lines: [TillPricedLine(label: 'Coffee beans', grossMinor: beans, quantity: '1')],
+      lines: [TillPricedLine(label: _beansName, grossMinor: beans, quantity: '1')],
       issueReceipt: 'supported',
     );
   }

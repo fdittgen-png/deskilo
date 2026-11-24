@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../providers/workspace_providers.dart';
@@ -53,12 +54,10 @@ class TemplatePicker extends ConsumerWidget {
           child: async.hasError && !async.hasValue
               ? Align(
                   alignment: Alignment.topCenter,
-                  child: InlineBanner(
+                  child: ReadFailureBanner(
                     key: const ValueKey('template-picker-failed'),
-                    icon: Icons.cloud_off_outlined,
-                    text: l10n.templatesLoadFailed,
-                    actionLabel: l10n.commonRetry,
-                    onAction: () => ref.invalidate(workspaceTemplatesProvider),
+                    error: async.error!,
+                    onRetry: () => ref.invalidate(workspaceTemplatesProvider),
                   ),
                 )
               : !async.hasValue
@@ -89,6 +88,7 @@ class TemplatesFailedNotice extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final async = ref.watch(workspaceTemplatesProvider);
+    // #4414 kept: says what the failure means here (the space starts empty)
     if (!async.hasError || async.hasValue) return const SizedBox.shrink();
     final l10n = context.l10n;
     return InlineBanner(

@@ -9,10 +9,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
@@ -34,7 +35,7 @@ Future<bool> showCountPlanSheet(
   CountPlan? plan,
 }) {
   final l10n = context.l10n;
-  final draft = _PlanDraft(choices, plan, today);
+  final draft = _PlanDraft(choices, plan, today, appFormatOf(context));
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -50,7 +51,7 @@ Future<bool> showCountPlanSheet(
 }
 
 class _PlanDraft {
-  _PlanDraft(this.choices, this.plan, String today)
+  _PlanDraft(this.choices, this.plan, String today, AppFormat format)
     : scope = plan?.scope ?? CountScope.places,
       places = {...?plan?.locationIds},
       items = {...?plan?.itemIds},
@@ -59,7 +60,11 @@ class _PlanDraft {
       due = plan?.nextDueOn ?? today,
       fields = FormControllers({
         'name': plan?.name ?? '',
-        'threshold': plan?.highValueMinor == null ? '' : '${plan!.highValueMinor! / 100}',
+        // the threshold in the business's currency, written as the member's format reads it back
+        'threshold': switch (plan?.highValueMinor) {
+          final minor? => amountInputText(minor, currency: format.currencyCode, locale: format.locale),
+          null => '',
+        },
         'every': '${plan?.intervalDays ?? 14}',
       });
 
@@ -87,7 +92,8 @@ class _PlanDraft {
     final errors = <String, String>{};
     _choiceError = null;
     if (fields.text('name').trim().isEmpty) errors['name'] = l10n.stockCyclePlanNameRequired;
-    if ((scope == CountScope.places && places.isEmpty) || (scope == CountScope.items && items.isEmpty)) {
+    // a scope this app does not know is never saved on a guess
+    if ((scope == CountScope.places && places.isEmpty) || (scope == CountScope.items && items.isEmpty) || scope == CountScope.unknown) {
       _choiceError = l10n.stockCyclePlanScopeRequired;
       errors['scope'] = _choiceError!;
     }
@@ -111,24 +117,25 @@ class _PlanDraft {
 
   Future<String?> submit(BuildContext context, AppLocalizations l10n, StockCycleCounts counts, String workspaceId) async {
     final threshold = scope == CountScope.highValue && fields.text('threshold').trim().isNotEmpty ? _threshold(context) : null;
-    try {
-      await counts.savePlan(workspaceId, (
-        planId: _id,
-        requestId: requestId,
-        name: fields.text('name').trim(),
-        scope: scope,
-        locationIds: scope == CountScope.places ? places.toList() : const [],
-        itemIds: scope == CountScope.items ? items.toList() : const [],
-        nextDueOn: due,
-        active: active,
-        highValueMinor: threshold,
-        intervalDays: repeating ? int.parse(fields.text('every').trim()) : null,
-      ));
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a count plan was not saved', error: e, stackTrace: st);
-      return stockSaveProblem(l10n, e);
-    }
+    return guardSave(
+      domain: 'stock',
+      message: 'a count plan was not saved',
+      action: () async {
+        await counts.savePlan(workspaceId, (
+          planId: _id,
+          requestId: requestId,
+          name: fields.text('name').trim(),
+          scope: scope,
+          locationIds: scope == CountScope.places ? places.toList() : const [],
+          itemIds: scope == CountScope.items ? items.toList() : const [],
+          nextDueOn: due,
+          active: active,
+          highValueMinor: threshold,
+          intervalDays: repeating ? int.parse(fields.text('every').trim()) : null,
+        ));
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
   }
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {
@@ -220,6 +227,7 @@ class _PlanDraft {
         inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
       ),
     ],
+    CountScope.unknown => [Text(l10n.stockStateUnknown, key: const ValueKey('stock-cycle-plan-scope-unknown'))],
   };
 
   Widget? _choiceText(BuildContext context) => _choiceError == null

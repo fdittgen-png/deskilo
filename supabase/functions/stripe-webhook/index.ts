@@ -5,11 +5,16 @@
 // resolves the payment_intents row → workspace → that workspace's Stripe
 // webhook secret (table first, env fallback). Settlement is idempotent.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { stripeFeeOf } from "../_shared/provider_settlement.ts";
 import { attachOrder, INTENT_KEY, intentIdOf, provisionalIntent } from "../_shared/provisional_intent.ts";
 import { handlePayout, isPayoutEvent } from "./payout.ts";
 import { handleReversal, ignoresTestEvent, isReversalEvent } from "./reversal.ts";
+import { describeError, logLine } from "../_shared/log.ts";
+import { guard } from "../_shared/serve.ts";
+
+const FN = "stripe-webhook";
 
 /** #3093 E5 — the one body of every answer given BEFORE the signature is
  * checked: an unsigned caller learns nothing about which stage refused (the
@@ -52,10 +57,10 @@ export interface Deps {
 const defaultDeps: Deps = {
   admin: () =>
     createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      readEnv(KEYS.supabaseUrl)!,
+      readEnv(KEYS.supabaseServiceRoleKey)!,
     ),
-  env: (name) => Deno.env.get(name),
+  env: readEnv,
   nowS: () => Date.now() / 1000,
   fetch: (input, init) => fetch(input, init),
 };
@@ -99,7 +104,7 @@ async function stripeBalanceTransaction(
   // disabling this endpoint. It is logged and the fee stays unrecorded; only a
   // transient failure (429, 5xx, the network) is retried.
   if (res.status >= 400 && res.status < 500 && res.status !== 429) {
-    console.error("stripe fee unavailable", { status: res.status });
+    logLine("error", FN, "fee_unavailable", { status: res.status });
     return null;
   }
   if (!res.ok) throw new Error(`stripe read ${res.status}`);
@@ -178,7 +183,7 @@ export async function handle(
   if (isPayoutEvent(event.type)) {
     // #3905 -- a test-mode payout reaches no books (unless test payments are on).
     if (ignoresTestEvent(event, deps.env)) {
-      console.log("stripe test event ignored");
+      logLine("info", FN, "test_event_ignored");
       return new Response("ok", { status: 200 });
     }
     return await handlePayout(
@@ -213,7 +218,7 @@ export async function handle(
       .maybeSingle();
   const { data: byOrder, error: lookupError } = await byOrderOnce();
   if (lookupError) {
-    console.error("stripe webhook: intent lookup failed");
+    logLine("error", FN, "intent_lookup_failed");
     return new Response(NOT_READY, { status: 500 });
   }
   // #3917 -- an intent whose provider answer was uncertain does not know its
@@ -230,7 +235,7 @@ export async function handle(
       "id, workspace_id",
     );
     if (provisional.error) {
-      console.error("stripe webhook: intent lookup failed");
+      logLine("error", FN, "intent_lookup_failed");
       return new Response(NOT_READY, { status: 500 });
     }
     intent = provisional.data;
@@ -241,7 +246,7 @@ export async function handle(
     // the two reads: read it by the session once more.
     const again = await byOrderOnce();
     if (again.error) {
-      console.error("stripe webhook: intent lookup failed");
+      logLine("error", FN, "intent_lookup_failed");
       return new Response(NOT_READY, { status: 500 });
     }
     intent = again.data as { id?: string; workspace_id: string } | null;
@@ -250,22 +255,22 @@ export async function handle(
     const age = deps.nowS() - Number(event.created ?? 0);
     if (age < EARLY_CALLBACK_WINDOW_S) {
       // The order id may not be stored yet: ask for a redelivery.
-      console.log("stripe webhook: session not associated yet, retry");
+      logLine("info", FN, "session_not_associated_yet_retry");
       return new Response(NOT_READY, { status: 503 });
     }
-    console.log("stripe webhook: unknown session, ignoring");
+    logLine("info", FN, "unknown_session_ignoring");
     return new Response("ok", { status: 200 });
   }
   let secret: string;
   try {
     secret = await webhookSecret(admin, intent.workspace_id, deps.env);
   } catch {
-    console.error("stripe webhook: credential lookup failed");
+    logLine("error", FN, "credential_lookup_failed");
     return new Response(NOT_READY, { status: 500 });
   }
   if (!secret) {
     // Not consumed: once the secret is configured, a redelivery settles.
-    console.log("stripe webhook not configured for a workspace");
+    logLine("info", FN, "not_configured_for_a_workspace");
     return new Response(NOT_READY, { status: 503 });
   }
   if (
@@ -276,26 +281,26 @@ export async function handle(
       deps.nowS(),
     ))
   ) {
-    console.error("stripe webhook signature verification FAILED");
+    logLine("error", FN, "signature_verification_failed");
     return new Response("verification_failed", { status: 400 });
   }
   // #3905 -- a test-mode event settles nothing in a production ledger,
   // unless the installation takes test payments.
   if (ignoresTestEvent(event, deps.env)) {
-    console.log("stripe test event ignored");
+    logLine("info", FN, "test_event_ignored");
     return new Response("ok", { status: 200 });
   }
   if (attach) {
     const { error, outcome } = await attachOrder(admin, attach, sessionId);
     if (error) {
-      console.error("stripe webhook: order attach failed");
+      logLine("error", FN, "order_attach_failed");
       return new Response(NOT_READY, { status: 500 });
     }
     if (outcome === "other") {
-      console.log("stripe webhook: the named intent holds another session, ignoring");
+      logLine("info", FN, "intent_holds_another_session");
       return new Response("ok", { status: 200 });
     }
-    console.log("stripe webhook: session attached to its intent", { session: sessionId, outcome });
+    logLine("info", FN, "session_attached_to_its_intent", { session: sessionId, outcome });
   }
 
   // #1554 — `completed` means the checkout finished, NOT that the money
@@ -316,10 +321,8 @@ export async function handle(
     event.type === "checkout.session.async_payment_succeeded";
 
   if (event.type === "checkout.session.completed" && !paid) {
-    console.log("stripe session completed but not paid — waiting", {
-      session: sessionId,
-      payment_status: object.payment_status,
-    });
+    logLine("info", FN, "session_not_paid_yet", { session: sessionId,
+      payment_status: object.payment_status });
   }
 
   if (settles) {
@@ -330,10 +333,10 @@ export async function handle(
       p_amount_cents: object.amount_total ?? null,
     });
     if (error) {
-      console.error("stripe settle failed", error.message);
+      logLine("error", FN, "settle_failed", { error: describeError(error) });
       return new Response("settle_failed", { status: 500 });
     }
-    console.log("stripe session settled", { session: sessionId });
+    logLine("info", FN, "session_settled", { session: sessionId });
     // #2380 -- what Stripe kept of it, recorded once (0687). Settlement above
     // is idempotent, so a failed read or record answers 5xx and Stripe
     // redelivers; a payment Stripe has no balance transaction for yet records
@@ -356,13 +359,13 @@ export async function handle(
               p_transaction_id: fee.transactionId,
             });
             if (recorded.error) {
-              console.error("stripe fee record failed", recorded.error.message);
+              logLine("error", FN, "fee_record_failed", { error: describeError(recorded.error) });
               return new Response("fee_record_failed", { status: 500 });
             }
           }
         }
       } catch (e) {
-        console.error("stripe fee read failed", String(e));
+        logLine("error", FN, "fee_read_failed", { error: describeError(e) });
         return new Response("fee_read_failed", { status: 500 });
       }
     }
@@ -375,14 +378,17 @@ export async function handle(
       p_order_id: sessionId,
     });
     if (error) {
-      console.error("stripe mark failed failed", error.message);
+      logLine("error", FN, "mark_failed_failed", { error: describeError(error) });
       return new Response("mark_failed_failed", { status: 500 });
     }
-    console.log("stripe session marked failed", sessionId, event.type);
+    logLine("info", FN, "session_marked_failed", { sessionId, type: event.type });
   } else {
-    console.log("stripe webhook ignored event", event.type);
+    logLine("info", FN, "ignored_event", { type: event.type });
   }
   return new Response("ok", { status: 200 });
 }
 
-if (import.meta.main) Deno.serve((req) => handle(req));
+/** The function as it is served: whatever [handle] throws is the envelope (#4412). */
+export const serve = (deps: Deps = defaultDeps) => guard(FN, (req) => handle(req, deps));
+
+if (import.meta.main) Deno.serve(serve());

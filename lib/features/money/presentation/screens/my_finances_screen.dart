@@ -16,6 +16,7 @@ import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/app_tab_bar.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -141,12 +142,10 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
           ),
         ),
         body: switch (overview) {
-          AsyncError() => Center(
-              child: TextButton(
-                key: const ValueKey('finances-retry'),
-                onPressed: () => ref.invalidate(financeOverviewProvider),
-                child: Text(l10n.accountActivityFailed),
-              ),
+          AsyncError(:final error) => ReadFailureBanner(
+              error: error,
+              retryKey: const ValueKey('finances-retry'),
+              onRetry: () => ref.invalidate(financeOverviewProvider),
             ),
           AsyncData() => Column(
               children: [
@@ -458,13 +457,13 @@ class _Payments extends ConsumerWidget {
               AsyncData(value: final all) => list(all),
               // The home did not answer: its Try again, and the connected
               // hosts' payments stay.
-              AsyncError() => Column(
+              AsyncError(:final error) => Column(
                   children: [
-                    TextButton(
-                      key: const ValueKey('finances-payments-retry'),
-                      onPressed: () => ref.invalidate(
+                    ReadFailureBanner(
+                      error: error,
+                      retryKey: const ValueKey('finances-payments-retry'),
+                      onRetry: () => ref.invalidate(
                           accountActivityProvider(AccountActivityKind.payments)),
-                      child: Text(l10n.accountActivityFailed),
                     ),
                     list(FinanceOverview.newestFirst(away)),
                   ],

@@ -102,10 +102,6 @@
   "@capacityKpiUnavailable": {
     "description": "#1918 capacity KPI"
   },
-  "capacityKpiRetry": "Erneut versuchen",
-  "@capacityKpiRetry": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiHistorySince": "Gezählt ab {date}, dem Beginn der Historie dieses Arbeitsbereichs; frühere Zeit ist unbekannt und wird nicht gezählt.",
   "@capacityKpiHistorySince": {
     "description": "#1920 capacity KPI history",

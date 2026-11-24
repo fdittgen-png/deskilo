@@ -19,8 +19,8 @@ import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/adaptive/task_surface.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../../../core/ui/inline_banner.dart';
 import '../../application/save_service.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
@@ -166,12 +166,10 @@ class _ServiceSheetState extends ConsumerState<_ServiceSheet> {
       value: _vatRateId,
       onChanged: (id) => setState(() => _vatRateId = id),
     ),
-    AsyncError() => InlineBanner(
+    AsyncError(:final error) => ReadFailureBanner(
       key: const ValueKey('services-vat-rates-failed'),
-      icon: Icons.cloud_off_outlined,
-      text: context.l10n.readStateFailed,
-      actionLabel: context.l10n.commonRetry,
-      onAction: () => ref.invalidate(vatRatesProvider),
+      error: error,
+      onRetry: () => ref.invalidate(vatRatesProvider),
     ),
     _ => const LinearProgressIndicator(),
   };

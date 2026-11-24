@@ -17,7 +17,8 @@ import 'till_quantity.dart';
 const int _decimals = 6;
 final int _scale = math.pow(10, _decimals).toInt();
 
-/// The longest reason a correction or a return carries (the server holds it to the same length).
+/// The longest reason a correction or a return carries.
+// not-mirrored: the server cuts a longer reason to 200 characters (left()), it does not refuse it
 const int counterReasonMaxLength = 200;
 final RegExp _shape = RegExp(r'^[0-9]{1,12}(\.[0-9]{1,6})?$');
 
@@ -83,6 +84,34 @@ class CounterBookLine {
   }
 }
 
+/// What a tender was paid with; the wire word is read once, here.
+enum TenderKind {
+  cash('cash'),
+  card('card'),
+  other('other');
+
+  const TenderKind(this.wire);
+
+  final String wire;
+
+  static TenderKind of(String wire) => values.firstWhere((k) => k.wire == wire, orElse: () => other);
+}
+
+/// Where a tender stands; a word from the future is [unknown], the neutral state that is settled by hand.
+enum TenderState {
+  recorded('recorded'),
+  requested('requested'),
+  accepted('accepted'),
+  refused('refused'),
+  unknown('unknown');
+
+  const TenderState(this.wire);
+
+  final String wire;
+
+  static TenderState of(String wire) => values.firstWhere((s) => s.wire == wire, orElse: () => unknown);
+}
+
 /// A tender of a receipt. A card tender moves `requested` -> `accepted` | `refused` | `unknown`; cash and other are
 /// recorded `accepted` by the sale itself.
 class CounterBookTender {
@@ -114,8 +143,14 @@ class CounterBookTender {
   final String providerKey;
   final String providerRef;
 
+  /// The kind as an enum; a kind from the future reads as [TenderKind.other].
+  TenderKind get tenderKind => TenderKind.of(kind);
+
+  /// The state as an enum; a state from the future reads as [TenderState.unknown].
+  TenderState get tenderState => TenderState.of(state);
+
   /// The answer has not been recorded, or was lost: it is settled, never asked again.
-  bool get open => kind == 'card' && (state == 'requested' || state == 'unknown');
+  bool get open => tenderKind == TenderKind.card && (tenderState == TenderState.requested || tenderState == TenderState.unknown);
   bool get needsReconciliation => state == 'accepted' && reconciliation == 'needed';
 
   /// Money taken that settles the sale.

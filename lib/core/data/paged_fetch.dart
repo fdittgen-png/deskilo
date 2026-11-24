@@ -30,13 +30,27 @@ const int _kExportPageSize = 500;
 /// workspace: 200 pages of 500.
 const int _kExportMaxRows = 100000;
 
+/// #4446 -- the most rows a configuration list holds (sites, levels, desks, seats, roles, templates, fee bands,
+/// rates, sequences…): far beyond any real business, so a longer list is a defect, refused as
+/// [ExportTooLargeException] naming the table rather than shown. A technical bound, not a business value: a list
+/// that grows with the business (members, ledger lines, documents) is read with [fetchAllPages] and no such cap.
+const int kConfigurationListCap = 5000;
+
+/// Every row of a configuration list [build] selects, page by page as [fetchAllPages] reads (to an empty page,
+/// never stopped by the server's own row cap), refused past [kConfigurationListCap]. [build] orders by a unique key
+/// last.
+Future<PostgrestList> fetchConfigurationList({
+  required String table,
+  required PostgrestTransformBuilder<PostgrestList> Function() build,
+}) => fetchAllPages(table: table, build: build, maxRows: kConfigurationListCap);
+
 /// Thrown when an export read hits [_kExportMaxRows].
 ///
 /// #1310's rule: *if a page limit is ever reached unexpectedly, the
 /// export fails with a message rather than returning less.* Silence is
 /// the failure mode being fixed here, so this must never be swallowed
-/// into a shorter list.
-@visibleForTesting
+/// into a shorter list. Public: a reader that bounds its own list turns it
+/// into its own refusal (#4401).
 class ExportTooLargeException implements Exception {
   const ExportTooLargeException(this.table, this.rows);
 

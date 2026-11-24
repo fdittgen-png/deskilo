@@ -13,8 +13,10 @@ import '../../../../core/demo/presentation/demo_entry_sheet.dart';
 import '../../../../core/demo/presentation/demo_environment.dart';
 import '../../../../core/demo/presentation/demo_setup_card.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -54,7 +56,16 @@ class SetupGuideScreen extends ConsumerWidget {
           workspaceName: value.name,
           listBeside: listBeside,
         ),
-        AsyncError() || AsyncData() => ListView(
+        AsyncError(:final error) => ListView(
+          children: [
+            ReadFailureBanner(
+              key: const ValueKey('setup-guide-workspace-unavailable'),
+              error: error,
+              onRetry: () => ref.invalidate(currentWorkspaceProvider),
+            ),
+          ],
+        ),
+        AsyncData() => ListView(
           children: [
             InlineBanner(
               key: const ValueKey('setup-guide-workspace-unavailable'),
@@ -146,7 +157,7 @@ class _SetupGuideBody extends ConsumerWidget {
                 icon: const Icon(Icons.fact_check_outlined),
                 label: Text(l10n.setupLaunchLink),
                 onPressed: () async {
-                  await context.push('/setup/launch');
+                  await context.push(Routes.setupLaunch);
                   await reload();
                 },
               ),
@@ -157,16 +168,13 @@ class _SetupGuideBody extends ConsumerWidget {
           ],
         ),
       ),
-      AsyncError() => ListView(
+      AsyncError(:final error) => ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
-          InlineBanner(
+          ReadFailureBanner(
             key: const ValueKey('setup-guide-unavailable'),
-            icon: Icons.cloud_off_outlined,
-            text: l10n.setupGuideUnavailable,
-            actionLabel: MaterialLocalizations.of(context)
-                .refreshIndicatorSemanticLabel,
-            onAction: reload,
+            error: error,
+            onRetry: reload,
           ),
         ],
       ),
@@ -304,7 +312,7 @@ Future<void> _openLevels(
   BuildContext context,
   Future<void> Function() reload,
 ) async {
-  await context.push('/setup/levels');
+  await context.push(Routes.setupLevels);
   await reload();
 }
 

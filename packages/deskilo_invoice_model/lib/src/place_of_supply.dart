@@ -61,7 +61,7 @@ String supplyVatCategory({
     case VatTreatment.auto:
       break;
   }
-  if (supply != SupplyClass.general) return '';
+  if (!_followsTheCustomer(supply)) return '';
   if (!sellerVatRegistered) return '';
   if (!isEuCountry(sellerCountry, reference: reference)) return '';
   if (buyerCapacity != 'business') return '';
@@ -75,3 +75,11 @@ String supplyVatCategory({
   }
   return 'G';
 }
+
+/// Whether [supply] is a general service, whose place follows the customer.
+/// #4441 — a class this app does not know picks no rule, not property's.
+bool _followsTheCustomer(SupplyClass supply) => switch (supply) {
+  SupplyClass.general => true,
+  SupplyClass.property => false,
+  SupplyClass.unknown => throw const UnknownSupplyClass(),
+};

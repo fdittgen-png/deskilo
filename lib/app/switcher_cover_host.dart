@@ -38,6 +38,7 @@ DisplayFrame displayFrameOf({
   required String? hostSource,
   required String path,
 }) {
+  // #4414 kept: the cover's frame is chosen, not a read shown
   if (session.hasError) {
     return const DisplayFrame(personal: null, role: DisplaySourceRole.personal);
   }
@@ -62,7 +63,8 @@ DisplayFrame displayFrameOf({
   if (me) {
     return DisplayFrame(personal: principal, role: DisplaySourceRole.personal);
   }
-  final settled = workspace.hasError || !workspace.isLoading;
+  // #4414 kept: the cover's frame is chosen, not a read shown
+  final settled = workspace.hasError || !workspace.isLoading; // #4414 kept: and the id below
   final id = workspace.hasError ? null : workspace.value?.id;
   return DisplayFrame(
     personal: principal,

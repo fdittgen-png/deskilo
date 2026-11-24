@@ -12,6 +12,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/country_field.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -93,7 +94,10 @@ class _TaxReferenceScreenState extends ConsumerState<TaxReferenceScreen> {
     final today = ref.watch(clockProvider).now().toIso8601String().substring(0, 10);
     return async.when(
       loading: () => const LoadingView(),
-      error: (e, st) => Center(child: Text(l10n.taxRefLoadFailed)),
+      error: (e, st) => ReadFailureBanner(
+        error: e,
+        onRetry: () => ref.invalidate(taxReferenceSetProvider),
+      ),
       data: (set) {
         final rows = set
             .on(today)

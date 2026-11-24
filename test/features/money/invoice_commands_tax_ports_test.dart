@@ -3,6 +3,7 @@
 // #2591 C3 — the invoice commands and the VAT reporting are ports of their
 // own: a decision class is built with a fake of the ports it needs alone,
 // and the composed repository hands every call to the port it was given.
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/application/declare_vat.dart';
 import 'package:deskilo/features/money/application/settle_invoices.dart';
 import 'package:deskilo/features/money/data/supabase_money_repository.dart';
@@ -239,7 +240,7 @@ void main() {
 
     expect(actions.calls, ['settle:a,b:req-1']);
     // The fresh list does not carry the new document: the id is quoted.
-    expect((outcome as Settled).number, 'settlement-1');
+    expect((outcome as CommandDone<String>).value, 'settlement-1');
   });
 
   test(

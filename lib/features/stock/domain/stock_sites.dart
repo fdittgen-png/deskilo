@@ -22,5 +22,5 @@ String? stockSiteOf(String placeId, Iterable<StockPlaceConfig> places) {
 /// system's own in-transit place.
 List<StockPlaceConfig> stockRealPlaces(Iterable<StockPlaceConfig> places) => [
   for (final p in places)
-    if (p.active && !p.virtual && p.kind != 'in_transit') p,
+    if (p.active && p.isAddressable) p,
 ];

@@ -7,6 +7,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/purchase.dart';
@@ -105,8 +106,12 @@ class PurchasePayablesView extends ConsumerWidget {
     final names = ref.watch(memberLabelsProvider);
     final rows = payables.value;
     if (rows == null) {
+      // A failed read is said, never shown as nothing owed.
       return payables.hasError
-          ? Text(l10n.purchasesOwedEmpty)
+          ? ReadFailureBanner(
+              error: payables.error!,
+              onRetry: () => ref.invalidate(payablesProvider(workspaceId)),
+            )
           : const LoadingView();
     }
     Widget group(String title, CreditorKind kind) {

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -71,10 +71,12 @@ class _TemplateDetailScreenState extends ConsumerState<TemplateDetailScreen> {
         loading: () => const LoadingView(),
         error: (e, _) => Padding(
           padding: AppSpacing.gutterAll,
-          child: InlineBanner(
+          child: ReadFailureBanner(
             key: const ValueKey('template-detail-unavailable'),
-            icon: Icons.cloud_off_outlined,
-            text: l10n.compareUnavailable,
+            error: e,
+            onRetry: () => ref.invalidate(
+              templateInspectionProvider(widget.template.id),
+            ),
           ),
         ),
         data: (t) {

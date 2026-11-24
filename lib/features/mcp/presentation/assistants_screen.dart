@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
@@ -115,11 +116,9 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
           const SizedBox(height: AppSpacing.md),
           caps.when(
             loading: () => const LoadingView(),
-            error: (e, _) => _banner(
-              'mcp-assistants-unavailable',
-              l10n.mcpAssistantsUnavailable,
-              Icons.cloud_off_outlined,
-              InlineBannerSeverity.error,
+            error: (e, _) => ReadFailureBanner(
+              error: e,
+              onRetry: () => ref.invalidate(myDatabaseCapabilitiesProvider),
             ),
             data: (c) => _eligibility(l10n, c),
           ),
@@ -131,11 +130,9 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
           const SizedBox(height: AppSpacing.sm),
           connections.when(
             loading: () => const LoadingView(),
-            error: (e, _) => _banner(
-              'mcp-connections-unavailable',
-              l10n.mcpAssistantsUnavailable,
-              Icons.cloud_off_outlined,
-              InlineBannerSeverity.error,
+            error: (e, _) => ReadFailureBanner(
+              error: e,
+              onRetry: () => ref.invalidate(myMcpConnectionsProvider),
             ),
             data: (list) => list.isEmpty
                 ? Text(

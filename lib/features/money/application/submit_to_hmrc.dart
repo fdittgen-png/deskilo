@@ -7,6 +7,7 @@
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
+import '../../../core/failure/app_failure.dart';
 import '../domain/hmrc_submission.dart';
 import '../domain/mtd_boxes.dart';
 
@@ -15,7 +16,7 @@ class SubmitToHmrc {
 
   final HmrcRepository _repository;
 
-  Future<HmrcOutcome> call({
+  Future<CommandOutcome<HmrcFiling>> call({
     required VatDeclaration declaration,
     required HmrcConnection connection,
     required HmrcClientValues client,

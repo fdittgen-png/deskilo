@@ -108,3 +108,13 @@ fileLength lib/features/workspace/domain/feature_manifest_part3.dart // #4165 on
 setState lib/features/money/presentation/standalone/standalone_invoice_screen.dart // #4165 the composer holds one draft, its checked revision, its request id and its outcome on one screen; a controller is the next step
 fileLength lib/core/demo/data/demo_till.dart // #4185 the Demo's till is one in-memory server: its readiness registry, offline sales and the counter's book (card tenders, corrections, refunds, returns) share one state, so the port cannot be split without a second copy of it
 fileLength lib/features/stock/presentation/item_group_sheet.dart // #4366 the item group sheet carries the till's six parameters (category, colour, minimum age, deposit item, weighed, label template) beside the stock ones; one sheet edits one group
+inlineRoute lib/features/stock/presentation/stock_chain_section.dart // #4422 owned by the stock lane while its v2.2 work is open; Routes symbols for the stock paths come with that lane
+inlineRoute lib/features/stock/presentation/stock_cycle_counts_screen.dart // #4422 owned by the stock lane while its v2.2 work is open; Routes symbols for the stock paths come with that lane
+inlineRoute lib/features/stock/presentation/stock_document_goods_block.dart // #4422 owned by the stock lane while its v2.2 work is open; Routes symbols for the stock paths come with that lane
+inlineRoute lib/features/stock/presentation/stock_first_run.dart // #4422 owned by the stock lane while its v2.2 work is open; Routes symbols for the stock paths come with that lane
+inlineRoute lib/features/stock/presentation/stock_screen.dart // #4422 owned by the stock lane while its v2.2 work is open; Routes symbols for the stock paths come with that lane
+inlineRoute lib/features/money/presentation/till_screen.dart // #4422 owned by the till lane while its v2.2 work is open
+inlineRoute lib/features/money/presentation/till_drawer/till_drawer_screen.dart // #4422 owned by the till lane while its v2.2 work is open
+inlineRoute lib/features/money/presentation/screens/customer_quote_editor_screen.dart // #4422 owned by the quote and invoice editor lane (#4405) while it is open
+inlineRoute lib/features/calendar/presentation/screens/calendar_hub_screen.dart // #4422 at its file-length budget: the Routes import is one line more; swept when the file is split
+inlineRoute lib/features/money/presentation/screens/vat_declarations_screen.dart // #4422 at the 500-line default: the Routes import is one line more; swept when the file is split

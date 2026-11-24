@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/navigation/routes.dart';
 import '../../domain/space_code.dart';
 import '../widgets/reference_open.dart';
 
@@ -47,7 +48,7 @@ class _ReferenceLinkScreenState extends ConsumerState<ReferenceLinkScreen> {
       await openSpaceById(context, ref, kind: kind, id: widget.id);
     }
     if (!mounted) return;
-    context.go('/reserve');
+    context.go(Routes.reserve);
   }
 
   @override

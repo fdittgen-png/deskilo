@@ -301,6 +301,7 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
         pins.waiting++;
       } else if (!own) {
         pins.unplaced++;
+        // #4414 kept: counts the pins whose place could not be looked up
         if (answer != null && answer.hasError) pins.failed.add(address);
       }
     }
@@ -381,6 +382,7 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
               key: const ValueKey('directory-location-status'),
               style: Theme.of(context).textTheme.bodySmall,
             )),
+            // #4414 kept: a pin's own retry beside its status line
             if (lookup?.hasError == true)
               IconButton(key: const ValueKey('directory-map-retry'), onPressed: () => ref.invalidate(directoryAddressLocationProvider(address)),
                 tooltip: l.commonRetry, icon: const Icon(Icons.refresh)),

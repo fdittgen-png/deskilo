@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/app_info.dart';
 import '../../../../core/demo/presentation/welcome_link_button.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../application/federation_handoff_controller.dart';
@@ -139,7 +140,7 @@ class AuthSecondaryLinks extends StatelessWidget {
         // setting one up is the wizard on that screen.
         TextButton(
           key: const ValueKey('auth-server'),
-          onPressed: () => context.push('/server'),
+          onPressed: () => context.push(Routes.server),
           child: Text(l10n.authConnectServer),
         ),
         // #2459 — beside Discover, in the same row where it fits.
@@ -148,7 +149,7 @@ class AuthSecondaryLinks extends StatelessWidget {
           children: [
             TextButton.icon(
               key: const ValueKey('auth-discover'),
-              onPressed: () => context.push('/discover'),
+              onPressed: () => context.push(Routes.discover),
               icon: const Icon(Icons.public),
               label: Text(l10n.portalDiscover),
             ),
@@ -167,6 +168,7 @@ class AuthBuildVersion extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(appVersionProvider);
+    // #4414 kept: the build line shows only a version that was read
     final version = state.isLoading || state.hasError ? null : state.value;
     if (version == null || version.isEmpty) return const SizedBox.shrink();
     return Padding(

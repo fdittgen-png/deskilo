@@ -9,6 +9,7 @@ import 'package:meta/meta.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../domain/invoice_pdf_template.dart';
+import '../domain/report_kind.dart';
 
 @visibleForTesting
 ReportBands customerStatementBands(AppLocalizations l10n) {
@@ -56,13 +57,13 @@ ReportBands customerStatementBands(AppLocalizations l10n) {
 
 /// #3839 — the label of either statement kind.
 String customerStatementKindLabel(AppLocalizations l10n, String key) =>
-    key == 'customer_statement_period'
+    ReportDocument.fromId(key) == ReportDocument.customerStatementPeriod
     ? l10n.reportDocCustomerStatementPeriod
     : l10n.reportDocCustomerStatement;
 
 /// #3839 — the built-in bands of either statement kind.
 ReportBands customerStatementBandsFor(AppLocalizations l10n, String key) =>
-    key == 'customer_statement_period'
+    ReportDocument.fromId(key) == ReportDocument.customerStatementPeriod
     ? customerStatementPeriodBands(l10n)
     : customerStatementBands(l10n);
 

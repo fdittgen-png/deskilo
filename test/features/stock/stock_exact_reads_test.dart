@@ -5,6 +5,7 @@
 // grouping. Each keeps what the float version answered for real inputs, and refuses what the server refuses.
 import 'package:deskilo/core/format/decimal_input.dart';
 import 'package:deskilo/features/stock/domain/put_away_progress.dart';
+import 'package:deskilo/features/stock/domain/stock_refusal.dart';
 import 'package:deskilo/features/stock/domain/stock_registry.dart';
 import 'package:deskilo/features/stock/domain/stock_reorder.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -39,12 +40,12 @@ void main() {
   });
 
   test('a reorder level is a quantity the server reads: never signed, at most six decimals, twelve digits', () {
-    String? level(String point) => checkReorderPoint(point: point, value: '', upTo: false)['reorder_point'];
+    StockRefusal? level(String point) => checkReorderPoint(point: point, value: '', upTo: false)['reorder_point'];
     for (final ok in ['0', '20', '12.5', '00012', '999999999999.999999']) {
       expect(level(ok), isNull, reason: ok);
     }
     for (final bad in ['-0', '-1', '1.', '.5', '1e3', '1.1234567', '1234567890123', '']) {
-      expect(level(bad), 'quantity_invalid', reason: bad);
+      expect(level(bad), StockRefusal.quantityInvalid, reason: bad);
     }
   });
 

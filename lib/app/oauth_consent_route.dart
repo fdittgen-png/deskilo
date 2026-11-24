@@ -15,6 +15,7 @@ class OAuthConsentRoute extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final consent = ref.watch(oauthConsentProvider(authorizationId));
+    // #4414 kept: the route chooses its screen; each shows its own failure
     if (!consent.isLoading && !consent.hasError &&
         consent.value?.context.purpose == OAuthConsentPurpose.mcp) {
       return McpConsentScreen(authorizationId: authorizationId);

@@ -81,3 +81,43 @@ Future<String> resolveRoute(
       );
   return match.uri.path;
 }
+
+/// #4422 — the location each symbol of a `Routes` source names: a
+/// `static const` path as written, a builder's path with each
+/// interpolation as `p1`; the query is not part of the location.
+Map<String, String> routeSymbolLocations(String source) {
+  final symbol = RegExp(
+    r"static (?:const (\w+) =|String (\w+)\([^)]*\)\s*=>)\s*'([^']*)';",
+  );
+  final interpolation = RegExp(r'\$\{[^}]*\}|\$\w+');
+  return {
+    for (final m in symbol.allMatches(source))
+      (m.group(1) ?? m.group(2))!: m
+          .group(3)!
+          .replaceAll(interpolation, 'p1')
+          .split('?')
+          .first,
+  };
+}
+
+/// The symbols of [source] whose location no pattern of [registered]
+/// matches: a link to a page the router does not register.
+List<String> unregisteredRouteSymbols(
+  String source,
+  Iterable<String> registered,
+) {
+  bool matches(String location, String pattern) {
+    final a = location.split('/');
+    final b = pattern.split('/');
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] != b[i] && !b[i].startsWith(':')) return false;
+    }
+    return true;
+  }
+
+  return [
+    for (final e in routeSymbolLocations(source).entries)
+      if (!registered.any((p) => matches(e.value, p))) e.key,
+  ];
+}

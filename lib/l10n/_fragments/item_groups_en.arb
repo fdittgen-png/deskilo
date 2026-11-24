@@ -302,10 +302,6 @@
   "@itemGroupReasonGroupUnknown": {
     "description": "#4361 G12 item groups: itemGroupReasonGroupUnknown"
   },
-  "itemGroupReasonNameDuplicate": "Another group already has this name.",
-  "@itemGroupReasonNameDuplicate": {
-    "description": "#4361 G12 item groups: itemGroupReasonNameDuplicate"
-  },
   "itemGroupReasonNotOverridable": "This setting cannot be given its own value.",
   "@itemGroupReasonNotOverridable": {
     "description": "#4361 G12 item groups: itemGroupReasonNotOverridable"

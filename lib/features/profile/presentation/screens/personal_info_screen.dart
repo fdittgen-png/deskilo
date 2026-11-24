@@ -14,6 +14,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../workspace/domain/workspace_field.dart';
 import '../../../workspace/presentation/widgets/workspace_fields_section.dart';
 import '../../../workspace/providers/workspace_fields_providers.dart';
@@ -148,10 +149,9 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
       ),
       body: profile.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(
-          child: Text(
-            l10n.workspaceGenericError,
-          ),
+        error: (e, _) => ReadFailureBanner(
+          error: e,
+          onRetry: () => ref.invalidate(myProfileProvider),
         ),
         data: (p) {
           if (!_birthdayLoaded) {

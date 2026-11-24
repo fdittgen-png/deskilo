@@ -66,8 +66,9 @@ final class Defect extends AppFailure {
   String toString() => 'Defect($cause)';
 }
 
-/// What a command answered: done with its value, refused (definite), or not
-/// reached (the outcome is unknown or the app failed).
+/// What a command answered: done with its value, refused (definite), held
+/// by a validation policy, or not reached (the outcome is unknown or the app
+/// failed).
 sealed class CommandOutcome<T> {
   const CommandOutcome();
 }
@@ -80,6 +81,13 @@ final class CommandDone<T> extends CommandOutcome<T> {
 final class CommandRefused<T> extends CommandOutcome<T> {
   const CommandRefused(this.refusal);
   final Refusal refusal;
+}
+
+/// A validation policy holds the command: nothing is done yet, and whoever
+/// the policy names decides the pending event [eventId] (#982).
+final class CommandHeld<T> extends CommandOutcome<T> {
+  const CommandHeld(this.eventId);
+  final String eventId;
 }
 
 final class CommandUnreached<T> extends CommandOutcome<T> {

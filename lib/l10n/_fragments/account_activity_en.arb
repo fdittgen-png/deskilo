@@ -11,10 +11,6 @@
   "@accountActivityEmpty": {
     "description": "Shown as a text in account activity screen (money), and 2 other places."
   },
-  "accountActivityFailed": "Could not load your financial history. Tap to retry.",
-  "@accountActivityFailed": {
-    "description": "Shown as a text in account activity screen (money), and 2 other places."
-  },
   "accountPaymentConfirmed": "Payment confirmed",
   "@accountPaymentConfirmed": {
     "description": "Shown as a text in account activity screen (money), and 1 other place."

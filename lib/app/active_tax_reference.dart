@@ -28,6 +28,7 @@ void activeTaxReference(Ref ref) {
     return;
   }
   final context = ref.watch(workspaceContextProvider);
+  // #4414 kept: a read's state steering what is installed, not a view
   if (context.isLoading || context.hasError) return;
   final set = ref.watch(taxReferenceSetProvider).value;
   if (set != null && !set.isEmpty) {

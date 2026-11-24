@@ -1670,7 +1670,7 @@ In diesem Kapitel:
 - Ihr Konto: [Foto](#ihr-konto-und-foto), [persönliche Angaben](#persönliche-angaben), [Adresse](#ihre-adresse), [USt-IdNr.](#ihre-ust-idnr), [Zahlungsbedingungen](#ihre-zahlungsbedingungen), [WhatsApp](#ihre-whatsapp-nummer), [Status](#ihre-statuszeile), [Standard-Buchungszeitraum](#standard-buchungszeitraum)
 - Ihr Badge: [das Badge](#ihr-badge) und [seine PIN](#ihre-badge-pin)
 - Wie die App aussieht und liest: [Sprache](#app-sprache), [Design](#design), [Navigation](#navigationsstil), [Zahlen und Daten](#zahlen-und-daten), [Uhr](#uhr), [Zeitzone](#zeiten-in-meiner-zeitzone-anzeigen), [Hinweise](#hinweise-wiederherstellen), [Frontkamera](#frontkamera-zum-scannen), [verknüpfte Konten](#verknüpfte-konten)
-- Datenschutz und Ihre Daten: [wer meine Daten sehen kann](#datenschutz-wer-meine-daten-sehen-kann), [wer mich sieht](#wählen-wer-mich-sieht), [öffentliches Profil](#ein-öffentliches-profil-veröffentlichen), [Export](#meine-daten-exportieren), [Löschen](#meine-daten-löschen), [Anträge auf Betroffenenrechte](#anträge-auf-betroffenenrechte), [Push](#push-benachrichtigungen-auf-diesem-gerät), [Ihre Rechte](#ihre-daten-ihre-rechte)
+- Datenschutz und Ihre Daten: [wer meine Daten sehen kann](#datenschutz-wer-meine-daten-sehen-kann), [wer mich sieht](#wählen-wer-mich-sieht), [öffentliches Profil](#ein-öffentliches-profil-veröffentlichen), [Export](#meine-daten-exportieren), [Löschen](#meine-daten-löschen), [Anträge auf Betroffenenrechte](#anträge-auf-betroffenenrechte), [Push](#push-benachrichtigungen-auf-diesem-gerät), [Fehlerberichte](#fehlerberichte-senden), [Ihre Rechte](#ihre-daten-ihre-rechte)
 - [Ihr eigener Server](#ihr-eigener-server)
 
 <!-- anchor: user.settings.organisation -->
@@ -2314,6 +2314,29 @@ Sie möchten verhindern, dass Benachrichtigungen an dieses Gerät gesendet werde
 
 - Ist es aus, funktioniert die App weiter, und an dieses Gerät wird nichts gesendet.
 - Ist es an, gehen die Adresse dieses Geräts und jede Benachrichtigung an den Push-Dienst.
+
+**Siehe auch:** [Ihre Daten, Ihre Rechte](#ihre-daten-ihre-rechte)
+
+<!-- anchor: user.privacy.error-reports -->
+### Fehlerberichte senden
+
+**Zielgruppe:** Alle
+
+Sie möchten wissen, was die App sendet, wenn etwas schiefgeht, oder es abstellen.
+
+<!-- image: user-privacy-error-reports -->
+
+**Schritte**
+
+1. Öffnen Sie [Datenschutz & Daten](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Schalten Sie **Fehlerberichte senden** aus oder ein. Es ist an, bis Sie es ausschalten, und die Wahl bleibt auf diesem Gerät gespeichert.
+
+**Gut zu wissen**
+
+- Ein Bericht geht nur an die Installation, bei der Sie angemeldet sind, nie an ein anderes Unternehmen. Ihr Betreiber liest ihn; die Unternehmen, bei denen Sie Mitglied sind, sehen ihn nicht.
+- Er nennt die App-Version, die Plattform, die Art des Fehlers und die Stelle der App, an der er auftrat. Er enthält nie, was Sie eingegeben haben, den Text des Fehlers, eine E-Mail-Adresse, einen Namen oder einen Schlüssel.
+- Jede Person sendet höchstens eine festgelegte Zahl von Berichten pro Stunde, ein Bericht hat eine Größengrenze, und die Installation löscht Berichte nach einer festgelegten Zahl von Tagen. Alle drei legt der Betreiber fest.
+- Ist es aus, verlässt nichts das Gerät: Der Fehler bleibt im Protokoll dieses Geräts. Ein mit Ihrem Konto verbundener Assistent sendet nie einen Bericht.
 
 **Siehe auch:** [Ihre Daten, Ihre Rechte](#ihre-daten-ihre-rechte)
 
@@ -3220,6 +3243,17 @@ Die Kasse sucht ihre Verbindung von selbst wieder, **Verbindung jetzt suchen** t
 
 Drei Einstellungen des Betriebs begrenzen, was angenommen wird: **Längste Offline-Zeit (Minuten)**, **Höchstzahl Offline-Verkäufe je Kassensitzung** und **Erlaubte Preisabweichung offline (%)**. Sind die Offline-Daten des Geräts nicht lesbar, wird offline nichts verkauft, bis eine Leitung entscheidet; **Offline-Daten verwerfen** verwirft sie nach einer Warnung, denn noch nicht gesendete Verkäufe gehen endgültig verloren.
 
+<!-- anchor: user.money.till.receipts -->
+### Belege und Kartenantworten an der Kasse
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie kassieren am Tresen mit Karte oder müssen einen Verkauf nachträglich korrigieren und möchten sehen, was die Kasse erstellt hat und was noch wartet.
+
+**Mit Karte kassieren** fragt das Terminal nach dem Gesamtbetrag; die Antwort des Terminals entscheidet den Verkauf: **Angenommen** schließt ihn ab, **Abgelehnt** lässt den Warenkorb anders bezahlen, und bei **Keine Antwort** bleibt der Verkauf unter **Warten auf eine Kartenantwort** in den **Kassenbelegen** (über **Belege** an der Kasse), wo die Karte nie erneut angefragt wird. Wer die Finanzen sehen darf, erfasst, was das Terminal gezeigt hat, und der Verkauf wird einmal abgeschlossen.
+
+ Die **Kassenbelege** listen, was die Kasse erstellt hat. **Diesen Verkauf korrigieren** stellt eine Korrektur als neuen Beleg aus, der das Original nennt, für die Menge jeder genannten Zeile (höchstens, was die Zeile noch hat) mit einem **Grund**. **Geld zurückgeben** zahlt den Betrag einer Korrektur zurück (höchstens, was sie gutschreibt), die zurückgenommene Ware wird dazu erfasst; nichts wird zweimal zurückgegeben.
+
 <!-- anchor: user.money.stock.rfid -->
 ### RFID-Tags: eines pro Charge oder eines pro Stück
 
@@ -4079,6 +4113,32 @@ Sie möchten, dass Ihre Rechnungen und Briefe auf dem Papier gedruckt werden, da
 - Zieht der Arbeitsbereich in ein Land, das das gewählte Papier nicht verwendet, folgt er dem dort üblichen Papier.
 
 **Siehe auch:** [Land](#land)
+
+<!-- anchor: user.workspace.settings.units -->
+### Maßeinheiten
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Ihre Artikel, Angebote und Rechnungen werden in Einheiten gemessen, und manche Einheiten rechnen sich in andere um: 1 km sind 1000 m. Jeder Betrieb beginnt mit den üblichen Einheiten (Stück, g, kg, ml, cl, l, mm, cm, m, km, m², min, h); eigene ergänzen Sie selbst, etwa eine Kabeltrommel zu 50 m.
+
+<!-- image: user-workspace-settings--units -->
+
+**Schritte**
+
+1. Schalten Sie **Maßeinheiten** unter **Funktionen** ein (sie ist aus, bis Sie sie verlangen).
+2. Tippen Sie in [Maßeinheiten](https://fdittgen-png.github.io/deskilo/#/settings/units) auf **Neue Einheit**.
+3. Füllen Sie **Einheitencode** (er lässt sich später nicht mehr ändern), **Ihre Bezeichnung der Einheit**, **Sie misst** und **Eine Einheit entspricht** in der Basiseinheit der Messgröße aus: 1000 für ein km in m, 0,001 für ein mm.
+4. Optional tragen Sie **UN/ECE-Code (für E-Rechnungen)** ein, den E-Rechnungen mitführen (KMT für ein km).
+5. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Eine Standardeinheit behält ihre Größe und ihren Faktor; Sie können ihr eine eigene Bezeichnung geben.
+- Eine Einheit in Verwendung (ein darin gezählter Artikel, eine Lagerbewegung, ein Angebot oder eine Rechnungszeile) behält Größe und Faktor für immer: Eine Korrektur ist eine neue Einheit. Eine Einheit, die niemand verwendet, lässt sich archivieren (**Archivieren**) und wieder anzeigen (**Wieder anzeigen**).
+- Eine Umrechnung ist exakt: 2,5 km sind 2500 m. Zwei Arten von Einheiten rechnen sich nie um, und ein Ergebnis, das sechs Nachkommastellen nicht fassen, wird abgelehnt, nie gerundet.
+- Nur Inhaber und Administratoren mit der Berechtigung, die Einstellungen des Workspace zu ändern, pflegen die Einheiten.
+
+**Siehe auch:** [Papier der Dokumente](#papier-der-dokumente)
 
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organisation
@@ -6884,7 +6944,7 @@ Das, was die tägliche Arbeit umgibt: die Testseite eines Space und die echte, A
 In diesem Kapitel:
 - [Ein Space hat zwei Seiten](#ein-space-hat-zwei-seiten) · [Eine Seite betreten](#die-echte-oder-die-testseite-betreten) · [Ein Testspace](#wofür-ein-testspace-da-ist) · [Wer ausrollen darf](#wer-ausrollen-und-in-die-produktion-darf) · [Zwischen den Seiten ausrollen](#zwischen-den-beiden-seiten-ausrollen) · [Status des Workspace und das Jahresarchiv](#status-des-workspace-und-das-jahresarchiv)
 - [Ihr eigener Server](#einen-eigenen-server-betreiben) · [Wenn eine Installation eine neuere App verlangt](#wenn-eine-installation-eine-neuere-app-verlangt) · [Eine neue Version veröffentlichen](#eine-neue-version-veröffentlichen-zuerst-der-server)
-- [Assistenten](#assistenten-was-sie-sind) · [Einen Assistenten verbinden](#einen-assistenten-verbinden) · [Freigaben](#freigaben-und-bestätigungen-für-assistenten) · [Was Assistenten dürfen](#was-assistenten-in-einem-workspace-dürfen)
+- [Assistenten](#assistenten-was-sie-sind) · [Einen Assistenten verbinden](#einen-assistenten-verbinden) · [Freigaben](#freigaben-und-bestätigungen-für-assistenten) · [Was Assistenten dürfen](#was-assistenten-in-einem-workspace-dürfen) · [Fehlerberichte](#fehlerberichte)
 - [Der Aufgabenrekorder](#der-aufgabenrekorder-und-geführte-touren) · [Eine Aufgabe aufzeichnen](#eine-aufgabe-aufzeichnen) · [Eine Aufzeichnung prüfen](#eine-aufzeichnung-prüfen-bearbeiten-und-exportieren) · [Eine Anleitung erstellen](#aus-einer-aufzeichnung-eine-anleitung-erstellen) · [Einer Anleitung folgen](#einer-anleitung-folgen) · [Das Kreismenü](#das-kreismenü) · [Eine Anleitung bearbeiten](#eine-anleitung-bearbeiten-oder-reparieren) · [Datenschutz der Aufzeichnungen](#was-eine-aufzeichnung-behält)
 - [Der Demo-Workspace](#der-demo-workspace) · [Aufnahmemodus](#aufnahmemodus)
 - [Plattformen](#deskilo-auf-ihren-geräten) · [Supportdetails](#supportdetails) · [Wenn etwas nicht funktioniert](#wenn-etwas-nicht-funktioniert)
@@ -7183,6 +7243,29 @@ Sie entscheiden, welche Dienste ein Workspace Assistenten anbietet.
 - Das ist für Personen mit der Integrations-Berechtigung; Inhaber haben sie immer.
 
 **Siehe auch:** [Ein Funktionsschalter](#ein-funktionsschalter)
+
+<!-- anchor: user.advanced.error-reports -->
+### Fehlerberichte
+
+**Zielgruppe:** Betreiber:in
+
+Sie betreiben die Installation und möchten sehen, was in den angemeldeten Apps schiefgegangen ist.
+
+<!-- image: user-advanced-error-reports -->
+
+**Schritte**
+
+1. Öffnen Sie [Installation: Assistenten](https://fdittgen-png.github.io/deskilo/#/installation/assistants).
+2. Tippen Sie auf **Fehlerberichte**. Die neuesten stehen oben.
+3. Tippen Sie auf einen Bericht, um seinen von der App geschwärzten Stack zu lesen. **Ältere Berichte** liest die nächsten.
+
+**Gut zu wissen**
+
+- Ein Bericht nennt die Stelle in der App und die Art des Fehlers, seinen Code, die App-Version, die Plattform und die Zeit. Er enthält nie, was eine Person eingegeben hat, eine E-Mail-Adresse, einen Namen oder einen Schlüssel.
+- Nur der Betreiber der Installation liest sie; die Unternehmen der Installation sehen sie nie.
+- In den Einstellungen legen **Fehlerberichte pro Person und Stunde**, **Größter Fehlerbericht** und **Fehlerberichte aufbewahren für** fest, wie viele ankommen, wie groß und wie lange. Jede Person kann Berichte auf ihrem Gerät ausschalten.
+
+**Siehe auch:** [Fehlerberichte senden](#fehlerberichte-senden)
 
 <!-- anchor: user.advanced.recorder -->
 ### Der Aufgabenrekorder und geführte Touren

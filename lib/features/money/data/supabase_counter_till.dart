@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/counter_receipt_document.dart';
 import '../domain/counter_till.dart';
@@ -8,6 +9,9 @@ import '../domain/counter_till.dart';
 /// #4366 -- `counter_readiness_v1`, `counter_receipt_draft_v1` and `counter_receipt_finalize_v1` behind the port; #4185 the
 /// card authorization asked of the terminal and its answer (`counter_tender_request_v1`, `counter_tender_resolve_v1`).
 /// A refusal is thrown as the server sent it (`knownRefusalText` reads its code); an answer of the wrong shape throws.
+/// The table of the counter's receipts, read by this file and by the counter's book.
+const String counterReceiptsTable = 'counter_receipts';
+
 class SupabaseCounterTill implements TillPort {
   SupabaseCounterTill(this._client);
 
@@ -31,11 +35,15 @@ class SupabaseCounterTill implements TillPort {
     if (readiness.operations.isEmpty) return readiness;
     final Map<String, String> evidence;
     try {
-      final rows = await _client
-          .from('counter_country_operations')
-          .select('operation, evidence')
-          .eq('country_code', readiness.country)
-          .eq('regime', readiness.fiscalObligation);
+      final rows = await fetchConfigurationList(
+        table: 'counter_country_operations',
+        build: () => _client
+            .from('counter_country_operations')
+            .select('operation, evidence')
+            .eq('country_code', readiness.country)
+            .eq('regime', readiness.fiscalObligation)
+            .order('operation', ascending: true),
+      );
       evidence = {for (final row in rows) '${row['operation']}': '${row['evidence'] ?? ''}'};
     } on Object catch (e, stack) {
       TraceLogger.instance.warn('money', 'the counter evidence was not read', error: e, stackTrace: stack);
@@ -54,7 +62,7 @@ class SupabaseCounterTill implements TillPort {
   @override
   Future<CounterReceiptDocument> receipt(String workspaceId, String receiptId) async {
     final row = await _client
-        .from('counter_receipts')
+        .from(counterReceiptsTable)
         .select('frozen')
         .eq('workspace_id', workspaceId)
         .eq('id', receiptId)

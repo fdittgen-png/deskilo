@@ -20,11 +20,17 @@
 // spec: docs.mollie.com "List settlements" / "Get settlement" — field names as
 // documented, not verified against a live account.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { CORS, preflight } from "../_shared/cors.ts";
 import { recorderOf, scanSettlements } from "../_shared/mollie_settlements.ts";
 import { mollieApi } from "../_shared/providers.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { describeError, logLine } from "../_shared/log.ts";
+import { ok, refuse } from "../_shared/respond.ts";
+import { guard } from "../_shared/serve.ts";
+
+const FN = "mollie-settlements";
 
 /** The most pages of settlements one request reads (50 a page). */
 export const MAX_PAGES = 10;
@@ -52,17 +58,15 @@ export type Deps = {
 
 const defaultDeps: Deps = {
   caller: (authorization) =>
-    createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, {
+    createClient(readEnv(KEYS.supabaseUrl)!, readEnv(KEYS.supabaseAnonKey)!, {
       global: { headers: { Authorization: authorization } },
     }) as unknown as Db,
   service: () =>
-    createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!) as unknown as Db,
-  env: (name) => Deno.env.get(name),
+    createClient(readEnv(KEYS.supabaseUrl)!, readEnv(KEYS.supabaseServiceRoleKey)!) as unknown as Db,
+  env: readEnv,
   fetch: (input, init) => fetch(input, init),
 };
 
-const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), { status, headers: { ...CORS, "Content-Type": "application/json" } });
 
 type Row = Record<string, unknown>;
 
@@ -70,35 +74,35 @@ export { settlementOf } from "../_shared/mollie_settlements.ts";
 
 export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Response> {
   if (req.method === "OPTIONS") return preflight();
-  if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+  if (req.method !== "POST") return refuse("method_not_allowed", 405);
   const delegated = refuseDelegated(req, CORS);
   if (delegated) return delegated;
   const authorization = req.headers.get("Authorization") ?? "";
-  if (!authorization) return json({ error: "not signed in" }, 401);
+  if (!authorization) return refuse("not signed in", 401);
   let body: Row;
   try {
     body = await req.json();
   } catch {
-    return json({ error: "invalid body" }, 400);
+    return refuse("invalid body", 400);
   }
   const workspaceId = typeof body.workspace_id === "string" ? body.workspace_id : "";
-  if (!UUID.test(workspaceId)) return json({ error: "workspace_id required" }, 400);
+  if (!UUID.test(workspaceId)) return refuse("workspace_id required", 400);
 
   const caller = deps.caller(authorization);
   const may = await caller.rpc("has_permission", { ws: workspaceId, perm: "manageBilling" });
-  if (may.error || may.data !== true) return json({ error: "not allowed" }, 403);
+  if (may.error || may.data !== true) return refuse("not allowed", 403);
   const on = await caller.rpc("feature_effective", { p_workspace_id: workspaceId, p_key: "onlinePayments" });
-  if (on.error || on.data !== true) return json({ error: "online_payments_off" }, 409);
+  if (on.error || on.data !== true) return refuse("online_payments_off", 409);
 
   const service = deps.service();
   // A failed credential read is not an absent key: it answers 5xx, never the
   // installation's key for a workspace that has its own (#2014).
   const cred = await service.from("payment_credentials").select("config")
     .eq("workspace_id", workspaceId).eq("provider", "mollie").maybeSingle();
-  if (cred.error) return json({ error: "credential_lookup_failed" }, 500);
+  if (cred.error) return refuse("credential_lookup_failed", 500);
   const stored = (cred.data?.config ?? {}) as Record<string, string>;
   const key = stored.api_key || "";
-  if (!key) return json({ error: "mollie_not_configured" }, 409);
+  if (!key) return refuse("mollie_not_configured", 409);
 
   // #3510: counted from what the recorder decided, not from the calls made;
   // the read is the schedule's (_shared/mollie_settlements.ts), from the
@@ -116,11 +120,11 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
   const imported = read.new;
   switch (read.failure?.kind) {
     case "refused":
-      return json({ error: "mollie_refused", status: read.failure.status, imported }, 422);
+      return refuse("mollie_refused", 422, undefined, { status: read.failure.status, imported });
     case "unreachable":
-      return json({ error: "mollie_unreachable", status: read.failure.status, imported }, 502);
+      return refuse("mollie_unreachable", 502, undefined, { status: read.failure.status, imported });
     case "record_failed":
-      return json({ error: "settlement_record_failed", settlement: read.failure.settlement, imported }, 500);
+      return refuse("settlement_record_failed", 500, undefined, { settlement: read.failure.settlement, imported });
   }
   // Every report of this workspace's Mollie settlements that still waits for
   // a person (not handled, #3510): this run's refusals and the earlier ones. A failed read is said
@@ -131,8 +135,8 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     .is("handled_at", null)
     .order("last_reported_at", { ascending: false })
     .limit(REVIEWS_SHOWN);
-  if (waiting.error) console.error("mollie settlement reviews read failed", String(waiting.error));
-  return json({
+  if (waiting.error) logLine("error", FN, "reviews_read_failed", { error: describeError(waiting.error) });
+  return ok({
     imported,
     unchanged: read.unchanged,
     skipped: read.pending + read.rejected,
@@ -142,4 +146,7 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
   });
 }
 
-if (import.meta.main) Deno.serve((req) => handle(req));
+/** The function as it is served: whatever [handle] throws is the envelope (#4412). */
+export const serve = (deps: Deps = defaultDeps) => guard(FN, (req) => handle(req, deps));
+
+if (import.meta.main) Deno.serve(serve());

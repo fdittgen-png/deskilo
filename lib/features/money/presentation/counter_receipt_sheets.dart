@@ -12,6 +12,7 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/form_choice_controls.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/counter_book.dart';
@@ -35,6 +36,10 @@ Future<String?> _run(AppLocalizations l10n, String what, Future<void> Function()
     return tillProblemText(l10n, e);
   }
 }
+
+const _reasonField = 'reason';
+const _amountField = 'amount';
+const _refField = 'ref';
 
 final _quantityChars = [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))];
 
@@ -60,7 +65,7 @@ Future<String?> showCounterCorrectSheet(
 }) async {
   final l10n = context.l10n;
   final open = [for (final l in sale.lines) if (counterQuantityUnits(book.leftOf(l)) > 0) l];
-  final fields = FormControllers({for (final l in open) l.id: '', 'reason': ''});
+  final fields = FormControllers({for (final l in open) l.id: '', _reasonField: ''});
   final ids = _RequestIds();
   String? number;
   final done = await showAppFormSheet(
@@ -77,7 +82,7 @@ Future<String?> showCounterCorrectSheet(
       onSubmit: () async {
         final lines = _typed(fields, open);
         if (lines.isEmpty) return l10n.counterSaleCorrectNothing;
-        final reason = fields['reason'].text.trim();
+        final reason = fields[_reasonField].text.trim();
         final content = '${[for (final l in lines) '${l.lineId}:${l.quantity}'].join(',')}|$reason';
         return _run(l10n, 'correction', () async => number = await correct(ids.of(content), lines, reason));
       },
@@ -95,7 +100,7 @@ Future<String?> showCounterCorrectSheet(
           ),
           const FormGap(),
         ],
-        AppTextField(key: const ValueKey('counter-correct-reason'), controller: fields['reason'], label: l10n.counterSaleCorrectReason, maxLength: counterReasonMaxLength),
+        AppTextField(key: const ValueKey('counter-correct-reason'), controller: fields[_reasonField], label: l10n.counterSaleCorrectReason, maxLength: counterReasonMaxLength),
       ],
     ),
   );
@@ -113,7 +118,7 @@ Future<bool> showCounterRefundSheet(
   final format = appFormatOf(context);
   final money = format.moneyIn(correction.currency);
   final left = correction.refundLeftMinor;
-  final fields = FormControllers({'amount': ''});
+  final fields = FormControllers({_amountField: ''});
   final ids = _RequestIds();
   var kind = 'cash';
   return showAppFormSheet(
@@ -123,37 +128,38 @@ Future<bool> showCounterRefundSheet(
       submitLabel: l10n.counterSaleRefundSubmit,
       submitKey: const ValueKey('counter-refund-submit'),
       onDispose: fields.dispose,
-      validate: () => switch (counterRefundCheck(format.parseMinor(fields['amount'].text), left)) {
-        CounterRefundCheck.invalid => {'amount': l10n.counterSaleRefundInvalid},
-        CounterRefundCheck.beyond => {'amount': l10n.counterSaleAtMost(money.formatMinor(left))},
+      validate: () => switch (counterRefundCheck(format.parseMinor(fields[_amountField].text), left)) {
+        CounterRefundCheck.invalid => {_amountField: l10n.counterSaleRefundInvalid},
+        CounterRefundCheck.beyond => {_amountField: l10n.counterSaleAtMost(money.formatMinor(left))},
         CounterRefundCheck.ok => const {},
       },
       onSubmit: () {
-        final part = CounterRefundPart(kind: kind, amountMinor: format.parseMinor(fields['amount'].text)!, tillId: kind == 'cash' ? tillId : null);
+        final part = CounterRefundPart(kind: kind, amountMinor: format.parseMinor(fields[_amountField].text)!, tillId: kind == TenderKind.cash.wire ? tillId : null);
         return _run(l10n, 'refund', () => refund(ids.of('${part.kind}:${part.amountMinor}'), part));
       },
       builder: (context, refresh) => [
         Text(l10n.counterSaleRefunded(money.formatMinor(correction.refundedMinor), money.formatMinor(correction.totalMinor))),
         const FormGap(),
-        SegmentedButton<String>(
+        AppChoiceChips<String>(
           key: const ValueKey('counter-refund-kind'),
-          segments: [
-            ButtonSegment(value: 'cash', label: Text(l10n.counterSaleTenderCash)),
-            ButtonSegment(value: 'other', label: Text(l10n.counterSaleTenderOther)),
+          choices: [
+            AppChoice(value: 'cash', label: l10n.counterSaleTenderCash, key: const ValueKey('counter-refund-kind-cash')),
+            AppChoice(value: 'other', label: l10n.counterSaleTenderOther, key: const ValueKey('counter-refund-kind-other')),
           ],
-          selected: {kind},
-          onSelectionChanged: (s) {
-            kind = s.first;
+          selected: kind,
+          onSelected: (v) {
+            kind = v;
             refresh();
           },
         ),
         const FormGap(),
         AppTextField(
           key: const ValueKey('counter-refund-amount'),
-          controller: fields['amount'],
-          fieldKey: 'amount',
+          controller: fields[_amountField],
+          fieldKey: _amountField,
           label: l10n.counterSaleRefundAmount(money.formatMinor(left)),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          inputFormatters: _quantityChars,
         ),
       ],
     ),
@@ -213,7 +219,7 @@ Future<bool> showCounterTenderAnswerSheet(
 }) {
   final l10n = context.l10n;
   final money = appFormatOf(context).moneyIn(currency);
-  final fields = FormControllers({'ref': ''});
+  final fields = FormControllers({_refField: ''});
   final ids = _RequestIds();
   var outcome = 'accepted';
   return showAppFormSheet(
@@ -224,30 +230,30 @@ Future<bool> showCounterTenderAnswerSheet(
       submitKey: const ValueKey('counter-answer-submit'),
       onDispose: fields.dispose,
       onSubmit: () {
-        final ref = fields['ref'].text.trim();
+        final ref = fields[_refField].text.trim();
         return _run(l10n, 'tender answer', () => resolve(ids.of('$outcome|$ref'), outcome, ref));
       },
       builder: (context, refresh) => [
         Text(l10n.counterSaleCardAskedTitle(money.formatMinor(tender.amountMinor))),
         Text(l10n.counterSaleReference(tender.providerKey)),
         const FormGap(),
-        SegmentedButton<String>(
+        AppChoiceChips<String>(
           key: const ValueKey('counter-answer-outcome'),
-          segments: [
-            ButtonSegment(value: 'accepted', label: Text(l10n.counterSaleCardAccepted)),
-            ButtonSegment(value: 'refused', label: Text(l10n.counterSaleCardRefused)),
-            if (tender.state == 'requested') ButtonSegment(value: 'unknown', label: Text(l10n.counterSaleCardNoAnswer)),
+          choices: [
+            AppChoice(value: 'accepted', label: l10n.counterSaleCardAccepted, key: const ValueKey('counter-answer-accepted')),
+            AppChoice(value: 'refused', label: l10n.counterSaleCardRefused, key: const ValueKey('counter-answer-refused')),
+            if (tender.tenderState == TenderState.requested) AppChoice(value: TenderState.unknown.wire, label: l10n.counterSaleCardNoAnswer, key: const ValueKey('counter-answer-unknown')),
           ],
-          selected: {outcome},
-          onSelectionChanged: (s) {
-            outcome = s.first;
+          selected: outcome,
+          onSelected: (v) {
+            outcome = v;
             refresh();
           },
         ),
         const FormGap(),
         AppTextField(
           key: const ValueKey('counter-answer-ref'),
-          controller: fields['ref'],
+          controller: fields[_refField],
           label: l10n.counterSaleAnswerRefLabel,
           helper: l10n.counterSaleAnswerRefHint,
           maxLength: counterReasonMaxLength,

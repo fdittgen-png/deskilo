@@ -740,6 +740,12 @@
  "fedFactBatchHint": "Die höchste Zahl an Mitgliedschaftsfakten, die ein Arbeitsbereichs-Server in einer Minute an sein persönliches Zuhause sendet. Ein Server erneuert jede lebende Beziehung einmal je Aktualisierung des Identitätsstatus; er schafft höchstens diese Zahl mal die Aktualisierungssekunden geteilt durch 60 Beziehungen (500 und 300 Sekunden: 2.500). Erhöhen Sie sie, wenn der Instanz-Doktor einen Sendestau meldet. Einstellbar in den Einstellungen der App.",
  "appSupportWindow": "Unterstützungsfrist für ältere Apps",
  "appSupportWindowHint": "Wie viele Tage eine ältere App angenommen bleibt, nachdem eine neuere auf dem langsamsten Vertriebskanal verfügbar ist. Die älteste App, die die Installation annimmt, wird erst nach dieser Frist angehoben, damit jedes Mitglied Zeit zum Aktualisieren hat. Einstellbar in den Einstellungen der App.",
+ "traceReportsPerHour": "Fehlerberichte pro Person und Stunde",
+ "traceReportsPerHourHint": "Wie viele Fehlerberichte eine angemeldete Person in einer Stunde an diese Installation senden darf, über alle ihre Geräte zusammen. Weitere Berichte in dieser Stunde werden verworfen. Keine schaltet Fehlerberichte ab. Einstellbar in den Einstellungen der App.",
+ "traceReportMaxBytes": "Größter Fehlerbericht",
+ "traceReportMaxBytesHint": "Der größte Fehlerbericht, den diese Installation annimmt; die App kürzt den Stack eines Berichts, bis er passt. Einstellbar in den Einstellungen der App.",
+ "traceReportRetention": "Fehlerberichte aufbewahren für",
+ "traceReportRetentionHint": "Wie lange diese Installation einen Fehlerbericht aufbewahrt, bevor sie ihn löscht. Einstellbar in den Einstellungen der App.",
  "supLookupWait": "Wartezeit der Lieferantensuche",
  "supLookupWaitHint": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, wenn jemand die USt-IdNr. eines Lieferanten sucht, bevor er meldet, dass das Register nicht geantwortet hat. Wird in den Einstellungen der App festgelegt.",
  "supLookupRate": "Lieferantensuchen pro Minute",
@@ -882,5 +888,10 @@
  "counterPaidOutLimitHint": "Eine Entnahme darüber braucht jemanden, der ausgehende Zahlungen erfassen darf. Einzustellen in den Einstellungen der App.",
  "counterCashReasons": "Gründe für Bargeld ein und aus",
  "counterCashReasonsHint": "Durch Kommas getrennt, zum Beispiel Wechselgeld, Ausgabe, sonstiges. Einzustellen in den Einstellungen der App.",
- "optNoLimit": "Keine Grenze"
+ "optNoLimit": "Keine Grenze",
+ "optPerHour": "{n} pro Stunde",
+ "optPerHourDefault": "{n} pro Stunde (Standard)",
+ "optKilobytes": "{n} KB",
+ "optKilobytesDefault": "{n} KB (Standard)",
+ "optReportsOff": "Keine (Fehlerberichte aus)"
 }

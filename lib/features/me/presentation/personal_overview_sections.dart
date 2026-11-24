@@ -14,6 +14,7 @@ import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/i18n/time_zones.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
@@ -125,6 +126,7 @@ class NextCommitmentSection extends ConsumerWidget {
       children: [
         if (value != null)
           _NextBody(window: value)
+        // #4414 kept: the overview names the source that failed, Try again
         else if (window.hasError)
           SourceUnavailable(
             key: const ValueKey('me-overview-next-unavailable'),
@@ -154,6 +156,7 @@ class _NextBody extends ConsumerWidget {
     final composed = ref.watch(myReservationsComposerProvider(query));
     final composition = composed.value;
     if (composition == null) {
+      // #4414 kept: the overview names the source that failed, Try again
       return composed.hasError
           ? SourceUnavailable(
               key: const ValueKey('me-overview-next-unavailable'),
@@ -345,7 +348,7 @@ class _NothingBooked extends StatelessWidget {
           style: FilledButton.styleFrom(
             minimumSize: const Size(0, PersonalShellMetrics.minTarget),
           ),
-          onPressed: () => context.go('/me/spaces'),
+          onPressed: () => context.go(Routes.meSpaces),
           child: Text(l10n.meNextBook),
         ),
       ],

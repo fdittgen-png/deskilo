@@ -267,7 +267,7 @@ List<Widget> accountSettingsTiles(
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
-        onTap: () => context.push('/settings/personal-info'),
+        onTap: () => context.push(Routes.settingsPersonalInfo),
       )
     else if (account)
       // Postal address (0060): printed on the member's invoices.
@@ -314,7 +314,7 @@ List<Widget> accountSettingsTiles(
       leading: const Icon(Icons.link),
       title: Text(l10n.linkedAccountsTitle),
       trailing: const Icon(Icons.chevron_right),
-      onTap: () => context.push('/linked-accounts'),
+      onTap: () => context.push(Routes.linkedAccounts),
     ),
     if (installations) const McpSettingsTiles(),
     // #1829 — who answers for this installation, for everyone.

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../l10n/app_localizations.dart';
+import '../data/external_hosts.dart';
 
 /// #751 — the consent the app asks for before anything else, and shows
 /// again on demand (Settings → Privacy & data, the in-app help, the
@@ -9,12 +10,12 @@ const kPrivacyPolicyVersion = '2026-10-10';
 
 /// #4205 — the published policy page (the store listings, the README and the
 /// help point at it); the assistant screens link it.
-const kPrivacyPolicyPageUrl = 'https://fdittgen-png.github.io/deskilo/privacy.html';
+const kPrivacyPolicyPageUrl = '${ExternalHosts.projectSite}privacy.html';
 
 /// Where the same text lives outside the app: its section of the published
 /// user guide (the guide site's element id is the section's anchor).
 const kPrivacyGuideUrl =
-    'https://fdittgen-png.github.io/deskilo/guide/en.html#user.privacy.consent';
+    '${ExternalHosts.projectSite}guide/en.html#user.privacy.consent';
 
 /// One section of the consent text: a heading and its paragraph, and, when
 /// the text runs on, a second paragraph of its own (#3767: two messages shown

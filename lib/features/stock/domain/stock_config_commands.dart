@@ -4,6 +4,7 @@
 // and the two guarded, idempotent saves. A save that changes nothing throws a
 // [StockConfigFailure]; it never reports success.
 import 'stock_config.dart';
+import 'stock_drafts.dart';
 import 'stock_variants.dart';
 
 abstract interface class StockConfigCommands {
@@ -21,11 +22,19 @@ abstract interface class StockConfigCommands {
     String requestId,
   );
 
+  /// #4402 -- makes a NEW item in one command: its service, its stock settings and its home place, all or none.
+  /// [requestId] makes a retry answer the item it first made. The answer names the item and its stock revision.
+  Future<StockSaved> createItem(
+    String workspaceId,
+    NewStockItemDraft item,
+    String requestId,
+  );
+
   /// Creates a place ([placeId] and [expectedRevision] null) or saves one
   /// read at [expectedRevision].
   Future<StockSaved> savePlace(
     String workspaceId, {
-    required Map<String, Object?> place,
+    required StockPlaceDraft place,
     required String requestId,
     String? placeId,
     int? expectedRevision,
@@ -47,7 +56,7 @@ abstract interface class StockConfigCommands {
   /// read at [expectedRevision].
   Future<StockSaved> saveDimension(
     String workspaceId, {
-    required Map<String, Object?> dimension,
+    required StockDimension dimension,
     required String requestId,
     String? dimensionId,
     int? expectedRevision,
@@ -66,7 +75,7 @@ abstract interface class StockConfigCommands {
   /// Maps a supplier's article to an item, by an explicit save.
   Future<StockSaved> saveMapping(
     String workspaceId, {
-    required Map<String, Object?> mapping,
+    required SupplierMappingDraft mapping,
     required String requestId,
     String? mappingId,
     int? expectedRevision,

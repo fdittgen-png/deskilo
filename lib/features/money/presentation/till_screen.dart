@@ -14,6 +14,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/scan/scan_scope.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/time/clock.dart';
@@ -69,7 +70,7 @@ class TillScreen extends ConsumerWidget {
             key: const ValueKey('till-receipts'),
             tooltip: context.l10n.counterSaleOpenReceipts,
             icon: const Icon(Icons.receipt_long_outlined),
-            onPressed: () => context.push('/till/receipts'),
+            onPressed: () => context.push(Routes.tillReceipts),
           ),
           if (workspaceId != null)
             IconButton(

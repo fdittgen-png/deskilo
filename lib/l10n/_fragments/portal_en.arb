@@ -35,10 +35,6 @@
   "@portalSendCode": {
     "description": "Shown as the text in connection dialog (directory)."
   },
-  "portalSourceUnavailable": "A server is unavailable. This overview is incomplete. Tap to retry.",
-  "@portalSourceUnavailable": {
-    "description": "Shown as the text in account messenger sections (directory), and 5 other places."
-  },
   "portalDiscover": "Find a place",
   "@portalDiscover": {
     "description": "Shown as the label in auth form sections (auth), and 2 other places."

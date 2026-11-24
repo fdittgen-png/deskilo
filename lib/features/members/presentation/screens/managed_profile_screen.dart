@@ -9,11 +9,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/privacy/recording_banner.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -79,7 +81,7 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
     );
     if (createdId != null) {
       // Straight to the member page: the next step is the handover.
-      context.pushReplacement('/member/$createdId');
+      context.pushReplacement(Routes.member(createdId!));
     } else if (context.canPop()) {
       context.pop();
     }
@@ -122,13 +124,11 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
     if (read == null) {
       slot = _form(l10n, PersonalInfo.empty, workspaceCountry);
     } else if (read.hasError && !read.isLoading) {
-      slot = InlineBanner(
-        icon: Icons.cloud_off_outlined,
-        // A known refusal says so; anything else is a fault worth retrying.
-        text: knownRefusalText(l10n, read.error!) ??
-            l10n.managedProfileIdentityUnavailable,
-        actionLabel: l10n.commonRetry,
-        onAction: () => ref.invalidate(managedIdentityProvider(editing!)),
+      // A known refusal says so; anything else is a fault worth retrying.
+      slot = ReadFailureBanner(
+        error: read.error!,
+        refusal: knownRefusalText(l10n, read.error!),
+        onRetry: () => ref.invalidate(managedIdentityProvider(editing!)),
       );
     } else if (value == null) {
       slot = const SizedBox(height: 160, child: LoadingView());

@@ -21,6 +21,7 @@ import {
 } from "./accounting_delivery.ts";
 import { type Posting, type PostingParty, postingSha256, taxBreakdownOf } from "./accounting_postings.ts";
 import { CUSTOM_NUMBERS_OFF, MINOR_VERSION, quickbooksOnline, setAssignmentStepsForTest } from "./accounting_quickbooks.ts";
+import { asFetch } from "./testing/as_fetch.ts";
 
 /** The rules of `record_accounting_delivery` the kit relies on. */
 class Log implements DeliveryStore {
@@ -110,7 +111,7 @@ function realm(opts: {
   const urls: string[] = [];
   const st = { posts: 0, loseNextAnswer: false };
   let next = 100;
-  const fetcher = (async (input: string | URL | Request, init?: RequestInit) => {
+  const fetcher = asFetch((input: string | URL | Request, init?: RequestInit) => {
     const url = new URL(String(input));
     urls.push(url.toString());
     const path = url.pathname.replace(/^\/v3\/company\/[^/]+\//, "");
@@ -175,7 +176,7 @@ function realm(opts: {
       return Response.json({ [entity]: row });
     }
     return new Response("{}", { status: 404 });
-  }) as typeof fetch;
+  });
   return { held, urls, st, fetcher };
 }
 

@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/labeled_rows.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -40,7 +40,7 @@ class NewMemberDefaultsTiles extends StatelessWidget {
     required this.enabled,
     required this.onSubscriptionChanged,
     required this.onOveragePolicyChanged,
-    this.failed = false,
+    this.failure,
     this.onRetry,
   });
 
@@ -50,8 +50,8 @@ class NewMemberDefaultsTiles extends StatelessWidget {
   /// value arrives must not save the fallback over what is configured.
   final NewMemberDefaults? defaults;
 
-  /// The read answered with a failure rather than not having answered.
-  final bool failed;
+  /// What the read failed with, rather than not having answered (null).
+  final Object? failure;
   final VoidCallback? onRetry;
   final bool enabled;
   final ValueChanged<int> onSubscriptionChanged;
@@ -75,14 +75,8 @@ class NewMemberDefaultsTiles extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _heading(theme, l10n),
-          if (failed)
-            InlineBanner(
-              icon: Icons.cloud_off_outlined,
-              text: l10n.newMemberDefaultsUnavailable,
-              actionLabel:
-                  onRetry == null ? null : (l10n.commonRetry),
-              onAction: onRetry,
-            )
+          if (failure case final error?)
+            ReadFailureBanner(error: error, onRetry: onRetry ?? () {})
           else
             const SizedBox(height: 80, child: LoadingView()),
         ],

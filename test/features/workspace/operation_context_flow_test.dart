@@ -116,6 +116,8 @@ class _Host {
           },
         });
       case '/rest/v1/closure_days':
+        // a list read pages until an empty page (#4446): the closure is the first page
+        if ((int.tryParse(request.url.queryParameters['offset'] ?? '') ?? 0) > 0) return _json(request, <Object>[]);
         return _json(request, [
           {
             'id': 'closure-$installationId',

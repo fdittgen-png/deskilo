@@ -12,6 +12,7 @@ import 'dart:typed_data';
 
 import 'package:meta/meta.dart';
 
+import '../../../core/failure/app_failure.dart';
 import '../../../core/share/file_sharer.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/invoice_commands.dart';
@@ -292,23 +293,22 @@ Future<ReminderHandled> shareQueuedReminder({
     return outcome;
   }
 
-  try {
-    final outcome = await sendReminder(
-      repository: repository,
-      share: tracked,
-      invoiceId: line.invoiceId,
-      level: line.level,
-      bytes: letter.bytes,
-      fileName: letter.fileName,
-      message: letter.message,
-    );
-    return outcome is ReminderNotSent
-        ? ReminderHandled.notRecorded
-        : ReminderHandled.shared;
-  } on Object catch (e, st) {
-    TraceLogger.instance.log(TraceLevel.debug, 'money', 'reminder_queue: Object handled', error: e, stackTrace: st);
-    return left ? ReminderHandled.sharedNotRecorded : ReminderHandled.failed;
-  }
+  final outcome = await sendReminder(
+    repository: repository,
+    share: tracked,
+    invoiceId: line.invoiceId,
+    level: line.level,
+    bytes: letter.bytes,
+    fileName: letter.fileName,
+    message: letter.message,
+  );
+  if (isReminderNotSent(outcome)) return ReminderHandled.notRecorded;
+  return outcome is CommandDone<int>
+      ? ReminderHandled.shared
+      // The share or the record failed: what left the device stays known.
+      : left
+      ? ReminderHandled.sharedNotRecorded
+      : ReminderHandled.failed;
 }
 
 /// Records the level of a reminder that already left ([line] is

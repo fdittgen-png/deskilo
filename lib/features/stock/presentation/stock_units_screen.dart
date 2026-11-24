@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -16,15 +16,15 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/dropdown_field.dart';
-import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../domain/handling_units.dart';
 import '../domain/stock_config.dart';
 import '../providers/stock_providers.dart';
 import 'handling_unit_sheets.dart';
 import 'stock_config_text.dart';
+import 'stock_page_shell.dart';
+import 'stock_sheet_opener.dart';
 
 class StockUnitsScreen extends ConsumerStatefulWidget {
   const StockUnitsScreen({super.key});
@@ -43,20 +43,26 @@ class _StockUnitsState extends ConsumerState<StockUnitsScreen> {
     if (unitId != null) ref.invalidate(handlingUnitProvider((workspaceId: workspaceId, unitId: unitId)));
   }
 
-  Future<void> _make(String workspaceId) async {
+  /// The sheet reads the units again itself when one is made ([_read]).
+  Future<void> _make(String workspaceId) {
     final l10n = context.l10n;
-    final places = _real(await ref.read(stockPlaceConfigsProvider(workspaceId).future));
-    final items = await ref.read(stockItemsProvider(workspaceId).future);
-    if (!mounted) return;
-    await showMakeUnitSheet(
+    return StockSheetOpener(ref).open(
       context,
-      ref.read(stockHandlingUnitsProvider),
-      workspaceId: workspaceId,
-      places: places,
-      items: items,
-      onDone: (made) async {
-        _read(workspaceId);
-        if (mounted) _told(l10n.stockUnitMade(made.code));
+      workspaceId,
+      what: 'make unit',
+      sheet: (choices) async {
+        await showMakeUnitSheet(
+          context,
+          ref.read(stockHandlingUnitsProvider),
+          workspaceId: workspaceId,
+          places: _real(choices.places),
+          items: choices.items,
+          onDone: (made) async {
+            _read(workspaceId);
+            if (mounted) _told(l10n.stockUnitMade(made.code));
+          },
+        );
+        return false;
       },
     );
   }
@@ -66,32 +72,25 @@ class _StockUnitsState extends ConsumerState<StockUnitsScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.stockUnitsTitle),
-        actions: [HelpDot(l10n.stockUnitsTitle, anchor: HelpAnchor.moneyStockUnits)],
+    return StockPageShell(
+      title: l10n.stockUnitsTitle,
+      anchor: HelpAnchor.moneyStockUnits,
+      floatingActionButton: (ref, workspaceId) => FloatingActionButton.extended(
+        key: const ValueKey('stock-units-make'),
+        onPressed: () => _make(workspaceId),
+        icon: const Icon(Icons.add),
+        label: Text(l10n.stockUnitMake),
       ),
-      floatingActionButton: workspaceId == null
-          ? null
-          : FloatingActionButton.extended(
-              key: const ValueKey('stock-units-make'),
-              onPressed: () => _make(workspaceId),
-              icon: const Icon(Icons.add),
-              label: Text(l10n.stockUnitMake),
-            ),
-      body: workspaceId == null
-          ? const LoadingView()
-          : ListView(
-              padding: const EdgeInsets.all(AppSpacing.md).add(const EdgeInsets.only(bottom: kFabSafeBottom)),
-              children: [
-                Text(l10n.stockUnitsIntro),
-                const SizedBox(height: AppSpacing.md),
-                _PlaceFilter(key: const ValueKey('stock-units-place-filter'), workspaceId: workspaceId, place: _place, onChanged: (v) => setState(() => _place = v)),
-                const SizedBox(height: AppSpacing.md),
-                _Units(workspaceId: workspaceId, place: _place, onOpen: (u) => _open(workspaceId, u)),
-              ],
-            ),
+      body: (context, ref, workspaceId) => ListView(
+        padding: const EdgeInsets.all(AppSpacing.md).add(const EdgeInsets.only(bottom: kFabSafeBottom)),
+        children: [
+          Text(l10n.stockUnitsIntro),
+          const SizedBox(height: AppSpacing.md),
+          _PlaceFilter(key: const ValueKey('stock-units-place-filter'), workspaceId: workspaceId, place: _place, onChanged: (v) => setState(() => _place = v)),
+          const SizedBox(height: AppSpacing.md),
+          _Units(workspaceId: workspaceId, place: _place, onOpen: (u) => _open(workspaceId, u)),
+        ],
+      ),
     );
   }
 
@@ -141,29 +140,25 @@ class _Units extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final key = (workspaceId: workspaceId, locationId: place);
-    return ref.watch(handlingUnitListProvider(key)).when(
-      loading: () => const LoadingView(),
-      error: (e, _) => Column(
+    return StockRead(
+      keyName: 'stock-units',
+      value: ref.watch(handlingUnitListProvider(key)),
+      onRetry: () => ref.invalidate(handlingUnitListProvider(key)),
+      isEmpty: (page) => page.rows.isEmpty,
+      empty: l10n.stockUnitsEmpty,
+      data: (page) => Column(
         children: [
-          Text(l10n.stockUnitsReadFailed),
-          TextButton(key: const ValueKey('stock-units-retry'), onPressed: () => ref.invalidate(handlingUnitListProvider(key)), child: Text(l10n.identityConnectRetry)),
+          for (final u in page.rows)
+            ListTile(
+              key: ValueKey('stock-unit-${u.code}'),
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.inventory_2_outlined),
+              title: Text(u.code),
+              subtitle: Text([unitKindText(l10n, u.kind), u.locationCode, if (u.labelCode != null) u.labelCode!].join(' · ')),
+              onTap: () => onOpen(u),
+            ),
         ],
       ),
-      data: (page) => page.rows.isEmpty
-          ? Text(l10n.stockUnitsEmpty, key: const ValueKey('stock-units-empty'))
-          : Column(
-              children: [
-                for (final u in page.rows)
-                  ListTile(
-                    key: ValueKey('stock-unit-${u.code}'),
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.inventory_2_outlined),
-                    title: Text(u.code),
-                    subtitle: Text([unitKindText(l10n, u.kind), u.locationCode, if (u.labelCode != null) u.labelCode!].join(' · ')),
-                    onTap: () => onOpen(u),
-                  ),
-              ],
-            ),
     );
   }
 }
@@ -229,7 +224,7 @@ class _UnitContent extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             title: Text(l.itemName),
             subtitle: Text([if (l.lotCode.isNotEmpty) l.lotCode, for (final p in l.pieces) if (p.tag.isNotEmpty) p.tag].join(' · ')),
-            trailing: Text('${l.quantity.text} ${l.unit}'),
+            trailing: Text('${appFormatOf(context).quantity(l.quantity)} ${l.unit}'),
           ),
         for (final c in d.children) ListTile(contentPadding: EdgeInsets.zero, title: Text(c.code), subtitle: Text(l10n.stockUnitNestedIn(d.unit.code))),
       ],
@@ -312,7 +307,7 @@ class _UnitActions extends ConsumerWidget {
       return null;
     } on StockConfigFailure catch (e, st) {
       TraceLogger.instance.error('stock', 'a unit could not be unpacked', error: e.runtimeType, stackTrace: st);
-      return stockSaveProblem(l10n, e);
+      return stockProblemText(l10n, e);
     }
   }
 }

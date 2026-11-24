@@ -1600,7 +1600,7 @@ In questo capitolo:
 - Il suo account: [foto](help:user.profile.settings.photo), [dati personali](help:user.profile.settings.personal-info), [indirizzo](help:user.profile.settings.address), [partita IVA](help:user.profile.settings.vat-id), [condizioni di pagamento](help:user.profile.settings.payment-terms), [WhatsApp](help:user.profile.settings.whatsapp), [stato](help:user.profile.settings.status), [periodo di prenotazione predefinito](help:user.profile.settings.default-period)
 - Il suo badge: [il badge](help:user.profile.settings.badge) e [il suo PIN](help:user.profile.settings.badge-pin)
 - Aspetto e lettura dell'app: [lingua](help:user.profile.settings.language), [tema](help:user.profile.settings.theme), [navigazione](help:user.profile.settings.navigation), [numeri e date](help:user.profile.settings.regional-formats), [orologio](help:user.profile.settings.clock), [fuso orario](help:user.profile.settings.device-zone), [suggerimenti](help:user.profile.settings.restore-hints), [fotocamera frontale](help:user.profile.settings.front-camera), [account collegati](help:user.profile.settings.linked-accounts)
-- Privacy e dati personali: [chi può vedere i miei dati](help:user.privacy.visibility), [chi mi vede](help:user.privacy.audiences), [profilo pubblico](help:user.privacy.public-profile), [esportazione](help:user.privacy.export), [cancellazione](help:user.privacy.erase), [richieste sui diritti](help:user.privacy.requests), [notifiche push](help:user.privacy.push), [i suoi diritti](help:user.privacy.consent)
+- Privacy e dati personali: [chi può vedere i miei dati](help:user.privacy.visibility), [chi mi vede](help:user.privacy.audiences), [profilo pubblico](help:user.privacy.public-profile), [esportazione](help:user.privacy.export), [cancellazione](help:user.privacy.erase), [richieste sui diritti](help:user.privacy.requests), [notifiche push](help:user.privacy.push), [segnalazioni di errore](help:user.privacy.error-reports), [i suoi diritti](help:user.privacy.consent)
 - [Il suo server](help:user.backend.server)
 
 ### Come sono organizzate le Impostazioni
@@ -2217,6 +2217,28 @@ Vuole che non vengano più inviate notifiche a questo dispositivo, oppure riatti
 
 - Disattivate, l'app continua a funzionare e nulla viene inviato a questo dispositivo.
 - Attivate, l'indirizzo di questo dispositivo e ogni notifica vanno al servizio push.
+
+**Vedi anche:** [I suoi dati, i suoi diritti](help:user.privacy.consent)
+
+### Inviare le segnalazioni di errore
+
+**Destinatari:** Tutti
+
+Vuole sapere che cosa invia l'app quando qualcosa va storto, oppure impedirlo.
+
+<!-- image: user-privacy-error-reports -->
+
+**Passaggi**
+
+1. Apra [Privacy e dati](app:/privacy).
+2. Disattivi o attivi **Inviare le segnalazioni di errore**. Resta attivo finché non lo disattiva, e la scelta è conservata su questo dispositivo.
+
+**Da sapere**
+
+- Una segnalazione va solo all'installazione a cui ha effettuato l'accesso, mai a un'altra società. Il suo operatore la legge; le aziende di cui è membro non la vedono.
+- Indica la versione dell'app, la piattaforma, il tipo di errore e il punto dell'app in cui è avvenuto. Non contiene mai ciò che ha digitato, il testo dell'errore, un indirizzo e-mail, un nome o una chiave.
+- Ogni persona invia al massimo un numero stabilito di segnalazioni all'ora, una segnalazione ha una dimensione massima e l'installazione elimina le segnalazioni dopo un numero stabilito di giorni. L'operatore stabilisce tutti e tre.
+- Disattivato, nulla lascia il dispositivo: l'errore resta nel registro di questo dispositivo. Un assistente collegato al Suo account non invia mai una segnalazione.
 
 **Vedi anche:** [I suoi dati, i suoi diritti](help:user.privacy.consent)
 
@@ -3076,6 +3098,16 @@ La cassa cerca da sola la connessione, e **Cerca subito la connessione** lo fa s
 
 Tre impostazioni dell'attività limitano ciò che viene accettato: **Durata massima offline (minuti)**, **Massimo di vendite offline per sessione di cassa** e **Differenza di prezzo ammessa offline (%)**. Se i dati offline del dispositivo non sono leggibili, non si vende nulla offline finché un responsabile non decide; **Elimina i dati offline** li elimina dopo un avviso, perché le vendite non ancora inviate vanno perse definitivamente.
 
+### Scontrini e risposte della carta alla cassa
+
+**Destinatari:** Amministratore · Proprietario
+
+Incassa con carta al banco, oppure una vendita va rettificata dopo, e vuole vedere cosa ha fatto la cassa e cosa è ancora in attesa.
+
+**Incassare con carta** chiede il totale al terminale; la risposta del terminale decide la vendita: **Accettata** la conclude, **Rifiutata** lascia il carrello da pagare in altro modo e **Nessuna risposta** lascia la vendita sotto **In attesa della risposta della carta** negli **Scontrini di cassa** (si aprono con **Scontrini** dalla cassa), dove la carta non viene mai richiesta di nuovo. Chi può vedere le finanze registra ciò che il terminale ha mostrato e la vendita viene conclusa una sola volta.
+
+Gli **Scontrini di cassa** elencano ciò che la cassa ha fatto. **Rettificare questa vendita** emette una rettifica come nuovo scontrino che cita l'originale, per la quantità di ogni riga indicata (al massimo quanto resta alla riga) con un **Motivo**. **Restituire denaro** restituisce l'importo di una rettifica (al massimo quanto accredita) e la merce ripresa viene registrata su di essa; nulla viene mai restituito due volte.
+
 ### Tag RFID: uno per lotto o uno per pezzo
 
 **Destinatari:** Amministratore · Proprietario
@@ -3889,6 +3921,31 @@ Vuole che le sue fatture e lettere siano stampate sulla carta che usa il suo pae
 - Se lo spazio passa a un paese che non usa la carta scelta, segue la carta abituale di quel paese.
 
 **Vedi anche:** [Paese](help:user.workspace.settings.country)
+
+### Unità di misura
+
+**Destinatari:** Proprietario · Amministratore con il permesso
+
+I suoi articoli, preventivi e fatture sono misurati in unità, e alcune unità si convertono in altre: 1 km sono 1000 m. Ogni attività parte con quelle usuali (pezzo, g, kg, ml, cl, l, mm, cm, m, km, m², min, h); lei aggiunge le sue, per esempio una matassa di cavo da 50 m.
+
+<!-- image: user-workspace-settings--units -->
+
+**Passaggi**
+
+1. Attivi **Unità di misura** in **Funzionalità** (è disattivata finché non la richiede).
+2. In [Unità di misura](app:/settings/units), tocchi **Nuova unità**.
+3. Compili **Codice dell’unità** (non potrà più cambiare), **Il suo nome per l’unità**, **Misura** e **Un’unità equivale a** nell’unità di base di ciò che misura: 1000 per un km contato in m, 0,001 per un mm.
+4. Se vuole, compili **Codice UN/ECE (per le fatture elettroniche)**, che le fatture elettroniche riportano (KMT per un km).
+5. Tocchi **Salva**.
+
+**Da sapere**
+
+- Un’unità di base mantiene la sua grandezza e il suo fattore; può darle un nome suo.
+- Un’unità in uso (un articolo contato con essa, un movimento di magazzino, un preventivo o una riga di fattura) mantiene per sempre grandezza e fattore: una correzione è una nuova unità. Un’unità che nessuno usa può essere archiviata (**Archivia**) e mostrata di nuovo (**Mostra di nuovo**).
+- Una conversione è esatta: 2,5 km sono 2500 m. Due tipi di unità non si convertono mai, e un risultato che sei decimali non possono contenere viene rifiutato, mai arrotondato.
+- Solo il proprietario e gli amministratori autorizzati a modificare le impostazioni dello spazio gestiscono le unità.
+
+**Vedi anche:** [Carta dei documenti](help:user.workspace.settings.paper)
 
 ### Organizzazione
 
@@ -6507,7 +6564,7 @@ Ciò che sta attorno al lavoro di ogni giorno: il lato di prova di uno spazio e 
 In questo capitolo:
 - [Uno spazio ha due lati](help:user.advanced.environments) · [Entrare in un lato](help:user.advanced.enter-environment) · [Uno spazio di prova](help:user.advanced.test-space) · [Chi può distribuire](help:user.advanced.deploy-permissions) · [Distribuire tra i lati](help:user.advanced.deploy) · [Situazione dello spazio e archivio dell'esercizio](help:user.advanced.status-archive)
 - [Il Suo server](help:user.advanced.own-server) · [Quando un'installazione richiede un'app più recente](help:user.advanced.app-floor) · [Pubblicare una nuova versione](help:user.advanced.releases)
-- [Assistenti](help:user.advanced.assistants) · [Collegare un assistente](help:user.advanced.assistants-connect) · [Approvazioni](help:user.advanced.assistants-approve) · [Che cosa possono fare gli assistenti](help:user.advanced.assistants-policy)
+- [Assistenti](help:user.advanced.assistants) · [Collegare un assistente](help:user.advanced.assistants-connect) · [Approvazioni](help:user.advanced.assistants-approve) · [Che cosa possono fare gli assistenti](help:user.advanced.assistants-policy) · [Segnalazioni di errore](help:user.advanced.error-reports)
 - [Il registratore di attività](help:user.advanced.recorder) · [Registrare un'attività](help:user.advanced.recorder-record) · [Rivedere una registrazione](help:user.advanced.recorder-review) · [Creare una guida](help:user.advanced.guide-make) · [Seguire una guida](help:user.advanced.guide-play) · [Il menu circolare](help:user.advanced.guide-circle) · [Modificare una guida](help:user.advanced.guide-edit) · [Riservatezza delle registrazioni](help:user.advanced.recorder-privacy)
 - [Lo spazio dimostrativo](help:user.advanced.demo) · [Modalità ripresa](help:user.advanced.filming)
 - [Piattaforme](help:user.advanced.platforms) · [Dettagli per l'assistenza](help:user.advanced.support) · [Quando qualcosa non funziona](help:user.advanced.troubleshooting)
@@ -6793,6 +6850,28 @@ Decide quali servizi uno spazio offre agli assistenti.
 - È riservato a chi possiede il permesso sulle integrazioni; i proprietari lo hanno sempre.
 
 **Vedi anche:** [Un interruttore di funzione](help:user.features.switch)
+
+### Segnalazioni di errore
+
+**Destinatari:** Operatore
+
+Gestisce l'installazione e vuole vedere che cosa è andato storto nelle app collegate.
+
+<!-- image: user-advanced-error-reports -->
+
+**Passaggi**
+
+1. Apra [Installazione: assistenti](app:/installation/assistants).
+2. Tocchi **Segnalazioni di errore**. Le più recenti vengono per prime.
+3. Tocchi una segnalazione per leggerne lo stack, oscurato dall'app. **Segnalazioni precedenti** legge le successive.
+
+**Da sapere**
+
+- Una segnalazione indica il punto dell'app e il tipo di errore, il suo codice, la versione dell'app, la piattaforma e l'ora. Non contiene mai ciò che una persona ha digitato, un indirizzo e-mail, un nome o una chiave.
+- Solo l'operatore dell'installazione le legge; le aziende dell'installazione non le vedono mai.
+- Nelle impostazioni, **Segnalazioni di errore per persona e ora**, **Dimensione massima di una segnalazione di errore** e **Conservare le segnalazioni di errore per** stabiliscono quante ne arrivano, quanto grandi e per quanto tempo. Ogni persona può disattivare le segnalazioni sul proprio dispositivo.
+
+**Vedi anche:** [Inviare le segnalazioni di errore](help:user.privacy.error-reports)
 
 ### Il registratore di attività e le visite guidate
 

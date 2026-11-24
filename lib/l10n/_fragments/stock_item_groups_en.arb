@@ -1,13 +1,5 @@
 {
   "@@locale": "en",
-  "stockReasonGroupDepth": "A sub-group cannot have sub-groups.",
-  "@stockReasonGroupDepth": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupNeedsSerial": "Per-unit tags need tracking by piece.",
-  "@stockReasonGroupNeedsSerial": {
-    "description": "#4361 refusal text"
-  },
   "stockReasonGroupNameDuplicate": "A group of this level already has this name.",
   "@stockReasonGroupNameDuplicate": {
     "description": "#4361 refusal text"
@@ -20,24 +12,8 @@
   "@stockReasonGroupNameRequired": {
     "description": "#4361 refusal text"
   },
-  "stockReasonGroupUnknown": "This group is not one of this business's.",
-  "@stockReasonGroupUnknown": {
-    "description": "#4361 refusal text"
-  },
   "stockReasonGroupUnknownReference": "A place, item or rate named here is not one of this business's.",
   "@stockReasonGroupUnknownReference": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupHasSubgroups": "This group has sub-groups: move or delete them first.",
-  "@stockReasonGroupHasSubgroups": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupInUse": "This group is used by items: move them first.",
-  "@stockReasonGroupInUse": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupNotOverridable": "This is a proposal for new items and is not set per item.",
-  "@stockReasonGroupNotOverridable": {
     "description": "#4361 refusal text"
   },
   "stockReasonGroupValueRequired": "Give a value, or use the group's value.",
@@ -54,10 +30,6 @@
   },
   "stockReasonGroupItemUnknown": "This item is not one of this business's.",
   "@stockReasonGroupItemUnknown": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupHasMovements": "This item has stock movements: its unit and tracking stay as they were written.",
-  "@stockReasonGroupHasMovements": {
     "description": "#4361 refusal text"
   },
   "settingLabelStockGroupDefaultTagMode": "Default tag mode of items",

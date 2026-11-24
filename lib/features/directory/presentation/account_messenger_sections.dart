@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/loading_view.dart';
 import '../providers/directory_providers.dart';
 
@@ -45,7 +46,6 @@ class _ContactResultsState extends ConsumerState<ContactResults> {
 
   @override
   Widget build(BuildContext context) {
-    final l = context.l10n;
     final provider = accountContactsProvider(
       widget.query,
       source: widget.source,
@@ -72,12 +72,10 @@ class _ContactResultsState extends ConsumerState<ContactResults> {
             ),
         ],
       ),
-      AsyncError() => TextButton(
-        key: const ValueKey('account-messenger-sections-portal-source-unavailable'),
-        onPressed: () => ref.invalidate(provider),
-        child: Text(
-          l.portalSourceUnavailable,
-        ),
+      AsyncError(:final error) => ReadFailureBanner(
+        error: error,
+        retryKey: const ValueKey('account-messenger-sections-portal-source-unavailable'),
+        onRetry: () => ref.invalidate(provider),
       ),
       _ => const LoadingView(),
     };
@@ -131,7 +129,6 @@ class _AccountConversationListState
 
   @override
   Widget build(BuildContext context) {
-    final l = context.l10n;
     final cursor = _pages.lastOrNull;
     final provider = accountConversationsProvider(
       source: widget.source,
@@ -174,12 +171,10 @@ class _AccountConversationListState
             ),
         ],
       ),
-      AsyncError() => TextButton(
-        key: const ValueKey('account-messenger-sections-portal-source-unavailable-2'),
-        onPressed: () => ref.invalidate(provider),
-        child: Text(
-          l.portalSourceUnavailable,
-        ),
+      AsyncError(:final error) => ReadFailureBanner(
+        error: error,
+        retryKey: const ValueKey('account-messenger-sections-portal-source-unavailable-2'),
+        onRetry: () => ref.invalidate(provider),
       ),
       _ => const LoadingView(),
     };

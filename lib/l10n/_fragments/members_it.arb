@@ -209,10 +209,6 @@
       }
     }
   },
-  "memberMoneyUnavailable": "Impossibile caricare le finanze. Trascini per aggiornare.",
-  "@memberMoneyUnavailable": {
-    "description": "#709 - the money section of a profile could not be read"
-  },
   "inboxAlertsTab": "Avvisi",
   "inboxFilterAll": "Tutti",
   "inboxFilterUnread": "Non letti",

@@ -18,6 +18,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/kiosk_device.dart';
@@ -156,16 +157,13 @@ class _KioskDevicesScreenState extends ConsumerState<KioskDevicesScreen> {
                             onRevoke: () => unawaited(_revoke(workspace.id, d)),
                           ),
                       ],
-                      AsyncError() => [
-                        ListTile(
+                      AsyncError(:final error) => [
+                        ReadFailureBanner(
                           key: const ValueKey('kiosk-devices-failed'),
-                          title: Text(l10n.readStateFailed),
-                          trailing: TextButton(
-                            key: const ValueKey('kiosk-devices-retry'),
-                            onPressed: () => ref.invalidate(
-                              kioskDevicesProvider(workspace.id),
-                            ),
-                            child: Text(l10n.commonRetry),
+                          error: error,
+                          retryKey: const ValueKey('kiosk-devices-retry'),
+                          onRetry: () => ref.invalidate(
+                            kioskDevicesProvider(workspace.id),
                           ),
                         ),
                       ],

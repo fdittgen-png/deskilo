@@ -6,6 +6,5 @@
   "meRefStale": "Membresía no confirmada recientemente",
   "meRefNoRelationship": "Sin membresía en este servidor",
   "meRefDefault": "Predeterminado",
-  "meRefsUnavailable": "No se pudieron leer sus lugares en otros servidores.",
   "meRefStatusUnknown": "Estado de afiliación que esta versión no puede leer"
 }

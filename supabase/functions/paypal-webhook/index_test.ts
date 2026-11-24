@@ -9,7 +9,7 @@
 // nothing written; a reversal never attaches; an event PayPal does not verify,
 // or naming nothing that waits, writes nothing.
 import { assertEquals } from "jsr:@std/assert@1";
-import { handle } from "./index.ts";
+import { handle, serve } from "./index.ts";
 import { intentsFake } from "../_shared/testing/intents_fake.ts";
 
 const INTENT = "00000000-0000-4000-8000-000000003917";
@@ -195,4 +195,30 @@ Deno.test("#4126: a settlement that throws after the capture is answered 500, as
   const f = fake();
   f.admin.rpc = () => Promise.reject(new Error("connection lost"));
   assertEquals((await call(f, approved())).status, 500);
+});
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+Deno.test("#4412 paypal-webhook: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const answer = await serve({
+      admin: () => {
+        throw new Error("service role key sb_secret_xyz is wrong");
+      },
+      env: () => undefined,
+      fetch: () => Promise.reject(new Error("unused")),
+      allowTest: () => false,
+    })(new Request("https://x.test/paypal-webhook", {
+      method: "POST",
+      headers: { "x-request-id": "r-hook" },
+      body: JSON.stringify({ event_type: "CHECKOUT.ORDER.APPROVED", resource: { id: "ORDER1" } }),
+    }));
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-hook" });
+    assertEquals(/secret|sb_|wrong/i.test(text), false);
+  } finally {
+    console.error = saved;
+  }
 });

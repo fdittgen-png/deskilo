@@ -169,4 +169,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.counterTillSessions,
     defaultOn: false,
   ),
+  // #4442 — the owner and the admins keep the business's own units of measure and their conversions (1 km = 1000 m). It
+  // requires nothing: invoice and quote lines of a business without any stock are priced in these units as much as items.
+  // Asked for; the built-in units are there whether it is on or not.
+  WorkspaceFeature.unitsOfMeasure: FeatureManifestEntry(
+    feature: WorkspaceFeature.unitsOfMeasure,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
 };

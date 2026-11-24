@@ -324,16 +324,16 @@ class _ApprovalPurchaseDetailView extends ConsumerWidget {
         children: const [LoadingView()],
       );
     }
+    // #4414 kept: the sheet's shell around the shared read failure below
     if (result.hasError) {
       return SheetShell(
         title: context.l10n.purchasesTitle,
         children: [
-          Text(context.l10n.purchaseApprovalsRefused),
-          TextButton(
-            key: const ValueKey('approval-detail-retry'),
-            onPressed: () =>
+          ReadFailureBanner(
+            error: result.error!,
+            retryKey: const ValueKey('approval-detail-retry'),
+            onRetry: () =>
                 ref.invalidate(purchaseApprovalDetailProvider(key)),
-            child: Text(context.l10n.commonRetry),
           ),
         ],
       );

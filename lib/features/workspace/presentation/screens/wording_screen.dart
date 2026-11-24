@@ -28,6 +28,7 @@ import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -142,9 +143,10 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
       ),
       body: switch (overrides) {
         AsyncData(value: final raw) => _body(context, l10n, raw, locale),
-        AsyncError() => Center(
-            child: Text(l10n.workspaceGenericError),
-          ),
+        AsyncError(:final error) => ReadFailureBanner(
+          error: error,
+          onRetry: () => ref.invalidate(lexiconProvider),
+        ),
         _ => const LoadingView(),
       },
     );

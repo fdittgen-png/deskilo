@@ -13,6 +13,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -120,9 +121,10 @@ class BankStatementsView extends ConsumerWidget {
         UnreadableRowsNotice.area(bankStatementsArea(workspaceId)),
         statements.when(
           loading: () => const LoadingView(),
-          error: (_, _) => Text(
-            l10n.bankStatementsLoadFailed,
+          error: (e, _) => ReadFailureBanner(
             key: const ValueKey('bank-statements-failed'),
+            error: e,
+            onRetry: () => ref.invalidate(bankStatementsProvider(workspaceId)),
           ),
           data: (all) => all.isEmpty
               ? Text(l10n.bankStatementsEmpty, key: const ValueKey('bank-statements-empty'))

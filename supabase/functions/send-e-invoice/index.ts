@@ -10,17 +10,20 @@
 // is never resent — #3335); the providers in connectors.ts (#2358); every
 // read and write in store.ts.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { guard } from "../_shared/serve.ts";
 import { handle } from "./handler.ts";
 import { supabaseStore } from "./store.ts";
 
-Deno.serve((req) =>
+// #4412 -- whatever the handler throws is the envelope, never its words.
+Deno.serve(guard("send-e-invoice", (req) =>
   handle(req, {
     store: supabaseStore(
       createClient(
-        Deno.env.get("SUPABASE_URL")!,
-        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+        readEnv(KEYS.supabaseUrl)!,
+        readEnv(KEYS.supabaseServiceRoleKey)!,
       ),
     ),
   })
-);
+));

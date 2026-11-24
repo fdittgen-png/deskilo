@@ -2,59 +2,69 @@
 //
 // #2362 -- the words for what a seller in the United States is missing before
 // an invoice can be issued (stable server keys, 0434). Every other key is its
-// own text: `invoiceMissingLabel` falls through to this and then to the key.
+// own text: a key this app does not know is shown as itself.
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/invoice_missing.dart';
 
-String _salesTaxMissingLabel(AppLocalizations l10n, String key) => switch (key) {
-  'sales_tax_rate_unset' => l10n.invoiceMissingSalesTaxRate,
-  'sales_tax_taxability_unset' => l10n.invoiceMissingSalesTaxTaxability,
-  _ => _territoryMissingLabel(l10n, key),
-};
+/// #1916 — the words for one missing essential (stable server keys, 0365);
+/// #2362 sales tax, #2363 a site outside VAT, #4105 the region (0792).
+String invoiceMissingLabel(AppLocalizations l10n, String key) =>
+    switch (InvoiceMissing.fromWire(key)) {
+      InvoiceMissing.salesTaxRateUnset => l10n.invoiceMissingSalesTaxRate,
+      InvoiceMissing.salesTaxTaxabilityUnset => l10n.invoiceMissingSalesTaxTaxability,
+      InvoiceMissing.territoryOutsideVat => l10n.invoiceMissingTerritoryOutsideVat,
+      InvoiceMissing.invoiceFeatureDisabled => l10n.invoiceFeatureDisabled,
+      InvoiceMissing.exemptionReason => l10n.invoiceMissingExemptionReason,
+      InvoiceMissing.vatNationalCurrency => l10n.invoiceMissingNationalCurrency,
+      InvoiceMissing.correctionReason => l10n.invoiceMissingCorrectionReason,
+      InvoiceMissing.vatRateUnresolved => l10n.invoiceMissingVatRate,
+      InvoiceMissing.vatLineZeroUnexplained => l10n.invoiceMissingVatZeroLine,
+      InvoiceMissing.vatChargedNotRegistered => l10n.invoiceMissingVatNotRegistered,
+      InvoiceMissing.vatTreatmentUnreviewed => l10n.invoiceMissingVatTreatment,
+      InvoiceMissing.viesUnverified => l10n.invoiceMissingVies,
+      InvoiceMissing.sellerRegion ||
+      InvoiceMissing.sellerAddress ||
+      InvoiceMissing.sellerVatId ||
+      InvoiceMissing.sellerCountryUnsupported ||
+      InvoiceMissing.sellerTaxNumber ||
+      InvoiceMissing.sellerVatIdFormat ||
+      InvoiceMissing.sellerUidFormat ||
+      InvoiceMissing.sellerBnFormat ||
+      InvoiceMissing.sellerQstNumber =>
+        _sellerMissingLabel(l10n, InvoiceMissing.fromWire(key)),
+      InvoiceMissing.buyerRegion ||
+      InvoiceMissing.buyerName ||
+      InvoiceMissing.buyerAddress ||
+      InvoiceMissing.buyerVatId ||
+      InvoiceMissing.buyerTaxId ||
+      InvoiceMissing.buyerCapacityUnknown =>
+        _buyerMissingLabel(l10n, InvoiceMissing.fromWire(key)),
+      InvoiceMissing.unknown => key,
+    };
 
-/// #2363 -- a site where the country's VAT does not apply (9999).
-String _territoryMissingLabel(AppLocalizations l10n, String key) => switch (key) {
-  'territory_outside_vat' => l10n.invoiceMissingTerritoryOutsideVat,
-  _ => _regionMissingLabel(l10n, key),
-};
+/// The business's own missing facts (`seller_*`).
+String _sellerMissingLabel(AppLocalizations l10n, InvoiceMissing missing) =>
+    switch (missing) {
+      InvoiceMissing.sellerRegion => l10n.invoiceMissingSellerRegion,
+      InvoiceMissing.sellerAddress => l10n.invoiceMissingSellerAddress,
+      InvoiceMissing.sellerVatId => l10n.invoiceMissingSellerVatId,
+      InvoiceMissing.sellerCountryUnsupported => l10n.invoiceMissingSellerCountry,
+      InvoiceMissing.sellerTaxNumber => l10n.invoiceMissingSellerTaxNumber,
+      InvoiceMissing.sellerVatIdFormat => l10n.invoiceMissingSellerVatIdFormat,
+      InvoiceMissing.sellerUidFormat => l10n.invoiceMissingSellerUidFormat,
+      InvoiceMissing.sellerBnFormat => l10n.invoiceMissingSellerBnFormat,
+      InvoiceMissing.sellerQstNumber => l10n.invoiceMissingSellerQstNumber,
+      _ => missing.wire,
+    };
 
-/// #4105 -- the region the country's own invoices require (0792).
-String _regionMissingLabel(AppLocalizations l10n, String key) => switch (key) {
-  'seller_region' => l10n.invoiceMissingSellerRegion,
-  'buyer_region' => l10n.invoiceMissingBuyerRegion,
-  _ => key,
-};
-
-/// #1916 — the words for one missing essential (stable server keys, 0365).
-String invoiceMissingLabel(AppLocalizations l10n, String key) => switch (key) {
-      'invoice_feature_disabled' => l10n.invoiceFeatureDisabled,
-      'seller_address' => l10n.invoiceMissingSellerAddress,
-      'seller_vat_id' => l10n.invoiceMissingSellerVatId,
-      'exemption_reason' => l10n.invoiceMissingExemptionReason,
-      'buyer_name' => l10n.invoiceMissingBuyerName,
-      'buyer_address' => l10n.invoiceMissingBuyerAddress,
-      'buyer_vat_id' => l10n.invoiceMissingBuyerVatId,
-      'seller_country_unsupported' => l10n.invoiceMissingSellerCountry,
-      // #2356 — § 14 UStG / NIF, the customer's identifier, art. 230.
-      'seller_tax_number' => l10n.invoiceMissingSellerTaxNumber,
-      'buyer_tax_id' => l10n.invoiceMissingBuyerTaxId,
-      'vat_national_currency' => l10n.invoiceMissingNationalCurrency,
-      // #2359 — HMRC's VAT registration number format.
-      'seller_vat_id_format' => l10n.invoiceMissingSellerVatIdFormat,
-      // #2360 — the Swiss UID with its MWST suffix.
-      'seller_uid_format' => l10n.invoiceMissingSellerUidFormat,
-      'seller_bn_format' => l10n.invoiceMissingSellerBnFormat,
-      'seller_qst_number' => l10n.invoiceMissingSellerQstNumber,
-      // #2440 — RD 1619/2012 art. 15.
-      'correction_reason' => l10n.invoiceMissingCorrectionReason,
-      'vat_rate_unresolved' => l10n.invoiceMissingVatRate,
-      'vat_line_zero_unexplained' => l10n.invoiceMissingVatZeroLine,
-      'vat_charged_not_registered' => l10n.invoiceMissingVatNotRegistered,
-      'vat_treatment_unreviewed' => l10n.invoiceMissingVatTreatment,
-      // #2354 — a general service to a customer abroad: business or not.
-      'vies_unverified' =>
-        l10n.invoiceMissingVies,
-      'buyer_capacity_unknown' =>
-        l10n
-            .invoiceMissingBuyerCapacity,
-      _ => _salesTaxMissingLabel(l10n, key),
+/// The customer's missing facts (`buyer_*`).
+String _buyerMissingLabel(AppLocalizations l10n, InvoiceMissing missing) =>
+    switch (missing) {
+      InvoiceMissing.buyerRegion => l10n.invoiceMissingBuyerRegion,
+      InvoiceMissing.buyerName => l10n.invoiceMissingBuyerName,
+      InvoiceMissing.buyerAddress => l10n.invoiceMissingBuyerAddress,
+      InvoiceMissing.buyerVatId => l10n.invoiceMissingBuyerVatId,
+      InvoiceMissing.buyerTaxId => l10n.invoiceMissingBuyerTaxId,
+      InvoiceMissing.buyerCapacityUnknown => l10n.invoiceMissingBuyerCapacity,
+      _ => missing.wire,
     };

@@ -3,7 +3,9 @@
 // #4161 (B) -- a walk over the pages of one stock read: the first page, then
 // each page from the cursor the last one gave. A failed page keeps the rows
 // already shown and the cursor, so the same page can be asked again; a
-// refusal or a failure is never shown as an empty list.
+// refusal or a failure is never shown as an empty list. #4401: the one walk
+// of stock -- on hand, the movements, the registry of items and the goods of
+// a document each give it their page function.
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,9 +28,14 @@ class StockWalkState<T> {
     this.complete = false,
     this.loading = true,
     this.error,
+    this.first,
   });
 
   final List<T> rows;
+
+  /// The first page as read: what the read says as a whole beside its rows (the goods of a document say whether a
+  /// recorded link reaches them).
+  final StockPage<T>? first;
 
   /// The cursor of the last page, when more follows.
   final StockCursor? next;
@@ -50,9 +57,9 @@ class StockWalkState<T> {
 
 /// The walk of one read.
 class StockWalk<T> extends Notifier<StockWalkState<T>> {
-  StockWalk(this.filters, this._read);
+  StockWalk(this._read);
 
-  final StockFilters filters;
+  /// The page function: given the walk's [Ref], reads the page after a cursor (the first when null).
   final Future<StockPage<T>> Function(StockCursor? after) Function(Ref ref)
   _read;
 
@@ -67,7 +74,7 @@ class StockWalk<T> extends Notifier<StockWalkState<T>> {
   Future<void> loadMore({bool first = false}) async {
     final current = state;
     if (!first && (current.loading || current.complete)) return;
-    state = StockWalkState(rows: current.rows, next: current.next);
+    state = StockWalkState(rows: current.rows, next: current.next, first: current.first);
     try {
       final page = await _read(ref)(first ? null : current.next);
       if (!ref.mounted) return;
@@ -76,6 +83,7 @@ class StockWalk<T> extends Notifier<StockWalkState<T>> {
         next: page.next,
         complete: page.complete,
         loading: false,
+        first: first ? page : current.first,
       );
     } on Object catch (error, stack) {
       TraceLogger.instance.warn('stock', 'a stock page could not be read', error: error, stackTrace: stack);
@@ -85,6 +93,7 @@ class StockWalk<T> extends Notifier<StockWalkState<T>> {
         next: current.next,
         loading: false,
         error: error,
+        first: current.first,
       );
     }
   }

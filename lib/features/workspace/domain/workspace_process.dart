@@ -138,40 +138,53 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.priceNegotiations,
       WorkspaceFeature.memberPaymentTerms,
       WorkspaceFeature.carnets,
-      // #3824 — the goods ledger, beside the catalogue whose rows it keeps.
-      WorkspaceFeature.stockManagement,
-      // #4169 — lots and expiry on those goods.
-      WorkspaceFeature.stockLots,
-      // #4171 — a delivery put away into stock.
-      WorkspaceFeature.stockReceiving,
-      // #4170 — goods taken out for use or as a loss.
-      WorkspaceFeature.stockTakeOut,
-      // #4294 — reorder points, low-stock alerts and the replenishment list.
-      WorkspaceFeature.stockReorder,
-      // #4172 — bounded returns and corrections of stock movements.
-      WorkspaceFeature.stockReturns,
-      // #4172 — counts of stock, approved before they move it.
-      WorkspaceFeature.stockCounts,
-      // #4295 — scheduled cycle counts.
-      WorkspaceFeature.stockCycleCounts,
-      // #4361
-      WorkspaceFeature.stockItemGroups,
-      // #4362 — RFID tags.
-      WorkspaceFeature.stockTags,
-      // #4359 — scanning.
-      WorkspaceFeature.stockScanning,
       // #4184
       WorkspaceFeature.counterReceipts,
       // #4367
       WorkspaceFeature.counterTillSessions,
-      // #4364
-      WorkspaceFeature.stockTagReads,
-      // #4431
-      WorkspaceFeature.stockExpiryReport,
-      // #4435
-      WorkspaceFeature.stockHandlingUnits,
       // #4373
       WorkspaceFeature.counterOfflineCash,
+    ]),
+  ]),
+  // #4449 — the goods the business keeps, moves, counts and traces: out of pricing, into a process of their own.
+  WorkspaceProcess('goodsStock', [
+    WorkspaceSubprocess('stockItems', [
+      // #3824 — the goods ledger, beside the catalogue whose rows it keeps.
+      WorkspaceFeature.stockManagement,
+      // #4361
+      WorkspaceFeature.stockItemGroups,
+      // #4442
+      WorkspaceFeature.unitsOfMeasure,
+      // #4435
+      WorkspaceFeature.stockHandlingUnits,
+    ]),
+    WorkspaceSubprocess('stockMovements', [
+      // #4171 — a delivery put away into stock.
+      WorkspaceFeature.stockReceiving,
+      // #4170 — goods taken out for use or as a loss.
+      WorkspaceFeature.stockTakeOut,
+      // #4172 — bounded returns and corrections of stock movements.
+      WorkspaceFeature.stockReturns,
+    ]),
+    WorkspaceSubprocess('stockControl', [
+      // #4172 — counts of stock, approved before they move it.
+      WorkspaceFeature.stockCounts,
+      // #4295 — scheduled cycle counts.
+      WorkspaceFeature.stockCycleCounts,
+      // #4294 — reorder points, low-stock alerts and the replenishment list.
+      WorkspaceFeature.stockReorder,
+    ]),
+    WorkspaceSubprocess('stockTracking', [
+      // #4169 — lots and expiry on those goods.
+      WorkspaceFeature.stockLots,
+      // #4431
+      WorkspaceFeature.stockExpiryReport,
+      // #4359 — scanning.
+      WorkspaceFeature.stockScanning,
+      // #4362 — RFID tags.
+      WorkspaceFeature.stockTags,
+      // #4364
+      WorkspaceFeature.stockTagReads,
     ]),
   ]),
   WorkspaceProcess('billingPayments', [

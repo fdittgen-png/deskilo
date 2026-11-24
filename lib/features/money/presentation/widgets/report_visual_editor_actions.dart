@@ -263,6 +263,7 @@ mixin ReportVisualEditorActions on ConsumerState<ReportVisualEditor> {
         final loaded = ref.watch(reportImageBytesProvider(image.name));
         final bytes = loaded.value;
         // #2586 — a read that failed is not a deleted image: say why, retry.
+        // #4414 kept: the notice names the picture that failed, with retry
         if (loaded.hasError) {
           return ReportImageNotice(
             name: image.name,

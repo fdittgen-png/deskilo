@@ -3,6 +3,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/enum_wire.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../domain/charging_station.dart';
 import '../domain/charging_station_repository.dart';
 
@@ -29,10 +30,11 @@ class SupabaseChargingStationRepository implements ChargingStationRepository {
 
   @override
   Future<Map<String, ChargingStation>> fetchStations(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'charging_stations', build: () => _client
         .from('charging_stations')
         .select()
-        .eq('workspace_id', workspaceId);
+        .eq('workspace_id', workspaceId)
+        .order('id', ascending: true));
     return {for (final row in rows) row['seat_id'] as String: _fromRow(row)};
   }
 

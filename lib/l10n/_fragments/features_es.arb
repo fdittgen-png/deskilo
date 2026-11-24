@@ -373,5 +373,13 @@
   "featureCounterOfflineCashDesc": "Si se pierde la conexión, la caja sigue vendiendo en efectivo, guarda cada venta en el dispositivo y envía las ventas en orden cuando vuelve la conexión. Los demás medios de pago esperan la conexión.",
   "@featureCounterOfflineCashDesc": {
     "description": "#4373 feature description"
+  },
+  "featureUnitsOfMeasureTitle": "Unidades de medida",
+  "@featureUnitsOfMeasureTitle": {
+    "description": "#4442 feature name"
+  },
+  "featureUnitsOfMeasureDesc": "El propietario y los administradores mantienen las unidades de medida del negocio y sus conversiones (1 km = 1000 m, 1 kg = 1000 g). Los artículos, los presupuestos y las facturas se miden con ellas. Las unidades básicas siempre están; al activar esta opción aparece la pantalla para mantenerlas.",
+  "@featureUnitsOfMeasureDesc": {
+    "description": "#4442 feature description"
   }
 }

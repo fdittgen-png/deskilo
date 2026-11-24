@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/failure/outcome_or_throw.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -97,13 +98,18 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
       domain: 'money',
       message: 'register payment failed',
       errorText: l10n.workspaceGenericError,
-      action: () => payments.record(
-        workspaceId: workspace.id,
-        memberId: memberId,
-        amountCents: cents,
-        note: _note.text,
-        method: _method,
-        paidOn: paidOn,
+      // #4444 -- the command answers an outcome; anything but done is
+      // handed to the guarded path as what was caught, so a refusal, a lost
+      // connection or a held request is said as before.
+      action: () async => valueOrThrow(
+        await payments.record(
+          workspaceId: workspace.id,
+          memberId: memberId,
+          amountCents: cents,
+          note: _note.text,
+          method: _method,
+          paidOn: paidOn,
+        ),
       ),
     );
     if (!mounted) return;

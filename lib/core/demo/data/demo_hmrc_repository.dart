@@ -16,6 +16,7 @@ import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import '../../../features/money/domain/hmrc_submission.dart';
 import '../../../features/money/domain/mtd_boxes.dart';
 import '../../../features/workspace/domain/member.dart';
+import '../../failure/app_failure.dart';
 import '../seed/demo_london_seed.dart';
 import 'book_profile_repository.dart' show demoTaxReference;
 import 'money_repository.dart';
@@ -23,7 +24,7 @@ import 'workspace_repository.dart';
 
 /// A scripted answer for the n-th attempt (tests only; there is no control in
 /// the product): null lets the attempt run for real.
-typedef DemoHmrcScript = HmrcOutcome? Function(int attempt);
+typedef DemoHmrcScript = CommandOutcome<HmrcFiling>? Function(int attempt);
 
 class DemoHmrcRepository implements HmrcRepository {
   DemoHmrcRepository({
@@ -92,7 +93,7 @@ class DemoHmrcRepository implements HmrcRepository {
   }
 
   @override
-  Future<HmrcOutcome> submit({
+  Future<CommandOutcome<HmrcFiling>> submit({
     required String declarationId,
     required String connectionId,
     required Map<String, num> boxes,
@@ -100,23 +101,23 @@ class DemoHmrcRepository implements HmrcRepository {
     String? recoveryMarker,
   }) async {
     // One submission of a return at a time: a second tap is in_flight.
-    if (!_mayFile) return const HmrcRefused(HmrcRefusal.notAllowed);
-    if (_inFlight) return const HmrcRefused(HmrcRefusal.inFlight);
+    if (!_mayFile) return hmrcRefused(HmrcRefusal.notAllowed);
+    if (_inFlight) return hmrcRefused(HmrcRefusal.inFlight);
     if (_connection == null || _connection!.id != connectionId || !_connection!.isConnected) {
-      return const HmrcRefused(HmrcRefusal.notConnected);
+      return hmrcRefused(HmrcRefusal.notConnected);
     }
     final marker = _uncertain[declarationId];
     if (marker != null && marker != recoveryMarker) {
-      return const HmrcUnconfirmed(code: 'CHECK_REQUIRED');
+      return hmrcUnconfirmed(code: 'CHECK_REQUIRED');
     }
     _inFlight = true;
     try {
       // The claim and the call are not one step: let a second tap in.
       await Future<void>.delayed(Duration.zero);
       final result = _run(declarationId, connectionId, boxes);
-      if (result is HmrcUnconfirmed || (result is HmrcRefused && result.refusal == HmrcRefusal.alreadySubmitted)) {
+      if (result is CommandUnreached || hmrcRefusalOf(result)?.refusal == HmrcRefusal.alreadySubmitted) {
         _uncertain[declarationId] = _marker(declarationId, _attempts);
-      } else if (result is HmrcFiled) {
+      } else if (hmrcFilingOf(result)?.recorded ?? false) {
         _uncertain.remove(declarationId);
       }
       return result;
@@ -125,34 +126,34 @@ class DemoHmrcRepository implements HmrcRepository {
     }
   }
 
-  HmrcOutcome _run(String declarationId, String connectionId, Map<String, num> sent) {
+  CommandOutcome<HmrcFiling> _run(String declarationId, String connectionId, Map<String, num> sent) {
     final connection = _connection;
-    if (!_mayFile) return const HmrcRefused(HmrcRefusal.notAllowed);
+    if (!_mayFile) return hmrcRefused(HmrcRefusal.notAllowed);
     if (connection == null || !connection.isConnected || connection.id != connectionId) {
-      return const HmrcRefused(HmrcRefusal.notConnected);
+      return hmrcRefused(HmrcRefusal.notConnected);
     }
     final declaration = _money.vatDeclarations.where((d) => d.id == declarationId).firstOrNull;
     if (declaration == null || !declaration.isPrepared) {
-      return const HmrcRefused(HmrcRefusal.figuresDiffer);
+      return hmrcRefused(HmrcRefusal.figuresDiffer);
     }
     // The prepared return must still be what the invoices give today.
     final now = _money.taxReporting.preparedLinesNow(declaration.periodStart, declaration.periodEnd);
     if (_totals(now) != _totals(declaration.lines)) {
-      return const HmrcRefused(HmrcRefusal.figuresDiffer);
+      return hmrcRefused(HmrcRefusal.figuresDiffer);
     }
     if (declaration.lines.any((l) => l.isAcquisition)) {
-      return const HmrcRefused(HmrcRefusal.acquisitionNotSupported);
+      return hmrcRefused(HmrcRefusal.acquisitionNotSupported);
     }
     final server = mtdBoxCents(declaration, reference: demoTaxReference());
     for (final field in mtdBoxFields) {
       final s = sent[field];
       if (s == null || (s * 100).round() != server[field]) {
-        return const HmrcRefused(HmrcRefusal.figuresDiffer);
+        return hmrcRefused(HmrcRefusal.figuresDiffer);
       }
     }
     // An obligation is open once its period has ended.
     if (!declaration.periodEnd.isBefore(_today)) {
-      return const HmrcRefused(HmrcRefusal.refused, code: 'TAX_PERIOD_NOT_ENDED');
+      return hmrcRefused(HmrcRefusal.refused, code: 'TAX_PERIOD_NOT_ENDED');
     }
     _attempts++;
     final scripted = script?.call(_attempts);
@@ -162,7 +163,7 @@ class DemoHmrcRepository implements HmrcRepository {
       processingDate: _today.toUtc().toIso8601String(),
     );
     _money.taxReporting.fileAsHmrcDemo(declaration.id, receipt.formBundleNumber, at: _today);
-    return HmrcFiled(receipt, demo: true);
+    return hmrcFiled(receipt, demo: true);
   }
 
   static (int, int, int) _totals(List<VatDeclarationLine> lines) => (

@@ -197,7 +197,7 @@ void main() {
         _Refusing(onLoad: const AuthException('authorization not found')),
       );
       expect(_key('mcp-consent-refused-requestExpired'), findsOneWidget);
-      expect(_key('mcp-consent-unavailable'), findsNothing);
+      expect(_key('read-failure'), findsNothing);
     });
   });
 }

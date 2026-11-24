@@ -969,5 +969,13 @@
   "featureCounterOfflineCashDesc": "When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.",
   "@featureCounterOfflineCashDesc": {
     "description": "#4373 feature description"
+  },
+  "featureUnitsOfMeasureTitle": "Units of measure",
+  "@featureUnitsOfMeasureTitle": {
+    "description": "#4442 feature name"
+  },
+  "featureUnitsOfMeasureDesc": "The owner and the admins keep the business's own units of measure and their conversions (1 km = 1000 m, 1 kg = 1000 g). Items, quotes and invoices are measured in them. The built-in units are always there; switching this on adds the screen to maintain them.",
+  "@featureUnitsOfMeasureDesc": {
+    "description": "#4442 feature description"
   }
 }

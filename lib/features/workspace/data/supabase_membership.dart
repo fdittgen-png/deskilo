@@ -8,6 +8,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show isoDay;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../core/codes/pg_code.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 import '../../../core/validation/pending_validation.dart';
 import '../domain/invitation_answer.dart';
@@ -145,12 +146,12 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
   Future<Map<String, String>> fetchMemberNames(String workspaceId) async {
     // members ↔ profiles share auth.users ids but carry no direct FK, so
     // PostgREST cannot embed — two queries, joined client-side.
-    final memberRows = await client
-        .from(ServerTable.members)
+    final memberRows = await fetchAllPages(table: ServerTable.members, build: () => client.from(ServerTable.members)
         .select(
           'id, user_id, managed_identity, managed_name, member_number, home_site_id',
         )
-        .eq('workspace_id', workspaceId);
+        .eq('workspace_id', workspaceId)
+        .order('id', ascending: true));
     // #887 — a managed member has no profile: its name is the identity
     // the admin typed (company when the person is nameless).
     String managedName(Map<String, dynamic> r) => managedDisplayName(r);
@@ -210,11 +211,11 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
 
   @override
   Future<List<Member>> fetchMembers(String workspaceId) async {
-    final rows = await client
-        .from(ServerTable.members)
+    final rows = await fetchAllPages(table: ServerTable.members, build: () => client.from(ServerTable.members)
         .select()
         .eq('workspace_id', workspaceId)
-        .order('joined_at', ascending: true);
+        .order('joined_at', ascending: true)
+        .order('id', ascending: true));
     return rows.map(memberFromRow).toList();
   }
 
@@ -222,12 +223,13 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
   Future<List<MemberTermChange>> fetchMemberTermChanges(
     String workspaceId,
   ) async {
-    final rows = await client
+    final rows = await fetchAllPages(table: 'member_term_changes', build: () => client
         .from('member_term_changes')
         .select()
         .eq('workspace_id', workspaceId)
         .order('due_on', ascending: true)
-        .order('seq', ascending: true);
+        .order('seq', ascending: true)
+        .order('id', ascending: true));
     return rows.map(MemberTermChange.fromRow).toList();
   }
 
@@ -290,11 +292,12 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
   Future<Map<String, Set<DateTime>>> fetchInvoicedMonths(
     String workspaceId,
   ) async {
-    final rows = await client
+    final rows = await fetchAllPages(table: 'member_period_terms', build: () => client
         .from('member_period_terms')
         .select('member_id, period, invoices!inner(voided_at)')
         .eq('workspace_id', workspaceId)
-        .isFilter('invoices.voided_at', null);
+        .isFilter('invoices.voided_at', null)
+        .order('id', ascending: true));
     final months = <String, Set<DateTime>>{};
     for (final row in rows) {
       final period = DateTime.parse('${row['period'] as String}-01');
@@ -445,7 +448,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
   Future<List<Member>> fetchMyMembers() async {
     final userId = client.auth.currentUser?.id;
     if (userId == null) return const [];
-    final rows = await client.from(ServerTable.members).select().eq('user_id', userId);
+    final rows = await fetchAllPages(table: ServerTable.members, build: () => client.from(ServerTable.members).select().eq('user_id', userId).order('id', ascending: true));
     return rows.map(memberFromRow).toList();
   }
 

@@ -5,7 +5,6 @@
   "acctTargetsTitle": "Sistemi contabili",
   "acctTargetsIntro": "Dove va la contabilità di ogni emittente. Un sistema collegato riceve i documenti da sé; gli altri ricevono i file esportati dalla contabilità. Ogni trasferimento è elencato qui sotto con l'impronta di ciò che ha portato.",
   "acctTargetsNoApiTarget": "Nessun sistema contabile di questo paese è ancora raggiunto da un collegamento: la contabilità parte tramite file, dall'esportazione contabile.",
-  "acctTargetsLoadFailed": "Non è stato possibile caricare i sistemi contabili.",
   "acctTargetsNotConnected": "Non collegato",
   "acctConnStatusPending": "In attesa dell'accesso",
   "acctConnStatusConnected": "Collegato",

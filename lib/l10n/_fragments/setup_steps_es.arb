@@ -14,7 +14,6 @@
   "setupInvitePreviewTitle": "La invitación, tal como la reciben sus miembros",
   "setupInvitePreviewNote": "Cada invitación que envía lleva su propio código de un solo uso en lugar del ID del espacio.",
   "setupInviteShareFailed": "No se pudo compartir el código QR. Inténtelo de nuevo.",
-  "setupStepLoadFailed": "No se ha podido cargar este paso. Inténtelo más tarde.",
   "setupBasicsSaveFailed": "No se han podido guardar los datos básicos. Inténtelo de nuevo.",
   "setupBasicsPreviewDate": "La fecha de hoy",
   "setupBasicsPreviewTime": "La hora actual",

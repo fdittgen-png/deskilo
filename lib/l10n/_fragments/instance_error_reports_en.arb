@@ -1,0 +1,47 @@
+{
+  "@@locale": "en",
+  "instanceErrorReports": "Error reports",
+  "@instanceErrorReports": {
+    "description": "#4416 Instance console: the error reports apps sent to this installation, its row and sheet title"
+  },
+  "instanceErrorReportsHint": "What the apps sent when something went wrong, newest first. Members of a business never see them.",
+  "@instanceErrorReportsHint": {
+    "description": "#4416 Instance console: under the error reports row"
+  },
+  "instanceErrorReportsNone": "No error report has arrived.",
+  "@instanceErrorReportsNone": {
+    "description": "#4416 Instance console: the list is empty"
+  },
+  "instanceErrorReportsOlder": "Older reports",
+  "@instanceErrorReportsOlder": {
+    "description": "#4416 Instance console: reads the next page of older reports"
+  },
+  "instanceErrorReportFacts": "{version} · {platform} · {time}",
+  "@instanceErrorReportFacts": {
+    "description": "#4416 Instance console: one report's app version, platform and time",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "platform": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceErrorReportCode": "Code {code}",
+  "@instanceErrorReportCode": {
+    "description": "#4416 Instance console: the code the error carried",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceErrorReportStack": "Stack, redacted by the app",
+  "@instanceErrorReportStack": {
+    "description": "#4416 Instance console: heading of a report's stack"
+  }
+}

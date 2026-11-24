@@ -7,19 +7,14 @@
 // nothing, or of another business) says so, and a failed read can be asked
 // again.
 
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show exponentOf;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/trace_logger.dart';
-import '../../../core/ui/app_snack.dart';
-import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_feature.dart';
@@ -30,31 +25,12 @@ import '../domain/stock_reversals.dart';
 import '../providers/stock_providers.dart';
 import 'stock_chain_section.dart';
 import 'stock_day.dart';
+import 'stock_page_shell.dart';
 import 'stock_place_text.dart';
 import 'stock_read_failed.dart';
 import 'stock_reversal_sheet.dart';
+import 'stock_sheet_opener.dart';
 import 'stock_trace_section.dart';
-
-@visibleForTesting
-/// A cost in minor units of [currency] (`250.5`) as the major amount it is
-/// (`2.505`), moving the decimal point and nothing else: no float.
-String stockCostText(String minor, String currency) {
-  final exponent = exponentOf(currency);
-  final negative = minor.startsWith('-');
-  final body = negative ? minor.substring(1) : minor;
-  final point = body.indexOf('.');
-  final whole = point < 0 ? body : body.substring(0, point);
-  final fraction = point < 0 ? '' : body.substring(point + 1);
-  final digits = (whole + fraction).padLeft(exponent + 1 + fraction.length, '0');
-  final cut = digits.length - fraction.length - exponent;
-  var text = '${digits.substring(0, cut)}.${digits.substring(cut)}';
-  text = text
-      .replaceFirst(RegExp(r'0+$'), '')
-      .replaceFirst(RegExp(r'\.$'), '');
-  final padded = exponent > 0 && !text.contains('.') ? '$text.${'0' * exponent}' : text;
-  final trimmedLeading = padded.replaceFirst(RegExp(r'^0+(?=\d)'), '');
-  return '${negative ? '-' : ''}$trimmedLeading $currency';
-}
 
 class StockMovementScreen extends ConsumerWidget {
   const StockMovementScreen({required this.movementId, super.key});
@@ -64,33 +40,28 @@ class StockMovementScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspace = ref.watch(currentWorkspaceProvider).value;
-    final provider = stockMovementProvider((
-      workspaceId: workspace?.id ?? '',
-      id: movementId,
-    ));
-    final movement = workspace == null ? null : ref.watch(provider);
     final held = ref.watch(myPermissionsProvider);
     final seesCost = held.contains(WorkspacePermission.viewFinances) ||
         held.contains(WorkspacePermission.managePurchases);
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.stockMovementTitle),
-        actions: [HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockReversals)],
-      ),
-      body: switch (movement) {
-        null => const LoadingView(),
-        AsyncLoading() => const LoadingView(),
-        AsyncError(:final error) => StockReadFailed(keyName: 'stock-movement', error: error, onRetry: () => ref.invalidate(provider)),
-        AsyncData(value: null) => Center(
-          key: const ValueKey('stock-movement-none'),
-          child: Text(l10n.stockMovementNotFound),
-        ),
-        AsyncData(:final value?) => _Detail(
-          movement: value,
-          seesCost: seesCost,
-          currency: workspace?.currencyCode ?? '',
-        ),
+    return StockPageShell(
+      title: l10n.stockMovementTitle,
+      anchor: HelpAnchor.moneyStockReversals,
+      helpTopic: l10n.permModuleStock,
+      body: (context, ref, workspaceId) {
+        final provider = stockMovementProvider((workspaceId: workspaceId, id: movementId));
+        return switch (ref.watch(provider)) {
+          AsyncLoading() => const LoadingView(),
+          AsyncError(:final error) => StockReadFailed(keyName: 'stock-movement', error: error, onRetry: () => ref.invalidate(provider)),
+          AsyncData(value: null) => Center(
+            key: const ValueKey('stock-movement-none'),
+            child: Text(l10n.stockMovementNotFound),
+          ),
+          AsyncData(:final value?) => _Detail(
+            movement: value,
+            seesCost: seesCost,
+            currency: ref.watch(currentWorkspaceProvider).value?.currencyCode ?? '',
+          ),
+        };
       },
     );
   }
@@ -117,7 +88,7 @@ class _Detail extends ConsumerWidget {
         ? l10n.stockCostNotShown
         : m.unitCost == null
         ? l10n.stockCostUnknown
-        : stockCostText(m.unitCost!, currency);
+        : appFormatOf(context).exactMinor(m.unitCost!, currency);
     Widget row(String key, String label, String value) => ListTile(
       key: ValueKey('stock-movement-$key'),
       title: Text(label),
@@ -137,12 +108,12 @@ class _Detail extends ConsumerWidget {
         row(
           'stored',
           l10n.stockStoredLabel,
-          l10n.stockQuantityWithUnit(m.quantity.text, m.unit),
+          l10n.stockQuantityWithUnit(appFormatOf(context).quantity(m.quantity), m.unit),
         ),
         row(
           'entered',
           l10n.stockEnteredLabel,
-          l10n.stockQuantityWithUnit(m.enteredQuantity.text, m.enteredUnit),
+          l10n.stockQuantityWithUnit(appFormatOf(context).quantity(m.enteredQuantity), m.enteredUnit),
         ),
         row('when', l10n.stockWhenLabel, day),
         row('reason', l10n.creditMoveReasonLabel, stockMoveReasonText(l10n, m.reason)),
@@ -185,14 +156,10 @@ class _Reversals extends ConsumerWidget {
         ),
         switch (allows) {
           AsyncLoading() => const Padding(padding: EdgeInsets.all(AppSpacing.md), child: LoadingView()),
-          AsyncError() => ListTile(
-            key: const ValueKey('stock-reversals-failed'),
-            title: Text(l10n.stockReadFailed),
-            trailing: TextButton(
-              key: const ValueKey('stock-reversals-retry'),
-              onPressed: () => ref.invalidate(stockReversibleProvider(key)),
-              child: Text(l10n.identityConnectRetry),
-            ),
+          AsyncError(:final error) => StockReadFailed(
+            keyName: 'stock-reversals',
+            error: error,
+            onRetry: () => ref.invalidate(stockReversibleProvider(key)),
           ),
           AsyncData(value: final a?) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,14 +169,14 @@ class _Reversals extends ConsumerWidget {
                 title: Text(
                   a.fullyReversed
                       ? l10n.stockReversalFully
-                      : l10n.stockReversalRemaining(a.remaining.text, movement.unit, a.reversed.text),
+                      : l10n.stockReversalRemaining(appFormatOf(context).quantity(a.remaining), movement.unit, appFormatOf(context).quantity(a.reversed)),
                 ),
               ),
               for (final r in a.reversals)
                 ListTile(
                   dense: true,
                   key: ValueKey('stock-reversal-${r.lineId}'),
-                  title: Text(l10n.stockReversalEntry(_kindText(l10n, r.kind), r.quantity.text, movement.unit)),
+                  title: Text(l10n.stockReversalEntry(_kindText(l10n, r.kind), appFormatOf(context).quantity(r.quantity), movement.unit)),
                 ),
               if (mayManage && !a.fullyReversed)
                 Padding(
@@ -246,27 +213,22 @@ class _Reversals extends ConsumerWidget {
     _ => l10n.stockReversalKindCorrection,
   };
 
-  Future<void> _open(BuildContext context, WidgetRef ref, StockReversible allows, StockReturnKind kind) async {
-    try {
-      final places = await ref.read(stockPlaceConfigsProvider(movement.workspaceId).future);
-      if (!context.mounted) return;
-      final done = await showStockReversalSheet(
-        context,
-        ref.read(stockReversalsProvider),
-        source: movement,
-        allows: allows,
-        kind: kind,
-        places: places,
-      );
-      if (done) {
-        ref
-          ..invalidate(stockReversibleProvider((workspaceId: movement.workspaceId, movementId: movement.id)))
-          ..invalidate(stockMovementsWalkProvider)
-          ..invalidate(stockOnHandWalkProvider);
-      }
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the return sheet could not read the stock', error: e, stackTrace: st);
-      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-    }
-  }
+  Future<void> _open(BuildContext context, WidgetRef ref, StockReversible allows, StockReturnKind kind) => StockSheetOpener(ref).open(
+    context,
+    movement.workspaceId,
+    what: 'return',
+    sheet: (choices) => showStockReversalSheet(
+      context,
+      ref.read(stockReversalsProvider),
+      source: movement,
+      allows: allows,
+      kind: kind,
+      places: choices.places,
+    ),
+    reads: [
+      stockReversibleProvider((workspaceId: movement.workspaceId, movementId: movement.id)),
+      stockMovementsWalkProvider,
+      stockOnHandWalkProvider,
+    ],
+  );
 }

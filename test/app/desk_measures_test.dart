@@ -68,6 +68,7 @@ const _measured = <(String, PageMeasure, String)>[
   ('/settings/roles-of-this-space', _reading, '/settings/roles-of-this-space'),
   ('/settings/what-you-can-do', _reading, '/settings/what-you-can-do'),
   ('/settings/questions', _form, '/settings/questions'),
+  ('/settings/units', _form, '/settings/units'),
   ('/attention', _work, '/attention'),
   ('/reservations/period', _work, '/reservations/period'),
   ('/setup', _work, '/setup'),

@@ -150,10 +150,6 @@
   "@taxRefMemberEmpty": {
     "description": "#2477 tax reference: Hint in the form of an EU member."
   },
-  "taxRefLoadFailed": "Die Referenzdaten konnten nicht geladen werden.",
-  "@taxRefLoadFailed": {
-    "description": "#2477 tax reference: error text when the list cannot load."
-  },
   "taxRefDomainThreshold": "Schwellenwerte",
   "@taxRefDomainThreshold": {
     "description": "#2479 tax reference: Domain filter: small-business turnover thresholds."

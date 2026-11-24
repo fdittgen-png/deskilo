@@ -13,8 +13,9 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/dictionary_labels.dart';
@@ -55,7 +56,6 @@ class _SetupServicesStepState extends ConsumerState<SetupServicesStep> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     final money = appFormatOf(context).moneyIn(widget.currencyCode);
     return switch (ref.watch(allServicesProvider)) {
       AsyncValue(hasValue: true, :final value) => SetupStepLayout(
@@ -68,12 +68,12 @@ class _SetupServicesStepState extends ConsumerState<SetupServicesStep> {
           money: money,
         ),
       ),
-      AsyncError() => Padding(
+      AsyncError(:final error) => Padding(
         padding: AppSpacing.lgAll,
-        child: InlineBanner(
+        child: ReadFailureBanner(
           key: const ValueKey('setup-services-failed'),
-          icon: Icons.error_outline,
-          text: l10n.setupStepLoadFailed,
+          error: error,
+          onRetry: () => ref.invalidate(allServicesProvider),
         ),
       ),
       _ => const LoadingView(),
@@ -121,7 +121,7 @@ class _SetupServicesStepState extends ConsumerState<SetupServicesStep> {
             ),
             TextButton(
               key: const ValueKey('setup-services-open'),
-              onPressed: () => context.push('/services'),
+              onPressed: () => context.push(Routes.services),
               child: Text(l10n.setupServicesMore),
             ),
           ],

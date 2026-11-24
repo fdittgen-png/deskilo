@@ -22,12 +22,13 @@
 // the sheet resolves no repository.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
+import '../../../core/data/app_failure_from.dart';
+import '../../../core/failure/app_failure.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/billing_rules.dart';
 import '../domain/command_receipt.dart';
 import '../domain/invoice_action_commands.dart';
 import '../domain/invoice_queries.dart';
-import 'command_failure.dart';
 
 /// Whether an open [invoice] may be regrouped: not voided, not already
 /// regrouped or a regrouping itself, not of a kind this app does not know
@@ -78,29 +79,6 @@ final class SettleAttempt {
   final String requestId;
 }
 
-sealed class SettleOutcome {
-  const SettleOutcome(this.attempt);
-  final SettleAttempt attempt;
-}
-
-/// The regrouping exists; [number] is what the person is shown.
-final class Settled extends SettleOutcome {
-  const Settled(super.attempt, this.number);
-  final String number;
-}
-
-/// The server said no, in words: nothing was regrouped.
-final class SettleRefused extends SettleOutcome {
-  const SettleRefused(super.attempt, this.error);
-  final Object error;
-}
-
-/// The answer did not come back usable; whether it applied is not known.
-final class SettleUnknown extends SettleOutcome {
-  const SettleUnknown(super.attempt, this.cause);
-  final Object cause;
-}
-
 /// Regrouping, as the decision behind it.
 class Settlements {
   const Settlements(this._commands, this._invoices);
@@ -111,38 +89,40 @@ class Settlements {
   /// Settles [SettleAttempt.invoiceIds] into one document, ONCE, and answers
   /// the NUMBER a person is shown (the id when the fresh list does not carry
   /// the new document — they still get something they can quote). A lost or
-  /// undecodable answer is [SettleUnknown], never a reason to send again.
-  Future<SettleOutcome> settle(SettleAttempt attempt) async {
-    try {
+  /// undecodable answer is [CommandUnreached], never a reason to send again.
+  Future<CommandOutcome<String>> settle(SettleAttempt attempt) => runCommand(
+    () async {
       final id = await _commands.settleInvoicesOnce(
         workspaceId: attempt.workspaceId,
         memberId: attempt.memberId,
         invoiceIds: attempt.invoiceIds,
         requestId: attempt.requestId,
       );
-      return Settled(attempt, await _numberOf(attempt.workspaceId, id));
-    } on Object catch (e, st) {
-      TraceLogger.instance.error('money', 'settle invoices failed', error: e, stackTrace: st);
-      return isDefiniteRefusal(e) ? SettleRefused(attempt, e) : SettleUnknown(attempt, e);
-    }
-  }
+      return _numberOf(attempt.workspaceId, id);
+    },
+    what: 'settle invoices failed',
+  );
 
-  /// Reads THAT request's receipt on the attempt's own workspace.
-  Future<SettleOutcome> look(SettleUnknown unknown) async {
-    final attempt = unknown.attempt;
+  /// Reads THAT request's receipt on [attempt]'s own workspace: the number
+  /// when it applied, otherwise the same [unknown].
+  Future<CommandOutcome<String>> look(
+    SettleAttempt attempt,
+    CommandUnreached<String> unknown,
+  ) async {
     try {
       final receipt = await _invoices.invoiceCommandOutcome(
         workspaceId: attempt.workspaceId,
         requestId: attempt.requestId,
       );
       return switch (receipt.state) {
-        CommandReceiptState.applied =>
-          Settled(attempt, await _numberOf(attempt.workspaceId, receipt.invoiceId!)),
+        CommandReceiptState.applied => CommandDone(
+          await _numberOf(attempt.workspaceId, receipt.invoiceId!),
+        ),
         _ => unknown,
       };
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'settlement receipt unreadable', error: e, stackTrace: st);
-      return SettleUnknown(attempt, e);
+      return CommandUnreached(appFailureFrom(e));
     }
   }
 

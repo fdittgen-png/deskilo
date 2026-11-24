@@ -8,6 +8,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -66,7 +67,9 @@ class TemplateApplySheet extends ConsumerStatefulWidget {
 }
 
 class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
-  late final Future<TemplatePreview> _preview =
+  late Future<TemplatePreview> _preview = _readPreview();
+
+  Future<TemplatePreview> _readPreview() =>
       previewTemplate(ref, widget.workspaceId, widget.template);
   Set<String>? _selected;
   bool _busy = false;
@@ -176,9 +179,9 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
           if (snap.hasError) {
             return Padding(
               padding: AppSpacing.gutterAll,
-              child: InlineBanner(
-                icon: Icons.error_outline,
-                text: l10n.libraryPreviewFailed,
+              child: ReadFailureBanner(
+                error: snap.error!,
+                onRetry: () => setState(() => _preview = _readPreview()),
               ),
             );
           }

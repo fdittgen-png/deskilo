@@ -10,6 +10,7 @@ import 'package:deskilo/core/demo/data/demo_item_groups.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/ui/dropdown_field.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/stock/domain/item_groups.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/presentation/item_group_assign_dialog.dart';
 import 'package:deskilo/features/stock/presentation/item_groups_screen.dart';
@@ -218,7 +219,7 @@ void main() {
         final w = await _open(tester, size);
         final groups = await w.groups('ws-1');
         final drinks = groups.firstWhere((g) => g.id == 'demo-group-drinks');
-        await w.save('ws-1', requestId: 'r-fin', groupId: drinks.id, expectedRevision: drinks.revision, body: {'parameters': {'vat_rate_id': 'vat-std', 'target_margin_bps': 2500}});
+        await w.save('ws-1', requestId: 'r-fin', groupId: drinks.id, expectedRevision: drinks.revision, body: ItemGroupDraft(name: drinks.name, parentId: drinks.parentId, parameters: {'vat_rate_id': 'vat-std', 'target_margin_bps': 2500}));
         ProviderScope.containerOf(tester.element(find.byType(Scaffold).first)).invalidate(itemGroupListProvider('ws-1'));
         await _frames(tester);
         expect(find.byKey(const ValueKey('item-group-vat')), findsNothing);
@@ -243,6 +244,15 @@ void main() {
           await _tap(tester, 'item-group-save');
           expect(find.text(_en.stockReasonOutOfRange), findsOneWidget, reason: bad);
         }
+      });
+
+      testWidgets('a name another group of the same level has is refused in the words of a group (#4402)', (tester) async {
+        await _open(tester, size);
+        await _tap(tester, 'item-group-add');
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'homeware');
+        await _tap(tester, 'item-group-save');
+        expect(find.text(_en.stockReasonGroupNameDuplicate), findsOneWidget);
+        expect(find.text(_en.stockReasonNameDuplicate), findsNothing, reason: 'the words of a variant are not the words of a group');
       });
 
       testWidgets('an empty group is created, then deleted', (tester) async {
@@ -273,7 +283,7 @@ void main() {
           ),
         );
         final drinks = (await w.groups('ws-1')).firstWhere((g) => g.id == 'demo-group-drinks');
-        await w.save('ws-1', requestId: 'r-1', groupId: drinks.id, expectedRevision: drinks.revision, body: {'parameters': {'tag_mode': 'per_batch'}});
+        await w.save('ws-1', requestId: 'r-1', groupId: drinks.id, expectedRevision: drinks.revision, body: ItemGroupDraft(name: drinks.name, parentId: drinks.parentId, parameters: {'tag_mode': 'per_batch'}));
         await tester.tap(find.byKey(const ValueKey('open')));
         await _frames(tester);
         final row = find.byKey(const ValueKey('item-group-param-tag_mode'));
@@ -299,7 +309,7 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('item-group-demo-group-drinks')));
         await _frames(tester);
         await tester.enterText(find.byKey(const ValueKey('item-group-margin')), '40');
-        await w.save('ws-1', requestId: 'r-moved', groupId: drinks.id, expectedRevision: drinks.revision, body: {'parameters': {'target_margin_bps': 1000}});
+        await w.save('ws-1', requestId: 'r-moved', groupId: drinks.id, expectedRevision: drinks.revision, body: ItemGroupDraft(name: drinks.name, parentId: drinks.parentId, parameters: {'target_margin_bps': 1000}));
         await _tap(tester, 'item-group-save');
         expect(find.text(_en.stockEditStale), findsOneWidget);
         expect((await w.groups('ws-1')).firstWhere((g) => g.id == 'demo-group-drinks').params['target_margin_bps'], 1000, reason: 'a refused save changes nothing');

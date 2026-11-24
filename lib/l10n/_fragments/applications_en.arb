@@ -39,10 +39,6 @@
   "@applicationDecisionComment": {
     "description": "Workspace admission history and discussion (#1791)"
   },
-  "applicationsLoadFailed": "Could not load your workspace requests. Please try again.",
-  "@applicationsLoadFailed": {
-    "description": "Admission action failure (#1791)"
-  },
   "applicationReplyFailed": "Your message was not sent. Your draft is kept; please try again.",
   "@applicationReplyFailed": {
     "description": "Admission action failure (#1791)"

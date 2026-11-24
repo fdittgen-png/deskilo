@@ -10,13 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
-import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -24,6 +22,7 @@ import '../domain/stock_page.dart';
 import '../domain/stock_trace.dart';
 import '../providers/stock_providers.dart';
 import 'stock_day.dart';
+import 'stock_page_shell.dart';
 import 'stock_read_failed.dart';
 
 class StockValueScreen extends ConsumerWidget {
@@ -32,28 +31,23 @@ class StockValueScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
     final held = ref.watch(myPermissionsProvider);
     final seesCost = held.contains(WorkspacePermission.viewFinances) || held.contains(WorkspacePermission.managePurchases);
-    final Widget body;
-    if (workspaceId == null) {
-      body = const LoadingView();
-    } else if (!seesCost) {
-      body = Center(key: const ValueKey('stock-value-needs-right'), child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.stockValueNeedsRight)));
-    } else {
-      final provider = stockValuationProvider(workspaceId);
-      body = switch (ref.watch(provider)) {
-        AsyncLoading() => const LoadingView(),
-        AsyncError(:final error) => StockReadFailed(keyName: 'stock-value', error: error, onRetry: () => ref.invalidate(provider)),
-        AsyncData(:final value) => _Value(valuation: value, workspaceId: workspaceId),
-      };
-    }
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.stockValueTitle),
-        actions: [HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockValue)],
-      ),
-      body: body,
+    return StockPageShell(
+      title: l10n.stockValueTitle,
+      anchor: HelpAnchor.moneyStockValue,
+      helpTopic: l10n.permModuleStock,
+      body: (context, ref, workspaceId) {
+        if (!seesCost) {
+          return Center(key: const ValueKey('stock-value-needs-right'), child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.stockValueNeedsRight)));
+        }
+        final provider = stockValuationProvider(workspaceId);
+        return switch (ref.watch(provider)) {
+          AsyncLoading() => const LoadingView(),
+          AsyncError(:final error) => StockReadFailed(keyName: 'stock-value', error: error, onRetry: () => ref.invalidate(provider)),
+          AsyncData(:final value) => _Value(valuation: value, workspaceId: workspaceId),
+        };
+      },
     );
   }
 }
@@ -98,7 +92,7 @@ class _Value extends ConsumerWidget {
               key: ValueKey('stock-value-uncosted-${u.itemId}-${u.variantId ?? ''}'),
               contentPadding: EdgeInsets.zero,
               title: Text(name(u.itemId)),
-              subtitle: Text('${l10n.stockQuantityWithUnit(u.quantity.text, unit(u.itemId))} · ${u.noLot ? l10n.stockValueUncostedNoLot : l10n.stockValueUncostedNoCost}'),
+              subtitle: Text('${l10n.stockQuantityWithUnit(appFormatOf(context).quantity(u.quantity), unit(u.itemId))} · ${u.noLot ? l10n.stockValueUncostedNoLot : l10n.stockValueUncostedNoCost}'),
             ),
           if (v.uncostedTruncated) Text(l10n.stockTraceMore),
         ],
@@ -110,7 +104,7 @@ class _Value extends ConsumerWidget {
               key: ValueKey('stock-value-line-${line.lotId ?? line.itemId}'),
               contentPadding: EdgeInsets.zero,
               title: Text(name(line.itemId)),
-              subtitle: Text(l10n.stockValueLine(l10n.stockQuantityWithUnit(line.quantity.text, unit(line.itemId)), money.formatMinor(line.valueMinor))),
+              subtitle: Text(l10n.stockValueLine(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(line.quantity), unit(line.itemId)), money.formatMinor(line.valueMinor))),
             ),
           if (v.linesTruncated) Text(l10n.stockTraceMore),
         ],

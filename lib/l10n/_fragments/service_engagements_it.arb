@@ -4,7 +4,6 @@
   "engagementsIntro": "Seguite ogni servizio ordinato: ordinato, avviato, concluso. Il preventivo, la fattura e i pagamenti restano invariati accanto.",
   "engagementsNew": "Nuovo servizio",
   "engagementsEmpty": "Nessun servizio per ora. Apritene uno da un preventivo accettato o aggiungetene uno direttamente.",
-  "engagementsLoadFailed": "Non è stato possibile leggere i servizi. Non è un elenco vuoto.",
   "engagementStateOrdered": "Ordinato",
   "engagementStateStarted": "Avviato",
   "engagementStateDone": "Concluso",
@@ -43,9 +42,6 @@
     "description": "service engagements (#4178)"
   },
   "@engagementsEmpty": {
-    "description": "service engagements (#4178)"
-  },
-  "@engagementsLoadFailed": {
     "description": "service engagements (#4178)"
   },
   "@engagementStateOrdered": {

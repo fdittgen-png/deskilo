@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/shortcuts/app_shortcuts.dart';
 import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -49,7 +50,7 @@ class PurchaseOrdersScreen extends ConsumerWidget {
           key: const ValueKey('purchase-order-mail-settings'),
           tooltip: l10n.businessMailSenderWhere,
           icon: const Icon(Icons.forward_to_inbox_outlined),
-          onPressed: () => context.push('/workspace-settings'),
+          onPressed: () => context.push(Routes.workspaceSettings),
         ),
       if (desk && mayAdd)
         TextButton.icon(

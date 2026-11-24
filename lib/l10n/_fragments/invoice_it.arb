@@ -383,7 +383,6 @@
   "fecAccountRevenue": "Ricavi",
   "fecMissingSiren": "Il FEC prende il nome dal numero di registrazione — inseriscilo prima in Identità legale.",
   "invoiceEInvoiceStaleIdentity": "La sua identità legale ora è completa, ma questa fattura è stata firmata prima e conserva ciò con cui è stata emessa. La segnali come errata ed emetta una sostitutiva perché porti la nuova identità.",
-  "einvoiceConfigUnavailable": "Impossibile caricare la configurazione della piattaforma. Controlli la connessione e riprovi.",
   "einvoiceEnvTitle": "Inviare a quale piattaforma?",
   "einvoiceEnvProd": "Produzione",
   "einvoiceEnvUat": "UAT (piattaforma di prova)",

@@ -64,6 +64,7 @@ class AvailabilityScreen extends ConsumerWidget {
     ];
     final failed = [
       for (final (value, retry) in reads)
+        // #4414 kept: the failed reloads, shown above with ReadFailureBanner
         if (value.hasValue && value.hasError) (value, retry),
     ];
 
@@ -123,14 +124,15 @@ class AvailabilityScreen extends ConsumerWidget {
               const CapacityKpiCard(), // #1918, gated inside
             ],
           ),
-        (AsyncError(), _, _) ||
-        (_, AsyncError(), _) ||
-        (_, _, AsyncError()) =>
-          Center(
-            child: Text(
-              l10n.workspaceGenericError,
-            ),
-          ),
+        (AsyncError(:final error), _, _) ||
+        (_, AsyncError(:final error), _) ||
+        (_, _, AsyncError(:final error)) => ReadFailureBanner(
+          error: error,
+          onRetry: () => ref
+            ..invalidate(openWeekdaysProvider)
+            ..invalidate(bookingGranularityProvider)
+            ..invalidate(closureDaysProvider),
+        ),
         _ => const LoadingView(),
       },
     );

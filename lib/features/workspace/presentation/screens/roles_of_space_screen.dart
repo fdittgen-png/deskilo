@@ -128,7 +128,7 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
         loading: () => const LoadingView(),
         // A refusal already reached the trace and the snack through
         // runGuarded; a screen-sized sentence would be a second voice.
-        error: (e, _) => const SizedBox.shrink(),
+        error: (e, _) => const SizedBox.shrink(), // #4414 kept: said by runGuarded
         data: (list) => ListView(
           padding: AppSpacing.gutterAll,
           children: [

@@ -1,158 +1,168 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4169 (B1) -- the words of a refusal: the server's reason, said in the
-// reader's language under the field it names.
+// #4169 (B1), #4402 -- the words of a stock refusal, in one place: the
+// server's reason (a [StockRefusal], read at the data boundary) said in the
+// reader's language under the field it names, and what any failed stock
+// command says. A reason has one sentence; the few reasons two kinds of thing
+// share (a duplicate name of a variant or of a group, a unit in use by an item
+// or as a unit of measure, an unknown tag) take the words of the [StockSubject]
+// the screen saves. A missing choice the app sees itself has its own words
+// (`stockRequired...`), never a server reason.
 import '../../../core/codes/dk_code.dart';
+import '../../../core/trace/refusal_text.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
 
-/// The text of [reason] (`code_duplicate`, `factor_invalid`, ...).
-String stockReasonText(AppLocalizations l10n, String reason) =>
-    _itemReason(l10n, reason) ??
-    _placeReason(l10n, reason) ??
-    _variantReason(l10n, reason) ??
-    _receivingReason(l10n, reason) ??
-    _operationReason(l10n, reason) ??
-    _groupReason(l10n, reason) ??
-    _tagReason(l10n, reason) ??
-    l10n.stockReasonOther;
+/// What a screen saves, for the few reasons that read differently by it.
+enum StockSubject {
+  /// An item, a place, a variant, a movement: the stock's own words.
+  stock,
 
-String? _itemReason(AppLocalizations l10n, String reason) => switch (reason) {
-  'unit_unknown' => l10n.stockReasonUnitUnknown,
-  'unit_duplicate' => l10n.stockReasonUnitDuplicate,
-  'factor_invalid' => l10n.stockReasonFactorInvalid,
-  'default_purchase_twice' => l10n.stockReasonDefaultPurchaseTwice,
-  'default_sale_twice' => l10n.stockReasonDefaultSaleTwice,
-  'code_malformed' => l10n.stockReasonCodeMalformed,
-  'code_duplicate' => l10n.stockReasonCodeDuplicate,
-  'gtin_length' => l10n.stockReasonGtinLength,
-  'gtin_check' => l10n.stockReasonGtinCheck,
-  'registry_unit' => l10n.stockReasonRegistryUnit,
-  'dimension_mismatch' => l10n.stockReasonDimensionMismatch,
-  'stock_on_hand' => l10n.stockReasonStockOnHand,
-  'tracking_unsupported' => l10n.stockReasonTrackingUnsupported,
-  'out_of_range' => l10n.stockReasonOutOfRange,
-  _ => null,
+  /// An item group.
+  group,
+
+  /// A tag or a named piece.
+  tag,
+
+  /// A unit of measure of the business.
+  measureUnit,
+}
+
+/// The sentence of [reason] under its field.
+String stockRefusalText(AppLocalizations l10n, StockRefusal reason, {StockSubject subject = StockSubject.stock}) =>
+    switch ((subject, reason)) {
+      (StockSubject.group, StockRefusal.nameDuplicate) => l10n.stockReasonGroupNameDuplicate,
+      (StockSubject.measureUnit, StockRefusal.unitInUse) => l10n.measureReasonInUse,
+      _ => _reasonText(l10n, reason),
+    };
+
+String _reasonText(AppLocalizations l10n, StockRefusal reason) => switch (reason) {
+  StockRefusal.codeDuplicate => l10n.stockReasonCodeDuplicate,
+  StockRefusal.codeMalformed => l10n.stockReasonCodeMalformed,
+  StockRefusal.codeUnitRemoved => l10n.stockReasonCodeUnitRemoved,
+  StockRefusal.costInvalid => l10n.stockReasonCostInvalid,
+  StockRefusal.costRateMissing => l10n.stockReasonCostRateMissing,
+  StockRefusal.defaultPurchaseTwice => l10n.stockReasonDefaultPurchaseTwice,
+  StockRefusal.defaultSaleTwice => l10n.stockReasonDefaultSaleTwice,
+  StockRefusal.depth => l10n.itemGroupReasonDepth,
+  StockRefusal.dimensionInvalid => l10n.measureReasonDimension,
+  StockRefusal.dimensionMismatch => l10n.stockReasonDimensionMismatch,
+  StockRefusal.eceInvalid => l10n.measureReasonEce,
+  StockRefusal.expiryMalformed => l10n.stockReasonExpiryMalformed,
+  StockRefusal.expiryRequired => l10n.stockReasonExpiryRequired,
+  StockRefusal.factorInvalid => l10n.stockReasonFactorInvalid,
+  StockRefusal.groupUnknown => l10n.itemGroupReasonGroupUnknown,
+  StockRefusal.gtinCheck => l10n.stockReasonGtinCheck,
+  StockRefusal.gtinLength => l10n.stockReasonGtinLength,
+  StockRefusal.hasSubgroups => l10n.itemGroupReasonHasSubgroups,
+  StockRefusal.hasTags => l10n.stockReasonHasTags,
+  StockRefusal.homeInvalid => l10n.stockReasonHomeInvalid,
+  StockRefusal.inUse => l10n.itemGroupReasonInUse,
+  StockRefusal.inexact => l10n.measureReasonInexact,
+  StockRefusal.itemForeign => l10n.stockReasonItemForeign,
+  StockRefusal.itemNotStocked => l10n.stockReasonItemNotStocked,
+  StockRefusal.itemUnknown => l10n.stockReasonGroupItemUnknown,
+  StockRefusal.kindUnknown => l10n.stockReasonKindUnknown,
+  StockRefusal.labelRequired => l10n.measureReasonName,
+  StockRefusal.levelChildrenWrong => l10n.stockReasonLevelChildrenWrong,
+  StockRefusal.levelParentMissing => l10n.stockReasonLevelParentMissing,
+  StockRefusal.levelParentWrong => l10n.stockReasonLevelParentWrong,
+  StockRefusal.lineConflict => l10n.stockReasonLineConflict,
+  StockRefusal.lineUnknown => l10n.stockReasonLineUnknown,
+  StockRefusal.locationCycle => l10n.stockReasonLocationCycle,
+  StockRefusal.locationDefault => l10n.stockReasonLocationDefault,
+  StockRefusal.locationForeign => l10n.stockReasonLocationForeign,
+  StockRefusal.locationHasChildren => l10n.stockReasonLocationHasChildren,
+  StockRefusal.locationOccupied => l10n.stockReasonLocationOccupied,
+  StockRefusal.locationParentForeign => l10n.stockReasonLocationParentForeign,
+  StockRefusal.locationVirtual => l10n.stockReasonLocationVirtual,
+  StockRefusal.lotCodeRequired => l10n.stockReasonLotCodeRequired,
+  StockRefusal.lotExpired => l10n.stockReasonLotExpired,
+  StockRefusal.lotGroupConflict => l10n.stockReasonLotGroupConflict,
+  StockRefusal.malformed => l10n.stockReasonMalformed,
+  StockRefusal.mappingDuplicate => l10n.stockReasonMappingDuplicate,
+  StockRefusal.mappingUnknown => l10n.stockReasonMappingUnknown,
+  StockRefusal.nameDuplicate => l10n.stockReasonNameDuplicate,
+  StockRefusal.nameLength => l10n.stockReasonGroupNameLength,
+  StockRefusal.nameMalformed => l10n.stockReasonNameMalformed,
+  StockRefusal.needsSerial => l10n.itemGroupReasonNeedsSerial,
+  StockRefusal.notOverridable => l10n.itemGroupReasonNotOverridable,
+  StockRefusal.oneSource => l10n.stockReasonOneSource,
+  StockRefusal.outOfRange => l10n.stockReasonOutOfRange,
+  StockRefusal.overAllocated => l10n.stockReasonOverAllocated,
+  StockRefusal.parentInactive => l10n.stockReasonParentInactive,
+  StockRefusal.pickRoleUnknown => l10n.stockReasonPickRoleUnknown,
+  StockRefusal.placeUnknown => l10n.stockReasonGroupPlaceUnknown,
+  StockRefusal.pointFixed => l10n.stockReasonPointFixed,
+  StockRefusal.pointTwice => l10n.stockReasonPointTwice,
+  StockRefusal.priceInvalid => l10n.stockReasonPriceInvalid,
+  StockRefusal.quantityAndTarget => l10n.stockReasonQuantityAndTarget,
+  StockRefusal.quantityInvalid => l10n.stockReasonQuantityInvalid,
+  StockRefusal.reasonPlaces => l10n.stockReasonReasonPlaces,
+  StockRefusal.receiptUnknown => l10n.stockReasonReceiptUnknown,
+  StockRefusal.receiveOver => l10n.stockReasonReceiveOver,
+  StockRefusal.registryUnit => l10n.stockReasonRegistryUnit,
+  StockRefusal.required => l10n.stockReasonGroupNameRequired,
+  StockRefusal.sameSite => l10n.stockReasonSameSite,
+  StockRefusal.siteUnknown => l10n.stockReasonSiteUnknown,
+  StockRefusal.stockOnHand => l10n.stockReasonStockOnHand,
+  StockRefusal.stockWithoutVariant => l10n.stockReasonStockWithoutVariant,
+  StockRefusal.supplierForeign => l10n.stockReasonSupplierForeign,
+  StockRefusal.tagMalformed => l10n.stockReasonTagMalformed,
+  StockRefusal.tagModeNone => l10n.stockReasonTagModeNone,
+  StockRefusal.tagOwnerInactive => l10n.stockReasonTagOwnerInactive,
+  StockRefusal.tagOwnerUnknown => l10n.stockReasonTagOwnerUnknown,
+  StockRefusal.tagPerUnitItem => l10n.stockReasonTagPerUnitItem,
+  StockRefusal.targetBelowPoint => l10n.stockReasonTargetBelowPoint,
+  StockRefusal.tooLong => l10n.stockReasonTooLong,
+  StockRefusal.trackingUnsupported => l10n.stockReasonTrackingUnsupported,
+  StockRefusal.transferNeedsTransit => l10n.stockReasonTransferNeedsTransit,
+  StockRefusal.transferUnknown => l10n.stockReasonTransferUnknown,
+  StockRefusal.transitIsSystem => l10n.stockReasonTransitIsSystem,
+  StockRefusal.unitDuplicate => l10n.stockReasonUnitDuplicate,
+  StockRefusal.unitFixed => l10n.measureReasonFixed,
+  StockRefusal.unitInUse => l10n.stockReasonUnitInUse,
+  StockRefusal.unitNotOfItem => l10n.stockReasonUnitNotOfItem,
+  StockRefusal.unitUnknown => l10n.stockReasonUnitUnknown,
+  StockRefusal.unitUnmapped => l10n.stockReasonUnitUnmapped,
+  StockRefusal.unitsNotTracked => l10n.stockReasonUnitsNotTracked,
+  StockRefusal.unknownReference => l10n.stockReasonGroupUnknownReference,
+  StockRefusal.valueForeign => l10n.stockReasonValueForeign,
+  StockRefusal.valueRequired => l10n.stockReasonGroupValueRequired,
+  StockRefusal.variantCombinationDuplicate => l10n.stockReasonCombinationDuplicate,
+  StockRefusal.variantHasStock => l10n.stockReasonVariantHasStock,
+  StockRefusal.variantInUse => l10n.stockReasonVariantInUse,
+  StockRefusal.variantRequired => l10n.stockReasonVariantRequired,
+  StockRefusal.variantUnknown => l10n.stockReasonVariantUnknown,
+  StockRefusal.variantValuesMissing => l10n.stockReasonValuesMissing,
+  StockRefusal.vatRateUnknown => l10n.stockReasonGroupVatRateUnknown,
+  StockRefusal.wrongSite => l10n.stockReasonWrongSite,
+  // no words of their own yet: the generic refusal
+  StockRefusal.oneSubject ||
+  StockRefusal.preferredTwice ||
+  StockRefusal.tagsOff ||
+  StockRefusal.unknown ||
+  StockRefusal.other => l10n.stockReasonOther,
 };
 
-String? _placeReason(AppLocalizations l10n, String reason) => switch (reason) {
-  'too_long' => l10n.stockReasonTooLong,
-  'kind_unknown' => l10n.stockReasonKindUnknown,
-  'location_cycle' => l10n.stockReasonLocationCycle,
-  'level_parent_wrong' => l10n.stockReasonLevelParentWrong,
-  'level_parent_missing' => l10n.stockReasonLevelParentMissing,
-  'level_children_wrong' => l10n.stockReasonLevelChildrenWrong,
-  'pick_role_unknown' => l10n.stockReasonPickRoleUnknown,
-  'mapping_unknown' => l10n.stockReasonMappingUnknown,
-  'site_unknown' => l10n.stockReasonSiteUnknown,
-  'point_fixed' => l10n.stockReasonPointFixed,
-  'quantity_and_target' => l10n.stockReasonQuantityAndTarget,
-  'target_below_point' => l10n.stockReasonTargetBelowPoint,
-  'point_twice' => l10n.stockReasonPointTwice,
-  'home_invalid' => l10n.stockReasonHomeInvalid,
-  'location_parent_foreign' => l10n.stockReasonLocationParentForeign,
-  'location_virtual' => l10n.stockReasonLocationVirtual,
-  'parent_inactive' => l10n.stockReasonParentInactive,
-  'location_occupied' => l10n.stockReasonLocationOccupied,
-  'location_has_children' => l10n.stockReasonLocationHasChildren,
-  'location_default' => l10n.stockReasonLocationDefault,
-  _ => null,
-};
-
-String? _variantReason(AppLocalizations l10n, String reason) => switch (reason) {
-  'variant_unknown' => l10n.stockReasonVariantUnknown,
-  'variant_combination_duplicate' => l10n.stockReasonCombinationDuplicate,
-  'variant_values_missing' => l10n.stockReasonValuesMissing,
-  'value_foreign' => l10n.stockReasonValueForeign,
-  'price_invalid' => l10n.stockReasonPriceInvalid,
-  'variant_in_use' => l10n.stockReasonVariantInUse,
-  'variant_has_stock' => l10n.stockReasonVariantHasStock,
-  'stock_without_variant' => l10n.stockReasonStockWithoutVariant,
-  'name_malformed' => l10n.stockReasonNameMalformed,
-  'name_duplicate' => l10n.stockReasonNameDuplicate,
-  'supplier_foreign' => l10n.stockReasonSupplierForeign,
-  'item_foreign' => l10n.stockReasonItemForeign,
-  'mapping_duplicate' => l10n.stockReasonMappingDuplicate,
-  'unit_not_of_item' => l10n.stockReasonUnitNotOfItem,
-  'unit_in_use' => l10n.stockReasonUnitInUse,
-  'code_unit_removed' => l10n.stockReasonCodeUnitRemoved,
-  'malformed' => l10n.stockReasonMalformed,
-  _ => null,
-};
-
-String? _receivingReason(AppLocalizations l10n, String reason) => switch (reason) {
-  'over_allocated' => l10n.stockReasonOverAllocated,
-  'line_unknown' => l10n.stockReasonLineUnknown,
-  'line_conflict' => l10n.stockReasonLineConflict,
-  'item_not_stocked' => l10n.stockReasonItemNotStocked,
-  'unit_unmapped' => l10n.stockReasonUnitUnmapped,
-  'quantity_invalid' => l10n.stockReasonQuantityInvalid,
-  'variant_required' => l10n.stockReasonVariantRequired,
-  'lot_code_required' => l10n.stockReasonLotCodeRequired,
-  'expiry_required' => l10n.stockReasonExpiryRequired,
-  'expiry_malformed' => l10n.stockReasonExpiryMalformed,
-  'cost_invalid' => l10n.stockReasonCostInvalid,
-  'cost_rate_missing' => l10n.stockReasonCostRateMissing,
-  'lot_group_conflict' => l10n.stockReasonLotGroupConflict,
-  'receipt_unknown' => l10n.stockReasonReceiptUnknown,
-  'location_foreign' => l10n.stockReasonLocationForeign,
-  _ => null,
-};
-
-String? _operationReason(AppLocalizations l10n, String reason) => switch (reason) {
-  'reason_places' => l10n.stockReasonReasonPlaces,
-  'transit_is_system' => l10n.stockReasonTransitIsSystem,
-  'transfer_needs_transit' => l10n.stockReasonTransferNeedsTransit,
-  'lot_expired' => l10n.stockReasonLotExpired,
-  'one_source' => l10n.stockReasonOneSource,
-  'receive_over' => l10n.stockReasonReceiveOver,
-  'wrong_site' => l10n.stockReasonWrongSite,
-  'same_site' => l10n.stockReasonSameSite,
-  'transfer_unknown' => l10n.stockReasonTransferUnknown,
-  _ => null,
-};
-
-/// What a failed save says: a stale read, a unit the first movement fixed, a
-/// refusal with its reason, or (anything else) that nothing was saved.
-String stockSaveProblem(AppLocalizations l10n, Object error) => switch (error) {
-  StockConfigStale() => l10n.stockEditStale,
-  StockConfigInUse() => l10n.stockEditInUse,
-  StockNotEnough() => l10n.refusalStockNotEnough,
-  StockUnitRefused(code: DkCode.dkg27) => l10n.refusalStockUnitChanged,
-  StockUnitRefused(code: DkCode.dkg29) => l10n.refusalStockUnitCodeTaken,
-  StockUnitRefused() => l10n.refusalStockUnitContent,
-  StockConfigRefused(:final reason) => stockReasonText(l10n, reason),
-  _ => l10n.stockEditNotSaved,
-};
-
-/// #4361 -- the reasons of the item groups.
-String? _groupReason(AppLocalizations l10n, String reason) => switch (reason) {
-  'depth' => l10n.stockReasonGroupDepth,
-  'needs_serial' || 'per_unit_needs_serial' => l10n.stockReasonGroupNeedsSerial,
-  'name_duplicate' => l10n.stockReasonGroupNameDuplicate,
-  'name_length' => l10n.stockReasonGroupNameLength,
-  'required' => l10n.stockReasonGroupNameRequired,
-  'group_unknown' => l10n.stockReasonGroupUnknown,
-  'unknown_reference' => l10n.stockReasonGroupUnknownReference,
-  'has_subgroups' => l10n.stockReasonGroupHasSubgroups,
-  'in_use' => l10n.stockReasonGroupInUse,
-  'not_overridable' => l10n.stockReasonGroupNotOverridable,
-  'value_required' => l10n.stockReasonGroupValueRequired,
-  'vat_rate_unknown' => l10n.stockReasonGroupVatRateUnknown,
-  'place_unknown' => l10n.stockReasonGroupPlaceUnknown,
-  'item_unknown' => l10n.stockReasonGroupItemUnknown,
-  'has_movements' => l10n.stockReasonGroupHasMovements,
-  _ => null,
-};
-
-/// #4362 -- the reasons of the tags and the named pieces.
-String? _tagReason(AppLocalizations l10n, String reason) => switch (reason) {
-  'has_tags' => l10n.stockReasonHasTags,
-  'tag_mode_none' => l10n.stockReasonTagModeNone,
-  'tag_per_unit_item' => l10n.stockReasonTagPerUnitItem,
-  'tag_malformed' => l10n.stockReasonTagMalformed,
-  'tag_owner_unknown' => l10n.stockReasonTagOwnerUnknown,
-  'tag_owner_inactive' => l10n.stockReasonTagOwnerInactive,
-  'units_not_tracked' => l10n.stockReasonUnitsNotTracked,
-  _ => null,
-};
+/// What a failed stock command says: a stale read, a unit the first movement
+/// fixed, too little on hand, a tag or a handling unit refused, a refusal with
+/// its reason, a refusal the app knows everywhere (who may, who you are), or
+/// (anything else) that nothing was saved.
+String stockProblemText(AppLocalizations l10n, Object error, {StockSubject subject = StockSubject.stock}) =>
+    switch (error) {
+      StockConfigStale() => l10n.stockEditStale,
+      StockConfigInUse() => l10n.stockEditInUse,
+      StockNotEnough() => l10n.refusalStockNotEnough,
+      StockUnitRefused(code: DkCode.dkg27) => l10n.refusalStockUnitChanged,
+      StockUnitRefused(code: DkCode.dkg29) => l10n.refusalStockUnitCodeTaken,
+      StockUnitRefused() => l10n.refusalStockUnitContent,
+      StockTagRefused(code: DkCode.dkg22, :final detail) => l10n.stockTagBoundElsewhere('${detail['owner'] ?? ''}'),
+      StockTagRefused(code: DkCode.dkg23) => l10n.stockTagRetiredLately,
+      StockTagRefused(code: DkCode.dkg24) => l10n.stockTagOnPiece,
+      StockTagRefused(code: DkCode.dkg25) => l10n.refusalStockNamePieces,
+      StockTagRefused(code: DkCode.dkg26) => l10n.refusalStockPieceWhere,
+      StockTagRefused(code: DkCode.dkg04) when subject == StockSubject.tag => l10n.stockTagNotInForce,
+      StockConfigRefused(:final reason) => stockRefusalText(l10n, reason, subject: subject),
+      _ => knownRefusalText(l10n, error) ?? l10n.stockEditNotSaved,
+    };

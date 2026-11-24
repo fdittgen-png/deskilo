@@ -25,6 +25,7 @@ import {
 } from "./accounting_delivery.ts";
 import { type Posting, type PostingParty, postingSha256, postingsOf } from "./accounting_postings.ts";
 import { CONNECTIONS_URL, IDEMPOTENCY_KEY_LENGTH, signedInTenant, xeroAccounting } from "./accounting_xero.ts";
+import { asFetch } from "./testing/as_fetch.ts";
 
 /** The rules of `record_accounting_delivery` the kit relies on. */
 class Log implements DeliveryStore {
@@ -90,7 +91,7 @@ function organisation(opts: { country?: string; taxDelta?: number; status?: numb
   const cache = new Map<string, Response>();
   const st = { writes: 0, loseNextAnswer: false };
   let next = 100;
-  const fetcher = (async (input: string | URL | Request, init?: RequestInit) => {
+  const fetcher = asFetch((input: string | URL | Request, init?: RequestInit) => {
     const url = new URL(String(input));
     const method = init?.method ?? "GET";
     const headers = (init?.headers ?? {}) as Record<string, string>;
@@ -157,7 +158,7 @@ function organisation(opts: { country?: string; taxDelta?: number; status?: numb
       throw new TypeError("connection reset");
     }
     return answer;
-  }) as typeof fetch;
+  });
   return { held, calls, st, fetcher };
 }
 

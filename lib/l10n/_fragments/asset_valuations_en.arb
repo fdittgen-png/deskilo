@@ -19,10 +19,6 @@
   "@valuationEmpty": {
     "description": "#2576 accountant valuations"
   },
-  "valuationLoadFailed": "The valuations could not be loaded.",
-  "@valuationLoadFailed": {
-    "description": "#2576 accountant valuations"
-  },
   "valuationSaved": "Saved",
   "@valuationSaved": {
     "description": "#2576 accountant valuations"

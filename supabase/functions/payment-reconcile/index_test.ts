@@ -8,7 +8,7 @@
 // order, names what it cannot read or write, stops at its budget and records
 // what it has with the lease.
 import { assertEquals } from "jsr:@std/assert@1";
-import { handle, RECONCILE_SECRET_HEADER, RUN_BUDGET_MS } from "./index.ts";
+import { handle, RECONCILE_SECRET_HEADER, RUN_BUDGET_MS, serve } from "./index.ts";
 
 const WS = "00000000-0000-4000-8000-00000000a126";
 const SECRET = "reconcile-secret";
@@ -428,4 +428,31 @@ Deno.test("a settlement records what the provider kept, once, as the notificatio
     intent: "i-paid",
     reason: "record_failed",
   }]);
+});
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+Deno.test("#4412 payment-reconcile: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const answer = await serve({
+      service: () => {
+        throw new Error("service role key sb_secret_xyz is wrong");
+      },
+      env: (n) => (n === "PAYMENT_RECONCILE_SECRET" ? SECRET : n === "SUPABASE_SERVICE_ROLE_KEY" ? SERVICE : undefined),
+      fetch: () => Promise.reject(new Error("unused")),
+      now: () => Date.now(),
+    })(
+      new Request("http://x/payment-reconcile", {
+        method: "POST",
+        headers: { [RECONCILE_SECRET_HEADER]: SECRET, "x-request-id": "r-rec" },
+      }),
+    );
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-rec" });
+    assertEquals(/secret|sb_|wrong/i.test(text), false);
+  } finally {
+    console.error = saved;
+  }
 });

@@ -1670,7 +1670,7 @@ In this chapter:
 - Your account: [photo](#your-account-and-photo), [personal information](#personal-information), [address](#your-address), [VAT number](#your-vat-number), [payment terms](#your-payment-terms), [WhatsApp](#your-whatsapp-number), [status](#your-status-line), [default booking period](#default-booking-period)
 - Your badge: [the badge](#your-badge) and [its PIN](#your-badge-pin)
 - How the app looks and reads: [language](#app-language), [theme](#theme), [navigation](#navigation-style), [numbers and dates](#numbers-and-dates), [clock](#clock), [time zone](#show-times-in-my-time-zone), [hints](#restore-the-hints), [front camera](#front-camera-for-scanning), [linked accounts](#linked-accounts)
-- Privacy & your data: [who can see my data](#privacy-who-can-see-my-data), [who sees me](#choose-who-sees-me), [public profile](#publish-a-public-profile), [export](#export-my-data), [erase](#erase-my-data), [rights requests](#rights-requests), [push](#push-notifications-on-this-device), [your rights](#your-data-your-rights)
+- Privacy & your data: [who can see my data](#privacy-who-can-see-my-data), [who sees me](#choose-who-sees-me), [public profile](#publish-a-public-profile), [export](#export-my-data), [erase](#erase-my-data), [rights requests](#rights-requests), [push](#push-notifications-on-this-device), [error reports](#send-error-reports), [your rights](#your-data-your-rights)
 - [Your own server](#your-own-server)
 
 <!-- anchor: user.settings.organisation -->
@@ -2314,6 +2314,29 @@ You want to stop notifications from being sent to this device, or turn them back
 
 - Off, the app keeps working and nothing is sent to this device.
 - On, this device's address and each notification go to the push service.
+
+**See also:** [Your data, your rights](#your-data-your-rights)
+
+<!-- anchor: user.privacy.error-reports -->
+### Send error reports
+
+**Audience:** Everyone
+
+You want to know what the app sends when something goes wrong, or to stop it.
+
+<!-- image: user-privacy-error-reports -->
+
+**Steps**
+
+1. Open [Privacy & data](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Switch **Send error reports** off or on. It is on until you switch it off, and the choice is kept on this device.
+
+**Good to know**
+
+- A report goes only to the installation you are signed in to, never to another company. Its operator reads it; the businesses you belong to do not.
+- It says which app version, platform and kind of error, and where in the app it happened. It never carries what you typed, the error's own text, an e-mail address, a name or a key.
+- Each person sends at most a set number of reports an hour, a report has a size limit, and the installation deletes reports after a set number of days. The operator sets all three.
+- Off, nothing leaves the device: the error stays in this device's own log. An assistant connected to your account never sends a report.
 
 **See also:** [Your data, your rights](#your-data-your-rights)
 
@@ -3220,6 +3243,17 @@ The till looks for its connection again by itself, and **Look for the connection
 
 Three settings of the business bound what is accepted: **Longest offline period (minutes)**, **Most offline sales per till session** and **Price difference allowed offline (%)**. If the offline data of the device cannot be read, nothing is sold offline until a manager decides; **Discard the offline data** drops it after a warning, because sales not yet sent are lost for good.
 
+<!-- anchor: user.money.till.receipts -->
+### Receipts and card answers at the till
+
+**Audience:** Administrator · Owner
+
+You take a card at the counter, or a sale needs to be corrected afterwards, and you want to see what the counter has made and what is still waiting.
+
+**Take card** asks the terminal for the total; the terminal's answer decides the sale: **Accepted** makes it, **Declined** leaves the basket to be paid another way, and **No answer** leaves the sale under **Waiting for a card answer** in **Counter receipts** (opened with **Receipts** from the till), where it is never asked again. Someone who may see the finances records what the terminal showed, and the sale is completed once.
+
+**Counter receipts** lists what the till made. **Correct this sale** issues a correction as a new receipt that cites the original, for the quantity of each line you name (at most what the line has left) with a **Reason**. **Give money back** gives back the amount of a correction (at most what it credits) and the goods taken back are recorded against it; nothing is ever given back twice.
+
 <!-- anchor: user.money.stock.rfid -->
 ### RFID tags: one per batch or one per piece
 
@@ -4079,6 +4113,32 @@ You want your invoices and letters printed on the paper your country uses.
 - If you move the space to a country that does not use the paper you chose, the space follows that country's usual paper.
 
 **See also:** [Country](#country)
+
+<!-- anchor: user.workspace.settings.units -->
+### Units of measure
+
+**Audience:** Owner · Administrator with the permission
+
+Your items, quotes and invoices are measured in units, and some units convert into others: 1 km is 1000 m. Every business starts with the usual ones (piece, g, kg, ml, cl, l, mm, cm, m, km, m², min, h); you add your own, such as a cable drum of 50 m.
+
+<!-- image: user-workspace-settings--units -->
+
+**Steps**
+
+1. Turn on **Units of measure** under **Features** (it is off until you ask for it).
+2. In [Units of measure](https://fdittgen-png.github.io/deskilo/#/settings/units), tap **New unit**.
+3. Fill in **Unit code** (it cannot change later), **Your name for the unit**, **It measures** and **One unit equals** in the base unit of what it measures: 1000 for a km counted in m, 0.001 for a mm.
+4. Optionally fill in **UN/ECE code (for e-invoices)**, which e-invoices carry (KMT for a km).
+5. Tap **Save**.
+
+**Good to know**
+
+- A built-in unit keeps its dimension and its factor; you can give it your own name.
+- A unit that is in use (an item counted in it, a stock movement, a quote or an invoice line) keeps its dimension and its factor for good: a correction is a new unit. A unit nobody uses can be archived (**Archive**) and shown again (**Show again**).
+- A conversion is exact: 2.5 km is 2500 m. Two kinds of unit never convert, and an answer that six decimals cannot hold is refused, never rounded.
+- Only the owner and the administrators allowed to change the workspace settings maintain the units.
+
+**See also:** [Paper of the documents](#paper-of-the-documents)
 
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organisation
@@ -6884,7 +6944,7 @@ The things around the everyday work: the test side of a space and the real one, 
 In this chapter:
 - [A space has two sides](#a-space-has-two-sides) · [Enter a side](#enter-the-real-side-or-the-test-side) · [A test space](#what-a-test-space-is-for) · [Who may deploy](#who-may-deploy-and-enter-production) · [Deploy between the sides](#deploy-between-the-two-sides) · [Workspace status and the year archive](#workspace-status-and-the-year-archive)
 - [Your own server](#run-your-own-server) · [When an installation requires a newer app](#when-an-installation-requires-a-newer-app) · [Release a new version](#release-a-new-version-the-server-first)
-- [Assistants](#assistants-what-they-are) · [Connect an assistant](#connect-an-assistant) · [Approvals](#approvals-and-confirmations-for-assistants) · [What assistants may do](#what-assistants-may-do-in-a-workspace)
+- [Assistants](#assistants-what-they-are) · [Connect an assistant](#connect-an-assistant) · [Approvals](#approvals-and-confirmations-for-assistants) · [What assistants may do](#what-assistants-may-do-in-a-workspace) · [Error reports](#error-reports)
 - [The task recorder](#the-task-recorder-and-guided-tours) · [Record a task](#record-a-task) · [Review a recording](#review-edit-and-export-a-recording) · [Make a guide](#make-a-guide-from-a-recording) · [Follow a guide](#follow-a-guide) · [The circle menu](#the-circle-menu) · [Edit a guide](#edit-or-repair-a-guide) · [Privacy of recordings](#what-a-recording-keeps)
 - [The demo workspace](#the-demo-workspace) · [Filming mode](#filming-mode)
 - [Platforms](#deskilo-on-your-devices) · [Support details](#support-details) · [When something does not work](#when-something-does-not-work)
@@ -7183,6 +7243,29 @@ You decide which services a workspace offers to assistants.
 - It is for people who hold the integrations permission; owners always do.
 
 **See also:** [A feature switch](#a-feature-switch)
+
+<!-- anchor: user.advanced.error-reports -->
+### Error reports
+
+**Audience:** Operator
+
+You run the installation and want to see what went wrong in the apps signed in to it.
+
+<!-- image: user-advanced-error-reports -->
+
+**Steps**
+
+1. Open [Installation: assistants](https://fdittgen-png.github.io/deskilo/#/installation/assistants).
+2. Tap **Error reports**. The newest reports come first.
+3. Tap a report to read its stack, redacted by the app. **Older reports** reads the next ones.
+
+**Good to know**
+
+- A report says where in the app and what kind of error, its code, the app version, the platform and the time. It never carries what a person typed, an e-mail address, a name or a key.
+- Only the installation's operator reads them; the businesses on the installation never see them.
+- In the settings, **Error reports per person and hour**, **Largest error report** and **Error reports kept for** set how many arrive, how large and for how long. Each person can switch reports off on their device.
+
+**See also:** [Send error reports](#send-error-reports)
 
 <!-- anchor: user.advanced.recorder -->
 ### The task recorder and guided tours

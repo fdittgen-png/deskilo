@@ -15,6 +15,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -97,12 +98,14 @@ class _State extends ConsumerState<ServiceFulfilmentScreen> {
                 .watch(serviceFulfilmentProvider((workspaceId: workspace.id, fulfilmentId: widget.fulfilmentId)))
                 .when(
                   loading: () => const LoadingView(),
-                  error: (error, _) => Center(
-                    child: Text(
-                      error is FulfilmentRefusal ? engagementRefusalText(l10n, error) : l10n.engagementsLoadFailed,
-                      key: const ValueKey('engagement-failed'),
-                      textAlign: TextAlign.center,
-                    ),
+                  error: (error, _) => ReadFailureBanner(
+                    key: const ValueKey('engagement-failed'),
+                    error: error,
+                    refusal: error is FulfilmentRefusal
+                        ? engagementRefusalText(l10n, error)
+                        : null,
+                    onRetry: () => ref.invalidate(serviceFulfilmentProvider(
+                        (workspaceId: workspace.id, fulfilmentId: widget.fulfilmentId))),
                   ),
                   data: (e) => Center(
                     child: ConstrainedBox(

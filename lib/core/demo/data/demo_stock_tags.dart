@@ -105,7 +105,7 @@ class DemoStockTags implements StockTags {
     final first = _answers[requestId];
     if (first != null) return first;
     final normalised = normalise(code);
-    if (!_hex.hasMatch(normalised)) throw const StockConfigRefused('tag.code', 'tag_malformed');
+    if (!_hex.hasMatch(normalised)) throw const StockConfigRefused('tag.code', StockRefusal.tagMalformed);
     final held = _active.where((t) => t.code == normalised).firstOrNull;
     // a piece's tag names a piece, never the item it belongs to: the server compares the kind of owner too
     if (held != null && (held.pieceId != null || !_same(held.owner, owner))) {
@@ -115,8 +115,8 @@ class DemoStockTags implements StockTags {
     final itemId = owner.itemId;
     if (held == null && tagModeOf != null && owner.kind != 'place' && itemId != null) {
       final mode = await tagModeOf!(itemId);
-      if (mode == 'per_unit') throw const StockConfigRefused('owner', 'tag_per_unit_item');
-      if (mode != 'per_batch') throw const StockConfigRefused('owner', 'tag_mode_none');
+      if (mode == 'per_unit') throw const StockConfigRefused('owner', StockRefusal.tagPerUnitItem);
+      if (mode != 'per_batch') throw const StockConfigRefused('owner', StockRefusal.tagModeNone);
     }
     final bound = held ?? _Bound('demo-tag-${_next++}', normalised, owner);
     if (held == null) _active.add(bound);

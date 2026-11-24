@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../providers/badge_security_providers.dart';
 
 /// An administrator sees unverifiable or short historical PINs as needing
@@ -28,9 +29,11 @@ class BadgePinReviewNotice extends ConsumerWidget {
             )
           : const SizedBox.shrink(),
       loading: () => const SizedBox.shrink(),
-      error: (error, stack) => Text(
-        context.l10n.badgePinReviewUnavailable,
+      error: (error, stack) => ReadFailureBanner(
         key: const ValueKey('badge-pin-review-unavailable'),
+        error: error,
+        onRetry: () =>
+            ref.invalidate(badgePinReviewProvider(workspaceId, memberId)),
       ),
     );
   }

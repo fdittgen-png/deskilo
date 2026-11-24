@@ -2,7 +2,6 @@
   "eventTypeBadgeSecurityAlert": "Protección del acceso con tarjeta",
   "eventBadgeSecurityAlert": "El acceso con tarjeta se ha bloqueado tras {failures, plural, one{1 intento fallido} other{{failures} intentos fallidos}} en {minutes, plural, one{1 minuto} other{{minutes} minutos}}. Revise las tarjetas y pida a los miembros que accedan por correo mientras termina el bloqueo.",
   "badgePinReviewNotice": "La longitud de este PIN antiguo es desconocida o inferior al mínimo actual. Pida al miembro que lo cambie en sus propios ajustes. Su PIN actual sigue funcionando.",
-  "badgePinReviewUnavailable": "El estado de revisión del PIN no está disponible. Reinténtelo antes de dar por hecho que cumple el mínimo actual.",
   "settingLabelSecurityBadgeWorkspaceFailureLimit": "Límite de fallos de tarjeta del espacio",
   "settingHintSecurityBadgeWorkspaceFailureLimit": "Credenciales distintas de este espacio con un PIN fallido durante el período de bloqueo antes de suspender el acceso y avisar a los propietarios. Una sola credencial no lo alcanza. Solo se puede reducir.",
   "@eventBadgeSecurityAlert": {

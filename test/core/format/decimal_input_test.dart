@@ -128,4 +128,20 @@ void main() {
       expect(parseDecimalInput('-1 234,5', locale: 'fr_FR'), -1234.5);
     });
   });
+
+  // #4425 -- the put-away rate is sent as typed with either separator, ungrouped and without a locale; the
+  // negotiation's amounts reach parseMinor untouched, which reads the grouping of the member's format.
+  group('the input seam behind the put-away rate and the negotiation amounts', () {
+    test('a rate typed with a comma or a dot is the same dot text, and a grouped rate is none', () {
+      expect(decimalTextFromInput('1,0856', grouping: false), '1.0856');
+      expect(decimalTextFromInput('1.0856', grouping: false), '1.0856');
+      expect(decimalTextFromInput('1.234,5', grouping: false), isNull);
+    });
+
+    test('an amount reads the grouping of its format, never a comma turned into a dot', () {
+      expect(parseMinorInput('1.234,50', locale: 'de_DE'), 123450);
+      expect(parseMinorInput('1,234.50', locale: 'en_US'), 123450);
+      expect(parseMinorInput('12,5', locale: 'de_DE'), 1250);
+    });
+  });
 }

@@ -8,6 +8,8 @@
 // difference; a skip needs a reason; a closed task offers no buttons; a failed read says so and asks
 // again. Nothing here moves a balance.
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/features/stock/domain/stock_bulk_read.dart';
 import 'package:deskilo/features/stock/domain/stock_code_resolver.dart';
 import 'package:deskilo/features/stock/domain/stock_cycle_counts.dart';
@@ -211,7 +213,12 @@ Future<void> _open(WidgetTester tester, Widget home, _Cycle cycle, Size size, {S
     size: size,
     locale: locale,
     overrides: [
-      ...standardTestOverrides(),
+      // a test that names a language also formats in it (the member's format locale)
+      ...standardTestOverrides(pinFormats: locale == null),
+      if (locale != null) ...[
+        appFormatProvider.overrideWithValue(AppFormat(locale: locale.languageCode == 'de' ? 'de_DE' : 'en_US', currencyCode: 'EUR')),
+        personalFormatProvider.overrideWithValue(AppFormat(locale: locale.languageCode == 'de' ? 'de_DE' : 'en_US', currencyCode: 'EUR')),
+      ],
       stockQueriesProvider.overrideWithValue(_Stock()),
       stockRegistryProvider.overrideWithValue(_Registry()),
       stockCodeResolverProvider.overrideWithValue(resolver ?? _Resolver()),
@@ -349,8 +356,8 @@ void main() {
       });
 
       // #4425 -- the count is read in the member's format: 11,5 in German and 11.5 in English send the same text
-      for (final (code, typed) in [('de', '11,5'), ('en', '11.5')]) {
-        testWidgets('a count typed $typed in $code is sent as 11.5', (tester) async {
+      for (final (code, typed, sent) in [('de', '11,5', '11.5'), ('en', '11.5', '11.5'), ('de', '1.234,5', '1234.5'), ('en', '1,234.5', '1234.5')]) {
+        testWidgets('a count typed $typed in $code is sent as $sent', (tester) async {
           final cycle = _Cycle();
           await _open(tester, const StockCountTaskScreen(taskId: 't-1'), cycle, size, locale: Locale(code));
           await tester.tap(find.byKey(const ValueKey('stock-cycle-count-l-1')));
@@ -358,7 +365,7 @@ void main() {
           await tester.enterText(find.byKey(const ValueKey('stock-cycle-observed')), typed);
           await tester.tap(find.byKey(const ValueKey('stock-cycle-count-save')));
           await _frames(tester);
-          expect(cycle.counted.single.observed, '11.5');
+          expect(cycle.counted.single.observed, sent);
         });
       }
 

@@ -9,6 +9,7 @@
 import 'dart:async';
 
 import 'package:deskilo/core/demo/data/money_repository.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/application/issue_month.dart';
@@ -330,13 +331,15 @@ void main() {
       'it and is not retried', (tester) async {
     // A receipt of a declined request: its look returns the declined outcome.
     const report = MonthIssueReport({
-      'anna': InvoiceIssueRefused(
-        InvoiceIssueAttempt(
+      'anna': (
+        attempt: InvoiceIssueAttempt(
           workspaceId: 'ws-1',
           memberId: 'anna',
           period: '2026-10',
         ),
-        InvoiceIssueDeclined('evt-1'),
+        outcome: CommandRefused<String>(
+          Refusal(cause: InvoiceIssueDeclined('evt-1')),
+        ),
       ),
     });
     expect(report.declined, ['anna']);

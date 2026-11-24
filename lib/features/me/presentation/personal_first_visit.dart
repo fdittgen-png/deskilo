@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
@@ -63,6 +64,7 @@ class HomeState {
   final answer = ref.watch(personalWorkspaceRefsProvider);
   final local = ref.watch(myWorkspacesProvider).value;
   final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
+  // #4414 kept: a first-visit fact; the page shows the failed read
   final refs = answer.hasError && !answer.isLoading
       ? null
       : refsOfCurrentAccount(answer);
@@ -341,7 +343,7 @@ class _FirstVisitState extends ConsumerState<PersonalFirstVisit> {
                 l10n.titleAndBody(l10n.meInvitationTitle, l10n.meInvitationBody),
             leading: const Icon(Icons.qr_code_2_outlined),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push('/onboarding?join=1'),
+            onTap: () => context.push(Routes.onboardingJoin),
           ),
         ),
         const SizedBox(height: AppSpacing.md),
@@ -354,7 +356,7 @@ class _FirstVisitState extends ConsumerState<PersonalFirstVisit> {
             minimumSize: const Size(0, PersonalShellMetrics.minTarget),
             tapTargetSize: MaterialTapTargetSize.padded,
           ),
-          onPressed: () => context.push('/onboarding'),
+          onPressed: () => context.push(Routes.onboarding),
           child: Text.rich(
             TextSpan(
               children: [

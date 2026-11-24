@@ -11,6 +11,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
@@ -478,12 +479,10 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
                   ...newest,
                   ..._earlier,
                 ], full: newest.length >= MessengerRules.pageSize),
-                AsyncError() => Center(
-                  child: TextButton(
-                    key: const ValueKey('context-thread-retry'),
-                    onPressed: () => ref.invalidate(_provider),
-                    child: Text(l10n.commonRetry),
-                  ),
+                AsyncError(:final error) => ReadFailureBanner(
+                  error: error,
+                  retryKey: const ValueKey('context-thread-retry'),
+                  onRetry: () => ref.invalidate(_provider),
                 ),
                 _ => const LoadingView(),
               },

@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/account_activity.dart';
@@ -36,10 +37,10 @@ class HostActivity extends ConsumerWidget {
               ),
         ],
       ),
-      AsyncError() => TextButton(
-        key: const ValueKey('host-activity-hosts-unavailable'),
-        onPressed: () => ref.invalidate(financeHostsProvider),
-        child: Text(context.l10n.portalSourceUnavailable),
+      AsyncError(:final error) => ReadFailureBanner(
+        error: error,
+        retryKey: const ValueKey('host-activity-hosts-unavailable'),
+        onRetry: () => ref.invalidate(financeHostsProvider),
       ),
       _ => const LoadingView(),
     };
@@ -119,10 +120,10 @@ class _HostSectionState extends ConsumerState<_HostSection> {
             ),
             // This host alone did not answer: its own Try again re-reads
             // this page of it, the other hosts stay as they are.
-            AsyncError() => TextButton(
-              key: ValueKey('host-activity-retry-${host.installationId}'),
-              onPressed: () => ref.invalidate(provider),
-              child: Text(l10n.portalSourceUnavailable),
+            AsyncError(:final error) => ReadFailureBanner(
+              error: error,
+              retryKey: ValueKey('host-activity-retry-${host.installationId}'),
+              onRetry: () => ref.invalidate(provider),
             ),
             _ => const LoadingView(),
           },
@@ -142,18 +143,26 @@ String _line(
 ) => [
   entry.reference,
   entry.description,
-  switch (entry.status) {
-    'created' => l10n.payOnlinePendingTitle,
-    'failed' => l10n.payOnlineFailedTitle,
-    'reversed' => l10n.payOnlineReversedTitle,
-    'confirmed' => l10n.accountPaymentConfirmed,
-    'awaiting_match' => l10n.accountPaymentAwaitingMatch,
-    'voided' => l10n.accountInvoiceVoided,
-    'regrouped' => l10n.accountInvoiceRegrouped,
-    _ => '',
-  },
+  activityStatusText(l10n, entry.state),
   personalFormatOf(context).dates(DateShape.date).format(personalFormatOf(context).wall(entry.occurredAt)),
   if (entry.amountCents case final amount?)
     personalFormatOf(context).moneyNamed(entry.currency).formatMinor(amount),
   if (entry.minutes case final minutes?) l10n.accountUsageMinutes(minutes),
 ].where((s) => s.isNotEmpty).join(' · ');
+
+/// #4418 -- the words of an activity row's status, the one mapping the
+/// account screen and a provider's rows share. An unknown status has no
+/// words: the row is shown without one.
+String activityStatusText(AppLocalizations l10n, ActivityStatus status) =>
+    switch (status) {
+      ActivityStatus.created => l10n.payOnlinePendingTitle,
+      ActivityStatus.failed => l10n.payOnlineFailedTitle,
+      ActivityStatus.reversed => l10n.payOnlineReversedTitle,
+      ActivityStatus.confirmed => l10n.accountPaymentConfirmed,
+      ActivityStatus.awaitingMatch => l10n.accountPaymentAwaitingMatch,
+      ActivityStatus.voided => l10n.accountInvoiceVoided,
+      ActivityStatus.regrouped => l10n.accountInvoiceRegrouped,
+      ActivityStatus.issued => l10n.accountInvoiceIssued,
+      ActivityStatus.corrected => l10n.accountUsageCorrected,
+      ActivityStatus.unknown => '',
+    };

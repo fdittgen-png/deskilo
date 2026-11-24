@@ -108,7 +108,6 @@
   "itemGroupReasonInUse": "Ce groupe est utilisé par des articles : déplacez-les d’abord.",
   "itemGroupReasonHasSubgroups": "Ce groupe a des sous-groupes : supprimez-les d’abord.",
   "itemGroupReasonGroupUnknown": "Ce groupe n’existe pas.",
-  "itemGroupReasonNameDuplicate": "Un autre groupe porte déjà ce nom.",
   "itemGroupReasonNotOverridable": "Ce réglage ne peut pas avoir de valeur propre.",
   "itemGroupReasonHasMovements": "il a déjà des mouvements",
   "itemGroupFailed": "Les groupes d’articles n’ont pas pu être lus.",

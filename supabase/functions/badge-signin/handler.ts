@@ -26,6 +26,8 @@
 
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { callerOf, identifyAnswer, kioskOf, UID_PATTERN } from "./badge_guard.ts";
+import { describeError, logLine } from "../_shared/log.ts";
+import { ok } from "../_shared/respond.ts";
 
 export type Deps = {
   // deno-lint-ignore no-explicit-any
@@ -42,11 +44,9 @@ export const CORS = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
+/** The badge's own answers, with its own CORS (the kiosk header). */
 function json(body: unknown, status = 200): Response {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { ...CORS, "Content-Type": "application/json" },
-  });
+  return ok(body, status, CORS);
 }
 
 /// The single refusal. Deliberately says nothing about WHY — see the
@@ -91,7 +91,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
     p_device_secret: kiosk?.device_secret ?? null,
   });
   if (error) {
-    console.error("badge_auth_verify failed", error.message);
+    logLine("error", "badge-signin", "verify_failed", { error: describeError(error) });
     return refused("refused");
   }
   if (!data?.ok) {

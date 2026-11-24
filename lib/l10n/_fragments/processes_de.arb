@@ -60,5 +60,15 @@
   "subprocessPrivacyDesc": "Zugriffe auf personenbezogene Daten prüfen und Daten exportieren.",
   "subprocessConfigurationDesc": "Konfiguration übertragen, Vorlagen nutzen und Instanzen verwalten.",
   "subprocessExperienceDesc": "Hilfe, Navigation und Anzeigeeinstellungen anpassen.",
-  "subprocessDeliveryDesc": "Push, WhatsApp und den elektronischen Rechnungsversand anbinden."
+  "subprocessDeliveryDesc": "Push, WhatsApp und den elektronischen Rechnungsversand anbinden.",
+  "processGoodsStock": "Waren und Lager",
+  "subprocessStockItems": "Artikel und Einheiten",
+  "subprocessStockMovements": "Wareneingang und Bewegungen",
+  "subprocessStockControl": "Zählungen und Nachbestellung",
+  "subprocessStockTracking": "Rückverfolgbarkeit",
+  "processGoodsStockDesc": "Die verkauften Waren führen, bewegen, zählen und zurückverfolgen.",
+  "subprocessStockItemsDesc": "Artikel, Artikelgruppen, Maßeinheiten und Handhabungseinheiten.",
+  "subprocessStockMovementsDesc": "Lieferungen annehmen, Waren entnehmen und Rücknahmen abwickeln.",
+  "subprocessStockControlDesc": "Bestand zählen, Stichtagszählungen planen und rechtzeitig nachbestellen.",
+  "subprocessStockTrackingDesc": "Chargen, Verfall, Scannen und Tags, die jedes Stück zurückverfolgen."
 }

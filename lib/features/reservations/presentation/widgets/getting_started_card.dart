@@ -10,6 +10,7 @@ import '../../../../core/help/help_arbiter.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -144,7 +145,7 @@ class GettingStartedCard extends ConsumerWidget {
       ),
       GettingStartedAction.viewMembership => (
         l10n.gettingStartedActionMembership,
-        () => context.push('/settings'),
+        () => context.push(Routes.settings),
       ),
       GettingStartedAction.finishSetup => (
         l10n.gettingStartedActionFinishSetup,

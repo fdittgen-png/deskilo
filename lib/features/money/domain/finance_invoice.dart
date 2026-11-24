@@ -33,6 +33,36 @@ enum FinanceState {
   bool get toPay => this == open || this == partiallyPaid;
 }
 
+/// #4418 -- where the online payment of an open claim stands, decoded once
+/// from `claim_payment_state` (0810, 0814).
+enum PaymentClaimState {
+  ready('ready'),
+  unavailable('unavailable'),
+  awaitingProvider('awaiting_provider'),
+  changed('changed'),
+  expired('expired'),
+  failed('failed'),
+  reversed('reversed'),
+  withdrawn('withdrawn'),
+
+  /// A state a newer server sent and this app does not know (#3730): no
+  /// word is said about it.
+  unknown('');
+
+  const PaymentClaimState(this.wire);
+
+  /// The name the server sends.
+  final String wire;
+
+  /// [raw] as this app reads it; a value it does not know is [unknown].
+  static PaymentClaimState fromWire(String? raw) {
+    for (final s in values) {
+      if (s != unknown && s.wire == raw) return s;
+    }
+    return unknown;
+  }
+}
+
 class FinanceInvoice {
   const FinanceInvoice({
     required this.id,
@@ -146,6 +176,11 @@ class FinanceInvoice {
   /// #4147 — absent on older hosts; only true offers continuation.
   final bool? claimCanContinue;
   final String? claimPaymentState;
+
+  /// [claimPaymentState] decoded; null when the host names none.
+  PaymentClaimState? get claimState => claimPaymentState == null
+      ? null
+      : PaymentClaimState.fromWire(claimPaymentState);
 
   /// #4140 — the declared payment, waiting for the business, whose claim
   /// names this invoice: the one I may take back. Null for an online one.

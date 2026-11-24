@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/push/push_status_tile.dart';
 import '../../../../core/scan/front_camera.dart';
 import '../../../../core/ui/help_row.dart';
@@ -71,7 +72,7 @@ List<Widget> advancedSettingsTiles(
               key: const ValueKey('settings-advanced-section-developer-title'),
               leading: const Icon(Icons.receipt_long_outlined),
               title: Text(l10n.developerTitle),
-              onTap: () => context.push('/developer'),
+              onTap: () => context.push(Routes.developer),
             ),
           ]),
       ];

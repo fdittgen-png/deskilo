@@ -22,6 +22,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_sheet.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
@@ -177,13 +178,11 @@ class _CreateHostSheetState extends ConsumerState<CreateHostSheet> {
                       text: l10n.createHostNone,
                     ),
                 ],
-              AsyncError() => [
-                  InlineBanner(
+              AsyncError(:final error) => [
+                  ReadFailureBanner(
                     key: const ValueKey('create-host-unavailable'),
-                    icon: Icons.cloud_off_outlined,
-                    text: l10n.createHostUnavailable,
-                    actionLabel: l10n.commonRetry,
-                    onAction: () => ref.invalidate(workspaceHostsProvider),
+                    error: error,
+                    onRetry: () => ref.invalidate(workspaceHostsProvider),
                   ),
                   here,
                 ],

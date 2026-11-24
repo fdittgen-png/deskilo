@@ -43,10 +43,6 @@
   "@bookPeriodsSaved": {
     "description": "#2365 accounting periods"
   },
-  "bookPeriodsLoadFailed": "The periods could not be loaded.",
-  "@bookPeriodsLoadFailed": {
-    "description": "#2365 accounting periods"
-  },
   "bookPeriodsEmpty": "No period is closed.",
   "@bookPeriodsEmpty": {
     "description": "#2365 accounting periods"

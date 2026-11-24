@@ -24,21 +24,25 @@
 // attacker learns which tags are real. The distinction lives in the
 // attempt log, which nothing outside the service role can read.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { describeError, logLine } from "../_shared/log.ts";
+import { guard } from "../_shared/serve.ts";
 import { handle } from "./handler.ts";
 
 const supabase = createClient(
-  Deno.env.get("SUPABASE_URL")!,
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+  readEnv(KEYS.supabaseUrl)!,
+  readEnv(KEYS.supabaseServiceRoleKey)!,
 );
 
-Deno.serve((req) =>
+// #4412 -- whatever the handler throws is the envelope, never its words.
+Deno.serve(guard("badge-signin", (req) =>
   handle(req, {
     rpc: (fn, args) => supabase.rpc(fn, args),
     emailOf: async (userId) => {
       const { data, error } = await supabase.auth.admin.getUserById(userId);
       if (error || !data?.user?.email) {
-        console.error("no e-mail for verified badge user", error?.message);
+        logLine("error", "badge-signin", "no_email", { error: describeError(error) });
         return null;
       }
       return data.user.email;
@@ -46,10 +50,10 @@ Deno.serve((req) =>
     tokenFor: async (email) => {
       const { data, error } = await supabase.auth.admin.generateLink({ type: "magiclink", email });
       if (error || !data?.properties?.hashed_token) {
-        console.error("generateLink failed", error?.message);
+        logLine("error", "badge-signin", "link_failed", { error: describeError(error) });
         return null;
       }
       return data.properties.hashed_token;
     },
   })
-);
+));

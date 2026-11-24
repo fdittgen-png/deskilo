@@ -35,6 +35,7 @@ import {
 } from "./common.ts";
 import { safeError } from "./connectors/common.ts";
 import { safeFetch } from "./connectors/safe_fetch.ts";
+import { logLine } from "../_shared/log.ts";
 
 export { clipDeclared, DISPATCH_WINDOW_SECONDS } from "./common.ts";
 export type { Deps } from "./common.ts";
@@ -54,7 +55,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   try {
     payload = await req.json();
   } catch (error) {
-    console.warn("send-e-invoice: invalid body", safeError(error));
+    logLine("warn", "send-e-invoice", "invalid_body", { error: safeError(error) });
     return json({ error: "invalid body" }, 400);
   }
   const workspaceId = payload.workspace_id ?? "";
@@ -130,7 +131,7 @@ async function liveGate(
   try {
     await store.expire(workspaceId);
   } catch (error) {
-    console.error("send-e-invoice: expiry sweep failed", safeError(error));
+    logLine("error", "send-e-invoice", "expiry_sweep_failed", { error: safeError(error) });
   }
   return null;
 }
