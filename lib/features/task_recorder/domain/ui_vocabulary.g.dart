@@ -6928,6 +6928,7 @@ const Set<String> uiRoutes = {
   '/stock/cycle-counts/:taskId',
   '/stock/expiry',
   '/stock/units',
+  '/settings/units',
   '/stock/items',
   '/stock/places',
   '/stock/settings',
