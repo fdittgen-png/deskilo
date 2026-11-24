@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../domain/account_rows.dart';
 import '../../domain/messenger.dart';
@@ -78,7 +79,7 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
       body: Align(
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 640),
+          constraints: const BoxConstraints(maxWidth: kFormColumnWidth),
           child: ListView(
             padding: AppSpacing.mdAll,
             children: [

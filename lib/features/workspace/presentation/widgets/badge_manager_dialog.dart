@@ -14,6 +14,7 @@ import '../../../../core/files/file_saver.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -419,7 +420,7 @@ class _BadgeManagerDialogState
                       backgroundColor: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.md),
                   Text(
                     l10n.badgeTokenOnce,
                     style: Theme.of(context).textTheme.bodySmall,
@@ -429,7 +430,7 @@ class _BadgeManagerDialogState
               )
             : badges == null
                 ? const Padding(
-                    padding: EdgeInsets.all(24),
+                    padding: EdgeInsets.all(AppSpacing.xl),
                     child: Center(child: CircularProgressIndicator()),
                   )
                 : Column(
@@ -438,7 +439,7 @@ class _BadgeManagerDialogState
                     children: [
                       if (badges.isEmpty)
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                           child: Text(
                             l10n.badgeNone,
                             style: Theme.of(context).textTheme.bodySmall,
@@ -451,7 +452,7 @@ class _BadgeManagerDialogState
                       if (badges.any((b) => b.isActive) &&
                           widget.setAuthEnabled != null)
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 4),
+                          padding: const EdgeInsets.only(bottom: AppSpacing.xs),
                           child: Text(
                             l10n.badgeAuthEnabledHint,
                             style: Theme.of(context).textTheme.bodySmall,
@@ -502,7 +503,7 @@ class _BadgeManagerDialogState
                     color: Theme.of(context).colorScheme.primary,
                   ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             BadgePinReviewNotice(workspaceId: widget.workspaceId, memberId: widget.memberId),
             _content(context, issued, badges),
           ],

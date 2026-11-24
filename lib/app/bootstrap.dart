@@ -13,6 +13,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../core/l10n/context_l10n.dart';
+import '../core/theme/app_spacing.dart';
 import '../core/ui/loading_view.dart';
 import '../l10n/app_localizations.dart';
 
@@ -126,7 +127,7 @@ class _BootRecoveryScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.all(AppSpacing.xl),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -134,7 +135,7 @@ class _BootRecoveryScreen extends StatelessWidget {
                   const Icon(Icons.cloud_off_outlined, size: 48)
                 else
                   const SizedBox(height: 48, child: LoadingView()),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
                 Text(
                   key: ValueKey(failed ? 'boot-failed' : 'boot-slow'),
                   failed
@@ -143,7 +144,7 @@ class _BootRecoveryScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
                   failed
                       ? (l10n.bootFailedBody)

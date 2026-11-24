@@ -116,3 +116,39 @@ inlineRoute lib/features/money/presentation/till_drawer/till_drawer_screen.dart 
 inlineRoute lib/features/money/presentation/screens/customer_quote_editor_screen.dart // #4422 owned by the quote and invoice editor lane (#4405) while it is open
 inlineRoute lib/features/calendar/presentation/screens/calendar_hub_screen.dart // #4422 at its file-length budget: the Routes import is one line more; swept when the file is split
 inlineRoute lib/features/money/presentation/screens/vat_declarations_screen.dart // #4422 at the 500-line default: the Routes import is one line more; swept when the file is split
+# #4421 — a raw-measure entry (rawInsets, rawGap, rawDurationMs, rawElevation,
+# rawAlpha, rawMaxWidth) without a line below holds literals no token has the
+# value of (an elevation, an alpha, a width other than 640 or 720, a spacing
+# other than 4, 8, 12, 16 or 24, a debounce that is not a motion): it falls
+# when its token is added once to the token class. The lines below are
+# entries another lane owns while its v2.2 work is open.
+rawInsets lib/features/money/presentation/screens/customer_quote_editor_screen.dart // #4421 owned by the quote and invoice editor lane (#4405) while it is open
+rawInsets lib/features/money/presentation/standalone/standalone_invoice_screen.dart // #4421 owned by the quote and invoice editor lane (#4405) while it is open
+rawInsets lib/features/money/presentation/standalone/standalone_line_form.dart // #4421 owned by the quote and invoice editor lane (#4405) while it is open
+rawInsets lib/features/money/presentation/till_drawer/cash_entry_sheet.dart // #4421 owned by the till lane while its v2.2 work is open
+rawInsets lib/features/money/presentation/till_drawer/drawer_inputs.dart // #4421 owned by the till lane while its v2.2 work is open
+rawInsets lib/features/stock/presentation/item_group_sheet.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawInsets lib/features/stock/presentation/item_groups_screen.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawInsets lib/features/stock/presentation/purchase_order_putaway.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawInsets lib/features/stock/presentation/stock_item_add.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawInsets lib/features/workspace/presentation/widgets/member_note_composer.dart // #4421 owned by the quote and invoice editor lane (#4405) while it is open
+rawGap lib/features/money/presentation/standalone/standalone_invoice_screen.dart // #4421 owned by the quote and invoice editor lane (#4405) while it is open
+rawGap lib/features/money/presentation/standalone/standalone_line_form.dart // #4421 owned by the quote and invoice editor lane (#4405) while it is open
+rawGap lib/features/money/presentation/till_drawer/drawer_inputs.dart // #4421 owned by the till lane while its v2.2 work is open
+rawGap lib/features/stock/presentation/stock_item_editor.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawGap lib/features/stock/presentation/stock_nfc_button.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawDurationMs lib/features/stock/presentation/stock_bulk_read_sheet.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawDurationMs lib/features/stock/presentation/stock_camera_scan.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawMaxWidth lib/features/money/presentation/till_drawer/day_report_view.dart // #4421 owned by the till lane while its v2.2 work is open
+rawMaxWidth lib/features/money/presentation/till_drawer/till_day_screen.dart // #4421 owned by the till lane while its v2.2 work is open
+rawMaxWidth lib/features/money/presentation/till_drawer/till_drawer_screen.dart // #4421 owned by the till lane while its v2.2 work is open
+rawMaxWidth lib/features/money/presentation/till_screen.dart // #4421 owned by the till lane while its v2.2 work is open
+rawMaxWidth lib/features/stock/presentation/item_groups_screen.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawMaxWidth lib/features/stock/presentation/stock_bulk_read_sheet.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawMaxWidth lib/features/stock/presentation/stock_first_run.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawMaxWidth lib/features/stock/presentation/stock_items_screen.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawMaxWidth lib/features/stock/presentation/stock_places_screen.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawMaxWidth lib/features/stock/presentation/stock_reorder_screen.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawMaxWidth lib/features/stock/presentation/stock_screen.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawMaxWidth lib/features/stock/presentation/stock_settings_screen.dart // #4421 owned by the stock lane while its v2.2 work is open
+rawMaxWidth lib/features/stock/presentation/stock_where_is_screen.dart // #4421 owned by the stock lane while its v2.2 work is open

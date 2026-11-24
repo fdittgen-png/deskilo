@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../domain/member_account.dart';
 
 /// #512 — the member's REAL position, above the per-month bill: months
@@ -65,7 +66,7 @@ class AccountCard extends StatelessWidget {
 
     final labels = l10n;
     final detail = Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -74,7 +75,7 @@ class AccountCard extends StatelessWidget {
               style: theme.textTheme.titleSmall
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             if (account.creditCents != 0)
               row(
                 l10n.accountCredit,
@@ -106,7 +107,7 @@ class AccountCard extends StatelessWidget {
             ),
             if (account.creditCents > 0 && account.openInvoices.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(top: 4),
+                padding: const EdgeInsets.only(top: AppSpacing.xs),
                 child: Text(
                   l10n.accountImputationHint,
                   style: theme.textTheme.bodySmall

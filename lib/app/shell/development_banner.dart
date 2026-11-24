@@ -71,7 +71,7 @@ class _DevelopmentStrip extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.md,
-            vertical: 4,
+            vertical: AppSpacing.xs,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

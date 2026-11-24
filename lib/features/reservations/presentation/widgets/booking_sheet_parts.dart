@@ -7,6 +7,7 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/app_date_picker.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -61,7 +62,7 @@ class BookingOverlapNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 8),
+    padding: const EdgeInsets.only(top: AppSpacing.sm),
     child: Text(
       key: const ValueKey('booking-overlap'),
       context.l10n.bookingOverlapsAnother,

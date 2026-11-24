@@ -12,6 +12,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/adaptive/task_surface.dart';
@@ -383,7 +384,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
       title: l10n.invoiceCreate,
       children: [
         if (replacesBanner != null) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           InlineBanner(
             key: const ValueKey('invoice-replaces-banner'),
             icon: Icons.published_with_changes_outlined,
@@ -391,7 +392,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             severity: InlineBannerSeverity.info,
           ),
         ],
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
         DropdownButtonFormField<String>(
           key: const ValueKey('invoice-member-dropdown'),
           initialValue: _memberId,
@@ -415,7 +416,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             labelText: l10n.invoiceMemberLabel,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
         _periodRow(context, monthLabel, atCurrent),
         // 0067 — a month can be invoiced ONCE; invoicing the running one
         // freezes numbers that are still moving.
@@ -426,7 +427,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             text: l10n.invoiceRunningMonth,
             severity: InlineBannerSeverity.info,
           ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
         InvoicePreviewBody(
           memberPicked: _memberId != null,
           loading: _loading,
@@ -437,7 +438,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           association: widget.association,
           period: _period,
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xs),
         // 0064 — snapshot the annex (check-ins, bookings, payments) into
         // the immutable document.
         SwitchListTile(
@@ -475,11 +476,11 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           _missingBanner(_readiness(lines).block)
         else if (_judged.gaps.isNotEmpty)
           EInvoiceGapsWarning(l10n: widget.l10n, gaps: _judged.gaps),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xs),
         _submitButton(context, lines),
         // #4058 — what issuing means, said before it is done.
         Padding(
-          padding: const EdgeInsets.only(top: 4),
+          padding: const EdgeInsets.only(top: AppSpacing.xs),
           child: Text(
             widget.canEmail ? l10n.invoiceIssueKeptEmail : l10n.invoiceIssueKept,
             key: const ValueKey('invoice-issue-original'),

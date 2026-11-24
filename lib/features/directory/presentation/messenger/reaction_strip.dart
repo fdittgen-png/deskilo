@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../domain/message_marks.dart';
 
 /// The emoji people put on a message, under its bubble: each emoji with how
@@ -23,7 +24,7 @@ class ReactionStrip extends StatelessWidget {
     if (reactions.isEmpty) return const SizedBox.shrink();
     final scheme = Theme.of(context).colorScheme;
     return Padding(
-      padding: const EdgeInsets.only(top: 4),
+      padding: const EdgeInsets.only(top: AppSpacing.xs),
       child: Wrap(
         spacing: 4,
         runSpacing: 4,
@@ -34,7 +35,7 @@ class ReactionStrip extends StatelessWidget {
               borderRadius: AppRadius.lgAll,
               onTap: onReact == null ? null : () => onReact!(r.emoji),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
                 decoration: BoxDecoration(
                   color: r.mine
                       ? scheme.secondaryContainer

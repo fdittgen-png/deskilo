@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/routes.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../directory/presentation/messenger/space_inquiries_screen.dart';
 import '../../../directory/providers/messenger_providers.dart';
 import '../../../events/presentation/screens/events_screen.dart';
@@ -103,7 +104,7 @@ class _AlertsHeader extends ConsumerWidget {
         : (l10n.tabEvents);
     return Padding(
       key: const ValueKey('inbox-tab-alerts'),
-      padding: const EdgeInsets.fromLTRB(8, 0, 12, 0),
+      padding: const EdgeInsets.fromLTRB(AppSpacing.sm, 0, AppSpacing.md, 0),
       child: Row(
         children: [
           Flexible(
@@ -116,7 +117,7 @@ class _AlertsHeader extends ConsumerWidget {
             ),
           ),
           if (pending > 0) ...[
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.sm),
             Tooltip(message: l10n.uxAttentionSummary(attention.updates, attention.pending),
                 child: Badge.count(count: pending, maxCount: 99)),
           ],
@@ -139,7 +140,7 @@ class _TopRow extends ConsumerWidget {
     final inbox = ref.watch(messengerInboxProvider);
     final unread = inbox.isReloading ? 0 : inbox.value?.unread ?? 0;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
       child: Wrap(
         spacing: 4,
         crossAxisAlignment: WrapCrossAlignment.center,

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../domain/small_business_threshold.dart';
@@ -56,7 +57,7 @@ class SmallBusinessNotice extends ConsumerWidget {
       (true, true) => l10n.smallBusinessPassedImmediate(turnoverText, limit),
     };
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
       child: InlineBanner(
         key: const ValueKey('small-business-notice'),
         icon: Icons.warning_amber_outlined,

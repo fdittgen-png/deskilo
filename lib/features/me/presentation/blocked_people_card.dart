@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/async_read_body.dart';
 import '../../directory/providers/blocks_providers.dart';
@@ -57,7 +58,7 @@ class _BlockedPeopleCardState extends ConsumerState<BlockedPeopleCard> {
           : null,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+          padding: const EdgeInsets.fromLTRB(AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.sm),
           child: Align(
             alignment: AlignmentDirectional.centerStart,
             child: Text(
@@ -68,7 +69,7 @@ class _BlockedPeopleCardState extends ConsumerState<BlockedPeopleCard> {
         ),
         if (!read.hasValue && read.hasError && !read.isLoading)
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+            padding: const EdgeInsets.fromLTRB(AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.sm),
             child: ReadFailureBanner(
               error: read.error!,
               onRetry: () => ref.invalidate(myBlocksProvider(thisServerSource)),

@@ -32,7 +32,7 @@ class ReportBlocksView extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget block(ReportBlock b) => switch (b) {
           ReportHeading(:final text) => Padding(
-              padding: const EdgeInsets.only(bottom: 4),
+              padding: const EdgeInsets.only(bottom: AppSpacing.xs),
               child: Text(text, style: ReportPage.heading),
             ),
           ReportSubheading(:final text) => Padding(
@@ -43,16 +43,16 @@ class ReportBlocksView extends StatelessWidget {
           ReportText(:final text) => Text(text, style: ReportPage.body),
           ReportMuted(:final text) => Text(text, style: ReportPage.small),
           ReportDivider() => Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
+              margin: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
               height: 2,
               color: ReportPage.accent),
-          ReportSpacer() => const SizedBox(height: 8),
+          ReportSpacer() => const SizedBox(height: AppSpacing.sm),
           // #488 — a library image; unresolved names render nothing.
           ReportImage(:final name, :final size, :final align) =>
             images[name] == null
                 ? const SizedBox.shrink()
                 : Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
                     child: Align(
                       // #822 — `![name|size|align]`, as the PDF draws it.
                       alignment: reportImageAlignment(align),
@@ -72,7 +72,7 @@ class ReportBlocksView extends StatelessWidget {
                 for (var i = 0; i < columns.length; i++)
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.only(left: i == 0 ? 0 : 16),
+                      padding: EdgeInsets.only(left: i == 0 ? 0 : AppSpacing.lg),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [for (final c in columns[i]) block(c)],
@@ -91,7 +91,7 @@ class ReportBlocksView extends StatelessWidget {
                             child: Text(cells[i],
                                 style: ReportPage.row(bold: bold)),
                           ) else Padding(
-                            padding: const EdgeInsets.only(left: 12),
+                            padding: const EdgeInsets.only(left: AppSpacing.md),
                             child: Text(cells[i],
                                 textAlign: TextAlign.right,
                                 style: ReportPage.row(bold: bold)),
@@ -106,7 +106,7 @@ class ReportBlocksView extends StatelessWidget {
       children: [
         for (final b in [...report.header, ...report.body]) block(b),
         if (report.footer.isNotEmpty) ...[
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           for (final b in report.footer) block(b),
         ],
       ],

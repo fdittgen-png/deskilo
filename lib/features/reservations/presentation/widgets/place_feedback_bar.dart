@@ -195,7 +195,7 @@ class PlaceFeedbackChip extends ConsumerWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: AppSpacing.sm),
           child: Row(mainAxisSize: MainAxisSize.min, children: [
             Icon(
               (feedback.mine ?? 0) > 0 ? Icons.star : Icons.star_border,

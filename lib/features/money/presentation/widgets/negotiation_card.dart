@@ -110,7 +110,7 @@ class NegotiationCard extends ConsumerWidget {
                       l10n.negotiationPendingBadge),
                   visualDensity: VisualDensity.compact,
                 )),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             Text(
               deal == null
                   ? (pending != null
@@ -273,13 +273,13 @@ Future<void> showPriceNegotiationSheet(
         children: [
           Text('${l10n.negotiationProposeTitle} · $memberName',
               style: Theme.of(sheetContext).textTheme.titleMedium),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             l10n.negotiationProposeHint,
             style: Theme.of(sheetContext).textTheme.bodySmall,
           ),
           if (current.pending != null) ...[
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             Text(
               l10n.negotiationPending,
               key: const ValueKey('negotiation-sheet-pending'),

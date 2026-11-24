@@ -12,6 +12,7 @@ import '../../../../core/i18n/workspace_locale_fields.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/routes.dart';
 import '../../../../core/settings/settings.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/help_row.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -68,7 +69,7 @@ class WorkspaceParameterTiles {
                     workspace.name,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   _general(l10n),
                   _payments(l10n),
                   _community(l10n),
@@ -101,7 +102,7 @@ class WorkspaceParameterTiles {
                     helpTopic,
                     anchor: HelpAnchor.workspaceCountry,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.md),
                   // #711 — currency picker and time-zone search, in
                   // core/i18n so the onboarding form can reuse them.
                   _withDot(
@@ -115,7 +116,7 @@ class WorkspaceParameterTiles {
                     helpTopic,
                     anchor: HelpAnchor.workspaceCurrencyTimezone,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.md),
                   // #486 — the workspace's own language: invitations
                   // default to it.
                   _withDot(
@@ -147,7 +148,7 @@ class WorkspaceParameterTiles {
                     helpTopic,
                     anchor: HelpAnchor.workspaceLanguage,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.md),
                   // #3852 — the paper the documents are printed on.
                   _withDot(
                     WorkspacePaperField(
@@ -173,7 +174,7 @@ class WorkspaceParameterTiles {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xl),
                   ]);
 
   /// Payments and billing: methods, legal identity, reports and the billing tools.
@@ -203,7 +204,7 @@ class WorkspaceParameterTiles {
                     onTap: () => context.push(Routes.legalIdentity),
                   ),
                   ..._billingTools(l10n),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xl),
                   ]);
 
   /// The community: the WhatsApp group and the invitation message.
@@ -215,12 +216,12 @@ class WorkspaceParameterTiles {
                     l10n.workspaceWhatsappGroupTitle,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xs),
                   Text(
                     l10n.workspaceWhatsappGroupHelper,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.md),
                   TextFormField(
                     key: const Key('workspaceSettingsWhatsappGroup'),
                     controller: form.whatsappGroup,
@@ -240,7 +241,7 @@ class WorkspaceParameterTiles {
                             ? null
                             : (l10n.workspaceWhatsappGroupInvalid),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xl),
                   // 0049 — the invitation message template. Tags are
                   // listed as selectable chips; empty uses the localized
                   // built-in message (invite sheet on the ID & QR screen).
@@ -253,12 +254,12 @@ class WorkspaceParameterTiles {
                       anchor: HelpAnchor.workspaceInvitationMessage,
                     ),
                   ]),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xs),
                   Text(
                     l10n.invitationTemplateHelp,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   // #486 — one template per language: the chips page
                   // through the drafts, empty = built-in message.
                   //
@@ -272,7 +273,7 @@ class WorkspaceParameterTiles {
                     l10n.invitationTemplateLanguage,
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xs),
                   Wrap(
                     spacing: 6,
                     children: [
@@ -288,7 +289,7 @@ class WorkspaceParameterTiles {
                         ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   Wrap(
                     spacing: 6,
                     runSpacing: 6,
@@ -314,7 +315,7 @@ class WorkspaceParameterTiles {
                         ),
                     ],
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.md),
                   TextFormField(
                     key: const Key('workspaceSettingsInvitationTemplate'),
                     controller: form.invitationTemplate,
@@ -327,7 +328,7 @@ class WorkspaceParameterTiles {
                       hintText: l10n.invitationTemplateHint,
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xl),
                   ]);
 
   /// Appearance: the rows with a screen of their own, and desk transparency.
@@ -336,7 +337,7 @@ class WorkspaceParameterTiles {
                   // #1277 / #1289 — the rows that open a screen of their
                   // own: neither rides the Save button below.
                   WorkspaceOwnScreens(helpTopic: helpTopic),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xl),
                   // 0040 — desk transparency. Rides the same Save button.
                   Row(children: [
                     Expanded(child: Text(
@@ -347,7 +348,7 @@ class WorkspaceParameterTiles {
                       anchor: HelpAnchor.workspaceDeskTransparency,
                     ),
                   ]),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xs),
                   Text(
                     l10n.workspaceDeskTransparencyHelper,
                     style: Theme.of(context).textTheme.bodySmall,
@@ -369,7 +370,7 @@ class WorkspaceParameterTiles {
                         appFormatOf(context).ratePercent(form.deskOpacity)),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xl),
                   ]);
 
   /// What a newly joining member starts with (#1294).
@@ -385,7 +386,7 @@ class WorkspaceParameterTiles {
                     onOveragePolicyChanged: (policy) => _update(() =>
                         form.newMemberDefaults = form.newMemberDefaults?.copyWith(overagePolicy: policy)),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xl),
                   ]);
 
   /// The billing tools beside the payment rows.

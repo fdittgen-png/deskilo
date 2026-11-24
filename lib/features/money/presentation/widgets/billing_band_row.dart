@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 
 /// One editable band: the upper boundary plus its two prices. The lower
@@ -79,7 +80,7 @@ class _BillingBandRowState extends State<BillingBandRow> {
     final draft = widget.draft;
     const amount = TextInputType.numberWithOptions(decimal: true);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
       child: Row(
         children: [
           SizedBox(width: 72, child: Text(l10n.billingBandFrom(appFormatOf(context).ratePercent(widget.from)))),
@@ -96,7 +97,7 @@ class _BillingBandRowState extends State<BillingBandRow> {
               },
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: AppTextField(
               key: ValueKey('billing-band-fee-${widget.index}'),
@@ -111,7 +112,7 @@ class _BillingBandRowState extends State<BillingBandRow> {
               },
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: AppTextField(
               key: ValueKey('billing-band-overage-${widget.index}'),

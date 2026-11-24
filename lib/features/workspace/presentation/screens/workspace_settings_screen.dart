@@ -11,6 +11,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/routes.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -299,7 +300,7 @@ class _WorkspaceSettingsScreenState
                     enabled: !_busy,
                     onTap: () => _importXml(workspace),
                   )),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xl),
 
       ];
 

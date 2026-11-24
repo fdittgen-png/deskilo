@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_spacing.dart';
 
 class BusinessSeesCard extends StatelessWidget {
   const BusinessSeesCard({super.key});
@@ -26,7 +27,7 @@ class BusinessSeesCard extends StatelessWidget {
         l10n.meBusinessSeesTitle,
         anchor: HelpAnchor.privacyBusinessSees,
       ),
-      childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+      childrenPadding: const EdgeInsets.fromLTRB(AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.md),
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
       children: [
         for (final line in [
@@ -35,7 +36,7 @@ class BusinessSeesCard extends StatelessWidget {
           l10n.meBusinessSeesAdmins,
         ])
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: Text(line, style: style),
           ),
       ],

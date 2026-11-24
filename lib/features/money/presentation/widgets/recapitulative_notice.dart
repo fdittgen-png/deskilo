@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../domain/recapitulative_statement.dart';
@@ -43,7 +44,7 @@ class RecapitulativeNotice extends ConsumerWidget {
         .fold(0, (sum, l) => sum + l.invoices);
     final month = appFormatOf(context).dates(DateShape.monthYear).format(DateTime.parse('$period-01'));
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
       child: InlineBanner(
         key: const ValueKey('recapitulative-notice'),
         icon: Icons.public_outlined,

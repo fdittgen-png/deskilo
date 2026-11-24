@@ -10,6 +10,7 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -101,7 +102,7 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
     return SheetShell(
       title: l10n.moneyRecordPayment,
       children: [
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.md),
         AppAmountField(
           key: const ValueKey('payment-amount'),
           controller: _draft.amount,
@@ -111,19 +112,19 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
           showProblem: _invalid,
           autofocus: true,
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.md),
         _methodChips(l10n),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xs),
         _dateTile(context, l10n),
         _periodTile(context, l10n),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xs),
         TextField(
           controller: _draft.note,
           decoration: InputDecoration(
             labelText: l10n.moneyNoteLabel,
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.lg),
         FilledButton(
           key: const ValueKey('money-submit-payment'),
           onPressed: _submit,
@@ -224,12 +225,12 @@ class QuotaRequestSheet extends StatelessWidget {
     return SheetShell(
       title: l10n.quotaRequestTitle,
       children: [
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
         Text(
           l10n.quotaRequestExplainer(period),
           style: Theme.of(context).textTheme.bodySmall,
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.md),
         TextField(
           key: const ValueKey('quota-request-count'),
           controller: count,
@@ -239,7 +240,7 @@ class QuotaRequestSheet extends StatelessWidget {
           keyboardType: TextInputType.number,
           autofocus: true,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.lg),
         FilledButton(
           key: const ValueKey('money-submit-payment-2'),
           onPressed: () => Navigator.of(context).pop(true),
@@ -272,7 +273,7 @@ class BuyPackageSheet extends StatelessWidget {
     return SheetShell(
       title: l10n.buyPackageTitle,
       children: [
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
         for (final package in packages)
           Card(
             child: ListTile(

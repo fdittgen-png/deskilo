@@ -153,7 +153,7 @@ class MoneyFaceContent {
     return <Widget>[
       moneySectionLabel(context, _l10n.scheduledAwaitingTitle),
       for (final o in awaiting) ExpenseOccurrenceCard(o, data.currency),
-      const SizedBox(height: 8),
+      const SizedBox(height: AppSpacing.sm),
     ];
   }
 
@@ -164,7 +164,7 @@ class MoneyFaceContent {
     return [
       if (account != null && account.isNotable) ...[
         AccountCard(account: account, currencyCode: data.currencyCode),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
       ],
       ...data.attemptsCard,
       if (data.statement != null) bill(null),
@@ -180,7 +180,7 @@ class MoneyFaceContent {
       ...occurrenceCards,
       sectionLabel(_l10n.moneySectionPay),
       actions.recordPayment,
-      if (buyPackage != null) ...[const SizedBox(height: 8), buyPackage],
+      if (buyPackage != null) ...[const SizedBox(height: AppSpacing.sm), buyPackage],
       sectionLabel(_l10n.moneySectionRequests),
       MoneyActionGrid(actions.requestButtons),
       if (actions.purchaseButtons.isNotEmpty) ...[
@@ -190,7 +190,7 @@ class MoneyFaceContent {
       sectionLabel(_l10n.moneySectionDocuments),
       for (final tile in actions.workspaceTools) ...[
         tile,
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
       ],
       // #494 — member self-service reports: the standing financial
       // agreement and the month's payments, viewable/downloadable/
@@ -224,7 +224,7 @@ class MoneyFaceContent {
         // #3627 — at the desk the month is a dashboard over its lines.
         if (statement != null && !_atDesk) bill(MoneyFace.statement),
         if (account != null && account.isNotable) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           AccountCard(
               account: account,
               currencyCode: data.currencyCode,
@@ -232,7 +232,7 @@ class MoneyFaceContent {
         ],
       ],
       MoneyFace.payments: [
-        if (overdueBanner != null) ...[overdueBanner, const SizedBox(height: 8)],
+        if (overdueBanner != null) ...[overdueBanner, const SizedBox(height: AppSpacing.sm)],
         ...data.attemptsCard,
         ...occurrenceCards,
         moneySectionLabel(context, _l10n.moneySectionPay),
@@ -243,7 +243,7 @@ class MoneyFaceContent {
           MoneyWorkspaceTools(actions: actions.workspaceTools),
         if (exposure != null) ...[
           InvoiceSummaryCard(exposure: exposure),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           MyInvoicesList(memberId: member?.id ?? '', exposure: exposure),
         ],
       ],
@@ -285,9 +285,9 @@ class MoneyFaceContent {
     return {
       MoneyFace.statement: const [],
       MoneyFace.payments: [
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
         actions.recordPayment,
-        if (buyPackage != null) ...[const SizedBox(height: 8), buyPackage],
+        if (buyPackage != null) ...[const SizedBox(height: AppSpacing.sm), buyPackage],
         moneySectionLabel(context, _l10n.moneySectionRequests),
         MoneyActionGrid(actions.requestButtons),
         if (actions.purchaseButtons.isNotEmpty) ...[

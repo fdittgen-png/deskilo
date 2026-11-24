@@ -260,7 +260,7 @@ class ReserveHubHeader extends ConsumerWidget {
         onPressed: actions.pickDate,
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           const Icon(Icons.calendar_month_outlined, size: 18),
-          const SizedBox(width: 4),
+          const SizedBox(width: AppSpacing.xs),
           // #711 — intl's default locale IS the member's format locale now
           // (set by appFormatProvider), so the bare call is the right one; a
           // per-site locale would disagree with every other date on screen.

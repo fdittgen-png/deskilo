@@ -253,7 +253,7 @@ class ReservePlanView extends ConsumerWidget {
       // #2011 — the floor plan could not be read: say what kind of failure
       // it is and offer Retry; the level selector stays, so the level is kept.
       AsyncError(:final error) => Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: ReadFailureBanner(
             key: const ValueKey('reserve-plan-unavailable'),
             error: error,

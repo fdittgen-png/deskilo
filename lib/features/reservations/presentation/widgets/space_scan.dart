@@ -8,6 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/settings/booking_windows.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -366,7 +367,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     return SheetShell(
       title: title,
       children: [
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xs),
         Text(
           bookingRangeText(context, appFormatOf(context), l10n, window.start, window.end),
           style: Theme.of(context).textTheme.bodySmall,
@@ -395,7 +396,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
             ),
           ).children(context),
         if (space.seats.isNotEmpty) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           for (final seat in space.seats)
             SpaceSeatTile(
               seat: seat,
@@ -408,7 +409,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
         // the plan with the space in focus, closing every sheet on the
         // way so the plan is actually visible.
         if (level != null) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           SpaceShowOnPlanButton(levelId: level.id, space: widget.space),
         ],
       ],

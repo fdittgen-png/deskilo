@@ -438,7 +438,7 @@ class InvoiceMoreMenu extends ConsumerWidget {
         // The worded button is a whole target, not just its words.
         constraints: const BoxConstraints(minHeight: 48),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

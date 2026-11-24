@@ -15,6 +15,7 @@ import '../../../../core/failure/app_failure.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -104,7 +105,7 @@ class _CustomerQuoteScreenState extends ConsumerState<CustomerQuoteScreen> {
           ? const SizedBox.shrink()
           : Center(
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 720),
+                constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
                 child: ref
                     .watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)))
                     .when(

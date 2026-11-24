@@ -111,7 +111,7 @@ class EventsFilterLines extends ConsumerWidget {
                     .clearCategories(),
               ),
               for (final category in NotificationCategory.values) ...[
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 FilterChip(
                   key: ValueKey('notif-cat-${category.wire}'),
                   label: Text(notificationCategoryLabel(l10n, category)),
@@ -158,7 +158,7 @@ class EventsFilterLines extends ConsumerWidget {
                               value ? ReadFilter.unread : ReadFilter.all,
                             ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: AppSpacing.sm),
                       FilterChip(
                         key: const ValueKey('notes-filter-read'),
                         label: Text(l10n.notesFilterRead),
@@ -208,7 +208,7 @@ class EventsFilterLines extends ConsumerWidget {
                   FeedGrouping.date,
                   FeedGrouping.user,
                 ]) ...[
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.sm),
                   FilterChip(
                     key: ValueKey('notif-group-${axis.name}'),
                     // #1191 — a selected chip draws its OWN

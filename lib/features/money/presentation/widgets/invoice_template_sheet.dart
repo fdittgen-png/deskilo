@@ -272,7 +272,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor>
               ),
             ],
           ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xs),
         // #966 — the markup mode's guide: grouped fields with their
         // meaning, the line markup one sign per row, three ready-made
         // pieces, everything inserted at the caret. Collapsed until

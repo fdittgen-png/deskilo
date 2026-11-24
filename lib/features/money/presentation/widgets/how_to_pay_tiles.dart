@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../workspace/domain/payment_instructions.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -147,12 +148,12 @@ class HowToPayCard extends ConsumerWidget {
     ];
     return Card(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, 0),
               child: Text(
                 l10n.paymentInstructionsTitle,
                 style: Theme.of(context).textTheme.titleMedium,
@@ -160,7 +161,7 @@ class HowToPayCard extends ConsumerWidget {
             ),
             if (onPayOnline != null)
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, 0),
                 child: FilledButton.icon(
                   key: const Key('pay-online-button'),
                   onPressed: onPayOnline,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/space_codes_pdf.dart';
 
@@ -65,7 +66,7 @@ class _SpaceCodesOptionsDialogState extends State<SpaceCodesOptionsDialog> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(l10n.spaceCardSizeLabel),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             SegmentedButton<SpaceCardSize>(
               segments: [
                 for (final size in SpaceCardSize.values)
@@ -81,9 +82,9 @@ class _SpaceCodesOptionsDialogState extends State<SpaceCodesOptionsDialog> {
               onSelectionChanged: (selection) =>
                   setState(() => _size = selection.first),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             Text(l10n.spaceQrSizeLabel),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             SegmentedButton<SpaceQrSize>(
               segments: [
                 for (final size in SpaceQrSize.values)
@@ -99,7 +100,7 @@ class _SpaceCodesOptionsDialogState extends State<SpaceCodesOptionsDialog> {
               onSelectionChanged: (selection) =>
                   setState(() => _qrSize = selection.first),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             Text(l10n.spaceCardInfoLabel),
             for (final info in SpaceCardInfo.values)
               CheckboxListTile(

@@ -39,7 +39,7 @@ class EditorEmptyFloor extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium,
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xs),
                   Text(
                     l10n.editorEmptyFloorBody,
                     style: Theme.of(context).textTheme.bodySmall,

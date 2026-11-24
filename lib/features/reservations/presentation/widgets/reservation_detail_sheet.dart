@@ -143,7 +143,7 @@ class _ReservationDetailSheetState
             ),
             ReservationStatusNote(reservation: r, now: now),
             if (seatId != null) SeatAccessoryRow(seatId: seatId),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             FilledButton.icon(
               key: const ValueKey('reservation-detail-sheet-calendar-show-on-plan'),
               icon: const Icon(Icons.map_outlined),
@@ -154,7 +154,7 @@ class _ReservationDetailSheetState
             ),
             ..._ownActions(context, ref, actions, offered),
             if (calendarFile) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               CalendarFileButton(reservation: r),
             ],
             // #841 — the booking says who decided about it. A deletion
@@ -255,7 +255,7 @@ class _ReservationDetailSheetState
     final l10n = context.l10n;
     return [
             if (offered.editable) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Row(
                 children: [
                   Expanded(
@@ -287,7 +287,7 @@ class _ReservationDetailSheetState
               ),
             ],
             if (offered.extendable) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               OutlinedButton.icon(
                 key: const ValueKey('reservation-extend'),
                 icon: const Icon(Icons.more_time_outlined),
@@ -298,7 +298,7 @@ class _ReservationDetailSheetState
               ),
             ],
             if (offered.endEarlyable) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               OutlinedButton.icon(
                 key: const ValueKey('reservation-end-early'),
                 icon: const Icon(Icons.timelapse_outlined),
@@ -309,7 +309,7 @@ class _ReservationDetailSheetState
               ),
             ],
             if (offered.deletionRequestable) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               OutlinedButton.icon(
                 key: const ValueKey('reservation-delete-request'),
                 style: OutlinedButton.styleFrom(

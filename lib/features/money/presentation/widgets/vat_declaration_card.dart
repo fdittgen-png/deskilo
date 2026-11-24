@@ -68,7 +68,7 @@ class VatDeclarationCard extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xs),
         for (final line in declaration.lines)
           Text(
             key: line.isCorrection
@@ -92,7 +92,7 @@ class VatDeclarationCard extends StatelessWidget {
             vatWords(l10n).vatDeclCorrectionsNote,
             style: theme.textTheme.bodySmall,
           ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xs),
         Text(
           l10n.vatDeclTotalsLine(
             '${centsToMajor(declaration.totalNetCents)} ${declaration.currency}',

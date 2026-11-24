@@ -259,7 +259,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
               labelText: l10n.scheduleTitleLabel,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           AppAmountField(
             key: const ValueKey('schedule-amount'),
             controller: amount,
@@ -268,7 +268,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
             allowNegative: false,
             showProblem: invalid,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           TextField(
             controller: description,
             decoration: InputDecoration(
@@ -290,7 +290,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
             value: supplierId,
             onChanged: (v) => setSheetState(() => supplierId = v),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           ScheduleStartsField(
             key: const ValueKey('schedule-starts'),
             now: now,
@@ -326,7 +326,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
               ),
             ),
           ]),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           TextField(
             key: const ValueKey('schedule-times'),
             controller: times,
@@ -343,12 +343,12 @@ Future<bool> _showCreateExpenseScheduleSheet(
             onChanged: (read) =>
                 setSheetState(() => (ends, endsOn) = (read, read.date)),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             l10n.scheduleValidationHint,
             style: Theme.of(context).textTheme.bodySmall,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           FilledButton(
             key: const ValueKey('schedule-submit'),
             onPressed: () => submitScheduleEntries(context,
@@ -465,7 +465,7 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
                 size: 18,
                 color: rejected ? scheme.error : scheme.primary,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
                   '${o.scheduleTitle} · ${dates.format(o.dueOn)}',
@@ -479,7 +479,7 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
             ]),
             if (rejected)
               Padding(
-                padding: const EdgeInsets.only(top: 4),
+                padding: const EdgeInsets.only(top: AppSpacing.xs),
                 child: Text(
                   l10n.occurrenceRejected,
                   style: Theme.of(context)
@@ -488,7 +488,7 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
                       ?.copyWith(color: scheme.error),
                 ),
               ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               key: ValueKey('occurrence-amount-${o.id}'),
               controller: _amount,
@@ -505,7 +505,7 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
               onChanged: (_) => setState(() {}),
             ),
             if (explain) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               TextField(
                 key: ValueKey('occurrence-reason-${o.id}'),
                 controller: _reason,
@@ -514,7 +514,7 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
                 ),
               ),
             ],
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Align(
               alignment: Alignment.centerRight,
               child: FilledButton(

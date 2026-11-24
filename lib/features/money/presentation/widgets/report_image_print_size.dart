@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../application/report_picture_library.dart';
 import '../../providers/guest_pass_providers.dart'
     show currentWorkspaceProvider;
@@ -85,7 +86,7 @@ class _ReportImagePrintSizeState extends ConsumerState<ReportImagePrintSize> {
       children: [
         if (_over.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: Column(
               key: const ValueKey('report-images-print-size'),
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +107,7 @@ class _ReportImagePrintSizeState extends ConsumerState<ReportImagePrintSize> {
           ),
         if (_failed.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: Text(
               l10n.reportImagesBringFailed(_failed.join(', ')),
               key: const ValueKey('report-images-bring-failed'),

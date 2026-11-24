@@ -205,7 +205,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _Wordmark(),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.xl),
           VerificationPendingView(
             key: const ValueKey('auth-pending'),
             email: _pendingEmail!,
@@ -223,7 +223,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const _Wordmark(),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Text(
               _isSignUp
                   ? (l10n.authSignUpTitle)
@@ -231,18 +231,18 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               style: Theme.of(context).textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xl),
             ..._credentialFields(l10n),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xl),
             ..._outcomeAndSubmit(l10n),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             AuthSocialSection(
               busy: _busy,
               onProvider: _social,
               onUseExistingAccount: _useExistingAccount,
             ),
             ..._badgeEntry(l10n),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             // #1379 — no account is needed to look around, so the
             // offer sits beside the two that do need one.
             const DemoEntryButton(),
@@ -272,7 +272,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     ? (l10n.taxRefRequired)
                     : null,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
             ],
             TextFormField(
               controller: _email,
@@ -287,7 +287,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   ? (l10n.taxRefRequired)
                   : null,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             TextFormField(
               controller: _password,
               decoration: InputDecoration(
@@ -356,7 +356,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         : InlineBannerSeverity.error,
                 text: authOutcomeText(result, l10n)!,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
             ],
             FilledButton(
               key: const ValueKey('auth-sign-up-button'),
@@ -394,7 +394,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 builder: (context, snapshot) =>
                     snapshot.data == true
                         ? Padding(
-                            padding: const EdgeInsets.only(top: 12),
+                            padding: const EdgeInsets.only(top: AppSpacing.md),
                             child: OutlinedButton.icon(
                               key: const ValueKey('auth-badge'),
                               onPressed: _busy

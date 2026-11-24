@@ -192,7 +192,7 @@ class InvoiceSummaryCard extends ConsumerWidget {
                 children: [
                   Text(l10n.moneyOpenInvoicesTitle,
                       style: theme.textTheme.titleMedium),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xs),
                   Text(
                     l10n.moneyOpenInvoicesSummary(
                           exposure.open.length,
@@ -201,7 +201,7 @@ class InvoiceSummaryCard extends ConsumerWidget {
                     style: theme.textTheme.bodyLarge,
                   ),
                   if (exposure.overdue.isNotEmpty) ...[
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       l10n.moneyOverdueBanner(
                             exposure.overdue.length,

@@ -9,6 +9,7 @@ import '../../../../core/files/file_picker.dart';
 import '../../../../core/images/report_picture_bytes.dart'
     show ReportPictureException;
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -145,7 +146,7 @@ class _Preparing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: 8),
+    padding: const EdgeInsets.only(bottom: AppSpacing.sm),
     child: Column(
       key: const ValueKey('report-image-preparing'),
       crossAxisAlignment: CrossAxisAlignment.start,

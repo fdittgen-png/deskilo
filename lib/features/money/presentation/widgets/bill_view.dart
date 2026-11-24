@@ -172,7 +172,7 @@ class _PackagesCard extends StatelessWidget {
     return Card(
       key: const Key('packages-card'),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -180,7 +180,7 @@ class _PackagesCard extends StatelessWidget {
               l10n.billPackages,
               style: Theme.of(context).textTheme.titleSmall,
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             for (final entry in entries)
               BillLine(
                 label: entry.description.isEmpty
@@ -238,7 +238,7 @@ class _OpenPositionsCard extends StatelessWidget {
         borderRadius: AppRadius.lgAll,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -267,7 +267,7 @@ class _OpenPositionsCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             for (final position in positions) ...[
               BillLine(
                 label: _label(l10n, position.event),
@@ -311,7 +311,7 @@ class _CreditsCard extends StatelessWidget {
     final l10n = context.l10n;
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -319,7 +319,7 @@ class _CreditsCard extends StatelessWidget {
               l10n.billPaymentsCredits,
               style: Theme.of(context).textTheme.titleSmall,
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             for (final entry in entries)
               BillLine(
                 label: entry.description.isEmpty
@@ -383,7 +383,7 @@ class _BalanceFooter extends StatelessWidget {
       key: prominent ? const ValueKey('money-month-balance') : null,
       color: prominent ? scheme.surfaceContainer : null,
       child: Padding(
-        padding: prominent ? AppSpacing.xlAll : const EdgeInsets.all(16),
+        padding: prominent ? AppSpacing.xlAll : const EdgeInsets.all(AppSpacing.lg),
         child: prominent ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Wrap(spacing: AppSpacing.md, runSpacing: AppSpacing.sm,
               crossAxisAlignment: WrapCrossAlignment.center, children: content.take(2).toList()),

@@ -210,7 +210,7 @@ Widget _button(
   return ListTile(
     key: ValueKey(key),
     dense: true,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 4),
+    contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
     leading: Icon(icon, size: 20, color: danger ? colors.error : null),
     title: Text(
       label,

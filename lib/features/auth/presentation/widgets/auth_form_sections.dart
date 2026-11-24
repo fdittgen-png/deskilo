@@ -57,7 +57,7 @@ class AuthSocialSection extends ConsumerWidget {
             // instead, which is what the rest of this form does.
             Flexible(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                 child: Text(
                   l10n.authContinueWith,
                   style: Theme.of(context).textTheme.bodySmall,
@@ -68,7 +68,7 @@ class AuthSocialSection extends ConsumerWidget {
             const Expanded(child: Divider()),
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.md),
         Wrap(
           spacing: 8,
           runSpacing: 8,
@@ -88,7 +88,7 @@ class AuthSocialSection extends ConsumerWidget {
         // #1648 — one explicit Continue with Deskilo, its destination
         // and its true stage; a failure names its own next action.
         if (handoff && offersDeskilo) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           FederationHandoffSection(onUseExistingAccount: onUseExistingAccount),
         ],
       ],
