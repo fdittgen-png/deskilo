@@ -155,7 +155,7 @@ static void open_settings_cb(lv_event_t *e) {
     lv_obj_center(s_settings);
     lv_obj_t *t = lv_label_create(s_settings);
     lv_label_set_text_fmt(t, "Settings\nRole:      %s\nWi-Fi:     %s\nCompany:   %s\nUser:      %s\nSession:   %s",
-        or_unset(g_cfg.role), or_unset(g_cfg.ssid), or_unset(g_cfg.workspace_name), or_unset(g_cfg.email), g_cfg.refresh[0] ? "kept" : "(not set)");
+        or_unset(g_cfg.role), or_unset(g_cfg.ssid), or_unset(g_cfg.workspace_name), g_cfg.email[0] ? "signed in" : "(not set)", g_cfg.refresh[0] ? "kept" : "(not set)");
     lv_obj_set_style_text_font(t, &lv_font_montserrat_16, 0);
     lv_obj_align(t, LV_ALIGN_TOP_LEFT, 0, 0);
     lv_obj_t *b1 = lv_btn_create(s_settings);
