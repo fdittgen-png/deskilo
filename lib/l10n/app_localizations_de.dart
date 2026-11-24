@@ -41814,7 +41814,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String tillReceiptTaxLine(String percent, String tax, String net) {
-    return 'MwSt. $percent %: $tax auf $net';
+    return 'MwSt. $percent: $tax auf $net';
   }
 
   @override

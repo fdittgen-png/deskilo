@@ -140,7 +140,7 @@ void main() {
         // are the contract here and the symbol, which is the ICU data's, is not pinned
         expect(spelled.replaceAll(RegExp(r'\s'), ''), contains(total));
         expect(text, contains(_en.tillReceiptTotal(spelled)));
-        expect(text, contains(_en.tillReceiptTaxLine('20', _format(currency).moneyIn(currency).formatMinor(tax), _format(currency).moneyIn(currency).formatMinor(net))));
+        expect(text, contains(_en.tillReceiptTaxLine(_format(currency).ratePercent(20), _format(currency).moneyIn(currency).formatMinor(tax), _format(currency).moneyIn(currency).formatMinor(net))));
         expect(text, contains(_en.tillReceiptIssuedUnder(doc.operation.specification, '2026-11')));
       });
     }

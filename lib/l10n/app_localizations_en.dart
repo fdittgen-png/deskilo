@@ -41346,7 +41346,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String tillReceiptTaxLine(String percent, String tax, String net) {
-    return 'VAT $percent %: $tax on $net';
+    return 'VAT $percent: $tax on $net';
   }
 
   @override

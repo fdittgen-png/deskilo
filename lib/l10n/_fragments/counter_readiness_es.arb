@@ -19,7 +19,7 @@
   "tillReceiptPrintNote": "No hay ninguna impresora de tickets conectada a la aplicación: imprima desde el menú de compartir.",
   "tillReceiptCorrects": "Corrige el ticket {number}",
   "tillReceiptLine": "{label}: {quantity} {unit}  {amount}",
-  "tillReceiptTaxLine": "IVA {percent} %: {tax} sobre {net}",
+  "tillReceiptTaxLine": "IVA {percent}: {tax} sobre {net}",
   "tillReceiptTotal": "Total {amount}",
   "tillReceiptIssuedUnder": "Emitido según: {specification} ({version})",
   "tillReceiptDisagrees": "Los importes de este ticket no concuerdan entre sí. Se muestra tal como se fijó; avise a su administración.",

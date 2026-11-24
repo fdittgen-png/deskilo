@@ -24239,7 +24239,7 @@
   "tillReceiptPrintNote": "Mit der App ist kein Belegdrucker verbunden: Drucken Sie über das Teilen-Menü.",
   "tillReceiptShare": "Beleg teilen",
   "tillReceiptShow": "Beleg anzeigen",
-  "tillReceiptTaxLine": "MwSt. {percent} %: {tax} auf {net}",
+  "tillReceiptTaxLine": "MwSt. {percent}: {tax} auf {net}",
   "tillReceiptTotal": "Summe {amount}",
   "tillReceiptUnreadable": "Dieser Beleg wurde von einer neueren Version von DesKilo geschrieben: Aktualisieren Sie die App, um ihn zu lesen.",
   "tillRemoveLine": "{name} aus dem Warenkorb nehmen",

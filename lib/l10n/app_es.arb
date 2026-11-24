@@ -24239,7 +24239,7 @@
   "tillReceiptPrintNote": "No hay ninguna impresora de tickets conectada a la aplicación: imprima desde el menú de compartir.",
   "tillReceiptShare": "Compartir el ticket",
   "tillReceiptShow": "Mostrar el ticket",
-  "tillReceiptTaxLine": "IVA {percent} %: {tax} sobre {net}",
+  "tillReceiptTaxLine": "IVA {percent}: {tax} sobre {net}",
   "tillReceiptTotal": "Total {amount}",
   "tillReceiptUnreadable": "Este ticket lo escribió una versión más reciente de DesKilo: actualice la aplicación para leerlo.",
   "tillRemoveLine": "Quitar {name} de la cesta",

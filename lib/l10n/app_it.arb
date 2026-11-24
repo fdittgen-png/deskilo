@@ -24239,7 +24239,7 @@
   "tillReceiptPrintNote": "Nessuna stampante di scontrini è collegata all'app: stampi dal menu di condivisione.",
   "tillReceiptShare": "Condividere lo scontrino",
   "tillReceiptShow": "Mostrare lo scontrino",
-  "tillReceiptTaxLine": "IVA {percent} %: {tax} su {net}",
+  "tillReceiptTaxLine": "IVA {percent}: {tax} su {net}",
   "tillReceiptTotal": "Totale {amount}",
   "tillReceiptUnreadable": "Questo scontrino è stato scritto da una versione più recente di DesKilo: aggiorni l'app per leggerlo.",
   "tillRemoveLine": "Togliere {name} dal carrello",
