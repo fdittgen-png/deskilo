@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -44,7 +45,7 @@ class _BillingCustomersScreenState
     if (query.isEmpty) return true;
     final d = p.draft;
     return [p.displayName, d.city, d.email, d.vatId, d.countryCode].any(
-      (field) => field.toLowerCase().contains(query),
+      (field) => foldForSearch(field).contains(query),
     );
   }
 
@@ -158,7 +159,7 @@ class _BillingCustomersScreenState
               ),
             ),
             data: (all) {
-              final query = _search.text.trim().toLowerCase();
+              final query = foldForSearch(_search.text.trim());
               final shown = [
                 for (final p in all)
                   if (_matches(p, query)) p,

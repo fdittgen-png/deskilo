@@ -17,6 +17,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/time/calendar_days.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -230,7 +231,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
     final l = context.l10n;
     final names = ref.watch(memberLabelsProvider);
     final customers = names.entries.toList()
-      ..sort((a, b) => a.value.compareTo(b.value));
+      ..sort((a, b) => compareNames(a.value, b.value));
     final today = ref.watch(businessDayProvider);
     ref.watch(invoiceDueDaysProvider); // the due date offered follows the payment term when it is read
     return [

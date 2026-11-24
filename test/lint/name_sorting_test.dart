@@ -2,7 +2,10 @@
 //
 // #3488 -- a name list is sorted with `compareNames` (lib/core/text), not
 // with Dart's UTF-16 `compareTo`, which puts every accented initial after Z.
-// Counted, not listed: the ceiling is 0 and a hit names its file.
+// Counted, not listed: the ceiling is 0 and a hit names its file. #4428: a
+// map's values that are names (`entries..sort((a, b) => a.value.compareTo(…))`)
+// sort the same way, and a search in a screen folds case and accents with
+// `foldForSearch` instead of lower-casing, so `cafe` finds `Café`.
 import 'package:flutter_test/flutter_test.dart';
 
 import 'literal_ratchet.dart';
@@ -30,7 +33,17 @@ final _kinds = [
     'name call compareTo',
     RegExp(r'\b\w*[Nn]ame\w*\([^()]*\)\s*\.compareTo\('),
   ),
+  LiteralKind(
+    'entry value compareTo',
+    RegExp(r'\.value\s*\.compareTo\('),
+  ),
 ];
+
+/// A search that lower-cases instead of folding (#4428).
+final _search = LiteralKind(
+  'lower-cased search',
+  RegExp(r'toLowerCase\(\)\s*\.contains\('),
+);
 
 void main() {
   test('no client-side name sort uses compareTo on a name', () {
@@ -54,12 +67,33 @@ void main() {
     }
   });
 
+  test('a search in a screen folds case and accents (#4428)', () {
+    final files = filesUnder(['lib/features', 'lib/core/ui']).where(
+      (f) => f.path.contains('/presentation/') || f.path.startsWith('lib/core/ui/'),
+    );
+    final perFile = countLiterals(files, [_search])[_search.name]!;
+    expect(
+      total(perFile),
+      0,
+      reason: ratchetMessage(
+        rule: 'search (#4428): compare foldForSearch(text).contains(foldForSearch(query)) from lib/core/text/collation.dart',
+        kind: _search.name,
+        ceiling: 0,
+        actual: total(perFile),
+        perFile: perFile,
+      ),
+    );
+    expect(_search.pattern.hasMatch('name.toLowerCase()\n    .contains(q)'), isTrue);
+    expect(_search.pattern.hasMatch('foldForSearch(name).contains(q)'), isFalse);
+  });
+
   test('the patterns see a split receiver and a wrapped call (#3654)', () {
     const planted = [
       "a.memberName\n    .toLowerCase()\n    .compareTo(b.memberName)",
       "(names[a.id] ?? '')\n    .compareTo(names[b.id] ?? '')",
       "localizedCountryName(\n  l10n,\n  a,\n).compareTo(x)",
       "localizedCountryName(l10n, a)\n    .compareTo(x)",
+      '..sort((a, b) => a.value.compareTo(b.value))',
     ];
     for (final text in planted) {
       expect(

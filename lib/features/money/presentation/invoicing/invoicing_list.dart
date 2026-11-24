@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/personal_theme.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -121,13 +122,13 @@ class InvoicingList extends StatelessWidget {
 
   /// The rows the filter and the search keep.
   List<Receivable> _shown(String text) {
-    final q = text.trim().toLowerCase();
+    final q = foldForSearch(text.trim());
     return [
       for (final r in receivables)
         if (_selects(r) &&
             (q.isEmpty ||
-                r.customerName.toLowerCase().contains(q) ||
-                r.number.toLowerCase().contains(q)))
+                foldForSearch(r.customerName).contains(q) ||
+                foldForSearch(r.number).contains(q)))
           r,
     ];
   }

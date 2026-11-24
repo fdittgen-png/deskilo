@@ -52,9 +52,12 @@ class _Queries implements StockQueries {
 
 /// The registry as the server answers it: Wine has its home shelf and a known cost, Tea has none.
 class _Registry implements StockRegistry {
-  _Registry({this.costVisible = true});
+  _Registry({this.costVisible = true, this.withCreme = false});
 
   final bool costVisible;
+
+  /// Also an item whose name carries an accent (#4428).
+  final bool withCreme;
   final homes = <({String item, String? variant, String? place})>[];
   final filters = <({String? place, bool noHome})>[];
   StockConfigFailure? failWith;
@@ -70,6 +73,8 @@ class _Registry implements StockRegistry {
       itemId: 'i-Tea', itemName: 'Tea', unit: 'piece', barcode: '4006381333931', priceCents: 300,
       costVisible: costVisible, onHand: ExactQuantity.parse('0'),
     ),
+    if (withCreme)
+      StockRegistryRow(itemId: 'i-Creme', itemName: 'Crème de marrons', unit: 'piece', costVisible: costVisible, onHand: ExactQuantity.parse('3')),
   ];
 
   @override
@@ -239,6 +244,15 @@ void main() {
         expect(find.byKey(const ValueKey('stock-item-i-Tea')), findsOneWidget);
         expect(find.textContaining('Tea'), findsWidgets);
         expect(find.byType(SnackBar), findsNothing, reason: 'no "unknown code" over a list that is filled');
+      });
+
+      testWidgets('a search without its accents finds the accented name, and only it (#4428)', (tester) async {
+        await _open(tester, _Config(), size, held: _manage, registry: _Registry(withCreme: true));
+        await tester.enterText(find.byKey(const ValueKey('stock-registry-search')), 'CREME');
+        await _settle(tester);
+        expect(find.byKey(const ValueKey('stock-item-i-Creme')), findsOneWidget);
+        expect(find.byKey(const ValueKey('stock-item-i-Tea')), findsNothing);
+        expect(find.byKey(const ValueKey('stock-item-i-Wine')), findsNothing);
       });
 
       testWidgets('a home place is chosen from the places and sent with its request', (tester) async {

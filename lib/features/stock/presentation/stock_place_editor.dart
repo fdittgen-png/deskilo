@@ -16,6 +16,7 @@ import '../../../core/files/file_delivery_notice.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/scan/scan_scope.dart';
+import '../../../core/text/collation.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
@@ -79,11 +80,11 @@ Widget _placeTile(AppLocalizations l10n, StockPlaceConfig p, String separator, V
 
 /// What a place is found by: its address (as the person reads it), name, code and barcode.
 bool _placeMatches(StockPlaceConfig p, String separator, String query) {
-  final q = query.trim().toLowerCase();
+  final q = foldForSearch(query.trim());
   if (q.isEmpty) return true;
-  return stockAddress(p, separator).toLowerCase().contains(q) ||
-      p.name.toLowerCase().contains(q) ||
-      (p.barcode ?? '').toLowerCase().contains(q);
+  return foldForSearch(stockAddress(p, separator)).contains(q) ||
+      foldForSearch(p.name).contains(q) ||
+      foldForSearch(p.barcode ?? '').contains(q);
 }
 
 /// The places of [workspaceId] as the body of the Places page, each opening
