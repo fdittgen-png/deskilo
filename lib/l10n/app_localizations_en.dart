@@ -40677,6 +40677,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillPayCash => 'Take cash';
 
   @override
+  String tillPieceTwice(String code) {
+    return 'Piece $code is already in the basket.';
+  }
+
+  @override
   String get tillPricing => 'Pricing the basket…';
 
   @override
@@ -40703,6 +40708,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillRetry => 'Try again';
 
   @override
+  String tillScanUnknown(String code) {
+    return '$code is not something this till sells.';
+  }
+
+  @override
   String get tillSoldTitle => 'Sold';
 
   @override
@@ -40716,6 +40726,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String tillTotalDue(String amount) {
     return 'Total to pay: $amount';
+  }
+
+  @override
+  String tillTrackLot(String code, String quantity) {
+    return 'Lot $code × $quantity';
+  }
+
+  @override
+  String tillTrackPiece(String code) {
+    return 'Piece $code';
   }
 
   @override

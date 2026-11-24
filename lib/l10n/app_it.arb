@@ -23812,6 +23812,15 @@
   "tillOpReconcileTender": "riconciliazione di un pagamento con carta",
   "tillOpSignFiscal": "firma di uno scontrino fiscale",
   "tillPayCash": "Incassare in contanti",
+  "tillPieceTwice": "Il pezzo {code} è già nel carrello.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Calcolo del carrello…",
   "tillQuantityHint": "Una quantità esatta, per esempio 1 oppure 0,350.",
   "tillQuantityRefused": "Inserisca una quantità superiore a zero con al massimo sei decimali.",
@@ -23822,10 +23831,40 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillScanUnknown": "{code} non è un articolo venduto da questa cassa.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillSoldTitle": "Venduto",
   "tillTaxIncluded": "di cui imposta {amount}",
   "tillTitle": "Cassa",
   "tillTotalDue": "Totale da pagare: {amount}",
+  "tillTrackLot": "Lotto {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Pezzo {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tipAvailabilityClosure": "Per chiudere un giorno che nessuno potrà prenotare: tocchi «Aggiungi giorno di chiusura» e indichi un motivo, se vuole.",
   "tipAvailabilityDays": "Per impostare i giorni di apertura: selezioni i giorni sotto «Giorni di apertura».",
   "tipAvailabilityGrid": "Per scegliere come si dividono le prenotazioni: scelga una «Granularità delle prenotazioni» — periodi liberi, fasce, mezze giornate o giornate intere.",

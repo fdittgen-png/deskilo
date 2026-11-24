@@ -3150,6 +3150,8 @@ Press **Take cash** and type the **Cash given** (or **Exact amount**). Less than
 
 Where your country does not yet allow the counter, the till says which operation is missing and offers nothing: nothing is numbered and nothing is taken. A goods line needs stock management on; a refusal of the server is shown in words. Card payments, discounts, refunds and returns are not part of this first till.
 
+A traced good names what it was taken from. When you sell an item tracked by lot without choosing a lot, the sale takes it from the lots on hand, the first to expire first and never an expired one; under the sold line the till shows each lot's code as received with the quantity taken from it, for example **Lot SUP-A × 2 · Lot SUP-B × 1**, and each piece by its tag. Where the business uses a scanner, scan a piece's tag to ring up that piece: the sale takes exactly the pieces scanned, and the same piece twice is refused. These track IDs are frozen with the receipt: changing a lot or a tag later never alters a receipt already issued. In the stock, the trace of a lot or a piece names the receipt that sold it.
+
 <!-- anchor: user.money.till-drawer -->
 ### Open the till, count and close it
 

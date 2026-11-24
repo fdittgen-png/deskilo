@@ -5,6 +5,7 @@
 // by itself (cash short of the total) is said here.
 import '../../../core/trace/refusal_text.dart';
 import '../../../l10n/app_localizations.dart';
+import '../domain/counter_till.dart';
 import 'till_drawer/drawer_text.dart';
 import 'till_session.dart';
 
@@ -24,3 +25,9 @@ String tillProblemText(AppLocalizations l10n, Object problem) {
   if (problem is TillCashShort) return l10n.tillCashShort;
   return drawerRefusalText(l10n, problem) ?? knownRefusalText(l10n, problem) ?? l10n.tillFailed;
 }
+
+/// #4436 -- the track IDs a sold line took, in words: each lot with its quantity, each piece by its tag.
+String tillTracksText(AppLocalizations l10n, List<TillTrack> tracks) => [
+  for (final t in tracks)
+    if (t.isPiece) l10n.tillTrackPiece(t.code) else l10n.tillTrackLot(t.code, t.quantity ?? ''),
+].join(' · ');
