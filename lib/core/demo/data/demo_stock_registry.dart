@@ -105,7 +105,8 @@ class DemoStockRegistry implements StockRegistry {
     required String? placeId,
     required String requestId,
   }) async {
-    if (workspaceId != _workspaceId || !catalogue.containsKey(itemId)) {
+    // an item of the catalogue, or a service made an item in this session (#4402)
+    if (workspaceId != _workspaceId || (!catalogue.containsKey(itemId) && (await _config.item(workspaceId, itemId))?.stockable != true)) {
       throw const StockConfigRefused('item', StockRefusal.itemUnknown);
     }
     if (placeId != null) {

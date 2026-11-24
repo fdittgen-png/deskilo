@@ -20,10 +20,4 @@ class MoneyStockServiceCreator implements StockServiceCreator {
     final active = [for (final r in rates) if (r.active && r.id.isNotEmpty) r]..sort((a, b) => a.isDefault == b.isDefault ? 0 : (a.isDefault ? -1 : 1));
     return [for (final r in active) (id: r.id, label: r.label)];
   }
-
-  @override
-  Future<String> create(String workspaceId, {required String name, required int priceCents, String? vatRateId, String? requestId}) async {
-    final service = await _ref.read(moneyRepositoryProvider).createService(workspaceId, name: name, priceCents: priceCents, vatRateId: vatRateId, requestId: requestId);
-    return service.id;
-  }
 }

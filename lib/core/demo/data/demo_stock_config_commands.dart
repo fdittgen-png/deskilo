@@ -193,6 +193,40 @@ class DemoStockConfigCommands implements StockConfigCommands {
     return (id: config.itemId, revision: revision, replayed: false);
   }
 
+  /// #4402 -- what a new item needs beside its stock settings: a service of the Demo's catalogue and a home in its
+  /// registry, wired by the Demo's kit. Without them a new item is refused as a malformed request.
+  ({
+    Future<String> Function(String name, int priceCents, String? vatRateId, String requestId) service,
+    Future<void> Function(String itemId, String placeId, String requestId) home,
+  })? newItems;
+
+  /// The items made by request id: a retry answers the item it first made.
+  final Map<String, StockSaved> _made = {};
+
+  @override
+  Future<StockSaved> createItem(String workspaceId, NewStockItemDraft draft, String requestId) async {
+    final steps = newItems;
+    if (!_mine(workspaceId) || steps == null) throw const StockConfigRefused('request', StockRefusal.malformed);
+    if (_made[requestId] case final done?) return (id: done.id, revision: done.revision, replayed: true);
+    // the server makes the three in one transaction: what it would refuse is refused before anything is made
+    if (draft.homeLocationId case final home?) {
+      final place = _places[home];
+      if (place == null || place.virtual || !place.active) throw const StockConfigRefused('home_location_id', StockRefusal.homeInvalid);
+    }
+    final id = await steps.service(draft.name, draft.priceCents, draft.vatRateId, '$requestId:service');
+    final saved = await saveItem(
+      workspaceId,
+      StockItemConfig(
+        itemId: id, revision: (await item(workspaceId, id))?.revision ?? 1, stockable: true, purchasable: true, sellable: true,
+        inventoryUnit: draft.inventoryUnit, tracking: 'none', shelfLifeDays: null, units: const [],
+        codes: [if (draft.barcode case final code?) StockCodeDraft(code: code, kind: 'own')],
+      ),
+      '$requestId:settings',
+    );
+    if (draft.homeLocationId case final home?) await steps.home(id, home, '$requestId:home');
+    return _made[requestId] = (id: id, revision: saved.revision, replayed: false);
+  }
+
   @override
   Future<StockSaved> savePlace(
     String workspaceId, {

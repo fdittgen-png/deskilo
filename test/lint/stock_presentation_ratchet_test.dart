@@ -40,14 +40,14 @@ int _count(String root, RegExp pattern, {String? skipFile}) {
 }
 
 /// Measured on 24 Nov 2026 before the sweep: 15 pages, 9 retry labels,
-/// 2 chips, 17 decimal fields, 52 catches (47 after the page shell, 6 after
+/// 2 chips, 17 decimal fields, 52 catches (47 after the page shell, 5 after
 /// the guarded path). Only falls.
 const _ceilings = <String, int>{
   'hand-built pages': 0,
   'connect wording as retry': 0,
   'plain chips as status': 0,
   'hand-built decimal fields': 5,
-  'on Object catch': 6,
+  'on Object catch': 5,
 };
 
 Map<String, int> _measure() => {

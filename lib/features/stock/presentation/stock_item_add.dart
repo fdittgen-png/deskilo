@@ -118,7 +118,7 @@ class StockItemAdd {
         if (!context.mounted) return false;
         return await showNewStockItemSheet(
           context,
-          (creator: creator, commands: _ref.read(stockConfigCommandsProvider), registry: _ref.read(stockRegistryProvider)),
+          (creator: creator, commands: _ref.read(stockConfigCommandsProvider)),
           workspaceId: workspaceId,
           choices: (
             vat: vat,

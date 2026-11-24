@@ -22,6 +22,14 @@ abstract interface class StockConfigCommands {
     String requestId,
   );
 
+  /// #4402 -- makes a NEW item in one command: its service, its stock settings and its home place, all or none.
+  /// [requestId] makes a retry answer the item it first made. The answer names the item and its stock revision.
+  Future<StockSaved> createItem(
+    String workspaceId,
+    NewStockItemDraft item,
+    String requestId,
+  );
+
   /// Creates a place ([placeId] and [expectedRevision] null) or saves one
   /// read at [expectedRevision].
   Future<StockSaved> savePlace(

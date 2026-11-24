@@ -139,6 +139,9 @@ class _Config implements StockConfigCommands {
   }
 
   @override
+  Future<StockSaved> createItem(String workspaceId, NewStockItemDraft item, String requestId) => throw UnimplementedError('not used here');
+
+  @override
   Future<StockSaved> savePlace(String workspaceId, {required StockPlaceDraft place, required String requestId, String? placeId, int? expectedRevision}) async {
     if (failWith case final StockConfigFailure e) throw e;
     savedPlaces.add((place: place.toJson(), id: placeId, rev: expectedRevision));
