@@ -37,6 +37,9 @@ class DemoWorkspaceUnits implements WorkspaceUnits {
   /// Whether the business holds [code] as the unit of an item, a line or a movement; the Demo asks its own ledger.
   bool Function(String workspaceId, String code) usedBy = (_, _) => false;
 
+  /// Whether an item of the business has [code] as a packaging unit (a box of 6): one code keeps one meaning.
+  bool Function(String workspaceId, String code) packages = (_, _) => false;
+
   final Map<String, List<WorkspaceUnit>> _units = {};
   final Map<String, ({String digest, WorkspaceUnit answer})> _requests = {};
 
@@ -71,6 +74,7 @@ class DemoWorkspaceUnits implements WorkspaceUnits {
     final list = _of(workspaceId);
     final at = list.indexWhere((u) => u.code == draft.code);
     final old = at < 0 ? null : list[at];
+    if (old == null && packages(workspaceId, draft.code)) throw const StockConfigRefused('code', 'code_duplicate');
     final unit = _edited(draft, old);
     if (old != null) _keepsWhatIsFixed(workspaceId, old, unit);
     if (at < 0) {

@@ -324,7 +324,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
   stockCodeResolverProvider.overrideWith((ref) => stocks.of(ref).codeResolver),
   // #4363 — and keeps tags (an NFC chip on a shelf and on the mugs) in memory.
   stockTagsStoreProvider.overrideWith((ref) => stocks.of(ref).tags),
-  ...demoUnitOverrides((ref) => stocks.of(ref).ledger.itemList.map((i) => i.unit)), // #4442 the units of measure
+  ...demoUnitOverrides((ref) => stocks.of(ref).ledger.itemList.map((i) => i.unit), (ref, ws, code) => stocks.of(ref).config.packages(ws, code)), // #4442
   // #4435 — and keeps handling units (a pallet and a carton at the main store) over that same ledger.
   stockHandlingUnitsProvider.overrideWith((ref) => stocks.of(ref).units),
   // #4431 — the expiry report answers from the lots the Demo keeps with their dates.

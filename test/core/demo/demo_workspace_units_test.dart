@@ -86,6 +86,16 @@ void main() {
     await expectLater(units.archive(_ws, requestId: next(), code: 'drum', archived: true), throwsA(_refused('archived', 'unit_in_use')));
   });
 
+  test('one code keeps one meaning: a code an item already uses for its packaging cannot be a unit', () async {
+    units.packages = (workspaceId, code) => code == 'box';
+    await expectLater(
+      units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'box', label: 'Box', dimension: UnitDimension.count, factorNum: 6)),
+      throwsA(_refused('code', 'code_duplicate')),
+    );
+    expect((await units.units(_ws)).map((u) => u.code), isNot(contains('box')));
+    expect((await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'crate', label: 'Crate', dimension: UnitDimension.count, factorNum: 6))).code, 'crate');
+  });
+
   test('an unused unit is archived and shown again; an unknown one is refused', () async {
     await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 50));
     await units.archive(_ws, requestId: next(), code: 'drum', archived: true);

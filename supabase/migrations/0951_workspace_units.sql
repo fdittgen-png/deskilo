@@ -19,6 +19,8 @@
 --   * Who maintains them: `workspaceSettings` (the owner and the admins, and a role the business gave it). A new
 --     permission would be restated into the catalogue, the roles screen and the Dart enum for no new audience: units are
 --     business configuration, used by invoice and quote lines of a business without any stock as much as by stock.
+--   * One code, one meaning: a unit cannot be created with a code an item already uses for its own packaging unit (a box of
+--     6), the reverse of 0952's rule that a packaging unit may not take the code of a unit of the business (`code_duplicate`).
 --   * A unit is never deleted. A unit that is used (an item's inventory or purchase unit, an item unit or code, a purchase
 --     line, a stock movement or receipt allocation, a tag, a supplier mapping, a draft, a quote or an issued invoice line) keeps
 --     its code, its dimension and its factor, and cannot be archived: a correction is a new unit. A built-in unit keeps
@@ -199,6 +201,10 @@ begin
   v_g := gcd(v_num, v_den);
   v_num := v_num / v_g;
   v_den := v_den / v_g;
+  -- one code, one meaning: a code an item already uses for its own packaging (a box of 6) is not given to a unit of the business
+  if v_new and exists (select 1 from public.item_units iu where iu.workspace_id = p_workspace_id and iu.unit = v_code) then
+    perform public.stock_config_refuse('code', 'code_duplicate');
+  end if;
   if v_new and v_label is null then
     perform public.stock_config_refuse('label', 'label_required');
   end if;

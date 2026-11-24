@@ -9,7 +9,13 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import '../../features/stock/providers/workspace_units_providers.dart';
 import 'data/demo_workspace_units.dart';
 
-List<Override> demoUnitOverrides(Iterable<String> Function(Ref ref) itemUnits) {
+List<Override> demoUnitOverrides(Iterable<String> Function(Ref ref) itemUnits, bool Function(Ref ref, String workspaceId, String code) packages) {
   final units = DemoWorkspaceUnits();
-  return [workspaceUnitsProvider.overrideWith((ref) => units..usedBy = (workspaceId, code) => itemUnits(ref).contains(code))];
+  return [
+    workspaceUnitsProvider.overrideWith(
+      (ref) => units
+        ..usedBy = ((workspaceId, code) => itemUnits(ref).contains(code))
+        ..packages = ((workspaceId, code) => packages(ref, workspaceId, code)),
+    ),
+  ];
 }

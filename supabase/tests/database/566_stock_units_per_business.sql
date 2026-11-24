@@ -5,7 +5,7 @@
 -- built-in unit behaves exactly as it did (a wine counted in litres, received in centilitres); a unit is bound to its business by
 -- the key. Rolled back.
 begin;
-select plan(23);
+select plan(24);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -99,6 +99,8 @@ select alike(pg_temp.save_item(1, 301, pg_temp.rev(301), 504, '{"units": [{"unit
   'ERR DKG11%registry_unit%', 'a packaging unit may not take the code of a unit of the business (km, which the six did not hold)');
 select alike(pg_temp.save_item(1, 301, pg_temp.rev(301), 505, '{"units": [{"unit": "spool", "factor_num": 2, "factor_den": 1}, {"unit": "drum", "factor_num": 5, "factor_den": 1}]}'),
   'ERR DKG11%registry_unit%', 'nor the code of the business''s own drum');
+select alike(pg_temp.save_unit(1, 903, '{"code": "spool", "label": "Spool", "dimension": "length", "factor_num": 3, "factor_den": 1}'), 'ERR DKG11%code_duplicate%',
+  'the reverse: a unit cannot take the code of an item''s packaging unit (the spool), so one code keeps one meaning');
 select is(public.stock_to_inventory(pg_temp.u(301), 'spool', 3), 6::numeric, '3 spools are 6 drums');
 select is(public.stock_to_inventory(pg_temp.u(301), 'm', 100), 2::numeric, '100 m are 2 drums');
 select is(public.stock_to_inventory(pg_temp.u(301), 'km', 1), 20::numeric, '1 km is 20 drums');
