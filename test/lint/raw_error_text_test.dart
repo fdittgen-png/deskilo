@@ -75,7 +75,7 @@ const _ownErrorBranchCeiling = <String, int>{
   'plan': 2,
   'profile': 3,
   'reservations': 11,
-  'stock': 14,
+  'stock': 10,
 };
 
 String _featureOf(String path) {
