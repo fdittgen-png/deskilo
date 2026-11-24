@@ -204,11 +204,12 @@ class _Tags implements StockTags {
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-Future<void> _open(WidgetTester tester, Widget home, _Cycle cycle, Size size, {Set<WorkspacePermission>? held, StockCodeResolver? resolver, bool tagReads = false}) async {
+Future<void> _open(WidgetTester tester, Widget home, _Cycle cycle, Size size, {Set<WorkspacePermission>? held, StockCodeResolver? resolver, bool tagReads = false, Locale? locale}) async {
   await pumpApp(
     tester,
     home,
     size: size,
+    locale: locale,
     overrides: [
       ...standardTestOverrides(),
       stockQueriesProvider.overrideWithValue(_Stock()),
@@ -346,6 +347,20 @@ void main() {
         expect(find.textContaining(_en.stockCycleCountedDifference('').split(':').first), findsNothing);
         expect(find.textContaining(_en.stockCycleLineCounted), findsWidgets);
       });
+
+      // #4425 -- the count is read in the member's format: 11,5 in German and 11.5 in English send the same text
+      for (final (code, typed) in [('de', '11,5'), ('en', '11.5')]) {
+        testWidgets('a count typed $typed in $code is sent as 11.5', (tester) async {
+          final cycle = _Cycle();
+          await _open(tester, const StockCountTaskScreen(taskId: 't-1'), cycle, size, locale: Locale(code));
+          await tester.tap(find.byKey(const ValueKey('stock-cycle-count-l-1')));
+          await _frames(tester);
+          await tester.enterText(find.byKey(const ValueKey('stock-cycle-observed')), typed);
+          await tester.tap(find.byKey(const ValueKey('stock-cycle-count-save')));
+          await _frames(tester);
+          expect(cycle.counted.single.observed, '11.5');
+        });
+      }
 
       testWidgets('a person who manages the stock is told the difference', (tester) async {
         final cycle = _Cycle(seeDifference: true);

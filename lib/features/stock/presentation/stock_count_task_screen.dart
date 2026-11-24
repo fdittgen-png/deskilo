@@ -11,8 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/format/decimal_input.dart';
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -139,6 +141,9 @@ class _State extends ConsumerState<StockCountTaskScreen> {
     final l10n = context.l10n;
     final fields = FormControllers({'observed': ''});
     final requestId = newRequestId();
+    final locale = appFormatOf(context).locale;
+    // what was counted, read in the member's format (1,5 or 1.5) and sent as the exact text the server reads
+    String? observed() => exactQuantityFromInput(fields.text('observed'), locale: locale).value?.text;
     CountLineResult? result;
     final done = await showAppFormSheet(
       context,
@@ -147,14 +152,12 @@ class _State extends ConsumerState<StockCountTaskScreen> {
         submitLabel: l10n.stockEditSave,
         submitKey: const ValueKey('stock-cycle-count-save'),
         onDispose: fields.dispose,
-        validate: () => RegExp(r'^[0-9]{1,12}([.,][0-9]{1,6})?$').hasMatch(fields.text('observed').trim())
-            ? const {}
-            : {'observed': stockReasonText(l10n, 'quantity_invalid')},
+        validate: () => observed() != null ? const {} : {'observed': stockReasonText(l10n, 'quantity_invalid')},
         onSubmit: () async {
           try {
             result = await ref
                 .read(stockCycleCountsProvider)
-                .countLine(workspaceId, line.lineId, fields.text('observed').trim().replaceAll(',', '.'), requestId);
+                .countLine(workspaceId, line.lineId, observed()!, requestId);
             return null;
           } on Object catch (e, st) {
             TraceLogger.instance.warn('stock', 'a line was not counted: $e', stackTrace: st);
