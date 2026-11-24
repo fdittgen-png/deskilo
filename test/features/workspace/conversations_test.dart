@@ -314,9 +314,10 @@ void main() {
       // #2493 — the bell is in the app bar's actions, the counts in the screen.
       final shell = File('lib/app/shell/shell_screen.dart').readAsStringSync() +
           File('lib/app/shell/shell_app_bar.dart').readAsStringSync();
-      expect(shell, isNot(contains("push('/events')")),
+      // #4422 — the path is the Routes symbol.
+      expect(shell, isNot(contains('push(Routes.events)')),
           reason: 'a pushed feed would be a second home for the alerts');
-      expect(shell, contains("go('/events')"));
+      expect(shell, contains('go(Routes.events)'));
       expect(shell, contains('myPendingEventCountProvider'));
       expect(shell, contains('unreadMessagesProvider'));
       expect(shell, isNot(contains('unreadMessagesProvider) +')),
