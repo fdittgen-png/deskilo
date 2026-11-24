@@ -118,6 +118,8 @@ A sale is **refused** (`state: "refused"`, recorded, listed for the owner; its c
 
 A sale already received (same `request_id`, same content) answers its first result with `replayed: true` and is never recorded twice; the same `request_id` with other content, or a `seq` already holding another request, is refused for the whole call (DKL16). A `seq` missing between recorded ones of a device is **reported** in `gaps`, never filled; a late sale carrying a missing `seq` is accepted into it.
 
+**Receipt source of an offline sale (#4451).** The receipt a sale makes is sourced by `source_kind = 'offline_till'` and a `source_ref` that names the sale's own identity: `<session>:<seq>` for a caller that names no device (or the all-zero legacy device), `<session>:<device>:<seq>` for any other device, so two devices of one session may both send sale 1 and each makes its own receipt. A sale accepted before this rule keeps its stored source; it is found by its request id first, so replaying it answers its original receipt. The identity is at most 36 + 1 + 36 + 1 + 20 characters, inside the 200 of §1.
+
 ### 7.2 Reading
 
 `counter_offline_list_v1(p_workspace_id, p_session_id)` (needs `viewFinances`, or `issueInvoices` for the caller's own sessions): `{sales: [{device_id, seq, state, reason, receipt_id, number, total_minor, cash_given_minor, change_minor, occurred_at, fiscal: "not_signed"}], gaps: [{device_id, seq}]}`. Every offline receipt is listed `fiscal: "not_signed"` until the country's signing (Germany CS7 #4369, France CS9 #4371) decides otherwise; nothing here claims compliance.
