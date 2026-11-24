@@ -6040,6 +6040,7 @@ const List<String> uiKeyPatterns = [
   'stock-home-{}',
   'stock-item-candidate-{}',
   'stock-item-group-{}',
+  'stock-item-own-{}',
   'stock-item-{}',
   'stock-low-{}',
   'stock-mapping-{}',
