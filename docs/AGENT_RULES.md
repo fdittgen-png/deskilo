@@ -78,10 +78,11 @@ feature from now on, not only to VAT.
 - **The server reads the same registry (#1333).** A gate in SQL asks
   `public.feature_effective(workspace, 'key')` — stored JSON boolean over
   the default, AND every parent — never `feature_flags ->> 'key'` by hand.
-  `public.feature_registry()` is generated from `featureManifest`: adding,
-  removing or re-parenting a feature, or changing its default or tier,
-  means a migration carrying the output of
-  `dart run tool/build_feature_registry_sql.dart`;
+  `public.feature_registry()` reads the rows of `feature_registry_entries`
+  (0949), which come from `featureManifest`: adding, removing or re-parenting
+  a feature, or changing its default or tier, means a migration carrying the
+  rows `dart run tool/build_feature_registry_sql.dart` prints (a few lines,
+  between its markers); the function is never restated.
   `test/lint/feature_registry_sql_test.dart` names the feature until it does.
 
 Every `WorkspaceFeature` also belongs to exactly one primary subprocess in

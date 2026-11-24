@@ -57,8 +57,8 @@ Edit ALL of these in the same commit:
    `featureAssessments` line (#1850): `_legacy`/unreviewed until a review names
    evidence ids from `docs/product/capabilities.json`; maturity never gates
    anything. A removed flag's key moves to `retiredFeatureAssessments`.
-7. **A migration** carrying `dart run tool/build_feature_registry_sql.dart`'s output
-   (the server's copy of the manifest, #1333). A server gate calls
+7. **A migration** carrying the rows `dart run tool/build_feature_registry_sql.dart` prints
+   (the server's copy of the manifest, #1333; a row insert since 0949, never a restated function). A server gate calls
    `public.feature_effective(ws, 'key')`, never reads the flag by hand.
 8. Routes: `lib/app/router.dart` GoRoute with a `featureEnabled(...)` redirect + a RouteRule.
 9. Budgets: use `dart run tool/code_health.dart --baseline` and its current
