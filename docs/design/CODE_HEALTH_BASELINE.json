@@ -1005,8 +1005,6 @@
 
       "lib/features/reservations/presentation/widgets/booking_controls.dart": 1,
 
-      "lib/features/stock/presentation/item_groups_screen.dart": 1,
-
       "lib/features/stock/presentation/stock_bulk_read_sheet.dart": 1,
 
       "lib/features/stock/presentation/stock_first_run.dart": 1,
