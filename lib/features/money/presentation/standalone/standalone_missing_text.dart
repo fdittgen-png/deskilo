@@ -67,8 +67,9 @@ String _stateText(AppLocalizations l, String key) => switch (key) {
     _ => invoiceMissingLabel(l, key),
   };
 
+/// The missing facts of a preview or a refusal, worded and joined: what a sentence of any surface names.
+String standaloneMissingList(AppLocalizations l, List<String> keys) => [for (final k in keys) _text(l, k)].join('; ');
+
 /// The missing facts of a preview or a refusal, as one sentence.
 String standaloneMissingSentence(AppLocalizations l, List<String> keys) =>
-    l.standaloneInvoiceMissing(
-      [for (final k in keys) _text(l, k)].join('; '),
-    );
+    l.standaloneInvoiceMissing(standaloneMissingList(l, keys));

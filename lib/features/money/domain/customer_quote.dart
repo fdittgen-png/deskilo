@@ -66,7 +66,7 @@ class QuoteRevision {
   factory QuoteRevision.fromJson(JsonReader r) => QuoteRevision(
     revision: r.integer('revision'),
     sent: r.stringOr('status') == 'sent',
-    draftVersion: r.intOrNull('draft_version') ?? 1,
+    draftVersion: r.integer('draft_version'),
     issuedOn: DateTime.parse(r.string('issued_on')),
     validUntil: DateTime.parse(r.string('valid_until')),
     buyerReference: r.stringOr('buyer_reference'),
@@ -371,8 +371,8 @@ class QuoteConversionPrep {
     return QuoteConversionPrep(
       draftRevision: r.integer('draft_revision'),
       missing: outer?.strings('missing') ?? const [],
-      acceptedTotalCents: int.tryParse(r.stringOr('accepted_total_cents')) ?? 0,
-      wouldBeTotalCents: inner?.intOrNull('total_cents') ?? 0,
+      acceptedTotalCents: _minor(r.string('accepted_total_cents'), 'accepted_total_cents'),
+      wouldBeTotalCents: inner?.intOrNull('total_cents'),
       currency: inner?.stringOr('currency') ?? '',
       contextChanged: r.isTrue('context_changed'),
       reviewDigest: r.stringOr('review_digest'),
@@ -385,7 +385,8 @@ class QuoteConversionPrep {
   /// The facts the issuer cannot accept yet (`due_on`, `buyer_vat_id`...).
   final List<String> missing;
   final int acceptedTotalCents;
-  final int wouldBeTotalCents;
+  /// What an issue would come to now; null while the preview has no total (a draft the issuer cannot accept yet).
+  final int? wouldBeTotalCents;
   final String currency;
 
   /// The invoice would differ from what was accepted: it needs an explicit review.
@@ -477,3 +478,7 @@ abstract interface class CustomerQuoteRepository {
   /// Discards a working draft that was never sent.
   Future<void> discardDraft(String workspaceId, String quoteId);
 }
+
+/// A minor-unit amount the server sent as text: an unreadable one is a decoding error, never a zero.
+int _minor(String text, String field) =>
+    int.tryParse(text) ?? (throw FormatException('prepare_quote_conversion_v1: $field is not an amount: $text'));

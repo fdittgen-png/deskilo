@@ -9,6 +9,7 @@
 import 'package:deskilo/core/demo/data/fake_customer_quotes.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
 import 'package:deskilo/features/money/domain/standalone_invoice.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// `customer_quote_v1` for a quote sent once: the frozen line is the real
@@ -150,5 +151,34 @@ void main() {
     expect(sent.lines.single.unitLabel, 'hours');
     expect(sent.lines.single.unitPrice, '150');
     expect(sent.totals!.totalCents, 36000, reason: '300 net + 20 % VAT');
+  });
+
+  group('#4405 a wire field the server always sends is never defaulted', () {
+    Map<String, Object?> prep({Object? accepted = '36000', Object? preview = const {'preview': {'total_cents': 36000, 'currency': 'EUR'}}}) => {
+      'draft_id': 'd-1',
+      'draft_revision': 2,
+      'quote_revision': 1,
+      'preview': {'missing': <String>[], 'preview': preview},
+      'accepted_total_cents': accepted,
+      'context_changed': false,
+      'review_digest': 'abc',
+    };
+
+    test('an accepted total that is not an amount is a decoding error, not a zero', () {
+      expect(QuoteConversionPrep.fromJson(prep()).acceptedTotalCents, 36000);
+      expect(() => QuoteConversionPrep.fromJson(prep(accepted: 'n/a')), throwsFormatException);
+      expect(() => QuoteConversionPrep.fromJson(prep(accepted: null)), throwsA(isA<JsonShapeException>()));
+    });
+
+    test('a preview with no total reads as no total, not as zero', () {
+      final p = QuoteConversionPrep.fromJson(prep(preview: const {'missing': ['due_on']}));
+      expect(p.wouldBeTotalCents, isNull);
+    });
+
+    test('a revision without its draft version is refused', () {
+      final revision = Map<String, Object?>.of(((_sentOnTheServer['revisions']! as List).single as Map).cast<String, Object?>())
+        ..remove('draft_version');
+      expect(() => QuoteRevision.fromJson(JsonReader.of(revision, context: 'revision')), throwsA(isA<JsonShapeException>()));
+    });
   });
 }
