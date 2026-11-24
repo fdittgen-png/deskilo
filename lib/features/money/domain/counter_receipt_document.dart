@@ -77,6 +77,9 @@ class CounterReceiptTax {
   const CounterReceiptTax({required this.percent, required this.netMinor, required this.taxMinor, required this.grossMinor});
 
   final String percent;
+
+  /// The rate as a number, for the language to write it; null when the frozen text is not one.
+  num? get rate => num.tryParse(percent);
   final int netMinor;
   final int taxMinor;
   final int grossMinor;

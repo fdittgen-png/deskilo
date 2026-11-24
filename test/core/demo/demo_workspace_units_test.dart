@@ -3,6 +3,7 @@
 // #4442 -- the Demo's units behind the port, with the server's own rules (0951): the 13 built-ins first, a unit created and
 // edited by code, a retried request that answers once, a built-in and a used unit that keep their factor, a reduced fraction,
 // and the refusals in the stock configuration's field and reason.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/demo_workspace_units.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
@@ -56,7 +57,7 @@ void main() {
     final again = await units.save(_ws, requestId: 'same', draft: draft);
     expect(identical(first, again), isTrue);
     expect(() => units.save(_ws, requestId: 'same', draft: const MeasureUnitDraft(code: 'drum', label: 'Another')),
-        throwsA(isA<PostgrestException>().having((e) => e.code, 'code', 'DKG07')));
+        throwsA(isA<PostgrestException>().having((e) => e.code, 'code', DkCode.dkg07)));
   });
 
   test('a malformed unit is refused by field and reason', () async {

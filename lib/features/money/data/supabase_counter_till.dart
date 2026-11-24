@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/counter_receipt_document.dart';
 import '../domain/counter_till.dart';
@@ -30,11 +31,15 @@ class SupabaseCounterTill implements TillPort {
     if (readiness.operations.isEmpty) return readiness;
     final Map<String, String> evidence;
     try {
-      final rows = await _client
-          .from('counter_country_operations')
-          .select('operation, evidence')
-          .eq('country_code', readiness.country)
-          .eq('regime', readiness.fiscalObligation);
+      final rows = await fetchConfigurationList(
+        table: 'counter_country_operations',
+        build: () => _client
+            .from('counter_country_operations')
+            .select('operation, evidence')
+            .eq('country_code', readiness.country)
+            .eq('regime', readiness.fiscalObligation)
+            .order('operation', ascending: true),
+      );
       evidence = {for (final row in rows) '${row['operation']}': '${row['evidence'] ?? ''}'};
     } on Object catch (e, stack) {
       TraceLogger.instance.warn('money', 'the counter evidence was not read', error: e, stackTrace: stack);

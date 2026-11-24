@@ -13,7 +13,9 @@ import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/refusal_text.dart';
 import '../../../core/ui/app_sheet.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
@@ -138,7 +140,11 @@ class _ReadinessSheet extends ConsumerWidget {
               .watch(tillReadinessProvider(workspaceId))
               .when(
                 loading: () => const LoadingView(),
-                error: (e, _) => Text(tillProblemText(l10n, e)),
+                error: (e, _) => ReadFailureBanner(
+                  error: e,
+                  onRetry: () => ref.invalidate(tillReadinessProvider(workspaceId)),
+                  refusal: knownRefusalText(l10n, e),
+                ),
                 data: (readiness) => CounterReadinessPanel(readiness: readiness),
               ),
           const FormGap(),
