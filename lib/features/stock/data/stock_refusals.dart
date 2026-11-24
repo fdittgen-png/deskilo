@@ -20,6 +20,8 @@ Never throwStockFailure(PostgrestException e, StackTrace stack, {bool pieces = f
   switch (e.code) {
     case DkCode.dkg25 || DkCode.dkg26 when pieces:
       Error.throwWithStackTrace(StockTagRefused(e.code!, _detail(e.details)), stack);
+    case DkCode.dkg27 || DkCode.dkg28 || DkCode.dkg29:
+      Error.throwWithStackTrace(StockUnitRefused(e.code!, _detail(e.details)), stack);
     case DkCode.dkg10:
       Error.throwWithStackTrace(const StockConfigStale(), stack);
     case DkCode.dkg08:

@@ -5,7 +5,7 @@
   "featureBillingCustomersTitle": "Rechnungskunden",
   "featureBillingCustomersDesc": "Verwalten Sie die Personen und Unternehmen, denen Sie Rechnungen stellen, mit oder ohne Konto: Name und Anschrift auf der Rechnung, Steuernummern und einen Kontakt für die Rechnung. Sie sind keine Mitglieder und sehen nichts von Ihrem Betrieb. Aus: Sie stellen Mitgliedern Rechnungen wie bisher.",
   "billingCustomersTitle": "Rechnungskunden",
-  "billingCustomersNoAccount": "Die Personen und Unternehmen, denen Sie Rechnungen stellen. Sie haben kein Konto und sehen nichts von Ihrem Betrieb.",
+  "billingCustomersNoAccount": "Die Personen und Unternehmen, denen Sie Rechnungen stellen. Sie sind keine Mitglieder und sehen nichts von Ihrem Betrieb, es sei denn, Sie laden sie ein, ihre eigenen Rechnungen in ihrem eigenen Konto zu lesen.",
   "billingCustomersEmpty": "Noch keine Rechnungskunden. Legen Sie den ersten an, um ihm eine Rechnung zu stellen, ohne dass er ein Konto anlegen muss.",
   "billingCustomersAdd": "Kunden hinzufügen",
   "billingCustomersSearch": "Kunden suchen",

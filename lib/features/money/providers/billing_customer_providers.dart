@@ -3,8 +3,11 @@
 // #4164 A2 -- the seller's billing customers.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../application/billing_access_commands.dart';
 import '../application/billing_customer_commands.dart';
+import '../data/supabase_billing_access_repository.dart';
 import '../data/supabase_billing_customer_repository.dart';
+import '../domain/billing_access.dart';
 import '../domain/billing_customer.dart';
 import 'credit_providers.dart';
 
@@ -28,3 +31,13 @@ final billingCustomersProvider = FutureProvider.autoDispose
           ref.watch(billingCustomerRepositoryProvider).fetch(workspaceId),
       retry: (_, _) => null,
     );
+
+/// #4164 B2 -- the billing-access grants (the seller's invitation, the
+/// account's preview and acceptance).
+final billingAccessRepositoryProvider = Provider<BillingAccessRepository>(
+  (ref) => SupabaseBillingAccessRepository(ref.watch(moneyClientProvider)),
+);
+
+final billingAccessCommandProvider = Provider<BillingAccessCommands>(
+  (ref) => BillingAccessCommands(ref.watch(billingAccessRepositoryProvider)),
+);

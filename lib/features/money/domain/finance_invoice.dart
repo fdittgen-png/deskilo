@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Me › Finances: one of MY invoices as `my_finance_overview` answers it
-// (0380, 0736, 0755), and where it stands. Split from `finance_overview.dart`,
+// (0380, 0736, 0755, 0911), and where it stands. Split from `finance_overview.dart`,
 // which re-exports it.
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -61,6 +61,8 @@ class FinanceInvoice {
     this.claimSettling = false,
     this.paymentReceived = false,
     this.payable = false,
+    this.financialSubjectId,
+    this.billingOnly = false,
   });
 
   final String id, workspaceId, workspaceName, number, currency;
@@ -98,7 +100,19 @@ class FinanceInvoice {
     claimSettling: claimSettling,
     paymentReceived: paymentReceived,
     payable: payable,
+    financialSubjectId: financialSubjectId,
+    billingOnly: billingOnly,
   );
+
+  /// #4164 B2 (0911) — the financial subject this invoice is owed by: the
+  /// seller-local `members.id`. Two debtors of one seller and currency are two
+  /// subjects; null from a host that does not answer it (the v1 reader).
+  final String? financialSubjectId;
+
+  /// #4164 B2 (0911) — read through a billing-access grant (`access:
+  /// billing_grant`), not as the account's own membership. These documents
+  /// are shown apart and never counted with what I owe as a member.
+  final bool billingOnly;
 
   /// #3659 — the issuing business's IANA zone (0736); null when unnamed.
   final String? timezone;
@@ -204,6 +218,8 @@ class FinanceInvoice {
       claimSettling: r.boolOr('claim_settling', fallback: false),
       paymentReceived: r.boolOr('payment_received', fallback: false),
       payable: r.boolOr('payable', fallback: false),
+      financialSubjectId: r.stringOrNull('financial_subject_id'),
+      billingOnly: r.stringOrNull('access') == 'billing_grant',
     );
   }
 }

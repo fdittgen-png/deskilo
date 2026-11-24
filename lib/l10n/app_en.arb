@@ -6516,6 +6516,223 @@
       }
     }
   },
+  "billingAccessAccept": "Accept",
+  "@billingAccessAccept": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessAccepted": "Done. The invoices {business} made out to you now appear in your finances, apart from what you owe as a member.",
+  "@billingAccessAccepted": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessAction": "Account access",
+  "@billingAccessAction": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessActive": "Reads the invoices since {date}",
+  "@billingAccessActive": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessAlreadyHeld": "You already hold this access; accepting it again changes nothing.",
+  "@billingAccessAlreadyHeld": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessCheck": "Check the code",
+  "@billingAccessCheck": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessCodeCopied": "Code copied",
+  "@billingAccessCodeCopied": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessCodeCopy": "Copy the code",
+  "@billingAccessCodeCopy": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessCodeField": "Code",
+  "@billingAccessCodeField": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessCodeOnce": "Give this code to the customer now. It is shown only once and cannot be read again. It is valid until {date}.",
+  "@billingAccessCodeOnce": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessCodeTitle": "Invitation code",
+  "@billingAccessCodeTitle": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessCodeUnusable": "This code cannot be used. It may be wrong, expired, withdrawn or already taken by another account. Ask the business for a new one.",
+  "@billingAccessCodeUnusable": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessEnter": "Use a billing code",
+  "@billingAccessEnter": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessEnterIntro": "A business that invoices you can give you a code. With it you read, from your own account, the invoices it made out to you. You do not become a member.",
+  "@billingAccessEnterIntro": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessEnterTitle": "Read the invoices of a business",
+  "@billingAccessEnterTitle": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessExpired": "Invitation expired on {date}",
+  "@billingAccessExpired": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessFailed": "The answer did not arrive. Nothing is known to have changed; try again.",
+  "@billingAccessFailed": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessGroupOpen": "Still open: {amounts}",
+  "@billingAccessGroupOpen": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "amounts": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessGroupSettled": "Nothing open",
+  "@billingAccessGroupSettled": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessGroupTitle": "{business} · account {ref}",
+  "@billingAccessGroupTitle": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      },
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessIntro": "Invite this customer to read their own invoices from their own account. The customer does not become a member and sees nothing else of your business.",
+  "@billingAccessIntro": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessInvite": "Create an invitation code",
+  "@billingAccessInvite": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessInvited": "Invited on {date}, not accepted yet",
+  "@billingAccessInvited": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessLoadFailed": "The invitations could not be read. This is not an empty list.",
+  "@billingAccessLoadFailed": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessNone": "No invitation yet.",
+  "@billingAccessNone": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessNotACustomer": "Only a billing customer can be invited. Nothing was changed.",
+  "@billingAccessNotACustomer": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessNotAllowed": "You may not invite customers to an account here. Nothing was changed.",
+  "@billingAccessNotAllowed": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessPaymentSoon": "Paying these invoices from here comes with a later update.",
+  "@billingAccessPaymentSoon": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessPreviewLine": "{business} invites you to read the invoices made out to {name}.",
+  "@billingAccessPreviewLine": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessPreviewUnnamed": "{business} invites you to read the invoices it made out to you.",
+  "@billingAccessPreviewUnnamed": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessReasonTooLong": "The reason is too long. Shorten it; nothing was changed.",
+  "@billingAccessReasonTooLong": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessRequestReused": "This request was already used for another invitation. Close this window and open it again; nothing was changed.",
+  "@billingAccessRequestReused": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessRevoke": "End access",
+  "@billingAccessRevoke": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessRevokeNote": "Ending access erases nothing: the invoices and their history stay as they are.",
+  "@billingAccessRevokeNote": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessRevoked": "Access ended on {date}",
+  "@billingAccessRevoked": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessSectionNote": "Invoices a business made out to you, read through the access it gave you. They are not counted with what you owe as a member.",
+  "@billingAccessSectionNote": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessSectionTitle": "Billed to you as a customer",
+  "@billingAccessSectionTitle": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
+  "billingAccessTitle": "Account access: {name}",
+  "@billingAccessTitle": {
+    "description": "the billing access of a customer to their own invoices (#4164)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "billingAccessUnknownGrant": "This access no longer exists. Close the list and open it again; nothing was changed.",
+  "@billingAccessUnknownGrant": {
+    "description": "the billing access of a customer to their own invoices (#4164)"
+  },
   "billingAddBand": "Add band",
   "@billingAddBand": {
     "description": "Button splitting the last band into two"
@@ -6677,7 +6894,7 @@
   "@billingCustomersLoadFailed": {
     "description": "the billing customers screen and editor (#4164)"
   },
-  "billingCustomersNoAccount": "The people and businesses you invoice. They have no account and see nothing of your business.",
+  "billingCustomersNoAccount": "The people and businesses you invoice. They are not members and see nothing of your business, unless you invite them to read their own invoices from their own account.",
   "@billingCustomersNoAccount": {
     "description": "the billing customers screen and editor (#4164)"
   },
@@ -48895,6 +49112,184 @@
   "stockTransfersTitle": "Transfers",
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockUnitChangedNow": "The unit is at {place} now: read it again.",
+  "@stockUnitChangedNow": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitCode": "Unit code",
+  "@stockUnitCode": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitContent": "Content",
+  "@stockUnitContent": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitContentNone": "Nothing in it.",
+  "@stockUnitContentNone": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitItem": "Item",
+  "@stockUnitItem": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKind": "Kind",
+  "@stockUnitKind": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindBox": "Box",
+  "@stockUnitKindBox": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindCarton": "Carton",
+  "@stockUnitKindCarton": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindCrate": "Crate",
+  "@stockUnitKindCrate": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindOther": "Other",
+  "@stockUnitKindOther": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitKindPallet": "Pallet",
+  "@stockUnitKindPallet": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitLabelCode": "Supplier label (SSCC), if any",
+  "@stockUnitLabelCode": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitLoose": "{quantity} loose here",
+  "@stockUnitLoose": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitMade": "{unit} made.",
+  "@stockUnitMade": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitMake": "Make a unit",
+  "@stockUnitMake": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitMove": "Move",
+  "@stockUnitMove": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitMoveTo": "Move to",
+  "@stockUnitMoveTo": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitMoved": "{unit} moved to {place}.",
+  "@stockUnitMoved": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitNestedIn": "In {unit}",
+  "@stockUnitNestedIn": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitPlace": "Place",
+  "@stockUnitPlace": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitQuantity": "Quantity",
+  "@stockUnitQuantity": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepack": "Repack into boxes",
+  "@stockUnitRepack": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepackBoxes": "Number of boxes",
+  "@stockUnitRepackBoxes": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepackEach": "Quantity in each box",
+  "@stockUnitRepackEach": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepackItem": "What to repack",
+  "@stockUnitRepackItem": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitRepacked": "{count, plural, one{1 box made.} other{{count} boxes made.}}",
+  "@stockUnitRepacked": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockUnitUnpack": "Unpack",
+  "@stockUnitUnpack": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitUnpackHint": "Its content stays where it is, loose.",
+  "@stockUnitUnpackHint": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitUnpacked": "{unit} unpacked.",
+  "@stockUnitUnpacked": {
+    "description": "#4435 handling units",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockUnitsAllPlaces": "All places",
+  "@stockUnitsAllPlaces": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsChooseItem": "Choose an item",
+  "@stockUnitsChooseItem": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsEmpty": "No unit yet. Make one from stock that is loose at a place.",
+  "@stockUnitsEmpty": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsIntro": "A pallet, a carton or a box of your own: it moves with its whole content, and every lot and piece stays traceable.",
+  "@stockUnitsIntro": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsReadFailed": "The units could not be read.",
+  "@stockUnitsReadFailed": {
+    "description": "#4435 handling units"
+  },
+  "stockUnitsTitle": "Handling units",
+  "@stockUnitsTitle": {
+    "description": "#4435 handling units"
   },
   "stockValueBasis": "An operational value from the recorded movements at their recorded lot costs. It is not a posted stock-book balance and states no cost of goods.",
   "@stockValueBasis": {

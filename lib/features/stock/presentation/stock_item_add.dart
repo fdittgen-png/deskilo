@@ -101,7 +101,7 @@ class StockItemAdd {
     workspaceId: workspaceId,
     itemId: service.id,
     itemName: service.name,
-    options: (lots: _ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockLots), keep: true),
+    options: (lots: _ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockLots), keep: true, groups: itemGroupsIfOn(_ref)),
   );
 
   Future<bool> _newItem(BuildContext context, String workspaceId) async {
