@@ -18,6 +18,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/storage/booking_intent_store.dart';
 import 'package:deskilo/core/time/clock.dart';
@@ -318,7 +319,7 @@ void main() {
     final before = (await wa.reservations(ws)).length;
     final refusal = await refusalOf(stranger.recovery.book(request(starts[3])));
     expect(refusal.kind, ReservationRefusalKind.coded);
-    expect(refusal.code, 'DKK27', reason: 'not an active member');
+    expect(refusal.code, DkCode.dkk27, reason: 'not an active member');
     expect(await wa.reservations(ws), hasLength(before));
   });
 
