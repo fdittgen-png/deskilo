@@ -245,7 +245,10 @@ Map<String, Object?> _lineData(ReportStrings strings, Invoice invoice,
     {required bool association}) {
   // #2362 -- a sales-tax line quotes its net price; its tax is stated below.
   final quoted = invoice.quotedCents(line);
+  // #4436 -- the track IDs frozen on a goods line; a line that took nothing traced carries neither key
+  final tracks = invoice.lineTracks[line.commercialLineId] ?? const <LineTrack>[];
   return {
+    ...lineTrackFields(tracks),
     'label': invoiceLineText(strings, line,
         association: association, period: invoice.period),
     // #1002 — what the line IS, its percentage and its month, so a design

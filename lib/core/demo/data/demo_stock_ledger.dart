@@ -15,6 +15,7 @@
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_operations.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show LineTrack, LineTrackKind;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'demo_stock_candidates.dart';
@@ -294,12 +295,43 @@ class DemoStockLedger implements DemoInvoiceGoods {
   /// #4433 -- the goods an issued invoice sells leave the main store for the customer, one sale per line, linked to the
   /// invoice. A line the main store cannot serve refuses them all and moves nothing, as the server does.
   @override
-  Future<void> sellOnInvoice(String invoiceId, List<({String itemId, ExactQuantity quantity})> lines) async {
-    final short = shortLine(lines);
+  Future<Map<int, List<LineTrack>>> sellOnInvoice(String invoiceId, List<({int n, String itemId, ExactQuantity quantity})> lines) async {
+    final short = shortLine([for (final l in lines) (itemId: l.itemId, quantity: l.quantity)]);
     if (short != null) throw StockNotEnough('line ${short + 1}');
+    final took = <int, List<LineTrack>>{};
     for (final l in lines) {
-      _book(DemoStockPost(item: itemOf(l.itemId)!, quantity: l.quantity, from: _main, to: _customer, reason: 'sale', causes: {'invoice': invoiceId}));
+      final item = itemOf(l.itemId)!;
+      var left = l.quantity;
+      // the lots the main store holds, in the order they were received; what they do not hold leaves the loose stock
+      for (final lot in _lotsAt(item.id, _main)) {
+        if (!(ExactQuantity.zero < left)) break;
+        final part = lot.quantity < left ? lot.quantity : left;
+        _book(DemoStockPost(item: item, quantity: part, from: _main, to: _customer, reason: 'sale', lotId: lot.id, lotCode: lot.code, causes: {'invoice': invoiceId}));
+        (took[l.n] ??= []).add(LineTrack(kind: LineTrackKind.lot, code: lot.code, quantity: part.text));
+        left = left - part;
+      }
+      if (ExactQuantity.zero < left) {
+        _book(DemoStockPost(item: item, quantity: left, from: _main, to: _customer, reason: 'sale', causes: {'invoice': invoiceId}));
+      }
     }
+    return took;
+  }
+
+  /// The lots of [itemId] with something at [place], as received (a lot without a code is no track ID and is not here).
+  List<({String id, String code, ExactQuantity quantity})> _lotsAt(String itemId, String place) => [
+    for (final MapEntry(:key, :value) in _keys.entries)
+      if (value.item.id == itemId && value.place == place && value.lotId != null && (value.lotCode ?? '').isNotEmpty &&
+          ExactQuantity.zero < (_balances[key] ?? ExactQuantity.zero))
+        (id: value.lotId!, code: value.lotCode!, quantity: _balances[key]!),
+  ];
+
+  /// What [itemId] holds at [place] in all, loose or in a lot.
+  ExactQuantity _held(String itemId, String place) {
+    var total = ExactQuantity.zero;
+    for (final MapEntry(:key, :value) in _keys.entries) {
+      if (value.item.id == itemId && value.place == place) total = total + (_balances[key] ?? ExactQuantity.zero);
+    }
+    return total;
   }
 
   /// The index of the first of [lines] the main store does not hold (an unknown item included), or null.
@@ -309,7 +341,7 @@ class DemoStockLedger implements DemoInvoiceGoods {
     for (final (i, l) in lines.indexed) {
       final total = (wanted[l.itemId] ?? ExactQuantity.zero) + l.quantity;
       wanted[l.itemId] = total;
-      if (itemOf(l.itemId) == null || balance(l.itemId, _main) < total) return i;
+      if (itemOf(l.itemId) == null || _held(l.itemId, _main) < total) return i;
     }
     return null;
   }

@@ -131,7 +131,7 @@ String defaultLetterLayoutXml(String kindId, LetterStrings s,
       <col w="18%" align="right"/>
       <row bold="true"><cell>$description</cell><cell>$colQty</cell><cell>$colUnit</cell><cell>$colTotal</cell></row>
       {% for line in lines %}
-      <row><cell>{{ line.label }}</cell><cell>{{ line.qty }}</cell><cell>{{ line.unit_price }}</cell><cell>{{ line.amount }}</cell></row>
+      <row><cell>{{ line.label }}{% if line.track_ids != nil and line.track_ids != "" %} ({{ line.track_ids }}){% endif %}</cell><cell>{{ line.qty }}</cell><cell>{{ line.unit_price }}</cell><cell>{{ line.amount }}</cell></row>
       {% endfor %}
     </table>''';
   const simpleLines = '''

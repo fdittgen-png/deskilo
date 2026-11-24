@@ -6,7 +6,9 @@ import 'e_invoice_totals.dart';
 import 'einvoice_format.dart';
 import 'einvoice_input.dart';
 import 'invoice.dart';
+import 'invoice_line_commercial.dart';
 import 'invoice_structured_line.dart';
+import 'line_track.dart';
 import 'subdivision.dart';
 import 'swiss_qr_bill.dart';
 import 'vat_rate.dart';
@@ -388,6 +390,13 @@ class _UblWriter {
             cbc('ID', 'VAT');
           });
         });
+        // #4436 -- BG-32: the lot and the pieces a goods line took, as item attributes (BT-160, BT-161)
+        for (final t in invoice.lineTracks[line.commercialLineId] ?? const <LineTrack>[]) {
+          builder.element('cac:AdditionalItemProperty', nest: () {
+            cbc('Name', t.kind == LineTrackKind.lot ? 'Lot' : 'Serial number');
+            cbc('Value', t.code);
+          });
+        }
       });
       builder.element('cac:Price', nest: () {
         if (exact == null) {

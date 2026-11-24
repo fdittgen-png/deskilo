@@ -30,7 +30,8 @@ class SupabaseInvoiceQueries implements InvoiceQueries {
       build: () => _client
           .from('invoices')
           // #1913 — the frozen due date travels with the invoice.
-          .select('*, invoice_maturities(due_on, basis)')
+          // #4436 — the track IDs frozen on its goods lines travel with it
+          .select('*, invoice_maturities(due_on, basis), invoice_line_tracks(line_id, tracks)')
           .eq('workspace_id', workspaceId)
           .order('issued_at', ascending: false)
           .order('id', ascending: true),
