@@ -269,7 +269,7 @@ class _ExcelExport {
     [
       'state', 'member', 'amount', 'currency', 'period', 'occurred_on',
       'recorded_at', 'description', 'provider', 'order_id', 'reversed_at', 'reversal_reason',
-      'allocation',
+      'allocation_mode',
     ],
     for (final entry in ledger)
       if (isExportedPayment(entry))
@@ -430,7 +430,7 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
       [
         'id', 'member', 'kind', 'category', 'amount', 'signed_amount',
         'currency', 'period', 'occurred_on', 'recorded_at', 'description',
-        'allocation',
+        'allocation_mode',
       ],
       for (final e in d.ledger)
         [
