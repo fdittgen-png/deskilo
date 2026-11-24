@@ -14,6 +14,11 @@ import 'demo_stock_registry.dart';
 /// The server's refusal: its SQLSTATE as the code, its words as the message.
 PostgrestException _refused(String code, String message) => PostgrestException(message: message, code: code);
 
+/// #4436 -- the Demo's traced item at the counter: the oat milk is tracked by lot, and a sale takes it from the lot on
+/// hand that expires first and is not expired yet (MILK-09 is past its date, so MILK-12; the expiry report's lots). The
+/// gift basket is tracked piece by piece: its pieces are of lot BASKET-1, and a sale names each piece scanned by its tag.
+const _tracedLots = <String, String>{'demo-item-milk': 'MILK-12', 'demo-item-basket': 'BASKET-1'};
+
 /// The prices of Demo items the stock registry does not carry (the T-shirt the variants are edited on), in cents.
 const _unstocked = <String, int>{'demo-item-shirt': 1900, 'demo-item-basket': 3900, 'demo-item-apples': 1800};
 
@@ -31,6 +36,9 @@ class DemoTill implements TillPort, TillOfflinePort {
   final Map<String, TillDraft> _drafts = {};
   final Map<String, TillSold> _done = {};
   final Map<String, TillDraft> _answered = {};
+
+  /// The basket each open draft priced: what its sale takes.
+  final Map<String, List<TillLine>> _lines = {};
 
   @override
   Future<TillReadiness> readiness(String workspaceId) async => TillReadiness(
@@ -72,6 +80,7 @@ class DemoTill implements TillPort, TillOfflinePort {
       issueReceipt: ready ? 'supported' : 'unavailable',
     );
     _drafts[id] = draft;
+    _lines[id] = lines;
     _answered[requestId] = draft;
     return draft;
   }
@@ -93,7 +102,19 @@ class DemoTill implements TillPort, TillOfflinePort {
     if (draft == null) throw _refused(DkCode.dkl04, 'this receipt is not an open draft');
     if (draft.revision != expectedRevision) throw _refused(DkCode.dkl10, 'this receipt changed meanwhile');
     if (tenders.fold<int>(0, (a, t) => a + t.amountMinor) != draft.totals.grossMinor) throw _refused(DkCode.dkl06, 'tender_sum');
-    final sold = TillSold(receiptId: receiptId, number: 'R-${(++_sales).toString().padLeft(5, '0')}', totals: draft.totals);
+    final traced = [
+      for (final (i, l) in (_lines[receiptId] ?? const <TillLine>[]).indexed)
+        if (_tracedLots[l.itemId] case final lot?)
+          TillSoldLine(
+            lineNo: i + 1,
+            tracks: [
+              TillTrack(kind: 'lot', code: lot, quantity: l.quantity),
+              for (final tag in [...l.pieces]..sort()) TillTrack(kind: 'piece', code: tag),
+            ],
+          ),
+    ];
+    final sold = TillSold(receiptId: receiptId, number: 'R-${(++_sales).toString().padLeft(5, '0')}', totals: draft.totals, lines: traced);
+    _lines.remove(receiptId);
     _drafts.remove(receiptId);
     return _done[requestId] = sold;
   }

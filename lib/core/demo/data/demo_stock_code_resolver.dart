@@ -66,7 +66,15 @@ class DemoStockCodeResolver implements StockCodeResolver {
     for (final row in rows) {
       final item = ScannedItem(id: row.itemId, name: row.itemName, unit: row.unit);
       if (held?.itemId == row.itemId) {
-        return StockCodeResolution(kind: ScannedKind.tag, code: DemoStockTags.normalise(typed), matchedBy: 'tag', item: item, tagBound: true);
+        final norm = DemoStockTags.normalise(typed);
+        return StockCodeResolution(
+          kind: ScannedKind.tag,
+          code: norm,
+          matchedBy: 'tag',
+          item: item,
+          tagBound: true,
+          tagOwnerKind: _tags?.pieceItemOf(norm) != null ? 'piece' : held?.kind,
+        );
       }
       if (row.barcode == typed) return StockCodeResolution(kind: ScannedKind.item, code: typed, matchedBy: 'gtin', item: item);
       final config = await _config.item(_workspaceId, row.itemId);
