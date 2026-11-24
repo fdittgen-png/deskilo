@@ -25,12 +25,12 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
-import '../../../stock/domain/workspace_units.dart';
-import '../../../stock/providers/workspace_units_providers.dart';
 import '../../application/issue_standalone_invoice.dart';
 import '../../domain/invoice_goods.dart';
+import '../../domain/line_unit.dart';
 import '../../domain/standalone_invoice.dart';
 import '../../providers/business_day_provider.dart';
+import '../../providers/line_units_provider.dart';
 import '../../providers/money_providers.dart'
     show invoicingBusinessProvider, memberLabelsProvider, vatRatesProvider;
 import '../../providers/standalone_invoice_providers.dart';
@@ -330,7 +330,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
           rates: rates,
           goods: goods,
           pieces: pieces,
-          units: ref.watch(lineUnitsProvider(workspaceId)).value ?? const <WorkspaceUnit>[], // empty-ok: the units only offer a choice
+          units: ref.watch(lineUnitsProvider(workspaceId)).value ?? const <LineUnit>[], // empty-ok: the units only offer a choice
           enabled: !locked,
           onChanged: _edited,
           onRemove: _lines.length > 1

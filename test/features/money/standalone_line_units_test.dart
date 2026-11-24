@@ -3,17 +3,17 @@
 // #4442 -- a free line of a quote or an invoice may be sold in a unit of the business's own (kilometres, a drum of cable): the
 // picker lists it after the four it always had, and the line carries its code and its UN/ECE code. With none offered the picker is
 // what it was; a line stored in a unit that is no longer offered keeps it.
+import 'package:deskilo/features/money/domain/line_unit.dart';
 import 'package:deskilo/features/money/presentation/standalone/standalone_line_form.dart';
-import 'package:deskilo/features/stock/domain/workspace_units.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-const _drum = WorkspaceUnit(code: 'drum', label: 'Drum', dimension: UnitDimension.length, factorNum: 50, factorDen: 1, unEceCode: 'DR');
-final _km = builtInUnits.firstWhere((u) => u.code == 'km');
-final _piece = builtInUnits.firstWhere((u) => u.code == 'piece');
+const _drum = LineUnit(code: 'drum', label: 'Drum', unEceCode: 'DR');
+const _km = LineUnit(code: 'km', unEceCode: 'KMT');
+const _piece = LineUnit(code: 'piece', unEceCode: 'C62');
 
-Future<BuildContext> _pump(WidgetTester tester, StandaloneLineForm form, List<WorkspaceUnit> units) async {
+Future<BuildContext> _pump(WidgetTester tester, StandaloneLineForm form, List<LineUnit> units) async {
   tester.view.physicalSize = const Size(900, 900);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
