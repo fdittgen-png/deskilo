@@ -159,10 +159,13 @@ void main() {
       'a lost answer is recovered with the settlement\'s own number',
       () async {
         final out = await settlements.settle(settle);
-        expect(out, isA<SettleUnknown>());
-        final found = await settlements.look(out as SettleUnknown);
-        expect(found, isA<Settled>());
-        final number = (found as Settled).number;
+        expect(out, isA<CommandUnreached<String>>());
+        final found = await settlements.look(
+          settle,
+          out as CommandUnreached<String>,
+        );
+        expect(found, isA<CommandDone<String>>());
+        final number = (found as CommandDone<String>).value;
         expect(repo.invoices.where((i) => i.number == number), hasLength(1));
       },
     );
@@ -170,10 +173,13 @@ void main() {
     test(
       'a request that never committed stays unknown after every look',
       () async {
-        final unknown = SettleUnknown(settle, StateError('lost'));
+        final unknown = CommandUnreached<String>(Defect(StateError('lost')));
       final before = actions.sends;
         for (var i = 0; i < 3; i++) {
-          expect(await settlements.look(unknown), isA<SettleUnknown>());
+          expect(
+            await settlements.look(settle, unknown),
+            isA<CommandUnreached<String>>(),
+          );
         }
         expect(actions.sends, before);
       },
