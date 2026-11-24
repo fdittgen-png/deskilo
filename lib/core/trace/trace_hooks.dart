@@ -13,6 +13,15 @@ TraceLogger createAppTraceLogger() =>
 /// existing crash semantics: the previous [FlutterError.onError] handler
 /// still runs, and [PlatformDispatcher.onError] returns false so errors
 /// keep propagating exactly as before (#144).
+///
+/// #4416 -- there is no `runZonedGuarded` around start-up, on purpose. An
+/// error no zone handles (an unawaited future, a timer, a stream with no
+/// listener for its error) reaches [PlatformDispatcher.onError] on every
+/// target this app ships to: Android, iOS, macOS, Windows, Linux and the web.
+/// A guarded zone around `runApp` would catch the same errors a second time
+/// and put the app in a zone other than the binding's, which Flutter reports
+/// as a zone mismatch. Work run on another isolate reports through
+/// `tracedCompute` (traced_compute.dart).
 void installGlobalTraceHooks(TraceLogger logger) {
   final previous = FlutterError.onError;
   FlutterError.onError = (details) {
