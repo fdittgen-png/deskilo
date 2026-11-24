@@ -380,7 +380,7 @@ void main() {
 
     expect(toConfirm.map((r) => r.number), ['KC-2026-0002']);
     expect(toConfirm.single.openMinor, 6000);
-    expect(toConfirm.single.declaredEventId, 'kessler-declared-a2');
+    expect(toConfirm.single.declaredEventId, 'evt-payment-kessler-a2');
     expect(
       receivables.where((r) => r.number == 'KC-2026-0003').single.paymentPending,
       isFalse,
