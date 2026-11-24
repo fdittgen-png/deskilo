@@ -7,6 +7,7 @@
 import 'directory_location.dart';
 import 'public_facets.dart';
 import 'public_workspace.dart';
+import 'publication_draft_from_json.dart';
 
 const _openingHours = 'opening_hours';
 const _name = 'name';
@@ -44,7 +45,7 @@ class PublicationDraft {
   /// The draft of a page answer `{published, document, following}`.
   factory PublicationDraft.fromPage(Map<String, Object?> page) =>
       PublicationDraft.fromDocument(
-        Map<String, Object?>.from(page['document'] as Map),
+        pageDocumentOf(page),
       );
 
   /// `host_type`: association, company or person.
@@ -131,13 +132,13 @@ class PublicationDraft {
 /// page as it reads back.
 class OwnPublicPage {
   OwnPublicPage.fromAnswer(Map<String, Object?> answer)
-    : published = answer['published'] == true,
+    : published = pagePublishedOf(answer),
       following = publicFollowing(answer),
       offer = PublicWorkspace(
         '',
         '',
         '',
-        Map<String, dynamic>.from(answer['document'] as Map),
+        pageDocumentOf(answer),
       ),
       draft = PublicationDraft.fromPage(answer);
 
