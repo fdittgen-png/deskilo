@@ -134,6 +134,7 @@ Quiere encontrar una factura, ver si está pagada y obtener su PDF.
 - Pulse el icono de pago en una factura abierta para ir a **Pagos**.
 - Si la lista está vacía, el espacio todavía no le ha facturado; factura un mes cuando lo cierra.
 - Las facturas no se pueden editar. Una factura equivocada se marca como **Errónea** y se sustituye por una nueva; la errónea desaparece de su lista. Cuando varias facturas se agrupan en una, la factura agrupada las sustituye en su lista.
+- Una línea facturada por horas, por días o por peso (por ejemplo *1.5 h a 90 EUR*, o *0.75 kg a 12.5 EUR por 10 kg*) muestra bajo su concepto la cantidad exacta, su unidad y el precio introducido, tal como los imprime el PDF; su importe es el fijado al emitir la factura. Una línea registrada por una versión más reciente de la aplicación se muestra tal cual e indica que no se puede usar aquí: actualice la aplicación para trabajar con ella.
 
 **Véase también:** [Pague lo que debe](help:user.money.payments) · [Sus finanzas en todos sus espacios](help:user.money.finances)
 
@@ -798,6 +799,8 @@ Abra **Caja** en el menú de ventas (necesita la función de tickets de caja y e
 Pulse **Cobrar en efectivo** y escriba el **Efectivo entregado** (o **Importe exacto**). Menos que el total se rechaza antes de enviar nada. El servidor numera la venta y la caja indica el cambio; **Siguiente cliente** empieza una cesta vacía. Enviar dos veces la misma venta nunca la vende dos veces.
 
 Donde su país aún no permite la caja, esta nombra la operación que falta y no ofrece nada: nada se numera ni se cobra. Una línea de mercancía necesita la gestión de stock; el rechazo del servidor se dice con palabras. Los pagos con tarjeta, descuentos, reembolsos y devoluciones no forman parte de esta primera caja.
+
+Un artículo trazado indica de dónde se tomó. Cuando vende un artículo seguido por lote sin elegir un lote, la venta lo toma de los lotes en existencia, primero el que caduca antes y nunca uno caducado; bajo la línea vendida, la caja muestra el código de cada lote tal como se recibió, con la cantidad tomada, por ejemplo **Lote SUP-A × 2 · Lote SUP-B × 1**, y cada pieza por su etiqueta. Si la empresa usa un lector, escanee la etiqueta de una pieza para añadirla: la venta toma exactamente las piezas escaneadas, y la misma pieza dos veces se rechaza. Estos identificadores de trazabilidad quedan fijados con el ticket: cambiar más tarde un lote o una etiqueta nunca altera un ticket ya emitido. En las existencias, la trazabilidad de un lote o de una pieza indica el ticket que lo vendió.
 
 <!-- anchor: user.money.stock.rfid -->
 ### Etiquetas RFID: una por lote o una por pieza

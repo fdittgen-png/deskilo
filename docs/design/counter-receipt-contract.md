@@ -82,3 +82,53 @@ Corrections and money back, each its own command: `counter_receipt_correct_v1(ws
 ## 6. The frozen document (`counter_receipts.frozen`, read through `counter_receipt_decode`)
 
 `{version: 1, number, currency, price_basis, issued_at, tax_point, lines[], totals, tax_breakdown: [{percent, category, gross_minor, net_minor, tax_minor}], source: {kind, ref}, financial_subject_id, operation: {country, operation, regime, specification, specification_version, effective_from, adapter, confirmed}, corrects: null | {receipt_id, number, reason}}`. `counter_receipt_decode` reads version 1 and refuses another version (DKL09).
+
+## 7. The offline sale (#4373)
+
+Feature **`counterOfflineCash`** (under `counterTillSessions`, off by default). A till that lost its connection keeps selling **for cash only**; the sales wait on the device and are sent when the connection returns. Nothing is accepted from the device clock alone: the server checks every rule below at sync.
+
+### 7.1 `counter_offline_sync_v1(p_workspace_id, p_session_id, p_offline_since, p_sales)`
+
+Rights as §4 (`issueInvoices`, `counterReceipts`, `counterTillSessions`, `counterOfflineCash` on; an assistant is refused). `p_session_id` is the till session the sales were made in; `p_offline_since` the device time the till lost its connection (the start of the offline period). `p_sales[]`, at most 200 per call, in the order they were made:
+
+| field | meaning |
+|---|---|
+| `seq` | the device sequence number of this sale, an integer ≥ 1, **gapless per till session** |
+| `request_id` | uuid, one per sale, kept by the device for every retry |
+| `occurred_at` | the device clock when the sale was made (recorded, never used as the receipt's issue time) |
+| `body` | a draft body as in §1 (lines at the prices and VAT in force when the till went offline; `till_id` is set by the server) |
+| `cash_given_minor` | integer ≥ the total: what the customer handed over (the change is the difference) |
+
+Each sale runs through the ordinary draft and finalize commands (§1, §2) with ONE cash tender of exactly the total, in its own sub-transaction: a refused sale does not stop the others. The answer is `{results: [{seq, request_id, state: "accepted" | "refused", receipt_id, number, reason, replayed}], gaps: [<missing seq numbers below the highest recorded>], accepted, refused}`.
+
+A sale is **refused** (`state: "refused"`, recorded, listed for the owner; its cash stays in the drawer figure) with `reason`:
+
+| reason | when |
+|---|---|
+| `session` | the session is not of this business, or not open at sync |
+| `before_session` | `occurred_at` is before the session was opened (the session must exist before the offline period) |
+| `too_long` | `occurred_at` is later than `p_offline_since` by more than `counter.offline_max_minutes` |
+| `too_many` | the session already holds `counter.offline_max_sales` offline sales |
+| `clock` | `occurred_at` is in the future of the server |
+| `price` | a line's price differs from the item's current price by more than `counter.offline_price_tolerance_percent` |
+| `item` | an item of a line is not active any more |
+| `cash` | `cash_given_minor` is below the total |
+| `refused:<code>` | the sale command refused it (DKL/DKG code of §3) |
+
+A sale already received (same `request_id`, same content) answers its first result with `replayed: true` and is never recorded twice; the same `request_id` with other content, or a `seq` already holding another request, is refused for the whole call (DKL13). A `seq` missing between recorded ones is **reported** in `gaps`, never filled; a late sale carrying a missing `seq` is accepted into it.
+
+### 7.2 Reading
+
+`counter_offline_list_v1(p_workspace_id, p_session_id)` (needs `viewFinances`, or `issueInvoices` for the caller's own sessions): `{sales: [{seq, state, reason, receipt_id, number, total_minor, cash_given_minor, change_minor, occurred_at, fiscal: "not_signed"}], gaps}`. Every offline receipt is listed `fiscal: "not_signed"` until the country's signing (Germany CS7 #4369, France CS9 #4371) decides otherwise; nothing here claims compliance.
+
+### 7.3 The drawer
+
+`counter_session_cash` adds `offline_refused_cash_minor` — the cash given, less change, of refused offline sales: it is in the drawer, so it is part of `expected_minor`, and is listed apart.
+
+### 7.4 Settings (workspace, with a UI point and a setup entry)
+
+`counter.offline_max_minutes` (int, default 240), `counter.offline_max_sales` (int, default 200), `counter.offline_price_tolerance_percent` (int, default 0).
+
+### 7.5 Refusal
+
+DKL13: a request id or sequence number already holds another sale. DKG01 when `counterOfflineCash` is off.

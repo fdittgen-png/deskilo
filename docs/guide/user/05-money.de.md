@@ -134,6 +134,7 @@ Sie möchten eine Rechnung finden, sehen, ob sie bezahlt ist, und ihr PDF erhalt
 - Tippen Sie bei einer offenen Rechnung auf das Zahlungssymbol, um zu **Zahlungen** zu gelangen.
 - Ist die Liste leer, hat der Workspace Ihnen noch nichts in Rechnung gestellt; er stellt einen Monat nach dem Abschluss in Rechnung.
 - Rechnungen lassen sich nicht bearbeiten. Eine falsche Rechnung wird als **Fehlerhaft** markiert und durch eine neue ersetzt; die fehlerhafte verschwindet aus Ihrer Liste. Werden Rechnungen zu einer zusammengefasst, ersetzt die zusammengefasste Rechnung sie in Ihrer Liste.
+- Eine Position nach Stunden, Tagen oder Gewicht (zum Beispiel *1.5 h zu 90 EUR* oder *0.75 kg zu 12.5 EUR je 10 kg*) zeigt unter ihrer Bezeichnung die genaue Menge, ihre Einheit und den erfassten Preis, so wie das PDF sie druckt; ihr Betrag ist der bei der Ausstellung festgelegte. Eine Position, die eine neuere Version der App erfasst hat, wird unverändert gezeigt und sagt, dass sie hier nicht verwendet werden kann: Aktualisieren Sie die App, um damit zu arbeiten.
 
 **Siehe auch:** [Offenes bezahlen](help:user.money.payments) · [Ihre Finanzen in allen Workspaces](help:user.money.finances)
 
@@ -798,6 +799,8 @@ Sie bedienen Kundschaft an der Theke und möchten jeden Verkauf in Sekunden, num
 Drücken Sie **Bar kassieren** und geben Sie **Gegeben** ein (oder **Passend**). Weniger als der Gesamtbetrag wird abgelehnt, bevor etwas gesendet wird. Der Server nummeriert den Verkauf, und die Kasse nennt das Rückgeld; **Nächster Kunde** beginnt einen leeren Warenkorb. Derselbe Verkauf, zweimal gesendet, verkauft nie doppelt.
 
 Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang und bietet nichts an: nichts wird nummeriert und nichts kassiert. Eine Warenzeile braucht die Lagerverwaltung; eine Ablehnung des Servers erscheint in Worten. Kartenzahlung, Rabatte, Erstattungen und Rückgaben gehören nicht zu dieser ersten Kasse.
+
+Ein rückverfolgter Artikel nennt, woraus er entnommen wurde. Verkaufen Sie einen chargengeführten Artikel, ohne eine Charge zu wählen, entnimmt der Verkauf ihn den vorrätigen Chargen, die zuerst ablaufende zuerst und nie eine abgelaufene; unter der verkauften Zeile zeigt die Kasse den Code jeder Charge wie beim Wareneingang mit der entnommenen Menge, zum Beispiel **Charge SUP-A × 2 · Charge SUP-B × 1**, und jedes Stück mit seinem Tag. Nutzt das Unternehmen einen Scanner, scannen Sie den Tag eines Stücks, um dieses Stück zu buchen: Der Verkauf nimmt genau die gescannten Stücke, und dasselbe Stück zweimal wird abgelehnt. Diese Rückverfolgungs-IDs werden mit dem Beleg festgeschrieben: Eine spätere Änderung einer Charge oder eines Tags ändert einen bereits ausgestellten Beleg nie. Im Lager nennt die Rückverfolgung einer Charge oder eines Stücks den Beleg, mit dem es verkauft wurde.
 
 <!-- anchor: user.money.stock.rfid -->
 ### RFID-Tags: eines pro Charge oder eines pro Stück

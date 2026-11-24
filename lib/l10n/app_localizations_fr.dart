@@ -5047,9 +5047,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get billingAccessCodeCopy => 'Copier le code';
 
   @override
-  String get billingAccessCodeField => 'Code';
-
-  @override
   String billingAccessCodeOnce(String date) {
     return 'Remettez ce code au client maintenant. Il n\'est affiché qu\'une fois et ne peut plus être relu. Il est valable jusqu\'au $date.';
   }
@@ -7031,6 +7028,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String commaPair(String first, String second) {
     return '$first, $second';
   }
+
+  @override
+  String commercialLineMeasure(String quantity, String price) {
+    return '$quantity à $price';
+  }
+
+  @override
+  String commercialLineMeasurePer(String quantity, String price, String base) {
+    return '$quantity à $price pour $base';
+  }
+
+  @override
+  String get commercialLineUnreadable =>
+      'Enregistré par une version plus récente : ces données sont affichées telles quelles et ne peuvent pas être utilisées ici';
 
   @override
   String get commonCancel => 'Annuler';
@@ -11866,6 +11877,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'Le fichier de l\'espace (XML) emporte toute la configuration — tarifs, identité légale, règles de réservation et de validation, rôles, maquettes de documents, sites, jours de fermeture — et l\'import l\'applique, même sur un espace qui a déjà des réservations. Désactivé : le fichier n\'emporte que les réglages et le plan.';
+
+  @override
+  String get featureCounterOfflineCashDesc =>
+      'Quand la connexion est perdue, la caisse continue de vendre en espèces, enregistre chaque vente sur l\'appareil et envoie les ventes dans l\'ordre au retour de la connexion. Les autres moyens de paiement attendent la connexion.';
+
+  @override
+  String get featureCounterOfflineCashTitle =>
+      'Vendre hors ligne, en espèces seulement';
 
   @override
   String get featureCounterReceiptsDesc =>
@@ -29383,6 +29402,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce ticket n\'est plus un brouillon ouvert, ou un ticket a déjà été émis pour la même vente.';
 
   @override
+  String get refusalCounterOfflineConflict =>
+      'Une vente envoyée par la caisse sous ce numéro a déjà été reçue avec un autre contenu. Rien n\'a été enregistré de nouveau ; consultez la liste des ventes hors ligne.';
+
+  @override
   String get refusalCounterTenderState =>
       'Cette autorisation par carte est encore ouverte, inconnue ou déjà réglée : interrogez le prestataire au lieu de redemander.';
 
@@ -32564,6 +32587,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce que vous déclarez sur les règles fiscales d\'une vente au comptoir : aucune signifie qu\'aucune obligation fiscale de caisse ne s\'applique à votre entreprise (votre propre déclaration, inscrite sur chaque ticket) ; caisse requise signifie qu\'une obligation s\'applique. Un ticket n\'est émis que là où l\'opération de votre pays est prise en charge dans le cas que vous déclarez.';
 
   @override
+  String get settingHintCounterOfflineMaxMinutes =>
+      'Combien de temps après la perte de connexion de la caisse une vente en espèces faite hors ligne est encore acceptée à l\'envoi. Les ventes plus tardives sont refusées et listées pour le gérant.';
+
+  @override
+  String get settingHintCounterOfflineMaxSales =>
+      'Combien de ventes en espèces faites hors ligne une session de caisse accepte. Les suivantes sont refusées et listées pour le gérant.';
+
+  @override
+  String get settingHintCounterOfflinePriceTolerance =>
+      'De combien, en pourcentage, le prix d\'une vente hors ligne peut différer du prix de l\'article à l\'envoi. 0 signifie que le prix doit être identique.';
+
+  @override
   String get settingHintCounterPaidOutLimit =>
       'Le plus grand montant, en unités mineures de la devise de l\'entreprise (centimes), d\'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.';
 
@@ -32840,6 +32875,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce).';
 
   @override
+  String get settingHintStockInvoiceSalePlace =>
+      'Le code d’un lieu de l’entreprise qui détient du stock, par exemple MAIN. Les biens vendus sur facture en partent à l’émission de la facture.';
+
+  @override
   String get settingHintStockPriceRounding =>
       'Comment un prix de vente proposé est arrondi : au 0,05 ou 0,10 le plus proche, ou à un prix qui finit par 0,99. Il ne sert qu\'à proposer un prix.';
 
@@ -32979,6 +33018,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Règles fiscales des ventes au comptoir';
+
+  @override
+  String get settingLabelCounterOfflineMaxMinutes =>
+      'Durée maximale hors ligne (minutes)';
+
+  @override
+  String get settingLabelCounterOfflineMaxSales =>
+      'Nombre maximal de ventes hors ligne par session de caisse';
+
+  @override
+  String get settingLabelCounterOfflinePriceTolerance =>
+      'Écart de prix toléré hors ligne (%)';
 
   @override
   String get settingLabelCounterPaidOutLimit =>
@@ -33244,6 +33295,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelStockGroupDefaultTagMode =>
       'Mode d\'étiquette par défaut des articles';
+
+  @override
+  String get settingLabelStockInvoiceSalePlace =>
+      'Lieu d’où partent les biens vendus sur facture';
 
   @override
   String get settingLabelStockPriceRounding => 'Arrondi des prix';
@@ -35872,6 +35927,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get standaloneFactLines => 'au moins une ligne';
 
   @override
+  String get standaloneFactSalePlace =>
+      'le lieu d’où partent les ventes : indiquez un lieu qui détient du stock dans les réglages de l’entreprise';
+
+  @override
   String get standaloneFactSalesTax =>
       'cette entreprise ajoute une taxe de vente, ce qui n’est pas encore pris en charge ici';
 
@@ -35904,7 +35963,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get standaloneFieldDescription => 'une description';
 
   @override
+  String get standaloneFieldGoodsAbroad =>
+      'un acheteur du pays de l’entreprise : les biens vendus à l’étranger ne se facturent pas encore ici';
+
+  @override
+  String get standaloneFieldGoodsOff =>
+      'la gestion des stocks, désactivée dans cette entreprise';
+
+  @override
+  String get standaloneFieldItem => 'un article tenu en stock et en vente';
+
+  @override
   String get standaloneFieldLineId => 'enregistrer à nouveau le brouillon';
+
+  @override
+  String get standaloneFieldLot => 'un lot de cet article';
+
+  @override
+  String get standaloneFieldPieces =>
+      'les étiquettes des pièces, en codes d’étiquette';
 
   @override
   String get standaloneFieldPrice => 'un prix avec six décimales au plus';
@@ -35914,11 +35991,32 @@ class AppLocalizationsFr extends AppLocalizations {
       'une quantité supérieure à zéro, avec six décimales au plus';
 
   @override
+  String get standaloneFieldStock =>
+      'des biens que le stock peut vendre tels que saisis';
+
+  @override
+  String get standaloneFieldStockExpired => 'un lot qui n’est pas périmé';
+
+  @override
+  String get standaloneFieldStockLot => 'un lot présent de cet article';
+
+  @override
+  String get standaloneFieldStockPieces =>
+      'les pièces vendues : une étiquette par pièce, chacune d’une pièce présente';
+
+  @override
+  String get standaloneFieldStockShort =>
+      'assez en stock au lieu d’où partent les ventes';
+
+  @override
   String get standaloneFieldSupply =>
-      'une prestation de services (les biens ne se facturent pas encore ici)';
+      'ce que fournit la ligne : une prestation, un bien immobilier ou des biens';
 
   @override
   String get standaloneFieldUnit => 'une unité';
+
+  @override
+  String get standaloneFieldVariant => 'la variante de l’article';
 
   @override
   String get standaloneFieldVatRate => 'un taux de TVA défini par l’entreprise';
@@ -35947,7 +36045,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get standaloneInvoiceLineDescription => 'Description';
 
   @override
+  String get standaloneInvoiceLineGoods => 'Vendu depuis le stock';
+
+  @override
   String get standaloneInvoiceLineGross => 'Le prix est TTC';
+
+  @override
+  String get standaloneInvoiceLineNoGoods => 'Rien du stock (une prestation)';
+
+  @override
+  String get standaloneInvoiceLinePieces => 'Étiquettes des pièces vendues';
+
+  @override
+  String get standaloneInvoiceLinePiecesHint =>
+      'Une étiquette par pièce, séparées par des virgules : cet article est suivi pièce par pièce.';
 
   @override
   String get standaloneInvoiceLinePrice => 'Prix unitaire';
@@ -38227,9 +38338,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockUnitContentNone => 'Rien dedans.';
 
   @override
-  String get stockUnitItem => 'Article';
-
-  @override
   String get stockUnitKind => 'Genre';
 
   @override
@@ -38284,9 +38392,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockUnitPlace => 'Emplacement';
 
   @override
-  String get stockUnitQuantity => 'Quantité';
-
-  @override
   String get stockUnitRepack => 'Reconditionner en boîtes';
 
   @override
@@ -38304,7 +38409,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count boîtes créées.',
-      one: '1 boîte créée.',
+      one: '$count boîte créée.',
     );
     return '$_temp0';
   }
@@ -41067,6 +41172,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillPayCash => 'Encaisser en espèces';
 
   @override
+  String tillPieceTwice(String code) {
+    return 'La pièce $code est déjà dans le panier.';
+  }
+
+  @override
   String get tillPricing => 'Calcul du panier…';
 
   @override
@@ -41093,6 +41203,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillRetry => 'Réessayer';
 
   @override
+  String tillScanUnknown(String code) {
+    return '$code n\'est pas un article vendu à cette caisse.';
+  }
+
+  @override
   String get tillSoldTitle => 'Vendu';
 
   @override
@@ -41106,6 +41221,16 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String tillTotalDue(String amount) {
     return 'Total à payer: $amount';
+  }
+
+  @override
+  String tillTrackLot(String code, String quantity) {
+    return 'Lot $code × $quantity';
+  }
+
+  @override
+  String tillTrackPiece(String code) {
+    return 'Pièce $code';
   }
 
   @override

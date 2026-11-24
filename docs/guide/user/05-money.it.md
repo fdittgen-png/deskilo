@@ -134,6 +134,7 @@ Vuole trovare una fattura, vedere se è pagata e ottenerne il PDF.
 - Tocchi l'icona del pagamento su una fattura aperta per passare a **Pagamenti**.
 - Se l'elenco è vuoto, lo spazio non Le ha ancora fatturato nulla; fattura un mese solo dopo la sua chiusura.
 - Le fatture non si possono modificare. Una fattura sbagliata è contrassegnata come **Errata** e sostituita da una nuova, e quella errata scompare dal Suo elenco. Quando più fatture vengono raggruppate in una, la fattura raggruppata le sostituisce nel suo elenco.
+- Una riga fatturata a ore, a giorni o a peso (ad esempio *1.5 h a 90 EUR*, oppure *0.75 kg a 12.5 EUR per 10 kg*) mostra sotto la descrizione la quantità esatta, la sua unità e il prezzo inserito, come li stampa il PDF; il suo importo è quello fissato all'emissione della fattura. Una riga registrata da una versione più recente dell'app è mostrata così com'è e indica che non può essere usata qui: per lavorarci occorre aggiornare l'app.
 
 **Vedi anche:** [Pagare quanto dovuto](help:user.money.payments) · [Le Sue finanze in tutti gli spazi](help:user.money.finances)
 
@@ -798,6 +799,8 @@ Apra **Cassa** nel menu delle vendite (richiede la funzione scontrini di cassa e
 Prema **Incassare in contanti** e digiti i **Contanti dati** (o **Importo esatto**). Meno del totale viene rifiutato prima di inviare qualsiasi cosa. Il server numera la vendita e la cassa dice il resto; **Cliente successivo** riparte da un carrello vuoto. Inviare due volte la stessa vendita non la vende mai due volte.
 
 Dove il suo paese non consente ancora la cassa, questa indica l'operazione mancante e non offre nulla: nulla viene numerato né incassato. Una riga di merce richiede la gestione del magazzino; un rifiuto del server è detto a parole. Pagamenti con carta, sconti, rimborsi e resi non fanno parte di questa prima cassa.
+
+Un articolo tracciato indica da dove è stato preso. Quando vende un articolo gestito a lotti senza scegliere un lotto, la vendita lo preleva dai lotti in giacenza, prima quello che scade per primo e mai uno scaduto; sotto la riga venduta la cassa mostra il codice di ogni lotto come è stato ricevuto, con la quantità prelevata, per esempio **Lotto SUP-A × 2 · Lotto SUP-B × 1**, e ogni pezzo con la sua etichetta. Se l'azienda usa un lettore, scansioni l'etichetta di un pezzo per aggiungerlo: la vendita preleva esattamente i pezzi scansionati, e lo stesso pezzo due volte viene rifiutato. Questi identificativi di tracciabilità sono fissati con lo scontrino: modificare in seguito un lotto o un'etichetta non altera mai uno scontrino già emesso. Nel magazzino, la tracciabilità di un lotto o di un pezzo indica lo scontrino che lo ha venduto.
 
 <!-- anchor: user.money.stock.rfid -->
 ### Tag RFID: uno per lotto o uno per pezzo

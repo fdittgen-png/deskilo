@@ -100,6 +100,14 @@ void main() {
     expect(line['unit_price'], '80');
   });
 
+  test('a commercial line prints the net the server froze, never a split of its gross', () {
+    // #4162 (X1.B) -- the snapshot names no rate, so a split of the gross
+    // would print the whole 145.20 as net; the frozen net is 120.00.
+    final line = _lineOf(_invoice([invoiceLineFromSnapshot(_commercial('1.5'))]));
+    expect(line['net'], contains('120'));
+    expect(line['net'], isNot(contains('145')));
+  });
+
   test('a legacy line prints as it always did', () {
     final line = _lineOf(
       _invoice([

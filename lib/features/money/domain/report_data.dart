@@ -265,9 +265,10 @@ Map<String, Object?> _lineData(ReportStrings strings, Invoice invoice,
     'vat_rate': line.vatPercent > 0 && !invoice.isSalesTax
         ? _rateText(strings, line.vatPercent)
         : '',
+    // #4162 -- a commercial line's net is the one the server froze.
     'net': currency.formatMinor(invoice.isSalesTax
         ? quoted
-        : vatSplit(line.amountCents, line.vatPercent).netCents),
+        : line.authoritativeNetCents),
   };
 }
 

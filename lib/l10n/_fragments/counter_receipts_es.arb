@@ -25,5 +25,33 @@
   "refusalCounterTill": "La caja no está lista para esto: ábrala primero, o ya está abierta o cerrada.",
   "refusalCounterCashEntry": "Este apunte de efectivo no se acepta: el motivo no está en la lista, el importe supera su límite, o las cuentas no suman.",
   "refusalCounterDayClose": "No se puede cerrar el día: una caja sigue abierta, o el día ya está cerrado.",
-  "refusalCounterDayOpen": "El día de esta caja ya está cerrado: se abrirá de nuevo mañana."
+  "refusalCounterDayOpen": "El día de esta caja ya está cerrado: se abrirá de nuevo mañana.",
+  "settingLabelCounterOfflineMaxMinutes": "Tiempo máximo sin conexión (minutos)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflineMaxMinutes": "Cuánto tiempo después de perder la conexión la caja aún se acepta una venta en efectivo hecha sin conexión al enviarla. Las posteriores se rechazan y se listan para el responsable.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingLabelCounterOfflineMaxSales": "Máximo de ventas sin conexión por sesión de caja",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflineMaxSales": "Cuántas ventas en efectivo hechas sin conexión acepta una sesión de caja. Las siguientes se rechazan y se listan.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Diferencia de precio admitida sin conexión (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflinePriceTolerance": "Cuánto, en porcentaje, puede diferir el precio de una venta sin conexión del precio del artículo al enviarla. 0 significa que el precio debe ser el mismo.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
+  "refusalCounterOfflineConflict": "Una venta enviada desde la caja con este número ya se recibió con otro contenido. No se registró nada de nuevo; consulte la lista de ventas sin conexión.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  }
 }

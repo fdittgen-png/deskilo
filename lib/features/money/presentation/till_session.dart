@@ -123,7 +123,7 @@ class TillSession {
   /// Whether the basket may still be changed: not once it is sold, and not while a sale is waiting to be confirmed.
   bool get _open => _now.sold == null && !_now.unconfirmed;
 
-  String _linesKey(List<TillLine> lines) => [for (final l in lines) '${l.itemId}:${l.quantity}'].join(',');
+  String _linesKey(List<TillLine> lines) => [for (final l in lines) '${l.itemId}:${l.quantity}:${l.pieces.join('+')}'].join(',');
 
   /// Rings up one more of [itemId]: a new line, or one more on the line it already has.
   Future<void> add({required String itemId, required String name, required String unit}) => _serial(() {
@@ -138,6 +138,25 @@ class TillSession {
     }
     return _price(lines);
   });
+
+  /// #4436 -- rings up the piece tagged [tag] of [itemId]: a new line naming it, or one more named piece on the item's
+  /// line. The same piece twice is refused here: it is one piece, sold once.
+  Future<void> addPiece({required String itemId, required String name, required String unit, required String tag, required String twice}) =>
+      _serial(() {
+        if (!_open) return Future.value();
+        final lines = [..._now.lines];
+        if (lines.any((l) => l.pieces.contains(tag))) {
+          _set(_now.copyWith(problem: () => twice));
+          return Future.value();
+        }
+        final at = lines.indexWhere((l) => l.itemId == itemId);
+        if (at < 0) {
+          lines.add(TillLine(itemId: itemId, name: name, quantity: '0', unit: unit).withPiece(tag));
+        } else {
+          lines[at] = lines[at].withPiece(tag);
+        }
+        return _price(lines);
+      });
 
   /// Sets the quantity of line [index] to [typed]; false when it is not an exact quantity above zero.
   Future<bool> setQuantity(int index, String typed) async {

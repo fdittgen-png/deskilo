@@ -14,8 +14,6 @@
   "stockUnitKindBox": "Scatola",
   "stockUnitKindOther": "Altro",
   "stockUnitPlace": "Luogo",
-  "stockUnitItem": "Articolo",
-  "stockUnitQuantity": "Quantità",
   "stockUnitContent": "Contenuto",
   "stockUnitContentNone": "Niente dentro.",
   "stockUnitMove": "Sposta",

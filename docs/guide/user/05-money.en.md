@@ -134,6 +134,7 @@ You want to find an invoice, see whether it is paid and get its PDF.
 - Tap the payment icon on an open invoice to go to **Payments**.
 - If the list is empty, the workspace has not invoiced you yet; it invoices a month once it closes.
 - Invoices cannot be edited. A wrong invoice is marked **Erroneous** and replaced by a new one, and the erroneous one leaves your list. When invoices are regrouped into one, the regrouped invoice replaces them in your list.
+- A line invoiced by the hour, the day or a weight (for example *1.5 h at 90 EUR*, or *0.75 kg at 12.5 EUR per 10 kg*) shows under its label the exact quantity, its unit and the price it was entered at, as the PDF prints them; its amount is the one fixed when the invoice was issued. A line recorded by a newer version of the app is shown as written and says it cannot be used here: update the app to work with it.
 
 **See also:** [Pay what you owe](help:user.money.payments) · [Your finances across spaces](help:user.money.finances)
 
@@ -798,6 +799,8 @@ Open **Till** in the sales menu (it needs the counter receipts feature and the r
 Press **Take cash** and type the **Cash given** (or **Exact amount**). Less than the total is refused before anything is sent. The sale is numbered by the server and the till says the change due; **Next customer** starts a clean basket. Sending the same sale twice never sells twice.
 
 Where your country does not yet allow the counter, the till says which operation is missing and offers nothing: nothing is numbered and nothing is taken. A goods line needs stock management on; a refusal of the server is shown in words. Card payments, discounts, refunds and returns are not part of this first till.
+
+A traced good names what it was taken from. When you sell an item tracked by lot without choosing a lot, the sale takes it from the lots on hand, the first to expire first and never an expired one; under the sold line the till shows each lot's code as received with the quantity taken from it, for example **Lot SUP-A × 2 · Lot SUP-B × 1**, and each piece by its tag. Where the business uses a scanner, scan a piece's tag to ring up that piece: the sale takes exactly the pieces scanned, and the same piece twice is refused. These track IDs are frozen with the receipt: changing a lot or a tag later never alters a receipt already issued. In the stock, the trace of a lot or a piece names the receipt that sold it.
 
 <!-- anchor: user.money.stock.rfid -->
 ### RFID tags: one per batch or one per piece

@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/settings/setting_defaults.g.dart';
 import '../application/issue_standalone_invoice.dart';
+import '../data/supabase_invoice_goods_catalogue.dart';
 import '../data/supabase_standalone_invoice_commands.dart';
+import '../domain/invoice_goods.dart';
 import '../domain/standalone_invoice.dart';
 import 'credit_providers.dart' show moneyClientProvider;
 import 'money_providers.dart' show dunningRulesProvider;
@@ -12,6 +14,17 @@ import 'money_queries_providers.dart';
 /// #4165 -- what a person does to a standalone draft. The Demo overrides it.
 final standaloneInvoiceCommandsProvider = Provider<StandaloneInvoiceCommands>(
   (ref) => SupabaseStandaloneInvoiceCommands(ref.watch(moneyClientProvider)),
+);
+
+/// #4433 -- the items a business keeps in stock, for a goods line. The Demo overrides it.
+final invoiceGoodsCatalogueProvider = Provider<InvoiceGoodsCatalogue>(
+  (ref) => SupabaseInvoiceGoodsCatalogue(ref.watch(moneyClientProvider)),
+);
+
+/// #4433 -- the items a goods line may sell in a business, read once per composer.
+final invoiceGoodsItemsProvider = FutureProvider.autoDispose.family<List<InvoiceGoodsItem>, String>(
+  (ref, workspaceId) => ref.watch(invoiceGoodsCatalogueProvider).items(workspaceId),
+  retry: (_, _) => null,
 );
 
 /// #4165 -- issuing once and looking for the answer by the attempt's request id.

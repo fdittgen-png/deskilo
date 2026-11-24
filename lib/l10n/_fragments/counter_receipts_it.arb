@@ -25,5 +25,33 @@
   "refusalCounterTill": "La cassa non è pronta per questo: la apra prima, oppure è già aperta o chiusa.",
   "refusalCounterCashEntry": "Questa registrazione di contante non è accettata: il motivo non è nell'elenco, l'importo supera il Suo limite, oppure i conteggi non tornano.",
   "refusalCounterDayClose": "La giornata non può essere chiusa: una cassa è ancora aperta, oppure la giornata è già chiusa.",
-  "refusalCounterDayOpen": "La giornata di questa cassa è già chiusa: si riapre domani."
+  "refusalCounterDayOpen": "La giornata di questa cassa è già chiusa: si riapre domani.",
+  "settingLabelCounterOfflineMaxMinutes": "Durata massima offline (minuti)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflineMaxMinutes": "Per quanto tempo dopo la perdita della connessione una vendita in contanti fatta offline è ancora accettata all'invio. Le vendite successive sono rifiutate ed elencate per il titolare.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingLabelCounterOfflineMaxSales": "Massimo di vendite offline per sessione di cassa",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflineMaxSales": "Quante vendite in contanti fatte offline accetta una sessione di cassa. Le successive sono rifiutate ed elencate.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Differenza di prezzo ammessa offline (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflinePriceTolerance": "Di quanto, in percentuale, il prezzo di una vendita offline può differire dal prezzo dell'articolo all'invio. 0 significa che il prezzo deve essere identico.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
+  "refusalCounterOfflineConflict": "Una vendita inviata dalla cassa con questo numero è già stata ricevuta con un altro contenuto. Non è stato registrato nulla di nuovo; consultate l'elenco delle vendite offline.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  }
 }

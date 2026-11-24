@@ -25,5 +25,33 @@
   "refusalCounterTill": "Die Kasse ist dafür nicht bereit: Öffnen Sie sie zuerst, oder sie ist schon offen oder geschlossen.",
   "refusalCounterCashEntry": "Diese Bargeldbuchung wird nicht angenommen: Der Grund steht nicht auf der Liste, der Betrag liegt über Ihrer Grenze, oder die Zahlen ergeben nicht den Betrag.",
   "refusalCounterDayClose": "Der Tag kann nicht abgeschlossen werden: Eine Kasse ist noch offen, oder der Tag ist schon abgeschlossen.",
-  "refusalCounterDayOpen": "Der Tag dieser Kasse ist schon abgeschlossen: Sie wird morgen wieder geöffnet."
+  "refusalCounterDayOpen": "Der Tag dieser Kasse ist schon abgeschlossen: Sie wird morgen wieder geöffnet.",
+  "settingLabelCounterOfflineMaxMinutes": "Längste Offline-Zeit (Minuten)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflineMaxMinutes": "Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingLabelCounterOfflineMaxSales": "Höchstzahl Offline-Verkäufe je Kassensitzung",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflineMaxSales": "Wie viele offline getätigte Barverkäufe eine Kassensitzung annimmt. Weitere werden abgelehnt und aufgelistet.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Erlaubte Preisabweichung offline (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflinePriceTolerance": "Wie weit der Preis eines Offline-Verkaufs beim Senden in Prozent vom Preis des Artikels abweichen darf. 0 heißt: der Preis muss gleich sein.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
+  "refusalCounterOfflineConflict": "Ein von der Kasse unter dieser Nummer gesendeter Verkauf wurde bereits mit anderem Inhalt empfangen. Es wurde nichts erneut erfasst; sehen Sie in der Liste der Offline-Verkäufe nach.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  }
 }

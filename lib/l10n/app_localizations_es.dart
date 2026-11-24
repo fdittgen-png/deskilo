@@ -5026,9 +5026,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get billingAccessCodeCopy => 'Copiar el código';
 
   @override
-  String get billingAccessCodeField => 'Código';
-
-  @override
   String billingAccessCodeOnce(String date) {
     return 'Entregue este código al cliente ahora. Se muestra una sola vez y no puede leerse de nuevo. Es válido hasta el $date.';
   }
@@ -6999,6 +6996,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String commaPair(String first, String second) {
     return '$first, $second';
   }
+
+  @override
+  String commercialLineMeasure(String quantity, String price) {
+    return '$quantity a $price';
+  }
+
+  @override
+  String commercialLineMeasurePer(String quantity, String price, String base) {
+    return '$quantity a $price por $base';
+  }
+
+  @override
+  String get commercialLineUnreadable =>
+      'Registrado por una versión más reciente: estos datos se muestran tal cual y no se pueden usar aquí';
 
   @override
   String get commonCancel => 'Cancelar';
@@ -11807,6 +11818,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'El archivo del espacio (XML) lleva toda la configuración — tarifas, identidad legal, reglas de reserva y validación, roles, diseños de documentos, sedes, días de cierre — y la importación la aplica, incluso en un espacio que ya tiene reservas. Desactivado: el archivo solo lleva ajustes y plano.';
+
+  @override
+  String get featureCounterOfflineCashDesc =>
+      'Si se pierde la conexión, la caja sigue vendiendo en efectivo, guarda cada venta en el dispositivo y envía las ventas en orden cuando vuelve la conexión. Los demás medios de pago esperan la conexión.';
+
+  @override
+  String get featureCounterOfflineCashTitle =>
+      'Vender sin conexión, solo en efectivo';
 
   @override
   String get featureCounterReceiptsDesc =>
@@ -29259,6 +29278,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este ticket ya no es un borrador abierto, o ya se emitió un ticket para la misma venta.';
 
   @override
+  String get refusalCounterOfflineConflict =>
+      'Una venta enviada desde la caja con este número ya se recibió con otro contenido. No se registró nada de nuevo; consulte la lista de ventas sin conexión.';
+
+  @override
   String get refusalCounterTenderState =>
       'Esta autorización de tarjeta sigue abierta, es desconocida o ya está resuelta: consulte al proveedor en lugar de pedirla otra vez.';
 
@@ -32423,6 +32446,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.';
 
   @override
+  String get settingHintCounterOfflineMaxMinutes =>
+      'Cuánto tiempo después de perder la conexión la caja aún se acepta una venta en efectivo hecha sin conexión al enviarla. Las posteriores se rechazan y se listan para el responsable.';
+
+  @override
+  String get settingHintCounterOfflineMaxSales =>
+      'Cuántas ventas en efectivo hechas sin conexión acepta una sesión de caja. Las siguientes se rechazan y se listan.';
+
+  @override
+  String get settingHintCounterOfflinePriceTolerance =>
+      'Cuánto, en porcentaje, puede diferir el precio de una venta sin conexión del precio del artículo al enviarla. 0 significa que el precio debe ser el mismo.';
+
+  @override
   String get settingHintCounterPaidOutLimit =>
       'El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.';
 
@@ -32699,6 +32734,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza).';
 
   @override
+  String get settingHintStockInvoiceSalePlace =>
+      'El código de un lugar de la empresa que tiene existencias, por ejemplo MAIN. Los bienes vendidos en factura salen de allí al emitir la factura.';
+
+  @override
   String get settingHintStockPriceRounding =>
       'Cómo se redondea un precio de venta propuesto: al 0,05 o 0,10 más cercano, o a un precio que termina en 0,99. Solo sirve para proponer un precio.';
 
@@ -32840,6 +32879,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Normas fiscales de las ventas en mostrador';
+
+  @override
+  String get settingLabelCounterOfflineMaxMinutes =>
+      'Tiempo máximo sin conexión (minutos)';
+
+  @override
+  String get settingLabelCounterOfflineMaxSales =>
+      'Máximo de ventas sin conexión por sesión de caja';
+
+  @override
+  String get settingLabelCounterOfflinePriceTolerance =>
+      'Diferencia de precio admitida sin conexión (%)';
 
   @override
   String get settingLabelCounterPaidOutLimit => 'Mayor salida sin autorización';
@@ -33108,6 +33159,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelStockGroupDefaultTagMode =>
       'Modo de etiqueta por defecto de los artículos';
+
+  @override
+  String get settingLabelStockInvoiceSalePlace =>
+      'Lugar del que salen los bienes vendidos en factura';
 
   @override
   String get settingLabelStockPriceRounding => 'Redondeo de precios';
@@ -35717,6 +35772,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get standaloneFactLines => 'al menos una línea';
 
   @override
+  String get standaloneFactSalePlace =>
+      'el lugar del que se vende: indique un lugar con existencias en los ajustes de la empresa';
+
+  @override
   String get standaloneFactSalesTax =>
       'esta empresa añade impuesto de ventas, que aquí aún no se admite';
 
@@ -35749,7 +35808,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get standaloneFieldDescription => 'una descripción';
 
   @override
+  String get standaloneFieldGoodsAbroad =>
+      'un comprador del país de la empresa: los bienes vendidos al extranjero aún no se facturan aquí';
+
+  @override
+  String get standaloneFieldGoodsOff =>
+      'la gestión de existencias, desactivada en esta empresa';
+
+  @override
+  String get standaloneFieldItem => 'un artículo con existencias y a la venta';
+
+  @override
   String get standaloneFieldLineId => 'guardar de nuevo el borrador';
+
+  @override
+  String get standaloneFieldLot => 'un lote de este artículo';
+
+  @override
+  String get standaloneFieldPieces =>
+      'las etiquetas de las piezas, como códigos de etiqueta';
 
   @override
   String get standaloneFieldPrice => 'un precio con seis decimales como máximo';
@@ -35759,11 +35836,32 @@ class AppLocalizationsEs extends AppLocalizations {
       'una cantidad mayor que cero con seis decimales como máximo';
 
   @override
+  String get standaloneFieldStock =>
+      'bienes que las existencias pueden vender tal como se han introducido';
+
+  @override
+  String get standaloneFieldStockExpired => 'un lote que no esté caducado';
+
+  @override
+  String get standaloneFieldStockLot => 'un lote presente de este artículo';
+
+  @override
+  String get standaloneFieldStockPieces =>
+      'las piezas vendidas: una etiqueta por pieza, cada una de una pieza presente';
+
+  @override
+  String get standaloneFieldStockShort =>
+      'suficientes existencias en el lugar del que se vende';
+
+  @override
   String get standaloneFieldSupply =>
-      'un servicio (los bienes aún no se facturan aquí)';
+      'lo que suministra la línea: un servicio, un inmueble o bienes';
 
   @override
   String get standaloneFieldUnit => 'una unidad';
+
+  @override
+  String get standaloneFieldVariant => 'la variante del artículo';
 
   @override
   String get standaloneFieldVatRate => 'un tipo de IVA definido por la empresa';
@@ -35792,7 +35890,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get standaloneInvoiceLineDescription => 'Descripción';
 
   @override
+  String get standaloneInvoiceLineGoods => 'Vendido de las existencias';
+
+  @override
   String get standaloneInvoiceLineGross => 'El precio incluye el impuesto';
+
+  @override
+  String get standaloneInvoiceLineNoGoods =>
+      'Nada de las existencias (un servicio)';
+
+  @override
+  String get standaloneInvoiceLinePieces => 'Etiquetas de las piezas vendidas';
+
+  @override
+  String get standaloneInvoiceLinePiecesHint =>
+      'Una etiqueta por pieza, separadas por comas: este artículo se sigue pieza por pieza.';
 
   @override
   String get standaloneInvoiceLinePrice => 'Precio unitario';
@@ -38062,9 +38174,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockUnitContentNone => 'Nada dentro.';
 
   @override
-  String get stockUnitItem => 'Artículo';
-
-  @override
   String get stockUnitKind => 'Tipo';
 
   @override
@@ -38116,9 +38225,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockUnitPlace => 'Lugar';
-
-  @override
-  String get stockUnitQuantity => 'Cantidad';
 
   @override
   String get stockUnitRepack => 'Reenvasar en cajas';
@@ -40884,6 +40990,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillPayCash => 'Cobrar en efectivo';
 
   @override
+  String tillPieceTwice(String code) {
+    return 'La pieza $code ya está en la cesta.';
+  }
+
+  @override
   String get tillPricing => 'Calculando la cesta…';
 
   @override
@@ -40910,6 +41021,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillRetry => 'Reintentar';
 
   @override
+  String tillScanUnknown(String code) {
+    return '$code no es algo que venda esta caja.';
+  }
+
+  @override
   String get tillSoldTitle => 'Vendido';
 
   @override
@@ -40923,6 +41039,16 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String tillTotalDue(String amount) {
     return 'Total a pagar: $amount';
+  }
+
+  @override
+  String tillTrackLot(String code, String quantity) {
+    return 'Lote $code × $quantity';
+  }
+
+  @override
+  String tillTrackPiece(String code) {
+    return 'Pieza $code';
   }
 
   @override

@@ -12,11 +12,16 @@ import 'demo_document_numbering.dart';
 /// space's in-memory money store as the server answers them (0820): exact
 /// decimals, the rate of the business's own VAT rates, half away from zero
 /// per line in the currency's minor unit, a revision that guards a stale edit,
-/// and an issue that replays under its request id.
+/// and an issue that replays under its request id. #4433 -- a goods line sells
+/// an item of the business's goods ledger ([goods]): the preview names a line
+/// the main store cannot serve, and the issue moves the goods out.
 class DemoStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
   DemoStandaloneInvoiceCommands(this._m);
 
   final FakeMoneyRepository _m;
+
+  /// The goods ledger the invoices sell from; none refuses a goods line as the server does with the ledger off.
+  DemoInvoiceGoods? goods;
   final Map<String, ({StandaloneDraft draft, int revision, String? invoiceId})>
   _drafts = {};
   var _next = 1;
@@ -78,7 +83,12 @@ class DemoStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
     if (qty.value == null) missing.add('line_${n}_quantity');
     if (price.value == null) missing.add('line_${n}_unit_price');
     if (base.value == null) missing.add('line_${n}_base_quantity');
-    if (l.supply != 'general' && l.supply != 'property') {
+    final sells = l.supply == 'goods';
+    if (sells && goods == null) {
+      missing.add('line_${n}_goods_off');
+    } else if (sells && (l.itemId == null || !goods!.sells(l.itemId!))) {
+      missing.add('line_${n}_item');
+    } else if (!sells && l.supply != 'general' && l.supply != 'property') {
       missing.add('line_${n}_supply');
     }
     if (missing.isNotEmpty) return (line: null, missing: missing);
@@ -99,13 +109,14 @@ class DemoStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
     return (
       missing: const [],
       line: {
-        'kind': 'service',
+        'kind': sells ? 'goods' : 'service',
         'label': l.description,
         'quantity': 1,
         'amount_cents': gross,
         'vat_percent': percent,
         'vat_category': 'S',
         'supply': l.supply,
+        if (sells) 'stock': {'item_id': l.itemId},
         'commercial': {
           'version': 1,
           'line_id': l.lineId,
@@ -144,6 +155,11 @@ class DemoStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
       final built = _line(i + 1, l, rate?.percent ?? _m.defaultVatPercent);
       missing.addAll(built.missing);
       if (built.line != null) lines.add(built.line!);
+    }
+    final sold = missing.isEmpty ? _sold(d.lines) : const <({int n, String itemId, ExactQuantity quantity})>[];
+    if (sold.isNotEmpty) {
+      final short = goods!.shortLine([for (final s in sold) (itemId: s.itemId, quantity: s.quantity)]);
+      if (short != null) missing.add('line_${sold[short].n}_stock_not_enough');
     }
     if (missing.isNotEmpty) return (preview: null, missing: missing);
     final byRate = <double, List<int>>{};
@@ -243,8 +259,30 @@ class DemoStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
     if (series.stored) {
       _m.numberSequences['invoice'] = series.copyWith(nextValue: counter + 1);
     }
+    final sold = _sold(d.draft.lines);
+    if (sold.isNotEmpty) {
+      await goods!.sellOnInvoice(id, [for (final s in sold) (itemId: s.itemId, quantity: s.quantity)]);
+    }
     _drafts[draftId] = (draft: d.draft, revision: d.revision, invoiceId: id);
     _m.invoiceReceipts[key] = id;
     return StandaloneIssued(invoiceId: id, number: number, replayed: false);
   }
+
+  /// The goods lines of [lines]: their number on the invoice, the item and the exact quantity.
+  List<({int n, String itemId, ExactQuantity quantity})> _sold(List<StandaloneLine> lines) => [
+    for (final (i, l) in lines.indexed)
+      if (l.supply == 'goods' && l.itemId != null) (n: i + 1, itemId: l.itemId!, quantity: ExactQuantity.parse(l.quantity)),
+  ];
+}
+
+/// #4433 -- the Demo's goods ledger, as the invoices sell from it.
+abstract interface class DemoInvoiceGoods {
+  /// Whether [itemId] is an item the ledger keeps.
+  bool sells(String itemId);
+
+  /// The index of the first line the main store cannot serve, or null.
+  int? shortLine(List<({String itemId, ExactQuantity quantity})> lines);
+
+  /// Moves the goods of an issued invoice out of the main store, linked to it.
+  Future<void> sellOnInvoice(String invoiceId, List<({String itemId, ExactQuantity quantity})> lines);
 }
