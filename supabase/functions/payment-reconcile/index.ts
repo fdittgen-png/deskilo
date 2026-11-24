@@ -35,14 +35,15 @@ import {
 import { describeError, logLine } from "../_shared/log.ts";
 import { ok, refuse } from "../_shared/respond.ts";
 import { guard } from "../_shared/serve.ts";
+import { PROVIDER_CALL_TIMEOUT_MS } from "../_shared/limits.ts";
 
 const FN = "payment-reconcile";
 
 export const RECONCILE_SECRET_HEADER = "x-deskilo-reconcile-secret";
 /** The most attempts of one business read per run. */
-export const MAX_INTENTS = 50;
+export const MAX_INTENTS = 50; // not-mirrored: a run's own batch size
 /** The longest one call to a provider may take before it counts as unreachable. */
-export const CALL_TIMEOUT_MS = 15_000;
+export const CALL_TIMEOUT_MS = PROVIDER_CALL_TIMEOUT_MS;
 /** No business is claimed once a run has lasted this long. */
 export const RUN_BUDGET_MS = 60_000;
 /** A lease outlives the longest read it covers (a PayPal read is two calls). */

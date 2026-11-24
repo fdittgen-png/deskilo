@@ -2,7 +2,7 @@
 # rewrite after a sweep with --dart-define=WRITE_CENSUS=true (see business_literals_census_test.dart).
 ceiling|lib/core/demo/data/demo_stock_cycle_counts.dart|1
 ceiling|lib/core/demo/data/demo_stock_trace.dart|1
-ceiling|lib/core/demo/data/demo_till.dart|1
+ceiling|lib/core/demo/data/demo_till.dart|2
 ceiling|lib/core/demo/data/fake_service_fulfilments.dart|1
 ceiling|lib/core/diagnostics/support_bundle.dart|1
 ceiling|lib/features/money/domain/purchase_order.dart|1

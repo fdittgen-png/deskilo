@@ -41,10 +41,7 @@ void main() {
     }, supportedCurrencies);
   });
 
-  test('the exact range is the same number on both sides', () {
-    expect(_ts, contains('MAX_SAFE_MINOR = ${maxSafeMinor}n'));
-  });
-
+  // The exact range is a row of mirrored_bounds_test (#4419).
   test('the wire form carries the same keys, minor units as a string', () {
     final wire = AccountingAmount('EUR', 114975).toJson();
     expect(wire.keys.toSet(), {'currency', 'exponent', 'minor'});

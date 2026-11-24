@@ -228,6 +228,13 @@ class PurchaseOrderLineDraft {
 }
 
 /// Why a draft cannot be saved; the form shows each under its field.
+/// #4419 — the order bounds the server checks (0681): its lines, and a
+/// line's quantity. Pinned to the SQL by test/lint/mirrored_bounds_test.dart.
+abstract final class PurchaseOrderLimits {
+  static const int maxLines = 200;
+  static const int maxQuantity = 1000000;
+}
+
 enum PurchaseOrderProblem {
   noSupplier,
   noLines,
@@ -269,11 +276,12 @@ class PurchaseOrderDraft {
   Set<PurchaseOrderProblem> get problems => {
     if (supplierId == null || supplierId!.isEmpty)
       PurchaseOrderProblem.noSupplier,
-    if (lines.isEmpty || lines.length > 200) PurchaseOrderProblem.noLines,
+    if (lines.isEmpty || lines.length > PurchaseOrderLimits.maxLines)
+      PurchaseOrderProblem.noLines,
     for (final l in lines) ...{
       if (l.serviceId == null && l.description.trim().isEmpty)
         PurchaseOrderProblem.lineDescription,
-      if (l.quantity <= 0 || l.quantity > 1000000)
+      if (l.quantity <= 0 || l.quantity > PurchaseOrderLimits.maxQuantity)
         PurchaseOrderProblem.lineQuantity,
       if (l.unitPriceCents < 0) PurchaseOrderProblem.linePrice,
       if (l.vatRatePercent case final r? when r < 0 || r >= 100)

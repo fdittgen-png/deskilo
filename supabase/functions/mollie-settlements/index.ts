@@ -29,13 +29,14 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { describeError, logLine } from "../_shared/log.ts";
 import { ok, refuse } from "../_shared/respond.ts";
 import { guard } from "../_shared/serve.ts";
+import { PROVIDER_CALL_TIMEOUT_MS } from "../_shared/limits.ts";
 
 const FN = "mollie-settlements";
 
 /** The most pages of settlements one request reads (50 a page). */
-export const MAX_PAGES = 10;
+export const MAX_PAGES = 10; // not-mirrored: a run's own page budget against the provider
 /** The longest one call to Mollie may take before it counts as unreachable. */
-export const CALL_TIMEOUT_MS = 15_000;
+export const CALL_TIMEOUT_MS = PROVIDER_CALL_TIMEOUT_MS;
 /** The reports waiting for review that one answer lists, newest first. */
 const REVIEWS_SHOWN = 50;
 

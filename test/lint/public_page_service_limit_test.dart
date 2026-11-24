@@ -5,7 +5,6 @@
 // (publicPageServiceLimit) is pinned to the latest definition, and no public
 // projection carries the services under a written-out limit.
 
-import 'package:deskilo/features/money/domain/public_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
@@ -14,20 +13,7 @@ void main() {
   final migrations = sqlFiles('supabase/migrations')
     ..sort((a, b) => a.path.compareTo(b.path));
 
-  test('the app mirrors the server function', () {
-    final definition = RegExp(
-      r'function public\.public_page_service_limit\(\)[^$]*\$\$\s*select\s+(\d+)\s*\$\$',
-    );
-    int? latest;
-    for (final f in migrations) {
-      for (final m in definition.allMatches(f.readAsStringSync())) {
-        latest = int.parse(m.group(1)!);
-      }
-    }
-    expect(latest, isNotNull, reason: 'public_page_service_limit() is defined');
-    expect(publicPageServiceLimit, latest);
-  });
-
+  // The app's mirror is a row of mirrored_bounds_test (#4419).
   test('the public services projection reads the limit from its source', () {
     // The latest migration that touches public_workspace_offer's services
     // must not write the limit out.

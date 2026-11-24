@@ -79,7 +79,7 @@ const ITEMS_PER_PAGE = 200;
 
 /** The most pages a list of tax rates, ledger accounts or bank accounts is
  * followed through: 10,000 rows, far above any business's chart. */
-const MAX_PAGES = 50;
+const MAX_PAGES = 50; // not-mirrored: a read's own page budget against the provider
 
 /** The longest contact `reference` Sage keeps. spec: Contacts — a number
  * longer than it is refused, never cut: two members would share a cut one. */

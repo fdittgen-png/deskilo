@@ -62,7 +62,8 @@ class DemoStockCycleCounts implements StockCycleCounts {
     final cost = costs[r.itemId];
     if (cost == null) return null;
     final scaled = r.quantity.micro * BigInt.parse(cost);
-    return ((scaled + BigInt.from(500000)) ~/ BigInt.from(1000000)).toInt();
+    final unit = BigInt.from(10).pow(exactQuantityScale);
+    return ((scaled + unit ~/ BigInt.two) ~/ unit).toInt();
   }
 
   Future<void> _seed() async {
