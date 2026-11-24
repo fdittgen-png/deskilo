@@ -11,6 +11,7 @@ import 'dart:io' show SocketException;
 
 import '../failure/app_failure.dart';
 import '../trace/trace_logger.dart';
+import '../validation/pending_validation.dart';
 import 'server_error.dart';
 
 final _httpStatus = RegExp(r'^\d{3}$');
@@ -55,6 +56,9 @@ Future<CommandOutcome<T>> runCommand<T>(
 }) async {
   try {
     return CommandDone(await action());
+  } on PendingValidationException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.info, 'command', '$what: held for validation', error: e, stackTrace: st);
+    return CommandHeld(e.eventId);
   } on Object catch (e, st) {
     final failure = appFailureFrom(e);
     TraceLogger.instance.warn('command', '$what: $failure', error: e, stackTrace: st);

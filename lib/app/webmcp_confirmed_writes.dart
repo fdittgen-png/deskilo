@@ -11,6 +11,7 @@ import 'dart:async';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/failure/app_failure.dart';
 import '../core/trace/trace_logger.dart';
 import '../core/validation/pending_validation.dart';
 import '../features/events/providers/event_providers.dart';
@@ -299,33 +300,34 @@ Future<Map<String, Object?>> _issue(
     ref.read(invoiceQueriesProvider),
     ref.read(invoiceActionCommandsProvider),
   );
-  var outcome = await issuance.issue(
-    InvoiceIssueAttempt(
-      workspaceId: workspace!.id,
-      memberId: input['member_id']! as String,
-      period: period,
-      kind: InvoiceKind.issuable.asNameMap()[input['kind']]!,
-      requestId: input['request_id']! as String,
-    ),
+  final attempt = InvoiceIssueAttempt(
+    workspaceId: workspace!.id,
+    memberId: input['member_id']! as String,
+    period: period,
+    kind: InvoiceKind.issuable.asNameMap()[input['kind']]!,
+    requestId: input['request_id']! as String,
   );
-  if (outcome is InvoiceIssueUnknown) outcome = await issuance.look(outcome);
+  var outcome = await issuance.issue(attempt);
+  if (outcome is CommandUnreached<String>) {
+    outcome = await issuance.look(attempt, outcome);
+  }
   ref.invalidate(invoicesProvider);
   switch (outcome) {
-    case InvoiceIssued(:final invoiceId):
+    case CommandDone(value: final invoiceId):
       final invoice = (await ref.read(invoicesProvider.future))
           .where((i) => i.id == invoiceId)
           .firstOrNull;
       return invoice == null
           ? {'invoice_id': invoiceId, 'period': period}
           : _invoiceView(invoice);
-    case InvoiceIssueHeld(:final eventId):
+    case CommandHeld(:final eventId):
       return {'event_id': eventId, 'period': period};
-    case InvoiceIssueRefused():
+    case CommandRefused():
       throw const WebMcpRefused(
         'denied',
         'The workspace refused to issue this invoice.',
       );
-    case InvoiceIssueUnknown():
+    case CommandUnreached():
       throw const WebMcpRefused(
         'conflict',
         'The answer did not come back: read the invoices before asking again.',

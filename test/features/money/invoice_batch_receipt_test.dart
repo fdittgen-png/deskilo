@@ -5,6 +5,7 @@
 // answer is recovered by its own id; "issue again" with that id replays it,
 // it neither fails on "already invoiced" nor issues a second document.
 import 'package:deskilo/core/demo/data/money_repository.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/application/settle_invoices.dart';
 import 'package:deskilo/features/money/domain/command_receipt.dart';
@@ -92,19 +93,24 @@ void main() {
   group('batch issue', () {
     test('a lost answer is recovered by the constituent\'s id', () async {
       final out = await issuance.issue(attempt('m1'));
-      expect(out, isA<InvoiceIssueUnknown>());
-      final found = await issuance.look(out as InvoiceIssueUnknown);
-      expect(found, isA<InvoiceIssued>());
-      expect((found as InvoiceIssued).invoiceId, repo.invoices.single.id);
+      expect(out, isA<CommandUnreached<String>>());
+      final found = await issuance.look(
+        attempt('m1'),
+        out as CommandUnreached<String>,
+      );
+      expect(found, isA<CommandDone<String>>());
+      expect((found as CommandDone<String>).value, repo.invoices.single.id);
     });
 
     test(
       'issuing again with the SAME id replays; no second invoice, no refusal',
       () async {
         actions.lose = false;
-        final first = await issuance.issue(attempt('m1')) as InvoiceIssued;
-        final again = await issuance.issue(attempt('m1')) as InvoiceIssued;
-        expect(again.invoiceId, first.invoiceId);
+        final first =
+            await issuance.issue(attempt('m1')) as CommandDone<String>;
+        final again =
+            await issuance.issue(attempt('m1')) as CommandDone<String>;
+        expect(again.value, first.value);
         expect(repo.invoices, hasLength(1));
       },
     );
@@ -113,16 +119,20 @@ void main() {
       actions.lose = false;
       await issuance.issue(attempt('m1'));
       final second = await issuance.issue(attempt('m2'));
-      expect(second, isA<InvoiceIssueRefused>());
+      expect(second, isA<CommandRefused<String>>());
       expect(repo.invoices, hasLength(1));
     });
 
     test('each member of the batch recovers its own invoice', () async {
-      final a = await issuance.issue(attempt('a'));
-      final b = await issuance.issue(attempt('b', period: '2026-08'));
-      final ia = await issuance.look(a as InvoiceIssueUnknown) as InvoiceIssued;
-      final ib = await issuance.look(b as InvoiceIssueUnknown) as InvoiceIssued;
-      expect(ia.invoiceId, isNot(ib.invoiceId));
+      final attemptA = attempt('a');
+      final attemptB = attempt('b', period: '2026-08');
+      final a = await issuance.issue(attemptA);
+      final b = await issuance.issue(attemptB);
+      final ia = await issuance.look(attemptA, a as CommandUnreached<String>)
+          as CommandDone<String>;
+      final ib = await issuance.look(attemptB, b as CommandUnreached<String>)
+          as CommandDone<String>;
+      expect(ia.value, isNot(ib.value));
       expect(repo.invoices, hasLength(2));
     });
   });
