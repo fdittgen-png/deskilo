@@ -447,7 +447,7 @@ enum WorkspaceFeature {
   stockTagReads,
   stockExpiryReport,
   stockHandlingUnits,
-  counterOfflineCash;
+  counterOfflineCash, unitsOfMeasure; // #4442 units of measure (feature_manifest_stock.dart)
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

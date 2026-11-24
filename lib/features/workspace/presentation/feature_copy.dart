@@ -327,6 +327,7 @@ String _stockDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.stockExpiryReport => l10n.featureStockExpiryReportDesc,
       WorkspaceFeature.stockHandlingUnits => l10n.featureStockHandlingUnitsDesc,
       WorkspaceFeature.counterOfflineCash => l10n.featureCounterOfflineCashDesc,
+      WorkspaceFeature.unitsOfMeasure => l10n.featureUnitsOfMeasureDesc,
       _ => feature.name,
     };
 

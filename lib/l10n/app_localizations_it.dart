@@ -12964,6 +12964,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureUniqueMonogramsTitle => 'Iniziali avatar distinte';
 
   @override
+  String get featureUnitsOfMeasureDesc =>
+      'Il titolare e gli amministratori gestiscono le unità di misura dell’attività e le loro conversioni (1 km = 1000 m, 1 kg = 1000 g). Articoli, preventivi e fatture sono misurati con esse. Le unità di base ci sono sempre; attivando questa opzione compare la schermata per gestirle.';
+
+  @override
+  String get featureUnitsOfMeasureTitle => 'Unità di misura';
+
+  @override
   String get featureUsageInvoicesDesc =>
       'Finito il mese, quanto è realmente costato oltre l\'abbonamento — eccedenze, supplementi, servizi — è fatturato a parte. Disattivato: resta sulla fattura del mese.';
 

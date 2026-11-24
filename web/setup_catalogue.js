@@ -718,6 +718,10 @@ window.SETUP_REGISTRY={
   [
    "counterOfflineCash",
    false
+  ],
+  [
+   "unitsOfMeasure",
+   false
   ]
  ],
  "requires": {
@@ -1579,7 +1583,8 @@ window.SETUP_PROCESSES=[
      "stockTagReads",
      "stockExpiryReport",
      "stockHandlingUnits",
-     "counterOfflineCash"
+     "counterOfflineCash",
+     "unitsOfMeasure"
     ]
    }
   ]
@@ -2080,7 +2085,8 @@ window.SETUP_LEVELS={
       "stockTagReads",
       "stockExpiryReport",
       "stockHandlingUnits",
-      "counterOfflineCash"
+      "counterOfflineCash",
+      "unitsOfMeasure"
      ],
      "needs": {
       "money": "invoices"

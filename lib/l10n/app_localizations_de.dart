@@ -12980,6 +12980,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureUniqueMonogramsTitle => 'Eindeutige Avatar-Initialen';
 
   @override
+  String get featureUnitsOfMeasureDesc =>
+      'Inhaber und Administratoren pflegen die eigenen Maßeinheiten des Betriebs und ihre Umrechnungen (1 km = 1000 m, 1 kg = 1000 g). Artikel, Angebote und Rechnungen werden darin gemessen. Die Standardeinheiten sind immer vorhanden; mit dieser Option erscheint die Seite, auf der sie gepflegt werden.';
+
+  @override
+  String get featureUnitsOfMeasureTitle => 'Maßeinheiten';
+
+  @override
   String get featureUsageInvoicesDesc =>
       'Ist ein Monat vorbei, wird getrennt berechnet, was er über das Abo hinaus gekostet hat — Mehrverbrauch, Zubehör, Leistungen. Aus: Das bleibt auf der Monatsrechnung.';
 

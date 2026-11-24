@@ -16916,6 +16916,14 @@
   "@featureUniqueMonogramsTitle": {
     "description": "Shown as a text in feature names (workspace)."
   },
+  "featureUnitsOfMeasureDesc": "The owner and the admins keep the business's own units of measure and their conversions (1 km = 1000 m, 1 kg = 1000 g). Items, quotes and invoices are measured in them. The built-in units are always there; switching this on adds the screen to maintain them.",
+  "@featureUnitsOfMeasureDesc": {
+    "description": "#4442 feature description"
+  },
+  "featureUnitsOfMeasureTitle": "Units of measure",
+  "@featureUnitsOfMeasureTitle": {
+    "description": "#4442 feature name"
+  },
   "featureUsageInvoicesDesc": "Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.",
   "@featureUsageInvoicesDesc": {
     "description": "Shown as a text in feature copy (workspace)."

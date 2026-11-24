@@ -12951,6 +12951,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureUniqueMonogramsTitle => 'Iniciales de avatar distintas';
 
   @override
+  String get featureUnitsOfMeasureDesc =>
+      'El propietario y los administradores mantienen las unidades de medida del negocio y sus conversiones (1 km = 1000 m, 1 kg = 1000 g). Los artículos, los presupuestos y las facturas se miden con ellas. Las unidades básicas siempre están; al activar esta opción aparece la pantalla para mantenerlas.';
+
+  @override
+  String get featureUnitsOfMeasureTitle => 'Unidades de medida';
+
+  @override
   String get featureUsageInvoicesDesc =>
       'Cuando el mes termina, lo que realmente costó más allá de la suscripción — excesos, suplementos, servicios — se factura aparte. Desactivado: eso sigue en la factura del mes.';
 

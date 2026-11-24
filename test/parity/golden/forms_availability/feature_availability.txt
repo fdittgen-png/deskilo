@@ -178,3 +178,4 @@ stockTagReads | everywhere | y y y y y y y y y y
 stockExpiryReport | everywhere | y y y y y y y y y y
 stockHandlingUnits | everywhere | y y y y y y y y y y
 counterOfflineCash | everywhere | y y y y y y y y y y
+unitsOfMeasure | everywhere | y y y y y y y y y y

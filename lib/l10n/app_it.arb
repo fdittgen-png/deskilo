@@ -7965,6 +7965,14 @@
   "featureUiAnimationsTitle": "Animazioni dell'interfaccia",
   "featureUniqueMonogramsDesc": "Un avatar senza foto mostra iniziali che appartengono a un solo membro: iniziale del nome e del cognome, una lettera in più in caso di conflitto, numeri solo come ultima risorsa. Disattivato: solo la prima lettera, uguale per tutti quelli che la condividono.",
   "featureUniqueMonogramsTitle": "Iniziali avatar distinte",
+  "featureUnitsOfMeasureDesc": "Il titolare e gli amministratori gestiscono le unità di misura dell’attività e le loro conversioni (1 km = 1000 m, 1 kg = 1000 g). Articoli, preventivi e fatture sono misurati con esse. Le unità di base ci sono sempre; attivando questa opzione compare la schermata per gestirle.",
+  "@featureUnitsOfMeasureDesc": {
+    "description": "#4442 feature description"
+  },
+  "featureUnitsOfMeasureTitle": "Unità di misura",
+  "@featureUnitsOfMeasureTitle": {
+    "description": "#4442 feature name"
+  },
   "featureUsageInvoicesDesc": "Finito il mese, quanto è realmente costato oltre l'abbonamento — eccedenze, supplementi, servizi — è fatturato a parte. Disattivato: resta sulla fattura del mese.",
   "featureUsageInvoicesTitle": "Fatture di fine mese",
   "featureUsageRecordsDesc": "Ogni prenotazione conteggiata lascia un rilevamento: la finestra prenotata, il tempo realmente presente e ciò che viene fatturato. Una prenotazione a cui non è venuto nessuno è fatturata per intero. Chi esce prima può chiedere che il tempo non usato non sia fatturato, e decide qualcun altro, mai chi chiede. Disattivato: nessun rilevamento e nessuna correzione.",

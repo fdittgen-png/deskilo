@@ -1605,6 +1605,10 @@ window.SETUP_L10N={
    "counterOfflineCash": [
     "Selling offline, cash only",
     "When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection."
+   ],
+   "unitsOfMeasure": [
+    "Units of measure",
+    "The owner and the admins keep the business's own units of measure and their conversions (1 km = 1000 m, 1 kg = 1000 g). Items, quotes and invoices are measured in them. The built-in units are always there; switching this on adds the screen to maintain them."
    ]
   },
   "process": {
@@ -3607,6 +3611,10 @@ window.SETUP_L10N={
    "counterOfflineCash": [
     "Vendre hors ligne, en espèces seulement",
     "Quand la connexion est perdue, la caisse continue de vendre en espèces, enregistre chaque vente sur l'appareil et envoie les ventes dans l'ordre au retour de la connexion. Les autres moyens de paiement attendent la connexion."
+   ],
+   "unitsOfMeasure": [
+    "Unités de mesure",
+    "Le propriétaire et les administrateurs tiennent les unités de mesure de l’entreprise et leurs conversions (1 km = 1000 m, 1 kg = 1000 g). Les articles, les devis et les factures sont mesurés avec elles. Les unités de base sont toujours là ; activer cette option ajoute l’écran pour les gérer."
    ]
   },
   "process": {
@@ -5609,6 +5617,10 @@ window.SETUP_L10N={
    "counterOfflineCash": [
     "Offline verkaufen, nur bar",
     "Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung."
+   ],
+   "unitsOfMeasure": [
+    "Maßeinheiten",
+    "Inhaber und Administratoren pflegen die eigenen Maßeinheiten des Betriebs und ihre Umrechnungen (1 km = 1000 m, 1 kg = 1000 g). Artikel, Angebote und Rechnungen werden darin gemessen. Die Standardeinheiten sind immer vorhanden; mit dieser Option erscheint die Seite, auf der sie gepflegt werden."
    ]
   },
   "process": {
@@ -7611,6 +7623,10 @@ window.SETUP_L10N={
    "counterOfflineCash": [
     "Vender sin conexión, solo en efectivo",
     "Si se pierde la conexión, la caja sigue vendiendo en efectivo, guarda cada venta en el dispositivo y envía las ventas en orden cuando vuelve la conexión. Los demás medios de pago esperan la conexión."
+   ],
+   "unitsOfMeasure": [
+    "Unidades de medida",
+    "El propietario y los administradores mantienen las unidades de medida del negocio y sus conversiones (1 km = 1000 m, 1 kg = 1000 g). Los artículos, los presupuestos y las facturas se miden con ellas. Las unidades básicas siempre están; al activar esta opción aparece la pantalla para mantenerlas."
    ]
   },
   "process": {
@@ -9613,6 +9629,10 @@ window.SETUP_L10N={
    "counterOfflineCash": [
     "Vendere offline, solo in contanti",
     "Quando la connessione cade, la cassa continua a vendere in contanti, registra ogni vendita sul dispositivo e invia le vendite in ordine al ritorno della connessione. Gli altri metodi di pagamento attendono la connessione."
+   ],
+   "unitsOfMeasure": [
+    "Unità di misura",
+    "Il titolare e gli amministratori gestiscono le unità di misura dell’attività e le loro conversioni (1 km = 1000 m, 1 kg = 1000 g). Articoli, preventivi e fatture sono misurati con esse. Le unità di base ci sono sempre; attivando questa opzione compare la schermata per gestirle."
    ]
   },
   "process": {

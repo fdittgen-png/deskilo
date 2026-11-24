@@ -12866,6 +12866,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureUniqueMonogramsTitle => 'Distinct avatar initials';
 
   @override
+  String get featureUnitsOfMeasureDesc =>
+      'The owner and the admins keep the business\'s own units of measure and their conversions (1 km = 1000 m, 1 kg = 1000 g). Items, quotes and invoices are measured in them. The built-in units are always there; switching this on adds the screen to maintain them.';
+
+  @override
+  String get featureUnitsOfMeasureTitle => 'Units of measure';
+
+  @override
   String get featureUsageInvoicesDesc =>
       'Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.';
 

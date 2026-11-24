@@ -20932,6 +20932,18 @@ abstract class AppLocalizations {
   /// **'Distinct avatar initials'**
   String get featureUniqueMonogramsTitle;
 
+  /// #4442 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'The owner and the admins keep the business\'s own units of measure and their conversions (1 km = 1000 m, 1 kg = 1000 g). Items, quotes and invoices are measured in them. The built-in units are always there; switching this on adds the screen to maintain them.'**
+  String get featureUnitsOfMeasureDesc;
+
+  /// #4442 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Units of measure'**
+  String get featureUnitsOfMeasureTitle;
+
   /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:

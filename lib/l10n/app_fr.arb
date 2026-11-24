@@ -7965,6 +7965,14 @@
   "featureUiAnimationsTitle": "Animations de l'interface",
   "featureUniqueMonogramsDesc": "Un avatar sans photo affiche des initiales propres à un seul membre : initiale du prénom et du nom, une lettre de plus en cas de collision, des chiffres seulement en dernier recours. Désactivé : la première lettre seule, identique pour tous ceux qui la partagent.",
   "featureUniqueMonogramsTitle": "Initiales d’avatar distinctes",
+  "featureUnitsOfMeasureDesc": "Le propriétaire et les administrateurs tiennent les unités de mesure de l’entreprise et leurs conversions (1 km = 1000 m, 1 kg = 1000 g). Les articles, les devis et les factures sont mesurés avec elles. Les unités de base sont toujours là ; activer cette option ajoute l’écran pour les gérer.",
+  "@featureUnitsOfMeasureDesc": {
+    "description": "#4442 feature description"
+  },
+  "featureUnitsOfMeasureTitle": "Unités de mesure",
+  "@featureUnitsOfMeasureTitle": {
+    "description": "#4442 feature name"
+  },
   "featureUsageInvoicesDesc": "Une fois le mois terminé, ce qu'il a réellement coûté au-delà de l'abonnement — dépassements, suppléments, services — est facturé à part. Désactivé : cela reste sur la facture du mois.",
   "featureUsageInvoicesTitle": "Factures de fin de mois",
   "featureUsageRecordsDesc": "Chaque réservation comptée laisse un relevé : la fenêtre réservée, le temps réellement passé, et ce qui est facturé. Une réservation où personne n'est venu est facturée en entier. Un membre parti plus tôt peut demander que le temps non utilisé cesse d'être facturé, et quelqu'un d'autre décide — jamais lui. Désactivé : aucun relevé, aucune correction.",

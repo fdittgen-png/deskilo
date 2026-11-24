@@ -5,7 +5,7 @@
 -- and cannot be archived; nothing is deleted; and the conversion is exact through the base unit, refusing two
 -- dimensions, an unknown unit and an answer six decimals cannot hold. Rolled back.
 begin;
-select plan(30);
+select plan(32);
 
 create function pg_temp.u(n int) returns uuid language sql immutable as $$
   select ('00000000-0000-4000-8000-00004442' || lpad(n::text, 4, '0'))::uuid;
@@ -45,11 +45,13 @@ grant execute on all functions in schema pg_temp to authenticated, anon;
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
        'units' || n || '@example.test', '', now(), now(), now() from generate_series(1, 3) n;
-insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by) values
-  (pg_temp.u(101), 'Cable and rope', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1));
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags) values
+  (pg_temp.u(101), 'Cable and rope', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{"unitsOfMeasure": true}'),
+  (pg_temp.u(102), 'Rope, units off', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{}');
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status, joined_at) values
   (pg_temp.u(201), pg_temp.u(101), pg_temp.u(1), true, true, 'active', '2026-01-01'),
-  (pg_temp.u(202), pg_temp.u(101), pg_temp.u(2), false, false, 'active', '2026-01-01');
+  (pg_temp.u(202), pg_temp.u(101), pg_temp.u(2), false, false, 'active', '2026-01-01'),
+  (pg_temp.u(211), pg_temp.u(102), pg_temp.u(1), true, true, 'active', '2026-01-01');
 
 -- ── every business starts with the built-ins ──
 select is((select count(*)::int from public.workspace_units where workspace_id = pg_temp.u(101) and built_in), 13,
@@ -77,6 +79,11 @@ select is(pg_temp.save(2, 902, '{"code": "reel", "label": "Reel", "dimension": "
   'a member without the right cannot');
 select is(pg_temp.save(3, 903, '{"code": "reel", "label": "Reel", "dimension": "length", "factor_num": 10, "factor_den": 1}'), 'ERR DKN01',
   'nor a stranger');
+
+-- ── while the feature is off, nothing is maintained, and the built-ins are there ──
+select is(pg_temp.save(1, 915, '{"code": "reel", "label": "Reel", "dimension": "length", "factor_num": 10}', 102), 'ERR DKN01',
+  'the commands are refused while the unitsOfMeasure feature is off');
+select is((select count(*)::int from public.workspace_units where workspace_id = pg_temp.u(102)), 13, 'but the business has its built-in units');
 
 -- ── a malformed unit, by field ──
 select is(pg_temp.save(1, 904, '{"code": "Bad Code", "label": "x", "dimension": "length", "factor_num": 1}'), 'ERR DKG11 {"field": "code", "reason": "code_malformed"}', 'a code is lower case letters, digits and underscores');
