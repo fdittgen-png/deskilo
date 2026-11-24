@@ -62,17 +62,15 @@ void main() {
 
     test('a reason off the list and a paid-out above the limit are refused; a count by denomination must add up', () async {
       final s = await drawer.openSession('w', requestId: 'r1', tillId: 'demo-till-front', floatMinor: 100);
-      expect(await _code(() => drawer.cashEntry('w', requestId: 'e1', sessionId: s.sessionId, kind: 'paid_in', amountMinor: 5, reason: 'gift')), 'DKL13');
+      expect(await _code(() => drawer.cashEntry('w', requestId: 'e1', sessionId: s.sessionId, entry: const DrawerEntry(kind: 'paid_in', amountMinor: 5, reason: 'gift'))), 'DKL13');
       drawer.rules = () => const DrawerSettings(blindCount: true, byDenomination: true, reasons: ['change'], paidOutLimitMinor: 50);
-      expect(await _code(() => drawer.cashEntry('w', requestId: 'e2', sessionId: s.sessionId, kind: 'paid_out', amountMinor: 60, reason: 'change')), 'DKL13');
-      expect(await _code(() => drawer.closeSession('w', requestId: 'c1', sessionId: s.sessionId, countedMinor: 100, bankedMinor: 0)), 'DKL13');
+      expect(await _code(() => drawer.cashEntry('w', requestId: 'e2', sessionId: s.sessionId, entry: const DrawerEntry(kind: 'paid_out', amountMinor: 60, reason: 'change'))), 'DKL13');
+      expect(await _code(() => drawer.closeSession('w', requestId: 'c1', sessionId: s.sessionId, count: const DrawerCount(countedMinor: 100, bankedMinor: 0))), 'DKL13');
       final closed = await drawer.closeSession(
         'w',
         requestId: 'c2',
         sessionId: s.sessionId,
-        countedMinor: 100,
-        denominations: const Denominations({50: 2}),
-        bankedMinor: 0,
+        count: const DrawerCount(countedMinor: 100, denominations: Denominations({50: 2}), bankedMinor: 0),
       );
       expect(closed.differenceMinor, 0);
     });

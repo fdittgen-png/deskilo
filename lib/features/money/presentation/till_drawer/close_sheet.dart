@@ -5,160 +5,186 @@
 // and its reason are asked for when the server says the count differs. Someone who may see the finances sees the expected
 // cash and the difference as they type. The figures of the close are shown after it.
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../application/till_drawer_commands.dart';
 import '../../domain/till_drawer.dart';
 import '../../domain/till_drawer_rules.dart';
-import '../../providers/till_drawer_providers.dart';
 import 'drawer_inputs.dart';
 import 'drawer_text.dart';
 
-/// Opens the sheet over [session]; the figures of the close, or null when it was not closed. [expected] is what the
-/// server gave for the session, null while the count is blind.
-Future<DrawerClosed?> showCloseTillSheet(
-  BuildContext context,
-  WidgetRef ref, {
-  required String workspaceId,
-  required DrawerSession session,
-  required String tillName,
-  required String currency,
-  required bool byDenomination,
-  required DrawerCash? expected,
-}) async {
-  final l10n = context.l10n;
-  final format = appFormatOf(context);
-  final money = format.moneyIn(currency);
-  final fields = FormControllers();
-  final rows = DenominationRows();
-  final intent = SameIntent();
+/// What the close sheet is opened over: the session, its till, how the business counts and what the server gave as expected
+/// (null while the count is blind).
+class CloseSheetInput {
+  const CloseSheetInput({required this.session, required this.tillName, required this.currency, required this.byDenomination, required this.expected});
+
+  final DrawerSession session;
+  final String tillName;
+  final String currency;
+  final bool byDenomination;
+  final DrawerCash? expected;
+}
+
+/// Opens the sheet over [input]; the figures of the close, or null when it was not closed.
+Future<DrawerClosed?> showCloseTillSheet(BuildContext context, TillDrawerCommands commands, CloseSheetInput input) async {
+  final form = _CloseForm(context, commands, input);
+  final done = await showAppFormSheet(context, form.sheet());
+  return done ? form.closed : null;
+}
+
+/// The state and the words of one close: what is typed, what it means, and what the server answered.
+class _CloseForm {
+  _CloseForm(this._context, this._commands, this._input)
+    : _l10n = _context.l10n,
+      _format = appFormatOf(_context);
+
+  final BuildContext _context;
+  final TillDrawerCommands _commands;
+  final CloseSheetInput _input;
+  final AppLocalizations _l10n;
+  final AppFormat _format;
+  final FormControllers _fields = FormControllers();
+  final DenominationRows _rows = DenominationRows();
+  final SameIntent _intent = SameIntent();
   DrawerClosed? closed;
-  var askReason = false;
-  VoidCallback refreshSheet = () {};
-  int? read(String key) => format.readAmount(fields.text(key), currency: currency, allowNegative: false).minor;
-  Denominations? counted() => byDenomination ? rows.read(context) : null;
-  int? countedMinor() => byDenomination ? counted()?.totalMinor : read('counted');
-  int? bankedMinor() => fields.text('banked').isEmpty ? null : read('banked');
-  int? known() => expected?.expectedMinor;
-  bool differs() {
-    final c = countedMinor();
-    final e = known();
+  bool _askReason = false;
+  VoidCallback _refreshSheet = () {};
+
+  String get _currency => _input.currency;
+  int? _read(String key) => _format.readAmount(_fields.text(key), currency: _currency, allowNegative: false).minor;
+  Denominations? _counted() => _input.byDenomination ? _rows.read(_context) : null;
+  int? _countedMinor() => _input.byDenomination ? _counted()?.totalMinor : _read('counted');
+  int? _bankedMinor() => _fields.text('banked').isEmpty ? null : _read('banked');
+  int? get _known => _input.expected?.expectedMinor;
+  bool get _differs {
+    final c = _countedMinor();
+    final e = _known;
     return c != null && e != null && c != e;
   }
 
-  final done = await showAppFormSheet(
-    context,
-    AppFormSheet(
-      title: l10n.tillDrawerCloseTitle(tillName),
-      submitLabel: l10n.tillDrawerCloseSubmit,
-      submitKey: const ValueKey('drawer-close-submit'),
-      onDispose: () {
-        fields.dispose();
-        rows.dispose();
-      },
-      validate: () => drawerFieldErrors(
-        l10n,
-        checkClose(
-          countedMinor: countedMinor(),
-          bankedMinor: fields.text('banked').isEmpty ? 0 : bankedMinor() ?? -1,
-          byDenomination: byDenomination,
-          denominations: counted(),
-          expectedMinor: known(),
-          differenceReason: fields.text('reason'),
-        ),
-      ),
-      onSubmit: () async {
-        final count = countedMinor()!;
-        final reason = fields.text('reason');
-        final denominations = counted();
-        try {
-          closed = await ref.read(tillDrawerPortProvider).closeSession(
-            workspaceId,
-            requestId: intent.idFor('${session.id}|$count|${denominations?.toJson()}|$reason|${bankedMinor()}'),
-            sessionId: session.id,
-            countedMinor: count,
-            denominations: denominations,
-            differenceReason: reason.isEmpty ? null : reason,
-            bankedMinor: bankedMinor() ?? 0,
-          );
-          ref
-            ..invalidate(drawerExpectedProvider)
-            ..invalidate(tillDrawerProvider(workspaceId));
-          return null;
-        } on Object catch (e, st) {
-      TraceLogger.instance.warn('money', 'the till drawer refused', error: e, stackTrace: st);
-          if (drawerAsksDifferenceReason(e)) {
-            askReason = true;
-            refreshSheet();
-          }
-          return drawerProblemText(l10n, e);
-        }
-      },
-      builder: (context, refresh) {
-        refreshSheet = refresh;
-        final counted = countedMinor();
-        final difference = counted != null && known() != null ? counted - known()! : null;
-        return [
-          if (expected != null) ...[
-            Text(l10n.tillDrawerExpected(money.formatMinor(expected.expectedMinor)), key: const ValueKey('drawer-close-expected'), style: Theme.of(context).textTheme.titleMedium),
-            Text(
-              l10n.tillDrawerBreakdown(
-                money.formatMinor(expected.floatMinor),
-                money.formatMinor(expected.cashSalesMinor - expected.cashRefundsMinor),
-                money.formatMinor(expected.paidInMinor),
-                money.formatMinor(expected.paidOutMinor),
-              ),
-              key: const ValueKey('drawer-close-breakdown'),
-            ),
-            const FormGap(),
-          ],
-          if (byDenomination)
-            DenominationFields(rows: rows, currency: currency)
-          else
-            AppAmountField(
-              key: const ValueKey('drawer-counted'),
-              controller: fields['counted'],
-              fieldKey: 'amount',
-              label: l10n.tillDrawerCounted,
-              helper: expected == null ? l10n.tillDrawerCountedHelpBlind : l10n.tillDrawerCountedHelp,
-              currency: currency,
-              allowNegative: false,
-              autofocus: true,
-              onChanged: (_) => refresh(),
-            ),
-          if (difference != null) ...[
-            const FormGap.small(),
-            Text(l10n.tillDrawerDifferenceLive(money.formatMinor(difference)), key: const ValueKey('drawer-close-difference')),
-          ],
-          if (askReason || differs()) ...[
-            const FormGap(),
-            AppTextField(
-              key: const ValueKey('drawer-close-reason'),
-              controller: fields['reason'],
-              fieldKey: 'differenceReason',
-              label: l10n.tillDrawerDifferenceReason,
-              helper: askReason ? l10n.tillDrawerDifferenceAsked : null,
-              maxLength: kDrawerReasonMaxLength,
-            ),
-          ],
-          const FormGap(),
-          AppAmountField(
-            key: const ValueKey('drawer-banked'),
-            controller: fields['banked'],
-            fieldKey: 'banked',
-            label: l10n.tillDrawerBanked,
-            helper: l10n.tillDrawerBankedHelp,
-            currency: currency,
-            allowNegative: false,
-          ),
-        ];
-      },
+  AppFormSheet sheet() => AppFormSheet(
+    title: _l10n.tillDrawerCloseTitle(_input.tillName),
+    submitLabel: _l10n.tillDrawerCloseSubmit,
+    submitKey: const ValueKey('drawer-close-submit'),
+    onDispose: () {
+      _fields.dispose();
+      _rows.dispose();
+    },
+    validate: _validate,
+    onSubmit: _submit,
+    builder: (context, refresh) {
+      _refreshSheet = refresh;
+      return _body(context, refresh);
+    },
+  );
+
+  Map<String, String> _validate() => drawerFieldErrors(
+    _l10n,
+    checkClose(
+      countedMinor: _countedMinor(),
+      bankedMinor: _fields.text('banked').isEmpty ? 0 : _bankedMinor() ?? -1,
+      byDenomination: _input.byDenomination,
+      denominations: _counted(),
+      expectedMinor: _known,
+      differenceReason: _fields.text('reason'),
     ),
   );
-  return done ? closed : null;
+
+  Future<String?> _submit() async {
+    final count = _countedMinor()!;
+    final reason = _fields.text('reason');
+    final denominations = _counted();
+    try {
+      closed = await _commands.closeSession(
+        requestId: _intent.idFor('${_input.session.id}|$count|${denominations?.toJson()}|$reason|${_bankedMinor()}'),
+        sessionId: _input.session.id,
+        count: DrawerCount(countedMinor: count, bankedMinor: _bankedMinor() ?? 0, denominations: denominations, differenceReason: reason.isEmpty ? null : reason),
+      );
+      return null;
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('money', 'the till drawer refused', error: e, stackTrace: st);
+      if (drawerAsksDifferenceReason(e)) {
+        _askReason = true;
+        _refreshSheet();
+      }
+      return drawerProblemText(_l10n, e);
+    }
+  }
+
+  List<Widget> _body(BuildContext context, VoidCallback refresh) {
+    final counted = _countedMinor();
+    final known = _known;
+    final difference = counted != null && known != null ? counted - known : null;
+    final money = _format.moneyIn(_currency);
+    return [
+      if (_input.expected != null) ..._expectedLines(context, _input.expected!),
+      _countField(refresh),
+      if (difference != null) ...[
+        const FormGap.small(),
+        Text(_l10n.tillDrawerDifferenceLive(money.formatMinor(difference)), key: const ValueKey('drawer-close-difference')),
+      ],
+      if (_askReason || _differs) ..._reasonField(),
+      const FormGap(),
+      AppAmountField(
+        key: const ValueKey('drawer-banked'),
+        controller: _fields['banked'],
+        fieldKey: 'banked',
+        label: _l10n.tillDrawerBanked,
+        helper: _l10n.tillDrawerBankedHelp,
+        currency: _currency,
+        allowNegative: false,
+      ),
+    ];
+  }
+
+  List<Widget> _expectedLines(BuildContext context, DrawerCash expected) {
+    final money = _format.moneyIn(_currency);
+    return [
+      Text(_l10n.tillDrawerExpected(money.formatMinor(expected.expectedMinor)), key: const ValueKey('drawer-close-expected'), style: Theme.of(context).textTheme.titleMedium),
+      Text(
+        _l10n.tillDrawerBreakdown(
+              money.formatMinor(expected.floatMinor),
+              money.formatMinor(expected.cashSalesMinor - expected.cashRefundsMinor),
+              money.formatMinor(expected.paidInMinor),
+              money.formatMinor(expected.paidOutMinor),
+            )
+           ,
+        key: const ValueKey('drawer-close-breakdown'),
+      ),
+      const FormGap(),
+    ];
+  }
+
+  Widget _countField(VoidCallback refresh) => _input.byDenomination
+      ? DenominationFields(rows: _rows, currency: _currency)
+      : AppAmountField(
+          key: const ValueKey('drawer-counted'),
+          controller: _fields['counted'],
+          fieldKey: 'amount',
+          label: _l10n.tillDrawerCounted,
+          helper: (_input.expected == null ? _l10n.tillDrawerCountedHelpBlind : _l10n.tillDrawerCountedHelp),
+          currency: _currency,
+          allowNegative: false,
+          autofocus: true,
+          onChanged: (_) => refresh(),
+        );
+
+  List<Widget> _reasonField() => [
+    const FormGap(),
+    AppTextField(
+      key: const ValueKey('drawer-close-reason'),
+      controller: _fields['reason'],
+      fieldKey: 'differenceReason',
+      label: _l10n.tillDrawerDifferenceReason,
+      helper: _askReason ? _l10n.tillDrawerDifferenceAsked : null,
+      maxLength: kDrawerReasonMaxLength,
+    ),
+  ];
 }
 
 /// The figures of a close, said after it: what the drawer should have held, what was counted and the difference.

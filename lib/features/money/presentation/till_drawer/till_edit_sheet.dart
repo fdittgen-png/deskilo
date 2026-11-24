@@ -2,20 +2,19 @@
 //
 // #4367 -- adding a till of the business, or renaming and switching one off. Whoever manages the sites does it.
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_choice_controls.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../application/till_drawer_commands.dart';
 import '../../domain/till_drawer.dart';
 import '../../domain/till_drawer_rules.dart';
-import '../../providers/till_drawer_providers.dart';
 import 'drawer_inputs.dart';
 import 'drawer_text.dart';
 
 /// Opens the sheet for a new till (null [till]) or an existing one; true when it was saved.
-Future<bool> showTillEditSheet(BuildContext context, WidgetRef ref, {required String workspaceId, DrawerTill? till}) {
+Future<bool> showTillEditSheet(BuildContext context, TillDrawerCommands commands, {DrawerTill? till}) {
   final l10n = context.l10n;
   final fields = FormControllers({'name': till?.name ?? ''});
   final intent = SameIntent();
@@ -30,15 +29,13 @@ Future<bool> showTillEditSheet(BuildContext context, WidgetRef ref, {required St
       validate: () => drawerFieldErrors(l10n, checkTillName(fields.text('name'))),
       onSubmit: () async {
         try {
-          await ref.read(tillDrawerPortProvider).saveTill(
-            workspaceId,
+          await commands.saveTill(
             requestId: intent.idFor('${fields.text('name')}|$active'),
             tillId: till?.id,
             name: fields.text('name'),
             siteId: till?.siteId,
             active: active,
           );
-          ref.invalidate(tillDrawerProvider(workspaceId));
           return null;
         } on Object catch (e, st) {
       TraceLogger.instance.warn('money', 'the till drawer refused', error: e, stackTrace: st);

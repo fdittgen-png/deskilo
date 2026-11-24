@@ -3,23 +3,21 @@
 // #4367 -- opening a till: the float the drawer starts with, typed as a total or, when the business counts by
 // denomination, row by row. The server refuses a till that is already open or a count that does not add up.
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../application/till_drawer_commands.dart';
 import '../../domain/till_drawer.dart';
 import '../../domain/till_drawer_rules.dart';
-import '../../providers/till_drawer_providers.dart';
 import 'drawer_inputs.dart';
 import 'drawer_text.dart';
 
 /// Opens the sheet for [till]; true when the session was opened.
 Future<bool> showOpenTillSheet(
   BuildContext context,
-  WidgetRef ref, {
-  required String workspaceId,
+  TillDrawerCommands commands, {
   required DrawerTill till,
   required String currency,
   required bool byDenomination,
@@ -50,14 +48,12 @@ Future<bool> showOpenTillSheet(
         final float = floatMinor()!;
         final denominations = counted();
         try {
-          await ref.read(tillDrawerPortProvider).openSession(
-            workspaceId,
+          await commands.openSession(
             requestId: intent.idFor('${till.id}|$float|${denominations?.toJson()}'),
             tillId: till.id,
             floatMinor: float,
             denominations: denominations,
           );
-          ref.invalidate(tillDrawerProvider(workspaceId));
           return null;
         } on Object catch (e, st) {
       TraceLogger.instance.warn('money', 'the till drawer refused', error: e, stackTrace: st);

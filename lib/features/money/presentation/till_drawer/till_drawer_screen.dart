@@ -16,6 +16,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../application/till_drawer_commands.dart';
 import '../../domain/till_drawer.dart';
 import '../../providers/till_drawer_providers.dart';
 import 'cash_entry_sheet.dart';
@@ -51,7 +52,7 @@ class TillDrawerScreen extends ConsumerWidget {
       floatingActionButton: canManage && workspaceId != null
           ? FloatingActionButton.extended(
               key: const ValueKey('drawer-add-till'),
-              onPressed: () => showTillEditSheet(context, ref, workspaceId: workspaceId),
+              onPressed: () => showTillEditSheet(context, ref.read(tillDrawerCommandsProvider(workspaceId))),
               icon: const Icon(Icons.add),
               label: Text(l10n.tillDrawerAddTill),
             )
@@ -127,13 +128,13 @@ class _TillCard extends ConsumerWidget {
   Future<void> _open(BuildContext context, WidgetRef ref) async {
     final settings = await ref.read(drawerSettingsProvider.future);
     if (!context.mounted) return;
-    await showOpenTillSheet(context, ref, workspaceId: workspaceId, till: till, currency: currency, byDenomination: settings.byDenomination);
+    await showOpenTillSheet(context, ref.read(tillDrawerCommandsProvider(workspaceId)), till: till, currency: currency, byDenomination: settings.byDenomination);
   }
 
   Future<void> _entry(BuildContext context, WidgetRef ref, DrawerSession session) async {
     final settings = await ref.read(drawerSettingsProvider.future);
     if (!context.mounted) return;
-    final done = await showCashEntrySheet(context, ref, workspaceId: workspaceId, session: session, currency: currency, settings: settings);
+    final done = await showCashEntrySheet(context, ref.read(tillDrawerCommandsProvider(workspaceId)), session: session, currency: currency, settings: settings);
     if (done && context.mounted) AppSnack.success(context, context.l10n.tillDrawerEntryDone);
   }
 
@@ -143,13 +144,8 @@ class _TillCard extends ConsumerWidget {
     if (!context.mounted) return;
     final closed = await showCloseTillSheet(
       context,
-      ref,
-      workspaceId: workspaceId,
-      session: session,
-      tillName: till.name,
-      currency: currency,
-      byDenomination: settings.byDenomination,
-      expected: expected,
+      ref.read(tillDrawerCommandsProvider(workspaceId)),
+      CloseSheetInput(session: session, tillName: till.name, currency: currency, byDenomination: settings.byDenomination, expected: expected),
     );
     if (closed != null && context.mounted) await showDrawerClosedDialog(context, closed, currency: currency);
   }
@@ -180,7 +176,7 @@ class _TillCard extends ConsumerWidget {
                     key: ValueKey('drawer-edit-${till.id}'),
                     tooltip: l10n.tillDrawerEditTill,
                     icon: const Icon(Icons.edit_outlined),
-                    onPressed: () => showTillEditSheet(context, ref, workspaceId: workspaceId, till: till),
+                    onPressed: () => showTillEditSheet(context, ref.read(tillDrawerCommandsProvider(workspaceId)), till: till),
                   ),
               ],
             ),

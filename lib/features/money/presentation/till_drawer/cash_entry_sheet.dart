@@ -3,24 +3,22 @@
 // #4367 -- cash paid into or out of the drawer during a session, with a reason from the business's own list. A paid-out
 // above the business's limit is the server's to refuse for someone who may not record outgoing payments.
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_choice_controls.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../application/till_drawer_commands.dart';
 import '../../domain/till_drawer.dart';
 import '../../domain/till_drawer_rules.dart';
-import '../../providers/till_drawer_providers.dart';
 import 'drawer_inputs.dart';
 import 'drawer_text.dart';
 
 /// Opens the sheet over [session]; true when the entry was recorded.
 Future<bool> showCashEntrySheet(
   BuildContext context,
-  WidgetRef ref, {
-  required String workspaceId,
+  TillDrawerCommands commands, {
   required DrawerSession session,
   required String currency,
   required DrawerSettings settings,
@@ -42,17 +40,11 @@ Future<bool> showCashEntrySheet(
       validate: () => drawerFieldErrors(l10n, checkCashEntry(amountMinor: amount(), reason: reason)),
       onSubmit: () async {
         try {
-          await ref.read(tillDrawerPortProvider).cashEntry(
-            workspaceId,
+          await commands.cashEntry(
             requestId: intent.idFor('${session.id}|$kind|${amount()}|$reason'),
             sessionId: session.id,
-            kind: kind,
-            amountMinor: amount()!,
-            reason: reason!,
+            entry: DrawerEntry(kind: kind, amountMinor: amount()!, reason: reason!),
           );
-          ref
-            ..invalidate(drawerExpectedProvider)
-            ..invalidate(tillDrawerProvider(workspaceId));
           return null;
         } on Object catch (e, st) {
       TraceLogger.instance.warn('money', 'the till drawer refused', error: e, stackTrace: st);

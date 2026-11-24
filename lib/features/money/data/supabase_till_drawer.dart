@@ -57,46 +57,32 @@ class SupabaseTillDrawer implements TillDrawerPort {
       }));
 
   @override
-  Future<DrawerEntryMade> cashEntry(
-    String workspaceId, {
-    required String requestId,
-    required String sessionId,
-    required String kind,
-    required int amountMinor,
-    required String reason,
-    String? purchaseDocumentId,
-  }) async => DrawerEntryMade.fromJson(await _call('counter_cash_entry_v1', {
-    'p_workspace_id': workspaceId,
-    'p_request_id': requestId,
-    'p_session_id': sessionId,
-    'p_kind': kind,
-    'p_amount_minor': amountMinor,
-    'p_reason': reason,
-    'p_purchase_document_id': purchaseDocumentId,
-  }));
+  Future<DrawerEntryMade> cashEntry(String workspaceId, {required String requestId, required String sessionId, required DrawerEntry entry}) async =>
+      DrawerEntryMade.fromJson(await _call('counter_cash_entry_v1', {
+        'p_workspace_id': workspaceId,
+        'p_request_id': requestId,
+        'p_session_id': sessionId,
+        'p_kind': entry.kind,
+        'p_amount_minor': entry.amountMinor,
+        'p_reason': entry.reason,
+        'p_purchase_document_id': entry.purchaseDocumentId,
+      }));
 
   @override
   Future<DrawerCash> expected(String workspaceId, {required String sessionId}) async =>
       DrawerCash.fromJson(await _call('counter_session_expected_v1', {'p_workspace_id': workspaceId, 'p_session_id': sessionId}));
 
   @override
-  Future<DrawerClosed> closeSession(
-    String workspaceId, {
-    required String requestId,
-    required String sessionId,
-    required int countedMinor,
-    Denominations? denominations,
-    String? differenceReason,
-    required int bankedMinor,
-  }) async => DrawerClosed.fromJson(await _call('counter_session_close_v1', {
-    'p_workspace_id': workspaceId,
-    'p_request_id': requestId,
-    'p_session_id': sessionId,
-    'p_counted_minor': countedMinor,
-    'p_denominations': denominations?.toJson(),
-    'p_difference_reason': differenceReason,
-    'p_banked_minor': bankedMinor,
-  }));
+  Future<DrawerClosed> closeSession(String workspaceId, {required String requestId, required String sessionId, required DrawerCount count}) async =>
+      DrawerClosed.fromJson(await _call('counter_session_close_v1', {
+        'p_workspace_id': workspaceId,
+        'p_request_id': requestId,
+        'p_session_id': sessionId,
+        'p_counted_minor': count.countedMinor,
+        'p_denominations': count.denominations?.toJson(),
+        'p_difference_reason': count.differenceReason,
+        'p_banked_minor': count.bankedMinor,
+      }));
 
   @override
   Future<List<DayCloseRow>> dayCloses(String workspaceId) async {

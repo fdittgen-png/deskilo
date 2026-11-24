@@ -156,15 +156,8 @@ class DemoTillDrawer implements TillDrawerPort {
   }
 
   @override
-  Future<DrawerEntryMade> cashEntry(
-    String workspaceId, {
-    required String requestId,
-    required String sessionId,
-    required String kind,
-    required int amountMinor,
-    required String reason,
-    String? purchaseDocumentId,
-  }) async {
+  Future<DrawerEntryMade> cashEntry(String workspaceId, {required String requestId, required String sessionId, required DrawerEntry entry}) async {
+    final (kind, amountMinor, reason) = (entry.kind, entry.amountMinor, entry.reason);
     if (_answered[requestId] != null) return _replayed(requestId);
     if (amountMinor <= 0) throw _refused(PgCode.invalidParameterValue, 'an entry has an amount');
     if (!rules().reasons.contains(reason.trim())) throw _refused(DkCode.dkl13, 'this reason is not on the list', reason: 'reason_unknown');
@@ -196,15 +189,8 @@ class DemoTillDrawer implements TillDrawerPort {
   }
 
   @override
-  Future<DrawerClosed> closeSession(
-    String workspaceId, {
-    required String requestId,
-    required String sessionId,
-    required int countedMinor,
-    Denominations? denominations,
-    String? differenceReason,
-    required int bankedMinor,
-  }) async {
+  Future<DrawerClosed> closeSession(String workspaceId, {required String requestId, required String sessionId, required DrawerCount count}) async {
+    final (countedMinor, bankedMinor, denominations, differenceReason) = (count.countedMinor, count.bankedMinor, count.denominations, count.differenceReason);
     if (_answered[requestId] != null) return _replayed(requestId);
     if (countedMinor < 0 || bankedMinor < 0 || bankedMinor > countedMinor) throw _refused(PgCode.invalidParameterValue, 'a session is closed with its count');
     if (rules().byDenomination && denominations?.totalMinor != countedMinor) {

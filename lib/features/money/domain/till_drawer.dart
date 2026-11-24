@@ -196,6 +196,28 @@ class Denominations {
   Map<String, int> toJson() => {for (final e in counts.entries) '${e.key}': e.value};
 }
 
+/// A cash entry: [kind] is `paid_in` or `paid_out`; [reason] is one of the business's reasons; a paid-out expense may name the
+/// purchase document it paid.
+class DrawerEntry {
+  const DrawerEntry({required this.kind, required this.amountMinor, required this.reason, this.purchaseDocumentId});
+
+  final String kind;
+  final int amountMinor;
+  final String reason;
+  final String? purchaseDocumentId;
+}
+
+/// What the person counted when closing a session: the cash (as a total, or by denomination), what was taken to the bank and the
+/// reason of a difference.
+class DrawerCount {
+  const DrawerCount({required this.countedMinor, required this.bankedMinor, this.denominations, this.differenceReason});
+
+  final int countedMinor;
+  final int bankedMinor;
+  final Denominations? denominations;
+  final String? differenceReason;
+}
+
 /// The cash drawer's server.
 abstract interface class TillDrawerPort {
   /// The tills of the business, each with the open session the person may read.
@@ -206,29 +228,14 @@ abstract interface class TillDrawerPort {
 
   Future<DrawerOpened> openSession(String workspaceId, {required String requestId, required String tillId, required int floatMinor, Denominations? denominations});
 
-  /// [kind] is `paid_in` or `paid_out`; [reason] one of the business's reasons.
-  Future<DrawerEntryMade> cashEntry(
-    String workspaceId, {
-    required String requestId,
-    required String sessionId,
-    required String kind,
-    required int amountMinor,
-    required String reason,
-    String? purchaseDocumentId,
-  });
+  /// A cash entry in or out of the drawer of [sessionId]; a request id replays the entry it made.
+  Future<DrawerEntryMade> cashEntry(String workspaceId, {required String requestId, required String sessionId, required DrawerEntry entry});
 
   /// What the session should hold. Refused (DKN01) while it is open and counted blind, for someone who may not see the finances.
   Future<DrawerCash> expected(String workspaceId, {required String sessionId});
 
-  Future<DrawerClosed> closeSession(
-    String workspaceId, {
-    required String requestId,
-    required String sessionId,
-    required int countedMinor,
-    Denominations? denominations,
-    String? differenceReason,
-    required int bankedMinor,
-  });
+  /// Counts and closes [sessionId]: the count, what was banked and, when the count differs, its reason.
+  Future<DrawerClosed> closeSession(String workspaceId, {required String requestId, required String sessionId, required DrawerCount count});
 
   /// The days closed so far, the latest first (the finances read them).
   Future<List<DayCloseRow>> dayCloses(String workspaceId);

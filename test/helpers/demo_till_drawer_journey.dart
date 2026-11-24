@@ -51,14 +51,14 @@ Future<TillDrawerFacts> tillDrawerFacts() => withDemoSession((fixture, outbox, c
     expectedRevision: draft.revision,
     tenders: [TillTender(kind: 'cash', amountMinor: draft.totals.grossMinor)],
   );
-  await drawer.cashEntry(ws, requestId: 'j-out', sessionId: opened.sessionId, kind: 'paid_out', amountMinor: 500, reason: 'expense');
+  await drawer.cashEntry(ws, requestId: 'j-out', sessionId: opened.sessionId, entry: const DrawerEntry(kind: 'paid_out', amountMinor: 500, reason: 'expense'));
   final cash = await drawer.expected(ws, sessionId: opened.sessionId);
-  final exact = await drawer.closeSession(ws, requestId: 'j-close', sessionId: opened.sessionId, countedMinor: cash.expectedMinor, bankedMinor: 5000);
+  final exact = await drawer.closeSession(ws, requestId: 'j-close', sessionId: opened.sessionId, count: DrawerCount(countedMinor: cash.expectedMinor, bankedMinor: 5000));
 
   final market = await drawer.openSession(ws, requestId: 'j-open-2', tillId: 'demo-till-market', floatMinor: 5000);
   String? refused;
   try {
-    await drawer.closeSession(ws, requestId: 'j-close-2', sessionId: market.sessionId, countedMinor: 4900, bankedMinor: 0);
+    await drawer.closeSession(ws, requestId: 'j-close-2', sessionId: market.sessionId, count: const DrawerCount(countedMinor: 4900, bankedMinor: 0));
   } on PostgrestException catch (e) {
     refused = e.code;
   }
@@ -72,9 +72,7 @@ Future<TillDrawerFacts> tillDrawerFacts() => withDemoSession((fixture, outbox, c
     ws,
     requestId: 'j-close-3',
     sessionId: market.sessionId,
-    countedMinor: 4900,
-    differenceReason: 'a coin was lost',
-    bankedMinor: 0,
+    count: const DrawerCount(countedMinor: 4900, differenceReason: 'a coin was lost', bankedMinor: 0),
   );
   final day = await drawer.closeDay(ws, requestId: 'j-day', businessDate: '2026-11-23');
   String? again;

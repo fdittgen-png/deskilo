@@ -3,6 +3,7 @@
 // #4367 (CS5) -- the day close at a phone and at a desk: refused while a till is open (naming it), then one numbered report
 // with each session's difference and reason, listed afterwards among the closed days and opened again from the list.
 import 'package:deskilo/core/demo/data/demo_till_drawer.dart';
+import 'package:deskilo/features/money/domain/till_drawer.dart';
 import 'package:deskilo/features/money/presentation/till_drawer/till_day_screen.dart';
 import 'package:deskilo/features/money/providers/till_drawer_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
@@ -42,7 +43,7 @@ void main() {
       await _tap(tester, 'day-close');
       expect(find.text(_en.tillDayRefusalTillOpen('Front counter')), findsOneWidget);
 
-      await drawer.closeSession('ws-1', requestId: 'c', sessionId: open.sessionId, countedMinor: 9900, differenceReason: 'a coin was lost', bankedMinor: 0);
+      await drawer.closeSession('ws-1', requestId: 'c', sessionId: open.sessionId, count: const DrawerCount(countedMinor: 9900, differenceReason: 'a coin was lost', bankedMinor: 0));
       await _tap(tester, 'day-close');
       expect(find.byKey(const ValueKey('day-report')), findsOneWidget);
       expect(find.byKey(const ValueKey('day-session-Front counter')), findsOneWidget);
