@@ -7,7 +7,6 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../core/format/decimal_input.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -19,6 +18,7 @@ import '../domain/handling_units.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_page.dart';
 import 'stock_config_text.dart';
+import 'stock_quantity_field.dart';
 
 String unitKindText(AppLocalizations l10n, HandlingUnitKind kind) => switch (kind) {
   HandlingUnitKind.pallet => l10n.stockUnitKindPallet,
@@ -32,7 +32,7 @@ String unitKindText(AppLocalizations l10n, HandlingUnitKind kind) => switch (kin
 /// A quantity typed in the member's format (1,5 or 1.5) as the exact text the server reads; what is no quantity is
 /// sent as typed, for the server to refuse.
 String _typed(BuildContext context, String raw) =>
-    exactQuantityFromInput(raw, locale: appFormatOf(context).locale).value?.text ?? raw.trim();
+    stockQuantityOrNull(raw, locale: appFormatOf(context).locale)?.text ?? raw.trim();
 
 /// What a command of a unit answered, or the words of why it did not: null when it worked.
 Future<String?> _guard(AppLocalizations l10n, Future<void> Function() act) async {
@@ -120,12 +120,10 @@ Future<void> showMakeUnitSheet(
           },
         ),
         const FormGap(),
-        AppTextField(
+        StockQuantityField(
           key: const ValueKey('stock-unit-quantity'),
           controller: fields['quantity'],
           label: l10n.purchasesQuantity,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         ),
       ],
     ),
@@ -194,7 +192,7 @@ Future<void> showRepackSheet(
       onSubmit: () => _guard(l10n, () async {
         final l = line;
         final n = int.tryParse(fields['boxes'].text.trim()) ?? 0;
-        final each = exactQuantityFromInput(fields['each'].text, locale: appFormatOf(context).locale).value;
+        final each = stockQuantityOrNull(fields['each'].text, locale: appFormatOf(context).locale);
         if (each == null) throw const StockConfigRefused('each', 'quantity_invalid');
         var total = ExactQuantity.zero;
         for (var i = 0; i < n; i++) {
@@ -242,12 +240,10 @@ Future<void> showRepackSheet(
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         ),
         const FormGap(),
-        AppTextField(
+        StockQuantityField(
           key: const ValueKey('stock-unit-repack-each'),
           controller: fields['each'],
           label: l10n.stockUnitRepackEach,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         ),
       ],
     ),

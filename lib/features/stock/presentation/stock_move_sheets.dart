@@ -8,11 +8,10 @@
 // makes a retry answer once. The quantity is read exactly, as it was typed.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/format/decimal_input.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -26,6 +25,7 @@ import '../domain/stock_sites.dart';
 import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
 import 'stock_place_text.dart';
+import 'stock_quantity_field.dart';
 import 'stock_scan_bar.dart';
 import 'stock_scan_feed.dart';
 import 'stock_scan_hint.dart';
@@ -47,7 +47,7 @@ Future<bool> showStockMoveSheet(
     items,
     places,
     takeOut: takeOut,
-    locale: Localizations.localeOf(context).toString(),
+    locale: appFormatOf(context).locale,
     separator: container.read(stockAddressSeparatorProvider),
   );
   if (container.read(stockScanningProvider)) {
@@ -135,7 +135,7 @@ class _MoveDraft {
 
   bool get betweenSites => from != null && to != null && stockSiteOf(from!, all) != stockSiteOf(to!, all);
 
-  ExactQuantity? get quantity => exactQuantityFromInput(fields.text('quantity'), locale: locale).value;
+  ExactQuantity? get quantity => stockQuantityOrNull(fields.text('quantity'), locale: locale);
 
   FieldErrors validate(AppLocalizations l10n) => {
     if (item == null) 'item': stockReasonText(l10n, 'item_foreign'),
@@ -235,14 +235,12 @@ class _MoveDraft {
         ],
       ],
       const FormGap(),
-      AppTextField(
+      StockQuantityField(
         key: const ValueKey('stock-move-quantity'),
         controller: fields['quantity'],
         fieldKey: 'quantity',
         label: l10n.stockMoveQuantity(unit),
         focusNode: _quantityFocus,
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
       ),
     ];
   }

@@ -8,10 +8,12 @@
 // meanwhile is refused. A group nothing uses can be deleted here.
 import 'dart:convert';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/format/decimal_input.dart';
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -25,6 +27,7 @@ import '../domain/purchase_factor.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_service_creator.dart';
 import 'item_group_text.dart';
+import 'stock_quantity_field.dart';
 
 /// The units a group may set for its items (the registry's units of count, mass and volume).
 const _units = ['piece', 'g', 'kg', 'ml', 'cl', 'l'];
@@ -43,7 +46,7 @@ Future<bool> showItemGroupSheet(
   GroupChoices choices = const (places: <StockPlaceConfig>[], vat: <StockVatChoice>[], finance: false),
 }) {
   final l10n = context.l10n;
-  final draft = _GroupDraft(port, workspaceId, group, groups, choices, appFormatOf(context).locale);
+  final draft = _GroupDraft(port, workspaceId, group, groups, choices, appFormatOf(context));
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -58,8 +61,16 @@ Future<bool> showItemGroupSheet(
   );
 }
 
+/// A quantity the server holds as text, shown in the member's own format without grouping (as a quantity field reads it
+/// back); a text that is no quantity is shown as it is.
+String _shownQuantity(AppFormat format, Object? held) {
+  if (held == null) return '';
+  final value = ExactQuantity.tryParse('$held').value;
+  return value == null ? '$held' : format.quantity(value, grouped: false);
+}
+
 class _GroupDraft {
-  _GroupDraft(this.port, this.workspaceId, this.group, this.groups, this.choices, this.locale)
+  _GroupDraft(this.port, this.workspaceId, this.group, this.groups, this.choices, this.format)
     : _id = group?.id ?? newRequestId(),
       parentId = group?.parentId,
       tracking = group?.params['tracking'] as String?,
@@ -79,8 +90,8 @@ class _GroupDraft {
         'factor': group?.params['default_purchase_factor_num'] == null
             ? ''
             : purchaseFactorText((group!.params['default_purchase_factor_num']! as num).toInt(), ((group.params['default_purchase_factor_den'] ?? 1) as num).toInt()),
-        'reorderPoint': '${group?.params['reorder_point_default'] ?? ''}',
-        'reorderQty': '${group?.params['reorder_quantity_default'] ?? ''}',
+        'reorderPoint': _shownQuantity(format, group?.params['reorder_point_default']),
+        'reorderQty': _shownQuantity(format, group?.params['reorder_quantity_default']),
         'margin': group?.params['target_margin_bps'] == null ? '' : percentOfMarginBps((group!.params['target_margin_bps']! as num).toInt()),
       });
 
@@ -89,7 +100,8 @@ class _GroupDraft {
   final ItemGroup? group;
   final List<ItemGroup> groups;
   final GroupChoices choices;
-  final String locale;
+  final AppFormat format;
+  String get locale => format.locale;
 
   List<StockPlaceConfig> get places => choices.places;
   List<StockVatChoice> get vatChoices => choices.vat;
@@ -119,7 +131,7 @@ class _GroupDraft {
   /// A decimal typed with the member's own separators, as the dot-decimal text the server reads; null when empty or not one.
   String? _decimal(String key) {
     if (fields.text(key).isEmpty) return null;
-    final text = decimalTextFromInput(fields.text(key), locale: locale, grouping: false);
+    final text = stockQuantityOf(fields.text(key), locale: locale).value?.text;
     // a numeric(18,6): at most six decimals, never rounded
     return text != null && RegExp(r'^[0-9]{1,12}(\.[0-9]{1,6})?$').hasMatch(text) ? text : null;
   }
@@ -294,23 +306,19 @@ class _GroupDraft {
       const FormGap(),
       AppTextField(key: const ValueKey('item-group-factor'), controller: fields['factor'], fieldKey: 'factor', label: l10n.itemGroupPurchaseFactor, onChanged: (_) => _preview = null),
       const FormGap(),
-      AppTextField(
+      StockQuantityField(
         key: const ValueKey('item-group-reorder-point'),
         controller: fields['reorderPoint'],
         fieldKey: 'reorderPoint',
         label: l10n.itemGroupReorderPoint,
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         onChanged: (_) => _preview = null,
       ),
       const FormGap(),
-      AppTextField(
+      StockQuantityField(
         key: const ValueKey('item-group-reorder-qty'),
         controller: fields['reorderQty'],
         fieldKey: 'reorderQty',
         label: l10n.itemGroupReorderQty,
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         onChanged: (_) => _preview = null,
       ),
       const FormGap(),

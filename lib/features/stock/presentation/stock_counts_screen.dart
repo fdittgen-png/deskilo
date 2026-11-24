@@ -10,10 +10,8 @@
 // and can be asked again, never shown as empty.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/format/decimal_input.dart';
 import '../../../core/help/help_anchors.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
@@ -35,6 +33,7 @@ import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
 import 'stock_move_sheets.dart' show StockPickField;
 import 'stock_page_shell.dart';
+import 'stock_quantity_field.dart';
 import 'stock_sheet_opener.dart';
 
 class StockCountsScreen extends ConsumerWidget {
@@ -252,7 +251,7 @@ Future<bool> _showCountSheet(
   required List<StockPlaceConfig> places,
 }) {
   final l10n = context.l10n;
-  final draft = _CountDraft(items, stockRealPlaces(places), Localizations.localeOf(context).toString());
+  final draft = _CountDraft(items, stockRealPlaces(places), appFormatOf(context).locale);
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -283,7 +282,7 @@ class _CountDraft {
 
   StockItem? get chosen => items.where((i) => i.id == item).firstOrNull;
 
-  ExactQuantity? get observed => exactQuantityFromInput(fields.text('observed'), locale: locale).value;
+  ExactQuantity? get observed => stockQuantityOrNull(fields.text('observed'), locale: locale);
 
   FieldErrors validate(AppLocalizations l10n) => {
     if (item == null) 'item': stockReasonText(l10n, 'item_foreign'),
@@ -335,13 +334,11 @@ class _CountDraft {
         },
       ),
       const FormGap(),
-      AppTextField(
+      StockQuantityField(
         key: const ValueKey('stock-count-observed'),
         controller: fields['observed'],
         fieldKey: 'observed',
         label: l10n.stockCountsObserved(chosen?.unit ?? ''),
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
       ),
       const FormGap(),
       AppTextField(

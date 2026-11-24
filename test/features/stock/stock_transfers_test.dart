@@ -10,6 +10,8 @@ import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_operations.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/features/stock/presentation/stock_transfers_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -43,13 +45,16 @@ Future<void> _open(
   Size size, {
   Set<WorkspacePermission> held = _manage,
   bool takeOut = false,
+  AppFormat? format,
 }) async {
   await pumpApp(
     tester,
     const StockTransfersScreen(),
     size: size,
     overrides: [
-      ...standardTestOverrides(),
+      // a test that pins its own format replaces the standard one
+      ...standardTestOverrides(pinFormats: format == null),
+      if (format != null) ...[appFormatProvider.overrideWithValue(format), personalFormatProvider.overrideWithValue(format)],
       stockQueriesProvider.overrideWithValue(DemoStockQueries(w.ledger)),
       stockConfigCommandsProvider.overrideWithValue(w.config),
       stockOperationsProvider.overrideWithValue(w.operations),
@@ -195,6 +200,21 @@ void main() {
         await _settle(tester);
         expect(w.ledger.balance('demo-item-beans', 'demo-place-main').text, '12');
         expect(w.ledger.movements.first.reason, 'loss');
+      });
+
+      testWidgets('in French, half a kilo typed as 0,5 is taken out exactly', (tester) async {
+        final w = _World();
+        await _open(tester, w, size, takeOut: true, format: const AppFormat(locale: 'fr_FR', currencyCode: 'EUR'));
+        await tester.tap(find.byKey(const ValueKey('stock-takeout-open')));
+        await _settle(tester);
+        await tester.tap(find.text(_en.stockTakeOutLoss));
+        await _settle(tester);
+        await _choose(tester, 'stock-move-item', 'Coffee beans');
+        await _choose(tester, 'stock-move-from', 'MAIN · Main store');
+        await tester.enterText(find.byKey(const ValueKey('stock-move-quantity')), '0,5');
+        await tester.tap(find.byKey(const ValueKey('stock-move-submit')));
+        await _settle(tester);
+        expect(w.ledger.balance('demo-item-beans', 'demo-place-main').text, '12');
       });
 
       testWidgets('a person who may only look sees the transfers and runs nothing', (tester) async {

@@ -109,6 +109,13 @@ void main() {
         expect(find.textContaining('12.5 kg'), findsNothing);
       });
 
+      testWidgets('in French, a count typed as 1,5 is recorded exactly', (tester) async {
+        final w = _World();
+        await _open(tester, w, size, format: const AppFormat(locale: 'fr_FR', currencyCode: 'EUR'));
+        await _recordCount(tester, '1,5');
+        expect(find.textContaining('1,5 kg'), findsOneWidget);
+      });
+
       testWidgets('a count moves nothing and waits for its approval, visibly', (tester) async {
         final w = _World();
         await _open(tester, w, size);

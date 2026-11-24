@@ -8,10 +8,8 @@
 // is counted or skipped; one that is no longer open says so. Each sheet carries ONE request id: a retry
 // answers once. A failed read says so and can be asked again.
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/format/decimal_input.dart';
 import '../../../core/help/help_anchors.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
@@ -30,6 +28,7 @@ import '../providers/stock_providers.dart';
 import 'stock_bulk_read_sheet.dart';
 import 'stock_config_text.dart';
 import 'stock_page_shell.dart';
+import 'stock_quantity_field.dart';
 import 'stock_read_failed.dart';
 
 class StockCountTaskScreen extends ConsumerStatefulWidget {
@@ -142,7 +141,7 @@ class _State extends ConsumerState<StockCountTaskScreen> {
     final requestId = newRequestId();
     final locale = appFormatOf(context).locale;
     // what was counted, read in the member's format (1,5 or 1.5) and sent as the exact text the server reads
-    String? observed() => exactQuantityFromInput(fields.text('observed'), locale: locale).value?.text;
+    String? observed() => stockQuantityOrNull(fields.text('observed'), locale: locale)?.text;
     CountLineResult? result;
     final done = await showAppFormSheet(
       context,
@@ -164,14 +163,12 @@ class _State extends ConsumerState<StockCountTaskScreen> {
           }
         },
         builder: (context, refresh) => [
-          AppTextField(
+          StockQuantityField(
             key: const ValueKey('stock-cycle-observed'),
             controller: fields['observed'],
             fieldKey: 'observed',
             label: l10n.stockCycleCountObserved(unit),
             autofocus: true,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
           ),
         ],
       ),

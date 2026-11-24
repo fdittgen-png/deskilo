@@ -8,9 +8,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import '../../../core/format/decimal_input.dart';
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
@@ -26,6 +24,7 @@ import '../domain/stock_reorder.dart';
 import '../domain/stock_sites.dart';
 import '../domain/stock_variants.dart';
 import 'stock_config_text.dart';
+import 'stock_quantity_field.dart';
 
 /// What the sheet chooses from: the stock items, the places (their sites) and the address separator.
 typedef StockPointChoices = ({List<StockItem> items, List<StockPlaceConfig> places, String separator});
@@ -95,7 +94,7 @@ class _PointDraft {
 
   /// What was typed, read in the member's format (1,5 or 1.5) as the exact text the server reads; what is no
   /// quantity stays as typed, for the check to refuse.
-  String _dot(String field) => exactQuantityFromInput(fields.text(field), locale: locale).value?.text ?? fields.text(field).trim();
+  String _dot(String field) => stockQuantityOrNull(fields.text(field), locale: locale)?.text ?? fields.text(field).trim();
 
   bool get isNew => point == null;
   String get unit => items.where((i) => i.id == item).firstOrNull?.unit ?? '';
@@ -216,13 +215,11 @@ class _PointDraft {
             : null,
       ),
       const FormGap(),
-      AppTextField(
+      StockQuantityField(
         key: const ValueKey('stock-point-level'),
         controller: fields['level'],
         fieldKey: 'level',
         label: l10n.stockReorderPointLevel(unit),
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
       ),
       const FormGap(),
       SegmentedButton<bool>(
@@ -238,13 +235,11 @@ class _PointDraft {
         },
       ),
       const FormGap.small(),
-      AppTextField(
+      StockQuantityField(
         key: const ValueKey('stock-point-value'),
         controller: fields['value'],
         fieldKey: 'value',
         label: l10n.stockReorderPointValue,
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
       ),
       SwitchListTile(
         key: const ValueKey('stock-point-active'),

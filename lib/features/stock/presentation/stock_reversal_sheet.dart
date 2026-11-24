@@ -11,9 +11,7 @@
 // answer once. The quantity is read exactly, as it was typed.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import '../../../core/format/decimal_input.dart';
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
@@ -28,6 +26,7 @@ import '../domain/stock_reversals.dart';
 import '../domain/stock_sites.dart';
 import 'stock_config_text.dart';
 import 'stock_move_sheets.dart' show StockPickField;
+import 'stock_quantity_field.dart';
 
 String _placeTitle(StockPlaceConfig p) => p.name.isEmpty ? p.code : '${p.code} · ${p.name}';
 
@@ -103,7 +102,7 @@ class _ReversalDraft {
 
   bool get needsPlace => kind != StockReturnKind.correction;
 
-  ExactQuantity? get quantity => exactQuantityFromInput(fields.text('quantity'), locale: locale).value;
+  ExactQuantity? get quantity => stockQuantityOrNull(fields.text('quantity'), locale: locale);
 
   FieldErrors validate(AppLocalizations l10n) {
     final q = quantity;
@@ -170,13 +169,11 @@ class _ReversalDraft {
         ),
         const FormGap(),
       ],
-      AppTextField(
+      StockQuantityField(
         key: const ValueKey('stock-reversal-quantity'),
         controller: fields['quantity'],
         fieldKey: 'quantity',
         label: l10n.stockMoveQuantity(source.unit),
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
       ),
       const FormGap(),
       AppTextField(

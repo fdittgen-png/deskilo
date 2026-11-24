@@ -8,10 +8,8 @@
 // stays visible. The server decides who may; this screen asks the same.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/format/decimal_input.dart';
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
@@ -33,6 +31,7 @@ import 'stock_day.dart';
 import 'stock_move_sheets.dart';
 import 'stock_page_shell.dart';
 import 'stock_place_text.dart';
+import 'stock_quantity_field.dart';
 import 'stock_sheet_opener.dart';
 
 class StockTransfersScreen extends ConsumerWidget {
@@ -209,7 +208,7 @@ Future<bool> _showReceiveSheet(
   required String separator,
 }) {
   final l10n = context.l10n;
-  final draft = _ReceiveDraft(transfer, places, Localizations.localeOf(context).toString(), separator);
+  final draft = _ReceiveDraft(transfer, places, appFormatOf(context).locale, separator);
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -248,7 +247,7 @@ class _ReceiveDraft {
   final String requestId = newRequestId();
   String to;
 
-  ExactQuantity? _typed(StockTransferLine l) => exactQuantityFromInput(fields.text(l.id), locale: locale).value;
+  ExactQuantity? _typed(StockTransferLine l) => stockQuantityOrNull(fields.text(l.id), locale: locale);
 
   FieldErrors validate(AppLocalizations l10n) {
     final errors = <String, String>{};
@@ -302,13 +301,11 @@ class _ReceiveDraft {
       ),
       for (final l in lines) ...[
         const FormGap(),
-        AppTextField(
+        StockQuantityField(
           key: ValueKey('stock-receive-${l.id}'),
           controller: fields[l.id],
           fieldKey: l.id,
           label: l10n.stockTransferReceiveQuantity(l.itemName, l.unit),
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         ),
       ],
     ];
