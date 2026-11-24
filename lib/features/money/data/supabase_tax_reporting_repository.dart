@@ -59,11 +59,12 @@ class SupabaseTaxReportingRepository implements TaxReportingRepository {
 
   @override
   Future<List<VatRate>> fetchVatRates(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'vat_rates', build: () => _client
         .from('vat_rates')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('percent', ascending: false);
+        .order('percent', ascending: false)
+        .order('id'));
     return rows.map(VatRate.fromRow).toList();
   }
 

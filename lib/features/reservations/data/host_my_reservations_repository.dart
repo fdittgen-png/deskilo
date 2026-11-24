@@ -17,6 +17,7 @@ import '../../../core/backend/connected_target.dart';
 import '../../../core/backend/connection_outcome.dart';
 import '../../../core/backend/context_clients.dart';
 import '../../../core/codes/pg_code.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 import '../../../core/settings/settings.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -195,10 +196,11 @@ class HostMyReservationsRepository implements MyReservationsRepository {
     final ids = {for (final i in page.items) i.workspaceId}.toList();
     if (ids.isEmpty) return const {};
     try {
-      final rows = await client
+      final rows = await fetchConfigurationList(table: ServerTable.workspaces, build: () => client
           .from(ServerTable.workspaces)
           .select('id, timezone')
-          .inFilter('id', ids);
+          .inFilter('id', ids)
+          .order('id'));
       return {
         for (final row in rows)
           if (row['id'] is String && row['timezone'] is String)

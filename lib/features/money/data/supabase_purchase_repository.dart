@@ -286,18 +286,20 @@ class SupabasePurchaseRepository implements PurchaseRepository {
   /// Read under the tables' own policies: a member sees the space's plan.
   @override
   Future<List<PurchasePlace>> fetchPlaces(String workspaceId) async {
-    final sites = await _client
+    final sites = await fetchConfigurationList(table: ServerTable.sites, build: () => _client
         .from(ServerTable.sites)
         .select('id, name')
         .eq('workspace_id', workspaceId)
         .order('sort_order')
-        .order('name');
-    final levels = await _client
+        .order('name')
+        .order('id'));
+    final levels = await fetchConfigurationList(table: ServerTable.levels, build: () => _client
         .from(ServerTable.levels)
         .select('id, name, offices(id, name)')
         .eq('workspace_id', workspaceId)
         .order('sort_order')
-        .order('name');
+        .order('name')
+        .order('id'));
     PurchasePlace place(String kind, Object? row) {
       final r = JsonReader.of(row, context: kind);
       return PurchasePlace(kind: kind, id: r.string('id'), name: r.string('name'));
@@ -357,11 +359,12 @@ class SupabasePurchaseRepository implements PurchaseRepository {
 
   @override
   Future<List<String>> fetchExchangeRateSources() async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'exchange_rate_sources', build: () => _client
         .from('exchange_rate_sources')
         .select('code')
         .eq('active', true)
-        .order('sort_order');
+        .order('sort_order')
+        .order('code'));
     return [
       for (final r in rows)
         JsonReader(r, context: 'exchange_rate_sources').string('code'),

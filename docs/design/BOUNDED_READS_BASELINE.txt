@@ -1,48 +1,7 @@
 # #4446: list reads of a data layer that nothing bounds yet (test/lint/bounded_reads_test.dart), one line per
 # read as "path table". The server cuts such a read at its max_rows without a word. The file only shrinks:
-# a read moved onto fetchAllPages (a list that grows with the business) or capped (a configuration list) leaves it.
-lib/features/directory/data/supabase_public_discovery_repository.dart _search.relation!
-lib/features/events/data/supabase_event_repository.dart 'validation_policies'
-lib/features/me/data/supabase_linked_me_repository.dart ServerTable.workspaces
-lib/features/money/data/supabase_billing_access_repository.dart 'billing_access_grants'
-lib/features/money/data/supabase_billing_access_repository.dart 'billing_access_grants'
-lib/features/money/data/supabase_commercial_terms_repository.dart 'fee_bands'
-lib/features/money/data/supabase_commercial_terms_repository.dart 'packages'
-lib/features/money/data/supabase_credit_repository.dart 'credit_products'
-lib/features/money/data/supabase_document_numbering.dart 'number_sequences'
-lib/features/money/data/supabase_dunning_repository.dart 'invoice_dunning_holds'
-lib/features/money/data/supabase_expense_repository.dart 'expense_repartitions'
-lib/features/money/data/supabase_expense_repository.dart 'expense_schedules'
-lib/features/money/data/supabase_guest_pass_repository.dart 'guest_pass_offers'
-lib/features/money/data/supabase_guest_pass_repository.dart ServerTable.seats
-lib/features/money/data/supabase_invoice_group_repository.dart _groups
-lib/features/money/data/supabase_purchase_repository.dart 'exchange_rate_sources'
-lib/features/money/data/supabase_purchase_repository.dart ServerTable.levels
-lib/features/money/data/supabase_purchase_repository.dart ServerTable.sites
-lib/features/money/data/supabase_room_rental_repository.dart 'plans'
-lib/features/money/data/supabase_supplier_repository.dart 'supplier_bank_revisions'
-lib/features/money/data/supabase_supplier_repository.dart 'supplier_review_candidates'
-lib/features/money/data/supabase_tax_reporting_repository.dart 'vat_rates'
+# a read moved onto fetchAllPages (a list that grows with the business) or fetchConfigurationList (a
+# configuration list) leaves it. Left: the till drawer, which belongs to the till workstream.
 lib/features/money/data/supabase_till_drawer.dart 'counter_day_closes'
 lib/features/money/data/supabase_till_drawer.dart 'counter_till_sessions'
 lib/features/money/data/supabase_till_drawer.dart 'counter_tills'
-lib/features/plan/data/supabase_accessory_repository.dart 'accessories'
-lib/features/plan/data/supabase_accessory_repository.dart 'seat_accessories'
-lib/features/plan/data/supabase_charging_station_repository.dart 'charging_stations'
-lib/features/reservations/data/host_my_reservations_repository.dart ServerTable.workspaces
-lib/features/workspace/data/supabase_business_kind_repository.dart 'business_kinds'
-lib/features/workspace/data/supabase_business_kind_repository.dart 'business_kinds'
-lib/features/workspace/data/supabase_conversations.dart ServerTable.memberNotes
-lib/features/workspace/data/supabase_membership.dart 'member_period_terms'
-lib/features/workspace/data/supabase_membership.dart 'member_term_changes'
-lib/features/workspace/data/supabase_sites.dart ServerTable.sites
-lib/features/workspace/data/supabase_workspace_fields.dart 'workspace_field_definitions'
-lib/features/workspace/data/supabase_workspace_fields.dart 'workspace_field_values'
-lib/features/workspace/data/supabase_workspace_identity.dart 'workspace_documents'
-lib/features/workspace/data/supabase_workspace_identity.dart 'workspace_documents'
-lib/features/workspace/data/supabase_workspace_lifecycle.dart ServerTable.workspaces
-lib/features/workspace/data/supabase_workspace_roles.dart 'workspace_role_members'
-lib/features/workspace/data/supabase_workspace_roles.dart 'workspace_role_members'
-lib/features/workspace/data/supabase_workspace_roles.dart 'workspace_roles'
-lib/features/workspace/data/supabase_workspace_rows.dart ServerTable.workspaces
-lib/features/workspace/data/supabase_workspace_templates.dart 'workspace_templates'

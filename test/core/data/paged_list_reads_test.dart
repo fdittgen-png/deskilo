@@ -3,9 +3,11 @@
 // #4446 -- a list that grows with the business is read to its end. The server stops an answer at its own row cap
 // (1000 by default) without saying so; a house with 1200 members or a member with 1200 ledger lines used to see the
 // first 1000 as if they were all. Over a mock that serves pages the way PostgREST does, the members of a workspace
-// and the ledger of a member come back whole, in order, none twice.
+// and the ledger of a member come back whole, in order, none twice; a configuration list is paged too, and refused
+// past the configuration cap.
 import 'dart:convert';
 
+import 'package:deskilo/core/data/paged_fetch.dart';
 import 'package:deskilo/features/money/data/supabase_member_account_queries.dart';
 import 'package:deskilo/features/workspace/data/supabase_workspace_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -116,5 +118,38 @@ void main() {
       reason: 'read page by page, to an empty page',
     );
     expect(asked.first.queryParameters['order'], contains('id'));
+  });
+
+  // A configuration list is paged the same way and refused past the configuration cap, never shown cut short.
+  test('a configuration list past the server\'s cap is read whole', () async {
+    final asked = <Uri>[];
+    final client = _paged(
+      'sites',
+      1200,
+      (i) => {'id': _id(i), 'workspace_id': 'ws-1', 'name': 'Site $i'},
+      asked,
+    );
+    final sites = await SupabaseWorkspaceRepository(client).fetchSites('ws-1');
+    expect(sites, hasLength(1200));
+    expect(
+      asked.first.queryParameters['order']!.split(',').last,
+      startsWith('id.'),
+      reason: 'a unique key last',
+    );
+  });
+
+  test('a configuration list longer than the configuration cap is refused, naming its table', () async {
+    final client = _paged(
+      'sites',
+      kConfigurationListCap + 1,
+      (i) => {'id': _id(i), 'workspace_id': 'ws-1', 'name': 'Site $i'},
+      [],
+    );
+    await expectLater(
+      SupabaseWorkspaceRepository(client).fetchSites('ws-1'),
+      throwsA(
+        isA<ExportTooLargeException>().having((e) => e.table, 'table', 'sites'),
+      ),
+    );
   });
 }

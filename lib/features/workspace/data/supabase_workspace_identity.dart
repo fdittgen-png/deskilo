@@ -10,6 +10,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/codes/pg_code.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/payment_instructions.dart';
@@ -134,12 +135,13 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
 
   @override
   Future<List<WorkspaceDocument>> fetchDocuments(String workspaceId) async {
-    final rows = await client
+    final rows = await fetchConfigurationList(table: 'workspace_documents', build: () => client
         .from('workspace_documents')
         .select()
         .eq('workspace_id', workspaceId)
         .order('category')
-        .order('title');
+        .order('title')
+        .order('id'));
     return [for (final row in rows) WorkspaceDocument.fromRow(row)];
   }
 

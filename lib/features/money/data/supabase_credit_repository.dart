@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../domain/credit_product.dart';
 
 /// #1279 — carnets over Supabase (0236, 0238).
@@ -11,12 +12,13 @@ class SupabaseCreditRepository implements CreditRepository {
 
   @override
   Future<List<CreditProduct>> fetchCreditProducts(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'credit_products', build: () => _client
         .from('credit_products')
         .select()
         .eq('workspace_id', workspaceId)
         .order('sort_order')
-        .order('name');
+        .order('name')
+        .order('id'));
     return [
       for (final row in rows)
         CreditProduct.fromRow(Map<String, dynamic>.from(row as Map)),

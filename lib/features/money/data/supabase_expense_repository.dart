@@ -42,11 +42,12 @@ class SupabaseExpenseRepository implements ExpenseRepository {
   Future<List<ExpenseRepartition>> fetchExpenseRepartitions(
     String workspaceId,
   ) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'expense_repartitions', build: () => _client
         .from('expense_repartitions')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('created_at', ascending: false);
+        .order('created_at', ascending: false)
+        .order('id'));
     return [
       for (final row in rows)
         ExpenseRepartition.fromJson(Map<String, dynamic>.from(row as Map)),
@@ -57,11 +58,12 @@ class SupabaseExpenseRepository implements ExpenseRepository {
   Future<List<ExpenseSchedule>> fetchExpenseSchedules(
     String workspaceId,
   ) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'expense_schedules', build: () => _client
         .from('expense_schedules')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('created_at', ascending: false);
+        .order('created_at', ascending: false)
+        .order('id'));
     return [
       for (final r in rows as List)
         ExpenseSchedule.fromDb(r as Map<String, dynamic>),

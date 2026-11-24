@@ -27,11 +27,11 @@ class StockRpc {
 
   final SupabaseClient _client;
 
-  /// #4401 -- the most rows a configuration list holds (places, location kinds, units, codes, dimensions, variants,
-  /// mappings, reorder points, count plans): far beyond any real business, so a longer list is a defect, refused as
-  /// [StockListTooLong] rather than shown. A technical bound, not a business value: a list that grows with the
-  /// business (items, suppliers, transfers, allocations) is read through [pages] and has no such cap.
-  static const int listCap = 5000;
+  /// #4401 -- the most rows a stock configuration list holds (places, location kinds, units, codes, dimensions,
+  /// variants, mappings, reorder points, count plans): the one configuration cap of the app
+  /// ([kConfigurationListCap]); a longer list is refused as [StockListTooLong]. A list that grows with the business
+  /// (items, suppliers, transfers, allocations) is read through [pages] and has no such cap.
+  static const int listCap = kConfigurationListCap;
 
   /// Every row of a configuration list [build] selects, page by page (`fetchAllPages`: ended by an empty page,
   /// never by the server's own row cap), refused as [StockListTooLong] past [listCap].

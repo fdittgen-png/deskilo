@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../domain/document_numbering.dart';
 
 /// #2591 — the number series and the invoice fingerprint check, with its own
@@ -14,11 +15,11 @@ class SupabaseDocumentNumbering implements DocumentNumbering {
 
   @override
   Future<List<NumberSequence>> fetchNumberSequences(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'number_sequences', build: () => _client
         .from('number_sequences')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('journal');
+        .order('journal'));
     final byJournal = {
       for (final r in rows) r['journal'] as String: NumberSequence.fromDb(r),
     };

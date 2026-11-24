@@ -27,14 +27,15 @@ class SupabaseSupplierRepository implements SupplierRepository {
 
   @override
   Future<List<SupplierReview>> fetchReviews(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'supplier_review_candidates', build: () => _client
         .from('supplier_review_candidates')
         .select(
           'id, reason, source_name, source_identifier, candidate_supplier_ids',
         )
         .eq('workspace_id', workspaceId)
         .eq('status', 'open')
-        .order('created_datetime');
+        .order('created_datetime')
+        .order('id'));
     return [for (final r in rows) SupplierReview.fromRow(r)];
   }
 
@@ -43,7 +44,7 @@ class SupabaseSupplierRepository implements SupplierRepository {
     String workspaceId,
     String supplierId,
   ) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'supplier_bank_revisions', build: () => _client
         .from('supplier_bank_revisions')
         .select(
           'revision, account_holder, iban, bic, validation, '
@@ -51,7 +52,8 @@ class SupabaseSupplierRepository implements SupplierRepository {
         )
         .eq('workspace_id', workspaceId)
         .eq('supplier_id', supplierId)
-        .order('revision', ascending: false);
+        .order('revision', ascending: false)
+        .order('id'));
     return [for (final r in rows) SupplierBankRevision.fromRow(r)];
   }
 

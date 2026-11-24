@@ -17,11 +17,12 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
 
   @override
   Future<List<GuestPassOffer>> offers(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'guest_pass_offers', build: () => _client
         .from('guest_pass_offers')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('name');
+        .order('name')
+        .order('id'));
     return [for (final r in rows) GuestPassOffer.fromJson(r)];
   }
 
@@ -40,11 +41,12 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
 
   @override
   Future<List<GuestPassPlace>> places(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: ServerTable.seats, build: () => _client
         .from(ServerTable.seats)
         .select('id, name, desks(offices(levels(name)))')
         .eq('workspace_id', workspaceId)
-        .order('name');
+        .order('name')
+        .order('id'));
     String level(Map<String, Object?> r) {
       final desk = JsonReader.orEmpty(r).objectOrAbsent('desks');
       return desk.objectOrAbsent('offices').objectOrAbsent('levels').stringOr('name');

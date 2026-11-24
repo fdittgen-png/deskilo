@@ -6,6 +6,7 @@
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 import '../domain/site.dart';
 import '../domain/site_repository.dart';
@@ -16,13 +17,14 @@ mixin SupabaseSites implements SiteRepository {
 
   @override
   Future<List<Site>> fetchSites(String workspaceId) async {
-    final rows = await client
+    final rows = await fetchConfigurationList(table: ServerTable.sites, build: () => client
         .from(ServerTable.sites)
         .select()
         .eq('workspace_id', workspaceId)
         .order('is_default', ascending: false)
         .order('sort_order')
-        .order('name');
+        .order('name')
+        .order('id'));
     return rows.map((r) => Site.fromRow(Map<String, dynamic>.from(r))).toList();
   }
 

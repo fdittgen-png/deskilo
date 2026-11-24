@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 import '../domain/room_level_kind.dart';
 import '../domain/room_rental.dart';
@@ -24,12 +25,13 @@ class SupabaseRoomRentalRepository implements RoomRentalRepository {
 
   @override
   Future<List<RoomPlan>> fetchPlans(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'plans', build: () => _client
         .from('plans')
         .select('id, name')
         .eq('workspace_id', workspaceId)
         .eq('active', true)
-        .order('name');
+        .order('name')
+        .order('id'));
     return [
       for (final r in rows)
         RoomPlan(id: r['id'] as String, name: r['name'] as String),

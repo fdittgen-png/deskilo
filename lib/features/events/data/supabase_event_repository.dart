@@ -180,10 +180,11 @@ class SupabaseEventRepository implements EventRepository {
   Future<List<ValidationPolicy>> fetchValidationPolicies(
     String workspaceId,
   ) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'validation_policies', build: () => _client
         .from('validation_policies')
         .select()
-        .eq('workspace_id', workspaceId);
+        .eq('workspace_id', workspaceId)
+        .order('id'));
     return rows.map(_policyFromRow).toList();
   }
 

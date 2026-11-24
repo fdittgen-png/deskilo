@@ -223,12 +223,13 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
   Future<List<MemberTermChange>> fetchMemberTermChanges(
     String workspaceId,
   ) async {
-    final rows = await client
+    final rows = await fetchAllPages(table: 'member_term_changes', build: () => client
         .from('member_term_changes')
         .select()
         .eq('workspace_id', workspaceId)
         .order('due_on', ascending: true)
-        .order('seq', ascending: true);
+        .order('seq', ascending: true)
+        .order('id'));
     return rows.map(MemberTermChange.fromRow).toList();
   }
 
@@ -291,11 +292,12 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
   Future<Map<String, Set<DateTime>>> fetchInvoicedMonths(
     String workspaceId,
   ) async {
-    final rows = await client
+    final rows = await fetchAllPages(table: 'member_period_terms', build: () => client
         .from('member_period_terms')
         .select('member_id, period, invoices!inner(voided_at)')
         .eq('workspace_id', workspaceId)
-        .isFilter('invoices.voided_at', null);
+        .isFilter('invoices.voided_at', null)
+        .order('id'));
     final months = <String, Set<DateTime>>{};
     for (final row in rows) {
       final period = DateTime.parse('${row['period'] as String}-01');
