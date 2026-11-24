@@ -12,7 +12,16 @@ library;
 import 'purchase.dart';
 
 /// Where the document stands as a document.
-enum PurchaseApproval { draft, waiting, approved, rejected, cancelled }
+enum PurchaseApproval {
+  draft,
+  waiting,
+  approved,
+  rejected,
+  cancelled,
+
+  /// #3730 — a state this app does not know: no decision is offered.
+  unknown,
+}
 
 /// What became of what it made the space owe.
 enum PurchaseSettlement {
@@ -51,6 +60,7 @@ PurchaseStatus purchaseStatusOf(PurchaseDetail detail) {
     PurchaseState.approved => PurchaseApproval.approved,
     PurchaseState.rejected => PurchaseApproval.rejected,
     PurchaseState.cancelled => PurchaseApproval.cancelled,
+    PurchaseState.unknown => PurchaseApproval.unknown,
   };
   final owed = [
     for (final o in detail.obligations)
@@ -58,7 +68,12 @@ PurchaseStatus purchaseStatusOf(PurchaseDetail detail) {
   ];
   final total = owed.fold<int>(0, (s, o) => s + o.amountCents);
   final remaining = owed.fold<int>(0, (s, o) => s + o.remainingCents);
-  final settlement = approval != PurchaseApproval.approved || total == 0
+  // A state this app does not know is not read as "not approved": what it
+  // owes is what the server listed.
+  final settlement =
+      (approval != PurchaseApproval.approved &&
+              approval != PurchaseApproval.unknown) ||
+          total == 0
       ? PurchaseSettlement.nothingOwed
       : remaining == 0
       ? PurchaseSettlement.settled
