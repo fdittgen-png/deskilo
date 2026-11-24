@@ -152,8 +152,8 @@ static void open_settings_cb(lv_event_t *e) {
     lv_obj_set_size(s_settings, 460, 300);
     lv_obj_center(s_settings);
     lv_obj_t *t = lv_label_create(s_settings);
-    lv_label_set_text_fmt(t, "Settings\nRole:      %s\nWi-Fi:     %s\nServer:    %s\nUser:      %s\nCompany:   %s\n           %.36s\nTill:      %.36s\nToken:     %s",
-        g_cfg.role, g_cfg.ssid, g_cfg.url, g_cfg.email, g_cfg.workspace_name, g_cfg.workspace, g_cfg.till[0] ? g_cfg.till : "(none)", g_cfg.refresh[0] ? "kept" : "missing");
+    lv_label_set_text_fmt(t, "Settings\nRole:      %s\nWi-Fi:     %s\nCompany:   %s\nUser:      %s\nSession:   %s",
+        g_cfg.role, g_cfg.ssid, g_cfg.workspace_name, g_cfg.email[0] ? "signed in" : "none", g_cfg.refresh[0] ? "kept" : "missing");
     lv_obj_set_style_text_font(t, &lv_font_montserrat_16, 0);
     lv_obj_align(t, LV_ALIGN_TOP_LEFT, 0, 0);
     lv_obj_t *b1 = lv_btn_create(s_settings);
@@ -175,11 +175,13 @@ static void build_common(const char *title) {
     lv_obj_set_style_text_font(t, &lv_font_montserrat_20, 0);
     lv_label_set_text(t, title);
     lv_obj_align(t, LV_ALIGN_TOP_LEFT, 10, 8);
-    lv_obj_t *g = lv_btn_create(scr);
-    lv_obj_set_size(g, 44, 34);
-    lv_obj_align(g, LV_ALIGN_TOP_RIGHT, -8, 4);
-    lv_obj_add_event_cb(g, open_settings_cb, LV_EVENT_CLICKED, NULL);
-    lv_label_set_text(lv_label_create(g), LV_SYMBOL_SETTINGS);
+    if (strcmp(g_cfg.role, "roll") != 0) {   // the customer's roll has no settings; the till's need a long press, a staff gesture
+        lv_obj_t *g = lv_btn_create(scr);
+        lv_obj_set_size(g, 44, 34);
+        lv_obj_align(g, LV_ALIGN_TOP_RIGHT, -8, 4);
+        lv_obj_add_event_cb(g, open_settings_cb, LV_EVENT_LONG_PRESSED, NULL);
+        lv_label_set_text(lv_label_create(g), LV_SYMBOL_SETTINGS);
+    }
     s_status = lv_label_create(scr);
     lv_obj_set_style_text_color(s_status, lv_color_hex(0x9fd3ff), 0);
     lv_obj_set_style_text_font(s_status, &lv_font_montserrat_16, 0);
