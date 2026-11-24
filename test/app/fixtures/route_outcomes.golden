@@ -154,6 +154,7 @@ signed-out on  /stock/places -> /auth
 signed-out on  /stock/reorder -> /auth
 signed-out on  /stock/settings -> /auth
 signed-out on  /stock/transfers -> /auth
+signed-out on  /stock/units -> /auth
 signed-out on  /stock/value -> /auth
 signed-out on  /stock/where/:itemId -> /auth
 signed-out on  /suppliers -> /auth
@@ -329,6 +330,7 @@ signed-out off /stock/places -> /auth
 signed-out off /stock/reorder -> /auth
 signed-out off /stock/settings -> /auth
 signed-out off /stock/transfers -> /auth
+signed-out off /stock/units -> /auth
 signed-out off /stock/value -> /auth
 signed-out off /stock/where/:itemId -> /auth
 signed-out off /suppliers -> /auth
@@ -504,6 +506,7 @@ no-space on  /stock/places -> /me
 no-space on  /stock/reorder -> /me
 no-space on  /stock/settings -> /me
 no-space on  /stock/transfers -> /me
+no-space on  /stock/units -> /me
 no-space on  /stock/value -> /me
 no-space on  /stock/where/:itemId -> /me
 no-space on  /suppliers -> /me
@@ -679,6 +682,7 @@ no-space off /stock/places -> /me
 no-space off /stock/reorder -> /me
 no-space off /stock/settings -> /me
 no-space off /stock/transfers -> /me
+no-space off /stock/units -> /me
 no-space off /stock/value -> /me
 no-space off /stock/where/:itemId -> /me
 no-space off /suppliers -> /me
@@ -854,6 +858,7 @@ member on  /stock/places -> /calendar
 member on  /stock/reorder -> /calendar
 member on  /stock/settings -> /calendar
 member on  /stock/transfers -> /calendar
+member on  /stock/units -> /calendar
 member on  /stock/value -> /calendar
 member on  /stock/where/:itemId -> /calendar
 member on  /suppliers -> /calendar
@@ -1029,6 +1034,7 @@ member off /stock/places -> /messages
 member off /stock/reorder -> /messages
 member off /stock/settings -> /messages
 member off /stock/transfers -> /messages
+member off /stock/units -> /messages
 member off /stock/value -> /messages
 member off /stock/where/:itemId -> /messages
 member off /suppliers -> /messages
@@ -1204,6 +1210,7 @@ admin on  /stock/places -> /calendar
 admin on  /stock/reorder -> /calendar
 admin on  /stock/settings -> /calendar
 admin on  /stock/transfers -> /calendar
+admin on  /stock/units -> /calendar
 admin on  /stock/value -> /reserve
 admin on  /stock/where/:itemId -> /calendar
 admin on  /suppliers -> /money/suppliers
@@ -1380,6 +1387,7 @@ admin off /stock/places -> /messages
 admin off /stock/reorder -> /messages
 admin off /stock/settings -> /messages
 admin off /stock/transfers -> /messages
+admin off /stock/units -> /messages
 admin off /stock/value -> /messages
 admin off /stock/where/:itemId -> /messages
 admin off /suppliers -> /messages
@@ -1555,6 +1563,7 @@ owner on  /stock/places -> /reserve
 owner on  /stock/reorder -> /reserve
 owner on  /stock/settings -> /reserve
 owner on  /stock/transfers -> /reserve
+owner on  /stock/units -> /reserve
 owner on  /stock/value -> /reserve
 owner on  /stock/where/:itemId -> /reserve
 owner on  /suppliers -> /money/suppliers
@@ -1731,6 +1740,7 @@ owner off /stock/places -> /messages
 owner off /stock/reorder -> /messages
 owner off /stock/settings -> /messages
 owner off /stock/transfers -> /messages
+owner off /stock/units -> /messages
 owner off /stock/value -> /messages
 owner off /stock/where/:itemId -> /messages
 owner off /suppliers -> /messages
