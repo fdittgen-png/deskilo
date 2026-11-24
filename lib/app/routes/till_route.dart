@@ -4,6 +4,7 @@
 // import the stock.
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../features/money/domain/counter_till.dart';
 import '../../features/money/presentation/till_drawer/till_day_screen.dart';
@@ -11,8 +12,11 @@ import '../../features/money/presentation/till_drawer/till_drawer_screen.dart';
 import '../../features/money/presentation/till_screen.dart';
 import '../../features/stock/domain/stock_code_resolver.dart';
 import '../../features/stock/providers/stock_providers.dart';
+import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../route_access.dart';
+import '../route_env.dart';
 
 class TillRoute extends ConsumerWidget {
   const TillRoute({super.key});
@@ -60,6 +64,7 @@ class TillDayRoute extends ConsumerWidget {
 
 /// #4436 -- what a scanned code rings up at the till: an item by its own code or its tag, one piece by its tag.
 /// A variant, a lot, a package unit or a place is not something the till rings up yet: it names nothing here.
+@visibleForTesting
 TillScan tillScanOf(StockCodeResolution r) {
   final item = r.item;
   if (item == null || item.id.isEmpty || r.unit != null || r.variantId != null) return TillScanUnknown(r.code);
@@ -68,3 +73,31 @@ TillScan tillScanOf(StockCodeResolution r) {
   if (r.kind == ScannedKind.item || (r.kind == ScannedKind.tag && r.tagBound && r.tagOwnerKind == 'item')) return TillScanItem(key);
   return TillScanUnknown(r.code);
 }
+
+/// #4366, #4367 — the till, its cash drawer and its day close.
+List<RouteBase> tillRoutes(RouteEnv env) => [
+    // #4366 — the till: a full-screen basket served in seconds, on the counter receipt of #4184.
+    GoRoute(
+      path: '/till',
+      redirect: env.guard(
+        const RouteAccess(features: [WorkspaceFeature.counterReceipts], to: '/money'),
+      ),
+      builder: (context, state) => const TillRoute(),
+    ),
+    // #4367 — the cash drawer of the tills: open with a float, cash in and out, count and close.
+    GoRoute(
+      path: '/till/drawer',
+      redirect: env.guard(
+        const RouteAccess(features: [WorkspaceFeature.counterTillSessions], to: '/till'),
+      ),
+      builder: (context, state) => const TillDrawerRoute(),
+    ),
+    // #4367 — the day close: the finances close the business day and read its report.
+    GoRoute(
+      path: '/till/day',
+      redirect: env.guard(
+        const RouteAccess(features: [WorkspaceFeature.counterTillSessions], to: '/till'),
+      ),
+      builder: (context, state) => const TillDayRoute(),
+    ),
+];
