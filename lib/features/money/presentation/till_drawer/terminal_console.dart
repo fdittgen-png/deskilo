@@ -11,12 +11,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../domain/counter_book.dart';
 import '../../providers/counter_book_providers.dart';
-import 'drawer_text.dart';
-
-/// How often the console reads the open draft again: a tap on a terminal shows within moments, for one small read.
-const Duration terminalConsoleBeat = Duration(seconds: 2);
 
 class TerminalConsole extends ConsumerStatefulWidget {
   const TerminalConsole({super.key, required this.workspaceId});
@@ -66,7 +63,12 @@ class _TerminalConsoleState extends ConsumerState<TerminalConsole> {
             ),
             const SizedBox(height: AppSpacing.sm),
             if (draft.hasError && !draft.isLoading)
-              Text(drawerProblemText(l10n, draft.error!), key: const ValueKey('terminal-console-problem'))
+              ReadFailureBanner(
+                key: const ValueKey('terminal-console-problem'),
+                error: draft.error!,
+                retryKey: const ValueKey('terminal-console-retry'),
+                onRetry: () => ref.invalidate(counterOpenDraftProvider(widget.workspaceId)),
+              )
             else if (shown == null)
               Text(l10n.tillDrawerConsoleEmpty, key: const ValueKey('terminal-console-empty'), style: theme.textTheme.bodyMedium)
             else

@@ -370,6 +370,10 @@ CounterRefundCheck counterRefundCheck(int? amountMinor, int leftMinor) {
   return amountMinor > leftMinor ? CounterRefundCheck.beyond : CounterRefundCheck.ok;
 }
 
+/// How often the till drawer's terminal console reads the open draft again: a tap on a terminal shows within moments,
+/// for one small read.
+const Duration terminalConsoleBeat = Duration(seconds: 2);
+
 /// The counter's book on the server. Every write goes under a request id: the same id again answers what it did.
 abstract interface class CounterBookPort {
   Future<CounterBook> book(String workspaceId);

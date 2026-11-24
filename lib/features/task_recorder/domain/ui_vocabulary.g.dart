@@ -4487,6 +4487,7 @@ const Set<String> uiKeys = {
   'terminal-console',
   'terminal-console-empty',
   'terminal-console-problem',
+  'terminal-console-retry',
   'terminal-console-total',
   'test-prompt',
   'text-prompt-dialog-cancel',
