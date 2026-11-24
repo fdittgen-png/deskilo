@@ -11,6 +11,7 @@
 import 'dart:convert';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/settings/setting_defaults.g.dart';
+import '../../../core/trace/trace_logger.dart';
 
 /// Where an intent is valid: one account on one server. An intent made
 /// under another login or against another installation is never shown,
@@ -201,7 +202,8 @@ class BookingIntentLedger {
     final Object? json;
     try {
       json = jsonDecode(text);
-    } on FormatException {
+    } on FormatException catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'reservations', 'booking_intent: FormatException handled', error: e, stackTrace: st);
       return empty;
     }
     if (json is! List) return empty;

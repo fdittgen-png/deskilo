@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/data/unreadable_rows.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/bank/bank_records.dart';
 import '../domain/bank/bank_statement.dart';
 import '../domain/bank/reconciliation_report.dart';
@@ -79,7 +80,8 @@ class BankReconciliationReader {
         requestedFrom: year == null ? null : DateTime.utc(year),
         requestedTo: year == null ? null : DateTime.utc(year, 12, 31),
       );
-    } on BankOriginalUnavailable {
+    } on BankOriginalUnavailable catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'money', 'bank_reconciliation_reader: BankOriginalUnavailable handled', error: e, stackTrace: st);
       return _unavailable(workspaceId, statement.id, year);
     }
   }

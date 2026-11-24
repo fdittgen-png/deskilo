@@ -18,6 +18,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/kit/retry_notice.dart';
 import '../../../core/ui/kit/status_chip.dart';
 import '../application/personal_commitments.dart';
@@ -296,7 +297,8 @@ class _NextActionState extends State<_NextAction> {
     try {
       await widget.checkIn(c.source, c.id);
       done = true;
-    } on Object {
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'me', 'personal_overview_sections: Object handled', error: e, stackTrace: st);
       // The host's refusal is said in words; My reservations says why.
     }
     messenger?.showSnackBar(SnackBar(

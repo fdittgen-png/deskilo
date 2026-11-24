@@ -107,16 +107,8 @@ List<File> _scanned() => [
 /// when #4410 started. A clause traced, rethrown or marked lowers its area:
 /// write the new number; a new one is a defect.
 const _untracedOnCeiling = <String, int>{
-  'app': 3,
-  'core': 19,
-  'features/directory': 2,
-  'features/me': 4,
-  'features/money': 26,
-  'features/profile': 2,
-  'features/reservations': 6,
-  'features/stock': 2,
-  'features/task_recorder': 10,
-  'features/workspace': 12,
+  // the two detail readers of presentation/till_drawer/drawer_text.dart
+  'features/money': 2,
   'packages/deskilo_task_recording': 2,
 };
 

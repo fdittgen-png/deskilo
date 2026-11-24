@@ -1,4 +1,6 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
+import '../../../core/trace/trace_logger.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// #4165 (0901) — how a payment is spent: `legacy` by the month rules every
@@ -101,7 +103,8 @@ class PaymentIntent implements SystemStamped {
       if (amount.scale > exponent) return null;
       return (amount.units * BigInt.from(10).pow(exponent - amount.scale))
           .toInt();
-    } on AccountingException {
+    } on AccountingException catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'money', 'payment_intent: AccountingException handled', error: e, stackTrace: st);
       return null;
     }
   }

@@ -98,7 +98,7 @@ class StoryboardReview {
     final Object? json;
     try {
       json = jsonDecode(text);
-    } on FormatException {
+    } on FormatException catch (e, st) { TraceLogger.instance.log(TraceLevel.debug, 'task_recorder', 'storyboard_review: FormatException handled', error: e, stackTrace: st);
       return null;
     }
     const rootKeys = {'format', 'version', 'source_revision', 'frames'};

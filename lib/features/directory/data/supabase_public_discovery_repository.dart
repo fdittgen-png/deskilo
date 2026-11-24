@@ -110,7 +110,8 @@ class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
           source['origin']! as String,
           () => source['publishable_key']! as String,
         );
-      } on PublicContractRefusal {
+      } on PublicContractRefusal catch (e, st) {
+        TraceLogger.instance.log(TraceLevel.debug, 'directory', 'supabase_public_discovery_repository: PublicContractRefusal handled', error: e, stackTrace: st);
         refused.add('${row['origin']}');
       }
     }
@@ -179,7 +180,8 @@ class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
       for (final row in rows) {
         try {
           cards.add(_card(row, source.origin, source.key));
-        } on PublicContractRefusal {
+        } on PublicContractRefusal catch (e, st) {
+          TraceLogger.instance.log(TraceLevel.debug, 'directory', 'supabase_public_discovery_repository: PublicContractRefusal handled', error: e, stackTrace: st);
           incompatible = true;
         }
       }

@@ -9,6 +9,7 @@
 // A read that fails is "unknown", never "ready" and never "blocked": the row
 // stays selectable and the server still refuses at issue time, in words.
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/einvoice_channel_check.dart';
 import '../domain/invoice_issue_draft.dart';
 
@@ -136,7 +137,8 @@ Future<void> readMonthReadiness({
         readiness = judged.missing.isEmpty
             ? ReadinessReady(judged.gaps)
             : ReadinessMissing(judged.missing);
-      } on Object {
+      } on Object catch (e, st) {
+        TraceLogger.instance.log(TraceLevel.debug, 'money', 'issue_month_readiness: Object handled', error: e, stackTrace: st);
         readiness = const ReadinessUnknown();
       }
       onEach(id, readiness);

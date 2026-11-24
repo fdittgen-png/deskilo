@@ -16,6 +16,7 @@ import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/context_l10n.dart';
 import '../../theme/app_spacing.dart';
+import '../../trace/trace_logger.dart';
 import '../../ui/app_sheet.dart';
 import '../demo_entry.dart';
 import '../demo_link.dart';
@@ -140,7 +141,8 @@ Future<bool> _showDemoEntrySheet(
     // Demo that cannot start. #2872 — the link's viewpoint is taken now, its
     // space and screen once the demo scope exists (DemoWorkspace applies them).
     await startDemoSession(ref, link?.persona);
-  } on Object {
+  } on Object catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.info, 'demo', 'demo_entry_sheet: Object handled', error: e, stackTrace: st);
     visit.cancel();
     if (context.mounted) {
       ScaffoldMessenger.maybeOf(context)?.showSnackBar(
@@ -203,7 +205,8 @@ abstract final class _Consent {
       return member?.isKiosk != true ||
           !features.contains(WorkspaceFeature.kioskMode) ||
           ref.read(kioskModeProvider) == KioskModeDecision.rejected;
-    } on Object {
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'demo', 'demo_entry_sheet: Object handled', error: e, stackTrace: st);
       return false;
     }
   }
@@ -214,7 +217,8 @@ abstract final class _Consent {
 Future<DemoIdentity?> _identityOrNull(DemoVisit visit) async {
   try {
     return await visit.identity();
-  } on Object {
+  } on Object catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.info, 'demo', 'demo_entry_sheet: Object handled', error: e, stackTrace: st);
     return null;
   }
 }

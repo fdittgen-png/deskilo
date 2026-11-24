@@ -183,7 +183,7 @@ class NativeFederationFlow {
         stackTrace: stack,
       );
       guard.report(AuthCallbackStatus.refused, failure: refusal.failure);
-    } on AuthRetryableFetchException {
+    } on AuthRetryableFetchException catch (e, st) { TraceLogger.instance.log(TraceLevel.debug, 'backend', 'native_federation_flow: AuthRetryableFetchException handled', error: e, stackTrace: st);
       guard.report(AuthCallbackStatus.unavailable);
     } on AuthException catch (error, stack) {
       // The error CODE only: its prose may quote the account or callback.

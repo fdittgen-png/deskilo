@@ -6,6 +6,7 @@
 // null, never zero. A home place is advice for put-away, counting and picking, never a balance.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import 'stock_page.dart';
 
 /// One line of the registry: an item, or one variant of an item.
@@ -64,7 +65,8 @@ class StockRegistryRow {
     final ExactDecimal d;
     try {
       d = ExactDecimal.parse(cost!);
-    } on AccountingException {
+    } on AccountingException catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'stock', 'stock_registry: AccountingException handled', error: e, stackTrace: st);
       return null;
     }
     final twice = d.units.abs() * BigInt.two + d.denominator;

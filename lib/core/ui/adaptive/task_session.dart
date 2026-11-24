@@ -25,6 +25,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../session/task_context.dart';
+import '../../trace/trace_logger.dart';
 import '../unsaved_changes_guard.dart';
 
 /// How much a task holds, which decides its container.
@@ -149,7 +150,8 @@ class _TaskSessionHostState extends State<TaskSessionHost> {
     final ProviderContainer providers;
     try {
       providers = ProviderScope.containerOf(context, listen: false);
-    } on StateError {
+    } on StateError catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'ui', 'task_session: StateError handled', error: e, stackTrace: st);
       return; // A task shown without the app's providers (a bare widget).
     }
     final opened = providers.read(taskContextTokenProvider);

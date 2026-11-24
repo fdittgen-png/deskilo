@@ -11,6 +11,7 @@
 // one server), and a call that was started under the previous context never
 // delivers its late answer under the new one.
 import '../mcp/mcp_operations.dart' show mcpForbiddenInputs;
+import '../trace/trace_logger.dart';
 import 'webmcp_context_base.dart';
 import 'webmcp_tool_spec.dart';
 import 'webmcp_tools.g.dart';
@@ -145,7 +146,8 @@ class WebMcpRegistry {
     final Object? answer;
     try {
       answer = await runner(tool, input, now);
-    } on Object {
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'webmcp', 'webmcp_registry: Object handled', error: e, stackTrace: st);
       return _refusal('internal_error', 'The tool could not run.');
     }
     // A late answer of the previous account or workspace is dropped.

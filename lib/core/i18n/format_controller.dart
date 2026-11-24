@@ -9,6 +9,7 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../locale/device_locale.dart';
 import '../settings/region_defaults.dart';
 import '../settings/setting_defaults.g.dart';
+import '../trace/trace_logger.dart';
 import 'app_format.dart';
 import 'format_prefs.dart';
 import 'shown_language.dart';
@@ -145,7 +146,8 @@ AppFormat _formatOf(
 ) {
   try {
     return ProviderScope.containerOf(context, listen: false).read(format);
-  } on StateError {
+  } on StateError catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'i18n', 'format_controller: StateError handled', error: e, stackTrace: st);
     // No scope above this widget — a sheet pumped on its own in a test,
     // or a surface outside the app root. A preference lookup must never
     // be the reason a sheet fails to build: a 24-hour clock in the

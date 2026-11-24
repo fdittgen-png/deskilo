@@ -12,6 +12,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/server_label.dart';
@@ -100,7 +101,8 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
     final SpacePrefs prefs;
     try {
       prefs = await ref.read(spacePrefsProvider.future);
-    } on Object {
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'me', 'me_spaces_list: Object handled', error: e, stackTrace: st);
       return;
     }
     if (!context.mounted) return;

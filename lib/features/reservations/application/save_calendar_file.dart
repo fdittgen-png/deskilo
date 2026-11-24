@@ -34,6 +34,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import '../../../core/time/clock.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/reservation.dart';
 import '../domain/reservation_calendar_file.dart';
 import '../domain/reservation_repository.dart';
@@ -152,7 +153,8 @@ class CalendarFiles {
     final Reservation? reservation;
     try {
       reservation = await _reservations.fetchById(reservationId);
-    } on ReservationUnreadable {
+    } on ReservationUnreadable catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'reservations', 'save_calendar_file: ReservationUnreadable handled', error: e, stackTrace: st);
       return const CalendarFileRefused(CalendarFileRefusal.unreadable);
     }
     if (reservation == null || reservation.memberId != memberId) {
@@ -174,7 +176,8 @@ class CalendarFiles {
     final Reservation? reservation;
     try {
       reservation = await _reservations.fetchById(preview.reservationId);
-    } on ReservationUnreadable {
+    } on ReservationUnreadable catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'reservations', 'save_calendar_file: ReservationUnreadable handled', error: e, stackTrace: st);
       return const CalendarSaveRefused(CalendarFileRefusal.unreadable);
     }
     if (reservation == null || reservation.memberId != memberId) {

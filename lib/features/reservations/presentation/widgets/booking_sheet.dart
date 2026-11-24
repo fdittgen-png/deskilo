@@ -7,6 +7,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
@@ -581,7 +582,8 @@ class _BookingSheetState extends State<BookingSheet> {
     try {
       ProviderScope.containerOf(context, listen: false);
       return true;
-    } on StateError {
+    } on StateError catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'reservations', 'booking_sheet: StateError handled', error: e, stackTrace: st);
       return false;
     }
   }

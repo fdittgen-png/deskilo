@@ -104,7 +104,8 @@ GuideDecodeResult decodeGuideText(
   final Object? json;
   try {
     json = jsonDecode(text);
-  } on FormatException {
+  } on FormatException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'task_recorder', 'guide_codec: FormatException handled', error: e, stackTrace: st);
     return const GuideDecodeResult(null, [
       GuideIssue(GuideIssueCode.notJson, r'$'),
     ]);

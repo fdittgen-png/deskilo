@@ -10,6 +10,7 @@ import '../../../../core/images/report_picture_bytes.dart'
     show ReportPictureException;
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -78,7 +79,8 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
         final name = safeFileSlug(file.name);
         try {
           await library.add(workspace.id, name: name, bytes: bytes);
-        } on ReportPictureException {
+        } on ReportPictureException catch (caught, caughtStack) {
+          TraceLogger.instance.log(TraceLevel.info, 'money', 'report_image_picker: ReportPictureException handled', error: caught, stackTrace: caughtStack);
           if (context.mounted) AppSnack.error(context, l10n.reportImageInvalid);
           return;
         }

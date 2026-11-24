@@ -9,6 +9,7 @@
 library;
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import '../../../core/trace/trace_logger.dart';
 import 'bi_modules.dart';
 import 'kpi_contract.dart';
 
@@ -59,7 +60,8 @@ final biReportId = RegExp(r'^[a-z0-9][a-z0-9_-]{0,31}$');
 JsonReader? biReportReader(Object? raw) {
   try {
     return JsonReader.of(raw, context: 'bi report');
-  } on JsonShapeException {
+  } on JsonShapeException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'workspace', 'bi_report_visual: JsonShapeException handled', error: e, stackTrace: st);
     return null;
   }
 }

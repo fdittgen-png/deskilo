@@ -29,6 +29,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import 'accounting_view.dart';
 import 'book_chart.dart';
 
@@ -104,7 +105,8 @@ PostingSet postingsOf({
     if (invoice.isVoided) continue;
     try {
       exponentOf(invoice.currency);
-    } on AccountingException {
+    } on AccountingException catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'money', 'posting_rules: AccountingException handled', error: e, stackTrace: st);
       book.block(PostingBlock.unsupportedCurrency, invoice.currency);
       continue;
     }

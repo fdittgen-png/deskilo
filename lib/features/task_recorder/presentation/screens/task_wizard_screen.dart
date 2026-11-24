@@ -385,7 +385,8 @@ TaskGuide? _guideOf(List<int> bytes) {
     final text = utf8.decode(bytes);
     if (!text.contains(taskGuideFormat)) return null;
     return decodeGuideText(text).guide;
-  } on FormatException {
+  } on FormatException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.info, 'task_recorder', 'task_wizard_screen: FormatException handled', error: e, stackTrace: st);
     return null;
   }
 }
