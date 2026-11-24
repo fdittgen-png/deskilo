@@ -23662,6 +23662,15 @@
   "tillOpReconcileTender": "rapprochement d'un paiement par carte",
   "tillOpSignFiscal": "signature d'un ticket fiscal",
   "tillPayCash": "Encaisser en espèces",
+  "tillPieceTwice": "La pièce {code} est déjà dans le panier.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Calcul du panier…",
   "tillQuantityHint": "Une quantité exacte, par exemple 1 ou 0,350.",
   "tillQuantityRefused": "Saisissez une quantité supérieure à zéro, avec au plus six décimales.",
@@ -23671,6 +23680,15 @@
   "tillRetry": "Réessayer",
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
+  },
+  "tillScanUnknown": "{code} n'est pas un article vendu à cette caisse.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
   },
   "tillSoldTitle": "Vendu",
   "tillTaxIncluded": "dont taxe {amount}",

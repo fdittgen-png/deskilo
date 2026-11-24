@@ -40686,6 +40686,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillPayCash => 'Bar kassieren';
 
   @override
+  String tillPieceTwice(String code) {
+    return 'Stück $code ist schon im Warenkorb.';
+  }
+
+  @override
   String get tillPricing => 'Warenkorb wird berechnet …';
 
   @override
@@ -40711,6 +40716,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tillRetry => 'Erneut versuchen';
+
+  @override
+  String tillScanUnknown(String code) {
+    return '$code ist nichts, was diese Kasse verkauft.';
+  }
 
   @override
   String get tillSoldTitle => 'Verkauft';

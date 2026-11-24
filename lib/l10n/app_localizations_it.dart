@@ -40610,6 +40610,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillPayCash => 'Incassare in contanti';
 
   @override
+  String tillPieceTwice(String code) {
+    return 'Il pezzo $code è già nel carrello.';
+  }
+
+  @override
   String get tillPricing => 'Calcolo del carrello…';
 
   @override
@@ -40635,6 +40640,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tillRetry => 'Riprova';
+
+  @override
+  String tillScanUnknown(String code) {
+    return '$code non è un articolo venduto da questa cassa.';
+  }
 
   @override
   String get tillSoldTitle => 'Venduto';

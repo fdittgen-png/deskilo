@@ -40554,6 +40554,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillPayCash => 'Cobrar en efectivo';
 
   @override
+  String tillPieceTwice(String code) {
+    return 'La pieza $code ya está en la cesta.';
+  }
+
+  @override
   String get tillPricing => 'Calculando la cesta…';
 
   @override
@@ -40578,6 +40583,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tillRetry => 'Reintentar';
+
+  @override
+  String tillScanUnknown(String code) {
+    return '$code no es algo que venda esta caja.';
+  }
 
   @override
   String get tillSoldTitle => 'Vendido';

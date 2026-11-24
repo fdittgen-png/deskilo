@@ -52253,6 +52253,15 @@
   "@tillPayCash": {
     "description": "#4366 the till"
   },
+  "tillPieceTwice": "Piece {code} is already in the basket.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Pricing the basket…",
   "@tillPricing": {
     "description": "#4366 the till"
@@ -52290,6 +52299,15 @@
   "tillRetry": "Try again",
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
+  },
+  "tillScanUnknown": "{code} is not something this till sells.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
   },
   "tillSoldTitle": "Sold",
   "@tillSoldTitle": {

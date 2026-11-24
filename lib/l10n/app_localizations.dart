@@ -64750,6 +64750,12 @@ abstract class AppLocalizations {
   /// **'Take cash'**
   String get tillPayCash;
 
+  /// #4436 the till: a piece scanned a second time into the same basket
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {code} is already in the basket.'**
+  String tillPieceTwice(String code);
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -64791,6 +64797,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again'**
   String get tillRetry;
+
+  /// #4436 the till: a scanned code that names nothing the till rings up
+  ///
+  /// In en, this message translates to:
+  /// **'{code} is not something this till sells.'**
+  String tillScanUnknown(String code);
 
   /// #4366 the till
   ///

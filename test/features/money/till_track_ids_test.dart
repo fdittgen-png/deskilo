@@ -10,8 +10,11 @@ import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/demo_till.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
+import 'package:deskilo/features/money/presentation/till_session.dart';
 import 'package:deskilo/features/money/presentation/till_text.dart';
 import 'package:deskilo/features/money/providers/till_providers.dart';
+import 'package:deskilo/features/stock/domain/stock_code_resolver.dart';
+import 'package:deskilo/features/stock/domain/stock_trace_chain.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:deskilo/l10n/app_localizations_fr.dart';
@@ -108,6 +111,169 @@ void main() {
       expect(sold.tracksOf(1), isEmpty);
     });
   });
+
+  group('a piece scanned at the till', () {
+    const basket = ScannedItem(
+      id: 'demo-item-basket',
+      name: 'Gift basket',
+      unit: 'piece',
+    );
+
+    test('a bound piece tag rings up that piece, an item code the item, anything else nothing', () {
+      final piece = tillScanOf(
+        const StockCodeResolution(
+          kind: ScannedKind.tag,
+          code: 'E2801160600002054AF3E001',
+          item: basket,
+          tagBound: true,
+          tagOwnerKind: 'piece',
+        ),
+      );
+      expect(
+        piece,
+        isA<TillScanPiece>().having(
+          (p) => p.tag,
+          'tag',
+          'E2801160600002054AF3E001',
+        ),
+      );
+      expect(
+        tillScanOf(
+          const StockCodeResolution(
+            kind: ScannedKind.item,
+            code: '4006381333931',
+            item: basket,
+          ),
+        ),
+        isA<TillScanItem>(),
+      );
+      expect(
+        tillScanOf(
+          const StockCodeResolution(
+            kind: ScannedKind.tag,
+            code: 'AA',
+            item: basket,
+            tagBound: true,
+            tagOwnerKind: 'lot',
+          ),
+        ),
+        isA<TillScanUnknown>(),
+        reason: 'a tag on a batch is not one piece',
+      );
+      expect(
+        tillScanOf(const StockCodeResolution.unknown('nothing')),
+        isA<TillScanUnknown>(),
+      );
+      expect(
+        tillScanOf(
+          const StockCodeResolution(
+            kind: ScannedKind.item,
+            code: 'C',
+            item: basket,
+            unit: ScannedUnit(unit: 'carton', factorNum: 6, factorDen: 1),
+          ),
+        ),
+        isA<TillScanUnknown>(),
+        reason: 'a package-unit code is not rung up as one piece',
+      );
+    });
+
+    test('the line sends its pieces as units, one quantity per piece, and the sale names each by its tag', () async {
+      final session = TillSession(
+        port: DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20),
+        workspaceId: 'ws-1',
+      );
+      addTearDown(session.dispose);
+      await session.addPiece(
+        itemId: basket.id,
+        name: basket.name,
+        unit: basket.unit,
+        tag: 'E2801160600002054AF3E002',
+        twice: 'twice',
+      );
+      await session.addPiece(
+        itemId: basket.id,
+        name: basket.name,
+        unit: basket.unit,
+        tag: 'E2801160600002054AF3E001',
+        twice: 'twice',
+      );
+      final line = session.state.value.lines.single;
+      expect(line.toJson(), {
+        'item_id': 'demo-item-basket',
+        'quantity': '2',
+        'units': [
+          {'tag': 'E2801160600002054AF3E002'},
+          {'tag': 'E2801160600002054AF3E001'},
+        ],
+      });
+      await session.addPiece(
+        itemId: basket.id,
+        name: basket.name,
+        unit: basket.unit,
+        tag: 'E2801160600002054AF3E001',
+        twice: 'twice',
+      );
+      expect(
+        session.state.value.problem,
+        'twice',
+        reason: 'one piece is sold once',
+      );
+      expect(session.state.value.lines.single.quantity, '2');
+      await session.payCash(7800);
+      expect(
+        tillTracksText(_en, session.state.value.sold!.tracksOf(1)),
+        'Lot BASKET-1 × 2 · Piece E2801160600002054AF3E001 · Piece E2801160600002054AF3E002',
+      );
+    });
+
+    test('a line of an untracked item sends no units', () {
+      expect(
+        const TillLine(
+          itemId: 'i',
+          name: 'Mug',
+          quantity: '1',
+          unit: 'piece',
+        ).toJson(),
+        {'item_id': 'i', 'quantity': '1'},
+      );
+    });
+  });
+
+  test(
+    'the trace read backwards from a sold line names the track IDs it took',
+    () {
+      final chain = TraceChain.fromJson({
+        'subject': 'sale_line',
+        'steps': <Object?>[],
+        'took': {
+          'lots': ['p'],
+          'pieces': ['x'],
+          'tracks': [
+            {'kind': 'lot', 'lot_id': 'p', 'code': 'SUP-P', 'quantity': '1'},
+            {
+              'kind': 'piece',
+              'piece_id': 'x',
+              'code': 'E28068940000401561D6DD02',
+              'lot_id': 'p',
+            },
+          ],
+        },
+        'truncated': false,
+      });
+      expect(
+        [
+          for (final t in chain.took)
+            '${t.kind}:${t.code}:${t.quantity?.text ?? '-'}',
+        ],
+        ['lot:SUP-P:1', 'piece:E28068940000401561D6DD02:-'],
+      );
+      expect(
+        TraceChain.fromJson({'subject': 'lot', 'steps': <Object?>[]}).took,
+        isEmpty,
+      );
+    },
+  );
 
   for (final size in const [Size(390, 844), Size(1440, 900)]) {
     testWidgets(

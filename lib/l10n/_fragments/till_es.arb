@@ -72,5 +72,23 @@
         "type": "String"
       }
     }
+  },
+  "tillScanUnknown": "{code} no es algo que venda esta caja.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "tillPieceTwice": "La pieza {code} ya está en la cesta.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
   }
 }

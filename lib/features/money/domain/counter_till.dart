@@ -58,7 +58,7 @@ class TillReadiness {
 
 /// A line of the basket as the till sends it: an item and an exact quantity; the server prices it.
 class TillLine {
-  const TillLine({required this.itemId, required this.name, required this.quantity, required this.unit});
+  const TillLine({required this.itemId, required this.name, required this.quantity, required this.unit, this.pieces = const []});
 
   final String itemId;
   final String name;
@@ -67,9 +67,48 @@ class TillLine {
   final String quantity;
   final String unit;
 
-  TillLine withQuantity(String q) => TillLine(itemId: itemId, name: name, quantity: q, unit: unit);
+  /// #4436 -- the tags of the pieces scanned into this line, for an item tracked piece by piece: the sale takes
+  /// exactly these pieces, and the server refuses a quantity that is not their number.
+  final List<String> pieces;
 
-  Map<String, Object?> toJson() => {'item_id': itemId, 'quantity': quantity};
+  TillLine withQuantity(String q) => TillLine(itemId: itemId, name: name, quantity: q, unit: unit, pieces: pieces);
+
+  /// The line with the piece tagged [tag] added: one more, named.
+  TillLine withPiece(String tag) =>
+      TillLine(itemId: itemId, name: name, quantity: '${pieces.length + 1}', unit: unit, pieces: [...pieces, tag]);
+
+  Map<String, Object?> toJson() => {
+    'item_id': itemId,
+    'quantity': quantity,
+    if (pieces.isNotEmpty) 'units': [for (final t in pieces) {'tag': t}],
+  };
+}
+
+/// #4436 -- what a code scanned at the till rings up: an item, one piece of an item by its tag, or nothing.
+sealed class TillScan {
+  const TillScan();
+}
+
+/// An item: one more of it, as a tap on its key.
+class TillScanItem extends TillScan {
+  const TillScanItem(this.key);
+
+  final TillKey key;
+}
+
+/// One piece of an item tracked piece by piece, by its tag: the sale takes that piece.
+class TillScanPiece extends TillScan {
+  const TillScanPiece(this.key, this.tag);
+
+  final TillKey key;
+  final String tag;
+}
+
+/// A code that names nothing the till sells.
+class TillScanUnknown extends TillScan {
+  const TillScanUnknown(this.code);
+
+  final String code;
 }
 
 /// The server sends totals as strings and per-line amounts as integers: both read as minor units.

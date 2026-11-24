@@ -72,5 +72,23 @@
         "type": "String"
       }
     }
+  },
+  "tillScanUnknown": "{code} non è un articolo venduto da questa cassa.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "tillPieceTwice": "Il pezzo {code} è già nel carrello.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
   }
 }
