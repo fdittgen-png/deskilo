@@ -4,6 +4,7 @@
 // does not import the workspace for it.
 import 'package:flutter_riverpod/misc.dart' show Override;
 
+import '../features/money/data/supabase_counter_offline.dart';
 import '../features/money/data/supabase_counter_till.dart';
 import '../features/money/data/supabase_till_drawer.dart';
 import '../features/money/providers/till_drawer_providers.dart';
@@ -18,4 +19,9 @@ final Override tillPortFromApp = tillPortProvider.overrideWith(
 /// #4367 -- the live cash drawer of the till, in the same scope.
 final Override tillDrawerPortFromApp = tillDrawerPortProvider.overrideWith(
   (ref) => SupabaseTillDrawer(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// #4373 -- the offline sales go to the same server.
+final Override tillOfflinePortFromApp = tillOfflinePortProvider.overrideWith(
+  (ref) => SupabaseCounterOffline(ref.watch(selectedWorkspaceClientProvider)),
 );

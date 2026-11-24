@@ -15328,6 +15328,14 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterOfflineCashDesc": "When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  },
+  "featureCounterOfflineCashTitle": "Selling offline, cash only",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
+  },
   "featureCounterReceiptsDesc": "A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country's operation is supported, and says plainly where it is not.",
   "@featureCounterReceiptsDesc": {
     "description": "#4184 feature description"
@@ -16424,6 +16432,14 @@
   "featureStockExpiryReportTitle": "The expiry report",
   "@featureStockExpiryReportTitle": {
     "description": "#4431 the expiry report feature: its name"
+  },
+  "featureStockHandlingUnitsDesc": "Goods move in the pallet or carton they were received in, or in the store's own repackaged units, and stay traceable through the repack.",
+  "@featureStockHandlingUnitsDesc": {
+    "description": "#4435 the handling units feature: what it does"
+  },
+  "featureStockHandlingUnitsTitle": "Handling units",
+  "@featureStockHandlingUnitsTitle": {
+    "description": "#4435 the handling units feature: its name"
   },
   "featureStockItemGroupsDesc": "Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group's value unless it keeps its own; a change to a group shows how many items it reaches before it is saved.",
   "@featureStockItemGroupsDesc": {
@@ -37891,6 +37907,10 @@
   "@refusalCounterNotOpen": {
     "description": "#4185 refusal"
   },
+  "refusalCounterOfflineConflict": "A sale sent from the till under this number was already received with other content. Nothing was recorded again; look at the list of offline sales.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  },
   "refusalCounterTenderState": "This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.",
   "@refusalCounterTenderState": {
     "description": "#4185 refusal"
@@ -38050,6 +38070,18 @@
   "refusalStockUnit": "This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.",
   "@refusalStockUnit": {
     "description": "refusal DKG02 (#3824)"
+  },
+  "refusalStockUnitChanged": "This unit changed since you read it: someone moved or unpacked it. Read it again.",
+  "@refusalStockUnitChanged": {
+    "description": "#4435 refusal"
+  },
+  "refusalStockUnitCodeTaken": "This unit code is already used in this business. Choose another code.",
+  "@refusalStockUnitCodeTaken": {
+    "description": "#4435 refusal"
+  },
+  "refusalStockUnitContent": "What the unit holds does not fit: the quantity, the lot, the piece or the place. Check the content.",
+  "@refusalStockUnitContent": {
+    "description": "#4435 refusal"
   },
   "refusalStockVariant": "This item has variants: name which one (colour, size) to move, sell or count. Nothing was changed.",
   "@refusalStockVariant": {
@@ -41737,6 +41769,18 @@
   "@settingHintCounterFiscalObligation": {
     "description": "#4184 setting label/hint"
   },
+  "settingHintCounterOfflineMaxMinutes": "How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflineMaxSales": "How many cash sales made offline one till session accepts. Further sales are refused and listed for the owner.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflinePriceTolerance": "How far, in percent, the price of an offline sale may differ from the item's price when the sale is sent. 0 means the price must be the same.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
   "settingHintCounterPaidOutLimit": "The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.",
   "@settingHintCounterPaidOutLimit": {
     "description": "#4367 setting label/hint or refusal"
@@ -42168,6 +42212,18 @@
   "settingLabelCounterFiscalObligation": "Fiscal rules for counter sales",
   "@settingLabelCounterFiscalObligation": {
     "description": "#4184 setting label/hint"
+  },
+  "settingLabelCounterOfflineMaxMinutes": "Longest offline period (minutes)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflineMaxSales": "Most offline sales per till session",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Price difference allowed offline (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
   },
   "settingLabelCounterPaidOutLimit": "Largest paid-out without approval",
   "@settingLabelCounterPaidOutLimit": {

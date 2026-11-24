@@ -11572,6 +11572,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.';
 
   @override
+  String get featureCounterOfflineCashDesc =>
+      'When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.';
+
+  @override
+  String get featureCounterOfflineCashTitle => 'Selling offline, cash only';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country\'s operation is supported, and says plainly where it is not.';
 
@@ -12498,6 +12505,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureStockExpiryReportTitle => 'The expiry report';
+
+  @override
+  String get featureStockHandlingUnitsDesc =>
+      'Goods move in the pallet or carton they were received in, or in the store\'s own repackaged units, and stay traceable through the repack.';
+
+  @override
+  String get featureStockHandlingUnitsTitle => 'Handling units';
 
   @override
   String get featureStockItemGroupsDesc =>
@@ -28868,6 +28882,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This receipt is no longer an open draft, or a receipt was already issued for the same sale.';
 
   @override
+  String get refusalCounterOfflineConflict =>
+      'A sale sent from the till under this number was already received with other content. Nothing was recorded again; look at the list of offline sales.';
+
+  @override
   String get refusalCounterTenderState =>
       'This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.';
 
@@ -29011,6 +29029,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalStockUnit =>
       'This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.';
+
+  @override
+  String get refusalStockUnitChanged =>
+      'This unit changed since you read it: someone moved or unpacked it. Read it again.';
+
+  @override
+  String get refusalStockUnitCodeTaken =>
+      'This unit code is already used in this business. Choose another code.';
+
+  @override
+  String get refusalStockUnitContent =>
+      'What the unit holds does not fit: the quantity, the lot, the piece or the place. Check the content.';
 
   @override
   String get refusalStockVariant =>
@@ -31989,6 +32019,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.';
 
   @override
+  String get settingHintCounterOfflineMaxMinutes =>
+      'How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.';
+
+  @override
+  String get settingHintCounterOfflineMaxSales =>
+      'How many cash sales made offline one till session accepts. Further sales are refused and listed for the owner.';
+
+  @override
+  String get settingHintCounterOfflinePriceTolerance =>
+      'How far, in percent, the price of an offline sale may differ from the item\'s price when the sale is sent. 0 means the price must be the same.';
+
+  @override
   String get settingHintCounterPaidOutLimit =>
       'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.';
 
@@ -32396,6 +32438,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Fiscal rules for counter sales';
+
+  @override
+  String get settingLabelCounterOfflineMaxMinutes =>
+      'Longest offline period (minutes)';
+
+  @override
+  String get settingLabelCounterOfflineMaxSales =>
+      'Most offline sales per till session';
+
+  @override
+  String get settingLabelCounterOfflinePriceTolerance =>
+      'Price difference allowed offline (%)';
 
   @override
   String get settingLabelCounterPaidOutLimit =>

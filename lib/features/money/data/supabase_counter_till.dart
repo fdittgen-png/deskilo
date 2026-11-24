@@ -35,12 +35,25 @@ class SupabaseCounterTill implements TillPort {
       }));
 
   @override
-  Future<TillSold> finalize(String workspaceId, {required String requestId, required String receiptId, required int expectedRevision, required List<TillTender> tenders}) async =>
-      TillSold.fromJson(await _call('counter_receipt_finalize_v1', {
-        'p_workspace_id': workspaceId,
-        'p_request_id': requestId,
-        'p_receipt_id': receiptId,
-        'p_expected_revision': expectedRevision,
-        'p_tenders': [for (final t in tenders) t.toJson()],
-      }));
+  Future<TillSold> finalize(String workspaceId, {required String requestId, required String receiptId, required int expectedRevision, required List<TillTender> tenders}) async {
+    final sold = await _call('counter_receipt_finalize_v1', {
+      'p_workspace_id': workspaceId,
+      'p_request_id': requestId,
+      'p_receipt_id': receiptId,
+      'p_expected_revision': expectedRevision,
+      'p_tenders': [for (final t in tenders) t.toJson()],
+    });
+    return TillSold.fromJson(sold, tracks: await _tracks(workspaceId, receiptId));
+  }
+
+  /// #4436 -- the track IDs the goods lines took, frozen when the stock moved (0939).
+  Future<List<TillTrack>> _tracks(String workspaceId, String receiptId) async {
+    final rows = await _client
+        .from('counter_line_tracks')
+        .select('line_id, track_kind, track_code, quantity')
+        .eq('workspace_id', workspaceId)
+        .eq('receipt_id', receiptId)
+        .order('created_datetime');
+    return [for (final row in rows) TillTrack.fromJson(row)];
+  }
 }

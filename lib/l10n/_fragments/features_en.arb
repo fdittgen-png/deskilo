@@ -946,6 +946,14 @@
   "@featureStockExpiryReportDesc": {
     "description": "#4431 the expiry report feature: what it does"
   },
+  "featureStockHandlingUnitsTitle": "Handling units",
+  "featureStockHandlingUnitsDesc": "Goods move in the pallet or carton they were received in, or in the store's own repackaged units, and stay traceable through the repack.",
+  "@featureStockHandlingUnitsTitle": {
+    "description": "#4435 the handling units feature: its name"
+  },
+  "@featureStockHandlingUnitsDesc": {
+    "description": "#4435 the handling units feature: what it does"
+  },
   "featureStockTagReadsTitle": "Reading many tags",
   "featureStockTagReadsDesc": "A UHF reader in keyboard mode reads many tags at once to receive, move and count: the tags are collected, de-duplicated and resolved, and nothing is sent until the user confirms.",
   "@featureStockTagReadsTitle": {
@@ -953,5 +961,13 @@
   },
   "@featureStockTagReadsDesc": {
     "description": "#4364 feature description"
+  },
+  "featureCounterOfflineCashTitle": "Selling offline, cash only",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
+  },
+  "featureCounterOfflineCashDesc": "When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
   }
 }
