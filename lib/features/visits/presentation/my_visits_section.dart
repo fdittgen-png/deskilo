@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -104,7 +105,7 @@ class _GuestVisitCardState extends ConsumerState<GuestVisitCard> {
     final starts = appFormatOf(context).wall(visit.startsAt);
     final ends = appFormatOf(context).wall(visit.endsAt);
     final when =
-        '${material.formatMediumDate(starts)} · '
+        '${appFormatOf(context).dates(DateShape.date).format(starts)} · '
         '${material.formatTimeOfDay(TimeOfDay.fromDateTime(starts))}–'
         '${material.formatTimeOfDay(TimeOfDay.fromDateTime(ends))}';
     final where = visit.siteName == null || visit.siteName!.isEmpty

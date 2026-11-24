@@ -9,6 +9,8 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -139,7 +141,7 @@ String _documentLine(BuildContext context, AccountingDelivery d) =>
     context.l10n.acctTransferDocLine(
       d.documentNumber,
       _documentKindLabel(context.l10n, d.documentKind),
-      MaterialLocalizations.of(context).formatMediumDate(d.eventDate),
+      appFormatOf(context).dates(DateShape.date).format(d.eventDate),
     );
 
 /// One file handed out: its target and period, when and by whom, its digest,
@@ -156,7 +158,6 @@ class _FileTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context).textTheme;
-    final material = MaterialLocalizations.of(context);
     final f = file;
     return ExpansionTile(
       key: ValueKey('acct-transfer-file-${f.id}'),
@@ -165,14 +166,14 @@ class _FileTile extends StatelessWidget {
       title: Text(
         l10n.acctTransferFile(
           targetLabel(f.formatId),
-          material.formatMediumDate(f.from),
-          material.formatMediumDate(f.to),
+          appFormatOf(context).dates(DateShape.date).format(f.from),
+          appFormatOf(context).dates(DateShape.date).format(f.to),
         ),
       ),
       subtitle: Text(
         [
           l10n.acctTransferFileMeta(
-            material.formatMediumDate(f.exportedAt),
+            appFormatOf(context).dates(DateShape.date).format(f.exportedAt),
             by ?? l10n.acctWhoUnknown,
             f.documentCount,
           ),

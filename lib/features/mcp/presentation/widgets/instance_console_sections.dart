@@ -9,6 +9,8 @@
 // can decide, with a reason and a length, shown as such afterwards.
 import 'package:flutter/material.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -173,7 +175,6 @@ class InstanceAccessSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final o = overview;
-    final dates = MaterialLocalizations.of(context);
     final granted = {for (final u in o.eligibleUsers) u.userId};
     final people = {
       for (final p in [...o.administrators, ...o.candidates]) p.userId: p,
@@ -196,7 +197,7 @@ class InstanceAccessSection extends StatelessWidget {
             subtitle: Text(
               [
                 if (u.expiresAt case final at?)
-                  l10n.instanceAccessUntil(dates.formatMediumDate(at)),
+                  l10n.instanceAccessUntil(appFormatOf(context).dates(DateShape.date).format(at)),
                 if (u.selfGrant)
                   l10n.instanceSelfApproved
                 else if (u.grantedByOperator)

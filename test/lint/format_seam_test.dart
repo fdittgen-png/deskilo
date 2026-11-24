@@ -154,7 +154,7 @@ const _ceilings = <String, int>{
 };
 
 /// #4427 -- `MaterialLocalizations.format*Date(` left in presentation.
-const _materialDateCeiling = 37;
+const _materialDateCeiling = 0;
 
 final _kinds = [
   LiteralKind('DateFormat.', RegExp(r'\bDateFormat\.')),
@@ -187,7 +187,7 @@ void main() {
 
   // #4427 -- a date in a screen follows the member's format locale
   // (AppFormat.dates), not the interface language MaterialLocalizations
-  // formats in. Recorded at 43 on b4e4bde00; stock is at 0.
+  // formats in. Recorded at 43 on b4e4bde00; 0 since the sweep.
   test('MaterialLocalizations date formats in presentation only fall', () {
     final kind = LiteralKind(
       'format*Date(',

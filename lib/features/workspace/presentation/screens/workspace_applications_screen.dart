@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -76,9 +77,7 @@ class _ApplicationsState extends ConsumerState<WorkspaceApplicationsScreen> {
                             if (!application.isApplicant)
                               application.applicantName,
                             applicationStatusLabel(l10n, application.status),
-                            MaterialLocalizations.of(
-                              context,
-                            ).formatShortDate(appFormatOf(context).wall(application.createdAt)),
+                            appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(application.createdAt)),
                           ].where((value) => value.isNotEmpty).join(' · '),
                         ),
                         trailing: const Icon(Icons.chat_bubble_outline),

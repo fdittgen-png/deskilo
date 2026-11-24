@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -206,9 +207,8 @@ class _LeaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final material = MaterialLocalizations.of(context);
     final money = appFormatOf(context).moneyIn(currencyCode);
-    String day(DateTime d) => material.formatMediumDate(d);
+    String day(DateTime d) => appFormatOf(context).dates(DateShape.date).format(d);
     return Card(
       key: ValueKey('lease-${lease.id}'),
       child: Padding(
@@ -336,8 +336,7 @@ class _SettlementLines extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final material = MaterialLocalizations.of(context);
-    String day(DateTime d) => material.formatMediumDate(d);
+    String day(DateTime d) => appFormatOf(context).dates(DateShape.date).format(d);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

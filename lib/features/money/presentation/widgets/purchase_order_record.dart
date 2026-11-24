@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -225,7 +226,7 @@ class PurchaseOrderDetails extends ConsumerWidget {
           Text(
             l10n.labelWithValue(
               l10n.purchaseOrderExpected,
-              MaterialLocalizations.of(context).formatMediumDate(d),
+              appFormatOf(context).dates(DateShape.date).format(d),
             ),
           ),
         const FormGap.small(),
