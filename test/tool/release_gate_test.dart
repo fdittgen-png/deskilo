@@ -6,7 +6,6 @@
 // that is not a number or has no version marker never passes. The candidate's
 // requirement is read from its own tree, the track's installation from the
 // committed map, and every upload leg of the train waits for the gate.
-import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -21,6 +20,7 @@ import '../helpers/tool_process.dart';
 
 const CandidateNeeds _needs = (
   schema: 12,
+  builtAgainst: 12,
   app: 3,
   migrations: [
     (number: 10, file: '0010_a.sql'),
@@ -120,9 +120,59 @@ void main() {
   group('what the candidate needs', () {
     test('is read from its own tree: the constants the app compiles in', () {
       final needs = readCandidateNeeds(Directory.current);
-      expect(needs.schema, requiredSchemaVersion);
+      expect(
+        needs.schema,
+        appNeedsSchemaVersion,
+        reason: 'what the app cannot work without (#3729)',
+      );
+      expect(needs.builtAgainst, requiredSchemaVersion);
       expect(needs.app, appCompatibilityNumber);
       expect(needs.migrations.last.number, requiredSchemaVersion);
+    });
+
+    test(
+      'a candidate from before the split needs what it was built against',
+      () {
+        final tmp = Directory.systemTemp.createTempSync('gate-old');
+        addTearDown(() => tmp.deleteSync(recursive: true));
+        File('${tmp.path}/lib/core/instance/schema_compatibility.dart')
+          ..createSync(recursive: true)
+          ..writeAsStringSync('const int requiredSchemaVersion = 12;\n');
+        File('${tmp.path}/lib/core/instance/app_compatibility.dart')
+            .writeAsStringSync('const int appCompatibilityNumber = 3;\n');
+        final needs = readCandidateNeeds(tmp);
+        expect(needs.schema, 12);
+        expect(needs.builtAgainst, 12);
+      },
+    );
+
+    test('an installation between needs and built-against is ready, and one '
+        'below needs names only the migrations up to it', () {
+      const split = (
+        schema: 11,
+        builtAgainst: 12,
+        app: 3,
+        migrations: [
+          (number: 10, file: '0010_a.sql'),
+          (number: 11, file: '0011_b.sql'),
+          (number: 12, file: '0012_c.sql'),
+        ],
+      );
+      expect(
+        judgeInstallation(
+          needs: split,
+          schema: const Answered(11),
+          floor: const Answered(null),
+        ).verdict,
+        ReleaseVerdict.sufficient,
+      );
+      final behind = judgeInstallation(
+        needs: split,
+        schema: const Answered(9),
+        floor: const Answered(null),
+      );
+      expect(behind.verdict, ReleaseVerdict.insufficient);
+      expect([for (final m in behind.missing) m.number], [10, 11]);
     });
 
     test('a tree without the declaration is refused, never assumed', () {
@@ -257,16 +307,16 @@ void main() {
     var hang = false;
 
     setUp(() async {
-      server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
-      server.listen((req) async {
-        await req.drain<void>();
-        if (hang) return;
-        final isSchema = req.uri.path.endsWith('/deskilo_schema_version');
-        req.response
-          ..statusCode = isSchema ? schemaStatus : 200
-          ..write(isSchema ? schema : floor);
-        await req.response.close();
-      });
+      server = (await HttpServer.bind(InternetAddress.loopbackIPv4, 0))
+        ..listen((req) async {
+          await req.drain<void>();
+          if (hang) return;
+          final isSchema = req.uri.path.endsWith('/deskilo_schema_version');
+          req.response
+            ..statusCode = isSchema ? schemaStatus : 200
+            ..write(isSchema ? schema : floor);
+          await req.response.close();
+        });
       root = Directory.systemTemp.createTempSync('gate-root');
       File('${root.path}/lib/core/instance/schema_compatibility.dart')
         ..createSync(recursive: true)

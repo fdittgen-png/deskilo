@@ -76,8 +76,9 @@ Future<void> main(List<String> args) async {
     result: result,
   );
   stdout.write(report);
-  if (summary != null)
+  if (summary != null) {
     File(summary).writeAsStringSync(report, mode: FileMode.append);
+  }
   if (result.verdict != ReleaseVerdict.sufficient) {
     stdout.writeln(
       '::error::the installation of the $track track is not proven ready: ${result.verdict.name}',

@@ -56,8 +56,15 @@ final class Unreadable extends ProbeAnswer {
 /// One migration file of the candidate.
 typedef Migration = ({int number, String file});
 
-/// What the pinned candidate needs, read from its own tree.
-typedef CandidateNeeds = ({int schema, int app, List<Migration> migrations});
+/// What the pinned candidate needs, read from its own tree: [schema] is the
+/// schema it cannot work without (`appNeedsSchemaVersion`, #3729), [builtAgainst]
+/// the one it was made against.
+typedef CandidateNeeds = ({
+  int schema,
+  int builtAgainst,
+  int app,
+  List<Migration> migrations,
+});
 
 /// The gate's conclusion with its reasons, in the order they were found.
 typedef GateResult = ({
@@ -145,30 +152,39 @@ final _schemaNeed = RegExp(
   r'^const int requiredSchemaVersion = (\d+);',
   multiLine: true,
 );
+final _appNeeds = RegExp(
+  r'^const int appNeedsSchemaVersion = (\d+);',
+  multiLine: true,
+);
 final _appNumber = RegExp(
   r'^const int appCompatibilityNumber = (\d+);',
   multiLine: true,
 );
 final _migrationFile = RegExp(r'^(\d{4})_[a-z0-9_]+\.sql$');
 
-/// Reads what the candidate checked out at [root] needs: the schema number
-/// and the app compatibility number it declares, and its migrations. Throws
-/// [FormatException] when either declaration is not where the app keeps it:
-/// a requirement that cannot be read is never assumed.
+/// Reads what the candidate checked out at [root] needs: the schema it
+/// cannot work without, the one it was built against, the app compatibility
+/// number it declares, and its migrations. A candidate that predates the
+/// split of #3729 needs what it was built against. Throws [FormatException]
+/// when a declaration is not where the app keeps it: a requirement that
+/// cannot be read is never assumed.
 CandidateNeeds readCandidateNeeds(Directory root) {
-  int declared(String path, RegExp pattern) {
+  int? declaredOrNull(String path, RegExp pattern) {
     final file = File('${root.path}/$path');
     if (!file.existsSync()) throw FormatException('$path is missing');
     final match = pattern.firstMatch(file.readAsStringSync());
-    if (match == null)
-      throw FormatException('$path declares no ${pattern.pattern}');
-    return int.parse(match.group(1)!);
+    return match == null ? null : int.parse(match.group(1)!);
   }
 
-  final schema = declared(
-    'lib/core/instance/schema_compatibility.dart',
-    _schemaNeed,
-  );
+  int declared(String path, RegExp pattern) =>
+      declaredOrNull(path, pattern) ??
+      (throw FormatException('$path declares no ${pattern.pattern}'));
+
+  const compatibility = 'lib/core/instance/schema_compatibility.dart';
+  final builtAgainst = declared(compatibility, _schemaNeed);
+  final needs = declaredOrNull(compatibility, _appNeeds);
+  // What the app needs is never above what it was built against.
+  final schema = needs == null || needs > builtAgainst ? builtAgainst : needs;
   final app = declared('lib/core/instance/app_compatibility.dart', _appNumber);
   final dir = Directory('${root.path}/supabase/migrations');
   final migrations = <Migration>[
@@ -177,7 +193,12 @@ CandidateNeeds readCandidateNeeds(Directory root) {
         if (_migrationFile.firstMatch(f.uri.pathSegments.last) case final m?)
           (number: int.parse(m.group(1)!), file: f.uri.pathSegments.last),
   ]..sort((a, b) => a.number.compareTo(b.number));
-  return (schema: schema, app: app, migrations: migrations);
+  return (
+    schema: schema,
+    builtAgainst: builtAgainst,
+    app: app,
+    migrations: migrations,
+  );
 }
 
 /// The installation a track ships to, named explicitly.
@@ -190,8 +211,9 @@ Installation installationFor(String mapJson, String track) {
   final map = jsonDecode(mapJson);
   final tracks = map is Map ? map['tracks'] : null;
   final entry = tracks is Map ? tracks[track] : null;
-  if (entry is! Map)
+  if (entry is! Map) {
     throw FormatException('no installation is named for the track "$track"');
+  }
   final name = entry['installation'], url = entry['url'], key = entry['key'];
   if (name is! String ||
       url is! String ||
@@ -269,7 +291,8 @@ String renderGate({
       '- **Track:** $track → installation **${installation.name}** (${installation.url})',
     )
     ..writeln(
-      '- **Candidate needs:** schema ${needs.schema}, app compatibility ${needs.app}',
+      '- **Candidate needs:** schema ${needs.schema} (built against '
+      '${needs.builtAgainst}), app compatibility ${needs.app}',
     )
     ..writeln(
       '- **Verdict:** ${switch (result.verdict) {
