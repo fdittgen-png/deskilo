@@ -42974,6 +42974,18 @@ abstract class AppLocalizations {
   /// **'No process matches this filter.'**
   String get processFilterEmpty;
 
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Goods & stock'**
+  String get processGoodsStock;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Keep, move, count and trace the goods the business sells.'**
+  String get processGoodsStockDesc;
+
   /// #1327 the process-first overview of the Features screen
   ///
   /// In en, this message translates to:
@@ -61407,6 +61419,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Book seats or whole spaces under the workspace rules.'**
   String get subprocessReservationsDesc;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Counts and replenishment'**
+  String get subprocessStockControl;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Count stock, schedule cycle counts and reorder in time.'**
+  String get subprocessStockControlDesc;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Items and units'**
+  String get subprocessStockItems;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Items, item groups, units of measure and handling units.'**
+  String get subprocessStockItemsDesc;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Receiving and movements'**
+  String get subprocessStockMovements;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Receive deliveries, take goods out and handle returns.'**
+  String get subprocessStockMovementsDesc;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Traceability'**
+  String get subprocessStockTracking;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Lots, expiry, scanning and tags that trace each piece.'**
+  String get subprocessStockTrackingDesc;
 
   /// Shown as the title in process names (workspace).
   ///

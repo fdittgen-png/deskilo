@@ -27086,6 +27086,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessun processo corrisponde a questo filtro.';
 
   @override
+  String get processGoodsStock => 'Merci e magazzino';
+
+  @override
+  String get processGoodsStockDesc =>
+      'Tenere, spostare, contare e tracciare le merci vendute.';
+
+  @override
   String processHeldBack(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -38656,6 +38663,34 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get subprocessReservationsDesc =>
       'Prenotare posti o interi spazi secondo le regole.';
+
+  @override
+  String get subprocessStockControl => 'Conteggi e rifornimento';
+
+  @override
+  String get subprocessStockControlDesc =>
+      'Contare le giacenze, pianificare i conteggi ciclici e riordinare per tempo.';
+
+  @override
+  String get subprocessStockItems => 'Articoli e unità';
+
+  @override
+  String get subprocessStockItemsDesc =>
+      'Articoli, gruppi di articoli, unità di misura e unità di movimentazione.';
+
+  @override
+  String get subprocessStockMovements => 'Ricezione e movimenti';
+
+  @override
+  String get subprocessStockMovementsDesc =>
+      'Ricevere le consegne, prelevare merci e gestire i resi.';
+
+  @override
+  String get subprocessStockTracking => 'Tracciabilità';
+
+  @override
+  String get subprocessStockTrackingDesc =>
+      'Lotti, scadenza, scansione ed etichette che tracciano ogni pezzo.';
 
   @override
   String get subprocessStructure => 'Struttura dello spazio';
