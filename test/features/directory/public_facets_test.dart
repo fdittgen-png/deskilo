@@ -9,6 +9,7 @@ import 'package:deskilo/core/public_network/public_network_codec.dart';
 import 'package:deskilo/features/directory/application/directory_actions.dart';
 import 'package:deskilo/features/directory/domain/public_facets.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
+import 'package:deskilo/features/directory/domain/publication_draft.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -26,16 +27,46 @@ void main() {
         }),
         published: true,
       );
-      final draft = PublicationDraft.fromPage(await actions.ownPage('space'));
+      final draft = (await actions.ownPage('space')).draft;
       await actions.savePage(
         'space',
-        draft.patch({'description': 'After'}),
+        draft.diff(draft.copyWith(texts: {'description': 'After'})),
         published: true,
       );
-      final document = (await actions.ownPage('space'))['document'] as Map;
-      expect(document['amenities'], ['wifi', 'meeting_room']);
-      expect(document['accessibility'], ['step_free_entrance']);
-      expect(document['description'], 'After');
+      final saved = (await actions.ownPage('space')).draft;
+      expect(saved.amenities, ['wifi', 'meeting_room']);
+      expect(saved.accessibility, ['step_free_entrance']);
+      expect(saved.text('description'), 'After');
+    },
+  );
+
+  test(
+    '#4409 one facet edited on a page holding a key the app does not know: '
+    'the patch carries the facet only and the key survives the save',
+    () async {
+      final repository = FakeDirectoryRepository();
+      repository.pages['space'] = {
+        'published': true,
+        'document': {
+          'description': 'Desks',
+          'amenities': ['wifi'],
+          'future_field': {'kept': true},
+        },
+      };
+      final actions = PublicationActions(repository);
+      final draft = (await actions.ownPage('space')).draft;
+      final patch = draft.diff(
+        draft.withFacet(PublicFacets.amenities, ['wifi', 'meeting_room']),
+      );
+      expect(patch.fields, {
+        'amenities': ['wifi', 'meeting_room'],
+      });
+      expect(patch.mode, PublicationWriteMode.patch);
+      await actions.savePage('space', patch, published: true);
+      final stored = repository.pages['space']!['document'] as Map;
+      expect(stored['future_field'], {'kept': true});
+      expect(stored['amenities'], ['wifi', 'meeting_room']);
+      expect(stored['description'], 'Desks');
     },
   );
 
@@ -109,9 +140,7 @@ void main() {
         },
       });
       expect(
-        draft.patch({
-          'amenities': ['wifi'],
-        }).fields,
+        draft.diff(draft.withFacet(PublicFacets.amenities, ['wifi'])).fields,
         isEmpty,
       );
       expect(PublicFacets.read('accessibility', null), isNull);
@@ -141,8 +170,8 @@ void main() {
       PublicOpeningHours.read(preview['opening_hours'])?.note,
       'By appointment',
     );
-    final draft = PublicationDraft.fromPage({'document': preview});
-    expect(draft.fields['opening_hours'], 'By appointment');
+    final draft = PublicationDraft.fromDocument(preview);
+    expect(draft.hoursNote, 'By appointment');
     repository.placeBooking = (_) => true;
     await expectLater(
       repository.savePage(

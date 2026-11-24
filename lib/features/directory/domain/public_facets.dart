@@ -3,6 +3,12 @@ import '../../../core/public_network/public_network_operations.dart';
 
 /// Stable public wire ids; labels belong to the presentation layer.
 abstract final class PublicFacets {
+  /// The two facet fields of a public page, in the order the editor shows
+  /// them.
+  static const amenities = 'amenities';
+  static const accessibility = 'accessibility';
+  static const fields = [amenities, accessibility];
+
   static List<String> ids(String field) =>
       publicNetworkSchemas['PublicationInput']!.fields[field]!.values;
 

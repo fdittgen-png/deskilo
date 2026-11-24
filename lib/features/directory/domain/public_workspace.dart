@@ -44,9 +44,9 @@ class PublicWorkspace {
       DirectoryLocation.parse(document['latitude'], document['longitude']);
   double? get latitude => location?.latitude;
   double? get longitude => location?.longitude;
-  List<Map<String, dynamic>> get contacts =>
+  List<PublicContact> get contacts =>
       (document['contacts'] as List<dynamic>? ?? [])
-          .map((e) => Map<String, dynamic>.from(e as Map))
+          .map((e) => PublicContact(Map<String, dynamic>.from(e as Map)))
           .toList();
 
   /// #3553 — the business's kind codes, the primary one first; none from an
@@ -69,6 +69,17 @@ class PublicWorkspace {
       document['takes_inquiries'] is bool
       ? document['takes_inquiries'] as bool
       : null;
+}
+
+/// #4409 — one contact a public page lists.
+extension type const PublicContact(Map<String, dynamic> _row) {
+  String get name => _row['name'] as String? ?? '';
+
+  /// The account to write to, when the contact has one.
+  String? get userId =>
+      _row['user_id'] is String ? _row['user_id'] as String : null;
+  bool get owner => _row['owner'] == true;
+  bool get available => _row['available'] == true;
 }
 
 /// #3553 — what a listed price means for tax: the price contains the tax,
@@ -124,7 +135,10 @@ class PublicService {
 /// #2086 — the public fields that have a counterpart in the workspace's
 /// own information: until the owner overrides one, it follows that
 /// information. Every other public field is only what the owner typed.
-const publicInheritedFields = ['host_type', 'address'];
+const publicInheritedFields = [publicHostField, 'address'];
+
+/// The field naming who runs the space: association, company or person.
+const publicHostField = 'host_type';
 
 /// The text fields of a public page the owner writes, beside its host type,
 /// in the order the page editor shows them.
@@ -159,39 +173,6 @@ Set<String> publicFollowing(Map<String, dynamic> page) {
     for (final field in publicInheritedFields)
       if (following[field] == true) field,
   };
-}
-
-/// The writable values read by an editor, excluding server-owned offer fields.
-/// Coordinates are numeric in the draft even when a legacy projection uses text.
-class PublicationDraft {
-  PublicationDraft.fromPage(Map<String, Object?> page) {
-    final document = Map<String, Object?>.from(page['document'] as Map);
-    fields = Map.unmodifiable({
-      for (final key in ['host_type', ...publicPageFields, 'amenities', 'accessibility'])
-        if (document.containsKey(key)) key: document[key],
-      ...publicPlaceFields(publicPlaceOf(document)),
-      'opening_hours': ?PublicOpeningHours.read(document['opening_hours'])?.note,
-    });
-  }
-
-  late final Map<String, Object?> fields;
-
-  /// Only edited fields are sent; another editor's fields remain on the server.
-  PublicationPatch patch(Map<String, Object?> changes) => PublicationPatch.patch({
-    for (final entry in changes.entries)
-      if (!_samePublicationValue(fields[entry.key], entry.value)) entry.key: entry.value,
-    if (changes.containsKey('latitude') && changes.containsKey('longitude') &&
-        (fields['latitude'] != changes['latitude'] ||
-         fields['longitude'] != changes['longitude'])) ...{
-      'latitude': changes['latitude'], 'longitude': changes['longitude'],
-    },
-  });
-}
-
-bool _samePublicationValue(Object? before, Object? after) {
-  if (before is! List || after is! List) return before == after;
-  return before.length == after.length &&
-      before.indexed.every((entry) => entry.$2 == after[entry.$1]);
 }
 
 /// Explicit write semantics shared by the editor, repository and Demo.

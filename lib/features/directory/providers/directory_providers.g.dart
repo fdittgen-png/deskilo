@@ -762,13 +762,13 @@ final accountContactsProvider = AccountContactsFamily._();
 final class AccountContactsProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<Map<String, dynamic>>>,
-          List<Map<String, dynamic>>,
-          FutureOr<List<Map<String, dynamic>>>
+          AsyncValue<List<AccountPersonRow>>,
+          List<AccountPersonRow>,
+          FutureOr<List<AccountPersonRow>>
         >
     with
-        $FutureModifier<List<Map<String, dynamic>>>,
-        $FutureProvider<List<Map<String, dynamic>>> {
+        $FutureModifier<List<AccountPersonRow>>,
+        $FutureProvider<List<AccountPersonRow>> {
   AccountContactsProvider._({
     required AccountContactsFamily super.from,
     required (String, {String source, String? before}) super.argument,
@@ -792,12 +792,12 @@ final class AccountContactsProvider
 
   @$internal
   @override
-  $FutureProviderElement<List<Map<String, dynamic>>> $createElement(
+  $FutureProviderElement<List<AccountPersonRow>> $createElement(
     $ProviderPointer pointer,
   ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<List<Map<String, dynamic>>> create(Ref ref) {
+  FutureOr<List<AccountPersonRow>> create(Ref ref) {
     final argument = this.argument as (String, {String source, String? before});
     return accountContacts(
       ref,
@@ -818,12 +818,12 @@ final class AccountContactsProvider
   }
 }
 
-String _$accountContactsHash() => r'ada9b3793a4853dddb67c7196adecf99c8ecc189';
+String _$accountContactsHash() => r'42bf621f66ceb31c87af29fd9f37da4ed843a465';
 
 final class AccountContactsFamily extends $Family
     with
         $FunctionalFamilyOverride<
-          FutureOr<List<Map<String, dynamic>>>,
+          FutureOr<List<AccountPersonRow>>,
           (String, {String source, String? before})
         > {
   AccountContactsFamily._()
@@ -940,13 +940,13 @@ final accountConversationsProvider = AccountConversationsFamily._();
 final class AccountConversationsProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<Map<String, dynamic>>>,
-          List<Map<String, dynamic>>,
-          FutureOr<List<Map<String, dynamic>>>
+          AsyncValue<List<AccountConversationRow>>,
+          List<AccountConversationRow>,
+          FutureOr<List<AccountConversationRow>>
         >
     with
-        $FutureModifier<List<Map<String, dynamic>>>,
-        $FutureProvider<List<Map<String, dynamic>>> {
+        $FutureModifier<List<AccountConversationRow>>,
+        $FutureProvider<List<AccountConversationRow>> {
   AccountConversationsProvider._({
     required AccountConversationsFamily super.from,
     required ({String source, DateTime? beforeAt, String? beforeId})
@@ -971,12 +971,12 @@ final class AccountConversationsProvider
 
   @$internal
   @override
-  $FutureProviderElement<List<Map<String, dynamic>>> $createElement(
+  $FutureProviderElement<List<AccountConversationRow>> $createElement(
     $ProviderPointer pointer,
   ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<List<Map<String, dynamic>>> create(Ref ref) {
+  FutureOr<List<AccountConversationRow>> create(Ref ref) {
     final argument =
         this.argument
             as ({String source, DateTime? beforeAt, String? beforeId});
@@ -1000,12 +1000,12 @@ final class AccountConversationsProvider
 }
 
 String _$accountConversationsHash() =>
-    r'c1dfcc97b1de6a0cc5efee3e52b963f1aaaa46ce';
+    r'e45f57992be92c4d11688d970490dcb9984f841c';
 
 final class AccountConversationsFamily extends $Family
     with
         $FunctionalFamilyOverride<
-          FutureOr<List<Map<String, dynamic>>>,
+          FutureOr<List<AccountConversationRow>>,
           ({String source, DateTime? beforeAt, String? beforeId})
         > {
   AccountConversationsFamily._()

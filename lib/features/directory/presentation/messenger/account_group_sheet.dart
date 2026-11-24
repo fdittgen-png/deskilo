@@ -7,6 +7,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/account_group.dart';
+import '../../domain/account_rows_from_json.dart';
 import '../../providers/directory_providers.dart';
 import '../../providers/message_marks_providers.dart';
 import '../../providers/messenger_providers.dart';
@@ -283,7 +284,7 @@ class _PeoplePickerState extends ConsumerState<_PeoplePicker> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final results = _query.isEmpty
-        ? const AsyncData<List<Map<String, dynamic>>>([])
+        ? const AsyncData<List<AccountPersonRow>>([])
         : ref.watch(accountContactsProvider(_query));
     return SafeArea(
       child: Padding(
@@ -318,10 +319,10 @@ class _PeoplePickerState extends ConsumerState<_PeoplePicker> {
                     children: [
                       for (final p in people)
                         ListTile(
-                          key: ValueKey('people-picker-${p['id']}'),
+                          key: ValueKey('people-picker-${p.id}'),
                           leading: const Icon(Icons.person_outline),
-                          title: Text('${p['name'] ?? ''}'),
-                          onTap: () => Navigator.of(context).pop('${p['id']}'),
+                          title: Text(p.name),
+                          onTap: () => Navigator.of(context).pop(p.id),
                         ),
                     ],
                   ),

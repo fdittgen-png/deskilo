@@ -1,18 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../domain/directory_location.dart';
 import '../domain/public_workspace.dart';
+import '../domain/publication_draft.dart';
 
 /// #1847 — the owner's publication decisions (MANAGEMENT). Server
 /// authorization remains authoritative for every operation.
 class PublicationActions {
   const PublicationActions(this.repository);
   final PublicationRepository repository;
-  Future<Map<String, dynamic>> ownPage(String workspace) =>
-      repository.ownPage(workspace);
+  /// #4409 — the owner's page, typed: the document's map stops here.
+  Future<OwnPublicPage> ownPage(String workspace) async =>
+      OwnPublicPage.fromAnswer(await repository.ownPage(workspace));
 
   /// Saves the typed edit. An inherited field in [following] is cleared,
   /// so it follows the workspace information; blank text remains an override.
-  Future<Map<String, dynamic>> savePage(
+  /// Answers the public projection of [workspace].
+  Future<PublicWorkspace> savePage(
     String workspace,
     PublicationPatch document, {
     Set<String> following = const {},
@@ -52,12 +55,14 @@ class PublicationActions {
     final patch = document.mode == PublicationWriteMode.patch
         ? PublicationPatch.patch(normalized)
         : PublicationPatch.replace(normalized);
-    return repository.savePage(workspace, patch, published: published);
+    return repository
+        .savePage(workspace, patch, published: published)
+        .then((preview) => PublicWorkspace(workspace, '', '', preview));
   }
 
   /// #2086 — back to the workspace information: [fields], or every
   /// inherited field when null.
-  Future<Map<String, dynamic>> resetPage(
+  Future<OwnPublicPage> resetPage(
     String workspace, {
     Set<String>? fields,
   }) {
@@ -65,7 +70,9 @@ class PublicationActions {
         (fields.isEmpty || !fields.every(publicInheritedFields.contains))) {
       throw ArgumentError('not an inherited public field');
     }
-    return repository.resetPage(workspace, fields: fields);
+    return repository
+        .resetPage(workspace, fields: fields)
+        .then(OwnPublicPage.fromAnswer);
   }
 }
 
