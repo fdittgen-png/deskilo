@@ -38,7 +38,8 @@
 //                        is a `Routes` symbol instead
 //   rawInsets            an `EdgeInsets` (or `EdgeInsetsDirectional`) call
 //                        with a non-zero number in it, per presentation
-//                        library (#4421); an `AppSpacing` token instead
+//                        library (#4421); an `AppSpacing` token instead. A
+//                        PDF widget (`pw.`) prints at paper size: not counted
 //   rawGap               a `SizedBox` with a non-zero number as its width,
 //                        height or dimension (#4421)
 //   rawDurationMs        `Duration(milliseconds: <number>)` (#4421); a
@@ -332,13 +333,13 @@ final Map<String, ({RegExp pattern, bool Function(Match) counts})>
 rawTokenPatterns = {
   'rawInsets': (
     pattern: RegExp(
-      r'\bEdgeInsets(?:Directional)?\.(?:all|symmetric|only|fromLTRB|fromSTEB)'
+      r'(?<!pw\.)\bEdgeInsets(?:Directional)?\.(?:all|symmetric|only|fromLTRB|fromSTEB)'
       r'\(([^()]*)\)',
     ),
     counts: (m) => _hasNonZero(m.group(1)!),
   ),
   'rawGap': (
-    pattern: RegExp(r'\bSizedBox(?:\.square)?\(([^()]*)\)'),
+    pattern: RegExp(r'(?<!pw\.)\bSizedBox(?:\.square)?\(([^()]*)\)'),
     counts: (m) => RegExp(r'\b(?:width|height|dimension):\s*([^,)]*)')
         .allMatches(m.group(1)!)
         .any((a) => _hasNonZero(a.group(1)!)),
