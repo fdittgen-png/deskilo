@@ -1011,15 +1011,7 @@
 
       "lib/features/stock/presentation/stock_first_run.dart": 1,
 
-      "lib/features/stock/presentation/stock_items_screen.dart": 1,
-
-      "lib/features/stock/presentation/stock_places_screen.dart": 1,
-
-      "lib/features/stock/presentation/stock_reorder_screen.dart": 1,
-
       "lib/features/stock/presentation/stock_screen.dart": 1,
-
-      "lib/features/stock/presentation/stock_settings_screen.dart": 1,
 
       "lib/features/stock/presentation/stock_where_is_screen.dart": 1,
 
