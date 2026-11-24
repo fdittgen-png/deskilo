@@ -831,6 +831,8 @@
  "shopTypeCornerShop": "Tienda de barrio",
  "stockWeighedGoods": "Las mercancías se venden al peso",
  "stockWeighedGoodsHint": "Un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador).",
+ "stockInvoiceSalePlace": "Lugar del que salen los bienes vendidos en factura",
+ "stockInvoiceSalePlaceHint": "El código de un lugar con existencias, por ejemplo MAIN. Al emitir una factura que vende bienes, salen de allí. Se puede cambiar después en los ajustes del espacio.",
  "stockGroupTagMode": "Modo de etiqueta por defecto de los artículos",
  "stockGroupTagModeHint": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza). Se ajusta en los ajustes de la app.",
  "stockGroupCountDays": "Ciclo de recuento por defecto",

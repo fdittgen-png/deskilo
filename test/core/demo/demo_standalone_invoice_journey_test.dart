@@ -111,7 +111,7 @@ void main() {
     expect(second.number, isNot(first.number));
   });
 
-  test('a stale revision, a closed draft and a goods line are refused before an invoice exists', () async {
+  test('a stale revision, a closed draft and a goods line naming no item are refused before an invoice exists', () async {
     final commands = container.read(standaloneInvoiceCommandsProvider);
     final a = await commands.saveDraft(workspaceId: workspaceId, draft: draft());
     final before = (await container.read(invoiceQueriesProvider).fetchInvoices(workspaceId)).length;
@@ -123,7 +123,8 @@ void main() {
     expect(stale, isA<StandaloneIssueRefused>());
     final goods = await commands.saveDraft(workspaceId: workspaceId, draft: draft(supply: 'goods'));
     final p = await commands.preview(workspaceId: workspaceId, draftId: goods.draftId, revision: goods.revision);
-    expect(p.missing, ['line_1_supply']);
+    // #4433: goods are a supply kind now; a goods line without one of the business's items is missing its item.
+    expect(p.missing, ['line_1_item']);
     final tooPrecise = await commands.saveDraft(workspaceId: workspaceId, draft: draft(quantity: '0.0000001'));
     expect((await commands.preview(workspaceId: workspaceId, draftId: tooPrecise.draftId, revision: 1)).missing,
         ['line_1_quantity']);

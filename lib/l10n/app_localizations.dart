@@ -10925,6 +10925,24 @@ abstract class AppLocalizations {
   /// **'{first}, {second}'**
   String commaPair(String first, String second);
 
+  /// #4162 an issued commercial line in the invoice sheet: its exact quantity with its unit, at the price entered (e.g. '1.5 h at 90 EUR')
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} at {price}'**
+  String commercialLineMeasure(String quantity, String price);
+
+  /// #4162 the same, for a price quoted for more than one unit (e.g. '30 kg at 12.5 EUR per 10 kg')
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} at {price} per {base}'**
+  String commercialLineMeasurePer(String quantity, String price, String base);
+
+  /// #4162 an issued line whose facts this version of the app cannot interpret: shown, never used
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded by a newer version: these facts are shown as written and cannot be used here'**
+  String get commercialLineUnreadable;
+
   /// Generic cancel action in dialogs
   ///
   /// In en, this message translates to:
@@ -52032,6 +52050,12 @@ abstract class AppLocalizations {
   /// **'Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece).'**
   String get settingHintStockGroupDefaultTagMode;
 
+  /// #4433 goods sold on an invoice: settingHintStockInvoiceSalePlace
+  ///
+  /// In en, this message translates to:
+  /// **'The code of a place of the business that holds stock, for example MAIN. Goods sold on an invoice leave from there when the invoice is issued.'**
+  String get settingHintStockInvoiceSalePlace;
+
   /// #4361 setting label/hint
   ///
   /// In en, this message translates to:
@@ -52697,6 +52721,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Default tag mode of items'**
   String get settingLabelStockGroupDefaultTagMode;
+
+  /// #4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace
+  ///
+  /// In en, this message translates to:
+  /// **'Place goods sold on an invoice leave from'**
+  String get settingLabelStockInvoiceSalePlace;
 
   /// #4361 setting label/hint
   ///
@@ -56765,6 +56795,12 @@ abstract class AppLocalizations {
   /// **'at least one line'**
   String get standaloneFactLines;
 
+  /// #4433 goods sold on an invoice: standaloneFactSalePlace
+  ///
+  /// In en, this message translates to:
+  /// **'the place goods are sold from: set a place that holds stock in the business settings'**
+  String get standaloneFactSalePlace;
+
   /// #4165 standalone invoice composer: standaloneFactSalesTax
   ///
   /// In en, this message translates to:
@@ -56825,11 +56861,41 @@ abstract class AppLocalizations {
   /// **'a description'**
   String get standaloneFieldDescription;
 
+  /// #4433 goods sold on an invoice: standaloneFieldGoodsAbroad
+  ///
+  /// In en, this message translates to:
+  /// **'a buyer in this business’s country: goods sold abroad are not invoiced here yet'**
+  String get standaloneFieldGoodsAbroad;
+
+  /// #4433 goods sold on an invoice: standaloneFieldGoodsOff
+  ///
+  /// In en, this message translates to:
+  /// **'the goods ledger, which is off in this business'**
+  String get standaloneFieldGoodsOff;
+
+  /// #4433 goods sold on an invoice: standaloneFieldItem
+  ///
+  /// In en, this message translates to:
+  /// **'an item kept in stock and on sale'**
+  String get standaloneFieldItem;
+
   /// #4165 standalone invoice composer: standaloneFieldLineId
   ///
   /// In en, this message translates to:
   /// **'saving the draft again'**
   String get standaloneFieldLineId;
+
+  /// #4433 goods sold on an invoice: standaloneFieldLot
+  ///
+  /// In en, this message translates to:
+  /// **'a lot of this item'**
+  String get standaloneFieldLot;
+
+  /// #4433 goods sold on an invoice: standaloneFieldPieces
+  ///
+  /// In en, this message translates to:
+  /// **'the tags of the pieces, as tag codes'**
+  String get standaloneFieldPieces;
 
   /// #4165 standalone invoice composer: standaloneFieldPrice
   ///
@@ -56843,10 +56909,40 @@ abstract class AppLocalizations {
   /// **'a quantity above zero with at most six decimals'**
   String get standaloneFieldQuantity;
 
+  /// #4433 goods sold on an invoice: standaloneFieldStock
+  ///
+  /// In en, this message translates to:
+  /// **'goods the stock can sell as entered'**
+  String get standaloneFieldStock;
+
+  /// #4433 goods sold on an invoice: standaloneFieldStockExpired
+  ///
+  /// In en, this message translates to:
+  /// **'a lot that has not expired'**
+  String get standaloneFieldStockExpired;
+
+  /// #4433 goods sold on an invoice: standaloneFieldStockLot
+  ///
+  /// In en, this message translates to:
+  /// **'a lot of this item that is there'**
+  String get standaloneFieldStockLot;
+
+  /// #4433 goods sold on an invoice: standaloneFieldStockPieces
+  ///
+  /// In en, this message translates to:
+  /// **'the pieces sold: one tag per piece, each of a piece that is there'**
+  String get standaloneFieldStockPieces;
+
+  /// #4433 goods sold on an invoice: standaloneFieldStockShort
+  ///
+  /// In en, this message translates to:
+  /// **'enough on hand at the place goods are sold from'**
+  String get standaloneFieldStockShort;
+
   /// #4165 standalone invoice composer: standaloneFieldSupply
   ///
   /// In en, this message translates to:
-  /// **'a service (goods are not invoiced here yet)'**
+  /// **'what the line supplies: a service, property or goods'**
   String get standaloneFieldSupply;
 
   /// #4165 standalone invoice composer: standaloneFieldUnit
@@ -56854,6 +56950,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'a unit'**
   String get standaloneFieldUnit;
+
+  /// #4433 goods sold on an invoice: standaloneFieldVariant
+  ///
+  /// In en, this message translates to:
+  /// **'the variant of the item'**
+  String get standaloneFieldVariant;
 
   /// #4165 standalone invoice composer: standaloneFieldVatRate
   ///
@@ -56903,11 +57005,35 @@ abstract class AppLocalizations {
   /// **'Description'**
   String get standaloneInvoiceLineDescription;
 
+  /// #4433 goods sold on an invoice: standaloneInvoiceLineGoods
+  ///
+  /// In en, this message translates to:
+  /// **'Sold from stock'**
+  String get standaloneInvoiceLineGoods;
+
   /// #4165 standalone invoice composer: standaloneInvoiceLineGross
   ///
   /// In en, this message translates to:
   /// **'The price includes tax'**
   String get standaloneInvoiceLineGross;
+
+  /// #4433 goods sold on an invoice: standaloneInvoiceLineNoGoods
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing from stock (a service)'**
+  String get standaloneInvoiceLineNoGoods;
+
+  /// #4433 goods sold on an invoice: standaloneInvoiceLinePieces
+  ///
+  /// In en, this message translates to:
+  /// **'Tags of the pieces sold'**
+  String get standaloneInvoiceLinePieces;
+
+  /// #4433 goods sold on an invoice: standaloneInvoiceLinePiecesHint
+  ///
+  /// In en, this message translates to:
+  /// **'One tag per piece, separated by commas: this item is tracked piece by piece.'**
+  String get standaloneInvoiceLinePiecesHint;
 
   /// #4165 standalone invoice composer: standaloneInvoiceLinePrice
   ///

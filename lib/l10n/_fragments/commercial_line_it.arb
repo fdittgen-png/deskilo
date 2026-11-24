@@ -1,0 +1,5 @@
+{
+  "commercialLineMeasure": "{quantity} a {price}",
+  "commercialLineMeasurePer": "{quantity} a {price} per {base}",
+  "commercialLineUnreadable": "Registrato da una versione più recente: questi dati sono mostrati così come sono e non possono essere usati qui"
+}

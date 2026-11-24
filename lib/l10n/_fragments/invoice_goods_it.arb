@@ -1,0 +1,75 @@
+{
+  "@@locale": "it",
+  "settingLabelStockInvoiceSalePlace": "Luogo da cui escono i beni venduti in fattura",
+  "@settingLabelStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
+  },
+  "settingHintStockInvoiceSalePlace": "Il codice di un luogo dell’attività che detiene scorte, per esempio MAIN. I beni venduti in fattura escono da lì all’emissione della fattura.",
+  "@settingHintStockInvoiceSalePlace": {
+    "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
+  },
+  "standaloneInvoiceLineGoods": "Venduto dalle scorte",
+  "@standaloneInvoiceLineGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineGoods"
+  },
+  "standaloneInvoiceLineNoGoods": "Nulla dalle scorte (un servizio)",
+  "@standaloneInvoiceLineNoGoods": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLineNoGoods"
+  },
+  "standaloneInvoiceLinePieces": "Etichette dei pezzi venduti",
+  "@standaloneInvoiceLinePieces": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePieces"
+  },
+  "standaloneInvoiceLinePiecesHint": "Un’etichetta per pezzo, separate da virgole: questo articolo è tracciato pezzo per pezzo.",
+  "@standaloneInvoiceLinePiecesHint": {
+    "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePiecesHint"
+  },
+  "standaloneFieldItem": "un articolo tenuto a scorta e in vendita",
+  "@standaloneFieldItem": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldItem"
+  },
+  "standaloneFieldVariant": "la variante dell’articolo",
+  "@standaloneFieldVariant": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldVariant"
+  },
+  "standaloneFieldLot": "un lotto di questo articolo",
+  "@standaloneFieldLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldLot"
+  },
+  "standaloneFieldPieces": "le etichette dei pezzi, come codici di etichetta",
+  "@standaloneFieldPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldPieces"
+  },
+  "standaloneFieldGoodsOff": "la gestione delle scorte, disattivata in questa attività",
+  "@standaloneFieldGoodsOff": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsOff"
+  },
+  "standaloneFieldGoodsAbroad": "un acquirente del Paese dell’attività: i beni venduti all’estero non si fatturano ancora qui",
+  "@standaloneFieldGoodsAbroad": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldGoodsAbroad"
+  },
+  "standaloneFieldStockShort": "scorte sufficienti nel luogo da cui si vende",
+  "@standaloneFieldStockShort": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockShort"
+  },
+  "standaloneFieldStockPieces": "i pezzi venduti: un’etichetta per pezzo, ciascuna di un pezzo presente",
+  "@standaloneFieldStockPieces": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockPieces"
+  },
+  "standaloneFieldStockLot": "un lotto presente di questo articolo",
+  "@standaloneFieldStockLot": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockLot"
+  },
+  "standaloneFieldStockExpired": "un lotto non scaduto",
+  "@standaloneFieldStockExpired": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStockExpired"
+  },
+  "standaloneFieldStock": "beni che le scorte possono vendere così come inseriti",
+  "@standaloneFieldStock": {
+    "description": "#4433 goods sold on an invoice: standaloneFieldStock"
+  },
+  "standaloneFactSalePlace": "il luogo da cui si vende: indicare un luogo con scorte nelle impostazioni dell’attività",
+  "@standaloneFactSalePlace": {
+    "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
+  }
+}

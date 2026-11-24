@@ -1848,6 +1848,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
+    since: 'invoice_goods_stock',
+    row: (
+      key: 'stock.invoice_sale_place',
+      type: 'text',
+      defaultValue: 'MAIN',
+      min: null,
+      max: 40,
+      unit: 'place code',
+      group: 'business',
+      scopes: ['workspace'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'goods on invoices (#4433)',
+      note: 'The code of the place goods sold on an invoice leave from, for example MAIN (the main store) or the code of a shop floor. It must be a place of the business that holds stock and is in use; otherwise an invoice with goods lines is refused until it is corrected.',
+    ),
+  ),
+  (
     since: 'stock_cycle_counts',
     row: (
       key: 'stock.cycle_count_high_value_minor',
