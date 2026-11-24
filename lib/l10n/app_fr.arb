@@ -20898,6 +20898,8 @@
   "stockChainDelivery": "Livraison {label} de {supplier}",
   "stockChainEmpty": "Aucun autre mouvement n'est enregistré.",
   "stockChainInvoice": "Facture {label}",
+  "stockChainOpen": "Tous les mouvements",
+  "stockChainPieceTitle": "Tous les mouvements de cette pièce",
   "stockChainPieces": "{count, plural, one{{count} pièce} other{{count} pièces}}",
   "stockChainReceipt": "Ticket {label}",
   "stockChainTitle": "Tous les mouvements de ce lot",

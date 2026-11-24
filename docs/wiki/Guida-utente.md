@@ -3205,6 +3205,7 @@ Apra una riga di **Magazzino** per vedere **Dov'è** quell'articolo (o quel lott
 - **Adesso** è ciò che il magazzino tiene in questo momento; **In un giorno…** mostra ciò che teneva a fine giornata, ricostruito dai movimenti. Guardare non cambia nulla.
 - I luoghi su uno scaffale sommano sempre la quantità mostrata in alto.
 - In un giorno passato la merce in viaggio non è mostrata; i pezzi sì, dal giorno in cui sono seguiti (un pezzo fatto prima non ha storico prima).
+- Tocchi un luogo che tiene un lotto per vedere **Tutti i movimenti** di quel lotto, dalla consegna con cui è arrivato fino alla sua uscita; il pulsante cronologia di un pezzo mostra **Tutti i movimenti di questo pezzo**. Un documento che non può vedere è indicato con il suo tipo, mai omesso.
 
 <!-- anchor: user.money.stock.value -->
 ### Valore del magazzino e origine della merce

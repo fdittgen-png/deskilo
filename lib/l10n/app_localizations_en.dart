@@ -35624,6 +35624,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get stockChainOpen => 'Every movement';
+
+  @override
+  String get stockChainPieceTitle => 'Every movement of this piece';
+
+  @override
   String stockChainPieces(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

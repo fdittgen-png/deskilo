@@ -207,8 +207,12 @@ final stockTraceChainReaderProvider = Provider<StockTraceChainReader>(
 );
 
 /// #4432 -- the chain of the lot (or, without a lot, the pieces) a movement belongs to.
-final stockMovementChainProvider = FutureProvider.autoDispose.family<TraceChain, ({String workspaceId, String movementId})>(
-  (ref, key) => ref.watch(stockTraceChainReaderProvider).chain(key.workspaceId, movementId: key.movementId),
+/// The subject is exactly one of a movement, a lot or a piece.
+final stockMovementChainProvider =
+    FutureProvider.autoDispose.family<TraceChain, ({String workspaceId, String? movementId, String? lotId, String? pieceId})>(
+  (ref, key) => ref
+      .watch(stockTraceChainReaderProvider)
+      .chain(key.workspaceId, movementId: key.movementId, lotId: key.lotId, pieceId: key.pieceId),
   retry: (_, _) => null,
 );
 

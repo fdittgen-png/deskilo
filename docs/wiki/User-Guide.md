@@ -3205,6 +3205,7 @@ Open any line of **Stock** to see **Where is it** for that item (or that lot): e
 - **Now** is what the stock holds at this moment; **On a day…** shows what it held when that day was over, replayed from the movements. Nothing is changed by looking.
 - The places on a shelf always add up to the quantity shown on top.
 - At a past day the goods on the road are not shown; the pieces are, from the day they are followed (a piece made before has no history before it).
+- Tap a place that holds a lot to see **Every movement of this lot**, from the delivery it came with to where it went out; the timeline button of a piece shows **Every movement of this piece**. A document you may not see is named by its kind, never left out.
 
 <!-- anchor: user.money.stock.value -->
 ### Stock value and where goods came from

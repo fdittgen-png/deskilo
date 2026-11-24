@@ -3,7 +3,8 @@
 // #4432 (G18) -- "Every movement of this lot" on a movement's page: the lot's whole chain, from where it came in to
 // where it went out, each step with its places, its quantity, the pieces it carried and the document that caused it.
 // A document the reader may not see is said, never left out. Each step opens its own movement. A failed read can be
-// asked again and is never shown as an empty chain.
+// asked again and is never shown as an empty chain. The same chain opens from "Where is it" for a lot or a piece
+// (showStockChainSheet).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -41,16 +42,35 @@ String? _documentText(AppLocalizations l10n, TraceDocument? d) {
   };
 }
 
+/// Opens the chain of a lot or of a piece (exactly one of them) in a sheet.
+Future<void> showStockChainSheet(BuildContext context, {required String workspaceId, String? lotId, String? pieceId}) =>
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (_) => SafeArea(
+        child: SingleChildScrollView(
+          key: const ValueKey('stock-chain-sheet'),
+          padding: const EdgeInsets.fromLTRB(AppSpacing.md, 0, AppSpacing.md, AppSpacing.md),
+          child: StockChainSection(workspaceId: workspaceId, lotId: lotId, pieceId: pieceId),
+        ),
+      ),
+    );
+
 class StockChainSection extends ConsumerWidget {
-  const StockChainSection({required this.workspaceId, required this.movementId, super.key});
+  /// The chain of exactly one subject: the movement on screen, a lot or a piece.
+  const StockChainSection({required this.workspaceId, this.movementId, this.lotId, this.pieceId, super.key})
+    : assert((movementId == null ? 0 : 1) + (lotId == null ? 0 : 1) + (pieceId == null ? 0 : 1) == 1, 'one subject');
 
   final String workspaceId;
-  final String movementId;
+  final String? movementId;
+  final String? lotId;
+  final String? pieceId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final provider = stockMovementChainProvider((workspaceId: workspaceId, movementId: movementId));
+    final provider = stockMovementChainProvider((workspaceId: workspaceId, movementId: movementId, lotId: lotId, pieceId: pieceId));
     final fmt = appFormatOf(context);
     final body = switch (ref.watch(provider)) {
       AsyncLoading() => const LinearProgressIndicator(),
@@ -94,7 +114,7 @@ class StockChainSection extends ConsumerWidget {
         key: const ValueKey('stock-chain'),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.stockChainTitle, style: Theme.of(context).textTheme.titleMedium),
+          Text(pieceId != null ? l10n.stockChainPieceTitle : l10n.stockChainTitle, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: AppSpacing.sm),
           body,
         ],
