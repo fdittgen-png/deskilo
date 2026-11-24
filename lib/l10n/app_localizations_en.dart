@@ -41101,6 +41101,121 @@ class AppLocalizationsEn extends AppLocalizations {
       'Nothing is numbered and nothing is taken until the country\'s operation is supported.';
 
   @override
+  String get tillOfflineBanner =>
+      'Offline — cash only. Sales are kept on this device and sent when the connection returns.';
+
+  @override
+  String get tillOfflineClosedSession =>
+      'The session was closed: these sales stay on the device for a manager.';
+
+  @override
+  String get tillOfflineDiscard => 'Discard the offline data';
+
+  @override
+  String get tillOfflineDiscardBody =>
+      'Sales that were not sent yet are lost for good. Only discard the data after a manager has checked.';
+
+  @override
+  String get tillOfflineDiscardConfirm => 'Discard';
+
+  @override
+  String tillOfflineGaps(String numbers) {
+    return 'Sale numbers missing at the server: $numbers.';
+  }
+
+  @override
+  String tillOfflineKept(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sales stay',
+      one: '1 sale stays',
+    );
+    return '$_temp0 on this device for a manager.';
+  }
+
+  @override
+  String get tillOfflineNoPrice =>
+      'This item has no price on this device, so it cannot be sold offline.';
+
+  @override
+  String get tillOfflineNotSigned =>
+      'Not signed. It is sent to the server when the connection returns.';
+
+  @override
+  String get tillOfflineReasonBeforeSession =>
+      'Made before this till was opened.';
+
+  @override
+  String get tillOfflineReasonCash => 'The cash given was less than the total.';
+
+  @override
+  String get tillOfflineReasonClock => 'The device clock was ahead.';
+
+  @override
+  String get tillOfflineReasonItem => 'The item is no longer sold.';
+
+  @override
+  String get tillOfflineReasonOther => 'The till rules refused it.';
+
+  @override
+  String get tillOfflineReasonPrice =>
+      'The price changed by more than is allowed.';
+
+  @override
+  String get tillOfflineReasonTooLong =>
+      'Made too long after the connection was lost.';
+
+  @override
+  String get tillOfflineReasonTooMany => 'More offline sales than allowed.';
+
+  @override
+  String tillOfflineRecorded(int seq) {
+    return 'Recorded offline · sale $seq of this till';
+  }
+
+  @override
+  String tillOfflineReportAccepted(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sales were recorded.',
+      one: '1 sale was recorded.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tillOfflineReportRefused(int seq, String reason) {
+    return 'Sale $seq was refused: $reason Its cash stays in the drawer count.';
+  }
+
+  @override
+  String get tillOfflineReportTitle => 'Offline sales sent';
+
+  @override
+  String get tillOfflineSendNow => 'Look for the connection now';
+
+  @override
+  String get tillOfflineSyncing => 'Sending the offline sales…';
+
+  @override
+  String get tillOfflineUnreadable =>
+      'The offline data on this device cannot be read. Nothing can be sold offline until a manager decides.';
+
+  @override
+  String tillOfflineWaiting(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sales wait on this device',
+      one: '1 sale waits on this device',
+      zero: 'No sale waits on this device',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get tillOpCorrectReceipt => 'correcting a receipt';
 
   @override

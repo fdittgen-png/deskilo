@@ -29,6 +29,8 @@ extension TillSessionOffline on TillSession {
           if (k.grossMinor != null) OfflinePrice(itemId: k.id, name: k.name, unit: k.unit, grossMinor: k.grossMinor!),
       ]);
       _setOffline(offline.value.copyWith(waiting: kit.queue.pendingCount, unreadable: false));
+      // sales that waited since the app was last closed offline are sent now, if the connection is there
+      if (kit.queue.hasPending) unawaited(reconnect(force: true));
     } on OfflineStoreUnreadable {
       _setOffline(offline.value.copyWith(unreadable: true));
     }
@@ -111,11 +113,11 @@ extension TillSessionOffline on TillSession {
     _reconnectTimer = null;
   }
 
-  /// Looks for the connection; when it is there, sends what waited, in order, and shows what the server answered. A send the server
+  /// Looks for the connection; [force] sends what waits even when the till is not offline now. When it is there, sends what waited, in order, and shows what the server answered. A send the server
   /// refuses as a whole (a closed session) keeps its sales on the device for a manager and says so; the till is online again.
-  Future<void> reconnect() => _serial(() async {
+  Future<void> reconnect({bool force = false}) => _serial(() async {
     final kit = offlineKit;
-    if (kit == null || !offline.value.active || offline.value.syncing) return;
+    if (kit == null || (!offline.value.active && !force) || offline.value.syncing) return;
     _setOffline(offline.value.copyWith(syncing: true));
     try {
       await port.readiness(workspaceId).timeout(callTimeout);

@@ -8,6 +8,9 @@ import 'package:flutter/foundation.dart';
 import '../domain/till_offline.dart';
 import '../domain/till_offline_queue.dart';
 
+/// How often an offline till looks for its connection again: a technical interval, nothing a business sets.
+const Duration kOfflineReconnectEvery = Duration(seconds: 20);
+
 /// Everything a till session needs to go on selling for cash when the connection is lost.
 class TillOfflineKit {
   const TillOfflineKit({
@@ -16,7 +19,7 @@ class TillOfflineKit {
     required this.currency,
     required this.minorDigits,
     required this.now,
-    this.reconnectEvery = const Duration(seconds: 20),
+    this.reconnectEvery = kOfflineReconnectEvery,
   });
 
   final TillOfflineQueue queue;

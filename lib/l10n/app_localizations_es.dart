@@ -41437,6 +41437,123 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se numera ni se cobra nada mientras la operación del país no esté admitida.';
 
   @override
+  String get tillOfflineBanner =>
+      'Sin conexión: solo efectivo. Las ventas se guardan en este dispositivo y se envían cuando vuelve la conexión.';
+
+  @override
+  String get tillOfflineClosedSession =>
+      'La sesión se cerró: estas ventas permanecen en el dispositivo para un responsable.';
+
+  @override
+  String get tillOfflineDiscard => 'Descartar los datos sin conexión';
+
+  @override
+  String get tillOfflineDiscardBody =>
+      'Las ventas que aún no se enviaron se pierden para siempre. Descarte los datos solo después de que un responsable los haya revisado.';
+
+  @override
+  String get tillOfflineDiscardConfirm => 'Descartar';
+
+  @override
+  String tillOfflineGaps(String numbers) {
+    return 'Números de venta que faltan en el servidor: $numbers.';
+  }
+
+  @override
+  String tillOfflineKept(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ventas permanecen',
+      one: '1 venta permanece',
+    );
+    return '$_temp0 en este dispositivo para un responsable.';
+  }
+
+  @override
+  String get tillOfflineNoPrice =>
+      'Este artículo no tiene precio en este dispositivo, por lo que no se puede vender sin conexión.';
+
+  @override
+  String get tillOfflineNotSigned =>
+      'Sin firmar. Se envía al servidor cuando vuelve la conexión.';
+
+  @override
+  String get tillOfflineReasonBeforeSession =>
+      'Hecha antes de abrir esta caja.';
+
+  @override
+  String get tillOfflineReasonCash =>
+      'El efectivo entregado era menor que el total.';
+
+  @override
+  String get tillOfflineReasonClock =>
+      'El reloj del dispositivo estaba adelantado.';
+
+  @override
+  String get tillOfflineReasonItem => 'El artículo ya no se vende.';
+
+  @override
+  String get tillOfflineReasonOther => 'Las reglas de la caja lo rechazaron.';
+
+  @override
+  String get tillOfflineReasonPrice => 'El precio cambió más de lo permitido.';
+
+  @override
+  String get tillOfflineReasonTooLong =>
+      'Hecha demasiado tiempo después de perder la conexión.';
+
+  @override
+  String get tillOfflineReasonTooMany =>
+      'Más ventas sin conexión de las permitidas.';
+
+  @override
+  String tillOfflineRecorded(int seq) {
+    return 'Registrada sin conexión · venta $seq de esta caja';
+  }
+
+  @override
+  String tillOfflineReportAccepted(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Se registraron $count ventas.',
+      one: 'Se registró 1 venta.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tillOfflineReportRefused(int seq, String reason) {
+    return 'Se rechazó la venta $seq: $reason Su efectivo permanece en el recuento del cajón.';
+  }
+
+  @override
+  String get tillOfflineReportTitle => 'Ventas sin conexión enviadas';
+
+  @override
+  String get tillOfflineSendNow => 'Buscar la conexión ahora';
+
+  @override
+  String get tillOfflineSyncing => 'Enviando las ventas sin conexión…';
+
+  @override
+  String get tillOfflineUnreadable =>
+      'Los datos sin conexión de este dispositivo no se pueden leer. No se venderá nada sin conexión hasta que un responsable decida.';
+
+  @override
+  String tillOfflineWaiting(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ventas esperan en este dispositivo',
+      one: '1 venta espera en este dispositivo',
+      zero: 'Ninguna venta espera en este dispositivo',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get tillOpCorrectReceipt => 'corrección de un ticket';
 
   @override

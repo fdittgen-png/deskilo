@@ -11,6 +11,9 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/form_kit.dart';
 import '../domain/counter_till.dart';
+import '../domain/till_offline.dart';
+import 'till_offline_mode.dart';
+import 'till_offline_panel.dart';
 import 'till_session.dart';
 import 'till_text.dart';
 
@@ -24,6 +27,9 @@ class TillBasket extends StatelessWidget {
     required this.onNext,
     required this.onRetry,
     required this.onConfirm,
+    this.offline = const TillOfflineStatus(),
+    this.onSendOffline,
+    this.onDiscardOffline,
   });
 
   final TillState state;
@@ -33,6 +39,11 @@ class TillBasket extends StatelessWidget {
   final VoidCallback onNext;
   final VoidCallback onRetry;
   final VoidCallback onConfirm;
+
+  /// #4373 -- what the till says of selling offline, and what its two actions do.
+  final TillOfflineStatus offline;
+  final VoidCallback? onSendOffline;
+  final VoidCallback? onDiscardOffline;
 
   @override
   Widget build(BuildContext context) {
@@ -44,16 +55,20 @@ class TillBasket extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, AppSpacing.sm),
-          child: Text(l10n.tillBasketTitle, style: theme.textTheme.titleMedium),
-        ),
+        // the banner and the title scroll with the lines: only the footer is fixed, so a short phone basket never overflows
         Expanded(
-          child: state.empty
-              ? Center(child: Text(l10n.tillBasketEmpty, textAlign: TextAlign.center))
-              : ListView.builder(
-                  itemCount: state.lines.length,
-                  itemBuilder: (context, i) => _Line(
+          child: ListView(
+            children: [
+              TillOfflinePanel(status: offline, onSend: onSendOffline, onDiscard: onDiscardOffline),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, AppSpacing.sm),
+                child: Text(l10n.tillBasketTitle, style: theme.textTheme.titleMedium),
+              ),
+              if (state.empty)
+                Padding(padding: const EdgeInsets.all(AppSpacing.lg), child: Text(l10n.tillBasketEmpty, textAlign: TextAlign.center))
+              else
+                for (var i = 0; i < state.lines.length; i++)
+                  _Line(
                     line: state.lines[i],
                     priced: draft != null && i < draft.lines.length ? draft.lines[i] : null,
                     tracks: sold?.tracksOf(i + 1) ?? const [],
@@ -61,16 +76,17 @@ class TillBasket extends StatelessWidget {
                     onQuantity: sold == null && !state.unconfirmed ? () => onQuantity(i) : null,
                     onRemove: sold == null && !state.unconfirmed ? () => onRemove(i) : null,
                   ),
-                ),
+            ],
+          ),
         ),
         const Divider(height: 1),
         Padding(
           padding: const EdgeInsets.all(AppSpacing.md),
           child: sold != null
-              ? _Sold(sold: sold, change: state.change, money: money, onNext: state.busy ? null : onNext)
+              ? _Sold(sold: sold, change: state.change, money: money, offlineSale: offline.sale, onNext: state.busy ? null : onNext)
               : state.unconfirmed
               ? _Unconfirmed(state: state, onConfirm: onConfirm)
-              : _Footer(state: state, money: money, onPay: onPay, onRetry: onRetry),
+              : _Footer(state: state, money: money, offline: offline.active, onPay: onPay, onRetry: onRetry),
         ),
       ],
     );
@@ -150,10 +166,13 @@ class _Unconfirmed extends StatelessWidget {
 }
 
 class _Footer extends StatelessWidget {
-  const _Footer({required this.state, required this.money, required this.onPay, required this.onRetry});
+  const _Footer({required this.state, required this.money, required this.offline, required this.onPay, required this.onRetry});
 
   final TillState state;
   final MoneyFormat money;
+
+  /// Selling offline: the tax is not split on the device, so it is not shown.
+  final bool offline;
   final VoidCallback onPay;
   final VoidCallback onRetry;
 
@@ -173,7 +192,7 @@ class _Footer extends StatelessWidget {
             key: const ValueKey('till-total'),
             style: theme.textTheme.titleLarge,
           ),
-          Text(l10n.tillTaxIncluded(money.formatMinor(draft.totals.taxMinor))),
+          if (!offline) Text(l10n.tillTaxIncluded(money.formatMinor(draft.totals.taxMinor))),
         ] else if (state.busy)
           Text(l10n.tillPricing),
         if (problem != null) ...[
@@ -197,9 +216,12 @@ class _Footer extends StatelessWidget {
 }
 
 class _Sold extends StatelessWidget {
-  const _Sold({required this.sold, required this.change, required this.money, required this.onNext});
+  const _Sold({required this.sold, required this.change, required this.money, required this.offlineSale, required this.onNext});
 
   final TillSold sold;
+
+  /// The sale as the device recorded it, when it was made offline: it has no receipt number yet.
+  final OfflineSale? offlineSale;
   final int? change;
   final MoneyFormat money;
   final VoidCallback? onNext;
@@ -213,7 +235,11 @@ class _Sold extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(l10n.tillSoldTitle, style: theme.textTheme.titleLarge),
-        Text(l10n.tillReceiptNumber(sold.number), key: const ValueKey('till-receipt')),
+        if (offlineSale case final sale?) ...[
+          Text(l10n.tillOfflineRecorded(sale.seq), key: const ValueKey('till-offline-receipt')),
+          Text(l10n.tillOfflineNotSigned, key: const ValueKey('till-offline-not-signed')),
+        ] else
+          Text(l10n.tillReceiptNumber(sold.number), key: const ValueKey('till-receipt')),
         Text(l10n.tillTotalDue(money.formatMinor(sold.totals.grossMinor))),
         if (change != null && change! > 0)
           Text(l10n.tillChangeDue(money.formatMinor(change!)), key: const ValueKey('till-change'), style: theme.textTheme.titleMedium),

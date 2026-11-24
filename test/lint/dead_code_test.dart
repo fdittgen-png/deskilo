@@ -18,11 +18,6 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  // The offline till (CS11): the till screen and the sync wire them in.
-  'lib/features/money/data/secure_offline_store.dart::SecureOfflineStore':
-      '#4373 — the till screen opens the secure store of the offline sales',
-  'lib/features/money/domain/till_offline_queue.dart::TillOfflineQueue':
-      '#4373 — the till screen records the offline sales in the queue',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':

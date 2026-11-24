@@ -464,8 +464,7 @@ List<Override> _hmrcOverrides(DemoFixture fixture) => [
 ];
 
 /// #4366 — each space's till: its own counter, its own numbers.
-/// The till's ports: its sales, its cash drawer (which follows the business's settings and the person's rights, as the server
-/// does) and its offline sales, each answered by the space the scope is looking at.
+/// The till's ports: its sales, its drawer (following the business's settings and the person's rights) and its offline sales.
 List<Override> _tillOverrides(DemoSpaces<DemoTill> tills, DemoSpaces<DemoTillDrawer> drawers) => [
     tillPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
     // #4367 — the drawer follows the business's settings and the person's rights, as the server does.

@@ -174,7 +174,7 @@ class OfflineSyncAnswer {
     final r = JsonReader.of(json, context: 'offline.sync');
     return OfflineSyncAnswer(
       results: [for (final x in r.listOrAbsent('results')) OfflineSaleResult.fromJson(x)],
-      gaps: [for (final g in r.listOrAbsent('gaps')) gapNumber(g)],
+      gaps: [for (final g in r.listOrAbsent('gaps')) _gapNumber(g)],
     );
   }
 }
@@ -223,13 +223,13 @@ class OfflineList {
     final r = JsonReader.of(json, context: 'offline.list');
     return OfflineList(
       sales: [for (final s in r.listOrAbsent('sales')) OfflineSaleRow.fromJson(s)],
-      gaps: [for (final g in r.listOrAbsent('gaps')) gapNumber(g)],
+      gaps: [for (final g in r.listOrAbsent('gaps')) _gapNumber(g)],
     );
   }
 }
 
 /// A missing sequence number as the server lists it: a number, or `{device_id, seq}` once sales name their device.
-int gapNumber(Object? gap) => gap is Map ? (gap['seq']! as num).toInt() : (gap! as num).toInt();
+int _gapNumber(Object? gap) => gap is Map ? (gap['seq']! as num).toInt() : (gap! as num).toInt();
 
 /// The server side of the offline sales.
 abstract interface class TillOfflinePort {
