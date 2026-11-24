@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../domain/sales_tax_repository.dart';
 import '../domain/sales_tax_return.dart';
 import '../domain/tax_exemption_certificate.dart';
@@ -36,11 +37,11 @@ class SupabaseSalesTaxRepository implements SalesTaxRepository {
   Future<List<TaxExemptionCertificate>> fetchCertificates(
     String memberId,
   ) async {
-    final rows = await _client
-        .from('tax_exemption_certificates')
+    final rows = await fetchAllPages(table: 'tax_exemption_certificates', build: () => _client.from('tax_exemption_certificates')
         .select('id, kind, state, number, valid_from, valid_to')
         .eq('member_id', memberId)
-        .order('valid_from', ascending: false);
+        .order('valid_from', ascending: false)
+        .order('id'));
     return [for (final row in rows) TaxExemptionCertificate.fromRow(row)];
   }
 

@@ -6,6 +6,7 @@
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../domain/badge_repository.dart';
 import '../domain/member_badge.dart';
 
@@ -15,11 +16,11 @@ mixin SupabaseBadges implements BadgeRepository {
 
   @override
   Future<List<MemberBadge>> fetchMemberBadges(String workspaceId) async {
-    final rows = await client
-        .from('member_badges')
+    final rows = await fetchAllPages(table: 'member_badges', build: () => client.from('member_badges')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('created_at', ascending: false);
+        .order('created_at', ascending: false)
+        .order('id'));
     return rows.map(MemberBadge.fromRow).toList();
   }
 

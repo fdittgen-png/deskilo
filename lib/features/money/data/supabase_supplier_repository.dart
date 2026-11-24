@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 
 /// #2567 — the suppliers and their RPCs (0457). The supplier row carries no
@@ -12,15 +13,15 @@ class SupabaseSupplierRepository implements SupplierRepository {
 
   @override
   Future<List<Supplier>> fetchSuppliers(String workspaceId) async {
-    final rows = await _client
-        .from(ServerTable.suppliers)
+    final rows = await fetchAllPages(table: ServerTable.suppliers, build: () => _client.from(ServerTable.suppliers)
         .select(
           'id, supplier_number, name, tax_id_entered, tax_identifier, '
           'tax_id_kind, street, postal_code, city, country_code, subdivision, contact, '
           'status, bank_revision',
         )
         .eq('workspace_id', workspaceId)
-        .order('supplier_number');
+        .order('supplier_number')
+        .order('id'));
     return [for (final r in rows) Supplier.fromRow(r)];
   }
 

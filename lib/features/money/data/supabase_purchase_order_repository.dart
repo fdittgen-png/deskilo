@@ -6,6 +6,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../domain/purchase_order.dart';
 import '../domain/purchase_order_receipt.dart';
 
@@ -16,12 +17,12 @@ class SupabasePurchaseOrderRepository implements PurchaseOrderRepository {
 
   @override
   Future<List<PurchaseOrder>> fetchOrders(String workspaceId) async {
-    final rows = await _client
-        .from('purchase_orders')
+    final rows = await fetchAllPages(table: 'purchase_orders', build: () => _client.from('purchase_orders')
         .select('*, purchase_order_lines(*), suppliers(name)')
         .eq('workspace_id', workspaceId)
         .order('year', ascending: false)
-        .order('number', ascending: false);
+        .order('number', ascending: false)
+        .order('id'));
     return [for (final row in rows) PurchaseOrder.fromJson(row)];
   }
 
@@ -84,11 +85,11 @@ class SupabasePurchaseOrderRepository implements PurchaseOrderRepository {
 
   @override
   Future<List<PurchaseOrderSend>> fetchSends(String workspaceId) async {
-    final rows = await _client
-        .from('purchase_order_sends')
+    final rows = await fetchAllPages(table: 'purchase_order_sends', build: () => _client.from('purchase_order_sends')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('created_datetime', ascending: false);
+        .order('created_datetime', ascending: false)
+        .order('id'));
     return [for (final row in rows) PurchaseOrderSend.fromJson(row)];
   }
 
@@ -174,15 +175,15 @@ class SupabasePurchaseOrderRepository implements PurchaseOrderRepository {
 
   @override
   Future<List<PurchaseOrderReceipt>> fetchReceipts(String workspaceId) async {
-    final rows = await _client
-        .from('purchase_order_receipts')
+    final rows = await fetchAllPages(table: 'purchase_order_receipts', build: () => _client.from('purchase_order_receipts')
         .select(
           'id, order_id, received_on, note, '
           'purchase_order_receipt_lines(id, quantity, purchase_order_lines(line_no))',
         )
         .eq('workspace_id', workspaceId)
         .order('received_on', ascending: false)
-        .order('created_datetime', ascending: false);
+        .order('created_datetime', ascending: false)
+        .order('id'));
     return [for (final row in rows) PurchaseOrderReceipt.fromJson(row)];
   }
 

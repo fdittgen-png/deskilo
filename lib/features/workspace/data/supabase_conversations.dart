@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 import '../domain/conversation.dart';
 import '../domain/member_note.dart';
@@ -65,11 +66,11 @@ mixin SupabaseConversations {
     Future<List<ConversationParticipant>> fetchParticipants(
     String conversationId,
   ) async {
-    final rows = await conversationClient
-        .from('conversation_participants')
+    final rows = await fetchAllPages(table: 'conversation_participants', build: () => conversationClient.from('conversation_participants')
         .select()
         .eq('conversation_id', conversationId)
-        .order('joined_at');
+        .order('joined_at')
+        .order('member_id'));
     return [
       for (final row in rows)
         ConversationParticipant.fromRow(Map<String, dynamic>.from(row)),

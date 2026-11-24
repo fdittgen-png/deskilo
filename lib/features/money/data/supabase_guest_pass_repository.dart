@@ -6,6 +6,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 import '../domain/guest_pass.dart';
 
@@ -26,14 +27,14 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
 
   @override
   Future<List<GuestPassRecord>> passesSold(String workspaceId) async {
-    final rows = await _client
-        .from('guest_passes')
+    final rows = await fetchAllPages(table: 'guest_passes', build: () => _client.from('guest_passes')
         .select(
           'id, member_id, offer_id, unit, units, amount_cents, starts_at, ends_at, '
           'revoked_at, revoked_reservation_ids, invoice_id',
         )
         .eq('workspace_id', workspaceId)
-        .order('sold_at', ascending: false);
+        .order('sold_at', ascending: false)
+        .order('id'));
     return [for (final r in rows) GuestPassRecord.fromJson(r)];
   }
 

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 import '../../../core/i18n/format_prefs.dart';
 import '../../../core/phone/phone_entry.dart';
@@ -143,11 +144,11 @@ class SupabaseProfileRepository implements ProfileRepository {
   ) async {
     // rights_requests_select (0327) lets the space's rights controller read
     // every request addressed to it, and a person only their own.
-    final rows = await _client
-        .from('rights_requests')
+    final rows = await fetchAllPages(table: 'rights_requests', build: () => _client.from('rights_requests')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('received_at', ascending: false);
+        .order('received_at', ascending: false)
+        .order('id'));
     return [
       for (final row in rows as List)
         RightsRequest.fromJson(

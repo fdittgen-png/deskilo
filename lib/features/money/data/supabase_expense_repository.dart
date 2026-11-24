@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../domain/expense_repository.dart';
 import '../domain/expense_schedule.dart';
 
@@ -133,14 +134,14 @@ class SupabaseExpenseRepository implements ExpenseRepository {
   Future<List<ExpenseOccurrence>> fetchExpenseOccurrences(
     String workspaceId,
   ) async {
-    final rows = await _client
-        .from('expense_occurrences')
+    final rows = await fetchAllPages(table: 'expense_occurrences', build: () => _client.from('expense_occurrences')
         // #2569 — a contract occurrence (a lease) is an expected obligation,
         // matched to the supplier invoice, so only outlays are confirmed here.
         .select('*, expense_schedules!inner(title, amount_cents, origin)')
         .eq('workspace_id', workspaceId)
         .eq('expense_schedules.origin', 'member_outlay')
-        .order('due_on');
+        .order('due_on')
+        .order('id'));
     return [
       for (final r in rows as List)
         ExpenseOccurrence.fromDb(r as Map<String, dynamic>),

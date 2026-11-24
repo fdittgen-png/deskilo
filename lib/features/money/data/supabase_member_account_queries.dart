@@ -72,11 +72,11 @@ class SupabaseMemberAccountQueries implements MemberAccountQueries {
 
   @override
   Future<List<LedgerEntry>> fetchLedger(String memberId) async {
-    final rows = await _client
-        .from('ledger_entries')
+    final rows = await fetchAllPages(table: 'ledger_entries', build: () => _client.from('ledger_entries')
         .select()
         .eq('member_id', memberId)
-        .order('created_at', ascending: false);
+        .order('created_at', ascending: false)
+        .order('id'));
     return _counted(rows, ledgerArea(memberId), memberId);
   }
 

@@ -44,7 +44,8 @@ const Map<String, Object?> _tableRow = {
     httpClient: MockClient((request) async {
       paths.add(request.url.path);
       final Object answer = switch (request.url.path) {
-        '/rest/v1/members' => _members,
+        // a list read pages until an empty page (#4446): the members are the first page
+        '/rest/v1/members' => (request.url.queryParameters['offset'] ?? '0') == '0' ? _members : const <Object?>[],
         '/rest/v1/profiles' => [_tableRow],
         _ => projection,
       };

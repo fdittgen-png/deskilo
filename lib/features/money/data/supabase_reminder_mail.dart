@@ -6,6 +6,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/codes/pg_code.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../domain/reminder_mail.dart';
 
 class SupabaseReminderMail implements ReminderMail {
@@ -44,8 +45,7 @@ class SupabaseReminderMail implements ReminderMail {
     String workspaceId,
     String invoiceId,
   ) async {
-    final rows = await _client
-        .from('reminder_email_sends')
+    final rows = await fetchAllPages(table: 'reminder_email_sends', build: () => _client.from('reminder_email_sends')
         .select()
         .eq('workspace_id', workspaceId)
         .eq('invoice_id', invoiceId)
@@ -55,7 +55,8 @@ class SupabaseReminderMail implements ReminderMail {
           ReminderMailState.unconfirmed.wire,
           ReminderMailState.pending.wire,
         ])
-        .order('created_datetime', ascending: false);
+        .order('created_datetime', ascending: false)
+        .order('id'));
     return [for (final row in rows) ReminderMailSend.fromJson(row)];
   }
 

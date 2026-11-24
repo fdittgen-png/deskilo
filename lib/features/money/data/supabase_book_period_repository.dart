@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../domain/renderer_declaration.dart';
 
 /// The book periods, the export log and their RPCs (0504). Reading checks
@@ -88,8 +89,7 @@ class SupabaseBookPeriodRepository implements BookPeriodRepository {
   ) async {
     // The log itself, under its read policy (viewFinances, exportData or
     // the owner): it names the member who made each file.
-    final rows = await _client
-        .from('book_exports')
+    final rows = await fetchAllPages(table: 'book_exports', build: () => _client.from('book_exports')
         .select(
           'id, format_id, period_from, period_to, sha256, byte_count, '
           'row_count, document_count, closed_period, exported_at, '
@@ -98,7 +98,8 @@ class SupabaseBookPeriodRepository implements BookPeriodRepository {
         .eq('workspace_id', workspaceId)
         .lte('period_from', isoDay(to))
         .gte('period_to', isoDay(from))
-        .order('exported_at');
+        .order('exported_at')
+        .order('id'));
     return [for (final r in rows) BookExport.fromJson(r)];
   }
 }
