@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 import '../domain/dunning.dart';
 import '../domain/dunning_repository.dart';
@@ -27,11 +28,12 @@ class SupabaseDunningRepository implements DunningRepository {
 
   @override
   Future<Map<String, String>> fetchDunningHolds(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchAllPages(table: 'invoice_dunning_holds', build: () => _client
         .from('invoice_dunning_holds')
         .select('invoice_id, reason')
         .eq('workspace_id', workspaceId)
-        .isFilter('released_at', null);
+        .isFilter('released_at', null)
+        .order('id', ascending: true));
     return {
       for (final row in rows)
         row['invoice_id'] as String: row['reason'] as String,

@@ -7,6 +7,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/codes/dk_code.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../domain/billing_access.dart';
 
 class SupabaseBillingAccessRepository implements BillingAccessRepository {
@@ -20,15 +21,19 @@ class SupabaseBillingAccessRepository implements BillingAccessRepository {
     String subjectId,
   ) async {
     final rows = await _asRefusal(
-      () => _client
-          .from('billing_access_grants')
-          .select(
-            'id, financial_subject_id, invited_at, expires_at, accepted_at, '
-            'revoked_at, revoke_reason',
-          )
-          .eq('workspace_id', workspaceId)
-          .eq('financial_subject_id', subjectId)
-          .order('invited_at', ascending: false),
+      () => fetchConfigurationList(
+        table: 'billing_access_grants',
+        build: () => _client
+            .from('billing_access_grants')
+            .select(
+              'id, financial_subject_id, invited_at, expires_at, accepted_at, '
+              'revoked_at, revoke_reason',
+            )
+            .eq('workspace_id', workspaceId)
+            .eq('financial_subject_id', subjectId)
+            .order('invited_at', ascending: false)
+            .order('id', ascending: true),
+      ),
     );
     return [for (final row in rows) BillingAccessGrant.fromJson(row)];
   }
@@ -39,11 +44,12 @@ class SupabaseBillingAccessRepository implements BillingAccessRepository {
   Future<Set<String>> heldSubjects() async {
     final me = _client.auth.currentUser?.id;
     if (me == null) return const {};
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'billing_access_grants', build: () => _client
         .from('billing_access_grants')
         .select('financial_subject_id')
         .eq('principal_user_id', me)
-        .filter('revoked_at', 'is', null);
+        .filter('revoked_at', 'is', null)
+        .order('id', ascending: true));
     return {for (final r in rows) r['financial_subject_id'] as String};
   }
 

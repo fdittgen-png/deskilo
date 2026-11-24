@@ -37842,6 +37842,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockSettingsValues => 'Reglas de existencias';
 
   @override
+  String get stockStateUnknown => 'Desconocido para esta aplicación';
+
+  @override
   String get stockStoredLabel => 'Guardado';
 
   @override

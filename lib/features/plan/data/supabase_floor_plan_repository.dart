@@ -329,14 +329,14 @@ class SupabaseFloorPlanRepository
       deskRows = await fetchAllIn(
         table: 'desks',
         ids: officeIds,
-        build: (chunk) => _client.from('desks').select().inFilter('office_id', chunk).order('id'),
+        build: (chunk) => _client.from('desks').select().inFilter('office_id', chunk).order('id', ascending: true),
       );
       final deskIds = deskRows.map((row) => row['id'] as String).toList();
       if (deskIds.isNotEmpty) {
         seatRows = await fetchAllIn(
           table: 'seats',
           ids: deskIds,
-          build: (chunk) => _client.from(ServerTable.seats).select().inFilter('desk_id', chunk).order('id'),
+          build: (chunk) => _client.from(ServerTable.seats).select().inFilter('desk_id', chunk).order('id', ascending: true),
         );
       }
     }

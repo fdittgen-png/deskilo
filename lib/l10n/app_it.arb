@@ -22083,6 +22083,7 @@
   "@stockSettingsValues": {
     "description": "the stock pages and group (#4299)"
   },
+  "stockStateUnknown": "Sconosciuto a questa applicazione",
   "stockStoredLabel": "Registrato",
   "stockTabMovements": "Movimenti",
   "stockTabOnHand": "Disponibile",

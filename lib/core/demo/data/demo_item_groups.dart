@@ -80,11 +80,11 @@ class DemoItemGroups implements ItemGroups {
         ];
 
   @override
-  Future<GroupSaved> save(String workspaceId, {required String requestId, required String groupId, required int expectedRevision, required Map<String, Object?> body, bool apply = true}) async {
+  Future<GroupSaved> save(String workspaceId, {required String requestId, required String groupId, required int expectedRevision, required ItemGroupDraft body, bool apply = true}) async {
     final replay = apply ? _answers[requestId] : null;
     if (replay is GroupSaved) return replay;
     final old = _groups[groupId];
-    final change = _checked(groupId, expectedRevision, body, old);
+    final change = _checked(groupId, expectedRevision, body.toJson(), old);
     final reached = old == null ? const <String>[] : _itemsOf(groupId);
     final effect = _effectOf(old, change.changes, change.next, reached);
     final revision = (old?.revision ?? 0) + 1;

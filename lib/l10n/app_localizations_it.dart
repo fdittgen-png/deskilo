@@ -37883,6 +37883,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockSettingsValues => 'Regole del magazzino';
 
   @override
+  String get stockStateUnknown => 'Sconosciuto a questa applicazione';
+
+  @override
   String get stockStoredLabel => 'Registrato';
 
   @override

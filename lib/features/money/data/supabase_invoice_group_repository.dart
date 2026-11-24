@@ -5,6 +5,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/codes/pg_code.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../domain/invoice_groups.dart';
 
 class SupabaseInvoiceGroupRepository implements InvoiceGroupRepository {
@@ -17,10 +18,11 @@ class SupabaseInvoiceGroupRepository implements InvoiceGroupRepository {
 
   @override
   Future<List<InvoiceGroup>> groups() async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: _groups, build: () => _client
         .from(_groups)
         .select('id, name, items:$_items(network_id, invoice_id, label)')
-        .order('name');
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return [for (final row in rows) InvoiceGroup.fromJson(row)];
   }
 

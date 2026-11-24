@@ -130,7 +130,7 @@ class _PointDraft {
     try {
       await reorder.savePoint(
         workspaceId,
-        point: reorderPointPayload(
+        point: StockReorderPointDraft(
           target: isNew ? (item: item, variant: variant, site: site) : null,
           point: _dot('level'),
           value: value,

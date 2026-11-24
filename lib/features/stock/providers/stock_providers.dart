@@ -56,7 +56,6 @@ final stockQueriesProvider = Provider<StockQueries>(
 final stockOnHandWalkProvider = NotifierProvider.autoDispose
     .family<StockWalk<StockOnHandRow>, StockWalkState<StockOnHandRow>, StockFilters>(
       (filters) => StockWalk<StockOnHandRow>(
-        filters,
         (ref) {
           final queries = ref.read(stockQueriesProvider);
           return (after) => queries.onHandPage(
@@ -73,7 +72,6 @@ final stockOnHandWalkProvider = NotifierProvider.autoDispose
 final stockMovementsWalkProvider = NotifierProvider.autoDispose
     .family<StockWalk<StockMovementRow>, StockWalkState<StockMovementRow>, StockFilters>(
       (filters) => StockWalk<StockMovementRow>(
-        filters,
         (ref) {
           final queries = ref.read(stockQueriesProvider);
           return (after) => queries.movementsPage(
@@ -136,6 +134,18 @@ final stockConfigCommandsProvider = Provider<StockConfigCommands>(
 final stockRegistryProvider = Provider<StockRegistry>(
   (ref) => SupabaseStockRegistry(ref.watch(selectedWorkspaceClientProvider)),
 );
+
+/// The registry of stocked items, a page at a time, under the place or the "no home" filter chosen (#4401: the one
+/// stock walk).
+final stockRegistryWalkProvider = NotifierProvider.autoDispose
+    .family<StockWalk<StockRegistryRow>, StockWalkState<StockRegistryRow>, ({String workspaceId, String? placeId, bool noHome})>(
+      (filter) => StockWalk<StockRegistryRow>(
+        (ref) {
+          final registry = ref.read(stockRegistryProvider);
+          return (after) => registry.page(filter.workspaceId, placeId: filter.placeId, noHome: filter.noHome, after: after);
+        },
+      ),
+    );
 
 /// #4294 -- what is low and what to order, for the selected business. The Demo and the tests
 /// replace it.
@@ -208,6 +218,18 @@ final stockScanAddsOneProvider = Provider<bool>((ref) {
 final stockTraceReaderProvider = Provider<StockTraceReader>(
   (ref) => SupabaseStockTrace(ref.watch(selectedWorkspaceClientProvider)),
 );
+
+/// The goods put away against one document (`order`, `bill` or `payment`), a keyset page at a time (#4401: the one
+/// stock walk).
+final stockDocumentGoodsWalkProvider = NotifierProvider.autoDispose
+    .family<StockWalk<DocumentGoodsRow>, StockWalkState<DocumentGoodsRow>, ({String workspaceId, String kind, String id})>(
+      (document) => StockWalk<DocumentGoodsRow>(
+        (ref) {
+          final reader = ref.read(stockTraceReaderProvider);
+          return (after) => reader.documentGoods(document.workspaceId, document.kind, document.id, after: after);
+        },
+      ),
+    );
 
 /// #4432 -- the whole chain of a lot or a piece (0923).
 final stockTraceChainReaderProvider = Provider<StockTraceChainReader>(

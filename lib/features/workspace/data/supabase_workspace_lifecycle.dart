@@ -6,6 +6,7 @@
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 import '../domain/feature_flags_write.dart';
 import '../domain/workspace.dart';
@@ -19,7 +20,7 @@ mixin SupabaseWorkspaceLifecycle on SupabaseWorkspaceRows
     implements WorkspaceLifecycleRepository {
   @override
   Future<List<Workspace>> fetchMyWorkspaces() async {
-    final rows = await client.from(ServerTable.workspaces).select();
+    final rows = await fetchConfigurationList(table: ServerTable.workspaces, build: () => client.from(ServerTable.workspaces).select().order('id', ascending: true));
     return rows.map(workspaceFromRow).toList();
   }
 

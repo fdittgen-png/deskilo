@@ -92,7 +92,8 @@ class _PlanDraft {
     final errors = <String, String>{};
     _choiceError = null;
     if (fields.text('name').trim().isEmpty) errors['name'] = l10n.stockCyclePlanNameRequired;
-    if ((scope == CountScope.places && places.isEmpty) || (scope == CountScope.items && items.isEmpty)) {
+    // a scope this app does not know is never saved on a guess
+    if ((scope == CountScope.places && places.isEmpty) || (scope == CountScope.items && items.isEmpty) || scope == CountScope.unknown) {
       _choiceError = l10n.stockCyclePlanScopeRequired;
       errors['scope'] = _choiceError!;
     }
@@ -225,6 +226,7 @@ class _PlanDraft {
         inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
       ),
     ],
+    CountScope.unknown => [Text(l10n.stockStateUnknown, key: const ValueKey('stock-cycle-plan-scope-unknown'))],
   };
 
   Widget? _choiceText(BuildContext context) => _choiceError == null

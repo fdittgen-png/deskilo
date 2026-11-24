@@ -450,5 +450,9 @@
   "stockReasonMalformed": "This value is not valid for this field.",
   "@stockReasonMalformed": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockStateUnknown": "Not known to this app",
+  "@stockStateUnknown": {
+    "description": "#4401 a state, scope or kind a newer server sent that this app does not know: shown instead of a guess"
   }
 }

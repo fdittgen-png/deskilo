@@ -80,6 +80,7 @@ import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/stock/domain/handling_units.dart';
+import 'package:deskilo/features/stock/domain/item_groups.dart';
 import 'package:deskilo/features/stock/domain/stock_code_resolver.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_cycle_counts.dart';
@@ -1542,7 +1543,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     (w) async {
       final groups = DemoItemGroups(demoFirstSpaceId, DemoStockConfigCommands(demoFirstSpaceId), () => DateTime(2026, 5, 13));
       final drinks = (await groups.groups(demoFirstSpaceId)).firstWhere((g) => g.id == 'demo-group-drinks');
-      final body = {'parameters': {'shelf_life_days': 120}};
+      final body = ItemGroupDraft(name: drinks.name, parentId: drinks.parentId, parameters: const {'shelf_life_days': 120});
       final preview = await groups.save(demoFirstSpaceId, requestId: 'preview', groupId: drinks.id, expectedRevision: drinks.revision, body: body, apply: false);
       final impact = preview.impact['shelf_life_days'];
       if (impact == null || impact.affected != 1 || impact.keptOwn != 1) return false;

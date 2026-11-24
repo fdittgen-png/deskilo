@@ -17,6 +17,7 @@ import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
+import '../domain/stock_drafts.dart';
 import '../domain/stock_variants.dart';
 import 'stock_config_text.dart';
 
@@ -186,14 +187,14 @@ class _MappingDraft {
     try {
       await commands.saveMapping(
         workspaceId,
-        mapping: {
-          'supplier_id': supplier,
-          'item_id': data.item.itemId,
-          'variant_id': variant,
-          'article_ref': article.text.trim(),
-          'purchase_unit': unit,
-          'active': true,
-        },
+        mapping: SupplierMappingDraft(
+          supplierId: supplier,
+          itemId: data.item.itemId,
+          variantId: variant,
+          articleRef: article.text.trim(),
+          purchaseUnit: unit,
+          active: true,
+        ),
         requestId: requestId,
         mappingId: mapping?.id,
         expectedRevision: mapping?.revision,

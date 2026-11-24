@@ -37945,6 +37945,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockSettingsValues => 'Lagerregeln';
 
   @override
+  String get stockStateUnknown => 'Dieser App unbekannt';
+
+  @override
   String get stockStoredLabel => 'Gespeichert';
 
   @override

@@ -73,7 +73,8 @@ class _Host {
             request: r,
           );
         }
-        body = [
+        // a list read pages until an empty page (#4446): the workspace is the first page
+        body = (int.tryParse(r.url.queryParameters['offset'] ?? '') ?? 0) > 0 ? const <Object?>[] : [
           {
             'id': _ws,
             'name': business,

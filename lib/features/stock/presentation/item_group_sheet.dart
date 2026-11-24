@@ -129,10 +129,10 @@ class _GroupDraft {
 
   PurchaseFactor? get _factor => fields.text('factor').isEmpty ? null : parsePurchaseFactor(fields.text('factor'));
 
-  Map<String, Object?> body() => {
-    'name': fields.text('name'),
-    'parent_id': parentId,
-    'parameters': {
+  ItemGroupDraft body() => ItemGroupDraft(
+    name: fields.text('name'),
+    parentId: parentId,
+    parameters: {
       'tracking': tracking,
       'shelf_life_days': _int('shelf'),
       'tag_mode': tagMode,
@@ -154,7 +154,7 @@ class _GroupDraft {
         'target_margin_bps': fields.text('margin').isEmpty ? null : marginBpsOfPercent(decimalTextFromInput(fields.text('margin'), locale: locale, grouping: false) ?? ''),
       },
     },
-  };
+  );
 
   FieldErrors validate(AppLocalizations l10n) => {
     if (fields.text('name').isEmpty) 'name': l10n.stockReasonNameMalformed,
