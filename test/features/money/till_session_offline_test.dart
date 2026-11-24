@@ -5,6 +5,7 @@
 // connection returns the sales are sent in order and the answer is shown. A line with no price is not sold, cash short of the total
 // is refused, a send the server refuses as a whole keeps the sales on the device, a store that cannot be read stops offline selling,
 // and a business that does not sell offline is told, as before, that the pricing failed.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/domain/till_offline.dart';
 import 'package:deskilo/features/money/domain/till_offline_queue.dart';
@@ -196,7 +197,7 @@ void main() {
     x.session.next();
     x.server
       ..down = false
-      ..refuseSync = const PostgrestException(message: 'open the till first', code: 'DKL12');
+      ..refuseSync = const PostgrestException(message: 'open the till first', code: DkCode.dkl12);
     await x.session.reconnect();
     final status = x.session.offline.value;
     expect(status.active, false);

@@ -12,66 +12,12 @@ import '../../../core/ids/request_id.dart';
 import '../../../core/trace/refusal_text.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/counter_till.dart';
-import '../domain/till_offline.dart';
-import '../domain/till_offline_queue.dart';
 import '../domain/till_quantity.dart';
+import 'till_offline_controller.dart';
 import 'till_offline_mode.dart';
+import 'till_state.dart';
 
-part 'till_session_offline.dart';
-
-/// What the till shows: the basket, its price, a sale made, or the refusal of the last act.
-@immutable
-class TillState {
-  const TillState({this.lines = const [], this.draft, this.sold, this.busy = false, this.problem, this.change, this.unconfirmed = false});
-
-  final List<TillLine> lines;
-  final TillDraft? draft;
-  final TillSold? sold;
-  final bool busy;
-
-  /// The error of the last act, as the server (or the client's own check) raised it; null when it went through.
-  final Object? problem;
-
-  /// The change due on the sale just made, in minor units.
-  final int? change;
-
-  /// The sale was sent and its answer did not come: it may have been made. Nothing else is done to the basket until the
-  /// sale is confirmed (sent again under the same request id, which the server answers with the sale it made).
-  final bool unconfirmed;
-
-  bool get empty => lines.isEmpty;
-
-  TillState copyWith({
-    List<TillLine>? lines,
-    TillDraft? Function()? draft,
-    TillSold? Function()? sold,
-    bool? busy,
-    Object? Function()? problem,
-    int? Function()? change,
-  }) => TillState(
-    lines: lines ?? this.lines,
-    draft: draft == null ? this.draft : draft(),
-    sold: sold == null ? this.sold : sold(),
-    busy: busy ?? this.busy,
-    problem: problem == null ? this.problem : problem(),
-    change: change == null ? this.change : change(),
-    unconfirmed: unconfirmed,
-  );
-
-  /// The same state with the sale marked as waiting to be confirmed, or not.
-  TillState withUnconfirmed({required bool value}) =>
-      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: value);
-}
-
-/// The cash given is less than the total: said by the till itself before anything is sent.
-class TillCashShort implements Exception {
-  const TillCashShort();
-}
-
-/// The server's draft does not describe the basket on the screen: it is not sold.
-class TillDraftMismatch implements Exception {
-  const TillDraftMismatch();
-}
+export 'till_state.dart';
 
 /// One pricing call as it was sent: the same call again (a retry after a lost answer) reuses its request id, so the
 /// server answers the first one instead of making a second.
@@ -103,11 +49,14 @@ class TillSession {
   final ValueNotifier<String?> chosenTill = ValueNotifier(null);
   String? tillId;
 
-  /// #4373 -- what the till shows of selling offline, and what it needs to do it (null: the business sells online only).
-  final ValueNotifier<TillOfflineStatus> offline = ValueNotifier(const TillOfflineStatus());
-  TillOfflineKit? offlineKit;
-  String? offlineSessionId;
-  Timer? _reconnectTimer;
+  /// #4373 -- selling offline: what the till shows of it, and what it needs to do it (no kit: the business sells online only).
+  late final TillOfflineController _offlineMode = TillOfflineController(_Host(this));
+  ValueNotifier<TillOfflineStatus> get offline => _offlineMode.status;
+  void configureOffline(TillOfflineKit? kit, {String? sessionId}) => _offlineMode.configure(kit, sessionId: sessionId);
+  Future<void> cacheOfflinePrices(List<TillKey> keys) => _offlineMode.cachePrices(keys);
+  Future<void> reconnect({bool force = false}) => _offlineMode.reconnect(force: force);
+  void dismissOfflineReport() => _offlineMode.dismissReport();
+  Future<void> discardOfflineStore() => _offlineMode.discardStore();
 
   /// Every act runs after the one before it: two taps never send the same receipt and revision, and the answer of a sale
   /// is never dropped for a tap that came after it.
@@ -206,8 +155,8 @@ class TillSession {
       return;
     }
     // selling offline: the device prices the basket from what it holds, until the connection is back
-    if (offline.value.active) {
-      _priceOffline(lines);
+    if (_offlineMode.status.value.active) {
+      _offlineMode.priceLocally(lines);
       return;
     }
     try {
@@ -217,8 +166,8 @@ class TillSession {
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'till pricing refused', error: e, stackTrace: st);
       // no answer at all: the till goes on selling for cash, when the business has that on and the till has its session
-      if (_connectionLost(e) && await _enterOffline()) {
-        _priceOffline(lines);
+      if (_offlineMode.connectionLost(e) && await _offlineMode.enter()) {
+        _offlineMode.priceLocally(lines);
         return;
       }
       _set(_now.copyWith(draft: () => null, problem: () => e));
@@ -267,7 +216,7 @@ class TillSession {
   Future<void> payCash(int givenMinor) => _serial(() async {
     final draft = _now.draft;
     if (draft == null || _now.sold != null) return;
-    if (offline.value.active) return _payOffline(givenMinor);
+    if (_offlineMode.status.value.active) return _offlineMode.payLocally(givenMinor);
     // A sale that may have been made is confirmed as it was sent, whatever the cash typed now.
     if (_now.unconfirmed) return _finalize(draft);
     final total = draft.totals.grossMinor;
@@ -340,7 +289,7 @@ class TillSession {
     _draftAttempt = null;
     _finalAttempt = null;
     _last = null;
-    _setOffline(offline.value.copyWith(sale: () => null));
+    _offlineMode.clearSale();
     _set(const TillState());
   }
 
@@ -354,9 +303,36 @@ class TillSession {
 
   void dispose() {
     _disposed = true;
-    _stopReconnect();
-    offline.dispose();
+    _offlineMode.dispose();
     chosenTill.dispose();
     state.dispose();
   }
+}
+
+/// The session as the offline selling sees it: what the till shows, how an act is run in order, and how the basket is priced again.
+class _Host implements TillOfflineHost {
+  _Host(this._session);
+
+  final TillSession _session;
+
+  @override
+  TillState get current => _session._now;
+
+  @override
+  void show(TillState next) => _session._set(next);
+
+  @override
+  Future<void> serial(Future<void> Function() work) => _session._serial(work);
+
+  @override
+  Future<void> priceAgain() => _session._price(_session._now.lines);
+
+  @override
+  TillPort get port => _session.port;
+
+  @override
+  String get workspaceId => _session.workspaceId;
+
+  @override
+  Duration get callTimeout => _session.callTimeout;
 }

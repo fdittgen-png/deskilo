@@ -66260,7 +66260,7 @@ abstract class AppLocalizations {
   /// **'More offline sales than allowed.'**
   String get tillOfflineReasonTooMany;
 
-  /// #4373 the receipt of a sale made offline: its number on this till
+  /// #4373 the receipt of a sale made offline: its number on this till [not a count: seq]
   ///
   /// In en, this message translates to:
   /// **'Recorded offline · sale {seq} of this till'**
@@ -66272,7 +66272,7 @@ abstract class AppLocalizations {
   /// **'{count, plural, one{1 sale was recorded.} other{{count} sales were recorded.}}'**
   String tillOfflineReportAccepted(int count);
 
-  /// #4373 the answer of the send: a sale the server refused, with its reason
+  /// #4373 the answer of the send: a sale the server refused, with its reason [not a count: seq]
   ///
   /// In en, this message translates to:
   /// **'Sale {seq} was refused: {reason} Its cash stays in the drawer count.'**

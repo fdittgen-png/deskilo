@@ -3,6 +3,7 @@
 // #4367 -- the cash drawer in the Demo: the float, a cash sale and a paid-out make the expected cash; a count that
 // matches closes with no difference, a short count is refused without its reason and closed with it; and the twin keeps
 // the server's blind-count and once-only rules.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/demo_till_drawer.dart';
 import 'package:deskilo/features/money/domain/till_drawer.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -27,10 +28,10 @@ void main() {
     expect(f.expectedBeforeClose, 10000 + 210 - 500);
     expect(f.exact.differenceMinor, 0);
     expect(f.exact.bankedMinor, 5000);
-    expect(f.refusedWithout, 'DKL13');
+    expect(f.refusedWithout, DkCode.dkl13);
     expect(f.short.differenceMinor, -100);
     // the day: refused while a till is open, then one report with both sessions, and a second close of the day is refused
-    expect(f.dayRefusedWhileOpen, 'DKL14');
+    expect(f.dayRefusedWhileOpen, DkCode.dkl14);
     expect(f.day.sessions.map((x) => x.till), ['Front counter', 'Market stall']);
     expect(f.day.differencesMinor, -100);
     expect(f.day.salesTotalMinor, 210);
@@ -38,7 +39,7 @@ void main() {
     expect(f.day.paidOutMinor, 500);
     expect(f.day.firstReceipt, f.day.lastReceipt);
     expect(f.day.sessions.last.differenceReason, 'a coin was lost');
-    expect(f.dayRefusedAgain, 'DKL14');
+    expect(f.dayRefusedAgain, DkCode.dkl14);
     expect(await tillDrawerJourney(), isTrue);
   });
 
@@ -50,22 +51,22 @@ void main() {
       final a = await drawer.openSession('w', requestId: 'r1', tillId: 'demo-till-front', floatMinor: 100);
       final again = await drawer.openSession('w', requestId: 'r1', tillId: 'demo-till-front', floatMinor: 100);
       expect(again.sessionId, a.sessionId);
-      expect(await _code(() => drawer.openSession('w', requestId: 'r2', tillId: 'demo-till-front', floatMinor: 100)), 'DKL12');
+      expect(await _code(() => drawer.openSession('w', requestId: 'r2', tillId: 'demo-till-front', floatMinor: 100)), DkCode.dkl12);
     });
 
     test('the expected cash is refused while the session is open and counted blind, unless the finances may be seen', () async {
       final s = await drawer.openSession('w', requestId: 'r1', tillId: 'demo-till-front', floatMinor: 100);
-      expect(await _code(() => drawer.expected('w', sessionId: s.sessionId)), 'DKN01');
+      expect(await _code(() => drawer.expected('w', sessionId: s.sessionId)), DkCode.dkn01);
       drawer.canSeeFinances = () => true;
       expect((await drawer.expected('w', sessionId: s.sessionId)).expectedMinor, 100);
     });
 
     test('a reason off the list and a paid-out above the limit are refused; a count by denomination must add up', () async {
       final s = await drawer.openSession('w', requestId: 'r1', tillId: 'demo-till-front', floatMinor: 100);
-      expect(await _code(() => drawer.cashEntry('w', requestId: 'e1', sessionId: s.sessionId, entry: const DrawerEntry(kind: 'paid_in', amountMinor: 5, reason: 'gift'))), 'DKL13');
+      expect(await _code(() => drawer.cashEntry('w', requestId: 'e1', sessionId: s.sessionId, entry: const DrawerEntry(kind: 'paid_in', amountMinor: 5, reason: 'gift'))), DkCode.dkl13);
       drawer.rules = () => const DrawerSettings(blindCount: true, byDenomination: true, reasons: ['change'], paidOutLimitMinor: 50);
-      expect(await _code(() => drawer.cashEntry('w', requestId: 'e2', sessionId: s.sessionId, entry: const DrawerEntry(kind: 'paid_out', amountMinor: 60, reason: 'change'))), 'DKL13');
-      expect(await _code(() => drawer.closeSession('w', requestId: 'c1', sessionId: s.sessionId, count: const DrawerCount(countedMinor: 100, bankedMinor: 0))), 'DKL13');
+      expect(await _code(() => drawer.cashEntry('w', requestId: 'e2', sessionId: s.sessionId, entry: const DrawerEntry(kind: 'paid_out', amountMinor: 60, reason: 'change'))), DkCode.dkl13);
+      expect(await _code(() => drawer.closeSession('w', requestId: 'c1', sessionId: s.sessionId, count: const DrawerCount(countedMinor: 100, bankedMinor: 0))), DkCode.dkl13);
       final closed = await drawer.closeSession(
         'w',
         requestId: 'c2',

@@ -234,7 +234,7 @@ class OfflineList {
 }
 
 /// A missing sequence number as the server lists it: a number, or `{device_id, seq}` once sales name their device.
-int _gapNumber(Object? gap) => gap is Map ? (gap['seq']! as num).toInt() : (gap! as num).toInt();
+int _gapNumber(Object? gap) => gap is num ? gap.toInt() : JsonReader.of(gap, context: 'offline.gap').integer('seq');
 
 /// The server side of the offline sales.
 abstract interface class TillOfflinePort {

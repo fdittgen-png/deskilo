@@ -24079,7 +24079,7 @@
   },
   "tillOfflineRecorded": "Offline erfasst · Verkauf {seq} dieser Kasse",
   "@tillOfflineRecorded": {
-    "description": "#4373 the receipt of a sale made offline: its number on this till",
+    "description": "#4373 the receipt of a sale made offline: its number on this till [not a count: seq]",
     "placeholders": {
       "seq": {
         "type": "int"
@@ -24097,7 +24097,7 @@
   },
   "tillOfflineReportRefused": "Verkauf {seq} wurde abgelehnt: {reason} Das Bargeld bleibt in der Kassenzählung.",
   "@tillOfflineReportRefused": {
-    "description": "#4373 the answer of the send: a sale the server refused, with its reason",
+    "description": "#4373 the answer of the send: a sale the server refused, with its reason [not a count: seq]",
     "placeholders": {
       "seq": {
         "type": "int"
