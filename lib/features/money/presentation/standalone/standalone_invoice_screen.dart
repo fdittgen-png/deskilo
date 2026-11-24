@@ -235,6 +235,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
     final today = ref.watch(businessDayProvider);
     ref.watch(invoiceDueDaysProvider); // the due date offered follows the payment term when it is read
     return DocumentComposer(
+      key: const ValueKey('standalone-composer'),
       workspaceId: workspaceId,
       draft: _doc,
       words: DocumentComposerWords(

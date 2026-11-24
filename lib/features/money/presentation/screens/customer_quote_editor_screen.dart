@@ -258,6 +258,7 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
       padding: const EdgeInsets.all(16),
       children: [
         DocumentComposer(
+          key: const ValueKey('quote-composer'),
           workspaceId: workspaceId,
           draft: doc,
           words: DocumentComposerWords(
