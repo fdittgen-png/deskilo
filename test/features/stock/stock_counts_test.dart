@@ -15,6 +15,7 @@ import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:deskilo/features/stock/presentation/stock_counts_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -55,6 +56,10 @@ Future<void> _open(WidgetTester tester, _World w, Size size, {Set<WorkspacePermi
       stockConfigCommandsProvider.overrideWithValue(w.config),
       stockReversalsProvider.overrideWithValue(w.reversals),
       myPermissionsProvider.overrideWithValue(held),
+      // the Demo records its counts as its owner's: the reader is that member (an author may cancel their count)
+      myMemberProvider.overrideWith(
+        (ref) async => const Member(id: 'demo-member-owner', workspaceId: 'ws-1', userId: 'u', isAdmin: false, isOwner: true, status: MemberStatus.active),
+      ),
       enabledFeaturesSyncProvider.overrideWithValue({WorkspaceFeature.stockManagement, WorkspaceFeature.stockCounts}),
     ],
   );

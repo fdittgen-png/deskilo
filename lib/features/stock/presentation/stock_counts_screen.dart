@@ -25,6 +25,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_config.dart';
+import '../domain/stock_count_decisions.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_reversals.dart';
 import '../domain/stock_sites.dart';
@@ -65,8 +66,11 @@ class StockCountsScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md),
           _Counts(
             workspaceId: workspaceId,
-            mayApprove: held.contains(WorkspacePermission.approveStockAdjustments),
-            mayCancel: mayCount || held.contains(WorkspacePermission.approveStockAdjustments),
+            decisions: StockCountDecisions(
+              mayApprove: held.contains(WorkspacePermission.approveStockAdjustments),
+              mayManage: mayCount,
+              memberId: ref.watch(myMemberProvider).value?.id,
+            ),
           ),
         ],
       ),
@@ -90,11 +94,10 @@ class StockCountsScreen extends ConsumerWidget {
 }
 
 class _Counts extends ConsumerWidget {
-  const _Counts({required this.workspaceId, required this.mayApprove, required this.mayCancel});
+  const _Counts({required this.workspaceId, required this.decisions});
 
   final String workspaceId;
-  final bool mayApprove;
-  final bool mayCancel;
+  final StockCountDecisions decisions;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -116,8 +119,7 @@ class _Counts extends ConsumerWidget {
               count: c,
               item: items[c.itemId],
               place: places[c.locationId],
-              mayApprove: mayApprove,
-              mayCancel: mayCancel,
+              decisions: decisions.on(c),
               workspaceId: workspaceId,
             ),
         ],
@@ -131,16 +133,16 @@ class _CountTile extends ConsumerWidget {
     required this.count,
     required this.item,
     required this.place,
-    required this.mayApprove,
-    required this.mayCancel,
+    required this.decisions,
     required this.workspaceId,
   });
 
   final StockCountRow count;
   final StockItem? item;
   final StockPlaceConfig? place;
-  final bool mayApprove;
-  final bool mayCancel;
+
+  /// What the reader may decide on this count (StockCountDecisions).
+  final List<StockCountDecision> decisions;
   final String workspaceId;
 
   @override
@@ -199,19 +201,19 @@ class _CountTile extends ConsumerWidget {
               Wrap(
                 spacing: AppSpacing.sm,
                 children: [
-                  if (mayApprove && !count.stale)
+                  if (decisions.contains(StockCountDecision.apply))
                     FilledButton(
                       key: ValueKey('stock-count-apply-${count.countId}'),
                       onPressed: () => _decide(context, ref, StockCountDecision.apply),
                       child: Text(l10n.stockCountsApply),
                     ),
-                  if (mayApprove)
+                  if (decisions.contains(StockCountDecision.reject))
                     OutlinedButton(
                       key: ValueKey('stock-count-reject-${count.countId}'),
                       onPressed: () => _decide(context, ref, StockCountDecision.reject),
                       child: Text(l10n.stockCountsReject),
                     ),
-                  if (mayCancel)
+                  if (decisions.contains(StockCountDecision.cancel))
                     TextButton(
                       key: ValueKey('stock-count-cancel-${count.countId}'),
                       onPressed: () => _decide(context, ref, StockCountDecision.cancel),
