@@ -65828,7 +65828,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'age {age}+ confirmed'**
-  String tillAgeConfirmedLine(int age);
+  String tillAgeConfirmedLine(String age);
 
   /// #4366 the till
   ///
@@ -65840,7 +65840,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'This item is for customers aged {age} or over. Is the customer at least {age}?'**
-  String tillAgeQuestion(int age);
+  String tillAgeQuestion(String age);
 
   /// #4366 the till
   ///

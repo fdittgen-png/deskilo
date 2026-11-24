@@ -216,12 +216,12 @@ void main() {
       testWidgets('an age-restricted item asks the customer age once and keeps the confirmation on its line', (tester) async {
         await _open(tester, _ready(), size, items: () async => [_cider]);
         await _tap(tester, 'till-key-demo-item-syrup');
-        expect(find.text(_en.tillAgeQuestion(18)), findsOneWidget);
+        expect(find.text(_en.tillAgeQuestion('18')), findsOneWidget);
         await _tap(tester, 'till-age-no');
         expect(find.byKey(const ValueKey('till-line-demo-item-syrup')), findsNothing);
         await _tap(tester, 'till-key-demo-item-syrup');
         await _tap(tester, 'till-age-yes');
-        expect(find.textContaining(_en.tillAgeConfirmedLine(18)), findsOneWidget);
+        expect(find.textContaining(_en.tillAgeConfirmedLine('18')), findsOneWidget);
         await _tap(tester, 'till-key-demo-item-syrup');
         expect(find.byKey(const ValueKey('till-age-yes')), findsNothing, reason: 'the age of this line is already confirmed');
         expect(find.textContaining('2 l'), findsOneWidget);

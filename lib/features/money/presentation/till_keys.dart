@@ -12,13 +12,15 @@ import '../domain/counter_till.dart';
 import 'till_text.dart';
 
 /// A colour typed `#rrggbb` as the settings keep it, or null when it is not one.
-Color? tillKeyColour(String? hex) {
+Color? _tillKeyColour(String? hex) {
   final m = RegExp(r'^#([0-9a-fA-F]{6})$').firstMatch(hex ?? '');
-  return m == null ? null : Color(0xFF000000 | int.parse(m[1]!, radix: 16));
+  if (m == null) return null;
+  final rgb = int.parse(m[1]!, radix: 16);
+  return Color.fromARGB(255, (rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF);
 }
 
 /// The categories of [keys], in the order of their names, each once.
-List<String> tillCategories(List<TillKey> keys) =>
+List<String> _tillCategories(List<TillKey> keys) =>
     ({for (final k in keys) if (k.category != null && k.category!.trim().isNotEmpty) k.category!.trim()}.toList()..sort());
 
 class TillKeys extends StatefulWidget {
@@ -43,7 +45,7 @@ class _TillKeysState extends State<TillKeys> {
       error: (e, _) => Center(child: Text(tillProblemText(l10n, e), textAlign: TextAlign.center)),
       data: (list) {
         if (list.isEmpty) return Center(child: Text(l10n.tillKeysEmpty, textAlign: TextAlign.center));
-        final categories = tillCategories(list);
+        final categories = _tillCategories(list);
         // a category that went away (the keys were read again) is not kept
         final shown = categories.contains(_category) ? _category : null;
         final keys = [for (final k in list) if (shown == null || k.category?.trim() == shown) k];
@@ -98,7 +100,7 @@ class _Key extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colour = tillKeyColour(item.colour);
+    final colour = _tillKeyColour(item.colour);
     final text = Text(item.name, maxLines: 2, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center);
     final key = ValueKey('till-key-${item.id}');
     if (colour == null) return FilledButton.tonal(key: key, onPressed: () => onTap(item), child: text);

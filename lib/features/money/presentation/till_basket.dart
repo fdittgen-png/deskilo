@@ -136,7 +136,7 @@ class _Line extends StatelessWidget {
     final text = Text(
       [
         '${line.quantity} ${line.unit}'.trim(),
-        if (line.ageConfirmed != null) l10n.tillAgeConfirmedLine(line.ageConfirmed!),
+        if (line.ageConfirmed != null) l10n.tillAgeConfirmedLine('${line.ageConfirmed}'),
         if (line.depositFor != null) l10n.tillDepositLine,
       ].join(' · '),
     );

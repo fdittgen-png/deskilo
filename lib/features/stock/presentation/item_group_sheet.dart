@@ -171,15 +171,19 @@ class _GroupDraft {
     },
   };
 
-  FieldErrors validate(AppLocalizations l10n) => {
-    if (fields.text('name').isEmpty) 'name': l10n.stockReasonNameMalformed,
-    for (final (key, field) in [('shelf', 'shelf'), ('count', 'count'), ('age', 'age')])
-      if (fields.text(key).isNotEmpty && (_int(key) ?? 0) < 1) field: l10n.stockReasonOutOfRange,
-    // the till's own settings: a category and a template are words, a colour is #rrggbb, a deposit an amount
+  /// The till's own settings: a category and a template are words, a colour is #rrggbb, a deposit an amount.
+  FieldErrors _tillErrors(AppLocalizations l10n) => {
     if (fields.text('keyColour').isNotEmpty && !RegExp(r'^#[0-9a-fA-F]{6}$').hasMatch(fields.text('keyColour'))) 'keyColour': l10n.stockReasonOutOfRange,
     if (fields.text('depositMinor').isNotEmpty && _int('depositMinor') == null) 'depositMinor': l10n.stockReasonOutOfRange,
     if (fields.text('tillCategory').trim().length > 40) 'tillCategory': l10n.stockReasonOutOfRange,
     if (fields.text('labelTemplate').trim().length > 60) 'labelTemplate': l10n.stockReasonOutOfRange,
+  };
+
+  FieldErrors validate(AppLocalizations l10n) => {
+    if (fields.text('name').isEmpty) 'name': l10n.stockReasonNameMalformed,
+    for (final (key, field) in [('shelf', 'shelf'), ('count', 'count'), ('age', 'age')])
+      if (fields.text(key).isNotEmpty && (_int(key) ?? 0) < 1) field: l10n.stockReasonOutOfRange,
+    ..._tillErrors(l10n),
     // a purchase unit and its factor go together, and the factor is one number or a fraction above zero
     if (fields.text('factor').isNotEmpty && _factor == null) 'factor': l10n.stockReasonOutOfRange,
     if (fields.text('purchaseUnit').isNotEmpty && fields.text('factor').isEmpty) 'factor': l10n.stockReasonOutOfRange,

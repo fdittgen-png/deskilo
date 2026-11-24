@@ -87,7 +87,7 @@ class _GroupList extends ConsumerWidget {
     try {
       items = await ref.read(stockItemsProvider(workspaceId).future);
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the items could not be read for a group: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the items could not be read for a group', error: e, stackTrace: st);
     }
     if (!context.mounted) return;
     final saved = await showItemGroupSheet(context, ref.read(itemGroupsProvider), workspaceId: workspaceId, group: group, groups: groups, choices: (places: places, vat: vat, finance: finance, items: items));

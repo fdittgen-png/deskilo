@@ -41304,7 +41304,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get threadRefsIn => 'Riferimenti in';
 
   @override
-  String tillAgeConfirmedLine(int age) {
+  String tillAgeConfirmedLine(String age) {
     return 'età $age+ confermata';
   }
 
@@ -41312,7 +41312,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillAgeNo => 'No, non vendere';
 
   @override
-  String tillAgeQuestion(int age) {
+  String tillAgeQuestion(String age) {
     return 'Questo articolo è riservato ai clienti di almeno $age anni. Il cliente ha almeno $age anni?';
   }
 
