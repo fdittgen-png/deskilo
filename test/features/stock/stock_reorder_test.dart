@@ -10,7 +10,7 @@ import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/i18n/app_format.dart';
 import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/core/ui/dropdown_field.dart';
-import 'package:deskilo/features/stock/domain/stock_config.dart' show StockConfigFailure, StockConfigRefused, StockSaved;
+import 'package:deskilo/features/stock/domain/stock_config.dart' show StockConfigFailure, StockConfigRefused, StockRefusal, StockSaved;
 import 'package:deskilo/features/stock/domain/stock_reorder.dart';
 import 'package:deskilo/features/stock/presentation/stock_reorder_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
@@ -200,7 +200,7 @@ void main() {
         await _settle(tester);
         expect(reorder.drafts.length, 2);
         expect(reorder.drafts[0].request, isNot(reorder.drafts[1].request), reason: 'a draft made renews the request');
-        reorder.failDraft = const StockConfigRefused('lines[0]', 'mapping_unknown');
+        reorder.failDraft = const StockConfigRefused('lines[0]', StockRefusal.mappingUnknown);
         await tester.tap(find.byKey(const ValueKey('stock-order-draft-sup-1')));
         await _settle(tester);
         reorder.failDraft = null;
@@ -211,7 +211,7 @@ void main() {
       });
 
       testWidgets('a refused draft says why and makes nothing', (tester) async {
-        final reorder = _Reorder()..failDraft = const StockConfigRefused('lines[0]', 'mapping_unknown');
+        final reorder = _Reorder()..failDraft = const StockConfigRefused('lines[0]', StockRefusal.mappingUnknown);
         await _open(tester, reorder, size);
         await tester.ensureVisible(find.byKey(const ValueKey('stock-order-draft-sup-1')));
         await tester.tap(find.byKey(const ValueKey('stock-order-draft-sup-1')));
@@ -272,8 +272,9 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('stock-point-save')));
         await _settle(tester);
         expect(reorder.saved, isEmpty, reason: 'no item, no site, no level: nothing is sent');
-        expect(find.text(_en.stockReasonItemForeign), findsOneWidget);
-        expect(find.text(_en.stockReasonSiteUnknown), findsOneWidget);
+        // #4402 -- a missing choice is the app's own check, in words of its own
+        expect(find.text(_en.stockRequiredItem), findsOneWidget);
+        expect(find.text(_en.stockRequiredSite), findsOneWidget);
         expect(find.text(_en.stockReasonQuantityInvalid), findsOneWidget);
       });
 
@@ -293,7 +294,7 @@ void main() {
       });
 
       testWidgets('a refusal of the server is said under the sheet and the sheet stays', (tester) async {
-        final reorder = _Reorder()..failSave = const StockConfigRefused('item_id', 'point_twice');
+        final reorder = _Reorder()..failSave = const StockConfigRefused('item_id', StockRefusal.pointTwice);
         await _open(tester, reorder, size);
         await _reveal(tester, find.byKey(const ValueKey('stock-point-pt-beans')));
         await tester.tap(find.byKey(const ValueKey('stock-point-pt-beans')));

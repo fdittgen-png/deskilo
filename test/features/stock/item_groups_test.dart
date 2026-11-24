@@ -224,6 +224,15 @@ void main() {
         }
       });
 
+      testWidgets('a name another group of the same level has is refused in the words of a group (#4402)', (tester) async {
+        await _open(tester, size);
+        await _tap(tester, 'item-group-add');
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'homeware');
+        await _tap(tester, 'item-group-save');
+        expect(find.text(_en.stockReasonGroupNameDuplicate), findsOneWidget);
+        expect(find.text(_en.stockReasonNameDuplicate), findsNothing, reason: 'the words of a variant are not the words of a group');
+      });
+
       testWidgets('an empty group is created, then deleted', (tester) async {
         final w = await _open(tester, size);
         await _tap(tester, 'item-group-add');

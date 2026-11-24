@@ -140,7 +140,7 @@ class _Result extends ConsumerWidget {
             TextButton(
               key: const ValueKey('stock-track-find-retry'),
               onPressed: () => ref.invalidate(provider),
-              child: Text(l10n.identityConnectRetry),
+              child: Text(l10n.commonRetry),
             ),
           ],
         ),

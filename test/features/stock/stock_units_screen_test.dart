@@ -217,7 +217,7 @@ void main() {
   testWidgets('a failed read says so and reads again', (tester) async {
     late _Flaky flaky;
     await _open(tester, const Size(390, 844), wrap: (u) => flaky = _Flaky(u));
-    expect(find.text(_en.stockUnitsReadFailed), findsOneWidget);
+    expect(find.byKey(const ValueKey('stock-units-failed')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('stock-units-retry')));
     await _frames(tester);
     expect(find.byKey(const ValueKey('stock-unit-PAL-001')), findsOneWidget);

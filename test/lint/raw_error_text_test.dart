@@ -66,7 +66,7 @@ int ownErrorBranches(String source) {
 /// sweep. Only falls: a branch moved onto the shared view lowers its feature.
 const _ownErrorBranchCeiling = <String, int>{
   'money': 6, // till* only, b5's lane
-  'stock': 14,
+  'stock': 10,
 };
 
 String _featureOf(String path) {

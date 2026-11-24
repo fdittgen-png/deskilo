@@ -70,3 +70,33 @@ class SupplierMappingDraft {
     'active': active,
   };
 }
+
+/// #4402 -- a NEW item as it is made from the Stock page, in one command (`create_stock_item_v1`): the service
+/// (its name, price in minor units and VAT rate), its stock settings (kept in stock, bought and sold, in
+/// [inventoryUnit], with [barcode] as its own code) and its home place. One request id makes the whole of it once.
+class NewStockItemDraft {
+  const NewStockItemDraft({
+    required this.name,
+    required this.priceCents,
+    required this.inventoryUnit,
+    this.vatRateId,
+    this.barcode,
+    this.homeLocationId,
+  });
+
+  final String name;
+  final int priceCents;
+  final String? vatRateId;
+  final String inventoryUnit;
+  final String? barcode;
+  final String? homeLocationId;
+
+  Map<String, Object?> toJson() => {
+    'name': name,
+    'price_cents': priceCents,
+    'vat_rate_id': ?vatRateId,
+    'inventory_unit': inventoryUnit,
+    'barcode': ?barcode,
+    'home_location_id': ?homeLocationId,
+  };
+}

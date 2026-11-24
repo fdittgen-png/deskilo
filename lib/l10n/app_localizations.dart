@@ -29945,12 +29945,6 @@ abstract class AppLocalizations {
   /// **'This group is used by items: move them first.'**
   String get itemGroupReasonInUse;
 
-  /// #4361 G12 item groups: itemGroupReasonNameDuplicate
-  ///
-  /// In en, this message translates to:
-  /// **'Another group already has this name.'**
-  String get itemGroupReasonNameDuplicate;
-
   /// #4361 G12 item groups: itemGroupReasonNeedsSerial
   ///
   /// In en, this message translates to:
@@ -59282,30 +59276,6 @@ abstract class AppLocalizations {
   /// #4361 refusal text
   ///
   /// In en, this message translates to:
-  /// **'A sub-group cannot have sub-groups.'**
-  String get stockReasonGroupDepth;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
-  /// **'This item has stock movements: its unit and tracking stay as they were written.'**
-  String get stockReasonGroupHasMovements;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
-  /// **'This group has sub-groups: move or delete them first.'**
-  String get stockReasonGroupHasSubgroups;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
-  /// **'This group is used by items: move them first.'**
-  String get stockReasonGroupInUse;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
   /// **'This item is not one of this business\'s.'**
   String get stockReasonGroupItemUnknown;
 
@@ -59330,26 +59300,8 @@ abstract class AppLocalizations {
   /// #4361 refusal text
   ///
   /// In en, this message translates to:
-  /// **'Per-unit tags need tracking by piece.'**
-  String get stockReasonGroupNeedsSerial;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
-  /// **'This is a proposal for new items and is not set per item.'**
-  String get stockReasonGroupNotOverridable;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
   /// **'This place is not one of this business\'s.'**
   String get stockReasonGroupPlaceUnknown;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
-  /// **'This group is not one of this business\'s.'**
-  String get stockReasonGroupUnknown;
 
   /// #4361 refusal text
   ///
@@ -60071,6 +60023,42 @@ abstract class AppLocalizations {
   /// **'What to order'**
   String get stockReorderToOrderTitle;
 
+  /// #4402 the supplier article sheet: said under the article reference when it is empty (the app's own check)
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the supplier\'s article reference.'**
+  String get stockRequiredArticle;
+
+  /// #4402 the move sheet: said under the destination when none is chosen, or when it is the place the goods leave (the app's own check)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the place the goods go to, another than the one they leave.'**
+  String get stockRequiredDestination;
+
+  /// #4402 a stock sheet: said under the item field when no item is chosen yet (the app's own check, not a refusal of the server)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an item.'**
+  String get stockRequiredItem;
+
+  /// #4402 a stock sheet: said under a place field when no place is chosen yet (the app's own check, not a refusal of the server)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a place.'**
+  String get stockRequiredPlace;
+
+  /// #4402 the reorder point sheet: said under the site when none is chosen yet (the app's own check, not a refusal of the server)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a site.'**
+  String get stockRequiredSite;
+
+  /// #4402 the supplier article sheet: said under the supplier when none is chosen yet (the app's own check)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a supplier.'**
+  String get stockRequiredSupplier;
+
   /// #4172 stock returns and counts screens
   ///
   /// In en, this message translates to:
@@ -60443,18 +60431,6 @@ abstract class AppLocalizations {
   /// **'UHF label'**
   String get stockTagKindUhf;
 
-  /// #4363 G14 tags: stockTagMalformed
-  ///
-  /// In en, this message translates to:
-  /// **'That is not a valid tag code.'**
-  String get stockTagMalformed;
-
-  /// #4363 G14 tags: stockTagModeNone
-  ///
-  /// In en, this message translates to:
-  /// **'This item does not use tags.'**
-  String get stockTagModeNone;
-
   /// #4363 G14 tags: stockTagNotInForce
   ///
   /// In en, this message translates to:
@@ -60466,18 +60442,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This tag is on a piece that is still in stock.'**
   String get stockTagOnPiece;
-
-  /// #4363 G14 tags: stockTagOwnerUnknown
-  ///
-  /// In en, this message translates to:
-  /// **'This item or place is not known.'**
-  String get stockTagOwnerUnknown;
-
-  /// #4363 G14 tags: stockTagPerUnit
-  ///
-  /// In en, this message translates to:
-  /// **'This item is tagged piece by piece: tag its pieces when they are received.'**
-  String get stockTagPerUnit;
 
   /// #4362 G13 tags: the name of one piece in the list of pieces
   ///

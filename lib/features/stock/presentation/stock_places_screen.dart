@@ -7,13 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/ui/kit/page_title.dart';
-import '../../../core/ui/loading_view.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../providers/stock_providers.dart';
+import 'stock_page_shell.dart';
 import 'stock_place_editor.dart';
 
 class StockPlacesScreen extends ConsumerWidget {
@@ -24,29 +22,21 @@ class StockPlacesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(context.l10n.stockPlacesTitle),
-        actions: [HelpDot(context.l10n.permModuleStock, anchor: HelpAnchor.moneyStockPlaces)],
+    return StockPageShell(
+      title: context.l10n.stockPlacesTitle,
+      anchor: HelpAnchor.moneyStockPlaces,
+      helpTopic: context.l10n.permModuleStock,
+      reading: true,
+      body: (context, ref, workspaceId) => StockPlacesBody(
+        workspaceId: workspaceId,
+        addFirst: addFirst,
+        canEdit: ref
+            .watch(myPermissionsProvider)
+            .contains(WorkspacePermission.manageStock),
+        // recorder-key-exempt: a data callback, not a control
+        onChanged: () =>
+            ref.invalidate(stockPlacesProvider(workspaceId)),
       ),
-      body: workspaceId == null
-          ? const LoadingView()
-          : Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 720),
-                child: StockPlacesBody(
-                  workspaceId: workspaceId,
-                  addFirst: addFirst,
-                  canEdit: ref
-                      .watch(myPermissionsProvider)
-                      .contains(WorkspacePermission.manageStock),
-                  // recorder-key-exempt: a data callback, not a control
-                  onChanged: () =>
-                      ref.invalidate(stockPlacesProvider(workspaceId)),
-                ),
-              ),
-            ),
     );
   }
 }

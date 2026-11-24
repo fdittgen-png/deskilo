@@ -24667,10 +24667,6 @@
   "@itemGroupReasonInUse": {
     "description": "#4361 G12 item groups: itemGroupReasonInUse"
   },
-  "itemGroupReasonNameDuplicate": "Another group already has this name.",
-  "@itemGroupReasonNameDuplicate": {
-    "description": "#4361 G12 item groups: itemGroupReasonNameDuplicate"
-  },
   "itemGroupReasonNeedsSerial": "Per-piece tags need tracking by piece.",
   "@itemGroupReasonNeedsSerial": {
     "description": "#4361 G12 item groups: itemGroupReasonNeedsSerial"
@@ -48082,22 +48078,6 @@
   "@stockReasonFactorInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
-  "stockReasonGroupDepth": "A sub-group cannot have sub-groups.",
-  "@stockReasonGroupDepth": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupHasMovements": "This item has stock movements: its unit and tracking stay as they were written.",
-  "@stockReasonGroupHasMovements": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupHasSubgroups": "This group has sub-groups: move or delete them first.",
-  "@stockReasonGroupHasSubgroups": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupInUse": "This group is used by items: move them first.",
-  "@stockReasonGroupInUse": {
-    "description": "#4361 refusal text"
-  },
   "stockReasonGroupItemUnknown": "This item is not one of this business's.",
   "@stockReasonGroupItemUnknown": {
     "description": "#4361 refusal text"
@@ -48114,20 +48094,8 @@
   "@stockReasonGroupNameRequired": {
     "description": "#4361 refusal text"
   },
-  "stockReasonGroupNeedsSerial": "Per-unit tags need tracking by piece.",
-  "@stockReasonGroupNeedsSerial": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupNotOverridable": "This is a proposal for new items and is not set per item.",
-  "@stockReasonGroupNotOverridable": {
-    "description": "#4361 refusal text"
-  },
   "stockReasonGroupPlaceUnknown": "This place is not one of this business's.",
   "@stockReasonGroupPlaceUnknown": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupUnknown": "This group is not one of this business's.",
-  "@stockReasonGroupUnknown": {
     "description": "#4361 refusal text"
   },
   "stockReasonGroupUnknownReference": "A place, item or rate named here is not one of this business's.",
@@ -48696,6 +48664,30 @@
   "@stockReorderToOrderTitle": {
     "description": "#4294 reorder: a label or a message"
   },
+  "stockRequiredArticle": "Enter the supplier's article reference.",
+  "@stockRequiredArticle": {
+    "description": "#4402 the supplier article sheet: said under the article reference when it is empty (the app's own check)"
+  },
+  "stockRequiredDestination": "Choose the place the goods go to, another than the one they leave.",
+  "@stockRequiredDestination": {
+    "description": "#4402 the move sheet: said under the destination when none is chosen, or when it is the place the goods leave (the app's own check)"
+  },
+  "stockRequiredItem": "Choose an item.",
+  "@stockRequiredItem": {
+    "description": "#4402 a stock sheet: said under the item field when no item is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredPlace": "Choose a place.",
+  "@stockRequiredPlace": {
+    "description": "#4402 a stock sheet: said under a place field when no place is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredSite": "Choose a site.",
+  "@stockRequiredSite": {
+    "description": "#4402 the reorder point sheet: said under the site when none is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredSupplier": "Choose a supplier.",
+  "@stockRequiredSupplier": {
+    "description": "#4402 the supplier article sheet: said under the supplier when none is chosen yet (the app's own check)"
+  },
   "stockReversalBackTo": "Goods come back to",
   "@stockReversalBackTo": {
     "description": "#4172 stock returns and counts screens"
@@ -49033,14 +49025,6 @@
   "@stockTagKindUhf": {
     "description": "#4363 G14 tags: stockTagKindUhf"
   },
-  "stockTagMalformed": "That is not a valid tag code.",
-  "@stockTagMalformed": {
-    "description": "#4363 G14 tags: stockTagMalformed"
-  },
-  "stockTagModeNone": "This item does not use tags.",
-  "@stockTagModeNone": {
-    "description": "#4363 G14 tags: stockTagModeNone"
-  },
   "stockTagNotInForce": "This is not a tag in force here.",
   "@stockTagNotInForce": {
     "description": "#4363 G14 tags: stockTagNotInForce"
@@ -49048,14 +49032,6 @@
   "stockTagOnPiece": "This tag is on a piece that is still in stock.",
   "@stockTagOnPiece": {
     "description": "#4363 G14 tags: stockTagOnPiece"
-  },
-  "stockTagOwnerUnknown": "This item or place is not known.",
-  "@stockTagOwnerUnknown": {
-    "description": "#4363 G14 tags: stockTagOwnerUnknown"
-  },
-  "stockTagPerUnit": "This item is tagged piece by piece: tag its pieces when they are received.",
-  "@stockTagPerUnit": {
-    "description": "#4363 G14 tags: stockTagPerUnit"
   },
   "stockTagPiece": "Piece {number}",
   "@stockTagPiece": {

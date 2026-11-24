@@ -14,8 +14,8 @@ import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/trace/refusal_text.dart';
-import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/form_kit.dart';
 import '../domain/stock_bulk_read.dart';
 import '../providers/stock_providers.dart';
@@ -91,13 +91,12 @@ class _State extends ConsumerState<StockBulkReadSheet> {
       _problem = null;
     });
     BulkResolution? resolved;
-    String? problem;
-    try {
-      resolved = await ref.read(stockTagsStoreProvider).resolveCodes(widget.workspaceId, _session.codes);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a bulk read could not be resolved', error: e, stackTrace: st);
-      problem = knownRefusalText(l10n, e) ?? l10n.stockReadFailed;
-    }
+    final problem = await guardSave(
+      domain: 'stock',
+      message: 'a bulk read could not be resolved',
+      action: () async => resolved = await ref.read(stockTagsStoreProvider).resolveCodes(widget.workspaceId, _session.codes),
+      problem: (e) => knownRefusalText(l10n, e) ?? l10n.stockReadFailed,
+    );
     if (!mounted) return;
     setState(() {
       _resolving = false;
