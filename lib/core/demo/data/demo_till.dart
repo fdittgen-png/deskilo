@@ -24,8 +24,11 @@ const _tracedLots = <String, String>{'demo-item-milk': 'MILK-12', 'demo-item-bas
 /// The prices of Demo items the stock registry does not carry (the T-shirt the variants are edited on), in cents.
 const _unstocked = <String, int>{'demo-item-shirt': 1900, 'demo-item-basket': 3900, 'demo-item-apples': 1800};
 
+/// #4436 -- one traced line a sale froze: its receipt, when, and the track IDs it took, as `counter_line_tracks` keeps them.
+typedef DemoSoldLine = ({String lineId, String receiptId, String number, DateTime at, List<TillTrack> tracks});
+
 class DemoTill implements TillPort, TillOfflinePort {
-  DemoTill({required this.country, required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2, this.drawer});
+  DemoTill({required this.country, required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2, this.drawer, this.clock});
 
   final String country;
   final String currency;
@@ -37,6 +40,14 @@ class DemoTill implements TillPort, TillOfflinePort {
   /// goes into it.
   final DemoTillDrawer? drawer;
   final Map<String, String> _tillOf = {};
+
+  /// The Demo's clock, stamping a sale; without it a sale is not kept for the trace.
+  final DateTime Function()? clock;
+
+  final List<DemoSoldLine> _soldLines = [];
+
+  /// The traced lines sold so far, oldest first: what the trace finds from a track ID (#4436).
+  List<DemoSoldLine> get soldLines => List.unmodifiable(_soldLines);
 
   int _revision = 0;
   int _sales = 0;
@@ -125,6 +136,12 @@ class DemoTill implements TillPort, TillOfflinePort {
           ),
     ];
     final sold = TillSold(receiptId: receiptId, number: 'R-${(++_sales).toString().padLeft(5, '0')}', totals: draft.totals, lines: traced);
+    final at = clock?.call();
+    if (at != null) {
+      for (final l in traced) {
+        _soldLines.add((lineId: '$receiptId-line-${l.lineNo}', receiptId: receiptId, number: sold.number, at: at, tracks: l.tracks));
+      }
+    }
     _lines.remove(receiptId);
     _drafts.remove(receiptId);
     final till = _tillOf.remove(receiptId);

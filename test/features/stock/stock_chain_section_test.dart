@@ -39,7 +39,7 @@ class _Reader implements StockTraceChainReader {
   int calls = 0;
 
   @override
-  Future<TraceChain> chain(String workspaceId, {String? lotId, String? pieceId, String? movementId}) async {
+  Future<TraceChain> chain(String workspaceId, {String? lotId, String? pieceId, String? movementId, String? counterLineId}) async {
     calls++;
     if (fail) throw StateError('offline');
     return TraceChain.fromJson(_answer);

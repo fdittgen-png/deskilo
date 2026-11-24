@@ -18,5 +18,20 @@
   "stockMoveReasonReturnIn": "Retourné par le client",
   "stockMoveReasonReturnOut": "Retourné au fournisseur",
   "stockChainPieceTitle": "Tous les mouvements de cette pièce",
-  "stockChainOpen": "Tous les mouvements"
+  "stockChainOpen": "Tous les mouvements",
+  "stockTrackFindTitle": "Retrouver un code de traçabilité",
+  "stockTrackFindField": "Code de lot ou étiquette",
+  "stockTrackFindHelper": "Le code du lot tel que reçu, le code de son étiquette, ou l'étiquette d'une pièce.",
+  "stockTrackFindSubmit": "Rechercher",
+  "stockTrackFindRequired": "Saisissez ou scannez d'abord un code.",
+  "stockTrackFindNone": "Rien dans cette entreprise ne porte {code}.",
+  "stockTrackFindLots": "Lots",
+  "stockTrackFindPieces": "Pièces",
+  "stockTrackFindSales": "Ventes qui l'ont pris",
+  "stockTrackFindNoSale": "Aucune vente ne l'a encore pris.",
+  "stockTrackFindExpires": "Expire le {date}",
+  "stockTrackFindTruncated": "Seules les premières correspondances sont affichées.",
+  "stockChainSaleTitle": "Ce que cette vente a pris",
+  "stockChainTookLot": "Lot {code} · {quantity}",
+  "stockChainTookPiece": "Pièce {tag}"
 }

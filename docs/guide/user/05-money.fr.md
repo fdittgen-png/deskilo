@@ -892,6 +892,7 @@ Ouvrez une ligne du **Stock** pour voir **Où est-ce** pour cet article (ou ce l
 - Les emplacements sur une étagère s'additionnent toujours à la quantité affichée en haut.
 - À un jour passé, les marchandises en route ne sont pas montrées ; les pièces le sont, depuis le jour où elles sont suivies (une pièce faite avant n'a pas d'historique avant).
 - Touchez un emplacement qui tient un lot pour voir **Tous les mouvements** de ce lot, de la livraison par laquelle il est arrivé jusqu'à sa sortie ; le bouton chronologie d'une pièce montre **Tous les mouvements de cette pièce**. Un document que vous ne pouvez pas voir est nommé par son type, jamais omis.
+- **Retrouver un code de traçabilité** (le bouton code en haut du **Stock**) prend un code de lot tel que reçu, le code de l'étiquette d'un lot ou l'étiquette d'une pièce, saisi ou scanné. Il liste les lots et les pièces qui le portent et les ventes qui les ont pris. Touchez un lot ou une pièce pour tous ses mouvements ; touchez une vente pour voir ce que cette ligne de ticket a pris : chaque lot avec sa quantité, chaque pièce par son étiquette. Un ticket que vous ne pouvez pas voir est nommé par son type et ne s'ouvre pas. Si rien n'est trouvé, c'est dit ; une recherche refusée ou en échec le dit et peut être relancée.
 
 <!-- anchor: user.money.stock.value -->
 ### Valeur du stock et origine des marchandises

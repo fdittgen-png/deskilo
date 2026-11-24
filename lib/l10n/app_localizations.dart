@@ -57569,11 +57569,29 @@ abstract class AppLocalizations {
   /// **'Receipt {label}'**
   String stockChainReceipt(String label);
 
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'What this sale took'**
+  String get stockChainSaleTitle;
+
   /// #4432 G18 trace chain
   ///
   /// In en, this message translates to:
   /// **'Every movement of this lot'**
   String get stockChainTitle;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Lot {code} · {quantity}'**
+  String stockChainTookLot(String code, String quantity);
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {tag}'**
+  String stockChainTookPiece(String tag);
 
   /// #4432 G18 trace chain
   ///
@@ -60586,6 +60604,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Where this came from'**
   String get stockTraceTitle;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {date}'**
+  String stockTrackFindExpires(String date);
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Lot code or tag'**
+  String get stockTrackFindField;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'The lot code as received, the code on its label, or a piece\'s tag.'**
+  String get stockTrackFindHelper;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Lots'**
+  String get stockTrackFindLots;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'No sale took it yet.'**
+  String get stockTrackFindNoSale;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in this business carries {code}.'**
+  String stockTrackFindNone(String code);
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Pieces'**
+  String get stockTrackFindPieces;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Type or scan a code first.'**
+  String get stockTrackFindRequired;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Sales that took it'**
+  String get stockTrackFindSales;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Find'**
+  String get stockTrackFindSubmit;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Find a track ID'**
+  String get stockTrackFindTitle;
+
+  /// #4436 G21 find by track ID
+  ///
+  /// In en, this message translates to:
+  /// **'Only the first matches are shown.'**
+  String get stockTrackFindTruncated;
 
   /// #4170 transfers and take-out: a label or message
   ///

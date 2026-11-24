@@ -36,7 +36,7 @@ class _Chain implements StockTraceChainReader {
   final asked = <String>[];
 
   @override
-  Future<TraceChain> chain(String workspaceId, {String? lotId, String? pieceId, String? movementId}) async {
+  Future<TraceChain> chain(String workspaceId, {String? lotId, String? pieceId, String? movementId, String? counterLineId}) async {
     asked.add('lot=$lotId piece=$pieceId movement=$movementId');
     return const TraceChain(subject: 'piece', steps: []);
   }

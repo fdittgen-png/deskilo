@@ -3132,6 +3132,7 @@ Abra una línea de **Stock** para ver **Dónde está** ese artículo (o ese lote
 - Los lugares en un estante suman siempre la cantidad mostrada arriba.
 - En un día pasado no se muestra la mercancía en camino; las piezas sí, desde el día en que se siguen (una pieza hecha antes no tiene historial anterior).
 - Toque un lugar que tiene un lote para ver **Todos los movimientos** de ese lote, desde la entrega con la que llegó hasta su salida; el botón de cronología de una pieza muestra **Todos los movimientos de esta pieza**. Un documento que no puede ver se nombra por su tipo, nunca se omite.
+- **Buscar un código de trazabilidad** (el botón de código arriba en **Existencias**) acepta un código de lote tal como se recibió, el código de la etiqueta de un lote o la etiqueta de una pieza, escrito o escaneado. Lista los lotes y las piezas que lo llevan y las ventas que los tomaron. Toque un lote o una pieza para ver todos sus movimientos; toque una venta para ver lo que tomó esa línea del ticket: cada lote con su cantidad, cada pieza por su etiqueta. Un ticket que no puede ver se nombra por su tipo y no se abre. Si no se encuentra nada, se indica; una búsqueda rechazada o fallida lo indica y puede repetirse.
 
 ### Valor de las existencias y origen de la mercancía
 

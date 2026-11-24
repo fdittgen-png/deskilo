@@ -143,6 +143,7 @@ class TraceChain {
 }
 
 abstract interface class StockTraceChainReader {
-  /// The chain of exactly one of [lotId], [pieceId] or [movementId].
-  Future<TraceChain> chain(String workspaceId, {String? lotId, String? pieceId, String? movementId});
+  /// The chain of exactly one of [lotId], [pieceId], [movementId] or [counterLineId] (a sold line, read backwards:
+  /// its movements and the track IDs it took).
+  Future<TraceChain> chain(String workspaceId, {String? lotId, String? pieceId, String? movementId, String? counterLineId});
 }

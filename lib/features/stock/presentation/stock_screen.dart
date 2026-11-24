@@ -14,6 +14,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/stock_view.dart';
 import '../application/stock_walk.dart';
@@ -22,6 +23,7 @@ import '../providers/stock_providers.dart';
 import 'stock_day.dart';
 import 'stock_first_run.dart';
 import 'stock_place_text.dart';
+import 'stock_track_find_sheet.dart';
 
 class StockScreen extends ConsumerWidget {
   /// The balances (`/stock`) or the movement log (`/stock/movements`): the
@@ -39,6 +41,14 @@ class StockScreen extends ConsumerWidget {
       appBar: AppBar(
         title: PageTitle(tab == StockTab.onHand ? l10n.permModuleStock : l10n.stockTabMovements),
         actions: [
+          // #4436 -- what carries a track ID, for whom the server lets read the stock
+          if (workspaceId != null && _readsStock(ref.watch(myPermissionsProvider)))
+            IconButton(
+              key: const ValueKey('stock-track-find-open'),
+              icon: const Icon(Icons.qr_code_2),
+              tooltip: l10n.stockTrackFindTitle,
+              onPressed: () => showStockTrackFindSheet(context, workspaceId: workspaceId),
+            ),
           if (workspaceId != null)
             IconButton(
               key: const ValueKey('stock-reload'),
@@ -93,6 +103,10 @@ class StockScreen extends ConsumerWidget {
     );
   }
 }
+
+/// Whether [held] reads the stock's trace, as the server's own guard asks.
+bool _readsStock(Set<WorkspacePermission> held) =>
+    held.contains(WorkspacePermission.viewStock) || held.contains(WorkspacePermission.manageStock);
 
 StockFilters _filtersOf(String workspaceId, StockView view) => (
   workspaceId: workspaceId,

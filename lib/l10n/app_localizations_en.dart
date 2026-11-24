@@ -35961,7 +35961,20 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get stockChainSaleTitle => 'What this sale took';
+
+  @override
   String get stockChainTitle => 'Every movement of this lot';
+
+  @override
+  String stockChainTookLot(String code, String quantity) {
+    return 'Lot $code · $quantity';
+  }
+
+  @override
+  String stockChainTookPiece(String tag) {
+    return 'Piece $tag';
+  }
 
   @override
   String get stockChainTruncated => 'Only the first movements are shown.';
@@ -37805,6 +37818,47 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockTraceTitle => 'Where this came from';
+
+  @override
+  String stockTrackFindExpires(String date) {
+    return 'Expires $date';
+  }
+
+  @override
+  String get stockTrackFindField => 'Lot code or tag';
+
+  @override
+  String get stockTrackFindHelper =>
+      'The lot code as received, the code on its label, or a piece\'s tag.';
+
+  @override
+  String get stockTrackFindLots => 'Lots';
+
+  @override
+  String get stockTrackFindNoSale => 'No sale took it yet.';
+
+  @override
+  String stockTrackFindNone(String code) {
+    return 'Nothing in this business carries $code.';
+  }
+
+  @override
+  String get stockTrackFindPieces => 'Pieces';
+
+  @override
+  String get stockTrackFindRequired => 'Type or scan a code first.';
+
+  @override
+  String get stockTrackFindSales => 'Sales that took it';
+
+  @override
+  String get stockTrackFindSubmit => 'Find';
+
+  @override
+  String get stockTrackFindTitle => 'Find a track ID';
+
+  @override
+  String get stockTrackFindTruncated => 'Only the first matches are shown.';
 
   @override
   String stockTransferLine(
