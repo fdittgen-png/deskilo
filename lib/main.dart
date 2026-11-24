@@ -155,6 +155,8 @@ Future<void> main() async {
         tillOfflinePortFromApp, // #4373
         tillOfflineStoreFromApp, // #4373
         tillOfflineEnabledFromApp, // #4373
+        counterDocumentChannelFromApp, // #4184
+        counterSettingsEditorFromApp, // #4184
         businessDayFromApp, // #4426
         privateValuesFromAccount, // #2552
         eventSourceOpenersFromMoney, // #2573

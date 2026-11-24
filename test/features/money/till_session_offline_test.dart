@@ -6,6 +6,7 @@
 // is refused, a send the server refuses as a whole keeps the sales on the device, a store that cannot be read stops offline selling,
 // and a business that does not sell offline is told, as before, that the pricing failed.
 import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/features/money/domain/counter_receipt_document.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/domain/till_offline.dart';
 import 'package:deskilo/features/money/domain/till_offline_queue.dart';
@@ -35,6 +36,9 @@ class _Server implements TillPort, TillOfflinePort {
     if (down) throw StateError('no connection');
     return const TillReadiness(country: 'FR', fiscalObligation: 'none', ready: true, operations: []);
   }
+
+  @override
+  Future<CounterReceiptDocument> receipt(String workspaceId, String receiptId) => throw UnimplementedError();
 
   @override
   Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision, String? tillId}) async {

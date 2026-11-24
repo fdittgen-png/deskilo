@@ -41203,6 +41203,12 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get tillDeclarationNone => 'nessun obbligo di registratore fiscale';
+
+  @override
+  String get tillDeclarationRegister => 'è richiesto un registratore fiscale';
+
+  @override
   String get tillDrawerAddTill => 'Aggiungere una cassa';
 
   @override
@@ -41666,9 +41672,107 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillQuantityTitle => 'Quantità venduta';
 
   @override
+  String get tillReadinessAdapterMissing =>
+      'Il registro la consente, ma nell\'app nulla la gestisce ancora.';
+
+  @override
+  String tillReadinessCase(String country, String declaration) {
+    return 'Paese $country, caso dichiarato: $declaration';
+  }
+
+  @override
+  String get tillReadinessConfirmed =>
+      'Confermata da un professionista fiscale.';
+
+  @override
+  String tillReadinessEvidence(String evidence) {
+    return 'Prova: $evidence';
+  }
+
+  @override
+  String get tillReadinessOffline =>
+      'Una vendita richiede una connessione: la cassa non vende offline, e una vendita la cui risposta è andata persa attende di essere confermata.';
+
+  @override
+  String get tillReadinessOpen => 'Disponibilità e impostazioni della cassa';
+
+  @override
+  String get tillReadinessSettings => 'Impostazioni della cassa';
+
+  @override
+  String tillReadinessSpecification(
+    String specification,
+    String version,
+    String date,
+  ) {
+    return 'Si basa su: $specification ($version), in vigore dal $date';
+  }
+
+  @override
+  String get tillReadinessSupported => 'Supportata';
+
+  @override
+  String get tillReadinessTitle => 'Disponibilità della cassa';
+
+  @override
+  String get tillReadinessUnavailable => 'Non disponibile';
+
+  @override
+  String get tillReadinessUnconfirmed =>
+      'Non ancora confermata da un professionista fiscale.';
+
+  @override
+  String tillReadinessUnknownCountry(String country) {
+    return 'Il registro non indica alcuna operazione di cassa per $country: nulla è supportato e la cassa non vende nulla.';
+  }
+
+  @override
+  String tillReceiptCorrects(String number) {
+    return 'Corregge lo scontrino $number';
+  }
+
+  @override
+  String get tillReceiptDisagrees =>
+      'Gli importi di questo scontrino non concordano tra loro. Viene mostrato così come è stato fissato; ne informi la Sua amministrazione.';
+
+  @override
+  String tillReceiptIssuedUnder(String specification, String version) {
+    return 'Emesso secondo: $specification ($version)';
+  }
+
+  @override
+  String tillReceiptLine(String label, String quantity, String unit) {
+    return '$label: $quantity $unit';
+  }
+
+  @override
   String tillReceiptNumber(String number) {
     return 'Scontrino $number';
   }
+
+  @override
+  String get tillReceiptPrintNote =>
+      'Nessuna stampante di scontrini è collegata all\'app: stampi dal menu di condivisione.';
+
+  @override
+  String get tillReceiptShare => 'Condividere lo scontrino';
+
+  @override
+  String get tillReceiptShow => 'Mostrare lo scontrino';
+
+  @override
+  String tillReceiptTaxLine(String percent, String tax, String net) {
+    return 'IVA $percent %: $tax su $net';
+  }
+
+  @override
+  String tillReceiptTotal(String amount) {
+    return 'Totale $amount';
+  }
+
+  @override
+  String get tillReceiptUnreadable =>
+      'Questo scontrino è stato scritto da una versione più recente di DesKilo: aggiorni l\'app per leggerlo.';
 
   @override
   String tillRemoveLine(String name) {

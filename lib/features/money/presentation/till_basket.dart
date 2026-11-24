@@ -30,6 +30,7 @@ class TillBasket extends StatelessWidget {
     this.offline = const TillOfflineStatus(),
     this.onSendOffline,
     this.onDiscardOffline,
+    this.onReceipt,
   });
 
   final TillState state;
@@ -44,6 +45,8 @@ class TillBasket extends StatelessWidget {
   final TillOfflineStatus offline;
   final VoidCallback? onSendOffline;
   final VoidCallback? onDiscardOffline;
+  /// #4184 -- opens the frozen document of the sale just made.
+  final void Function(String receiptId)? onReceipt;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +86,15 @@ class TillBasket extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(AppSpacing.md),
           child: sold != null
-              ? _Sold(sold: sold, change: state.change, money: money, offlineSale: offline.sale, onNext: state.busy ? null : onNext)
+              ? _Sold(
+                  sold: sold,
+                  change: state.change,
+                  money: money,
+                  offlineSale: offline.sale,
+                  onNext: state.busy ? null : onNext,
+                  // a sale recorded offline has no frozen document until the server has received it
+                  onReceipt: onReceipt == null || offline.sale != null ? null : () => onReceipt!(sold.receiptId),
+                )
               : state.unconfirmed
               ? _Unconfirmed(state: state, onConfirm: onConfirm)
               : _Footer(state: state, money: money, offline: offline.active, onPay: onPay, onRetry: onRetry),
@@ -216,7 +227,7 @@ class _Footer extends StatelessWidget {
 }
 
 class _Sold extends StatelessWidget {
-  const _Sold({required this.sold, required this.change, required this.money, required this.offlineSale, required this.onNext});
+  const _Sold({required this.sold, required this.change, required this.money, required this.offlineSale, required this.onNext, this.onReceipt});
 
   final TillSold sold;
 
@@ -225,6 +236,7 @@ class _Sold extends StatelessWidget {
   final int? change;
   final MoneyFormat money;
   final VoidCallback? onNext;
+  final VoidCallback? onReceipt;
 
   @override
   Widget build(BuildContext context) {
@@ -243,6 +255,14 @@ class _Sold extends StatelessWidget {
         Text(l10n.tillTotalDue(money.formatMinor(sold.totals.grossMinor))),
         if (change != null && change! > 0)
           Text(l10n.tillChangeDue(money.formatMinor(change!)), key: const ValueKey('till-change'), style: theme.textTheme.titleMedium),
+        if (onReceipt != null)
+          TextButton.icon(
+            key: const ValueKey('till-show-receipt'),
+            icon: const Icon(Icons.receipt_long),
+            style: TextButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+            onPressed: onReceipt,
+            label: Text(l10n.tillReceiptShow),
+          ),
         const FormGap(),
         FilledButton(
           key: const ValueKey('till-next'),

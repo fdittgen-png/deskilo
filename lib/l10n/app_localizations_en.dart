@@ -40812,6 +40812,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tillDeclarationNone => 'no fiscal register obligation';
+
+  @override
+  String get tillDeclarationRegister => 'a fiscal register is required';
+
+  @override
   String get tillDrawerAddTill => 'Add a till';
 
   @override
@@ -41267,9 +41273,106 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillQuantityTitle => 'Quantity sold';
 
   @override
+  String get tillReadinessAdapterMissing =>
+      'The registry allows it, but nothing in the app carries it yet.';
+
+  @override
+  String tillReadinessCase(String country, String declaration) {
+    return 'Country $country, declared case: $declaration';
+  }
+
+  @override
+  String get tillReadinessConfirmed => 'Confirmed by a tax professional.';
+
+  @override
+  String tillReadinessEvidence(String evidence) {
+    return 'Proof: $evidence';
+  }
+
+  @override
+  String get tillReadinessOffline =>
+      'A sale needs a connection: the till does not sell offline, and a sale whose answer was lost waits to be confirmed.';
+
+  @override
+  String get tillReadinessOpen => 'Counter readiness and settings';
+
+  @override
+  String get tillReadinessSettings => 'Counter settings';
+
+  @override
+  String tillReadinessSpecification(
+    String specification,
+    String version,
+    String date,
+  ) {
+    return 'Rests on: $specification ($version), in force since $date';
+  }
+
+  @override
+  String get tillReadinessSupported => 'Supported';
+
+  @override
+  String get tillReadinessTitle => 'Counter readiness';
+
+  @override
+  String get tillReadinessUnavailable => 'Not available';
+
+  @override
+  String get tillReadinessUnconfirmed =>
+      'Not yet confirmed by a tax professional.';
+
+  @override
+  String tillReadinessUnknownCountry(String country) {
+    return 'The registry names no counter operation for $country: nothing is supported, and the till sells nothing.';
+  }
+
+  @override
+  String tillReceiptCorrects(String number) {
+    return 'Corrects receipt $number';
+  }
+
+  @override
+  String get tillReceiptDisagrees =>
+      'The amounts of this receipt do not agree with each other. It is shown as it was frozen; tell your administrator.';
+
+  @override
+  String tillReceiptIssuedUnder(String specification, String version) {
+    return 'Issued under: $specification ($version)';
+  }
+
+  @override
+  String tillReceiptLine(String label, String quantity, String unit) {
+    return '$label: $quantity $unit';
+  }
+
+  @override
   String tillReceiptNumber(String number) {
     return 'Receipt $number';
   }
+
+  @override
+  String get tillReceiptPrintNote =>
+      'No receipt printer is connected to the app: print from the share sheet.';
+
+  @override
+  String get tillReceiptShare => 'Share the receipt';
+
+  @override
+  String get tillReceiptShow => 'Show the receipt';
+
+  @override
+  String tillReceiptTaxLine(String percent, String tax, String net) {
+    return 'VAT $percent %: $tax on $net';
+  }
+
+  @override
+  String tillReceiptTotal(String amount) {
+    return 'Total $amount';
+  }
+
+  @override
+  String get tillReceiptUnreadable =>
+      'This receipt was written by a newer version of DesKilo: update the app to read it.';
 
   @override
   String tillRemoveLine(String name) {

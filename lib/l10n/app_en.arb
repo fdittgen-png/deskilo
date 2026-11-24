@@ -53125,6 +53125,14 @@
       }
     }
   },
+  "tillDeclarationNone": "no fiscal register obligation",
+  "@tillDeclarationNone": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillDeclarationRegister": "a fiscal register is required",
+  "@tillDeclarationRegister": {
+    "description": "#4184 the counter readiness"
+  },
   "tillDrawerAddTill": "Add a till",
   "@tillDrawerAddTill": {
     "description": "#4367 till sessions: the cash drawer"
@@ -53721,6 +53729,127 @@
   "@tillQuantityTitle": {
     "description": "#4366 the till"
   },
+  "tillReadinessAdapterMissing": "The registry allows it, but nothing in the app carries it yet.",
+  "@tillReadinessAdapterMissing": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessCase": "Country {country}, declared case: {declaration}",
+  "@tillReadinessCase": {
+    "description": "#4184 the counter readiness",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "declaration": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReadinessConfirmed": "Confirmed by a tax professional.",
+  "@tillReadinessConfirmed": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessEvidence": "Proof: {evidence}",
+  "@tillReadinessEvidence": {
+    "description": "#4184 the counter readiness",
+    "placeholders": {
+      "evidence": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReadinessOffline": "A sale needs a connection: the till does not sell offline, and a sale whose answer was lost waits to be confirmed.",
+  "@tillReadinessOffline": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessOpen": "Counter readiness and settings",
+  "@tillReadinessOpen": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessSettings": "Counter settings",
+  "@tillReadinessSettings": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessSpecification": "Rests on: {specification} ({version}), in force since {date}",
+  "@tillReadinessSpecification": {
+    "description": "#4184 the counter readiness",
+    "placeholders": {
+      "specification": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReadinessSupported": "Supported",
+  "@tillReadinessSupported": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessTitle": "Counter readiness",
+  "@tillReadinessTitle": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessUnavailable": "Not available",
+  "@tillReadinessUnavailable": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessUnconfirmed": "Not yet confirmed by a tax professional.",
+  "@tillReadinessUnconfirmed": {
+    "description": "#4184 the counter readiness"
+  },
+  "tillReadinessUnknownCountry": "The registry names no counter operation for {country}: nothing is supported, and the till sells nothing.",
+  "@tillReadinessUnknownCountry": {
+    "description": "#4184 the counter readiness",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReceiptCorrects": "Corrects receipt {number}",
+  "@tillReceiptCorrects": {
+    "description": "#4184 the counter receipt document",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReceiptDisagrees": "The amounts of this receipt do not agree with each other. It is shown as it was frozen; tell your administrator.",
+  "@tillReceiptDisagrees": {
+    "description": "#4184 the counter receipt document"
+  },
+  "tillReceiptIssuedUnder": "Issued under: {specification} ({version})",
+  "@tillReceiptIssuedUnder": {
+    "description": "#4184 the counter receipt document",
+    "placeholders": {
+      "specification": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReceiptLine": "{label}: {quantity} {unit}",
+  "@tillReceiptLine": {
+    "description": "#4184 the counter receipt document",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
   "tillReceiptNumber": "Receipt {number}",
   "@tillReceiptNumber": {
     "description": "#4366 the till",
@@ -53729,6 +53858,46 @@
         "type": "String"
       }
     }
+  },
+  "tillReceiptPrintNote": "No receipt printer is connected to the app: print from the share sheet.",
+  "@tillReceiptPrintNote": {
+    "description": "#4184 the counter receipt document"
+  },
+  "tillReceiptShare": "Share the receipt",
+  "@tillReceiptShare": {
+    "description": "#4184 the counter receipt document"
+  },
+  "tillReceiptShow": "Show the receipt",
+  "@tillReceiptShow": {
+    "description": "#4184 the counter receipt document"
+  },
+  "tillReceiptTaxLine": "VAT {percent} %: {tax} on {net}",
+  "@tillReceiptTaxLine": {
+    "description": "#4184 the counter receipt document",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      },
+      "tax": {
+        "type": "String"
+      },
+      "net": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReceiptTotal": "Total {amount}",
+  "@tillReceiptTotal": {
+    "description": "#4184 the counter receipt document",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReceiptUnreadable": "This receipt was written by a newer version of DesKilo: update the app to read it.",
+  "@tillReceiptUnreadable": {
+    "description": "#4184 the counter receipt document"
   },
   "tillRemoveLine": "Take {name} out of the basket",
   "@tillRemoveLine": {

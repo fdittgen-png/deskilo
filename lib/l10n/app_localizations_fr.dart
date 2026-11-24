@@ -41329,6 +41329,12 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get tillDeclarationNone => 'aucune obligation de caisse fiscale';
+
+  @override
+  String get tillDeclarationRegister => 'une caisse fiscale est obligatoire';
+
+  @override
   String get tillDrawerAddTill => 'Ajouter une caisse';
 
   @override
@@ -41791,9 +41797,107 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillQuantityTitle => 'Quantité vendue';
 
   @override
+  String get tillReadinessAdapterMissing =>
+      'Le registre l\'autorise, mais rien dans l\'application ne le prend encore en charge.';
+
+  @override
+  String tillReadinessCase(String country, String declaration) {
+    return 'Pays $country, cas déclaré : $declaration';
+  }
+
+  @override
+  String get tillReadinessConfirmed =>
+      'Confirmé par un professionnel de la fiscalité.';
+
+  @override
+  String tillReadinessEvidence(String evidence) {
+    return 'Preuve : $evidence';
+  }
+
+  @override
+  String get tillReadinessOffline =>
+      'Une vente demande une connexion : la caisse ne vend pas hors ligne, et une vente dont la réponse s\'est perdue attend d\'être confirmée.';
+
+  @override
+  String get tillReadinessOpen => 'Disponibilité et réglages de la caisse';
+
+  @override
+  String get tillReadinessSettings => 'Réglages de la caisse';
+
+  @override
+  String tillReadinessSpecification(
+    String specification,
+    String version,
+    String date,
+  ) {
+    return 'Repose sur : $specification ($version), en vigueur depuis le $date';
+  }
+
+  @override
+  String get tillReadinessSupported => 'Pris en charge';
+
+  @override
+  String get tillReadinessTitle => 'Disponibilité de la caisse';
+
+  @override
+  String get tillReadinessUnavailable => 'Indisponible';
+
+  @override
+  String get tillReadinessUnconfirmed =>
+      'Pas encore confirmé par un professionnel de la fiscalité.';
+
+  @override
+  String tillReadinessUnknownCountry(String country) {
+    return 'Le registre ne nomme aucune opération de caisse pour $country : rien n\'est pris en charge et la caisse ne vend rien.';
+  }
+
+  @override
+  String tillReceiptCorrects(String number) {
+    return 'Corrige le ticket $number';
+  }
+
+  @override
+  String get tillReceiptDisagrees =>
+      'Les montants de ce ticket ne concordent pas entre eux. Il est affiché tel qu\'il a été figé ; prévenez votre administrateur.';
+
+  @override
+  String tillReceiptIssuedUnder(String specification, String version) {
+    return 'Émis selon : $specification ($version)';
+  }
+
+  @override
+  String tillReceiptLine(String label, String quantity, String unit) {
+    return '$label : $quantity $unit';
+  }
+
+  @override
   String tillReceiptNumber(String number) {
     return 'Ticket $number';
   }
+
+  @override
+  String get tillReceiptPrintNote =>
+      'Aucune imprimante de tickets n\'est reliée à l\'application : imprimez depuis le menu de partage.';
+
+  @override
+  String get tillReceiptShare => 'Partager le ticket';
+
+  @override
+  String get tillReceiptShow => 'Afficher le ticket';
+
+  @override
+  String tillReceiptTaxLine(String percent, String tax, String net) {
+    return 'TVA $percent % : $tax sur $net';
+  }
+
+  @override
+  String tillReceiptTotal(String amount) {
+    return 'Total $amount';
+  }
+
+  @override
+  String get tillReceiptUnreadable =>
+      'Ce ticket a été écrit par une version plus récente de DesKilo : mettez l\'application à jour pour le lire.';
 
   @override
   String tillRemoveLine(String name) {
