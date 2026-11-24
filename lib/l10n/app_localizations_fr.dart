@@ -27192,6 +27192,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get processFilterEmpty => 'Aucun processus ne correspond à ce filtre.';
 
   @override
+  String get processGoodsStock => 'Marchandises et stock';
+
+  @override
+  String get processGoodsStockDesc =>
+      'Tenir, déplacer, compter et tracer les marchandises vendues.';
+
+  @override
   String processHeldBack(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -38819,6 +38826,34 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get subprocessReservationsDesc =>
       'Réserver des places ou des espaces selon les règles de l’espace.';
+
+  @override
+  String get subprocessStockControl => 'Inventaires et réapprovisionnement';
+
+  @override
+  String get subprocessStockControlDesc =>
+      'Compter le stock, planifier les inventaires tournants et réapprovisionner à temps.';
+
+  @override
+  String get subprocessStockItems => 'Articles et unités';
+
+  @override
+  String get subprocessStockItemsDesc =>
+      'Articles, groupes d\'articles, unités de mesure et unités de manutention.';
+
+  @override
+  String get subprocessStockMovements => 'Réception et mouvements';
+
+  @override
+  String get subprocessStockMovementsDesc =>
+      'Recevoir les livraisons, sortir des marchandises et gérer les retours.';
+
+  @override
+  String get subprocessStockTracking => 'Traçabilité';
+
+  @override
+  String get subprocessStockTrackingDesc =>
+      'Lots, péremption, scan et étiquettes qui tracent chaque pièce.';
 
   @override
   String get subprocessStructure => 'Structure des lieux';

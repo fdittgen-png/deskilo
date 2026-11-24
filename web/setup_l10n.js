@@ -1643,6 +1643,10 @@ window.SETUP_L10N={
     "Membership commerce",
     "Set service prices and member agreements."
    ],
+   "goodsStock": [
+    "Goods & stock",
+    "Keep, move, count and trace the goods the business sells."
+   ],
    "billingPayments": [
     "Billing & payments",
     "Turn activity into invoices and reconcile what is owed."
@@ -1704,6 +1708,22 @@ window.SETUP_L10N={
    "pricing": [
     "Services & pricing",
     "Price services and accessories and agree member terms."
+   ],
+   "stockItems": [
+    "Items and units",
+    "Items, item groups, units of measure and handling units."
+   ],
+   "stockMovements": [
+    "Receiving and movements",
+    "Receive deliveries, take goods out and handle returns."
+   ],
+   "stockControl": [
+    "Counts and replenishment",
+    "Count stock, schedule cycle counts and reorder in time."
+   ],
+   "stockTracking": [
+    "Traceability",
+    "Lots, expiry, scanning and tags that trace each piece."
    ],
    "records": [
     "Financial records",
@@ -3660,6 +3680,10 @@ window.SETUP_L10N={
     "Offres aux membres",
     "Définir les prix des services et les accords avec les membres."
    ],
+   "goodsStock": [
+    "Marchandises et stock",
+    "Tenir, déplacer, compter et tracer les marchandises vendues."
+   ],
    "billingPayments": [
     "Facturation et paiements",
     "Facturer l’activité et suivre les sommes dues."
@@ -3721,6 +3745,22 @@ window.SETUP_L10N={
    "pricing": [
     "Services et tarification",
     "Tarifer les services et accessoires et convenir des conditions des membres."
+   ],
+   "stockItems": [
+    "Articles et unités",
+    "Articles, groupes d'articles, unités de mesure et unités de manutention."
+   ],
+   "stockMovements": [
+    "Réception et mouvements",
+    "Recevoir les livraisons, sortir des marchandises et gérer les retours."
+   ],
+   "stockControl": [
+    "Inventaires et réapprovisionnement",
+    "Compter le stock, planifier les inventaires tournants et réapprovisionner à temps."
+   ],
+   "stockTracking": [
+    "Traçabilité",
+    "Lots, péremption, scan et étiquettes qui tracent chaque pièce."
    ],
    "records": [
     "Suivi financier",
@@ -5677,6 +5717,10 @@ window.SETUP_L10N={
     "Mitgliedschaftsangebote",
     "Leistungspreise und Mitgliedsvereinbarungen festlegen."
    ],
+   "goodsStock": [
+    "Waren und Lager",
+    "Die verkauften Waren führen, bewegen, zählen und zurückverfolgen."
+   ],
    "billingPayments": [
     "Abrechnung und Zahlungen",
     "Aktivitäten abrechnen und offene Beträge abstimmen."
@@ -5738,6 +5782,22 @@ window.SETUP_L10N={
    "pricing": [
     "Leistungen und Preise",
     "Leistungen und Zubehör bepreisen und Mitgliedskonditionen vereinbaren."
+   ],
+   "stockItems": [
+    "Artikel und Einheiten",
+    "Artikel, Artikelgruppen, Maßeinheiten und Handhabungseinheiten."
+   ],
+   "stockMovements": [
+    "Wareneingang und Bewegungen",
+    "Lieferungen annehmen, Waren entnehmen und Rücknahmen abwickeln."
+   ],
+   "stockControl": [
+    "Zählungen und Nachbestellung",
+    "Bestand zählen, Stichtagszählungen planen und rechtzeitig nachbestellen."
+   ],
+   "stockTracking": [
+    "Rückverfolgbarkeit",
+    "Chargen, Verfall, Scannen und Tags, die jedes Stück zurückverfolgen."
    ],
    "records": [
     "Finanzübersicht",
@@ -7694,6 +7754,10 @@ window.SETUP_L10N={
     "Ofertas para miembros",
     "Definir precios de servicios y acuerdos con los miembros."
    ],
+   "goodsStock": [
+    "Mercancías y existencias",
+    "Llevar, mover, contar y rastrear las mercancías que se venden."
+   ],
    "billingPayments": [
     "Facturación y pagos",
     "Facturar la actividad y conciliar los importes pendientes."
@@ -7755,6 +7819,22 @@ window.SETUP_L10N={
    "pricing": [
     "Servicios y precios",
     "Fijar precios de servicios y accesorios y acordar condiciones."
+   ],
+   "stockItems": [
+    "Artículos y unidades",
+    "Artículos, grupos de artículos, unidades de medida y unidades de manipulación."
+   ],
+   "stockMovements": [
+    "Recepción y movimientos",
+    "Recibir entregas, retirar mercancías y gestionar devoluciones."
+   ],
+   "stockControl": [
+    "Recuentos y reposición",
+    "Contar existencias, programar recuentos cíclicos y reponer a tiempo."
+   ],
+   "stockTracking": [
+    "Trazabilidad",
+    "Lotes, caducidad, escaneo y etiquetas que rastrean cada pieza."
    ],
    "records": [
     "Registros financieros",
@@ -9711,6 +9791,10 @@ window.SETUP_L10N={
     "Offerte per i membri",
     "Definire prezzi dei servizi e accordi con i membri."
    ],
+   "goodsStock": [
+    "Merci e magazzino",
+    "Tenere, spostare, contare e tracciare le merci vendute."
+   ],
    "billingPayments": [
     "Fatturazione e pagamenti",
     "Fatturare le attività e riconciliare gli importi dovuti."
@@ -9772,6 +9856,22 @@ window.SETUP_L10N={
    "pricing": [
     "Servizi e prezzi",
     "Definire prezzi di servizi e accessori e concordare le condizioni."
+   ],
+   "stockItems": [
+    "Articoli e unità",
+    "Articoli, gruppi di articoli, unità di misura e unità di movimentazione."
+   ],
+   "stockMovements": [
+    "Ricezione e movimenti",
+    "Ricevere le consegne, prelevare merci e gestire i resi."
+   ],
+   "stockControl": [
+    "Conteggi e rifornimento",
+    "Contare le giacenze, pianificare i conteggi ciclici e riordinare per tempo."
+   ],
+   "stockTracking": [
+    "Tracciabilità",
+    "Lotti, scadenza, scansione ed etichette che tracciano ogni pezzo."
    ],
    "records": [
     "Registrazioni finanziarie",
