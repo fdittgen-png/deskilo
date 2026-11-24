@@ -126,6 +126,11 @@ class DemoStockConfigCommands implements StockConfigCommands {
       id: 'demo-place-supplier', revision: 1, kind: 'supplier', code: 'SUPPLIER', name: '',
       barcode: null, parentId: null, active: true, virtual: true,
     ),
+    // #4173 -- where a sale's goods go: the server's own customer place, which holds nothing.
+    'demo-place-customer': const StockPlaceConfig(
+      id: 'demo-place-customer', revision: 1, kind: 'customer', code: 'CUSTOMER', name: '',
+      barcode: null, parentId: null, active: true, virtual: true,
+    ),
   };
 
   /// The items the Demo's movements name: their unit and tracking are fixed.

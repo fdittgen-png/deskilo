@@ -104,8 +104,8 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('stock-move-submit')));
         await _frames(tester);
         expect(w.ledger.balance('demo-item-mugs', 'demo-place-main').text, '23');
-        expect(before, '12');
-        expect(w.ledger.balance('demo-item-mugs', 'demo-place-shelf').text, '25');
+        expect(before, '10', reason: 'the 12 shelved less the 2 sold');
+        expect(w.ledger.balance('demo-item-mugs', 'demo-place-shelf').text, '23');
       });
 
       testWidgets('a code that names nothing is said, and nothing is filled', (tester) async {
