@@ -51,10 +51,7 @@ class SupportBundle {
           : null,
       'requiredSchemaVersion': requiredSchemaVersion,
       'needsSchemaVersion': appNeedsSchemaVersion,
-      'schemaVersion':
-          schemaVersion != null && schemaVersion > 0 && schemaVersion <= 1000000
-          ? schemaVersion
-          : null,
+      'schemaVersion': _plausibleSchema(schemaVersion),
       'window': {
         'from': from.toUtc().toIso8601String(),
         'until': until.toUtc().toIso8601String(),
@@ -86,3 +83,8 @@ class SupportBundle {
     return SupportBundle._(preview);
   }
 }
+
+/// A schema marker as a report may carry it: a positive number of a sane
+/// size, or nothing.
+int? _plausibleSchema(int? v) =>
+    v != null && v > 0 && v <= 1000000 ? v : null;
