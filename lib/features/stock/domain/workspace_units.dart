@@ -213,11 +213,11 @@ const List<WorkspaceUnit> builtInUnits = [
 ];
 
 /// The units an item was counted in before a business had units of its own (0747): what the pickers offer while the feature is off.
-const Set<String> originalStockUnitCodes = {'piece', 'g', 'kg', 'ml', 'cl', 'l'};
+const Set<String> _originalStockUnitCodes = {'piece', 'g', 'kg', 'ml', 'cl', 'l'};
 
 /// The units a picker for what an item is counted in offers: the six of before while the feature is off, every unit that is not
 /// archived when it is on, and always [keep] (the unit the item already has, archived or not, so editing it never loses it).
 List<WorkspaceUnit> pickableUnits(List<WorkspaceUnit> all, {required bool unitsOn, String? keep}) => [
   for (final u in all)
-    if (u.code == keep || (unitsOn ? !u.archived : originalStockUnitCodes.contains(u.code))) u,
+    if (u.code == keep || (unitsOn ? !u.archived : _originalStockUnitCodes.contains(u.code))) u,
 ];

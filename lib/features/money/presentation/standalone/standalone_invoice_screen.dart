@@ -24,6 +24,8 @@ import '../../../../core/time/calendar_days.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
+import '../../../stock/domain/workspace_units.dart';
+import '../../../stock/providers/workspace_units_providers.dart';
 import '../../application/issue_standalone_invoice.dart';
 import '../../domain/invoice_goods.dart';
 import '../../domain/standalone_invoice.dart';
@@ -322,6 +324,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
           rates: rates,
           goods: goods,
           pieces: pieces,
+          units: ref.watch(lineUnitsProvider(workspaceId)).value ?? const <WorkspaceUnit>[], // empty-ok: the units only offer a choice
           enabled: !locked,
           onChanged: _edited,
           onRemove: _lines.length > 1

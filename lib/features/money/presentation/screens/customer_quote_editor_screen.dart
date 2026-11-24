@@ -21,6 +21,8 @@ import '../../../../core/theme/app_typography.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../stock/domain/workspace_units.dart';
+import '../../../stock/providers/workspace_units_providers.dart';
 import '../../domain/billing_customer.dart';
 import '../../domain/customer_quote.dart';
 import '../../domain/invoice_goods.dart';
@@ -351,6 +353,7 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
             form: line,
             rates: rates,
             goods: goods,
+            units: ref.watch(lineUnitsProvider(workspaceId)).value ?? const <WorkspaceUnit>[], // empty-ok: the units only offer a choice
             enabled: !locked,
             onChanged: _form.changed,
             onRemove: _form.lines.length > 1
