@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3550 — the kinds of business, and the workspace's own.
+import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../application/business_kind_commands.dart';
 import '../data/supabase_business_kind_repository.dart';
 import '../domain/business_kind.dart';
 import '../domain/business_profile.dart';
+import '../domain/business_shape.dart';
 import '../domain/setup_status.dart';
 import '../domain/setup_steps_for_kind.dart';
 import '../domain/switched_off_by_kind.dart';
@@ -41,27 +43,28 @@ BusinessKindCommands businessKindCommands(Ref ref) => BusinessKindCommands(
   ref.watch(settingsRepositoryProvider),
 );
 
-/// #4223 — whether the selected workspace's primary kind keeps places off.
-/// Watched, never awaited (the settings are a long chain): until the kinds and
-/// the profile are both read, and when one cannot be, it is false, so
-/// nothing is hidden on a guess.
-@riverpod
-bool keepsPlacesOff(Ref ref) {
+/// #4407 — what the selected business is (places, services, shop), from its effective features, its primary kind and its
+/// kinds (`BusinessShape` names the sources and which wins). Watched, never awaited (the settings are a long chain): until the
+/// kinds and the profile are both read, and when one cannot be, no kind keeps places off, so nothing is hidden on a guess.
+final businessShapeProvider = Provider<BusinessShape>((ref) {
   final kinds = ref.watch(businessKindsProvider);
   final profile = ref.watch(businessProfileProvider);
-  return switch ((kinds, profile)) {
-    (AsyncData(value: final k), AsyncData(value: final p)) =>
-      switchedOffByKind(WorkspaceFeature.placeBooking, p, k),
-    _ => false,
-  };
-}
+  return BusinessShape.of(
+    features: ref.watch(enabledFeaturesSyncProvider),
+    kindKeepsPlacesOff: switch ((kinds, profile)) {
+      (AsyncData(value: final k), AsyncData(value: final p)) => switchedOffByKind(WorkspaceFeature.placeBooking, p, k),
+      _ => false,
+    },
+    kinds: profile.value?.kinds ?? const [],
+  );
+});
 
 /// #4223, #4232 — the setup status a business is shown: a business whose kind
 /// keeps places off has no place step in it, so no list, "Next" or resume line
 /// can name one. Every reader of the guide's status reads this one.
 @riverpod
 AsyncValue<SetupStatus> visibleSetupStatus(Ref ref, String workspaceId) {
-  final noPlaces = ref.watch(keepsPlacesOffProvider);
+  final noPlaces = ref.watch(businessShapeProvider).kindKeepsPlacesOff;
   return ref
       .watch(workspaceSetupStatusProvider(workspaceId))
       .whenData((s) => noPlaces ? s.withoutSteps(setupStepsNeedingPlaces) : s);

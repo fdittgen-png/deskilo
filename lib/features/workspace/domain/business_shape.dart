@@ -16,7 +16,7 @@ import 'workspace_feature.dart';
 ///  * **services** -- the effective `services` feature.
 ///  * **shop** -- the business's kinds (the primary one or a further one) include `shop`.
 class BusinessShape {
-  const BusinessShape({required this.places, required this.services, required this.shop});
+  const BusinessShape({required this.places, required this.services, required this.shop, this.kindKeepsPlacesOff = false});
 
   /// Reads the shape from its three sources: the effective [features], whether the primary kind keeps places off
   /// ([kindKeepsPlacesOff]) and the business's kind codes ([kinds], the primary one first).
@@ -28,6 +28,7 @@ class BusinessShape {
     places: features.contains(WorkspaceFeature.placeBooking) && !kindKeepsPlacesOff,
     services: features.contains(WorkspaceFeature.services),
     shop: kinds.contains('shop'),
+    kindKeepsPlacesOff: kindKeepsPlacesOff,
   );
 
   /// Has places members or customers book.
@@ -38,4 +39,8 @@ class BusinessShape {
 
   /// Is a shop (alone or beside another kind).
   final bool shop;
+
+  /// The primary kind alone keeps places off, whatever the business switched on: the setup status hides the place steps of such
+  /// a business (#4223), never of one that switched places off by hand and may still want them.
+  final bool kindKeepsPlacesOff;
 }

@@ -13,7 +13,7 @@ import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
-import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/providers/business_kind_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/directory_location.dart';
 import '../domain/public_workspace.dart';
@@ -374,8 +374,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                 _placeSection(),
                 PublicFacetsEditor(offer: _offer, changes: _facetChanges,
                   hoursController: _hoursNote, enabled: !_busy,
-                  hasPlaces: effectiveFeatures(resolveEnabledFeatures(workspace!.featureFlags))
-                      .contains(WorkspaceFeature.placeBooking)),
+                  hasPlaces: ref.watch(businessShapeProvider).places),
                 PublicOfferPreview(offer: _offer),
                 Padding(
                   padding: AppSpacing.smAll,

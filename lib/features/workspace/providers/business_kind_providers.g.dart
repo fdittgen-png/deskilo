@@ -200,60 +200,6 @@ final class BusinessKindCommandsProvider
 String _$businessKindCommandsHash() =>
     r'a78827ee000a757aa163ec88c390459b1608671f';
 
-/// #4223 — whether the selected workspace's primary kind keeps places off.
-/// Watched, never awaited (the settings are a long chain): until the kinds and
-/// the profile are both read, and when one cannot be, it is false, so
-/// nothing is hidden on a guess.
-
-@ProviderFor(keepsPlacesOff)
-final keepsPlacesOffProvider = KeepsPlacesOffProvider._();
-
-/// #4223 — whether the selected workspace's primary kind keeps places off.
-/// Watched, never awaited (the settings are a long chain): until the kinds and
-/// the profile are both read, and when one cannot be, it is false, so
-/// nothing is hidden on a guess.
-
-final class KeepsPlacesOffProvider extends $FunctionalProvider<bool, bool, bool>
-    with $Provider<bool> {
-  /// #4223 — whether the selected workspace's primary kind keeps places off.
-  /// Watched, never awaited (the settings are a long chain): until the kinds and
-  /// the profile are both read, and when one cannot be, it is false, so
-  /// nothing is hidden on a guess.
-  KeepsPlacesOffProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'keepsPlacesOffProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$keepsPlacesOffHash();
-
-  @$internal
-  @override
-  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  bool create(Ref ref) {
-    return keepsPlacesOff(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(bool value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<bool>(value),
-    );
-  }
-}
-
-String _$keepsPlacesOffHash() => r'bee267f5ef34f7812b7da4ba7392f54a2ee0861e';
-
 /// #4223, #4232 — the setup status a business is shown: a business whose kind
 /// keeps places off has no place step in it, so no list, "Next" or resume line
 /// can name one. Every reader of the guide's status reads this one.
@@ -329,7 +275,7 @@ final class VisibleSetupStatusProvider
 }
 
 String _$visibleSetupStatusHash() =>
-    r'aa9c0ebdbca6434b8f0e952a58491f7a096e7d53';
+    r'65022deffd732881e7a17fa6bf9ce43d1ac40c19';
 
 /// #4223, #4232 — the setup status a business is shown: a business whose kind
 /// keeps places off has no place step in it, so no list, "Next" or resume line

@@ -6,7 +6,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/setup_levels.dart';
-import '../../providers/business_shape_provider.dart';
+import '../../providers/business_kind_providers.dart';
 
 /// One collapsible group of the setup questions (#3317): each question with
 /// a business example (#3283), its yes/no switch and its "Not sure yet".

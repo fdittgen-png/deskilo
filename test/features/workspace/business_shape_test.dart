@@ -9,7 +9,6 @@ import 'package:deskilo/features/workspace/domain/setup_recommendation.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/setup_question_group.dart';
 import 'package:deskilo/features/workspace/providers/business_kind_providers.dart';
-import 'package:deskilo/features/workspace/providers/business_shape_provider.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +38,7 @@ void main() {
     final container = ProviderContainer(
       overrides: [
         enabledFeaturesSyncProvider.overrideWithValue({WorkspaceFeature.placeBooking, WorkspaceFeature.services}),
-        keepsPlacesOffProvider.overrideWithValue(false),
+        businessKindsProvider.overrideWith((ref) async => const []),
         businessProfileProvider.overrideWith((ref) async => const BusinessProfile(kind: 'shop')),
       ],
     );
@@ -56,7 +55,7 @@ void main() {
         ProviderScope(
           overrides: [
             enabledFeaturesSyncProvider.overrideWithValue(features),
-            keepsPlacesOffProvider.overrideWithValue(false),
+            businessKindsProvider.overrideWith((ref) async => const []),
             businessProfileProvider.overrideWith((ref) async => const BusinessProfile(kind: 'coworking')),
           ],
           child: MaterialApp(

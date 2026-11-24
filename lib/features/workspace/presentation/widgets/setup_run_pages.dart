@@ -20,7 +20,7 @@ import '../../domain/member.dart';
 import '../../domain/payment_instructions.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
-import '../../providers/business_shape_provider.dart';
+import '../../providers/business_kind_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'setup_draft_frame.dart';
 import 'setup_kiosk_step.dart';

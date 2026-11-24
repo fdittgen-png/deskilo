@@ -22,7 +22,7 @@ import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/booking_granularity.dart';
 import '../../domain/closure_day.dart';
 import '../../domain/workspace_feature.dart';
-import '../../providers/business_shape_provider.dart';
+import '../../providers/business_kind_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../screens/availability_actions.dart';
 import '../screens/availability_sections.dart';

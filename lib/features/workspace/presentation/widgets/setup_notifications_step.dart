@@ -22,7 +22,7 @@ import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/notification_lines.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
-import '../../providers/business_shape_provider.dart';
+import '../../providers/business_kind_providers.dart';
 import '../../providers/settings_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'availability_tiles.dart';

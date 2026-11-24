@@ -25,7 +25,6 @@ import '../../application/setup_step_actions.dart';
 import '../../domain/setup_status.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/business_kind_providers.dart';
-import '../../providers/business_shape_provider.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../setup_step_words.dart';
