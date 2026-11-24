@@ -12,6 +12,7 @@
 // (docs/guides/push-setup.md). Absent -> the function no-ops politely so
 // the trigger never fails.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { mayTriggerPush } from "./push_caller.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
@@ -21,8 +22,8 @@ import { logLine } from "../_shared/log.ts";
 let client: SupabaseClient | null = null;
 const db = (): SupabaseClient =>
   client ??= createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    readEnv(KEYS.supabaseUrl)!,
+    readEnv(KEYS.supabaseServiceRoleKey)!,
   );
 
 // #2559 C2 -- what a notification SHOWS: the app's name and a generic line
@@ -464,8 +465,8 @@ export async function handle(
 ): Promise<Response> {
   const delegated = refuseDelegated(req);
   if (delegated) return delegated;
-  if (!mayTriggerPush(req, Deno.env.get("PUSH_SHARED_SECRET"),
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"))) {
+  if (!mayTriggerPush(req, readEnv(KEYS.pushSharedSecret),
+      readEnv(KEYS.supabaseServiceRoleKey))) {
     return Response.json({ error: "unauthorized" }, { status: 401 });
   }
   try {
@@ -478,7 +479,7 @@ export async function handle(
 }
 
 async function deliver(req: Request, supabase: SupabaseClient): Promise<void> {
-  const saRaw = Deno.env.get("FCM_SERVICE_ACCOUNT");
+  const saRaw = readEnv(KEYS.fcmServiceAccount);
   if (!saRaw) {
     return;
   }

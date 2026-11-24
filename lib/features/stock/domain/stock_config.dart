@@ -7,6 +7,10 @@
 // screen can show it under that field.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import 'stock_refusal.dart';
+
+export 'stock_refusal.dart';
+
 /// A package unit of one item: `factorNum / factorDen` of its inventory unit.
 class StockUnitDraft {
   const StockUnitDraft({
@@ -194,15 +198,16 @@ final class StockConfigStale extends StockConfigFailure {
 }
 
 /// The content is not valid: [field] (`units[0].factor_den`, `code`) and the
-/// [reason] (`factor_invalid`, `code_duplicate`, `location_cycle`, ...).
+/// [reason] (`factorInvalid`, `codeDuplicate`, `locationCycle`, ...), read from
+/// the server's wire name at the data boundary (#4402).
 final class StockConfigRefused extends StockConfigFailure {
   const StockConfigRefused(this.field, this.reason);
 
   final String field;
-  final String reason;
+  final StockRefusal reason;
 
   @override
-  String toString() => 'StockConfigRefused($field: $reason)';
+  String toString() => 'StockConfigRefused($field: ${reason.wire})';
 }
 
 /// The first movement fixed the unit and the tracking of this item.

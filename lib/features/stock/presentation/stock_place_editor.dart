@@ -19,12 +19,12 @@ import '../../../core/scan/scan_scope.dart';
 import '../../../core/text/collation.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
-import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/stock_reads.dart';
 import '../domain/place_labels_pdf.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_check.dart';
@@ -33,6 +33,7 @@ import '../domain/stock_drafts.dart';
 import '../domain/stock_tags.dart';
 import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
+import 'stock_read_failed.dart';
 import 'stock_screen_scan.dart';
 import 'stock_tags_dialog.dart';
 
@@ -175,7 +176,7 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
   }
 
   // read at the time, so a read that cannot be made is the page's own failure
-  Future<List<StockPlaceConfig>> _read() async => ref.read(stockConfigCommandsProvider).places(widget.workspaceId);
+  Future<List<StockPlaceConfig>> _read() => StockReads(ref.read(stockConfigCommandsProvider)).places(widget.workspaceId);
 
   Future<void> _edit(List<StockPlaceConfig> all, StockPlaceConfig? place) async {
     final saved = await _showStockPlaceEditor(
@@ -218,19 +219,12 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
           future: _places,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Column(
-                key: const ValueKey('stock-places-failed'),
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(l10n.stockReadFailed),
-                  TextButton(
-                    key: const ValueKey('stock-places-retry'),
-                    onPressed: () => setState(() {
-                      _places = _read();
-                    }),
-                    child: Text(l10n.identityConnectRetry),
-                  ),
-                ],
+              return StockReadFailed(
+                keyName: 'stock-places',
+                error: snapshot.error!,
+                onRetry: () => setState(() {
+                  _places = _read();
+                }),
               );
             }
             final all = snapshot.data;
@@ -356,32 +350,33 @@ class _PlaceDraft {
       name: fields.text('name'),
       barcode: fields.text('barcode'),
     ).entries)
-      e.key: stockReasonText(l10n, e.value),
+      e.key: stockRefusalText(l10n, e.value),
   };
 
   Future<String?> save(AppLocalizations l10n, StockConfigCommands commands, String workspaceId) async {
-    try {
-      await commands.savePlace(
-        workspaceId,
-        place: StockPlaceDraft(
-          kind: kind,
-          code: fields.text('code'),
-          name: fields.text('name'),
-          barcode: fields.text('barcode').isEmpty ? null : fields.text('barcode'),
-          parentId: isSite ? null : parent,
-          active: active,
-          receivesFromSuppliers: !isSite || receives,
-          pickRole: isSite ? null : role,
-        ),
-        requestId: requestId,
-        placeId: place?.id,
-        expectedRevision: place?.revision,
-      );
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a place was not saved', error: e, stackTrace: st);
-      return stockSaveProblem(l10n, e);
-    }
+    return guardSave(
+      domain: 'stock',
+      message: 'a place was not saved',
+      action: () async {
+        await commands.savePlace(
+          workspaceId,
+          place: StockPlaceDraft(
+            kind: kind,
+            code: fields.text('code'),
+            name: fields.text('name'),
+            barcode: fields.text('barcode').isEmpty ? null : fields.text('barcode'),
+            parentId: isSite ? null : parent,
+            active: active,
+            receivesFromSuppliers: !isSite || receives,
+            pickRole: isSite ? null : role,
+          ),
+          requestId: requestId,
+          placeId: place?.id,
+          expectedRevision: place?.revision,
+        );
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
   }
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {

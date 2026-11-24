@@ -8,7 +8,7 @@ Dans ce chapitre :
 - Votre compte : [photo](help:user.profile.settings.photo), [informations personnelles](help:user.profile.settings.personal-info), [adresse](help:user.profile.settings.address), [numéro de TVA](help:user.profile.settings.vat-id), [conditions de paiement](help:user.profile.settings.payment-terms), [WhatsApp](help:user.profile.settings.whatsapp), [statut](help:user.profile.settings.status), [période de réservation par défaut](help:user.profile.settings.default-period)
 - Votre badge : [le badge](help:user.profile.settings.badge) et [son code](help:user.profile.settings.badge-pin)
 - L'aspect et la lecture de l'application : [langue](help:user.profile.settings.language), [thème](help:user.profile.settings.theme), [navigation](help:user.profile.settings.navigation), [nombres et dates](help:user.profile.settings.regional-formats), [horloge](help:user.profile.settings.clock), [fuseau horaire](help:user.profile.settings.device-zone), [astuces](help:user.profile.settings.restore-hints), [caméra avant](help:user.profile.settings.front-camera), [comptes liés](help:user.profile.settings.linked-accounts)
-- Confidentialité et vos données : [qui peut voir mes données](help:user.privacy.visibility), [qui me voit](help:user.privacy.audiences), [profil public](help:user.privacy.public-profile), [export](help:user.privacy.export), [effacement](help:user.privacy.erase), [demandes d'exercice de droits](help:user.privacy.requests), [notifications push](help:user.privacy.push), [vos droits](help:user.privacy.consent)
+- Confidentialité et vos données : [qui peut voir mes données](help:user.privacy.visibility), [qui me voit](help:user.privacy.audiences), [profil public](help:user.privacy.public-profile), [export](help:user.privacy.export), [effacement](help:user.privacy.erase), [demandes d'exercice de droits](help:user.privacy.requests), [notifications push](help:user.privacy.push), [rapports d'erreur](help:user.privacy.error-reports), [vos droits](help:user.privacy.consent)
 - [Votre propre serveur](help:user.backend.server)
 
 <!-- anchor: user.settings.organisation -->
@@ -652,6 +652,29 @@ Vous voulez cesser d'envoyer des notifications à cet appareil, ou les réactive
 
 - Désactivé, l'application continue de fonctionner et rien n'est envoyé à cet appareil.
 - Activé, l'adresse de cet appareil et chaque notification passent par le service de notifications push.
+
+**Voir aussi:** [Vos données, vos droits](help:user.privacy.consent)
+
+<!-- anchor: user.privacy.error-reports -->
+### Envoyer les rapports d'erreur
+
+**Public:** Tout le monde
+
+Vous voulez savoir ce que l'application envoie quand quelque chose se passe mal, ou l'en empêcher.
+
+<!-- image: user-privacy-error-reports -->
+
+**Étapes**
+
+1. Ouvrez [Confidentialité et données](app:/privacy).
+2. Désactivez ou activez **Envoyer les rapports d'erreur**. Il reste activé tant que vous ne le désactivez pas, et le choix est conservé sur cet appareil.
+
+**Bon à savoir**
+
+- Un rapport part uniquement vers l'installation à laquelle vous êtes connecté, jamais vers une autre société. Son opérateur le lit ; les entreprises dont vous êtes membre ne le voient pas.
+- Il indique la version de l'application, la plateforme, le type d'erreur et l'endroit de l'application où elle s'est produite. Il ne contient jamais ce que vous avez saisi, le texte de l'erreur, une adresse e-mail, un nom ou une clé.
+- Chaque personne envoie au plus un nombre fixé de rapports par heure, un rapport a une taille maximale, et l'installation supprime les rapports après un nombre de jours fixé. L'opérateur règle les trois.
+- Désactivé, rien ne quitte l'appareil : l'erreur reste dans le journal de cet appareil. Un assistant relié à votre compte n'envoie jamais de rapport.
 
 **Voir aussi:** [Vos données, vos droits](help:user.privacy.consent)
 

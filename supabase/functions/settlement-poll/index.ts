@@ -20,6 +20,7 @@
 // the next attempt comes: a key Mollie refuses (4xx) is permanent and
 // logged, the network, 429, 5xx and the database are retried.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { recorderOf, type ScanResult, scanSettlements } from "../_shared/mollie_settlements.ts";
 import { mollieApi } from "../_shared/providers.ts";
@@ -59,8 +60,8 @@ export type Deps = {
 
 const defaultDeps: Deps = {
   service: () =>
-    createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!) as unknown as Db,
-  env: (name) => Deno.env.get(name),
+    createClient(readEnv(KEYS.supabaseUrl)!, readEnv(KEYS.supabaseServiceRoleKey)!) as unknown as Db,
+  env: readEnv,
   fetch: (input, init) => fetch(input, init),
   now: () => Date.now(),
 };

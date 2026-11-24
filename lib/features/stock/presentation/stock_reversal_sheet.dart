@@ -11,15 +11,12 @@
 // answer once. The quantity is read exactly, as it was typed.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import '../../../core/format/decimal_input.dart';
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/refusal_text.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
@@ -28,6 +25,7 @@ import '../domain/stock_reversals.dart';
 import '../domain/stock_sites.dart';
 import 'stock_config_text.dart';
 import 'stock_move_sheets.dart' show StockPickField;
+import 'stock_quantity_field.dart';
 
 String _placeTitle(StockPlaceConfig p) => p.name.isEmpty ? p.code : '${p.code} · ${p.name}';
 
@@ -103,39 +101,40 @@ class _ReversalDraft {
 
   bool get needsPlace => kind != StockReturnKind.correction;
 
-  ExactQuantity? get quantity => exactQuantityFromInput(fields.text('quantity'), locale: locale).value;
+  ExactQuantity? get quantity => stockQuantityOrNull(fields.text('quantity'), locale: locale);
 
   FieldErrors validate(AppLocalizations l10n) {
     final q = quantity;
     return {
-      if (needsPlace && place == null) 'place': stockReasonText(l10n, 'location_foreign'),
-      if (q == null || q <= ExactQuantity.zero) 'quantity': stockReasonText(l10n, 'quantity_invalid'),
+      if (needsPlace && place == null) 'place': l10n.stockRequiredPlace,
+      if (q == null || q <= ExactQuantity.zero) 'quantity': stockRefusalText(l10n, StockRefusal.quantityInvalid),
       if (q != null && q > allows.remaining) 'quantity': l10n.stockReversalMoreThanRemains(format.quantity(allows.remaining), source.unit),
     };
   }
 
   Future<String?> submit(AppLocalizations l10n, StockReversals reversals, String workspaceId) async {
-    try {
-      await reversals.makeReturn(
-        workspaceId,
-        returnId,
-        kind,
-        [
-          (
-            lineId: lineId,
-            sourceMovementId: source.id,
-            quantity: quantity!.text,
-            locationId: needsPlace ? place : null,
-            note: fields.text('note').trim(),
-          ),
-        ],
-        requestId,
-      );
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'goods were not reversed', error: e, stackTrace: st);
-      return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
-    }
+    return guardSave(
+      domain: 'stock',
+      message: 'goods were not reversed',
+      action: () async {
+        await reversals.makeReturn(
+          workspaceId,
+          returnId,
+          kind,
+          [
+            (
+              lineId: lineId,
+              sourceMovementId: source.id,
+              quantity: quantity!.text,
+              locationId: needsPlace ? place : null,
+              note: fields.text('note').trim(),
+            ),
+          ],
+          requestId,
+        );
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
   }
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {
@@ -170,13 +169,11 @@ class _ReversalDraft {
         ),
         const FormGap(),
       ],
-      AppTextField(
+      StockQuantityField(
         key: const ValueKey('stock-reversal-quantity'),
         controller: fields['quantity'],
         fieldKey: 'quantity',
         label: l10n.stockMoveQuantity(source.unit),
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
       ),
       const FormGap(),
       AppTextField(

@@ -77,7 +77,7 @@ String? resolveLayoutXmlFor({
     countryCode: countryCode,
   );
   if (resolved == null || template.layoutFor(kindId) != null ||
-      kindId == 'invoice' || kindId == 'proforma' || kind == null) {
+      kind == null || kind.document.isInvoiceDocument) {
     return resolved;
   }
   // Use the complete kind-specific content, including reminder wording,
@@ -85,7 +85,7 @@ String? resolveLayoutXmlFor({
   final bands = defaultBandsForDoc(kindId, l10n ?? englishL10n);
   final content = '## ${reportKindLabel(l10n ?? englishL10n, kind)}\n'
       '{{ member }} · {{ period }}\n'
-      '${kindId == 'status' ? '{{ status_from }} → {{ status_to }}' : ''}'
+      '${kind.document == ReportDocument.status ? '{{ status_from }} → {{ status_to }}' : ''}'
       '\n\n${bands.body}\n\n${bands.footer}';
   final body = content.replaceAll('&', '&amp;')
       .replaceAll('<', '&lt;').replaceAll('>', '&gt;');

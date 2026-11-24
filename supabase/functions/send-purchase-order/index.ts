@@ -26,6 +26,7 @@
 // after the call; a failure to record it leaves it pending, which blocks a
 // second send just the same.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
@@ -241,14 +242,14 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
 }
 
 if (import.meta.main) {
-  const url = Deno.env.get("SUPABASE_URL")!;
+  const url = readEnv(KEYS.supabaseUrl)!;
   const deps: Deps = {
     caller: (authorization) =>
-      createClient(url, Deno.env.get("SUPABASE_ANON_KEY")!, {
+      createClient(url, readEnv(KEYS.supabaseAnonKey)!, {
         global: { headers: { Authorization: authorization } },
       }),
     service: () =>
-      createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!),
+      createClient(url, readEnv(KEYS.supabaseServiceRoleKey)!),
   };
   Deno.serve(guard(FN, (req) => handle(req, deps)));
 }

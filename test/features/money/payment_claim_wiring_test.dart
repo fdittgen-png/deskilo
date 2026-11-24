@@ -55,7 +55,7 @@ void main() {
       'a claim it answers refused (409 claim_refused) is that refusal',
       () async {
         final repo = SupabasePaymentGatewayRepository(
-          _answering(409, {'error': 'claim_refused', 'code': 'DKC06'}),
+          _answering(409, {'error': 'claim_refused', 'code': DkCode.dkc06}),
         );
         final error = await _caught(
           () => repo.createClaimOrder(

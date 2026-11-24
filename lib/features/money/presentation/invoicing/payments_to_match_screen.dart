@@ -9,7 +9,7 @@
 // server stays the authority (a validation quorum may keep it waiting).
 import 'dart:async';
 
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show Invoice;
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show Invoice, MatchResolution;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -131,7 +131,7 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
           .matchInvoice(
             invoiceId: c.invoice.invoiceId,
             paymentLedgerId: row.payment.id,
-            resolution: 'exact',
+            resolution: MatchResolution.exact.wire,
           );
     } on Object catch (e, st) {
       TraceLogger.instance.error(

@@ -2106,7 +2106,7 @@ final class InvoicingOverviewProvider
   }
 }
 
-String _$invoicingOverviewHash() => r'718619debdc64c63a481db5774940c4ac53f7a71';
+String _$invoicingOverviewHash() => r'54a57e8fb0f59fcee57b89340d9644896491431f';
 
 /// #739 — a member's deal (default, active, pending). The server logs
 /// a read by anyone but the member; the provider is per member so the

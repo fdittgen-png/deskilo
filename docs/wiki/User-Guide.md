@@ -1670,7 +1670,7 @@ In this chapter:
 - Your account: [photo](#your-account-and-photo), [personal information](#personal-information), [address](#your-address), [VAT number](#your-vat-number), [payment terms](#your-payment-terms), [WhatsApp](#your-whatsapp-number), [status](#your-status-line), [default booking period](#default-booking-period)
 - Your badge: [the badge](#your-badge) and [its PIN](#your-badge-pin)
 - How the app looks and reads: [language](#app-language), [theme](#theme), [navigation](#navigation-style), [numbers and dates](#numbers-and-dates), [clock](#clock), [time zone](#show-times-in-my-time-zone), [hints](#restore-the-hints), [front camera](#front-camera-for-scanning), [linked accounts](#linked-accounts)
-- Privacy & your data: [who can see my data](#privacy-who-can-see-my-data), [who sees me](#choose-who-sees-me), [public profile](#publish-a-public-profile), [export](#export-my-data), [erase](#erase-my-data), [rights requests](#rights-requests), [push](#push-notifications-on-this-device), [your rights](#your-data-your-rights)
+- Privacy & your data: [who can see my data](#privacy-who-can-see-my-data), [who sees me](#choose-who-sees-me), [public profile](#publish-a-public-profile), [export](#export-my-data), [erase](#erase-my-data), [rights requests](#rights-requests), [push](#push-notifications-on-this-device), [error reports](#send-error-reports), [your rights](#your-data-your-rights)
 - [Your own server](#your-own-server)
 
 <!-- anchor: user.settings.organisation -->
@@ -2314,6 +2314,29 @@ You want to stop notifications from being sent to this device, or turn them back
 
 - Off, the app keeps working and nothing is sent to this device.
 - On, this device's address and each notification go to the push service.
+
+**See also:** [Your data, your rights](#your-data-your-rights)
+
+<!-- anchor: user.privacy.error-reports -->
+### Send error reports
+
+**Audience:** Everyone
+
+You want to know what the app sends when something goes wrong, or to stop it.
+
+<!-- image: user-privacy-error-reports -->
+
+**Steps**
+
+1. Open [Privacy & data](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Switch **Send error reports** off or on. It is on until you switch it off, and the choice is kept on this device.
+
+**Good to know**
+
+- A report goes only to the installation you are signed in to, never to another company. Its operator reads it; the businesses you belong to do not.
+- It says which app version, platform and kind of error, and where in the app it happened. It never carries what you typed, the error's own text, an e-mail address, a name or a key.
+- Each person sends at most a set number of reports an hour, a report has a size limit, and the installation deletes reports after a set number of days. The operator sets all three.
+- Off, nothing leaves the device: the error stays in this device's own log. An assistant connected to your account never sends a report.
 
 **See also:** [Your data, your rights](#your-data-your-rights)
 
@@ -6910,7 +6933,7 @@ The things around the everyday work: the test side of a space and the real one, 
 In this chapter:
 - [A space has two sides](#a-space-has-two-sides) · [Enter a side](#enter-the-real-side-or-the-test-side) · [A test space](#what-a-test-space-is-for) · [Who may deploy](#who-may-deploy-and-enter-production) · [Deploy between the sides](#deploy-between-the-two-sides) · [Workspace status and the year archive](#workspace-status-and-the-year-archive)
 - [Your own server](#run-your-own-server) · [When an installation requires a newer app](#when-an-installation-requires-a-newer-app) · [Release a new version](#release-a-new-version-the-server-first)
-- [Assistants](#assistants-what-they-are) · [Connect an assistant](#connect-an-assistant) · [Approvals](#approvals-and-confirmations-for-assistants) · [What assistants may do](#what-assistants-may-do-in-a-workspace)
+- [Assistants](#assistants-what-they-are) · [Connect an assistant](#connect-an-assistant) · [Approvals](#approvals-and-confirmations-for-assistants) · [What assistants may do](#what-assistants-may-do-in-a-workspace) · [Error reports](#error-reports)
 - [The task recorder](#the-task-recorder-and-guided-tours) · [Record a task](#record-a-task) · [Review a recording](#review-edit-and-export-a-recording) · [Make a guide](#make-a-guide-from-a-recording) · [Follow a guide](#follow-a-guide) · [The circle menu](#the-circle-menu) · [Edit a guide](#edit-or-repair-a-guide) · [Privacy of recordings](#what-a-recording-keeps)
 - [The demo workspace](#the-demo-workspace) · [Filming mode](#filming-mode)
 - [Platforms](#deskilo-on-your-devices) · [Support details](#support-details) · [When something does not work](#when-something-does-not-work)
@@ -7209,6 +7232,29 @@ You decide which services a workspace offers to assistants.
 - It is for people who hold the integrations permission; owners always do.
 
 **See also:** [A feature switch](#a-feature-switch)
+
+<!-- anchor: user.advanced.error-reports -->
+### Error reports
+
+**Audience:** Operator
+
+You run the installation and want to see what went wrong in the apps signed in to it.
+
+<!-- image: user-advanced-error-reports -->
+
+**Steps**
+
+1. Open [Installation: assistants](https://fdittgen-png.github.io/deskilo/#/installation/assistants).
+2. Tap **Error reports**. The newest reports come first.
+3. Tap a report to read its stack, redacted by the app. **Older reports** reads the next ones.
+
+**Good to know**
+
+- A report says where in the app and what kind of error, its code, the app version, the platform and the time. It never carries what a person typed, an e-mail address, a name or a key.
+- Only the installation's operator reads them; the businesses on the installation never see them.
+- In the settings, **Error reports per person and hour**, **Largest error report** and **Error reports kept for** set how many arrive, how large and for how long. Each person can switch reports off on their device.
+
+**See also:** [Send error reports](#send-error-reports)
 
 <!-- anchor: user.advanced.recorder -->
 ### The task recorder and guided tours

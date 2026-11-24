@@ -353,7 +353,9 @@ class ReserveDayView extends ConsumerWidget {
     final dayKey = dayKeyOf(selectedDay);
     final dayRead = ref.watch(reservationsForDayProvider(dayKey));
     if (dayRead.hasError && !dayRead.hasValue) {
-      return AvailabilityUnavailableBanner(
+      return ReadFailureBanner(
+          key: const ValueKey('reserve-availability-unavailable'),
+          error: dayRead.error!,
           onRetry: () => ref.invalidate(reservationsForDayProvider(dayKey)));
     }
     final reservations = dayRead.value ?? const <Reservation>[];
@@ -407,20 +409,23 @@ class ReserveWeekView extends ConsumerWidget {
     // De-duplicated by id: a reservation crossing the month boundary is
     // returned by both month windows.
     final byId = <String, Reservation>{};
-    var unavailable = false;
+    Object? failure;
     for (final key in monthKeys) {
       final read = ref.watch(reservationsForMonthProvider(key));
-      unavailable |= read.hasError && !read.hasValue;
+      if (!read.hasValue) failure ??= read.error;
       for (final r in read.value ?? const <Reservation>[]) {
         byId[r.id] = r;
       }
     }
-    if (unavailable) {
-      return AvailabilityUnavailableBanner(onRetry: () {
-        for (final key in monthKeys) {
-          ref.invalidate(reservationsForMonthProvider(key));
-        }
-      });
+    if (failure != null) {
+      return ReadFailureBanner(
+          key: const ValueKey('reserve-availability-unavailable'),
+          error: failure,
+          onRetry: () {
+            for (final key in monthKeys) {
+              ref.invalidate(reservationsForMonthProvider(key));
+            }
+          });
     }
     return WeekGrid(
       key: const ValueKey('reserve-week-grid'),
@@ -466,7 +471,9 @@ class ReserveMonthView extends ConsumerWidget {
     final monthKey = monthKeyOf(selectedDay);
     final read = ref.watch(reservationsForMonthProvider(monthKey));
     if (read.hasError && !read.hasValue) {
-      return AvailabilityUnavailableBanner(
+      return ReadFailureBanner(
+          key: const ValueKey('reserve-availability-unavailable'),
+          error: read.error!,
           onRetry: () =>
               ref.invalidate(reservationsForMonthProvider(monthKey)));
     }

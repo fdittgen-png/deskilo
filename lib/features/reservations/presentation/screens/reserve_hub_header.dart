@@ -308,7 +308,8 @@ class ReserveHubHeader extends ConsumerWidget {
       membership: factOf(member).map(standingOf),
       dayOpen: availability.known
           ? Fact.ready(availability.open)
-          : ref.watch(openWeekdaysProvider).hasError ||
+          // #4414 kept: the header's fact; the views show the failed read
+          : ref.watch(openWeekdaysProvider).hasError || // #4414 kept: and the next line
                   ref.watch(closureDaysProvider).hasError
               ? const Fact.offline()
               : const Fact.loading(),

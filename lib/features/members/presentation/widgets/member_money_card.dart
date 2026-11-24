@@ -9,6 +9,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../money/domain/member_account.dart';
 import '../../../money/presentation/widgets/account_card.dart';
 import '../../../money/presentation/widgets/move_credit_dialog.dart';
@@ -48,6 +49,12 @@ class MemberMoneyCard extends ConsumerWidget {
   final String memberId;
   final bool isSelf;
 
+  /// The three reads the card is built from, asked again.
+  void _retry(WidgetRef ref) => ref
+    ..invalidate(memberAccountProvider(memberId))
+    ..invalidate(memberInvoicesProvider(memberId))
+    ..invalidate(memberLedgerProvider(memberId));
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -79,15 +86,14 @@ class MemberMoneyCard extends ConsumerWidget {
     // value null and the card vanished — indistinguishable from "this
     // member has no money history", which is the one thing an admin
     // must not conclude from a network blip.
-    if (accountAsync.hasError || invoicesAsync.hasError || ledgerAsync.hasError) {
+    final failed = accountAsync.error ?? invoicesAsync.error ?? ledgerAsync.error;
+    if (failed != null) {
       return Padding(
         padding: const EdgeInsets.only(top: AppSpacing.md),
-        child: Text(
-          l10n.memberMoneyUnavailable,
+        child: ReadFailureBanner(
           key: const ValueKey('member-money-error'),
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.error,
-          ),
+          error: failed,
+          onRetry: () => _retry(ref),
         ),
       );
     }

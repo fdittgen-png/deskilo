@@ -250,9 +250,9 @@ void main() {
         final (code, detail) = switch (refusal) {
           BookingRefusal.closedDay => (DkCode.dkk01, null),
           BookingRefusal.seatBlocked => (DkCode.dkk07, null),
-          BookingRefusal.beyondHorizon => ('DKK08', '{"days" : 90}'),
-          BookingRefusal.tooShort => ('DKK09', '{"minutes" : 30}'),
-          BookingRefusal.tooLong => ('DKK10', '{"minutes" : 1440}'),
+          BookingRefusal.beyondHorizon => (DkCode.dkk08, '{"days" : 90}'),
+          BookingRefusal.tooShort => (DkCode.dkk09, '{"minutes" : 30}'),
+          BookingRefusal.tooLong => (DkCode.dkk10, '{"minutes" : 1440}'),
           BookingRefusal.past => (DkCode.dkk11, null),
           BookingRefusal.walkUpNotToday => (DkCode.dkk12, null),
           BookingRefusal.crossesMidnight => (DkCode.dkk13, null),

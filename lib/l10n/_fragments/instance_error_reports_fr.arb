@@ -1,0 +1,10 @@
+{
+  "@@locale": "fr",
+  "instanceErrorReports": "Rapports d'erreur",
+  "instanceErrorReportsHint": "Ce que les applications ont envoyé quand quelque chose s'est mal passé, du plus récent au plus ancien. Les membres d'une entreprise ne les voient jamais.",
+  "instanceErrorReportsNone": "Aucun rapport d'erreur n'est arrivé.",
+  "instanceErrorReportsOlder": "Rapports plus anciens",
+  "instanceErrorReportFacts": "{version} · {platform} · {time}",
+  "instanceErrorReportCode": "Code {code}",
+  "instanceErrorReportStack": "Pile, masquée par l'application"
+}

@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async' show FutureRecord2, ParallelWaitError;
+import 'dart:async' as async show AsyncError;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/settings/active_settings.dart';
@@ -305,6 +308,32 @@ final openTransfersProvider = FutureProvider.autoDispose
 final stockPlaceConfigsProvider = FutureProvider.autoDispose
     .family<List<StockPlaceConfig>, String>(
       (ref, workspaceId) => ref.watch(stockConfigCommandsProvider).places(workspaceId),
+      retry: (_, _) => null,
+    );
+
+/// What a stock sheet chooses from: the items, the places and the character
+/// between the levels of an address.
+typedef StockSheetChoices = ({List<StockItem> items, List<StockPlaceConfig> places, String separator});
+
+/// The items and places of a business, read together (neither waits for the
+/// other); the first read that failed is the failure.
+final stockSheetChoicesProvider = FutureProvider.autoDispose
+    .family<StockSheetChoices, String>(
+      (ref, workspaceId) async {
+        final separator = ref.watch(stockAddressSeparatorProvider);
+        try {
+          final (items, places) = await (
+            ref.watch(stockItemsProvider(workspaceId).future),
+            ref.watch(stockPlaceConfigsProvider(workspaceId).future),
+          ).wait;
+          return (items: items, places: places, separator: separator);
+        } on ParallelWaitError<(List<StockItem>?, List<StockPlaceConfig>?), (async.AsyncError?, async.AsyncError?)> catch (e, st) {
+          // the read's own failure is carried on unchanged
+          final failed = e.errors.$1 ?? e.errors.$2;
+          if (failed == null) Error.throwWithStackTrace(e, st);
+          Error.throwWithStackTrace(failed.error, failed.stackTrace);
+        }
+      },
       retry: (_, _) => null,
     );
 

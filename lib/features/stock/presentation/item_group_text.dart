@@ -1,14 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4361 (G12) -- the words of item groups: a parameter's name, a value as a person reads it, a group in one line,
-// and what a refused command says (a sub-group of a sub-group, per-piece tags without tracking by piece, a group
-// still in use...). Anything else falls back to the stock's own wording.
+// and why an item was skipped. What a refused command says is the stock's one wording (stock_config_text.dart).
 import '../../../core/i18n/rate_format.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/item_groups.dart';
 import '../domain/purchase_factor.dart';
-import '../domain/stock_config.dart';
-import 'stock_config_text.dart';
 
 String itemGroupParamLabel(AppLocalizations l10n, String param) => switch (param) {
   'tracking' => l10n.stockEditTracking,
@@ -74,15 +71,4 @@ String _proposalText(AppLocalizations l10n, ItemGroup g, String p) => switch (p)
 String itemGroupReasonText(AppLocalizations l10n, String reason) => switch (reason) {
   'has_movements' => l10n.itemGroupReasonHasMovements,
   _ => reason,
-};
-
-String itemGroupProblem(AppLocalizations l10n, Object error) => switch (error) {
-  StockConfigRefused(reason: 'depth') => l10n.itemGroupReasonDepth,
-  StockConfigRefused(reason: 'needs_serial') => l10n.itemGroupReasonNeedsSerial,
-  StockConfigRefused(reason: 'in_use') => l10n.itemGroupReasonInUse,
-  StockConfigRefused(reason: 'has_subgroups') => l10n.itemGroupReasonHasSubgroups,
-  StockConfigRefused(reason: 'group_unknown') => l10n.itemGroupReasonGroupUnknown,
-  StockConfigRefused(reason: 'name_duplicate') => l10n.itemGroupReasonNameDuplicate,
-  StockConfigRefused(reason: 'not_overridable') => l10n.itemGroupReasonNotOverridable,
-  _ => stockSaveProblem(l10n, error),
 };

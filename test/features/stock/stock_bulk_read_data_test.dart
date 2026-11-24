@@ -101,6 +101,6 @@ void main() {
     final t = BulkTally.of(r);
     expect([t.pieces, t.lines.single.itemName, t.unknown], [2, 'Gift basket', ['NOPE']]);
     expect(r.codes.first.piece?.place.code, 'MAIN');
-    expect(() => const StockConfigRefused('a', 'b'), returnsNormally);
+    expect(() => const StockConfigRefused('a', StockRefusal.malformed), returnsNormally);
   });
 }

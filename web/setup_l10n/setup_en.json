@@ -740,6 +740,12 @@
  "fedFactBatchHint": "The most membership facts a workspace server sends to its personal home in one minute. A server renews each live relationship once per identity status refresh, so it keeps up with this number times the refresh seconds divided by 60 relationships (500 and 300 seconds: 2,500). Raise it when the instance doctor reports a delivery backlog. Set in the app's settings.",
  "appSupportWindow": "Support window for older apps",
  "appSupportWindowHint": "How many days an older app stays accepted after a newer one is available on the slowest channel you distribute it through. The oldest app the installation accepts is raised only after this window, so every member has time to update. Set in the app's settings.",
+ "traceReportsPerHour": "Error reports per person and hour",
+ "traceReportsPerHourHint": "How many error reports one signed-in person may send to this installation in an hour, from all their devices together. Further reports in that hour are dropped. None turns error reports off. Set in the app's settings.",
+ "traceReportMaxBytes": "Largest error report",
+ "traceReportMaxBytesHint": "The largest error report this installation accepts; the app shortens a report's stack to fit. Set in the app's settings.",
+ "traceReportRetention": "Error reports kept for",
+ "traceReportRetentionHint": "How long this installation keeps an error report before deleting it. Set in the app's settings.",
  "supLookupWait": "Supplier lookup wait",
  "supLookupWaitHint": "How long the server waits for the company registry (VIES) when someone looks up a supplier's VAT number, before it says the registry did not answer. Set in the app's settings.",
  "supLookupRate": "Supplier lookups per minute",
@@ -882,5 +888,10 @@
  "counterPaidOutLimitHint": "A paid-out above this needs someone who may record outgoing payments. Set in the app's settings.",
  "counterCashReasons": "Reasons for cash in and out",
  "counterCashReasonsHint": "Separated by commas, for example change, expense, other. Set in the app's settings.",
- "optNoLimit": "No limit"
+ "optNoLimit": "No limit",
+ "optPerHour": "{n} per hour",
+ "optPerHourDefault": "{n} per hour (default)",
+ "optKilobytes": "{n} KB",
+ "optKilobytesDefault": "{n} KB (default)",
+ "optReportsOff": "None (error reports off)"
 }

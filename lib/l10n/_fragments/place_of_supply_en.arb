@@ -151,5 +151,9 @@
         "type": "int"
       }
     }
+  },
+  "supplyClassUnknown": "A class this app does not know yet: kept as the server has it",
+  "@supplyClassUnknown": {
+    "description": "#4441 Service sheet: a supply class from a newer server, shown read-only and kept"
   }
 }

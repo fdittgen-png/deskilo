@@ -129,7 +129,7 @@ InvoiceJourneyFacts journeyFactsOf(
   var writeoffPending = false;
   final partialSince = match != null &&
           !match.pending &&
-          match.resolution == 'under_accepted' &&
+          match.settles == MatchResolution.underAccepted &&
           match.writeoffAt == null
       ? match.matchedAt
       : invoice.issuedAt;

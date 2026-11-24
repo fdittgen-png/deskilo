@@ -6,8 +6,11 @@
 // and acknowledged from Privacy & data; and optional push delivery can
 // be turned off on this device, which a restart does not undo.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/app/trace_reporting_wiring.dart';
 import 'package:deskilo/core/push/push_opt_out.dart';
 import 'package:deskilo/core/push/push_providers.dart';
+import 'package:deskilo/core/trace/trace_report.dart';
+import 'package:deskilo/core/trace/trace_report_device.dart';
 import 'package:deskilo/features/profile/domain/privacy_notice.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/profile/providers/profile_providers.dart';
@@ -59,6 +62,22 @@ const _spaceNotice = PrivacyNotice(
   recipients: [],
 );
 
+class _MemoryReports implements TraceReportDeviceStore {
+  bool on = true;
+  @override
+  Future<String> deviceId() async => 'device-0123456789';
+  @override
+  Future<bool> enabled() async => on;
+  @override
+  Future<void> setEnabled({required bool on}) async => this.on = on;
+}
+
+class _NoSink implements TraceReportSink {
+  @override
+  Future<TraceReportAnswer> submit(TraceReport report) async =>
+      TraceReportAnswer.stored;
+}
+
 class _MemoryOptOut implements PushOptOutStore {
   bool value = false;
   @override
@@ -72,6 +91,7 @@ Future<FakeProfileRepository> _pump(
   String? accepted,
   PrivacyNotices notices = const PrivacyNotices(installation: _operatorNotice),
   _MemoryOptOut? optOut,
+  _MemoryReports? reports,
   FakeNotificationService? notifications,
   bool noPushPipeline = false,
 }) async {
@@ -97,6 +117,10 @@ Future<FakeProfileRepository> _pump(
           notifications: notifications,
         ),
         pushOptOutStoreProvider.overrideWithValue(optOut ?? _MemoryOptOut()),
+        traceReportDeviceStoreProvider.overrideWithValue(
+          reports ?? _MemoryReports(),
+        ),
+        traceReportSinkProvider.overrideWithValue(_NoSink()),
         if (noPushPipeline) pushBootstrapProvider.overrideWith((ref) async => null),
       ],
       child: const DeskiloApp(),
@@ -174,6 +198,23 @@ void main() {
     await tester.pumpAndSettle();
     expect(optOut.value, isTrue);
     expect(tester.widget<SwitchListTile>(toggle).value, isFalse);
+  });
+
+  testWidgets('#4416 — error reports are on until switched off on this '
+      'device, and the choice is kept', (tester) async {
+    final reports = _MemoryReports();
+    await _pump(tester, accepted: '2026-10-05', reports: reports);
+    await openMyPrivacy(tester);
+    final toggle = find.byKey(const ValueKey('privacy-error-reports'));
+    Switch control() => tester.widget<Switch>(
+      find.descendant(of: toggle, matching: find.byType(Switch)),
+    );
+    await tester.ensureVisible(toggle);
+    expect(control().value, isTrue);
+    await tester.tap(toggle);
+    await tester.pumpAndSettle();
+    expect(reports.on, isFalse);
+    expect(control().value, isFalse);
   });
 
   testWidgets('#2559 C2 — opening the app never asks for notification '

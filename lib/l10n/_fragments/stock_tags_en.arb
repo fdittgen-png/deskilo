@@ -199,22 +199,6 @@
   "@stockTagNotInForce": {
     "description": "#4363 G14 tags: stockTagNotInForce"
   },
-  "stockTagMalformed": "That is not a valid tag code.",
-  "@stockTagMalformed": {
-    "description": "#4363 G14 tags: stockTagMalformed"
-  },
-  "stockTagOwnerUnknown": "This item or place is not known.",
-  "@stockTagOwnerUnknown": {
-    "description": "#4363 G14 tags: stockTagOwnerUnknown"
-  },
-  "stockTagModeNone": "This item does not use tags.",
-  "@stockTagModeNone": {
-    "description": "#4363 G14 tags: stockTagModeNone"
-  },
-  "stockTagPerUnit": "This item is tagged piece by piece: tag its pieces when they are received.",
-  "@stockTagPerUnit": {
-    "description": "#4363 G14 tags: stockTagPerUnit"
-  },
   "settingLabelStockTagReadMaxTags": "Most tags in one bulk read",
   "@settingLabelStockTagReadMaxTags": {
     "description": "#4364 setting label/hint"

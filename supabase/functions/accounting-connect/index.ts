@@ -40,6 +40,7 @@
 // An installation that registered no OAuth application with a target
 // answers 503 `oauth_not_configured` before anything is opened.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { guard } from "../_shared/serve.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
@@ -466,10 +467,10 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
 }
 
 if (import.meta.main) {
-  const url = Deno.env.get("SUPABASE_URL")!;
+  const url = readEnv(KEYS.supabaseUrl)!;
   const deps: Deps = {
     caller: (authorization) => {
-      const client = createClient(url, Deno.env.get("SUPABASE_ANON_KEY")!, {
+      const client = createClient(url, readEnv(KEYS.supabaseAnonKey)!, {
         global: { headers: { Authorization: authorization } },
       });
       return {
@@ -483,16 +484,16 @@ if (import.meta.main) {
       };
     },
     service: () =>
-      createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!),
+      createClient(url, readEnv(KEYS.supabaseServiceRoleKey)!),
     userOf: async (authorization) => {
       const token = authorization.replace(/^Bearer\s+/i, "");
       const { data, error } = await createClient(
         url,
-        Deno.env.get("SUPABASE_ANON_KEY")!,
+        readEnv(KEYS.supabaseAnonKey)!,
       ).auth.getUser(token);
       return error ? null : data.user?.id ?? null;
     },
-    env: (name) => Deno.env.get(name),
+    env: readEnv,
     redirectUri: `${url}/functions/v1/accounting-connect`,
   };
   // #4412 -- whatever the handler throws is the envelope, never its words.
