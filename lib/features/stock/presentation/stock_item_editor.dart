@@ -15,19 +15,21 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
+import '../domain/item_groups.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_check.dart';
 import '../domain/stock_config_commands.dart';
 import 'stock_config_text.dart';
 
-/// Opens the editor of [itemId]; true when something was saved.
+/// Opens the editor of [itemId]; true when something was saved. [options] says whether lots are asked for, whether the
+/// item is kept in stock and, when the business has item groups, the port that tells which values the item keeps of its own.
 Future<bool> showStockItemEditor(
   BuildContext context,
   StockConfigCommands commands, {
   required String workspaceId,
   required String itemId,
   required String itemName,
-  ({bool lots, bool keep}) options = (lots: false, keep: false),
+  ({bool lots, bool keep, ItemGroups? groups}) options = (lots: false, keep: false, groups: null),
 }) async {
   final l10n = context.l10n;
   final StockItemConfig? config;
@@ -39,7 +41,9 @@ Future<bool> showStockItemEditor(
     return false;
   }
   if (config == null || !context.mounted) return false;
-  final editor = _ItemDraft(config, lotsOn: options.lots, keepInStock: options.keep);
+  final own = await _ownValues(options.groups, workspaceId, itemId);
+  if (!context.mounted) return false;
+  final editor = _ItemDraft(config, lotsOn: options.lots, keepInStock: options.keep, own: own);
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -95,8 +99,22 @@ class _CodeRow {
   void dispose() => code.dispose();
 }
 
+/// The settings in which the item of a group keeps a value of its own against the group's. Without groups, or when the
+/// read fails, nothing is marked: the mark is information, never a reason to keep the editor closed.
+Future<Set<String>> _ownValues(ItemGroups? groups, String workspaceId, String itemId) async {
+  if (groups == null) return const {};
+  try {
+    final effective = await groups.effective(workspaceId, itemId);
+    if (effective.groupId == null) return const {};
+    return {for (final e in effective.params.entries) if (e.value.own) e.key};
+  } on Object catch (e, st) {
+    TraceLogger.instance.warn('stock', 'the own values of an item were not read for its editor: $e', stackTrace: st);
+    return const {};
+  }
+}
+
 class _ItemDraft {
-  _ItemDraft(this.config, {required this.lotsOn, bool keepInStock = false})
+  _ItemDraft(this.config, {required this.lotsOn, bool keepInStock = false, this.own = const {}})
     : tracking = config.tracking,
       shelfLife = TextEditingController(text: config.shelfLifeDays?.toString() ?? ''),
       stockable = keepInStock || config.stockable,
@@ -109,6 +127,13 @@ class _ItemDraft {
 
   /// Whether lots and expiry are asked for in this business (stockLots).
   final bool lotsOn;
+
+  /// The settings the item keeps its own value of, against its group.
+  final Set<String> own;
+
+  Widget? _ownMark(AppLocalizations l10n, BuildContext context, String parameter) => own.contains(parameter)
+      ? Text(l10n.itemGroupOwn, key: ValueKey('stock-item-own-$parameter'), style: Theme.of(context).textTheme.bodySmall)
+      : null;
   String tracking;
   final TextEditingController shelfLife;
 
@@ -201,9 +226,10 @@ class _ItemDraft {
         key: const ValueKey('stock-item-inventory-unit'),
         contentPadding: EdgeInsets.zero,
         title: Text(l10n.stockEditInventoryUnit),
+        subtitle: _ownMark(l10n, context, 'inventory_unit'),
         trailing: Text(config.inventoryUnit),
       ),
-      if (lotsOn) ..._trackingFields(l10n, refresh),
+      if (lotsOn) ..._trackingFields(context, l10n, refresh),
       const FormGap(),
       FormSection(
         title: l10n.stockEditUnitsTitle,
@@ -241,7 +267,7 @@ class _ItemDraft {
     ];
   }
 
-  List<Widget> _trackingFields(AppLocalizations l10n, VoidCallback refresh) => [
+  List<Widget> _trackingFields(BuildContext context, AppLocalizations l10n, VoidCallback refresh) => [
     const FormGap(),
     SegmentedButton<String>(
       key: const ValueKey('stock-item-tracking'),
@@ -257,6 +283,7 @@ class _ItemDraft {
         refresh();
       },
     ),
+    ...?_ownLine(l10n, context, 'tracking'),
     if (tracking == 'expiry') ...[
       const FormGap.small(),
       AppTextField(
@@ -267,8 +294,14 @@ class _ItemDraft {
         keyboardType: TextInputType.number,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       ),
+      ...?_ownLine(l10n, context, 'shelf_life_days'),
     ],
   ];
+
+  List<Widget>? _ownLine(AppLocalizations l10n, BuildContext context, String parameter) {
+    final mark = _ownMark(l10n, context, parameter);
+    return mark == null ? null : [mark];
+  }
 
   List<Widget> _unitRow(BuildContext context, AppLocalizations l10n, int i, VoidCallback refresh) {
     final u = units[i];

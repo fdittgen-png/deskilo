@@ -82,9 +82,35 @@ class TraceStep {
   }
 }
 
+/// #4436 -- a track ID a sold line took: a lot (its code as received and the quantity taken) or a piece (its tag).
+class TraceTrack {
+  const TraceTrack({required this.kind, required this.code, this.quantity});
+
+  /// `lot` or `piece`.
+  final String kind;
+  final String code;
+
+  /// The quantity taken from a lot; null for a piece.
+  final ExactQuantity? quantity;
+
+  factory TraceTrack.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'stock_trace_chain.took.tracks');
+    final q = r.stringOrNull('quantity');
+    return TraceTrack(kind: r.string('kind'), code: r.stringOr('code'), quantity: q == null ? null : ExactQuantity.parse(q));
+  }
+}
+
 /// The chain of one subject.
 class TraceChain {
-  const TraceChain({required this.subject, required this.steps, this.lotCode, this.pieceTag, this.piecePlace, this.truncated = false});
+  const TraceChain({
+    required this.subject,
+    required this.steps,
+    this.lotCode,
+    this.pieceTag,
+    this.piecePlace,
+    this.truncated = false,
+    this.took = const [],
+  });
 
   /// `lot`, `piece`, `movement` or `sale_line`.
   final String subject;
@@ -98,6 +124,9 @@ class TraceChain {
   /// More steps exist than were answered.
   final bool truncated;
 
+  /// #4436 -- read backwards from a sold line: the track IDs that line took (empty for any other subject).
+  final List<TraceTrack> took;
+
   factory TraceChain.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'stock_trace_chain');
     final piece = r.objectOrNull('piece');
@@ -108,6 +137,7 @@ class TraceChain {
       piecePlace: piece?.objectOrNull('place')?.stringOrNull('code'),
       steps: [for (final s in r.list('steps')) TraceStep.fromJson(s)],
       truncated: r.boolOr('truncated', fallback: false),
+      took: [for (final t in r.objectOrNull('took')?.listOrAbsent('tracks') ?? const <Object?>[]) TraceTrack.fromJson(t)],
     );
   }
 }

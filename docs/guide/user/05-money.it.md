@@ -607,6 +607,19 @@ Aprire **Vendite e incassi** e poi **Clienti fatturati**. Qui si tengono le pers
 
 Scegliere **Aggiungere un cliente** e indicare un'azienda o un nome, l'indirizzo postale, il codice paese, la partita IVA e un indirizzo e-mail per la fattura. La partita IVA è controllata solo nella forma, mai verificata. **Fatturato come** (azienda o privato) determina le diciture legali e il trattamento fiscale; solo chi può emettere fatture può modificarlo. Scegliere un cliente per modificarlo. Se qualcun altro lo ha cambiato dopo l'apertura, non viene salvato nulla e si deve riaprirlo. Se l'elenco non può essere letto, riprovare invece di darlo per vuoto. Modificare un cliente non riscrive mai una fattura già emessa: ognuna conserva il nome e l'indirizzo con cui è stata emessa.
 
+<!-- anchor: user.money.customers.access -->
+### Accesso con account per un cliente fatturato
+
+**Destinatari:** Amministratore · Proprietario
+
+Apra **Vendite e incassi** e poi **Clienti fatturati**, e scelga la chiave accanto a un cliente (**Accesso con account**). Qui permette a un cliente di leggere le proprie fatture dal proprio account, senza farne un membro. Serve il diritto di gestire i clienti fatturati.
+
+Scelga **Creare un codice d'invito**. Il codice viene mostrato una sola volta, con il suo ultimo giorno: lo consegni subito al cliente, perché non può essere riletto. Il cliente lo inserisce in **Usare un codice di fatturazione**, sotto **Le mie finanze**, verifica chi lo invita e accetta. Fino ad allora l'invito resta in attesa. Un codice vale per un account; un cliente può essere letto da più account, ciascuno invitato a parte, e un account può leggere più clienti: chi acquista a titolo personale e per un'azienda mantiene due debitori distinti.
+
+L'elenco mostra ogni invito come invitato, in lettura, scaduto o terminato. **Terminare l'accesso** ferma la lettura da quel momento; non viene cancellato nulla, le fatture e la loro cronologia restano come sono. Il cliente non è mai un membro: dall'accesso non derivano prenotazioni, elenco, community, ruolo né piano. Se l'elenco non può essere letto, riprovi invece di crederlo vuoto; se una risposta non arriva, scelga di nuovo **Creare un codice d'invito**: la stessa richiesta dà lo stesso invito, mai un secondo.
+
+**Vedere anche:** [Clienti fatturati](help:user.money.customers.billing)
+
 <!-- anchor: user.money.quotes -->
 ### Preventivi
 
@@ -712,7 +725,7 @@ Vuole dire una volta ciò che una famiglia di articoli ha in comune — quanto d
 
 Apra **Magazzino → Gruppi di articoli** (serve la funzione *Gruppi di articoli* sotto la gestione del magazzino). Un gruppo ha un nome, sta in alto o dentro un altro gruppo (un solo livello di sottogruppi) e porta le impostazioni che sceglie: **tracciamento**, **durata di conservazione**, **modalità tag**, **unità di magazzino**, **conta ogni n giorni**, **età minima** e **venduto a peso**. Un’impostazione lasciata *Non impostato* non è decisa a questo livello.
 
-- **Un articolo segue il suo gruppo finché non ha un valore proprio.** Vale il valore dell’articolo se ce l’ha, altrimenti quello del suo sottogruppo, altrimenti quello del suo gruppo. Apra **Gruppo e impostazioni ereditate** di un articolo (l’icona della cartella sulla sua riga in **Magazzino → Articoli**) per vedere da dove viene ogni impostazione (*Dal gruppo Bevande dal 3 dic.* o *Valore proprio*), spostarlo in un altro gruppo e restituire un valore proprio con **Usa il valore del gruppo**.
+- **Un articolo segue il suo gruppo finché non ha un valore proprio.** Vale il valore dell’articolo se ce l’ha, altrimenti quello del suo sottogruppo, altrimenti quello del suo gruppo. Apra **Gruppo e impostazioni ereditate** di un articolo (l’icona della cartella sulla sua riga in **Magazzino → Articoli**) per vedere da dove viene ogni impostazione (*Dal gruppo Bevande dal 3 dic.* o *Valore proprio*), spostarlo in un altro gruppo e restituire un valore proprio con **Usa il valore del gruppo**. Nelle **impostazioni di magazzino** dell’articolo, *Valore proprio* compare accanto a un’impostazione per cui l’articolo mantiene un valore proprio rispetto al suo gruppo (tracciamento, scadenza, unità di inventario).
 - **Ogni modifica è mostrata in anteprima.** Salvando un gruppo vede prima cosa raggiunge la modifica: *si applica a 1, 1 mantengono il proprio valore, 0 non sono raggiungibili*. Nulla viene applicato finché non salva una seconda volta; ogni modifica intermedia chiede una nuova anteprima. Un articolo che la modifica non può raggiungere (ad esempio un’unità su un articolo che ha già movimenti) viene elencato, e la modifica del gruppo viene salvata per gli altri.
 - **Proposte e prezzi.** Un gruppo può proporre a un nuovo articolo un'**unità di acquisto predefinita** con il suo fattore (un numero o una frazione come 1/3), un **punto e una quantità di riordino** e una **zona di giacenza**: vengono copiati in un nuovo articolo come punto di partenza e non raggiungono nessun articolo esistente. L'**aliquota IVA**, il **tipo di operazione**, l'**arrotondamento del prezzo** e il **margine obiettivo sul costo** li mostra e li imposta solo chi può gestire i servizi e vedere le finanze; per tutti gli altri non sono né mostrati né modificati da un salvataggio.
 - **Cronologia.** Il foglio del gruppo elenca ogni modifica con quanti articoli ha raggiunto; la riga di origine di un articolo dice da quando.
@@ -762,6 +775,8 @@ Prema **Incassare in contanti** e digiti i **Contanti dati** (o **Importo esatto
 
 Dove il suo paese non consente ancora la cassa, questa indica l'operazione mancante e non offre nulla: nulla viene numerato né incassato. Una riga di merce richiede la gestione del magazzino; un rifiuto del server è detto a parole. Pagamenti con carta, sconti, rimborsi e resi non fanno parte di questa prima cassa.
 
+Un articolo tracciato indica da dove è stato preso. Quando vende un articolo gestito a lotti senza scegliere un lotto, la vendita lo preleva dai lotti in giacenza, prima quello che scade per primo e mai uno scaduto; sotto la riga venduta la cassa mostra il codice di ogni lotto come è stato ricevuto, con la quantità prelevata, per esempio **Lotto SUP-A × 2 · Lotto SUP-B × 1**, e ogni pezzo con la sua etichetta. Se l'azienda usa un lettore, scansioni l'etichetta di un pezzo per aggiungerlo: la vendita preleva esattamente i pezzi scansionati, e lo stesso pezzo due volte viene rifiutato. Questi identificativi di tracciabilità sono fissati con lo scontrino: modificare in seguito un lotto o un'etichetta non altera mai uno scontrino già emesso. Nel magazzino, la tracciabilità di un lotto o di un pezzo indica lo scontrino che lo ha venduto.
+
 <!-- anchor: user.money.stock.rfid -->
 ### Tag RFID: uno per lotto o uno per pezzo
 
@@ -778,6 +793,23 @@ Con la funzione *Tag* attiva, un articolo ha una **modalità del tag**, impostat
 - Una lettura massiva conta pezzi solo per gli articoli con un tag per pezzo. Per un articolo con un tag per lotto conta lotti e mostra la quantità registrata del lotto accanto al conteggio, mai come cifra contata.
 - La modalità di un articolo che ha già dei tag non cambia finché i tag non sono ritirati o la giacenza non è zero; la modifica di un gruppo salta allora l'articolo e lo elenca come mantenuto. Un tag su un luogo indica sempre un solo luogo.
 - Un codice tag è un'etichetta UHF (EPC; il server legge un SGTIN-96 come GTIN e numero di serie) o un chip NFC, salvato in esadecimale maiuscolo e unico nell'azienda tra articoli, pezzi e luoghi. Collegare e ritirare richiedono il diritto di gestire il magazzino; leggere, quello di vederlo.
+
+<!-- anchor: user.money.stock.units -->
+### Unità di movimentazione
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole che la merce viaggi nel bancale o nel cartone in cui è arrivata, o in scatole proprie, sapendo comunque dov'è ogni lotto e ogni pezzo.
+
+Con la funzione *Unità di movimentazione* attiva, apra **Magazzino → Unità di movimentazione**. Un'unità ha un codice proprio (e l'etichetta del fornitore quando è arrivata su un bancale etichettato), un tipo (bancale, cartone, cassa, scatola), un luogo e un contenuto: articoli con il loro lotto, quantità e pezzi. L'elenco mostra le unità aperte, in un luogo o ovunque.
+
+- **Crea un'unità.** Prema *Crea un'unità*: il suo codice, il tipo, il luogo e ciò che contiene. Un'unità reclama solo giacenza **sfusa** in quel luogo (ciò che il luogo detiene meno ciò che altre unità vi detengono già); chiederne di più viene rifiutato e dice quanto è sfuso.
+- **Sposta.** *Sposta* porta tutto il contenuto in un altro luogo con una sola richiesta: ogni lotto e ogni pezzo conserva la sua traccia. Se qualcuno ha spostato o disfatto l'unità dopo la sua lettura, lo spostamento viene rifiutato e la rilegga.
+- **Disfa.** *Disfa* lascia il contenuto dov'è, sfuso, e l'unità non è più aperta.
+- **Riconfeziona in scatole.** *Riconfeziona in scatole* toglie una quantità da un'unità e la mette in scatole proprie (un numero di scatole, una quantità in ciascuna). Ciò che entra è esattamente ciò che è uscito: il totale della giacenza non cambia mai, e un lotto seguito attraverso il riconfezionamento si ritrova da entrambi i lati. Un riconfezionamento avviene in un luogo; sposti poi le scatole nuove.
+
+- La giacenza imballata in un'unità non si può prelevare sfusa: il server rifiuta e nomina l'unità. Sposti o disfi prima l'unità.
+- Come si traccia un articolo si sceglie per articolo (o si eredita dal gruppo): non tracciato, per lotto (con data di scadenza dove impostata) o per pezzo (un tag per pezzo).
 
 <!-- anchor: user.money.stock.expiry -->
 ### Il rapporto di scadenza
@@ -901,6 +933,29 @@ Appartiene a più spazi e vuole tutte le Sue fatture, i Suoi pagamenti e i Suoi 
 - Cronologia completa, utilizzo e altri server sono raggiungibili dalla stessa schermata.
 
 **Vedi anche:** [Le Sue fatture](help:user.money.invoices)
+
+<!-- anchor: user.money.finances.billed -->
+### Fatture che un'azienda ha emesso a Suo nome come cliente
+
+**Destinatari:** Membro
+
+Un'azienda che Le fattura può darLe un codice, così che legga ciò che Le fattura dal Suo account, senza unirsi all'azienda.
+
+**Passaggi**
+
+1. Apra [Le mie finanze](app:/money) e, sotto **Da pagare**, scelga **Usare un codice di fatturazione**.
+2. Inserisca il codice e scelga **Verificare il codice**. Vede quale azienda La invita e a nome di chi emette le fatture.
+3. Scelga **Accettare**. Le fatture compaiono sotto **Fatturato come cliente**.
+
+**Da sapere**
+
+- Una scheda per azienda e per debitore: chi acquista a titolo personale e per un'azienda ha due schede, e due debitori di una stessa azienda non vengono mai sommati. Gli importi di valute diverse non vengono sommati nemmeno.
+- Queste fatture non sono conteggiate con ciò che deve come membro e non compaiono nei Suoi elenchi di membro né nelle esportazioni.
+- Un codice che non può essere usato (errato, scaduto, ritirato o già preso da un altro account) riceve sempre la stessa risposta: ne chieda uno nuovo all'azienda.
+- Accettare non La rende membro dell'azienda. L'azienda può terminare l'accesso, e anche Lei; alla fine non viene cancellato nulla.
+- Pagare queste fatture da qui non è ancora previsto.
+
+**Vedere anche:** [Le Sue finanze in tutti gli spazi](help:user.money.finances)
 
 <!-- anchor: user.money.businesses -->
 ### Le attività a colpo d'occhio

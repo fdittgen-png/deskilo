@@ -177,3 +177,4 @@ counterTillSessions | everywhere | y y y y y y y y y y
 stockTagReads | everywhere | y y y y y y y y y y
 stockExpiryReport | everywhere | y y y y y y y y y y
 stockHandlingUnits | everywhere | y y y y y y y y y y
+counterOfflineCash | everywhere | y y y y y y y y y y

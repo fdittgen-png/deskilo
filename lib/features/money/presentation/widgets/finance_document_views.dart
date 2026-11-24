@@ -35,7 +35,7 @@ import 'own_finance_export_menu.dart';
 
 /// The payment state, as the server derived it. A credit note nothing was
 /// matched to is not an unpaid debt of mine: it is a credit not used yet.
-String _paymentState(AppLocalizations l10n, FinanceInvoice invoice) =>
+String financePaymentStateText(AppLocalizations l10n, FinanceInvoice invoice) =>
     switch (invoice.state) {
       FinanceState.open when invoice.isCreditNote =>
         l10n.financesStateCreditOpen,
@@ -181,7 +181,7 @@ class _FinanceDocument extends ConsumerWidget {
     final due = invoice.dueOn;
     return invoice.state.owed && due != null
         ? Text(
-            _dueText(context.l10n, invoice, format.format(due), now),
+            financeDueText(context.l10n, invoice, format.format(due), now),
             style: theme.textTheme.bodySmall?.copyWith(
               color: overdue
                   ? theme.colorScheme.error
@@ -232,7 +232,7 @@ class _FinanceDocument extends ConsumerWidget {
               ? l10n.financesTypeCreditNote
               : l10n.invoicePdfTitle,
         ),
-        _StateChip(_paymentState(l10n, invoice)),
+        _StateChip(financePaymentStateText(l10n, invoice)),
         if (invoice.reminderCount > 0 && invoice.state.owed)
           _StateChip(l10n.financesRemindedTimes(invoice.reminderCount)),
         FinanceClaimState(invoice),
@@ -428,7 +428,7 @@ class _CardAmount extends StatelessWidget {
 
 /// #3659 — the due line on the issuing business's day: late, due, or its
 /// calendar unknown; the business's zone named when it is not the device's.
-String _dueText(
+String financeDueText(
   AppLocalizations l10n,
   FinanceInvoice invoice,
   String date,

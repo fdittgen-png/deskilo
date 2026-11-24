@@ -2995,6 +2995,19 @@ Wählen Sie **Lieferantenverbindlichkeiten anzeigen**, um dessen Rechnungen und 
 
 Wählen Sie **Kunden hinzufügen** und geben Sie eine Firma oder einen Namen, die Anschrift, den Ländercode, die USt-IdNr. und eine E-Mail-Adresse für die Rechnung an. Die USt-IdNr. wird nur auf ihre Form geprüft, nie bestätigt. **Abgerechnet als** (Unternehmen oder Privatperson) bestimmt die Pflichtangaben und die steuerliche Behandlung; nur wer Rechnungen ausstellen darf, kann es ändern. Wählen Sie einen Kunden, um ihn zu bearbeiten. Hat jemand anderes den Kunden seit dem Öffnen geändert, wird nichts gespeichert und Sie öffnen ihn erneut. Lässt sich die Liste nicht lesen, versuchen Sie es erneut, statt sie für leer zu halten. Eine Änderung schreibt nie eine bereits ausgestellte Rechnung um: Jede behält Namen und Anschrift, mit denen sie ausgestellt wurde.
 
+<!-- anchor: user.money.customers.access -->
+### Kontozugang für einen Rechnungskunden
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Öffnen Sie **Verkauf & Zahlungseingang** und dann **Rechnungskunden**, und wählen Sie den Schlüssel neben einem Kunden (**Kontozugang**). Hier lassen Sie einen Kunden seine eigenen Rechnungen in seinem eigenen Konto lesen, ohne ihn zum Mitglied zu machen. Sie brauchen das Recht, Rechnungskunden zu verwalten.
+
+Wählen Sie **Einladungscode erstellen**. Der Code wird einmal angezeigt, mit seinem letzten Tag: Geben Sie ihn dem Kunden sofort weiter, denn er kann nicht erneut gelesen werden. Der Kunde gibt ihn unter **Meine Finanzen** bei **Rechnungscode verwenden** ein, prüft, wer ihn einlädt, und nimmt an. Bis dahin wartet die Einladung nur. Ein Code gilt für ein Konto; ein Kunde kann von mehreren Konten gelesen werden, jedes einzeln eingeladen, und ein Konto kann mehrere Kunden lesen: Wer privat und für ein Unternehmen kauft, behält so zwei getrennte Schuldner.
+
+Die Liste zeigt jede Einladung als eingeladen, liest, abgelaufen oder beendet. **Zugang beenden** stoppt das Lesen ab dann; nichts wird gelöscht, die Rechnungen und ihr Verlauf bleiben unverändert. Der Kunde ist nie ein Mitglied: Aus dem Zugang folgen keine Buchung, kein Verzeichnis, keine Community, keine Rolle und kein Tarif. Kann die Liste nicht gelesen werden, versuchen Sie es erneut, statt sie für leer zu halten; kommt eine Antwort nicht an, wählen Sie **Einladungscode erstellen** noch einmal: Dieselbe Anfrage ergibt dieselbe Einladung, nie eine zweite.
+
+**Siehe auch:** [Rechnungskunden](#rechnungskunden)
+
 <!-- anchor: user.money.quotes -->
 ### Angebote
 
@@ -3100,7 +3113,7 @@ Sie möchten einmal festlegen, was eine Familie von Artikeln gemeinsam hat – w
 
 Öffnen Sie **Lager → Artikelgruppen** (dafür ist die Funktion *Artikelgruppen* unter der Lagerverwaltung nötig). Eine Gruppe hat einen Namen, steht oben oder in einer anderen Gruppe (eine Ebene Untergruppen, nicht mehr) und trägt die Einstellungen, die Sie wählen: **Nachverfolgung**, **Haltbarkeit**, **Tag-Modus**, **Lagereinheit**, **Zählen alle n Tage**, **Mindestalter** und **Nach Gewicht verkauft**. Eine Einstellung, die Sie auf *Nicht festgelegt* lassen, wird auf dieser Ebene nicht entschieden.
 
-- **Ein Artikel folgt seiner Gruppe, solange er keinen eigenen Wert hat.** Es gilt der eigene Wert des Artikels, sonst der seiner Untergruppe, sonst der seiner Gruppe. Öffnen Sie **Gruppe und geerbte Einstellungen** eines Artikels (das Ordner-Symbol in seiner Zeile unter **Lager → Artikel**), um zu sehen, woher jede Einstellung kommt (*Von Getränke seit 3. Dez.* oder *Eigener Wert*), ihn in eine andere Gruppe zu verschieben und einen eigenen Wert mit **Wert der Gruppe verwenden** zurückzugeben.
+- **Ein Artikel folgt seiner Gruppe, solange er keinen eigenen Wert hat.** Es gilt der eigene Wert des Artikels, sonst der seiner Untergruppe, sonst der seiner Gruppe. Öffnen Sie **Gruppe und geerbte Einstellungen** eines Artikels (das Ordner-Symbol in seiner Zeile unter **Lager → Artikel**), um zu sehen, woher jede Einstellung kommt (*Von Getränke seit 3. Dez.* oder *Eigener Wert*), ihn in eine andere Gruppe zu verschieben und einen eigenen Wert mit **Wert der Gruppe verwenden** zurückzugeben. In den **Lagereinstellungen** des Artikels steht *Eigener Wert* neben einer Einstellung, bei der der Artikel gegenüber seiner Gruppe einen eigenen Wert behält (Nachverfolgung, Haltbarkeit, Bestandseinheit).
 - **Jede Änderung wird vorab gezeigt.** Beim Speichern einer Gruppe sehen Sie zuerst, was die Änderung erreicht: *gilt für 1, 1 behalten ihren eigenen Wert, 0 sind nicht erreichbar*. Erst das zweite Speichern wendet sie an; jede Änderung dazwischen verlangt eine neue Vorschau. Ein Artikel, den die Änderung nicht erreichen kann (etwa eine Einheit bei einem Artikel mit Bewegungen), wird aufgeführt, und die Änderung der Gruppe wird für die anderen trotzdem gespeichert.
 - **Vorschläge und Preise.** Eine Gruppe kann einem neuen Artikel eine **Standard-Einkaufseinheit** mit ihrem Faktor (eine Zahl oder ein Bruch wie 1/3), einen **Meldebestand und eine Nachbestellmenge** und eine **Lagerzone** vorschlagen: Sie werden als Ausgangswert in einen neuen Artikel kopiert und erreichen keinen bestehenden. **Steuersatz**, **Leistungsart**, **Preisrundung** und **Zielmarge auf die Kosten** zeigt und setzt nur, wer Leistungen verwalten und die Finanzen sehen darf; für alle anderen werden sie weder angezeigt noch durch ein Speichern geändert.
 - **Verlauf.** Das Blatt der Gruppe listet jede Änderung mit der Zahl der erreichten Artikel; die Herkunftszeile eines Artikels nennt, seit wann.
@@ -3150,6 +3163,8 @@ Drücken Sie **Bar kassieren** und geben Sie **Gegeben** ein (oder **Passend**).
 
 Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang und bietet nichts an: nichts wird nummeriert und nichts kassiert. Eine Warenzeile braucht die Lagerverwaltung; eine Ablehnung des Servers erscheint in Worten. Kartenzahlung, Rabatte, Erstattungen und Rückgaben gehören nicht zu dieser ersten Kasse.
 
+Ein rückverfolgter Artikel nennt, woraus er entnommen wurde. Verkaufen Sie einen chargengeführten Artikel, ohne eine Charge zu wählen, entnimmt der Verkauf ihn den vorrätigen Chargen, die zuerst ablaufende zuerst und nie eine abgelaufene; unter der verkauften Zeile zeigt die Kasse den Code jeder Charge wie beim Wareneingang mit der entnommenen Menge, zum Beispiel **Charge SUP-A × 2 · Charge SUP-B × 1**, und jedes Stück mit seinem Tag. Nutzt das Unternehmen einen Scanner, scannen Sie den Tag eines Stücks, um dieses Stück zu buchen: Der Verkauf nimmt genau die gescannten Stücke, und dasselbe Stück zweimal wird abgelehnt. Diese Rückverfolgungs-IDs werden mit dem Beleg festgeschrieben: Eine spätere Änderung einer Charge oder eines Tags ändert einen bereits ausgestellten Beleg nie. Im Lager nennt die Rückverfolgung einer Charge oder eines Stücks den Beleg, mit dem es verkauft wurde.
+
 <!-- anchor: user.money.stock.rfid -->
 ### RFID-Tags: eines pro Charge oder eines pro Stück
 
@@ -3166,6 +3181,23 @@ Mit der Funktion *Tags* hat ein Artikel einen **Tag-Modus**, der an seiner Grupp
 - Ein Massenlesen zählt Stücke nur bei Artikeln mit einem Tag pro Stück. Bei einem Artikel mit einem Tag pro Charge zählt es Chargen und zeigt die erfasste Menge der Charge neben der Zählung, nie als gezählte Zahl.
 - Der Modus eines Artikels, der schon Tags hat, ändert sich erst, wenn die Tags zurückgegeben sind oder der Bestand null ist; eine Änderung der Gruppe überspringt den Artikel dann und führt ihn als beibehalten auf. Ein Tag an einem Lagerplatz bezeichnet immer genau einen Platz.
 - Ein Tag-Code ist ein UHF-Etikett (EPC; ein SGTIN-96 liest der Server als GTIN und Seriennummer) oder ein NFC-Chip, in Großbuchstaben-Hex gespeichert und im Betrieb über Artikel, Stücke und Plätze eindeutig. Zum Binden und Zurückgeben braucht es das Recht, das Lager zu verwalten, zum Lesen das Recht, es zu sehen.
+
+<!-- anchor: user.money.stock.units -->
+### Packeinheiten
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten, dass Ware in der Palette oder dem Karton reist, in dem sie ankam, oder in eigenen Kisten, und trotzdem wissen, wo jede Charge und jedes Stück ist.
+
+Mit der Funktion *Packeinheiten* öffnen Sie **Lager → Packeinheiten**. Eine Einheit hat einen eigenen Code (und das Etikett des Lieferanten, wenn sie auf einer etikettierten Palette kam), eine Art (Palette, Karton, Kiste, Schachtel), einen Ort und einen Inhalt: Artikel mit Charge, Menge und Stücken. Die Liste zeigt die offenen Einheiten, an einem Ort oder überall.
+
+- **Einheit anlegen.** Drücken Sie *Einheit anlegen*: Code, Art, Ort und Inhalt. Eine Einheit beansprucht nur **losen** Bestand an diesem Ort (was der Ort hält minus dem, was andere Einheiten dort schon halten); mehr zu verlangen wird abgelehnt, mit der losen Menge.
+- **Bewegen.** *Bewegen* bringt den ganzen Inhalt in einer Anfrage an einen anderen Ort: jede Charge und jedes Stück behält seine Spur. Hat jemand die Einheit seit Ihrem Lesen bewegt oder ausgepackt, wird die Bewegung abgelehnt und Sie lesen neu.
+- **Auspacken.** *Auspacken* lässt den Inhalt, wo er ist, lose; die Einheit ist nicht mehr offen.
+- **In Kisten umpacken.** *In Kisten umpacken* nimmt eine Menge aus einer Einheit und legt sie in eigene Kisten (Anzahl Kisten, Menge je Kiste). Was hineinkommt, ist genau, was herauskam: der Bestand ändert sich nie, und eine Charge ist über das Umpacken auf beiden Seiten zu finden. Umgepackt wird an einem Ort; die neuen Kisten bewegen Sie danach.
+
+- Ware, die in einer Einheit gepackt ist, kann nicht lose entnommen werden: der Server lehnt ab und nennt die Einheit. Bewegen oder packen Sie die Einheit zuerst aus.
+- Wie ein Artikel verfolgt wird, wählen Sie je Artikel (oder erben ihn von der Gruppe): nicht verfolgt, nach Charge (mit Ablaufdatum, wo gesetzt) oder je Stück (ein Etikett pro Stück).
 
 <!-- anchor: user.money.stock.expiry -->
 ### Der Verfallsbericht
@@ -3289,6 +3321,29 @@ Sie gehören mehreren Spaces an und möchten alle Ihre Rechnungen, Zahlungen und
 - Vollständiger Verlauf, Nutzung und andere Server sind von demselben Bildschirm aus erreichbar.
 
 **Siehe auch:** [Ihre Rechnungen](#ihre-rechnungen)
+
+<!-- anchor: user.money.finances.billed -->
+### Rechnungen, die ein Betrieb als Kunde auf Sie ausgestellt hat
+
+**Zielgruppe:** Mitglied
+
+Ein Betrieb, der Ihnen Rechnungen stellt, kann Ihnen einen Code geben, damit Sie lesen, was er Ihnen in Rechnung stellt, in Ihrem eigenen Konto, ohne ihm beizutreten.
+
+**Schritte**
+
+1. Öffnen Sie [Meine Finanzen](https://fdittgen-png.github.io/deskilo/#/money) und wählen Sie unter **Ausstehend** **Rechnungscode verwenden**.
+2. Geben Sie den Code ein und wählen Sie **Code prüfen**. Sie sehen, welcher Betrieb Sie einlädt und auf wen seine Rechnungen ausgestellt sind.
+3. Wählen Sie **Annehmen**. Die Rechnungen erscheinen unter **Als Kunde in Rechnung gestellt**.
+
+**Gut zu wissen**
+
+- Eine Karte pro Betrieb und pro Schuldner: Wer privat und für ein Unternehmen kauft, hat zwei Karten, und zwei Schuldner eines Betriebs werden nie addiert. Beträge verschiedener Währungen werden ebenfalls nie addiert.
+- Diese Rechnungen zählen nicht zu dem, was Sie als Mitglied schulden, und stehen weder in Ihren Mitgliederlisten noch in Ihren Exporten.
+- Ein Code, der nicht verwendet werden kann (falsch, abgelaufen, zurückgezogen oder schon von einem anderen Konto angenommen), bekommt immer dieselbe Antwort: Fragen Sie den Betrieb nach einem neuen.
+- Annehmen macht Sie nicht zum Mitglied des Betriebs. Der Betrieb kann den Zugang beenden, und Sie auch; beim Beenden wird nichts gelöscht.
+- Diese Rechnungen von hier aus zu bezahlen, wird noch nicht angeboten.
+
+**Siehe auch:** [Ihre Finanzen in allen Workspaces](#ihre-finanzen-in-allen-workspaces)
 
 <!-- anchor: user.money.businesses -->
 ### Ihre Unternehmen auf einen Blick

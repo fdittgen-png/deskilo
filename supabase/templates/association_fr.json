@@ -97,6 +97,7 @@
         "configurationTransfer": false,
         "counterReceipts": false,
         "counterTillSessions": false,
+        "counterOfflineCash": false,
         "customFields": false,
         "customRoles": true,
         "customerQuotes": false,
