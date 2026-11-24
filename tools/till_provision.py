@@ -47,12 +47,41 @@ def check(rows):
 
 
 def pick(title, rows, label):
+    """Lists the rows numbered; one row is taken without asking; anything but a listed number asks again."""
     if not rows:
         sys.exit(f"no {title} found")
+    print(f"\n{title.capitalize()}:")
     for i, r in enumerate(rows, 1):
         print(f"  {i}. {label(r)}")
-    n = input(f"{title} [1]: ").strip() or "1"
-    return rows[int(n) - 1]
+    if len(rows) == 1:
+        print(f"  -> the only {title}, taken")
+        return rows[0]
+    while True:
+        n = input(f"Which {title}? (1-{len(rows)}): ").strip()
+        if n.isdigit() and 1 <= int(n) <= len(rows):
+            return rows[int(n) - 1]
+        print(f"  type a number from 1 to {len(rows)}")
+
+
+def companies(url, anon, token, user_id):
+    """The user's own active companies, each once, by name, with what a till would find there."""
+    rows = call(url, anon, f"/rest/v1/members?select=workspace_id,workspaces(name,created_at)&status=eq.active&user_id=eq.{user_id}", token=token)
+    seen = {}
+    for m in rows:
+        seen.setdefault(m["workspace_id"], m)
+    out = []
+    for wid, m in seen.items():
+        w = m.get("workspaces") or {}
+        products = call(url, anon, f"/rest/v1/services?select=id&workspace_id=eq.{wid}&active=eq.true&sellable=eq.true&limit=100", token=token)
+        tills = call(url, anon, f"/rest/v1/counter_tills?select=id&workspace_id=eq.{wid}&active=eq.true&limit=100", token=token)
+        out.append({"workspace_id": wid, "name": w.get("name") or "?", "created": (w.get("created_at") or "")[:10],
+                    "products": len(products), "tills": len(tills)})
+    out.sort(key=lambda c: (c["products"] == 0, c["name"].lower(), c["created"]))
+    return out
+
+
+def company_label(c):
+    return f"{c['name']:<24} {c['products']:>3} products  {c['tills']:>2} tills  since {c['created'] or '?'}  (id …{c['workspace_id'][-6:]})"
 
 
 def main():
@@ -70,12 +99,17 @@ def main():
     password = getpass.getpass("Deskilo password (used once, not stored): ")
     session = call(a.url, a.anon, "/auth/v1/token?grant_type=password", {"email": email, "password": password})
     token, refresh = session["access_token"], session["refresh_token"]
-    memberships = call(a.url, a.anon, "/rest/v1/members?select=workspace_id,workspaces(name)&status=eq.active", token=token)
-    ws = pick("company", memberships, lambda m: f"{(m.get('workspaces') or {}).get('name', '?')}  {m['workspace_id']}")
+    ws = pick("company", companies(a.url, a.anon, token, session["user"]["id"]), company_label)
+    if ws["products"] == 0:
+        print(f"  note: '{ws['name']}' has no sellable product yet; the till screen will stay empty until one is added")
     tills = call(a.url, a.anon, f"/rest/v1/counter_tills?select=id,name&workspace_id=eq.{ws['workspace_id']}&active=eq.true&order=name", token=token)
-    till = pick("till", tills + [{"id": "", "name": "(none: no till)"}], lambda t: f"{t['name']}  {t['id']}") if tills else {"id": ""}
+    till = pick("till", tills + [{"id": "", "name": "(none: no till)"}], lambda t: f"{t['name']}  (id …{t['id'][-6:]})" if t["id"] else t["name"]) if tills else {"id": "", "name": "(none)"}
+    print(f"\nAbout to write board {a.port}:\n  role     {a.role}\n  Wi-Fi    {ssid}\n  user     {email}\n  company  {ws['name']}  ({ws['products']} products)\n  till     {till['name']}")
+    if input("Write it? (y/N): ").strip().lower() not in ("y", "yes"):
+        call(a.url, a.anon, "/auth/v1/logout", {}, token=token)
+        sys.exit("nothing written; the sign-in was ended")
     rows = [("role", a.role), ("ssid", ssid), ("wifi_pass", wpass), ("url", a.url), ("anon", a.anon), ("refresh", refresh), ("email", email),
-            ("workspace", ws["workspace_id"]), ("ws_name", (ws.get("workspaces") or {}).get("name", "")), ("till", till["id"])]
+            ("workspace", ws["workspace_id"]), ("ws_name", ws["name"]), ("till", till["id"])]
     check(rows)
     work = tempfile.mkdtemp(prefix="till-provision-")   # mode 0700: it holds a refresh token until it is flashed
     try:
@@ -99,7 +133,7 @@ def main():
         raise
     finally:
         shutil.rmtree(work, ignore_errors=True)
-    print(f"\nBoard provisioned as '{a.role}' for company '{(ws.get('workspaces') or {}).get('name','?')}'. Reset it (EN button).")
+    print(f"\nBoard provisioned as '{a.role}' for company '{ws['name']}'. Reset it (EN button).")
 
 
 if __name__ == "__main__":
