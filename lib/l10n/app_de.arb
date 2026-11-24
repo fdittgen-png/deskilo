@@ -4295,6 +4295,8 @@
   "@conversationYesterday": {
     "description": "#687 - messaging centre"
   },
+  "counterLotsExpired": "Nur {held} der verlangten {asked} sind hier verkäuflich: {expired} weitere sind abgelaufen. Es wurde nichts verkauft.",
+  "counterLotsShort": "Nur {held} der verlangten {asked} sind hier. Es wurde nichts verkauft.",
   "countryChangeBody": "In {country} sind diese Funktionen nicht verfügbar und funktionieren nicht mehr: {features}. Ihre Schalter bleiben erhalten: Sie kehren zurück, wenn Sie das Land zurückändern.",
   "@countryChangeBody": {
     "description": "#2454 country change",
