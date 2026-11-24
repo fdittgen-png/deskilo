@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/features/enabled_feature_keys.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -265,8 +267,7 @@ class PurchaseExchangeRateTile extends ConsumerWidget {
                 held.currency,
                 held.entry.rate.toString(),
                 held.functionalCurrency,
-                MaterialLocalizations.of(context)
-                    .formatMediumDate(held.entry.rateDate),
+                appFormatOf(context).dates(DateShape.date).format(held.entry.rateDate),
                 _sourceLabel(l10n, held.entry.source),
               ),
       ),
@@ -402,7 +403,7 @@ class ApprovalExchangeRateTile extends StatelessWidget {
         PurchaseApprovalFxStatus.missing => l10n.purchasesFxMissing,
         PurchaseApprovalFxStatus.recorded => l10n.purchasesFxRecorded(
           fx.currency!, fx.rate!, fx.functionalCurrency!,
-          MaterialLocalizations.of(context).formatMediumDate(fx.rateDate!),
+          appFormatOf(context).dates(DateShape.date).format(fx.rateDate!),
           _sourceLabel(l10n, fx.source!),
         ),
       }),

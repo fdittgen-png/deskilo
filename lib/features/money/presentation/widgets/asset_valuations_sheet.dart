@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/share/text_sharer.dart';
@@ -155,7 +156,6 @@ class _BatchCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final material = MaterialLocalizations.of(context);
     return Card(
       key: ValueKey('valuation-${batch.id}'),
       child: Padding(
@@ -173,8 +173,8 @@ class _BatchCard extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Text(
-              '${material.formatMediumDate(batch.periodFrom)} – '
-              '${material.formatMediumDate(batch.periodTo)} · ${batch.currency}',
+              '${appFormatOf(context).dates(DateShape.date).format(batch.periodFrom)} – '
+              '${appFormatOf(context).dates(DateShape.date).format(batch.periodTo)} · ${batch.currency}',
             ),
             Text(
               _statusLabel(l10n, batch.status),

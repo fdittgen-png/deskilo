@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -63,7 +64,7 @@ class SpacePriceLine extends ConsumerWidget {
             until == null
                 ? l10n.roomOfferOpen
                 : l10n.roomOfferUntil(
-                    MaterialLocalizations.of(context).formatMediumDate(until),
+                    appFormatOf(context).dates(DateShape.date).format(until),
                   ),
             key: const ValueKey('space-room-window'),
             style: style,

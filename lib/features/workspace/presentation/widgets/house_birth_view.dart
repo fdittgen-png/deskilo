@@ -7,6 +7,8 @@
 // Organisation for as long as the house is one.
 import 'package:flutter/material.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/organisation.dart';
@@ -37,7 +39,7 @@ class HouseBirthView extends StatelessWidget {
           Text(
             l10n.houseBirthCreated(
               head,
-              MaterialLocalizations.of(context).formatMediumDate(date),
+              appFormatOf(context).dates(DateShape.date).format(date),
             ),
           ),
         Text(

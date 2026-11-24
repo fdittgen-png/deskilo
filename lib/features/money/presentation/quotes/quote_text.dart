@@ -4,6 +4,7 @@
 // says: a status, a server refusal, the amount of a sent revision and a date.
 import 'package:flutter/material.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/billing_customer.dart';
@@ -39,7 +40,7 @@ String quoteRefusalText(AppLocalizations l10n, QuoteRefusal refusal) =>
 
 /// A date of the offer, in the reader's own locale.
 String quoteDate(BuildContext context, DateTime d) =>
-    MaterialLocalizations.of(context).formatMediumDate(d);
+    appFormatOf(context).dates(DateShape.date).format(d);
 
 /// An amount of a sent revision, in its own currency.
 String quoteAmount(BuildContext context, QuoteTotals totals) =>

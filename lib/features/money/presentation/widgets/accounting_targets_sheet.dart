@@ -8,6 +8,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -303,7 +305,6 @@ class _ConnectionCard extends ConsumerWidget {
   /// What is known of the connection: its state and the target's words.
   List<Widget> _facts(BuildContext context) {
     final l10n = context.l10n;
-    final material = MaterialLocalizations.of(context);
     final c = connection;
     final waiting = [
       if (!target.runnerDelivers)
@@ -334,7 +335,7 @@ class _ConnectionCard extends ConsumerWidget {
       if (c.displayName.isNotEmpty) Text(c.displayName),
       if (c.remoteTenantId.isNotEmpty) Text(l10n.acctConnTenant(c.remoteTenantId)),
       if (c.connectedAt case final at?)
-        Text(l10n.acctConnSince(material.formatMediumDate(at))),
+        Text(l10n.acctConnSince(appFormatOf(context).dates(DateShape.date).format(at))),
       if (c.statusDetail.isNotEmpty) Text(l10n.acctConnDetail(c.statusDetail)),
     ];
   }
