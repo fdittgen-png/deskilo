@@ -12,14 +12,10 @@
 import 'package:deskilo/features/money/domain/counter_receipt_document.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/domain/till_offline.dart';
-import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
-import 'package:deskilo_jurisdiction_de/deskilo_jurisdiction_de.dart';
-import 'package:deskilo_jurisdiction_es/deskilo_jurisdiction_es.dart';
-import 'package:deskilo_jurisdiction_fr/deskilo_jurisdiction_fr.dart';
-import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../codes/dk_code.dart';
+import '../../jurisdiction/installed_invoice_mentions.dart';
 import 'demo_stock_registry.dart';
 import 'demo_till_drawer.dart';
 
@@ -46,35 +42,31 @@ const _evidence = {
   'reconcile_tender': 'pgTAP 523 (tender states and reconciliation)',
 };
 
-/// The country of an installed add-on is the one in its capability id (`invoice_mentions.IT`), so the rows are keyed by
-/// the add-on that states the country's law, not by a country literal of this file.
-Map<String, _Row> _byCountry(Map<InvoiceMentionsContribution, _Row> rows) => {
-  for (final e in rows.entries) e.key.descriptor.capabilityId.split('.').last: e.value,
-};
-
-final _registry = _byCountry({
-  const FrInvoiceMentions(): (
+/// The rows by the module id of the installed add-on that states the country's law: a country with no installed add-on has
+/// no row (the country is the one in the add-on's capability id, `invoice_mentions.IT`).
+const _registry = <String, _Row>{
+  'fr.invoice_mentions': (
     specification: 'Code général des impôts, annexe II, art. 242 nonies A (mentions des factures)',
     version: '2026-11',
     from: '2013-01-01',
     supported: true,
     note: '',
   ),
-  const DeInvoiceMentions(): (
+  'de.invoice_mentions': (
     specification: 'Umsatzsteuer-Durchführungsverordnung, § 33 (Rechnungen über Kleinbeträge)',
     version: '2026-11',
     from: '2017-01-01',
     supported: true,
     note: '',
   ),
-  const EsInvoiceMentions(): (
+  'es.invoice_mentions': (
     specification: 'Real Decreto 1619/2012, art. 4 y 7 (factura simplificada)',
     version: '2026-11',
     from: '2013-01-01',
     supported: true,
     note: '',
   ),
-  const ItInvoiceMentions(): (
+  'it.invoice_mentions': (
     specification: 'Decreto legislativo 127/2015, art. 2 (memorizzazione e trasmissione telematica dei corrispettivi)',
     version: 'D.Lgs. 127/2015',
     from: '2020-01-01',
@@ -82,7 +74,7 @@ final _registry = _byCountry({
     note:
         "The retail sale in Italy is recorded through the telematic transmission of the day's takings; a receipt of this kind is not that, and no adapter transmits it.",
   ),
-});
+};
 
 
 /// #4436 -- one traced line a sale froze: its receipt, when, and the track IDs it took, as `counter_line_tracks` keeps them.
@@ -127,7 +119,12 @@ class DemoTill implements TillPort, TillOfflinePort {
   final Map<String, TillDraft> _answered = {};
   final Map<String, Map<String, Object?>> _frozen = {};
 
-  _Row? get _row => _registry[country];
+  _Row? get _row {
+    for (final addOn in installedInvoiceMentions) {
+      if (addOn.descriptor.capabilityId == 'invoice_mentions.$country') return _registry[addOn.descriptor.moduleId];
+    }
+    return null;
+  }
 
   bool get _supported => ready && (_row?.supported ?? false);
 

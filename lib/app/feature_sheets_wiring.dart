@@ -4,7 +4,6 @@
 // composed here where every feature is visible: money, profile and the
 // workspace's messenger open them without importing the calendar, money
 // or members feature.
-import 'package:flutter_riverpod/flutter_riverpod.dart' show AsyncData, AsyncError, AsyncLoading, AsyncValue;
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../core/navigation/feature_sheets.dart'
@@ -40,14 +39,12 @@ final List<Override> featureSheetsFromApp = [
   // #4431 — the expiry report is printed by the report engine (the stock never imports it).
   stockExpiryPrinterProvider.overrideWithValue(const MoneyStockExpiryPrinter()),
   // #4442 — the units of the business a free line may be sold in (money never imports the stock).
-  lineUnitsProvider.overrideWith((ref, workspaceId) => _lineUnits(ref.watch(stock_units.lineUnitsProvider(workspaceId)))),
+  lineUnitsProvider.overrideWith(
+    (ref, workspaceId) => [
+      for (final u in ref.watch(stock_units.lineUnitsProvider(workspaceId)).value ?? const <WorkspaceUnit>[]) // empty-ok: the units only offer a choice
+        LineUnit(code: u.code, label: u.label, unEceCode: u.unEceCode),
+    ],
+  ),
   // #4294 — the names the low-stock notice of the inbox reads (events never import the stock).
   eventNameSourcesProvider.overrideWithValue(const [stockEventNames]),
 ];
-
-/// The business's units as a line of a quote or an invoice knows them.
-AsyncValue<List<LineUnit>> _lineUnits(AsyncValue<List<WorkspaceUnit>> units) => switch (units) {
-  AsyncData(:final value) => AsyncData([for (final u in value) LineUnit(code: u.code, label: u.label, unEceCode: u.unEceCode)]),
-  AsyncError(:final error, :final stackTrace) => AsyncError(error, stackTrace),
-  _ => const AsyncLoading(),
-};

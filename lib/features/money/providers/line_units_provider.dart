@@ -7,4 +7,4 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/line_unit.dart';
 
-final lineUnitsProvider = Provider.family<AsyncValue<List<LineUnit>>, String>((ref, workspaceId) => const AsyncData(<LineUnit>[]));
+final lineUnitsProvider = Provider.family<List<LineUnit>, String>((ref, workspaceId) => const <LineUnit>[]);
