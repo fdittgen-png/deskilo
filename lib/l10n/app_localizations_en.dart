@@ -1120,10 +1120,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get applicationsEmpty => 'No workspace requests.';
 
   @override
-  String get applicationsLoadFailed =>
-      'Could not load your workspace requests. Please try again.';
-
-  @override
   String get applicationsTitle => 'Workspace requests';
 
   @override
@@ -2126,10 +2122,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get badgePinReviewNotice =>
       'This PIN predates length tracking or is shorter than the current minimum. Ask the member to change it in their own settings. Their existing PIN keeps working.';
-
-  @override
-  String get badgePinReviewUnavailable =>
-      'PIN review status is unavailable. Try again before assuming this PIN meets the current minimum.';
 
   @override
   String get badgePinSaveFailed =>
@@ -6627,9 +6619,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get capacityKpiRetry => 'Try again';
-
-  @override
   String capacityKpiRooms(String count, String reserved, String offered) {
     return 'Rooms without seats: $count, $reserved of $offered room-hours reserved';
   }
@@ -7082,10 +7071,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get compareTitle => 'Compare templates';
-
-  @override
-  String get compareUnavailable =>
-      'These templates could not be read to compare them. Nothing is claimed either way.';
 
   @override
   String get compareUnknown => 'Unknown';
@@ -20543,10 +20528,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get libraryPreviewChanges => 'Preview changes';
 
   @override
-  String get libraryPreviewFailed =>
-      'The changes could not be previewed. Nothing was applied.';
-
-  @override
   String libraryPreviewTitle(String name) {
     return 'What « $name » would change';
   }
@@ -24014,10 +23995,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get newMemberDefaultsTitle => 'New members';
-
-  @override
-  String get newMemberDefaultsUnavailable =>
-      'These could not be read just now. Saving leaves them exactly as they are.';
 
   @override
   String get newMemberDefaultsUnset =>
@@ -33064,9 +33041,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Badges are read with the screen-side camera — turn off to use the back camera.';
 
   @override
-  String get settingsLoadFailed => 'The settings could not be loaded.';
-
-  @override
   String get settingsOfflineRegistry =>
       'Showing the built-in defaults: the server could not be reached, so nothing can be changed now.';
 
@@ -40606,9 +40580,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String templateWidenTitle(String audience) {
     return 'Make this template readable by: $audience?';
   }
-
-  @override
-  String get templatesLoadFailed => 'The templates could not be loaded.';
 
   @override
   String get themeDark => 'Dark';

@@ -514,10 +514,6 @@
   "@applicationsEmpty": {
     "description": "Workspace admission history and discussion (#1791)"
   },
-  "applicationsLoadFailed": "Ihre Arbeitsplatzanfragen konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
-  "@applicationsLoadFailed": {
-    "description": "Admission action failure (#1791)"
-  },
   "applicationsTitle": "Arbeitsplatzanfragen",
   "@applicationsTitle": {
     "description": "Workspace admission history and discussion (#1791)"
@@ -867,7 +863,6 @@
     "description": "#662 - badge sign-in"
   },
   "badgePinReviewNotice": "Die Länge dieser älteren PIN ist unbekannt oder unterschreitet das aktuelle Minimum. Bitten Sie das Mitglied, sie in den eigenen Einstellungen zu ändern. Die bisherige PIN bleibt gültig.",
-  "badgePinReviewUnavailable": "Der PIN-Prüfstatus ist nicht verfügbar. Versuchen Sie es erneut, bevor Sie annehmen, dass diese PIN das aktuelle Minimum erfüllt.",
   "badgePinSaveFailed": "Server nicht erreichbar. Ihre PIN wurde nicht geändert — bitte erneut versuchen.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
@@ -3884,10 +3879,6 @@
       }
     }
   },
-  "capacityKpiRetry": "Erneut versuchen",
-  "@capacityKpiRetry": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiRooms": "Räume ohne Plätze: {count}, {reserved} von {offered} Raumstunden reserviert",
   "@capacityKpiRooms": {
     "description": "#1918 capacity KPI",
@@ -4153,7 +4144,6 @@
   "compareRemove": "Aus dem Vergleich entfernen",
   "compareSearch": "Einstellung suchen",
   "compareTitle": "Vorlagen vergleichen",
-  "compareUnavailable": "Diese Vorlagen konnten zum Vergleich nicht gelesen werden. Es wird nichts behauptet.",
   "compareUnknown": "Unbekannt",
   "compareYes": "Ja",
   "composerAttach": "Verweis anhängen",
@@ -12588,7 +12578,6 @@
   "libraryPartial": "Ein Teil dieser Vorlage kann hier nicht angewendet werden und bleibt außen vor.",
   "libraryPlanNames": "Diese Namen reisen mit dem Plan: {names}",
   "libraryPreviewChanges": "Änderungen ansehen",
-  "libraryPreviewFailed": "Die Änderungen konnten nicht angezeigt werden. Es wurde nichts angewendet.",
   "libraryPreviewTitle": "Was « {name} » ändern würde",
   "libraryProcessOff": "{feature} aus",
   "@libraryProcessOff": {
@@ -13920,10 +13909,6 @@
   "newMemberDefaultsTitle": "Neue Mitglieder",
   "@newMemberDefaultsTitle": {
     "description": "#1294 the new-member defaults section title"
-  },
-  "newMemberDefaultsUnavailable": "Diese konnten gerade nicht gelesen werden. Das Speichern lässt sie unverändert.",
-  "@newMemberDefaultsUnavailable": {
-    "description": "#1563 shown when the new-member defaults could not be read, so Save omits them"
   },
   "newMemberDefaultsUnset": "Nichts gewählt — neue Mitglieder starten mit 100 %, Buchungen werden gesperrt, sobald das Kontingent aufgebraucht ist.",
   "@newMemberDefaultsUnset": {
@@ -19803,10 +19788,6 @@
   },
   "settingsFrontCamera": "Mit der Frontkamera scannen",
   "settingsFrontCameraDesc": "Badges werden mit der Kamera auf der Bildschirmseite gelesen — ausschalten für die Rückkamera.",
-  "settingsLoadFailed": "Die Einstellungen konnten nicht geladen werden.",
-  "@settingsLoadFailed": {
-    "description": "#2484 settings: Error text."
-  },
   "settingsOfflineRegistry": "Es werden die eingebauten Standardwerte gezeigt: Der Server ist nicht erreichbar, daher lässt sich jetzt nichts ändern.",
   "@settingsOfflineRegistry": {
     "description": "#2484 settings: Banner: the editor shows the bundled registry."
@@ -23842,7 +23823,6 @@
   "templateWidenCount": "{count, plural, one{1 Einstellung wird lesbar, genau so, wie die Vorlage sie jetzt enthält.} other{{count} Einstellungen werden lesbar, genau so, wie die Vorlage sie jetzt enthält.}}",
   "templateWidenExcluded": "{count, plural, one{1 Art von Wert verlässt den Workspace nie mit ihr (Bankdaten, Standorte, Adressen…).} other{{count} Arten von Werten verlassen den Workspace nie mit ihr (Bankdaten, Standorte, Adressen…).}}",
   "templateWidenTitle": "Diese Vorlage lesbar machen für: {audience}?",
-  "templatesLoadFailed": "Die Vorlagen konnten nicht geladen werden.",
   "themeDark": "Dunkel",
   "themeLight": "Hell",
   "themeSystem": "Systemstandard",

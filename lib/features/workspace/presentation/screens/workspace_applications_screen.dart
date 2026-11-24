@@ -7,6 +7,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../auth/providers/auth_providers.dart';
@@ -118,20 +119,10 @@ class _ApplicationsState extends ConsumerState<WorkspaceApplicationsScreen> {
                   ),
                 ],
               ),
-              AsyncError() => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      l10n.applicationsLoadFailed,
-                    ),
-                    TextButton(
-                      key: const ValueKey('workspace-applications-retry'),
-                      onPressed: () => ref.invalidate(provider),
-                      child: Text(l10n.commonRetry),
-                    ),
-                  ],
-                ),
+              AsyncError(:final error) => ReadFailureBanner(
+                error: error,
+                retryKey: const ValueKey('workspace-applications-retry'),
+                onRetry: () => ref.invalidate(provider),
               ),
               _ => const LoadingView(),
             },

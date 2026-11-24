@@ -463,8 +463,6 @@
 
       "lib/features/workspace/presentation/screens/availability_actions.dart": 1,
 
-      "lib/features/workspace/presentation/screens/availability_screen.dart": 1,
-
       "lib/features/workspace/presentation/screens/deployment_screen.dart": 3,
 
       "lib/features/workspace/presentation/screens/documents_screen.dart": 3,
@@ -479,7 +477,7 @@
 
       "lib/features/workspace/presentation/screens/sites_screen.dart": 2,
 
-      "lib/features/workspace/presentation/screens/wording_screen.dart": 2,
+      "lib/features/workspace/presentation/screens/wording_screen.dart": 1,
 
       "lib/features/workspace/presentation/screens/workspace_code_screen.dart": 1,
 

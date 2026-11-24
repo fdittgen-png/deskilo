@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -48,7 +49,6 @@ class _LaunchBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
     final status = ref.watch(workspaceSetupStatusProvider(workspace.id));
     Future<void> open(String route) async {
       await context.push(route);
@@ -62,11 +62,12 @@ class _LaunchBody extends ConsumerWidget {
         value,
         open,
       ),
-      AsyncError() => Padding(
+      AsyncError(:final error) => Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
-        child: InlineBanner(
-          icon: Icons.error_outline,
-          text: l10n.setupGuideUnavailable,
+        child: ReadFailureBanner(
+          error: error,
+          onRetry: () =>
+              ref.invalidate(workspaceSetupStatusProvider(workspace.id)),
         ),
       ),
       _ => const LoadingView(),

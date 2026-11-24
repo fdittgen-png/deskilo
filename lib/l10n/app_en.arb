@@ -1476,10 +1476,6 @@
   "@applicationsEmpty": {
     "description": "Workspace admission history and discussion (#1791)"
   },
-  "applicationsLoadFailed": "Could not load your workspace requests. Please try again.",
-  "@applicationsLoadFailed": {
-    "description": "Admission action failure (#1791)"
-  },
   "applicationsTitle": "Workspace requests",
   "@applicationsTitle": {
     "description": "Workspace admission history and discussion (#1791)"
@@ -2740,10 +2736,6 @@
   },
   "badgePinReviewNotice": "This PIN predates length tracking or is shorter than the current minimum. Ask the member to change it in their own settings. Their existing PIN keeps working.",
   "@badgePinReviewNotice": {
-    "description": "Shown as a text in badge pin review notice (workspace)."
-  },
-  "badgePinReviewUnavailable": "PIN review status is unavailable. Try again before assuming this PIN meets the current minimum.",
-  "@badgePinReviewUnavailable": {
     "description": "Shown as a text in badge pin review notice (workspace)."
   },
   "badgePinSaveFailed": "Could not reach the server. Your PIN was not changed — try again.",
@@ -8708,10 +8700,6 @@
       }
     }
   },
-  "capacityKpiRetry": "Try again",
-  "@capacityKpiRetry": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiRooms": "Rooms without seats: {count}, {reserved} of {offered} room-hours reserved",
   "@capacityKpiRooms": {
     "description": "#1918 capacity KPI",
@@ -9291,10 +9279,6 @@
   },
   "compareTitle": "Compare templates",
   "@compareTitle": {
-    "description": "#1660 template_compare"
-  },
-  "compareUnavailable": "These templates could not be read to compare them. Nothing is claimed either way.",
-  "@compareUnavailable": {
     "description": "#1660 template_compare"
   },
   "compareUnknown": "Unknown",
@@ -27066,10 +27050,6 @@
   "@libraryPreviewChanges": {
     "description": "Template apply preview (#1280): libraryPreviewChanges"
   },
-  "libraryPreviewFailed": "The changes could not be previewed. Nothing was applied.",
-  "@libraryPreviewFailed": {
-    "description": "Template apply sheet when the server preview could not be loaded (#1280)"
-  },
   "libraryPreviewTitle": "What « {name} » would change",
   "@libraryPreviewTitle": {
     "description": "Template apply preview (#1280): libraryPreviewTitle",
@@ -31660,10 +31640,6 @@
   "newMemberDefaultsTitle": "New members",
   "@newMemberDefaultsTitle": {
     "description": "#1294 the new-member defaults section title"
-  },
-  "newMemberDefaultsUnavailable": "These could not be read just now. Saving leaves them exactly as they are.",
-  "@newMemberDefaultsUnavailable": {
-    "description": "#1563 shown when the new-member defaults could not be read, so Save omits them"
   },
   "newMemberDefaultsUnset": "Nothing chosen — new members start at 100% with bookings blocked once the entitlement is used.",
   "@newMemberDefaultsUnset": {
@@ -43058,10 +43034,6 @@
   "@settingsFrontCameraDesc": {
     "description": "Subtitle of the front-camera switch"
   },
-  "settingsLoadFailed": "The settings could not be loaded.",
-  "@settingsLoadFailed": {
-    "description": "#2484 settings: Error text."
-  },
   "settingsOfflineRegistry": "Showing the built-in defaults: the server could not be reached, so nothing can be changed now.",
   "@settingsOfflineRegistry": {
     "description": "#2484 settings: Banner: the editor shows the bundled registry."
@@ -52804,10 +52776,6 @@
         "type": "String"
       }
     }
-  },
-  "templatesLoadFailed": "The templates could not be loaded.",
-  "@templatesLoadFailed": {
-    "description": "#1660 library"
   },
   "themeDark": "Dark",
   "@themeDark": {

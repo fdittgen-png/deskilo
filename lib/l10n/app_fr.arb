@@ -514,10 +514,6 @@
   "@applicationsEmpty": {
     "description": "Workspace admission history and discussion (#1791)"
   },
-  "applicationsLoadFailed": "Impossible de charger vos demandes d’accès. Veuillez réessayer.",
-  "@applicationsLoadFailed": {
-    "description": "Admission action failure (#1791)"
-  },
   "applicationsTitle": "Demandes d’accès",
   "@applicationsTitle": {
     "description": "Workspace admission history and discussion (#1791)"
@@ -867,7 +863,6 @@
     "description": "#662 - badge sign-in"
   },
   "badgePinReviewNotice": "La longueur de ce code ancien est inconnue ou inférieure au minimum actuel. Demandez au membre de le modifier dans ses propres réglages. Son code actuel reste utilisable.",
-  "badgePinReviewUnavailable": "La vérification du code est indisponible. Réessayez avant de considérer que ce code respecte le minimum actuel.",
   "badgePinSaveFailed": "Serveur injoignable. Votre code n'a pas été modifié — réessayez.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
@@ -3884,10 +3879,6 @@
       }
     }
   },
-  "capacityKpiRetry": "Réessayer",
-  "@capacityKpiRetry": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiRooms": "Salles sans place : {count}, {reserved} sur {offered} heures-salles réservées",
   "@capacityKpiRooms": {
     "description": "#1918 capacity KPI",
@@ -4153,7 +4144,6 @@
   "compareRemove": "Retirer de la comparaison",
   "compareSearch": "Chercher un réglage",
   "compareTitle": "Comparer les modèles",
-  "compareUnavailable": "Ces modèles n'ont pas pu être lus pour les comparer. Rien n'est affirmé.",
   "compareUnknown": "Inconnu",
   "compareYes": "Oui",
   "composerAttach": "Joindre une référence",
@@ -12588,7 +12578,6 @@
   "libraryPartial": "Une partie de ce modèle ne peut pas être appliquée ici et est laissée de côté.",
   "libraryPlanNames": "Ces noms partent avec le plan : {names}",
   "libraryPreviewChanges": "Voir les changements",
-  "libraryPreviewFailed": "Les changements n'ont pas pu être prévisualisés. Rien n'a été appliqué.",
   "libraryPreviewTitle": "Ce que « {name} » changerait",
   "libraryProcessOff": "{feature} désactivé",
   "@libraryProcessOff": {
@@ -13920,10 +13909,6 @@
   "newMemberDefaultsTitle": "Nouveaux membres",
   "@newMemberDefaultsTitle": {
     "description": "#1294 the new-member defaults section title"
-  },
-  "newMemberDefaultsUnavailable": "Impossible de les lire pour l'instant. L'enregistrement les laisse telles quelles.",
-  "@newMemberDefaultsUnavailable": {
-    "description": "#1563 shown when the new-member defaults could not be read, so Save omits them"
   },
   "newMemberDefaultsUnset": "Rien de choisi — les nouveaux membres commencent à 100 % et les réservations sont bloquées une fois le forfait épuisé.",
   "@newMemberDefaultsUnset": {
@@ -19803,10 +19788,6 @@
   },
   "settingsFrontCamera": "Scanner avec la caméra avant",
   "settingsFrontCameraDesc": "Les badges sont lus avec la caméra côté écran — désactivez pour utiliser la caméra arrière.",
-  "settingsLoadFailed": "Les réglages n'ont pas pu être chargés.",
-  "@settingsLoadFailed": {
-    "description": "#2484 settings: Error text."
-  },
   "settingsOfflineRegistry": "Valeurs par défaut intégrées : le serveur est injoignable, rien ne peut être modifié pour le moment.",
   "@settingsOfflineRegistry": {
     "description": "#2484 settings: Banner: the editor shows the bundled registry."
@@ -23842,7 +23823,6 @@
   "templateWidenCount": "{count, plural, one{{count} réglage devient lisible, tel que le modèle le contient maintenant.} other{{count} réglages deviennent lisibles, tels que le modèle les contient maintenant.}}",
   "templateWidenExcluded": "{count, plural, one{{count} type de valeur ne part jamais avec lui (coordonnées bancaires, sites, adresses…).} other{{count} types de valeurs ne partent jamais avec lui (coordonnées bancaires, sites, adresses…).}}",
   "templateWidenTitle": "Rendre ce modèle lisible par : {audience} ?",
-  "templatesLoadFailed": "Les modèles n’ont pas pu être chargés.",
   "themeDark": "Sombre",
   "themeLight": "Clair",
   "themeSystem": "Par défaut du système",

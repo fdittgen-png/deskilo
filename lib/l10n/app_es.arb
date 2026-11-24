@@ -514,10 +514,6 @@
   "@applicationsEmpty": {
     "description": "Workspace admission history and discussion (#1791)"
   },
-  "applicationsLoadFailed": "No se pudieron cargar sus solicitudes de acceso. Inténtelo de nuevo.",
-  "@applicationsLoadFailed": {
-    "description": "Admission action failure (#1791)"
-  },
   "applicationsTitle": "Solicitudes de acceso",
   "@applicationsTitle": {
     "description": "Workspace admission history and discussion (#1791)"
@@ -867,7 +863,6 @@
     "description": "#662 - badge sign-in"
   },
   "badgePinReviewNotice": "La longitud de este PIN antiguo es desconocida o inferior al mínimo actual. Pida al miembro que lo cambie en sus propios ajustes. Su PIN actual sigue funcionando.",
-  "badgePinReviewUnavailable": "El estado de revisión del PIN no está disponible. Reinténtelo antes de dar por hecho que cumple el mínimo actual.",
   "badgePinSaveFailed": "No se pudo contactar con el servidor. Su PIN no ha cambiado: inténtelo de nuevo.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
@@ -3884,10 +3879,6 @@
       }
     }
   },
-  "capacityKpiRetry": "Reintentar",
-  "@capacityKpiRetry": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiRooms": "Salas sin puestos: {count}, {reserved} de {offered} horas-sala reservadas",
   "@capacityKpiRooms": {
     "description": "#1918 capacity KPI",
@@ -4153,7 +4144,6 @@
   "compareRemove": "Quitar de la comparación",
   "compareSearch": "Buscar un ajuste",
   "compareTitle": "Comparar plantillas",
-  "compareUnavailable": "No se pudieron leer estas plantillas para compararlas. No se afirma nada.",
   "compareUnknown": "Desconocido",
   "compareYes": "Sí",
   "composerAttach": "Adjuntar una referencia",
@@ -12588,7 +12578,6 @@
   "libraryPartial": "Una parte de esta plantilla no puede aplicarse aquí y se deja fuera.",
   "libraryPlanNames": "Estos nombres viajan con el plano: {names}",
   "libraryPreviewChanges": "Ver los cambios",
-  "libraryPreviewFailed": "No se pudieron previsualizar los cambios. No se aplicó nada.",
   "libraryPreviewTitle": "Qué cambiaría « {name} »",
   "libraryProcessOff": "{feature} desactivada",
   "@libraryProcessOff": {
@@ -13920,10 +13909,6 @@
   "newMemberDefaultsTitle": "Nuevos miembros",
   "@newMemberDefaultsTitle": {
     "description": "#1294 the new-member defaults section title"
-  },
-  "newMemberDefaultsUnavailable": "No se han podido leer ahora mismo. Al guardar se quedan como están.",
-  "@newMemberDefaultsUnavailable": {
-    "description": "#1563 shown when the new-member defaults could not be read, so Save omits them"
   },
   "newMemberDefaultsUnset": "Nada elegido: los nuevos miembros empiezan al 100 % y las reservas se bloquean cuando se agota el derecho.",
   "@newMemberDefaultsUnset": {
@@ -19803,10 +19788,6 @@
   },
   "settingsFrontCamera": "Escanear con la cámara frontal",
   "settingsFrontCameraDesc": "Las tarjetas se leen con la cámara del lado de la pantalla — desactívelo para usar la cámara trasera.",
-  "settingsLoadFailed": "No se pudieron cargar los ajustes.",
-  "@settingsLoadFailed": {
-    "description": "#2484 settings: Error text."
-  },
   "settingsOfflineRegistry": "Se muestran los valores por defecto integrados: no se pudo contactar con el servidor, por ahora no se puede cambiar nada.",
   "@settingsOfflineRegistry": {
     "description": "#2484 settings: Banner: the editor shows the bundled registry."
@@ -23842,7 +23823,6 @@
   "templateWidenCount": "{count, plural, one{1 ajuste pasa a ser legible, tal como lo contiene ahora la plantilla.} other{{count} ajustes pasan a ser legibles, tal como los contiene ahora la plantilla.}}",
   "templateWidenExcluded": "{count, plural, one{1 tipo de valor nunca sale con ella (datos bancarios, sedes, direcciones…).} other{{count} tipos de valores nunca salen con ella (datos bancarios, sedes, direcciones…).}}",
   "templateWidenTitle": "¿Hacer esta plantilla legible para: {audience}?",
-  "templatesLoadFailed": "No se pudieron cargar las plantillas.",
   "themeDark": "Oscuro",
   "themeLight": "Claro",
   "themeSystem": "Predeterminado del sistema",

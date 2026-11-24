@@ -253,14 +253,19 @@ class BiLineBody extends ConsumerWidget {
         .asData
         ?.value
         .currency;
-    final series = switch (answer) {
-      AsyncData(:final value) => value,
-      AsyncError() => null,
-      _ => const BiSeries([]),
-    };
     if (answer.isLoading) return const LinearProgressIndicator();
+    // A failed read is said, never drawn as a figure without history; on the
+    // canvas a tap selects the card, so the line carries no button.
+    // #4414 kept: as the visual body's own unavailable line
+    if (answer case AsyncError()) {
+      return Text(
+        l10n.overviewUnavailable,
+        key: ValueKey('bi-visual-unavailable-${visual.id}'),
+      );
+    }
+    final series = answer.value ?? const BiSeries([]);
     final known = [
-      for (final p in series?.points ?? const <BiSeriesPoint>[])
+      for (final p in series.points)
         if (p.known) p,
     ];
     String value(BiSeriesPoint p) => view.value(p.value, locale, currency);
@@ -306,7 +311,7 @@ class BiLineBody extends ConsumerWidget {
             child: CustomPaint(
               key: ValueKey('bi-visual-line-${visual.id}'),
               painter: _LinePainter(
-                points: series!.points,
+                points: series.points,
                 low: low,
                 colour: _palette(cs, visual.style.palette).first,
                 axis: cs.outline,

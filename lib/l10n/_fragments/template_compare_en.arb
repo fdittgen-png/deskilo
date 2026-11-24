@@ -3,10 +3,6 @@
   "@compareTitle": {
     "description": "#1660 template_compare"
   },
-  "compareUnavailable": "These templates could not be read to compare them. Nothing is claimed either way.",
-  "@compareUnavailable": {
-    "description": "#1660 template_compare"
-  },
   "compareDifferences": "Differences",
   "@compareDifferences": {
     "description": "#1660 template_compare"

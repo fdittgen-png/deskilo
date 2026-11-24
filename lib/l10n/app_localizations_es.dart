@@ -1125,10 +1125,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get applicationsEmpty => 'No hay solicitudes de acceso.';
 
   @override
-  String get applicationsLoadFailed =>
-      'No se pudieron cargar sus solicitudes de acceso. Inténtelo de nuevo.';
-
-  @override
   String get applicationsTitle => 'Solicitudes de acceso';
 
   @override
@@ -2142,10 +2138,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get badgePinReviewNotice =>
       'La longitud de este PIN antiguo es desconocida o inferior al mínimo actual. Pida al miembro que lo cambie en sus propios ajustes. Su PIN actual sigue funcionando.';
-
-  @override
-  String get badgePinReviewUnavailable =>
-      'El estado de revisión del PIN no está disponible. Reinténtelo antes de dar por hecho que cumple el mínimo actual.';
 
   @override
   String get badgePinSaveFailed =>
@@ -6664,9 +6656,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get capacityKpiRetry => 'Reintentar';
-
-  @override
   String capacityKpiRooms(String count, String reserved, String offered) {
     return 'Salas sin puestos: $count, $reserved de $offered horas-sala reservadas';
   }
@@ -7120,10 +7109,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get compareTitle => 'Comparar plantillas';
-
-  @override
-  String get compareUnavailable =>
-      'No se pudieron leer estas plantillas para compararlas. No se afirma nada.';
 
   @override
   String get compareUnknown => 'Desconocido';
@@ -20681,10 +20666,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get libraryPreviewChanges => 'Ver los cambios';
 
   @override
-  String get libraryPreviewFailed =>
-      'No se pudieron previsualizar los cambios. No se aplicó nada.';
-
-  @override
   String libraryPreviewTitle(String name) {
     return 'Qué cambiaría « $name »';
   }
@@ -24175,10 +24156,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get newMemberDefaultsTitle => 'Nuevos miembros';
-
-  @override
-  String get newMemberDefaultsUnavailable =>
-      'No se han podido leer ahora mismo. Al guardar se quedan como están.';
 
   @override
   String get newMemberDefaultsUnset =>
@@ -33335,9 +33312,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las tarjetas se leen con la cámara del lado de la pantalla — desactívelo para usar la cámara trasera.';
 
   @override
-  String get settingsLoadFailed => 'No se pudieron cargar los ajustes.';
-
-  @override
   String get settingsOfflineRegistry =>
       'Se muestran los valores por defecto integrados: no se pudo contactar con el servidor, por ahora no se puede cambiar nada.';
 
@@ -40940,9 +40914,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String templateWidenTitle(String audience) {
     return '¿Hacer esta plantilla legible para: $audience?';
   }
-
-  @override
-  String get templatesLoadFailed => 'No se pudieron cargar las plantillas.';
 
   @override
   String get themeDark => 'Oscuro';

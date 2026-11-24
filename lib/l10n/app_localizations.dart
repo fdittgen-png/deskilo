@@ -1904,12 +1904,6 @@ abstract class AppLocalizations {
   /// **'No workspace requests.'**
   String get applicationsEmpty;
 
-  /// Admission action failure (#1791)
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load your workspace requests. Please try again.'**
-  String get applicationsLoadFailed;
-
   /// Workspace admission history and discussion (#1791)
   ///
   /// In en, this message translates to:
@@ -3492,12 +3486,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This PIN predates length tracking or is shorter than the current minimum. Ask the member to change it in their own settings. Their existing PIN keeps working.'**
   String get badgePinReviewNotice;
-
-  /// Shown as a text in badge pin review notice (workspace).
-  ///
-  /// In en, this message translates to:
-  /// **'PIN review status is unavailable. Try again before assuming this PIN meets the current minimum.'**
-  String get badgePinReviewUnavailable;
 
   /// #1086 the PIN save or clear could not reach the server
   ///
@@ -10448,12 +10436,6 @@ abstract class AppLocalizations {
   /// #1918 capacity KPI
   ///
   /// In en, this message translates to:
-  /// **'Try again'**
-  String get capacityKpiRetry;
-
-  /// #1918 capacity KPI
-  ///
-  /// In en, this message translates to:
   /// **'Rooms without seats: {count}, {reserved} of {offered} room-hours reserved'**
   String capacityKpiRooms(String count, String reserved, String offered);
 
@@ -11146,12 +11128,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Compare templates'**
   String get compareTitle;
-
-  /// #1660 template_compare
-  ///
-  /// In en, this message translates to:
-  /// **'These templates could not be read to compare them. Nothing is claimed either way.'**
-  String get compareUnavailable;
 
   /// #1660 template_compare
   ///
@@ -32620,12 +32596,6 @@ abstract class AppLocalizations {
   /// **'Preview changes'**
   String get libraryPreviewChanges;
 
-  /// Template apply sheet when the server preview could not be loaded (#1280)
-  ///
-  /// In en, this message translates to:
-  /// **'The changes could not be previewed. Nothing was applied.'**
-  String get libraryPreviewFailed;
-
   /// Template apply preview (#1280): libraryPreviewTitle
   ///
   /// In en, this message translates to:
@@ -38271,12 +38241,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New members'**
   String get newMemberDefaultsTitle;
-
-  /// #1563 shown when the new-member defaults could not be read, so Save omits them
-  ///
-  /// In en, this message translates to:
-  /// **'These could not be read just now. Saving leaves them exactly as they are.'**
-  String get newMemberDefaultsUnavailable;
 
   /// #1294 shown when nothing is configured, naming the product defaults
   ///
@@ -53064,12 +53028,6 @@ abstract class AppLocalizations {
   /// **'Badges are read with the screen-side camera — turn off to use the back camera.'**
   String get settingsFrontCameraDesc;
 
-  /// #2484 settings: Error text.
-  ///
-  /// In en, this message translates to:
-  /// **'The settings could not be loaded.'**
-  String get settingsLoadFailed;
-
   /// #2484 settings: Banner: the editor shows the bundled registry.
   ///
   /// In en, this message translates to:
@@ -65331,12 +65289,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Make this template readable by: {audience}?'**
   String templateWidenTitle(String audience);
-
-  /// #1660 library
-  ///
-  /// In en, this message translates to:
-  /// **'The templates could not be loaded.'**
-  String get templatesLoadFailed;
 
   /// Theme option forcing the dark appearance
   ///

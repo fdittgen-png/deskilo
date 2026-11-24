@@ -15,7 +15,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/work_hours.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/dictionary_labels.dart';
@@ -79,15 +79,15 @@ class SetupHoursStep extends ConsumerWidget {
             today: ref.watch(clockProvider).now(),
           ),
         ),
-      (AsyncError(), _, _) ||
-      (_, AsyncError(), _) ||
-      (_, _, AsyncError()) => Padding(
-        padding: AppSpacing.lgAll,
-        child: InlineBanner(
-          key: const ValueKey('setup-hours-failed'),
-          icon: Icons.error_outline,
-          text: context.l10n.setupStepLoadFailed,
-        ),
+      (AsyncError(:final error), _, _) ||
+      (_, AsyncError(:final error), _) ||
+      (_, _, AsyncError(:final error)) => ReadFailureBanner(
+        key: const ValueKey('setup-hours-failed'),
+        error: error,
+        onRetry: () => ref
+          ..invalidate(openWeekdaysProvider)
+          ..invalidate(bookingGranularityProvider)
+          ..invalidate(closureDaysProvider),
       ),
       _ => const LoadingView(),
     };

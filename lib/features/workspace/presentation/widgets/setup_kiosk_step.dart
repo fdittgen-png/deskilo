@@ -13,7 +13,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/dictionary_labels.dart';
@@ -91,7 +91,6 @@ class _SetupKioskStepState extends ConsumerState<SetupKioskStep> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     final emails = ref.watch(memberEmailsProvider).value ?? const {};
     String who(Member m) => emails[m.id] ?? m.managedName;
     return switch (ref.watch(workspaceMembersProvider)) {
@@ -108,12 +107,12 @@ class _SetupKioskStepState extends ConsumerState<SetupKioskStep> {
           ],
         ),
       ),
-      AsyncError() => Padding(
+      AsyncError(:final error) => Padding(
         padding: AppSpacing.lgAll,
-        child: InlineBanner(
+        child: ReadFailureBanner(
           key: const ValueKey('setup-kiosk-failed'),
-          icon: Icons.error_outline,
-          text: l10n.setupStepLoadFailed,
+          error: error,
+          onRetry: () => ref.invalidate(workspaceMembersProvider),
         ),
       ),
       _ => const LoadingView(),
