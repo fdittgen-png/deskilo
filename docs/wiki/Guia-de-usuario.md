@@ -3167,6 +3167,23 @@ Con la función *Etiquetas* activada, un artículo tiene un **modo de etiqueta**
 - El modo de un artículo que ya tiene etiquetas no cambia hasta retirarlas o hasta que su stock sea cero; un cambio del grupo salta entonces el artículo y lo lista como conservado. Una etiqueta de un lugar designa siempre un solo lugar.
 - Un código de etiqueta es una etiqueta UHF (EPC; el servidor lee un SGTIN-96 como GTIN y número de serie) o un chip NFC, guardado en hexadecimal mayúsculo y único en la empresa entre artículos, piezas y lugares. Vincular y retirar exigen el derecho a gestionar el stock; leer, el de verlo.
 
+<!-- anchor: user.money.stock.units -->
+### Unidades de manipulación
+
+**Público:** Administrador/a · Propietario
+
+Quiere que la mercancía viaje en el palé o la caja en que llegó, o en cajas propias, y aun así saber dónde está cada lote y cada pieza.
+
+Con la función *Unidades de manipulación* activada, abra **Stock → Unidades de manipulación**. Una unidad tiene un código propio (y la etiqueta del proveedor cuando llegó en un palé etiquetado), un tipo (palé, caja de cartón, cajón, caja), un lugar y un contenido: artículos con su lote, cantidad y piezas. La lista muestra las unidades abiertas, en un lugar o en todos.
+
+- **Crear una unidad.** Pulse *Crear una unidad*: su código, su tipo, su lugar y lo que contiene. Una unidad solo reclama stock **suelto** en ese lugar (lo que el lugar tiene menos lo que otras unidades ya tienen allí); pedir más se rechaza y dice cuánto hay suelto.
+- **Mover.** *Mover* lleva todo el contenido a otro lugar en una sola petición: cada lote y cada pieza conserva su rastro. Si alguien movió o deshizo la unidad desde que la leyó, el movimiento se rechaza y la lee de nuevo.
+- **Deshacer.** *Deshacer* deja el contenido donde está, suelto, y la unidad ya no está abierta.
+- **Reenvasar en cajas.** *Reenvasar en cajas* saca una cantidad de una unidad y la pone en cajas propias (un número de cajas, una cantidad en cada una). Lo que entra es exactamente lo que salió: el total del stock nunca cambia, y un lote seguido a través del reenvasado se encuentra en ambos lados. Un reenvasado ocurre en un lugar; mueva después las cajas nuevas.
+
+- El stock empaquetado en una unidad no se puede sacar suelto: el servidor lo rechaza y nombra la unidad. Mueva o deshaga primero la unidad.
+- El seguimiento de un artículo se elige por artículo (o se hereda de su grupo): sin seguimiento, por lote (con fecha de consumo donde se fije) o por pieza (una etiqueta por pieza).
+
 <!-- anchor: user.money.stock.expiry -->
 ### El informe de caducidad
 

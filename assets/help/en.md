@@ -3026,6 +3026,22 @@ With the *Tags* feature on, an item carries a **tag mode**, set on its group and
 - The mode of an item that already has tags cannot change until its tags are retired or its stock is zero; a group's change then skips the item and lists it as kept. A tag on a place always names one place.
 - A tag code is a UHF label (EPC, an SGTIN-96 is read as its GTIN and serial by the server) or an NFC chip, stored in upper-case hex and unique in the business across items, pieces and places. Binding and retiring need the right to manage the stock; reading needs the right to see it.
 
+### Handling units
+
+**Audience:** Administrator · Owner
+
+You want goods to travel in the pallet or carton they came in, or in boxes of your own, and still know where every lot and piece is.
+
+With the *Handling units* feature on, open **Stock → Handling units**. A unit has a code of your own (and the supplier's label when it came on a labelled pallet), a kind (pallet, carton, crate, box), a place and a content: items with their lot, quantity and pieces. The list shows the open units, at one place or everywhere.
+
+- **Make a unit.** Press *Make a unit*: its code, its kind, its place and what it holds. A unit claims only stock that is **loose** at that place (what the place holds minus what other units there already hold); asking for more is refused and says how much is loose.
+- **Move.** *Move* takes the whole content to another place in one request: every lot and piece keeps its own trace. If someone moved or unpacked the unit since you read it, the move is refused and you read it again.
+- **Unpack.** *Unpack* leaves the content where it is, loose, and the unit is no longer open.
+- **Repack into boxes.** *Repack into boxes* takes a quantity out of a unit and puts it into boxes of your own (a number of boxes, a quantity in each). What goes in is exactly what came out: the stock total never changes, and a lot followed through the repack is found on both sides. A repack happens at one place; move the new boxes afterwards.
+
+- Stock that is packed in a unit cannot be taken out loose: the server refuses and names the unit. Move or unpack the unit first.
+- How an item is traced is chosen per item (or inherited from its group): not traced, by batch (with an expiry date where set) or by piece (a tag per piece).
+
 ### The expiry report
 
 **Audience:** Administrator · Owner

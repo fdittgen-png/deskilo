@@ -3167,6 +3167,23 @@ Con la funzione *Tag* attiva, un articolo ha una **modalità del tag**, impostat
 - La modalità di un articolo che ha già dei tag non cambia finché i tag non sono ritirati o la giacenza non è zero; la modifica di un gruppo salta allora l'articolo e lo elenca come mantenuto. Un tag su un luogo indica sempre un solo luogo.
 - Un codice tag è un'etichetta UHF (EPC; il server legge un SGTIN-96 come GTIN e numero di serie) o un chip NFC, salvato in esadecimale maiuscolo e unico nell'azienda tra articoli, pezzi e luoghi. Collegare e ritirare richiedono il diritto di gestire il magazzino; leggere, quello di vederlo.
 
+<!-- anchor: user.money.stock.units -->
+### Unità di movimentazione
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole che la merce viaggi nel bancale o nel cartone in cui è arrivata, o in scatole proprie, sapendo comunque dov'è ogni lotto e ogni pezzo.
+
+Con la funzione *Unità di movimentazione* attiva, apra **Magazzino → Unità di movimentazione**. Un'unità ha un codice proprio (e l'etichetta del fornitore quando è arrivata su un bancale etichettato), un tipo (bancale, cartone, cassa, scatola), un luogo e un contenuto: articoli con il loro lotto, quantità e pezzi. L'elenco mostra le unità aperte, in un luogo o ovunque.
+
+- **Crea un'unità.** Prema *Crea un'unità*: il suo codice, il tipo, il luogo e ciò che contiene. Un'unità reclama solo giacenza **sfusa** in quel luogo (ciò che il luogo detiene meno ciò che altre unità vi detengono già); chiederne di più viene rifiutato e dice quanto è sfuso.
+- **Sposta.** *Sposta* porta tutto il contenuto in un altro luogo con una sola richiesta: ogni lotto e ogni pezzo conserva la sua traccia. Se qualcuno ha spostato o disfatto l'unità dopo la sua lettura, lo spostamento viene rifiutato e la rilegga.
+- **Disfa.** *Disfa* lascia il contenuto dov'è, sfuso, e l'unità non è più aperta.
+- **Riconfeziona in scatole.** *Riconfeziona in scatole* toglie una quantità da un'unità e la mette in scatole proprie (un numero di scatole, una quantità in ciascuna). Ciò che entra è esattamente ciò che è uscito: il totale della giacenza non cambia mai, e un lotto seguito attraverso il riconfezionamento si ritrova da entrambi i lati. Un riconfezionamento avviene in un luogo; sposti poi le scatole nuove.
+
+- La giacenza imballata in un'unità non si può prelevare sfusa: il server rifiuta e nomina l'unità. Sposti o disfi prima l'unità.
+- Come si traccia un articolo si sceglie per articolo (o si eredita dal gruppo): non tracciato, per lotto (con data di scadenza dove impostata) o per pezzo (un tag per pezzo).
+
 <!-- anchor: user.money.stock.expiry -->
 ### Il rapporto di scadenza
 

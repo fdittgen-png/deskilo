@@ -219,6 +219,21 @@ final class StockTagRefused extends StockConfigFailure {
   String toString() => 'StockTagRefused($code)';
 }
 
+/// #4435 -- a handling unit command refused: `DKG27` the unit changed since it was read (detail: unit_id, state, location_id,
+/// revision), `DKG28` its content does not fit (detail: reason, ...), `DKG29` its code is taken (detail: code).
+final class StockUnitRefused extends StockConfigFailure {
+  const StockUnitRefused(this.code, [this.detail = const {}]);
+
+  final String code;
+  final Map<String, Object?> detail;
+
+  /// The place and the revision the unit has now, when the server said it (DKG27).
+  String? get nowAt => detail['location_id'] as String?;
+
+  @override
+  String toString() => 'StockUnitRefused($code)';
+}
+
 final class StockNotEnough extends StockConfigFailure {
   const StockNotEnough([this.detail = '']);
 

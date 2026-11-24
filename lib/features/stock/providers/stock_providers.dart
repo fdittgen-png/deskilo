@@ -12,6 +12,7 @@ import '../data/supabase_stock_code_resolver.dart';
 import '../data/supabase_stock_config_commands.dart';
 import '../data/supabase_stock_cycle_counts.dart';
 import '../data/supabase_stock_expiry.dart';
+import '../data/supabase_stock_handling_units.dart';
 import '../data/supabase_stock_operations.dart';
 import '../data/supabase_stock_queries.dart';
 import '../data/supabase_stock_receiving_commands.dart';
@@ -22,6 +23,7 @@ import '../data/supabase_stock_tags.dart';
 import '../data/supabase_stock_trace.dart';
 import '../data/supabase_stock_trace_chain.dart';
 import '../data/supabase_stock_where_is.dart';
+import '../domain/handling_units.dart';
 import '../domain/item_groups.dart';
 import '../domain/stock_code_resolver.dart';
 import '../domain/stock_config.dart';
@@ -350,3 +352,18 @@ final stockTagReadMaxProvider = Provider<int>((ref) {
       ? settings.read<int>('stock.tag_read_max_tags')
       : SettingDefaults.stockTagReadMaxTags;
 });
+
+/// #4435 -- the handling units of the selected business, read and acted on through the server (the Demo answers from its own ledger).
+final stockHandlingUnitsProvider = Provider<StockHandlingUnits>((ref) => SupabaseStockHandlingUnits(ref.watch(selectedWorkspaceClientProvider)));
+
+/// #4435 -- the open units of one business, at one place or everywhere, read again after a command.
+final handlingUnitListProvider = FutureProvider.autoDispose.family<HandlingUnitPage, ({String workspaceId, String? locationId})>(
+  (ref, key) => ref.watch(stockHandlingUnitsProvider).page(key.workspaceId, locationId: key.locationId),
+  retry: (_, _) => null,
+);
+
+/// #4435 -- one unit with its content.
+final handlingUnitProvider = FutureProvider.autoDispose.family<HandlingUnitDetail?, ({String workspaceId, String unitId})>(
+  (ref, key) => ref.watch(stockHandlingUnitsProvider).unit(key.workspaceId, key.unitId),
+  retry: (_, _) => null,
+);

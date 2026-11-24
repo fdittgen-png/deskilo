@@ -779,6 +779,23 @@ Avec la fonction *Puces* activée, un article a un **mode de puce**, posé sur s
 - Le mode d'un article qui a déjà des puces ne change pas tant que ses puces ne sont pas retirées ou que son stock n'est pas nul ; le changement d'un groupe saute alors l'article et le liste comme conservé. Une puce sur un emplacement désigne toujours un seul emplacement.
 - Un code de puce est une étiquette UHF (EPC ; un SGTIN-96 est lu par le serveur comme GTIN et numéro de série) ou une puce NFC, enregistré en hexadécimal majuscule et unique dans l'entreprise entre articles, pièces et emplacements. Lier et retirer demandent le droit de gérer le stock ; lire demande celui de le voir.
 
+<!-- anchor: user.money.stock.units -->
+### Unités de manutention
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez que les marchandises voyagent dans la palette ou le carton où elles sont arrivées, ou dans des boîtes à vous, et savoir quand même où est chaque lot et chaque pièce.
+
+Avec la fonction *Unités de manutention* activée, ouvrez **Stock → Unités de manutention**. Une unité a un code à vous (et l'étiquette du fournisseur quand elle est arrivée sur une palette étiquetée), un genre (palette, carton, caisse, boîte), un emplacement et un contenu : des articles avec leur lot, leur quantité et leurs pièces. La liste montre les unités ouvertes, à un emplacement ou partout.
+
+- **Créer une unité.** Appuyez sur *Créer une unité* : son code, son genre, son emplacement et son contenu. Une unité ne réclame que du stock **en vrac** à cet emplacement (ce que l'emplacement détient moins ce que d'autres unités y détiennent déjà) ; en demander plus est refusé et dit combien est en vrac.
+- **Déplacer.** *Déplacer* emmène tout le contenu vers un autre emplacement en une seule demande : chaque lot et chaque pièce garde sa trace. Si quelqu'un a déplacé ou défait l'unité depuis votre lecture, le déplacement est refusé et vous relisez.
+- **Défaire.** *Défaire* laisse le contenu où il est, en vrac, et l'unité n'est plus ouverte.
+- **Reconditionner en boîtes.** *Reconditionner en boîtes* sort une quantité d'une unité et la met dans des boîtes à vous (un nombre de boîtes, une quantité dans chacune). Ce qui entre est exactement ce qui est sorti : le total du stock ne change jamais, et un lot suivi à travers le reconditionnement se retrouve des deux côtés. Un reconditionnement se fait en un emplacement ; déplacez ensuite les nouvelles boîtes.
+
+- Un stock emballé dans une unité ne peut pas être sorti en vrac : le serveur refuse et nomme l'unité. Déplacez ou défaites d'abord l'unité.
+- Le suivi d'un article se choisit par article (ou s'hérite de son groupe) : non suivi, par lot (avec date limite là où elle est posée) ou par pièce (une puce par pièce).
+
 <!-- anchor: user.money.stock.expiry -->
 ### Le rapport de péremption
 

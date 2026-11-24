@@ -37864,6 +37864,133 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockTransfersTitle => 'Traslados';
 
   @override
+  String stockUnitChangedNow(String place) {
+    return 'La unidad está ahora en $place: léala de nuevo.';
+  }
+
+  @override
+  String get stockUnitCode => 'Código de la unidad';
+
+  @override
+  String get stockUnitContent => 'Contenido';
+
+  @override
+  String get stockUnitContentNone => 'Nada dentro.';
+
+  @override
+  String get stockUnitItem => 'Artículo';
+
+  @override
+  String get stockUnitKind => 'Tipo';
+
+  @override
+  String get stockUnitKindBox => 'Caja';
+
+  @override
+  String get stockUnitKindCarton => 'Caja de cartón';
+
+  @override
+  String get stockUnitKindCrate => 'Cajón';
+
+  @override
+  String get stockUnitKindOther => 'Otro';
+
+  @override
+  String get stockUnitKindPallet => 'Palé';
+
+  @override
+  String get stockUnitLabelCode => 'Etiqueta del proveedor (SSCC), si la hay';
+
+  @override
+  String stockUnitLoose(String quantity) {
+    return '$quantity suelto aquí';
+  }
+
+  @override
+  String stockUnitMade(String unit) {
+    return '$unit creada.';
+  }
+
+  @override
+  String get stockUnitMake => 'Crear una unidad';
+
+  @override
+  String get stockUnitMove => 'Mover';
+
+  @override
+  String get stockUnitMoveTo => 'Mover a';
+
+  @override
+  String stockUnitMoved(String unit, String place) {
+    return '$unit movida a $place.';
+  }
+
+  @override
+  String stockUnitNestedIn(String unit) {
+    return 'En $unit';
+  }
+
+  @override
+  String get stockUnitPlace => 'Lugar';
+
+  @override
+  String get stockUnitQuantity => 'Cantidad';
+
+  @override
+  String get stockUnitRepack => 'Reenvasar en cajas';
+
+  @override
+  String get stockUnitRepackBoxes => 'Número de cajas';
+
+  @override
+  String get stockUnitRepackEach => 'Cantidad por caja';
+
+  @override
+  String get stockUnitRepackItem => 'Qué reenvasar';
+
+  @override
+  String stockUnitRepacked(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count cajas creadas.',
+      one: '1 caja creada.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockUnitUnpack => 'Deshacer';
+
+  @override
+  String get stockUnitUnpackHint => 'Su contenido se queda donde está, suelto.';
+
+  @override
+  String stockUnitUnpacked(String unit) {
+    return '$unit deshecha.';
+  }
+
+  @override
+  String get stockUnitsAllPlaces => 'Todos los lugares';
+
+  @override
+  String get stockUnitsChooseItem => 'Elegir un artículo';
+
+  @override
+  String get stockUnitsEmpty =>
+      'Aún no hay unidades. Cree una con el stock suelto de un lugar.';
+
+  @override
+  String get stockUnitsIntro =>
+      'Un palé, una caja o un cajón propio: se mueve con todo su contenido, y cada lote y cada pieza sigue siendo trazable.';
+
+  @override
+  String get stockUnitsReadFailed => 'No se pudieron leer las unidades.';
+
+  @override
+  String get stockUnitsTitle => 'Unidades de manipulación';
+
+  @override
   String get stockValueBasis =>
       'Un valor operativo de los movimientos registrados a su coste de lote registrado. No es un saldo contabilizado de existencias ni indica coste de ventas.';
 

@@ -37971,6 +37971,134 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockTransfersTitle => 'Umlagerungen';
 
   @override
+  String stockUnitChangedNow(String place) {
+    return 'Die Einheit ist jetzt bei $place: Lesen Sie sie neu.';
+  }
+
+  @override
+  String get stockUnitCode => 'Einheitencode';
+
+  @override
+  String get stockUnitContent => 'Inhalt';
+
+  @override
+  String get stockUnitContentNone => 'Nichts darin.';
+
+  @override
+  String get stockUnitItem => 'Artikel';
+
+  @override
+  String get stockUnitKind => 'Art';
+
+  @override
+  String get stockUnitKindBox => 'Schachtel';
+
+  @override
+  String get stockUnitKindCarton => 'Karton';
+
+  @override
+  String get stockUnitKindCrate => 'Kiste';
+
+  @override
+  String get stockUnitKindOther => 'Andere';
+
+  @override
+  String get stockUnitKindPallet => 'Palette';
+
+  @override
+  String get stockUnitLabelCode => 'Lieferantenetikett (SSCC), falls vorhanden';
+
+  @override
+  String stockUnitLoose(String quantity) {
+    return '$quantity lose hier';
+  }
+
+  @override
+  String stockUnitMade(String unit) {
+    return '$unit angelegt.';
+  }
+
+  @override
+  String get stockUnitMake => 'Einheit anlegen';
+
+  @override
+  String get stockUnitMove => 'Bewegen';
+
+  @override
+  String get stockUnitMoveTo => 'Bewegen nach';
+
+  @override
+  String stockUnitMoved(String unit, String place) {
+    return '$unit nach $place bewegt.';
+  }
+
+  @override
+  String stockUnitNestedIn(String unit) {
+    return 'In $unit';
+  }
+
+  @override
+  String get stockUnitPlace => 'Ort';
+
+  @override
+  String get stockUnitQuantity => 'Menge';
+
+  @override
+  String get stockUnitRepack => 'In Kisten umpacken';
+
+  @override
+  String get stockUnitRepackBoxes => 'Anzahl Kisten';
+
+  @override
+  String get stockUnitRepackEach => 'Menge je Kiste';
+
+  @override
+  String get stockUnitRepackItem => 'Was umgepackt wird';
+
+  @override
+  String stockUnitRepacked(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Kisten angelegt.',
+      one: '1 Kiste angelegt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockUnitUnpack => 'Auspacken';
+
+  @override
+  String get stockUnitUnpackHint => 'Der Inhalt bleibt, wo er ist, lose.';
+
+  @override
+  String stockUnitUnpacked(String unit) {
+    return '$unit ausgepackt.';
+  }
+
+  @override
+  String get stockUnitsAllPlaces => 'Alle Orte';
+
+  @override
+  String get stockUnitsChooseItem => 'Artikel wählen';
+
+  @override
+  String get stockUnitsEmpty =>
+      'Noch keine Einheit. Legen Sie eine aus losem Bestand an einem Ort an.';
+
+  @override
+  String get stockUnitsIntro =>
+      'Eine Palette, ein Karton oder eine eigene Kiste: Sie bewegt sich mit ihrem ganzen Inhalt, und jede Charge und jedes Stück bleibt rückverfolgbar.';
+
+  @override
+  String get stockUnitsReadFailed =>
+      'Die Einheiten konnten nicht gelesen werden.';
+
+  @override
+  String get stockUnitsTitle => 'Packeinheiten';
+
+  @override
   String get stockValueBasis =>
       'Ein operativer Wert aus den erfassten Bewegungen zu den erfassten Chargenkosten. Er ist kein gebuchter Lagerbuchsaldo und nennt keinen Wareneinsatz.';
 

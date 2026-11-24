@@ -138,6 +138,7 @@
   "user.money.stock.nfc": "Tag con l’NFC del telefono",
   "user.money.till": "Cassa",
   "user.money.stock.rfid": "Tag RFID: uno per lotto o uno per pezzo",
+  "user.money.stock.units": "Unità di movimentazione",
   "user.money.stock.expiry": "Il rapporto di scadenza",
   "user.money.stock.bulkread": "Lettura di molte etichette",
   "user.money.stock.whereis": "Dov'è",

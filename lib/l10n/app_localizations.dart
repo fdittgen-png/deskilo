@@ -60196,6 +60196,216 @@ abstract class AppLocalizations {
   /// **'Transfers'**
   String get stockTransfersTitle;
 
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'The unit is at {place} now: read it again.'**
+  String stockUnitChangedNow(String place);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Unit code'**
+  String get stockUnitCode;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Content'**
+  String get stockUnitContent;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in it.'**
+  String get stockUnitContentNone;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get stockUnitItem;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Kind'**
+  String get stockUnitKind;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Box'**
+  String get stockUnitKindBox;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Carton'**
+  String get stockUnitKindCarton;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Crate'**
+  String get stockUnitKindCrate;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get stockUnitKindOther;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Pallet'**
+  String get stockUnitKindPallet;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier label (SSCC), if any'**
+  String get stockUnitLabelCode;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} loose here'**
+  String stockUnitLoose(String quantity);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'{unit} made.'**
+  String stockUnitMade(String unit);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Make a unit'**
+  String get stockUnitMake;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Move'**
+  String get stockUnitMove;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Move to'**
+  String get stockUnitMoveTo;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'{unit} moved to {place}.'**
+  String stockUnitMoved(String unit, String place);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'In {unit}'**
+  String stockUnitNestedIn(String unit);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get stockUnitPlace;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get stockUnitQuantity;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Repack into boxes'**
+  String get stockUnitRepack;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Number of boxes'**
+  String get stockUnitRepackBoxes;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity in each box'**
+  String get stockUnitRepackEach;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'What to repack'**
+  String get stockUnitRepackItem;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 box made.} other{{count} boxes made.}}'**
+  String stockUnitRepacked(int count);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Unpack'**
+  String get stockUnitUnpack;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Its content stays where it is, loose.'**
+  String get stockUnitUnpackHint;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'{unit} unpacked.'**
+  String stockUnitUnpacked(String unit);
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'All places'**
+  String get stockUnitsAllPlaces;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an item'**
+  String get stockUnitsChooseItem;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'No unit yet. Make one from stock that is loose at a place.'**
+  String get stockUnitsEmpty;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'A pallet, a carton or a box of your own: it moves with its whole content, and every lot and piece stays traceable.'**
+  String get stockUnitsIntro;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'The units could not be read.'**
+  String get stockUnitsReadFailed;
+
+  /// #4435 handling units
+  ///
+  /// In en, this message translates to:
+  /// **'Handling units'**
+  String get stockUnitsTitle;
+
   /// #4173 the goods trace and the stock value
   ///
   /// In en, this message translates to:

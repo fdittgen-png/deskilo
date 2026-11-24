@@ -3167,6 +3167,23 @@ Mit der Funktion *Tags* hat ein Artikel einen **Tag-Modus**, der an seiner Grupp
 - Der Modus eines Artikels, der schon Tags hat, ändert sich erst, wenn die Tags zurückgegeben sind oder der Bestand null ist; eine Änderung der Gruppe überspringt den Artikel dann und führt ihn als beibehalten auf. Ein Tag an einem Lagerplatz bezeichnet immer genau einen Platz.
 - Ein Tag-Code ist ein UHF-Etikett (EPC; ein SGTIN-96 liest der Server als GTIN und Seriennummer) oder ein NFC-Chip, in Großbuchstaben-Hex gespeichert und im Betrieb über Artikel, Stücke und Plätze eindeutig. Zum Binden und Zurückgeben braucht es das Recht, das Lager zu verwalten, zum Lesen das Recht, es zu sehen.
 
+<!-- anchor: user.money.stock.units -->
+### Packeinheiten
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten, dass Ware in der Palette oder dem Karton reist, in dem sie ankam, oder in eigenen Kisten, und trotzdem wissen, wo jede Charge und jedes Stück ist.
+
+Mit der Funktion *Packeinheiten* öffnen Sie **Lager → Packeinheiten**. Eine Einheit hat einen eigenen Code (und das Etikett des Lieferanten, wenn sie auf einer etikettierten Palette kam), eine Art (Palette, Karton, Kiste, Schachtel), einen Ort und einen Inhalt: Artikel mit Charge, Menge und Stücken. Die Liste zeigt die offenen Einheiten, an einem Ort oder überall.
+
+- **Einheit anlegen.** Drücken Sie *Einheit anlegen*: Code, Art, Ort und Inhalt. Eine Einheit beansprucht nur **losen** Bestand an diesem Ort (was der Ort hält minus dem, was andere Einheiten dort schon halten); mehr zu verlangen wird abgelehnt, mit der losen Menge.
+- **Bewegen.** *Bewegen* bringt den ganzen Inhalt in einer Anfrage an einen anderen Ort: jede Charge und jedes Stück behält seine Spur. Hat jemand die Einheit seit Ihrem Lesen bewegt oder ausgepackt, wird die Bewegung abgelehnt und Sie lesen neu.
+- **Auspacken.** *Auspacken* lässt den Inhalt, wo er ist, lose; die Einheit ist nicht mehr offen.
+- **In Kisten umpacken.** *In Kisten umpacken* nimmt eine Menge aus einer Einheit und legt sie in eigene Kisten (Anzahl Kisten, Menge je Kiste). Was hineinkommt, ist genau, was herauskam: der Bestand ändert sich nie, und eine Charge ist über das Umpacken auf beiden Seiten zu finden. Umgepackt wird an einem Ort; die neuen Kisten bewegen Sie danach.
+
+- Ware, die in einer Einheit gepackt ist, kann nicht lose entnommen werden: der Server lehnt ab und nennt die Einheit. Bewegen oder packen Sie die Einheit zuerst aus.
+- Wie ein Artikel verfolgt wird, wählen Sie je Artikel (oder erben ihn von der Gruppe): nicht verfolgt, nach Charge (mit Ablaufdatum, wo gesetzt) oder je Stück (ein Etikett pro Stück).
+
 <!-- anchor: user.money.stock.expiry -->
 ### Der Verfallsbericht
 

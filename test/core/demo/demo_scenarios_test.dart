@@ -26,6 +26,7 @@ import 'package:deskilo/core/demo/data/demo_stock_code_resolver.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_cycle_counts.dart';
 import 'package:deskilo/core/demo/data/demo_stock_expiry.dart';
+import 'package:deskilo/core/demo/data/demo_stock_handling_units.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_operations.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
@@ -77,6 +78,7 @@ import 'package:deskilo/features/money/domain/service_fulfilment.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/stock/domain/handling_units.dart';
 import 'package:deskilo/features/stock/domain/stock_code_resolver.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_cycle_counts.dart';
@@ -1446,6 +1448,37 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       } on PostgrestException catch (e) {
         return e.code == 'DKG20' && ledger.balance('demo-item-beans', 'demo-place-main').text == '9';
       }
+    },
+  ),
+  // #4435 — handling units: a pallet moves with its whole content through the ledger, a second move with the revision someone
+  // else already used is refused and told where the unit is, an unpack leaves the content loose, a repack makes boxes of it, and a
+  // code is unique.
+  WorkspaceFeature.stockHandlingUnits: _action(
+    _owner,
+    'Ada moves the pallet of 30 mugs to Shelf A, a second move with the old revision is refused, and she repacks the carton of coffee into two boxes',
+    (w) async {
+      final ledger = DemoStockLedger(demoFirstSpaceId, DemoStockConfigCommands(demoFirstSpaceId));
+      final units = DemoStockHandlingUnits(ledger);
+      final page = await units.page(demoFirstSpaceId);
+      final pallet = page.rows.firstWhere((u) => u.code == 'PAL-001');
+      final moved = await units.move(demoFirstSpaceId, 'req-1', unitId: pallet.id, toLocationId: 'demo-place-shelf', revision: pallet.revision);
+      var refused = false;
+      try {
+        await units.move(demoFirstSpaceId, 'req-2', unitId: pallet.id, toLocationId: 'demo-place-main', revision: pallet.revision);
+      } on StockUnitRefused catch (e) {
+        refused = e.code == 'DKG27';
+      }
+      final carton = (await units.page(demoFirstSpaceId)).rows.firstWhere((u) => u.code == 'CT-001');
+      final boxes = await units.repack(
+        demoFirstSpaceId,
+        'req-3',
+        sources: [RepackSource(unitId: carton.id, revision: carton.revision, line: const UnitLineDraft(itemId: 'demo-item-beans', quantity: '10'))],
+        targets: [
+          for (final n in [1, 2])
+            UnitDraft(code: 'CT-001-$n', kind: HandlingUnitKind.box, locationId: carton.locationId, lines: const [UnitLineDraft(itemId: 'demo-item-beans', quantity: '5')]),
+        ],
+      );
+      return moved.locationId == 'demo-place-shelf' && ledger.balance('demo-item-mugs', 'demo-place-shelf').text == '42' && refused && boxes.length == 2;
     },
   ),
   // #4431 — the expiry report: what expired and what is about to, by date, the five basket pieces one by one, and a place keeps

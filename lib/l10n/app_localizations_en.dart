@@ -37555,6 +37555,133 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockTransfersTitle => 'Transfers';
 
   @override
+  String stockUnitChangedNow(String place) {
+    return 'The unit is at $place now: read it again.';
+  }
+
+  @override
+  String get stockUnitCode => 'Unit code';
+
+  @override
+  String get stockUnitContent => 'Content';
+
+  @override
+  String get stockUnitContentNone => 'Nothing in it.';
+
+  @override
+  String get stockUnitItem => 'Item';
+
+  @override
+  String get stockUnitKind => 'Kind';
+
+  @override
+  String get stockUnitKindBox => 'Box';
+
+  @override
+  String get stockUnitKindCarton => 'Carton';
+
+  @override
+  String get stockUnitKindCrate => 'Crate';
+
+  @override
+  String get stockUnitKindOther => 'Other';
+
+  @override
+  String get stockUnitKindPallet => 'Pallet';
+
+  @override
+  String get stockUnitLabelCode => 'Supplier label (SSCC), if any';
+
+  @override
+  String stockUnitLoose(String quantity) {
+    return '$quantity loose here';
+  }
+
+  @override
+  String stockUnitMade(String unit) {
+    return '$unit made.';
+  }
+
+  @override
+  String get stockUnitMake => 'Make a unit';
+
+  @override
+  String get stockUnitMove => 'Move';
+
+  @override
+  String get stockUnitMoveTo => 'Move to';
+
+  @override
+  String stockUnitMoved(String unit, String place) {
+    return '$unit moved to $place.';
+  }
+
+  @override
+  String stockUnitNestedIn(String unit) {
+    return 'In $unit';
+  }
+
+  @override
+  String get stockUnitPlace => 'Place';
+
+  @override
+  String get stockUnitQuantity => 'Quantity';
+
+  @override
+  String get stockUnitRepack => 'Repack into boxes';
+
+  @override
+  String get stockUnitRepackBoxes => 'Number of boxes';
+
+  @override
+  String get stockUnitRepackEach => 'Quantity in each box';
+
+  @override
+  String get stockUnitRepackItem => 'What to repack';
+
+  @override
+  String stockUnitRepacked(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count boxes made.',
+      one: '1 box made.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockUnitUnpack => 'Unpack';
+
+  @override
+  String get stockUnitUnpackHint => 'Its content stays where it is, loose.';
+
+  @override
+  String stockUnitUnpacked(String unit) {
+    return '$unit unpacked.';
+  }
+
+  @override
+  String get stockUnitsAllPlaces => 'All places';
+
+  @override
+  String get stockUnitsChooseItem => 'Choose an item';
+
+  @override
+  String get stockUnitsEmpty =>
+      'No unit yet. Make one from stock that is loose at a place.';
+
+  @override
+  String get stockUnitsIntro =>
+      'A pallet, a carton or a box of your own: it moves with its whole content, and every lot and piece stays traceable.';
+
+  @override
+  String get stockUnitsReadFailed => 'The units could not be read.';
+
+  @override
+  String get stockUnitsTitle => 'Handling units';
+
+  @override
   String get stockValueBasis =>
       'An operational value from the recorded movements at their recorded lot costs. It is not a posted stock-book balance and states no cost of goods.';
 

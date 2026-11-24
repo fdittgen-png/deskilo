@@ -138,6 +138,7 @@
   "user.money.stock.nfc": "Tags with the phone's NFC",
   "user.money.till": "Till",
   "user.money.stock.rfid": "RFID tags: one per batch or one per piece",
+  "user.money.stock.units": "Handling units",
   "user.money.stock.expiry": "The expiry report",
   "user.money.stock.bulkread": "Reading many tags",
   "user.money.stock.whereis": "Where is it",

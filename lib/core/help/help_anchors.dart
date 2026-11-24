@@ -41,6 +41,7 @@ abstract final class HelpAnchor {
   static const moneyStockRfid = 'user.money.stock.rfid';
   static const moneyStockWhereIs = 'user.money.stock.whereis';
   static const moneyStockExpiry = 'user.money.stock.expiry';
+  static const moneyStockUnits = 'user.money.stock.units';
   static const moneyStockBulkRead = 'user.money.stock.bulkread';
   static const moneyTill = 'user.money.till';
 
