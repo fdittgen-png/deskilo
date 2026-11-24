@@ -6748,7 +6748,7 @@ Ciò che sta attorno al lavoro di ogni giorno: il lato di prova di uno spazio e 
 
 In questo capitolo:
 - [Uno spazio ha due lati](#uno-spazio-ha-due-lati) · [Entrare in un lato](#entrare-nel-lato-reale-o-in-quello-di-prova) · [Uno spazio di prova](#a-che-cosa-serve-uno-spazio-di-prova) · [Chi può distribuire](#chi-può-distribuire-ed-entrare-in-produzione) · [Distribuire tra i lati](#distribuire-tra-i-due-lati) · [Situazione dello spazio e archivio dell'esercizio](#situazione-dello-spazio-e-archivio-dellesercizio)
-- [Il Suo server](#gestire-il-proprio-server)
+- [Il Suo server](#gestire-il-proprio-server) · [Quando un'installazione richiede un'app più recente](#quando-uninstallazione-richiede-unapp-più-recente)
 - [Assistenti](#assistenti-che-cosa-sono) · [Collegare un assistente](#collegare-un-assistente) · [Approvazioni](#approvazioni-e-conferme-per-gli-assistenti) · [Che cosa possono fare gli assistenti](#che-cosa-possono-fare-gli-assistenti-in-uno-spazio)
 - [Il registratore di attività](#il-registratore-di-attività-e-le-visite-guidate) · [Registrare un'attività](#registrare-unattività) · [Rivedere una registrazione](#rivedere-modificare-ed-esportare-una-registrazione) · [Creare una guida](#creare-una-guida-da-una-registrazione) · [Seguire una guida](#seguire-una-guida) · [Il menu circolare](#il-menu-circolare) · [Modificare una guida](#modificare-o-riparare-una-guida) · [Riservatezza delle registrazioni](#che-cosa-conserva-una-registrazione)
 - [Lo spazio dimostrativo](#lo-spazio-dimostrativo) · [Modalità ripresa](#modalità-ripresa)
@@ -6909,6 +6909,29 @@ Vuole i dati della Sua comunità su un server che controlla, oppure appartiene a
 - Un operatore può attivare gli assistenti per l'intera installazione — veda [Approvazioni](#approvazioni-e-conferme-per-gli-assistenti).
 
 **Vedi anche:** [Il Suo server](#il-suo-server)
+
+<!-- anchor: user.advanced.app-floor -->
+### Quando un'installazione richiede un'app più recente
+
+**Destinatari:** Operatore · Proprietario
+
+Un'installazione può stabilire che con essa si usi solo un'app più recente. Vuole sapere quando è giustificato e che cosa vedranno i Suoi tester e i membri.
+
+**Passaggi**
+
+1. Alzi la soglia solo quando un'app vecchia sarebbe sbagliata e non soltanto incompleta: una correzione di sicurezza o un cambio di significato dei dati salvati. Una funzione mancante non è un motivo.
+2. La alzi in una modifica a sé e solo dopo che l'app più recente è disponibile per tutti i tester e i membri per il periodo di supporto. I tester dell'installazione di riferimento sono bloccati non appena la soglia viene alzata.
+3. Dica prima alle persone quale app installare e dove: lo store da cui l'hanno installata, la pagina delle versioni o ricaricando l'app web.
+4. Poi apra l'app su un dispositivo più vecchio e verifichi che compaia **Questa app deve essere aggiornata**.
+
+**Da sapere**
+
+- Un'app sotto la soglia vede una sola schermata, **Questa app deve essere aggiornata**, con come aggiornare sulla sua piattaforma, **Controlla di nuovo**, **Impostazioni del server** ed **Esci**. Guida, privacy e demo restano aperte.
+- La soglia appartiene a una sola installazione: la stessa app continua a funzionare su tutte le altre installazioni della persona.
+- Se la soglia non si può leggere, l'app non è bloccata. Un rifiuto già letto resta finché una risposta più recente lo toglie, e l'app chiede di nuovo al rientro.
+- La soglia è una cortesia per le app che la conoscono, non un lucchetto: le regole su denaro e permessi le decide il server, qualunque sia l'app.
+
+**Vedi anche:** [Gestire il proprio server](#gestire-il-proprio-server) · [Piattaforme](#deskilo-sui-suoi-dispositivi)
 
 <!-- anchor: user.advanced.assistants -->
 ### Assistenti: che cosa sono

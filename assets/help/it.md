@@ -6378,7 +6378,7 @@ Ciò che sta attorno al lavoro di ogni giorno: il lato di prova di uno spazio e 
 
 In questo capitolo:
 - [Uno spazio ha due lati](help:user.advanced.environments) · [Entrare in un lato](help:user.advanced.enter-environment) · [Uno spazio di prova](help:user.advanced.test-space) · [Chi può distribuire](help:user.advanced.deploy-permissions) · [Distribuire tra i lati](help:user.advanced.deploy) · [Situazione dello spazio e archivio dell'esercizio](help:user.advanced.status-archive)
-- [Il Suo server](help:user.advanced.own-server)
+- [Il Suo server](help:user.advanced.own-server) · [Quando un'installazione richiede un'app più recente](help:user.advanced.app-floor)
 - [Assistenti](help:user.advanced.assistants) · [Collegare un assistente](help:user.advanced.assistants-connect) · [Approvazioni](help:user.advanced.assistants-approve) · [Che cosa possono fare gli assistenti](help:user.advanced.assistants-policy)
 - [Il registratore di attività](help:user.advanced.recorder) · [Registrare un'attività](help:user.advanced.recorder-record) · [Rivedere una registrazione](help:user.advanced.recorder-review) · [Creare una guida](help:user.advanced.guide-make) · [Seguire una guida](help:user.advanced.guide-play) · [Il menu circolare](help:user.advanced.guide-circle) · [Modificare una guida](help:user.advanced.guide-edit) · [Riservatezza delle registrazioni](help:user.advanced.recorder-privacy)
 - [Lo spazio dimostrativo](help:user.advanced.demo) · [Modalità ripresa](help:user.advanced.filming)
@@ -6532,6 +6532,28 @@ Vuole i dati della Sua comunità su un server che controlla, oppure appartiene a
 - Un operatore può attivare gli assistenti per l'intera installazione — veda [Approvazioni](help:user.advanced.assistants-approve).
 
 **Vedi anche:** [Il Suo server](help:user.backend.server)
+
+### Quando un'installazione richiede un'app più recente
+
+**Destinatari:** Operatore · Proprietario
+
+Un'installazione può stabilire che con essa si usi solo un'app più recente. Vuole sapere quando è giustificato e che cosa vedranno i Suoi tester e i membri.
+
+**Passaggi**
+
+1. Alzi la soglia solo quando un'app vecchia sarebbe sbagliata e non soltanto incompleta: una correzione di sicurezza o un cambio di significato dei dati salvati. Una funzione mancante non è un motivo.
+2. La alzi in una modifica a sé e solo dopo che l'app più recente è disponibile per tutti i tester e i membri per il periodo di supporto. I tester dell'installazione di riferimento sono bloccati non appena la soglia viene alzata.
+3. Dica prima alle persone quale app installare e dove: lo store da cui l'hanno installata, la pagina delle versioni o ricaricando l'app web.
+4. Poi apra l'app su un dispositivo più vecchio e verifichi che compaia **Questa app deve essere aggiornata**.
+
+**Da sapere**
+
+- Un'app sotto la soglia vede una sola schermata, **Questa app deve essere aggiornata**, con come aggiornare sulla sua piattaforma, **Controlla di nuovo**, **Impostazioni del server** ed **Esci**. Guida, privacy e demo restano aperte.
+- La soglia appartiene a una sola installazione: la stessa app continua a funzionare su tutte le altre installazioni della persona.
+- Se la soglia non si può leggere, l'app non è bloccata. Un rifiuto già letto resta finché una risposta più recente lo toglie, e l'app chiede di nuovo al rientro.
+- La soglia è una cortesia per le app che la conoscono, non un lucchetto: le regole su denaro e permessi le decide il server, qualunque sia l'app.
+
+**Vedi anche:** [Gestire il proprio server](help:user.advanced.own-server) · [Piattaforme](help:user.advanced.platforms)
 
 ### Assistenti: che cosa sono
 

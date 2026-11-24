@@ -317,6 +317,7 @@
   "user.advanced.deploy": "Distribuire tra i due lati",
   "user.advanced.status-archive": "Situazione dello spazio e archivio dell'esercizio",
   "user.advanced.own-server": "Gestire il proprio server",
+  "user.advanced.app-floor": "Quando un'installazione richiede un'app più recente",
   "user.advanced.assistants": "Assistenti: che cosa sono",
   "user.advanced.assistants-connect": "Collegare un assistente",
   "user.advanced.assistants-approve": "Approvazioni e conferme per gli assistenti",

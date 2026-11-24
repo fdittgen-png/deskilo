@@ -7,7 +7,7 @@ Lo que rodea al trabajo diario: la cara de pruebas de un espacio y la real, los 
 
 En este capítulo:
 - [Un espacio tiene dos caras](help:user.advanced.environments) · [Entre en una cara](help:user.advanced.enter-environment) · [Un espacio de prueba](help:user.advanced.test-space) · [Quién puede desplegar](help:user.advanced.deploy-permissions) · [Despliegue entre las caras](help:user.advanced.deploy) · [Situación del espacio y archivo del ejercicio](help:user.advanced.status-archive)
-- [Su propio servidor](help:user.advanced.own-server)
+- [Su propio servidor](help:user.advanced.own-server) · [Cuando una instalación exige una aplicación más reciente](help:user.advanced.app-floor)
 - [Asistentes](help:user.advanced.assistants) · [Conecte un asistente](help:user.advanced.assistants-connect) · [Aprobaciones](help:user.advanced.assistants-approve) · [Qué pueden hacer los asistentes](help:user.advanced.assistants-policy)
 - [El grabador de tareas](help:user.advanced.recorder) · [Grabe una tarea](help:user.advanced.recorder-record) · [Revise una grabación](help:user.advanced.recorder-review) · [Cree una guía](help:user.advanced.guide-make) · [Siga una guía](help:user.advanced.guide-play) · [El menú circular](help:user.advanced.guide-circle) · [Edite una guía](help:user.advanced.guide-edit) · [Privacidad de las grabaciones](help:user.advanced.recorder-privacy)
 - [El espacio de demostración](help:user.advanced.demo) · [Modo grabación](help:user.advanced.filming)
@@ -168,6 +168,29 @@ Quiere los datos de su comunidad en un servidor que usted controle, o pertenece 
 - Un operador puede activar los asistentes para toda la instalación; véase [Aprobaciones](help:user.advanced.assistants-approve).
 
 **Véase también:** [Su propio servidor](help:user.backend.server)
+
+<!-- anchor: user.advanced.app-floor -->
+### Cuando una instalación exige una aplicación más reciente
+
+**Público:** Operador/a · Propietario
+
+Una instalación puede indicar que solo se use con ella una aplicación más reciente. Quiere saber cuándo está justificado y qué verán sus probadores y miembros.
+
+**Pasos**
+
+1. Suba el mínimo solo cuando una aplicación antigua sería errónea y no simplemente incompleta: una corrección de seguridad o un cambio en el significado de los datos guardados. Que falte una función no es motivo.
+2. Súbalo en un cambio aparte y solo cuando la aplicación más reciente lleve disponible para todos los probadores y miembros el periodo de soporte. Los probadores de la instalación de referencia quedan bloqueados en cuanto se sube el mínimo.
+3. Avise antes a las personas de qué aplicación instalar y dónde: la tienda de la que la instalaron, la página de versiones o recargando la aplicación web.
+4. Después, abra la aplicación en un dispositivo antiguo y compruebe que aparece **Esta aplicación necesita una actualización**.
+
+**Conviene saber**
+
+- Una aplicación por debajo del mínimo ve una sola pantalla, **Esta aplicación necesita una actualización**, con cómo actualizar en su plataforma, **Comprobar de nuevo**, **Ajustes del servidor** y **Cerrar sesión**. La ayuda, la privacidad y la demo siguen abiertas.
+- El mínimo pertenece a una instalación: la misma aplicación sigue funcionando en todas las demás instalaciones de la persona.
+- Si no se puede leer el mínimo, la aplicación no se bloquea. Un rechazo ya leído se mantiene hasta que una respuesta más reciente lo levante, y la aplicación vuelve a preguntar al regresar.
+- El mínimo es una cortesía para las aplicaciones que lo conocen, no un cerrojo: las reglas de dinero y permisos las decide el servidor, sea cual sea la aplicación.
+
+**Véase también:** [Gestione su propio servidor](help:user.advanced.own-server) · [Plataformas](help:user.advanced.platforms)
 
 <!-- anchor: user.advanced.assistants -->
 ### Asistentes: qué son

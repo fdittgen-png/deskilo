@@ -317,6 +317,7 @@
   "user.advanced.deploy": "Deploy between the two sides",
   "user.advanced.status-archive": "Workspace status and the year archive",
   "user.advanced.own-server": "Run your own server",
+  "user.advanced.app-floor": "When an installation requires a newer app",
   "user.advanced.assistants": "Assistants: what they are",
   "user.advanced.assistants-connect": "Connect an assistant",
   "user.advanced.assistants-approve": "Approvals and confirmations for assistants",
