@@ -71,6 +71,7 @@ class FeatureManifestEntry {
     this.defaultOn = true,
     this.requires,
     this.availableIn,
+    this.since,
   });
 
   final WorkspaceFeature feature;
@@ -96,4 +97,12 @@ class FeatureManifestEntry {
   /// the feature is available in; null means every country. Derived, never
   /// stored: the owner's switch is kept when the country does not match.
   final Set<String>? availableIn;
+
+  /// #3729 (K2) — the schema number of the migration that brought this
+  /// feature's server side: an installation below it does not offer the
+  /// feature (menu, routes, assistants) instead of failing at the first call.
+  /// Null means "any". Not mirrored in `feature_registry()`: the
+  /// installation's own number is the server's side of the comparison.
+  /// Declared when the feature is written, while its author knows it.
+  final int? since;
 }

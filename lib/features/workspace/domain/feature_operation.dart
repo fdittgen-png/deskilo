@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:meta/meta.dart';
-import '../../../core/instance/schema_compatibility.dart';
 import 'feature_lifecycle.dart';
 import 'workspace_feature.dart';
 
@@ -94,17 +93,16 @@ const Map<WorkspaceFeature, int> featureOperationSince = {
 };
 
 /// #1851 C — may the app say that switching [feature] off leaves its open
-/// work serviceable, given how the server compares with this build? Only
-/// a server at least as new as this build (which needs every class's
-/// migration) runs the classes; an older one, or one that could not be
-/// asked, still stops existing work with the switch.
-bool serverKeepsExistingWork(
-  WorkspaceFeature feature,
-  SchemaCompatibility? compatibility,
-) =>
-    (compatibility == SchemaCompatibility.current ||
-        compatibility == SchemaCompatibility.ahead) &&
-    requiredSchemaVersion >= (featureOperationSince[feature] ?? 1 << 30);
+/// work serviceable, given the schema [installation] (the number its host
+/// answered, null when it is not established) runs? Only an installation at
+/// least as new as the migration of every class runs them; an older one, or
+/// one that could not be asked, still stops existing work with the switch.
+///
+/// #3729 — compared with the INSTALLATION's number. It used to be compared
+/// with the build's own, which is always true once the gate has passed.
+bool serverKeepsExistingWork(WorkspaceFeature feature, int? installation) =>
+    installation != null &&
+    installation >= (featureOperationSince[feature] ?? 1 << 30);
 
 /// Does switching [feature] off leave existing work serviceable?
 bool featureKeepsExistingWork(WorkspaceFeature feature) =>

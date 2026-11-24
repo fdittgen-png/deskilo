@@ -45,6 +45,7 @@ import 'active_workspace_providers.dart';
 import 'operation_context_providers.dart';
 import 'workspace_host_providers.dart';
 import 'workspace_roles_providers.dart';
+import 'workspace_schema_providers.dart';
 
 export 'active_workspace_providers.dart';
 export 'member_display_providers.dart' show accountMemberNameProvider, mayIssueInvoicesProvider, memberNamesProvider, memberProfilesProvider;
@@ -433,11 +434,10 @@ Future<List<ClosureDay>> closureDays(Ref ref) async {
 /// new workspace's flags — no extra plumbing. No workspace = defaults.
 @Riverpod(keepAlive: true)
 Future<Set<WorkspaceFeature>> enabledFeatures(Ref ref) async {
+  final schema = ref.watch(currentWorkspaceSchemaProvider); // #3729 watched before the await
   final workspace = await ref.watch(currentWorkspaceProvider.future);
-  // Hierarchy applied here: gates all over the app see the EFFECTIVE
-  // set, so switching a parent off takes its whole subtree with it.
   final flags = workspace?.featureFlags ?? platformFeaturesOnByDefault; // #2566
-  return effectiveFeatures(resolveEnabledFeatures(flags), country: workspace?.countryCode); // #2454
+  return effectiveFeatures(resolveEnabledFeatures(flags), country: workspace?.countryCode, schema: schema); // #2454, #3729
 }
 
 /// Sync convenience over [enabledFeatures] for build methods and router

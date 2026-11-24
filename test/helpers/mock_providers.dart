@@ -12,6 +12,7 @@ import 'package:deskilo/core/backend/app_floor.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/backend/installation_schema.dart';
 import 'package:deskilo/core/backend/kiosk_credential_store.dart';
 import 'package:deskilo/core/backend/operation_context.dart' as personal;
 import 'package:deskilo/core/backend/schema_version.dart';
@@ -356,6 +357,7 @@ List<Override> standardTestOverrides({
   DeploymentRepository? deployment,
   SchemaVersionSource? schemaVersion,
   AppFloorSource? appFloor,
+  InstallationSchemaSource? installationSchema,
   WorkspaceFilesRepository? workspaceFiles,
   WorkspaceFieldsRepository? fields,
   WorkspaceRolesRepository? roles,
@@ -424,6 +426,10 @@ List<Override> standardTestOverrides({
         schemaVersion ?? const FixedSchemaVersionSource(requiredSchemaVersion)),
     appFloorSourceProvider
         .overrideWithValue(appFloor ?? const FixedAppFloorSource(null)),
+    // #3729 — a workspace's installation runs this build's schema unless a
+    // test says otherwise.
+    installationSchemaSourceProvider.overrideWithValue(
+        installationSchema ?? const FixedInstallationSchemaSource()),
     // #969/#970 — the per-device preferences, in memory by default.
     navigationStyleStoreProvider.overrideWithValue(
         navigationStyle ?? InMemoryNavigationStyleStore()),
@@ -762,6 +768,40 @@ class FixedAppFloorSource implements AppFloorSource {
   Future<int?> read() async {
     if (unavailable) throw const AppFloorUnavailable('offline in the test');
     return floor;
+  }
+}
+
+/// #3729 — one installation schema for every workspace, or one per
+/// workspace id; [unavailable] throws as an offline host does.
+class FixedInstallationSchemaSource implements InstallationSchemaSource {
+  const FixedInstallationSchemaSource({
+    this.number = requiredSchemaVersion,
+    this.byWorkspace = const {},
+    this.unavailable = false,
+    this.installationId = 'test-installation',
+  });
+  final int? number;
+  final Map<String, int?> byWorkspace;
+  final bool unavailable;
+  final String installationId;
+  @override
+  Future<({String installationId, int? number})> read(
+    String workspaceId,
+  ) async {
+    if (unavailable) {
+      throw InstallationSchemaUnavailable(
+        'offline in the test',
+        installationId: installationId,
+      );
+    }
+    return (
+      installationId: byWorkspace.containsKey(workspaceId)
+          ? 'host-$workspaceId'
+          : installationId,
+      number: byWorkspace.containsKey(workspaceId)
+          ? byWorkspace[workspaceId]
+          : number,
+    );
   }
 }
 
