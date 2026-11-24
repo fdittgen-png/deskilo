@@ -7,6 +7,8 @@
 // financial claim: the value is a qualified calculation, not a posted stock-book balance.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import 'stock_page.dart';
+
 /// How far a layer of the trace could be read.
 enum TraceState {
   /// Recorded and shown.
@@ -397,17 +399,16 @@ class DocumentGoodsRow {
   );
 }
 
-/// A page of the goods put away against a document, a keyset page at a time.
-class DocumentGoods {
-  const DocumentGoods({required this.state, required this.rows, required this.more, this.next});
+/// A page of the goods put away against a document, a keyset page at a time: a [StockPage] that also says whether a
+/// recorded link reaches goods at all (#4401: walked by the one stock walk).
+class DocumentGoods extends StockPage<DocumentGoodsRow> {
+  const DocumentGoods({required this.state, required super.rows, required bool more, super.next}) : super(complete: !more);
 
   /// `listed`, `notLinked` (no recorded link reaches goods) or `unavailable`.
   final TraceState state;
-  final List<DocumentGoodsRow> rows;
-  final bool more;
 
-  /// The cursor to send back unchanged for the next page.
-  final Map<String, Object?>? next;
+  /// More follows: the cursor [next] reads it.
+  bool get more => !complete;
 
   factory DocumentGoods.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'stock_document_goods_v1');

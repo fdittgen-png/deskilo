@@ -53,7 +53,13 @@ class _Queries implements StockQueries {
 
 /// The registry as the server answers it: Wine has its home shelf and a known cost, Tea has none.
 class _Registry implements StockRegistry {
-  _Registry({this.costVisible = true, this.withCreme = false});
+  _Registry({this.costVisible = true, this.withCreme = false, this.paged = false});
+
+  /// One row a page (#4401: the registry is walked a page at a time).
+  final bool paged;
+
+  /// The next page read fails once.
+  bool failNext = false;
 
   final bool costVisible;
 
@@ -82,8 +88,15 @@ class _Registry implements StockRegistry {
   Future<StockPage<StockRegistryRow>> page(String workspaceId, {String? placeId, bool noHome = false, int limit = 50, StockCursor? after}) async {
     filters.add((place: placeId, noHome: noHome));
     pages++;
+    if (failNext) {
+      failNext = false;
+      throw StateError('the registry could not be read');
+    }
     final rows = _all.where((r) => !noHome || r.homeLocationId == null).toList();
-    return StockPage(rows: rows, complete: true);
+    if (!paged) return StockPage(rows: rows, complete: true);
+    final from = (after?['n'] as int?) ?? 0;
+    final complete = from + 1 >= rows.length;
+    return StockPage(rows: rows.sublist(from, from + 1), complete: complete, next: complete ? null : {'n': from + 1});
   }
 
   @override
@@ -227,6 +240,23 @@ void main() {
         expect(registry.filters.last, (place: null, noHome: true));
         expect(find.byKey(const ValueKey('stock-item-i-Tea')), findsOneWidget);
         expect(find.byKey(const ValueKey('stock-item-i-Wine')), findsNothing);
+      });
+
+      testWidgets('the registry is read a page at a time, and a page that failed is asked again (#4401)', (tester) async {
+        final registry = _Registry(paged: true);
+        await _open(tester, _Config(), size, held: _manage, registry: registry);
+        expect(find.byKey(const ValueKey('stock-item-i-Wine')), findsOneWidget);
+        expect(find.byKey(const ValueKey('stock-item-i-Tea')), findsNothing, reason: 'the second page is not read yet');
+        registry.failNext = true;
+        await tester.tap(find.byKey(const ValueKey('stock-registry-more')));
+        await _settle(tester);
+        expect(find.byKey(const ValueKey('stock-items-failed')), findsOneWidget, reason: 'a failed page is said, never an empty list');
+        await tester.tap(find.byKey(const ValueKey('stock-items-retry')));
+        await _settle(tester);
+        expect(find.byKey(const ValueKey('stock-item-i-Wine')), findsOneWidget, reason: 'the rows read stay');
+        expect(find.byKey(const ValueKey('stock-item-i-Tea')), findsOneWidget, reason: 'the page that failed was asked again');
+        expect(registry.pages, 3, reason: 'the first page is not read twice');
+        expect(find.byKey(const ValueKey('stock-registry-more')), findsNothing, reason: 'nothing follows the last page');
       });
 
       testWidgets('a barcode typed into the search opens its item', (tester) async {
