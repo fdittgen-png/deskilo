@@ -6933,7 +6933,7 @@ Das, was die tägliche Arbeit umgibt: die Testseite eines Space und die echte, A
 In diesem Kapitel:
 - [Ein Space hat zwei Seiten](#ein-space-hat-zwei-seiten) · [Eine Seite betreten](#die-echte-oder-die-testseite-betreten) · [Ein Testspace](#wofür-ein-testspace-da-ist) · [Wer ausrollen darf](#wer-ausrollen-und-in-die-produktion-darf) · [Zwischen den Seiten ausrollen](#zwischen-den-beiden-seiten-ausrollen) · [Status des Workspace und das Jahresarchiv](#status-des-workspace-und-das-jahresarchiv)
 - [Ihr eigener Server](#einen-eigenen-server-betreiben) · [Wenn eine Installation eine neuere App verlangt](#wenn-eine-installation-eine-neuere-app-verlangt) · [Eine neue Version veröffentlichen](#eine-neue-version-veröffentlichen-zuerst-der-server)
-- [Assistenten](#assistenten-was-sie-sind) · [Einen Assistenten verbinden](#einen-assistenten-verbinden) · [Freigaben](#freigaben-und-bestätigungen-für-assistenten) · [Was Assistenten dürfen](#was-assistenten-in-einem-workspace-dürfen)
+- [Assistenten](#assistenten-was-sie-sind) · [Einen Assistenten verbinden](#einen-assistenten-verbinden) · [Freigaben](#freigaben-und-bestätigungen-für-assistenten) · [Was Assistenten dürfen](#was-assistenten-in-einem-workspace-dürfen) · [Fehlerberichte](#fehlerberichte)
 - [Der Aufgabenrekorder](#der-aufgabenrekorder-und-geführte-touren) · [Eine Aufgabe aufzeichnen](#eine-aufgabe-aufzeichnen) · [Eine Aufzeichnung prüfen](#eine-aufzeichnung-prüfen-bearbeiten-und-exportieren) · [Eine Anleitung erstellen](#aus-einer-aufzeichnung-eine-anleitung-erstellen) · [Einer Anleitung folgen](#einer-anleitung-folgen) · [Das Kreismenü](#das-kreismenü) · [Eine Anleitung bearbeiten](#eine-anleitung-bearbeiten-oder-reparieren) · [Datenschutz der Aufzeichnungen](#was-eine-aufzeichnung-behält)
 - [Der Demo-Workspace](#der-demo-workspace) · [Aufnahmemodus](#aufnahmemodus)
 - [Plattformen](#deskilo-auf-ihren-geräten) · [Supportdetails](#supportdetails) · [Wenn etwas nicht funktioniert](#wenn-etwas-nicht-funktioniert)
@@ -7232,6 +7232,29 @@ Sie entscheiden, welche Dienste ein Workspace Assistenten anbietet.
 - Das ist für Personen mit der Integrations-Berechtigung; Inhaber haben sie immer.
 
 **Siehe auch:** [Ein Funktionsschalter](#ein-funktionsschalter)
+
+<!-- anchor: user.advanced.error-reports -->
+### Fehlerberichte
+
+**Zielgruppe:** Betreiber:in
+
+Sie betreiben die Installation und möchten sehen, was in den angemeldeten Apps schiefgegangen ist.
+
+<!-- image: user-advanced-error-reports -->
+
+**Schritte**
+
+1. Öffnen Sie [Installation: Assistenten](https://fdittgen-png.github.io/deskilo/#/installation/assistants).
+2. Tippen Sie auf **Fehlerberichte**. Die neuesten stehen oben.
+3. Tippen Sie auf einen Bericht, um seinen von der App geschwärzten Stack zu lesen. **Ältere Berichte** liest die nächsten.
+
+**Gut zu wissen**
+
+- Ein Bericht nennt die Stelle in der App und die Art des Fehlers, seinen Code, die App-Version, die Plattform und die Zeit. Er enthält nie, was eine Person eingegeben hat, eine E-Mail-Adresse, einen Namen oder einen Schlüssel.
+- Nur der Betreiber der Installation liest sie; die Unternehmen der Installation sehen sie nie.
+- In den Einstellungen legen **Fehlerberichte pro Person und Stunde**, **Größter Fehlerbericht** und **Fehlerberichte aufbewahren für** fest, wie viele ankommen, wie groß und wie lange. Jede Person kann Berichte auf ihrem Gerät ausschalten.
+
+**Siehe auch:** [Fehlerberichte senden](#fehlerberichte-senden)
 
 <!-- anchor: user.advanced.recorder -->
 ### Der Aufgabenrekorder und geführte Touren

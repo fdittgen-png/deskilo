@@ -332,6 +332,7 @@
   "user.advanced.assistants-connect": "Connecter un assistant",
   "user.advanced.assistants-approve": "Autorisations et confirmations pour les assistants",
   "user.advanced.assistants-policy": "Ce que les assistants peuvent faire dans un espace",
+  "user.advanced.error-reports": "Rapports d'erreur",
   "user.advanced.recorder": "L'enregistreur de tâches et les visites guidées",
   "user.advanced.recorder-record": "Enregistrer une tâche",
   "user.advanced.recorder-review": "Relire, modifier et exporter un enregistrement",

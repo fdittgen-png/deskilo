@@ -16158,6 +16158,37 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce projet ne répond pas encore comme une installation Deskilo. Installez d\'abord le schéma.';
 
   @override
+  String instanceErrorReportCode(String code) {
+    return 'Code $code';
+  }
+
+  @override
+  String instanceErrorReportFacts(
+    String version,
+    String platform,
+    String time,
+  ) {
+    return '$version · $platform · $time';
+  }
+
+  @override
+  String get instanceErrorReportStack => 'Pile, masquée par l\'application';
+
+  @override
+  String get instanceErrorReports => 'Rapports d\'erreur';
+
+  @override
+  String get instanceErrorReportsHint =>
+      'Ce que les applications ont envoyé quand quelque chose s\'est mal passé, du plus récent au plus ancien. Les membres d\'une entreprise ne les voient jamais.';
+
+  @override
+  String get instanceErrorReportsNone =>
+      'Aucun rapport d\'erreur n\'est arrivé.';
+
+  @override
+  String get instanceErrorReportsOlder => 'Rapports plus anciens';
+
+  @override
   String get instanceFamilyChatgpt => 'ChatGPT';
 
   @override

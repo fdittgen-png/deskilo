@@ -6554,7 +6554,7 @@ Ciò che sta attorno al lavoro di ogni giorno: il lato di prova di uno spazio e 
 In questo capitolo:
 - [Uno spazio ha due lati](help:user.advanced.environments) · [Entrare in un lato](help:user.advanced.enter-environment) · [Uno spazio di prova](help:user.advanced.test-space) · [Chi può distribuire](help:user.advanced.deploy-permissions) · [Distribuire tra i lati](help:user.advanced.deploy) · [Situazione dello spazio e archivio dell'esercizio](help:user.advanced.status-archive)
 - [Il Suo server](help:user.advanced.own-server) · [Quando un'installazione richiede un'app più recente](help:user.advanced.app-floor) · [Pubblicare una nuova versione](help:user.advanced.releases)
-- [Assistenti](help:user.advanced.assistants) · [Collegare un assistente](help:user.advanced.assistants-connect) · [Approvazioni](help:user.advanced.assistants-approve) · [Che cosa possono fare gli assistenti](help:user.advanced.assistants-policy)
+- [Assistenti](help:user.advanced.assistants) · [Collegare un assistente](help:user.advanced.assistants-connect) · [Approvazioni](help:user.advanced.assistants-approve) · [Che cosa possono fare gli assistenti](help:user.advanced.assistants-policy) · [Segnalazioni di errore](help:user.advanced.error-reports)
 - [Il registratore di attività](help:user.advanced.recorder) · [Registrare un'attività](help:user.advanced.recorder-record) · [Rivedere una registrazione](help:user.advanced.recorder-review) · [Creare una guida](help:user.advanced.guide-make) · [Seguire una guida](help:user.advanced.guide-play) · [Il menu circolare](help:user.advanced.guide-circle) · [Modificare una guida](help:user.advanced.guide-edit) · [Riservatezza delle registrazioni](help:user.advanced.recorder-privacy)
 - [Lo spazio dimostrativo](help:user.advanced.demo) · [Modalità ripresa](help:user.advanced.filming)
 - [Piattaforme](help:user.advanced.platforms) · [Dettagli per l'assistenza](help:user.advanced.support) · [Quando qualcosa non funziona](help:user.advanced.troubleshooting)
@@ -6840,6 +6840,28 @@ Decide quali servizi uno spazio offre agli assistenti.
 - È riservato a chi possiede il permesso sulle integrazioni; i proprietari lo hanno sempre.
 
 **Vedi anche:** [Un interruttore di funzione](help:user.features.switch)
+
+### Segnalazioni di errore
+
+**Destinatari:** Operatore
+
+Gestisce l'installazione e vuole vedere che cosa è andato storto nelle app collegate.
+
+<!-- image: user-advanced-error-reports -->
+
+**Passaggi**
+
+1. Apra [Installazione: assistenti](app:/installation/assistants).
+2. Tocchi **Segnalazioni di errore**. Le più recenti vengono per prime.
+3. Tocchi una segnalazione per leggerne lo stack, oscurato dall'app. **Segnalazioni precedenti** legge le successive.
+
+**Da sapere**
+
+- Una segnalazione indica il punto dell'app e il tipo di errore, il suo codice, la versione dell'app, la piattaforma e l'ora. Non contiene mai ciò che una persona ha digitato, un indirizzo e-mail, un nome o una chiave.
+- Solo l'operatore dell'installazione le legge; le aziende dell'installazione non le vedono mai.
+- Nelle impostazioni, **Segnalazioni di errore per persona e ora**, **Dimensione massima di una segnalazione di errore** e **Conservare le segnalazioni di errore per** stabiliscono quante ne arrivano, quanto grandi e per quanto tempo. Ogni persona può disattivare le segnalazioni sul proprio dispositivo.
+
+**Vedi anche:** [Inviare le segnalazioni di errore](help:user.privacy.error-reports)
 
 ### Il registratore di attività e le visite guidate
 

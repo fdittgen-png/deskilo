@@ -6933,7 +6933,7 @@ The things around the everyday work: the test side of a space and the real one, 
 In this chapter:
 - [A space has two sides](#a-space-has-two-sides) · [Enter a side](#enter-the-real-side-or-the-test-side) · [A test space](#what-a-test-space-is-for) · [Who may deploy](#who-may-deploy-and-enter-production) · [Deploy between the sides](#deploy-between-the-two-sides) · [Workspace status and the year archive](#workspace-status-and-the-year-archive)
 - [Your own server](#run-your-own-server) · [When an installation requires a newer app](#when-an-installation-requires-a-newer-app) · [Release a new version](#release-a-new-version-the-server-first)
-- [Assistants](#assistants-what-they-are) · [Connect an assistant](#connect-an-assistant) · [Approvals](#approvals-and-confirmations-for-assistants) · [What assistants may do](#what-assistants-may-do-in-a-workspace)
+- [Assistants](#assistants-what-they-are) · [Connect an assistant](#connect-an-assistant) · [Approvals](#approvals-and-confirmations-for-assistants) · [What assistants may do](#what-assistants-may-do-in-a-workspace) · [Error reports](#error-reports)
 - [The task recorder](#the-task-recorder-and-guided-tours) · [Record a task](#record-a-task) · [Review a recording](#review-edit-and-export-a-recording) · [Make a guide](#make-a-guide-from-a-recording) · [Follow a guide](#follow-a-guide) · [The circle menu](#the-circle-menu) · [Edit a guide](#edit-or-repair-a-guide) · [Privacy of recordings](#what-a-recording-keeps)
 - [The demo workspace](#the-demo-workspace) · [Filming mode](#filming-mode)
 - [Platforms](#deskilo-on-your-devices) · [Support details](#support-details) · [When something does not work](#when-something-does-not-work)
@@ -7232,6 +7232,29 @@ You decide which services a workspace offers to assistants.
 - It is for people who hold the integrations permission; owners always do.
 
 **See also:** [A feature switch](#a-feature-switch)
+
+<!-- anchor: user.advanced.error-reports -->
+### Error reports
+
+**Audience:** Operator
+
+You run the installation and want to see what went wrong in the apps signed in to it.
+
+<!-- image: user-advanced-error-reports -->
+
+**Steps**
+
+1. Open [Installation: assistants](https://fdittgen-png.github.io/deskilo/#/installation/assistants).
+2. Tap **Error reports**. The newest reports come first.
+3. Tap a report to read its stack, redacted by the app. **Older reports** reads the next ones.
+
+**Good to know**
+
+- A report says where in the app and what kind of error, its code, the app version, the platform and the time. It never carries what a person typed, an e-mail address, a name or a key.
+- Only the installation's operator reads them; the businesses on the installation never see them.
+- In the settings, **Error reports per person and hour**, **Largest error report** and **Error reports kept for** set how many arrive, how large and for how long. Each person can switch reports off on their device.
+
+**See also:** [Send error reports](#send-error-reports)
 
 <!-- anchor: user.advanced.recorder -->
 ### The task recorder and guided tours

@@ -6933,7 +6933,7 @@ Lo que rodea al trabajo diario: la cara de pruebas de un espacio y la real, los 
 En este capítulo:
 - [Un espacio tiene dos caras](#un-espacio-tiene-dos-caras) · [Entre en una cara](#entre-en-la-cara-real-o-en-la-de-pruebas) · [Un espacio de prueba](#para-qué-sirve-un-espacio-de-prueba) · [Quién puede desplegar](#quién-puede-desplegar-y-entrar-en-producción) · [Despliegue entre las caras](#despliegue-entre-las-dos-caras) · [Situación del espacio y archivo del ejercicio](#situación-del-espacio-y-archivo-del-ejercicio)
 - [Su propio servidor](#gestione-su-propio-servidor) · [Cuando una instalación exige una aplicación más reciente](#cuando-una-instalación-exige-una-aplicación-más-reciente) · [Publicar una nueva versión](#publicar-una-nueva-versión-primero-el-servidor)
-- [Asistentes](#asistentes-qué-son) · [Conecte un asistente](#conecte-un-asistente) · [Aprobaciones](#aprobaciones-y-confirmaciones-de-los-asistentes) · [Qué pueden hacer los asistentes](#qué-pueden-hacer-los-asistentes-en-un-espacio)
+- [Asistentes](#asistentes-qué-son) · [Conecte un asistente](#conecte-un-asistente) · [Aprobaciones](#aprobaciones-y-confirmaciones-de-los-asistentes) · [Qué pueden hacer los asistentes](#qué-pueden-hacer-los-asistentes-en-un-espacio) · [Informes de error](#informes-de-error)
 - [El grabador de tareas](#el-grabador-de-tareas-y-las-visitas-guiadas) · [Grabe una tarea](#grabe-una-tarea) · [Revise una grabación](#revise-edite-y-exporte-una-grabación) · [Cree una guía](#cree-una-guía-a-partir-de-una-grabación) · [Siga una guía](#siga-una-guía) · [El menú circular](#el-menú-circular) · [Edite una guía](#edite-o-repare-una-guía) · [Privacidad de las grabaciones](#qué-conserva-una-grabación)
 - [El espacio de demostración](#el-espacio-de-demostración) · [Modo grabación](#modo-grabación)
 - [Plataformas](#deskilo-en-sus-dispositivos) · [Detalles de soporte](#detalles-de-soporte) · [Cuando algo no funciona](#cuando-algo-no-funciona)
@@ -7232,6 +7232,29 @@ Usted decide qué servicios ofrece un espacio a los asistentes.
 - Es para quienes tienen el permiso de integraciones; los propietarios siempre lo tienen.
 
 **Véase también:** [Un interruptor de función](#un-interruptor-de-función)
+
+<!-- anchor: user.advanced.error-reports -->
+### Informes de error
+
+**Público:** Operador/a
+
+Usted opera la instalación y quiere ver qué falló en las apps conectadas a ella.
+
+<!-- image: user-advanced-error-reports -->
+
+**Pasos**
+
+1. Abra [Instalación: asistentes](https://fdittgen-png.github.io/deskilo/#/installation/assistants).
+2. Toque **Informes de error**. Los más recientes van primero.
+3. Toque un informe para leer su pila, ocultada por la app. **Informes anteriores** lee los siguientes.
+
+**Conviene saber**
+
+- Un informe indica el lugar de la app y el tipo de error, su código, la versión de la app, la plataforma y la hora. Nunca lleva lo que una persona escribió, una dirección de correo, un nombre ni una clave.
+- Solo el operador de la instalación los lee; las empresas de la instalación nunca los ven.
+- En los ajustes, **Informes de error por persona y hora**, **Tamaño máximo de un informe de error** y **Conservar los informes de error durante** fijan cuántos llegan, su tamaño y cuánto tiempo. Cada persona puede desactivar los informes en su dispositivo.
+
+**Véase también:** [Enviar informes de error](#enviar-informes-de-error)
 
 <!-- anchor: user.advanced.recorder -->
 ### El grabador de tareas y las visitas guiadas

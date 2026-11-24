@@ -198,6 +198,9 @@ abstract final class HelpAnchor {
   /// What an error report carries and where it goes (#4416).
   static const privacyErrorReports = 'user.privacy.error-reports';
 
+  /// The error reports the installation's operator reads (#4416).
+  static const advancedErrorReports = 'user.advanced.error-reports';
+
   /// Bands, or a positioned layout that wins over them.
   static const reportsEditor = 'user.money.reports.editor';
 

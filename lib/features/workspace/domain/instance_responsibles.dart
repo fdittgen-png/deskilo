@@ -8,6 +8,8 @@
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import 'instance_trace_report.dart';
+
 /// What the signed-in person is for the installation.
 enum InstanceRole { owner, delegate }
 
@@ -126,4 +128,9 @@ abstract interface class InstanceRepository {
 
   /// Whether the caller became the owner of a new instance.
   Future<bool> claim();
+
+  /// #4416 — the newest error reports the apps sent, older than [before]
+  /// when given; for the installation's operator only (the server refuses
+  /// anyone else). A server without them answers none.
+  Future<List<InstanceTraceReport>> traceReports({DateTime? before});
 }

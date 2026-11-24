@@ -6554,7 +6554,7 @@ The things around the everyday work: the test side of a space and the real one, 
 In this chapter:
 - [A space has two sides](help:user.advanced.environments) · [Enter a side](help:user.advanced.enter-environment) · [A test space](help:user.advanced.test-space) · [Who may deploy](help:user.advanced.deploy-permissions) · [Deploy between the sides](help:user.advanced.deploy) · [Workspace status and the year archive](help:user.advanced.status-archive)
 - [Your own server](help:user.advanced.own-server) · [When an installation requires a newer app](help:user.advanced.app-floor) · [Release a new version](help:user.advanced.releases)
-- [Assistants](help:user.advanced.assistants) · [Connect an assistant](help:user.advanced.assistants-connect) · [Approvals](help:user.advanced.assistants-approve) · [What assistants may do](help:user.advanced.assistants-policy)
+- [Assistants](help:user.advanced.assistants) · [Connect an assistant](help:user.advanced.assistants-connect) · [Approvals](help:user.advanced.assistants-approve) · [What assistants may do](help:user.advanced.assistants-policy) · [Error reports](help:user.advanced.error-reports)
 - [The task recorder](help:user.advanced.recorder) · [Record a task](help:user.advanced.recorder-record) · [Review a recording](help:user.advanced.recorder-review) · [Make a guide](help:user.advanced.guide-make) · [Follow a guide](help:user.advanced.guide-play) · [The circle menu](help:user.advanced.guide-circle) · [Edit a guide](help:user.advanced.guide-edit) · [Privacy of recordings](help:user.advanced.recorder-privacy)
 - [The demo workspace](help:user.advanced.demo) · [Filming mode](help:user.advanced.filming)
 - [Platforms](help:user.advanced.platforms) · [Support details](help:user.advanced.support) · [When something does not work](help:user.advanced.troubleshooting)
@@ -6840,6 +6840,28 @@ You decide which services a workspace offers to assistants.
 - It is for people who hold the integrations permission; owners always do.
 
 **See also:** [A feature switch](help:user.features.switch)
+
+### Error reports
+
+**Audience:** Operator
+
+You run the installation and want to see what went wrong in the apps signed in to it.
+
+<!-- image: user-advanced-error-reports -->
+
+**Steps**
+
+1. Open [Installation: assistants](app:/installation/assistants).
+2. Tap **Error reports**. The newest reports come first.
+3. Tap a report to read its stack, redacted by the app. **Older reports** reads the next ones.
+
+**Good to know**
+
+- A report says where in the app and what kind of error, its code, the app version, the platform and the time. It never carries what a person typed, an e-mail address, a name or a key.
+- Only the installation's operator reads them; the businesses on the installation never see them.
+- In the settings, **Error reports per person and hour**, **Largest error report** and **Error reports kept for** set how many arrive, how large and for how long. Each person can switch reports off on their device.
+
+**See also:** [Send error reports](help:user.privacy.error-reports)
 
 ### The task recorder and guided tours
 

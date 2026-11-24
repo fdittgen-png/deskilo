@@ -9,6 +9,7 @@ const helpAnchorIndex = <String>{
   HelpAnchor.workspacePublicPage,
   HelpAnchor.privacyBusinessSees,
   HelpAnchor.privacyErrorReports,
+  HelpAnchor.advancedErrorReports,
   HelpAnchor.workspaceBusinessKind,
   HelpAnchor.moneySales,
   HelpAnchor.moneyPurchases,

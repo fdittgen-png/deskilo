@@ -6933,7 +6933,7 @@ Ce qui entoure le travail de tous les jours : le côté test d'un espace et le c
 Dans ce chapitre :
 - [Un espace a deux côtés](#un-espace-a-deux-côtés) · [Entrer d'un côté](#entrer-côté-réel-ou-côté-test) · [Un espace de test](#à-quoi-sert-un-espace-de-test) · [Qui peut déployer](#qui-peut-déployer-et-entrer-en-production) · [Déployer entre les côtés](#déployer-entre-les-deux-côtés) · [Situation de l'espace et archive de l'exercice](#situation-de-lespace-et-archive-de-lexercice)
 - [Votre propre serveur](#faire-tourner-votre-propre-serveur) · [Quand une installation exige une application plus récente](#quand-une-installation-exige-une-application-plus-récente) · [Publier une nouvelle version](#publier-une-nouvelle-version--le-serveur-dabord)
-- [Les assistants](#les-assistants--ce-que-cest) · [Connecter un assistant](#connecter-un-assistant) · [Les autorisations](#autorisations-et-confirmations-pour-les-assistants) · [Ce que les assistants peuvent faire](#ce-que-les-assistants-peuvent-faire-dans-un-espace)
+- [Les assistants](#les-assistants--ce-que-cest) · [Connecter un assistant](#connecter-un-assistant) · [Les autorisations](#autorisations-et-confirmations-pour-les-assistants) · [Ce que les assistants peuvent faire](#ce-que-les-assistants-peuvent-faire-dans-un-espace) · [Rapports d'erreur](#rapports-derreur)
 - [L'enregistreur de tâches](#lenregistreur-de-tâches-et-les-visites-guidées) · [Enregistrer une tâche](#enregistrer-une-tâche) · [Relire un enregistrement](#relire-modifier-et-exporter-un-enregistrement) · [Créer un guide](#créer-un-guide-à-partir-dun-enregistrement) · [Suivre un guide](#suivre-un-guide) · [Le menu rond](#le-menu-rond) · [Modifier un guide](#modifier-ou-réparer-un-guide) · [Confidentialité des enregistrements](#ce-quun-enregistrement-conserve)
 - [L'espace de démonstration](#lespace-de-démonstration) · [Mode tournage](#mode-tournage)
 - [Les plateformes](#deskilo-sur-vos-appareils) · [Détails pour l'assistance](#détails-pour-lassistance) · [Quand quelque chose ne fonctionne pas](#quand-quelque-chose-ne-fonctionne-pas)
@@ -7232,6 +7232,29 @@ Vous décidez quels services un espace propose aux assistants.
 - C'est réservé aux personnes qui détiennent la permission d'intégrations ; les propriétaires l'ont toujours.
 
 **Voir aussi:** [Un interrupteur de fonctionnalité](#un-interrupteur-de-fonctionnalité)
+
+<!-- anchor: user.advanced.error-reports -->
+### Rapports d'erreur
+
+**Public:** Opérateur·rice
+
+Vous exploitez l'installation et voulez voir ce qui s'est mal passé dans les applications qui y sont connectées.
+
+<!-- image: user-advanced-error-reports -->
+
+**Étapes**
+
+1. Ouvrez [Installation : assistants](https://fdittgen-png.github.io/deskilo/#/installation/assistants).
+2. Touchez **Rapports d'erreur**. Les plus récents viennent en premier.
+3. Touchez un rapport pour lire sa pile, masquée par l'application. **Rapports plus anciens** lit les suivants.
+
+**Bon à savoir**
+
+- Un rapport indique l'endroit de l'application et le type d'erreur, son code, la version de l'application, la plateforme et l'heure. Il ne contient jamais ce qu'une personne a saisi, une adresse e-mail, un nom ou une clé.
+- Seul l'opérateur de l'installation les lit ; les entreprises de l'installation ne les voient jamais.
+- Dans les paramètres, **Rapports d'erreur par personne et par heure**, **Taille maximale d'un rapport d'erreur** et **Durée de conservation des rapports d'erreur** fixent combien en arrivent, leur taille et leur durée. Chaque personne peut désactiver les rapports sur son appareil.
+
+**Voir aussi:** [Envoyer les rapports d'erreur](#envoyer-les-rapports-derreur)
 
 <!-- anchor: user.advanced.recorder -->
 ### L'enregistreur de tâches et les visites guidées

@@ -332,6 +332,7 @@
   "user.advanced.assistants-connect": "Einen Assistenten verbinden",
   "user.advanced.assistants-approve": "Freigaben und Bestätigungen für Assistenten",
   "user.advanced.assistants-policy": "Was Assistenten in einem Workspace dürfen",
+  "user.advanced.error-reports": "Fehlerberichte",
   "user.advanced.recorder": "Der Aufgabenrekorder und geführte Touren",
   "user.advanced.recorder-record": "Eine Aufgabe aufzeichnen",
   "user.advanced.recorder-review": "Eine Aufzeichnung prüfen, bearbeiten und exportieren",

@@ -6933,7 +6933,7 @@ Ciò che sta attorno al lavoro di ogni giorno: il lato di prova di uno spazio e 
 In questo capitolo:
 - [Uno spazio ha due lati](#uno-spazio-ha-due-lati) · [Entrare in un lato](#entrare-nel-lato-reale-o-in-quello-di-prova) · [Uno spazio di prova](#a-che-cosa-serve-uno-spazio-di-prova) · [Chi può distribuire](#chi-può-distribuire-ed-entrare-in-produzione) · [Distribuire tra i lati](#distribuire-tra-i-due-lati) · [Situazione dello spazio e archivio dell'esercizio](#situazione-dello-spazio-e-archivio-dellesercizio)
 - [Il Suo server](#gestire-il-proprio-server) · [Quando un'installazione richiede un'app più recente](#quando-uninstallazione-richiede-unapp-più-recente) · [Pubblicare una nuova versione](#pubblicare-una-nuova-versione-prima-il-server)
-- [Assistenti](#assistenti-che-cosa-sono) · [Collegare un assistente](#collegare-un-assistente) · [Approvazioni](#approvazioni-e-conferme-per-gli-assistenti) · [Che cosa possono fare gli assistenti](#che-cosa-possono-fare-gli-assistenti-in-uno-spazio)
+- [Assistenti](#assistenti-che-cosa-sono) · [Collegare un assistente](#collegare-un-assistente) · [Approvazioni](#approvazioni-e-conferme-per-gli-assistenti) · [Che cosa possono fare gli assistenti](#che-cosa-possono-fare-gli-assistenti-in-uno-spazio) · [Segnalazioni di errore](#segnalazioni-di-errore)
 - [Il registratore di attività](#il-registratore-di-attività-e-le-visite-guidate) · [Registrare un'attività](#registrare-unattività) · [Rivedere una registrazione](#rivedere-modificare-ed-esportare-una-registrazione) · [Creare una guida](#creare-una-guida-da-una-registrazione) · [Seguire una guida](#seguire-una-guida) · [Il menu circolare](#il-menu-circolare) · [Modificare una guida](#modificare-o-riparare-una-guida) · [Riservatezza delle registrazioni](#che-cosa-conserva-una-registrazione)
 - [Lo spazio dimostrativo](#lo-spazio-dimostrativo) · [Modalità ripresa](#modalità-ripresa)
 - [Piattaforme](#deskilo-sui-suoi-dispositivi) · [Dettagli per l'assistenza](#dettagli-per-lassistenza) · [Quando qualcosa non funziona](#quando-qualcosa-non-funziona)
@@ -7232,6 +7232,29 @@ Decide quali servizi uno spazio offre agli assistenti.
 - È riservato a chi possiede il permesso sulle integrazioni; i proprietari lo hanno sempre.
 
 **Vedi anche:** [Un interruttore di funzione](#un-interruttore-di-funzionalità)
+
+<!-- anchor: user.advanced.error-reports -->
+### Segnalazioni di errore
+
+**Destinatari:** Operatore
+
+Gestisce l'installazione e vuole vedere che cosa è andato storto nelle app collegate.
+
+<!-- image: user-advanced-error-reports -->
+
+**Passaggi**
+
+1. Apra [Installazione: assistenti](https://fdittgen-png.github.io/deskilo/#/installation/assistants).
+2. Tocchi **Segnalazioni di errore**. Le più recenti vengono per prime.
+3. Tocchi una segnalazione per leggerne lo stack, oscurato dall'app. **Segnalazioni precedenti** legge le successive.
+
+**Da sapere**
+
+- Una segnalazione indica il punto dell'app e il tipo di errore, il suo codice, la versione dell'app, la piattaforma e l'ora. Non contiene mai ciò che una persona ha digitato, un indirizzo e-mail, un nome o una chiave.
+- Solo l'operatore dell'installazione le legge; le aziende dell'installazione non le vedono mai.
+- Nelle impostazioni, **Segnalazioni di errore per persona e ora**, **Dimensione massima di una segnalazione di errore** e **Conservare le segnalazioni di errore per** stabiliscono quante ne arrivano, quanto grandi e per quanto tempo. Ogni persona può disattivare le segnalazioni sul proprio dispositivo.
+
+**Vedi anche:** [Inviare le segnalazioni di errore](#inviare-le-segnalazioni-di-errore)
 
 <!-- anchor: user.advanced.recorder -->
 ### Il registratore di attività e le visite guidate

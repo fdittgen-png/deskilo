@@ -16126,6 +16126,37 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieses Projekt antwortet noch nicht als Deskilo-Installation. Installieren Sie zuerst das Schema.';
 
   @override
+  String instanceErrorReportCode(String code) {
+    return 'Code $code';
+  }
+
+  @override
+  String instanceErrorReportFacts(
+    String version,
+    String platform,
+    String time,
+  ) {
+    return '$version · $platform · $time';
+  }
+
+  @override
+  String get instanceErrorReportStack => 'Stack, von der App geschwärzt';
+
+  @override
+  String get instanceErrorReports => 'Fehlerberichte';
+
+  @override
+  String get instanceErrorReportsHint =>
+      'Was die Apps gesendet haben, als etwas schiefging, die neuesten zuerst. Mitglieder eines Unternehmens sehen sie nie.';
+
+  @override
+  String get instanceErrorReportsNone =>
+      'Es ist noch kein Fehlerbericht eingegangen.';
+
+  @override
+  String get instanceErrorReportsOlder => 'Ältere Berichte';
+
+  @override
   String get instanceFamilyChatgpt => 'ChatGPT';
 
   @override

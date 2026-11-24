@@ -332,6 +332,7 @@
   "user.advanced.assistants-connect": "Connect an assistant",
   "user.advanced.assistants-approve": "Approvals and confirmations for assistants",
   "user.advanced.assistants-policy": "What assistants may do in a workspace",
+  "user.advanced.error-reports": "Error reports",
   "user.advanced.recorder": "The task recorder and guided tours",
   "user.advanced.recorder-record": "Record a task",
   "user.advanced.recorder-review": "Review, edit and export a recording",

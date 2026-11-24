@@ -25615,6 +25615,48 @@ abstract class AppLocalizations {
   /// **'This project does not answer as a Deskilo installation yet. Install the schema first.'**
   String get instanceEnrolUnreadable;
 
+  /// #4416 Instance console: the code the error carried
+  ///
+  /// In en, this message translates to:
+  /// **'Code {code}'**
+  String instanceErrorReportCode(String code);
+
+  /// #4416 Instance console: one report's app version, platform and time
+  ///
+  /// In en, this message translates to:
+  /// **'{version} · {platform} · {time}'**
+  String instanceErrorReportFacts(String version, String platform, String time);
+
+  /// #4416 Instance console: heading of a report's stack
+  ///
+  /// In en, this message translates to:
+  /// **'Stack, redacted by the app'**
+  String get instanceErrorReportStack;
+
+  /// #4416 Instance console: the error reports apps sent to this installation, its row and sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Error reports'**
+  String get instanceErrorReports;
+
+  /// #4416 Instance console: under the error reports row
+  ///
+  /// In en, this message translates to:
+  /// **'What the apps sent when something went wrong, newest first. Members of a business never see them.'**
+  String get instanceErrorReportsHint;
+
+  /// #4416 Instance console: the list is empty
+  ///
+  /// In en, this message translates to:
+  /// **'No error report has arrived.'**
+  String get instanceErrorReportsNone;
+
+  /// #4416 Instance console: reads the next page of older reports
+  ///
+  /// In en, this message translates to:
+  /// **'Older reports'**
+  String get instanceErrorReportsOlder;
+
   /// #2145 assistant onboarding: instanceFamilyChatgpt
   ///
   /// In en, this message translates to:
