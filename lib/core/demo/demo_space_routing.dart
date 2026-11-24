@@ -416,11 +416,8 @@ class _DemoStock {
     config = DemoStockConfigCommands(id, candidates: candidates);
     ledger = DemoStockLedger(id, config, now, candidates);
     registry = DemoStockRegistry(id, ledger, config);
-    config.newItems = (
-      service: (name, priceCents, vatRateId, requestId) async =>
-          (await money.createService(id, name: name, priceCents: priceCents, vatRateId: vatRateId, requestId: requestId)).id,
-      home: (itemId, placeId, requestId) => registry.setHome(id, itemId: itemId, variantId: null, placeId: placeId, requestId: requestId),
-    );
+    config.newItems = (service: (name, price, vat, request) async => (await money.createService(id, name: name, priceCents: price, vatRateId: vat, requestId: request)).id,
+        home: (item, place, request) => registry.setHome(id, itemId: item, variantId: null, placeId: place, requestId: request));
     reorder = DemoStockReorder(id, ledger, config);
     operations = DemoStockOperations(ledger, config);
     reversals = DemoStockReversals(ledger);
