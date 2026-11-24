@@ -16,6 +16,7 @@ import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/stock_reads.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_drafts.dart';
@@ -66,14 +67,8 @@ class _MappingsSheetState extends State<_MappingsSheet> {
   late Future<_Loaded> _loaded = _read();
 
   Future<_Loaded> _read() async {
-    final item = await widget.commands.item(widget.workspaceId, widget.itemId);
-    if (item == null) throw StateError('the item is gone');
-    return _Loaded(
-      item,
-      [for (final m in await widget.commands.mappings(widget.workspaceId)) if (m.itemId == widget.itemId) m],
-      await widget.commands.suppliers(widget.workspaceId),
-      await widget.commands.variants(widget.workspaceId, widget.itemId),
-    );
+    final read = await StockReads(widget.commands).mappingsOf(widget.workspaceId, widget.itemId);
+    return _Loaded(read.item, read.mappings, read.suppliers, read.variants);
   }
 
   Future<void> _edit(_Loaded data, SupplierItemMapping? mapping) async {

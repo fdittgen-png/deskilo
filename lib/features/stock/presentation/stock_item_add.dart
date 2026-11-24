@@ -18,6 +18,7 @@ import '../../../core/ui/app_snack.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/stock_reads.dart';
 import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_item_editor.dart';
@@ -38,7 +39,7 @@ class StockItemAdd {
     final candidates = await guardRead<List<StockItem>?>(
       domain: 'stock',
       message: 'the services that may become items could not be read',
-      read: () => _ref.read(stockQueriesProvider).unstocked(workspaceId),
+      read: () => StockReads(_ref.read(stockConfigCommandsProvider), queries: _ref.read(stockQueriesProvider)).unstocked(workspaceId),
       fallback: (_) {
         if (context.mounted) AppSnack.error(context, l10n.stockReadFailed);
         return null;

@@ -20,6 +20,7 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/stock_reads.dart';
 import '../domain/item_groups.dart';
 import '../providers/stock_providers.dart';
 import 'item_group_text.dart';
@@ -73,13 +74,8 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
     super.dispose();
   }
 
-  Future<_Loaded> _load() async {
-    final port = ref.read(itemGroupsProvider);
-    final groups = await port.groups(widget.workspaceId);
-    final effective = await port.effective(widget.workspaceId, widget.itemId);
-    final config = await ref.read(stockConfigCommandsProvider).item(widget.workspaceId, widget.itemId);
-    return (groups: groups, effective: effective, revision: config?.revision ?? 0);
-  }
+  Future<_Loaded> _load() =>
+      StockReads(ref.read(stockConfigCommandsProvider), groups: ref.read(itemGroupsProvider)).groupOf(widget.workspaceId, widget.itemId);
 
   void _reload({String? say}) {
     if (mounted) _view.value = _View(read: _load(), problem: say);

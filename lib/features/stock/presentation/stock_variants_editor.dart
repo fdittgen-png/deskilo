@@ -22,6 +22,7 @@ import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/stock_reads.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_check.dart';
 import '../domain/stock_config_commands.dart';
@@ -40,11 +41,10 @@ Future<bool> showStockVariantsEditor(
   final read = await guardRead<(StockItemConfig?, List<StockDimension>, List<StockVariant>)?>(
     domain: 'stock',
     message: 'the variants of an item could not be read',
-    read: () async => (
-      await commands.item(workspaceId, itemId),
-      await commands.dimensions(workspaceId),
-      await commands.variants(workspaceId, itemId),
-    ),
+    read: () async {
+      final read = await StockReads(commands).variantsOf(workspaceId, itemId);
+      return (read.item, read.dimensions, read.variants);
+    },
     fallback: (_) {
       if (context.mounted) AppSnack.error(context, l10n.stockReadFailed);
       return null;
@@ -173,7 +173,7 @@ class _VariantsDraft {
               dimensions = await guardRead(
                 domain: 'stock',
                 message: 'the dimensions could not be read again',
-                read: () => commands.dimensions(workspaceId),
+                read: () => StockReads(commands).dimensions(workspaceId),
                 fallback: (_) => dimensions,
               );
               refresh();
@@ -280,13 +280,13 @@ class _DimensionsSheet extends StatefulWidget {
 }
 
 class _DimensionsSheetState extends State<_DimensionsSheet> {
-  late Future<List<StockDimension>> _dimensions = widget.commands.dimensions(widget.workspaceId);
+  late Future<List<StockDimension>> _dimensions = StockReads(widget.commands).dimensions(widget.workspaceId);
 
   Future<void> _edit(StockDimension? dimension) async {
     final saved = await _showDimensionEditor(context, widget.commands, workspaceId: widget.workspaceId, dimension: dimension);
     if (saved && mounted) {
       setState(() {
-        _dimensions = widget.commands.dimensions(widget.workspaceId);
+        _dimensions = StockReads(widget.commands).dimensions(widget.workspaceId);
       });
     }
   }

@@ -24,6 +24,7 @@ import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/stock_reads.dart';
 import '../domain/place_labels_pdf.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_check.dart';
@@ -175,7 +176,7 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
   }
 
   // read at the time, so a read that cannot be made is the page's own failure
-  Future<List<StockPlaceConfig>> _read() async => ref.read(stockConfigCommandsProvider).places(widget.workspaceId);
+  Future<List<StockPlaceConfig>> _read() => StockReads(ref.read(stockConfigCommandsProvider)).places(widget.workspaceId);
 
   Future<void> _edit(List<StockPlaceConfig> all, StockPlaceConfig? place) async {
     final saved = await _showStockPlaceEditor(

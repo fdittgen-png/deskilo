@@ -15,6 +15,7 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/stock_reads.dart';
 import '../domain/item_groups.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_check.dart';
@@ -35,14 +36,14 @@ Future<bool> showStockItemEditor(
   final config = await guardRead<StockItemConfig?>(
     domain: 'stock',
     message: 'the item could not be read for its editor',
-    read: () => commands.item(workspaceId, itemId),
+    read: () => StockReads(commands).item(workspaceId, itemId),
     fallback: (_) {
       if (context.mounted) AppSnack.error(context, l10n.stockReadFailed);
       return null;
     },
   );
   if (config == null || !context.mounted) return false;
-  final own = await _ownValues(options.groups, workspaceId, itemId);
+  final own = await _ownValues(StockReads(commands, groups: options.groups), workspaceId, itemId);
   if (!context.mounted) return false;
   final editor = _ItemDraft(config, lotsOn: options.lots, keepInStock: options.keep, own: own);
   return showAppFormSheet(
@@ -102,19 +103,12 @@ class _CodeRow {
 
 /// The settings in which the item of a group keeps a value of its own against the group's. Without groups, or when the
 /// read fails, nothing is marked: the mark is information, never a reason to keep the editor closed.
-Future<Set<String>> _ownValues(ItemGroups? groups, String workspaceId, String itemId) async {
-  if (groups == null) return const {};
-  return guardRead(
-    domain: 'stock',
-    message: 'the own values of an item were not read for its editor',
-    read: () async {
-      final effective = await groups.effective(workspaceId, itemId);
-      if (effective.groupId == null) return const <String>{};
-      return {for (final e in effective.params.entries) if (e.value.own) e.key};
-    },
-    fallback: (_) => const <String>{},
-  );
-}
+Future<Set<String>> _ownValues(StockReads reads, String workspaceId, String itemId) => guardRead(
+  domain: 'stock',
+  message: 'the own values of an item were not read for its editor',
+  read: () => reads.ownValues(workspaceId, itemId),
+  fallback: (_) => const <String>{},
+);
 
 class _ItemDraft {
   _ItemDraft(this.config, {required this.lotsOn, bool keepInStock = false, this.own = const {}})

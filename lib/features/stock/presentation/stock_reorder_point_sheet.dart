@@ -17,6 +17,7 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/stock_reads.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_page.dart';
@@ -153,7 +154,7 @@ class _PointDraft {
     variants = await guardRead(
       domain: 'stock',
       message: 'the variants could not be read',
-      read: () async => [for (final v in await config.variants(workspaceId, id)) if (v.id != null && v.active) v],
+      read: () => StockReads(config).activeVariants(workspaceId, id),
       fallback: (_) => const [],
     );
     refresh();
