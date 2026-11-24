@@ -486,9 +486,7 @@ DemoSpaces<DemoTill> _demoTills(DemoFixture fixture, DemoSpaces<DemoTillDrawer> 
   final till = DemoTill(
     drawer: drawers.at(key),
     country: fixture.workspaces.workspaces.firstWhere((w) => w.id == key.id).countryCode,
-    currency: key.currency,
-    vatPercent: 20,
-    clock: () => fixture.seededAt, // #4436 -- a sale is kept with the Demo's day, so the trace finds it from its track IDs
+    currency: key.currency, vatPercent: 20, clock: () => fixture.seededAt, // #4436 -- a sale is kept with the Demo's day, so the trace finds it from its track IDs
   );
   return key == DemoSpaceKey.home ? (till..seed()) : till;
 });
