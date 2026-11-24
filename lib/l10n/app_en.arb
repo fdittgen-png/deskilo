@@ -15545,6 +15545,14 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterOfflineCashDesc": "When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  },
+  "featureCounterOfflineCashTitle": "Selling offline, cash only",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
+  },
   "featureCounterReceiptsDesc": "A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country's operation is supported, and says plainly where it is not.",
   "@featureCounterReceiptsDesc": {
     "description": "#4184 feature description"
@@ -38116,6 +38124,10 @@
   "@refusalCounterNotOpen": {
     "description": "#4185 refusal"
   },
+  "refusalCounterOfflineConflict": "A sale sent from the till under this number was already received with other content. Nothing was recorded again; look at the list of offline sales.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  },
   "refusalCounterTenderState": "This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.",
   "@refusalCounterTenderState": {
     "description": "#4185 refusal"
@@ -41974,6 +41986,18 @@
   "@settingHintCounterFiscalObligation": {
     "description": "#4184 setting label/hint"
   },
+  "settingHintCounterOfflineMaxMinutes": "How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflineMaxSales": "How many cash sales made offline one till session accepts. Further sales are refused and listed for the owner.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflinePriceTolerance": "How far, in percent, the price of an offline sale may differ from the item's price when the sale is sent. 0 means the price must be the same.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
   "settingHintCounterPaidOutLimit": "The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.",
   "@settingHintCounterPaidOutLimit": {
     "description": "#4367 setting label/hint or refusal"
@@ -42409,6 +42433,18 @@
   "settingLabelCounterFiscalObligation": "Fiscal rules for counter sales",
   "@settingLabelCounterFiscalObligation": {
     "description": "#4184 setting label/hint"
+  },
+  "settingLabelCounterOfflineMaxMinutes": "Longest offline period (minutes)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflineMaxSales": "Most offline sales per till session",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Price difference allowed offline (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
   },
   "settingLabelCounterPaidOutLimit": "Largest paid-out without approval",
   "@settingLabelCounterPaidOutLimit": {
@@ -52748,6 +52784,15 @@
   "@tillPayCash": {
     "description": "#4366 the till"
   },
+  "tillPieceTwice": "Piece {code} is already in the basket.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Pricing the basket…",
   "@tillPricing": {
     "description": "#4366 the till"
@@ -52786,6 +52831,15 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillScanUnknown": "{code} is not something this till sells.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillSoldTitle": "Sold",
   "@tillSoldTitle": {
     "description": "#4366 the till"
@@ -52808,6 +52862,27 @@
     "description": "#4366 the till",
     "placeholders": {
       "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackLot": "Lot {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Piece {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
         "type": "String"
       }
     }
