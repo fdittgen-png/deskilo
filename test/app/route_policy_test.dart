@@ -7,6 +7,7 @@
 // every route and every fact lives in route_policy_grid_test.dart; this
 // is the table a person reads to know what the app does.
 import 'package:deskilo/app/route_policy.dart';
+import 'package:deskilo/core/instance/app_compatibility.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -26,6 +27,7 @@ const behindIn = RouteFacts(auth: AuthFact.signedIn, schema: SchemaCompatibility
 const behindLocked = RouteFacts(auth: AuthFact.signedIn, schema: SchemaCompatibility.behind, kiosk: KioskFact.locked);
 const hostBehind = RouteFacts(auth: AuthFact.signedIn, hostSchema: SchemaCompatibility.behind);
 const hostBehindOut = RouteFacts(auth: AuthFact.signedOut, hostSchema: SchemaCompatibility.behind);
+const hostRefuses = RouteFacts(auth: AuthFact.signedIn, appFloor: AppFloorVerdict.accepted, hostAppFloor: AppFloorVerdict.below);
 const gate = RouteFacts(auth: AuthFact.signedIn, kiosk: KioskFact.gatePending);
 const locked = RouteFacts(auth: AuthFact.signedIn, kiosk: KioskFact.locked);
 const released = RouteFacts(auth: AuthFact.signedIn, kiosk: KioskFact.released);
@@ -160,6 +162,14 @@ final rows = <Row>[
   stay('host behind, signed out: sign-in is not blocked', '/auth', hostBehindOut),
   go('host current: the notice bounces home', '/server-update', const RouteFacts(auth: AuthFact.signedIn, hostSchema: SchemaCompatibility.current), '/reserve', RouteReason.schemaCurrent),
   go('host unknown: nothing is gated', '/server-update', member, '/reserve', RouteReason.schemaCurrent),
+  // #3726 — the installation hosting the workspace refuses this app, the account's own does not.
+  go('host refuses the app: a workspace route goes to the app notice', '/money', hostRefuses, '/app-update', RouteReason.hostAppBelowFloor),
+  stay('host refuses the app: the notice stays', '/app-update', hostRefuses),
+  stay('host refuses the app: Me stays reachable', '/me', hostRefuses),
+  stay('host refuses the app: the server screen is the way out', '/server', hostRefuses),
+  stay('host refuses the app: the demo entry opens', '/demo', hostRefuses),
+  go('host accepts the app: the app notice bounces home', '/app-update', const RouteFacts(auth: AuthFact.signedIn, hostAppFloor: AppFloorVerdict.accepted), '/reserve', RouteReason.appAccepted),
+  stay('host floor unknown (the default): nothing is gated', '/money', const RouteFacts(auth: AuthFact.signedIn)),
 ];
 
 void main() {

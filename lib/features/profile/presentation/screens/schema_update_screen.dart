@@ -8,6 +8,8 @@ import '../../../../core/backend/schema_version.dart';
 import '../../../../core/instance/schema_compatibility.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../auth/providers/auth_providers.dart';
+import '../../../auth/providers/sign_out.dart';
 
 /// #1312 — the server this device uses runs an older DesKilo schema than
 /// this app needs.
@@ -31,7 +33,9 @@ class SchemaUpdateScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final title = l10n.schemaUpdateTitle;
-    final body = l10n.schemaUpdateBody(requiredSchemaVersion);
+    // What the app cannot work without, not what it was built against: an
+    // older but sufficient server is never sent here.
+    final body = l10n.schemaUpdateBody(appNeedsSchemaVersion);
     final operator = l10n.schemaUpdateOperator;
     final member = l10n.schemaUpdateMember;
     // #3729 — what the installation hosting the workspace reports, and the
@@ -40,6 +44,13 @@ class SchemaUpdateScreen extends ConsumerWidget {
     final running = hosted != null && hosted.answered && hosted.number != null
         ? hosted.number
         : null;
+    final signedIn = ref.watch(authStateProvider).value != null;
+    // Only one business's installation is old when the personal one is not:
+    // the account and its other businesses stay open, so the screen leads
+    // back to Me.
+    final onlyThisHost =
+        ref.watch(schemaCompatibilityProvider).value !=
+        SchemaCompatibility.behind;
     return Scaffold(
       key: const ValueKey('schema-update'),
       body: SafeArea(
@@ -92,6 +103,24 @@ class SchemaUpdateScreen extends ConsumerWidget {
               icon: const Icon(Icons.dns_outlined),
               label: Text(l10n.schemaUpdateServer),
             ),
+            if (signedIn && onlyThisHost) ...[
+              const SizedBox(height: AppSpacing.sm),
+              OutlinedButton.icon(
+                key: const ValueKey('schema-update-me'),
+                onPressed: () => context.go('/me'),
+                icon: const Icon(Icons.switch_account_outlined),
+                label: Text(l10n.spaceBackToMe),
+              ),
+            ],
+            if (signedIn) ...[
+              const SizedBox(height: AppSpacing.sm),
+              TextButton.icon(
+                key: const ValueKey('schema-update-sign-out'),
+                onPressed: () => signOutAndForget(ref),
+                icon: const Icon(Icons.logout),
+                label: Text(l10n.authSignOut),
+              ),
+            ],
           ],
         ),
       ),

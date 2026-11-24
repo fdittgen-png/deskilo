@@ -31,8 +31,10 @@ abstract interface class AppFloorSource {
 }
 
 /// Asks [client]. A missing function is an answer (no floor); silence and
-/// anything but an integer or null are not.
-Future<int?> _readAppFloor(SupabaseClient client) async {
+/// anything but an integer or null are not. Read with the personal client
+/// here, and with a hosting installation's own client by
+/// `installation_schema.dart`.
+Future<int?> readAppFloor(SupabaseClient client) async {
   final Object? value;
   try {
     value = await client
@@ -55,7 +57,7 @@ class _ClientAppFloorSource implements AppFloorSource {
   final SupabaseClient _client;
 
   @override
-  Future<int?> read() => _readAppFloor(_client);
+  Future<int?> read() => readAppFloor(_client);
 }
 
 /// The floor of the installation this device is signed in to (or would

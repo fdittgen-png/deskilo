@@ -122,6 +122,7 @@ class RouteFacts {
     this.schema = SchemaCompatibility.unknown,
     this.hostSchema = SchemaCompatibility.unknown,
     this.appFloor = AppFloorVerdict.unknown,
+    this.hostAppFloor = AppFloorVerdict.unknown,
     this.privacy = PrivacyFact.accepted,
     this.workspaces = WorkspacesFact.some,
     this.membership = MembershipFact.active,
@@ -142,6 +143,11 @@ class RouteFacts {
 
   /// #3726 — how the installation's floor judges this app.
   final AppFloorVerdict appFloor;
+
+  /// #3726 — how the floor of the installation hosting the CURRENT
+  /// workspace judges this app: below it, that workspace's routes go to the
+  /// app update screen and the account's pages stay open.
+  final AppFloorVerdict hostAppFloor;
   final PrivacyFact privacy;
   final WorkspacesFact workspaces;
   final MembershipFact membership;
@@ -169,6 +175,10 @@ enum RouteReason {
 
   /// #3726 — the installation accepts only newer apps.
   appBelowFloor,
+
+  /// #3726 — the installation hosting the workspace accepts only newer
+  /// apps: the workspace's routes go to the notice, the account's stay.
+  hostAppBelowFloor,
 
   /// #3726 — the app is accepted: the update screen sends home.
   appAccepted,
@@ -302,6 +312,16 @@ RouteDecision? _appFloorDecision(
   final path = request.location;
   final gate = appFloorGateRedirect(facts.appFloor, path);
   if (facts.appFloor != AppFloorVerdict.below) {
+    if (facts.hostAppFloor == AppFloorVerdict.below &&
+        !(path == '/demo' || demoEntry != null)) {
+      if (path == kAppUpdateRoute) return const RouteDecision.stay();
+      if (classifyRoute(path) == RouteClass.workspace) {
+        return const RouteDecision.go(
+          kAppUpdateRoute,
+          RouteReason.hostAppBelowFloor,
+        );
+      }
+    }
     return gate == null ? null : RouteDecision.go(facts.home, RouteReason.appAccepted);
   }
   if (path == '/demo' || demoEntry != null) return null;

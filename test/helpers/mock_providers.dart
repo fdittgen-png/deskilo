@@ -62,6 +62,7 @@ import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/i18n/app_format.dart';
 import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/core/i18n/format_prefs.dart';
+import 'package:deskilo/core/instance/app_compatibility.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/core/locale/device_locale.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
@@ -772,22 +773,23 @@ class FixedAppFloorSource implements AppFloorSource {
 }
 
 /// #3729 — one installation schema for every workspace, or one per
-/// workspace id; [unavailable] throws as an offline host does.
+/// workspace id; [unavailable] throws as an offline host does. [floor] is
+/// how the host's app floor judges this app (#3726).
 class FixedInstallationSchemaSource implements InstallationSchemaSource {
   const FixedInstallationSchemaSource({
     this.number = requiredSchemaVersion,
     this.byWorkspace = const {},
     this.unavailable = false,
     this.installationId = 'test-installation',
+    this.floor = AppFloorVerdict.accepted,
   });
   final int? number;
   final Map<String, int?> byWorkspace;
   final bool unavailable;
   final String installationId;
+  final AppFloorVerdict floor;
   @override
-  Future<({String installationId, int? number})> read(
-    String workspaceId,
-  ) async {
+  Future<InstallationAnswer> read(String workspaceId) async {
     if (unavailable) {
       throw InstallationSchemaUnavailable(
         'offline in the test',
@@ -801,6 +803,7 @@ class FixedInstallationSchemaSource implements InstallationSchemaSource {
       number: byWorkspace.containsKey(workspaceId)
           ? byWorkspace[workspaceId]
           : number,
+      floor: floor,
     );
   }
 }

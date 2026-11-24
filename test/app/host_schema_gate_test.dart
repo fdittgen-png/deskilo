@@ -6,9 +6,12 @@
 // stay; an installation that is current changes nothing. Below what one
 // FEATURE needs, only that feature (and what is under it) is not offered:
 // not as a switch, not as an effective feature, not through its route.
+// #3726 — an installation whose own app floor refuses this app closes its
+// workspace with the app update screen, the account's pages stay.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/backend/installation_schema.dart';
+import 'package:deskilo/core/instance/app_compatibility.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/screens/features_screen.dart';
@@ -96,6 +99,54 @@ void main() {
     router.go('/reserve');
     await tester.pumpAndSettle();
     expect(find.byKey(_update), findsOneWidget);
+  });
+
+  // #3726 — the floor of the installation hosting the workspace.
+  for (final size in const [Size(390, 844), Size(1440, 900)]) {
+    testWidgets(
+      'at ${size.width.toInt()}: a host whose floor refuses this app closes '
+      'its workspace with the app update screen; Me stays open', (tester) async {
+        await _boot(
+          tester,
+          const FixedInstallationSchemaSource(floor: AppFloorVerdict.below),
+          size: size,
+        );
+        const appUpdate = ValueKey('app-update');
+        expect(find.byKey(appUpdate), findsOneWidget);
+        expect(find.byKey(_update), findsNothing);
+        final me = find.byKey(const ValueKey('app-update-me'));
+        await tester.ensureVisible(me);
+        await tester.tap(me);
+        await tester.pumpAndSettle();
+        expect(find.byKey(appUpdate), findsNothing, reason: 'Me is the account\'s');
+      },
+    );
+  }
+
+  testWidgets('a host whose floor accepts this app, or was never read, '
+      'changes nothing', (tester) async {
+    for (final floor in const [
+      AppFloorVerdict.accepted,
+      AppFloorVerdict.unknown,
+    ]) {
+      await _boot(tester, FixedInstallationSchemaSource(floor: floor));
+      expect(find.byKey(const ValueKey('app-update')), findsNothing,
+          reason: floor.name);
+    }
+  });
+
+  testWidgets('the update screen of an old host leads back to Me and offers '
+      'signing out', (tester) async {
+    await _boot(
+      tester,
+      const FixedInstallationSchemaSource(number: appNeedsSchemaVersion - 1),
+    );
+    expect(find.byKey(const ValueKey('schema-update-sign-out')), findsOneWidget);
+    final me = find.byKey(const ValueKey('schema-update-me'));
+    await tester.ensureVisible(me);
+    await tester.tap(me);
+    await tester.pumpAndSettle();
+    expect(find.byKey(_update), findsNothing, reason: 'Me is the account\'s');
   });
 
   group('a feature the installation is too old for', () {

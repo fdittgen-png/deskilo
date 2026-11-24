@@ -188,7 +188,7 @@ final class WorkspaceSchemaProvider
   }
 }
 
-String _$workspaceSchemaHash() => r'577110c834284a9849274c23950cce7538dfe34a';
+String _$workspaceSchemaHash() => r'e4e11fbe5921b87f228c3465260df95e323460a8';
 
 /// The schema of the installation that hosts [workspaceId].
 ///

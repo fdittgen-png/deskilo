@@ -119,6 +119,9 @@ RouteFacts _factsOf(
     hostSchema:
         ref.read(currentWorkspaceInstallationSchemaProvider)?.verdict ??
             SchemaCompatibility.unknown,
+    hostAppFloor:
+        ref.read(currentWorkspaceInstallationSchemaProvider)?.floor ??
+            AppFloorVerdict.unknown,
     appFloor: ref.read(appFloorProvider).value ?? AppFloorVerdict.unknown,
     auth: signedIn ? AuthFact.signedIn : AuthFact.signedOut,
     privacy: privacyFactOf(

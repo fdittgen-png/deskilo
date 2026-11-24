@@ -26,6 +26,7 @@ import '../backend/app_floor.dart';
 import '../backend/installation_schema.dart';
 import '../backend/schema_version.dart';
 import '../files/file_types.dart';
+import '../instance/app_compatibility.dart';
 import '../instance/schema_compatibility.dart';
 import '../push/push_connector.dart';
 import '../push/push_endpoint_repository.dart';
@@ -190,12 +191,15 @@ class DemoAppFloorSource implements AppFloorSource {
 
 /// #3729 — the schema of the installation hosting a Demo workspace: this
 /// build's own, for the reason the schema probe above gives. The Demo
-/// withholds no feature for an installation it does not talk to.
+/// withholds no feature, and refuses no app, for an installation it does
+/// not talk to.
 class DemoInstallationSchemaSource implements InstallationSchemaSource {
   @override
-  Future<({String installationId, int? number})> read(
-    String workspaceId,
-  ) async => (installationId: 'demo', number: requiredSchemaVersion);
+  Future<InstallationAnswer> read(String workspaceId) async => (
+    installationId: 'demo',
+    number: requiredSchemaVersion,
+    floor: AppFloorVerdict.accepted,
+  );
 }
 
 class DemoSchemaVersionSource implements SchemaVersionSource {

@@ -4,7 +4,9 @@
 // per installation, with that installation's own client: an old business does
 // not lend its verdict to another, a failed refresh keeps what THAT
 // installation last answered, and silence is unknown, which never withholds.
+// #3726 — the same holds for each installation's app floor.
 import 'package:deskilo/core/backend/installation_schema.dart';
+import 'package:deskilo/core/instance/app_compatibility.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,8 +16,11 @@ class _Hosts implements InstallationSchemaSource {
   final Map<String, ({String id, int? number})> hosts = {};
   final Set<String> down = {};
   final Set<String> unreachable = {};
+
+  /// How a host's floor judges this app; absent: accepted.
+  final Map<String, AppFloorVerdict> floors = {};
   @override
-  Future<({String installationId, int? number})> read(String w) async {
+  Future<InstallationAnswer> read(String w) async {
     if (unreachable.contains(w)) {
       throw const InstallationSchemaUnavailable('no route to host');
     }
@@ -23,7 +28,11 @@ class _Hosts implements InstallationSchemaSource {
     if (down.contains(w)) {
       throw InstallationSchemaUnavailable('timeout', installationId: host.id);
     }
-    return (installationId: host.id, number: host.number);
+    return (
+      installationId: host.id,
+      number: host.number,
+      floor: floors[w] ?? AppFloorVerdict.accepted,
+    );
   }
 }
 
@@ -95,5 +104,41 @@ void main() {
     hosts.hosts['w-other'] = (id: 'inst-other', number: requiredSchemaVersion);
     hosts.down.add('w-other');
     expect((await read('w-other')).verdict, SchemaCompatibility.unknown);
+  });
+
+  group('the app floor of each installation', () {
+    test('one installation refuses this app and another accepts it', () async {
+      hosts.floors['w-old'] = AppFloorVerdict.below;
+      expect((await read('w-old')).floor, AppFloorVerdict.below);
+      expect((await read('w-new')).floor, AppFloorVerdict.accepted);
+    });
+
+    test('a floor that could not be read keeps a known refusal', () async {
+      hosts.floors['w-new'] = AppFloorVerdict.below;
+      expect((await read('w-new')).floor, AppFloorVerdict.below);
+      hosts.floors['w-new'] = AppFloorVerdict.unknown;
+      c.invalidate(workspaceSchemaProvider('w-new'));
+      expect((await read('w-new')).floor, AppFloorVerdict.below);
+    });
+
+    test('a failed refresh keeps the refusal; a lowered floor lifts it',
+        () async {
+      hosts.floors['w-new'] = AppFloorVerdict.below;
+      expect((await read('w-new')).floor, AppFloorVerdict.below);
+      hosts.down.add('w-new');
+      c.invalidate(workspaceSchemaProvider('w-new'));
+      expect((await read('w-new')).floor, AppFloorVerdict.below);
+      hosts.down.remove('w-new');
+      hosts.floors['w-new'] = AppFloorVerdict.accepted;
+      c.invalidate(workspaceSchemaProvider('w-new'));
+      expect((await read('w-new')).floor, AppFloorVerdict.accepted);
+    });
+
+    test('a floor never read refuses nothing', () async {
+      hosts.floors['w-new'] = AppFloorVerdict.unknown;
+      expect((await read('w-new')).floor, AppFloorVerdict.unknown);
+      hosts.unreachable.add('w-old');
+      expect((await read('w-old')).floor, AppFloorVerdict.unknown);
+    });
   });
 }

@@ -8,28 +8,43 @@
 // another.
 import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show SupabaseClient;
 
+import '../instance/app_compatibility.dart';
 import '../instance/schema_compatibility.dart';
 import '../lifecycle/app_foreground.dart';
 import '../trace/trace_logger.dart';
+import 'app_floor.dart';
 import 'context_client_providers.dart';
 import 'context_clients.dart';
 import 'schema_version.dart';
 
 part 'installation_schema.g.dart';
 
-/// What an installation answered about its schema.
+/// What an installation answered about its schema, and how its app floor
+/// judges this app.
 class InstallationSchema {
   /// An answer: [number] is the marker, or null for a server that has no
   /// `deskilo_schema_version()` — it predates 0226.
-  const InstallationSchema.answered(this.number) : answered = true;
+  const InstallationSchema.answered(
+    this.number, {
+    this.floor = AppFloorVerdict.unknown,
+  }) : answered = true;
 
   /// Nothing answered yet, or ever: offline, a timeout, a host that could not
   /// be reached. Never a block.
-  const InstallationSchema.unknown() : number = null, answered = false;
+  const InstallationSchema.unknown()
+    : number = null,
+      answered = false,
+      floor = AppFloorVerdict.unknown;
 
   final int? number;
   final bool answered;
+
+  /// #3726 — how THIS installation's `deskilo_app_floor()` judges this app:
+  /// below it, the installation's workspaces show the app update screen and
+  /// the account's pages stay. Unknown (never read) blocks nothing.
+  final AppFloorVerdict floor;
 
   /// Against what this app needs and was built against.
   SchemaCompatibility get verdict =>
@@ -44,10 +59,11 @@ class InstallationSchema {
   bool operator ==(Object other) =>
       other is InstallationSchema &&
       other.answered == answered &&
-      other.number == number;
+      other.number == number &&
+      other.floor == floor;
 
   @override
-  int get hashCode => Object.hash(answered, number);
+  int get hashCode => Object.hash(answered, number, floor);
 }
 
 /// The host could not be asked: [installationId] is known once the host
@@ -61,11 +77,20 @@ class InstallationSchemaUnavailable implements Exception {
   String toString() => 'installation schema unavailable: $cause';
 }
 
-/// Reads the schema number of the installation that hosts a workspace.
+/// One answer of the installation hosting a workspace: its id, its schema
+/// marker (null: no such function) and how its app floor judges this app
+/// ([AppFloorVerdict.unknown] when the floor alone could not be read).
+typedef InstallationAnswer = ({
+  String installationId,
+  int? number,
+  AppFloorVerdict floor,
+});
+
+/// Reads the schema number and the app floor of the installation that hosts
+/// a workspace.
 abstract interface class InstallationSchemaSource {
-  /// The installation's id and its marker (null: no such function). Throws
-  /// [InstallationSchemaUnavailable] when nothing answered.
-  Future<({String installationId, int? number})> read(String workspaceId);
+  /// Throws [InstallationSchemaUnavailable] when the schema got no answer.
+  Future<InstallationAnswer> read(String workspaceId);
 }
 
 class _HostedInstallationSchemaSource implements InstallationSchemaSource {
@@ -73,9 +98,7 @@ class _HostedInstallationSchemaSource implements InstallationSchemaSource {
   final Ref _ref;
 
   @override
-  Future<({String installationId, int? number})> read(
-    String workspaceId,
-  ) async {
+  Future<InstallationAnswer> read(String workspaceId) async {
     final ResolvedWorkspaceHost host;
     try {
       host = await _ref.read(workspaceHostResolverProvider).resolve(workspaceId);
@@ -85,7 +108,11 @@ class _HostedInstallationSchemaSource implements InstallationSchemaSource {
     }
     try {
       final number = await readSchemaVersion(host.client);
-      return (installationId: host.installationId, number: number);
+      return (
+        installationId: host.installationId,
+        number: number,
+        floor: await _floorOf(host.client),
+      );
     } on SchemaVersionUnavailable catch (e, st) {
       // trace-exempt: rethrown as a typed failure, stack kept; the caller traces.
       Error.throwWithStackTrace(
@@ -95,6 +122,21 @@ class _HostedInstallationSchemaSource implements InstallationSchemaSource {
     } finally {
       host.lease?.release();
     }
+  }
+}
+
+/// The host's floor; one that cannot be read is unknown, never a refusal.
+Future<AppFloorVerdict> _floorOf(SupabaseClient client) async {
+  try {
+    return judgeAppFloor(await readAppFloor(client));
+  } on Object catch (e, st) {
+    TraceLogger.instance.warn(
+      'backend',
+      'installation app floor could not be read — not refusing',
+      error: e,
+      stackTrace: st,
+    );
+    return AppFloorVerdict.unknown;
   }
 }
 
@@ -138,7 +180,12 @@ Future<InstallationSchema> workspaceSchema(Ref ref, String workspaceId) async {
     final answer = await ref
         .read(installationSchemaSourceProvider)
         .read(workspaceId);
-    final schema = InstallationSchema.answered(answer.number);
+    // A floor that could not be read this time keeps what that
+    // installation last said: a known refusal is not reopened by silence.
+    final floor = answer.floor == AppFloorVerdict.unknown
+        ? memory.of(answer.installationId)?.floor ?? AppFloorVerdict.unknown
+        : answer.floor;
+    final schema = InstallationSchema.answered(answer.number, floor: floor);
     memory.remember(answer.installationId, schema);
     if (schema.verdict == SchemaCompatibility.behind) {
       memory.lastBehind = schema;
