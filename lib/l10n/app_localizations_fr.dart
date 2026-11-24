@@ -32332,6 +32332,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingGroupCompatibility => 'Versions de l\'application';
 
   @override
+  String get settingGroupDiagnostics => 'Rapports d\'erreur';
+
+  @override
   String get settingGroupDirectory => 'Annuaire des membres';
 
   @override
@@ -32812,6 +32815,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Activé : un nouvel article de stock est proposé en kilogrammes plutôt qu’en pièces (boucherie, boulangerie, comptoir d’épicerie). Tout article peut garder une autre unité.';
 
   @override
+  String get settingHintTraceReportMaxBytes =>
+      'Le plus grand rapport d\'erreur que cette installation accepte. L\'application raccourcit la pile du rapport avant l\'envoi ; un rapport encore trop grand est abandonné.';
+
+  @override
+  String get settingHintTraceReportRetentionDays =>
+      'Combien de jours cette installation conserve un rapport d\'erreur. Les rapports plus anciens sont supprimés à l\'arrivée d\'un nouveau.';
+
+  @override
+  String get settingHintTraceReportsPerHour =>
+      'Combien de rapports d\'erreur un appareil peut envoyer à cette installation en une heure. Les rapports suivants de cette heure sont abandonnés, jamais mis en attente. 0 désactive les rapports d\'erreur pour tous les appareils.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.';
 
@@ -33234,6 +33249,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelStockWeighedGoods =>
       'Les marchandises se vendent au poids';
+
+  @override
+  String get settingLabelTraceReportMaxBytes =>
+      'Taille maximale d\'un rapport d\'erreur';
+
+  @override
+  String get settingLabelTraceReportRetentionDays =>
+      'Durée de conservation des rapports d\'erreur';
+
+  @override
+  String get settingLabelTraceReportsPerHour =>
+      'Rapports d\'erreur par appareil et par heure';
 
   @override
   String get settingLabelVatViesEvidenceDays =>

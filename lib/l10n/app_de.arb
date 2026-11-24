@@ -19018,6 +19018,7 @@
   },
   "settingGroupBusiness": "Geschäft",
   "settingGroupCompatibility": "App-Versionen",
+  "settingGroupDiagnostics": "Fehlerberichte",
   "settingGroupDirectory": "Mitgliederverzeichnis",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -19306,6 +19307,9 @@
   "settingHintStockTagReadUnitAsQuantity": "Bei einer Massenumlagerung wird eine Etikette auf einem Stück eines nicht stückweise geführten Artikels als Menge 1 dieses Artikels aufgenommen. Aus: Eine solche Etikette wird ausgelassen und aufgelistet.",
   "settingHintStockTagRebindGraceDays": "Wie viele Tage nach dem Entfernen ein Etikettencode wieder gebunden werden darf. 0 heißt sofort. Ein gültiges Etikett wird nie doppelt gebunden.",
   "settingHintStockWeighedGoods": "An: Ein neuer Lagerartikel wird in Kilogramm statt in Stück vorgeschlagen (Metzgerei, Bäckerei, Theke). Jeder Artikel kann weiterhin eine andere Einheit erhalten.",
+  "settingHintTraceReportMaxBytes": "Der größte Fehlerbericht, den diese Installation annimmt. Die App kürzt den Stack des Berichts vor dem Senden; ein Bericht, der dann noch größer ist, wird verworfen.",
+  "settingHintTraceReportRetentionDays": "Wie viele Tage diese Installation einen Fehlerbericht aufbewahrt. Ältere Berichte werden gelöscht, sobald ein neuer eintrifft.",
+  "settingHintTraceReportsPerHour": "Wie viele Fehlerberichte ein Gerät in einer Stunde an diese Installation senden darf. Weitere Berichte in dieser Stunde werden verworfen, nie zurückgestellt. 0 schaltet Fehlerberichte für alle Geräte ab.",
   "settingHintVatViesEvidenceDays": "Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19563,6 +19567,9 @@
   "settingLabelStockTagReadUnitAsQuantity": "Ein gelesenes Stück in einer Umlagerung zählt als eins seines Artikels",
   "settingLabelStockTagRebindGraceDays": "Tage, bevor ein entferntes Etikett neu vergeben wird",
   "settingLabelStockWeighedGoods": "Ware wird nach Gewicht verkauft",
+  "settingLabelTraceReportMaxBytes": "Größter Fehlerbericht",
+  "settingLabelTraceReportRetentionDays": "Fehlerberichte aufbewahren für",
+  "settingLabelTraceReportsPerHour": "Fehlerberichte pro Gerät und Stunde",
   "settingLabelVatViesEvidenceDays": "Aktualität der USt-IdNr.-Prüfung",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"

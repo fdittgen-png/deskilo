@@ -32233,6 +32233,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingGroupCompatibility => 'Versioni dell\'app';
 
   @override
+  String get settingGroupDiagnostics => 'Segnalazioni di errore';
+
+  @override
   String get settingGroupDirectory => 'Elenco dei membri';
 
   @override
@@ -32713,6 +32716,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Attivo: un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco). Ogni articolo può avere un’altra unità.';
 
   @override
+  String get settingHintTraceReportMaxBytes =>
+      'La segnalazione di errore più grande che questa installazione accetta. L\'app accorcia lo stack della segnalazione prima dell\'invio; una segnalazione ancora più grande viene scartata.';
+
+  @override
+  String get settingHintTraceReportRetentionDays =>
+      'Per quanti giorni questa installazione conserva una segnalazione di errore. Le segnalazioni più vecchie vengono eliminate all\'arrivo di una nuova.';
+
+  @override
+  String get settingHintTraceReportsPerHour =>
+      'Quante segnalazioni di errore un dispositivo può inviare a questa installazione in un\'ora. Le successive di quell\'ora vengono scartate, mai messe in coda. 0 disattiva le segnalazioni di errore per tutti i dispositivi.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.';
 
@@ -33140,6 +33155,18 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingLabelStockWeighedGoods => 'La merce si vende a peso';
+
+  @override
+  String get settingLabelTraceReportMaxBytes =>
+      'Dimensione massima di una segnalazione di errore';
+
+  @override
+  String get settingLabelTraceReportRetentionDays =>
+      'Conservare le segnalazioni di errore per';
+
+  @override
+  String get settingLabelTraceReportsPerHour =>
+      'Segnalazioni di errore per dispositivo e ora';
 
   @override
   String get settingLabelVatViesEvidenceDays =>

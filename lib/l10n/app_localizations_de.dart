@@ -32283,6 +32283,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingGroupCompatibility => 'App-Versionen';
 
   @override
+  String get settingGroupDiagnostics => 'Fehlerberichte';
+
+  @override
   String get settingGroupDirectory => 'Mitgliederverzeichnis';
 
   @override
@@ -32763,6 +32766,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'An: Ein neuer Lagerartikel wird in Kilogramm statt in Stück vorgeschlagen (Metzgerei, Bäckerei, Theke). Jeder Artikel kann weiterhin eine andere Einheit erhalten.';
 
   @override
+  String get settingHintTraceReportMaxBytes =>
+      'Der größte Fehlerbericht, den diese Installation annimmt. Die App kürzt den Stack des Berichts vor dem Senden; ein Bericht, der dann noch größer ist, wird verworfen.';
+
+  @override
+  String get settingHintTraceReportRetentionDays =>
+      'Wie viele Tage diese Installation einen Fehlerbericht aufbewahrt. Ältere Berichte werden gelöscht, sobald ein neuer eintrifft.';
+
+  @override
+  String get settingHintTraceReportsPerHour =>
+      'Wie viele Fehlerberichte ein Gerät in einer Stunde an diese Installation senden darf. Weitere Berichte in dieser Stunde werden verworfen, nie zurückgestellt. 0 schaltet Fehlerberichte für alle Geräte ab.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.';
 
@@ -33173,6 +33188,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelStockWeighedGoods => 'Ware wird nach Gewicht verkauft';
+
+  @override
+  String get settingLabelTraceReportMaxBytes => 'Größter Fehlerbericht';
+
+  @override
+  String get settingLabelTraceReportRetentionDays =>
+      'Fehlerberichte aufbewahren für';
+
+  @override
+  String get settingLabelTraceReportsPerHour =>
+      'Fehlerberichte pro Gerät und Stunde';
 
   @override
   String get settingLabelVatViesEvidenceDays =>

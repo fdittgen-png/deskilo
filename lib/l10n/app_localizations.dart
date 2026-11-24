@@ -51240,6 +51240,12 @@ abstract class AppLocalizations {
   /// **'App versions'**
   String get settingGroupCompatibility;
 
+  /// #4416 Settings group: the error reports apps send to this installation
+  ///
+  /// In en, this message translates to:
+  /// **'Error reports'**
+  String get settingGroupDiagnostics;
+
   /// #2486 settings: Settings group title.
   ///
   /// In en, this message translates to:
@@ -51978,6 +51984,24 @@ abstract class AppLocalizations {
   /// **'On: a new stock item is proposed in kilograms instead of pieces (a butcher, a bakery, a grocery counter). Any item can still be given another unit.'**
   String get settingHintStockWeighedGoods;
 
+  /// #4416 Platform setting trace.report_max_bytes: what it decides, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'The largest error report this installation accepts. The app shortens the report\'s stack to fit before it sends; a report still larger is dropped.'**
+  String get settingHintTraceReportMaxBytes;
+
+  /// #4416 Platform setting trace.report_retention_days: what it decides, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'How many days this installation keeps an error report. Older reports are deleted when a new one arrives.'**
+  String get settingHintTraceReportRetentionDays;
+
+  /// #4416 Platform setting trace.reports_per_hour: what it decides, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'How many error reports one device may send to this installation in an hour. Further reports in that hour are dropped, never queued. 0 turns error reports off for every device.'**
+  String get settingHintTraceReportsPerHour;
+
   /// #2487 retention settings
   ///
   /// In en, this message translates to:
@@ -52655,6 +52679,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Goods are sold by weight'**
   String get settingLabelStockWeighedGoods;
+
+  /// #4416 Platform setting trace.report_max_bytes: its name in the settings editor
+  ///
+  /// In en, this message translates to:
+  /// **'Largest error report'**
+  String get settingLabelTraceReportMaxBytes;
+
+  /// #4416 Platform setting trace.report_retention_days: its name in the settings editor
+  ///
+  /// In en, this message translates to:
+  /// **'Error reports kept for'**
+  String get settingLabelTraceReportRetentionDays;
+
+  /// #4416 Platform setting trace.reports_per_hour: its name in the settings editor
+  ///
+  /// In en, this message translates to:
+  /// **'Error reports per device and hour'**
+  String get settingLabelTraceReportsPerHour;
 
   /// #2487 retention settings
   ///

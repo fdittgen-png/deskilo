@@ -32192,6 +32192,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingGroupCompatibility => 'Versiones de la aplicación';
 
   @override
+  String get settingGroupDiagnostics => 'Informes de error';
+
+  @override
   String get settingGroupDirectory => 'Directorio de miembros';
 
   @override
@@ -32672,6 +32675,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Activado: un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador). Cualquier artículo puede tener otra unidad.';
 
   @override
+  String get settingHintTraceReportMaxBytes =>
+      'El mayor informe de error que acepta esta instalación. La app acorta la pila del informe antes de enviarlo; un informe que siga siendo mayor se descarta.';
+
+  @override
+  String get settingHintTraceReportRetentionDays =>
+      'Cuántos días conserva esta instalación un informe de error. Los informes más antiguos se borran cuando llega uno nuevo.';
+
+  @override
+  String get settingHintTraceReportsPerHour =>
+      'Cuántos informes de error puede enviar un dispositivo a esta instalación en una hora. Los siguientes de esa hora se descartan, nunca se ponen en cola. 0 desactiva los informes de error para todos los dispositivos.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.';
 
@@ -33099,6 +33114,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelStockWeighedGoods =>
       'Las mercancías se venden al peso';
+
+  @override
+  String get settingLabelTraceReportMaxBytes =>
+      'Tamaño máximo de un informe de error';
+
+  @override
+  String get settingLabelTraceReportRetentionDays =>
+      'Conservar los informes de error durante';
+
+  @override
+  String get settingLabelTraceReportsPerHour =>
+      'Informes de error por dispositivo y hora';
 
   @override
   String get settingLabelVatViesEvidenceDays =>

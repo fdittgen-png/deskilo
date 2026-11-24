@@ -1,0 +1,31 @@
+{
+  "@@locale": "en",
+  "settingGroupDiagnostics": "Error reports",
+  "@settingGroupDiagnostics": {
+    "description": "#4416 Settings group: the error reports apps send to this installation"
+  },
+  "settingLabelTraceReportsPerHour": "Error reports per device and hour",
+  "@settingLabelTraceReportsPerHour": {
+    "description": "#4416 Platform setting trace.reports_per_hour: its name in the settings editor"
+  },
+  "settingHintTraceReportsPerHour": "How many error reports one device may send to this installation in an hour. Further reports in that hour are dropped, never queued. 0 turns error reports off for every device.",
+  "@settingHintTraceReportsPerHour": {
+    "description": "#4416 Platform setting trace.reports_per_hour: what it decides, under its name"
+  },
+  "settingLabelTraceReportMaxBytes": "Largest error report",
+  "@settingLabelTraceReportMaxBytes": {
+    "description": "#4416 Platform setting trace.report_max_bytes: its name in the settings editor"
+  },
+  "settingHintTraceReportMaxBytes": "The largest error report this installation accepts. The app shortens the report's stack to fit before it sends; a report still larger is dropped.",
+  "@settingHintTraceReportMaxBytes": {
+    "description": "#4416 Platform setting trace.report_max_bytes: what it decides, under its name"
+  },
+  "settingLabelTraceReportRetentionDays": "Error reports kept for",
+  "@settingLabelTraceReportRetentionDays": {
+    "description": "#4416 Platform setting trace.report_retention_days: its name in the settings editor"
+  },
+  "settingHintTraceReportRetentionDays": "How many days this installation keeps an error report. Older reports are deleted when a new one arrives.",
+  "@settingHintTraceReportRetentionDays": {
+    "description": "#4416 Platform setting trace.report_retention_days: what it decides, under its name"
+  }
+}

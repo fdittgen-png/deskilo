@@ -31957,6 +31957,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingGroupCompatibility => 'App versions';
 
   @override
+  String get settingGroupDiagnostics => 'Error reports';
+
+  @override
   String get settingGroupDirectory => 'Member directory';
 
   @override
@@ -32437,6 +32440,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'On: a new stock item is proposed in kilograms instead of pieces (a butcher, a bakery, a grocery counter). Any item can still be given another unit.';
 
   @override
+  String get settingHintTraceReportMaxBytes =>
+      'The largest error report this installation accepts. The app shortens the report\'s stack to fit before it sends; a report still larger is dropped.';
+
+  @override
+  String get settingHintTraceReportRetentionDays =>
+      'How many days this installation keeps an error report. Older reports are deleted when a new one arrives.';
+
+  @override
+  String get settingHintTraceReportsPerHour =>
+      'How many error reports one device may send to this installation in an hour. Further reports in that hour are dropped, never queued. 0 turns error reports off for every device.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.';
 
@@ -32831,6 +32846,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelStockWeighedGoods => 'Goods are sold by weight';
+
+  @override
+  String get settingLabelTraceReportMaxBytes => 'Largest error report';
+
+  @override
+  String get settingLabelTraceReportRetentionDays => 'Error reports kept for';
+
+  @override
+  String get settingLabelTraceReportsPerHour =>
+      'Error reports per device and hour';
 
   @override
   String get settingLabelVatViesEvidenceDays => 'VAT-number check freshness';
