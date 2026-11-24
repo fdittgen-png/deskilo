@@ -4,6 +4,7 @@
 // answer is read back by THAT id (never by "the newest invoice"), and nothing
 // here ever sends it a second time.
 import 'package:deskilo/core/demo/data/money_repository.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/core/validation/pending_validation.dart';
 import 'package:deskilo/features/money/application/invoice_action.dart';
 import 'package:deskilo/features/money/domain/command_receipt.dart';
@@ -62,6 +63,10 @@ class _Reads extends FakeMoneyRepository {
   }
 }
 
+/// An answer that was lost.
+CommandUnreached<void> _lost() =>
+    CommandUnreached<void>(Defect(StateError('lost')));
+
 void main() {
   late _Reads repo;
   late _Commands commands;
@@ -100,12 +105,13 @@ void main() {
       );
 
   test('a lost answer after the commit is recovered by the request id, with no second send', () async {
-    final out = await actions.run(attempt('r1'));
-    expect(out, isA<InvoiceActionUnknown>());
+    final sent = attempt('r1');
+    final out = await actions.run(sent);
+    expect(out, isA<CommandUnreached<void>>());
     expect(repo.invoices.first.isVoided, isTrue);
-    final found = await actions.look(out as InvoiceActionUnknown);
-    expect(found, isA<InvoiceActionDone>());
-    await actions.look(out);
+    final found = await actions.look(sent, out as CommandUnreached<void>);
+    expect(found, isA<CommandDone<void>>());
+    await actions.look(sent, out);
     expect(commands.sends, 1);
     expect(repo.reads, 2);
   });
@@ -113,9 +119,12 @@ void main() {
   test(
     'a request that never committed stays unknown after every look',
     () async {
-      final out = InvoiceActionUnknown(attempt('never'), StateError('lost'));
+      final out = _lost();
       for (var i = 0; i < 3; i++) {
-        expect(await actions.look(out), isA<InvoiceActionUnknown>());
+        expect(
+          await actions.look(attempt('never'), out),
+          isA<CommandUnreached<void>>(),
+        );
       }
       expect(commands.sends, 0);
       expect(repo.invoices.first.isVoided, isFalse);
@@ -126,46 +135,46 @@ void main() {
     'another request id, or the same id in another workspace, is not this act',
     () async {
       await actions.run(attempt('r2'));
-      final other = await actions.look(
-        InvoiceActionUnknown(attempt('r3'), StateError('lost')),
-      );
-      expect(other, isA<InvoiceActionUnknown>());
+      final other = await actions.look(attempt('r3'), _lost());
+      expect(other, isA<CommandUnreached<void>>());
       final foreign = await actions.look(
-        InvoiceActionUnknown(
-          attempt('r2', workspace: 'ws-other'),
-          StateError('lost'),
-        ),
+        attempt('r2', workspace: 'ws-other'),
+        _lost(),
       );
-      expect(foreign, isA<InvoiceActionUnknown>());
+      expect(foreign, isA<CommandUnreached<void>>());
     },
   );
 
   test('held, declined and unreadable receipts', () async {
-    final unknown = InvoiceActionUnknown(attempt('r4'), StateError('lost'));
+    final sent = attempt('r4');
+    final unknown = _lost();
     repo.forced = const CommandReceipt(
       CommandReceiptState.pending,
       eventId: 'ev-1',
     );
-    expect((await actions.look(unknown) as InvoiceActionHeld).eventId, 'ev-1');
+    expect(
+      (await actions.look(sent, unknown) as CommandHeld<void>).eventId,
+      'ev-1',
+    );
     repo.forced = const CommandReceipt(
       CommandReceiptState.refused,
       eventId: 'ev-1',
     );
     expect(
-      (await actions.look(unknown) as InvoiceActionRefused).declined,
-      isTrue,
+      (await actions.look(sent, unknown) as CommandRefused<void>).refusal.cause,
+      isA<InvoiceActionDeclined>(),
     );
     repo
       ..forced = null
       ..fails = Exception('offline');
-    expect(await actions.look(unknown), isA<InvoiceActionUnknown>());
+    expect(await actions.look(sent, unknown), isA<CommandUnreached<void>>());
   });
 
   test('a pending answer is held and a server refusal is refused', () async {
     commands.answer = const PendingValidationException('ev-2');
-    expect(await actions.run(attempt('r5')), isA<InvoiceActionHeld>());
+    expect(await actions.run(attempt('r5')), isA<CommandHeld<void>>());
     commands.answer = StateError('invoice already voided');
-    expect(await actions.run(attempt('r6')), isA<InvoiceActionRefused>());
+    expect(await actions.run(attempt('r6')), isA<CommandRefused<void>>());
   });
 
   test('the replay of one id acts once on the fake like the server', () async {

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -20,15 +21,15 @@ Future<bool> runInvoiceReceiptAction(
 }) async {
   final l10n = context.l10n;
   var outcome = await actions.run(attempt);
-  if (outcome is InvoiceActionUnknown) {
+  if (outcome is CommandUnreached<void>) {
     if (!context.mounted) return false;
     var current = outcome;
-    final resolved = await showCommandUnknownDialog<InvoiceActionOutcome>(
+    final resolved = await showCommandUnknownDialog<CommandOutcome<void>>(
       context,
       body: l10n.invoiceActionUnknownBody,
       check: () async {
-        final looked = await actions.look(current);
-        if (looked is InvoiceActionUnknown) {
+        final looked = await actions.look(attempt, current);
+        if (looked is CommandUnreached<void>) {
           current = looked;
           return null;
         }
@@ -40,22 +41,24 @@ Future<bool> runInvoiceReceiptAction(
   }
   if (!context.mounted) return false;
   switch (outcome) {
-    case InvoiceActionDone():
+    case CommandDone():
       AppSnack.success(context, successText);
       return true;
-    case InvoiceActionHeld():
+    case CommandHeld():
       AppSnack.info(context, l10n.validationSentForApproval);
-    case InvoiceActionRefused(:final error, :final declined):
+    case CommandRefused(:final refusal):
       TraceLogger.instance.error(
         'money',
         'invoice action refused',
-        error: error,
+        error: refusal,
       );
       AppSnack.error(
         context,
-        declined ? l10n.invoiceActionDeclined : failureText,
+        refusal.cause is InvoiceActionDeclined
+            ? l10n.invoiceActionDeclined
+            : failureText,
       );
-    case InvoiceActionUnknown():
+    case CommandUnreached():
       break;
   }
   return false;

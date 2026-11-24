@@ -9,12 +9,12 @@
 // is read from the attempt's own workspace (0463). A missing receipt is "not
 // observed", which proves nothing, so the attempt stays unknown and retained.
 // Nothing here ever sends the command a second time.
+import '../../../core/data/app_failure_from.dart';
+import '../../../core/failure/app_failure.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../../../core/validation/pending_validation.dart';
 import '../domain/command_receipt.dart';
 import '../domain/invoice_action_commands.dart';
 import '../domain/invoice_queries.dart';
-import 'command_failure.dart';
 
 enum InvoiceActionKind { voidInvoice, refundCreditNote }
 
@@ -35,39 +35,14 @@ final class InvoiceActionAttempt {
   final String note;
 }
 
-sealed class InvoiceActionOutcome {
-  const InvoiceActionOutcome(this.attempt);
-  final InvoiceActionAttempt attempt;
-}
-
-/// The server applied it (or its receipt says so).
-final class InvoiceActionDone extends InvoiceActionOutcome {
-  const InvoiceActionDone(super.attempt);
-}
-
-/// A validation policy holds it; nothing changed yet.
-final class InvoiceActionHeld extends InvoiceActionOutcome {
-  const InvoiceActionHeld(super.attempt, this.eventId);
+/// The validators declined (or let expire) the held act: nothing changed.
+/// A receipt look answers it as a refusal whose cause this is.
+final class InvoiceActionDeclined implements TypedRefusal {
+  const InvoiceActionDeclined(this.eventId);
   final String eventId;
-}
 
-/// The server said no (in words), or the validators declined.
-final class InvoiceActionRefused extends InvoiceActionOutcome {
-  const InvoiceActionRefused(
-    super.attempt,
-    this.error, {
-    this.declined = false,
-  });
-  final Object error;
-
-  /// The held request was rejected or expired, as opposed to refused at once.
-  final bool declined;
-}
-
-/// The answer did not come back usable; whether it applied is not known.
-final class InvoiceActionUnknown extends InvoiceActionOutcome {
-  const InvoiceActionUnknown(super.attempt, this.cause);
-  final Object cause;
+  @override
+  String toString() => 'InvoiceActionDeclined($eventId)';
 }
 
 class InvoiceReceiptActions {
@@ -76,9 +51,10 @@ class InvoiceReceiptActions {
   final InvoiceActionCommands _commands;
   final InvoiceQueries _queries;
 
-  /// Sends [attempt] ONCE.
-  Future<InvoiceActionOutcome> run(InvoiceActionAttempt attempt) async {
-    try {
+  /// Sends [attempt] ONCE: done, held for a validation, refused in the
+  /// server's words, or not reached (never a reason to send again).
+  Future<CommandOutcome<void>> run(InvoiceActionAttempt attempt) => runCommand(
+    () async {
       switch (attempt.kind) {
         case InvoiceActionKind.voidInvoice:
           await _commands.voidInvoice(
@@ -93,46 +69,26 @@ class InvoiceReceiptActions {
             note: attempt.note,
           );
       }
-      return InvoiceActionDone(attempt);
-    } on PendingValidationException catch (e, st) {
-      TraceLogger.instance.error(
-        'money',
-        'invoice action held',
-        error: e,
-        stackTrace: st,
-      );
-      return InvoiceActionHeld(attempt, e.eventId);
-    } on Object catch (e, st) {
-      TraceLogger.instance.error(
-        'money',
-        'invoice action failed',
-        error: e,
-        stackTrace: st,
-      );
-      return isDefiniteRefusal(e)
-          ? InvoiceActionRefused(attempt, e)
-          : InvoiceActionUnknown(attempt, e);
-    }
-  }
+    },
+    what: 'invoice action failed',
+  );
 
-  /// Reads THAT request's receipt on the attempt's own workspace.
-  Future<InvoiceActionOutcome> look(InvoiceActionUnknown unknown) async {
-    final attempt = unknown.attempt;
+  /// Reads THAT request's receipt on [attempt]'s own workspace: applied,
+  /// held, declined, or the same [unknown] when it is not observed.
+  Future<CommandOutcome<void>> look(
+    InvoiceActionAttempt attempt,
+    CommandUnreached<void> unknown,
+  ) async {
     try {
       final receipt = await _queries.invoiceCommandOutcome(
         workspaceId: attempt.workspaceId,
         requestId: attempt.requestId,
       );
       return switch (receipt.state) {
-        CommandReceiptState.applied => InvoiceActionDone(attempt),
-        CommandReceiptState.pending => InvoiceActionHeld(
-          attempt,
-          receipt.eventId!,
-        ),
-        CommandReceiptState.refused => InvoiceActionRefused(
-          attempt,
-          StateError('declined ${receipt.eventId}'),
-          declined: true,
+        CommandReceiptState.applied => const CommandDone<void>(null),
+        CommandReceiptState.pending => CommandHeld(receipt.eventId!),
+        CommandReceiptState.refused => CommandRefused(
+          Refusal(cause: InvoiceActionDeclined(receipt.eventId!)),
         ),
         CommandReceiptState.notObserved => unknown,
       };
@@ -143,7 +99,7 @@ class InvoiceReceiptActions {
         error: e,
         stackTrace: st,
       );
-      return InvoiceActionUnknown(attempt, e);
+      return CommandUnreached(appFailureFrom(e));
     }
   }
 }
