@@ -230,10 +230,6 @@
   "@visibilityPreviewNothing": {
     "description": "Preview when the audience sees nothing."
   },
-  "visibilityPreviewFailed": "The preview could not be loaded.",
-  "@visibilityPreviewFailed": {
-    "description": "Preview failed to load."
-  },
   "visibilityPreviewCanWrite": "Can start a conversation with you",
   "@visibilityPreviewCanWrite": {
     "description": "Preview line: this audience may start a conversation."

@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../core/ui/private_value.dart';
 import '../domain/visibility.dart';
@@ -64,7 +65,10 @@ class _VisibilityPreviewState extends ConsumerState<VisibilityPreview> {
           const SizedBox(height: AppSpacing.sm),
           switch (view) {
             AsyncData(:final value) => _Preview(view: value),
-            AsyncError() => Text(l10n.visibilityPreviewFailed),
+            AsyncError(:final error) => ReadFailureBanner(
+              error: error,
+              onRetry: () => ref.invalidate(visibilityPreviewProvider(_as)),
+            ),
             _ => const LoadingView(),
           },
         ],

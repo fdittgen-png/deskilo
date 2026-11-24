@@ -215,6 +215,7 @@ class _SpacesSection extends ConsumerWidget {
     // waits; failed, the section says so (Try again repeats both reads).
     final prefsRead = ref.watch(spacePrefsProvider);
     final prefsFailed = ReadsAnswer.of([prefsRead]).failure != null;
+    // #4414 kept: the section below shows the failure with Try again
     final failed = answer.hasError && !answer.isLoading || prefsFailed;
     final prefs = prefsRead.value;
     final refs = failed || prefs == null ? null : refsOfCurrentAccount(answer);

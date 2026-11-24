@@ -48,7 +48,6 @@
   "visibilityPreviewSignedIn": "Cualquiera con sesión iniciada",
   "visibilityPreviewNobody": "Solo yo",
   "visibilityPreviewNothing": "No ven nada de usted.",
-  "visibilityPreviewFailed": "No se pudo cargar la vista previa.",
   "visibilityPreviewCanWrite": "Puede iniciar una conversación con usted",
   "visibilityPreviewCannotWrite": "No puede iniciar una conversación con usted",
   "visibilityChosenCount": "{count, plural, one{Miembros de 1 lugar elegido} other{Miembros de {count} lugares elegidos}}",

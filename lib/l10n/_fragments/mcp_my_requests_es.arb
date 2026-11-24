@@ -7,6 +7,5 @@
   "mcpRequestRefused": "Rechazada",
   "mcpRequestExpired": "Caducada",
   "mcpRequestRevoked": "Retirada",
-  "mcpRequestUnknown": "Respuesta ilegible",
-  "mcpRequestsUnavailable": "No se pudieron leer las solicitudes de sus asistentes. Vuelva a abrir esta página más tarde."
+  "mcpRequestUnknown": "Respuesta ilegible"
 }

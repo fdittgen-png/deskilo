@@ -7,6 +7,5 @@
   "mcpRequestRefused": "Abgelehnt",
   "mcpRequestExpired": "Abgelaufen",
   "mcpRequestRevoked": "Zurückgezogen",
-  "mcpRequestUnknown": "Antwort nicht lesbar",
-  "mcpRequestsUnavailable": "Die Anfragen Ihrer Assistenten konnten nicht gelesen werden. Öffnen Sie diese Seite später erneut."
+  "mcpRequestUnknown": "Antwort nicht lesbar"
 }

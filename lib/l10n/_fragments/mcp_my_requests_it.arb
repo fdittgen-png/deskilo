@@ -7,6 +7,5 @@
   "mcpRequestRefused": "Rifiutata",
   "mcpRequestExpired": "Scaduta",
   "mcpRequestRevoked": "Ritirata",
-  "mcpRequestUnknown": "Risposta non leggibile",
-  "mcpRequestsUnavailable": "Non è stato possibile leggere le richieste dei Suoi assistenti. Riapra questa pagina più tardi."
+  "mcpRequestUnknown": "Risposta non leggibile"
 }

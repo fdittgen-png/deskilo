@@ -21661,10 +21661,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpPolicyTitle => 'Assistant access';
 
   @override
-  String get mcpPolicyUnavailable =>
-      'The assistant settings could not be loaded. Try again later.';
-
-  @override
   String get mcpRefusalClientNotApproved =>
       'This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant.';
 
@@ -21719,10 +21715,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpRequestsAnsweredTitle => 'Answered recently';
 
   @override
-  String get mcpRequestsUnavailable =>
-      'Your assistants\' requests could not be read. Open this page again later.';
-
-  @override
   String get mcpRequestsWaitingTitle => 'Waiting for your confirmation';
 
   @override
@@ -21758,10 +21750,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpReviewTitle => 'Assistant approvals';
-
-  @override
-  String get mcpReviewUnavailable =>
-      'The requests could not be loaded. A review needs your second factor; try again.';
 
   @override
   String get mcpStateAfterPrevious => 'After the step above';
@@ -21877,9 +21865,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpUsageRequests => 'Requests';
 
   @override
-  String get mcpUsageUnavailable => 'Usage could not be loaded.';
-
-  @override
   String get mcpUsageWorkspaceTitle => 'Assistant use, last 30 days';
 
   @override
@@ -21985,10 +21970,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meDataWorkspacesEmpty => 'Your account names no business yet.';
-
-  @override
-  String get meDataWorkspacesFailed =>
-      'The businesses your account names could not be read. Nothing was exported.';
 
   @override
   String get meDataWorkspacesScope =>
@@ -22264,9 +22245,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mePlaceRequestSent => 'Request sent · waiting for an answer';
 
   @override
-  String get mePlacesLoadFailed => 'Your places could not be loaded.';
-
-  @override
   String get mePrivacySelfServiceOff =>
       'This business handles data requests itself. File a rights request and the personal data admin will answer it.';
 
@@ -22293,9 +22271,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meRefsTitle => 'Places elsewhere';
-
-  @override
-  String get meRefsUnavailable => 'Your places elsewhere could not be read.';
 
   @override
   String get meRunASpace => 'Run a business yourself?';
@@ -27246,10 +27221,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get publicProfilePublishedInfo =>
       'Information published by this business. Missing information does not mean that a facility is absent.';
-
-  @override
-  String get publicProfileRefreshFailed =>
-      'Could not refresh this business’s page. Showing the information already loaded.';
 
   @override
   String get publicProfileRefreshing => 'Refreshing published information…';
@@ -43271,11 +43242,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String visibilityOnServerUnavailable(String host) {
-    return '$host did not answer. Try again later.';
-  }
-
-  @override
   String get visibilityPresence => 'At the place today';
 
   @override
@@ -43284,9 +43250,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get visibilityPreviewCannotWrite =>
       'Cannot start a conversation with you';
-
-  @override
-  String get visibilityPreviewFailed => 'The preview could not be loaded.';
 
   @override
   String get visibilityPreviewMySpaces => 'A member of my places';
@@ -43343,15 +43306,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visibilitySpaceUnverified => 'Verification unavailable';
 
   @override
-  String get visibilitySpacesUnavailable =>
-      'Your places cannot be listed right now.';
-
-  @override
   String get visibilityTitle => 'Who sees me';
-
-  @override
-  String get visibilityUnavailable =>
-      'Who sees what of you cannot be read right now. Nothing was changed.';
 
   @override
   String get visibilityUnconfirmedTitle => 'Your change could not be confirmed';

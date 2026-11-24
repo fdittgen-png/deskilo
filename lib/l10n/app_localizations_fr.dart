@@ -21916,10 +21916,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpPolicyTitle => 'Accès des assistants';
 
   @override
-  String get mcpPolicyUnavailable =>
-      'Les réglages des assistants n\'ont pas pu être chargés. Réessayez plus tard.';
-
-  @override
   String get mcpRefusalClientNotApproved =>
       'Cet assistant n’est pas encore approuvé sur ce serveur. L’opérateur approuve chaque assistant une fois ; demandez-le-lui, puis reconnectez-vous depuis l’assistant.';
 
@@ -21974,10 +21970,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpRequestsAnsweredTitle => 'Répondues récemment';
 
   @override
-  String get mcpRequestsUnavailable =>
-      'Les demandes de vos assistants n\'ont pas pu être lues. Rouvrez cette page plus tard.';
-
-  @override
   String get mcpRequestsWaitingTitle => 'En attente de votre confirmation';
 
   @override
@@ -22013,10 +22005,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mcpReviewTitle => 'Autorisations des assistants';
-
-  @override
-  String get mcpReviewUnavailable =>
-      'Les demandes n\'ont pas pu être chargées. Un examen demande votre second facteur ; réessayez.';
 
   @override
   String get mcpStateAfterPrevious => 'Après l\'étape précédente';
@@ -22133,9 +22121,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpUsageRequests => 'Demandes';
 
   @override
-  String get mcpUsageUnavailable => 'L\'utilisation n\'a pas pu être chargée.';
-
-  @override
   String get mcpUsageWorkspaceTitle =>
       'Utilisation des assistants, 30 derniers jours';
 
@@ -22245,10 +22230,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get meDataWorkspacesEmpty =>
       'Votre compte ne nomme encore aucune entreprise.';
-
-  @override
-  String get meDataWorkspacesFailed =>
-      'Les entreprises de votre compte n’ont pas pu être lues. Rien n’a été exporté.';
 
   @override
   String get meDataWorkspacesScope =>
@@ -22527,9 +22508,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mePlaceRequestSent => 'Demande envoyée · en attente de réponse';
 
   @override
-  String get mePlacesLoadFailed => 'Vos lieux n\'ont pas pu être chargés.';
-
-  @override
   String get mePrivacySelfServiceOff =>
       'Cette entreprise traite elle-même les demandes sur les données. Déposez une demande de droits : l’administrateur des données personnelles y répondra.';
 
@@ -22557,9 +22535,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get meRefsTitle => 'Lieux ailleurs';
-
-  @override
-  String get meRefsUnavailable => 'Vos lieux ailleurs n\'ont pas pu être lus.';
 
   @override
   String get meRunASpace => 'Vous dirigez vous-même une activité ?';
@@ -27558,10 +27533,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get publicProfilePublishedInfo =>
       'Informations publiées par cette entreprise. Une information manquante ne signifie pas qu’un équipement est absent.';
-
-  @override
-  String get publicProfileRefreshFailed =>
-      'Impossible d’actualiser la page de cette entreprise. Les informations déjà chargées restent affichées.';
 
   @override
   String get publicProfileRefreshing =>
@@ -43818,11 +43789,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String visibilityOnServerUnavailable(String host) {
-    return '$host n\'a pas répondu. Réessayez plus tard.';
-  }
-
-  @override
   String get visibilityPresence => 'Présent sur place aujourd\'hui';
 
   @override
@@ -43832,9 +43798,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get visibilityPreviewCannotWrite =>
       'Ne peut pas démarrer de conversation avec vous';
-
-  @override
-  String get visibilityPreviewFailed => 'L\'aperçu n\'a pas pu être chargé.';
 
   @override
   String get visibilityPreviewMySpaces => 'Un membre de mes lieux';
@@ -43892,15 +43855,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get visibilitySpaceUnverified => 'Vérification indisponible';
 
   @override
-  String get visibilitySpacesUnavailable =>
-      'Vos lieux ne peuvent pas être listés pour l\'instant.';
-
-  @override
   String get visibilityTitle => 'Qui me voit';
-
-  @override
-  String get visibilityUnavailable =>
-      'Impossible de lire pour l\'instant qui voit quoi de vous. Rien n\'a été modifié.';
 
   @override
   String get visibilityUnconfirmedTitle =>

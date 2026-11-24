@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -122,11 +123,11 @@ class SpaceInquiriesScreen extends ConsumerWidget {
             ],
           ),
         ),
-        AsyncError() => Center(
-          child: TextButton(
-            key: const ValueKey('space-inquiries-retry'),
-            onPressed: () => ref.invalidate(provider),
-            child: Text(l10n.commonRetry),
+        AsyncError(:final error) => Center(
+          child: ReadFailureBanner(
+            error: error,
+            retryKey: const ValueKey('space-inquiries-retry'),
+            onRetry: () => ref.invalidate(provider),
           ),
         ),
         _ => const LoadingView(),

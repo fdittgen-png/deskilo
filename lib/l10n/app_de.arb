@@ -13001,7 +13001,6 @@
   "mcpPolicyStale": "Jemand hat diese Einstellungen inzwischen geändert. Prüfen Sie den aktuellen Stand und speichern Sie erneut.",
   "mcpPolicySwitched": "Sie haben den Arbeitsbereich gewechselt. Öffnen Sie diese Seite erneut, um den anderen zu bearbeiten.",
   "mcpPolicyTitle": "Zugriff für Assistenten",
-  "mcpPolicyUnavailable": "Die Assistenten-Einstellungen konnten nicht geladen werden. Versuchen Sie es später erneut.",
   "mcpRefusalClientNotApproved": "Dieser Assistent ist auf diesem Server noch nicht freigegeben. Der Betreiber gibt jeden Assistenten einmal frei; fragen Sie ihn und verbinden Sie dann erneut aus dem Assistenten.",
   "mcpRefusalClientNotApprovedNamed": "Dieser Assistent ist auf diesem Server noch nicht freigegeben. Der Betreiber gibt jeden Assistenten einmal frei; fragen Sie ihn und verbinden Sie dann erneut aus dem Assistenten. Wartet auf den Betreiber des Servers: {names}.",
   "mcpRefusalNoIdentity": "Bestätigen Sie zuerst Ihre Identität in DesKilo unter Assistenten und verbinden Sie dann erneut aus dem Assistenten.",
@@ -13017,7 +13016,6 @@
   "mcpRequestRevoked": "Zurückgezogen",
   "mcpRequestUnknown": "Antwort nicht lesbar",
   "mcpRequestsAnsweredTitle": "Kürzlich beantwortet",
-  "mcpRequestsUnavailable": "Die Anfragen Ihrer Assistenten konnten nicht gelesen werden. Öffnen Sie diese Seite später erneut.",
   "mcpRequestsWaitingTitle": "Wartet auf Ihre Bestätigung",
   "mcpReviewApprove": "Freigeben",
   "mcpReviewChanged": "Diese Anfrage hat sich geändert oder ein anderer Administrator hat zuerst entschieden. Es wurde nichts getan.",
@@ -13029,7 +13027,6 @@
   "mcpReviewReject": "Ablehnen",
   "mcpReviewSecondFactor": "Diese Datenbank verlangt Ihren zweiten Faktor in ihrer eigenen Sitzung. Es wurde nichts entschieden.",
   "mcpReviewTitle": "Freigaben für Assistenten",
-  "mcpReviewUnavailable": "Die Anfragen konnten nicht geladen werden. Eine Prüfung braucht Ihren zweiten Faktor; versuchen Sie es erneut.",
   "mcpStateAfterPrevious": "Nach dem vorherigen Schritt",
   "mcpStateAllowed": "Erlaubt",
   "mcpStateApproved": "Freigegeben",
@@ -13067,7 +13064,6 @@
   "mcpUsagePending": "Warten auf Freigabe",
   "mcpUsageRefusals": "Abgelehnt",
   "mcpUsageRequests": "Anfragen",
-  "mcpUsageUnavailable": "Die Nutzung konnte nicht geladen werden.",
   "mcpUsageWorkspaceTitle": "Nutzung durch Assistenten, letzte 30 Tage",
   "meAccountInMe": "Mein Konto ist unter Ich",
   "meAccountInMeBody": "Foto, Sprache, Design und Anmeldungen gehören Ihnen – in jedem Space.",
@@ -13108,7 +13104,6 @@
   "meDataWorkspaceSuperseded": "Das angemeldete Konto hat sich während des Exports geändert. Es wurde nichts angeboten.",
   "meDataWorkspaceUnnamed": "Betrieb {id}",
   "meDataWorkspacesEmpty": "Ihr Konto nennt noch keinen Betrieb.",
-  "meDataWorkspacesFailed": "Die Betriebe Ihres Kontos konnten nicht gelesen werden. Es wurde nichts exportiert.",
   "meDataWorkspacesScope": "Jeder Betrieb exportiert, was er über Sie hält – Mitgliedschaft, Buchungen, Konto und Rechnungen – von seinem eigenen Server, eine Datei je Betrieb. Der Teil Ihres persönlichen Kontos ist die Karte oben.",
   "meDataWorkspacesTitle": "Ihre Daten in jedem Betrieb",
   "meDemoSessionBadgeHint": "Sie erkunden einen Demonstrationsbetrieb. Nichts davon verlässt dieses Gerät.",
@@ -13190,7 +13185,6 @@
   "meOverviewView": "Ansehen",
   "mePlaceMember": "Mitglied",
   "mePlaceRequestSent": "Anfrage gesendet · wartet auf eine Antwort",
-  "mePlacesLoadFailed": "Ihre Orte konnten nicht geladen werden.",
   "mePrivacySelfServiceOff": "Dieser Betrieb bearbeitet Datenanfragen selbst. Stellen Sie eine Betroffenenanfrage; der oder die Verantwortliche für personenbezogene Daten beantwortet sie.",
   "meRealBusiness": "Betrieb",
   "meRefDefault": "Standard",
@@ -13200,7 +13194,6 @@
   "meRefUnnamed": "Ein Ort auf einem anderen Server",
   "meRefUnverified": "Mitgliedschaft noch nicht bestätigt",
   "meRefsTitle": "Orte anderswo",
-  "meRefsUnavailable": "Ihre Orte anderswo konnten nicht gelesen werden.",
   "meRunASpace": "Sie führen selbst ein Geschäft?",
   "meRunASpaceAction": "Einrichten",
   "meSectionMine": "Mein Verlauf und meine Daten",
@@ -15580,7 +15573,6 @@
   "publicProfilePublishBody": "Jede Person im Internet, angemeldet oder nicht, kann über Ihren Link Ihren Namen, Ihren Beruf und Ihre Vorstellung lesen. Kontaktdaten, Anwesenheit und Orte bleiben privat.",
   "publicProfilePublishTitle": "Öffentliches Profil veröffentlichen?",
   "publicProfilePublishedInfo": "Von diesem Betrieb veröffentlichte Angaben. Eine fehlende Angabe bedeutet nicht, dass eine Ausstattung nicht vorhanden ist.",
-  "publicProfileRefreshFailed": "Die Seite dieses Betriebs konnte nicht aktualisiert werden. Die bereits geladenen Angaben werden angezeigt.",
   "publicProfileRefreshing": "Veröffentlichte Angaben werden aktualisiert…",
   "publicProfileRegularHours": "Reguläre Zeiten in der Zeitzone des Betriebs; Ausnahmen und aktuelle Verfügbarkeit können abweichen.",
   "publicProfileTakesInquiries": "Nimmt Anfragen an",
@@ -25550,18 +25542,9 @@
       }
     }
   },
-  "visibilityOnServerUnavailable": "{host} hat nicht geantwortet. Versuchen Sie es später erneut.",
-  "@visibilityOnServerUnavailable": {
-    "placeholders": {
-      "host": {
-        "type": "String"
-      }
-    }
-  },
   "visibilityPresence": "Heute am Ort",
   "visibilityPreviewCanWrite": "Kann ein Gespräch mit Ihnen beginnen",
   "visibilityPreviewCannotWrite": "Kann kein Gespräch mit Ihnen beginnen",
-  "visibilityPreviewFailed": "Die Vorschau konnte nicht geladen werden.",
   "visibilityPreviewMySpaces": "Ein Mitglied meiner Orte",
   "visibilityPreviewNobody": "Nur ich",
   "visibilityPreviewNothing": "Diese Personen sehen nichts von Ihnen.",
@@ -25578,9 +25561,7 @@
   "visibilitySpaceOnServer": "auf Server {installation}",
   "visibilitySpaceUnlisted": "Ein Ort, der nicht mehr aufgeführt ist",
   "visibilitySpaceUnverified": "Überprüfung nicht verfügbar",
-  "visibilitySpacesUnavailable": "Ihre Orte lassen sich gerade nicht auflisten.",
   "visibilityTitle": "Wer mich sieht",
-  "visibilityUnavailable": "Wer was von Ihnen sieht, lässt sich gerade nicht lesen. Es wurde nichts geändert.",
   "visibilityUnconfirmedTitle": "Ihre Änderung konnte nicht bestätigt werden",
   "visibilityUnsupported": "Ihr persönliches Zuhause kann diese Einstellung noch nicht speichern: Die Betreiber müssen es aktualisieren. Es wurde nichts geändert.",
   "visibilityWidenAction": "Erweitern",

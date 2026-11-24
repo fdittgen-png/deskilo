@@ -13001,7 +13001,6 @@
   "mcpPolicyStale": "Qualcuno ha modificato queste impostazioni nel frattempo. Controlli quelle attuali e salvi di nuovo.",
   "mcpPolicySwitched": "Ha cambiato spazio. Riapra questa pagina per modificare l'altro spazio.",
   "mcpPolicyTitle": "Accesso degli assistenti",
-  "mcpPolicyUnavailable": "Impossibile caricare le impostazioni degli assistenti. Riprovi più tardi.",
   "mcpRefusalClientNotApproved": "Questo assistente non è ancora approvato su questo server. L’operatore approva ogni assistente una volta; glielo chieda, poi si colleghi di nuovo dall’assistente.",
   "mcpRefusalClientNotApprovedNamed": "Questo assistente non è ancora approvato su questo server. L’operatore approva ogni assistente una volta; glielo chieda, poi si colleghi di nuovo dall’assistente. In attesa dell'operatore del server: {names}.",
   "mcpRefusalNoIdentity": "Confermi prima la sua identità in DesKilo in Assistenti, poi si colleghi di nuovo dall’assistente.",
@@ -13017,7 +13016,6 @@
   "mcpRequestRevoked": "Ritirata",
   "mcpRequestUnknown": "Risposta non leggibile",
   "mcpRequestsAnsweredTitle": "Risposte di recente",
-  "mcpRequestsUnavailable": "Non è stato possibile leggere le richieste dei Suoi assistenti. Riapra questa pagina più tardi.",
   "mcpRequestsWaitingTitle": "In attesa della Sua conferma",
   "mcpReviewApprove": "Approva",
   "mcpReviewChanged": "Questa richiesta è cambiata o un altro amministratore ha deciso prima. Non è stato fatto nulla.",
@@ -13029,7 +13027,6 @@
   "mcpReviewReject": "Rifiuta",
   "mcpReviewSecondFactor": "Quel database richiede il suo secondo fattore nella propria sessione. Non è stato deciso nulla.",
   "mcpReviewTitle": "Approvazioni degli assistenti",
-  "mcpReviewUnavailable": "Impossibile caricare le richieste. Un esame richiede il suo secondo fattore; riprovi.",
   "mcpStateAfterPrevious": "Dopo il passaggio precedente",
   "mcpStateAllowed": "Consentito",
   "mcpStateApproved": "Approvata",
@@ -13067,7 +13064,6 @@
   "mcpUsagePending": "In attesa di convalida",
   "mcpUsageRefusals": "Rifiutate",
   "mcpUsageRequests": "Richieste",
-  "mcpUsageUnavailable": "Non è stato possibile caricare l'utilizzo.",
   "mcpUsageWorkspaceTitle": "Uso degli assistenti, ultimi 30 giorni",
   "meAccountInMe": "Il mio account è in Io",
   "meAccountInMeBody": "Foto, lingua, tema e accessi sono suoi in ogni spazio.",
@@ -13108,7 +13104,6 @@
   "meDataWorkspaceSuperseded": "L’account connesso è cambiato durante la lettura dell’esportazione. Non è stato offerto nulla.",
   "meDataWorkspaceUnnamed": "Attività {id}",
   "meDataWorkspacesEmpty": "Il Suo account non nomina ancora alcuna attività.",
-  "meDataWorkspacesFailed": "Non è stato possibile leggere le attività del Suo account. Non è stato esportato nulla.",
   "meDataWorkspacesScope": "Ogni attività esporta ciò che conserva su di Lei — iscrizione, prenotazioni, conto e fatture — dal proprio server, un file per attività. La parte del Suo account personale è la scheda qui sopra.",
   "meDataWorkspacesTitle": "I Suoi dati in ogni attività",
   "meDemoSessionBadgeHint": "Sta esplorando un’attività dimostrativa. Nulla di tutto questo lascia questo dispositivo.",
@@ -13190,7 +13185,6 @@
   "meOverviewView": "Vedi",
   "mePlaceMember": "Membro",
   "mePlaceRequestSent": "Richiesta inviata · in attesa di risposta",
-  "mePlacesLoadFailed": "Impossibile caricare i suoi posti.",
   "mePrivacySelfServiceOff": "Questa attività gestisce da sé le richieste sui dati. Presenti una richiesta di diritti: l’amministratore dei dati personali risponderà.",
   "meRealBusiness": "Attività reale",
   "meRefDefault": "Predefinito",
@@ -13200,7 +13194,6 @@
   "meRefUnnamed": "Un posto su un altro server",
   "meRefUnverified": "Iscrizione non ancora verificata",
   "meRefsTitle": "Posti altrove",
-  "meRefsUnavailable": "Non è stato possibile leggere i Suoi posti altrove.",
   "meRunASpace": "Gestisce un’attività in proprio?",
   "meRunASpaceAction": "Configurala",
   "meSectionMine": "Cronologia e dati personali",
@@ -15580,7 +15573,6 @@
   "publicProfilePublishBody": "Chiunque su Internet, con o senza accesso, potrà leggere il suo nome, la sua professione e la sua presentazione tramite il suo link. Contatti, presenza e posti restano privati.",
   "publicProfilePublishTitle": "Pubblicare un profilo pubblico?",
   "publicProfilePublishedInfo": "Informazioni pubblicate da questa attività. Un’informazione mancante non indica che una dotazione sia assente.",
-  "publicProfileRefreshFailed": "Non è stato possibile aggiornare la pagina di questa attività. Vengono mostrate le informazioni già caricate.",
   "publicProfileRefreshing": "Aggiornamento delle informazioni pubblicate…",
   "publicProfileRegularHours": "Orari abituali nel fuso orario dell’attività; eccezioni e disponibilità effettiva possono differire.",
   "publicProfileTakesInquiries": "Accetta richieste di informazioni",
@@ -25550,18 +25542,9 @@
       }
     }
   },
-  "visibilityOnServerUnavailable": "{host} non ha risposto. Riprovi più tardi.",
-  "@visibilityOnServerUnavailable": {
-    "placeholders": {
-      "host": {
-        "type": "String"
-      }
-    }
-  },
   "visibilityPresence": "Oggi sul posto",
   "visibilityPreviewCanWrite": "Può iniziare una conversazione con Lei",
   "visibilityPreviewCannotWrite": "Non può iniziare una conversazione con Lei",
-  "visibilityPreviewFailed": "Impossibile caricare l'anteprima.",
   "visibilityPreviewMySpaces": "Un membro dei miei posti",
   "visibilityPreviewNobody": "Solo io",
   "visibilityPreviewNothing": "Non vedono nulla di Lei.",
@@ -25578,9 +25561,7 @@
   "visibilitySpaceOnServer": "sul server {installation}",
   "visibilitySpaceUnlisted": "Un posto non più elencato",
   "visibilitySpaceUnverified": "Verifica non disponibile",
-  "visibilitySpacesUnavailable": "Al momento i Suoi posti non possono essere elencati.",
   "visibilityTitle": "Chi mi vede",
-  "visibilityUnavailable": "Al momento non è possibile leggere chi vede cosa di Lei. Non è stato modificato nulla.",
   "visibilityUnconfirmedTitle": "Non è stato possibile confermare la Sua modifica",
   "visibilityUnsupported": "La Sua casa personale non può ancora salvare questa impostazione: chi la gestisce deve aggiornarla. Non è stato modificato nulla.",
   "visibilityWidenAction": "Amplia",

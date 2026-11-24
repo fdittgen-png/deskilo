@@ -28499,10 +28499,6 @@
   "@mcpPolicyTitle": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
-  "mcpPolicyUnavailable": "The assistant settings could not be loaded. Try again later.",
-  "@mcpPolicyUnavailable": {
-    "description": "#1626 #1627 #1628 mcp_settings"
-  },
   "mcpRefusalClientNotApproved": "This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant.",
   "@mcpRefusalClientNotApproved": {
     "description": "#2145 Connect an assistant: mcpRefusalClientNotApproved"
@@ -28579,10 +28575,6 @@
   "@mcpRequestsAnsweredTitle": {
     "description": "#3978 mcp_my_requests"
   },
-  "mcpRequestsUnavailable": "Your assistants' requests could not be read. Open this page again later.",
-  "@mcpRequestsUnavailable": {
-    "description": "#3978 mcp_my_requests"
-  },
   "mcpRequestsWaitingTitle": "Waiting for your confirmation",
   "@mcpRequestsWaitingTitle": {
     "description": "#3978 mcp_my_requests"
@@ -28625,10 +28617,6 @@
   },
   "mcpReviewTitle": "Assistant approvals",
   "@mcpReviewTitle": {
-    "description": "#1626 #1627 #1628 mcp_settings"
-  },
-  "mcpReviewUnavailable": "The requests could not be loaded. A review needs your second factor; try again.",
-  "@mcpReviewUnavailable": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
   "mcpStateAfterPrevious": "After the step above",
@@ -28784,10 +28772,6 @@
   "@mcpUsageRequests": {
     "description": "#1630 mcp_usage"
   },
-  "mcpUsageUnavailable": "Usage could not be loaded.",
-  "@mcpUsageUnavailable": {
-    "description": "#1630 mcp_usage"
-  },
   "mcpUsageWorkspaceTitle": "Assistant use, last 30 days",
   "@mcpUsageWorkspaceTitle": {
     "description": "#1630 mcp_usage"
@@ -28915,10 +28899,6 @@
   "meDataWorkspacesEmpty": "Your account names no business yet.",
   "@meDataWorkspacesEmpty": {
     "description": "#2557 C3 no workspace to export from."
-  },
-  "meDataWorkspacesFailed": "The businesses your account names could not be read. Nothing was exported.",
-  "@meDataWorkspacesFailed": {
-    "description": "#2557 C3 the workspace list could not be read."
   },
   "meDataWorkspacesScope": "Each business exports what it holds about you — membership, reservations, ledger and invoices — from its own server, one file per business. Your personal account's part is the card above.",
   "@meDataWorkspacesScope": {
@@ -29305,10 +29285,6 @@
   "@mePlaceRequestSent": {
     "description": "#3545 E: a compact Home row of a space the person asked to join and nobody has answered"
   },
-  "mePlacesLoadFailed": "Your places could not be loaded.",
-  "@mePlacesLoadFailed": {
-    "description": "Me, My places: the places could not be loaded (#3555: the profiles screen keeps profilesUnavailable)"
-  },
   "mePrivacySelfServiceOff": "This business handles data requests itself. File a rights request and the personal data admin will answer it.",
   "@mePrivacySelfServiceOff": {
     "description": "Me, the data export card: the business answers data requests itself (#3555: refusal_text keeps privacySelfServiceOff)"
@@ -29344,10 +29320,6 @@
   "meRefsTitle": "Places elsewhere",
   "@meRefsTitle": {
     "description": "#2563 Me home: section of workspaces named by reference that this server does not list"
-  },
-  "meRefsUnavailable": "Your places elsewhere could not be read.",
-  "@meRefsUnavailable": {
-    "description": "#2563 Me home: the references could not be read"
   },
   "meRunASpace": "Run a business yourself?",
   "@meRunASpace": {
@@ -35811,10 +35783,6 @@
   "publicProfilePublishedInfo": "Information published by this business. Missing information does not mean that a facility is absent.",
   "@publicProfilePublishedInfo": {
     "description": "Public profile: PublishedInfo."
-  },
-  "publicProfileRefreshFailed": "Could not refresh this business’s page. Showing the information already loaded.",
-  "@publicProfileRefreshFailed": {
-    "description": "Public profile: RefreshFailed."
   },
   "publicProfileRefreshing": "Refreshing published information…",
   "@publicProfileRefreshing": {
@@ -56264,15 +56232,6 @@
       }
     }
   },
-  "visibilityOnServerUnavailable": "{host} did not answer. Try again later.",
-  "@visibilityOnServerUnavailable": {
-    "description": "#2211 who sees me on a connected server: visibilityOnServerUnavailable",
-    "placeholders": {
-      "host": {
-        "type": "String"
-      }
-    }
-  },
   "visibilityPresence": "At the place today",
   "@visibilityPresence": {
     "description": "Visibility field: presence in a space today."
@@ -56284,10 +56243,6 @@
   "visibilityPreviewCannotWrite": "Cannot start a conversation with you",
   "@visibilityPreviewCannotWrite": {
     "description": "Preview line: this audience may not start a conversation."
-  },
-  "visibilityPreviewFailed": "The preview could not be loaded.",
-  "@visibilityPreviewFailed": {
-    "description": "Preview failed to load."
   },
   "visibilityPreviewMySpaces": "A member of my places",
   "@visibilityPreviewMySpaces": {
@@ -56365,17 +56320,9 @@
   "@visibilitySpaceUnverified": {
     "description": "#2558 chosen-spaces picker: a space on another installation whose membership cannot be verified yet"
   },
-  "visibilitySpacesUnavailable": "Your places cannot be listed right now.",
-  "@visibilitySpacesUnavailable": {
-    "description": "#2558 — the chosen-spaces picker when the list of spaces cannot be read."
-  },
   "visibilityTitle": "Who sees me",
   "@visibilityTitle": {
     "description": "Title of the card choosing who sees what of the account."
-  },
-  "visibilityUnavailable": "Who sees what of you cannot be read right now. Nothing was changed.",
-  "@visibilityUnavailable": {
-    "description": "#2558 — the privacy card when the saved settings cannot be read; a retry follows."
   },
   "visibilityUnconfirmedTitle": "Your change could not be confirmed",
   "@visibilityUnconfirmedTitle": {

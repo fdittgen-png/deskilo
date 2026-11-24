@@ -218,7 +218,10 @@ void main() {
             .first,
       );
       expect(
-        find.text('Your places elsewhere could not be read.'),
+        find.descendant(
+          of: find.byKey(const ValueKey('me-refs-unavailable')),
+          matching: find.byKey(const ValueKey('read-failure')),
+        ),
         findsOneWidget,
       );
     });

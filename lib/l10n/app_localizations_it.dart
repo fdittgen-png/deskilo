@@ -21843,10 +21843,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpPolicyTitle => 'Accesso degli assistenti';
 
   @override
-  String get mcpPolicyUnavailable =>
-      'Impossibile caricare le impostazioni degli assistenti. Riprovi più tardi.';
-
-  @override
   String get mcpRefusalClientNotApproved =>
       'Questo assistente non è ancora approvato su questo server. L’operatore approva ogni assistente una volta; glielo chieda, poi si colleghi di nuovo dall’assistente.';
 
@@ -21901,10 +21897,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpRequestsAnsweredTitle => 'Risposte di recente';
 
   @override
-  String get mcpRequestsUnavailable =>
-      'Non è stato possibile leggere le richieste dei Suoi assistenti. Riapra questa pagina più tardi.';
-
-  @override
   String get mcpRequestsWaitingTitle => 'In attesa della Sua conferma';
 
   @override
@@ -21940,10 +21932,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpReviewTitle => 'Approvazioni degli assistenti';
-
-  @override
-  String get mcpReviewUnavailable =>
-      'Impossibile caricare le richieste. Un esame richiede il suo secondo fattore; riprovi.';
 
   @override
   String get mcpStateAfterPrevious => 'Dopo il passaggio precedente';
@@ -22060,10 +22048,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpUsageRequests => 'Richieste';
 
   @override
-  String get mcpUsageUnavailable =>
-      'Non è stato possibile caricare l\'utilizzo.';
-
-  @override
   String get mcpUsageWorkspaceTitle => 'Uso degli assistenti, ultimi 30 giorni';
 
   @override
@@ -22171,10 +22155,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get meDataWorkspacesEmpty =>
       'Il Suo account non nomina ancora alcuna attività.';
-
-  @override
-  String get meDataWorkspacesFailed =>
-      'Non è stato possibile leggere le attività del Suo account. Non è stato esportato nulla.';
 
   @override
   String get meDataWorkspacesScope =>
@@ -22452,9 +22432,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mePlaceRequestSent => 'Richiesta inviata · in attesa di risposta';
 
   @override
-  String get mePlacesLoadFailed => 'Impossibile caricare i suoi posti.';
-
-  @override
   String get mePrivacySelfServiceOff =>
       'Questa attività gestisce da sé le richieste sui dati. Presenti una richiesta di diritti: l’amministratore dei dati personali risponderà.';
 
@@ -22482,10 +22459,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get meRefsTitle => 'Posti altrove';
-
-  @override
-  String get meRefsUnavailable =>
-      'Non è stato possibile leggere i Suoi posti altrove.';
 
   @override
   String get meRunASpace => 'Gestisce un’attività in proprio?';
@@ -27476,10 +27449,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get publicProfilePublishedInfo =>
       'Informazioni pubblicate da questa attività. Un’informazione mancante non indica che una dotazione sia assente.';
-
-  @override
-  String get publicProfileRefreshFailed =>
-      'Non è stato possibile aggiornare la pagina di questa attività. Vengono mostrate le informazioni già caricate.';
 
   @override
   String get publicProfileRefreshing =>
@@ -43689,11 +43658,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String visibilityOnServerUnavailable(String host) {
-    return '$host non ha risposto. Riprovi più tardi.';
-  }
-
-  @override
   String get visibilityPresence => 'Oggi sul posto';
 
   @override
@@ -43703,9 +43667,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get visibilityPreviewCannotWrite =>
       'Non può iniziare una conversazione con Lei';
-
-  @override
-  String get visibilityPreviewFailed => 'Impossibile caricare l\'anteprima.';
 
   @override
   String get visibilityPreviewMySpaces => 'Un membro dei miei posti';
@@ -43764,15 +43725,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get visibilitySpaceUnverified => 'Verifica non disponibile';
 
   @override
-  String get visibilitySpacesUnavailable =>
-      'Al momento i Suoi posti non possono essere elencati.';
-
-  @override
   String get visibilityTitle => 'Chi mi vede';
-
-  @override
-  String get visibilityUnavailable =>
-      'Al momento non è possibile leggere chi vede cosa di Lei. Non è stato modificato nulla.';
 
   @override
   String get visibilityUnconfirmedTitle =>

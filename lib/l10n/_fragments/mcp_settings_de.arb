@@ -1,6 +1,5 @@
 {
   "mcpPolicyTitle": "Zugriff für Assistenten",
-  "mcpPolicyUnavailable": "Die Assistenten-Einstellungen konnten nicht geladen werden. Versuchen Sie es später erneut.",
   "mcpPolicySwitched": "Sie haben den Arbeitsbereich gewechselt. Öffnen Sie diese Seite erneut, um den anderen zu bearbeiten.",
   "mcpPolicyExplain": "Wählen Sie, was Assistenten in diesem Arbeitsbereich tun dürfen. Ein Mitglied braucht weiterhin die Freigabe dieser Datenbank, die passende Rolle und muss diesen Arbeitsbereich beim Verbinden seines Assistenten wählen.",
   "mcpPolicyFeatureOff": "Assistenten sind in den Funktionen dieses Arbeitsbereichs ausgeschaltet. Sie können die Dienste unten weiterhin einschränken oder abschalten.",
@@ -33,7 +32,6 @@
   "mcpRemoveWorkspace": "Diesen Arbeitsbereich entfernen",
   "mcpReviewTitle": "Freigaben für Assistenten",
   "mcpReviewNotAdmin": "Nur die Administratoren dieser Datenbank prüfen Freigaben.",
-  "mcpReviewUnavailable": "Die Anfragen konnten nicht geladen werden. Eine Prüfung braucht Ihren zweiten Faktor; versuchen Sie es erneut.",
   "mcpReviewExplain": "Eine Freigabe erlaubt einer Person, Assistenten auf dieser Datenbank zu verbinden, in den Arbeitsbereichen, deren Eigentümer es zulassen. Sie gewährt keine Mitgliedschaft und keine Rolle.",
   "mcpReviewEmpty": "Keine Anfrage wartet.",
   "mcpReviewReject": "Ablehnen",

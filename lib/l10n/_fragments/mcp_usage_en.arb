@@ -7,10 +7,6 @@
   "@mcpUsageMineTitle": {
     "description": "#1630 mcp_usage"
   },
-  "mcpUsageUnavailable": "Usage could not be loaded.",
-  "@mcpUsageUnavailable": {
-    "description": "#1630 mcp_usage"
-  },
   "mcpUsageNone": "No assistant has used your access yet.",
   "@mcpUsageNone": {
     "description": "#1630 mcp_usage"

@@ -13001,7 +13001,6 @@
   "mcpPolicyStale": "Alguien cambió estos ajustes mientras tanto. Revise los ajustes actuales y guarde de nuevo.",
   "mcpPolicySwitched": "Ha cambiado de espacio. Vuelva a abrir esta página para editar el otro espacio.",
   "mcpPolicyTitle": "Acceso de asistentes",
-  "mcpPolicyUnavailable": "No se pudieron cargar los ajustes de asistentes. Inténtelo más tarde.",
   "mcpRefusalClientNotApproved": "Este asistente aún no está aprobado en este servidor. El operador aprueba cada asistente una vez; pídaselo y vuelva a conectar desde el asistente.",
   "mcpRefusalClientNotApprovedNamed": "Este asistente aún no está aprobado en este servidor. El operador aprueba cada asistente una vez; pídaselo y vuelva a conectar desde el asistente. Esperando al operador del servidor: {names}.",
   "mcpRefusalNoIdentity": "Confirme primero su identidad en DesKilo en Asistentes y vuelva a conectar desde el asistente.",
@@ -13017,7 +13016,6 @@
   "mcpRequestRevoked": "Retirada",
   "mcpRequestUnknown": "Respuesta ilegible",
   "mcpRequestsAnsweredTitle": "Respondidas recientemente",
-  "mcpRequestsUnavailable": "No se pudieron leer las solicitudes de sus asistentes. Vuelva a abrir esta página más tarde.",
   "mcpRequestsWaitingTitle": "Pendiente de su confirmación",
   "mcpReviewApprove": "Aprobar",
   "mcpReviewChanged": "Esta solicitud cambió u otro administrador decidió antes. No se hizo nada.",
@@ -13029,7 +13027,6 @@
   "mcpReviewReject": "Rechazar",
   "mcpReviewSecondFactor": "Esa base de datos necesita su segundo factor en su propia sesión. No se decidió nada.",
   "mcpReviewTitle": "Aprobaciones de asistentes",
-  "mcpReviewUnavailable": "No se pudieron cargar las solicitudes. Una revisión necesita su segundo factor; inténtelo de nuevo.",
   "mcpStateAfterPrevious": "Después del paso anterior",
   "mcpStateAllowed": "Permitido",
   "mcpStateApproved": "Aprobada",
@@ -13067,7 +13064,6 @@
   "mcpUsagePending": "Pendientes de validación",
   "mcpUsageRefusals": "Rechazadas",
   "mcpUsageRequests": "Solicitudes",
-  "mcpUsageUnavailable": "No se pudo cargar el uso.",
   "mcpUsageWorkspaceTitle": "Uso de asistentes, últimos 30 días",
   "meAccountInMe": "Mi cuenta está en Yo",
   "meAccountInMeBody": "Foto, idioma, tema e inicios de sesión son suyos en todos los espacios.",
@@ -13108,7 +13104,6 @@
   "meDataWorkspaceSuperseded": "La cuenta conectada cambió mientras se leía la exportación. No se ofreció nada.",
   "meDataWorkspaceUnnamed": "Negocio {id}",
   "meDataWorkspacesEmpty": "Su cuenta aún no nombra ningún negocio.",
-  "meDataWorkspacesFailed": "No se pudieron leer los negocios de su cuenta. No se exportó nada.",
   "meDataWorkspacesScope": "Cada negocio exporta lo que conserva sobre usted — afiliación, reservas, cuenta y facturas — desde su propio servidor, un archivo por negocio. La parte de su cuenta personal es la tarjeta de arriba.",
   "meDataWorkspacesTitle": "Sus datos en cada negocio",
   "meDemoSessionBadgeHint": "Está explorando un negocio de demostración. Nada de esto sale de este dispositivo.",
@@ -13190,7 +13185,6 @@
   "meOverviewView": "Ver",
   "mePlaceMember": "Miembro",
   "mePlaceRequestSent": "Solicitud enviada · esperando respuesta",
-  "mePlacesLoadFailed": "No se pudieron cargar sus lugares.",
   "mePrivacySelfServiceOff": "Este negocio gestiona él mismo las solicitudes de datos. Presente una solicitud de derechos y el administrador de datos personales la responderá.",
   "meRealBusiness": "Negocio real",
   "meRefDefault": "Predeterminado",
@@ -13200,7 +13194,6 @@
   "meRefUnnamed": "Un lugar en otro servidor",
   "meRefUnverified": "Membresía aún no verificada",
   "meRefsTitle": "Lugares en otros servidores",
-  "meRefsUnavailable": "No se pudieron leer sus lugares en otros servidores.",
   "meRunASpace": "¿Dirige usted un negocio?",
   "meRunASpaceAction": "Configurarlo",
   "meSectionMine": "Mi historial y mis datos",
@@ -15580,7 +15573,6 @@
   "publicProfilePublishBody": "Cualquier persona en Internet, con sesión o sin ella, podrá leer su nombre, su profesión y su presentación en su enlace. Sus datos de contacto, su presencia y sus lugares siguen siendo privados.",
   "publicProfilePublishTitle": "¿Publicar un perfil público?",
   "publicProfilePublishedInfo": "Información publicada por este negocio. La falta de información no significa que un equipamiento no esté disponible.",
-  "publicProfileRefreshFailed": "No se ha podido actualizar la página de este negocio. Se muestra la información ya cargada.",
   "publicProfileRefreshing": "Actualizando la información publicada…",
   "publicProfileRegularHours": "Horario habitual en la zona horaria del negocio; las excepciones y la disponibilidad actual pueden variar.",
   "publicProfileTakesInquiries": "Acepta consultas",
@@ -25550,18 +25542,9 @@
       }
     }
   },
-  "visibilityOnServerUnavailable": "{host} no respondió. Inténtelo más tarde.",
-  "@visibilityOnServerUnavailable": {
-    "placeholders": {
-      "host": {
-        "type": "String"
-      }
-    }
-  },
   "visibilityPresence": "Hoy en el lugar",
   "visibilityPreviewCanWrite": "Puede iniciar una conversación con usted",
   "visibilityPreviewCannotWrite": "No puede iniciar una conversación con usted",
-  "visibilityPreviewFailed": "No se pudo cargar la vista previa.",
   "visibilityPreviewMySpaces": "Un miembro de mis lugares",
   "visibilityPreviewNobody": "Solo yo",
   "visibilityPreviewNothing": "No ven nada de usted.",
@@ -25578,9 +25561,7 @@
   "visibilitySpaceOnServer": "en el servidor {installation}",
   "visibilitySpaceUnlisted": "Un lugar que ya no aparece en la lista",
   "visibilitySpaceUnverified": "Verificación no disponible",
-  "visibilitySpacesUnavailable": "Sus lugares no se pueden listar ahora.",
   "visibilityTitle": "Quién me ve",
-  "visibilityUnavailable": "No se puede leer ahora quién ve qué de usted. No se ha cambiado nada.",
   "visibilityUnconfirmedTitle": "No se ha podido confirmar su cambio",
   "visibilityUnsupported": "Su hogar personal aún no puede guardar este ajuste: quienes lo gestionan deben actualizarlo. No se ha cambiado nada.",
   "visibilityWidenAction": "Ampliar",

@@ -13001,7 +13001,6 @@
   "mcpPolicyStale": "Quelqu'un a modifié ces réglages entre-temps. Vérifiez les réglages actuels et enregistrez à nouveau.",
   "mcpPolicySwitched": "Vous avez changé d'espace. Rouvrez cette page pour modifier l'autre espace.",
   "mcpPolicyTitle": "Accès des assistants",
-  "mcpPolicyUnavailable": "Les réglages des assistants n'ont pas pu être chargés. Réessayez plus tard.",
   "mcpRefusalClientNotApproved": "Cet assistant n’est pas encore approuvé sur ce serveur. L’opérateur approuve chaque assistant une fois ; demandez-le-lui, puis reconnectez-vous depuis l’assistant.",
   "mcpRefusalClientNotApprovedNamed": "Cet assistant n’est pas encore approuvé sur ce serveur. L’opérateur approuve chaque assistant une fois ; demandez-le-lui, puis reconnectez-vous depuis l’assistant. En attente de l'opérateur du serveur : {names}.",
   "mcpRefusalNoIdentity": "Confirmez d’abord votre identité dans DesKilo sous Assistants, puis reconnectez-vous depuis l’assistant.",
@@ -13017,7 +13016,6 @@
   "mcpRequestRevoked": "Retirée",
   "mcpRequestUnknown": "Réponse illisible",
   "mcpRequestsAnsweredTitle": "Répondues récemment",
-  "mcpRequestsUnavailable": "Les demandes de vos assistants n'ont pas pu être lues. Rouvrez cette page plus tard.",
   "mcpRequestsWaitingTitle": "En attente de votre confirmation",
   "mcpReviewApprove": "Autoriser",
   "mcpReviewChanged": "Cette demande a changé ou un autre administrateur a décidé avant vous. Rien n'a été fait.",
@@ -13029,7 +13027,6 @@
   "mcpReviewReject": "Refuser",
   "mcpReviewSecondFactor": "Cette base de données exige votre second facteur dans sa propre session. Rien n'a été décidé.",
   "mcpReviewTitle": "Autorisations des assistants",
-  "mcpReviewUnavailable": "Les demandes n'ont pas pu être chargées. Un examen demande votre second facteur ; réessayez.",
   "mcpStateAfterPrevious": "Après l'étape précédente",
   "mcpStateAllowed": "Autorisé",
   "mcpStateApproved": "Approuvée",
@@ -13067,7 +13064,6 @@
   "mcpUsagePending": "En attente de validation",
   "mcpUsageRefusals": "Refusées",
   "mcpUsageRequests": "Demandes",
-  "mcpUsageUnavailable": "L'utilisation n'a pas pu être chargée.",
   "mcpUsageWorkspaceTitle": "Utilisation des assistants, 30 derniers jours",
   "meAccountInMe": "Mon compte est dans Moi",
   "meAccountInMeBody": "Photo, langue, thème et connexions sont à vous, dans chaque espace.",
@@ -13108,7 +13104,6 @@
   "meDataWorkspaceSuperseded": "Le compte connecté a changé pendant la lecture de l’export. Rien n’a été proposé.",
   "meDataWorkspaceUnnamed": "Entreprise {id}",
   "meDataWorkspacesEmpty": "Votre compte ne nomme encore aucune entreprise.",
-  "meDataWorkspacesFailed": "Les entreprises de votre compte n’ont pas pu être lues. Rien n’a été exporté.",
   "meDataWorkspacesScope": "Chaque entreprise exporte ce qu’elle détient sur vous — adhésion, réservations, compte et factures — depuis son propre serveur, un fichier par entreprise. La part de votre compte personnel est la carte ci-dessus.",
   "meDataWorkspacesTitle": "Vos données dans chaque entreprise",
   "meDemoSessionBadgeHint": "Vous explorez une entreprise de démonstration. Rien ici ne quitte cet appareil.",
@@ -13190,7 +13185,6 @@
   "meOverviewView": "Voir",
   "mePlaceMember": "Membre",
   "mePlaceRequestSent": "Demande envoyée · en attente de réponse",
-  "mePlacesLoadFailed": "Vos lieux n'ont pas pu être chargés.",
   "mePrivacySelfServiceOff": "Cette entreprise traite elle-même les demandes sur les données. Déposez une demande de droits : l’administrateur des données personnelles y répondra.",
   "meRealBusiness": "Entreprise réelle",
   "meRefDefault": "Par défaut",
@@ -13200,7 +13194,6 @@
   "meRefUnnamed": "Un lieu sur un autre serveur",
   "meRefUnverified": "Adhésion pas encore vérifiée",
   "meRefsTitle": "Lieux ailleurs",
-  "meRefsUnavailable": "Vos lieux ailleurs n'ont pas pu être lus.",
   "meRunASpace": "Vous dirigez vous-même une activité ?",
   "meRunASpaceAction": "Configurer",
   "meSectionMine": "Mon historique et mes données",
@@ -15580,7 +15573,6 @@
   "publicProfilePublishBody": "N'importe qui sur Internet, connecté ou non, pourra lire votre nom, votre métier et votre présentation via votre lien. Vos coordonnées, votre présence et vos lieux restent privés.",
   "publicProfilePublishTitle": "Publier un profil public ?",
   "publicProfilePublishedInfo": "Informations publiées par cette entreprise. Une information manquante ne signifie pas qu’un équipement est absent.",
-  "publicProfileRefreshFailed": "Impossible d’actualiser la page de cette entreprise. Les informations déjà chargées restent affichées.",
   "publicProfileRefreshing": "Actualisation des informations publiées…",
   "publicProfileRegularHours": "Horaires habituels dans le fuseau horaire de l’entreprise ; les exceptions et la disponibilité réelle peuvent différer.",
   "publicProfileTakesInquiries": "Accepte les demandes de renseignements",
@@ -25550,18 +25542,9 @@
       }
     }
   },
-  "visibilityOnServerUnavailable": "{host} n'a pas répondu. Réessayez plus tard.",
-  "@visibilityOnServerUnavailable": {
-    "placeholders": {
-      "host": {
-        "type": "String"
-      }
-    }
-  },
   "visibilityPresence": "Présent sur place aujourd'hui",
   "visibilityPreviewCanWrite": "Peut démarrer une conversation avec vous",
   "visibilityPreviewCannotWrite": "Ne peut pas démarrer de conversation avec vous",
-  "visibilityPreviewFailed": "L'aperçu n'a pas pu être chargé.",
   "visibilityPreviewMySpaces": "Un membre de mes lieux",
   "visibilityPreviewNobody": "Moi seul",
   "visibilityPreviewNothing": "Ils ne voient rien de vous.",
@@ -25578,9 +25561,7 @@
   "visibilitySpaceOnServer": "sur le serveur {installation}",
   "visibilitySpaceUnlisted": "Un lieu qui n'est plus listé",
   "visibilitySpaceUnverified": "Vérification indisponible",
-  "visibilitySpacesUnavailable": "Vos lieux ne peuvent pas être listés pour l'instant.",
   "visibilityTitle": "Qui me voit",
-  "visibilityUnavailable": "Impossible de lire pour l'instant qui voit quoi de vous. Rien n'a été modifié.",
   "visibilityUnconfirmedTitle": "Votre modification n’a pas pu être confirmée",
   "visibilityUnsupported": "Votre domicile personnel ne peut pas encore enregistrer ce réglage : ses administrateurs doivent le mettre à jour. Rien n’a été modifié.",
   "visibilityWidenAction": "Élargir",

@@ -67,11 +67,9 @@ int ownErrorBranches(String source) {
 const _ownErrorBranchCeiling = <String, int>{
   'auth': 2,
   'calendar': 5,
-  'directory': 25,
   'editor': 2,
   'events': 2,
   'kiosk': 1,
-  'me': 20,
   'members': 4,
   'money': 98,
   'plan': 2,

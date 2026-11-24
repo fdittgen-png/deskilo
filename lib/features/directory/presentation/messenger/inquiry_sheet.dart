@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/copy_value.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/messenger.dart';
@@ -161,11 +162,11 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
                         ),
                     ],
                   ),
-                  AsyncError() => Center(
-                    child: TextButton(
-                      key: const ValueKey('inquiry-roster-retry'),
-                      onPressed: () => ref.invalidate(provider),
-                      child: Text(l10n.commonRetry),
+                  AsyncError(:final error) => Center(
+                    child: ReadFailureBanner(
+                      error: error,
+                      retryKey: const ValueKey('inquiry-roster-retry'),
+                      onRetry: () => ref.invalidate(provider),
                     ),
                   ),
                   _ => const LoadingView(),

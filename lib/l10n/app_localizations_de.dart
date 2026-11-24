@@ -21873,10 +21873,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpPolicyTitle => 'Zugriff für Assistenten';
 
   @override
-  String get mcpPolicyUnavailable =>
-      'Die Assistenten-Einstellungen konnten nicht geladen werden. Versuchen Sie es später erneut.';
-
-  @override
   String get mcpRefusalClientNotApproved =>
       'Dieser Assistent ist auf diesem Server noch nicht freigegeben. Der Betreiber gibt jeden Assistenten einmal frei; fragen Sie ihn und verbinden Sie dann erneut aus dem Assistenten.';
 
@@ -21931,10 +21927,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpRequestsAnsweredTitle => 'Kürzlich beantwortet';
 
   @override
-  String get mcpRequestsUnavailable =>
-      'Die Anfragen Ihrer Assistenten konnten nicht gelesen werden. Öffnen Sie diese Seite später erneut.';
-
-  @override
   String get mcpRequestsWaitingTitle => 'Wartet auf Ihre Bestätigung';
 
   @override
@@ -21970,10 +21962,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mcpReviewTitle => 'Freigaben für Assistenten';
-
-  @override
-  String get mcpReviewUnavailable =>
-      'Die Anfragen konnten nicht geladen werden. Eine Prüfung braucht Ihren zweiten Faktor; versuchen Sie es erneut.';
 
   @override
   String get mcpStateAfterPrevious => 'Nach dem vorherigen Schritt';
@@ -22089,9 +22077,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpUsageRequests => 'Anfragen';
 
   @override
-  String get mcpUsageUnavailable => 'Die Nutzung konnte nicht geladen werden.';
-
-  @override
   String get mcpUsageWorkspaceTitle =>
       'Nutzung durch Assistenten, letzte 30 Tage';
 
@@ -22199,10 +22184,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get meDataWorkspacesEmpty => 'Ihr Konto nennt noch keinen Betrieb.';
-
-  @override
-  String get meDataWorkspacesFailed =>
-      'Die Betriebe Ihres Kontos konnten nicht gelesen werden. Es wurde nichts exportiert.';
 
   @override
   String get meDataWorkspacesScope =>
@@ -22482,9 +22463,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mePlaceRequestSent => 'Anfrage gesendet · wartet auf eine Antwort';
 
   @override
-  String get mePlacesLoadFailed => 'Ihre Orte konnten nicht geladen werden.';
-
-  @override
   String get mePrivacySelfServiceOff =>
       'Dieser Betrieb bearbeitet Datenanfragen selbst. Stellen Sie eine Betroffenenanfrage; der oder die Verantwortliche für personenbezogene Daten beantwortet sie.';
 
@@ -22512,10 +22490,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get meRefsTitle => 'Orte anderswo';
-
-  @override
-  String get meRefsUnavailable =>
-      'Ihre Orte anderswo konnten nicht gelesen werden.';
 
   @override
   String get meRunASpace => 'Sie führen selbst ein Geschäft?';
@@ -27519,10 +27493,6 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get publicProfilePublishedInfo =>
       'Von diesem Betrieb veröffentlichte Angaben. Eine fehlende Angabe bedeutet nicht, dass eine Ausstattung nicht vorhanden ist.';
-
-  @override
-  String get publicProfileRefreshFailed =>
-      'Die Seite dieses Betriebs konnte nicht aktualisiert werden. Die bereits geladenen Angaben werden angezeigt.';
 
   @override
   String get publicProfileRefreshing =>
@@ -43768,11 +43738,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String visibilityOnServerUnavailable(String host) {
-    return '$host hat nicht geantwortet. Versuchen Sie es später erneut.';
-  }
-
-  @override
   String get visibilityPresence => 'Heute am Ort';
 
   @override
@@ -43782,10 +43747,6 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get visibilityPreviewCannotWrite =>
       'Kann kein Gespräch mit Ihnen beginnen';
-
-  @override
-  String get visibilityPreviewFailed =>
-      'Die Vorschau konnte nicht geladen werden.';
 
   @override
   String get visibilityPreviewMySpaces => 'Ein Mitglied meiner Orte';
@@ -43844,15 +43805,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get visibilitySpaceUnverified => 'Überprüfung nicht verfügbar';
 
   @override
-  String get visibilitySpacesUnavailable =>
-      'Ihre Orte lassen sich gerade nicht auflisten.';
-
-  @override
   String get visibilityTitle => 'Wer mich sieht';
-
-  @override
-  String get visibilityUnavailable =>
-      'Wer was von Ihnen sieht, lässt sich gerade nicht lesen. Es wurde nichts geändert.';
 
   @override
   String get visibilityUnconfirmedTitle =>

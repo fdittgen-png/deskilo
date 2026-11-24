@@ -34468,12 +34468,6 @@ abstract class AppLocalizations {
   /// **'Assistant access'**
   String get mcpPolicyTitle;
 
-  /// #1626 #1627 #1628 mcp_settings
-  ///
-  /// In en, this message translates to:
-  /// **'The assistant settings could not be loaded. Try again later.'**
-  String get mcpPolicyUnavailable;
-
   /// #2145 Connect an assistant: mcpRefusalClientNotApproved
   ///
   /// In en, this message translates to:
@@ -34567,12 +34561,6 @@ abstract class AppLocalizations {
   /// #3978 mcp_my_requests
   ///
   /// In en, this message translates to:
-  /// **'Your assistants\' requests could not be read. Open this page again later.'**
-  String get mcpRequestsUnavailable;
-
-  /// #3978 mcp_my_requests
-  ///
-  /// In en, this message translates to:
   /// **'Waiting for your confirmation'**
   String get mcpRequestsWaitingTitle;
 
@@ -34635,12 +34623,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Assistant approvals'**
   String get mcpReviewTitle;
-
-  /// #1626 #1627 #1628 mcp_settings
-  ///
-  /// In en, this message translates to:
-  /// **'The requests could not be loaded. A review needs your second factor; try again.'**
-  String get mcpReviewUnavailable;
 
   /// MCP status card (assistant setup): identity confirmation, taken in place
   ///
@@ -34867,12 +34849,6 @@ abstract class AppLocalizations {
   /// #1630 mcp_usage
   ///
   /// In en, this message translates to:
-  /// **'Usage could not be loaded.'**
-  String get mcpUsageUnavailable;
-
-  /// #1630 mcp_usage
-  ///
-  /// In en, this message translates to:
   /// **'Assistant use, last 30 days'**
   String get mcpUsageWorkspaceTitle;
 
@@ -35037,12 +35013,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your account names no business yet.'**
   String get meDataWorkspacesEmpty;
-
-  /// #2557 C3 the workspace list could not be read.
-  ///
-  /// In en, this message translates to:
-  /// **'The businesses your account names could not be read. Nothing was exported.'**
-  String get meDataWorkspacesFailed;
 
   /// #2557 C3 what each workspace's export covers.
   ///
@@ -35470,12 +35440,6 @@ abstract class AppLocalizations {
   /// **'Request sent · waiting for an answer'**
   String get mePlaceRequestSent;
 
-  /// Me, My places: the places could not be loaded (#3555: the profiles screen keeps profilesUnavailable)
-  ///
-  /// In en, this message translates to:
-  /// **'Your places could not be loaded.'**
-  String get mePlacesLoadFailed;
-
   /// Me, the data export card: the business answers data requests itself (#3555: refusal_text keeps privacySelfServiceOff)
   ///
   /// In en, this message translates to:
@@ -35529,12 +35493,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Places elsewhere'**
   String get meRefsTitle;
-
-  /// #2563 Me home: the references could not be read
-  ///
-  /// In en, this message translates to:
-  /// **'Your places elsewhere could not be read.'**
-  String get meRefsUnavailable;
 
   /// #3545 First visit: the question before the link that creates a business.
   ///
@@ -43561,12 +43519,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Information published by this business. Missing information does not mean that a facility is absent.'**
   String get publicProfilePublishedInfo;
-
-  /// Public profile: RefreshFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not refresh this business’s page. Showing the information already loaded.'**
-  String get publicProfileRefreshFailed;
 
   /// Public profile: Refreshing.
   ///
@@ -69541,12 +69493,6 @@ abstract class AppLocalizations {
   /// **'Who sees me on {host}'**
   String visibilityOnServer(String host);
 
-  /// #2211 who sees me on a connected server: visibilityOnServerUnavailable
-  ///
-  /// In en, this message translates to:
-  /// **'{host} did not answer. Try again later.'**
-  String visibilityOnServerUnavailable(String host);
-
   /// Visibility field: presence in a space today.
   ///
   /// In en, this message translates to:
@@ -69564,12 +69510,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cannot start a conversation with you'**
   String get visibilityPreviewCannotWrite;
-
-  /// Preview failed to load.
-  ///
-  /// In en, this message translates to:
-  /// **'The preview could not be loaded.'**
-  String get visibilityPreviewFailed;
 
   /// Preview audience chip: a member of my spaces.
   ///
@@ -69667,23 +69607,11 @@ abstract class AppLocalizations {
   /// **'Verification unavailable'**
   String get visibilitySpaceUnverified;
 
-  /// #2558 — the chosen-spaces picker when the list of spaces cannot be read.
-  ///
-  /// In en, this message translates to:
-  /// **'Your places cannot be listed right now.'**
-  String get visibilitySpacesUnavailable;
-
   /// Title of the card choosing who sees what of the account.
   ///
   /// In en, this message translates to:
   /// **'Who sees me'**
   String get visibilityTitle;
-
-  /// #2558 — the privacy card when the saved settings cannot be read; a retry follows.
-  ///
-  /// In en, this message translates to:
-  /// **'Who sees what of you cannot be read right now. Nothing was changed.'**
-  String get visibilityUnavailable;
 
   /// #2558 C2 privacy: the reply was lost and the saved field read back is not the intended one
   ///
