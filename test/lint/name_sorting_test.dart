@@ -67,9 +67,16 @@ void main() {
     }
   });
 
-  test('a search in a screen folds case and accents (#4428)', () {
-    final files = filesUnder(['lib/features', 'lib/core/ui']).where(
-      (f) => f.path.contains('/presentation/') || f.path.startsWith('lib/core/ui/'),
+  // Every layer, not only screens: a domain or application filter (the
+  // features list, Me's spaces, the time zones) searches for a person too.
+  // Exempt: lib/core/backend matches a server's English error text, and the
+  // Demo's fakes answer as the server's own search does.
+  test('a search folds case and accents (#4428)', () {
+    final files = filesUnder(['lib']).where(
+      (f) =>
+          !f.path.startsWith('lib/core/backend/') &&
+          !f.path.startsWith('lib/core/demo/') &&
+          !f.path.startsWith('lib/core/text/'),
     );
     final perFile = countLiterals(files, [_search])[_search.name]!;
     expect(

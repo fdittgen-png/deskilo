@@ -13,6 +13,7 @@
 import 'package:meta/meta.dart';
 
 import '../../../core/storage/space_prefs_store.dart';
+import '../../../core/text/collation.dart';
 import '../../workspace/domain/workspace.dart';
 import '../domain/personal_workspace_refs.dart';
 import '../domain/space_pairs.dart';
@@ -90,11 +91,11 @@ List<PersonalSpaceEntry> personalSpaceEntries(
     return null;
   }
 
-  final needle = query.trim().toLowerCase();
+  final needle = foldForSearch(query.trim());
   final entries = [
     for (final ref in refs.refs)
       if (needle.isEmpty ||
-          (ref.label ?? '').toLowerCase().contains(needle))
+          foldForSearch(ref.label ?? '').contains(needle))
         PersonalSpaceEntry(ref: ref, local: localOf(ref)),
   ];
   int rank(PersonalSpaceEntry e) =>
@@ -158,7 +159,7 @@ class PersonalSpaceRow {
       sides.any((s) =>
           filter._admits(s.ref.status) &&
           (needle.isEmpty ||
-              (s.ref.label ?? '').toLowerCase().contains(needle)));
+              foldForSearch(s.ref.label ?? '').contains(needle)));
 }
 
 String _keyOf(PersonalSpaceEntry e) {
@@ -198,7 +199,7 @@ List<PersonalSpaceRow> personalSpaceRows(
       ),
   ];
   final ordered = _ordered(rows, prefs);
-  final needle = query.trim().toLowerCase();
+  final needle = foldForSearch(query.trim());
   return [
     for (final row in ordered)
       if (row._matches(needle, filter)) row,
