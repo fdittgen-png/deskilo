@@ -1480,7 +1480,8 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
             UnitDraft(code: 'CT-001-$n', kind: HandlingUnitKind.box, locationId: carton.locationId, lines: const [UnitLineDraft(itemId: 'demo-item-beans', quantity: '5')]),
         ],
       );
-      return moved.locationId == 'demo-place-shelf' && ledger.balance('demo-item-mugs', 'demo-place-shelf').text == '42' && refused && boxes.length == 2;
+      // the shelf held 12 mugs less the 2 the shop sold from it (#4173); the pallet brings 30
+      return moved.locationId == 'demo-place-shelf' && ledger.balance('demo-item-mugs', 'demo-place-shelf').text == '40' && refused && boxes.length == 2;
     },
   ),
   // #4431 — the expiry report: what expired and what is about to, by date, the five basket pieces one by one, and a place keeps
