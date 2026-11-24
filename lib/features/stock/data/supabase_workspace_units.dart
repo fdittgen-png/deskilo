@@ -26,7 +26,7 @@ class SupabaseWorkspaceUnits implements WorkspaceUnits {
   });
 
   @override
-  Future<WorkspaceUnit> save(String workspaceId, {required String requestId, required UnitDraft draft}) async => WorkspaceUnit.fromJson(
+  Future<WorkspaceUnit> save(String workspaceId, {required String requestId, required MeasureUnitDraft draft}) async => WorkspaceUnit.fromJson(
     await _rpc.object('workspace_unit_save_v1', {'p_workspace_id': workspaceId, 'p_request_id': requestId, 'p_unit': draft.toJson()}),
   );
 

@@ -336,6 +336,7 @@ abstract final class HelpAnchor {
 
   /// The paper the space's documents are printed on (#3852).
   static const workspacePaper = 'user.workspace.settings.paper';
+  static const settingsUnits = 'user.workspace.settings.units';
 
   /// The free-text address a paper document prints.
   static const workspaceAddress = 'user.workspace.settings.address';

@@ -73,6 +73,17 @@ class WorkspaceOwnScreens extends ConsumerWidget {
             path: '/settings/questions',
             helpTopic: helpTopic,
           ),
+        // #4442 — the units this business measures in and how they convert.
+        if (features.contains(WorkspaceFeature.unitsOfMeasure))
+          _Row(
+            rowKey: 'workspaceSettingsUnits',
+            icon: Icons.straighten,
+            title: l10n.featureUnitsOfMeasureTitle,
+            anchor: HelpAnchor.settingsUnits,
+            subtitle: l10n.measureUnitsSubtitle,
+            path: '/settings/units',
+            helpTopic: helpTopic,
+          ),
       ],
     );
   }

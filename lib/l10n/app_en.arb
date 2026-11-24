@@ -29519,6 +29519,134 @@
   "@meWhereSpacesLive": {
     "description": "Row in Me opening the connected servers."
   },
+  "measureDimensionArea": "Area",
+  "@measureDimensionArea": {
+    "description": "#4442 dimension: area"
+  },
+  "measureDimensionCount": "Count",
+  "@measureDimensionCount": {
+    "description": "#4442 dimension: counting"
+  },
+  "measureDimensionLength": "Length",
+  "@measureDimensionLength": {
+    "description": "#4442 dimension: length"
+  },
+  "measureDimensionMass": "Mass",
+  "@measureDimensionMass": {
+    "description": "#4442 dimension: mass"
+  },
+  "measureDimensionTime": "Time",
+  "@measureDimensionTime": {
+    "description": "#4442 dimension: time"
+  },
+  "measureDimensionVolume": "Volume",
+  "@measureDimensionVolume": {
+    "description": "#4442 dimension: volume"
+  },
+  "measureReasonDimension": "Choose what this unit measures.",
+  "@measureReasonDimension": {
+    "description": "#4442 refusal: no dimension chosen"
+  },
+  "measureReasonEce": "A UN/ECE code is two or three capital letters or digits.",
+  "@measureReasonEce": {
+    "description": "#4442 refusal: the UN/ECE code is malformed"
+  },
+  "measureReasonFixed": "This unit is fixed and cannot be changed or removed.",
+  "@measureReasonFixed": {
+    "description": "#4442 refusal: a fixed unit"
+  },
+  "measureReasonInUse": "This unit is in use, so its dimension and factor can no longer change. Make a new unit instead.",
+  "@measureReasonInUse": {
+    "description": "#4442 refusal: a unit in use keeps its factor"
+  },
+  "measureReasonInexact": "The result cannot be written exactly with six decimals.",
+  "@measureReasonInexact": {
+    "description": "#4442 refusal: a conversion that six decimals cannot hold"
+  },
+  "measureReasonName": "A new unit needs a name.",
+  "@measureReasonName": {
+    "description": "#4442 refusal: a new unit needs a name"
+  },
+  "measureUnitArchive": "Archive",
+  "@measureUnitArchive": {
+    "description": "#4442 action: archive an unused unit"
+  },
+  "measureUnitArchivedTag": "Archived",
+  "@measureUnitArchivedTag": {
+    "description": "#4442 tag on an archived unit"
+  },
+  "measureUnitBuiltIn": "Built in",
+  "@measureUnitBuiltIn": {
+    "description": "#4442 tag on a built-in unit"
+  },
+  "measureUnitCodeField": "Unit code",
+  "@measureUnitCodeField": {
+    "description": "#4442 field: the code of a unit"
+  },
+  "measureUnitCodeHelp": "Lower case letters, digits and underscores. It cannot change later.",
+  "@measureUnitCodeHelp": {
+    "description": "#4442 helper of the code field"
+  },
+  "measureUnitDimensionField": "It measures",
+  "@measureUnitDimensionField": {
+    "description": "#4442 field: what a unit measures"
+  },
+  "measureUnitEceField": "UN/ECE code (for e-invoices)",
+  "@measureUnitEceField": {
+    "description": "#4442 field: the UN/ECE code of a unit"
+  },
+  "measureUnitEdit": "Edit unit",
+  "@measureUnitEdit": {
+    "description": "#4442 edit sheet title"
+  },
+  "measureUnitFactorField": "One unit equals",
+  "@measureUnitFactorField": {
+    "description": "#4442 field: how many base units one unit is"
+  },
+  "measureUnitFactorHelp": "Counted in {base}, the base unit of what it measures: 1000 for a km, 0.001 for a mm.",
+  "@measureUnitFactorHelp": {
+    "description": "#4442 helper of the factor field",
+    "placeholders": {
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureUnitLine": "1 {unit} = {value} {base}",
+  "@measureUnitLine": {
+    "description": "#4442 a unit's conversion line, e.g. 1 km = 1000 m",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureUnitNameField": "Your name for the unit",
+  "@measureUnitNameField": {
+    "description": "#4442 field: the business's own word for a unit"
+  },
+  "measureUnitNew": "New unit",
+  "@measureUnitNew": {
+    "description": "#4442 new unit action"
+  },
+  "measureUnitRestore": "Show again",
+  "@measureUnitRestore": {
+    "description": "#4442 action: show an archived unit again"
+  },
+  "measureUnitsIntro": "The units your items, quotes and invoices are measured in, and how they convert: 1 km = 1000 m. The built-in units are always there; add your own, such as a cable drum of 50 m.",
+  "@measureUnitsIntro": {
+    "description": "#4442 what the screen is for"
+  },
+  "measureUnitsSubtitle": "Your own units and how they convert",
+  "@measureUnitsSubtitle": {
+    "description": "#4442 the row in the workspace settings"
+  },
   "memberAccountTitle": "My account",
   "@memberAccountTitle": {
     "description": "#1598 member account menu: memberAccountTitle"

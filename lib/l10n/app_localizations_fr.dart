@@ -22697,6 +22697,101 @@ class AppLocalizationsFr extends AppLocalizations {
   String get meWhereSpacesLive => 'Où vivent mes lieux';
 
   @override
+  String get measureDimensionArea => 'Surface';
+
+  @override
+  String get measureDimensionCount => 'Quantité';
+
+  @override
+  String get measureDimensionLength => 'Longueur';
+
+  @override
+  String get measureDimensionMass => 'Masse';
+
+  @override
+  String get measureDimensionTime => 'Durée';
+
+  @override
+  String get measureDimensionVolume => 'Volume';
+
+  @override
+  String get measureReasonDimension => 'Choisissez ce que cette unité mesure.';
+
+  @override
+  String get measureReasonEce =>
+      'Un code UN/ECE comporte deux ou trois majuscules ou chiffres.';
+
+  @override
+  String get measureReasonFixed =>
+      'Cette unité est fixe : elle ne peut être ni modifiée ni supprimée.';
+
+  @override
+  String get measureReasonInUse =>
+      'Cette unité est utilisée : sa dimension et son facteur ne peuvent plus changer. Créez plutôt une nouvelle unité.';
+
+  @override
+  String get measureReasonInexact =>
+      'Le résultat ne peut pas s’écrire exactement avec six décimales.';
+
+  @override
+  String get measureReasonName => 'Une nouvelle unité a besoin d’un nom.';
+
+  @override
+  String get measureUnitArchive => 'Archiver';
+
+  @override
+  String get measureUnitArchivedTag => 'Archivée';
+
+  @override
+  String get measureUnitBuiltIn => 'De base';
+
+  @override
+  String get measureUnitCodeField => 'Code de l’unité';
+
+  @override
+  String get measureUnitCodeHelp =>
+      'Lettres minuscules, chiffres et tirets bas. Il ne pourra plus changer.';
+
+  @override
+  String get measureUnitDimensionField => 'Elle mesure';
+
+  @override
+  String get measureUnitEceField =>
+      'Code UN/ECE (pour les factures électroniques)';
+
+  @override
+  String get measureUnitEdit => 'Modifier l’unité';
+
+  @override
+  String get measureUnitFactorField => 'Une unité vaut';
+
+  @override
+  String measureUnitFactorHelp(String base) {
+    return 'Compté en $base, l’unité de base de ce qu’elle mesure : 1000 pour un km, 0,001 pour un mm.';
+  }
+
+  @override
+  String measureUnitLine(String unit, String value, String base) {
+    return '1 $unit = $value $base';
+  }
+
+  @override
+  String get measureUnitNameField => 'Votre nom pour l’unité';
+
+  @override
+  String get measureUnitNew => 'Nouvelle unité';
+
+  @override
+  String get measureUnitRestore => 'Afficher de nouveau';
+
+  @override
+  String get measureUnitsIntro =>
+      'Les unités dans lesquelles vos articles, devis et factures sont mesurés, et leurs conversions : 1 km = 1000 m. Les unités de base sont toujours là ; ajoutez les vôtres, par exemple un touret de câble de 50 m.';
+
+  @override
+  String get measureUnitsSubtitle => 'Vos propres unités et leurs conversions';
+
+  @override
   String get memberAccountTitle => 'Mon compte';
 
   @override

@@ -31,9 +31,6 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
   WorkspaceFeature.stockTagReads:
       '#4364: the server side is delivered first; its Demo scenario arrives with the screens, '
       'which turn the feature on and add it',
-  WorkspaceFeature.unitsOfMeasure:
-      '#4442: the server side is delivered first; its Demo scenario arrives with the Settings > Units screen, '
-      'which turns the feature on and adds it',
   WorkspaceFeature.mtdSubmission:
       'UK only: off in the head, on in the London house (ws-3), where its '
       'scenario is performed (#4009); left off in the other houses',

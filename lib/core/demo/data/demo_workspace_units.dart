@@ -60,7 +60,7 @@ class DemoWorkspaceUnits implements WorkspaceUnits {
   }
 
   @override
-  Future<WorkspaceUnit> save(String workspaceId, {required String requestId, required UnitDraft draft}) async {
+  Future<WorkspaceUnit> save(String workspaceId, {required String requestId, required MeasureUnitDraft draft}) async {
     final digest = '$workspaceId|${draft.toJson()}';
     final stored = _requests[requestId];
     if (stored != null) {
@@ -83,7 +83,7 @@ class DemoWorkspaceUnits implements WorkspaceUnits {
   }
 
   /// The unit [draft] makes of [old] (null: a new one): what it sets, else what was, the fraction reduced, every field checked.
-  WorkspaceUnit _edited(UnitDraft draft, WorkspaceUnit? old) {
+  WorkspaceUnit _edited(MeasureUnitDraft draft, WorkspaceUnit? old) {
     final dimension = draft.dimension ?? old?.dimension;
     if (dimension == null) throw const StockConfigRefused('dimension', 'dimension_invalid');
     var num = draft.factorNum ?? old?.factorNum;

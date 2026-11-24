@@ -3890,6 +3890,31 @@ Vous voulez que vos factures et vos lettres s'impriment sur le papier qu'utilise
 
 **Voir aussi:** [Pays](help:user.workspace.settings.country)
 
+### Unités de mesure
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+Vos articles, devis et factures sont mesurés dans des unités, et certaines se convertissent en d’autres : 1 km vaut 1000 m. Chaque entreprise commence avec les unités usuelles (pièce, g, kg, ml, cl, l, mm, cm, m, km, m², min, h) ; vous ajoutez les vôtres, par exemple un touret de câble de 50 m.
+
+<!-- image: user-workspace-settings--units -->
+
+**Étapes**
+
+1. Activez **Unités de mesure** sous **Fonctionnalités** (elle est désactivée tant que vous ne la demandez pas).
+2. Dans [Unités de mesure](app:/settings/units), touchez **Nouvelle unité**.
+3. Renseignez **Code de l’unité** (il ne pourra plus changer), **Votre nom pour l’unité**, **Elle mesure** et **Une unité vaut** dans l’unité de base de ce qu’elle mesure : 1000 pour un km compté en m, 0,001 pour un mm.
+4. Si vous le souhaitez, renseignez **Code UN/ECE (pour les factures électroniques)**, que portent les factures électroniques (KMT pour un km).
+5. Touchez **Enregistrer**.
+
+**Bon à savoir**
+
+- Une unité de base garde sa dimension et son facteur ; vous pouvez lui donner votre propre nom.
+- Une unité utilisée (un article compté avec elle, un mouvement de stock, un devis ou une ligne de facture) garde pour toujours sa dimension et son facteur : une correction est une nouvelle unité. Une unité que personne n’utilise peut être archivée (**Archiver**) puis affichée de nouveau (**Afficher de nouveau**).
+- Une conversion est exacte : 2,5 km font 2500 m. Deux sortes d’unités ne se convertissent jamais, et un résultat que six décimales ne peuvent pas contenir est refusé, jamais arrondi.
+- Seuls le propriétaire et les administrateurs autorisés à modifier les réglages de l’espace tiennent les unités.
+
+**Voir aussi:** [Papier des documents](help:user.workspace.settings.paper)
+
 ### Organisation
 
 **Public:** Propriétaire

@@ -37,57 +37,57 @@ void main() {
   });
 
   test('another business has its own list', () async {
-    await units.save(_ws, requestId: next(), draft: const UnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 50));
+    await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 50));
     expect((await units.units(_ws)).map((u) => u.code), contains('drum'));
     expect((await units.units('ws-2')).map((u) => u.code), isNot(contains('drum')));
   });
 
   test('a unit is created, its fraction is reduced, and it is edited while unused', () async {
     final drum = await units.save(_ws,
-        requestId: next(), draft: const UnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 100, factorDen: 2));
+        requestId: next(), draft: const MeasureUnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 100, factorDen: 2));
     expect([drum.factorNum, drum.factorDen, drum.builtIn], [50, 1, false]);
-    final edited = await units.save(_ws, requestId: next(), draft: const UnitDraft(code: 'drum', factorNum: 60));
+    final edited = await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'drum', factorNum: 60));
     expect([edited.factorNum, edited.label], [60, 'Cable drum']);
   });
 
   test('a retried request answers once, and another content under its id is refused', () async {
-    const draft = UnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 50);
+    const draft = MeasureUnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 50);
     final first = await units.save(_ws, requestId: 'same', draft: draft);
     final again = await units.save(_ws, requestId: 'same', draft: draft);
     expect(identical(first, again), isTrue);
-    expect(() => units.save(_ws, requestId: 'same', draft: const UnitDraft(code: 'drum', label: 'Another')),
+    expect(() => units.save(_ws, requestId: 'same', draft: const MeasureUnitDraft(code: 'drum', label: 'Another')),
         throwsA(isA<PostgrestException>().having((e) => e.code, 'code', 'DKG07')));
   });
 
   test('a malformed unit is refused by field and reason', () async {
-    Future<void> save(UnitDraft d) => units.save(_ws, requestId: next(), draft: d);
-    expect(save(const UnitDraft(code: 'Bad Code', label: 'x', dimension: UnitDimension.length, factorNum: 1)), throwsA(_refused('code', 'code_malformed')));
-    expect(save(const UnitDraft(code: 'bad', label: 'x', factorNum: 1)), throwsA(_refused('dimension', 'dimension_invalid')));
-    expect(save(const UnitDraft(code: 'bad', label: 'x', dimension: UnitDimension.length, factorNum: 0)), throwsA(_refused('factor', 'factor_invalid')));
-    expect(save(const UnitDraft(code: 'bad', dimension: UnitDimension.length, factorNum: 1)), throwsA(_refused('label', 'label_required')));
-    expect(save(UnitDraft(code: 'bad', label: 'x' * 41, dimension: UnitDimension.length, factorNum: 1)), throwsA(_refused('label', 'too_long')));
-    expect(save(const UnitDraft(code: 'bad', label: 'x', dimension: UnitDimension.length, factorNum: 1, unEceCode: 'toolong')),
+    Future<void> save(MeasureUnitDraft d) => units.save(_ws, requestId: next(), draft: d);
+    expect(save(const MeasureUnitDraft(code: 'Bad Code', label: 'x', dimension: UnitDimension.length, factorNum: 1)), throwsA(_refused('code', 'code_malformed')));
+    expect(save(const MeasureUnitDraft(code: 'bad', label: 'x', factorNum: 1)), throwsA(_refused('dimension', 'dimension_invalid')));
+    expect(save(const MeasureUnitDraft(code: 'bad', label: 'x', dimension: UnitDimension.length, factorNum: 0)), throwsA(_refused('factor', 'factor_invalid')));
+    expect(save(const MeasureUnitDraft(code: 'bad', dimension: UnitDimension.length, factorNum: 1)), throwsA(_refused('label', 'label_required')));
+    expect(save(MeasureUnitDraft(code: 'bad', label: 'x' * 41, dimension: UnitDimension.length, factorNum: 1)), throwsA(_refused('label', 'too_long')));
+    expect(save(const MeasureUnitDraft(code: 'bad', label: 'x', dimension: UnitDimension.length, factorNum: 1, unEceCode: 'toolong')),
         throwsA(_refused('un_ece_code', 'ece_invalid')));
   });
 
   test('a built-in keeps its factor but takes a word of the business\'s own, and gives it back', () async {
-    await expectLater(units.save(_ws, requestId: next(), draft: const UnitDraft(code: 'km', factorNum: 999)), throwsA(_refused('factor', 'registry_unit')));
-    final named = await units.save(_ws, requestId: next(), draft: const UnitDraft(code: 'km', label: 'Kilometre'));
+    await expectLater(units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'km', factorNum: 999)), throwsA(_refused('factor', 'registry_unit')));
+    final named = await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'km', label: 'Kilometre'));
     expect([named.label, named.factorNum], ['Kilometre', 1000]);
-    final back = await units.save(_ws, requestId: next(), draft: const UnitDraft(code: 'km', clearLabel: true));
+    final back = await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'km', clearLabel: true));
     expect(back.label, isNull);
   });
 
   test('a used unit keeps its dimension and factor, may be renamed, and cannot be archived', () async {
-    await units.save(_ws, requestId: next(), draft: const UnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 50));
+    await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 50));
     units.usedBy = (workspaceId, code) => code == 'drum';
-    await expectLater(units.save(_ws, requestId: next(), draft: const UnitDraft(code: 'drum', factorNum: 60)), throwsA(_refused('factor', 'unit_in_use')));
-    expect((await units.save(_ws, requestId: next(), draft: const UnitDraft(code: 'drum', label: 'Drum of cable'))).label, 'Drum of cable');
+    await expectLater(units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'drum', factorNum: 60)), throwsA(_refused('factor', 'unit_in_use')));
+    expect((await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'drum', label: 'Drum of cable'))).label, 'Drum of cable');
     await expectLater(units.archive(_ws, requestId: next(), code: 'drum', archived: true), throwsA(_refused('archived', 'unit_in_use')));
   });
 
   test('an unused unit is archived and shown again; an unknown one is refused', () async {
-    await units.save(_ws, requestId: next(), draft: const UnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 50));
+    await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 50));
     await units.archive(_ws, requestId: next(), code: 'drum', archived: true);
     expect((await units.units(_ws)).firstWhere((u) => u.code == 'drum').archived, isTrue);
     await units.archive(_ws, requestId: next(), code: 'drum', archived: false);

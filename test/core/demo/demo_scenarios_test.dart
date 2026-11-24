@@ -36,6 +36,7 @@ import 'package:deskilo/core/demo/data/demo_stock_registry.dart';
 import 'package:deskilo/core/demo/data/demo_stock_reorder.dart';
 import 'package:deskilo/core/demo/data/demo_stock_reversals.dart';
 import 'package:deskilo/core/demo/data/demo_stock_tags.dart';
+import 'package:deskilo/core/demo/data/demo_workspace_units.dart';
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
@@ -88,6 +89,7 @@ import 'package:deskilo/features/stock/domain/stock_operations.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:deskilo/features/stock/domain/stock_tags.dart';
+import 'package:deskilo/features/stock/domain/workspace_units.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -1483,6 +1485,32 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       );
       // the shelf held 12 mugs less the 2 the shop sold from it (#4173); the pallet brings 30
       return moved.locationId == 'demo-place-shelf' && ledger.balance('demo-item-mugs', 'demo-place-shelf').text == '40' && refused && boxes.length == 2;
+    },
+  ),
+  // #4442 — units of measure: a business that sells cable by the metre and buys it by the km keeps a unit of its own (a drum of 50 m),
+  // converts exactly through the metre, and a built-in unit keeps its factor.
+  WorkspaceFeature.unitsOfMeasure: _action(
+    _owner,
+    'Ada adds a cable drum of 50 m, reads 2.5 km as 2500 m and 2 drums as 0.1 km, and the km keeps its factor when she tries another',
+    (w) async {
+      final units = DemoWorkspaceUnits();
+      final drum = await units.save(
+        demoFirstSpaceId,
+        requestId: 'req-1',
+        draft: const MeasureUnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 50),
+      );
+      final all = await units.units(demoFirstSpaceId);
+      final km = all.firstWhere((u) => u.code == 'km');
+      final m = all.firstWhere((u) => u.code == 'm');
+      final metres = convertUnit(ExactQuantity.parse('2.5'), km, m).value?.text == '2500';
+      final kilometres = convertUnit(ExactQuantity.parse('2'), drum, km).value?.text == '0.1';
+      var refused = false;
+      try {
+        await units.save(demoFirstSpaceId, requestId: 'req-2', draft: const MeasureUnitDraft(code: 'km', factorNum: 999));
+      } on StockConfigRefused catch (e) {
+        refused = e.reason == 'registry_unit';
+      }
+      return metres && kilometres && refused && all.length == 14;
     },
   ),
   // #4431 — the expiry report: what expired and what is about to, by date, the five basket pieces one by one, and a place keeps

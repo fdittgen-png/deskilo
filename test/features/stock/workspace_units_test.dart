@@ -44,15 +44,15 @@ void main() {
 
   group('a draft', () {
     test('carries only what the person set', () {
-      expect(const UnitDraft(code: 'drum').toJson(), {'code': 'drum'});
+      expect(const MeasureUnitDraft(code: 'drum').toJson(), {'code': 'drum'});
       expect(
-        const UnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 50, factorDen: 1, unEceCode: 'C62', sortOrder: 5).toJson(),
+        const MeasureUnitDraft(code: 'drum', label: 'Cable drum', dimension: UnitDimension.length, factorNum: 50, factorDen: 1, unEceCode: 'C62', sortOrder: 5).toJson(),
         {'code': 'drum', 'label': 'Cable drum', 'dimension': 'length', 'factor_num': 50, 'factor_den': 1, 'un_ece_code': 'C62', 'sort_order': 5},
       );
     });
 
     test('can give a built-in unit the app\'s own word back', () {
-      expect(const UnitDraft(code: 'km', clearLabel: true).toJson(), {'code': 'km', 'label': null});
+      expect(const MeasureUnitDraft(code: 'km', clearLabel: true).toJson(), {'code': 'km', 'label': null});
     });
   });
 
@@ -83,6 +83,24 @@ void main() {
 
     test('refuses an answer beyond what a quantity holds', () {
       expect(convertUnit(q('999999999999'), _huge, _mm).problem, UnitConversionProblem.outOfRange);
+    });
+  });
+
+  group('a factor', () {
+    test('typed as a decimal is the exact reduced fraction', () {
+      expect(factorOfQuantity(ExactQuantity.parse('1000')), (num: 1000, den: 1));
+      expect(factorOfQuantity(ExactQuantity.parse('0.001')), (num: 1, den: 1000));
+      expect(factorOfQuantity(ExactQuantity.parse('2.5')), (num: 5, den: 2));
+      expect(factorOfQuantity(ExactQuantity.parse('0.000001')), (num: 1, den: 1000000));
+      expect(factorOfQuantity(ExactQuantity.parse('0')), isNull);
+      expect(factorOfQuantity(ExactQuantity.parse('-1')), isNull);
+    });
+
+    test('reads as a decimal when six decimals hold it, else as the fraction', () {
+      expect(factorText(_km), '1000');
+      expect(factorText(_mm), '0.001');
+      expect(factorText(_third), '1/3');
+      expect(factorText(const WorkspaceUnit(code: 'h', dimension: UnitDimension.time, factorNum: 60, factorDen: 1)), '60');
     });
   });
 }

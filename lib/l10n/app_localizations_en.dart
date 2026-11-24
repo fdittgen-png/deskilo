@@ -22432,6 +22432,100 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meWhereSpacesLive => 'Where my places live';
 
   @override
+  String get measureDimensionArea => 'Area';
+
+  @override
+  String get measureDimensionCount => 'Count';
+
+  @override
+  String get measureDimensionLength => 'Length';
+
+  @override
+  String get measureDimensionMass => 'Mass';
+
+  @override
+  String get measureDimensionTime => 'Time';
+
+  @override
+  String get measureDimensionVolume => 'Volume';
+
+  @override
+  String get measureReasonDimension => 'Choose what this unit measures.';
+
+  @override
+  String get measureReasonEce =>
+      'A UN/ECE code is two or three capital letters or digits.';
+
+  @override
+  String get measureReasonFixed =>
+      'This unit is fixed and cannot be changed or removed.';
+
+  @override
+  String get measureReasonInUse =>
+      'This unit is in use, so its dimension and factor can no longer change. Make a new unit instead.';
+
+  @override
+  String get measureReasonInexact =>
+      'The result cannot be written exactly with six decimals.';
+
+  @override
+  String get measureReasonName => 'A new unit needs a name.';
+
+  @override
+  String get measureUnitArchive => 'Archive';
+
+  @override
+  String get measureUnitArchivedTag => 'Archived';
+
+  @override
+  String get measureUnitBuiltIn => 'Built in';
+
+  @override
+  String get measureUnitCodeField => 'Unit code';
+
+  @override
+  String get measureUnitCodeHelp =>
+      'Lower case letters, digits and underscores. It cannot change later.';
+
+  @override
+  String get measureUnitDimensionField => 'It measures';
+
+  @override
+  String get measureUnitEceField => 'UN/ECE code (for e-invoices)';
+
+  @override
+  String get measureUnitEdit => 'Edit unit';
+
+  @override
+  String get measureUnitFactorField => 'One unit equals';
+
+  @override
+  String measureUnitFactorHelp(String base) {
+    return 'Counted in $base, the base unit of what it measures: 1000 for a km, 0.001 for a mm.';
+  }
+
+  @override
+  String measureUnitLine(String unit, String value, String base) {
+    return '1 $unit = $value $base';
+  }
+
+  @override
+  String get measureUnitNameField => 'Your name for the unit';
+
+  @override
+  String get measureUnitNew => 'New unit';
+
+  @override
+  String get measureUnitRestore => 'Show again';
+
+  @override
+  String get measureUnitsIntro =>
+      'The units your items, quotes and invoices are measured in, and how they convert: 1 km = 1000 m. The built-in units are always there; add your own, such as a cable drum of 50 m.';
+
+  @override
+  String get measureUnitsSubtitle => 'Your own units and how they convert';
+
+  @override
   String get memberAccountTitle => 'My account';
 
   @override

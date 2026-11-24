@@ -96,8 +96,8 @@ class WorkspaceUnit {
 
 /// What a person types to create or edit a unit. A null field is left as it was (on an edit); [label] null on a new unit is
 /// refused by the server.
-class UnitDraft {
-  const UnitDraft({
+class MeasureUnitDraft {
+  const MeasureUnitDraft({
     required this.code,
     this.label,
     this.dimension,
@@ -137,7 +137,7 @@ abstract interface class WorkspaceUnits {
   Future<List<WorkspaceUnit>> units(String workspaceId);
 
   /// Creates a unit or edits one (`workspace_unit_save_v1`): a retried [requestId] answers once.
-  Future<WorkspaceUnit> save(String workspaceId, {required String requestId, required UnitDraft draft});
+  Future<WorkspaceUnit> save(String workspaceId, {required String requestId, required MeasureUnitDraft draft});
 
   /// Hides or shows a unit that is no longer used (`workspace_unit_archive_v1`).
   Future<void> archive(String workspaceId, {required String requestId, required String code, required bool archived});
@@ -163,8 +163,33 @@ enum UnitConversionProblem {
   final numerator = quantity.micro * BigInt.from(from.factorNum) * BigInt.from(to.factorDen);
   final denominator = BigInt.from(from.factorDen) * BigInt.from(to.factorNum);
   if (numerator.remainder(denominator) != BigInt.zero) return (value: null, problem: UnitConversionProblem.notExact);
-  final micro = numerator ~/ denominator;
-  final digits = micro.abs().toString().padLeft(7, '0');
-  final read = ExactQuantity.tryParse('${micro.isNegative ? '-' : ''}${digits.substring(0, digits.length - 6)}.${digits.substring(digits.length - 6)}');
+  final read = ExactQuantity.tryParse(_decimal(numerator ~/ denominator));
   return read.value == null ? (value: null, problem: UnitConversionProblem.outOfRange) : (value: read.value, problem: null);
+}
+
+/// Millionths in one: a quantity holds six decimals.
+final BigInt _micro = BigInt.from(10).pow(6);
+
+/// The exact fraction a typed factor is, as the server stores it: `0.001` is 1/1000 and `1000` is 1000/1, reduced. Null when it
+/// is not above zero.
+({int num, int den})? factorOfQuantity(ExactQuantity factor) {
+  if (factor.isNegative || factor.isZero) return null;
+  final million = _micro;
+  final g = factor.micro.gcd(million);
+  return (num: (factor.micro ~/ g).toInt(), den: (million ~/ g).toInt());
+}
+
+/// A unit's factor as the person reads it: a decimal (`1000`, `0.001`) when six decimals hold it, else the fraction (`1/3`).
+String factorText(WorkspaceUnit unit) {
+  final micro = BigInt.from(unit.factorNum) * _micro;
+  final den = BigInt.from(unit.factorDen);
+  if (micro.remainder(den) != BigInt.zero) return '${unit.factorNum}/${unit.factorDen}';
+  final read = ExactQuantity.tryParse(_decimal(micro ~/ den));
+  return read.value?.text ?? '${unit.factorNum}/${unit.factorDen}';
+}
+
+/// Millionths as decimal text (`1500000` is `1.500000`).
+String _decimal(BigInt micro) {
+  final digits = micro.abs().toString().padLeft(7, '0');
+  return '${micro.isNegative ? '-' : ''}${digits.substring(0, digits.length - 6)}.${digits.substring(digits.length - 6)}';
 }
