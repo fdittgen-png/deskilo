@@ -35,8 +35,8 @@ const int _kExportMaxRows = 100000;
 /// #1310's rule: *if a page limit is ever reached unexpectedly, the
 /// export fails with a message rather than returning less.* Silence is
 /// the failure mode being fixed here, so this must never be swallowed
-/// into a shorter list.
-@visibleForTesting
+/// into a shorter list. Public: a reader that bounds its own list turns it
+/// into its own refusal (#4401).
 class ExportTooLargeException implements Exception {
   const ExportTooLargeException(this.table, this.rows);
 

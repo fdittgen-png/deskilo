@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4401 -- no stock read is unbounded: a table read in lib/features/stock/data goes through
-// `StockRpc.rows` (at most `StockRpc.listCap` rows, a longer list refused, never cut) or carries its own
+// `StockRpc.rows` (a configuration list, at most `StockRpc.listCap` rows, a longer list refused) or
+// `StockRpc.pages` (a list that grows with the business, read page by page) or carries its own
 // `.limit(` / `.range(`. A `.from(` of a table outside them is counted, and the count is 0.
 import 'dart:io';
 
@@ -25,6 +26,7 @@ List<int> unboundedReads(String source) {
       end < 0 ? source.length : end,
     );
     if (statement.contains('.rows(') ||
+        statement.contains('.pages(') ||
         statement.contains('.limit(') ||
         statement.contains('.range(')) {
       continue;

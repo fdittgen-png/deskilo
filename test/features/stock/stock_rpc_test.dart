@@ -117,37 +117,43 @@ void main() {
     expect(entry.error, isNotNull);
   });
 
-  // #4401 -- a list read is bounded: it asks for one row more than the cap, and a list longer than the cap is
-  // refused, never shown cut short; a refusal of the read becomes its typed failure like every call.
-  test('a list read asks for at most one row over the cap, and a longer list is refused, not cut', () async {
-    Uri? asked;
-    final client = SupabaseClient(
-      'http://localhost',
-      'anon',
-      httpClient: MockClient((request) async {
-        asked = request.url;
-        final n = int.parse(request.url.queryParameters['limit']!);
-        return http.Response(jsonEncode([for (var i = 0; i < n; i++) {'id': '$i'}]), 200,
-            headers: {'content-type': 'application/json'}, request: request);
-      }),
-      authOptions: const AuthClientOptions(autoRefreshToken: false),
-    );
+  // #4401 -- a configuration list is read page by page and refused past the cap, never cut; a list that grows with
+  // the business is read page by page to its end, however long; both end on an empty page, never on the server's
+  // own row cap.
+  SupabaseClient pagedClient(int total, {List<Uri>? asked}) => SupabaseClient(
+    'http://localhost',
+    'anon',
+    httpClient: MockClient((request) async {
+      asked?.add(request.url);
+      final offset = int.parse(request.url.queryParameters['offset'] ?? '0');
+      final limit = int.parse(request.url.queryParameters['limit']!);
+      final n = (total - offset).clamp(0, limit);
+      return http.Response(jsonEncode([for (var i = 0; i < n; i++) {'id': '${offset + i}'}]), 200,
+          headers: {'content-type': 'application/json'}, request: request);
+    }),
+    authOptions: const AuthClientOptions(autoRefreshToken: false),
+  );
+
+  test('a configuration list longer than the cap is refused, not cut', () async {
+    final client = pagedClient(StockRpc.listCap + 1);
     await expectLater(
-      StockRpc(client).rows('stock_transfers', client.from('stock_transfers').select('id')),
+      StockRpc(client).rows('stock_locations', () => client.from('stock_locations').select('id').order('id')),
       throwsA(isA<StockListTooLong>().having((e) => e.cap, 'cap', StockRpc.listCap)),
     );
-    expect(asked!.queryParameters['limit'], '${StockRpc.listCap + 1}');
   });
 
-  test('a list within the cap is returned whole', () async {
-    final client = SupabaseClient(
-      'http://localhost',
-      'anon',
-      httpClient: MockClient((request) async => http.Response(jsonEncode([{'id': 'a'}, {'id': 'b'}]), 200,
-          headers: {'content-type': 'application/json'}, request: request)),
-      authOptions: const AuthClientOptions(autoRefreshToken: false),
-    );
-    final rows = await StockRpc(client).rows('stock_transfers', client.from('stock_transfers').select('id'));
-    expect(rows.map((r) => r['id']), ['a', 'b']);
+  test('a configuration list within the cap is read whole, page by page', () async {
+    final asked = <Uri>[];
+    final client = pagedClient(1200, asked: asked);
+    final rows = await StockRpc(client).rows('stock_locations', () => client.from('stock_locations').select('id').order('id'));
+    expect(rows, hasLength(1200));
+    expect({for (final r in rows) r['id']}, hasLength(1200), reason: 'no row repeated across pages');
+    expect(asked.length, greaterThan(1), reason: 'more than one page was asked');
+  });
+
+  test('a list that grows with the business is read to its end, past the configuration cap', () async {
+    final client = pagedClient(StockRpc.listCap + 1000);
+    final rows = await StockRpc(client).pages('services', () => client.from('services').select('id').order('id'));
+    expect(rows, hasLength(StockRpc.listCap + 1000));
   });
 }

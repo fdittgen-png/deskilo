@@ -29,6 +29,10 @@ const _ws = '00000000-0000-4000-8000-000000000101';
     'anon',
     httpClient: MockClient((request) async {
       sent.add(request);
+      // a list read pages until an empty page (#4401): the canned answer is the first page
+      if (int.tryParse(request.url.queryParameters['offset'] ?? '0')! > 0) {
+        return http.Response('[]', 200, headers: {'content-type': 'application/json'}, request: request);
+      }
       final r = answer(request);
       return http.Response(r.body, r.statusCode, headers: r.headers, request: request);
     }),

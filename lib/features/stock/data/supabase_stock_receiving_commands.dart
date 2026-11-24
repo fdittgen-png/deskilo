@@ -16,7 +16,7 @@ class SupabaseStockReceivingCommands implements StockReceivingCommands {
 
   @override
   Future<List<ReceiptAllocation>> allocations(String workspaceId, String receiptId) async {
-    final rows = await StockRpc(_client).rows('stock_receipt_allocations', _client
+    final rows = await StockRpc(_client).pages('stock_receipt_allocations', () => _client
         .from('stock_receipt_allocations')
         .select(
           'id, receipt_line_id, item_id, variant_id, lot_id, location_id, movement_id, '
@@ -24,13 +24,14 @@ class SupabaseStockReceivingCommands implements StockReceivingCommands {
         )
         .eq('workspace_id', workspaceId)
         .eq('receipt_id', receiptId)
-        .order('part'));
+        .order('part')
+        .order('id'));
     return [for (final row in rows) ReceiptAllocation.fromJson(row)];
   }
 
   @override
   Future<List<ReceiptAllocation>> allocationsOfOrder(String workspaceId, String orderId) async {
-    final rows = await StockRpc(_client).rows('stock_receipt_allocations', _client
+    final rows = await StockRpc(_client).pages('stock_receipt_allocations', () => _client
         .from('stock_receipt_allocations')
         .select(
           'id, receipt_line_id, item_id, variant_id, lot_id, location_id, movement_id, '
@@ -39,7 +40,8 @@ class SupabaseStockReceivingCommands implements StockReceivingCommands {
         )
         .eq('workspace_id', workspaceId)
         .eq('purchase_order_receipts.order_id', orderId)
-        .order('created_datetime'));
+        .order('created_datetime')
+        .order('id'));
     return [for (final row in rows) ReceiptAllocation.fromJson(row)];
   }
 

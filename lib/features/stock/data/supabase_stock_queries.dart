@@ -60,35 +60,38 @@ class SupabaseStockQueries implements StockQueries {
 
   @override
   Future<List<StockPlace>> places(String workspaceId) async {
-    final rows = await StockRpc(_client).rows('stock_locations', _client
+    final rows = await StockRpc(_client).rows('stock_locations', () => _client
         .from(ServerTable.stockLocations)
         .select('id, code, name')
         .eq('workspace_id', workspaceId)
         .eq('active', true)
-        .order('code'));
+        .order('code')
+        .order('id'));
     return [for (final row in rows) StockPlace.fromJson(row)];
   }
 
   @override
   Future<List<StockItem>> items(String workspaceId) async {
-    final rows = await StockRpc(_client).rows('services', _client
+    final rows = await StockRpc(_client).pages('services', () => _client
         .from(ServerTable.services)
         .select('id, name, inventory_unit, active')
         .eq('workspace_id', workspaceId)
         .eq('stockable', true)
-        .order('name'));
+        .order('name')
+        .order('id'));
     return [for (final row in rows) StockItem.fromJson(row)];
   }
 
   @override
   Future<List<StockItem>> unstocked(String workspaceId) async {
-    final rows = await StockRpc(_client).rows('services', _client
+    final rows = await StockRpc(_client).pages('services', () => _client
         .from(ServerTable.services)
         .select('id, name, inventory_unit')
         .eq('workspace_id', workspaceId)
         .eq('stockable', false)
         .eq('active', true)
-        .order('name'));
+        .order('name')
+        .order('id'));
     return [for (final row in rows) StockItem.fromJson(row)];
   }
 

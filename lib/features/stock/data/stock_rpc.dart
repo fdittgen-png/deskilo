@@ -5,6 +5,7 @@
 // (a FormatException naming the function), never shown as an empty result.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/trace/trace_logger.dart';
 import 'stock_refusals.dart';
 
@@ -26,19 +27,28 @@ class StockRpc {
 
   final SupabaseClient _client;
 
-  /// #4401 -- the most rows a list read of configuration takes (places, items, units, codes, variants, mappings,
-  /// points, plans, allocations): far above what one business holds, and a bound, so no read is unbounded. A page of
-  /// the ledger is read by its own paged function, never by this.
+  /// #4401 -- the most rows a configuration list holds (places, location kinds, units, codes, dimensions, variants,
+  /// mappings, reorder points, count plans): far beyond any real business, so a longer list is a defect, refused as
+  /// [StockListTooLong] rather than shown. A technical bound, not a business value: a list that grows with the
+  /// business (items, suppliers, transfers, allocations) is read through [pages] and has no such cap.
   static const int listCap = 5000;
 
-  /// [query]'s rows, at most [listCap]: a longer list is a [StockListTooLong], never silently cut. A refusal
-  /// becomes its typed failure as every call through [guard] does.
-  Future<List<Map<String, dynamic>>> rows(String what, PostgrestTransformBuilder<PostgrestList> query) =>
+  /// Every row of a configuration list [build] selects, page by page (`fetchAllPages`: ended by an empty page,
+  /// never by the server's own row cap), refused as [StockListTooLong] past [listCap].
+  Future<List<Map<String, dynamic>>> rows(String what, PostgrestTransformBuilder<PostgrestList> Function() build) =>
       guard(what, () async {
-        final rows = await query.limit(listCap + 1);
-        if (rows.length > listCap) throw StockListTooLong(what, listCap);
-        return rows;
+        try {
+          return await fetchAllPages(table: what, build: build, maxRows: listCap);
+        } on ExportTooLargeException catch (e, stack) {
+          Error.throwWithStackTrace(StockListTooLong(what, listCap), stack);
+        }
       });
+
+  /// Every row of a list that grows with the business [build] selects, page by page, with no cap of its own
+  /// (`fetchAllPages`' safety ceiling only). [build] orders by a unique key last, so no row repeats or is skipped
+  /// between pages.
+  Future<List<Map<String, dynamic>>> pages(String what, PostgrestTransformBuilder<PostgrestList> Function() build) =>
+      guard(what, () => fetchAllPages(table: what, build: build));
 
   /// Runs [read]: a refusal of the server is logged once at warn as "[what] was refused" and thrown as
   /// its typed failure; anything else (a lost connection, a defect) is logged once at error and

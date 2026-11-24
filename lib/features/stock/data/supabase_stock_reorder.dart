@@ -16,11 +16,12 @@ class SupabaseStockReorder implements StockReorder {
   @override
   Future<List<StockReorderPoint>> points(String workspaceId) async {
     // the quantities are read as text: exact, never through a floating-point number
-    final rows = await StockRpc(_client).rows('stock_reorder_points', _client
+    final rows = await StockRpc(_client).rows('stock_reorder_points', () => _client
         .from('stock_reorder_points')
         .select('id, revision, item_id, variant_id, site_id, reorder_point::text, reorder_quantity::text, target_quantity::text, active')
         .eq('workspace_id', workspaceId)
-        .order('created_datetime'));
+        .order('created_datetime')
+        .order('id'));
     return [for (final row in rows) StockReorderPoint.fromJson(row)];
   }
 

@@ -27,8 +27,10 @@ const _receipt = '00000000-0000-4000-8000-000000000801';
     'anon',
     httpClient: MockClient((request) async {
       sent.add(request);
+      // a list read pages until an empty page (#4401): the canned rows are the first page
+      final later = int.tryParse(request.url.queryParameters['offset'] ?? '0')! > 0;
       return http.Response(
-        jsonEncode(answer),
+        jsonEncode(later ? <Object?>[] : answer),
         status,
         headers: {'content-type': 'application/json'},
         request: request,
@@ -129,7 +131,7 @@ void main() {
       ('2', 'carton', '2026-0001', 'Water Co'),
       ('1', 'carton', '2026-0001', 'Water Co'),
     ]);
-    expect(h.sent.single.url.queryParameters['receipt_id'], 'eq.$_receipt');
+    expect(h.sent.first.url.queryParameters['receipt_id'], 'eq.$_receipt');
   });
 
   test('the allocations of an order are read through its deliveries, with the order line each came from', () async {
@@ -138,6 +140,6 @@ void main() {
     ]);
     final read = await h.commands.allocationsOfOrder(_ws, 'o-1');
     expect(read.single.lineNo, 3);
-    expect(h.sent.single.url.queryParameters['purchase_order_receipts.order_id'], 'eq.o-1');
+    expect(h.sent.first.url.queryParameters['purchase_order_receipts.order_id'], 'eq.o-1');
   });
 }

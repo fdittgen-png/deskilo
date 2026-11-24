@@ -19,16 +19,17 @@ class SupabaseStockOperations implements StockOperations {
 
   @override
   Future<List<StockTransfer>> openTransfers(String workspaceId) async {
-    final transfers = await StockRpc(_client).rows('stock_transfers', _client
+    final transfers = await StockRpc(_client).pages('stock_transfers', () => _client
         .from('stock_transfers')
         .select('id, from_location_id, to_location_id, status, revision, created_datetime')
         .eq('workspace_id', workspaceId)
         .neq('status', 'received')
-        .order('created_datetime'));
+        .order('created_datetime')
+        .order('id'));
     if (transfers.isEmpty) return const [];
     final heads = [for (final t in transfers) JsonReader.of(t, context: 'stock_transfers')];
     final lines = [
-      for (final l in await StockRpc(_client).rows('stock_transfer_lines', _client
+      for (final l in await StockRpc(_client).pages('stock_transfer_lines', () => _client
           .from('stock_transfer_lines')
           .select('id, transfer_id, item_id, variant_id, lot_id, loaded::text, received::text')
           .eq('workspace_id', workspaceId)
@@ -37,21 +38,23 @@ class SupabaseStockOperations implements StockOperations {
         JsonReader.of(l, context: 'stock_transfer_lines'),
     ];
     final items = {
-      for (final i in await StockRpc(_client).rows('services', _client
+      for (final i in await StockRpc(_client).rows('services', () => _client
           .from(ServerTable.services)
           .select('id, name, inventory_unit')
           .eq('workspace_id', workspaceId)
-          .inFilter('id', {for (final l in lines) l.string('item_id')}.toList())))
+          .inFilter('id', {for (final l in lines) l.string('item_id')}.toList())
+          .order('id')))
         ..._byId(JsonReader.of(i, context: 'services')),
     };
     final codes = {
-      for (final p in await StockRpc(_client).rows('stock_locations', _client
+      for (final p in await StockRpc(_client).rows('stock_locations', () => _client
           .from(ServerTable.stockLocations)
           .select('id, code')
           .eq('workspace_id', workspaceId)
           .inFilter('id', {
             for (final h in heads) ...[h.string('from_location_id'), h.string('to_location_id')],
-          }.toList())))
+          }.toList())
+          .order('id')))
         ..._codeById(JsonReader.of(p, context: 'stock_locations')),
     };
     return [for (final h in heads) _transfer(h, lines, items, codes)];
