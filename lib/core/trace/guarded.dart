@@ -62,8 +62,7 @@ Future<bool> runGuarded(
     // #982 — not a failure: the policy holds the act for a decision. One
     // notice, the same everywhere, and the caller treats it as "not
     // done" (the feed shows the pending request).
-    TraceLogger.instance.log(TraceLevel.info, domain, '$message: pending validation ${e.eventId}');
-    debugPrint('$message: pending validation $st');
+    TraceLogger.instance.log(TraceLevel.info, domain, '$message: pending validation ${e.eventId}', stackTrace: st);
     if (context.mounted) {
       AppSnack.info(
         context,
@@ -73,7 +72,6 @@ Future<bool> runGuarded(
     return false;
   } on Object catch (e, st) {
     if (watched != null) watcher?.ended(watched, error: e);
-    debugPrint('$message: $e\n$st');
     TraceLogger.instance.error(domain, message, error: e, stackTrace: st);
     if (e is WorkspaceContextNotReady && context.mounted) {
       // #3403 -- the reference an action needs is not ready: say so, with or

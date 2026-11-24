@@ -11652,6 +11652,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get exportValueNameWorkspace => 'Espace de travail';
 
   @override
+  String get failedPartNotShown =>
+      'Cette partie n\'a pas pu être affichée. Revenez en arrière et ouvrez-la de nouveau.';
+
+  @override
   String get favoriteKeptOnDeviceRefused =>
       'Gardé sur cet appareil uniquement : votre compte ne peut pas enregistrer ce lieu.';
 
@@ -42131,7 +42135,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count fonctions',
-      one: 'une fonction',
+      one: '$count fonction',
     );
     return 'Ce type règle aussi $_temp0 que cette version de l\'application ne connaît pas. Mettez à jour l\'application pour le choisir.';
   }

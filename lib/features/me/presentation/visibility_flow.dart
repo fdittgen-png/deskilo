@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../domain/visibility.dart';
 import '../domain/visibility_write.dart';
@@ -57,12 +58,12 @@ Future<void> chooseAudience(
         try {
           await save(choice, expected);
         } on VisibilityConflict catch (e, st) {
-          // trace-exempt: not a failure; the person reviews it below.
-          debugPrint('visibility conflict: $e\n$st');
+          // Not a failure: the person reviews it below.
+          TraceLogger.instance.log(TraceLevel.info, 'me', 'visibility conflict', error: e, stackTrace: st);
           conflict = e;
         } on VisibilityUnsupported catch (e, st) {
-          // trace-exempt: named below; nothing was written or retried.
-          debugPrint('visibility writer unsupported: $e\n$st');
+          // Named below; nothing was written or retried.
+          TraceLogger.instance.log(TraceLevel.info, 'me', 'visibility writer unsupported', error: e, stackTrace: st);
           unsupported = true;
         }
       },

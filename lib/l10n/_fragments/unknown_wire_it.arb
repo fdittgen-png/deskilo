@@ -2,5 +2,5 @@
   "unknownWireValue": "{value} (sconosciuto a questa versione dell'app)",
   "unknownWireInvoiceKind": "Un tipo che questa versione dell'app non conosce",
   "unknownWireReadOnly": "Questa versione dell'app non sa che cosa sia questo record: si può leggere, non modificare. Aggiorni l'app per lavorarci.",
-  "unknownWireKindFeatures": "Questo tipo imposta anche {count, plural, =1{una funzione} other{{count} funzioni}} che questa versione dell'app non conosce. Aggiorni l'app per sceglierlo."
+  "unknownWireKindFeatures": "Questo tipo imposta anche {count, plural, one{una funzione} other{{count} funzioni}} che questa versione dell'app non conosce. Aggiorni l'app per sceglierlo."
 }

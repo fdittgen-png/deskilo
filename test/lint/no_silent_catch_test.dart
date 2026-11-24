@@ -122,13 +122,12 @@ const _untracedOnCeiling = <String, int>{
 
 /// `// trace-exempt:` markers per area. Down only.
 const _exemptCeiling = <String, int>{
-  'core': 52,
+  'core': 51,
   'features/auth': 3,
   'features/directory': 7,
   'features/help': 2,
-  'features/kiosk': 2,
   'features/mcp': 6,
-  'features/me': 11,
+  'features/me': 9,
   'features/money': 28,
   'features/reservations': 13,
   'features/workspace': 32,
@@ -204,6 +203,33 @@ int? g(String s) {
             '(error: and stackTrace: need `on T catch (e, st)`), rethrow, or '
             'mark it `// trace-exempt: <reason>`; when one was fixed, lower '
             'its area in _untracedOnCeiling.\n$actual',
+      );
+    });
+
+    test('#4416 — no catch body prints past the redactor', () {
+      final printing = RegExp(r'\bdebugPrint\(');
+      final facade = RegExp(
+        r'TraceLogger|\bActTrace\.|\btrace[A-Z]\w*\('
+        r'|\b(?:logger|trace)\.(?:error|warn|log)\(',
+      );
+      final clause = RegExp(r'\bcatch\s*\(|\}\s*on\s+[\w.<>?, ]+\{');
+      final hits = <String>[];
+      for (final f in handWrittenDartFiles('lib')) {
+        final content = f.readAsStringSync();
+        for (final m in clause.allMatches(content)) {
+          final body = _catchBlockBody(content, m.start + 1) ?? '';
+          if (printing.hasMatch(body) && !facade.hasMatch(body)) {
+            final line =
+                '\n'.allMatches(content.substring(0, m.start)).length + 1;
+            hits.add('${f.path}:$line');
+          }
+        }
+      }
+      expect(
+        hits,
+        isEmpty,
+        reason: 'debugPrint writes past lib/core/trace/redaction.dart: '
+            'log through TraceLogger instead.\n${hits.join('\n')}',
       );
     });
 

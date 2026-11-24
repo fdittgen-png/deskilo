@@ -18676,6 +18676,12 @@ abstract class AppLocalizations {
   /// **'Workspace'**
   String get exportValueNameWorkspace;
 
+  /// #4416 Shown in a release build where a part of a screen failed to build, instead of the framework's grey box. The failure is in the trace.
+  ///
+  /// In en, this message translates to:
+  /// **'This part could not be shown. Go back and open it again.'**
+  String get failedPartNotShown;
+
   /// Shown as a text in personal space card (me).
   ///
   /// In en, this message translates to:
@@ -66899,7 +66905,7 @@ abstract class AppLocalizations {
   /// #3730 the business kind chooser: the chosen kind's profile names features this app does not know, so saving it is refused.
   ///
   /// In en, this message translates to:
-  /// **'This kind also sets {count, plural, =1{one feature} other{{count} features}} this version of the app does not know. Update the app to choose it.'**
+  /// **'This kind also sets {count, plural, one{one feature} other{{count} features}} this version of the app does not know. Update the app to choose it.'**
   String unknownWireKindFeatures(int count);
 
   /// #3730 an action was asked on a record whose kind or state this app does not know; only reading is allowed.

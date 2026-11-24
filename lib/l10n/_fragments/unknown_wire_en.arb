@@ -14,7 +14,7 @@
   "@unknownWireReadOnly": {
     "description": "#3730 an action was asked on a record whose kind or state this app does not know; only reading is allowed."
   },
-  "unknownWireKindFeatures": "This kind also sets {count, plural, =1{one feature} other{{count} features}} this version of the app does not know. Update the app to choose it.",
+  "unknownWireKindFeatures": "This kind also sets {count, plural, one{one feature} other{{count} features}} this version of the app does not know. Update the app to choose it.",
   "@unknownWireKindFeatures": {
     "description": "#3730 the business kind chooser: the chosen kind's profile names features this app does not know, so saving it is refused.",
     "placeholders": {

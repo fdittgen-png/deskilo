@@ -11628,6 +11628,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get exportValueNameWorkspace => 'Arbeitsbereich';
 
   @override
+  String get failedPartNotShown =>
+      'Dieser Teil konnte nicht angezeigt werden. Gehen Sie zurück und öffnen Sie ihn erneut.';
+
+  @override
   String get favoriteKeptOnDeviceRefused =>
       'Nur auf diesem Gerät gespeichert: Ihr Konto kann diesen Ort nicht speichern.';
 

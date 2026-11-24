@@ -27,6 +27,7 @@ import 'core/notifications/notification_taps.dart';
 import 'core/trace/trace_hooks.dart';
 import 'core/trace/trace_logger.dart';
 import 'core/trace/trace_provider_observer.dart';
+import 'core/ui/failed_part_tile.dart';
 import 'features/auth/providers/auth_providers.dart';
 import 'features/me/providers/me_providers.dart'
     show myReservationsSourcesFromMe, pendingAdmissionsFromMe;
@@ -52,6 +53,8 @@ Future<void> main() async {
   // below land in the trace.
   final trace = TraceLogger.instance = createAppTraceLogger();
   installGlobalTraceHooks(trace);
+  // #4416 — a part that fails to build says so in words in a release build.
+  installFailedPartTile();
   // #992 — a row whose system columns break the server's invariants is
   // reported to the trace, never trusted silently.
   SystemColumns.onBreach = (detail) => trace.warn('data', detail);
