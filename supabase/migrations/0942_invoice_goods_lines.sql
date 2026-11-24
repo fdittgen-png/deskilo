@@ -507,4 +507,4 @@ end;
 $fn$;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(940);
+select public.set_deskilo_schema_version(942);

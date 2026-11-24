@@ -84,4 +84,4 @@ end
 $patch$;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(939);
+select public.set_deskilo_schema_version(941);
