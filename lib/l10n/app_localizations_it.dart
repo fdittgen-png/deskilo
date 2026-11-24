@@ -39041,6 +39041,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get supplyClassPropertyMeaning => 'Tassato dove si trovano i locali.';
 
   @override
+  String get supplyClassUnknown =>
+      'Una classe che quest\'app non conosce ancora: resta come l\'ha il server';
+
+  @override
   String get supportChanged =>
       'Il contesto è cambiato. Prepari una nuova anteprima.';
 

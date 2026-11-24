@@ -22931,6 +22931,7 @@
   "supplyClassLabel": "Luogo della prestazione",
   "supplyClassProperty": "Connesso ai locali",
   "supplyClassPropertyMeaning": "Tassato dove si trovano i locali.",
+  "supplyClassUnknown": "Una classe che quest'app non conosce ancora: resta come l'ha il server",
   "supportChanged": "Il contesto è cambiato. Prepari una nuova anteprima.",
   "supportDay": "Ultime 24 ore",
   "supportDemo": "Demo: contesto locale simulato",

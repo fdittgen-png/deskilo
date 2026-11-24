@@ -39107,6 +39107,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Steuerbar dort, wo die Räumlichkeiten liegen.';
 
   @override
+  String get supplyClassUnknown =>
+      'Eine Klasse, die diese App noch nicht kennt: bleibt so, wie der Server sie hat';
+
+  @override
   String get supportChanged =>
       'Der Kontext hat sich geändert. Erstellen Sie eine neue Vorschau.';
 

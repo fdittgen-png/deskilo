@@ -5587,6 +5587,7 @@ Map<String, _Getter> _part12() => {
   'supplierLookupManualHint': (l) => l.supplierLookupManualHint,
   'suppliersRestore': (l) => l.suppliersRestore,
   'suppliersTaxUnverified': (l) => l.suppliersTaxUnverified,
+  'supplyClassUnknown': (l) => l.supplyClassUnknown,
   'supportChanged': (l) => l.supportChanged,
   'symbolTaken': (l) => l.symbolTaken,
   'taskExportEndStopped': (l) => l.taskExportEndStopped,

@@ -50391,6 +50391,10 @@
   "@supplyClassPropertyMeaning": {
     "description": "#3864 place of supply: what the premises choice means"
   },
+  "supplyClassUnknown": "A class this app does not know yet: kept as the server has it",
+  "@supplyClassUnknown": {
+    "description": "#4441 Service sheet: a supply class from a newer server, shown read-only and kept"
+  },
   "supportChanged": "The context changed. Prepare a new preview.",
   "@supportChanged": {
     "description": "Shown as the text in support bundle screen (help)."

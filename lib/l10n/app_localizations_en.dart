@@ -38684,6 +38684,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supplyClassPropertyMeaning => 'Taxed where the premises are.';
 
   @override
+  String get supplyClassUnknown =>
+      'A class this app does not know yet: kept as the server has it';
+
+  @override
   String get supportChanged => 'The context changed. Prepare a new preview.';
 
   @override

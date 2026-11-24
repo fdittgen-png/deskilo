@@ -39166,6 +39166,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Imposé là où se trouvent les locaux.';
 
   @override
+  String get supplyClassUnknown =>
+      'Une catégorie que cette application ne connaît pas encore : conservée telle que le serveur l\'a';
+
+  @override
   String get supportChanged =>
       'Le contexte a changé. Préparez un nouvel aperçu.';
 

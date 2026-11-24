@@ -22931,6 +22931,7 @@
   "supplyClassLabel": "Lieu de prestation",
   "supplyClassProperty": "Rattaché aux locaux",
   "supplyClassPropertyMeaning": "Imposé là où se trouvent les locaux.",
+  "supplyClassUnknown": "Une catégorie que cette application ne connaît pas encore : conservée telle que le serveur l'a",
   "supportChanged": "Le contexte a changé. Préparez un nouvel aperçu.",
   "supportDay": "Dernières 24 heures",
   "supportDemo": "Démo : contexte local simulé",

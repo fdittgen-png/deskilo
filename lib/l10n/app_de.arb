@@ -22931,6 +22931,7 @@
   "supplyClassLabel": "Leistungsort",
   "supplyClassProperty": "Mit den Räumlichkeiten verbunden",
   "supplyClassPropertyMeaning": "Steuerbar dort, wo die Räumlichkeiten liegen.",
+  "supplyClassUnknown": "Eine Klasse, die diese App noch nicht kennt: bleibt so, wie der Server sie hat",
   "supportChanged": "Der Kontext hat sich geändert. Erstellen Sie eine neue Vorschau.",
   "supportDay": "Letzte 24 Stunden",
   "supportDemo": "Demo: simulierter lokaler Kontext",

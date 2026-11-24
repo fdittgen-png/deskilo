@@ -62044,6 +62044,12 @@ abstract class AppLocalizations {
   /// **'Taxed where the premises are.'**
   String get supplyClassPropertyMeaning;
 
+  /// #4441 Service sheet: a supply class from a newer server, shown read-only and kept
+  ///
+  /// In en, this message translates to:
+  /// **'A class this app does not know yet: kept as the server has it'**
+  String get supplyClassUnknown;
+
   /// Shown as the text in support bundle screen (help).
   ///
   /// In en, this message translates to:
