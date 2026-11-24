@@ -2416,6 +2416,7 @@ Sie möchten eine Rechnung finden, sehen, ob sie bezahlt ist, und ihr PDF erhalt
 - Tippen Sie bei einer offenen Rechnung auf das Zahlungssymbol, um zu **Zahlungen** zu gelangen.
 - Ist die Liste leer, hat der Workspace Ihnen noch nichts in Rechnung gestellt; er stellt einen Monat nach dem Abschluss in Rechnung.
 - Rechnungen lassen sich nicht bearbeiten. Eine falsche Rechnung wird als **Fehlerhaft** markiert und durch eine neue ersetzt; die fehlerhafte verschwindet aus Ihrer Liste. Werden Rechnungen zu einer zusammengefasst, ersetzt die zusammengefasste Rechnung sie in Ihrer Liste.
+- Eine Position nach Stunden, Tagen oder Gewicht (zum Beispiel *1.5 h zu 90 EUR* oder *0.75 kg zu 12.5 EUR je 10 kg*) zeigt unter ihrer Bezeichnung die genaue Menge, ihre Einheit und den erfassten Preis, so wie das PDF sie druckt; ihr Betrag ist der bei der Ausstellung festgelegte. Eine Position, die eine neuere Version der App erfasst hat, wird unverändert gezeigt und sagt, dass sie hier nicht verwendet werden kann: Aktualisieren Sie die App, um damit zu arbeiten.
 
 **Siehe auch:** [Offenes bezahlen](help:user.money.payments) · [Ihre Finanzen in allen Workspaces](help:user.money.finances)
 
