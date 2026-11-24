@@ -4247,6 +4247,7 @@ const Set<String> uiKeys = {
   'stock-units-empty',
   'stock-units-make',
   'stock-units-place',
+  'stock-units-place-filter',
   'stock-units-retry',
   'stock-value-basis',
   'stock-value-complete',
