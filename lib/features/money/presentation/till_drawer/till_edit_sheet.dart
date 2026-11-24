@@ -50,7 +50,7 @@ Future<bool> showTillEditSheet(BuildContext context, WidgetRef ref, {required St
           controller: fields['name'],
           fieldKey: 'name',
           label: l10n.tillDrawerTillName,
-          maxLength: 60,
+          maxLength: kTillNameMaxLength,
           autofocus: true,
         ),
         if (till != null)

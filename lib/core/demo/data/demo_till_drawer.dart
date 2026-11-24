@@ -8,9 +8,11 @@ import 'dart:convert';
 
 import 'package:deskilo/features/money/domain/till_day.dart';
 import 'package:deskilo/features/money/domain/till_drawer.dart';
+import 'package:deskilo/features/money/domain/till_drawer_rules.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../codes/dk_code.dart';
+import '../../codes/pg_code.dart';
 
 PostgrestException _refused(String code, String message, {String? reason, Map<String, Object?> more = const {}}) => PostgrestException(
   message: message,
@@ -115,7 +117,7 @@ class DemoTillDrawer implements TillDrawerPort {
   Future<DrawerTill> saveTill(String workspaceId, {required String requestId, String? tillId, required String name, String? siteId, required bool active}) async {
     if (_answered[requestId] != null) return _replayed(requestId);
     final clean = name.trim();
-    if (clean.isEmpty || clean.length > 60) throw _refused('22023', 'a till has a name');
+    if (clean.isEmpty || clean.length > kTillNameMaxLength) throw _refused(PgCode.invalidParameterValue, 'a till has a name');
     final taken = _tills.any((t) => t.id != tillId && t.name.toLowerCase() == clean.toLowerCase());
     if (taken) throw _refused(DkCode.dkl12, 'a till of this business already has this name', reason: 'name_taken');
     if (tillId == null) {
@@ -134,7 +136,7 @@ class DemoTillDrawer implements TillDrawerPort {
   @override
   Future<DrawerOpened> openSession(String workspaceId, {required String requestId, required String tillId, required int floatMinor, Denominations? denominations}) async {
     if (_answered[requestId] != null) return _replayed(requestId);
-    if (floatMinor < 0) throw _refused('22023', 'a session is opened with its float');
+    if (floatMinor < 0) throw _refused(PgCode.invalidParameterValue, 'a session is opened with its float');
     if (rules().byDenomination && denominations?.totalMinor != floatMinor) {
       throw _refused(DkCode.dkl13, 'the float is counted by denomination and adds up', reason: 'denominations');
     }
@@ -164,7 +166,7 @@ class DemoTillDrawer implements TillDrawerPort {
     String? purchaseDocumentId,
   }) async {
     if (_answered[requestId] != null) return _replayed(requestId);
-    if (amountMinor <= 0) throw _refused('22023', 'an entry has an amount');
+    if (amountMinor <= 0) throw _refused(PgCode.invalidParameterValue, 'an entry has an amount');
     if (!rules().reasons.contains(reason.trim())) throw _refused(DkCode.dkl13, 'this reason is not on the list', reason: 'reason_unknown');
     final session = _open(sessionId);
     final limit = rules().paidOutLimitMinor;
@@ -204,7 +206,7 @@ class DemoTillDrawer implements TillDrawerPort {
     required int bankedMinor,
   }) async {
     if (_answered[requestId] != null) return _replayed(requestId);
-    if (countedMinor < 0 || bankedMinor < 0 || bankedMinor > countedMinor) throw _refused('22023', 'a session is closed with its count');
+    if (countedMinor < 0 || bankedMinor < 0 || bankedMinor > countedMinor) throw _refused(PgCode.invalidParameterValue, 'a session is closed with its count');
     if (rules().byDenomination && denominations?.totalMinor != countedMinor) {
       throw _refused(DkCode.dkl13, 'the drawer is counted by denomination and adds up', reason: 'denominations');
     }

@@ -141,7 +141,7 @@ Future<DrawerClosed?> showCloseTillSheet(
               fieldKey: 'differenceReason',
               label: l10n.tillDrawerDifferenceReason,
               helper: askReason ? l10n.tillDrawerDifferenceAsked : null,
-              maxLength: 200,
+              maxLength: kDrawerReasonMaxLength,
             ),
           ],
           const FormGap(),
@@ -169,6 +169,7 @@ Future<void> showDrawerClosedDialog(BuildContext context, DrawerClosed closed, {
   return showDialog<void>(
     context: context,
     builder: (c) => AlertDialog(
+      scrollable: true,
       title: Text(l10n.tillDrawerClosedTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
