@@ -1,13 +1,13 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 -- apps: additive
--- restates 0926
 -- #4434 (G19, second file) -- the pieces of "where is it" at a past date. Until now a past date answered the places and
 -- not the pieces. With the movement-piece link of 0922 each piece is placed by the last movement that carried it up to that
 -- date (its state from the kind of the place: a customer is sold, a loss is written off, any other is in stock); a piece
 -- that no movement had carried yet did not exist then. A piece made before the link has no history before it:
 -- `pieces_known_from` says since when the link is kept. Now is unchanged. Read-only.
 
+-- restates 0926
 create or replace function public.stock_where_is_v1(
   p_workspace_id uuid, p_item_id uuid, p_lot_id uuid default null, p_at timestamptz default null
 ) returns jsonb language plpgsql stable security definer set search_path = public as $fn$
