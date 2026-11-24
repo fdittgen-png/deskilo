@@ -12,6 +12,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -104,7 +105,7 @@ class _Tills extends ConsumerWidget {
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 720),
                     child: ListView(
-                      padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, 96),
+                      padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, kFabSafeBottom),
                       children: [
                         for (final t in tills) _TillCard(workspaceId: workspaceId, currency: currency, till: t, canManage: canManage),
                       ],
@@ -133,7 +134,7 @@ class _TillCard extends ConsumerWidget {
     final settings = await ref.read(drawerSettingsProvider.future);
     if (!context.mounted) return;
     final done = await showCashEntrySheet(context, ref, workspaceId: workspaceId, session: session, currency: currency, settings: settings);
-    if (done && context.mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.tillDrawerEntryDone)));
+    if (done && context.mounted) AppSnack.success(context, context.l10n.tillDrawerEntryDone);
   }
 
   Future<void> _close(BuildContext context, WidgetRef ref, DrawerSession session) async {
