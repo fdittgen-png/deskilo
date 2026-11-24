@@ -25,7 +25,7 @@ void main() {
         AppLocalizationsFr().stockCyclePlanEvery(1),
         AppLocalizationsFr().stockCyclePlanEvery(14),
       ],
-      ['un intervalle de 1 jour', 'un intervalle de 14 jours'],
+      ['Intervalle : 1 jour', 'Intervalle : 14 jours'],
     );
     expect(
       [

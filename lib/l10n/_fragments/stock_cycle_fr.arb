@@ -27,7 +27,7 @@
   "stockCyclePlanItemsCount": "{count, plural, one{{count} article} other{{count} articles}}",
   "stockCyclePlanValue": "valant au moins {amount}",
   "stockCyclePlanValueSetting": "valant au moins la limite de l’entreprise",
-  "stockCyclePlanEvery": "{count, plural, one{un intervalle de {count} jour} other{un intervalle de {count} jours}}",
+  "stockCyclePlanEvery": "Intervalle : {count, plural, one{{count} jour} other{{count} jours}}",
   "stockCyclePlanOnce": "une fois",
   "stockCyclePlanNext": "prochaine {date}",
   "stockCycleHistoryEmpty": "Rien n’a encore été compté.",

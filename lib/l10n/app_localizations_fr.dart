@@ -36604,10 +36604,10 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'un intervalle de $count jours',
-      one: 'un intervalle de $count jour',
+      other: '$count jours',
+      one: '$count jour',
     );
-    return '$_temp0';
+    return 'Intervalle : $_temp0';
   }
 
   @override
