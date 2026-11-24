@@ -7299,10 +7299,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get consentTitle => 'Ihre Daten, Ihre Rechte';
 
   @override
-  String get consentUnavailable =>
-      'Ihr Konto konnte nicht geladen werden, daher gibt es noch nichts zu akzeptieren.';
-
-  @override
   String get consentVersion => 'Version';
 
   @override
@@ -20986,10 +20982,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Erzeugt einen persönlichen Code für dieses Profil. Wer ihn einlöst, übernimmt das Profil — Reservierungen, Rechnungen, Abo — sobald Sie die Mitgliedschaft bestätigen.';
 
   @override
-  String get managedProfileIdentityUnavailable =>
-      'Diese Angaben konnten nicht gelesen werden, es gibt also noch nichts zu bearbeiten. Es wurde nichts geändert.';
-
-  @override
   String get managedProfileIntro =>
       'Diese Person hat noch kein Konto. Sie buchen, fakturieren und verwalten für sie; übergeben Sie das Profil, wenn sie beitritt.';
 
@@ -22777,10 +22769,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get memberMoneySettled => 'Nichts offen.';
-
-  @override
-  String get memberMoneyUnavailable =>
-      'Finanzen konnten nicht geladen werden. Zum Aktualisieren ziehen.';
 
   @override
   String get memberMonthInProgress => 'Dieser Monat';
@@ -25531,10 +25519,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get periodReservationsEmpty => 'Keine Buchung in diesen Monaten.';
 
   @override
-  String get periodReservationsFailed =>
-      'Die Buchungen konnten nicht gelesen werden.';
-
-  @override
   String periodReservationsLevel(String level) {
     return 'Nur auf $level';
   }
@@ -26827,10 +26811,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get privacyAdminKind => 'Art der Anfrage';
 
   @override
-  String get privacyAdminLoadFailed =>
-      'Die Anfragen konnten nicht gelesen werden.';
-
-  @override
   String get privacyAdminMember => 'Mitglied';
 
   @override
@@ -27435,10 +27415,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get profilesTitle => 'Profile';
-
-  @override
-  String get profilesUnavailable =>
-      'Ihre Arbeitsbereiche konnten nicht geladen werden.';
 
   @override
   String provenanceFromTemplate(String name) {
@@ -35451,10 +35427,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get setupStepLeaveTitle => 'Diesen Schritt verlassen?';
-
-  @override
-  String get setupStepLoadFailed =>
-      'Dieser Schritt konnte nicht geladen werden. Versuchen Sie es später erneut.';
 
   @override
   String get setupStepNext => 'Nächster Schritt';

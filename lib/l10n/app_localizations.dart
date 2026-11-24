@@ -11399,12 +11399,6 @@ abstract class AppLocalizations {
   /// **'Your data, your rights'**
   String get consentTitle;
 
-  /// Banner on the consent screen when the profile could not be fetched (#1650): a retry replaces the acceptance form
-  ///
-  /// In en, this message translates to:
-  /// **'Your account could not be loaded, so there is nothing to accept yet.'**
-  String get consentUnavailable;
-
   /// Shown as the text in consent screen (profile), and 1 other place.
   ///
   /// In en, this message translates to:
@@ -33022,12 +33016,6 @@ abstract class AppLocalizations {
   /// **'Mints a personal code bound to this profile. Whoever redeems it takes the profile over — reservations, invoices, subscription — once you approve the membership.'**
   String get managedProfileHandOverHint;
 
-  /// #1561 shown when the managed identity could not be read, so the form is not offered
-  ///
-  /// In en, this message translates to:
-  /// **'These details could not be read, so there is nothing to edit yet. Nothing has been changed.'**
-  String get managedProfileIdentityUnavailable;
-
   /// #887 managed profiles: managedProfileIntro
   ///
   /// In en, this message translates to:
@@ -35991,12 +35979,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing outstanding.'**
   String get memberMoneySettled;
-
-  /// #709 - the money section of a profile could not be read
-  ///
-  /// In en, this message translates to:
-  /// **'Money could not be loaded. Pull to refresh.'**
-  String get memberMoneyUnavailable;
 
   /// #704 - the money section of a member profile
   ///
@@ -40406,12 +40388,6 @@ abstract class AppLocalizations {
   /// **'No booking in these months.'**
   String get periodReservationsEmpty;
 
-  /// #2578 the bookings behind the capacity figure
-  ///
-  /// In en, this message translates to:
-  /// **'The bookings could not be read.'**
-  String get periodReservationsFailed;
-
   /// #2580 the bookings behind the capacity figure, narrowed to one level
   ///
   /// In en, this message translates to:
@@ -42506,12 +42482,6 @@ abstract class AppLocalizations {
   /// **'Kind of request'**
   String get privacyAdminKind;
 
-  /// Shown as the text in privacy admin screen (members).
-  ///
-  /// In en, this message translates to:
-  /// **'The requests could not be read.'**
-  String get privacyAdminLoadFailed;
-
   /// Shown as the text in privacy admin sheets (members), and 1 other place.
   ///
   /// In en, this message translates to:
@@ -43447,12 +43417,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profiles'**
   String get profilesTitle;
-
-  /// Banner on the Profiles screen when the membership list could not be fetched (#1650); paired with commonRetry
-  ///
-  /// In en, this message translates to:
-  /// **'Your workspaces could not be loaded.'**
-  String get profilesUnavailable;
 
   /// #1307 S4 provenance chip
   ///
@@ -56104,12 +56068,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Leave this step?'**
   String get setupStepLeaveTitle;
-
-  /// #2870 setup steps: setupStepLoadFailed
-  ///
-  /// In en, this message translates to:
-  /// **'This step could not be loaded. Try again later.'**
-  String get setupStepLoadFailed;
 
   /// #3076 — on a step page of the guide: goes on to the next step still to do.
   ///

@@ -4196,7 +4196,6 @@
   "consentRightsBody": "Acceso, rectificación, exportación (art. 20), supresión (art. 17) y oposición — cada uno es un botón en Ajustes → Privacidad y datos. Para lo demás: fdittgen@gmail.com. Puede retirar este consentimiento en cualquier momento saliendo del espacio y borrando sus datos.",
   "consentRightsTitle": "Sus derechos",
   "consentTitle": "Sus datos, sus derechos",
-  "consentUnavailable": "No se pudo cargar su cuenta, así que todavía no hay nada que aceptar.",
   "consentVersion": "Versión",
   "consentVersionNumber": "Versión {version}",
   "consentWhatBody": "Su cuenta (e-mail, nombre visible, contraseña cifrada), su perfil tal como lo rellena (foto, estado, dirección, número de WhatsApp — cada uno opcional), y lo que hace en un espacio: reservas y registros de entrada, mensajes, gastos y consumos, su suscripción, facturas y pagos. Todo se guarda en el servidor donde funciona su espacio: en el servidor de referencia compartido, en la UE (Supabase, eu-central-1); en un servidor que una comunidad gestiona por su cuenta, donde su operador haya elegido. Ajustes → Privacidad y datos muestra el aviso de ese servidor: quién lo gestiona, dónde están los datos y quién los recibe.",
@@ -12727,10 +12726,6 @@
   "@managedProfileHandOverHint": {
     "description": "#887 managed profiles: managedProfileHandOverHint"
   },
-  "managedProfileIdentityUnavailable": "No se han podido leer estos datos, así que todavía no hay nada que editar. No se ha cambiado nada.",
-  "@managedProfileIdentityUnavailable": {
-    "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
-  },
   "managedProfileIntro": "Esta persona aún no tiene cuenta. Usted reserva, factura y gestiona por ella; entréguele el perfil cuando se una.",
   "@managedProfileIntro": {
     "description": "#887 managed profiles: managedProfileIntro"
@@ -13405,10 +13400,6 @@
   "memberMoneySettled": "Nada pendiente.",
   "@memberMoneySettled": {
     "description": "#704 - the money section of a member profile"
-  },
-  "memberMoneyUnavailable": "No se pudieron cargar las finanzas. Tire para actualizar.",
-  "@memberMoneyUnavailable": {
-    "description": "#709 - the money section of a profile could not be read"
   },
   "memberMonthInProgress": "Este mes",
   "@memberMonthInProgress": {
@@ -14640,7 +14631,6 @@
   "pendingNotUpdated": "Estado no actualizado — no se pudo contactar con el servidor. Su solicitud no ha cambiado.",
   "pendingStillWaiting": "Sigue pendiente de aprobación.",
   "periodReservationsEmpty": "Ninguna reserva en estos meses.",
-  "periodReservationsFailed": "No se pudieron leer las reservas.",
   "periodReservationsLevel": "Solo en {level}",
   "periodReservationsTitle": "Reservas de {period}",
   "periodReservationsUnknownLevel": "Este no es un nivel de este espacio.",
@@ -15255,7 +15245,6 @@
   "privacyAdminIncidentTitle": "Registrar un incidente de datos",
   "privacyAdminIntro": "Las solicitudes de los miembros sobre sus datos personales y los incidentes que usted registra. Cada solicitud se responde en un mes natural.",
   "privacyAdminKind": "Tipo de solicitud",
-  "privacyAdminLoadFailed": "No se pudieron leer las solicitudes.",
   "privacyAdminMember": "Miembro",
   "privacyAdminOpenTile": "Datos personales y solicitudes de derechos",
   "privacyAdminOutcomeKind": "Qué pasó con los datos",
@@ -15601,7 +15590,6 @@
     "description": "#974 profiles site: profilesSitePick"
   },
   "profilesTitle": "Perfiles",
-  "profilesUnavailable": "No se pudieron cargar sus espacios de trabajo.",
   "provenanceFromTemplate": "De la plantilla «{name}»",
   "provenanceProductDefault": "Valor predeterminado del producto",
   "provenanceResetToDefault": "Volver al valor predeterminado",
@@ -20526,7 +20514,6 @@
   "setupStepLeave": "Salir",
   "setupStepLeaveMessage": "Sus respuestas aún no se han aplicado. Quedan guardadas como borrador y las encontrará aquí cuando vuelva.",
   "setupStepLeaveTitle": "¿Salir de este paso?",
-  "setupStepLoadFailed": "No se ha podido cargar este paso. Inténtelo más tarde.",
   "setupStepNext": "Siguiente paso",
   "@setupStepNext": {
     "description": "#3076 — on a step page of the guide: goes on to the next step still to do."

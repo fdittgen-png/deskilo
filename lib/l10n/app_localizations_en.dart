@@ -7245,10 +7245,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get consentTitle => 'Your data, your rights';
 
   @override
-  String get consentUnavailable =>
-      'Your account could not be loaded, so there is nothing to accept yet.';
-
-  @override
   String get consentVersion => 'Version';
 
   @override
@@ -20790,10 +20786,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Mints a personal code bound to this profile. Whoever redeems it takes the profile over — reservations, invoices, subscription — once you approve the membership.';
 
   @override
-  String get managedProfileIdentityUnavailable =>
-      'These details could not be read, so there is nothing to edit yet. Nothing has been changed.';
-
-  @override
   String get managedProfileIntro =>
       'This person has no account yet. You book, invoice and manage for them; hand the profile over when they join.';
 
@@ -22558,10 +22550,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get memberMoneySettled => 'Nothing outstanding.';
-
-  @override
-  String get memberMoneyUnavailable =>
-      'Money could not be loaded. Pull to refresh.';
 
   @override
   String get memberMonthInProgress => 'This month';
@@ -25289,9 +25277,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get periodReservationsEmpty => 'No booking in these months.';
 
   @override
-  String get periodReservationsFailed => 'The bookings could not be read.';
-
-  @override
   String periodReservationsLevel(String level) {
     return 'On $level only';
   }
@@ -26565,9 +26550,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyAdminKind => 'Kind of request';
 
   @override
-  String get privacyAdminLoadFailed => 'The requests could not be read.';
-
-  @override
   String get privacyAdminMember => 'Member';
 
   @override
@@ -27166,9 +27148,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profilesTitle => 'Profiles';
-
-  @override
-  String get profilesUnavailable => 'Your workspaces could not be loaded.';
 
   @override
   String provenanceFromTemplate(String name) {
@@ -35081,10 +35060,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupStepLeaveTitle => 'Leave this step?';
-
-  @override
-  String get setupStepLoadFailed =>
-      'This step could not be loaded. Try again later.';
 
   @override
   String get setupStepNext => 'Next step';

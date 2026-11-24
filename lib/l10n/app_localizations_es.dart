@@ -7283,10 +7283,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get consentTitle => 'Sus datos, sus derechos';
 
   @override
-  String get consentUnavailable =>
-      'No se pudo cargar su cuenta, así que todavía no hay nada que aceptar.';
-
-  @override
   String get consentVersion => 'Versión';
 
   @override
@@ -20931,10 +20927,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Genera un código personal ligado a este perfil. Quien lo canjee se hace con el perfil — reservas, facturas, suscripción — en cuanto usted apruebe la membresía.';
 
   @override
-  String get managedProfileIdentityUnavailable =>
-      'No se han podido leer estos datos, así que todavía no hay nada que editar. No se ha cambiado nada.';
-
-  @override
   String get managedProfileIntro =>
       'Esta persona aún no tiene cuenta. Usted reserva, factura y gestiona por ella; entréguele el perfil cuando se una.';
 
@@ -22716,10 +22708,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get memberMoneySettled => 'Nada pendiente.';
-
-  @override
-  String get memberMoneyUnavailable =>
-      'No se pudieron cargar las finanzas. Tire para actualizar.';
 
   @override
   String get memberMonthInProgress => 'Este mes';
@@ -25459,9 +25447,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get periodReservationsEmpty => 'Ninguna reserva en estos meses.';
 
   @override
-  String get periodReservationsFailed => 'No se pudieron leer las reservas.';
-
-  @override
   String periodReservationsLevel(String level) {
     return 'Solo en $level';
   }
@@ -26747,9 +26732,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get privacyAdminKind => 'Tipo de solicitud';
 
   @override
-  String get privacyAdminLoadFailed => 'No se pudieron leer las solicitudes.';
-
-  @override
   String get privacyAdminMember => 'Miembro';
 
   @override
@@ -27353,10 +27335,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get profilesTitle => 'Perfiles';
-
-  @override
-  String get profilesUnavailable =>
-      'No se pudieron cargar sus espacios de trabajo.';
 
   @override
   String provenanceFromTemplate(String name) {
@@ -35369,10 +35347,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get setupStepLeaveTitle => '¿Salir de este paso?';
-
-  @override
-  String get setupStepLoadFailed =>
-      'No se ha podido cargar este paso. Inténtelo más tarde.';
 
   @override
   String get setupStepNext => 'Siguiente paso';

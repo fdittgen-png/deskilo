@@ -9506,10 +9506,6 @@
   "@consentTitle": {
     "description": "Shown as the text in help tips (core), and 2 other places."
   },
-  "consentUnavailable": "Your account could not be loaded, so there is nothing to accept yet.",
-  "@consentUnavailable": {
-    "description": "Banner on the consent screen when the profile could not be fetched (#1650): a retry replaces the acceptance form"
-  },
   "consentVersion": "Version",
   "@consentVersion": {
     "description": "Shown as the text in consent screen (profile), and 1 other place."
@@ -27405,10 +27401,6 @@
   "@managedProfileHandOverHint": {
     "description": "#887 managed profiles: managedProfileHandOverHint"
   },
-  "managedProfileIdentityUnavailable": "These details could not be read, so there is nothing to edit yet. Nothing has been changed.",
-  "@managedProfileIdentityUnavailable": {
-    "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
-  },
   "managedProfileIntro": "This person has no account yet. You book, invoice and manage for them; hand the profile over when they join.",
   "@managedProfileIntro": {
     "description": "#887 managed profiles: managedProfileIntro"
@@ -29717,10 +29709,6 @@
   "memberMoneySettled": "Nothing outstanding.",
   "@memberMoneySettled": {
     "description": "#704 - the money section of a member profile"
-  },
-  "memberMoneyUnavailable": "Money could not be loaded. Pull to refresh.",
-  "@memberMoneyUnavailable": {
-    "description": "#709 - the money section of a profile could not be read"
   },
   "memberMonthInProgress": "This month",
   "@memberMonthInProgress": {
@@ -33358,10 +33346,6 @@
   "@periodReservationsEmpty": {
     "description": "#2578 the bookings behind the capacity figure"
   },
-  "periodReservationsFailed": "The bookings could not be read.",
-  "@periodReservationsFailed": {
-    "description": "#2578 the bookings behind the capacity figure"
-  },
   "periodReservationsLevel": "On {level} only",
   "@periodReservationsLevel": {
     "description": "#2580 the bookings behind the capacity figure, narrowed to one level",
@@ -34973,10 +34957,6 @@
   "@privacyAdminKind": {
     "description": "Shown as the label of a field in privacy admin sheets (members), and 1 other place."
   },
-  "privacyAdminLoadFailed": "The requests could not be read.",
-  "@privacyAdminLoadFailed": {
-    "description": "Shown as the text in privacy admin screen (members)."
-  },
   "privacyAdminMember": "Member",
   "@privacyAdminMember": {
     "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
@@ -35747,10 +35727,6 @@
   "profilesTitle": "Profiles",
   "@profilesTitle": {
     "description": "Profile switcher screen (#89): one profile per workspace membership"
-  },
-  "profilesUnavailable": "Your workspaces could not be loaded.",
-  "@profilesUnavailable": {
-    "description": "Banner on the Profiles screen when the membership list could not be fetched (#1650); paired with commonRetry"
   },
   "provenanceFromTemplate": "From template «{name}»",
   "@provenanceFromTemplate": {
@@ -45557,10 +45533,6 @@
   "setupStepLeaveTitle": "Leave this step?",
   "@setupStepLeaveTitle": {
     "description": "#3629 asked when leaving a setup step whose answers are a draft not applied yet."
-  },
-  "setupStepLoadFailed": "This step could not be loaded. Try again later.",
-  "@setupStepLoadFailed": {
-    "description": "#2870 setup steps: setupStepLoadFailed"
   },
   "setupStepNext": "Next step",
   "@setupStepNext": {

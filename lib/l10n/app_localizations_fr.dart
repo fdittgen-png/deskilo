@@ -7317,10 +7317,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get consentTitle => 'Vos données, vos droits';
 
   @override
-  String get consentUnavailable =>
-      'Votre compte n\'a pas pu être chargé ; il n\'y a donc rien à accepter pour l\'instant.';
-
-  @override
   String get consentVersion => 'Version';
 
   @override
@@ -21023,10 +21019,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Crée un code personnel lié à ce profil. Qui l\'utilise reprend le profil — réservations, factures, abonnement — dès que vous validez l\'adhésion.';
 
   @override
-  String get managedProfileIdentityUnavailable =>
-      'Ces informations n\'ont pas pu être lues : il n\'y a donc rien à modifier pour l\'instant. Rien n\'a été changé.';
-
-  @override
   String get managedProfileIntro =>
       'Cette personne n\'a pas encore de compte. Vous réservez, facturez et gérez pour elle ; remettez-lui le profil quand elle rejoint l\'espace.';
 
@@ -22824,10 +22816,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get memberMoneySettled => 'Rien en attente.';
-
-  @override
-  String get memberMoneyUnavailable =>
-      'Impossible de charger les finances. Tirez pour actualiser.';
 
   @override
   String get memberMonthInProgress => 'Ce mois-ci';
@@ -25574,10 +25562,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get periodReservationsEmpty => 'Aucune réservation ces mois-ci.';
 
   @override
-  String get periodReservationsFailed =>
-      'Les réservations n\'ont pas pu être lues.';
-
-  @override
   String periodReservationsLevel(String level) {
     return 'Sur $level seulement';
   }
@@ -26870,9 +26854,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get privacyAdminKind => 'Type de demande';
 
   @override
-  String get privacyAdminLoadFailed => 'Les demandes n\'ont pas pu être lues.';
-
-  @override
   String get privacyAdminMember => 'Membre';
 
   @override
@@ -27478,9 +27459,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get profilesTitle => 'Profils';
-
-  @override
-  String get profilesUnavailable => 'Vos espaces n\'ont pas pu être chargés.';
 
   @override
   String provenanceFromTemplate(String name) {
@@ -35526,10 +35504,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get setupStepLeaveTitle => 'Quitter cette étape ?';
-
-  @override
-  String get setupStepLoadFailed =>
-      'Cette étape n’a pas pu être chargée. Réessayez plus tard.';
 
   @override
   String get setupStepNext => 'Étape suivante';

@@ -4196,7 +4196,6 @@
   "consentRightsBody": "Auskunft, Berichtigung, Export (Art. 20), Löschung (Art. 17) und Widerspruch — jedes ein Knopf in Einstellungen → Datenschutz & Daten. Für alles andere: fdittgen@gmail.com. Sie können diese Einwilligung jederzeit widerrufen, indem Sie den Workspace verlassen und Ihre Daten löschen.",
   "consentRightsTitle": "Ihre Rechte",
   "consentTitle": "Ihre Daten, Ihre Rechte",
-  "consentUnavailable": "Ihr Konto konnte nicht geladen werden, daher gibt es noch nichts zu akzeptieren.",
   "consentVersion": "Version",
   "consentVersionNumber": "Version {version}",
   "consentWhatBody": "Ihr Konto (E-Mail, Anzeigename, gehashtes Passwort), Ihr Profil, wie Sie es ausfüllen (Foto, Status, Adresse, WhatsApp-Nummer — je optional), und was Sie in einem Space tun: Reservierungen und Check-ins, Nachrichten, Ausgaben und Verbräuche, Ihr Abonnement, Rechnungen und Zahlungen. Alles liegt auf dem Server, auf dem Ihr Space läuft: auf dem gemeinsamen Referenzserver in der EU (Supabase, eu-central-1); auf einem Server, den eine Gemeinschaft selbst betreibt, dort, wo ihr Betreiber es gewählt hat. Einstellungen → Datenschutz & Daten zeigt den Hinweis dieses Servers: wer ihn betreibt, wo die Daten liegen und wer sie erhält.",
@@ -12727,10 +12726,6 @@
   "@managedProfileHandOverHint": {
     "description": "#887 managed profiles: managedProfileHandOverHint"
   },
-  "managedProfileIdentityUnavailable": "Diese Angaben konnten nicht gelesen werden, es gibt also noch nichts zu bearbeiten. Es wurde nichts geändert.",
-  "@managedProfileIdentityUnavailable": {
-    "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
-  },
   "managedProfileIntro": "Diese Person hat noch kein Konto. Sie buchen, fakturieren und verwalten für sie; übergeben Sie das Profil, wenn sie beitritt.",
   "@managedProfileIntro": {
     "description": "#887 managed profiles: managedProfileIntro"
@@ -13405,10 +13400,6 @@
   "memberMoneySettled": "Nichts offen.",
   "@memberMoneySettled": {
     "description": "#704 - the money section of a member profile"
-  },
-  "memberMoneyUnavailable": "Finanzen konnten nicht geladen werden. Zum Aktualisieren ziehen.",
-  "@memberMoneyUnavailable": {
-    "description": "#709 - the money section of a profile could not be read"
   },
   "memberMonthInProgress": "Dieser Monat",
   "@memberMonthInProgress": {
@@ -14640,7 +14631,6 @@
   "pendingNotUpdated": "Status nicht aktualisiert — der Server ist nicht erreichbar. Ihre Anfrage bleibt unverändert.",
   "pendingStillWaiting": "Wartet weiter auf Freigabe.",
   "periodReservationsEmpty": "Keine Buchung in diesen Monaten.",
-  "periodReservationsFailed": "Die Buchungen konnten nicht gelesen werden.",
   "periodReservationsLevel": "Nur auf {level}",
   "periodReservationsTitle": "Buchungen von {period}",
   "periodReservationsUnknownLevel": "Das ist keine Ebene dieses Raums.",
@@ -15255,7 +15245,6 @@
   "privacyAdminIncidentTitle": "Datenschutzvorfall erfassen",
   "privacyAdminIntro": "Die Anfragen der Mitglieder zu ihren persönlichen Daten und die Vorfälle, die Sie erfassen. Jede Anfrage wird innerhalb eines Kalendermonats beantwortet.",
   "privacyAdminKind": "Art der Anfrage",
-  "privacyAdminLoadFailed": "Die Anfragen konnten nicht gelesen werden.",
   "privacyAdminMember": "Mitglied",
   "privacyAdminOpenTile": "Persönliche Daten und Rechteanfragen",
   "privacyAdminOutcomeKind": "Was mit den Daten geschah",
@@ -15601,7 +15590,6 @@
     "description": "#974 profiles site: profilesSitePick"
   },
   "profilesTitle": "Profile",
-  "profilesUnavailable": "Ihre Arbeitsbereiche konnten nicht geladen werden.",
   "provenanceFromTemplate": "Aus Vorlage „{name}“",
   "provenanceProductDefault": "Produktstandard",
   "provenanceResetToDefault": "Auf Produktstandard zurücksetzen",
@@ -20526,7 +20514,6 @@
   "setupStepLeave": "Verlassen",
   "setupStepLeaveMessage": "Ihre Antworten sind noch nicht übernommen. Sie bleiben als Entwurf gespeichert, und Sie finden sie hier wieder, wenn Sie zurückkommen.",
   "setupStepLeaveTitle": "Diesen Schritt verlassen?",
-  "setupStepLoadFailed": "Dieser Schritt konnte nicht geladen werden. Versuchen Sie es später erneut.",
   "setupStepNext": "Nächster Schritt",
   "@setupStepNext": {
     "description": "#3076 — on a step page of the guide: goes on to the next step still to do."

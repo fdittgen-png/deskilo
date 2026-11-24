@@ -167,6 +167,7 @@ class AuthBuildVersion extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(appVersionProvider);
+    // #4414 kept: the build line shows only a version that was read
     final version = state.isLoading || state.hasError ? null : state.value;
     if (version == null || version.isEmpty) return const SizedBox.shrink();
     return Padding(
