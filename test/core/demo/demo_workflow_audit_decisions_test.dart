@@ -235,7 +235,18 @@ const _practiceNoPlaces = 'The practice (#3863) is a business without places: '
     'what a new workspace starts with and the practice kind on top, so the '
     'place steps (access, structure, attendance) are off by design, and the '
     'steps a new workspace keeps off stay off as in Leipzig.';
+const _noGoodsLedger = 'Goods stock (#4449) is a separate process the reference space ws-1 shows; this space keeps no stock ledger, '
+    'so the four subprocesses stay off here.';
+
 const _offOnPurpose = <String, String>{
+  'ws-2/goodsStock/stockItems': _noGoodsLedger,
+  'ws-2/goodsStock/stockMovements': _noGoodsLedger,
+  'ws-2/goodsStock/stockControl': _noGoodsLedger,
+  'ws-2/goodsStock/stockTracking': _noGoodsLedger,
+  'ws-7/goodsStock/stockItems': _noGoodsLedger,
+  'ws-7/goodsStock/stockMovements': _noGoodsLedger,
+  'ws-7/goodsStock/stockControl': _noGoodsLedger,
+  'ws-7/goodsStock/stockTracking': _noGoodsLedger,
   'ws-7/workspaceAccess/physicalAccess': _practiceNoPlaces,
   'ws-7/spaceManagement/structure': _practiceNoPlaces,
   'ws-7/reservationsUsage/attendance': _practiceNoPlaces,
