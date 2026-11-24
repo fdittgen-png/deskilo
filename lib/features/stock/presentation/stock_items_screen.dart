@@ -187,7 +187,7 @@ class _ItemsState extends ConsumerState<_Items> {
         workspaceId: widget.workspaceId,
         itemId: item.id,
         itemName: item.name,
-        options: (lots: lotsOn, keep: false),
+        options: (lots: lotsOn, keep: false, groups: itemGroupsIfOn(ref)),
       );
     }
   }
@@ -413,7 +413,7 @@ class _RegistryRow extends ConsumerWidget {
                       workspaceId: workspaceId,
                       itemId: row.itemId,
                       itemName: row.itemName,
-                      options: (lots: lotsOn, keep: false),
+                      options: (lots: lotsOn, keep: false, groups: itemGroupsIfOn(ref)),
                     ),
                   ),
                   IconButton(

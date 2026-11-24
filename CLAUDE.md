@@ -66,7 +66,7 @@ optional commands supplement the execution loop; they do not replace its gates.
 
 ## Non-negotiables in one breath
 
-One registry-touching branch at a time. Harness a migration before you apply it.
+Push every few commits, never leave work unpushed (`docs/AGENT_RULES.md` hard rule 0). One registry-touching branch at a time. Harness a migration before you apply it.
 Every user-facing string in ARB ×5. Every functionality behind a `WorkspaceFeature`. No hardcoded business value — configuration with a UI point (`docs/AGENT_RULES.md`).
 `web/setup.html` in the same PR as any parameter. Before a push: `dart analyze --fatal-infos`,
 `flutter test test/lint` and the affected test folders — the full suite runs in CI only. Never format whole directories. Never use the `alpha1`

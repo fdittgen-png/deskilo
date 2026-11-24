@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/money/domain/counter_till.dart';
 import '../../features/money/presentation/till_screen.dart';
+import '../../features/stock/domain/stock_code_resolver.dart';
 import '../../features/stock/providers/stock_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 
@@ -21,6 +22,24 @@ class TillRoute extends ConsumerWidget {
         : ref
               .watch(stockItemsProvider(workspaceId))
               .whenData((items) => [for (final i in items) if (i.active) TillKey(id: i.id, name: i.name, unit: i.unit)]);
-    return TillScreen(workspaceId: workspaceId, keys: keys);
+    return TillScreen(
+      workspaceId: workspaceId,
+      keys: keys,
+      scan: workspaceId == null || !ref.watch(stockScanningProvider)
+          ? null
+          : (code) async => tillScanOf(await ref.read(stockCodeResolverProvider).resolve(workspaceId, code)),
+    );
   }
+}
+
+/// #4436 -- what a scanned code rings up at the till: an item by its own code or its tag, one piece by its tag.
+/// A variant, a lot, a package unit or a place is not something the till rings up yet: it names nothing here.
+@visibleForTesting
+TillScan tillScanOf(StockCodeResolution r) {
+  final item = r.item;
+  if (item == null || item.id.isEmpty || r.unit != null || r.variantId != null) return TillScanUnknown(r.code);
+  final key = TillKey(id: item.id, name: item.name, unit: item.unit);
+  if (r.isPieceTag) return TillScanPiece(key, r.code);
+  if (r.kind == ScannedKind.item || (r.kind == ScannedKind.tag && r.tagBound && r.tagOwnerKind == 'item')) return TillScanItem(key);
+  return TillScanUnknown(r.code);
 }

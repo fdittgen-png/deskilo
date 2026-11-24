@@ -106,5 +106,33 @@
   "refusalCounterDayOpen": "The day of this till is already closed: it is opened again tomorrow.",
   "@refusalCounterDayOpen": {
     "description": "#4367 setting label/hint or refusal"
+  },
+  "settingLabelCounterOfflineMaxMinutes": "Longest offline period (minutes)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflineMaxMinutes": "How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingLabelCounterOfflineMaxSales": "Most offline sales per till session",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflineMaxSales": "How many cash sales made offline one till session accepts. Further sales are refused and listed for the owner.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Price difference allowed offline (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflinePriceTolerance": "How far, in percent, the price of an offline sale may differ from the item's price when the sale is sent. 0 means the price must be the same.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
+  "refusalCounterOfflineConflict": "A sale sent from the till under this number was already received with other content. Nothing was recorded again; look at the list of offline sales.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
   }
 }

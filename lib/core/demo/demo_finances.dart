@@ -14,8 +14,10 @@ import '../../features/money/domain/finance_overview.dart';
 import 'data/account_activity_repository.dart';
 import 'data/money_repository.dart';
 import 'demo_fixture.dart';
+import 'demo_space_ids.dart';
 import 'demo_space_routing.dart' show kDemoInstallationId;
 import 'demo_spaces.dart';
+import 'seed/demo_billing_access_seed.dart';
 
 /// The overview the server's `my_finance_overview` (0380) would answer for
 /// the persona [fixture] is acting as.
@@ -35,6 +37,13 @@ FinanceOverview demoFinanceOverview(DemoFixture fixture) {
   return FinanceOverview(
     invoices: [for (final p in parts) ...p.invoices],
     reminders: [for (final p in parts) ...p.reminders],
+    // #4164 B2 — the documents of the subjects the account holds a grant for.
+    billed: demoBilledInvoices(
+      now: fixture.seededAt,
+      held: fixture.stores.home.billingAccess.heldSubjects,
+      workspaceName: names[demoFirstSpaceId] ?? '',
+      timezone: zones[demoFirstSpaceId],
+    ),
   );
 }
 

@@ -4966,6 +4966,156 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get billingAccessAccept => 'Accept';
+
+  @override
+  String billingAccessAccepted(String business) {
+    return 'Done. The invoices $business made out to you now appear in your finances, apart from what you owe as a member.';
+  }
+
+  @override
+  String get billingAccessAction => 'Account access';
+
+  @override
+  String billingAccessActive(String date) {
+    return 'Reads the invoices since $date';
+  }
+
+  @override
+  String get billingAccessAlreadyHeld =>
+      'You already hold this access; accepting it again changes nothing.';
+
+  @override
+  String get billingAccessCheck => 'Check the code';
+
+  @override
+  String get billingAccessCodeCopied => 'Code copied';
+
+  @override
+  String get billingAccessCodeCopy => 'Copy the code';
+
+  @override
+  String billingAccessCodeOnce(String date) {
+    return 'Give this code to the customer now. It is shown only once and cannot be read again. It is valid until $date.';
+  }
+
+  @override
+  String get billingAccessCodeTitle => 'Invitation code';
+
+  @override
+  String get billingAccessCodeUnusable =>
+      'This code cannot be used. It may be wrong, expired, withdrawn or already taken by another account. Ask the business for a new one.';
+
+  @override
+  String get billingAccessEnter => 'Use a billing code';
+
+  @override
+  String get billingAccessEnterIntro =>
+      'A business that invoices you can give you a code. With it you read, from your own account, the invoices it made out to you. You do not become a member.';
+
+  @override
+  String get billingAccessEnterTitle => 'Read the invoices of a business';
+
+  @override
+  String billingAccessExpired(String date) {
+    return 'Invitation expired on $date';
+  }
+
+  @override
+  String get billingAccessFailed =>
+      'The answer did not arrive. Nothing is known to have changed; try again.';
+
+  @override
+  String billingAccessGroupOpen(String amounts) {
+    return 'Still open: $amounts';
+  }
+
+  @override
+  String get billingAccessGroupSettled => 'Nothing open';
+
+  @override
+  String billingAccessGroupTitle(String business, String ref) {
+    return '$business · account $ref';
+  }
+
+  @override
+  String get billingAccessIntro =>
+      'Invite this customer to read their own invoices from their own account. The customer does not become a member and sees nothing else of your business.';
+
+  @override
+  String get billingAccessInvite => 'Create an invitation code';
+
+  @override
+  String billingAccessInvited(String date) {
+    return 'Invited on $date, not accepted yet';
+  }
+
+  @override
+  String get billingAccessLoadFailed =>
+      'The invitations could not be read. This is not an empty list.';
+
+  @override
+  String get billingAccessNone => 'No invitation yet.';
+
+  @override
+  String get billingAccessNotACustomer =>
+      'Only a billing customer can be invited. Nothing was changed.';
+
+  @override
+  String get billingAccessNotAllowed =>
+      'You may not invite customers to an account here. Nothing was changed.';
+
+  @override
+  String get billingAccessPaymentSoon =>
+      'Paying these invoices from here comes with a later update.';
+
+  @override
+  String billingAccessPreviewLine(String business, String name) {
+    return '$business invites you to read the invoices made out to $name.';
+  }
+
+  @override
+  String billingAccessPreviewUnnamed(String business) {
+    return '$business invites you to read the invoices it made out to you.';
+  }
+
+  @override
+  String get billingAccessReasonTooLong =>
+      'The reason is too long. Shorten it; nothing was changed.';
+
+  @override
+  String get billingAccessRequestReused =>
+      'This request was already used for another invitation. Close this window and open it again; nothing was changed.';
+
+  @override
+  String get billingAccessRevoke => 'End access';
+
+  @override
+  String get billingAccessRevokeNote =>
+      'Ending access erases nothing: the invoices and their history stay as they are.';
+
+  @override
+  String billingAccessRevoked(String date) {
+    return 'Access ended on $date';
+  }
+
+  @override
+  String get billingAccessSectionNote =>
+      'Invoices a business made out to you, read through the access it gave you. They are not counted with what you owe as a member.';
+
+  @override
+  String get billingAccessSectionTitle => 'Billed to you as a customer';
+
+  @override
+  String billingAccessTitle(String name) {
+    return 'Account access: $name';
+  }
+
+  @override
+  String get billingAccessUnknownGrant =>
+      'This access no longer exists. Close the list and open it again; nothing was changed.';
+
+  @override
   String get billingAddBand => 'Add band';
 
   @override
@@ -5096,7 +5246,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get billingCustomersNoAccount =>
-      'The people and businesses you invoice. They have no account and see nothing of your business.';
+      'The people and businesses you invoice. They are not members and see nothing of your business, unless you invite them to read their own invoices from their own account.';
 
   @override
   String get billingCustomersRetry => 'Try again';
@@ -11570,6 +11720,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.';
+
+  @override
+  String get featureCounterOfflineCashDesc =>
+      'When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.';
+
+  @override
+  String get featureCounterOfflineCashTitle => 'Selling offline, cash only';
 
   @override
   String get featureCounterReceiptsDesc =>
@@ -28875,6 +29032,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This receipt is no longer an open draft, or a receipt was already issued for the same sale.';
 
   @override
+  String get refusalCounterOfflineConflict =>
+      'A sale sent from the till under this number was already received with other content. Nothing was recorded again; look at the list of offline sales.';
+
+  @override
   String get refusalCounterTenderState =>
       'This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.';
 
@@ -32008,6 +32169,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.';
 
   @override
+  String get settingHintCounterOfflineMaxMinutes =>
+      'How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.';
+
+  @override
+  String get settingHintCounterOfflineMaxSales =>
+      'How many cash sales made offline one till session accepts. Further sales are refused and listed for the owner.';
+
+  @override
+  String get settingHintCounterOfflinePriceTolerance =>
+      'How far, in percent, the price of an offline sale may differ from the item\'s price when the sale is sent. 0 means the price must be the same.';
+
+  @override
   String get settingHintCounterPaidOutLimit =>
       'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.';
 
@@ -32415,6 +32588,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Fiscal rules for counter sales';
+
+  @override
+  String get settingLabelCounterOfflineMaxMinutes =>
+      'Longest offline period (minutes)';
+
+  @override
+  String get settingLabelCounterOfflineMaxSales =>
+      'Most offline sales per till session';
+
+  @override
+  String get settingLabelCounterOfflinePriceTolerance =>
+      'Price difference allowed offline (%)';
 
   @override
   String get settingLabelCounterPaidOutLimit =>
@@ -37561,6 +37746,127 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockTransfersTitle => 'Transfers';
 
   @override
+  String stockUnitChangedNow(String place) {
+    return 'The unit is at $place now: read it again.';
+  }
+
+  @override
+  String get stockUnitCode => 'Unit code';
+
+  @override
+  String get stockUnitContent => 'Content';
+
+  @override
+  String get stockUnitContentNone => 'Nothing in it.';
+
+  @override
+  String get stockUnitKind => 'Kind';
+
+  @override
+  String get stockUnitKindBox => 'Box';
+
+  @override
+  String get stockUnitKindCarton => 'Carton';
+
+  @override
+  String get stockUnitKindCrate => 'Crate';
+
+  @override
+  String get stockUnitKindOther => 'Other';
+
+  @override
+  String get stockUnitKindPallet => 'Pallet';
+
+  @override
+  String get stockUnitLabelCode => 'Supplier label (SSCC), if any';
+
+  @override
+  String stockUnitLoose(String quantity) {
+    return '$quantity loose here';
+  }
+
+  @override
+  String stockUnitMade(String unit) {
+    return '$unit made.';
+  }
+
+  @override
+  String get stockUnitMake => 'Make a unit';
+
+  @override
+  String get stockUnitMove => 'Move';
+
+  @override
+  String get stockUnitMoveTo => 'Move to';
+
+  @override
+  String stockUnitMoved(String unit, String place) {
+    return '$unit moved to $place.';
+  }
+
+  @override
+  String stockUnitNestedIn(String unit) {
+    return 'In $unit';
+  }
+
+  @override
+  String get stockUnitPlace => 'Place';
+
+  @override
+  String get stockUnitRepack => 'Repack into boxes';
+
+  @override
+  String get stockUnitRepackBoxes => 'Number of boxes';
+
+  @override
+  String get stockUnitRepackEach => 'Quantity in each box';
+
+  @override
+  String get stockUnitRepackItem => 'What to repack';
+
+  @override
+  String stockUnitRepacked(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count boxes made.',
+      one: '1 box made.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockUnitUnpack => 'Unpack';
+
+  @override
+  String get stockUnitUnpackHint => 'Its content stays where it is, loose.';
+
+  @override
+  String stockUnitUnpacked(String unit) {
+    return '$unit unpacked.';
+  }
+
+  @override
+  String get stockUnitsAllPlaces => 'All places';
+
+  @override
+  String get stockUnitsChooseItem => 'Choose an item';
+
+  @override
+  String get stockUnitsEmpty =>
+      'No unit yet. Make one from stock that is loose at a place.';
+
+  @override
+  String get stockUnitsIntro =>
+      'A pallet, a carton or a box of your own: it moves with its whole content, and every lot and piece stays traceable.';
+
+  @override
+  String get stockUnitsReadFailed => 'The units could not be read.';
+
+  @override
+  String get stockUnitsTitle => 'Handling units';
+
+  @override
   String get stockValueBasis =>
       'An operational value from the recorded movements at their recorded lot costs. It is not a posted stock-book balance and states no cost of goods.';
 
@@ -40249,6 +40555,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillPayCash => 'Take cash';
 
   @override
+  String tillPieceTwice(String code) {
+    return 'Piece $code is already in the basket.';
+  }
+
+  @override
   String get tillPricing => 'Pricing the basket…';
 
   @override
@@ -40275,6 +40586,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillRetry => 'Try again';
 
   @override
+  String tillScanUnknown(String code) {
+    return '$code is not something this till sells.';
+  }
+
+  @override
   String get tillSoldTitle => 'Sold';
 
   @override
@@ -40288,6 +40604,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String tillTotalDue(String amount) {
     return 'Total to pay: $amount';
+  }
+
+  @override
+  String tillTrackLot(String code, String quantity) {
+    return 'Lot $code × $quantity';
+  }
+
+  @override
+  String tillTrackPiece(String code) {
+    return 'Piece $code';
   }
 
   @override

@@ -33,6 +33,9 @@ Set<String> _workspaceTables() {
 
 /// Calls scoped by a parent that is itself one workspace's, with the reason.
 const Map<String, String> _scopedByParent = {
+  'lib/features/money/data/supabase_billing_access_repository.dart:billing_access_grants':
+      'by the account\'s own principal id: the held subjects of a customer across every seller '
+          '(#4164); the seller\'s read of one subject names its workspace',
   'lib/features/plan/data/supabase_accessory_repository.dart:seat_accessories':
       'by seat id: a seat belongs to one workspace, and the trigger rejects '
           'cross-workspace links',

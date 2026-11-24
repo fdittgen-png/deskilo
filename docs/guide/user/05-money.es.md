@@ -607,6 +607,19 @@ Abra **Ventas y cobros** y luego **Clientes facturados**. Aquí guarda las perso
 
 Elija **Añadir un cliente** e indique una empresa o un nombre, la dirección postal, el código de país, el número de IVA y un correo para la factura. El número de IVA solo se comprueba en su forma, nunca se verifica. **Facturado como** (empresa o particular) determina las menciones legales y el tratamiento fiscal; solo quien puede emitir facturas puede cambiarlo. Elija un cliente para editarlo. Si alguien más lo cambió desde que lo abrió, no se guarda nada y se le pide abrirlo de nuevo. Si no se puede leer la lista, reintente en lugar de darla por vacía. Cambiar un cliente nunca reescribe una factura ya emitida: cada una conserva el nombre y la dirección con los que se emitió.
 
+<!-- anchor: user.money.customers.access -->
+### Acceso por cuenta de un cliente facturado
+
+**Público:** Administrador/a · Propietario
+
+Abra **Ventas y cobros** y después **Clientes facturados**, y elija la llave junto a un cliente (**Acceso por cuenta**). Aquí permite que un cliente lea sus propias facturas desde su propia cuenta, sin hacerlo miembro. Necesita el derecho de gestionar los clientes facturados.
+
+Elija **Crear un código de invitación**. El código se muestra una sola vez, con su último día: entréguelo al cliente enseguida, porque no puede leerse de nuevo. El cliente lo introduce en **Usar un código de facturación**, en **Mis finanzas**, comprueba quién lo invita y acepta. Hasta entonces la invitación solo espera. Un código sirve para una cuenta; un cliente puede ser leído por varias cuentas, cada una invitada por separado, y una cuenta puede leer varios clientes: quien compra a título personal y para una empresa conserva dos deudores distintos.
+
+La lista muestra cada invitación como invitada, en lectura, caducada o terminada. **Terminar el acceso** detiene la lectura a partir de entonces; no se borra nada, las facturas y su historial siguen como están. El cliente nunca es miembro: del acceso no se deriva ninguna reserva, directorio, comunidad, rol ni plan. Si la lista no puede leerse, reintente en lugar de darla por vacía; si una respuesta no llega, elija de nuevo **Crear un código de invitación**: la misma solicitud da la misma invitación, nunca una segunda.
+
+**Véase también:** [Clientes facturados](help:user.money.customers.billing)
+
 <!-- anchor: user.money.quotes -->
 ### Presupuestos
 
@@ -712,7 +725,7 @@ Quiere decir una vez lo que una familia de artículos tiene en común — cuánt
 
 Abra **Stock → Grupos de artículos** (requiere la función *Grupos de artículos* bajo la gestión del stock). Un grupo tiene un nombre, está arriba o dentro de otro grupo (un solo nivel de subgrupos) y lleva los ajustes que elija: **seguimiento**, **vida útil**, **modo de etiqueta**, **unidad de inventario**, **contar cada n días**, **edad mínima** y **se vende al peso**. Un ajuste que deja *Sin definir* no se decide en este nivel.
 
-- **Un artículo sigue a su grupo mientras no tenga un valor propio.** Rige el valor del propio artículo si lo tiene, si no el de su subgrupo, si no el de su grupo. Abra **Grupo y ajustes heredados** de un artículo (el icono de carpeta en su línea de **Stock → Artículos**) para ver de dónde viene cada ajuste (*Del grupo Bebidas desde el 3 dic.* o *Valor propio*), moverlo a otro grupo y devolver un valor propio con **Usar el valor del grupo**.
+- **Un artículo sigue a su grupo mientras no tenga un valor propio.** Rige el valor del propio artículo si lo tiene, si no el de su subgrupo, si no el de su grupo. Abra **Grupo y ajustes heredados** de un artículo (el icono de carpeta en su línea de **Stock → Artículos**) para ver de dónde viene cada ajuste (*Del grupo Bebidas desde el 3 dic.* o *Valor propio*), moverlo a otro grupo y devolver un valor propio con **Usar el valor del grupo**. En los **ajustes de stock** del artículo, *Valor propio* aparece junto a un ajuste en el que el artículo conserva su propio valor frente a su grupo (seguimiento, caducidad, unidad de inventario).
 - **Cada cambio se previsualiza.** Al guardar un grupo se muestra primero lo que el cambio alcanza: *se aplica a 1, 1 conservan su propio valor, 0 no se pueden alcanzar*. No se aplica nada hasta guardar por segunda vez; cualquier edición intermedia pide una nueva vista previa. Un artículo que el cambio no puede alcanzar (por ejemplo una unidad en un artículo que ya tiene movimientos) se lista, y el cambio del grupo se guarda para los demás.
 - **Propuestas y precios.** Un grupo puede proponer a un artículo nuevo una **unidad de compra por defecto** con su factor (un número o una fracción como 1/3), un **punto y una cantidad de pedido** y una **zona de almacén**: se copian en un artículo nuevo como punto de partida y no alcanzan a ningún artículo existente. El **tipo de IVA**, la **clase de operación**, el **redondeo del precio** y el **margen objetivo sobre el coste** solo los muestra y fija quien puede gestionar servicios y ver las finanzas; para los demás ni se muestran ni los cambia un guardado.
 - **Historial.** La hoja del grupo lista cada cambio con cuántos artículos alcanzó; la línea de origen de un artículo dice desde cuándo.
@@ -762,6 +775,8 @@ Pulse **Cobrar en efectivo** y escriba el **Efectivo entregado** (o **Importe ex
 
 Donde su país aún no permite la caja, esta nombra la operación que falta y no ofrece nada: nada se numera ni se cobra. Una línea de mercancía necesita la gestión de stock; el rechazo del servidor se dice con palabras. Los pagos con tarjeta, descuentos, reembolsos y devoluciones no forman parte de esta primera caja.
 
+Un artículo trazado indica de dónde se tomó. Cuando vende un artículo seguido por lote sin elegir un lote, la venta lo toma de los lotes en existencia, primero el que caduca antes y nunca uno caducado; bajo la línea vendida, la caja muestra el código de cada lote tal como se recibió, con la cantidad tomada, por ejemplo **Lote SUP-A × 2 · Lote SUP-B × 1**, y cada pieza por su etiqueta. Si la empresa usa un lector, escanee la etiqueta de una pieza para añadirla: la venta toma exactamente las piezas escaneadas, y la misma pieza dos veces se rechaza. Estos identificadores de trazabilidad quedan fijados con el ticket: cambiar más tarde un lote o una etiqueta nunca altera un ticket ya emitido. En las existencias, la trazabilidad de un lote o de una pieza indica el ticket que lo vendió.
+
 <!-- anchor: user.money.stock.rfid -->
 ### Etiquetas RFID: una por lote o una por pieza
 
@@ -778,6 +793,23 @@ Con la función *Etiquetas* activada, un artículo tiene un **modo de etiqueta**
 - Una lectura masiva solo cuenta piezas en los artículos de una etiqueta por pieza. En un artículo de una etiqueta por lote cuenta lotes y muestra la cantidad registrada del lote junto al recuento, nunca como cifra contada.
 - El modo de un artículo que ya tiene etiquetas no cambia hasta retirarlas o hasta que su stock sea cero; un cambio del grupo salta entonces el artículo y lo lista como conservado. Una etiqueta de un lugar designa siempre un solo lugar.
 - Un código de etiqueta es una etiqueta UHF (EPC; el servidor lee un SGTIN-96 como GTIN y número de serie) o un chip NFC, guardado en hexadecimal mayúsculo y único en la empresa entre artículos, piezas y lugares. Vincular y retirar exigen el derecho a gestionar el stock; leer, el de verlo.
+
+<!-- anchor: user.money.stock.units -->
+### Unidades de manipulación
+
+**Público:** Administrador/a · Propietario
+
+Quiere que la mercancía viaje en el palé o la caja en que llegó, o en cajas propias, y aun así saber dónde está cada lote y cada pieza.
+
+Con la función *Unidades de manipulación* activada, abra **Stock → Unidades de manipulación**. Una unidad tiene un código propio (y la etiqueta del proveedor cuando llegó en un palé etiquetado), un tipo (palé, caja de cartón, cajón, caja), un lugar y un contenido: artículos con su lote, cantidad y piezas. La lista muestra las unidades abiertas, en un lugar o en todos.
+
+- **Crear una unidad.** Pulse *Crear una unidad*: su código, su tipo, su lugar y lo que contiene. Una unidad solo reclama stock **suelto** en ese lugar (lo que el lugar tiene menos lo que otras unidades ya tienen allí); pedir más se rechaza y dice cuánto hay suelto.
+- **Mover.** *Mover* lleva todo el contenido a otro lugar en una sola petición: cada lote y cada pieza conserva su rastro. Si alguien movió o deshizo la unidad desde que la leyó, el movimiento se rechaza y la lee de nuevo.
+- **Deshacer.** *Deshacer* deja el contenido donde está, suelto, y la unidad ya no está abierta.
+- **Reenvasar en cajas.** *Reenvasar en cajas* saca una cantidad de una unidad y la pone en cajas propias (un número de cajas, una cantidad en cada una). Lo que entra es exactamente lo que salió: el total del stock nunca cambia, y un lote seguido a través del reenvasado se encuentra en ambos lados. Un reenvasado ocurre en un lugar; mueva después las cajas nuevas.
+
+- El stock empaquetado en una unidad no se puede sacar suelto: el servidor lo rechaza y nombra la unidad. Mueva o deshaga primero la unidad.
+- El seguimiento de un artículo se elige por artículo (o se hereda de su grupo): sin seguimiento, por lote (con fecha de consumo donde se fije) o por pieza (una etiqueta por pieza).
 
 <!-- anchor: user.money.stock.expiry -->
 ### El informe de caducidad
@@ -901,6 +933,29 @@ Pertenece a varios espacios y quiere ver todas sus facturas, pagos y recordatori
 - Desde la misma pantalla se accede al historial completo, al uso y a otros servidores.
 
 **Véase también:** [Sus facturas](help:user.money.invoices)
+
+<!-- anchor: user.money.finances.billed -->
+### Facturas que una empresa emitió a su nombre como cliente
+
+**Público:** Miembro
+
+Una empresa que le factura puede darle un código para que lea lo que le factura desde su propia cuenta, sin unirse a ella.
+
+**Pasos**
+
+1. Abra [Mis finanzas](app:/money) y, en **Pendiente**, elija **Usar un código de facturación**.
+2. Introduzca el código y elija **Comprobar el código**. Verá qué empresa le invita y a nombre de quién emite sus facturas.
+3. Elija **Aceptar**. Las facturas aparecen en **Facturado como cliente**.
+
+**Conviene saber**
+
+- Una tarjeta por empresa y por deudor: quien compra a título personal y para una empresa tiene dos tarjetas, y dos deudores de una misma empresa nunca se suman. Los importes de monedas distintas tampoco se suman.
+- Estas facturas no se cuentan con lo que debe como miembro y no figuran en sus listas de miembro ni en sus exportaciones.
+- Un código que no puede usarse (erróneo, caducado, retirado o ya tomado por otra cuenta) recibe siempre la misma respuesta: pida uno nuevo a la empresa.
+- Aceptar no le hace miembro de la empresa. La empresa puede terminar el acceso, y usted también; al terminar no se borra nada.
+- Pagar estas facturas desde aquí aún no se ofrece.
+
+**Véase también:** [Sus finanzas en todos sus espacios](help:user.money.finances)
 
 <!-- anchor: user.money.businesses -->
 ### Sus negocios de un vistazo
