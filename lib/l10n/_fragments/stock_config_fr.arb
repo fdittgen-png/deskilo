@@ -450,5 +450,6 @@
   "stockReasonMalformed": "Cette valeur n’est pas valide pour ce champ.",
   "@stockReasonMalformed": {
     "description": "#4169 the stock editors: a text under a field the server refused"
-  }
+  },
+  "stockStateUnknown": "Inconnu de cette application"
 }

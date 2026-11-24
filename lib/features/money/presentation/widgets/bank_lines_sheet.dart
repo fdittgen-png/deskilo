@@ -18,6 +18,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -242,9 +243,10 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
             Expanded(
               child: work.when(
                 loading: () => const LoadingView(),
-                error: (_, _) => Text(
-                  l10n.bankStatementsLoadFailed,
+                error: (e, _) => ReadFailureBanner(
                   key: const ValueKey('bank-lines-failed'),
+                  error: e,
+                  onRetry: () => ref.invalidate(bankWorkListProvider(_statementId)),
                 ),
                 data: _list,
               ),

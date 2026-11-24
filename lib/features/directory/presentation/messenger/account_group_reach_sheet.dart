@@ -6,6 +6,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/account_group.dart';
 import '../../providers/messenger_providers.dart';
@@ -70,7 +71,10 @@ class _GroupReach extends ConsumerWidget {
                   ),
               ],
             ),
-          AsyncError() => Text(l10n.portalActionFailed),
+          AsyncError(:final error) => ReadFailureBanner(
+            error: error,
+            onRetry: () => ref.invalidate(_groupReachProvider(messageId)),
+          ),
           _ => const LoadingView(),
         },
       ),

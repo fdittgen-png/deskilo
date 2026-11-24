@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/text/initials.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/loading_view.dart';
 import '../domain/messenger.dart';
 import '../domain/personal_message_directory.dart';
@@ -70,6 +71,7 @@ class ReachableSection extends ConsumerWidget {
               onOpenGroup: onOpenGroup,
             ),
           ],
+          // #4414 kept: a server without the directory is not a failed read
           AsyncError(:final error) when personalDirectoryUnsupported(error) =>
             [
               for (final server in servers.entries)
@@ -82,12 +84,11 @@ class ReachableSection extends ConsumerWidget {
                 ),
               _ReachableGroups(onOpenGroup: onOpenGroup),
             ],
-          AsyncError() => [
-            TextButton(
-              key: const ValueKey('reachable-retry-personal'),
-              onPressed: () =>
-                  ref.invalidate(personalDirectoryControllerProvider),
-              child: Text(context.l10n.portalSourceUnavailable),
+          AsyncError(:final error) => [
+            ReadFailureBanner(
+              error: error,
+              retryKey: const ValueKey('reachable-retry-personal'),
+              onRetry: () => ref.invalidate(personalDirectoryControllerProvider),
             ),
           ],
           _ => [const LoadingView()],
@@ -254,14 +255,12 @@ class _ReachableDirectory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = context.l10n;
     return switch (ref.watch(reachablePeopleProvider(source: source))) {
       AsyncData(value: final rows) => _sections(context, rows),
-      AsyncError() => TextButton(
-        key: ValueKey('reachable-retry-$source'),
-        onPressed: () =>
-            ref.invalidate(reachablePeopleProvider(source: source)),
-        child: Text(l.portalSourceUnavailable),
+      AsyncError(:final error) => ReadFailureBanner(
+        error: error,
+        retryKey: ValueKey('reachable-retry-$source'),
+        onRetry: () => ref.invalidate(reachablePeopleProvider(source: source)),
       ),
       _ => const LoadingView(),
     };

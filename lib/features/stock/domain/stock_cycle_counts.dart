@@ -18,13 +18,16 @@ enum CountScope {
   items('items'),
 
   /// What a place holds of an item that is worth at least a threshold.
-  highValue('high_value');
+  highValue('high_value'),
+
+  /// A scope a newer server sent and this app does not know: the plan is listed and not edited on a guess.
+  unknown('');
 
   const CountScope(this.wire);
 
   final String wire;
 
-  static CountScope fromWire(String? wire) => values.firstWhere((s) => s.wire == wire, orElse: () => places);
+  static CountScope fromWire(String? wire) => values.firstWhere((s) => s != unknown && s.wire == wire, orElse: () => unknown);
 }
 
 /// A plan: a scope and a schedule.
@@ -91,9 +94,11 @@ typedef CountPlanDraft = ({
 enum CountTaskState {
   open,
   complete,
-  cancelled;
+  cancelled,
+  /// A value a newer server sent and this app does not know: shown as not known, and nothing is done on a guess.
+  unknown;
 
-  static CountTaskState fromWire(String? wire) => values.firstWhere((s) => s.name == wire, orElse: () => open);
+  static CountTaskState fromWire(String? wire) => values.firstWhere((s) => s != unknown && s.name == wire, orElse: () => unknown);
 }
 
 /// One task in the list: how many lines, how many still to count.
@@ -131,9 +136,11 @@ class CountTaskSummary {
 enum CountLineState {
   pending,
   counted,
-  skipped;
+  skipped,
+  /// A value a newer server sent and this app does not know: shown as not known, and nothing is done on a guess.
+  unknown;
 
-  static CountLineState fromWire(String? wire) => values.firstWhere((s) => s.name == wire, orElse: () => pending);
+  static CountLineState fromWire(String? wire) => values.firstWhere((s) => s != unknown && s.name == wire, orElse: () => unknown);
 }
 
 /// One line to count: WHAT and WHERE, never what the ledger expects.

@@ -5,6 +5,5 @@
   "publicProfileRegularHours": "Horario habitual en la zona horaria del negocio; las excepciones y la disponibilidad actual pueden variar.",
   "publicProfileTakesInquiries": "Acepta consultas",
   "publicProfileContacts": "Opciones de contacto",
-  "publicProfileRefreshing": "Actualizando la información publicada…",
-  "publicProfileRefreshFailed": "No se ha podido actualizar la página de este negocio. Se muestra la información ya cargada."
+  "publicProfileRefreshing": "Actualizando la información publicada…"
 }

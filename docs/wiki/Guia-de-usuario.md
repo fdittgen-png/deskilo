@@ -4080,6 +4080,32 @@ Usted quiere que sus facturas y cartas se impriman en el papel que usa su país.
 
 **Véase también:** [País](#país)
 
+<!-- anchor: user.workspace.settings.units -->
+### Unidades de medida
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Sus artículos, presupuestos y facturas se miden en unidades, y algunas se convierten en otras: 1 km son 1000 m. Cada negocio empieza con las habituales (pieza, g, kg, ml, cl, l, mm, cm, m, km, m², min, h); usted añade las suyas, por ejemplo una bobina de cable de 50 m.
+
+<!-- image: user-workspace-settings--units -->
+
+**Pasos**
+
+1. Active **Unidades de medida** en **Funciones** (está desactivada hasta que la pida).
+2. En [Unidades de medida](https://fdittgen-png.github.io/deskilo/#/settings/units), pulse **Nueva unidad**.
+3. Rellene **Código de la unidad** (ya no podrá cambiarse), **Su nombre para la unidad**, **Mide** y **Una unidad equivale a** en la unidad base de lo que mide: 1000 para un km contado en m, 0,001 para un mm.
+4. Si quiere, rellene **Código UN/ECE (para facturas electrónicas)**, que llevan las facturas electrónicas (KMT para un km).
+5. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Una unidad básica conserva su dimensión y su factor; puede darle su propio nombre.
+- Una unidad en uso (un artículo contado con ella, un movimiento de stock, un presupuesto o una línea de factura) conserva para siempre su dimensión y su factor: una corrección es una unidad nueva. Una unidad que nadie usa puede archivarse (**Archivar**) y mostrarse de nuevo (**Mostrar de nuevo**).
+- Una conversión es exacta: 2,5 km son 2500 m. Dos clases de unidad nunca se convierten, y un resultado que seis decimales no pueden contener se rechaza, nunca se redondea.
+- Solo el propietario y los administradores autorizados a cambiar los ajustes del espacio mantienen las unidades.
+
+**Véase también:** [Papel de los documentos](#papel-de-los-documentos)
+
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organización
 

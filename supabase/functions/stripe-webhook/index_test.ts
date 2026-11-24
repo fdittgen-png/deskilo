@@ -7,7 +7,7 @@
 // is acknowledged (bounded retries). Settlement still needs a valid
 // signature and `paid`.
 import { assertEquals } from "jsr:@std/assert@1";
-import { EARLY_CALLBACK_WINDOW_S, handle } from "./index.ts";
+import { EARLY_CALLBACK_WINDOW_S, handle, serve } from "./index.ts";
 
 const NOW = 1_800_000_000;
 const SECRET = "whsec_test";
@@ -308,4 +308,29 @@ Deno.test("#3905 with test payments on, a test-mode event settles", async () => 
   const on = { DESKILO_ALLOW_TEST_PAYMENTS: "true" };
   assertEquals((await call(fake, { ...paid(), livemode: false }, on)).status, 200);
   assertEquals(fake.rpcCalls, ["settle_online_payment"]);
+});
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+Deno.test("#4412 stripe-webhook: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const answer = await serve({
+      admin: () => {
+        throw new Error("service role key sb_secret_xyz is wrong");
+      },
+      env: () => undefined,
+      nowS: () => 1_800_000_000,
+    })(new Request("https://x.test/stripe-webhook", {
+      method: "POST",
+      headers: { "x-request-id": "r-hook" },
+      body: JSON.stringify({ type: "checkout.session.completed", livemode: true, data: { object: { id: "cs_1" } } }),
+    }));
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-hook" });
+    assertEquals(/secret|sb_|wrong/i.test(text), false);
+  } finally {
+    console.error = saved;
+  }
 });

@@ -38,7 +38,8 @@ import {
   validateHeaders,
   type VendorValues,
 } from "../_shared/hmrc_mtd.ts";
-import { type Deps, json, resolved, UUID } from "./connection.ts";
+import { type Deps, FN, json, resolved, UUID } from "./connection.ts";
+import { logLine } from "../_shared/log.ts";
 import { freshToken } from "./deliver.ts";
 
 const text = (v: unknown, max: number): string =>
@@ -437,9 +438,7 @@ export async function hmrcSubmit(
     // and the receipt goes back in the answer.
     sentToHmrc = Boolean(kept.error);
     if (kept.error || !await fileHere(result.receipt)) {
-      console.error(
-        "accounting-connect: HMRC accepted a return that could not be filed here",
-      );
+      logLine("error", FN, "hmrc_accepted_not_filed");
       return json(
         { error: "accepted_not_recorded", receipt: result.receipt },
         500,

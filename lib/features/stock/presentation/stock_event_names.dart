@@ -22,6 +22,6 @@ Future<Map<String, String>> stockEventNames(Ref ref) async {
   final places = await placesRead;
   return {
     for (final i in items) ...{'item:${i.id}': i.name, 'unit:${i.id}': i.unit},
-    for (final p in places) 'place:${p.id}': p.virtual || p.kind == 'in_transit' ? p.code : stockAddress(p, separator),
+    for (final p in places) 'place:${p.id}': p.isAddressable ? stockAddress(p, separator) : p.code,
   };
 }

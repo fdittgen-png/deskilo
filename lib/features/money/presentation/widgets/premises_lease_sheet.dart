@@ -9,6 +9,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -102,7 +103,10 @@ class PremisesLeaseView extends ConsumerWidget {
           ),
         leases.when(
           loading: () => const LoadingView(),
-          error: (_, _) => Text(l10n.leaseLoadFailed),
+          error: (e, _) => ReadFailureBanner(
+            error: e,
+            onRetry: () => ref.invalidate(premisesLeasesProvider(workspaceId)),
+          ),
           data: (rows) => rows.isEmpty
               ? Padding(
                   padding: const EdgeInsets.only(top: AppSpacing.md),

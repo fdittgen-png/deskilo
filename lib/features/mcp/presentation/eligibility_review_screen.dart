@@ -8,6 +8,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_sheet.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
@@ -149,8 +150,14 @@ class _EligibilityReviewScreenState
       ),
       body: caps.when(
         loading: () => const LoadingView(),
-        error: (e, _) => _message(
-          l10n.mcpAssistantsUnavailable,
+        error: (e, _) => ListView(
+          padding: AppSpacing.gutterAll,
+          children: [
+            ReadFailureBanner(
+              error: e,
+              onRetry: () => ref.invalidate(myDatabaseCapabilitiesProvider),
+            ),
+          ],
         ),
         data: (c) => !c.databaseAdministrator
             ? _message(
@@ -161,14 +168,15 @@ class _EligibilityReviewScreenState
                   .when(
                     loading: () => const LoadingView(),
                     error: (e, _) => ListView(
+                      padding: AppSpacing.gutterAll,
                       children: [
-                        _message(
-                          l10n.mcpReviewUnavailable,
+                        ReadFailureBanner(
+                          error: e,
+                          onRetry: () =>
+                              ref.invalidate(eligibilityRequestsProvider),
                         ),
-                        Padding(
-                          padding: AppSpacing.gutterH,
-                          child: maximum,
-                        ),
+                        const SizedBox(height: AppSpacing.md),
+                        maximum,
                       ],
                     ),
                     data: (requests) => ListView(

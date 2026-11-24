@@ -170,7 +170,7 @@ void main() {
     ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
         .invalidate(customerQuotesProvider(setup.workspaceId));
     await _settle(tester);
-    expect(find.text(_en.quotesLoadFailed), findsOneWidget);
+    expect(find.byKey(const ValueKey('read-failure')), findsOneWidget);
     expect(find.byKey(const ValueKey('quotes-empty')), findsNothing);
     await tester.tap(find.byKey(const ValueKey('quotes-retry')));
     await _settle(tester);

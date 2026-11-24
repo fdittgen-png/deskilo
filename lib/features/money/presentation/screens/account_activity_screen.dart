@@ -7,6 +7,7 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -162,16 +163,14 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                         ],
                       ),
                     ),
-                    AsyncError() => ListView(
+                    AsyncError(:final error) => ListView(
                       children: [
-                        HostActivity(key: ValueKey(account), kind: _kind),
-                        TextButton(
-                          key: const ValueKey('account-activity-failed'),
-                          onPressed: () => ref.invalidate(provider),
-                          child: Text(
-                            l10n.accountActivityFailed,
-                          ),
+                        ReadFailureBanner(
+                          error: error,
+                          retryKey: const ValueKey('account-activity-failed'),
+                          onRetry: () => ref.invalidate(provider),
                         ),
+                        HostActivity(key: ValueKey(account), kind: _kind),
                       ],
                     ),
                     _ => ListView(

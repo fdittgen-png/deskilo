@@ -10,6 +10,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/failure/outcome_or_throw.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -219,7 +220,7 @@ Future<void> remindInvoice(
       ),
     );
   }
-  SendReminderOutcome? outcome;
+  var notSent = false;
   if (!await runGuarded(
     context,
     domain: 'money',
@@ -238,7 +239,7 @@ Future<void> remindInvoice(
       );
       // The ORDER is the decision, so it lives in the command (#1532):
       // the letter goes out, and the level is recorded only if it did.
-      outcome = await sendReminder(
+      final outcome = await sendReminder(
         repository: ref.read(invoiceCommandsProvider),
         share: ref.read(fileSharerProvider),
         invoiceId: invoice.id,
@@ -247,13 +248,16 @@ Future<void> remindInvoice(
         fileName: pdf.fileName,
         message: message,
       );
+      notSent = isReminderNotSent(outcome);
+      // Anything but done or "not sent" is said by the guarded path.
+      if (!notSent) valueOrThrow(outcome);
     },
   )) {
     return;
   }
   // Nothing left the device and nothing was recorded. "Reminder
   // recorded." would be false, and an error would be false too.
-  if (outcome is ReminderNotSent) {
+  if (notSent) {
     if (!context.mounted) return;
     AppSnack.info(
         context,

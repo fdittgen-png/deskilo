@@ -9,6 +9,7 @@
 // validates every answer and writes none if one fails.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../domain/workspace_field.dart';
 import '../domain/workspace_fields_repository.dart';
 
@@ -19,14 +20,15 @@ class SupabaseWorkspaceFields implements WorkspaceFieldsRepository {
 
   @override
   Future<List<WorkspaceField>> fetchFields(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'workspace_field_definitions', build: () => _client
         .from('workspace_field_definitions')
         .select('id, key, type, required, personal_data, visibility, '
             'contexts, group_key, sort_order, validation, active, '
             'workspace_field_labels(locale, label, help_text), '
             'workspace_field_options(id, key, sort_order, active, '
             'workspace_field_option_labels(locale, label))')
-        .eq('workspace_id', workspaceId);
+        .eq('workspace_id', workspaceId)
+        .order('id', ascending: true));
 
     final fields = <WorkspaceField>[];
     for (final row in rows as List) {
@@ -94,12 +96,13 @@ class SupabaseWorkspaceFields implements WorkspaceFieldsRepository {
 
   @override
   Future<Map<String, Object?>> fetchAnswers(String memberId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'workspace_field_values', build: () => _client
         .from('workspace_field_values')
         .select('text_value, integer_value, decimal_value, date_value, '
             'boolean_value, workspace_field_definitions(key, type), '
             'workspace_field_value_options(workspace_field_options(key))')
-        .eq('member_id', memberId);
+        .eq('member_id', memberId)
+        .order('id', ascending: true));
 
     final answers = <String, Object?>{};
     for (final row in rows as List) {

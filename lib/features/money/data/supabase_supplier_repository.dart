@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 
 /// #2567 — the suppliers and their RPCs (0457). The supplier row carries no
@@ -12,28 +13,29 @@ class SupabaseSupplierRepository implements SupplierRepository {
 
   @override
   Future<List<Supplier>> fetchSuppliers(String workspaceId) async {
-    final rows = await _client
-        .from(ServerTable.suppliers)
+    final rows = await fetchAllPages(table: ServerTable.suppliers, build: () => _client.from(ServerTable.suppliers)
         .select(
           'id, supplier_number, name, tax_id_entered, tax_identifier, '
           'tax_id_kind, street, postal_code, city, country_code, subdivision, contact, '
           'status, bank_revision',
         )
         .eq('workspace_id', workspaceId)
-        .order('supplier_number');
+        .order('supplier_number', ascending: true)
+        .order('id', ascending: true));
     return [for (final r in rows) Supplier.fromRow(r)];
   }
 
   @override
   Future<List<SupplierReview>> fetchReviews(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'supplier_review_candidates', build: () => _client
         .from('supplier_review_candidates')
         .select(
           'id, reason, source_name, source_identifier, candidate_supplier_ids',
         )
         .eq('workspace_id', workspaceId)
         .eq('status', 'open')
-        .order('created_datetime');
+        .order('created_datetime', ascending: true)
+        .order('id', ascending: true));
     return [for (final r in rows) SupplierReview.fromRow(r)];
   }
 
@@ -42,7 +44,7 @@ class SupabaseSupplierRepository implements SupplierRepository {
     String workspaceId,
     String supplierId,
   ) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'supplier_bank_revisions', build: () => _client
         .from('supplier_bank_revisions')
         .select(
           'revision, account_holder, iban, bic, validation, '
@@ -50,7 +52,8 @@ class SupabaseSupplierRepository implements SupplierRepository {
         )
         .eq('workspace_id', workspaceId)
         .eq('supplier_id', supplierId)
-        .order('revision', ascending: false);
+        .order('revision', ascending: false)
+        .order('id', ascending: true));
     return [for (final r in rows) SupplierBankRevision.fromRow(r)];
   }
 

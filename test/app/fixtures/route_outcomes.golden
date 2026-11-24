@@ -134,6 +134,7 @@ signed-out on  /settings/public-page -> /auth
 signed-out on  /settings/questions -> /auth
 signed-out on  /settings/roles-of-this-space -> /auth
 signed-out on  /settings/sites -> /auth
+signed-out on  /settings/units -> /auth
 signed-out on  /settings/what-you-can-do -> /auth
 signed-out on  /settings/wording -> /auth
 signed-out on  /setup -> /auth
@@ -312,6 +313,7 @@ signed-out off /settings/public-page -> /auth
 signed-out off /settings/questions -> /auth
 signed-out off /settings/roles-of-this-space -> /auth
 signed-out off /settings/sites -> /auth
+signed-out off /settings/units -> /auth
 signed-out off /settings/what-you-can-do -> /auth
 signed-out off /settings/wording -> /auth
 signed-out off /setup -> /auth
@@ -490,6 +492,7 @@ no-space on  /settings/public-page -> /me
 no-space on  /settings/questions -> /me
 no-space on  /settings/roles-of-this-space -> /me
 no-space on  /settings/sites -> /me
+no-space on  /settings/units -> /me
 no-space on  /settings/what-you-can-do -> /me
 no-space on  /settings/wording -> /me
 no-space on  /setup -> /me
@@ -668,6 +671,7 @@ no-space off /settings/public-page -> /me
 no-space off /settings/questions -> /me
 no-space off /settings/roles-of-this-space -> /me
 no-space off /settings/sites -> /me
+no-space off /settings/units -> /me
 no-space off /settings/what-you-can-do -> /me
 no-space off /settings/wording -> /me
 no-space off /setup -> /me
@@ -846,6 +850,7 @@ member on  /settings/public-page -> /calendar
 member on  /settings/questions -> /calendar
 member on  /settings/roles-of-this-space -> /calendar
 member on  /settings/sites -> /calendar
+member on  /settings/units -> /calendar
 member on  /settings/what-you-can-do -> (open)
 member on  /settings/wording -> /calendar
 member on  /setup -> /calendar
@@ -1024,6 +1029,7 @@ member off /settings/public-page -> /messages
 member off /settings/questions -> /messages
 member off /settings/roles-of-this-space -> /messages
 member off /settings/sites -> /messages
+member off /settings/units -> /messages
 member off /settings/what-you-can-do -> /settings
 member off /settings/wording -> /messages
 member off /setup -> /messages
@@ -1202,6 +1208,7 @@ admin on  /settings/public-page -> /calendar
 admin on  /settings/questions -> /calendar
 admin on  /settings/roles-of-this-space -> /calendar
 admin on  /settings/sites -> /settings
+admin on  /settings/units -> /calendar
 admin on  /settings/what-you-can-do -> (open)
 admin on  /settings/wording -> /calendar
 admin on  /setup -> /calendar
@@ -1381,6 +1388,7 @@ admin off /settings/public-page -> /messages
 admin off /settings/questions -> /messages
 admin off /settings/roles-of-this-space -> /messages
 admin off /settings/sites -> /settings
+admin off /settings/units -> /messages
 admin off /settings/what-you-can-do -> /settings
 admin off /settings/wording -> /messages
 admin off /setup -> /messages
@@ -1559,6 +1567,7 @@ owner on  /settings/public-page -> (open)
 owner on  /settings/questions -> /settings
 owner on  /settings/roles-of-this-space -> /settings
 owner on  /settings/sites -> /settings
+owner on  /settings/units -> /settings
 owner on  /settings/what-you-can-do -> (open)
 owner on  /settings/wording -> /settings
 owner on  /setup -> (open)
@@ -1738,6 +1747,7 @@ owner off /settings/public-page -> (open)
 owner off /settings/questions -> /settings
 owner off /settings/roles-of-this-space -> /settings
 owner off /settings/sites -> /settings
+owner off /settings/units -> /settings
 owner off /settings/what-you-can-do -> /settings
 owner off /settings/wording -> /settings
 owner off /setup -> /workspace-settings

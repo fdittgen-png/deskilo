@@ -63,6 +63,7 @@ class HomeState {
   final answer = ref.watch(personalWorkspaceRefsProvider);
   final local = ref.watch(myWorkspacesProvider).value;
   final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
+  // #4414 kept: a first-visit fact; the page shows the failed read
   final refs = answer.hasError && !answer.isLoading
       ? null
       : refsOfCurrentAccount(answer);

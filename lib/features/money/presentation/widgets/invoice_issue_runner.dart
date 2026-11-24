@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/codes/dk_code.dart';
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -24,11 +25,12 @@ Future<bool> runInvoiceIssue(
 }) async {
   final l10n = context.l10n;
   var outcome = await issuance.issue(attempt);
-  if (outcome is InvoiceIssueUnknown) {
+  if (outcome is CommandUnreached<String>) {
     if (!context.mounted) return false;
     final found = await showInvoiceUnknownOutcomeDialog(
       context,
       issuance: issuance,
+      attempt: attempt,
       unknown: outcome,
     );
     if (found == null) return false;
@@ -36,20 +38,20 @@ Future<bool> runInvoiceIssue(
   }
   if (!context.mounted) return false;
   switch (outcome) {
-    case InvoiceIssued(:final invoiceId):
+    case CommandDone(value: final invoiceId):
       AppSnack.success(context, l10n.invoiceIssued);
       await afterIssue?.call(invoiceId);
       return true;
-    case InvoiceIssueHeld():
+    case CommandHeld():
       AppSnack.info(context, l10n.validationSentForApproval);
-    case InvoiceIssueRefused(:final error):
+    case CommandRefused(:final refusal):
       TraceLogger.instance.error(
         'money',
         'invoice issue refused',
-        error: error,
+        error: refusal,
       );
-      AppSnack.error(context, invoiceRefusalText(l10n, error));
-    case InvoiceIssueUnknown():
+      AppSnack.error(context, invoiceRefusalText(l10n, refusal));
+    case CommandUnreached():
       break;
   }
   return false;
@@ -64,7 +66,10 @@ String invoiceRefusalText(
   Object error, {
   String? fallback,
 }) {
-  if (error is InvoiceIssueDeclined) return l10n.invoiceIssueDeclined;
+  if (error is InvoiceIssueDeclined ||
+      (error is Refusal && isDeclined(error))) {
+    return l10n.invoiceIssueDeclined;
+  }
   // #3811 — read by the server's codes (0396, 0740), never its sentences.
   final refusal = refusalCodeOf(error);
   return switch (refusal.code) {

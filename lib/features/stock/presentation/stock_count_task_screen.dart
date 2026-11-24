@@ -181,7 +181,7 @@ class _State extends ConsumerState<StockCountTaskScreen> {
     if (!done || !mounted) return;
     _refresh(workspaceId);
     final difference = result?.difference;
-    AppSnack.success(context, difference == null ? l10n.stockCycleCounted : l10n.stockCycleCountedDifference(difference.text));
+    AppSnack.success(context, difference == null ? l10n.stockCycleCounted : l10n.stockCycleCountedDifference(appFormatOf(context).quantity(difference)));
   }
 
   Future<void> _skipSheet(String workspaceId, CountTaskLine line) async {
@@ -316,6 +316,7 @@ class _LineTile extends StatelessWidget {
             CountLineState.counted => l10n.stockCycleLineCounted,
             CountLineState.skipped => l10n.stockCycleLineSkipped(line.skipReason ?? ''),
             CountLineState.pending => '',
+            CountLineState.unknown => l10n.stockStateUnknown,
           },
         ].where((t) => t.isNotEmpty).join(' · '),
       ),

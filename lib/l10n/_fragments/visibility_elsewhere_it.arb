@@ -8,13 +8,5 @@
         "type": "String"
       }
     }
-  },
-  "visibilityOnServerUnavailable": "{host} non ha risposto. Riprovi più tardi.",
-  "@visibilityOnServerUnavailable": {
-    "placeholders": {
-      "host": {
-        "type": "String"
-      }
-    }
   }
 }

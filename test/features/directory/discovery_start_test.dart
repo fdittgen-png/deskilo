@@ -79,13 +79,13 @@ void main() {
     final banner = _key('directory-portal-directory-unavailable-2');
     expect(banner, findsOneWidget);
     expect(
-      find.descendant(of: banner, matching: find.textContaining('directory did not answer')),
+      find.descendant(of: banner, matching: _key('read-failure')),
       findsOneWidget,
     );
     expect(find.text('What are you looking for?'), findsOneWidget);
     directory.fail = false;
     await tester.tap(
-      find.descendant(of: banner, matching: _key('retry-notice-retry')),
+      find.descendant(of: banner, matching: _key('inline-banner-action')),
     );
     await tester.pumpAndSettle();
     expect(banner, findsNothing);

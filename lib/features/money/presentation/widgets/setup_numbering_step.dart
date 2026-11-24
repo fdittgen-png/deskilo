@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -40,12 +41,12 @@ class SetupNumberingStep extends ConsumerWidget {
                   .firstOrNull ??
               NumberSequence.defaultsFor(_invoiceJournal),
         ),
-        AsyncError() => Padding(
+        AsyncError(:final error) => Padding(
           padding: AppSpacing.lgAll,
-          child: InlineBanner(
+          child: ReadFailureBanner(
             key: const ValueKey('setup-numbering-failed'),
-            icon: Icons.error_outline,
-            text: context.l10n.setupStepLoadFailed,
+            error: error,
+            onRetry: () => ref.invalidate(numberSequencesProvider),
           ),
         ),
         _ => const LoadingView(),

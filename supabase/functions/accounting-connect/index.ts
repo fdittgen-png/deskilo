@@ -40,6 +40,7 @@
 // An installation that registered no OAuth application with a target
 // answers 503 `oauth_not_configured` before anything is opened.
 
+import { guard } from "../_shared/serve.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
@@ -59,6 +60,7 @@ import {
 import {
   clientOf,
   type Deps,
+  FN,
   json,
   manageableRpc,
   refreshExclusive,
@@ -493,5 +495,6 @@ if (import.meta.main) {
     env: (name) => Deno.env.get(name),
     redirectUri: `${url}/functions/v1/accounting-connect`,
   };
-  Deno.serve((req) => handle(req, deps));
+  // #4412 -- whatever the handler throws is the envelope, never its words.
+  Deno.serve(guard(FN, (req) => handle(req, deps)));
 }

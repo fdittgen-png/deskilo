@@ -6,11 +6,25 @@
 // uses. Amounts are MINOR units; a quantity is an exact decimal string; nothing here prices a line.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
+import 'counter_receipt_document.dart';
 import 'till_quantity.dart';
 
-/// One operation of the counter in the business's country, under the case the owner declared.
+/// One operation of the counter in the business's country, under the case the owner declared, with the evidence the
+/// registry names for it (#4184): its specification, version and effective date, the adapter, the proof, and whether
+/// a tax professional confirmed it.
 class TillOperation {
-  const TillOperation({required this.operation, required this.outcome, required this.reason, required this.note});
+  const TillOperation({
+    required this.operation,
+    required this.outcome,
+    required this.reason,
+    required this.note,
+    this.specification = '',
+    this.specificationVersion = '',
+    this.effectiveFrom = '',
+    this.adapter = '',
+    this.evidence = '',
+    this.confirmed = false,
+  });
 
   /// `issue_receipt`, `correct_receipt`, `reconcile_tender`, `sign_fiscal`, `export_fiscal`.
   final String operation;
@@ -22,11 +36,50 @@ class TillOperation {
   final String reason;
   final String note;
 
+  /// The authoritative text the row rests on, its version and the day it took effect.
+  final String specification;
+  final String specificationVersion;
+  final String effectiveFrom;
+
+  /// The implementation that carries the operation; empty when none does.
+  final String adapter;
+
+  /// What proves the row: the tests of the implementation, or why there is none.
+  final String evidence;
+
+  /// Whether a tax professional confirmed the row: false for every row today.
+  final bool confirmed;
+
   bool get supported => outcome == 'supported';
+
+  /// The same operation with the registry's [text] of evidence.
+  TillOperation withEvidence(String text) => TillOperation(
+    operation: operation,
+    outcome: outcome,
+    reason: reason,
+    note: note,
+    specification: specification,
+    specificationVersion: specificationVersion,
+    effectiveFrom: effectiveFrom,
+    adapter: adapter,
+    evidence: text,
+    confirmed: confirmed,
+  );
 
   factory TillOperation.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'counter_readiness.operations');
-    return TillOperation(operation: r.string('operation'), outcome: r.string('outcome'), reason: r.stringOr('reason'), note: r.stringOr('note'));
+    return TillOperation(
+      operation: r.string('operation'),
+      outcome: r.string('outcome'),
+      reason: r.stringOr('reason'),
+      note: r.stringOr('note'),
+      specification: r.textOrAbsent('specification') ?? '',
+      specificationVersion: r.textOrAbsent('specification_version') ?? '',
+      effectiveFrom: r.textOrAbsent('effective_from') ?? '',
+      adapter: r.textOrAbsent('adapter') ?? '',
+      evidence: r.textOrAbsent('evidence') ?? '',
+      confirmed: r.isTrue('confirmed'),
+    );
   }
 }
 
@@ -40,6 +93,9 @@ class TillReadiness {
   final String fiscalObligation;
   final bool ready;
   final List<TillOperation> operations;
+
+  /// The registry names no operation for this country under this declaration: nothing is supported, nothing guessed.
+  bool get unknownCountry => operations.isEmpty;
 
   /// The operations that block selling: the ones the till needs and the country does not allow.
   List<TillOperation> get blocking => [
@@ -261,6 +317,9 @@ abstract interface class TillPort {
   Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision, String? tillId});
 
   Future<TillSold> finalize(String workspaceId, {required String requestId, required String receiptId, required int expectedRevision, required List<TillTender> tenders});
+
+  /// #4184 -- the finalized receipt [receiptId] as its frozen document, read by the versioned reader.
+  Future<CounterReceiptDocument> receipt(String workspaceId, String receiptId);
 }
 
 /// #4366 -- an item the till offers as a key: what a tap rings up.

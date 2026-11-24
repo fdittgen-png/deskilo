@@ -27,7 +27,7 @@ import '../../core/time/day_axis.dart';
 import '../../core/time/work_hours.dart';
 import '../../core/time/workspace_calendar.dart';
 import '../../core/trace/trace_logger.dart';
-import '../../core/ui/availability_unavailable_banner.dart';
+import '../../core/ui/async_read_body.dart';
 import '../../core/ui/inline_banner.dart';
 import '../../core/ui/kit/list_detail_scaffold.dart';
 import '../../core/ui/loading_view.dart';
@@ -244,7 +244,8 @@ class _DeskCalendarBodyState extends ConsumerState<DeskCalendarBody> {
     final read = ref.watch(deskCalendarDataProvider(span));
     return switch (read) {
       AsyncData(:final value) => _loaded(context, span, value),
-      AsyncError() => AvailabilityUnavailableBanner(
+      AsyncError(:final error) => ReadFailureBanner(
+        error: error,
         onRetry: () => ref.invalidate(deskCalendarDataProvider(span)),
       ),
       _ => const LoadingView(),

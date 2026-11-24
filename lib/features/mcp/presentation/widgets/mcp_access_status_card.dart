@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -28,17 +29,17 @@ class McpAccessStatusCard extends ConsumerWidget {
     final l10n = context.l10n;
     final scope = ref.watch(currentMcpContextProvider);
     final overview = ref.watch(connectedMcpOverviewProvider).value ?? const [];
-    final unavailable = _Banner(
-      'mcp-status-next-unavailable',
-      _nextText(l10n, McpNextStep.unavailable),
-      InlineBannerSeverity.error,
-    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ...scope.when(
           loading: () => const [LoadingView()],
-          error: (_, _) => [unavailable],
+          error: (e, _) => [
+            ReadFailureBanner(
+              error: e,
+              onRetry: () => ref.invalidate(currentMcpContextProvider),
+            ),
+          ],
           data: (captured) => captured == null
               ? const <Widget>[]
               : [
@@ -46,7 +47,12 @@ class McpAccessStatusCard extends ConsumerWidget {
                       .watch(mcpAccessStatusProvider(captured))
                       .when(
                         loading: () => const LoadingView(),
-                        error: (_, _) => unavailable,
+                        error: (e, _) => ReadFailureBanner(
+                          error: e,
+                          onRetry: () => ref.invalidate(
+                            mcpAccessStatusProvider(captured),
+                          ),
+                        ),
                         data: (s) => _StatusCard(status: s),
                       ),
                 ],

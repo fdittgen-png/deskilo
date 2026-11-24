@@ -140,6 +140,7 @@ class NeedsAttentionSection extends ConsumerWidget {
       refs: refsOfCurrentAccount(refs),
       inbox: inbox.value,
     );
+    // #4414 kept: each source's failure is named below (SourceUnavailable)
     bool failed(AsyncValue<Object?> a) => a.hasError && !a.isLoading;
     final sources = [documents, refs, inbox];
     final (hostsReading, partialDocuments) = _hostsCoverage(ref);

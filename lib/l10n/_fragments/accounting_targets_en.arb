@@ -20,10 +20,6 @@
   "@acctTargetsNoApiTarget": {
     "description": "#2370 Accounting systems sheet: no system of the country is reached by a connection."
   },
-  "acctTargetsLoadFailed": "The accounting systems could not be loaded.",
-  "@acctTargetsLoadFailed": {
-    "description": "#2370 Accounting systems sheet: the connections or transfers could not be read."
-  },
   "acctTargetsNotConnected": "Not connected",
   "@acctTargetsNotConnected": {
     "description": "#2370 Connection card: this issuer has no connection to this system."

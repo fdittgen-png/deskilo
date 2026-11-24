@@ -373,5 +373,13 @@
   "featureCounterOfflineCashDesc": "Quand la connexion est perdue, la caisse continue de vendre en espèces, enregistre chaque vente sur l'appareil et envoie les ventes dans l'ordre au retour de la connexion. Les autres moyens de paiement attendent la connexion.",
   "@featureCounterOfflineCashDesc": {
     "description": "#4373 feature description"
+  },
+  "featureUnitsOfMeasureTitle": "Unités de mesure",
+  "@featureUnitsOfMeasureTitle": {
+    "description": "#4442 feature name"
+  },
+  "featureUnitsOfMeasureDesc": "Le propriétaire et les administrateurs tiennent les unités de mesure de l’entreprise et leurs conversions (1 km = 1000 m, 1 kg = 1000 g). Les articles, les devis et les factures sont mesurés avec elles. Les unités de base sont toujours là ; activer cette option ajoute l’écran pour les gérer.",
+  "@featureUnitsOfMeasureDesc": {
+    "description": "#4442 feature description"
   }
 }

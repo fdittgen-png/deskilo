@@ -1,0 +1,130 @@
+{
+  "measureUnitsSubtitle": "Eigene Einheiten und ihre Umrechnung",
+  "@measureUnitsSubtitle": {
+    "description": "#4442 the row in the workspace settings"
+  },
+  "measureUnitsIntro": "Die Einheiten, in denen Ihre Artikel, Angebote und Rechnungen gemessen werden, und ihre Umrechnung: 1 km = 1000 m. Die Standardeinheiten sind immer da; ergänzen Sie eigene, etwa eine Kabeltrommel zu 50 m.",
+  "@measureUnitsIntro": {
+    "description": "#4442 what the screen is for"
+  },
+  "measureUnitNew": "Neue Einheit",
+  "@measureUnitNew": {
+    "description": "#4442 new unit action"
+  },
+  "measureUnitEdit": "Einheit bearbeiten",
+  "@measureUnitEdit": {
+    "description": "#4442 edit sheet title"
+  },
+  "measureUnitCodeField": "Einheitencode",
+  "@measureUnitCodeField": {
+    "description": "#4442 field: the code of a unit"
+  },
+  "measureUnitCodeHelp": "Kleinbuchstaben, Ziffern und Unterstriche. Er kann später nicht mehr geändert werden.",
+  "@measureUnitCodeHelp": {
+    "description": "#4442 helper of the code field"
+  },
+  "measureUnitNameField": "Ihre Bezeichnung der Einheit",
+  "@measureUnitNameField": {
+    "description": "#4442 field: the business's own word for a unit"
+  },
+  "measureUnitDimensionField": "Sie misst",
+  "@measureUnitDimensionField": {
+    "description": "#4442 field: what a unit measures"
+  },
+  "measureUnitFactorField": "Eine Einheit entspricht",
+  "@measureUnitFactorField": {
+    "description": "#4442 field: how many base units one unit is"
+  },
+  "measureUnitFactorHelp": "Gezählt in {base}, der Basiseinheit der Messgröße: 1000 für ein km, 0,001 für ein mm.",
+  "@measureUnitFactorHelp": {
+    "description": "#4442 helper of the factor field",
+    "placeholders": {
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureUnitEceField": "UN/ECE-Code (für E-Rechnungen)",
+  "@measureUnitEceField": {
+    "description": "#4442 field: the UN/ECE code of a unit"
+  },
+  "measureUnitBuiltIn": "Standard",
+  "@measureUnitBuiltIn": {
+    "description": "#4442 tag on a built-in unit"
+  },
+  "measureUnitArchivedTag": "Archiviert",
+  "@measureUnitArchivedTag": {
+    "description": "#4442 tag on an archived unit"
+  },
+  "measureUnitArchive": "Archivieren",
+  "@measureUnitArchive": {
+    "description": "#4442 action: archive an unused unit"
+  },
+  "measureUnitRestore": "Wieder anzeigen",
+  "@measureUnitRestore": {
+    "description": "#4442 action: show an archived unit again"
+  },
+  "measureUnitLine": "1 {unit} = {value} {base}",
+  "@measureUnitLine": {
+    "description": "#4442 a unit's conversion line, e.g. 1 km = 1000 m",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureDimensionCount": "Anzahl",
+  "@measureDimensionCount": {
+    "description": "#4442 dimension: counting"
+  },
+  "measureDimensionMass": "Masse",
+  "@measureDimensionMass": {
+    "description": "#4442 dimension: mass"
+  },
+  "measureDimensionVolume": "Volumen",
+  "@measureDimensionVolume": {
+    "description": "#4442 dimension: volume"
+  },
+  "measureDimensionLength": "Länge",
+  "@measureDimensionLength": {
+    "description": "#4442 dimension: length"
+  },
+  "measureDimensionArea": "Fläche",
+  "@measureDimensionArea": {
+    "description": "#4442 dimension: area"
+  },
+  "measureDimensionTime": "Zeit",
+  "@measureDimensionTime": {
+    "description": "#4442 dimension: time"
+  },
+  "measureReasonInUse": "Diese Einheit wird verwendet, ihre Größe und ihr Faktor können sich nicht mehr ändern. Legen Sie stattdessen eine neue Einheit an.",
+  "@measureReasonInUse": {
+    "description": "#4442 refusal: a unit in use keeps its factor"
+  },
+  "measureReasonFixed": "Diese Einheit ist fest und kann weder geändert noch entfernt werden.",
+  "@measureReasonFixed": {
+    "description": "#4442 refusal: a fixed unit"
+  },
+  "measureReasonDimension": "Wählen Sie, was diese Einheit misst.",
+  "@measureReasonDimension": {
+    "description": "#4442 refusal: no dimension chosen"
+  },
+  "measureReasonName": "Eine neue Einheit braucht eine Bezeichnung.",
+  "@measureReasonName": {
+    "description": "#4442 refusal: a new unit needs a name"
+  },
+  "measureReasonEce": "Ein UN/ECE-Code besteht aus zwei oder drei Großbuchstaben oder Ziffern.",
+  "@measureReasonEce": {
+    "description": "#4442 refusal: the UN/ECE code is malformed"
+  },
+  "measureReasonInexact": "Das Ergebnis lässt sich mit sechs Nachkommastellen nicht exakt schreiben.",
+  "@measureReasonInexact": {
+    "description": "#4442 refusal: a conversion that six decimals cannot hold"
+  }
+}

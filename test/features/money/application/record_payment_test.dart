@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1449 — the rules the Register payment sheet used to own.
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/application/record_payment.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -29,9 +30,10 @@ void main() {
       note: '  bank transfer  ',
       method: PaymentMethod.bankTransfer,
     );
-    expect(outcome, isA<PaymentRecorded>());
-    expect((outcome as PaymentRecorded).period, '2026-01');
-    expect(outcome.eventId, isNotEmpty);
+    expect(outcome, isA<CommandDone<PaymentRecorded>>());
+    final recorded = (outcome as CommandDone<PaymentRecorded>).value;
+    expect(recorded.period, '2026-01');
+    expect(recorded.eventId, isNotEmpty);
     expect(money.recordedPayments.single.period, '2026-01');
     expect(money.recordedPayments.single.note, 'bank transfer',
         reason: 'the note is trimmed once, here, not in every caller');
@@ -40,7 +42,10 @@ void main() {
   test('what is missing is named, and nothing is sent', () async {
     final money = FakeMoneyRepository();
     final payments = Payments(money);
-    String what(RecordPaymentOutcome o) => (o as PaymentIncomplete).what;
+    String what(CommandOutcome<PaymentRecorded> o) =>
+        ((o as CommandRefused<PaymentRecorded>).refusal.cause!
+                as PaymentIncomplete)
+            .what;
 
     expect(
       what(await payments.record(

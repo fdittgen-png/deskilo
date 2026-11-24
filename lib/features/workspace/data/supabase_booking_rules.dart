@@ -7,6 +7,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 import '../../../core/time/work_hours.dart';
 import '../domain/booking_granularity.dart';
@@ -166,11 +167,11 @@ mixin SupabaseBookingRules implements BookingRulesRepository {
 
   @override
   Future<List<ClosureDay>> fetchClosureDays(String workspaceId) async {
-    final rows = await client
-        .from('closure_days')
+    final rows = await fetchAllPages(table: 'closure_days', build: () => client.from('closure_days')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('day', ascending: true);
+        .order('day', ascending: true)
+        .order('id', ascending: true));
     return rows.map(_closureDayFromRow).toList();
   }
 

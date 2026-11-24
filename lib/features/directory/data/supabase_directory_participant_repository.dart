@@ -167,7 +167,7 @@ class SupabaseDirectoryParticipantRepository
         final rows = await client
             .from(_sources.relation!)
             .select(_sources.selectClause)
-            .order('origin')
+            .order('origin', ascending: true)
             .range(page * size, page * size + size - 1)
             .timeout(Duration(seconds: _sources.timeoutSeconds ?? 12));
         if (rows.any((row) => row['origin'] == canonical)) {

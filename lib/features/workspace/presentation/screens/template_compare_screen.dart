@@ -7,7 +7,7 @@ import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -86,10 +86,10 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
         loading: () => const LoadingView(),
         error: (e, _) => Padding(
           padding: AppSpacing.gutterAll,
-          child: InlineBanner(
+          child: ReadFailureBanner(
             key: const ValueKey('compare-unavailable'),
-            icon: Icons.cloud_off_outlined,
-            text: l10n.compareUnavailable,
+            error: e,
+            onRetry: () => ref.invalidate(templateComparisonProvider(ids)),
           ),
         ),
         data: (rows) => LayoutBuilder(

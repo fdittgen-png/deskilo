@@ -1,5 +1,4 @@
 {
-  "reportImagesLoadFailed": "Impossible de charger les images des rapports. Réessayez.",
   "reportImagePreparing": "Préparation de l’image pour l’impression…",
   "reportImagesOversized": "{count, plural, one{{count} image enregistrée est plus grande qu’à l’impression} other{{count} images enregistrées sont plus grandes qu’à l’impression}}",
   "reportImagesBringToPrint": "Amener à la taille d’impression",

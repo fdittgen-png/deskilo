@@ -4080,6 +4080,32 @@ You want your invoices and letters printed on the paper your country uses.
 
 **See also:** [Country](#country)
 
+<!-- anchor: user.workspace.settings.units -->
+### Units of measure
+
+**Audience:** Owner · Administrator with the permission
+
+Your items, quotes and invoices are measured in units, and some units convert into others: 1 km is 1000 m. Every business starts with the usual ones (piece, g, kg, ml, cl, l, mm, cm, m, km, m², min, h); you add your own, such as a cable drum of 50 m.
+
+<!-- image: user-workspace-settings--units -->
+
+**Steps**
+
+1. Turn on **Units of measure** under **Features** (it is off until you ask for it).
+2. In [Units of measure](https://fdittgen-png.github.io/deskilo/#/settings/units), tap **New unit**.
+3. Fill in **Unit code** (it cannot change later), **Your name for the unit**, **It measures** and **One unit equals** in the base unit of what it measures: 1000 for a km counted in m, 0.001 for a mm.
+4. Optionally fill in **UN/ECE code (for e-invoices)**, which e-invoices carry (KMT for a km).
+5. Tap **Save**.
+
+**Good to know**
+
+- A built-in unit keeps its dimension and its factor; you can give it your own name.
+- A unit that is in use (an item counted in it, a stock movement, a quote or an invoice line) keeps its dimension and its factor for good: a correction is a new unit. A unit nobody uses can be archived (**Archive**) and shown again (**Show again**).
+- A conversion is exact: 2.5 km is 2500 m. Two kinds of unit never convert, and an answer that six decimals cannot hold is refused, never rounded.
+- Only the owner and the administrators allowed to change the workspace settings maintain the units.
+
+**See also:** [Paper of the documents](#paper-of-the-documents)
+
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organisation
 

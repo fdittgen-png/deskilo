@@ -1,6 +1,5 @@
 {
   "mcpPolicyTitle": "Accès des assistants",
-  "mcpPolicyUnavailable": "Les réglages des assistants n'ont pas pu être chargés. Réessayez plus tard.",
   "mcpPolicySwitched": "Vous avez changé d'espace. Rouvrez cette page pour modifier l'autre espace.",
   "mcpPolicyExplain": "Choisissez ce que les assistants peuvent faire dans cet espace. Un membre a toujours besoin de l'autorisation de cette base, du rôle adéquat, et doit choisir cet espace en connectant son assistant.",
   "mcpPolicyFeatureOff": "Les assistants sont désactivés dans les fonctionnalités de cet espace. Vous pouvez toujours restreindre ou désactiver les services ci-dessous.",
@@ -33,7 +32,6 @@
   "mcpRemoveWorkspace": "Retirer cet espace",
   "mcpReviewTitle": "Autorisations des assistants",
   "mcpReviewNotAdmin": "Seuls les administrateurs de cette base examinent les autorisations.",
-  "mcpReviewUnavailable": "Les demandes n'ont pas pu être chargées. Un examen demande votre second facteur ; réessayez.",
   "mcpReviewExplain": "Autoriser permet à une personne de connecter des assistants sur cette base, dans les espaces dont les propriétaires l'acceptent. Cela n'accorde ni adhésion ni rôle.",
   "mcpReviewEmpty": "Aucune demande en attente.",
   "mcpReviewReject": "Refuser",

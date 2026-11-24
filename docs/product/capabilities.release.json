@@ -2420,6 +2420,12 @@
       "capabilities": []
     },
     {
+      "key": "unitsOfMeasure",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "usageInvoices",
       "maturity": "beta",
       "lifecycle": "active",

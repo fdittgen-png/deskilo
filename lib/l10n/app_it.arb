@@ -125,7 +125,6 @@
   "accessoriesSupplement": "Supplemento per mezza giornata",
   "accessoriesTitle": "Accessori",
   "accountActivityEmpty": "Nessun dato da mostrare.",
-  "accountActivityFailed": "Impossibile caricare la cronologia finanziaria. Tocchi per riprovare.",
   "accountActivityScope": "Tutti i suoi profili su questo server, comprese le iscrizioni precedenti. Le valute sono mostrate separatamente.",
   "accountActivityTitle": "I miei consumi e pagamenti",
   "accountCardTitle": "Il suo conto",
@@ -334,7 +333,6 @@
   "acctStateTitle": "Nuovo lavoro contabile",
   "acctTargetNotDeliveredYet": "Nessun documento viene ancora inviato a questo sistema: la connessione e le sue corrispondenze sono conservate per l'invio, che per esso non è ancora attivo.",
   "acctTargetsIntro": "Dove va la contabilità di ogni emittente. Un sistema collegato riceve i documenti da sé; gli altri ricevono i file esportati dalla contabilità. Ogni trasferimento è elencato qui sotto con l'impronta di ciò che ha portato.",
-  "acctTargetsLoadFailed": "Non è stato possibile caricare i sistemi contabili.",
   "acctTargetsNoApiTarget": "Nessun sistema contabile di questo paese è ancora raggiunto da un collegamento: la contabilità parte tramite file, dall'esportazione contabile.",
   "acctTargetsNotConnected": "Non collegato",
   "acctTargetsTitle": "Sistemi contabili",
@@ -513,10 +511,6 @@
   "applicationsEmpty": "Nessuna richiesta di accesso.",
   "@applicationsEmpty": {
     "description": "Workspace admission history and discussion (#1791)"
-  },
-  "applicationsLoadFailed": "Impossibile caricare le richieste di accesso. Riprovi.",
-  "@applicationsLoadFailed": {
-    "description": "Admission action failure (#1791)"
   },
   "applicationsTitle": "Richieste di accesso",
   "@applicationsTitle": {
@@ -867,7 +861,6 @@
     "description": "#662 - badge sign-in"
   },
   "badgePinReviewNotice": "La lunghezza di questo vecchio PIN è sconosciuta o inferiore al minimo attuale. Chiedi al membro di cambiarlo nelle proprie impostazioni. Il PIN attuale resta utilizzabile.",
-  "badgePinReviewUnavailable": "Lo stato di verifica del PIN non è disponibile. Riprova prima di presumere che rispetti il minimo attuale.",
   "badgePinSaveFailed": "Server irraggiungibile. Il suo PIN non è stato modificato — riprovi.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
@@ -3004,7 +2997,6 @@
   "billingCustomerVatInvalid": "Non sembra una partita IVA. Si controlla solo la forma, non l'esistenza.",
   "billingCustomersAdd": "Aggiungere un cliente",
   "billingCustomersEmpty": "Nessun cliente fatturato per ora. Si aggiunga il primo per fatturargli senza chiedergli di creare un account.",
-  "billingCustomersLoadFailed": "Non è stato possibile leggere i clienti. Non è un elenco vuoto.",
   "billingCustomersNoAccount": "Le persone e le aziende a cui si fattura. Non sono membri e non vedono nulla dell'attività, a meno che non le si inviti a leggere le proprie fatture dal proprio account.",
   "billingCustomersRetry": "Riprovare",
   "billingCustomersSearch": "Cercare un cliente",
@@ -3153,10 +3145,6 @@
   },
   "bookPeriodsInvalid": "Scelga entrambi i giorni e indichi un motivo dove richiesto.",
   "@bookPeriodsInvalid": {
-    "description": "#2365 accounting periods"
-  },
-  "bookPeriodsLoadFailed": "Non è stato possibile caricare i periodi.",
-  "@bookPeriodsLoadFailed": {
     "description": "#2365 accounting periods"
   },
   "bookPeriodsNoExports": "Ancora nessuna esportazione.",
@@ -3884,10 +3872,6 @@
       }
     }
   },
-  "capacityKpiRetry": "Riprova",
-  "@capacityKpiRetry": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiRooms": "Sale senza posti: {count}, {reserved} su {offered} ore-sala prenotate",
   "@capacityKpiRooms": {
     "description": "#1918 capacity KPI",
@@ -4153,7 +4137,6 @@
   "compareRemove": "Rimuovi dal confronto",
   "compareSearch": "Cerca un'impostazione",
   "compareTitle": "Confronta i modelli",
-  "compareUnavailable": "Non è stato possibile leggere questi modelli per confrontarli. Non si afferma nulla.",
   "compareUnknown": "Sconosciuto",
   "compareYes": "Sì",
   "composerAttach": "Allega un riferimento",
@@ -6003,7 +5986,6 @@
   "einvoiceConfigTitle": "Piattaforma di fatturazione elettronica",
   "einvoiceConfigToken": "Token o credenziale",
   "einvoiceConfigTokenSet": "Un token è salvato (digitane uno nuovo per sostituirlo).",
-  "einvoiceConfigUnavailable": "Impossibile caricare la configurazione della piattaforma. Controlli la connessione e riprovi.",
   "einvoiceCustomerSectionHelp": "Dove vanno le fatture per il cliente: il suo punto di accesso Peppol, il portale o l’API concordata — separato dalla piattaforma governativa.",
   "@einvoiceCustomerSectionHelp": {
     "description": "E-invoicing config: customer delivery section help (#568)"
@@ -6219,10 +6201,6 @@
   "@engagementsIntro": {
     "description": "service engagements (#4178)"
   },
-  "engagementsLoadFailed": "Non è stato possibile leggere i servizi. Non è un elenco vuoto.",
-  "@engagementsLoadFailed": {
-    "description": "service engagements (#4178)"
-  },
   "engagementsNew": "Nuovo servizio",
   "@engagementsNew": {
     "description": "service engagements (#4178)"
@@ -6378,10 +6356,6 @@
   },
   "equipmentInvalid": "Scelga una riga d'acquisto e, per una decisione, ne indichi il fondamento.",
   "@equipmentInvalid": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentLoadFailed": "Impossibile caricare le attrezzature.",
-  "@equipmentLoadFailed": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Registra un'attrezzatura",
@@ -7965,6 +7939,14 @@
   "featureUiAnimationsTitle": "Animazioni dell'interfaccia",
   "featureUniqueMonogramsDesc": "Un avatar senza foto mostra iniziali che appartengono a un solo membro: iniziale del nome e del cognome, una lettera in più in caso di conflitto, numeri solo come ultima risorsa. Disattivato: solo la prima lettera, uguale per tutti quelli che la condividono.",
   "featureUniqueMonogramsTitle": "Iniziali avatar distinte",
+  "featureUnitsOfMeasureDesc": "Il titolare e gli amministratori gestiscono le unità di misura dell’attività e le loro conversioni (1 km = 1000 m, 1 kg = 1000 g). Articoli, preventivi e fatture sono misurati con esse. Le unità di base ci sono sempre; attivando questa opzione compare la schermata per gestirle.",
+  "@featureUnitsOfMeasureDesc": {
+    "description": "#4442 feature description"
+  },
+  "featureUnitsOfMeasureTitle": "Unità di misura",
+  "@featureUnitsOfMeasureTitle": {
+    "description": "#4442 feature name"
+  },
   "featureUsageInvoicesDesc": "Finito il mese, quanto è realmente costato oltre l'abbonamento — eccedenze, supplementi, servizi — è fatturato a parte. Disattivato: resta sulla fattura del mese.",
   "featureUsageInvoicesTitle": "Fatture di fine mese",
   "featureUsageRecordsDesc": "Ogni prenotazione conteggiata lascia un rilevamento: la finestra prenotata, il tempo realmente presente e ciò che viene fatturato. Una prenotazione a cui non è venuto nessuno è fatturata per intero. Chi esce prima può chiedere che il tempo non usato non sia fatturato, e decide qualcun altro, mai chi chiede. Disattivato: nessun rilevamento e nessuna correzione.",
@@ -11971,10 +11953,6 @@
   "@leaseCommitmentsIntro": {
     "description": "#2575 commitment matching"
   },
-  "leaseCommitmentsLoadFailed": "Impossibile caricare le scadenze.",
-  "@leaseCommitmentsLoadFailed": {
-    "description": "#2575 commitment matching"
-  },
   "leaseDeposit": "Deposito {amount}",
   "@leaseDeposit": {
     "description": "#2569 premises lease",
@@ -12098,10 +12076,6 @@
         "type": "String"
       }
     }
-  },
-  "leaseLoadFailed": "Impossibile caricare il contratto.",
-  "@leaseLoadFailed": {
-    "description": "#2569 premises lease"
   },
   "leaseMatchAction": "Abbina una fattura",
   "@leaseMatchAction": {
@@ -12588,7 +12562,6 @@
   "libraryPartial": "Una parte di questo modello non può essere applicata qui e viene esclusa.",
   "libraryPlanNames": "Questi nomi viaggiano con la pianta: {names}",
   "libraryPreviewChanges": "Vedi le modifiche",
-  "libraryPreviewFailed": "Non è stato possibile mostrare le modifiche. Non è stato applicato nulla.",
   "libraryPreviewTitle": "Cosa cambierebbe « {name} »",
   "libraryProcessOff": "{feature} disattivata",
   "@libraryProcessOff": {
@@ -13001,7 +12974,6 @@
   "mcpPolicyStale": "Qualcuno ha modificato queste impostazioni nel frattempo. Controlli quelle attuali e salvi di nuovo.",
   "mcpPolicySwitched": "Ha cambiato spazio. Riapra questa pagina per modificare l'altro spazio.",
   "mcpPolicyTitle": "Accesso degli assistenti",
-  "mcpPolicyUnavailable": "Impossibile caricare le impostazioni degli assistenti. Riprovi più tardi.",
   "mcpRefusalClientNotApproved": "Questo assistente non è ancora approvato su questo server. L’operatore approva ogni assistente una volta; glielo chieda, poi si colleghi di nuovo dall’assistente.",
   "mcpRefusalClientNotApprovedNamed": "Questo assistente non è ancora approvato su questo server. L’operatore approva ogni assistente una volta; glielo chieda, poi si colleghi di nuovo dall’assistente. In attesa dell'operatore del server: {names}.",
   "mcpRefusalNoIdentity": "Confermi prima la sua identità in DesKilo in Assistenti, poi si colleghi di nuovo dall’assistente.",
@@ -13017,7 +12989,6 @@
   "mcpRequestRevoked": "Ritirata",
   "mcpRequestUnknown": "Risposta non leggibile",
   "mcpRequestsAnsweredTitle": "Risposte di recente",
-  "mcpRequestsUnavailable": "Non è stato possibile leggere le richieste dei Suoi assistenti. Riapra questa pagina più tardi.",
   "mcpRequestsWaitingTitle": "In attesa della Sua conferma",
   "mcpReviewApprove": "Approva",
   "mcpReviewChanged": "Questa richiesta è cambiata o un altro amministratore ha deciso prima. Non è stato fatto nulla.",
@@ -13029,7 +13000,6 @@
   "mcpReviewReject": "Rifiuta",
   "mcpReviewSecondFactor": "Quel database richiede il suo secondo fattore nella propria sessione. Non è stato deciso nulla.",
   "mcpReviewTitle": "Approvazioni degli assistenti",
-  "mcpReviewUnavailable": "Impossibile caricare le richieste. Un esame richiede il suo secondo fattore; riprovi.",
   "mcpStateAfterPrevious": "Dopo il passaggio precedente",
   "mcpStateAllowed": "Consentito",
   "mcpStateApproved": "Approvata",
@@ -13067,7 +13037,6 @@
   "mcpUsagePending": "In attesa di convalida",
   "mcpUsageRefusals": "Rifiutate",
   "mcpUsageRequests": "Richieste",
-  "mcpUsageUnavailable": "Non è stato possibile caricare l'utilizzo.",
   "mcpUsageWorkspaceTitle": "Uso degli assistenti, ultimi 30 giorni",
   "meAccountInMe": "Il mio account è in Io",
   "meAccountInMeBody": "Foto, lingua, tema e accessi sono suoi in ogni spazio.",
@@ -13108,7 +13077,6 @@
   "meDataWorkspaceSuperseded": "L’account connesso è cambiato durante la lettura dell’esportazione. Non è stato offerto nulla.",
   "meDataWorkspaceUnnamed": "Attività {id}",
   "meDataWorkspacesEmpty": "Il Suo account non nomina ancora alcuna attività.",
-  "meDataWorkspacesFailed": "Non è stato possibile leggere le attività del Suo account. Non è stato esportato nulla.",
   "meDataWorkspacesScope": "Ogni attività esporta ciò che conserva su di Lei — iscrizione, prenotazioni, conto e fatture — dal proprio server, un file per attività. La parte del Suo account personale è la scheda qui sopra.",
   "meDataWorkspacesTitle": "I Suoi dati in ogni attività",
   "meDemoSessionBadgeHint": "Sta esplorando un’attività dimostrativa. Nulla di tutto questo lascia questo dispositivo.",
@@ -13190,7 +13158,6 @@
   "meOverviewView": "Vedi",
   "mePlaceMember": "Membro",
   "mePlaceRequestSent": "Richiesta inviata · in attesa di risposta",
-  "mePlacesLoadFailed": "Impossibile caricare i suoi posti.",
   "mePrivacySelfServiceOff": "Questa attività gestisce da sé le richieste sui dati. Presenti una richiesta di diritti: l’amministratore dei dati personali risponderà.",
   "meRealBusiness": "Attività reale",
   "meRefDefault": "Predefinito",
@@ -13200,7 +13167,6 @@
   "meRefUnnamed": "Un posto su un altro server",
   "meRefUnverified": "Iscrizione non ancora verificata",
   "meRefsTitle": "Posti altrove",
-  "meRefsUnavailable": "Non è stato possibile leggere i Suoi posti altrove.",
   "meRunASpace": "Gestisce un’attività in proprio?",
   "meRunASpaceAction": "Configurala",
   "meSectionMine": "Cronologia e dati personali",
@@ -13237,6 +13203,134 @@
   "meWelcomeSubtitle": "Che cosa cerca?",
   "meWelcomeTitle": "Benvenuto, {name}",
   "meWhereSpacesLive": "Dove si trovano i miei posti",
+  "measureDimensionArea": "Superficie",
+  "@measureDimensionArea": {
+    "description": "#4442 dimension: area"
+  },
+  "measureDimensionCount": "Quantità",
+  "@measureDimensionCount": {
+    "description": "#4442 dimension: counting"
+  },
+  "measureDimensionLength": "Lunghezza",
+  "@measureDimensionLength": {
+    "description": "#4442 dimension: length"
+  },
+  "measureDimensionMass": "Massa",
+  "@measureDimensionMass": {
+    "description": "#4442 dimension: mass"
+  },
+  "measureDimensionTime": "Tempo",
+  "@measureDimensionTime": {
+    "description": "#4442 dimension: time"
+  },
+  "measureDimensionVolume": "Volume",
+  "@measureDimensionVolume": {
+    "description": "#4442 dimension: volume"
+  },
+  "measureReasonDimension": "Scelga che cosa misura questa unità.",
+  "@measureReasonDimension": {
+    "description": "#4442 refusal: no dimension chosen"
+  },
+  "measureReasonEce": "Un codice UN/ECE è formato da due o tre lettere maiuscole o cifre.",
+  "@measureReasonEce": {
+    "description": "#4442 refusal: the UN/ECE code is malformed"
+  },
+  "measureReasonFixed": "Questa unità è fissa e non può essere modificata né rimossa.",
+  "@measureReasonFixed": {
+    "description": "#4442 refusal: a fixed unit"
+  },
+  "measureReasonInUse": "Questa unità è in uso, quindi la sua grandezza e il suo fattore non possono più cambiare. Crei invece una nuova unità.",
+  "@measureReasonInUse": {
+    "description": "#4442 refusal: a unit in use keeps its factor"
+  },
+  "measureReasonInexact": "Il risultato non può essere scritto esattamente con sei decimali.",
+  "@measureReasonInexact": {
+    "description": "#4442 refusal: a conversion that six decimals cannot hold"
+  },
+  "measureReasonName": "Una nuova unità ha bisogno di un nome.",
+  "@measureReasonName": {
+    "description": "#4442 refusal: a new unit needs a name"
+  },
+  "measureUnitArchive": "Archivia",
+  "@measureUnitArchive": {
+    "description": "#4442 action: archive an unused unit"
+  },
+  "measureUnitArchivedTag": "Archiviata",
+  "@measureUnitArchivedTag": {
+    "description": "#4442 tag on an archived unit"
+  },
+  "measureUnitBuiltIn": "Di base",
+  "@measureUnitBuiltIn": {
+    "description": "#4442 tag on a built-in unit"
+  },
+  "measureUnitCodeField": "Codice dell’unità",
+  "@measureUnitCodeField": {
+    "description": "#4442 field: the code of a unit"
+  },
+  "measureUnitCodeHelp": "Lettere minuscole, cifre e trattini bassi. Non potrà più cambiare.",
+  "@measureUnitCodeHelp": {
+    "description": "#4442 helper of the code field"
+  },
+  "measureUnitDimensionField": "Misura",
+  "@measureUnitDimensionField": {
+    "description": "#4442 field: what a unit measures"
+  },
+  "measureUnitEceField": "Codice UN/ECE (per le fatture elettroniche)",
+  "@measureUnitEceField": {
+    "description": "#4442 field: the UN/ECE code of a unit"
+  },
+  "measureUnitEdit": "Modifica unità",
+  "@measureUnitEdit": {
+    "description": "#4442 edit sheet title"
+  },
+  "measureUnitFactorField": "Un’unità equivale a",
+  "@measureUnitFactorField": {
+    "description": "#4442 field: how many base units one unit is"
+  },
+  "measureUnitFactorHelp": "Contata in {base}, l’unità di base di ciò che misura: 1000 per un km, 0,001 per un mm.",
+  "@measureUnitFactorHelp": {
+    "description": "#4442 helper of the factor field",
+    "placeholders": {
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureUnitLine": "1 {unit} = {value} {base}",
+  "@measureUnitLine": {
+    "description": "#4442 a unit's conversion line, e.g. 1 km = 1000 m",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureUnitNameField": "Il suo nome per l’unità",
+  "@measureUnitNameField": {
+    "description": "#4442 field: the business's own word for a unit"
+  },
+  "measureUnitNew": "Nuova unità",
+  "@measureUnitNew": {
+    "description": "#4442 new unit action"
+  },
+  "measureUnitRestore": "Mostra di nuovo",
+  "@measureUnitRestore": {
+    "description": "#4442 action: show an archived unit again"
+  },
+  "measureUnitsIntro": "Le unità in cui sono misurati i suoi articoli, preventivi e fatture, e come si convertono: 1 km = 1000 m. Le unità di base ci sono sempre; aggiunga le sue, per esempio una matassa di cavo da 50 m.",
+  "@measureUnitsIntro": {
+    "description": "#4442 what the screen is for"
+  },
+  "measureUnitsSubtitle": "Le sue unità e le loro conversioni",
+  "@measureUnitsSubtitle": {
+    "description": "#4442 the row in the workspace settings"
+  },
   "memberAccountTitle": "Il mio account",
   "@memberAccountTitle": {
     "description": "#1598 member account menu: memberAccountTitle"
@@ -13928,10 +14022,6 @@
   "@newMemberDefaultsTitle": {
     "description": "#1294 the new-member defaults section title"
   },
-  "newMemberDefaultsUnavailable": "Non è stato possibile leggerli ora. Il salvataggio li lascia invariati.",
-  "@newMemberDefaultsUnavailable": {
-    "description": "#1563 shown when the new-member defaults could not be read, so Save omits them"
-  },
   "newMemberDefaultsUnset": "Niente scelto: i nuovi membri iniziano al 100 % e le prenotazioni si bloccano una volta esaurito il monte ore.",
   "@newMemberDefaultsUnset": {
     "description": "#1294 shown when nothing is configured, naming the product defaults"
@@ -14356,7 +14446,6 @@
   "payConfigSettlementsFetch": "Recupera i pagamenti",
   "payConfigSettlementsFetched": "{count} pagamenti registrati",
   "payConfigSettlementsReviewTitle": "Liquidazioni da verificare",
-  "payConfigSettlementsReviewUnreadable": "Non è stato possibile leggere le liquidazioni da verificare.",
   "payConfigTitle": "Pagamenti online",
   "payFieldApiKey": "Chiave API",
   "payFieldClientId": "Client ID",
@@ -14426,7 +14515,6 @@
   "paymentMatchCandidate": "{number} · {amount} aperti",
   "paymentMatchDecide": "Altro importo: sceglie come saldare la differenza",
   "paymentMatchEmpty": "Nessun pagamento attende una fattura.",
-  "paymentMatchFailed": "Non è stato possibile leggere i pagamenti.",
   "paymentMatchHeader": "{amount} ricevuti il {date}",
   "paymentMatchIntro": "È stato ricevuto un pagamento non ancora assegnato. Scelga la fattura che paga.",
   "paymentMatchInvoiceGone": "Questa fattura non è più aperta: l'elenco viene riletto.",
@@ -15109,7 +15197,6 @@
   "portalSavePreview": "Salva e mostra la vista esterna",
   "portalSearch": "Cerca posti",
   "portalSendCode": "Invia codice di accesso",
-  "portalSourceUnavailable": "Un server non è disponibile. La panoramica è incompleta. Tocchi per riprovare.",
   "portalUseCode": "Usa un codice via email",
   "portalUseWorkspaceInfo": "Usa le informazioni dello spazio",
   "portalVisibilityLink": "Chi può trovarmi e scrivermi",
@@ -15580,7 +15667,6 @@
   "publicProfilePublishBody": "Chiunque su Internet, con o senza accesso, potrà leggere il suo nome, la sua professione e la sua presentazione tramite il suo link. Contatti, presenza e posti restano privati.",
   "publicProfilePublishTitle": "Pubblicare un profilo pubblico?",
   "publicProfilePublishedInfo": "Informazioni pubblicate da questa attività. Un’informazione mancante non indica che una dotazione sia assente.",
-  "publicProfileRefreshFailed": "Non è stato possibile aggiornare la pagina di questa attività. Vengono mostrate le informazioni già caricate.",
   "publicProfileRefreshing": "Aggiornamento delle informazioni pubblicate…",
   "publicProfileRegularHours": "Orari abituali nel fuso orario dell’attività; eccezioni e disponibilità effettiva possono differire.",
   "publicProfileTakesInquiries": "Accetta richieste di informazioni",
@@ -16471,10 +16557,8 @@
   "quoteValidUntil": "Valido fino al {date}",
   "quotesEmpty": "Nessun preventivo per ora. Crearne il primo per un cliente fatturato.",
   "quotesIntro": "Offerte ai clienti fatturati. Un preventivo inviato non cambia mai; una modifica è un'altra revisione. Non si fattura nulla finché non si converte uno accettato.",
-  "quotesLoadFailed": "I preventivi non hanno potuto essere letti. Non è un elenco vuoto.",
   "quotesNew": "Nuovo preventivo",
   "quotesNotAllowed": "Non è consentito leggere i preventivi di questa attività.",
-  "quotesRetry": "Riprovare",
   "quotesTitle": "Preventivi",
   "readStateDenied": "Non ha accesso a questo. Se serve, lo chieda a un amministratore dello spazio.",
   "@readStateDenied": {
@@ -17816,7 +17900,6 @@
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportImagesLoadFailed": "Impossibile caricare le immagini dei report. Riprovi.",
   "reportImagesOpenLibrary": "Apri la libreria di immagini",
   "reportImagesOversized": "{count, plural, one{{count} immagine salvata è più grande di quanto si stampa} other{{count} immagini salvate sono più grandi di quanto si stampano}}",
   "reportImagesTitle": "Immagini dei report",
@@ -18258,7 +18341,6 @@
   "retentionHoldSaveFailed": "Non è stato possibile salvare il blocco. Non è cambiato nulla.",
   "retentionHoldSince": "{what} · {issuer} · dal {date}",
   "retentionHoldsEmpty": "Nessun blocco attivo. Un blocco conserva i documenti oltre il periodo di conservazione, per una verifica o una controversia.",
-  "retentionHoldsLoadFailed": "Non è stato possibile leggere i blocchi.",
   "retentionHoldsTitle": "Blocchi di conservazione",
   "retentionKeptHold": "Conservato per un blocco di conservazione: {reason}",
   "retentionKeptReview": "Conservato finché una persona non verifica la regola di conservazione",
@@ -18744,10 +18826,6 @@
   },
   "roomRentLevels": "Piani",
   "@roomRentLevels": {
-    "description": "#2568 rented rooms"
-  },
-  "roomRentLoadFailed": "Non è stato possibile caricare le sale in affitto.",
-  "@roomRentLoadFailed": {
     "description": "#2568 rented rooms"
   },
   "roomRentNeedSupplier": "Aggiungete prima il locatore come fornitore.",
@@ -19811,10 +19889,6 @@
   },
   "settingsFrontCamera": "Scansiona con la fotocamera frontale",
   "settingsFrontCameraDesc": "I badge vengono letti con la fotocamera lato schermo — la disattivi per usare la fotocamera posteriore.",
-  "settingsLoadFailed": "Impossibile caricare le impostazioni.",
-  "@settingsLoadFailed": {
-    "description": "#2484 settings: Error text."
-  },
   "settingsOfflineRegistry": "Valori predefiniti incorporati: il server non è raggiungibile, per ora non si può modificare nulla.",
   "@settingsOfflineRegistry": {
     "description": "#2484 settings: Banner: the editor shows the bundled registry."
@@ -22145,6 +22219,7 @@
   "@stockSettingsValues": {
     "description": "the stock pages and group (#4299)"
   },
+  "stockStateUnknown": "Sconosciuto a questa applicazione",
   "stockStoredLabel": "Registrato",
   "stockTabMovements": "Movimenti",
   "stockTabOnHand": "Disponibile",
@@ -22628,10 +22703,6 @@
   "suppliersArchivedTag": "archiviato",
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
-  },
-  "suppliersBalanceUnavailable": "Saldo non disponibile",
-  "@suppliersBalanceUnavailable": {
-    "description": "#3070 supplier outstanding balance"
   },
   "suppliersBank": "Coordinate bancarie",
   "@suppliersBank": {
@@ -23683,10 +23754,6 @@
     "description": "#2477 tax reference: Field: label of a rate."
   },
   "taxRefLanguages": "Lingue ufficiali (ISO 639-1, la consueta per prima)",
-  "taxRefLoadFailed": "Impossibile caricare i dati di riferimento.",
-  "@taxRefLoadFailed": {
-    "description": "#2477 tax reference: error text when the list cannot load."
-  },
   "taxRefMemberEmpty": "Uno Stato membro non ha altri campi.",
   "@taxRefMemberEmpty": {
     "description": "#2477 tax reference: Hint in the form of an EU member."
@@ -23850,7 +23917,6 @@
   "templateWidenCount": "{count, plural, one{1 impostazione diventa leggibile, esattamente come il modello la contiene ora.} other{{count} impostazioni diventano leggibili, esattamente come il modello le contiene ora.}}",
   "templateWidenExcluded": "{count, plural, one{1 tipo di valore non esce mai con esso (coordinate bancarie, sedi, indirizzi…).} other{{count} tipi di valori non escono mai con esso (coordinate bancarie, sedi, indirizzi…).}}",
   "templateWidenTitle": "Rendere questo modello leggibile da: {audience}?",
-  "templatesLoadFailed": "Non è stato possibile caricare i modelli.",
   "themeDark": "Scuro",
   "themeLight": "Chiaro",
   "themeSystem": "Predefinito di sistema",
@@ -23903,6 +23969,8 @@
   "tillDayTenderOther": "Altro",
   "tillDayTitle": "Chiusura della giornata",
   "tillDayToday": "Giornata da chiudere: {date}",
+  "tillDeclarationNone": "nessun obbligo di registratore fiscale",
+  "tillDeclarationRegister": "è richiesto un registratore fiscale",
   "tillDrawerAddTill": "Aggiungere una cassa",
   "tillDrawerAmountInvalid": "Digitare un importo.",
   "tillDrawerAmountZero": "L'importo deve essere superiore a zero.",
@@ -24150,7 +24218,30 @@
   "tillQuantityHint": "Una quantità esatta, per esempio 1 oppure 0,350.",
   "tillQuantityRefused": "Inserisca una quantità superiore a zero con al massimo sei decimali.",
   "tillQuantityTitle": "Quantità venduta",
+  "tillReadinessAdapterMissing": "Il registro la consente, ma nell'app nulla la gestisce ancora.",
+  "tillReadinessCase": "Paese {country}, caso dichiarato: {declaration}",
+  "tillReadinessConfirmed": "Confermata da un professionista fiscale.",
+  "tillReadinessEvidence": "Prova: {evidence}",
+  "tillReadinessOffline": "Una vendita richiede una connessione: la cassa non vende offline, e una vendita la cui risposta è andata persa attende di essere confermata.",
+  "tillReadinessOpen": "Disponibilità e impostazioni della cassa",
+  "tillReadinessSettings": "Impostazioni della cassa",
+  "tillReadinessSpecification": "Si basa su: {specification} ({version}), in vigore dal {date}",
+  "tillReadinessSupported": "Supportata",
+  "tillReadinessTitle": "Disponibilità della cassa",
+  "tillReadinessUnavailable": "Non disponibile",
+  "tillReadinessUnconfirmed": "Non ancora confermata da un professionista fiscale.",
+  "tillReadinessUnknownCountry": "Il registro non indica alcuna operazione di cassa per {country}: nulla è supportato e la cassa non vende nulla.",
+  "tillReceiptCorrects": "Corregge lo scontrino {number}",
+  "tillReceiptDisagrees": "Gli importi di questo scontrino non concordano tra loro. Viene mostrato così come è stato fissato; ne informi la Sua amministrazione.",
+  "tillReceiptIssuedUnder": "Emesso secondo: {specification} ({version})",
+  "tillReceiptLine": "{label}: {quantity} {unit}  {amount}",
   "tillReceiptNumber": "Scontrino {number}",
+  "tillReceiptPrintNote": "Nessuna stampante di scontrini è collegata all'app: stampi dal menu di condivisione.",
+  "tillReceiptShare": "Condividere lo scontrino",
+  "tillReceiptShow": "Mostrare lo scontrino",
+  "tillReceiptTaxLine": "IVA {percent}: {tax} su {net}",
+  "tillReceiptTotal": "Totale {amount}",
+  "tillReceiptUnreadable": "Questo scontrino è stato scritto da una versione più recente di DesKilo: aggiorni l'app per leggerlo.",
   "tillRemoveLine": "Togliere {name} dal carrello",
   "tillRetry": "Riprova",
   "@tillRetry": {
@@ -24722,10 +24813,6 @@
         "type": "String"
       }
     }
-  },
-  "valuationLoadFailed": "Non è stato possibile caricare le valutazioni.",
-  "@valuationLoadFailed": {
-    "description": "#2576 accountant valuations"
   },
   "valuationManual": "Inserire un bene",
   "@valuationManual": {
@@ -25550,18 +25637,9 @@
       }
     }
   },
-  "visibilityOnServerUnavailable": "{host} non ha risposto. Riprovi più tardi.",
-  "@visibilityOnServerUnavailable": {
-    "placeholders": {
-      "host": {
-        "type": "String"
-      }
-    }
-  },
   "visibilityPresence": "Oggi sul posto",
   "visibilityPreviewCanWrite": "Può iniziare una conversazione con Lei",
   "visibilityPreviewCannotWrite": "Non può iniziare una conversazione con Lei",
-  "visibilityPreviewFailed": "Impossibile caricare l'anteprima.",
   "visibilityPreviewMySpaces": "Un membro dei miei posti",
   "visibilityPreviewNobody": "Solo io",
   "visibilityPreviewNothing": "Non vedono nulla di Lei.",
@@ -25578,9 +25656,7 @@
   "visibilitySpaceOnServer": "sul server {installation}",
   "visibilitySpaceUnlisted": "Un posto non più elencato",
   "visibilitySpaceUnverified": "Verifica non disponibile",
-  "visibilitySpacesUnavailable": "Al momento i Suoi posti non possono essere elencati.",
   "visibilityTitle": "Chi mi vede",
-  "visibilityUnavailable": "Al momento non è possibile leggere chi vede cosa di Lei. Non è stato modificato nulla.",
   "visibilityUnconfirmedTitle": "Non è stato possibile confermare la Sua modifica",
   "visibilityUnsupported": "La Sua casa personale non può ancora salvare questa impostazione: chi la gestisce deve aggiornarla. Non è stato modificato nulla.",
   "visibilityWidenAction": "Amplia",

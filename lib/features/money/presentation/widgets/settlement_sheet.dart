@@ -7,6 +7,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -79,22 +80,21 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
     final settlements = ref.read(settlementsProvider);
     // The write and the look-up that follows it are one decision (#1449):
     // what the person is told is the new document's NUMBER.
-    var outcome = await settlements.settle(
-      SettleAttempt(
-        workspaceId: workspace.id,
-        memberId: memberId,
-        invoiceIds: ids,
-        requestId: _requestId!,
-      ),
+    final attempt = SettleAttempt(
+      workspaceId: workspace.id,
+      memberId: memberId,
+      invoiceIds: ids,
+      requestId: _requestId!,
     );
-    if (outcome is SettleUnknown && mounted) {
+    var outcome = await settlements.settle(attempt);
+    if (outcome is CommandUnreached<String> && mounted) {
       var current = outcome;
-      final resolved = await showCommandUnknownDialog<SettleOutcome>(
+      final resolved = await showCommandUnknownDialog<CommandOutcome<String>>(
         context,
         body: l10n.invoiceActionUnknownBody,
         check: () async {
-          final looked = await settlements.look(current);
-          if (looked is SettleUnknown) {
+          final looked = await settlements.look(attempt, current);
+          if (looked is CommandUnreached<String>) {
             current = looked;
             return null;
           }
@@ -105,13 +105,13 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
     }
     if (!mounted) return;
     final number = switch (outcome) {
-      Settled(:final number) => number,
+      CommandDone(value: final number) => number,
       _ => null,
     };
     if (number == null) {
       setState(() => _busy = false);
-      if (outcome is SettleRefused) {
-        TraceLogger.instance.error('money', 'settle invoices refused', error: outcome.error);
+      if (outcome is CommandRefused<String>) {
+        TraceLogger.instance.error('money', 'settle invoices refused', error: outcome.refusal);
         // A definite refusal committed nothing: the next try is a new act.
         _attemptKey = null;
       }

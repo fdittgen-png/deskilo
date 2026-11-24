@@ -15,14 +15,5 @@
         "type": "String"
       }
     }
-  },
-  "visibilityOnServerUnavailable": "{host} did not answer. Try again later.",
-  "@visibilityOnServerUnavailable": {
-    "description": "#2211 who sees me on a connected server: visibilityOnServerUnavailable",
-    "placeholders": {
-      "host": {
-        "type": "String"
-      }
-    }
   }
 }

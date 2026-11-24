@@ -5,6 +5,7 @@
 // had, and a receipt the server says moved is priced again once.
 import 'dart:async';
 
+import 'package:deskilo/features/money/domain/counter_receipt_document.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/presentation/till_session.dart';
 import 'package:deskilo/features/money/providers/till_providers.dart';
@@ -41,6 +42,9 @@ class _Port implements TillPort {
 
   @override
   Future<TillReadiness> readiness(String workspaceId) => throw UnimplementedError();
+
+  @override
+  Future<CounterReceiptDocument> receipt(String workspaceId, String receiptId) => throw UnimplementedError();
 
   @override
   Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision, String? tillId}) async {
@@ -354,6 +358,9 @@ class _OnceLost implements TillPort {
 
   @override
   Future<TillReadiness> readiness(String workspaceId) => _inner.readiness(workspaceId);
+
+  @override
+  Future<CounterReceiptDocument> receipt(String workspaceId, String receiptId) => _inner.receipt(workspaceId, receiptId);
 
   @override
   Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision, String? tillId}) async {

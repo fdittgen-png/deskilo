@@ -377,7 +377,7 @@ class WorkspaceParameterTiles {
                   NewMemberDefaultsTiles(
                     defaults: form.newMemberDefaults,
                     enabled: !busy,
-                    failed: ref.watch(newMemberDefaultsProvider).hasError,
+                    failure: ref.watch(newMemberDefaultsProvider).error,
                     onRetry: () => ref.invalidate(newMemberDefaultsProvider),
                     onSubscriptionChanged: (pct) => _update(() =>
                         form.newMemberDefaults = form.newMemberDefaults?.copyWith(subscriptionPct: pct)),

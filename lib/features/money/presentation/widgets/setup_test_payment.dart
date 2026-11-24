@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/payment_test_check.dart';
@@ -77,10 +78,12 @@ class _SetupPaymentTestState extends ConsumerState<SetupPaymentTest> {
               const SizedBox(height: AppSpacing.sm),
               switch (answer) {
                 AsyncData(:final value) => _Answer(check: value),
-                AsyncError() => InlineBanner(
+                AsyncError(:final error) => ReadFailureBanner(
                   key: const ValueKey('setup-online-test-failed'),
-                  icon: Icons.error_outline,
-                  text: l10n.setupStepLoadFailed,
+                  error: error,
+                  onRetry: () => ref.invalidate(
+                    paymentTestCheckProvider(widget.workspaceId),
+                  ),
                 ),
                 _ => const LinearProgressIndicator(),
               },

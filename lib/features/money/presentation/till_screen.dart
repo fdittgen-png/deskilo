@@ -26,6 +26,8 @@ import '../domain/counter_till.dart';
 import '../domain/till_drawer.dart';
 import '../providers/till_drawer_providers.dart';
 import '../providers/till_providers.dart';
+import 'counter_readiness_panel.dart';
+import 'counter_receipt_view.dart';
 import 'till_basket.dart';
 import 'till_cash_dialog.dart';
 import 'till_offline_mode.dart';
@@ -57,7 +59,16 @@ class TillScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(context.l10n.tillTitle),
-        actions: [HelpDot(context.l10n.tillTitle, anchor: HelpAnchor.moneyTill)],
+        actions: [
+          if (workspaceId != null)
+            IconButton(
+              key: const ValueKey('till-readiness'),
+              tooltip: context.l10n.tillReadinessOpen,
+              icon: const Icon(Icons.fact_check_outlined),
+              onPressed: () => unawaited(showCounterReadinessSheet(context, workspaceId: workspaceId)),
+            ),
+          HelpDot(context.l10n.tillTitle, anchor: HelpAnchor.moneyTill),
+        ],
       ),
       body: workspaceId == null ? const LoadingView() : _Readiness(workspaceId: workspaceId, keys: keys, scan: scan, currency: currency),
     );
@@ -88,10 +99,13 @@ class _Readiness extends ConsumerWidget {
               ? _SessionGate(workspaceId: workspaceId, keys: keys, scan: scan, currency: currency)
               : _Notice(
                   key: const ValueKey('till-not-ready'),
-                  text: l10n.tillNotReady(
-                    [for (final o in readiness.blocking) tillOperationName(l10n, o.operation)].join(', '),
-                  ),
+                  text: readiness.unknownCountry
+                      ? l10n.tillReadinessUnknownCountry(readiness.country)
+                      : l10n.tillNotReady(
+                          [for (final o in readiness.blocking) tillOperationName(l10n, o.operation)].join(', '),
+                        ),
                   hint: l10n.tillNotReadyHint,
+                  detail: readiness.unknownCountry ? null : CounterReadinessPanel(readiness: readiness),
                 ),
         );
   }
@@ -199,26 +213,33 @@ class _ChooseTill extends StatelessWidget {
 }
 
 class _Notice extends StatelessWidget {
-  const _Notice({super.key, required this.text, this.hint, this.onRetry});
+  const _Notice({super.key, required this.text, this.hint, this.onRetry, this.detail});
 
   final String text;
   final String? hint;
   final VoidCallback? onRetry;
 
+  /// #4184 -- what stands behind the notice: the readiness of every operation, with its evidence.
+  final Widget? detail;
+
   @override
   Widget build(BuildContext context) => Center(
-    child: Padding(
+    child: SingleChildScrollView(
       padding: const EdgeInsets.all(AppSpacing.lg),
-      child: Column(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 720),
+        child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(text, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.center),
           if (hint != null) ...[const FormGap(), Text(hint!, textAlign: TextAlign.center)],
+          if (detail != null) ...[const FormGap(), detail!],
           if (onRetry != null) ...[
             const FormGap(),
             FilledButton(key: const ValueKey('till-retry'), onPressed: onRetry, child: Text(context.l10n.tillRetry)),
           ],
         ],
+      ),
       ),
     ),
   );
@@ -394,6 +415,7 @@ class _TillState extends ConsumerState<_Till> {
               offline: offline,
               onSendOffline: () => unawaited(_session.reconnect(force: true)),
               onDiscardOffline: () => unawaited(_discardOffline()),
+              onReceipt: (id) => unawaited(showCounterReceiptSheet(context, workspaceId: widget.workspaceId, receiptId: id)),
             ),
           ),
         );

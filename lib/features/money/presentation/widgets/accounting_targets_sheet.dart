@@ -16,6 +16,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -109,9 +110,10 @@ class AccountingTargetsView extends ConsumerWidget {
           Text(l10n.acctTargetsNoApiTarget, key: const ValueKey('acct-no-api-target')),
         connections.when(
           loading: () => const LoadingView(),
-          error: (_, _) => Text(
-            l10n.acctTargetsLoadFailed,
+          error: (e, _) => ReadFailureBanner(
             key: const ValueKey('acct-targets-failed'),
+            error: e,
+            onRetry: () => ref.invalidate(accountingConnectionsProvider(workspaceId)),
           ),
           data: (all) => Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

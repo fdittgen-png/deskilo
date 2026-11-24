@@ -5,6 +5,5 @@
   "publicProfileRegularHours": "Horaires habituels dans le fuseau horaire de l’entreprise ; les exceptions et la disponibilité réelle peuvent différer.",
   "publicProfileTakesInquiries": "Accepte les demandes de renseignements",
   "publicProfileContacts": "Moyens de contact",
-  "publicProfileRefreshing": "Actualisation des informations publiées…",
-  "publicProfileRefreshFailed": "Impossible d’actualiser la page de cette entreprise. Les informations déjà chargées restent affichées."
+  "publicProfileRefreshing": "Actualisation des informations publiées…"
 }

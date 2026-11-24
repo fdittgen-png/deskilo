@@ -113,7 +113,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
         // A refusal here already reached the trace and the snack through
         // runGuarded; repeating it as a screen-sized sentence adds a
         // second voice saying the same thing (#1305).
-        error: (e, _) => const SizedBox.shrink(),
+        error: (e, _) => const SizedBox.shrink(), // #4414 kept: said by runGuarded
         data: (list) => ListView(
           padding: AppSpacing.gutterAll,
           children: [

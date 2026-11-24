@@ -6,6 +6,7 @@
 // webhook secret its settlement needs; a provider name must be one of
 // ours, not an inherited property such as `constructor`.
 import { assertEquals, assertRejects } from "jsr:@std/assert@1";
+import { guard } from "../_shared/serve.ts";
 import {
   effectiveConfig,
   failureOutcome,
@@ -495,4 +496,26 @@ Deno.test("#4147 — an older database withholds continuation rather than creati
   }));
   assertEquals(result.status, 200);
   assertEquals((await result.json()).status, "not_configured");
+});
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+Deno.test("#4412 create-payment-order: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const exploding = new Proxy({}, {
+      get: () => {
+        throw new Error("service role key sb_secret_xyz is wrong");
+      },
+    });
+    const request = order("55555555-5555-4555-8555-555555555555");
+    request.headers.set("x-request-id", "r-pay");
+    const answer = await guard("create-payment-order", (req) => handleWith(req, exploding))(request);
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-pay" });
+    assertEquals(/secret|sb_|wrong/i.test(text), false);
+  } finally {
+    console.error = saved;
+  }
 });

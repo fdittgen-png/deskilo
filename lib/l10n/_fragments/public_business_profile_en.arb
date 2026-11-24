@@ -6,7 +6,6 @@
   "publicProfileTakesInquiries": "Accepts inquiries",
   "publicProfileContacts": "Contact options",
   "publicProfileRefreshing": "Refreshing published information…",
-  "publicProfileRefreshFailed": "Could not refresh this business’s page. Showing the information already loaded.",
   "@publicProfileOverview": {
     "description": "Public profile: Overview."
   },
@@ -27,8 +26,5 @@
   },
   "@publicProfileRefreshing": {
     "description": "Public profile: Refreshing."
-  },
-  "@publicProfileRefreshFailed": {
-    "description": "Public profile: RefreshFailed."
   }
 }

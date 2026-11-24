@@ -16,6 +16,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_modules.dart';
@@ -288,6 +289,7 @@ class BiModuleSection extends ConsumerWidget {
                 query: query,
                 result: value,
               ),
+              // #4414 kept: typed refusals as themselves, the rest is shared
               AsyncError(:final error) => switch (error) {
                 BiRefused(:final reasons, :final groupBudgetExceeded) =>
                   _refusal(l10n, reasons, groupBudgetExceeded),
@@ -300,19 +302,11 @@ class BiModuleSection extends ConsumerWidget {
                   l10n.biIncompatible,
                   key: const ValueKey('bi-incompatible'),
                 ),
-                _ => Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Text(
-                      l10n.biUnavailable,
-                      key: const ValueKey('bi-unavailable'),
-                    ),
-                    TextButton(
-                      key: const ValueKey('bi-retry'),
-                      onPressed: () => ref.invalidate(provider),
-                      child: Text(l10n.capacityKpiRetry),
-                    ),
-                  ],
+                _ => ReadFailureBanner(
+                  key: const ValueKey('bi-unavailable'),
+                  error: error,
+                  retryKey: const ValueKey('bi-retry'),
+                  onRetry: () => ref.invalidate(provider),
                 ),
               },
               _ => const LoadingView(),

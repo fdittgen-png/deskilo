@@ -69,6 +69,7 @@ class _PersonalDataCardState extends ConsumerState<PersonalDataCard> {
           key: ValueKey('me-data-personal-loading'),
         ),
       );
+    // #4414 kept: a typed export refusal is worded as itself
     } else if (answer.hasError) {
       final error = answer.error!;
       final unsupported =

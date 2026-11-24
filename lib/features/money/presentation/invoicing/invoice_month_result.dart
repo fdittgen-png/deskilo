@@ -126,7 +126,7 @@ class MonthResultView extends ConsumerWidget {
     ResultTone.ok => l10n.invoiceMonthResultTitle(report.issued.length),
     ResultTone.partial => l10n.invoiceMonthResultPartial(
       report.issued.length,
-      report.outcomes.length,
+      report.lines.length,
     ),
   };
 

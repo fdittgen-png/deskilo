@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../providers/supplier_balance_provider.dart';
 
@@ -31,16 +32,10 @@ class SupplierBalanceLine extends ConsumerWidget {
       return const SizedBox(height: AppSpacing.xl, child: LoadingView());
     }
     if (result.hasError) {
-      return Row(
-        children: [
-          Expanded(child: Text(l10n.suppliersBalanceUnavailable)),
-          TextButton(
-            key: ValueKey('supplier-balance-retry-$supplierId'),
-            onPressed: () =>
-                ref.invalidate(supplierBalancesProvider(workspaceId)),
-            child: Text(l10n.commonRetry),
-          ),
-        ],
+      return ReadFailureBanner(
+        error: result.error!,
+        retryKey: ValueKey('supplier-balance-retry-$supplierId'),
+        onRetry: () => ref.invalidate(supplierBalancesProvider(workspaceId)),
       );
     }
     final balances = result.requireValue

@@ -8,10 +8,6 @@
   "@badgePinReviewNotice": {
     "description": "Shown as a text in badge pin review notice (workspace)."
   },
-  "badgePinReviewUnavailable": "PIN review status is unavailable. Try again before assuming this PIN meets the current minimum.",
-  "@badgePinReviewUnavailable": {
-    "description": "Shown as a text in badge pin review notice (workspace)."
-  },
   "settingLabelSecurityBadgeWorkspaceFailureLimit": "Workspace badge failure ceiling",
   "@settingLabelSecurityBadgeWorkspaceFailureLimit": {
     "description": "Shown as a text in settings labels (workspace)."

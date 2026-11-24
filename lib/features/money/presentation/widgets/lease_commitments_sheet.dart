@@ -11,6 +11,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -199,7 +200,10 @@ class LeaseCommitmentsView extends ConsumerWidget {
         ),
         page.when(
           loading: () => const LoadingView(),
-          error: (_, _) => Text(l10n.leaseCommitmentsLoadFailed),
+          error: (e, _) => ReadFailureBanner(
+            error: e,
+            onRetry: () => ref.invalidate(leaseCommitmentsProvider(_key)),
+          ),
           data: (p) => p.occurrences.isEmpty
               ? Text(
                   l10n.leaseCommitmentsEmpty,

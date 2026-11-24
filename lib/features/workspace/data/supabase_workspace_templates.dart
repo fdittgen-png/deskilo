@@ -6,6 +6,7 @@
 // class so the interface stays ONE thing the app reads through.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../domain/template_inspection.dart';
 import '../domain/template_outline.dart';
 import '../domain/template_preview.dart';
@@ -20,11 +21,12 @@ mixin SupabaseWorkspaceTemplates {
   Future<List<WorkspaceTemplate>> fetchWorkspaceTemplates() async {
     // RLS is the filter: `workspace_templates_read` asks
     // workspace_template_readable(id) per row.
-    final rows = await client
+    final rows = await fetchConfigurationList(table: 'workspace_templates', build: () => client
         .from('workspace_templates')
         .select()
-        .order('visibility')
-        .order('name');
+        .order('visibility', ascending: true)
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return [
       for (final row in rows)
         WorkspaceTemplate.fromRow(Map<String, dynamic>.from(row as Map)),

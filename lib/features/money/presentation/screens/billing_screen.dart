@@ -9,6 +9,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/form_scroll.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -51,11 +52,18 @@ class BillingScreen extends ConsumerWidget {
           levels: levels,
           packages: packages,
         ),
-      (AsyncError(), _, _) || (_, AsyncError(), _) || (_, _, AsyncError()) =>
-        Scaffold(
-          appBar: appBar,
-          body: Center(child: Text(l10n.workspaceGenericError)),
+      (AsyncError(:final error), _, _) ||
+      (_, AsyncError(:final error), _) ||
+      (_, _, AsyncError(:final error)) => Scaffold(
+        body: ReadFailureBanner(
+          error: error,
+          onRetry: () => ref
+            ..invalidate(feeBandsProvider)
+            ..invalidate(subscriptionLevelsProvider)
+            ..invalidate(allPackagesProvider),
         ),
+        appBar: appBar,
+      ),
       _ => Scaffold(appBar: appBar, body: const LoadingView()),
     };
   }

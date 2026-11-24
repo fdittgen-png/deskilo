@@ -146,7 +146,7 @@ class DemoStockTrace implements StockTraceReader {
       'bill' => _orders.billOrders[id],
       _ => null,
     };
-    if (orderId == null) return const DocumentGoods(state: TraceState.notLinked, rows: [], more: false);
+    if (orderId == null) return const DocumentGoods(state: TraceState.notLinked, rows: <DocumentGoodsRow>[], more: false);
     final allocations = await _receiving.allocationsOfOrder(workspaceId, orderId);
     final queries = DemoStockQueries(_ledger);
     final rows = <DocumentGoodsRow>[];

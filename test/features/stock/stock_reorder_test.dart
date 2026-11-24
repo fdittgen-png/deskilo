@@ -7,6 +7,8 @@
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/core/ui/dropdown_field.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart' show StockConfigFailure, StockConfigRefused, StockSaved;
 import 'package:deskilo/features/stock/domain/stock_reorder.dart';
@@ -47,13 +49,13 @@ class _Reorder implements StockReorder {
   @override
   Future<StockSaved> savePoint(
     String workspaceId, {
-    required Map<String, Object?> point,
+    required StockReorderPointDraft point,
     required String requestId,
     String? pointId,
     int? expectedRevision,
   }) async {
     if (failSave case final StockConfigFailure e) throw e;
-    saved.add((point: point, id: pointId, rev: expectedRevision, request: requestId));
+    saved.add((point: point.toJson(), id: pointId, rev: expectedRevision, request: requestId));
     return (id: pointId ?? 'pt-new', revision: (expectedRevision ?? 0) + 1, replayed: false);
   }
 
@@ -121,7 +123,12 @@ Future<void> _open(WidgetTester tester, _Reorder reorder, Size size, {Set<Worksp
     size: size,
     locale: locale,
     overrides: [
-      ...standardTestOverrides(),
+      // a test that names a language also formats in it (the member's format locale)
+      ...standardTestOverrides(pinFormats: locale == null),
+      if (locale != null) ...[
+        appFormatProvider.overrideWithValue(AppFormat(locale: locale.languageCode == 'de' ? 'de_DE' : 'en_US', currencyCode: 'EUR')),
+        personalFormatProvider.overrideWithValue(AppFormat(locale: locale.languageCode == 'de' ? 'de_DE' : 'en_US', currencyCode: 'EUR')),
+      ],
       stockReorderProvider.overrideWithValue(reorder),
       stockConfigCommandsProvider.overrideWithValue(config),
       stockQueriesProvider.overrideWithValue(DemoStockQueries(DemoStockLedger('ws-1', config))),
@@ -224,8 +231,8 @@ void main() {
       });
 
       // #4425 -- a level typed with the member's decimal separator: 15,5 in German and 15.5 in English save the same
-      for (final (code, typed) in [('de', '15,5'), ('en', '15.5')]) {
-        testWidgets('a level typed $typed in $code is saved as 15.5', (tester) async {
+      for (final (code, typed, saved) in [('de', '15,5', '15.5'), ('en', '15.5', '15.5'), ('de', '1.234,5', '1234.5'), ('en', '1,234.5', '1234.5')]) {
+        testWidgets('a level typed $typed in $code is saved as $saved', (tester) async {
           final reorder = _Reorder();
           await _open(tester, reorder, size, locale: Locale(code));
           await _reveal(tester, find.byKey(const ValueKey('stock-point-pt-beans')));
@@ -234,7 +241,7 @@ void main() {
           await tester.enterText(find.byKey(const ValueKey('stock-point-level')), typed);
           await tester.tap(find.byKey(const ValueKey('stock-point-save')));
           await _settle(tester);
-          expect(reorder.saved.single.point['reorder_point'], '15.5');
+          expect(reorder.saved.single.point['reorder_point'], saved);
         });
       }
 
