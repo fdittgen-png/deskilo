@@ -5,7 +5,7 @@
   },
   "counterSaleCardAskedTitle": "Card on the terminal: {amount}",
   "@counterSaleCardAskedTitle": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the amount arrives formatted (AppFormat money)",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -68,7 +68,7 @@
   },
   "counterSaleSale": "Sale {number}",
   "@counterSaleSale": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued",
     "placeholders": {
       "number": {
         "type": "String"
@@ -77,7 +77,7 @@
   },
   "counterSaleCorrection": "Correction {number} of {original}",
   "@counterSaleCorrection": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued",
     "placeholders": {
       "number": {
         "type": "String"
@@ -89,7 +89,7 @@
   },
   "counterSaleDraft": "Unfinished sale of {amount}",
   "@counterSaleDraft": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the amount arrives formatted (AppFormat money)",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -98,7 +98,7 @@
   },
   "counterSaleTotal": "Total {amount}",
   "@counterSaleTotal": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the amount arrives formatted (AppFormat money)",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -107,7 +107,7 @@
   },
   "counterSaleTax": "of which tax {amount}",
   "@counterSaleTax": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the amount arrives formatted (AppFormat money)",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -116,10 +116,6 @@
   },
   "counterSaleTenderCash": "Cash",
   "@counterSaleTenderCash": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
-  },
-  "counterSaleTenderCard": "Card",
-  "@counterSaleTenderCard": {
     "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
   },
   "counterSaleTenderOther": "Other",
@@ -134,10 +130,6 @@
   "@counterSaleStateUnknown": {
     "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
   },
-  "counterSaleStateAccepted": "accepted",
-  "@counterSaleStateAccepted": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
-  },
   "counterSaleStateRefused": "declined",
   "@counterSaleStateRefused": {
     "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns"
@@ -148,7 +140,7 @@
   },
   "counterSaleTenderLine": "{kind} {amount}: {state}",
   "@counterSaleTenderLine": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the amount arrives formatted (AppFormat money)",
     "placeholders": {
       "kind": {
         "type": "String"
@@ -192,7 +184,7 @@
   },
   "counterSaleCompleted": "Sale {number} completed.",
   "@counterSaleCompleted": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued",
     "placeholders": {
       "number": {
         "type": "String"
@@ -205,7 +197,7 @@
   },
   "counterSaleCorrectTitle": "Correction of {number}",
   "@counterSaleCorrectTitle": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued",
     "placeholders": {
       "number": {
         "type": "String"
@@ -255,7 +247,7 @@
   },
   "counterSaleCorrected": "Correction {number} issued.",
   "@counterSaleCorrected": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued",
     "placeholders": {
       "number": {
         "type": "String"
@@ -268,7 +260,7 @@
   },
   "counterSaleRefundTitle": "Money back against {number}",
   "@counterSaleRefundTitle": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued",
     "placeholders": {
       "number": {
         "type": "String"
@@ -314,7 +306,7 @@
   },
   "counterSaleReturnTitle": "Goods back against {number}",
   "@counterSaleReturnTitle": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the number is the receipt's reference as issued",
     "placeholders": {
       "number": {
         "type": "String"
@@ -359,18 +351,9 @@
   },
   "counterSaleLeft": "{quantity} left to correct",
   "@counterSaleLeft": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
+    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns; the quantity arrives formatted (AppFormat)",
     "placeholders": {
       "quantity": {
-        "type": "String"
-      }
-    }
-  },
-  "counterSaleReasonShown": "Reason: {reason}",
-  "@counterSaleReasonShown": {
-    "description": "#4185 the counter sale: card at the till, receipts, corrections, refunds, returns",
-    "placeholders": {
-      "reason": {
         "type": "String"
       }
     }

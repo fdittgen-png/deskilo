@@ -18,11 +18,9 @@
   "counterSaleTotal": "Summe {amount}",
   "counterSaleTax": "davon Steuer {amount}",
   "counterSaleTenderCash": "Bar",
-  "counterSaleTenderCard": "Karte",
   "counterSaleTenderOther": "Andere",
   "counterSaleStateRequested": "angefragt, keine Antwort erfasst",
   "counterSaleStateUnknown": "Antwort unbekannt",
-  "counterSaleStateAccepted": "angenommen",
   "counterSaleStateRefused": "abgelehnt",
   "counterSaleStateReconcile": "für ein geändertes Angebot angenommen: abzustimmen",
   "counterSaleTenderLine": "{kind} {amount}: {state}",
@@ -59,6 +57,5 @@
   "counterSaleShareTitle": "Beleg",
   "counterSaleTotalLabel": "Summe",
   "counterSaleTaxLabel": "Enthaltene Steuer",
-  "counterSaleLeft": "{quantity} noch zu korrigieren",
-  "counterSaleReasonShown": "Grund: {reason}"
+  "counterSaleLeft": "{quantity} noch zu korrigieren"
 }

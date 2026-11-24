@@ -18,11 +18,9 @@
   "counterSaleTotal": "Totale {amount}",
   "counterSaleTax": "di cui imposta {amount}",
   "counterSaleTenderCash": "Contanti",
-  "counterSaleTenderCard": "Carta",
   "counterSaleTenderOther": "Altro",
   "counterSaleStateRequested": "richiesta, nessuna risposta registrata",
   "counterSaleStateUnknown": "risposta sconosciuta",
-  "counterSaleStateAccepted": "accettata",
   "counterSaleStateRefused": "rifiutata",
   "counterSaleStateReconcile": "accettata per un'offerta cambiata: da riconciliare",
   "counterSaleTenderLine": "{kind} {amount}: {state}",
@@ -59,6 +57,5 @@
   "counterSaleShareTitle": "Scontrino",
   "counterSaleTotalLabel": "Totale",
   "counterSaleTaxLabel": "Imposta inclusa",
-  "counterSaleLeft": "{quantity} ancora da rettificare",
-  "counterSaleReasonShown": "Motivo: {reason}"
+  "counterSaleLeft": "{quantity} ancora da rettificare"
 }
