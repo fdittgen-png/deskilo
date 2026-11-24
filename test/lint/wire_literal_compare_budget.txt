@@ -4,7 +4,7 @@
 #   lib/features/stock/** -- the stock lane (StockRefusal);
 #   lib/features/money/**/*till*, *counter* -- the till lane;
 #   customer_quote_editor_screen, standalone_invoice_screen, standalone_line_form -- the document composer lane.
-# total 1176 in 185 files
+# total 1108 in 176 files
 1 lib/core/demo/presentation/demo_setup_card.dart
 3 lib/features/auth/presentation/screens/linked_accounts_screen.dart
 2 lib/features/calendar/presentation/screens/calendar_screen.dart
@@ -49,17 +49,11 @@
 3 lib/features/money/presentation/dunning_hold_actions.dart
 2 lib/features/money/presentation/engagements/engagement_text.dart
 5 lib/features/money/presentation/gobd_procedure_document.dart
-9 lib/features/money/presentation/invoice_documents.dart
 2 lib/features/money/presentation/invoice_einvoice_actions.dart
 2 lib/features/money/presentation/invoicing/invoice_month_result.dart
-9 lib/features/money/presentation/professional_report_bands.dart
 3 lib/features/money/presentation/quotes/quote_decision_sheet.dart
 2 lib/features/money/presentation/report_actions.dart
 15 lib/features/money/presentation/report_defaults.dart
-2 lib/features/money/presentation/report_defaults_customer_statement.dart
-2 lib/features/money/presentation/report_defaults_trading.dart
-23 lib/features/money/presentation/report_kind_labels.dart
-3 lib/features/money/presentation/report_layout_defaults.dart
 1 lib/features/money/presentation/screens/accounting_status.dart
 2 lib/features/money/presentation/screens/billing_customers_screen.dart
 1 lib/features/money/presentation/screens/billing_screen.dart
@@ -67,7 +61,6 @@
 1 lib/features/money/presentation/screens/einvoice_config_screen.dart
 1 lib/features/money/presentation/screens/invoices_screen.dart
 2 lib/features/money/presentation/screens/legal_identity_screen.dart
-8 lib/features/money/presentation/screens/money_member_documents.dart
 6 lib/features/money/presentation/screens/number_sequences_screen.dart
 8 lib/features/money/presentation/screens/payment_config_screen.dart
 2 lib/features/money/presentation/settlement_texts.dart
@@ -92,7 +85,6 @@
 1 lib/features/money/presentation/widgets/invoice_issue_runner.dart
 1 lib/features/money/presentation/widgets/invoice_missing_banner.dart
 27 lib/features/money/presentation/widgets/invoice_missing_sales_tax.dart
-5 lib/features/money/presentation/widgets/invoice_template_editor_actions.dart
 2 lib/features/money/presentation/widgets/legal_identity_sections.dart
 3 lib/features/money/presentation/widgets/member_tax_certificates.dart
 2 lib/features/money/presentation/widgets/purchase_dialogs.dart
@@ -111,7 +103,6 @@
 1 lib/features/money/presentation/widgets/setup_einvoicing_step.dart
 6 lib/features/money/presentation/widgets/setup_purchase_side_step.dart
 1 lib/features/money/presentation/widgets/supplier_dialogs.dart
-7 lib/features/money/presentation/widgets/template_live_data.dart
 1 lib/features/money/presentation/widgets/uk_land_taxation_fields.dart
 1 lib/features/money/presentation/widgets/wizard_steps_payments.dart
 5 lib/features/plan/presentation/widgets/admin_seat_actions.dart

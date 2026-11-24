@@ -53,6 +53,64 @@ class ReportReminderSlot extends ReportSlot {
   final int level;
 }
 
+/// #4418 -- which document a [ReportKind] is, decoded once from its id, so
+/// a screen switches on the document and the compiler checks the switch.
+/// The ids are the ones [fixedReportKinds] registers.
+enum ReportDocument {
+  invoice('invoice'),
+  proforma('proforma'),
+  statement('statement'),
+  agreement('agreement'),
+  payments('payments'),
+  usage('usage'),
+  workspace('workspace'),
+  biAnalytics('bi_analytics'),
+  workspaceConfiguration('workspace_configuration'),
+  status('status'),
+  vat('vat'),
+  vatDeclaration('vat_declaration'),
+  coa('coa'),
+  generalLedger('general_ledger'),
+  trialBalance('trial_balance'),
+  journals('journals'),
+  bankReconciliation('bank_reconciliation'),
+  purchaseOrder('purchase_order'),
+  quote('quote'),
+  customerStatement('customer_statement'),
+  customerStatementPeriod('customer_statement_period'),
+  stockExpiry('stock_expiry'),
+  badges('badges'),
+  spaceCodes('space_codes'),
+
+  /// A dunning reminder, at any level (`r1`, `r2`, ...).
+  reminder(''),
+
+  /// An id this app does not register (a design from a newer app, or a
+  /// typo): edited and printed by its bands, with its id for a name.
+  unknown('');
+
+  const ReportDocument(this.id);
+
+  /// The id a [ReportKind] of this document carries.
+  final String id;
+
+  /// The document [id] names; [unknown] when none does. A reminder level is
+  /// read by [ReportKind.document], which knows the slot.
+  static ReportDocument fromId(String? id) {
+    for (final d in values) {
+      if (d.id.isNotEmpty && d.id == id) return d;
+    }
+    return unknown;
+  }
+
+  /// #2376 -- the books as an accountant reads them.
+  bool get isBook =>
+      this == generalLedger || this == trialBalance || this == journals;
+
+  /// The two documents of an invoice itself: the invoice and its proforma.
+  bool get isInvoiceDocument => this == invoice || this == proforma;
+}
+
 /// One report the designer can edit and the exchange format can carry.
 class ReportKind {
   const ReportKind({required this.id, required this.slot,
@@ -76,6 +134,10 @@ class ReportKind {
   Paper? printedOn(Paper business) => papers.contains(business) ? business : null;
 
   bool get isReminder => slot is ReportReminderSlot;
+
+  /// [id] decoded.
+  ReportDocument get document =>
+      isReminder ? ReportDocument.reminder : ReportDocument.fromId(id);
 }
 
 /// The kinds that exist regardless of configuration, in the order the

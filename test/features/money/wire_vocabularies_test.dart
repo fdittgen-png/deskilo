@@ -5,7 +5,9 @@
 import 'package:deskilo/features/money/domain/account_activity.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
+import 'package:deskilo/features/money/domain/report_kind.dart';
 import 'package:deskilo/features/money/presentation/invoice_status.dart';
+import 'package:deskilo/features/money/presentation/report_kind_labels.dart';
 import 'package:deskilo/features/money/presentation/widgets/finance_claim_state.dart';
 import 'package:deskilo/features/money/presentation/widgets/host_activity.dart';
 import 'package:deskilo/features/money/presentation/widgets/online_payment_status_card.dart';
@@ -129,6 +131,29 @@ void main() {
       expect(claimEndedText(_en, PaymentClaimState.unknown), isNull);
       expect(claimEndedText(_en, null), isNull);
       expect(claimEndedText(_en, PaymentClaimState.expired), _en.financesPaymentExpired);
+    });
+  });
+
+  group('report document', () {
+    test('every registered kind is a known document, each document but the '
+        'reminder and unknown is registered once', () {
+      final kinds = reportKinds(reminderLevels: 2);
+      for (final kind in kinds) {
+        expect(kind.document, isNot(ReportDocument.unknown), reason: kind.id);
+      }
+      expect(kinds.where((k) => k.isReminder).map((k) => k.document).toSet(),
+          {ReportDocument.reminder});
+      for (final d in ReportDocument.values) {
+        if (d == ReportDocument.reminder || d == ReportDocument.unknown) continue;
+        expect(kinds.where((k) => k.id == d.id), hasLength(1), reason: d.name);
+      }
+    });
+
+    test('an id from the future is unknown and the editor names it by its id',
+        () {
+      const kind = ReportKind(id: 'delivery_note', slot: ReportDocSlot('delivery_note'));
+      expect(kind.document, ReportDocument.unknown);
+      expect(reportKindLabel(_en, kind), 'delivery_note');
     });
   });
 }
