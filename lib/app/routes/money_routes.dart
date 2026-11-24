@@ -53,7 +53,7 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 import 'me_adapters.dart';
-import 'till_route.dart';
+import 'till_route.dart' show tillRoutes;
 
 /// Routes of the money feature.
 List<RouteBase> moneyRoutes(RouteEnv env) => [
@@ -85,14 +85,7 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
       ),
       builder: (context, state) => const BillingScreen(),
     ),
-    // #4366 — the till: a full-screen basket served in seconds, on the counter receipt of #4184.
-    GoRoute(
-      path: '/till',
-      redirect: env.guard(
-        const RouteAccess(features: [WorkspaceFeature.counterReceipts], to: '/money'),
-      ),
-      builder: (context, state) => const TillRoute(),
-    ),
+    ...tillRoutes(env),
     GoRoute(
       path: '/invoices',
       redirect: env.guard(

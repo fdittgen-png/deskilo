@@ -6,6 +6,7 @@
 import '../../../core/trace/refusal_text.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/counter_till.dart';
+import 'till_drawer/drawer_text.dart';
 import 'till_session.dart';
 
 /// The name of a counter operation as a country's registry knows it.
@@ -22,7 +23,7 @@ String tillOperationName(AppLocalizations l10n, String operation) => switch (ope
 String tillProblemText(AppLocalizations l10n, Object problem) {
   if (problem is String) return problem;
   if (problem is TillCashShort) return l10n.tillCashShort;
-  return knownRefusalText(l10n, problem) ?? l10n.tillFailed;
+  return drawerRefusalText(l10n, problem) ?? knownRefusalText(l10n, problem) ?? l10n.tillFailed;
 }
 
 /// #4436 -- the track IDs a sold line took, in words: each lot with its quantity, each piece by its tag.

@@ -25,13 +25,13 @@ class SupabaseCounterTill implements TillPort {
       TillReadiness.fromJson(await _call('counter_readiness_v1', {'p_workspace_id': workspaceId}));
 
   @override
-  Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision}) async =>
+  Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision, String? tillId}) async =>
       TillDraft.fromJson(await _call('counter_receipt_draft_v1', {
         'p_workspace_id': workspaceId,
         'p_request_id': requestId,
         'p_receipt_id': receiptId,
         'p_expected_revision': expectedRevision,
-        'p_body': {'lines': [for (final l in lines) l.toJson()]},
+        'p_body': {'lines': [for (final l in lines) l.toJson()], 'till_id': ?tillId},
       }));
 
   @override

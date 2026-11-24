@@ -32,6 +32,7 @@ class _Port implements TillPort {
   Completer<void>? holdFinalize;
   Completer<void>? holdDrafts;
   int shortBy = 0;
+  String? lastTillId;
   String? quantityAs;
   int _revision = 0;
   int _sold = 0;
@@ -42,7 +43,8 @@ class _Port implements TillPort {
   Future<TillReadiness> readiness(String workspaceId) => throw UnimplementedError();
 
   @override
-  Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision}) async {
+  Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision, String? tillId}) async {
+    lastTillId = tillId;
     drafts.add(_Call(requestId, receiptId, expectedRevision, lines.length));
     await holdDrafts?.future;
     final seen = _answered[requestId];
@@ -91,6 +93,16 @@ TillSession _session(TillPort port, {Duration timeout = const Duration(seconds: 
 Future<void> _ring(TillSession s, String id) => s.add(itemId: id, name: id, unit: 'piece');
 
 void main() {
+  test('the till the sale is made on goes with every pricing, and a business without sessions sends none', () async {
+    final port = _Port();
+    final s = _session(port);
+    await s.add(itemId: 'a', name: 'A', unit: 'pc');
+    expect(port.lastTillId, isNull);
+    s.tillId = 'till-1';
+    await s.add(itemId: 'b', name: 'B', unit: 'pc');
+    expect(port.lastTillId, 'till-1');
+  });
+
   test('a basket whose repricing fails has no draft: it cannot be paid, and the sale is not of the older basket', () async {
     final port = _Port();
     final s = _session(port);
@@ -344,7 +356,7 @@ class _OnceLost implements TillPort {
   Future<TillReadiness> readiness(String workspaceId) => _inner.readiness(workspaceId);
 
   @override
-  Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision}) async {
+  Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision, String? tillId}) async {
     if (receiptId == null && _inner.drafts.isNotEmpty && !_lost()) {
       _markLost();
       _inner.drafts.add(_Call(requestId, null, null, lines.length));

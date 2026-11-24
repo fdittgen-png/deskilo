@@ -143,6 +143,9 @@ Future<void> main() async {
         financeWorkspaceEntryFromApp, // #3556 1b
         businessWorkspacesFromApp, // #4167
         tillPortFromApp, // #4366
+        tillDrawerPortFromApp, // #4367
+        tillSessionsFromApp, // #4367
+        drawerSettingsFromApp, // #4367
         tillOfflinePortFromApp, // #4373
         businessDayFromApp, // #4426
         privateValuesFromAccount, // #2552

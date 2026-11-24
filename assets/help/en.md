@@ -3024,6 +3024,22 @@ Where your country does not yet allow the counter, the till says which operation
 
 A traced good names what it was taken from. When you sell an item tracked by lot without choosing a lot, the sale takes it from the lots on hand, the first to expire first and never an expired one; under the sold line the till shows each lot's code as received with the quantity taken from it, for example **Lot SUP-A × 2 · Lot SUP-B × 1**, and each piece by its tag. Where the business uses a scanner, scan a piece's tag to ring up that piece: the sale takes exactly the pieces scanned, and the same piece twice is refused. These track IDs are frozen with the receipt: changing a lot or a tag later never alters a receipt already issued. In the stock, the trace of a lot or a piece names the receipt that sold it.
 
+### Open the till, count and close it
+
+**Audience:** Administrator · Owner
+
+You work a cash drawer and want to know that the money in it is right at the end of the day.
+
+Open **Till drawer** in the sales menu (it needs the till sessions feature and the right to issue invoices or to see the finances). Every till of the business is listed with its state. Someone who manages the sites adds a till with **Add a till** and can rename it or switch it off.
+
+Press **Open the till**, type the **Float in the drawer** (or, when your business counts by denomination, the value of each note or coin and how many) and confirm. A till has one open session at a time, and with till sessions on the till sells only on an open session: with none open it offers **Open the till** instead of selling.
+
+**Paid in or out** records cash put into or taken out of the drawer, with a **Reason** chosen from your business's list. A paid-out above the business's limit is recorded by someone who may record outgoing payments.
+
+**Count and close** asks for the **Cash counted in the drawer** and what is **Taken to the bank**. When the business counts blind, the expected cash is not shown before the count; someone who may see the finances sees it, and the difference as they type. A count that differs from the expected cash is closed only with its reason, which the till asks for. After the close the till says what was expected, what was counted and the difference. Card payments still unanswered are listed apart and never counted as cash.
+
+**Day close.** Someone who may see the finances opens **Day close** from the till drawer and presses **Close the day** once every till is closed (a till still open is named and refuses it). The day's closed sessions become one numbered report: each session with what was expected, counted, the difference and its reason, the takings by tender and by tax rate, the cash paid in and out, the refunds and the range of receipt numbers. **Closed days** lists the reports already made; a closed day is never changed. This is the business's own record; the legal content a country asks of a day close comes with its own module.
+
 ### RFID tags: one per batch or one per piece
 
 **Audience:** Administrator · Owner

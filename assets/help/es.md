@@ -3024,6 +3024,22 @@ Donde su país aún no permite la caja, esta nombra la operación que falta y no
 
 Un artículo trazado indica de dónde se tomó. Cuando vende un artículo seguido por lote sin elegir un lote, la venta lo toma de los lotes en existencia, primero el que caduca antes y nunca uno caducado; bajo la línea vendida, la caja muestra el código de cada lote tal como se recibió, con la cantidad tomada, por ejemplo **Lote SUP-A × 2 · Lote SUP-B × 1**, y cada pieza por su etiqueta. Si la empresa usa un lector, escanee la etiqueta de una pieza para añadirla: la venta toma exactamente las piezas escaneadas, y la misma pieza dos veces se rechaza. Estos identificadores de trazabilidad quedan fijados con el ticket: cambiar más tarde un lote o una etiqueta nunca altera un ticket ya emitido. En las existencias, la trazabilidad de un lote o de una pieza indica el ticket que lo vendió.
 
+### Abrir la caja, contar y cerrar
+
+**Público:** Administrador/a · Propietario
+
+Usted lleva un cajón de caja y quiere saber que el dinero que contiene es correcto al final del día.
+
+Abra **Cajón de caja** en el menú de ventas (requiere la función de sesiones de caja y el derecho de emitir facturas o de ver las finanzas). Cada caja del negocio aparece con su estado. Quien gestiona las sedes añade una caja con **Añadir una caja** y puede renombrarla o desactivarla.
+
+Pulse **Abrir la caja**, escriba el **Fondo del cajón** (o, si su negocio cuenta por denominación, el valor de cada billete o moneda y cuántos hay) y confirme. Una caja tiene una sola sesión abierta a la vez, y con las sesiones de caja la caja solo vende sobre una sesión abierta: sin ninguna abierta, ofrece **Abrir la caja** en lugar de vender.
+
+**Entrada o salida de efectivo** registra el dinero puesto en el cajón o sacado de él, con un **Motivo** elegido de la lista de su negocio. Una salida por encima del límite del negocio la registra quien puede registrar pagos salientes.
+
+**Contar y cerrar** pide el **Efectivo contado en el cajón** y lo que se **Lleva al banco**. Cuando el negocio cuenta a ciegas, el efectivo esperado no se muestra antes del recuento; quien puede ver las finanzas lo ve, y la diferencia mientras escribe. Un recuento que difiere del efectivo esperado solo se cierra con su motivo, que la caja pide. Tras el cierre, la caja dice lo esperado, lo contado y la diferencia. Los pagos con tarjeta sin respuesta se listan aparte y nunca cuentan como efectivo.
+
+**Cierre del día.** Quien puede ver las finanzas abre **Cierre del día** desde el cajón de caja y pulsa **Cerrar el día** cuando cada caja está cerrada (una caja aún abierta se nombra y rechaza el cierre). Las sesiones cerradas del día forman un informe numerado: cada sesión con lo esperado, lo contado, la diferencia y su motivo, los cobros por medio de pago y por tipo de impuesto, el efectivo entrado y salido, los reembolsos y el rango de números de tickets. **Días cerrados** lista los informes ya hechos; un día cerrado no se cambia nunca. Es el registro propio del negocio; el contenido legal que un país exige al cierre del día llega con su propio módulo.
+
 ### Etiquetas RFID: una por lote o una por pieza
 
 **Público:** Administrador/a · Propietario

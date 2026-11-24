@@ -22,6 +22,7 @@ import '../../features/events/providers/event_providers.dart';
 import '../../features/me/providers/me_providers.dart'
     show myReservationsSourcesFromMe, pendingAdmissionsFromMe;
 import '../../features/money/domain/hmrc_submission.dart';
+import '../../features/money/domain/till_drawer.dart' show DrawerSettings;
 import '../../features/money/providers/bank_statement_providers.dart';
 import '../../features/money/providers/credit_move_providers.dart';
 import '../../features/money/providers/credit_providers.dart';
@@ -34,6 +35,7 @@ import '../../features/money/providers/purchase_providers.dart';
 import '../../features/money/providers/recorded_payments_providers.dart';
 import '../../features/money/providers/settlement_review_providers.dart';
 import '../../features/money/providers/standalone_invoice_providers.dart';
+import '../../features/money/providers/till_drawer_providers.dart';
 import '../../features/money/providers/till_providers.dart';
 import '../../features/plan/providers/accessory_providers.dart';
 import '../../features/plan/providers/charging_station_providers.dart';
@@ -43,9 +45,11 @@ import '../../features/stock/providers/stock_providers.dart';
 import '../../features/workspace/domain/member.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
+import '../../features/workspace/providers/settings_providers.dart' show currentSettingsProvider;
 import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../features/workspace/providers/workspace_roles_providers.dart';
+import '../settings/settings.dart' show SettingsSet;
 import '../storage/resume_place_store.dart';
 import '../time/clock.dart';
 import 'data/bank_statement_repository.dart';
@@ -69,6 +73,7 @@ import 'data/demo_stock_trace.dart';
 import 'data/demo_stock_trace_chain.dart';
 import 'data/demo_stock_where_is.dart';
 import 'data/demo_till.dart';
+import 'data/demo_till_drawer.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
 import 'data/money/demo_invoice_goods_catalogue.dart';
@@ -140,7 +145,8 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
       workspaces: space.workspaces,
     );
   });
-  final tills = _demoTills(fixture);
+  final drawers = demoSpacesOf((key) => DemoTillDrawer());
+  final tills = _demoTills(fixture, drawers);
   final myReservations = _myReservations(fixture);
   final stocks = _DemoStocks(fixture);
   // #3865 — each space's last bank statement lives on the fixture.
@@ -262,8 +268,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     recordedPaymentsRepositoryProvider.overrideWith(
       (ref) => demoPickSpace(ref, payments),
     ),
-    tillPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
-    tillOfflinePortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
+    ..._tillOverrides(tills, drawers),
   ];
 }
 
@@ -442,10 +447,36 @@ List<Override> _hmrcOverrides(DemoFixture fixture) => [
 ];
 
 /// #4366 — each space's till: its own counter, its own numbers.
-DemoSpaces<DemoTill> _demoTills(DemoFixture fixture) => demoSpacesOf(
+/// The till's ports: its sales, its cash drawer (which follows the business's settings and the person's rights, as the server
+/// does) and its offline sales, each answered by the space the scope is looking at.
+List<Override> _tillOverrides(DemoSpaces<DemoTill> tills, DemoSpaces<DemoTillDrawer> drawers) => [
+    tillPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
+    // #4367 — the drawer follows the business's settings and the person's rights, as the server does.
+    tillDrawerPortProvider.overrideWith((ref) {
+      return demoPickSpace<DemoTillDrawer>(ref, drawers)
+        ..rules = (() => ref.read(currentSettingsProvider).asData?.value == null
+            ? const DrawerSettings(blindCount: true, byDenomination: false, reasons: ['change', 'expense', 'other'], paidOutLimitMinor: 0)
+            : _drawerSettingsOf(ref.read(currentSettingsProvider).requireValue))
+        ..canSeeFinances = (() => ref.read(myPermissionsProvider).contains(WorkspacePermission.viewFinances))
+        ..canRecordOutgoing = (() => ref.read(myPermissionsProvider).contains(WorkspacePermission.recordOutgoingPayments))
+        ..me = (() => ref.read(myMemberProvider).value?.id ?? 'demo-member');
+    }),
+    tillOfflinePortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
+];
+
+DemoSpaces<DemoTill> _demoTills(DemoFixture fixture, DemoSpaces<DemoTillDrawer> drawers) => demoSpacesOf(
   (key) => DemoTill(
+    drawer: drawers.at(key),
     country: fixture.workspaces.workspaces.firstWhere((w) => w.id == key.id).countryCode,
     currency: key.currency,
     vatPercent: 20,
   ),
+);
+
+/// #4367 — the drawer's settings as the business has them.
+DrawerSettings _drawerSettingsOf(SettingsSet settings) => DrawerSettings(
+  blindCount: settings.read<bool>('counter.blind_count'),
+  byDenomination: settings.read<bool>('counter.count_by_denomination'),
+  reasons: DrawerSettings.reasonsOf(settings.read<String>('counter.cash_reasons')),
+  paidOutLimitMinor: settings.read<int>('counter.paid_out_limit_minor'),
 );

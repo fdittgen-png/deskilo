@@ -49,6 +49,7 @@ abstract final class HelpAnchor {
   static const moneyStockUnits = 'user.money.stock.units';
   static const moneyStockBulkRead = 'user.money.stock.bulkread';
   static const moneyTill = 'user.money.till';
+  static const moneyTillDrawer = 'user.money.till-drawer';
 
   /// #3527 — the Sales, Purchases and Cash pages.
   static const moneySales = 'user.money.sales';

@@ -3024,6 +3024,22 @@ Là où votre pays n'autorise pas encore la caisse, elle nomme l'opération manq
 
 Un article tracé indique d'où il a été pris. Quand vous vendez un article suivi par lot sans choisir de lot, la vente le prend dans les lots en stock, celui qui expire le premier d'abord et jamais un lot périmé ; sous la ligne vendue, la caisse affiche le code de chaque lot tel qu'il a été reçu, avec la quantité prise, par exemple **Lot SUP-A × 2 · Lot SUP-B × 1**, et chaque pièce par son étiquette. Si l'entreprise utilise un lecteur, scannez l'étiquette d'une pièce pour l'ajouter : la vente prend exactement les pièces scannées, et la même pièce deux fois est refusée. Ces identifiants de traçabilité sont figés avec le ticket : modifier plus tard un lot ou une étiquette ne change jamais un ticket déjà émis. Dans le stock, la traçabilité d'un lot ou d'une pièce indique le ticket qui l'a vendu.
 
+### Ouvrir la caisse, compter et fermer
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous tenez un tiroir-caisse et voulez savoir que l'argent qu'il contient est juste en fin de journée.
+
+Ouvrez **Tiroir-caisse** dans le menu des ventes (il demande la fonction sessions de caisse et le droit d'émettre des factures ou de voir les finances). Chaque caisse de l'entreprise est listée avec son état. Une personne qui gère les sites ajoute une caisse avec **Ajouter une caisse** et peut la renommer ou la désactiver.
+
+Appuyez sur **Ouvrir la caisse**, saisissez le **Fond de caisse** (ou, si votre entreprise compte par coupure, la valeur de chaque billet ou pièce et leur nombre) et confirmez. Une caisse n'a qu'une session ouverte à la fois, et avec les sessions de caisse la caisse ne vend que sur une session ouverte : sans session ouverte, elle propose **Ouvrir la caisse** au lieu de vendre.
+
+**Entrée ou sortie d'espèces** enregistre l'argent mis dans le tiroir ou retiré, avec un **Motif** choisi dans la liste de votre entreprise. Une sortie au-delà de la limite de l'entreprise est enregistrée par une personne qui peut enregistrer des paiements sortants.
+
+**Compter et fermer** demande les **Espèces comptées dans le tiroir** et ce qui est **Déposé à la banque**. Quand l'entreprise compte à l'aveugle, les espèces attendues ne s'affichent pas avant le comptage ; une personne qui peut voir les finances les voit, ainsi que l'écart pendant la saisie. Un comptage qui diffère des espèces attendues ne se ferme qu'avec son motif, que la caisse demande. Après la fermeture, la caisse indique ce qui était attendu, ce qui a été compté et l'écart. Les paiements par carte sans réponse sont listés à part et jamais comptés comme espèces.
+
+**Clôture de la journée.** Une personne qui peut voir les finances ouvre **Clôture de la journée** depuis le tiroir-caisse et appuie sur **Clôturer la journée** quand chaque caisse est fermée (une caisse encore ouverte est nommée et refuse la clôture). Les sessions fermées du jour forment un rapport numéroté : chaque session avec l'attendu, le compté, l'écart et son motif, les encaissements par moyen de paiement et par taux de taxe, les espèces entrées et sorties, les remboursements et la plage des numéros de tickets. **Journées clôturées** liste les rapports déjà faits ; une journée clôturée ne change jamais. C'est le registre propre de l'entreprise ; le contenu légal qu'un pays demande à une clôture de journée vient avec son propre module.
+
 ### Puces RFID : une par lot ou une par pièce
 
 **Public:** Administrateur·rice · Propriétaire

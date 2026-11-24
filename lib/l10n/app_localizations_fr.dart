@@ -41104,6 +41104,408 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillConfirmSale => 'Confirmer la vente';
 
   @override
+  String tillDayAmountLine(String label, String amount) {
+    return '$label : $amount';
+  }
+
+  @override
+  String get tillDayByRate => 'Ventes par taux de taxe';
+
+  @override
+  String get tillDayByTender => 'Encaissements par moyen de paiement';
+
+  @override
+  String tillDayCorrections(String amount) {
+    return 'Corrections : $amount';
+  }
+
+  @override
+  String tillDayDifferences(String amount) {
+    return 'Écart total des tiroirs : $amount';
+  }
+
+  @override
+  String get tillDayHelp =>
+      'Réunit les sessions fermées des caisses en un rapport numéroté. Chaque caisse doit d\'abord être fermée.';
+
+  @override
+  String tillDayItem(String number, String date) {
+    return '$number · $date';
+  }
+
+  @override
+  String get tillDayNone => 'Aucune journée n\'est encore clôturée.';
+
+  @override
+  String get tillDayOpen => 'Clôturer la journée';
+
+  @override
+  String tillDayPaidIn(String amount) {
+    return 'Espèces entrées : $amount';
+  }
+
+  @override
+  String tillDayPaidOut(String amount) {
+    return 'Espèces sorties : $amount';
+  }
+
+  @override
+  String get tillDayPast => 'Journées clôturées';
+
+  @override
+  String tillDayRateLine(String rate, String net, String tax, String gross) {
+    return '$rate % : HT $net, taxe $tax, TTC $gross';
+  }
+
+  @override
+  String tillDayReceiptRange(String first, String last) {
+    return 'Tickets $first à $last';
+  }
+
+  @override
+  String tillDayRefunds(String amount) {
+    return 'Remboursements : $amount';
+  }
+
+  @override
+  String get tillDayRefusalClosed => 'Cette journée est déjà clôturée.';
+
+  @override
+  String get tillDayRefusalFuture =>
+      'Une journée ne peut pas être clôturée avant d\'avoir commencé.';
+
+  @override
+  String get tillDayRefusalNothing =>
+      'Aucune session n\'a été fermée ce jour : il n\'y a rien à clôturer.';
+
+  @override
+  String tillDayRefusalTillOpen(String name) {
+    return 'La caisse $name est encore ouverte. Comptez-la et fermez-la d\'abord.';
+  }
+
+  @override
+  String tillDayReportDate(String date) {
+    return 'Journée d\'activité : $date';
+  }
+
+  @override
+  String tillDayReportTitle(String number) {
+    return 'Rapport de journée $number';
+  }
+
+  @override
+  String tillDaySalesTotal(String amount) {
+    return 'Ventes : $amount';
+  }
+
+  @override
+  String tillDaySessionLine(
+    String till,
+    String expected,
+    String counted,
+    String difference,
+  ) {
+    return '$till : attendu $expected, compté $counted, écart $difference';
+  }
+
+  @override
+  String tillDaySessionReason(String reason) {
+    return 'Motif : $reason';
+  }
+
+  @override
+  String get tillDaySessions => 'Sessions';
+
+  @override
+  String get tillDayTenderCard => 'Carte';
+
+  @override
+  String get tillDayTenderCash => 'Espèces';
+
+  @override
+  String get tillDayTenderOther => 'Autre';
+
+  @override
+  String get tillDayTitle => 'Clôture de la journée';
+
+  @override
+  String tillDayToday(String date) {
+    return 'Journée à clôturer : $date';
+  }
+
+  @override
+  String get tillDrawerAddTill => 'Ajouter une caisse';
+
+  @override
+  String get tillDrawerAmountInvalid => 'Saisissez un montant.';
+
+  @override
+  String get tillDrawerAmountZero => 'Le montant doit être supérieur à zéro.';
+
+  @override
+  String get tillDrawerBanked => 'Déposé à la banque';
+
+  @override
+  String get tillDrawerBankedAbove =>
+      'Le montant déposé ne peut pas dépasser les espèces comptées.';
+
+  @override
+  String get tillDrawerBankedHelp =>
+      'La part des espèces comptées déposée à la banque. Laissez vide s\'il n\'y en a pas.';
+
+  @override
+  String tillDrawerBreakdown(
+    String float,
+    String sales,
+    String paidIn,
+    String paidOut,
+  ) {
+    return 'Fond $float, ventes $sales, entrées $paidIn, sorties $paidOut';
+  }
+
+  @override
+  String get tillDrawerCashAction => 'Entrée ou sortie d\'espèces';
+
+  @override
+  String get tillDrawerChoose => 'Vendre sur quelle caisse ?';
+
+  @override
+  String get tillDrawerCloseAction => 'Compter et fermer';
+
+  @override
+  String get tillDrawerCloseSubmit => 'Fermer la caisse';
+
+  @override
+  String tillDrawerCloseTitle(String till) {
+    return 'Compter et fermer $till';
+  }
+
+  @override
+  String tillDrawerClosedBanked(String amount) {
+    return 'Déposé à la banque : $amount.';
+  }
+
+  @override
+  String tillDrawerClosedCard(String amount) {
+    return 'Paiements par carte sans réponse : $amount. Ils ne sont pas comptés comme espèces.';
+  }
+
+  @override
+  String tillDrawerClosedCounts(String expected, String counted) {
+    return 'Attendu $expected, compté $counted.';
+  }
+
+  @override
+  String tillDrawerClosedOver(String amount) {
+    return 'Excédent de $amount.';
+  }
+
+  @override
+  String get tillDrawerClosedSame =>
+      'Le comptage correspond aux espèces attendues.';
+
+  @override
+  String tillDrawerClosedShort(String amount) {
+    return 'Manque $amount.';
+  }
+
+  @override
+  String get tillDrawerClosedTitle => 'Caisse fermée';
+
+  @override
+  String get tillDrawerCounted => 'Espèces comptées dans le tiroir';
+
+  @override
+  String get tillDrawerCountedHelp => 'Comptez ce qui est dans le tiroir.';
+
+  @override
+  String get tillDrawerCountedHelpBlind =>
+      'Comptez ce qui est dans le tiroir. Les espèces attendues s\'affichent après le comptage.';
+
+  @override
+  String get tillDrawerDenomAdd => 'Ajouter une coupure';
+
+  @override
+  String get tillDrawerDenomCount => 'Combien';
+
+  @override
+  String get tillDrawerDenomIncomplete =>
+      'Chaque ligne demande une valeur supérieure à zéro et un nombre de pièces, sans valeur en double.';
+
+  @override
+  String get tillDrawerDenomRemove => 'Retirer cette ligne';
+
+  @override
+  String tillDrawerDenomTotal(String amount) {
+    return 'Total compté : $amount';
+  }
+
+  @override
+  String get tillDrawerDenomValue => 'Valeur d\'un billet ou d\'une pièce';
+
+  @override
+  String get tillDrawerDifferenceAsked =>
+      'Le comptage diffère des espèces attendues. Dites pourquoi pour fermer la caisse.';
+
+  @override
+  String tillDrawerDifferenceLive(String amount) {
+    return 'Écart : $amount';
+  }
+
+  @override
+  String get tillDrawerDifferenceReason =>
+      'Pourquoi le comptage diffère-t-il ?';
+
+  @override
+  String get tillDrawerDifferenceReasonMissing =>
+      'Dites pourquoi le comptage diffère.';
+
+  @override
+  String get tillDrawerEditTill => 'Modifier la caisse';
+
+  @override
+  String get tillDrawerEntryAmount => 'Montant';
+
+  @override
+  String get tillDrawerEntryDone => 'Mouvement d\'espèces enregistré.';
+
+  @override
+  String tillDrawerEntryLimit(String limit) {
+    return 'Au-delà de $limit, une sortie est enregistrée par une personne qui peut enregistrer des paiements sortants.';
+  }
+
+  @override
+  String get tillDrawerEntryPaidIn => 'Entrée';
+
+  @override
+  String get tillDrawerEntryPaidOut => 'Sortie';
+
+  @override
+  String get tillDrawerEntryReason => 'Motif';
+
+  @override
+  String get tillDrawerEntryReasonMissing => 'Choisissez un motif.';
+
+  @override
+  String get tillDrawerEntrySubmit => 'Enregistrer';
+
+  @override
+  String get tillDrawerEntryTitle => 'Entrée ou sortie d\'espèces';
+
+  @override
+  String tillDrawerExpected(String amount) {
+    return 'Espèces attendues : $amount';
+  }
+
+  @override
+  String get tillDrawerExpectedHidden =>
+      'Les espèces attendues s\'affichent après le comptage du tiroir.';
+
+  @override
+  String get tillDrawerFailed => 'La caisse n\'a pas pu le faire. Réessayez.';
+
+  @override
+  String get tillDrawerFloat => 'Fond de caisse';
+
+  @override
+  String get tillDrawerFloatHelp =>
+      'Les espèces avec lesquelles le tiroir démarre, comptées maintenant.';
+
+  @override
+  String get tillDrawerLoadFailed => 'Les caisses n\'ont pas pu être lues.';
+
+  @override
+  String get tillDrawerManage => 'Caisses et tiroirs';
+
+  @override
+  String get tillDrawerNameMissing => 'Donnez un nom à la caisse.';
+
+  @override
+  String get tillDrawerNoTills =>
+      'Il n\'y a pas encore de caisse. Ajoutez la première pour compter un tiroir.';
+
+  @override
+  String get tillDrawerNoTillsPerson =>
+      'Aucune caisse n\'est encore créée. Une personne qui gère les sites l\'ajoute.';
+
+  @override
+  String get tillDrawerOpenAction => 'Ouvrir la caisse';
+
+  @override
+  String get tillDrawerOpenFirstBody =>
+      'Ouvrez une caisse avec son fond de caisse avant de vendre.';
+
+  @override
+  String get tillDrawerOpenFirstTitle => 'Aucune caisse n\'est ouverte';
+
+  @override
+  String tillDrawerOpenTitle(String till) {
+    return 'Ouvrir $till';
+  }
+
+  @override
+  String get tillDrawerRefusalAboveLimit =>
+      'Une sortie de cette importance est enregistrée par une personne qui peut enregistrer des paiements sortants.';
+
+  @override
+  String get tillDrawerRefusalAlreadyOpen =>
+      'Cette caisse est déjà ouverte. Comptez-la et fermez-la avant de la rouvrir ou de la désactiver.';
+
+  @override
+  String get tillDrawerRefusalDenominations =>
+      'Les comptages par coupure ne font pas le montant.';
+
+  @override
+  String get tillDrawerRefusalDifference =>
+      'Le comptage diffère des espèces attendues. Dites pourquoi avant de fermer.';
+
+  @override
+  String get tillDrawerRefusalNameTaken =>
+      'Une autre caisse de cette entreprise porte déjà ce nom.';
+
+  @override
+  String get tillDrawerRefusalOpenFirst =>
+      'Ouvrez d\'abord la caisse : une vente demande une session ouverte sur sa caisse.';
+
+  @override
+  String get tillDrawerRefusalReasonUnknown =>
+      'Ce motif n\'est pas dans la liste de l\'entreprise. Choisissez-en un dans la liste.';
+
+  @override
+  String get tillDrawerRefusalSessionGone =>
+      'Cette session n\'est plus ouverte.';
+
+  @override
+  String get tillDrawerRefusalTillUnknown =>
+      'Ce n\'est pas une caisse active de cette entreprise.';
+
+  @override
+  String get tillDrawerStateClosed => 'Fermée';
+
+  @override
+  String get tillDrawerStateOff => 'Désactivée';
+
+  @override
+  String tillDrawerStateOpen(String float) {
+    return 'Ouverte · fond de caisse $float';
+  }
+
+  @override
+  String get tillDrawerTillActive => 'En service';
+
+  @override
+  String get tillDrawerTillName => 'Nom de la caisse';
+
+  @override
+  String get tillDrawerTillNewTitle => 'Nouvelle caisse';
+
+  @override
+  String get tillDrawerTillSave => 'Enregistrer la caisse';
+
+  @override
+  String get tillDrawerTitle => 'Tiroir-caisse';
+
+  @override
   String get tillFailed => 'La caisse n\'a pas pu le faire. Réessayez.';
 
   @override

@@ -3165,6 +3165,23 @@ Dove il suo paese non consente ancora la cassa, questa indica l'operazione manca
 
 Un articolo tracciato indica da dove è stato preso. Quando vende un articolo gestito a lotti senza scegliere un lotto, la vendita lo preleva dai lotti in giacenza, prima quello che scade per primo e mai uno scaduto; sotto la riga venduta la cassa mostra il codice di ogni lotto come è stato ricevuto, con la quantità prelevata, per esempio **Lotto SUP-A × 2 · Lotto SUP-B × 1**, e ogni pezzo con la sua etichetta. Se l'azienda usa un lettore, scansioni l'etichetta di un pezzo per aggiungerlo: la vendita preleva esattamente i pezzi scansionati, e lo stesso pezzo due volte viene rifiutato. Questi identificativi di tracciabilità sono fissati con lo scontrino: modificare in seguito un lotto o un'etichetta non altera mai uno scontrino già emesso. Nel magazzino, la tracciabilità di un lotto o di un pezzo indica lo scontrino che lo ha venduto.
 
+<!-- anchor: user.money.till-drawer -->
+### Aprire la cassa, contare e chiudere
+
+**Destinatari:** Amministratore · Proprietario
+
+Si gestisce un cassetto di cassa e si vuole sapere che il denaro al suo interno sia corretto a fine giornata.
+
+Aprire **Cassetto di cassa** nel menu delle vendite (richiede la funzione sessioni di cassa e il diritto di emettere fatture o di vedere le finanze). Ogni cassa dell'attività è elencata con il suo stato. Chi gestisce le sedi aggiunge una cassa con **Aggiungere una cassa** e può rinominarla o disattivarla.
+
+Premere **Aprire la cassa**, digitare il **Fondo cassa nel cassetto** (o, se l'attività conta per taglio, il valore di ogni banconota o moneta e quanti pezzi) e confermare. Una cassa ha una sola sessione aperta alla volta e, con le sessioni di cassa, la cassa vende solo su una sessione aperta: senza sessione aperta propone **Aprire la cassa** invece di vendere.
+
+**Versamento o prelievo** registra il denaro messo nel cassetto o prelevato, con un **Motivo** scelto dall'elenco dell'attività. Un prelievo oltre il limite dell'attività viene registrato da chi può registrare i pagamenti in uscita.
+
+**Contare e chiudere** chiede i **Contanti contati nel cassetto** e quanto viene **Portato in banca**. Quando l'attività conta alla cieca, i contanti attesi non vengono mostrati prima del conteggio; chi può vedere le finanze li vede, insieme alla differenza mentre digita. Un conteggio che differisce dai contanti attesi si chiude solo con il suo motivo, che la cassa richiede. Dopo la chiusura la cassa indica quanto era atteso, quanto è stato contato e la differenza. I pagamenti con carta senza risposta sono elencati a parte e mai contati come contanti.
+
+**Chiusura della giornata.** Chi può vedere le finanze apre **Chiusura della giornata** dal cassetto di cassa e preme **Chiudere la giornata** quando ogni cassa è chiusa (una cassa ancora aperta viene indicata e rifiuta la chiusura). Le sessioni chiuse della giornata diventano un rapporto numerato: ogni sessione con atteso, contato, differenza e motivo, gli incassi per mezzo di pagamento e per aliquota, i contanti versati e prelevati, i rimborsi e l'intervallo dei numeri degli scontrini. **Giornate chiuse** elenca i rapporti già fatti; una giornata chiusa non cambia mai. È la registrazione propria dell'attività; il contenuto legale che un paese richiede alla chiusura della giornata arriva con un proprio modulo.
+
 <!-- anchor: user.money.stock.rfid -->
 ### Tag RFID: uno per lotto o uno per pezzo
 

@@ -10,9 +10,11 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../codes/dk_code.dart';
 import 'demo_stock_registry.dart';
+import 'demo_till_drawer.dart';
 
 /// The server's refusal: its SQLSTATE as the code, its words as the message.
-PostgrestException _refused(String code, String message) => PostgrestException(message: message, code: code);
+PostgrestException _refused(String code, String message, {String? reason}) =>
+    PostgrestException(message: message, code: code, details: reason == null ? null : '{"reason":"$reason"}');
 
 /// #4436 -- the Demo's traced item at the counter: the oat milk is tracked by lot, and a sale takes it from the lot on
 /// hand that expires first and is not expired yet (MILK-09 is past its date, so MILK-12; the expiry report's lots). The
@@ -23,13 +25,18 @@ const _tracedLots = <String, String>{'demo-item-milk': 'MILK-12', 'demo-item-bas
 const _unstocked = <String, int>{'demo-item-shirt': 1900, 'demo-item-basket': 3900, 'demo-item-apples': 1800};
 
 class DemoTill implements TillPort, TillOfflinePort {
-  DemoTill({required this.country, required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2});
+  DemoTill({required this.country, required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2, this.drawer});
 
   final String country;
   final String currency;
   final int vatPercent;
   final bool ready;
   final int minorDigits;
+
+  /// The cash drawer of this business: with its sessions on, a sale needs an open session on its till, and a cash sale
+  /// goes into it.
+  final DemoTillDrawer? drawer;
+  final Map<String, String> _tillOf = {};
 
   int _revision = 0;
   int _sales = 0;
@@ -52,9 +59,12 @@ class DemoTill implements TillPort, TillOfflinePort {
   );
 
   @override
-  Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision}) async {
+  Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision, String? tillId}) async {
     final replay = _answered[requestId];
     if (replay != null) return replay;
+    if (tillId != null && drawer != null && !drawer!.hasOpenSession(tillId)) {
+      throw _refused(DkCode.dkl12, 'open the till first', reason: 'till_open_first');
+    }
     final id = receiptId ?? 'demo-receipt-${_drafts.length + _sales + 1}';
     final known = _drafts[id];
     if (receiptId != null && (known == null || known.revision != expectedRevision)) {
@@ -80,6 +90,7 @@ class DemoTill implements TillPort, TillOfflinePort {
       issueReceipt: ready ? 'supported' : 'unavailable',
     );
     _drafts[id] = draft;
+    if (tillId != null) _tillOf[id] = tillId;
     _lines[id] = lines;
     _answered[requestId] = draft;
     return draft;
@@ -116,6 +127,8 @@ class DemoTill implements TillPort, TillOfflinePort {
     final sold = TillSold(receiptId: receiptId, number: 'R-${(++_sales).toString().padLeft(5, '0')}', totals: draft.totals, lines: traced);
     _lines.remove(receiptId);
     _drafts.remove(receiptId);
+    final till = _tillOf.remove(receiptId);
+    if (till != null) drawer?.recordCashSale(till, tenders.where((t) => t.kind == 'cash').fold(0, (a, t) => a + t.amountMinor), number: sold.number);
     return _done[requestId] = sold;
   }
 

@@ -138,6 +138,7 @@
   "user.money.stock.scanning": "Trabajar con un escáner",
   "user.money.stock.nfc": "Etiquetas con el NFC del teléfono",
   "user.money.till": "Caja",
+  "user.money.till-drawer": "Abrir la caja, contar y cerrar",
   "user.money.stock.rfid": "Etiquetas RFID: una por lote o una por pieza",
   "user.money.stock.units": "Unidades de manipulación",
   "user.money.stock.expiry": "El informe de caducidad",
