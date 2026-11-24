@@ -31379,12 +31379,6 @@ abstract class AppLocalizations {
   /// **'{label}: {value}'**
   String labelWithValue(String label, String value);
 
-  /// #4429 a label and its value on one line, the way the language joins them (French puts a space before the colon)
-  ///
-  /// In en, this message translates to:
-  /// **'{label}: {value}'**
-  String labelledValue(String label, String value);
-
   /// Text in the app-language dialog saying which languages exist; fallback is the name of the language a device in another language sees
   ///
   /// In en, this message translates to:

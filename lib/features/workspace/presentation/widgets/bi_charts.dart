@@ -135,7 +135,7 @@ class _BiEvolutionChartState extends State<BiEvolutionChart> {
         : p.partial
         ? ' · ${widget.partialLabel}'
         : '';
-    return context.l10n.labelledValue(widget.periodLabel(p.period), '$what$tag');
+    return context.l10n.labelWithValue(widget.periodLabel(p.period), '$what$tag');
   }
 
   @override

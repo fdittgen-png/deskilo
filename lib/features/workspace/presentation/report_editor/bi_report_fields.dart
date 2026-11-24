@@ -134,7 +134,7 @@ class BiStepper extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
     children: [
-      Expanded(child: Text(context.l10n.labelledValue(label, value))),
+      Expanded(child: Text(context.l10n.labelWithValue(label, value))),
       IconButton(
         key: ValueKey('$keyPrefix-less'),
         tooltip: less,

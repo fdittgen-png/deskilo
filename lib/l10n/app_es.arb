@@ -11856,7 +11856,6 @@
   "kitScrollBack": "Desplazar hacia atrás",
   "kitScrollForward": "Desplazar hacia adelante",
   "labelWithValue": "{label}: {value}",
-  "labelledValue": "{label}: {value}",
   "languageAvailableHint": "DesKilo está disponible en los idiomas siguientes. En un dispositivo configurado en otro idioma, se muestra en {fallback}.",
   "languageNameCS": "Checo",
   "@languageNameCS": {

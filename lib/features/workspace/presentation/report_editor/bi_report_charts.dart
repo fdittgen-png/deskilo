@@ -125,7 +125,7 @@ class BiBars extends StatelessWidget {
                 key: ValueKey('bi-bar-${visual.id}-${r.key}'),
                 colour: colours[i % colours.length],
                 text:
-                    context.l10n.labelledValue(label(r), '${text(r)} (${share.format(valueOf(r)! / total)})'),
+                    context.l10n.labelWithValue(label(r), '${text(r)} (${share.format(valueOf(r)! / total)})'),
                 onTap: onPick == null ? null : () => onPick!(r),
               ),
         ],
@@ -265,7 +265,7 @@ class BiLineBody extends ConsumerWidget {
     ];
     String value(BiSeriesPoint p) => view.value(p.value, locale, currency);
     String line(BiSeriesPoint p) =>
-        l10n.labelledValue(biPeriodLabel(p.period, l10n, locale), value(p));
+        l10n.labelWithValue(biPeriodLabel(p.period, l10n, locale), value(p));
     if (known.isEmpty) {
       return Text(
         l10n.biEditorNoHistory,

@@ -126,7 +126,7 @@ class InvoiceJourneyBar extends StatelessWidget {
     return Semantics(
       label: [
         for (final step in InvoiceStep.values)
-          l10n.labelledValue(invoiceStepLabel(l10n, step), _stepStateLabel(l10n, steps[step]!)),
+          l10n.labelWithValue(invoiceStepLabel(l10n, step), _stepStateLabel(l10n, steps[step]!)),
       ].join(', '),
       // #3285 — fits a phone: four columns, labels wrap, no sideways scroll.
       child: Row(
