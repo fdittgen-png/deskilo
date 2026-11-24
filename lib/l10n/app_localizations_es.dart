@@ -8019,7 +8019,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String datevProblemAutomatic(String percent, String account) {
-    return 'el $percent % se contabilizaría en $account, la cuenta automática de otro tipo';
+    return 'el $percent se contabilizaría en $account, la cuenta automática de otro tipo';
   }
 
   @override
@@ -8078,7 +8078,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String datevProblemTaxKey(String percent, String account) {
-    return 'no hay ningún BU-Schlüssel registrado para el $percent % en la cuenta $account';
+    return 'no hay ningún BU-Schlüssel registrado para el $percent en la cuenta $account';
   }
 
   @override
@@ -18863,11 +18863,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get itemGroupMargin => 'Margen objetivo sobre el coste (%)';
 
   @override
-  String itemGroupMarginValue(String percent) {
-    return '$percent %';
-  }
-
-  @override
   String get itemGroupMinAge => 'Edad mínima para una venta';
 
   @override
@@ -19903,6 +19898,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String labelWithValue(String label, String value) {
+    return '$label: $value';
+  }
+
+  @override
+  String labelledValue(String label, String value) {
     return '$label: $value';
   }
 
@@ -21031,7 +21031,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String mcpConfirmNewShare(String pct) {
-    return 'Nueva parte de suscripción: $pct %';
+    return 'Nueva parte de suscripción: $pct';
   }
 
   @override
@@ -21062,7 +21062,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String mcpConfirmShareFrom(String pct, String date) {
-    return 'Nueva parte de suscripción: $pct % desde el $date';
+    return 'Nueva parte de suscripción: $pct desde el $date';
   }
 
   @override
@@ -22878,7 +22878,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String memberPlanShare(String pct) {
-    return 'Plan $pct %';
+    return 'Plan $pct';
   }
 
   @override
@@ -25310,10 +25310,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cuándo se ejecuta: cada mañana en el servidor, si la instalación programa tareas (pg_cron); si no, cuando un administrador abre Finanzas. El operador de su servidor sabe cuál se aplica.';
 
   @override
-  String get paymentRoutingNumberLabel => 'Routing number';
+  String get paymentRoutingNumberLabel => 'Número de ruta (ABA)';
 
   @override
-  String get paymentSortCodeLabel => 'Sort code';
+  String get paymentSortCodeLabel => 'Código de sucursal (sort code)';
 
   @override
   String get paymentTermsEdit => 'Solicitar un cambio';
@@ -34004,12 +34004,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String setupGrowVatPreviewRate(String rate) {
-    return 'IVA $rate %';
-  }
-
-  @override
-  String setupGrowVatRate(String rate) {
-    return '$rate %';
+    return 'IVA $rate';
   }
 
   @override

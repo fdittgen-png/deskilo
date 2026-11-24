@@ -46,7 +46,7 @@ class BiVisualScope extends ConsumerWidget {
     }
 
     String what(BiReportFilter f) =>
-        '${biDimensionName(l10n, f.dimension)}: ${valueOf(f)}';
+        l10n.labelledValue(biDimensionName(l10n, f.dimension), valueOf(f));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

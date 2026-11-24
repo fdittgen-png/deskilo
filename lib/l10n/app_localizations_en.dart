@@ -7980,7 +7980,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String datevProblemAutomatic(String percent, String account) {
-    return '$percent % would be booked to $account, the automatic account of another rate';
+    return '$percent would be booked to $account, the automatic account of another rate';
   }
 
   @override
@@ -8039,7 +8039,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String datevProblemTaxKey(String percent, String account) {
-    return 'no BU-Schlüssel is recorded for $percent % on account $account';
+    return 'no BU-Schlüssel is recorded for $percent on account $account';
   }
 
   @override
@@ -18735,11 +18735,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemGroupMargin => 'Target margin on cost (%)';
 
   @override
-  String itemGroupMarginValue(String percent) {
-    return '$percent %';
-  }
-
-  @override
   String get itemGroupMinAge => 'Minimum age for a sale';
 
   @override
@@ -19768,6 +19763,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String labelWithValue(String label, String value) {
+    return '$label: $value';
+  }
+
+  @override
+  String labelledValue(String label, String value) {
     return '$label: $value';
   }
 
@@ -20891,7 +20891,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String mcpConfirmNewShare(String pct) {
-    return 'New subscription share: $pct %';
+    return 'New subscription share: $pct';
   }
 
   @override
@@ -20922,7 +20922,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String mcpConfirmShareFrom(String pct, String date) {
-    return 'New subscription share: $pct % from $date';
+    return 'New subscription share: $pct from $date';
   }
 
   @override
@@ -22721,7 +22721,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String memberPlanShare(String pct) {
-    return 'Plan $pct%';
+    return 'Plan $pct';
   }
 
   @override
@@ -33727,12 +33727,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String setupGrowVatPreviewRate(String rate) {
-    return 'VAT $rate %';
-  }
-
-  @override
-  String setupGrowVatRate(String rate) {
-    return '$rate %';
+    return 'VAT $rate';
   }
 
   @override

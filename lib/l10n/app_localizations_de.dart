@@ -8043,7 +8043,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String datevProblemAutomatic(String percent, String account) {
-    return '$percent % würde auf $account gebucht, das Automatikkonto eines anderen Satzes';
+    return '$percent würde auf $account gebucht, das Automatikkonto eines anderen Satzes';
   }
 
   @override
@@ -8102,7 +8102,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String datevProblemTaxKey(String percent, String account) {
-    return 'für $percent % auf Konto $account ist kein BU-Schlüssel hinterlegt';
+    return 'für $percent auf Konto $account ist kein BU-Schlüssel hinterlegt';
   }
 
   @override
@@ -18916,11 +18916,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get itemGroupMargin => 'Zielmarge auf die Kosten (%)';
 
   @override
-  String itemGroupMarginValue(String percent) {
-    return '$percent %';
-  }
-
-  @override
   String get itemGroupMinAge => 'Mindestalter für einen Verkauf';
 
   @override
@@ -19955,6 +19950,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String labelWithValue(String label, String value) {
+    return '$label: $value';
+  }
+
+  @override
+  String labelledValue(String label, String value) {
     return '$label: $value';
   }
 
@@ -21087,7 +21087,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String mcpConfirmNewShare(String pct) {
-    return 'Neuer Abonnementanteil: $pct %';
+    return 'Neuer Abonnementanteil: $pct';
   }
 
   @override
@@ -21118,7 +21118,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String mcpConfirmShareFrom(String pct, String date) {
-    return 'Neuer Abonnementanteil: $pct % ab $date';
+    return 'Neuer Abonnementanteil: $pct ab $date';
   }
 
   @override
@@ -22941,7 +22941,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String memberPlanShare(String pct) {
-    return 'Tarif $pct %';
+    return 'Tarif $pct';
   }
 
   @override
@@ -25385,10 +25385,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wann es läuft: jeden Morgen auf dem Server, sofern die Installation Aufgaben plant (pg_cron); sonst, wenn eine Verwaltungsperson Finanzen öffnet. Der Betreiber Ihres Servers weiß, was zutrifft.';
 
   @override
-  String get paymentRoutingNumberLabel => 'Routing number';
+  String get paymentRoutingNumberLabel => 'Routing-Nummer (ABA)';
 
   @override
-  String get paymentSortCodeLabel => 'Sort code';
+  String get paymentSortCodeLabel => 'Bankleitzahl (Sort Code)';
 
   @override
   String get paymentTermsEdit => 'Änderung beantragen';
@@ -34081,12 +34081,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String setupGrowVatPreviewRate(String rate) {
-    return 'USt. $rate %';
-  }
-
-  @override
-  String setupGrowVatRate(String rate) {
-    return '$rate %';
+    return 'USt. $rate';
   }
 
   @override

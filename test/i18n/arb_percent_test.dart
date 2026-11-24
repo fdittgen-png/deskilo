@@ -122,15 +122,8 @@ void main() {
 /// The keys that still add a literal sign to a bare number handed in as text,
 /// each with the call site that formats it (#4429). The list only shrinks.
 const _textPercentLeft = {
-  'datevProblemAutomatic', // gobd_procedure_document.dart: a document, rate.format(percent)
-  'datevProblemTaxKey', // gobd_procedure_document.dart: a document, rate.format(percent)
-  'itemGroupMarginValue', // item_group_text.dart: percentOfMarginBps
-  'mcpConfirmNewShare', // mcp_confirmation_screen.dart: the share the assistant asks for
-  'mcpConfirmShareFrom', // mcp_confirmation_screen.dart: the share the assistant asks for
-  'memberPlanShare', // member_contact_card.dart: subscriptionPct
-  'setupGrowVatPreviewRate', // setup_vat_step.dart: _rate
-  'setupGrowVatRate', // setup_vat_step.dart: _rate
-  'tillDayRateLine', // till_drawer/day_report_view.dart: the till's day report
+  // till_drawer/day_report_view.dart: the till's day report, which this work does not touch (b5 owns the till)
+  'tillDayRateLine',
 };
 
 /// Every literal sign beside a TEXT placeholder, as `key language: the text`.

@@ -10,7 +10,7 @@
   "mcpConfirmNotFound": "Für Sie gibt es keine solche Anfrage.",
   "mcpConfirmUnavailable": "Diese Anfrage konnte nicht geladen werden. Versuchen Sie es über den Link erneut.",
   "mcpConfirmNewStatus": "Neuer Status: {status}",
-  "mcpConfirmNewShare": "Neuer Abonnementanteil: {pct} %",
+  "mcpConfirmNewShare": "Neuer Abonnementanteil: {pct}",
   "mcpConfirmApprove": "Ihre Antwort: freigeben",
   "mcpConfirmRefuse": "Ihre Antwort: ablehnen",
   "mcpConfirmPeriod": "Zeitraum: {period}",
@@ -24,7 +24,7 @@
   "mcpConfirmFieldChange": "{field}: {from} → {to}",
   "mcpConfirmClosureReason": "Grund: {reason}",
   "mcpConfirmInvitee": "Einladung für",
-  "mcpConfirmShareFrom": "Neuer Abonnementanteil: {pct} % ab {date}",
+  "mcpConfirmShareFrom": "Neuer Abonnementanteil: {pct} ab {date}",
   "mcpConfirmPauseUntil": "Pause vom {from} bis {to}",
   "mcpConfirmPauseOpen": "Pause ab {from}, bis zur Wiederaufnahme",
   "mcpConfirmCancelDated": "Die Änderung vom {date} abbrechen"

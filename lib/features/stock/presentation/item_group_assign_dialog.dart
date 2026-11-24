@@ -190,7 +190,7 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('${itemGroupParamLabel(l10n, p)}: ${itemGroupValueText(l10n, p, param.value)}'),
+        Text(l10n.labelledValue(itemGroupParamLabel(l10n, p), itemGroupValueText(l10n, p, param.value))),
         Text(_source(context, l10n, param), key: ValueKey('item-group-source-$p'), style: Theme.of(context).textTheme.bodySmall),
         if (p == 'tag_mode')
           Row(

@@ -4700,7 +4700,7 @@
   },
   "datevDebtorBase": "Cuenta Debitor del miembro n.º 0",
   "datevProblemAccountLength": "la cuenta {account} no tiene {length} dígitos",
-  "datevProblemAutomatic": "el {percent} % se contabilizaría en {account}, la cuenta automática de otro tipo",
+  "datevProblemAutomatic": "el {percent} se contabilizaría en {account}, la cuenta automática de otro tipo",
   "datevProblemBooksBlocked": "Los libros no pudieron contabilizar las compras: {subjects}",
   "@datevProblemBooksBlocked": {
     "description": "DATEV export (#2375): the books could not post the purchases, with the missing roles or rates",
@@ -4742,7 +4742,7 @@
       }
     }
   },
-  "datevProblemTaxKey": "no hay ningún BU-Schlüssel registrado para el {percent} % en la cuenta {account}",
+  "datevProblemTaxKey": "no hay ningún BU-Schlüssel registrado para el {percent} en la cuenta {account}",
   "datevVoucherLinks": "Adjuntar los PDF de las facturas y enlazarlos desde cada línea (Beleglink)",
   "decisionSurfaceEmpty": "Nada le espera",
   "@decisionSurfaceEmpty": {
@@ -11348,15 +11348,6 @@
   "@itemGroupMargin": {
     "description": "#4361 G12 finance parameters of an item group"
   },
-  "itemGroupMarginValue": "{percent} %",
-  "@itemGroupMarginValue": {
-    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
-    "placeholders": {
-      "percent": {
-        "type": "String"
-      }
-    }
-  },
   "itemGroupMinAge": "Edad mínima para una venta",
   "itemGroupMove": "Mover",
   "itemGroupMoveReaches": "{count, plural, one{Moverlo cambia 1 ajuste.} other{Moverlo cambia {count} ajustes.}}",
@@ -11862,6 +11853,7 @@
   "kitScrollBack": "Desplazar hacia atrás",
   "kitScrollForward": "Desplazar hacia adelante",
   "labelWithValue": "{label}: {value}",
+  "labelledValue": "{label}: {value}",
   "languageAvailableHint": "DesKilo está disponible en los idiomas siguientes. En un dispositivo configurado en otro idioma, se muestra en {fallback}.",
   "languageNameCS": "Checo",
   "@languageNameCS": {
@@ -12796,14 +12788,14 @@
   "mcpConfirmFieldChange": "{field}: {from} → {to}",
   "mcpConfirmInvitee": "Invitación para",
   "mcpConfirmLevel": "{process}: {level}",
-  "mcpConfirmNewShare": "Nueva parte de suscripción: {pct} %",
+  "mcpConfirmNewShare": "Nueva parte de suscripción: {pct}",
   "mcpConfirmNewStatus": "Nuevo estado: {status}",
   "mcpConfirmNotFound": "No hay ninguna solicitud así para usted.",
   "mcpConfirmPauseOpen": "Pausa desde el {from}, hasta que se reanude",
   "mcpConfirmPauseUntil": "Pausa del {from} al {to}",
   "mcpConfirmPeriod": "Periodo: {period}",
   "mcpConfirmRefuse": "Su respuesta: rechazar",
-  "mcpConfirmShareFrom": "Nueva parte de suscripción: {pct} % desde el {date}",
+  "mcpConfirmShareFrom": "Nueva parte de suscripción: {pct} desde el {date}",
   "mcpConfirmStale": "Esta solicitud ya no coincide con los datos actuales o con su acceso. No se ha hecho nada.",
   "mcpConfirmStepDone": "Se marcará como hecho.",
   "mcpConfirmStepLater": "Se dejará para más tarde.",
@@ -13444,7 +13436,7 @@
   "memberPlanJoinedUnknown": "No registrada",
   "memberPlanPausedNoDates": "En pausa: no hay fecha registrada para esta pausa",
   "memberPlanPausedSince": "En pausa desde el {date}",
-  "memberPlanShare": "Plan {pct} %",
+  "memberPlanShare": "Plan {pct}",
   "@memberPlanShare": {
     "description": "#704 - the contact section of a member profile",
     "placeholders": {
@@ -14463,11 +14455,11 @@
   "@paymentRemindersWhen": {
     "description": "#2332: when automatic payment reminders run"
   },
-  "paymentRoutingNumberLabel": "Routing number",
+  "paymentRoutingNumberLabel": "Número de ruta (ABA)",
   "@paymentRoutingNumberLabel": {
     "description": "#711 - globalization"
   },
-  "paymentSortCodeLabel": "Sort code",
+  "paymentSortCodeLabel": "Código de sucursal (sort code)",
   "@paymentSortCodeLabel": {
     "description": "#711 - globalization"
   },
@@ -20031,8 +20023,7 @@
   "setupGrowVatOpen": "Editar los tipos de IVA",
   "setupGrowVatPreviewNoVat": "No se cobra IVA: una línea de {gross} se factura tal cual.",
   "setupGrowVatPreviewNote": "Una línea de ejemplo de {gross}, IVA incluido, desglosada como en una factura:",
-  "setupGrowVatPreviewRate": "IVA {rate} %",
-  "setupGrowVatRate": "{rate} %",
+  "setupGrowVatPreviewRate": "IVA {rate}",
   "setupGrowVatUsualNote": "Un punto de partida, no un consejo fiscal: su asesor confirma qué tipo se aplica a lo que usted vende.",
   "setupGrowVatUsualTitle": "Los tipos habituales de su país",
   "setupGuidanceTitle": "Orientación y comprobaciones",

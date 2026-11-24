@@ -4700,7 +4700,7 @@
   },
   "datevDebtorBase": "Debitor zu Mitgliedsnummer 0",
   "datevProblemAccountLength": "Konto {account} hat nicht {length} Stellen",
-  "datevProblemAutomatic": "{percent} % würde auf {account} gebucht, das Automatikkonto eines anderen Satzes",
+  "datevProblemAutomatic": "{percent} würde auf {account} gebucht, das Automatikkonto eines anderen Satzes",
   "datevProblemBooksBlocked": "Die Buchführung konnte die Einkäufe nicht buchen: {subjects}",
   "@datevProblemBooksBlocked": {
     "description": "DATEV export (#2375): the books could not post the purchases, with the missing roles or rates",
@@ -4742,7 +4742,7 @@
       }
     }
   },
-  "datevProblemTaxKey": "für {percent} % auf Konto {account} ist kein BU-Schlüssel hinterlegt",
+  "datevProblemTaxKey": "für {percent} auf Konto {account} ist kein BU-Schlüssel hinterlegt",
   "datevVoucherLinks": "Rechnungs-PDFs beilegen und aus jeder Buchung verlinken (Beleglink)",
   "decisionSurfaceEmpty": "Nichts wartet auf Sie",
   "@decisionSurfaceEmpty": {
@@ -11348,15 +11348,6 @@
   "@itemGroupMargin": {
     "description": "#4361 G12 finance parameters of an item group"
   },
-  "itemGroupMarginValue": "{percent} %",
-  "@itemGroupMarginValue": {
-    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
-    "placeholders": {
-      "percent": {
-        "type": "String"
-      }
-    }
-  },
   "itemGroupMinAge": "Mindestalter für einen Verkauf",
   "itemGroupMove": "Verschieben",
   "itemGroupMoveReaches": "{count, plural, one{Das Verschieben ändert 1 Einstellung.} other{Das Verschieben ändert {count} Einstellungen.}}",
@@ -11862,6 +11853,7 @@
   "kitScrollBack": "Zurück scrollen",
   "kitScrollForward": "Weiter scrollen",
   "labelWithValue": "{label}: {value}",
+  "labelledValue": "{label}: {value}",
   "languageAvailableHint": "DesKilo gibt es in den folgenden Sprachen. Auf einem Gerät in einer anderen Sprache erscheint es auf {fallback}.",
   "languageNameCS": "Tschechisch",
   "@languageNameCS": {
@@ -12796,14 +12788,14 @@
   "mcpConfirmFieldChange": "{field}: {from} → {to}",
   "mcpConfirmInvitee": "Einladung für",
   "mcpConfirmLevel": "{process}: {level}",
-  "mcpConfirmNewShare": "Neuer Abonnementanteil: {pct} %",
+  "mcpConfirmNewShare": "Neuer Abonnementanteil: {pct}",
   "mcpConfirmNewStatus": "Neuer Status: {status}",
   "mcpConfirmNotFound": "Für Sie gibt es keine solche Anfrage.",
   "mcpConfirmPauseOpen": "Pause ab {from}, bis zur Wiederaufnahme",
   "mcpConfirmPauseUntil": "Pause vom {from} bis {to}",
   "mcpConfirmPeriod": "Zeitraum: {period}",
   "mcpConfirmRefuse": "Ihre Antwort: ablehnen",
-  "mcpConfirmShareFrom": "Neuer Abonnementanteil: {pct} % ab {date}",
+  "mcpConfirmShareFrom": "Neuer Abonnementanteil: {pct} ab {date}",
   "mcpConfirmStale": "Diese Anfrage passt nicht mehr zu den aktuellen Daten oder Ihrem Zugriff. Es wurde nichts ausgeführt.",
   "mcpConfirmStepDone": "Er wird als erledigt markiert.",
   "mcpConfirmStepLater": "Er wird für später zurückgestellt.",
@@ -13444,7 +13436,7 @@
   "memberPlanJoinedUnknown": "Nicht erfasst",
   "memberPlanPausedNoDates": "Pausiert: Für diese Pause ist kein Datum erfasst",
   "memberPlanPausedSince": "Pausiert seit {date}",
-  "memberPlanShare": "Tarif {pct} %",
+  "memberPlanShare": "Tarif {pct}",
   "@memberPlanShare": {
     "description": "#704 - the contact section of a member profile",
     "placeholders": {
@@ -14463,11 +14455,11 @@
   "@paymentRemindersWhen": {
     "description": "#2332: when automatic payment reminders run"
   },
-  "paymentRoutingNumberLabel": "Routing number",
+  "paymentRoutingNumberLabel": "Routing-Nummer (ABA)",
   "@paymentRoutingNumberLabel": {
     "description": "#711 - globalization"
   },
-  "paymentSortCodeLabel": "Sort code",
+  "paymentSortCodeLabel": "Bankleitzahl (Sort Code)",
   "@paymentSortCodeLabel": {
     "description": "#711 - globalization"
   },
@@ -20031,8 +20023,7 @@
   "setupGrowVatOpen": "Umsatzsteuersätze bearbeiten",
   "setupGrowVatPreviewNoVat": "Es wird keine Umsatzsteuer berechnet: eine Position über {gross} wird so berechnet, wie sie ist.",
   "setupGrowVatPreviewNote": "Eine Beispielposition über {gross} inklusive Umsatzsteuer, aufgeteilt wie auf einer Rechnung:",
-  "setupGrowVatPreviewRate": "USt. {rate} %",
-  "setupGrowVatRate": "{rate} %",
+  "setupGrowVatPreviewRate": "USt. {rate}",
   "setupGrowVatUsualNote": "Ein Ausgangspunkt, keine Steuerberatung: Ihre Steuerberatung bestätigt, welcher Satz für Ihre Leistungen gilt.",
   "setupGrowVatUsualTitle": "Die üblichen Sätze Ihres Landes",
   "setupGuidanceTitle": "Hinweise und Prüfungen",

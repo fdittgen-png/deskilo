@@ -3,10 +3,8 @@
 # Claude, DesKilo), standards and their codes (IBAN, BIC / SWIFT, SAF-T, DATEV, KSeF,
 # VIES, MT940), country names spelled the same, the Swiss QR-bill's fixed English labels
 # in Spanish (the standard has no Spanish text), and words the language shares with
-# English (Status, Name, Total, Description, Version, Server, Demo). A few look like
-# translations never made and are to review first: the US and UK bank labels (Routing
-# number, Sort code) in fr, es and it, and Italian "Sales tax". A message leaves this
-# file when it is translated; the file only shrinks.
+# English (Status, Name, Total, Description, Version, Server, Demo). A message leaves
+# this file when it is translated; the file only shrinks.
 de aboutAttribution
 de aboutVersion
 de accessoriesName
@@ -117,8 +115,6 @@ de paymentMethodTwint
 de paymentMethodWero
 de paymentMethodWise
 de paymentProviderMollie
-de paymentRoutingNumberLabel
-de paymentSortCodeLabel
 de planNameLabel
 de portalAdmin
 de portalChat
@@ -227,6 +223,7 @@ es mcpConnectTabClaudeCode
 es mcpConnectTabCursor
 es mcpConnectTabVscode
 es meContextPersonal
+es memberPlanShare
 es membersTabPlan
 es myBusinessesFacePersonal
 es payFieldClientId
@@ -238,8 +235,6 @@ es paymentMethodTwint
 es paymentMethodWero
 es paymentMethodWise
 es paymentProviderMollie
-es paymentRoutingNumberLabel
-es paymentSortCodeLabel
 es plansColPlan
 es profilesPairProd
 es purchasesTotal
@@ -416,8 +411,6 @@ fr paymentMethodWero
 fr paymentMethodWise
 fr paymentProviderMollie
 fr paymentProviderWero
-fr paymentRoutingNumberLabel
-fr paymentSortCodeLabel
 fr paymentTransitNumberLabel
 fr permModuleConfiguration
 fr permModuleStock
@@ -543,7 +536,6 @@ it invoiceExportDatev
 it invoiceExportSafTAt
 it invoicePdfProforma
 it invoicePdfProformaNamed
-it invoicePdfSalesTax
 it invoiceSentTestChip
 it mcpConnectTabChatgpt
 it mcpConnectTabClaude
@@ -565,8 +557,6 @@ it paymentMethodTwint
 it paymentMethodWero
 it paymentMethodWise
 it paymentProviderMollie
-it paymentRoutingNumberLabel
-it paymentSortCodeLabel
 it portalChat
 it profilesPairProd
 it pushPendingTitle

@@ -48,7 +48,7 @@
       }
     }
   },
-  "mcpConfirmNewShare": "New subscription share: {pct} %",
+  "mcpConfirmNewShare": "New subscription share: {pct}",
   "@mcpConfirmNewShare": {
     "description": "#1619 mcp_confirmation",
     "placeholders": {
@@ -158,7 +158,7 @@
   "@mcpConfirmInvitee": {
     "description": "#3132 mcp_confirmation: the label of the person an assistant proposes to invite"
   },
-  "mcpConfirmShareFrom": "New subscription share: {pct} % from {date}",
+  "mcpConfirmShareFrom": "New subscription share: {pct} from {date}",
   "@mcpConfirmShareFrom": {
     "description": "#3937 mcp_confirmation: the share and the day it applies from",
     "placeholders": {

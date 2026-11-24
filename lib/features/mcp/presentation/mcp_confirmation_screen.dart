@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/mcp/mcp_operations.dart';
@@ -198,9 +199,9 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
       McpOperationId.requestMemberStatusChange =>
         l10n.mcpConfirmNewStatus('${args['status']}'),
       McpOperationId.requestSubscriptionChange =>
-        l10n.mcpConfirmNewShare('${args['pct']}'),
+        l10n.mcpConfirmNewShare(_share(format, args['pct'])),
       McpOperationId.scheduleMemberShareChange => l10n.mcpConfirmShareFrom(
-        '${args['pct']}',
+        _share(format, args['pct']),
         format.isoDay('${args['effective_on']}'),
       ),
       McpOperationId.scheduleMemberPause =>
@@ -307,4 +308,10 @@ String _featureChanges(AppLocalizations l10n, Map<String, Object?> target) {
     if (on.isNotEmpty) l10n.mcpConfirmSwitchOn(on),
     if (off.isNotEmpty) l10n.mcpConfirmSwitchOff(off),
   ].join('\n');
+}
+
+/// A share the assistant asks for, as a rate in the member's format; what is no number is shown as it came.
+String _share(AppFormat format, Object? raw) {
+  final value = num.tryParse('$raw');
+  return value == null ? '$raw' : format.ratePercent(value);
 }

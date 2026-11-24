@@ -12680,7 +12680,7 @@ abstract class AppLocalizations {
   /// DATEV export (#2375): a rate is booked to the automatic account of another rate
   ///
   /// In en, this message translates to:
-  /// **'{percent} % would be booked to {account}, the automatic account of another rate'**
+  /// **'{percent} would be booked to {account}, the automatic account of another rate'**
   String datevProblemAutomatic(String percent, String account);
 
   /// DATEV export (#2375): the books could not post the purchases, with the missing roles or rates
@@ -12752,7 +12752,7 @@ abstract class AppLocalizations {
   /// DATEV export (#2375): no BU key for a rate booked to a non-automatic account
   ///
   /// In en, this message translates to:
-  /// **'no BU-Schlüssel is recorded for {percent} % on account {account}'**
+  /// **'no BU-Schlüssel is recorded for {percent} on account {account}'**
   String datevProblemTaxKey(String percent, String account);
 
   /// DATEV export dialog (#2375): include the invoice PDFs, linked from each row
@@ -29814,12 +29814,6 @@ abstract class AppLocalizations {
   /// **'Target margin on cost (%)'**
   String get itemGroupMargin;
 
-  /// #4361 G12: a target margin as the group shows it; the percent arrives formatted
-  ///
-  /// In en, this message translates to:
-  /// **'{percent} %'**
-  String itemGroupMarginValue(String percent);
-
   /// #4361 G12 item groups: itemGroupMinAge
   ///
   /// In en, this message translates to:
@@ -31366,6 +31360,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{label}: {value}'**
   String labelWithValue(String label, String value);
+
+  /// #4429 a label and its value on one line, the way the language joins them (French puts a space before the colon)
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: {value}'**
+  String labelledValue(String label, String value);
 
   /// Text in the app-language dialog saying which languages exist; fallback is the name of the language a device in another language sees
   ///
@@ -33193,7 +33193,7 @@ abstract class AppLocalizations {
   /// #1619 mcp_confirmation
   ///
   /// In en, this message translates to:
-  /// **'New subscription share: {pct} %'**
+  /// **'New subscription share: {pct}'**
   String mcpConfirmNewShare(String pct);
 
   /// #1619 mcp_confirmation
@@ -33235,7 +33235,7 @@ abstract class AppLocalizations {
   /// #3937 mcp_confirmation: the share and the day it applies from
   ///
   /// In en, this message translates to:
-  /// **'New subscription share: {pct} % from {date}'**
+  /// **'New subscription share: {pct} from {date}'**
   String mcpConfirmShareFrom(String pct, String date);
 
   /// #1619 mcp_confirmation
@@ -36241,7 +36241,7 @@ abstract class AppLocalizations {
   /// #704 - the contact section of a member profile
   ///
   /// In en, this message translates to:
-  /// **'Plan {pct}%'**
+  /// **'Plan {pct}'**
   String memberPlanShare(String pct);
 
   /// #3618 members at the desk: plan tab row
@@ -53937,14 +53937,8 @@ abstract class AppLocalizations {
   /// #2875 setup grow steps: setupGrowVatPreviewRate
   ///
   /// In en, this message translates to:
-  /// **'VAT {rate} %'**
+  /// **'VAT {rate}'**
   String setupGrowVatPreviewRate(String rate);
-
-  /// #2875 setup grow steps: setupGrowVatRate
-  ///
-  /// In en, this message translates to:
-  /// **'{rate} %'**
-  String setupGrowVatRate(String rate);
 
   /// #2875 setup grow steps: setupGrowVatUsualNote
   ///

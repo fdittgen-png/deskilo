@@ -34,7 +34,7 @@ const _allowed = <String, (int, String)>{
     "a document: the book reports print in the document's locale",
   ),
   'lib/features/money/presentation/gobd_procedure_document.dart': (
-    2,
+    1,
     "a document: the GoBD procedure document prints in its own language",
   ),
   'lib/features/money/presentation/invoice_documents.dart': (
