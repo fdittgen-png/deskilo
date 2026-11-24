@@ -8,6 +8,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
 import '../../../../core/codes/dk_code.dart';
 import '../../../../core/trace/refusal_text.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/till_drawer_rules.dart';
 
@@ -17,8 +18,9 @@ String? _drawerRefusalReason(Object error) {
   if (raw == null) return null;
   try {
     return JsonReader.of(jsonDecode(raw), context: 'till_refusal').stringOrNull('reason');
-  } on Object {
+  } on Object catch (e, st) {
     // a detail that is not our JSON is no hint: the generic words stand
+    TraceLogger.instance.warn('money', 'a till refusal detail is not readable', error: e, stackTrace: st);
     return null;
   }
 }
@@ -29,7 +31,9 @@ String _drawerRefusalName(Object error) {
   if (raw == null) return '';
   try {
     return JsonReader.of(jsonDecode(raw), context: 'till_refusal').stringOr('name');
-  } on Object {
+  } on Object catch (e, st) {
+    // a detail that is not our JSON names no till: the generic words stand
+    TraceLogger.instance.warn('money', 'a till refusal detail is not readable', error: e, stackTrace: st);
     return '';
   }
 }

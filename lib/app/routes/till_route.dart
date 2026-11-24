@@ -29,7 +29,7 @@ class TillRoute extends ConsumerWidget {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final workspaceId = workspace?.id;
     // the price of each item, gross: what the till falls back on when it sells offline (the server prices every online sale)
-    final prices = {for (final s in ref.watch(servicesProvider).value ?? const <ServiceItem>[]) s.id: s.priceCents};
+    final prices = {for (final s in ref.watch(servicesProvider).value ?? const <ServiceItem>[]) s.id: s.priceCents}; // empty-ok: the prices only feed the offline fallback, the server prices every online sale
     final keys = workspaceId == null
         ? const AsyncValue<List<TillKey>>.loading()
         : ref

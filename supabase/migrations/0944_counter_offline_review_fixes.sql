@@ -69,15 +69,15 @@ end;
 $fn$;
 revoke execute on function public.counter_offline_body_total(uuid, jsonb, int) from public, anon, authenticated;
 
--- the sequence numbers missing between the recorded ones of each of [p_devices], as one list of numbers
+-- the sequence numbers missing between the recorded ones of each of [p_devices] (null: every device), as one list of numbers
 drop function if exists public.counter_offline_gaps(uuid);
 -- restates 0937
-create or replace function public.counter_offline_gaps(p_session_id uuid, p_devices uuid[])
+create or replace function public.counter_offline_gaps(p_session_id uuid, p_devices uuid[] default null)
 returns jsonb language sql stable security definer set search_path = public as $fn$
   select coalesce(jsonb_agg(distinct g.n order by g.n), '[]'::jsonb)
     from (select m.device_id, generate_series(1, m.top) as n
             from (select o.device_id, max(o.seq) as top from public.counter_offline_sales o
-                   where o.till_session_id = p_session_id and o.device_id = any (p_devices) group by o.device_id) m) g
+                   where o.till_session_id = p_session_id and (p_devices is null or o.device_id = any (p_devices)) group by o.device_id) m) g
    where not exists (select 1 from public.counter_offline_sales o where o.till_session_id = p_session_id and o.device_id = g.device_id and o.seq = g.n)
 $fn$;
 revoke execute on function public.counter_offline_gaps(uuid, uuid[]) from public, anon, authenticated;
