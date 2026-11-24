@@ -224,7 +224,7 @@ void main() {
       expect(await refusal(w.reversals.makeReturn('ws-1', 'r-4', StockReturnKind.customer, [line('1', to: 'demo-place-transit')], 'q-4')), DkCode.dkg05);
       expect(await refusal(w.reversals.makeReturn('ws-1', 'r-5', StockReturnKind.customer, [line('1', to: null)], 'q-5')), DkCode.dkg05);
       // the same holds for a supplier return: the goods leave from a place that can hold them
-      final supplier = (lineId: 'line-1', sourceMovementId: _delivery, quantity: '1', locationId: 'demo-place-loss', note: '');
+      const supplier = (lineId: 'line-1', sourceMovementId: _delivery, quantity: '1', locationId: 'demo-place-loss', note: '');
       expect(await refusal(w.reversals.makeReturn('ws-1', 'r-6', StockReturnKind.supplier, [supplier], 'q-6')), DkCode.dkg05);
       expect(w.ledger.movements.length, before, reason: 'nothing moved');
       expect(w.ledger.balance('demo-item-mugs', 'demo-place-shelf').text, '10');
