@@ -17,6 +17,9 @@
 // `has_more`/`starting_after`) -- field names as documented, not verified
 // against a live account.
 import type { SupabaseClient } from "npm:@supabase/supabase-js@2";
+import { describeError, logLine } from "../_shared/log.ts";
+
+const FN = "stripe-webhook";
 
 /** The payout statuses the books record, by event type. */
 const STATUS: Record<string, string> = {
@@ -63,7 +66,7 @@ async function carriedTransactions(
       (after ? `&starting_after=${encodeURIComponent(after)}` : "");
     const res = await deps.fetch(url, { headers: { Authorization: `Bearer ${key}` } });
     if (res.status >= 400 && res.status < 500 && res.status !== 429) {
-      console.error("stripe payout read refused", { status: res.status });
+      logLine("error", FN, "payout_read_refused", { status: res.status });
       return null;
     }
     if (!res.ok) throw new Error(`stripe payout read ${res.status}`);
@@ -92,7 +95,7 @@ export async function handlePayout(
     .select("workspace_id, config")
     .eq("provider", "stripe");
   if (error) {
-    console.error("stripe payout: credential lookup failed");
+    logLine("error", FN, "payout_credential_lookup_failed");
     return new Response("not_ready", { status: 500 });
   }
   // EVERY workspace whose own secret signed the event: two spaces sharing one
@@ -106,9 +109,7 @@ export async function handlePayout(
     }
   }
   if (signed.length > 1) {
-    console.error("stripe payout: signed by several workspaces' secrets, booking nothing", {
-      workspaces: signed.length,
-    });
+    logLine("error", FN, "payout_signed_by_several", { workspaces: signed.length });
     return new Response("ok", { status: 200 });
   }
   const workspaceId = signed[0]?.workspaceId ?? "";
@@ -117,7 +118,7 @@ export async function handlePayout(
     // Not signed by any workspace's own secret: another account's event, or
     // the installation's secret, which names no workspace. Never an error for
     // Stripe to retry; nothing is recorded.
-    console.log("stripe payout: no workspace signed it, ignoring");
+    logLine("info", FN, "payout_no_workspace_signed_it_ignoring");
     return new Response("ok", { status: 200 });
   }
   const payout = ((event.data as Row | undefined)?.object ?? {}) as Row;
@@ -126,11 +127,11 @@ export async function handlePayout(
   const amount = payout.amount;
   const currency = String(payout.currency ?? "").toUpperCase();
   if (!payoutId || !Number.isSafeInteger(amount) || !currency) {
-    console.error("stripe payout: malformed payout, ignoring");
+    logLine("error", FN, "payout_malformed_payout_ignoring");
     return new Response("ok", { status: 200 });
   }
   if (!key) {
-    console.log("stripe payout: no API key for the workspace, ignoring");
+    logLine("info", FN, "payout_no_api_key_for_the_workspace_ignoring");
     return new Response("ok", { status: 200 });
   }
   let transactions: string[] | null = [];
@@ -138,7 +139,7 @@ export async function handlePayout(
     // A failed or canceled payout carried nothing to the bank: no list needed.
     if (status === "paid") transactions = await carriedTransactions(deps, key, payoutId);
   } catch (e) {
-    console.error("stripe payout read failed", String(e));
+    logLine("error", FN, "payout_read_failed", { error: describeError(e) });
     return new Response("payout_read_failed", { status: 500 });
   }
   if (transactions === null) return new Response("ok", { status: 200 });
@@ -153,18 +154,16 @@ export async function handlePayout(
     p_transaction_ids: transactions,
   });
   if (recorded.error) {
-    console.error("stripe payout record failed", recorded.error.message);
+    logLine("error", FN, "payout_record_failed", { error: describeError(recorded.error) });
     return new Response("payout_record_failed", { status: 500 });
   }
   const answer = (recorded.data ?? {}) as Row;
   if (answer.reconciled === false) {
     // The nets of the payments linked do not add up to the payout: said, never
     // adjusted (the books keep both sides as they are).
-    console.warn("stripe payout does not reconcile with its payments", {
-      payout: payoutId,
+    logLine("warn", FN, "payout_unreconciled", { payout: payoutId,
       net: answer.net_cents,
-      amount,
-    });
+      amount });
   }
   return new Response("ok", { status: 200 });
 }

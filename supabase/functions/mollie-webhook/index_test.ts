@@ -8,7 +8,7 @@
 // known-payment path; an address naming nothing waiting, a payment carrying
 // another intent, an unreachable Mollie or a failed read attaches nothing.
 import { assertEquals } from "jsr:@std/assert@1";
-import { handle } from "./index.ts";
+import { handle, serve } from "./index.ts";
 import { intentsFake } from "../_shared/testing/intents_fake.ts";
 
 const INTENT = "00000000-0000-4000-8000-000000003917";
@@ -143,4 +143,30 @@ Deno.test("a failed read of the intents is a 500, nothing written", async () => 
   const f = fake({ readError: true });
   assertEquals((await call(f, `?intent=${INTENT}`)).status, 500);
   assertEquals(f.rpcCalls, []);
+});
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+Deno.test("#4412 mollie-webhook: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const answer = await serve({
+      admin: () => {
+        throw new Error("service role key sb_secret_xyz is wrong");
+      },
+      env: () => undefined,
+      fetch: () => Promise.reject(new Error("unused")),
+      allowTest: () => false,
+    })(new Request("https://x.test/mollie-webhook", {
+      method: "POST",
+      headers: { "x-request-id": "r-hook", "content-type": "application/x-www-form-urlencoded" },
+      body: "id=tr_abc123",
+    }));
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-hook" });
+    assertEquals(/secret|sb_|wrong/i.test(text), false);
+  } finally {
+    console.error = saved;
+  }
 });

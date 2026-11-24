@@ -22,6 +22,9 @@
 import type { SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { toMajor } from "../_shared/money.ts";
 import { allowsTestPayments } from "../_shared/test_payments.ts";
+import { describeError, logLine } from "../_shared/log.ts";
+
+const FN = "stripe-webhook";
 
 /** The reversal event types recorded, with the field naming the amount. */
 const REVERSALS: Record<string, string> = {
@@ -93,7 +96,7 @@ export async function handleReversal(
     .select("workspace_id, config")
     .eq("provider", "stripe");
   if (error) {
-    console.error("stripe reversal: credential lookup failed");
+    logLine("error", FN, "reversal_credential_lookup_failed");
     return new Response("not_ready", { status: 500 });
   }
   // Every key whose secret signed the event, the installation's own last.
@@ -108,17 +111,17 @@ export async function handleReversal(
     }
   }
   if (keys.length === 0) {
-    console.log("stripe reversal: no workspace signed it, ignoring");
+    logLine("info", FN, "reversal_no_workspace_signed_it_ignoring");
     return new Response("ok", { status: 200 });
   }
   if (ignoresTestEvent(event, deps.env)) {
-    console.log("stripe test event ignored");
+    logLine("info", FN, "reversal_test_event_ignored");
     return new Response("ok", { status: 200 });
   }
   const object = ((event.data as Row | undefined)?.object ?? {}) as Row;
   const paymentIntent = typeof object.payment_intent === "string" ? object.payment_intent : "";
   if (!paymentIntent) {
-    console.log("stripe reversal: no payment intent, ignoring");
+    logLine("info", FN, "reversal_no_payment_intent_ignoring");
     return new Response("ok", { status: 200 });
   }
   let session: string | null = null;
@@ -127,7 +130,7 @@ export async function handleReversal(
     try {
       session = await sessionOf(deps, key, paymentIntent);
     } catch (e) {
-      console.error("stripe reversal: session read failed", String(e));
+      logLine("error", FN, "reversal_session_read_failed", { error: describeError(e) });
       unread = true;
       continue;
     }
@@ -135,7 +138,7 @@ export async function handleReversal(
   }
   if (!session) {
     if (unread) return new Response("session_read_failed", { status: 500 });
-    console.log("stripe reversal: no session of ours, ignoring");
+    logLine("info", FN, "reversal_no_session_of_ours_ignoring");
     return new Response("ok", { status: 200 });
   }
   const { data: state, error: markError } = await admin.rpc("mark_payment_reversed", {
@@ -144,14 +147,14 @@ export async function handleReversal(
     p_reason: reversalReason(event),
   });
   if (markError) {
-    console.error("stripe reversal record failed", markError.message);
+    logLine("error", FN, "reversal_record_failed", { error: describeError(markError) });
     return new Response("reversal_record_failed", { status: 500 });
   }
   if (state === "created") {
     // The capture is not recorded yet: Stripe delivers this again.
-    console.log("stripe reversal before its capture, retry", session);
+    logLine("info", FN, "reversal_before_its_capture_retry", { session });
     return new Response("not_ready", { status: 503 });
   }
-  console.log("stripe payment reversed", session, event.type);
+  logLine("info", FN, "reversal_payment_reversed", { session, type: event.type });
   return new Response("ok", { status: 200 });
 }

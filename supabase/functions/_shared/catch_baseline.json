@@ -22,9 +22,8 @@
   "deskilo-mcp/index.ts": 5,
   "maintenance/index.ts": 2,
   "mollie-settlements/index.ts": 1,
-  "mollie-webhook/index.ts": 3,
   "payment-reconcile/readers.ts": 3,
-  "paypal-webhook/index.ts": 4,
+  "paypal-webhook/index.ts": 1,
   "send-e-invoice/common.ts": 1,
   "send-e-invoice/connectors.ts": 2,
   "send-e-invoice/connectors/common.ts": 1,
@@ -37,9 +36,8 @@
   "send-purchase-order/index.ts": 1,
   "send-push/index.ts": 6,
   "send-reminder-email/index.ts": 1,
-  "stripe-webhook/index.ts": 3,
-  "stripe-webhook/payout.ts": 1,
-  "stripe-webhook/reversal.ts": 2,
+  "stripe-webhook/index.ts": 1,
+  "stripe-webhook/reversal.ts": 1,
   "supplier-lookup/vies.ts": 1,
   "vies-check/index.ts": 1
 }

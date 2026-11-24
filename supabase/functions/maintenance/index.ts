@@ -165,7 +165,7 @@ export async function handle(
   try {
     result = await run(service);
   } catch (e) {
-    logLine("error", FN, "maintenance_job_failed", { job, error: String(e) });
+    logLine("error", FN, "job_failed", { job, error: describeError(e) });
     return refuse("job_failed", 500, undefined, { job });
   }
   if (!result) return ok({ job, skipped: "leased" });
