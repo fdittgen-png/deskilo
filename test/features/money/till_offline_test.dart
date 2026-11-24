@@ -175,7 +175,7 @@ void main() {
       'sales': [
         {'seq': 2, 'state': 'refused', 'reason': 'price', 'receipt_id': null, 'number': null, 'total_minor': null, 'cash_given_minor': 500, 'change_minor': 20, 'occurred_at': '2026-11-24T07:00:00Z', 'fiscal': 'not_signed'},
       ],
-      'gaps': [],
+      'gaps': <int>[],
     });
     expect(l.refused.single.keptMinor, 480);
   });

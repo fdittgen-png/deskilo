@@ -33,13 +33,13 @@ class OfflineBasketLine {
 }
 
 class TillOfflineQueue {
-  TillOfflineQueue({required OfflineStore store, required String Function() newRequestId}) : _store = store, _newRequestId = newRequestId;
+  TillOfflineQueue({required this.store, required this.newRequestId});
 
   static const int _version = 1;
   static const int _batch = 200;
 
-  final OfflineStore _store;
-  final String Function() _newRequestId;
+  final OfflineStore store;
+  final String Function() newRequestId;
 
   String? _sessionId;
   DateTime? _offlineSince;
@@ -60,7 +60,7 @@ class TillOfflineQueue {
   Future<void> load() async {
     if (_loaded) return;
     _loaded = true;
-    final raw = await _store.read();
+    final raw = await store.read();
     if (raw == null) return;
     final j = jsonDecode(raw);
     if (j is! Map || j['v'] != _version) return;
@@ -76,7 +76,7 @@ class TillOfflineQueue {
     }
   }
 
-  Future<void> _save() => _store.write(jsonEncode({
+  Future<void> _save() => store.write(jsonEncode({
     'v': _version,
     'session_id': _sessionId,
     'offline_since': _offlineSince?.toUtc().toIso8601String(),
@@ -133,7 +133,7 @@ class TillOfflineQueue {
     if (cashGivenMinor < total) throw const OfflineRecordRefused(OfflineRefusal.cashShort);
     final sale = OfflineSale(
       seq: _nextSeq,
-      requestId: _newRequestId(),
+      requestId: newRequestId(),
       occurredAt: now.toUtc(),
       lines: lines,
       cashGivenMinor: cashGivenMinor,
