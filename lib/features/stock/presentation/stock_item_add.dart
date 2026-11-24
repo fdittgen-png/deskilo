@@ -21,6 +21,7 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../application/stock_reads.dart';
 import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
+import '../providers/workspace_units_providers.dart';
 import 'stock_item_editor.dart';
 import 'stock_item_new_sheet.dart';
 
@@ -116,6 +117,7 @@ class StockItemAdd {
       read: () async {
         final vat = await creator.vatChoices(workspaceId);
         final places = await _ref.read(stockPlaceConfigsProvider(workspaceId).future);
+        final units = await pickableUnitsOf(_ref, workspaceId);
         if (!context.mounted) return false;
         return await showNewStockItemSheet(
           context,
@@ -127,6 +129,7 @@ class StockItemAdd {
             separator: _ref.read(stockAddressSeparatorProvider),
             currency: _ref.read(currentWorkspaceProvider).value?.currencyCode ?? '',
             unit: _ref.read(stockWeighedGoodsProvider) ? 'kg' : 'piece',
+            units: units,
           ),
         );
       },

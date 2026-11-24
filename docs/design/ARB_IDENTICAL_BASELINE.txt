@@ -262,6 +262,7 @@ es standaloneInvoicePreviewTotal
 es supplierLookupProviderVies
 es suppliersBankIban
 es taskRecorderValueAgenda
+es tillReceiptTotal
 es vatRegisterEs347
 es whatsappTitle
 fr aboutAttribution
@@ -380,6 +381,7 @@ fr mcpConnectTabCursor
 fr mcpConnectTabVscode
 fr mcpGroupFinancial
 fr mcpGroupValidations
+fr measureDimensionVolume
 fr memberBadgesTitle
 fr memberBadgesTooltip
 fr memberContactHeading
@@ -473,6 +475,7 @@ fr taxRefFormat
 fr taxRefPosition
 fr taxRefSource
 fr tillDaySessions
+fr tillReceiptTotal
 fr usageTitle
 fr uxNavReporting
 fr vatAnnualSummaryBase
@@ -545,6 +548,7 @@ it mcpConnectTabVscode
 it mcpStatusBackend
 it meHomeTitle
 it meTabHome
+it measureDimensionVolume
 it memberPageEmailAction
 it membersColEmail
 it payFieldClientId

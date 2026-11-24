@@ -15,15 +15,18 @@ class SupabaseWorkspaceUnits implements WorkspaceUnits {
   StockRpc get _rpc => StockRpc(_client);
 
   @override
-  Future<List<WorkspaceUnit>> units(String workspaceId) => _rpc.guard('workspace_units', () async {
-    final rows = await _client
-        .from('workspace_units')
-        .select('code, label, dimension, factor_num, factor_den, un_ece_code, built_in, archived, sort_order')
-        .eq('workspace_id', workspaceId)
-        .order('sort_order', ascending: true)
-        .order('code', ascending: true);
+  Future<List<WorkspaceUnit>> units(String workspaceId) async {
+    final rows = await _rpc.rows(
+      'workspace_units',
+      () => _client
+          .from('workspace_units')
+          .select('code, label, dimension, factor_num, factor_den, un_ece_code, built_in, archived, sort_order')
+          .eq('workspace_id', workspaceId)
+          .order('sort_order', ascending: true)
+          .order('code', ascending: true),
+    );
     return [for (final row in rows) WorkspaceUnit.fromJson(row)];
-  });
+  }
 
   @override
   Future<WorkspaceUnit> save(String workspaceId, {required String requestId, required MeasureUnitDraft draft}) async => WorkspaceUnit.fromJson(

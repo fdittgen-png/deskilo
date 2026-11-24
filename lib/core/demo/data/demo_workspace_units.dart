@@ -10,23 +10,6 @@ import '../../../features/stock/domain/stock_config.dart';
 import '../../../features/stock/domain/workspace_units.dart';
 import '../../codes/dk_code.dart';
 
-/// The 13 built-in units of the server's seed, in its order (code, dimension, factor, UN/ECE code).
-const _builtIn = <(String, UnitDimension, int, int, String)>[
-  ('piece', UnitDimension.count, 1, 1, 'C62'),
-  ('g', UnitDimension.mass, 1, 1, 'GRM'),
-  ('kg', UnitDimension.mass, 1000, 1, 'KGM'),
-  ('ml', UnitDimension.volume, 1, 1, 'MLT'),
-  ('cl', UnitDimension.volume, 10, 1, 'CLT'),
-  ('l', UnitDimension.volume, 1000, 1, 'LTR'),
-  ('mm', UnitDimension.length, 1, 1000, 'MMT'),
-  ('cm', UnitDimension.length, 1, 100, 'CMT'),
-  ('m', UnitDimension.length, 1, 1, 'MTR'),
-  ('km', UnitDimension.length, 1000, 1, 'KMT'),
-  ('m2', UnitDimension.area, 1, 1, 'MTK'),
-  ('min', UnitDimension.time, 1, 1, 'MIN'),
-  ('h', UnitDimension.time, 60, 1, 'HUR'),
-];
-
 final _code = RegExp(r'^[a-z][a-z0-9_]{0,19}$');
 final _ece = RegExp(r'^[A-Z0-9]{2,3}$');
 
@@ -43,18 +26,7 @@ class DemoWorkspaceUnits implements WorkspaceUnits {
   final Map<String, List<WorkspaceUnit>> _units = {};
   final Map<String, ({String digest, WorkspaceUnit answer})> _requests = {};
 
-  List<WorkspaceUnit> _of(String workspaceId) => _units.putIfAbsent(workspaceId, () => [
-    for (final (i, b) in _builtIn.indexed)
-      WorkspaceUnit(
-        code: b.$1,
-        dimension: b.$2,
-        factorNum: b.$3,
-        factorDen: b.$4,
-        unEceCode: b.$5,
-        builtIn: true,
-        sortOrder: (i + 1) * 10,
-      ),
-  ]);
+  List<WorkspaceUnit> _of(String workspaceId) => _units.putIfAbsent(workspaceId, () => [...builtInUnits]);
 
   @override
   Future<List<WorkspaceUnit>> units(String workspaceId) async {

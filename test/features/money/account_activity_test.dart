@@ -3,6 +3,7 @@
 // pagination and logout must not lose records or expose another account's view.
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
+import 'package:deskilo/core/ui/async_read_body.dart';
 import 'package:deskilo/features/money/domain/account_activity.dart';
 import 'package:deskilo/features/money/domain/finance_hosts.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
@@ -102,10 +103,8 @@ void main() {
       expect(find.text('Office 99'), findsOneWidget);
       expect(find.text('one.example'), findsOneWidget);
       expect(find.text('two.example'), findsOneWidget);
-      expect(
-        find.textContaining('This overview is incomplete.'),
-        findsOneWidget,
-      );
+      // #4414: an unavailable server is the shared read failure, with Try again.
+      expect(find.byType(ReadFailureBanner), findsWidgets);
       await auth.signOut();
       await tester.pumpAndSettle();
       expect(find.text('Office 99'), findsNothing);

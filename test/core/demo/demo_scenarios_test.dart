@@ -116,6 +116,7 @@ import '../../helpers/demo_till_drawer_journey.dart';
 import '../../helpers/demo_till_offline_journey.dart';
 import '../../helpers/demo_vies_export_journeys.dart';
 import '../../helpers/demo_whatsapp_journeys.dart';
+import '../../helpers/unit_conversion.dart';
 
 /// One house of the reference organisation, as a check reads it: the parts
 /// the Demo scope seeds for it and the stores it keeps for the session.

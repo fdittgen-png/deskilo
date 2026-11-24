@@ -17,6 +17,7 @@ import '../domain/item_groups.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_service_creator.dart';
 import '../providers/stock_providers.dart';
+import '../providers/workspace_units_providers.dart';
 import 'item_group_sheet.dart';
 import 'item_group_text.dart';
 import 'stock_page_shell.dart';
@@ -61,8 +62,9 @@ class _GroupList extends ConsumerWidget {
     final held = ref.read(myPermissionsProvider);
     final finance = held.contains(WorkspacePermission.manageServices) && held.contains(WorkspacePermission.viewFinances);
     final vat = finance ? await ref.read(stockServiceCreatorProvider)?.vatChoices(workspaceId) ?? const <StockVatChoice>[] : const <StockVatChoice>[];
+    final units = await pickableUnitsOf(ref, workspaceId, keep: group?.params['inventory_unit'] as String?);
     if (!context.mounted) return;
-    final saved = await showItemGroupSheet(context, ref.read(itemGroupsProvider), workspaceId: workspaceId, group: group, groups: groups, choices: (places: places, vat: vat, finance: finance));
+    final saved = await showItemGroupSheet(context, ref.read(itemGroupsProvider), workspaceId: workspaceId, group: group, groups: groups, choices: (places: places, vat: vat, finance: finance, units: units));
     if (saved) ref.invalidate(itemGroupListProvider(workspaceId));
   }
 

@@ -7,6 +7,8 @@ import 'package:deskilo/features/stock/domain/workspace_units.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/unit_conversion.dart';
+
 const _km = WorkspaceUnit(code: 'km', dimension: UnitDimension.length, factorNum: 1000, factorDen: 1, builtIn: true);
 const _m = WorkspaceUnit(code: 'm', dimension: UnitDimension.length, factorNum: 1, factorDen: 1, builtIn: true);
 const _mm = WorkspaceUnit(code: 'mm', dimension: UnitDimension.length, factorNum: 1, factorDen: 1000, builtIn: true);
@@ -101,6 +103,23 @@ void main() {
       expect(factorText(_mm), '0.001');
       expect(factorText(_third), '1/3');
       expect(factorText(const WorkspaceUnit(code: 'h', dimension: UnitDimension.time, factorNum: 60, factorDen: 1)), '60');
+    });
+  });
+  group('the units a picker offers', () {
+    const drum = WorkspaceUnit(code: 'drum', label: 'Drum', dimension: UnitDimension.length, factorNum: 50, factorDen: 1);
+    final old = drum.copyWith(archived: true);
+    List<String> codes(List<WorkspaceUnit> l) => [for (final u in l) u.code];
+
+    test('with the feature off: the six of before, as ever', () {
+      expect(codes(pickableUnits([...builtInUnits, drum], unitsOn: false)), ['piece', 'g', 'kg', 'ml', 'cl', 'l']);
+    });
+    test('with it on: every unit that is not archived, the custom ones included', () {
+      expect(codes(pickableUnits([...builtInUnits, drum], unitsOn: true)), [...builtInUnits.map((u) => u.code), 'drum']);
+      expect(codes(pickableUnits([...builtInUnits, old], unitsOn: true)), isNot(contains('drum')));
+    });
+    test('the unit an item already has is kept, archived or not, so editing it never loses it', () {
+      expect(codes(pickableUnits([...builtInUnits, old], unitsOn: true, keep: 'drum')), contains('drum'));
+      expect(codes(pickableUnits(builtInUnits, unitsOn: false, keep: 'km')), contains('km'));
     });
   });
 }

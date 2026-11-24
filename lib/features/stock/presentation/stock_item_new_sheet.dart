@@ -20,16 +20,15 @@ import '../domain/stock_config_commands.dart';
 import '../domain/stock_drafts.dart';
 import '../domain/stock_service_creator.dart';
 import '../domain/stock_sites.dart';
+import '../domain/workspace_units.dart';
+import 'measure_unit_text.dart';
 import 'stock_config_text.dart';
 
 /// What the sheet reads from and writes through.
 typedef NewStockItemPorts = ({StockServiceCreator creator, StockConfigCommands commands});
 
 /// What the sheet chooses from: the VAT rates, the places (and their address separator) and the currency.
-typedef NewStockItemChoices = ({List<StockVatChoice> vat, List<StockPlaceConfig> places, String separator, String currency, String unit});
-
-/// The units a new item may be counted in (the registry's units of count, mass and volume).
-const _units = ['piece', 'g', 'kg', 'ml', 'cl', 'l'];
+typedef NewStockItemChoices = ({List<StockVatChoice> vat, List<StockPlaceConfig> places, String separator, String currency, String unit, List<WorkspaceUnit> units});
 
 /// Opens the sheet; true when the item was made.
 Future<bool> showNewStockItemSheet(
@@ -39,7 +38,8 @@ Future<bool> showNewStockItemSheet(
   required NewStockItemChoices choices,
 }) {
   final l10n = context.l10n;
-  final draft = _NewItemDraft(ports, choices.vat, choices.places, choices.separator, choices.currency)..unit = choices.unit;
+  final draft = _NewItemDraft(ports, choices.vat, choices.places, choices.separator, choices.currency, choices.units)
+    ..unit = choices.units.any((u) => u.code == choices.unit) ? choices.unit : choices.units.first.code;
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -55,12 +55,15 @@ Future<bool> showNewStockItemSheet(
 }
 
 class _NewItemDraft {
-  _NewItemDraft(this.ports, this.vat, List<StockPlaceConfig> places, this.separator, this.currency)
+  _NewItemDraft(this.ports, this.vat, List<StockPlaceConfig> places, this.separator, this.currency, this.units)
     : places = stockRealPlaces(places),
       vatId = vat.isEmpty ? null : vat.first.id,
       fields = FormControllers({'name': '', 'price': '', 'barcode': ''});
 
   final NewStockItemPorts ports;
+
+  /// The units the item may be counted in: the business's own that are not archived (the six of before while the feature is off).
+  final List<WorkspaceUnit> units;
   final List<StockVatChoice> vat;
   final List<StockPlaceConfig> places;
   final String separator;
@@ -140,7 +143,7 @@ class _NewItemDraft {
         key: const ValueKey('stock-new-item-unit'),
         label: l10n.stockItemNewUnit,
         value: unit,
-        items: [for (final u in _units) (u, u)],
+        items: [for (final u in units) (u.code, measureUnitName(l10n, u))],
         onChanged: (v) {
           unit = v ?? unit;
           refresh();

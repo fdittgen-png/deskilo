@@ -9,7 +9,6 @@
 // The conversion is exact, as the server's `workspace_unit_convert` is: through the base unit, never through a double; two
 // dimensions never convert; an answer six decimals cannot hold is refused, not rounded.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import 'package:meta/meta.dart';
 
 /// What a unit measures. Units of one dimension convert to each other; units of two never do.
 enum UnitDimension {
@@ -143,30 +142,6 @@ abstract interface class WorkspaceUnits {
   Future<void> archive(String workspaceId, {required String requestId, required String code, required bool archived});
 }
 
-/// Why a quantity has no value in another unit.
-@visibleForTesting
-enum UnitConversionProblem {
-  /// Two dimensions: a length is not a mass.
-  differentDimensions,
-
-  /// The answer has more than six decimals: it is refused, never rounded.
-  notExact,
-
-  /// The answer is beyond what a quantity can hold.
-  outOfRange,
-}
-
-/// [quantity] of [from] as a quantity of [to], exactly (no screen reads it yet: the Settings > Units screen does): `quantity x from / to` through the dimension's base unit.
-@visibleForTesting
-({ExactQuantity? value, UnitConversionProblem? problem}) convertUnit(ExactQuantity quantity, WorkspaceUnit from, WorkspaceUnit to) {
-  if (from.dimension != to.dimension) return (value: null, problem: UnitConversionProblem.differentDimensions);
-  final numerator = quantity.micro * BigInt.from(from.factorNum) * BigInt.from(to.factorDen);
-  final denominator = BigInt.from(from.factorDen) * BigInt.from(to.factorNum);
-  if (numerator.remainder(denominator) != BigInt.zero) return (value: null, problem: UnitConversionProblem.notExact);
-  final read = ExactQuantity.tryParse(_decimal(numerator ~/ denominator));
-  return read.value == null ? (value: null, problem: UnitConversionProblem.outOfRange) : (value: read.value, problem: null);
-}
-
 /// Millionths in one: a quantity holds six decimals.
 final BigInt _micro = BigInt.from(10).pow(6);
 
@@ -193,3 +168,31 @@ String _decimal(BigInt micro) {
   final digits = micro.abs().toString().padLeft(7, '0');
   return '${micro.isNegative ? '-' : ''}${digits.substring(0, digits.length - 6)}.${digits.substring(digits.length - 6)}';
 }
+
+/// The 13 units every business starts with, in the order of the server's seed (0951): the six of the original stock registry, then
+/// length, area and time. A built-in's code, dimension and factor are fixed; the business may give it a word of its own.
+const List<WorkspaceUnit> builtInUnits = [
+  WorkspaceUnit(code: 'piece', dimension: UnitDimension.count, factorNum: 1, factorDen: 1, unEceCode: 'C62', builtIn: true, sortOrder: 10),
+  WorkspaceUnit(code: 'g', dimension: UnitDimension.mass, factorNum: 1, factorDen: 1, unEceCode: 'GRM', builtIn: true, sortOrder: 20),
+  WorkspaceUnit(code: 'kg', dimension: UnitDimension.mass, factorNum: 1000, factorDen: 1, unEceCode: 'KGM', builtIn: true, sortOrder: 30),
+  WorkspaceUnit(code: 'ml', dimension: UnitDimension.volume, factorNum: 1, factorDen: 1, unEceCode: 'MLT', builtIn: true, sortOrder: 40),
+  WorkspaceUnit(code: 'cl', dimension: UnitDimension.volume, factorNum: 10, factorDen: 1, unEceCode: 'CLT', builtIn: true, sortOrder: 50),
+  WorkspaceUnit(code: 'l', dimension: UnitDimension.volume, factorNum: 1000, factorDen: 1, unEceCode: 'LTR', builtIn: true, sortOrder: 60),
+  WorkspaceUnit(code: 'mm', dimension: UnitDimension.length, factorNum: 1, factorDen: 1000, unEceCode: 'MMT', builtIn: true, sortOrder: 70),
+  WorkspaceUnit(code: 'cm', dimension: UnitDimension.length, factorNum: 1, factorDen: 100, unEceCode: 'CMT', builtIn: true, sortOrder: 80),
+  WorkspaceUnit(code: 'm', dimension: UnitDimension.length, factorNum: 1, factorDen: 1, unEceCode: 'MTR', builtIn: true, sortOrder: 90),
+  WorkspaceUnit(code: 'km', dimension: UnitDimension.length, factorNum: 1000, factorDen: 1, unEceCode: 'KMT', builtIn: true, sortOrder: 100),
+  WorkspaceUnit(code: 'm2', dimension: UnitDimension.area, factorNum: 1, factorDen: 1, unEceCode: 'MTK', builtIn: true, sortOrder: 110),
+  WorkspaceUnit(code: 'min', dimension: UnitDimension.time, factorNum: 1, factorDen: 1, unEceCode: 'MIN', builtIn: true, sortOrder: 120),
+  WorkspaceUnit(code: 'h', dimension: UnitDimension.time, factorNum: 60, factorDen: 1, unEceCode: 'HUR', builtIn: true, sortOrder: 130),
+];
+
+/// The units an item was counted in before a business had units of its own (0747): what the pickers offer while the feature is off.
+const Set<String> _originalStockUnitCodes = {'piece', 'g', 'kg', 'ml', 'cl', 'l'};
+
+/// The units a picker for what an item is counted in offers: the six of before while the feature is off, every unit that is not
+/// archived when it is on, and always [keep] (the unit the item already has, archived or not, so editing it never loses it).
+List<WorkspaceUnit> pickableUnits(List<WorkspaceUnit> all, {required bool unitsOn, String? keep}) => [
+  for (final u in all)
+    if (u.code == keep || (unitsOn ? !u.archived : _originalStockUnitCodes.contains(u.code))) u,
+];

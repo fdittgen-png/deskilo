@@ -12,7 +12,9 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/invoice_goods.dart';
+import '../../domain/line_unit.dart';
 import '../../domain/standalone_invoice.dart';
+import 'line_unit_text.dart';
 
 /// The units the composer offers, by the UN/ECE code the structured invoice
 /// needs: the registry of billing units belongs to the goods work (#4169).
@@ -56,10 +58,19 @@ class StandaloneLineForm {
   /// The line this form was opened with: what it does not edit (the supply kind, the base quantity) is kept as it was.
   final StandaloneLine? _from;
 
+  /// #4442 -- the business's own units the line may also be sold in (kilometres, a drum of cable): set by the editor that shows them.
+  List<LineUnit> offered = const [];
+
+  /// The units the business adds to the four of the composer (a piece and an hour are already there).
+  List<LineUnit> get extraUnits => [
+    for (final u in offered)
+      if (u.code != 'piece' && u.code != 'h') u,
+  ];
+
   /// A unit the composer does not list, shown by the label it was stored with and saved unchanged; null when listed.
   ({String code, String label})? get unlistedUnit {
     final from = _from;
-    if (from == null || standaloneUnits.any((u) => u.code == from.unitCode)) return null;
+    if (from == null || standaloneUnits.any((u) => u.code == from.unitCode) || extraUnits.any((u) => u.code == from.unitCode)) return null;
     return (code: from.unitCode, label: from.unitLabel);
   }
 
@@ -98,6 +109,7 @@ class StandaloneLineForm {
     final locale = appFormatOf(context).locale;
     final from = _from;
     final listed = standaloneUnits.where((u) => u.code == unit);
+    final own = extraUnits.where((u) => u.code == unit).firstOrNull;
     // The unit the line was opened with, if it is still the chosen one, is saved as it was stored (its label in the
     // language it was written in, its UN/ECE code): only a unit the person changes is read from the table.
     final keep = from != null && from.unitCode == unit;
@@ -106,7 +118,11 @@ class StandaloneLineForm {
       description: description.text.trim(),
       quantity: decimalTextFromInput(quantityField.text, locale: locale, grouping: false) ?? quantityField.text.trim(),
       unit: goodsUnit ??
-          (code: unit, label: keep ? from.unitLabel : _unitLabel(context, unit), un: keep ? from.unEceCode : (listed.isEmpty ? '' : listed.first.un)),
+          (
+            code: unit,
+            label: keep ? from.unitLabel : (own == null ? _unitLabel(context, unit) : lineUnitName(context.l10n, code: own.code, label: own.label)),
+            un: keep ? from.unEceCode : (own?.unEceCode ?? (listed.isEmpty ? '' : listed.first.un)),
+          ),
       unitPrice: decimalTextFromInput(price.text, locale: locale) ?? price.text.trim(),
       grossPrice: gross,
       vatRateId: () => rateId,
@@ -137,6 +153,7 @@ class StandaloneLineEditor extends StatelessWidget {
     this.enabled = true,
     this.goods = const [],
     this.pieces = false,
+    this.units = const [],
   });
 
   final int index;
@@ -152,10 +169,42 @@ class StandaloneLineEditor extends StatelessWidget {
   /// Whether a line may name the pieces it sells (a standalone invoice; a quote names none).
   final bool pieces;
 
+  /// #4442 -- the business's own units a free line may also be sold in; none while the feature is off.
+  final List<LineUnit> units;
+
+  /// What the line is counted in: the item's own unit on a goods line, else the units to pick from.
+  Widget _unitField(BuildContext context) {
+    final l = context.l10n;
+    return switch (form.goodsUnit) {
+      final g? => InputDecorator(
+        key: ValueKey('standalone-line-$index-goods-unit'),
+        decoration: InputDecoration(labelText: l.standaloneInvoiceLineUnit, enabled: false),
+        child: Text(g.label),
+      ),
+      null => DropdownButtonFormField<String>(
+        key: ValueKey('standalone-line-$index-unit'),
+        initialValue: form.unit,
+        decoration: InputDecoration(labelText: l.standaloneInvoiceLineUnit),
+        items: [
+          if (form.unlistedUnit case final u?) DropdownMenuItem(value: u.code, child: Text(u.label)),
+          for (final u in standaloneUnits) DropdownMenuItem(value: u.code, child: Text(_unitLabel(context, u.code))),
+          for (final u in form.extraUnits) DropdownMenuItem(value: u.code, child: Text(lineUnitName(l, code: u.code, label: u.label))),
+        ],
+        onChanged: enabled
+            ? (v) {
+                form.unit = v ?? form.unit;
+                onChanged();
+              }
+            : null,
+      ),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final sold = goods.where((g) => g.id == form.itemId).firstOrNull;
+    form.offered = units;
     return Card(
       key: ValueKey('standalone-line-$index'),
       child: Padding(
@@ -205,34 +254,7 @@ class StandaloneLineEditor extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Expanded(
-                  child: switch (form.goodsUnit) {
-                    final g? => InputDecorator(
-                      key: ValueKey('standalone-line-$index-goods-unit'),
-                      decoration: InputDecoration(labelText: l.standaloneInvoiceLineUnit, enabled: false),
-                      child: Text(g.label),
-                    ),
-                    null => DropdownButtonFormField<String>(
-                    key: ValueKey('standalone-line-$index-unit'),
-                    initialValue: form.unit,
-                    decoration: InputDecoration(labelText: l.standaloneInvoiceLineUnit),
-                    items: [
-                      if (form.unlistedUnit case final u?) DropdownMenuItem(value: u.code, child: Text(u.label)),
-                      for (final u in standaloneUnits)
-                        DropdownMenuItem(
-                          value: u.code,
-                          child: Text(_unitLabel(context, u.code)),
-                        ),
-                    ],
-                    onChanged: enabled
-                        ? (v) {
-                            form.unit = v ?? form.unit;
-                            onChanged();
-                          }
-                        : null,
-                  ),
-                  },
-                ),
+                Expanded(child: _unitField(context)),
               ],
             ),
             if (pieces && (sold?.byPiece ?? form.tags.text.isNotEmpty)) ...[
