@@ -8,8 +8,6 @@ import '../../../../core/backend/schema_version.dart';
 import '../../../../core/instance/schema_compatibility.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../providers/auth_providers.dart';
-import '../../providers/sign_out.dart';
 
 /// #1312 — the server this device uses runs an older DesKilo schema than
 /// this app needs.
@@ -26,7 +24,13 @@ import '../../providers/sign_out.dart';
 /// No feature flag, for the reason the Server screen has none: the flags
 /// live on the server this screen says cannot be used yet.
 class SchemaUpdateScreen extends ConsumerWidget {
-  const SchemaUpdateScreen({super.key});
+  const SchemaUpdateScreen({super.key, this.signedIn = false, this.onSignOut});
+
+  /// Whether someone is signed in: the account's own exits are offered only then.
+  final bool signedIn;
+
+  /// Signs out and forgets the account; the app composes it, so this screen needs no auth import.
+  final VoidCallback? onSignOut;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,7 +48,6 @@ class SchemaUpdateScreen extends ConsumerWidget {
     final running = hosted != null && hosted.answered && hosted.number != null
         ? hosted.number
         : null;
-    final signedIn = ref.watch(authStateProvider).value != null;
     // Only one business's installation is old when the personal one is not:
     // the account and its other businesses stay open, so the screen leads
     // back to Me.
@@ -112,11 +115,11 @@ class SchemaUpdateScreen extends ConsumerWidget {
                 label: Text(l10n.spaceBackToMe),
               ),
             ],
-            if (signedIn) ...[
+            if (signedIn && onSignOut != null) ...[
               const SizedBox(height: AppSpacing.sm),
               TextButton.icon(
                 key: const ValueKey('schema-update-sign-out'),
-                onPressed: () => signOutAndForget(ref),
+                onPressed: onSignOut,
                 icon: const Icon(Icons.logout),
                 label: Text(l10n.authSignOut),
               ),

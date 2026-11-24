@@ -2416,6 +2416,7 @@ You want to find an invoice, see whether it is paid and get its PDF.
 - Tap the payment icon on an open invoice to go to **Payments**.
 - If the list is empty, the workspace has not invoiced you yet; it invoices a month once it closes.
 - Invoices cannot be edited. A wrong invoice is marked **Erroneous** and replaced by a new one, and the erroneous one leaves your list. When invoices are regrouped into one, the regrouped invoice replaces them in your list.
+- A line invoiced by the hour, the day or a weight (for example *1.5 h at 90 EUR*, or *0.75 kg at 12.5 EUR per 10 kg*) shows under its label the exact quantity, its unit and the price it was entered at, as the PDF prints them; its amount is the one fixed when the invoice was issued. A line recorded by a newer version of the app is shown as written and says it cannot be used here: update the app to work with it.
 
 **See also:** [Pay what you owe](help:user.money.payments) · [Your finances across spaces](help:user.money.finances)
 

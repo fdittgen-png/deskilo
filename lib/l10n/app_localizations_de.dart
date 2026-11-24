@@ -33375,6 +33375,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingUnitPerHour => 'pro Stunde';
 
   @override
+  String get settingUnitPlaceCode => 'Lagerortcode';
+
+  @override
   String get settingUnitQuarters => 'Quartale';
 
   @override
@@ -41252,9 +41255,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tillDaySessions => 'Sitzungen';
-
-  @override
-  String get tillDayTenderCard => 'Karte';
 
   @override
   String get tillDayTenderCash => 'Bargeld';

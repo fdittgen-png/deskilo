@@ -52998,6 +52998,12 @@ abstract class AppLocalizations {
   /// **'per hour'**
   String get settingUnitPerHour;
 
+  /// #4433 the unit of the selling place setting: a place is named by its code
+  ///
+  /// In en, this message translates to:
+  /// **'place code'**
+  String get settingUnitPlaceCode;
+
   /// #2578 settings: unit of a count of quarters.
   ///
   /// In en, this message translates to:
@@ -65600,12 +65606,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sessions'**
   String get tillDaySessions;
-
-  /// #4367 till sessions: the cash drawer
-  ///
-  /// In en, this message translates to:
-  /// **'Card'**
-  String get tillDayTenderCard;
 
   /// #4367 till sessions: the cash drawer
   ///

@@ -54,6 +54,7 @@ Future<bool> showCashEntrySheet(
       builder: (context, refresh) {
         return [
           AppChoiceChips<String>(
+            key: const ValueKey('drawer-entry-kinds'),
             choices: [
               for (final k in const ['paid_in', 'paid_out'])
                 AppChoice(
@@ -85,6 +86,7 @@ Future<bool> showCashEntrySheet(
           Text(l10n.tillDrawerEntryReason, style: Theme.of(context).textTheme.titleSmall),
           const FormGap.small(),
           AppChoiceChips<String>(
+            key: const ValueKey('drawer-entry-reasons'),
             choices: [for (final r in settings.reasons) AppChoice(value: r, key: ValueKey('drawer-entry-reason-$r'), label: r)],
             selected: reason,
             onSelected: (r) {

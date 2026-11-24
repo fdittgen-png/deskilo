@@ -483,10 +483,6 @@
   "@tillDayTenderCash": {
     "description": "#4367 till sessions: the cash drawer"
   },
-  "tillDayTenderCard": "Card",
-  "@tillDayTenderCard": {
-    "description": "#4367 till sessions: the cash drawer"
-  },
   "tillDayTenderOther": "Other",
   "@tillDayTenderOther": {
     "description": "#4367 till sessions: the cash drawer"

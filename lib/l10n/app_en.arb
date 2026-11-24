@@ -42984,6 +42984,10 @@
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitPlaceCode": "place code",
+  "@settingUnitPlaceCode": {
+    "description": "#4433 the unit of the selling place setting: a place is named by its code"
+  },
   "settingUnitQuarters": "quarters",
   "@settingUnitQuarters": {
     "description": "#2578 settings: unit of a count of quarters."
@@ -53077,10 +53081,6 @@
   },
   "tillDaySessions": "Sessions",
   "@tillDaySessions": {
-    "description": "#4367 till sessions: the cash drawer"
-  },
-  "tillDayTenderCard": "Card",
-  "@tillDayTenderCard": {
     "description": "#4367 till sessions: the cash drawer"
   },
   "tillDayTenderCash": "Cash",

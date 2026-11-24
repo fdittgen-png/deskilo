@@ -112,6 +112,10 @@
   "@settingHintAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
   },
+  "settingUnitPlaceCode": "place code",
+  "@settingUnitPlaceCode": {
+    "description": "#4433 the unit of the selling place setting: a place is named by its code"
+  },
   "settingUnitRows": "rows",
   "@settingUnitRows": {
     "description": "#2576 valuation settings"

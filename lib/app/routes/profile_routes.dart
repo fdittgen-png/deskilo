@@ -3,11 +3,13 @@
 // #2493 — feature route list: the account and settings routes of the profile feature, the server screens and the schema update.
 // A route is one GoRoute and its RouteAccess here; router.dart only composes
 // the lists.
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/backend/backend_uri.dart';
 import '../../features/auth/presentation/screens/app_update_screen.dart';
-import '../../features/auth/presentation/screens/schema_update_screen.dart';
+import '../../features/auth/providers/auth_providers.dart';
+import '../../features/auth/providers/sign_out.dart';
 import '../../features/me/presentation/me_data_tab.dart';
 import '../../features/me/providers/personal_shell_providers.dart';
 import '../../features/profile/presentation/screens/backend_screen.dart';
@@ -17,6 +19,7 @@ import '../../features/profile/presentation/screens/new_instance_screen.dart';
 import '../../features/profile/presentation/screens/personal_info_screen.dart';
 import '../../features/profile/presentation/screens/privacy_screen.dart';
 import '../../features/profile/presentation/screens/profiles_screen.dart';
+import '../../features/profile/presentation/screens/schema_update_screen.dart';
 import '../../features/profile/presentation/screens/settings_screen.dart';
 import '../../features/profile/presentation/widgets/regional_formats_section.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
@@ -128,7 +131,13 @@ List<RouteBase> profileRoutes(RouteEnv env) {
     // #1312 — where a server older than this app sends every route.
     GoRoute(
       path: kSchemaUpdateRoute,
-      builder: (context, state) => const SchemaUpdateScreen(),
+      // the account's exits are composed here, so the profile feature stays off the auth providers
+      builder: (context, state) => Consumer(
+        builder: (context, ref, _) => SchemaUpdateScreen(
+          signedIn: ref.watch(authStateProvider).value != null,
+          onSignOut: () => signOutAndForget(ref),
+        ),
+      ),
     ),
     // #3726 — where an installation that accepts only newer apps sends
     // every route.

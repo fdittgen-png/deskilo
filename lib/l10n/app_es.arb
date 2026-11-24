@@ -19763,6 +19763,7 @@
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitPlaceCode": "código de ubicación",
   "settingUnitQuarters": "trimestres",
   "settingUnitRequests": "consultas",
   "@settingUnitRequests": {
@@ -23903,7 +23904,6 @@
   "tillDaySessionLine": "{till}: esperado {expected}, contado {counted}, diferencia {difference}",
   "tillDaySessionReason": "Motivo: {reason}",
   "tillDaySessions": "Sesiones",
-  "tillDayTenderCard": "Tarjeta",
   "tillDayTenderCash": "Efectivo",
   "tillDayTenderOther": "Otro",
   "tillDayTitle": "Cierre del día",
