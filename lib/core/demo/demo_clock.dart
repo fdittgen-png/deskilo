@@ -11,6 +11,7 @@
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../trace/trace_logger.dart';
 import 'data/fixture_clock.dart';
 
 /// The demo space's IANA zone (its workspace row says the same).
@@ -73,7 +74,8 @@ tz.Location _zoneNamed(String name) {
   if (name == paris.name) return paris;
   try {
     return tz.getLocation(name);
-  } on tz.LocationNotFoundException {
+  } on tz.LocationNotFoundException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'demo', 'demo_clock: LocationNotFoundException handled', error: e, stackTrace: st);
     return tz.UTC;
   }
 }

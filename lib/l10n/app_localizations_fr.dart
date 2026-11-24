@@ -7507,6 +7507,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get conversationYesterday => 'Hier';
 
   @override
+  String counterLotsExpired(String held, String asked, String expired) {
+    return 'Seuls $held des $asked demandés sont vendables ici : $expired de plus ont dépassé leur date. Rien n\'a été vendu.';
+  }
+
+  @override
+  String counterLotsShort(String held, String asked) {
+    return 'Seuls $held des $asked demandés sont ici. Rien n\'a été vendu.';
+  }
+
+  @override
   String countryChangeBody(String country, String features) {
     return 'En $country, ces fonctionnalités ne sont pas disponibles et cessent de fonctionner : $features. Leurs interrupteurs sont conservés : elles reviennent si vous remettez le pays d\'origine.';
   }
@@ -11650,6 +11660,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get exportValueNameWorkspace => 'Espace de travail';
+
+  @override
+  String get failedPartNotShown =>
+      'Cette partie n\'a pas pu être affichée. Revenez en arrière et ouvrez-la de nouveau.';
 
   @override
   String get favoriteKeptOnDeviceRefused =>
@@ -32437,6 +32451,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingGroupBusiness => 'Activité';
 
   @override
+  String get settingGroupCompatibility => 'Versions de l\'application';
+
+  @override
   String get settingGroupDirectory => 'Annuaire des membres';
 
   @override
@@ -32475,6 +32492,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingGuardrailFallback =>
       'Fixé par le logiciel ; affiché pour que vous sachiez qu\'il existe.';
+
+  @override
+  String get settingHintAppsSupportWindowDays =>
+      'Combien de jours une ancienne application reste acceptée après qu\'une plus récente est disponible sur le canal de distribution le plus lent. L\'application la plus ancienne acceptée par cette installation n\'est relevée qu\'une fois ce nombre de jours écoulé, pour que chaque membre ait le temps de la mettre à jour.';
 
   @override
   String get settingHintAssetsValuationMaxRows =>
@@ -32922,6 +32943,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingHistoryEmpty =>
       'Aucune version enregistrée : la valeur par défaut s\'applique.';
+
+  @override
+  String get settingLabelAppsSupportWindowDays =>
+      'Délai de prise en charge des anciennes applications';
 
   @override
   String get settingLabelAssetsValuationMaxRows =>
@@ -41614,6 +41639,125 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get tillNotReadyHint =>
       'Rien n\'est numéroté ni encaissé tant que l\'opération du pays n\'est pas prise en charge.';
+
+  @override
+  String get tillOfflineBanner =>
+      'Hors ligne — espèces uniquement. Les ventes sont conservées sur cet appareil et envoyées au retour de la connexion.';
+
+  @override
+  String get tillOfflineClosedSession =>
+      'La session a été fermée : ces ventes restent sur l\'appareil pour un responsable.';
+
+  @override
+  String get tillOfflineDiscard => 'Supprimer les données hors ligne';
+
+  @override
+  String get tillOfflineDiscardBody =>
+      'Les ventes non envoyées sont perdues définitivement. Ne supprimez les données qu\'après vérification par un responsable.';
+
+  @override
+  String get tillOfflineDiscardConfirm => 'Supprimer les données';
+
+  @override
+  String tillOfflineGaps(String numbers) {
+    return 'Numéros de vente manquants sur le serveur : $numbers.';
+  }
+
+  @override
+  String tillOfflineKept(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ventes restent',
+      one: '1 vente reste',
+    );
+    return '$_temp0 sur cet appareil pour un responsable.';
+  }
+
+  @override
+  String get tillOfflineNoPrice =>
+      'Cet article n\'a pas de prix sur cet appareil : il ne peut pas être vendu hors ligne.';
+
+  @override
+  String get tillOfflineNotSigned =>
+      'Non signé. Il est envoyé au serveur au retour de la connexion.';
+
+  @override
+  String get tillOfflineReasonBeforeSession =>
+      'Faite avant l\'ouverture de cette caisse.';
+
+  @override
+  String get tillOfflineReasonCash =>
+      'Les espèces données étaient inférieures au total.';
+
+  @override
+  String get tillOfflineReasonClock =>
+      'L\'horloge de l\'appareil était en avance.';
+
+  @override
+  String get tillOfflineReasonItem => 'L\'article n\'est plus vendu.';
+
+  @override
+  String get tillOfflineReasonOther =>
+      'Les règles de la caisse l\'ont refusée.';
+
+  @override
+  String get tillOfflineReasonPrice =>
+      'Le prix a changé plus que ce qui est autorisé.';
+
+  @override
+  String get tillOfflineReasonTooLong =>
+      'Faite trop longtemps après la perte de la connexion.';
+
+  @override
+  String get tillOfflineReasonTooMany =>
+      'Plus de ventes hors ligne que ce qui est autorisé.';
+
+  @override
+  String tillOfflineRecorded(int seq) {
+    return 'Enregistrée hors ligne · vente $seq de cette caisse';
+  }
+
+  @override
+  String tillOfflineReportAccepted(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ventes ont été enregistrées.',
+      one: '1 vente a été enregistrée.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tillOfflineReportRefused(int seq, String reason) {
+    return 'La vente $seq a été refusée : $reason Ses espèces restent dans le comptage du tiroir.';
+  }
+
+  @override
+  String get tillOfflineReportTitle => 'Ventes hors ligne envoyées';
+
+  @override
+  String get tillOfflineSendNow => 'Chercher la connexion maintenant';
+
+  @override
+  String get tillOfflineSyncing => 'Envoi des ventes hors ligne…';
+
+  @override
+  String get tillOfflineUnreadable =>
+      'Les données hors ligne de cet appareil sont illisibles. Rien ne se vend hors ligne tant qu\'un responsable n\'a pas décidé.';
+
+  @override
+  String tillOfflineWaiting(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ventes attendent sur cet appareil',
+      one: '1 vente attend sur cet appareil',
+      zero: 'Aucune vente n\'attend sur cet appareil',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get tillOpCorrectReceipt => 'correction d\'un ticket';

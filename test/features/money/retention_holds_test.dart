@@ -4,6 +4,7 @@
 // legal holds; someone who manages billing places one (a kind of record, an
 // issuer, a reason) and releases it with a reason. A reader without that
 // right sees the holds and no action.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/features/money/domain/accounting_connection.dart';
 import 'package:deskilo/features/money/domain/retention_hold.dart';
@@ -167,13 +168,13 @@ void main() {
   });
 
   testWidgets('a refused or failed read says so, never "no hold"', (tester) async {
-    await _open(tester, permissions: {'viewFinances'}, repository: _Refusing(readCode: '42501'));
+    await _open(tester, permissions: {'viewFinances'}, repository: _Refusing(readCode: PgCode.insufficientPrivilege));
     expect(find.textContaining('You do not have the permission'), findsOneWidget);
     expect(find.textContaining('No hold is in place'), findsNothing);
   });
 
   testWidgets('a hold the server refuses to place names the refusal and keeps the sheet', (tester) async {
-    final repo = _Refusing(placeCode: '42501');
+    final repo = _Refusing(placeCode: PgCode.insufficientPrivilege);
     await _open(tester, permissions: {'manageBilling'}, repository: repo);
     await _tap(tester, find.byKey(const ValueKey('retention-hold-place')));
     await tester.enterText(find.byKey(const ValueKey('retention-hold-reason')), 'audit');

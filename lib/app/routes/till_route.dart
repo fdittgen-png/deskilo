@@ -7,9 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/money/domain/counter_till.dart';
+import '../../features/money/domain/service_item.dart';
 import '../../features/money/presentation/till_drawer/till_day_screen.dart';
 import '../../features/money/presentation/till_drawer/till_drawer_screen.dart';
 import '../../features/money/presentation/till_screen.dart';
+import '../../features/money/providers/money_providers.dart' show servicesProvider;
 import '../../features/stock/domain/stock_code_resolver.dart';
 import '../../features/stock/providers/stock_providers.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
@@ -24,14 +26,18 @@ class TillRoute extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
+    final workspace = ref.watch(currentWorkspaceProvider).value;
+    final workspaceId = workspace?.id;
+    // the price of each item, gross: what the till falls back on when it sells offline (the server prices every online sale)
+    final prices = {for (final s in ref.watch(servicesProvider).value ?? const <ServiceItem>[]) s.id: s.priceCents};
     final keys = workspaceId == null
         ? const AsyncValue<List<TillKey>>.loading()
         : ref
               .watch(stockItemsProvider(workspaceId))
-              .whenData((items) => [for (final i in items) if (i.active) TillKey(id: i.id, name: i.name, unit: i.unit)]);
+              .whenData((items) => [for (final i in items) if (i.active) TillKey(id: i.id, name: i.name, unit: i.unit, grossMinor: prices[i.id])]);
     return TillScreen(
       workspaceId: workspaceId,
+      currency: workspace?.currencyCode ?? '',
       keys: keys,
       scan: workspaceId == null || !ref.watch(stockScanningProvider)
           ? null

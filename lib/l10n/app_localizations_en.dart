@@ -7434,6 +7434,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get conversationYesterday => 'Yesterday';
 
   @override
+  String counterLotsExpired(String held, String asked, String expired) {
+    return 'Only $held of the $asked asked for is fit to sell here: $expired more is past its date. Nothing was sold.';
+  }
+
+  @override
+  String counterLotsShort(String held, String asked) {
+    return 'Only $held of the $asked asked for is here. Nothing was sold.';
+  }
+
+  @override
   String countryChangeBody(String country, String features) {
     return 'In $country these features are not available and stop working: $features. Their switches are kept: they return if you change the country back.';
   }
@@ -11522,6 +11532,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exportValueNameWorkspace => 'Workspace';
+
+  @override
+  String get failedPartNotShown =>
+      'This part could not be shown. Go back and open it again.';
 
   @override
   String get favoriteKeptOnDeviceRefused =>
@@ -32058,6 +32072,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingGroupBusiness => 'Business';
 
   @override
+  String get settingGroupCompatibility => 'App versions';
+
+  @override
   String get settingGroupDirectory => 'Member directory';
 
   @override
@@ -32096,6 +32113,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingGuardrailFallback =>
       'Fixed by the software; it is shown so you know it exists.';
+
+  @override
+  String get settingHintAppsSupportWindowDays =>
+      'How many days an older app stays accepted after a newer one is available on the slowest channel you distribute it through. The oldest app this installation accepts is raised only once this many days have passed, so every member has time to update.';
 
   @override
   String get settingHintAssetsValuationMaxRows =>
@@ -32542,6 +32563,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingHistoryEmpty => 'No stored version: the default applies.';
+
+  @override
+  String get settingLabelAppsSupportWindowDays =>
+      'Support window for older apps';
 
   @override
   String get settingLabelAssetsValuationMaxRows => 'Valuation rows per batch';
@@ -41094,6 +41119,121 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tillNotReadyHint =>
       'Nothing is numbered and nothing is taken until the country\'s operation is supported.';
+
+  @override
+  String get tillOfflineBanner =>
+      'Offline — cash only. Sales are kept on this device and sent when the connection returns.';
+
+  @override
+  String get tillOfflineClosedSession =>
+      'The session was closed: these sales stay on the device for a manager.';
+
+  @override
+  String get tillOfflineDiscard => 'Discard the offline data';
+
+  @override
+  String get tillOfflineDiscardBody =>
+      'Sales that were not sent yet are lost for good. Only discard the data after a manager has checked.';
+
+  @override
+  String get tillOfflineDiscardConfirm => 'Discard the data';
+
+  @override
+  String tillOfflineGaps(String numbers) {
+    return 'Sale numbers missing at the server: $numbers.';
+  }
+
+  @override
+  String tillOfflineKept(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sales stay',
+      one: '1 sale stays',
+    );
+    return '$_temp0 on this device for a manager.';
+  }
+
+  @override
+  String get tillOfflineNoPrice =>
+      'This item has no price on this device, so it cannot be sold offline.';
+
+  @override
+  String get tillOfflineNotSigned =>
+      'Not signed. It is sent to the server when the connection returns.';
+
+  @override
+  String get tillOfflineReasonBeforeSession =>
+      'Made before this till was opened.';
+
+  @override
+  String get tillOfflineReasonCash => 'The cash given was less than the total.';
+
+  @override
+  String get tillOfflineReasonClock => 'The device clock was ahead.';
+
+  @override
+  String get tillOfflineReasonItem => 'The item is no longer sold.';
+
+  @override
+  String get tillOfflineReasonOther => 'The till rules refused it.';
+
+  @override
+  String get tillOfflineReasonPrice =>
+      'The price changed by more than is allowed.';
+
+  @override
+  String get tillOfflineReasonTooLong =>
+      'Made too long after the connection was lost.';
+
+  @override
+  String get tillOfflineReasonTooMany => 'More offline sales than allowed.';
+
+  @override
+  String tillOfflineRecorded(int seq) {
+    return 'Recorded offline · sale $seq of this till';
+  }
+
+  @override
+  String tillOfflineReportAccepted(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sales were recorded.',
+      one: '1 sale was recorded.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tillOfflineReportRefused(int seq, String reason) {
+    return 'Sale $seq was refused: $reason Its cash stays in the drawer count.';
+  }
+
+  @override
+  String get tillOfflineReportTitle => 'Offline sales sent';
+
+  @override
+  String get tillOfflineSendNow => 'Look for the connection now';
+
+  @override
+  String get tillOfflineSyncing => 'Sending the offline sales…';
+
+  @override
+  String get tillOfflineUnreadable =>
+      'The offline data on this device cannot be read. Nothing can be sold offline until a manager decides.';
+
+  @override
+  String tillOfflineWaiting(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sales wait on this device',
+      one: '1 sale waits on this device',
+      zero: 'No sale waits on this device',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get tillOpCorrectReceipt => 'correcting a receipt';

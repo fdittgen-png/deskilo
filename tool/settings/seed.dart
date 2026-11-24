@@ -2132,6 +2132,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       note: 'Whether, in a bulk move, a tag on a piece of an item that is not tracked piece by piece is added as quantity 1 of that item. Off: such a tag is left out of the move and listed.',
     ),
   ),
+  (
+    since: 'support_window',
+    row: (
+      key: 'apps.support_window_days',
+      type: 'int',
+      defaultValue: 30,
+      min: 1,
+      max: 365,
+      unit: 'days',
+      group: 'compatibility',
+      scopes: ['platform'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'support window (#3732)',
+      note: 'How many days an app version stays accepted after a newer one is available on the slowest channel this installation is distributed through. The oldest app accepted (the app floor) is raised only once this many days have passed since the newer app became available everywhere: widen the server, make the app available, wait the window, then end the old contract.',
+    ),
+  ),
 ];
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";

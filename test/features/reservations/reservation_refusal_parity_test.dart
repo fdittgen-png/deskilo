@@ -7,6 +7,8 @@
 // the right sentence everywhere but on the device.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/reservation_repository.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/features/reservations/data/supabase_reservation_repository.dart';
@@ -29,7 +31,7 @@ SupabaseReservationRepository _adapter(Future<http.Response> Function(http.Reque
     );
 
 Future<http.Response> _refusal(http.Request r) async => http.Response(
-  jsonEncode({'code': 'DKK19', 'message': 'you already have a reservation in that period', 'details': null, 'hint': null}),
+  jsonEncode({'code': DkCode.dkk19, 'message': 'you already have a reservation in that period', 'details': null, 'hint': null}),
   400,
   request: r,
   headers: {'content-type': 'application/json'},
@@ -74,7 +76,7 @@ void main() {
     final real = await _caught(
       () => _adapter(
         (r) async => http.Response(
-          jsonEncode({'code': 'P0001', 'message': 'badge not recognized', 'details': null, 'hint': null}),
+          jsonEncode({'code': PgCode.raiseException, 'message': 'badge not recognized', 'details': null, 'hint': null}),
           400,
           request: r,
           headers: {'content-type': 'application/json'},

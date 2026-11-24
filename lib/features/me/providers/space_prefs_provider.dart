@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/trace/trace_logger.dart';
 
 /// The person's own layout of Me › Home (order, favourites, stars).
 final spacePrefsProvider =
@@ -25,7 +26,8 @@ class _SpacePrefsNotifier extends AsyncNotifier<SpacePrefs> {
     try {
       await future;
       return true;
-    } on Object {
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'me', 'space_prefs_provider: Object handled', error: e, stackTrace: st);
       return false;
     }
   }

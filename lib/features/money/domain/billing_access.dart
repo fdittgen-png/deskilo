@@ -9,6 +9,8 @@
 // RPCs of 0910) answers these shapes, the screens word the refusals.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../../../core/failure/app_failure.dart';
+
 /// Where one grant stands, read from its own stamps.
 enum BillingGrantState {
   /// Invited, not accepted yet, not expired.
@@ -172,7 +174,7 @@ enum BillingAccessRefusalKind {
   other,
 }
 
-class BillingAccessRefusal implements Exception {
+class BillingAccessRefusal implements TypedRefusal {
   const BillingAccessRefusal(this.kind, {this.cause});
 
   final BillingAccessRefusalKind kind;

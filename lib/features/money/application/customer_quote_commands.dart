@@ -3,32 +3,12 @@
 // #4166 (cut 2) -- the one door for what an issuer does to a quote. The server
 // decides everything (who may, the revision, what is missing); the answer is a
 // closed outcome the screen words, never an exception it has to guess at. A
-// write is never retried here: a lost answer is [QuoteUnreached] and the
+// write is never retried here: a lost answer is [CommandUnreached] and the
 // screen reads the quote again before it offers anything.
+import '../../../core/data/app_failure_from.dart';
+import '../../../core/failure/app_failure.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/customer_quote.dart';
-
-sealed class QuoteCommandOutcome<T> {
-  const QuoteCommandOutcome();
-}
-
-/// The server did it; [value] is its answer.
-final class QuoteDone<T> extends QuoteCommandOutcome<T> {
-  const QuoteDone(this.value);
-  final T value;
-}
-
-/// The server refused: nothing was written.
-final class QuoteRefused<T> extends QuoteCommandOutcome<T> {
-  const QuoteRefused(this.refusal);
-  final QuoteRefusal refusal;
-}
-
-/// The answer never came (a lost connection, an older host): whether it was
-/// done is not known, so nothing is claimed.
-final class QuoteUnreached<T> extends QuoteCommandOutcome<T> {
-  const QuoteUnreached();
-}
 
 class CustomerQuoteCommands {
   const CustomerQuoteCommands(this._repository);
@@ -52,7 +32,7 @@ class CustomerQuoteCommands {
   }
 
   /// Creates a quote ([quoteId] null) or edits its working draft at [expectedVersion].
-  Future<QuoteCommandOutcome<QuoteSaved>> saveDraft(
+  Future<CommandOutcome<QuoteSaved>> saveDraft(
     String workspaceId, {
     required QuoteDraftInput input,
     String? quoteId,
@@ -67,12 +47,12 @@ class CustomerQuoteCommands {
     ),
   );
 
-  Future<QuoteCommandOutcome<QuoteSaved>> amend(
+  Future<CommandOutcome<QuoteSaved>> amend(
     String workspaceId,
     String quoteId,
   ) => _run('quote not amended', () => _repository.amend(workspaceId, quoteId));
 
-  Future<QuoteCommandOutcome<QuoteSent>> send(
+  Future<CommandOutcome<QuoteSent>> send(
     String workspaceId,
     String quoteId, {
     required int revision,
@@ -83,7 +63,7 @@ class CustomerQuoteCommands {
   );
 
   /// Records the customer's answer; the issuer's own record, never a signature.
-  Future<QuoteCommandOutcome<void>> recordDecision(
+  Future<CommandOutcome<void>> recordDecision(
     String workspaceId,
     String quoteId,
     QuoteDecisionInput decision,
@@ -94,7 +74,7 @@ class CustomerQuoteCommands {
 
   /// Previews the invoice of an accepted quote: the real issuer's own preview,
   /// nothing issued, nothing numbered.
-  Future<QuoteCommandOutcome<QuoteConversionPrep>> prepareConversion(
+  Future<CommandOutcome<QuoteConversionPrep>> prepareConversion(
     String workspaceId,
     String quoteId, {
     required DateTime serviceDate,
@@ -113,7 +93,7 @@ class CustomerQuoteCommands {
   /// once per confirmed review: a second tap is the same attempt, and the server
   /// answers the same invoice whatever the request. A lost answer is looked up
   /// in the quote itself (its recorded conversion) before anything is offered.
-  Future<QuoteCommandOutcome<QuoteConverted>> convert(
+  Future<CommandOutcome<QuoteConverted>> convert(
     String workspaceId,
     String quoteId, {
     required int draftRevision,
@@ -130,18 +110,25 @@ class CustomerQuoteCommands {
         reviewedDigest: reviewedDigest,
       ),
     );
-    if (outcome is! QuoteUnreached<QuoteConverted>) return outcome;
+    // Done, or refused by the quote's own rules: the answer is known. Anything
+    // else may have converted it: the quote says.
+    final known = switch (outcome) {
+      CommandDone() => true,
+      CommandRefused(refusal: Refusal(cause: QuoteRefusal())) => true,
+      _ => false,
+    };
+    if (known) return outcome;
     final now = await read(workspaceId, quoteId);
     final invoiceId = now?.invoiceId;
     return invoiceId == null
         ? outcome
-        : QuoteDone(QuoteConverted(invoiceId: invoiceId, number: '', replayed: true));
+        : CommandDone(QuoteConverted(invoiceId: invoiceId, number: '', replayed: true));
   }
 
-  Future<QuoteCommandOutcome<void>> cancel(String workspaceId, String quoteId) =>
+  Future<CommandOutcome<void>> cancel(String workspaceId, String quoteId) =>
       _run('quote not cancelled', () => _repository.cancel(workspaceId, quoteId));
 
-  Future<QuoteCommandOutcome<void>> discardDraft(
+  Future<CommandOutcome<void>> discardDraft(
     String workspaceId,
     String quoteId,
   ) => _run(
@@ -149,15 +136,9 @@ class CustomerQuoteCommands {
     () => _repository.discardDraft(workspaceId, quoteId),
   );
 
-  Future<QuoteCommandOutcome<T>> _run<T>(
-    String what,
-    Future<T> Function() send,
-  ) async {
-    try {
-      return QuoteDone(await send());
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('money', what, error: e, stackTrace: st);
-      return e is QuoteRefusal ? QuoteRefused<T>(e) : QuoteUnreached<T>();
-    }
-  }
+  /// Runs [send]: done, refused with its [QuoteRefusal] as the cause, or
+  /// not reached; logged once under [what].
+  Future<CommandOutcome<T>> _run<T>(String what, Future<T> Function() send) =>
+      runCommand(send, what: what);
+
 }

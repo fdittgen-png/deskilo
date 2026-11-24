@@ -23,9 +23,12 @@ class _Port implements TillOfflinePort {
   final List<List<OfflineSale>> sent = [];
   bool fail = false;
   Set<int> refuseSeq = {};
+  final List<String> sessions = [];
+  String? failSession;
   @override
   Future<OfflineSyncAnswer> sync(String workspaceId, {required String sessionId, required DateTime offlineSince, required List<OfflineSale> sales, required int minorDigits}) async {
-    if (fail) throw StateError('no connection');
+    if (fail || sessionId == failSession) throw StateError('no connection');
+    sessions.add(sessionId);
     sent.add(sales);
     return OfflineSyncAnswer(
       results: [
@@ -118,7 +121,7 @@ void main() {
     expect(answer.refused.single.reason, 'price');
     expect(q.pending, isEmpty);
     expect(q.offlineSince, isNull);
-    expect(store.text, isNot(contains('req-')), reason: 'no sale stays on the device once the server answered');
+    expect(store.text, isNot(contains('request_id')), reason: 'no sale stays on the device once the server answered');
   });
 
   test('a connection that fails loses nothing: the same request ids go again, the sequence goes on', () async {
@@ -144,6 +147,76 @@ void main() {
     await q.goOffline(sessionId: 's2', now: t0);
     final sale = await q.record(basket: const [OfflineBasketLine(itemId: 'bread', quantity: '1')], cashGivenMinor: 120, now: t0);
     expect(sale.seq, 1);
+    // the unsent sale of the first session is still on the device, and still the cash in its drawer
+    expect(q.hasPending, true);
+    expect(q.pendingKeptMinor, 240);
+  });
+
+  test('a session the till left keeps its sales and sends them to that session, in order, when the connection returns', () async {
+    final q = await ready(_Mem());
+    await q.record(basket: const [OfflineBasketLine(itemId: 'bread', quantity: '1')], cashGivenMinor: 120, now: t0);
+    await q.goOffline(sessionId: 's2', now: t0);
+    await q.record(basket: const [OfflineBasketLine(itemId: 'bread', quantity: '2')], cashGivenMinor: 240, now: t0);
+    final port = _Port();
+    final answer = await q.sync(port, workspaceId: 'w', minorDigits: 2);
+    expect(answer!.acceptedCount, 2);
+    expect(port.sessions, ['s1', 's2']);
+    expect(q.hasPending, false);
+  });
+
+  test('a session the server refuses as a whole keeps its sales and does not hold the others back', () async {
+    final q = await ready(_Mem());
+    await q.record(basket: const [OfflineBasketLine(itemId: 'bread', quantity: '1')], cashGivenMinor: 120, now: t0);
+    await q.goOffline(sessionId: 's2', now: t0);
+    await q.record(basket: const [OfflineBasketLine(itemId: 'bread', quantity: '2')], cashGivenMinor: 240, now: t0);
+    final port = _Port()..failSession = 's1';
+    await expectLater(q.sync(port, workspaceId: 'w', minorDigits: 2), throwsStateError);
+    expect(port.sessions, ['s2']);
+    expect(q.hasPending, true);
+    await q.goOffline(sessionId: 's1', now: t0);
+    expect(q.pending.map((s) => s.seq), [1]);
+  });
+
+  test('every sale names its device, the same name across restarts, and two devices both number from 1', () async {
+    final store = _Mem();
+    final a = await ready(store);
+    final first = await a.record(basket: const [OfflineBasketLine(itemId: 'bread', quantity: '1')], cashGivenMinor: 120, now: t0);
+    expect(first.toSyncJson(minorDigits: 2)['device_id'], a.deviceId);
+    final again = make(store);
+    await again.load();
+    expect(again.deviceId, a.deviceId);
+    final other = await ready(_Mem());
+    final second = await other.record(basket: const [OfflineBasketLine(itemId: 'bread', quantity: '1')], cashGivenMinor: 120, now: t0);
+    expect([first.seq, second.seq], [1, 1]);
+    expect(other.deviceId, isNot(a.deviceId));
+  });
+
+  test('a store that cannot be read is never written over: the sales in it stay until someone decides', () async {
+    final store = _Mem()..text = '{"v": 9, "lanes": []}';
+    final q = make(store);
+    await expectLater(q.load(), throwsA(isA<OfflineStoreUnreadable>()));
+    await expectLater(q.goOffline(sessionId: 's1', now: t0), throwsA(isA<OfflineStoreUnreadable>()));
+    expect(store.text, '{"v": 9, "lanes": []}');
+    store.text = 'not json at all';
+    await expectLater(make(store).cachePrices(const [bread]), throwsA(isA<OfflineStoreUnreadable>()));
+    expect(store.text, 'not json at all');
+    await q.discardUnreadable();
+    expect(store.text, isNull);
+    await q.cachePrices(const [bread]);
+    expect(q.prices.keys, ['bread']);
+  });
+
+  test('what the first release stored (one session, no device) is read, and its sales take this device\'s name', () async {
+    final store = _Mem()
+      ..text =
+          '{"v":1,"session_id":"s1","offline_since":"2026-11-24T07:00:00.000Z","next_seq":2,"prices":[{"item_id":"bread","name":"Baguette","unit":"piece","gross_minor":120}],'
+          '"sales":[{"seq":1,"request_id":"r1","occurred_at":"2026-11-24T07:01:00.000Z","lines":[{"item_id":"bread","name":"Baguette","quantity":"1","unit_minor":120}],"cash_given_minor":120,"change_minor":0}]}';
+    final q = make(store);
+    await q.load();
+    expect(q.sessionId, 's1');
+    expect(q.pending.single.deviceId, q.deviceId);
+    final next = await q.record(basket: const [OfflineBasketLine(itemId: 'bread', quantity: '1')], cashGivenMinor: 120, now: t0);
+    expect(next.seq, 2);
   });
 
   test('more than 200 sales go in batches, in order', () async {

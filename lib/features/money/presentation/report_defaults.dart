@@ -96,7 +96,7 @@ ${l10n.invoicePdfBilledTo}
   // totals block (empty first column pushes it right, like the model).
   final lineTable =
       '= ${l10n.invoicePdfDescription} | ${l10n.reportColUnitPrice} | ${l10n.reportColQty} | ${l10n.reportColTotal}\n'
-      '{% for line in lines %}{{ line.label }} | {{ line.unit_price }} | {{ line.qty }} | {{ line.amount }}\n'
+      '{% for line in lines %}{{ line.label }}{% if line.track_ids != nil and line.track_ids != "" %} ({{ line.track_ids }}){% endif %} | {{ line.unit_price }} | {{ line.qty }} | {{ line.amount }}\n'
       '{% endfor %}';
   final totalsBlock = '''
 :::
@@ -131,7 +131,7 @@ $brandRow
 $addressRow''',
         body: '''
 = ${l10n.invoicePdfDescription} | ${l10n.reportColUnitPrice} | ${l10n.reportColQty} | ${l10n.vatPdfNet} | ${l10n.vatPdfVat} | ${l10n.reportColTotal}
-{% for line in lines %}{{ line.label }} | {{ line.unit_price }} | {{ line.qty }} | {{ line.net }} | {{ line.vat_rate }} | {{ line.amount }}
+{% for line in lines %}{{ line.label }}{% if line.track_ids != nil and line.track_ids != "" %} ({{ line.track_ids }}){% endif %} | {{ line.unit_price }} | {{ line.qty }} | {{ line.net }} | {{ line.vat_rate }} | {{ line.amount }}
 {% endfor %}---
 :::
 |||

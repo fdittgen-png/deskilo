@@ -11,6 +11,7 @@ import 'dart:convert';
 
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -91,7 +92,7 @@ class _World {
         'installation_id': installations[origin],
       }),
       '/rest/v1/rpc/public_network_descriptor' => _json(r, {
-        'code': 'PGRST202',
+        'code': PgCode.pgrstFunctionNotFound,
         'message': 'not found',
       }, 404),
       _ => throw StateError('unexpected endpoint ${r.url.path}'),

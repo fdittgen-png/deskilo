@@ -9,6 +9,8 @@
 // pending intent survives it.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/storage/booking_intent_store.dart';
 import 'package:deskilo/core/time/clock.dart';
@@ -126,7 +128,7 @@ void main() {
   test('an unknown badge at kiosk_identify is the kiosk\'s own refusal, never the transport\'s '
       'error', () async {
     final error = await _identify(
-      _client((r) async => _postgrestError(r, code: 'P0001', message: 'badge not recognized')),
+      _client((r) async => _postgrestError(r, code: PgCode.raiseException, message: 'badge not recognized')),
     );
     expect(error, isA<ReservationRefused>());
     expect((error! as ReservationRefused).refusal.kind, ReservationRefusalKind.badgeRejected);
@@ -161,7 +163,7 @@ void main() {
 
     test('a refusal the database raised stays definitive, with no intent left', () async {
       final out = await _booked(
-        (r) async => _postgrestError(r, code: 'DKK19', message: 'you already have a reservation in that period'),
+        (r) async => _postgrestError(r, code: DkCode.dkk19, message: 'you already have a reservation in that period'),
       );
       expect(out.told, isA<ReservationRefused>());
       expect(out.open, isEmpty);
@@ -175,7 +177,7 @@ void main() {
       _client(
         (r) async => _postgrestError(
           r,
-          code: 'DKK06',
+          code: DkCode.dkk06,
           message: 'booking slots must be a multiple of the grid',
           details: '{"minutes": 20}',
         ),
@@ -184,11 +186,11 @@ void main() {
     expect(error, isA<ReservationRefused>());
     final refused = error! as ReservationRefused;
     expect(refused.refusal.kind, ReservationRefusalKind.coded);
-    expect(refused.refusal.code, 'DKK06');
+    expect(refused.refusal.code, DkCode.dkk06);
     expect(refused.refusal.minutes, 20);
     expect(
       refused.cause,
-      isA<PostgrestException>().having((e) => e.code, 'code', 'DKK06'),
+      isA<PostgrestException>().having((e) => e.code, 'code', DkCode.dkk06),
       reason: 'the original error stays for the trace',
     );
     expect(
@@ -214,7 +216,7 @@ void main() {
         _client(
           (r) async => _postgrestError(
             r,
-            code: 'DKK06',
+            code: DkCode.dkk06,
             message: 'booking slots must be a multiple of the grid',
             details: details,
           ),
@@ -303,7 +305,7 @@ void main() {
         _client(
           (r) async => _postgrestError(
             r,
-            code: 'DKK19',
+            code: DkCode.dkk19,
             message: 'you already have a reservation in that period',
           ),
         ),
@@ -332,7 +334,7 @@ void main() {
     expect(error, isA<ReservationRefused>());
     expect(
       (error! as ReservationRefused).refusal.code,
-      'DKK19',
+      DkCode.dkk19,
       reason: 'the person reads the typed refusal',
     );
     expect(await recovery.unresolved(), isEmpty);

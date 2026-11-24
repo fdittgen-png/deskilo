@@ -40,6 +40,9 @@ class _Session {
   final List<_Entry> entries = [];
   int cashSales = 0;
   int cashRefunds = 0;
+
+  /// #4373 -- the cash of offline sales the server refused: it is in the drawer, so it is in the expected cash.
+  int offlineRefused = 0;
   bool closed = false;
   bool inDayClose = false;
   final List<String> receipts = [];
@@ -49,7 +52,7 @@ class _Session {
 
   int _sum(String kind) => entries.where((e) => e.kind == kind).fold(0, (a, e) => a + e.amount);
 
-  int get expected => floatMinor + cashSales - cashRefunds + _sum('paid_in') - _sum('paid_out');
+  int get expected => floatMinor + cashSales - cashRefunds + offlineRefused + _sum('paid_in') - _sum('paid_out');
 }
 
 class DemoTillDrawer implements TillDrawerPort {
@@ -95,6 +98,22 @@ class DemoTillDrawer implements TillDrawerPort {
     if (s == null) return;
     s.cashSales += amountMinor;
     if (number.isNotEmpty) s.receipts.add(number);
+  }
+
+  /// #4373 -- whether [sessionId] is a session still open: an offline sale is sent into it, and a closed one takes nothing.
+  bool sessionIsOpen(String sessionId) => _sessions[sessionId]?.closed == false;
+
+  /// #4373 -- an offline sale reaches the session it was made in: an accepted one is a cash sale of it, a refused one leaves its
+  /// cash in the drawer count.
+  void recordOfflineSale(String sessionId, {required int cashMinor, required bool accepted, String number = ''}) {
+    final s = _sessions[sessionId];
+    if (s == null || s.closed) return;
+    if (accepted) {
+      s.cashSales += cashMinor;
+      if (number.isNotEmpty) s.receipts.add(number);
+    } else {
+      s.offlineRefused += cashMinor;
+    }
   }
 
   DrawerTill _view(DrawerTill t) {

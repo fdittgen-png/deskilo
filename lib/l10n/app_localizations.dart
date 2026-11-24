@@ -11711,6 +11711,18 @@ abstract class AppLocalizations {
   /// **'Yesterday'**
   String get conversationYesterday;
 
+  /// #4436 a counter sale refused for its lots (DKG03, scope lots)
+  ///
+  /// In en, this message translates to:
+  /// **'Only {held} of the {asked} asked for is fit to sell here: {expired} more is past its date. Nothing was sold.'**
+  String counterLotsExpired(String held, String asked, String expired);
+
+  /// #4436 a counter sale refused for its lots (DKG03, scope lots)
+  ///
+  /// In en, this message translates to:
+  /// **'Only {held} of the {asked} asked for is here. Nothing was sold.'**
+  String counterLotsShort(String held, String asked);
+
   /// #2454 country change
   ///
   /// In en, this message translates to:
@@ -18675,6 +18687,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace'**
   String get exportValueNameWorkspace;
+
+  /// #4416 Shown in a release build where a part of a screen failed to build, instead of the framework's grey box. The failure is in the trace.
+  ///
+  /// In en, this message translates to:
+  /// **'This part could not be shown. Go back and open it again.'**
+  String get failedPartNotShown;
 
   /// Shown as a text in personal space card (me).
   ///
@@ -51408,6 +51426,12 @@ abstract class AppLocalizations {
   /// **'Business'**
   String get settingGroupBusiness;
 
+  /// #3732 Settings group: how long older app versions stay accepted by this installation
+  ///
+  /// In en, this message translates to:
+  /// **'App versions'**
+  String get settingGroupCompatibility;
+
   /// #2486 settings: Settings group title.
   ///
   /// In en, this message translates to:
@@ -51485,6 +51509,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fixed by the software; it is shown so you know it exists.'**
   String get settingGuardrailFallback;
+
+  /// #3732 Platform setting apps.support_window_days: what it decides, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'How many days an older app stays accepted after a newer one is available on the slowest channel you distribute it through. The oldest app this installation accepts is raised only once this many days have passed, so every member has time to update.'**
+  String get settingHintAppsSupportWindowDays;
 
   /// #2576 valuation settings
   ///
@@ -52157,6 +52187,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No stored version: the default applies.'**
   String get settingHistoryEmpty;
+
+  /// #3732 Platform setting apps.support_window_days: its name in the settings editor
+  ///
+  /// In en, this message translates to:
+  /// **'Support window for older apps'**
+  String get settingLabelAppsSupportWindowDays;
 
   /// #2576 valuation settings
   ///
@@ -66121,6 +66157,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing is numbered and nothing is taken until the country\'s operation is supported.'**
   String get tillNotReadyHint;
+
+  /// #4373 the till sells offline: the banner
+  ///
+  /// In en, this message translates to:
+  /// **'Offline — cash only. Sales are kept on this device and sent when the connection returns.'**
+  String get tillOfflineBanner;
+
+  /// #4373 the send was refused because the session was closed (DKL12)
+  ///
+  /// In en, this message translates to:
+  /// **'The session was closed: these sales stay on the device for a manager.'**
+  String get tillOfflineClosedSession;
+
+  /// #4373 drop the unreadable offline data: the action
+  ///
+  /// In en, this message translates to:
+  /// **'Discard the offline data'**
+  String get tillOfflineDiscard;
+
+  /// #4373 drop the unreadable offline data: the warning
+  ///
+  /// In en, this message translates to:
+  /// **'Sales that were not sent yet are lost for good. Only discard the data after a manager has checked.'**
+  String get tillOfflineDiscardBody;
+
+  /// #4373 drop the unreadable offline data: confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Discard the data'**
+  String get tillOfflineDiscardConfirm;
+
+  /// #4373 the answer of the send: sale numbers the server finds missing
+  ///
+  /// In en, this message translates to:
+  /// **'Sale numbers missing at the server: {numbers}.'**
+  String tillOfflineGaps(String numbers);
+
+  /// #4373 the answer of the send: sales that stay on the device
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 sale stays} other{{count} sales stay}} on this device for a manager.'**
+  String tillOfflineKept(int count);
+
+  /// #4373 a line the device holds no price for
+  ///
+  /// In en, this message translates to:
+  /// **'This item has no price on this device, so it cannot be sold offline.'**
+  String get tillOfflineNoPrice;
+
+  /// #4373 the receipt of a sale made offline: not signed yet
+  ///
+  /// In en, this message translates to:
+  /// **'Not signed. It is sent to the server when the connection returns.'**
+  String get tillOfflineNotSigned;
+
+  /// #4373 why the server refused an offline sale: BeforeSession
+  ///
+  /// In en, this message translates to:
+  /// **'Made before this till was opened.'**
+  String get tillOfflineReasonBeforeSession;
+
+  /// #4373 why the server refused an offline sale: Cash
+  ///
+  /// In en, this message translates to:
+  /// **'The cash given was less than the total.'**
+  String get tillOfflineReasonCash;
+
+  /// #4373 why the server refused an offline sale: Clock
+  ///
+  /// In en, this message translates to:
+  /// **'The device clock was ahead.'**
+  String get tillOfflineReasonClock;
+
+  /// #4373 why the server refused an offline sale: Item
+  ///
+  /// In en, this message translates to:
+  /// **'The item is no longer sold.'**
+  String get tillOfflineReasonItem;
+
+  /// #4373 why the server refused an offline sale: Other
+  ///
+  /// In en, this message translates to:
+  /// **'The till rules refused it.'**
+  String get tillOfflineReasonOther;
+
+  /// #4373 why the server refused an offline sale: Price
+  ///
+  /// In en, this message translates to:
+  /// **'The price changed by more than is allowed.'**
+  String get tillOfflineReasonPrice;
+
+  /// #4373 why the server refused an offline sale: TooLong
+  ///
+  /// In en, this message translates to:
+  /// **'Made too long after the connection was lost.'**
+  String get tillOfflineReasonTooLong;
+
+  /// #4373 why the server refused an offline sale: TooMany
+  ///
+  /// In en, this message translates to:
+  /// **'More offline sales than allowed.'**
+  String get tillOfflineReasonTooMany;
+
+  /// #4373 the receipt of a sale made offline: its number on this till
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded offline · sale {seq} of this till'**
+  String tillOfflineRecorded(int seq);
+
+  /// #4373 the answer of the send: how many sales were recorded
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 sale was recorded.} other{{count} sales were recorded.}}'**
+  String tillOfflineReportAccepted(int count);
+
+  /// #4373 the answer of the send: a sale the server refused, with its reason
+  ///
+  /// In en, this message translates to:
+  /// **'Sale {seq} was refused: {reason} Its cash stays in the drawer count.'**
+  String tillOfflineReportRefused(int seq, String reason);
+
+  /// #4373 the answer of the send: title
+  ///
+  /// In en, this message translates to:
+  /// **'Offline sales sent'**
+  String get tillOfflineReportTitle;
+
+  /// #4373 look for the connection and send the waiting sales
+  ///
+  /// In en, this message translates to:
+  /// **'Look for the connection now'**
+  String get tillOfflineSendNow;
+
+  /// #4373 the waiting sales are being sent
+  ///
+  /// In en, this message translates to:
+  /// **'Sending the offline sales…'**
+  String get tillOfflineSyncing;
+
+  /// #4373 the offline data of the device cannot be read
+  ///
+  /// In en, this message translates to:
+  /// **'The offline data on this device cannot be read. Nothing can be sold offline until a manager decides.'**
+  String get tillOfflineUnreadable;
+
+  /// #4373 the till sells offline: how many sales wait on the device
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No sale waits on this device} one{1 sale waits on this device} other{{count} sales wait on this device}}'**
+  String tillOfflineWaiting(int count);
 
   /// #4366 the till
   ///

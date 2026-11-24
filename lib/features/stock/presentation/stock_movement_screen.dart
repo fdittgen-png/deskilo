@@ -31,6 +31,7 @@ import '../providers/stock_providers.dart';
 import 'stock_chain_section.dart';
 import 'stock_day.dart';
 import 'stock_place_text.dart';
+import 'stock_read_failed.dart';
 import 'stock_reversal_sheet.dart';
 import 'stock_trace_section.dart';
 
@@ -80,20 +81,7 @@ class StockMovementScreen extends ConsumerWidget {
       body: switch (movement) {
         null => const LoadingView(),
         AsyncLoading() => const LoadingView(),
-        AsyncError() => Center(
-          key: const ValueKey('stock-movement-failed'),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(l10n.stockReadFailed),
-              TextButton(
-                key: const ValueKey('stock-movement-retry'),
-                onPressed: () => ref.invalidate(provider),
-                child: Text(l10n.identityConnectRetry),
-              ),
-            ],
-          ),
-        ),
+        AsyncError(:final error) => StockReadFailed(keyName: 'stock-movement', error: error, onRetry: () => ref.invalidate(provider)),
         AsyncData(value: null) => Center(
           key: const ValueKey('stock-movement-none'),
           child: Text(l10n.stockMovementNotFound),
@@ -277,7 +265,7 @@ class _Reversals extends ConsumerWidget {
           ..invalidate(stockOnHandWalkProvider);
       }
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the return sheet could not read the stock: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the return sheet could not read the stock', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
     }
   }

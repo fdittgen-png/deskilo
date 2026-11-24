@@ -8,10 +8,10 @@
 // incomplete quote names what is missing.
 import 'package:deskilo/core/demo/data/fake_billing_customers.dart';
 import 'package:deskilo/core/demo/data/fake_customer_quotes.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/core/time/calendar_days.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/ui/date_field.dart';
-import 'package:deskilo/features/money/application/customer_quote_commands.dart';
 import 'package:deskilo/features/money/domain/billing_customer.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
 import 'package:deskilo/features/money/domain/standalone_invoice.dart';
@@ -343,8 +343,8 @@ void main() {
     final outcome = await ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
         .read(customerQuoteCommandProvider)
         .convert(setup.workspaceId, 'quote-1', draftRevision: 1, requestId: 'r1');
-    expect(outcome, isA<QuoteDone<QuoteConverted>>());
-    expect((outcome as QuoteDone<QuoteConverted>).value.replayed, isTrue);
+    expect(outcome, isA<CommandDone<QuoteConverted>>());
+    expect((outcome as CommandDone<QuoteConverted>).value.replayed, isTrue);
   });
 
   testWidgets('the editor offers the business\'s day as the issue date, not the device\'s', (tester) async {

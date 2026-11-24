@@ -365,7 +365,8 @@ class _WorkspaceSettingsScreenState
             // The next Save compares against what was just committed.
             _form.openedAt = saved.system.modifiedAt;
             _form.markSaved();
-          } on WorkspaceSettingsConflict {
+          } on WorkspaceSettingsConflict catch (caught, caughtStack) {
+            TraceLogger.instance.log(TraceLevel.info, 'workspace', 'workspace_settings_screen: WorkspaceSettingsConflict handled', error: caught, stackTrace: caughtStack);
             // Nothing was written; everything typed stays on screen.
             if (mounted) {
               AppSnack.error(

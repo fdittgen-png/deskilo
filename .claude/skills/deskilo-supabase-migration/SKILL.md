@@ -121,8 +121,9 @@ last release does after the change. Rules: AGENT_RULES, "Every migration ends wi
   `public.role_permission_catalog()` whole (0195 moved the array there; 0340 is the
   latest); `roles_screen_test` reads the LATEST definer of that function.
   `has_permission` admin defaults are a literal list too.
-- **Features**: `public.feature_registry()` carries `build_feature_registry_sql.dart`'s
-  output (`feature_registry_sql_test`); gates call `public.feature_effective(ws, 'key')`.
+- **Features**: `public.feature_registry()` reads `feature_registry_entries` (0949); a migration carries the
+  rows `build_feature_registry_sql.dart` prints between its markers (`feature_registry_sql_test`) and never restates
+  the function; gates call `public.feature_effective(ws, 'key')`.
 - `invoices_no_mutation` (→ `invoices_immutable()`): lift only for test data, re-arm.
   A guard comparing whole rows subtracts `public.system_column_names()`.
 - Decisions apply through an AFTER UPDATE trigger on `events`, never a branch in

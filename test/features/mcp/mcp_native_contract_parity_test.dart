@@ -19,6 +19,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/auth/domain/identity_binding.dart';
 import 'package:deskilo/features/mcp/data/connected_target_client.dart';
 import 'package:deskilo/features/mcp/domain/action_confirmation.dart';
@@ -267,7 +268,7 @@ void main() {
       final missing = supabaseMcpRepositories(
         _wire(
           (_) => {
-            'code': 'PGRST202',
+            'code': PgCode.pgrstFunctionNotFound,
             'message': 'Could not find the function',
             'details': null,
             'hint': null,

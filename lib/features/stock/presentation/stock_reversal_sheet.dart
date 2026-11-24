@@ -129,7 +129,7 @@ class _ReversalDraft {
       );
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'goods were not reversed: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'goods were not reversed', error: e, stackTrace: st);
       return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
     }
   }

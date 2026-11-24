@@ -36,6 +36,7 @@ class InlineBanner extends StatelessWidget {
     this.severity = InlineBannerSeverity.error,
     this.actionLabel,
     this.onAction,
+    this.actionKey = const ValueKey('inline-banner-action'),
   }) : assert((actionLabel == null) == (onAction == null),
             'an action needs both a label and a handler');
 
@@ -54,6 +55,9 @@ class InlineBanner extends StatelessWidget {
   /// and made the member find it by hand.
   final String? actionLabel;
   final VoidCallback? onAction;
+
+  /// The action's key, for a screen that names its own retry.
+  final Key actionKey;
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +108,7 @@ class InlineBanner extends StatelessWidget {
             Align(
               alignment: AlignmentDirectional.centerEnd,
               child: TextButton(
-                key: const ValueKey('inline-banner-action'),
+                key: actionKey,
                 onPressed: onAction,
                 style: TextButton.styleFrom(foregroundColor: foreground),
                 child: Text(actionLabel!),

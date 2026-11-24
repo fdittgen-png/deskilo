@@ -4,6 +4,8 @@
 // does not import the workspace for it.
 import 'package:flutter_riverpod/misc.dart' show Override;
 
+import '../core/backend/auth_secret_store.dart';
+import '../features/money/data/secure_offline_store.dart';
 import '../features/money/data/supabase_counter_offline.dart';
 import '../features/money/data/supabase_counter_till.dart';
 import '../features/money/data/supabase_till_drawer.dart';
@@ -44,4 +46,15 @@ final Override drawerSettingsFromApp = drawerSettingsProvider.overrideWith((ref)
     reasons: DrawerSettings.reasonsOf(settings.read<String>('counter.cash_reasons')),
     paidOutLimitMinor: settings.read<int>('counter.paid_out_limit_minor'),
   );
+});
+
+/// #4373 -- the offline state of a till is kept in the app's secure store, one entry per business.
+final Override tillOfflineStoreFromApp = tillOfflineStoreFactoryProvider.overrideWithValue(
+  (workspaceId) => SecureOfflineStore(const PlatformAuthSecretStore(), workspaceId: workspaceId),
+);
+
+/// #4373 -- the till sells offline when the business runs till sessions and has the offline feature on.
+final Override tillOfflineEnabledFromApp = tillOfflineEnabledProvider.overrideWith((ref) {
+  final features = ref.watch(enabledFeaturesSyncProvider);
+  return features.contains(WorkspaceFeature.counterTillSessions) && features.contains(WorkspaceFeature.counterOfflineCash);
 });

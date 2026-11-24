@@ -10,6 +10,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/workspace_export_repository.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/session/session_source.dart';
@@ -245,18 +246,18 @@ void main() {
           workspaceExportRefusalOf(
             PostgrestException(message: message, code: code),
           );
-      expect(of('42501'), WorkspaceExportFailure.forbidden);
+      expect(of(PgCode.insufficientPrivilege), WorkspaceExportFailure.forbidden);
       // #3278 — a workspace that turned direct access off says so: typed apart
       // from a plain refusal, so the card can tell the member what to do.
       expect(
-        of('42501', 'privacy_self_service_off: file a rights request instead'),
+        of(PgCode.insufficientPrivilege, 'privacy_self_service_off: file a rights request instead'),
         WorkspaceExportFailure.selfServiceOff,
       );
       expect(
-        of('P0001', 'not a member of this workspace'),
+        of(PgCode.raiseException, 'not a member of this workspace'),
         WorkspaceExportFailure.forbidden,
       );
-      expect(of('P0001', 'something else'), isNull);
+      expect(of(PgCode.raiseException, 'something else'), isNull);
       expect(of('57014'), isNull);
     });
   });

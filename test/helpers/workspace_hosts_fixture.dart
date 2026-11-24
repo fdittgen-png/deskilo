@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/workspace/domain/workspace_host.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -50,7 +51,7 @@ class WireHost {
     };
     if (body == null) {
       return http.Response(
-        jsonEncode({'code': 'PGRST202', 'message': 'not found'}),
+        jsonEncode({'code': PgCode.pgrstFunctionNotFound, 'message': 'not found'}),
         404,
         headers: {'content-type': 'application/json'},
         request: r,

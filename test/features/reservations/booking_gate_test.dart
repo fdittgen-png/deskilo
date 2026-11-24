@@ -8,6 +8,7 @@
 // the admin check-out follows the owner's policy.
 import 'dart:io';
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
@@ -247,16 +248,16 @@ void main() {
       for (final refusal in BookingRefusal.values) {
         // The code and the values the server raises since 0739.
         final (code, detail) = switch (refusal) {
-          BookingRefusal.closedDay => ('DKK01', null),
-          BookingRefusal.seatBlocked => ('DKK07', null),
+          BookingRefusal.closedDay => (DkCode.dkk01, null),
+          BookingRefusal.seatBlocked => (DkCode.dkk07, null),
           BookingRefusal.beyondHorizon => ('DKK08', '{"days" : 90}'),
           BookingRefusal.tooShort => ('DKK09', '{"minutes" : 30}'),
           BookingRefusal.tooLong => ('DKK10', '{"minutes" : 1440}'),
-          BookingRefusal.past => ('DKK11', null),
-          BookingRefusal.walkUpNotToday => ('DKK12', null),
-          BookingRefusal.crossesMidnight => ('DKK13', null),
-          BookingRefusal.outsideHoursAheadOnly => ('DKK15', null),
-          BookingRefusal.outsideHoursOff => ('DKK16', null),
+          BookingRefusal.past => (DkCode.dkk11, null),
+          BookingRefusal.walkUpNotToday => (DkCode.dkk12, null),
+          BookingRefusal.crossesMidnight => (DkCode.dkk13, null),
+          BookingRefusal.outsideHoursAheadOnly => (DkCode.dkk15, null),
+          BookingRefusal.outsideHoursOff => (DkCode.dkk16, null),
         };
         final mapped = bookingErrorText(
           englishL10n,

@@ -7,6 +7,7 @@
 // workspace_overview_layout_test.dart (lost answer, same request, one layout).
 import 'dart:io';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/workspace/domain/attention.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -100,7 +101,7 @@ void main() {
 
     testWidgets('a refused read is access, not an empty inbox', (tester) async {
       final probe = await _pump(tester, screen);
-      probe.fail(const PostgrestException(message: 'x', code: '42501'));
+      probe.fail(const PostgrestException(message: 'x', code: PgCode.insufficientPrivilege));
       await tester.pump();
       expect(find.byKey(_empty), findsNothing);
       expect(find.text(_en.readStateDenied), findsOneWidget);

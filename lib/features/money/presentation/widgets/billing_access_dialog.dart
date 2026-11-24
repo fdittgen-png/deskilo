@@ -10,6 +10,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/app_format.dart';
@@ -86,7 +87,7 @@ class _BillingAccessDialogState extends State<_BillingAccessDialog> {
     if (!mounted) return;
     setState(() {
       switch (outcome) {
-        case BillingAccessDone(:final value):
+        case CommandDone(:final value):
           _grants = value;
           _loadFailed = false;
         default:
@@ -110,13 +111,13 @@ class _BillingAccessDialogState extends State<_BillingAccessDialog> {
     setState(() {
       _busy = false;
       _problem = billingAccessProblemText(context.l10n, outcome);
-      if (outcome case BillingAccessDone(:final value)) {
+      if (outcome case CommandDone(:final value)) {
         _invitation = value;
         // The next invitation is another intention.
         _requestId = newRequestId();
       }
     });
-    if (outcome is BillingAccessDone) await _load();
+    if (outcome is CommandDone) await _load();
   }
 
   Future<void> _revoke(BillingAccessGrant grant) async {
@@ -129,11 +130,11 @@ class _BillingAccessDialogState extends State<_BillingAccessDialog> {
     setState(() {
       _busy = false;
       _problem = billingAccessProblemText(context.l10n, outcome);
-      if (outcome is BillingAccessDone && _invitation?.grantId == grant.id) {
+      if (outcome is CommandDone && _invitation?.grantId == grant.id) {
         _invitation = null;
       }
     });
-    if (outcome is BillingAccessDone) await _load();
+    if (outcome is CommandDone) await _load();
   }
 
   @override

@@ -3207,6 +3207,19 @@ Appuyez sur **Ouvrir la caisse**, saisissez le **Fond de caisse** (ou, si votre 
 
 **Clôture de la journée.** Une personne qui peut voir les finances ouvre **Clôture de la journée** depuis le tiroir-caisse et appuie sur **Clôturer la journée** quand chaque caisse est fermée (une caisse encore ouverte est nommée et refuse la clôture). Les sessions fermées du jour forment un rapport numéroté : chaque session avec l'attendu, le compté, l'écart et son motif, les encaissements par moyen de paiement et par taux de taxe, les espèces entrées et sorties, les remboursements et la plage des numéros de tickets. **Journées clôturées** liste les rapports déjà faits ; une journée clôturée ne change jamais. C'est le registre propre de l'entreprise ; le contenu légal qu'un pays demande à une clôture de journée vient avec son propre module.
 
+<!-- anchor: user.money.till-offline -->
+### Quand la caisse est hors ligne
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous vendez au comptoir et la connexion est perdue : vous voulez continuer à vendre et être sûr que rien ne se perd ni ne se compte deux fois.
+
+Activez **Vendre hors ligne, en espèces seulement** (elle suppose la fonction des sessions de caisse). Quand un appel au serveur reste sans réponse, la caisse indique **Hors ligne — espèces uniquement. Les ventes sont conservées sur cet appareil et envoyées au retour de la connexion.** et continue à vendre en espèces uniquement, aux prix qu'elle avait lors de sa dernière connexion ; un article dont l'appareil n'a pas le prix n'est pas vendu. Chaque vente est conservée sur l'appareil sous le numéro suivant de sa session de caisse ; le reçu porte **Enregistrée hors ligne** avec ce numéro et **Non signé. Il est envoyé au serveur au retour de la connexion.** : il n'a pas de numéro de reçu tant que le serveur ne l'a pas reçu.
+
+La caisse cherche d'elle-même sa connexion, et **Chercher la connexion maintenant** le fait aussitôt. Quand la connexion revient, les ventes sont envoyées dans l'ordre, chacune sous le numéro avec lequel elle a été faite : une vente déjà reçue n'est donc jamais comptée deux fois. La caisse indique alors combien ont été enregistrées et, pour chaque vente refusée par le serveur, pourquoi (par exemple le prix a changé au-delà de ce qui est permis, ou l'article n'est plus vendu) ; les espèces d'une vente refusée restent dans le comptage du tiroir. Si la session a été fermée entre-temps, la caisse dit : « La session a été fermée : ces ventes restent sur l'appareil pour un responsable. » Les ventes restent sur l'appareil jusqu'à ce qu'un responsable les ait traitées.
+
+Trois réglages de l'entreprise bornent ce qui est accepté : **Durée maximale hors ligne (minutes)**, **Nombre maximal de ventes hors ligne par session de caisse** et **Écart de prix toléré hors ligne (%)**. Si les données hors ligne de l'appareil sont illisibles, rien ne se vend hors ligne tant qu'un responsable n'a pas décidé ; **Supprimer les données hors ligne** les supprime après un avertissement, car les ventes non encore envoyées sont perdues définitivement.
+
 <!-- anchor: user.money.stock.rfid -->
 ### Puces RFID : une par lot ou une par pièce
 
@@ -6870,7 +6883,7 @@ Ce qui entoure le travail de tous les jours : le côté test d'un espace et le c
 
 Dans ce chapitre :
 - [Un espace a deux côtés](#un-espace-a-deux-côtés) · [Entrer d'un côté](#entrer-côté-réel-ou-côté-test) · [Un espace de test](#à-quoi-sert-un-espace-de-test) · [Qui peut déployer](#qui-peut-déployer-et-entrer-en-production) · [Déployer entre les côtés](#déployer-entre-les-deux-côtés) · [Situation de l'espace et archive de l'exercice](#situation-de-lespace-et-archive-de-lexercice)
-- [Votre propre serveur](#faire-tourner-votre-propre-serveur) · [Quand une installation exige une application plus récente](#quand-une-installation-exige-une-application-plus-récente)
+- [Votre propre serveur](#faire-tourner-votre-propre-serveur) · [Quand une installation exige une application plus récente](#quand-une-installation-exige-une-application-plus-récente) · [Publier une nouvelle version](#publier-une-nouvelle-version--le-serveur-dabord)
 - [Les assistants](#les-assistants--ce-que-cest) · [Connecter un assistant](#connecter-un-assistant) · [Les autorisations](#autorisations-et-confirmations-pour-les-assistants) · [Ce que les assistants peuvent faire](#ce-que-les-assistants-peuvent-faire-dans-un-espace)
 - [L'enregistreur de tâches](#lenregistreur-de-tâches-et-les-visites-guidées) · [Enregistrer une tâche](#enregistrer-une-tâche) · [Relire un enregistrement](#relire-modifier-et-exporter-un-enregistrement) · [Créer un guide](#créer-un-guide-à-partir-dun-enregistrement) · [Suivre un guide](#suivre-un-guide) · [Le menu rond](#le-menu-rond) · [Modifier un guide](#modifier-ou-réparer-un-guide) · [Confidentialité des enregistrements](#ce-quun-enregistrement-conserve)
 - [L'espace de démonstration](#lespace-de-démonstration) · [Mode tournage](#mode-tournage)
@@ -7054,6 +7067,29 @@ Une installation peut indiquer que seule une application plus récente peut l'ut
 - Le seuil est une courtoisie pour les applications qui le connaissent, pas un verrou : les règles d'argent et de droits sont décidées par le serveur, quelle que soit l'application.
 
 **Voir aussi :** [Faire tourner votre propre serveur](#faire-tourner-votre-propre-serveur) · [Plateformes](#deskilo-sur-vos-appareils)
+
+<!-- anchor: user.advanced.releases -->
+### Publier une nouvelle version : le serveur d'abord
+
+**Public:** Opérateur·rice
+
+Vous exploitez une installation et une nouvelle version de l'application arrive. Le serveur est toujours mis à jour avant l'application, et une ancienne application n'est jamais écartée sans prévenir.
+
+**Étapes**
+
+1. Mettez d'abord le serveur à jour : appliquez ses nouvelles migrations, puis ses fonctions. Rien ne change pour les membres : une application déjà installée continue de fonctionner, car le serveur ne fait qu'ajouter.
+2. Publiez l'application. Avant tout envoi, le train de publication lit l'installation qu'il dessert et s'arrête, en nommant les migrations manquantes, quand l'installation est en retard, refuse la nouvelle application ou ne peut pas être lue. Une fois l'application publiée, la version du serveur y indique *À jour*, et une ancienne application indique *Le serveur est plus récent que cette app — mettez l'app à jour dès que possible*.
+3. Attendez le délai de prise en charge : [Profils](https://fdittgen-png.github.io/deskilo/#/profiles) → **Réglages de la plateforme (valeurs par défaut)** → **Versions de l'application** → **Délai de prise en charge des anciennes applications**. Il court à partir du jour où la nouvelle application est disponible sur le canal de distribution le plus lent, pas du jour où elle a été construite : l'examen d'un store peut prendre des jours.
+4. Seulement alors, relevez l'application la plus ancienne acceptée par l'installation, dans une migration à part. Une application en dessous affiche **Cette application doit être mise à jour** avec la façon de la mettre à jour sur sa plateforme ; rien de ce que le membre a saisi n'est perdu.
+
+**Bon à savoir**
+
+- Une application plus récente que son serveur indique *Mise à jour nécessaire : cette app a besoin du schéma …*. C'est le cas que l'ordre « le serveur d'abord » évite.
+- Pour annuler un relèvement, abaissez de nouveau l'application la plus ancienne acceptée, ou supprimez ce seuil, dans une nouvelle migration : une application bloquée refonctionne à son prochain démarrage ou à son retour au premier plan.
+- Le train de publication ne fait que lire l'installation : il n'applique aucune migration et ne change pas qui peut publier.
+- Ne relevez jamais l'application la plus ancienne acceptée dans la migration qui a besoin de la nouvelle application : les testeurs de cette installation seraient bloqués dès qu'elle est appliquée.
+
+**Voir aussi:** [Faire tourner votre propre serveur](#faire-tourner-votre-propre-serveur)
 
 <!-- anchor: user.advanced.assistants -->
 ### Les assistants : ce que c'est

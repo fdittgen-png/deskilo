@@ -136,7 +136,7 @@ class _PointDraft {
       );
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a reorder point was not saved: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a reorder point was not saved', error: e, stackTrace: st);
       return stockSaveProblem(l10n, e);
     }
   }
@@ -149,7 +149,7 @@ class _PointDraft {
     try {
       variants = [for (final v in await config.variants(workspaceId, id)) if (v.id != null && v.active) v];
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the variants could not be read: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the variants could not be read', error: e, stackTrace: st);
       variants = const [];
     }
     refresh();

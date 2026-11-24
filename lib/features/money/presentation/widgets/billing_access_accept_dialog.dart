@@ -7,6 +7,7 @@
 // membership: the documents appear apart in Me › Finances.
 import 'package:flutter/material.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -60,7 +61,7 @@ class _AcceptDialogState extends State<_AcceptDialog> {
       _busy = false;
       _problem = billingAccessProblemText(context.l10n, outcome);
       _preview = switch (outcome) {
-        BillingAccessDone(:final value) => value,
+        CommandDone(:final value) => value,
         _ => null,
       };
     });
@@ -78,7 +79,7 @@ class _AcceptDialogState extends State<_AcceptDialog> {
     setState(() {
       _busy = false;
       _problem = billingAccessProblemText(context.l10n, outcome);
-      if (outcome is BillingAccessDone) {
+      if (outcome is CommandDone) {
         _accepted = true;
         _business = preview.workspaceName;
       }

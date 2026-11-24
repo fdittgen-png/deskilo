@@ -14,6 +14,8 @@
 // Pure Dart.
 library;
 
+import '../../../core/trace/trace_logger.dart';
+
 /// How long one period is.
 enum BiGrain {
   month(1),
@@ -347,7 +349,8 @@ class BiQueryContext {
   static BiQueryContext? tryParse(Map<String, String> query) {
     try {
       return parse(query);
-    } on BiContextRefused {
+    } on BiContextRefused catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'workspace', 'bi_query: BiContextRefused handled', error: e, stackTrace: st);
       return null;
     }
   }

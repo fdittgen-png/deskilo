@@ -3064,6 +3064,18 @@ Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade**
 
 **Tagesabschluss.** Wer die Finanzen sehen darf, öffnet **Tagesabschluss** in der Kassenschublade und tippt auf **Tag abschließen**, sobald jede Kasse geschlossen ist (eine noch offene Kasse wird genannt und verweigert den Abschluss). Die geschlossenen Sitzungen des Tages werden zu einem nummerierten Bericht: jede Sitzung mit Erwartetem, Gezähltem, Differenz und Grund, die Einnahmen nach Zahlungsart und Steuersatz, das ein- und entnommene Bargeld, die Erstattungen und der Bereich der Belegnummern. **Abgeschlossene Tage** listet die bereits erstellten Berichte; ein abgeschlossener Tag wird nie geändert. Das ist die eigene Aufzeichnung des Betriebs; den rechtlichen Inhalt, den ein Land vom Tagesabschluss verlangt, liefert ein eigenes Modul.
 
+### Wenn die Kasse offline ist
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie verkaufen an der Kasse und die Verbindung geht verloren: Sie möchten weiter verkaufen und sicher sein, dass nichts verloren geht oder doppelt gezählt wird.
+
+Schalten Sie **Offline verkaufen, nur bar** ein (die Funktion Kassensitzungen wird vorausgesetzt). Bekommt ein Aufruf an den Server keine Antwort, meldet die Kasse **Offline – nur Barzahlung. Die Verkäufe bleiben auf diesem Gerät und werden gesendet, sobald die Verbindung wieder da ist.** und verkauft weiter, nur gegen Bargeld, zu den Preisen, die sie zuletzt online kannte; ein Artikel ohne Preis auf dem Gerät wird nicht verkauft. Jeder Verkauf bleibt auf dem Gerät unter der nächsten Nummer seiner Kassensitzung; der Beleg trägt **Offline erfasst** mit dieser Nummer und **Nicht signiert. Der Beleg wird an den Server gesendet, sobald die Verbindung wieder da ist.** – eine Belegnummer erhält er erst, wenn der Server ihn empfangen hat.
+
+Die Kasse sucht ihre Verbindung von selbst wieder, **Verbindung jetzt suchen** tut es sofort. Ist die Verbindung zurück, werden die Verkäufe der Reihe nach gesendet, jeder unter der Nummer, mit der er entstand; ein bereits empfangener Verkauf wird also nie doppelt gezählt. Die Kasse sagt dann, wie viele erfasst wurden und, für jeden vom Server abgelehnten Verkauf, warum (zum Beispiel: der Preis hat sich stärker geändert als erlaubt, oder der Artikel wird nicht mehr verkauft); das Bargeld eines abgelehnten Verkaufs bleibt in der Kassenzählung. Wurde die Sitzung inzwischen geschlossen, sagt die Kasse: „Die Sitzung wurde geschlossen: Diese Verkäufe bleiben für eine Leitung auf dem Gerät.“ Die Verkäufe bleiben auf dem Gerät, bis eine Leitung sie bearbeitet hat.
+
+Drei Einstellungen des Betriebs begrenzen, was angenommen wird: **Längste Offline-Zeit (Minuten)**, **Höchstzahl Offline-Verkäufe je Kassensitzung** und **Erlaubte Preisabweichung offline (%)**. Sind die Offline-Daten des Geräts nicht lesbar, wird offline nichts verkauft, bis eine Leitung entscheidet; **Offline-Daten verwerfen** verwirft sie nach einer Warnung, denn noch nicht gesendete Verkäufe gehen endgültig verloren.
+
 ### RFID-Tags: eines pro Charge oder eines pro Stück
 
 **Zielgruppe:** Administrator:in · Inhaber
@@ -6494,7 +6506,7 @@ Das, was die tägliche Arbeit umgibt: die Testseite eines Space und die echte, A
 
 In diesem Kapitel:
 - [Ein Space hat zwei Seiten](help:user.advanced.environments) · [Eine Seite betreten](help:user.advanced.enter-environment) · [Ein Testspace](help:user.advanced.test-space) · [Wer ausrollen darf](help:user.advanced.deploy-permissions) · [Zwischen den Seiten ausrollen](help:user.advanced.deploy) · [Status des Workspace und das Jahresarchiv](help:user.advanced.status-archive)
-- [Ihr eigener Server](help:user.advanced.own-server) · [Wenn eine Installation eine neuere App verlangt](help:user.advanced.app-floor)
+- [Ihr eigener Server](help:user.advanced.own-server) · [Wenn eine Installation eine neuere App verlangt](help:user.advanced.app-floor) · [Eine neue Version veröffentlichen](help:user.advanced.releases)
 - [Assistenten](help:user.advanced.assistants) · [Einen Assistenten verbinden](help:user.advanced.assistants-connect) · [Freigaben](help:user.advanced.assistants-approve) · [Was Assistenten dürfen](help:user.advanced.assistants-policy)
 - [Der Aufgabenrekorder](help:user.advanced.recorder) · [Eine Aufgabe aufzeichnen](help:user.advanced.recorder-record) · [Eine Aufzeichnung prüfen](help:user.advanced.recorder-review) · [Eine Anleitung erstellen](help:user.advanced.guide-make) · [Einer Anleitung folgen](help:user.advanced.guide-play) · [Das Kreismenü](help:user.advanced.guide-circle) · [Eine Anleitung bearbeiten](help:user.advanced.guide-edit) · [Datenschutz der Aufzeichnungen](help:user.advanced.recorder-privacy)
 - [Der Demo-Workspace](help:user.advanced.demo) · [Aufnahmemodus](help:user.advanced.filming)
@@ -6670,6 +6682,28 @@ Eine Installation kann festlegen, dass nur eine neuere App mit ihr benutzt werde
 - Die Untergrenze ist ein Entgegenkommen an Apps, die sie kennen, keine Sperre: Geld- und Berechtigungsregeln entscheidet der Server, egal welche App anfragt.
 
 **Siehe auch:** [Einen eigenen Server betreiben](help:user.advanced.own-server) · [Plattformen](help:user.advanced.platforms)
+
+### Eine neue Version veröffentlichen: zuerst der Server
+
+**Zielgruppe:** Betreiber:in
+
+Sie betreiben eine Installation, und eine neue Version der App kommt. Der Server wird immer vor der App aktualisiert, und eine ältere App wird nie ohne Vorwarnung ausgesperrt.
+
+**Schritte**
+
+1. Aktualisieren Sie zuerst den Server: Wenden Sie seine neuen Migrationen an, danach seine Funktionen. Für die Mitglieder ändert sich nichts: Eine bereits installierte App arbeitet weiter, denn der Server fügt nur hinzu.
+2. Veröffentlichen Sie die App. Vor jedem Upload liest der Release-Zug die Installation, an die er ausliefert, und hält an, mit den fehlenden Migrationen, wenn die Installation zurückliegt, die neue App ablehnt oder nicht gelesen werden kann. Ist die App erschienen, zeigt sie für die Serverversion *Aktuell*, und eine ältere App zeigt *Der Server ist neuer als diese App — aktualisieren Sie die App, sobald Sie können*.
+3. Warten Sie die Unterstützungsfrist ab: [Profile](app:/profiles) → **Plattform-Einstellungen (Standardwerte)** → **App-Versionen** → **Unterstützungsfrist für ältere Apps**. Sie zählt ab dem Tag, an dem die neue App auf dem langsamsten Vertriebskanal verfügbar ist, nicht ab dem Tag, an dem sie gebaut wurde: Eine Store-Prüfung kann Tage dauern.
+4. Erst dann heben Sie die älteste App an, die die Installation annimmt, in einer eigenen Migration. Eine App darunter zeigt **Diese App braucht ein Update** mit dem Weg zum Update auf ihrer Plattform; nichts, was das Mitglied eingegeben hat, geht verloren.
+
+**Gut zu wissen**
+
+- Eine App, die neuer als ihr Server ist, zeigt *Aktualisierung nötig: diese App braucht Schema …*. Genau das verhindert die Reihenfolge „zuerst der Server“.
+- Um eine Anhebung rückgängig zu machen, senken Sie die älteste angenommene App in einer neuen Migration wieder ab oder entfernen die Grenze: Eine gesperrte App arbeitet beim nächsten Start oder bei der Rückkehr in den Vordergrund wieder.
+- Der Release-Zug liest die Installation nur: Er wendet keine Migration an und ändert nicht, wer veröffentlichen darf.
+- Heben Sie die älteste angenommene App nie in der Migration an, die die neue App als erste braucht: Die Tester dieser Installation wären gesperrt, sobald sie angewendet ist.
+
+**Siehe auch:** [Einen eigenen Server betreiben](help:user.advanced.own-server)
 
 ### Assistenten: was sie sind
 

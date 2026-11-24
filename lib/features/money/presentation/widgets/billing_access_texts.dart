@@ -3,8 +3,8 @@
 // #4164 B2 -- the words of a billing-access refusal (DKH01 to DKH05 and the
 // seller's right), shared by the seller's invitation dialog and the account's
 // code dialog.
+import '../../../../core/failure/app_failure.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../application/billing_access_commands.dart';
 import '../../domain/billing_access.dart';
 
 String _refusalText(AppLocalizations l10n, BillingAccessRefusalKind kind) =>
@@ -21,10 +21,10 @@ String _refusalText(AppLocalizations l10n, BillingAccessRefusalKind kind) =>
 /// The sentence of an outcome that did not succeed; null when it did.
 String? billingAccessProblemText<T>(
   AppLocalizations l10n,
-  BillingAccessOutcome<T> outcome,
+  CommandOutcome<T> outcome,
 ) => switch (outcome) {
-  BillingAccessDone<T>() => null,
-  BillingAccessInvalid<T>(:final kind) ||
-  BillingAccessRefused<T>(:final kind) => _refusalText(l10n, kind),
-  BillingAccessUnreached<T>() => l10n.billingAccessFailed,
+  CommandDone<T>() => null,
+  CommandRefused<T>(refusal: Refusal(cause: final BillingAccessRefusal r)) =>
+    _refusalText(l10n, r.kind),
+  _ => l10n.billingAccessFailed,
 };

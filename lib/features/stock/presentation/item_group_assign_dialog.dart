@@ -101,7 +101,7 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
       ref.invalidate(itemGroupListProvider(widget.workspaceId));
       _reload(say: l10n.itemGroupMoved);
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'an item was not moved to a group: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'an item was not moved to a group', error: e, stackTrace: st);
       if (mounted) _view.value = _view.value.said(itemGroupProblem(l10n, e));
     }
   }
@@ -114,7 +114,7 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
       await ref.read(itemGroupsProvider).setOverride(widget.workspaceId, newRequestId(), (itemId: widget.itemId, expectedRevision: revision, parameter: parameter, mode: 'set', value: value));
       _reload();
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'an item was not given its own value: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'an item was not given its own value', error: e, stackTrace: st);
       // the field shows the value in force: read it again, so a refused choice does not stay on the screen
       if (mounted) _reload(say: itemGroupProblem(l10n, e));
     }
@@ -126,7 +126,7 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
       await ref.read(itemGroupsProvider).setOverride(widget.workspaceId, newRequestId(), (itemId: widget.itemId, expectedRevision: revision, parameter: parameter, mode: 'inherit', value: null));
       _reload();
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'an item was not given back to its group: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'an item was not given back to its group', error: e, stackTrace: st);
       if (mounted) _view.value = _view.value.said(itemGroupProblem(l10n, e));
     }
   }

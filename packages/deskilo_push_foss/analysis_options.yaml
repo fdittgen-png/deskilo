@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# #4410 -- the error-handling rules the app holds (analysis_options.yaml).
+linter:
+  rules:
+    - avoid_print
+    - unawaited_futures
+    - only_throw_errors
+    - avoid_catches_without_on_clauses
+    - empty_catches

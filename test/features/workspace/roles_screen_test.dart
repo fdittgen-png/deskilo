@@ -8,6 +8,7 @@
 import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter/material.dart';
@@ -167,7 +168,7 @@ void main() {
     await expectLater(
       workspace.setRolePermissions(
           workspace.workspaces.single.id, 'member', const []),
-      throwsRefusal('DKN01'),
+      throwsRefusal(DkCode.dkn01),
     );
     // An active CO-OWNER holds manageRoles by default ("can have
     // less" — until the owner takes it away).

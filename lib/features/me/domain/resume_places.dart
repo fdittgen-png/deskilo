@@ -14,6 +14,8 @@ import 'dart:convert';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/trace/trace_logger.dart';
+
 /// Which side the account was on last.
 enum ResumeSide { personal, workspace }
 
@@ -118,7 +120,8 @@ class ResumePlaces {
     final Object? decoded;
     try {
       decoded = jsonDecode(raw);
-    } on FormatException {
+    } on FormatException catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'me', 'resume_places: FormatException handled', error: e, stackTrace: st);
       return null;
     }
     if (decoded is! Map) return null;

@@ -819,6 +819,19 @@ Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade**
 
 **Tagesabschluss.** Wer die Finanzen sehen darf, öffnet **Tagesabschluss** in der Kassenschublade und tippt auf **Tag abschließen**, sobald jede Kasse geschlossen ist (eine noch offene Kasse wird genannt und verweigert den Abschluss). Die geschlossenen Sitzungen des Tages werden zu einem nummerierten Bericht: jede Sitzung mit Erwartetem, Gezähltem, Differenz und Grund, die Einnahmen nach Zahlungsart und Steuersatz, das ein- und entnommene Bargeld, die Erstattungen und der Bereich der Belegnummern. **Abgeschlossene Tage** listet die bereits erstellten Berichte; ein abgeschlossener Tag wird nie geändert. Das ist die eigene Aufzeichnung des Betriebs; den rechtlichen Inhalt, den ein Land vom Tagesabschluss verlangt, liefert ein eigenes Modul.
 
+<!-- anchor: user.money.till-offline -->
+### Wenn die Kasse offline ist
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie verkaufen an der Kasse und die Verbindung geht verloren: Sie möchten weiter verkaufen und sicher sein, dass nichts verloren geht oder doppelt gezählt wird.
+
+Schalten Sie **Offline verkaufen, nur bar** ein (die Funktion Kassensitzungen wird vorausgesetzt). Bekommt ein Aufruf an den Server keine Antwort, meldet die Kasse **Offline – nur Barzahlung. Die Verkäufe bleiben auf diesem Gerät und werden gesendet, sobald die Verbindung wieder da ist.** und verkauft weiter, nur gegen Bargeld, zu den Preisen, die sie zuletzt online kannte; ein Artikel ohne Preis auf dem Gerät wird nicht verkauft. Jeder Verkauf bleibt auf dem Gerät unter der nächsten Nummer seiner Kassensitzung; der Beleg trägt **Offline erfasst** mit dieser Nummer und **Nicht signiert. Der Beleg wird an den Server gesendet, sobald die Verbindung wieder da ist.** – eine Belegnummer erhält er erst, wenn der Server ihn empfangen hat.
+
+Die Kasse sucht ihre Verbindung von selbst wieder, **Verbindung jetzt suchen** tut es sofort. Ist die Verbindung zurück, werden die Verkäufe der Reihe nach gesendet, jeder unter der Nummer, mit der er entstand; ein bereits empfangener Verkauf wird also nie doppelt gezählt. Die Kasse sagt dann, wie viele erfasst wurden und, für jeden vom Server abgelehnten Verkauf, warum (zum Beispiel: der Preis hat sich stärker geändert als erlaubt, oder der Artikel wird nicht mehr verkauft); das Bargeld eines abgelehnten Verkaufs bleibt in der Kassenzählung. Wurde die Sitzung inzwischen geschlossen, sagt die Kasse: „Die Sitzung wurde geschlossen: Diese Verkäufe bleiben für eine Leitung auf dem Gerät.“ Die Verkäufe bleiben auf dem Gerät, bis eine Leitung sie bearbeitet hat.
+
+Drei Einstellungen des Betriebs begrenzen, was angenommen wird: **Längste Offline-Zeit (Minuten)**, **Höchstzahl Offline-Verkäufe je Kassensitzung** und **Erlaubte Preisabweichung offline (%)**. Sind die Offline-Daten des Geräts nicht lesbar, wird offline nichts verkauft, bis eine Leitung entscheidet; **Offline-Daten verwerfen** verwirft sie nach einer Warnung, denn noch nicht gesendete Verkäufe gehen endgültig verloren.
+
 <!-- anchor: user.money.stock.rfid -->
 ### RFID-Tags: eines pro Charge oder eines pro Stück
 

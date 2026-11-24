@@ -819,6 +819,19 @@ Pulse **Abrir la caja**, escriba el **Fondo del cajón** (o, si su negocio cuent
 
 **Cierre del día.** Quien puede ver las finanzas abre **Cierre del día** desde el cajón de caja y pulsa **Cerrar el día** cuando cada caja está cerrada (una caja aún abierta se nombra y rechaza el cierre). Las sesiones cerradas del día forman un informe numerado: cada sesión con lo esperado, lo contado, la diferencia y su motivo, los cobros por medio de pago y por tipo de impuesto, el efectivo entrado y salido, los reembolsos y el rango de números de tickets. **Días cerrados** lista los informes ya hechos; un día cerrado no se cambia nunca. Es el registro propio del negocio; el contenido legal que un país exige al cierre del día llega con su propio módulo.
 
+<!-- anchor: user.money.till-offline -->
+### Cuando la caja está sin conexión
+
+**Público:** Administrador/a · Propietario
+
+Vende en el mostrador y se pierde la conexión: quiere seguir vendiendo y saber que nada se pierde ni se cuenta dos veces.
+
+Active **Vender sin conexión, solo en efectivo** (requiere la función de sesiones de caja). Cuando una llamada al servidor no recibe respuesta, la caja indica **Sin conexión: solo efectivo. Las ventas se guardan en este dispositivo y se envían cuando vuelve la conexión.** y sigue vendiendo solo en efectivo, a los precios que tenía la última vez que estuvo conectada; un artículo sin precio en el dispositivo no se vende. Cada venta se guarda en el dispositivo con el número siguiente de su sesión de caja; el recibo dice **Registrada sin conexión** con ese número y **Sin firmar. Se envía al servidor cuando vuelve la conexión.**: no tiene número de recibo hasta que el servidor lo recibe.
+
+La caja vuelve a buscar la conexión sola, y **Buscar la conexión ahora** lo hace al instante. Cuando vuelve la conexión, las ventas se envían en orden, cada una con el número con que se hizo, de modo que una venta ya recibida nunca se cuenta dos veces. Entonces la caja dice cuántas se registraron y, de cada venta que el servidor rechazó, por qué (por ejemplo, el precio cambió más de lo permitido o el artículo ya no se vende); el efectivo de una venta rechazada permanece en el recuento del cajón. Si la sesión se cerró entretanto, la caja dice: «La sesión se cerró: estas ventas permanecen en el dispositivo para un responsable.» Las ventas permanecen en el dispositivo hasta que un responsable las haya tratado.
+
+Tres ajustes del negocio acotan lo que se acepta: **Tiempo máximo sin conexión (minutos)**, **Máximo de ventas sin conexión por sesión de caja** y **Diferencia de precio admitida sin conexión (%)**. Si los datos sin conexión del dispositivo no se pueden leer, no se vende nada sin conexión hasta que un responsable decida; **Descartar los datos sin conexión** los descarta tras una advertencia, porque las ventas aún no enviadas se pierden para siempre.
+
 <!-- anchor: user.money.stock.rfid -->
 ### Etiquetas RFID: una por lote o una por pieza
 

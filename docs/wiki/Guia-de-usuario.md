@@ -3207,6 +3207,19 @@ Pulse **Abrir la caja**, escriba el **Fondo del cajón** (o, si su negocio cuent
 
 **Cierre del día.** Quien puede ver las finanzas abre **Cierre del día** desde el cajón de caja y pulsa **Cerrar el día** cuando cada caja está cerrada (una caja aún abierta se nombra y rechaza el cierre). Las sesiones cerradas del día forman un informe numerado: cada sesión con lo esperado, lo contado, la diferencia y su motivo, los cobros por medio de pago y por tipo de impuesto, el efectivo entrado y salido, los reembolsos y el rango de números de tickets. **Días cerrados** lista los informes ya hechos; un día cerrado no se cambia nunca. Es el registro propio del negocio; el contenido legal que un país exige al cierre del día llega con su propio módulo.
 
+<!-- anchor: user.money.till-offline -->
+### Cuando la caja está sin conexión
+
+**Público:** Administrador/a · Propietario
+
+Vende en el mostrador y se pierde la conexión: quiere seguir vendiendo y saber que nada se pierde ni se cuenta dos veces.
+
+Active **Vender sin conexión, solo en efectivo** (requiere la función de sesiones de caja). Cuando una llamada al servidor no recibe respuesta, la caja indica **Sin conexión: solo efectivo. Las ventas se guardan en este dispositivo y se envían cuando vuelve la conexión.** y sigue vendiendo solo en efectivo, a los precios que tenía la última vez que estuvo conectada; un artículo sin precio en el dispositivo no se vende. Cada venta se guarda en el dispositivo con el número siguiente de su sesión de caja; el recibo dice **Registrada sin conexión** con ese número y **Sin firmar. Se envía al servidor cuando vuelve la conexión.**: no tiene número de recibo hasta que el servidor lo recibe.
+
+La caja vuelve a buscar la conexión sola, y **Buscar la conexión ahora** lo hace al instante. Cuando vuelve la conexión, las ventas se envían en orden, cada una con el número con que se hizo, de modo que una venta ya recibida nunca se cuenta dos veces. Entonces la caja dice cuántas se registraron y, de cada venta que el servidor rechazó, por qué (por ejemplo, el precio cambió más de lo permitido o el artículo ya no se vende); el efectivo de una venta rechazada permanece en el recuento del cajón. Si la sesión se cerró entretanto, la caja dice: «La sesión se cerró: estas ventas permanecen en el dispositivo para un responsable.» Las ventas permanecen en el dispositivo hasta que un responsable las haya tratado.
+
+Tres ajustes del negocio acotan lo que se acepta: **Tiempo máximo sin conexión (minutos)**, **Máximo de ventas sin conexión por sesión de caja** y **Diferencia de precio admitida sin conexión (%)**. Si los datos sin conexión del dispositivo no se pueden leer, no se vende nada sin conexión hasta que un responsable decida; **Descartar los datos sin conexión** los descarta tras una advertencia, porque las ventas aún no enviadas se pierden para siempre.
+
 <!-- anchor: user.money.stock.rfid -->
 ### Etiquetas RFID: una por lote o una por pieza
 
@@ -6870,7 +6883,7 @@ Lo que rodea al trabajo diario: la cara de pruebas de un espacio y la real, los 
 
 En este capítulo:
 - [Un espacio tiene dos caras](#un-espacio-tiene-dos-caras) · [Entre en una cara](#entre-en-la-cara-real-o-en-la-de-pruebas) · [Un espacio de prueba](#para-qué-sirve-un-espacio-de-prueba) · [Quién puede desplegar](#quién-puede-desplegar-y-entrar-en-producción) · [Despliegue entre las caras](#despliegue-entre-las-dos-caras) · [Situación del espacio y archivo del ejercicio](#situación-del-espacio-y-archivo-del-ejercicio)
-- [Su propio servidor](#gestione-su-propio-servidor) · [Cuando una instalación exige una aplicación más reciente](#cuando-una-instalación-exige-una-aplicación-más-reciente)
+- [Su propio servidor](#gestione-su-propio-servidor) · [Cuando una instalación exige una aplicación más reciente](#cuando-una-instalación-exige-una-aplicación-más-reciente) · [Publicar una nueva versión](#publicar-una-nueva-versión-primero-el-servidor)
 - [Asistentes](#asistentes-qué-son) · [Conecte un asistente](#conecte-un-asistente) · [Aprobaciones](#aprobaciones-y-confirmaciones-de-los-asistentes) · [Qué pueden hacer los asistentes](#qué-pueden-hacer-los-asistentes-en-un-espacio)
 - [El grabador de tareas](#el-grabador-de-tareas-y-las-visitas-guiadas) · [Grabe una tarea](#grabe-una-tarea) · [Revise una grabación](#revise-edite-y-exporte-una-grabación) · [Cree una guía](#cree-una-guía-a-partir-de-una-grabación) · [Siga una guía](#siga-una-guía) · [El menú circular](#el-menú-circular) · [Edite una guía](#edite-o-repare-una-guía) · [Privacidad de las grabaciones](#qué-conserva-una-grabación)
 - [El espacio de demostración](#el-espacio-de-demostración) · [Modo grabación](#modo-grabación)
@@ -7054,6 +7067,29 @@ Una instalación puede indicar que solo se use con ella una aplicación más rec
 - El mínimo es una cortesía para las aplicaciones que lo conocen, no un cerrojo: las reglas de dinero y permisos las decide el servidor, sea cual sea la aplicación.
 
 **Véase también:** [Gestione su propio servidor](#gestione-su-propio-servidor) · [Plataformas](#deskilo-en-sus-dispositivos)
+
+<!-- anchor: user.advanced.releases -->
+### Publicar una nueva versión: primero el servidor
+
+**Público:** Operador/a
+
+Usted gestiona una instalación y llega una nueva versión de la aplicación. El servidor siempre se actualiza antes que la aplicación, y una aplicación antigua nunca queda fuera sin aviso.
+
+**Pasos**
+
+1. Actualice primero el servidor: aplique sus nuevas migraciones y después sus funciones. Para los miembros no cambia nada: una aplicación ya instalada sigue funcionando, porque el servidor solo añade.
+2. Publique la aplicación. Antes de cualquier subida, el tren de publicación lee la instalación a la que entrega y se detiene, nombrando las migraciones que faltan, cuando la instalación va por detrás, rechaza la nueva aplicación o no se puede leer. Una vez publicada la aplicación, la versión del servidor indica en ella *Actualizado*, y una aplicación antigua indica *El servidor es más reciente que esta app: actualice la app cuando pueda*.
+3. Espere el plazo de soporte: [Perfiles](https://fdittgen-png.github.io/deskilo/#/profiles) → **Ajustes de la plataforma (valores por defecto)** → **Versiones de la aplicación** → **Plazo de soporte de las aplicaciones antiguas**. Cuenta desde el día en que la nueva aplicación está disponible en el canal de distribución más lento, no desde el día en que se construyó: la revisión de una tienda puede tardar días.
+4. Solo entonces eleve la aplicación más antigua que acepta la instalación, en una migración propia. Una aplicación por debajo muestra **Esta aplicación necesita una actualización** con cómo actualizarla en su plataforma; no se pierde nada de lo que el miembro introdujo.
+
+**Conviene saber**
+
+- Una aplicación más reciente que su servidor indica *Necesita una actualización: esta app necesita el esquema …*. Es el caso que evita el orden «primero el servidor».
+- Para deshacer una elevación, vuelva a bajar la aplicación más antigua aceptada, o quite el límite, en una nueva migración: una aplicación bloqueada vuelve a funcionar en su próximo inicio o al volver al primer plano.
+- El tren de publicación solo lee la instalación: no aplica ninguna migración ni cambia quién puede publicar.
+- Nunca eleve la aplicación más antigua aceptada en la migración que necesita la nueva aplicación: los probadores de esa instalación quedarían bloqueados en cuanto se aplique.
+
+**Véase también:** [Gestione su propio servidor](#gestione-su-propio-servidor)
 
 <!-- anchor: user.advanced.assistants -->
 ### Asistentes: qué son

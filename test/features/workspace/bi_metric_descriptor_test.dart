@@ -8,6 +8,7 @@
 // than this client knows is incompatible, never a figure.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/workspace/domain/bi_batch.dart';
 import 'package:deskilo/features/workspace/domain/bi_modules.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
@@ -47,7 +48,7 @@ Map<String, Object?> _answer(
     'coverage': d.coverage.wire,
     'ok': ok,
     if (ok) 'result': result,
-    if (!ok) 'code': '22023',
+    if (!ok) 'code': PgCode.invalidParameterValue,
     ...override,
   };
 }
@@ -181,7 +182,7 @@ void main() {
         _answer(_capacity.metricId, ok: false),
       );
       expect(e.ok, isFalse);
-      expect(e.code, '22023');
+      expect(e.code, PgCode.invalidParameterValue);
       expect(e.toError(), isNot(isA<KpiIncompatible>()));
     });
 

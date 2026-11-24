@@ -13,6 +13,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/backend/backend_settings.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/public_network/data/public_network_client.dart';
 import 'package:deskilo/core/public_network/public_network_negotiator.dart';
@@ -194,7 +195,7 @@ void main() {
   test('the server\'s revalidation refusal is the same typed outcome, and the '
       'next action asks for the descriptor again', () async {
     mutation = (_) => http.Response(
-      jsonEncode({'code': 'P0001', 'message': publicNetworkVersionRefusal}),
+      jsonEncode({'code': PgCode.raiseException, 'message': publicNetworkVersionRefusal}),
       400,
     );
     final repo = repository();
@@ -238,7 +239,7 @@ void main() {
 
   test('another refusal (not a version) passes through untouched', () async {
     mutation = (_) => http.Response(
-      jsonEncode({'code': 'P0001', 'message': 'workspace not published'}),
+      jsonEncode({'code': PgCode.raiseException, 'message': 'workspace not published'}),
       400,
     );
     await expectLater(

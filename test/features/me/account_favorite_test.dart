@@ -5,6 +5,7 @@
 // and stays when the personal home refuses the reference or cannot be
 // reached; once the home kept it and the list was read again, the device
 // copy goes, so the account is what every device shows.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/features/me/application/account_favorite.dart';
 import 'package:deskilo/features/me/domain/account_favorite.dart';
@@ -136,11 +137,11 @@ void main() {
 
   test('the SQLSTATEs of the writer map to refusals, the rest is transport',
       () {
-    expect(accountFavoriteRefusalOf('22023'),
+    expect(accountFavoriteRefusalOf(PgCode.invalidParameterValue),
         AccountFavoriteRefusal.unknownReference);
-    expect(accountFavoriteRefusalOf('42501'),
+    expect(accountFavoriteRefusalOf(PgCode.insufficientPrivilege),
         AccountFavoriteRefusal.noRelationship);
-    expect(accountFavoriteRefusalOf('PGRST202'),
+    expect(accountFavoriteRefusalOf(PgCode.pgrstFunctionNotFound),
         AccountFavoriteRefusal.unsupported);
     expect(accountFavoriteRefusalOf('08006'), isNull);
     expect(accountFavoriteRefusalOf(null), isNull);

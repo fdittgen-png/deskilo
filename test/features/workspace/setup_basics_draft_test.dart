@@ -10,6 +10,7 @@
 // fake server's stored draft.
 import 'dart:async';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/ui/app_durations.dart';
 import 'package:deskilo/features/workspace/application/save_workspace_basics.dart';
@@ -280,6 +281,6 @@ class _Withdrawn implements SaveWorkspaceBasics {
   Future<void> save(Workspace stored, WorkspaceBasics basics) async =>
       throw const PostgrestException(
         message: 'permission denied',
-        code: '42501',
+        code: PgCode.insufficientPrivilege,
       );
 }

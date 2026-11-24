@@ -5,6 +5,7 @@
 // when the connection returns; the server (`counter_offline_sync_v1`, contract section 7) checks every rule again. Nothing here
 // takes anything but cash, claims a fiscal signature, or prices a line the device has no price for. Amounts are MINOR units.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
+import 'package:meta/meta.dart' show visibleForTesting;
 
 import 'till_quantity.dart';
 
@@ -45,6 +46,9 @@ class OfflineLine {
   }
 }
 
+/// How often an offline till looks for its connection again: a technical interval, nothing a business sets.
+const Duration kOfflineReconnectEvery = Duration(seconds: 20);
+
 /// The reasons the device refuses to record a sale itself.
 enum OfflineRefusal { noPrice, badQuantity, empty, cashShort }
 
@@ -57,7 +61,12 @@ class OfflineSale {
     required this.lines,
     required this.cashGivenMinor,
     required this.changeMinor,
+    this.deviceId,
   });
+
+  /// The device that made the sale, named once per device: the sequence number is unique per (session, device), so two devices of
+  /// one session both number from 1. Null for a sale made before devices named themselves (the server reads the one legacy device).
+  final String? deviceId;
 
   /// The device sequence number: 1, 2, 3 … within one till session, never reused, never skipped.
   final int seq;
@@ -71,6 +80,17 @@ class OfflineSale {
 
   int get totalMinor => lines.fold(0, (a, l) => a + l.amountMinor);
 
+  /// The same sale, made by [id].
+  OfflineSale madeBy(String id) => OfflineSale(
+    seq: seq,
+    requestId: requestId,
+    occurredAt: occurredAt,
+    lines: lines,
+    cashGivenMinor: cashGivenMinor,
+    changeMinor: changeMinor,
+    deviceId: id,
+  );
+
   /// The sale as `counter_offline_sync_v1` takes it: the unit price is in major units read on the gross basis.
   Map<String, Object?> toSyncJson({required int minorDigits}) => {
     'seq': seq,
@@ -78,6 +98,7 @@ class OfflineSale {
     'occurred_at': occurredAt.toUtc().toIso8601String(),
     'cash_given_minor': cashGivenMinor,
     'change_minor': changeMinor,
+    if (deviceId != null) 'device_id': deviceId,
     'body': {
       'lines': [
         for (final l in lines) {'item_id': l.itemId, 'quantity': l.quantity, 'unit_price': majorText(l.unitMinor, minorDigits)},
@@ -92,6 +113,7 @@ class OfflineSale {
     'lines': [for (final l in lines) l.toJson()],
     'cash_given_minor': cashGivenMinor,
     'change_minor': changeMinor,
+    if (deviceId != null) 'device_id': deviceId,
   };
 
   factory OfflineSale.fromJson(Object? json) {
@@ -103,11 +125,13 @@ class OfflineSale {
       lines: [for (final l in r.listOrAbsent('lines')) OfflineLine.fromJson(l)],
       cashGivenMinor: r.integer('cash_given_minor'),
       changeMinor: r.integer('change_minor'),
+      deviceId: r.stringOrNull('device_id'),
     );
   }
 }
 
 /// [minor] as the decimal text of major units with exactly [digits] decimals (`120` with 2 is `1.20`).
+@visibleForTesting
 String majorText(int minor, int digits) {
   if (digits <= 0) return '$minor';
   final sign = minor < 0 ? '-' : '';
@@ -155,7 +179,7 @@ class OfflineSyncAnswer {
     final r = JsonReader.of(json, context: 'offline.sync');
     return OfflineSyncAnswer(
       results: [for (final x in r.listOrAbsent('results')) OfflineSaleResult.fromJson(x)],
-      gaps: [for (final g in r.listOrAbsent('gaps')) (g as num).toInt()],
+      gaps: [for (final g in r.listOrAbsent('gaps')) _gapNumber(g)],
     );
   }
 }
@@ -204,10 +228,13 @@ class OfflineList {
     final r = JsonReader.of(json, context: 'offline.list');
     return OfflineList(
       sales: [for (final s in r.listOrAbsent('sales')) OfflineSaleRow.fromJson(s)],
-      gaps: [for (final g in r.listOrAbsent('gaps')) (g as num).toInt()],
+      gaps: [for (final g in r.listOrAbsent('gaps')) _gapNumber(g)],
     );
   }
 }
+
+/// A missing sequence number as the server lists it: a number, or `{device_id, seq}` once sales name their device.
+int _gapNumber(Object? gap) => gap is Map ? (gap['seq']! as num).toInt() : (gap! as num).toInt();
 
 /// The server side of the offline sales.
 abstract interface class TillOfflinePort {

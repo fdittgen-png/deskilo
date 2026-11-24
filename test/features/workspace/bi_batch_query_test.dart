@@ -5,6 +5,7 @@
 // the server could not answer is a gap and never a zero or a failure of the
 // others; a refusal of the reader refuses everything; the fan-out for
 // single-figure repositories keeps the same contract.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/workspace/data/fan_out_batch_reader.dart';
 import 'package:deskilo/features/workspace/domain/bi_batch.dart';
@@ -119,7 +120,7 @@ void main() {
   test('a period the server could not answer is a gap; the others keep their figures', () async {
     final reader = _Reader(
       (r) => r.key == '11'
-          ? BiBatchEntry.failed(r.key, code: '22023', message: 'bad period')
+          ? BiBatchEntry.failed(r.key, code: PgCode.invalidParameterValue, message: 'bad period')
           : BiBatchEntry.seat(r.key, _seat(20, 80)),
     );
     final container = _container(reader);
@@ -167,7 +168,7 @@ void main() {
     'a failed request fails the module result with its reason, never a zero',
     () async {
       final reader = _Reader(
-        (r) => BiBatchEntry.failed(r.key, code: '22023', message: 'too long'),
+        (r) => BiBatchEntry.failed(r.key, code: PgCode.invalidParameterValue, message: 'too long'),
       );
       final container = _container(reader);
       addTearDown(container.dispose);
@@ -192,7 +193,7 @@ void main() {
           _fin(r.fromMonth!, r.toMonth!, currency: 'USD'),
         );
       }
-      if (r.key == '4') return BiBatchEntry.failed(r.key, code: '22023');
+      if (r.key == '4') return BiBatchEntry.failed(r.key, code: PgCode.invalidParameterValue);
       return BiBatchEntry.finance(r.key, _fin(r.fromMonth!, r.toMonth!));
     });
     final container = _container(reader);

@@ -15,6 +15,7 @@ import 'app/finance_hosts_wiring.dart';
 import 'app/private_values_wiring.dart';
 import 'app/realtime_invalidations.dart';
 import 'app/recorder_target_wiring.dart';
+import 'app/refusals_wiring.dart';
 import 'app/server_choice_app.dart';
 import 'app/till_wiring.dart';
 import 'core/cache/read_retry.dart';
@@ -27,6 +28,7 @@ import 'core/notifications/notification_taps.dart';
 import 'core/trace/trace_hooks.dart';
 import 'core/trace/trace_logger.dart';
 import 'core/trace/trace_provider_observer.dart';
+import 'core/ui/failed_part_tile.dart';
 import 'features/auth/providers/auth_providers.dart';
 import 'features/me/providers/me_providers.dart'
     show myReservationsSourcesFromMe, pendingAdmissionsFromMe;
@@ -52,6 +54,10 @@ Future<void> main() async {
   // below land in the trace.
   final trace = TraceLogger.instance = createAppTraceLogger();
   installGlobalTraceHooks(trace);
+  // #4416 — a part that fails to build says so in words in a release build.
+  installFailedPartTile();
+  // #4413 — each feature's refusal codes and their words.
+  registerFeatureRefusals();
   // #992 — a row whose system columns break the server's invariants is
   // reported to the trace, never trusted silently.
   SystemColumns.onBreach = (detail) => trace.warn('data', detail);
@@ -147,6 +153,8 @@ Future<void> main() async {
         tillSessionsFromApp, // #4367
         drawerSettingsFromApp, // #4367
         tillOfflinePortFromApp, // #4373
+        tillOfflineStoreFromApp, // #4373
+        tillOfflineEnabledFromApp, // #4373
         businessDayFromApp, // #4426
         privateValuesFromAccount, // #2552
         eventSourceOpenersFromMoney, // #2573

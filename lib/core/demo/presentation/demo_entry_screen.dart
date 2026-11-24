@@ -20,6 +20,7 @@ import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/context_l10n.dart';
 import '../../theme/app_spacing.dart';
+import '../../trace/trace_logger.dart';
 import '../demo_entry.dart';
 import '../demo_link.dart';
 import '../demo_reload_marker_provider.dart';
@@ -62,7 +63,8 @@ class _DemoEntryScreenState extends ConsumerState<DemoEntryScreen> {
       try {
         // A later cancelled offer must not clear a visit that already won.
         if (!outer.read(demoEntryProvider)) marker?.clear();
-      } on Object {
+      } on Object catch (e, st) {
+        TraceLogger.instance.log(TraceLevel.info, 'demo', 'demo_entry_screen: Object handled', error: e, stackTrace: st);
         // A disposed outer scope cannot safely settle this hint; keep it.
       }
     }

@@ -4295,6 +4295,8 @@
   "@conversationYesterday": {
     "description": "#687 - messaging centre"
   },
+  "counterLotsExpired": "Seuls {held} des {asked} demandés sont vendables ici : {expired} de plus ont dépassé leur date. Rien n'a été vendu.",
+  "counterLotsShort": "Seuls {held} des {asked} demandés sont ici. Rien n'a été vendu.",
   "countryChangeBody": "En {country}, ces fonctionnalités ne sont pas disponibles et cessent de fonctionner : {features}. Leurs interrupteurs sont conservés : elles reviennent si vous remettez le pays d'origine.",
   "@countryChangeBody": {
     "description": "#2454 country change",
@@ -7117,6 +7119,7 @@
   "exportValueNameUsage": "Consommation",
   "exportValueNameW": "Ouest",
   "exportValueNameWorkspace": "Espace de travail",
+  "failedPartNotShown": "Cette partie n'a pas pu être affichée. Revenez en arrière et ouvrez-la de nouveau.",
   "favoriteKeptOnDeviceRefused": "Gardé sur cet appareil uniquement : votre compte ne peut pas enregistrer ce lieu.",
   "favoriteKeptOnDeviceUnreachable": "Gardé sur cet appareil uniquement : votre compte n’a pas pu être joint. Réessayez plus tard.",
   "featureAccessorySupplements": "Suppléments d'accessoires",
@@ -19073,6 +19076,7 @@
     "description": "#2486 settings: Settings group title."
   },
   "settingGroupBusiness": "Activité",
+  "settingGroupCompatibility": "Versions de l'application",
   "settingGroupDirectory": "Annuaire des membres",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -19116,6 +19120,7 @@
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
   },
+  "settingHintAppsSupportWindowDays": "Combien de jours une ancienne application reste acceptée après qu'une plus récente est disponible sur le canal de distribution le plus lent. L'application la plus ancienne acceptée par cette installation n'est relevée qu'une fois ce nombre de jours écoulé, pour que chaque membre ait le temps de la mettre à jour.",
   "settingHintAssetsValuationMaxRows": "Le plus grand nombre de lignes d'un lot de valorisations du comptable, une par bien. Un fichier plus grand est refusé en entier ; scindez-le avant l'import.",
   "@settingHintAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
@@ -19372,6 +19377,7 @@
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
   },
+  "settingLabelAppsSupportWindowDays": "Délai de prise en charge des anciennes applications",
   "settingLabelAssetsValuationMaxRows": "Lignes de valorisation par lot",
   "@settingLabelAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
@@ -23993,6 +23999,139 @@
   "tillNextCustomer": "Client suivant",
   "tillNotReady": "Pas encore prêt dans votre pays : {operation}",
   "tillNotReadyHint": "Rien n'est numéroté ni encaissé tant que l'opération du pays n'est pas prise en charge.",
+  "tillOfflineBanner": "Hors ligne — espèces uniquement. Les ventes sont conservées sur cet appareil et envoyées au retour de la connexion.",
+  "@tillOfflineBanner": {
+    "description": "#4373 the till sells offline: the banner"
+  },
+  "tillOfflineClosedSession": "La session a été fermée : ces ventes restent sur l'appareil pour un responsable.",
+  "@tillOfflineClosedSession": {
+    "description": "#4373 the send was refused because the session was closed (DKL12)"
+  },
+  "tillOfflineDiscard": "Supprimer les données hors ligne",
+  "@tillOfflineDiscard": {
+    "description": "#4373 drop the unreadable offline data: the action"
+  },
+  "tillOfflineDiscardBody": "Les ventes non envoyées sont perdues définitivement. Ne supprimez les données qu'après vérification par un responsable.",
+  "@tillOfflineDiscardBody": {
+    "description": "#4373 drop the unreadable offline data: the warning"
+  },
+  "tillOfflineDiscardConfirm": "Supprimer les données",
+  "@tillOfflineDiscardConfirm": {
+    "description": "#4373 drop the unreadable offline data: confirm"
+  },
+  "tillOfflineGaps": "Numéros de vente manquants sur le serveur : {numbers}.",
+  "@tillOfflineGaps": {
+    "description": "#4373 the answer of the send: sale numbers the server finds missing",
+    "placeholders": {
+      "numbers": {
+        "type": "String"
+      }
+    }
+  },
+  "tillOfflineKept": "{count, plural, one{1 vente reste} other{{count} ventes restent}} sur cet appareil pour un responsable.",
+  "@tillOfflineKept": {
+    "description": "#4373 the answer of the send: sales that stay on the device",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tillOfflineNoPrice": "Cet article n'a pas de prix sur cet appareil : il ne peut pas être vendu hors ligne.",
+  "@tillOfflineNoPrice": {
+    "description": "#4373 a line the device holds no price for"
+  },
+  "tillOfflineNotSigned": "Non signé. Il est envoyé au serveur au retour de la connexion.",
+  "@tillOfflineNotSigned": {
+    "description": "#4373 the receipt of a sale made offline: not signed yet"
+  },
+  "tillOfflineReasonBeforeSession": "Faite avant l'ouverture de cette caisse.",
+  "@tillOfflineReasonBeforeSession": {
+    "description": "#4373 why the server refused an offline sale: BeforeSession"
+  },
+  "tillOfflineReasonCash": "Les espèces données étaient inférieures au total.",
+  "@tillOfflineReasonCash": {
+    "description": "#4373 why the server refused an offline sale: Cash"
+  },
+  "tillOfflineReasonClock": "L'horloge de l'appareil était en avance.",
+  "@tillOfflineReasonClock": {
+    "description": "#4373 why the server refused an offline sale: Clock"
+  },
+  "tillOfflineReasonItem": "L'article n'est plus vendu.",
+  "@tillOfflineReasonItem": {
+    "description": "#4373 why the server refused an offline sale: Item"
+  },
+  "tillOfflineReasonOther": "Les règles de la caisse l'ont refusée.",
+  "@tillOfflineReasonOther": {
+    "description": "#4373 why the server refused an offline sale: Other"
+  },
+  "tillOfflineReasonPrice": "Le prix a changé plus que ce qui est autorisé.",
+  "@tillOfflineReasonPrice": {
+    "description": "#4373 why the server refused an offline sale: Price"
+  },
+  "tillOfflineReasonTooLong": "Faite trop longtemps après la perte de la connexion.",
+  "@tillOfflineReasonTooLong": {
+    "description": "#4373 why the server refused an offline sale: TooLong"
+  },
+  "tillOfflineReasonTooMany": "Plus de ventes hors ligne que ce qui est autorisé.",
+  "@tillOfflineReasonTooMany": {
+    "description": "#4373 why the server refused an offline sale: TooMany"
+  },
+  "tillOfflineRecorded": "Enregistrée hors ligne · vente {seq} de cette caisse",
+  "@tillOfflineRecorded": {
+    "description": "#4373 the receipt of a sale made offline: its number on this till",
+    "placeholders": {
+      "seq": {
+        "type": "int"
+      }
+    }
+  },
+  "tillOfflineReportAccepted": "{count, plural, one{1 vente a été enregistrée.} other{{count} ventes ont été enregistrées.}}",
+  "@tillOfflineReportAccepted": {
+    "description": "#4373 the answer of the send: how many sales were recorded",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tillOfflineReportRefused": "La vente {seq} a été refusée : {reason} Ses espèces restent dans le comptage du tiroir.",
+  "@tillOfflineReportRefused": {
+    "description": "#4373 the answer of the send: a sale the server refused, with its reason",
+    "placeholders": {
+      "seq": {
+        "type": "int"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "tillOfflineReportTitle": "Ventes hors ligne envoyées",
+  "@tillOfflineReportTitle": {
+    "description": "#4373 the answer of the send: title"
+  },
+  "tillOfflineSendNow": "Chercher la connexion maintenant",
+  "@tillOfflineSendNow": {
+    "description": "#4373 look for the connection and send the waiting sales"
+  },
+  "tillOfflineSyncing": "Envoi des ventes hors ligne…",
+  "@tillOfflineSyncing": {
+    "description": "#4373 the waiting sales are being sent"
+  },
+  "tillOfflineUnreadable": "Les données hors ligne de cet appareil sont illisibles. Rien ne se vend hors ligne tant qu'un responsable n'a pas décidé.",
+  "@tillOfflineUnreadable": {
+    "description": "#4373 the offline data of the device cannot be read"
+  },
+  "tillOfflineWaiting": "{count, plural, =0{Aucune vente n'attend sur cet appareil} one{1 vente attend sur cet appareil} other{{count} ventes attendent sur cet appareil}}",
+  "@tillOfflineWaiting": {
+    "description": "#4373 the till sells offline: how many sales wait on the device",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "tillOpCorrectReceipt": "correction d'un ticket",
   "tillOpExportFiscal": "export des données fiscales",
   "tillOpIssueReceipt": "émission d'un ticket",

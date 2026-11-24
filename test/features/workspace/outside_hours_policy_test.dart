@@ -14,6 +14,7 @@
 // assert_member_quota and member_statement filter through the SAME SQL
 // predicate — all pinned below.
 import 'dart:io';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/reservations/domain/reservation_refusal.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -148,7 +149,7 @@ void main() {
           endsAt: _midnight,
           checkIn: true,
         ),
-        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK16')),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk16)),
       );
       expect(repo.reservations, isEmpty);
     });
@@ -163,7 +164,7 @@ void main() {
           startsAt: _at(6),
           endsAt: _at(7, 30),
         ),
-        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK16')),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk16)),
       );
     });
 
@@ -192,7 +193,7 @@ void main() {
           startsAt: _at(16),
           endsAt: _at(20),
         ),
-        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK16')),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk16)),
       );
       expect(repo.reservations, isEmpty);
     });
@@ -266,7 +267,7 @@ void main() {
           startsAt: _at(17),
           endsAt: _at(20),
         ),
-        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK15')),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk15)),
       );
       expect(repo.reservations, isEmpty);
     });
@@ -286,7 +287,7 @@ void main() {
             startsAt: window.$1,
             endsAt: window.$2,
           ),
-          throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK15')),
+          throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk15)),
         );
       }
     });
@@ -319,7 +320,7 @@ void main() {
           startsAt: _at(6),
           endsAt: _at(7, 30),
         ),
-        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK15')),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk15)),
       );
       expect(ahead.reservations, isEmpty);
     });

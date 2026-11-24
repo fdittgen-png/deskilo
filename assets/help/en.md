@@ -3064,6 +3064,18 @@ Press **Open the till**, type the **Float in the drawer** (or, when your busines
 
 **Day close.** Someone who may see the finances opens **Day close** from the till drawer and presses **Close the day** once every till is closed (a till still open is named and refuses it). The day's closed sessions become one numbered report: each session with what was expected, counted, the difference and its reason, the takings by tender and by tax rate, the cash paid in and out, the refunds and the range of receipt numbers. **Closed days** lists the reports already made; a closed day is never changed. This is the business's own record; the legal content a country asks of a day close comes with its own module.
 
+### When the till is offline
+
+**Audience:** Administrator · Owner
+
+You sell at the counter and the connection is lost: you want to go on selling, and to know that nothing is lost or counted twice.
+
+Turn on **Selling offline, cash only** (it needs the till sessions feature). When a call to the server gets no answer, the till says **Offline — cash only. Sales are kept on this device and sent when the connection returns.** and goes on selling for cash only, at the prices it held when it was last online, and an item the till holds no price for is not sold. Each sale is kept on the device under the next number of its till session; the receipt reads **Recorded offline** with that number and **Not signed. It is sent to the server when the connection returns.** - it has no receipt number until the server has received it.
+
+The till looks for its connection again by itself, and **Look for the connection now** does it at once. When the connection is back, the sales are sent in order, each under the number it was made with, so a sale already received is never counted twice. The till then says how many were recorded and, for each sale the server refused, why (for example the price changed beyond what is allowed, or the item is no longer sold); the cash of a refused sale stays in the drawer count. If the session was closed meanwhile, the till says: "The session was closed: these sales stay on the device for a manager." The sales stay on the device until a manager has dealt with them.
+
+Three settings of the business bound what is accepted: **Longest offline period (minutes)**, **Most offline sales per till session** and **Price difference allowed offline (%)**. If the offline data of the device cannot be read, nothing is sold offline until a manager decides; **Discard the offline data** drops it after a warning, because sales not yet sent are lost for good.
+
 ### RFID tags: one per batch or one per piece
 
 **Audience:** Administrator · Owner
@@ -6494,7 +6506,7 @@ The things around the everyday work: the test side of a space and the real one, 
 
 In this chapter:
 - [A space has two sides](help:user.advanced.environments) · [Enter a side](help:user.advanced.enter-environment) · [A test space](help:user.advanced.test-space) · [Who may deploy](help:user.advanced.deploy-permissions) · [Deploy between the sides](help:user.advanced.deploy) · [Workspace status and the year archive](help:user.advanced.status-archive)
-- [Your own server](help:user.advanced.own-server) · [When an installation requires a newer app](help:user.advanced.app-floor)
+- [Your own server](help:user.advanced.own-server) · [When an installation requires a newer app](help:user.advanced.app-floor) · [Release a new version](help:user.advanced.releases)
 - [Assistants](help:user.advanced.assistants) · [Connect an assistant](help:user.advanced.assistants-connect) · [Approvals](help:user.advanced.assistants-approve) · [What assistants may do](help:user.advanced.assistants-policy)
 - [The task recorder](help:user.advanced.recorder) · [Record a task](help:user.advanced.recorder-record) · [Review a recording](help:user.advanced.recorder-review) · [Make a guide](help:user.advanced.guide-make) · [Follow a guide](help:user.advanced.guide-play) · [The circle menu](help:user.advanced.guide-circle) · [Edit a guide](help:user.advanced.guide-edit) · [Privacy of recordings](help:user.advanced.recorder-privacy)
 - [The demo workspace](help:user.advanced.demo) · [Filming mode](help:user.advanced.filming)
@@ -6670,6 +6682,28 @@ An installation can say that only a newer app may be used with it. You want to k
 - The floor is a courtesy to apps that know it, not a lock: money and permission rules are decided by the server whatever the app.
 
 **See also:** [Run your own server](help:user.advanced.own-server) · [Platforms](help:user.advanced.platforms)
+
+### Release a new version: the server first
+
+**Audience:** Operator
+
+You run an installation and a new version of the app is coming. The server is always updated before the app, and an older app is never shut out without warning.
+
+**Steps**
+
+1. Update the server first: apply its new migrations, then its functions. Nothing changes for members: an app already installed keeps working, because the server only adds.
+2. Publish the app. Before any upload, the release train reads the installation it ships to and stops, naming the missing migrations, when the installation is behind, refuses the new app or cannot be read. Once the app is out, the server's version reads *Up to date* in it, and an older app reads *The server is newer than this app — update the app when you can*.
+3. Wait the support window: [Profiles](app:/profiles) → **Platform settings (defaults)** → **App versions** → **Support window for older apps**. It counts from the day the new app is available on the slowest channel you distribute it through, not from the day it was built: a store review can take days.
+4. Only then raise the oldest app the installation accepts, in a migration of its own. An app below it shows **This app needs an update** with how to update on its platform; nothing the member entered is lost.
+
+**Good to know**
+
+- An app newer than its server reads *Needs an update: this app needs schema …*. That is the case the server-first order prevents.
+- To undo a raise, lower the oldest accepted app again, or remove it, in a new migration: a blocked app works again the next time it starts or comes back to the foreground.
+- The release train only reads the installation: it applies no migration and does not change who may publish.
+- Never raise the oldest accepted app in the migration that first needs the new app: testers on that installation would be blocked the moment it is applied.
+
+**See also:** [Run your own server](help:user.advanced.own-server)
 
 ### Assistants: what they are
 

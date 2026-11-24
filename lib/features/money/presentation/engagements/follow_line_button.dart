@@ -8,10 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../application/service_fulfilment_commands.dart';
+import '../../domain/service_fulfilment.dart';
 import '../../providers/service_fulfilment_providers.dart';
 import 'engagement_text.dart';
 
@@ -50,14 +51,14 @@ class _State extends ConsumerState<FollowLineButton> {
     if (!mounted) return;
     setState(() => _busy = false);
     switch (outcome) {
-      case FulfilmentDone(:final value):
+      case CommandDone(:final value):
         _requestId = null;
         ref.invalidate(serviceFulfilmentsProvider(widget.workspaceId));
         context.go('/money/engagements/${value.fulfilment.id}');
-      case FulfilmentRefused(:final refusal):
+      case CommandRefused(refusal: Refusal(cause: final FulfilmentRefusal refusal)):
         _requestId = null;
         AppSnack.error(context, engagementRefusalText(l10n, refusal));
-      case FulfilmentUnreached():
+      case _:
         AppSnack.error(context, l10n.engagementUnreached);
     }
   }

@@ -71,7 +71,7 @@ class _TagsDialogState extends ConsumerState<_TagsDialog> {
       });
       _reload();
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a tag was not bound: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a tag was not bound', error: e, stackTrace: st);
       // a refusal is an answer: a new attempt is a new request; an unknown outcome (the connection) keeps its
       // request id, so the retry answers once
       if (e is StockConfigFailure) _requests.remove(code);
@@ -90,7 +90,7 @@ class _TagsDialogState extends ConsumerState<_TagsDialog> {
       });
       _reload();
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a tag was not retired: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a tag was not retired', error: e, stackTrace: st);
       if (mounted) setState(() => _problem = stockTagProblem(l10n, e));
     }
   }

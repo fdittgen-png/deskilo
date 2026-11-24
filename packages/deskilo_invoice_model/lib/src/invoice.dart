@@ -7,6 +7,7 @@ import 'commercial_line_snapshot.dart';
 import 'invoice_clauses.dart';
 import 'invoice_kind.dart';
 import 'invoice_line_snapshot.dart';
+import 'line_track.dart';
 import 'vat_rate.dart';
 
 part 'invoice.freezed.dart';
@@ -336,6 +337,8 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     /// workspace's current term, the way such documents always printed.
     DateTime? dueOn,
 
+    @Default(<String, List<LineTrack>>{}) Map<String, List<LineTrack>> lineTracks,
+
     /// #1913 — on what basis [dueOn] was frozen: `document_term`,
     /// `default_term` (the unagreed default; needs review) or `unknown`.
     String? maturityBasis,
@@ -431,11 +434,11 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     kind: InvoiceKind.fromWire(row['kind'] as String?),
     settledByInvoiceId: row['settled_by_invoice_id'] as String?,
     settles: [
-      for (final source in (row['settles'] as List? ?? const []))
-        SettledSource.fromSnapshot(source as Map),
+      for (final source in (row['settles'] as List? ?? const [])) SettledSource.fromSnapshot(source as Map),
     ],
     dueOn: _maturityDueOn(row['invoice_maturities']),
     maturityBasis: _maturityOf(row['invoice_maturities'])?['basis'] as String?,
+    lineTracks: lineTracksByLineId(row['invoice_line_tracks']),
     legalSnapshot: switch (row['legal_snapshot']) {
       final Map<dynamic, dynamic> json => json.cast<String, Object?>(),
       _ => null,
@@ -487,20 +490,16 @@ sealed class Invoice with _$Invoice implements SystemStamped {
   );
 }
 
-/// #1913 — the embedded `invoice_maturities` row: PostgREST returns the
-/// one-to-one relation as an object, older servers as a list or nothing.
+/// #1913 — the embedded `invoice_maturities` row (an object, on older servers a list of one or nothing).
 Map<Object?, Object?>? _maturityOf(Object? embedded) => switch (embedded) {
-      final Map<Object?, Object?> map => map,
-      final List<Object?> list when list.isNotEmpty && list.first is Map =>
-        list.first! as Map<Object?, Object?>,
-      _ => null,
-    };
+  final Map<Object?, Object?> map => map,
+  final List<Object?> list when list.isNotEmpty && list.first is Map => list.first! as Map<Object?, Object?>,
+  _ => null,
+};
 
 DateTime? _maturityDueOn(Object? embedded) {
-  final raw = _maturityOf(embedded)?['due_on'] as String?;
-  if (raw == null) return null;
-  final day = DateTime.parse(raw);
-  return DateTime(day.year, day.month, day.day);
+  final day = DateTime.tryParse('${_maturityOf(embedded)?['due_on'] ?? ''}');
+  return day == null ? null : DateTime(day.year, day.month, day.day);
 }
 
 /// The breakdown the documents render, one entry per rate: the SNAPSHOT wins

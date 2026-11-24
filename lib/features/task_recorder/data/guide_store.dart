@@ -17,6 +17,7 @@ import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:deskilo_task_recording/task_guide.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/stored_guide.dart';
 import '../guide/guide_codec.dart';
 import 'recorder_store.dart';
@@ -119,9 +120,11 @@ class GuideStore {
             ? DateTime.fromMillisecondsSinceEpoch(created)
             : null,
       );
-    } on FormatException {
+    } on FormatException catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'task_recorder', 'guide_store: FormatException handled', error: e, stackTrace: st);
       return null;
-    } on TypeError {
+    } on TypeError catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'task_recorder', 'guide_store: TypeError handled', error: e, stackTrace: st);
       return null;
     }
   }

@@ -4,6 +4,7 @@
 // replaces, as the server does (0786): a month with a subscription and a
 // usage invoice can have its usage invoice corrected; a correction of
 // another kind is refused (DKI08).
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -60,7 +61,7 @@ void main() {
         replacesId: subscription,
         kind: InvoiceKind.usage,
       ),
-      throwsA(isA<PostgrestException>().having((e) => e.code, 'code', 'DKI08')),
+      throwsA(isA<PostgrestException>().having((e) => e.code, 'code', DkCode.dki08)),
     );
     expect(usage, isNotEmpty);
   });

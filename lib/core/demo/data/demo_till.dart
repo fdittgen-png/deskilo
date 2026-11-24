@@ -49,6 +49,13 @@ class DemoTill implements TillPort, TillOfflinePort {
   /// The traced lines sold so far, oldest first: what the trace finds from a track ID (#4436).
   List<DemoSoldLine> get soldLines => List.unmodifiable(_soldLines);
 
+  /// #4373 -- the Demo's connection: while it is down every call to the server gets no answer at all, as when the line is lost.
+  bool connected = true;
+
+  void _line() {
+    if (!connected) throw StateError('no connection');
+  }
+
   int _revision = 0;
   int _sales = 0;
   final Map<String, TillDraft> _drafts = {};
@@ -59,7 +66,12 @@ class DemoTill implements TillPort, TillOfflinePort {
   final Map<String, List<TillLine>> _lines = {};
 
   @override
-  Future<TillReadiness> readiness(String workspaceId) async => TillReadiness(
+  Future<TillReadiness> readiness(String workspaceId) async {
+    _line();
+    return _readiness();
+  }
+
+  TillReadiness _readiness() => TillReadiness(
     country: country,
     fiscalObligation: 'none',
     ready: ready,
@@ -71,6 +83,7 @@ class DemoTill implements TillPort, TillOfflinePort {
 
   @override
   Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision, String? tillId}) async {
+    _line();
     final replay = _answered[requestId];
     if (replay != null) return replay;
     if (tillId != null && drawer != null && !drawer!.hasOpenSession(tillId)) {
@@ -117,6 +130,7 @@ class DemoTill implements TillPort, TillOfflinePort {
 
   @override
   Future<TillSold> finalize(String workspaceId, {required String requestId, required String receiptId, required int expectedRevision, required List<TillTender> tenders}) async {
+    _line();
     final again = _done[requestId];
     if (again != null) return again;
     final draft = _drafts[receiptId];
@@ -155,6 +169,7 @@ class DemoTill implements TillPort, TillOfflinePort {
 
   @override
   Future<OfflineSyncAnswer> sync(String workspaceId, {required String sessionId, required DateTime offlineSince, required List<OfflineSale> sales, required int minorDigits}) async {
+    _line();
     final rows = _offlineRows.putIfAbsent(sessionId, () => []);
     final results = <OfflineSaleResult>[];
     for (final sale in sales) {
@@ -163,12 +178,15 @@ class DemoTill implements TillPort, TillOfflinePort {
         results.add(OfflineSaleResult(seq: again.seq, requestId: again.requestId, accepted: again.accepted, reason: again.reason, number: again.number, replayed: true));
         continue;
       }
+      // a session already closed takes no new sale, not even a refused one: its counted cash never moves
+      if (drawer != null && !drawer!.sessionIsOpen(sessionId)) throw _refused(DkCode.dkl12, 'open the till first');
       final priced = [for (final l in sale.lines) DemoStockRegistry.catalogue[l.itemId]?.$2 ?? _unstocked[l.itemId]];
       final reason = [for (var i = 0; i < priced.length; i++) if (priced[i] == null) 'item' else if (priced[i] != sale.lines[i].unitMinor) 'price'].firstOrNull ?? '';
       final number = reason.isEmpty ? 'R-${(++_sales).toString().padLeft(5, '0')}' : '';
       final result = OfflineSaleResult(seq: sale.seq, requestId: sale.requestId, accepted: reason.isEmpty, reason: reason, number: number, replayed: false);
       _offlineByRequest[sale.requestId] = result;
       results.add(result);
+      drawer?.recordOfflineSale(sessionId, cashMinor: reason.isEmpty ? sale.totalMinor : sale.cashGivenMinor - sale.changeMinor, accepted: reason.isEmpty, number: number);
       rows.add(OfflineSaleRow(
         seq: sale.seq, accepted: reason.isEmpty, reason: reason, number: number, totalMinor: reason.isEmpty ? sale.totalMinor : null,
         cashGivenMinor: sale.cashGivenMinor, changeMinor: sale.changeMinor, occurredAt: sale.occurredAt,
@@ -179,6 +197,7 @@ class DemoTill implements TillPort, TillOfflinePort {
 
   @override
   Future<OfflineList> list(String workspaceId, {required String sessionId}) async {
+    _line();
     final rows = [...?_offlineRows[sessionId]]..sort((a, b) => a.seq.compareTo(b.seq));
     return OfflineList(sales: rows, gaps: _gapsOf(rows));
   }

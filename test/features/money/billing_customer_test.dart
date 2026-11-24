@@ -5,7 +5,10 @@
 // outcomes) and its adapter over the real RPC names and wire shapes of 0821.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/fake_billing_customers.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/application/billing_customer_commands.dart';
 import 'package:deskilo/features/money/data/supabase_billing_customer_repository.dart';
 import 'package:deskilo/features/money/domain/billing_customer.dart';
@@ -95,7 +98,11 @@ void main() {
       final repo = FakeBillingCustomerRepository();
       final out = await BillingCustomerCommands(repo)
           .create('ws', const BillingPartyDraft());
-      expect(out, isA<BillingInvalid>());
+      expect(
+        out,
+        isA<CommandRefused<String>>()
+            .having((o) => o.refusal.cause, 'cause', isA<BillingDraftInvalid>()),
+      );
       expect(repo.calls, isEmpty);
     });
 
@@ -104,7 +111,7 @@ void main() {
       final repo = FakeBillingCustomerRepository();
       final commands = BillingCustomerCommands(repo);
       final created = await commands.create('ws', _lumi, capacity: 'business');
-      expect(created, isA<BillingSaved>());
+      expect(created, isA<CommandDone<String>>());
       final read = (await repo.fetch('ws')).single;
       expect(read.revision, 1);
       expect(read.capacity, 'business');
@@ -115,13 +122,13 @@ void main() {
         read,
         const BillingPartyDraft(company: 'Atelier Lumi', city: 'Beziers'),
       );
-      expect(saved, isA<BillingSaved>());
+      expect(saved, isA<CommandDone<String>>());
       final stale = await commands.save(
         'ws',
         read,
         const BillingPartyDraft(company: 'Other', city: 'Nice'),
       );
-      expect((stale as BillingRefused).kind, BillingCustomerRefusalKind.stale);
+      expect(((stale as CommandRefused<String>).refusal.cause! as BillingCustomerRefusal).kind, BillingCustomerRefusalKind.stale);
       final now = (await repo.fetch('ws')).single;
       expect(now.revision, 2);
       expect(now.draft.company, 'Atelier Lumi');
@@ -131,14 +138,16 @@ void main() {
       final repo = FakeBillingCustomerRepository(mayManage: () => false);
       final commands = BillingCustomerCommands(repo);
       expect(
-        ((await commands.create('ws', _lumi)) as BillingRefused).kind,
+        (((await commands.create('ws', _lumi)) as CommandRefused<String>).refusal.cause!
+                as BillingCustomerRefusal)
+            .kind,
         BillingCustomerRefusalKind.notAllowed,
       );
       final open = FakeBillingCustomerRepository()
         ..failNext = http.ClientException('connection closed');
       expect(
         await BillingCustomerCommands(open).create('ws', _lumi),
-        isA<BillingUnreached>(),
+        isA<CommandUnreached<String>>(),
       );
       expect(await open.fetch('ws'), isEmpty);
     });
@@ -232,13 +241,13 @@ void main() {
         fail('no refusal');
       }
 
-      expect(await kindOf('DKN01'), BillingCustomerRefusalKind.notAllowed);
-      expect(await kindOf('DKU02'), BillingCustomerRefusalKind.notAllowed);
-      expect(await kindOf('DKU05'), BillingCustomerRefusalKind.stale);
-      expect(await kindOf('DKU04'), BillingCustomerRefusalKind.unknownCustomer);
-      expect(await kindOf('DKU03'), BillingCustomerRefusalKind.nameNeeded);
+      expect(await kindOf(DkCode.dkn01), BillingCustomerRefusalKind.notAllowed);
+      expect(await kindOf(DkCode.dku02), BillingCustomerRefusalKind.notAllowed);
+      expect(await kindOf(DkCode.dku05), BillingCustomerRefusalKind.stale);
+      expect(await kindOf(DkCode.dku04), BillingCustomerRefusalKind.unknownCustomer);
+      expect(await kindOf(DkCode.dku03), BillingCustomerRefusalKind.nameNeeded);
       expect(
-        await kindOf('42883'),
+        await kindOf(PgCode.undefinedFunction),
         isNull,
         reason: 'an older host: no function',
       );

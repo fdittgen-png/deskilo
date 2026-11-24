@@ -5,6 +5,8 @@
 // basket are listed with their tag, a past day is replayed from the movements (and says the pieces are not shown yet), and a
 // failed read says so and can be asked again. The read itself: the answer is parsed as it comes and balances.
 // #4432: a piece opens "Every movement of this piece", asked of the chain by the piece and nothing else.
+import 'dart:io';
+
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_tags.dart';
@@ -29,6 +31,17 @@ class _Failing implements StockWhereIs {
   Future<WhereIsAnswer> whereIs(String workspaceId, String itemId, {String? lotId, DateTime? at}) async {
     calls++;
     throw StateError('unreachable');
+  }
+}
+
+/// #4414 -- a read that never reaches the server.
+class _Offline implements StockWhereIs {
+  int calls = 0;
+
+  @override
+  Future<WhereIsAnswer> whereIs(String workspaceId, String itemId, {String? lotId, DateTime? at}) async {
+    calls++;
+    throw const SocketException('no route to host');
   }
 }
 
@@ -115,6 +128,23 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('stock-where-retry')));
         await _frames(tester);
         expect(port.calls, 2);
+      });
+
+      // #4414 -- a read that never reached the server says so, in the shared
+      // view's words, and Try again asks again.
+      testWidgets('an offline read says there is no connection, with Try again', (tester) async {
+        final port = _Offline();
+        await _open(tester, port, 'demo-item-mugs', size);
+        // A lost connection is retried by the provider before it fails.
+        for (var i = 0; i < 12 && find.byKey(const ValueKey('stock-where-failed')).evaluate().isEmpty; i++) {
+          await tester.pump(const Duration(seconds: 7));
+        }
+        expect(find.byKey(const ValueKey('stock-where-failed')), findsOneWidget);
+        expect(find.text(_en.readStateOffline), findsOneWidget);
+        final before = port.calls;
+        await tester.tap(find.byKey(const ValueKey('stock-where-retry')));
+        await tester.pump();
+        expect(port.calls, greaterThan(before), reason: 'Try again asks again');
       });
     });
   }

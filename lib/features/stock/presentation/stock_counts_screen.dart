@@ -36,6 +36,7 @@ import '../domain/stock_sites.dart';
 import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
 import 'stock_move_sheets.dart' show StockPickField;
+import 'stock_read_failed.dart';
 
 class StockCountsScreen extends ConsumerWidget {
   const StockCountsScreen({super.key});
@@ -100,7 +101,7 @@ class StockCountsScreen extends ConsumerWidget {
       );
       if (done) ref.invalidate(stockCountsProvider(workspaceId));
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the count sheet could not read the stock: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the count sheet could not read the stock', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
     }
   }
@@ -121,17 +122,7 @@ class _Counts extends ConsumerWidget {
     final places = {for (final p in ref.watch(stockPlaceConfigsProvider(workspaceId)).value ?? const <StockPlaceConfig>[]) p.id: p}; // empty-ok: a count is named by its ids
     return counts.when(
       loading: () => const LoadingView(),
-      error: (e, st) => Column(
-        key: const ValueKey('stock-counts-failed'),
-        children: [
-          Text(l10n.stockReadFailed),
-          TextButton(
-            key: const ValueKey('stock-counts-retry'),
-            onPressed: () => ref.invalidate(stockCountsProvider(workspaceId)),
-            child: Text(l10n.identityConnectRetry),
-          ),
-        ],
-      ),
+      error: (e, st) => StockReadFailed(keyName: 'stock-counts', error: e, onRetry: () => ref.invalidate(stockCountsProvider(workspaceId))),
       data: (list) => list.isEmpty
           ? Text(l10n.stockCountsEmpty, key: const ValueKey('stock-counts-empty'))
           : Column(
@@ -251,7 +242,7 @@ class _CountTile extends ConsumerWidget {
         ..invalidate(stockOnHandWalkProvider)
         ..invalidate(stockMovementsWalkProvider);
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a count was not decided: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a count was not decided', error: e, stackTrace: st);
       // a stale or decided count is read again: what the screen shows follows the server
       ref.invalidate(stockCountsProvider(workspaceId));
       if (context.mounted) AppSnack.error(context, knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e));
@@ -320,7 +311,7 @@ class _CountDraft {
       ));
       return null;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a count was not recorded: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'a count was not recorded', error: e, stackTrace: st);
       return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
     }
   }

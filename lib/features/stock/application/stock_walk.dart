@@ -78,7 +78,7 @@ class StockWalk<T> extends Notifier<StockWalkState<T>> {
         loading: false,
       );
     } on Object catch (error, stack) {
-      TraceLogger.instance.warn('stock', 'a stock page could not be read: $error\n$stack');
+      TraceLogger.instance.warn('stock', 'a stock page could not be read', error: error, stackTrace: stack);
       if (!ref.mounted) return;
       state = StockWalkState(
         rows: current.rows,

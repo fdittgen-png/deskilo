@@ -21,6 +21,7 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_where_is.dart';
 import '../providers/stock_providers.dart';
 import 'stock_chain_section.dart';
+import 'stock_read_failed.dart';
 
 class StockWhereIsScreen extends ConsumerStatefulWidget {
   const StockWhereIsScreen({required this.itemId, this.lotId, super.key});
@@ -56,22 +57,12 @@ class _State extends ConsumerState<StockWhereIsScreen> {
   }
 
   Widget _body(BuildContext context, String workspaceId) {
-    final l10n = context.l10n;
     final provider = stockWhereIsAnswerProvider((workspaceId: workspaceId, itemId: widget.itemId, lotId: widget.lotId, at: _at));
     return ref
         .watch(provider)
         .when(
           loading: () => const LoadingView(),
-          error: (_, _) => Center(
-            key: const ValueKey('stock-where-failed'),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(l10n.stockReadFailed),
-                TextButton(key: const ValueKey('stock-where-retry'), onPressed: () => ref.invalidate(provider), child: Text(l10n.identityConnectRetry)),
-              ],
-            ),
-          ),
+          error: (e, _) => StockReadFailed(keyName: 'stock-where', error: e, onRetry: () => ref.invalidate(provider)),
           data: (a) => _Answer(
             answer: a,
             workspaceId: workspaceId,

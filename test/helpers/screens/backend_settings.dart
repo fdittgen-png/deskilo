@@ -8,6 +8,7 @@ import 'dart:async';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/schema_version.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +111,7 @@ class _Transport implements BackendProbeTransport {
       case BackendProbeResult.schemaMissing:
         throw const PostgrestException(
           message: 'relation does not exist',
-          code: '42P01',
+          code: PgCode.undefinedTable,
         );
       case BackendProbeResult.attention:
         throw const PostgrestException(message: 'odd', code: '500');

@@ -32,15 +32,15 @@ Invoice _invoice() => Invoice(
   issuedAt: DateTime(2026, 9, 30),
   period: '2026-09',
   title: '2026-09',
-  lines: const [
-    InvoiceLine(
+  lines: [
+    const InvoiceLine(
       kind: 'subscription',
       label: '50',
       amountCents: 24000,
       vatPercent: 20,
       vatCategory: 'S',
     ),
-    InvoiceLine(
+    const InvoiceLine(
       kind: 'overage',
       label: '',
       quantity: 2,
@@ -48,17 +48,43 @@ Invoice _invoice() => Invoice(
       vatPercent: 20,
       vatCategory: 'S',
     ),
+    // #4436 -- a goods line that took two lots and a tagged piece: the structured invoice tells them as item attributes
+    invoiceLineFromSnapshot(const {
+      'kind': 'goods',
+      'label': 'Honey',
+      'quantity': 1,
+      'amount_cents': 4800,
+      'vat_percent': 20,
+      'vat_category': 'S',
+      'commercial': {
+        'version': 1,
+        'line_id': 'L-HONEY',
+        'quantity': '4',
+        'unit': {'code': 'piece', 'un_ece_code': 'C62', 'label': 'pc'},
+        'unit_price': {'amount': '10', 'currency': 'EUR', 'basis': 'net', 'base_quantity': '1'},
+        'supply': 'goods',
+        'tax_facts': <String, Object?>{},
+        'amounts': {'currency': 'EUR', 'net_minor': '4000', 'tax_minor': '800', 'gross_minor': '4800'},
+      },
+    }),
   ],
   vatTotals: const [
     InvoiceVatTotal(
       percent: 20,
       category: 'S',
-      grossCents: 28800,
-      netCents: 24000,
-      vatCents: 4800,
+      grossCents: 33600,
+      netCents: 28000,
+      vatCents: 5600,
     ),
   ],
-  totalCents: 28800,
+  lineTracks: const {
+    'L-HONEY': [
+      LineTrack(kind: LineTrackKind.lot, code: 'EARLY', quantity: '3'),
+      LineTrack(kind: LineTrackKind.lot, code: 'LATE', quantity: '1'),
+      LineTrack(kind: LineTrackKind.piece, code: 'SN-0001'),
+    ],
+  },
+  totalCents: 33600,
   currency: 'EUR',
   memberName: 'Atelier Nord SARL',
   memberAddress: '1 Rue Test\n34120 Pézenas',

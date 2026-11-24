@@ -33,6 +33,8 @@ import 'package:deskilo/core/backend/connected_installations.dart';
 import 'package:deskilo/core/backend/context_client_providers.dart';
 import 'package:deskilo/core/backend/context_clients.dart';
 import 'package:deskilo/core/cache/cache_store.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/realtime/realtime_wiring.dart';
 import 'package:deskilo/core/session/session_source.dart';
@@ -588,7 +590,7 @@ void main() {
       p.client.rpc<dynamic>('create_workspace_once', params: creation('SEP-06 refused')),
       throwsA(
         isA<PostgrestException>()
-            .having((e) => e.code, 'code', 'DKR01')
+            .having((e) => e.code, 'code', DkCode.dkr01)
             .having((e) => e.message, 'message', contains('personal home')),
       ),
     );
@@ -615,14 +617,14 @@ void main() {
     final before = [await a.rows('workspaces'), await a.rows('members')];
     final refused = await a.operatorSetRoles(['personal_home']);
     expect(refused.exitCode, isNot(0));
-    expect('${refused.stderr}', contains('DKR02'));
+    expect('${refused.stderr}', contains(DkCode.dkr02));
     // No API role may run it at all: the service role is refused too.
     await expectLater(
       a.readback.rpc<dynamic>(
         'operator_set_installation_roles',
         params: {'p_roles': ['personal_home']},
       ),
-      throwsA(isA<PostgrestException>().having((e) => e.code, 'code', '42501')),
+      throwsA(isA<PostgrestException>().having((e) => e.code, 'code', PgCode.insufficientPrivilege)),
     );
     expect(await a.storedRoles(), ['personal_home', 'workspace_host']);
     expect([await a.rows('workspaces'), await a.rows('members')], before);

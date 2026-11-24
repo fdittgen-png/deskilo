@@ -19,6 +19,7 @@ import 'dart:convert';
 
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/workspace/domain/feature_lifecycle.dart';
+import 'package:deskilo/features/workspace/domain/feature_registry_sql.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/feature_names.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -159,15 +160,20 @@ void _tierPins() {
   });
 }
 
-/// Every key any migration's `feature_registry()` ever returned.
+/// Every key any migration's `feature_registry()` ever returned: those of the bodies that carried the registry as a
+/// JSON literal (up to 0936), and every row a marked block wrote since it became rows (0949, #4396).
 Set<String> everRegisteredFeatureKeys() {
   const definition = 'create or replace function public.feature_registry()';
+  final literal = RegExp(r"\$registry\$\s*select '");
   final keys = <String>{};
   for (final f in sqlFiles('supabase/migrations')) {
     final sql = f.readAsStringSync();
+    keys.addAll(featureRegistryRowKeys(sql));
     final at = sql.indexOf(definition);
     if (at < 0) continue;
-    final open = sql.indexOf("select '", at) + "select '".length;
+    final body = literal.firstMatch(sql.substring(at));
+    if (body == null) continue; // the function reads the rows: its keys are the blocks'
+    final open = at + body.end;
     final close = sql.indexOf("'::jsonb", open);
     keys.addAll(
         (jsonDecode(sql.substring(open, close)) as Map<String, dynamic>).keys);

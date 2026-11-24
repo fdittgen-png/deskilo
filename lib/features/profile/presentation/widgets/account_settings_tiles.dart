@@ -112,7 +112,8 @@ Future<void> _uploadPhoto(
     _invalidateAvatar(ref, userId);
     if (!context.mounted) return;
     AppSnack.success(context, l10n.profilePhotoSaved);
-  } on ProfilePhotoRefused {
+  } on ProfilePhotoRefused catch (caught, caughtStack) {
+    TraceLogger.instance.log(TraceLevel.info, 'profile', 'account_settings_tiles: ProfilePhotoRefused handled', error: caught, stackTrace: caughtStack);
     if (!context.mounted) return;
     AppSnack.error(
       context,

@@ -7,6 +7,7 @@
 // rather than failing the page.
 import 'dart:convert';
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/mcp/data/supabase_mcp_onboarding_repository.dart';
 import 'package:deskilo/features/mcp/domain/instance_operator.dart';
 import 'package:deskilo/features/mcp/domain/mcp_onboarding.dart';
@@ -102,7 +103,7 @@ void main() {
 
   test('a server before 0357 answers unknown, not an error', () async {
     final w = _wire(
-      (_) => {'code': 'PGRST202', 'message': 'Could not find the function'},
+      (_) => {'code': PgCode.pgrstFunctionNotFound, 'message': 'Could not find the function'},
       status: 404,
     );
     final repo = SupabaseMcpOnboardingRepository(w.client);

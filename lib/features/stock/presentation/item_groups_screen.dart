@@ -75,7 +75,7 @@ class _GroupList extends ConsumerWidget {
     try {
       places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the places could not be read for a group: $e', stackTrace: st);
+      TraceLogger.instance.warn('stock', 'the places could not be read for a group', error: e, stackTrace: st);
     }
     // what an item costs or sells for: only for someone who may manage services AND see the finances
     final held = ref.read(myPermissionsProvider);

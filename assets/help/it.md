@@ -3064,6 +3064,18 @@ Premere **Aprire la cassa**, digitare il **Fondo cassa nel cassetto** (o, se l'a
 
 **Chiusura della giornata.** Chi può vedere le finanze apre **Chiusura della giornata** dal cassetto di cassa e preme **Chiudere la giornata** quando ogni cassa è chiusa (una cassa ancora aperta viene indicata e rifiuta la chiusura). Le sessioni chiuse della giornata diventano un rapporto numerato: ogni sessione con atteso, contato, differenza e motivo, gli incassi per mezzo di pagamento e per aliquota, i contanti versati e prelevati, i rimborsi e l'intervallo dei numeri degli scontrini. **Giornate chiuse** elenca i rapporti già fatti; una giornata chiusa non cambia mai. È la registrazione propria dell'attività; il contenuto legale che un paese richiede alla chiusura della giornata arriva con un proprio modulo.
 
+### Quando la cassa è offline
+
+**Destinatari:** Amministratore · Proprietario
+
+Vende al banco e la connessione si perde: vuole continuare a vendere ed essere certo che nulla vada perso o venga contato due volte.
+
+Attivi **Vendere offline, solo in contanti** (richiede la funzione delle sessioni di cassa). Quando una chiamata al server non riceve risposta, la cassa indica **Offline: solo contanti. Le vendite restano su questo dispositivo e vengono inviate quando la connessione torna.** e continua a vendere solo in contanti, ai prezzi che aveva all'ultimo collegamento; un articolo di cui il dispositivo non ha il prezzo non viene venduto. Ogni vendita resta sul dispositivo con il numero successivo della sua sessione di cassa; lo scontrino riporta **Registrata offline** con quel numero e **Non firmato. Viene inviato al server quando la connessione torna.**: non ha un numero di scontrino finché il server non l'ha ricevuto.
+
+La cassa cerca da sola la connessione, e **Cerca subito la connessione** lo fa subito. Quando la connessione torna, le vendite vengono inviate in ordine, ciascuna con il numero con cui è stata fatta, così una vendita già ricevuta non viene mai contata due volte. La cassa dice poi quante sono state registrate e, per ogni vendita rifiutata dal server, perché (ad esempio il prezzo è cambiato oltre il consentito, o l'articolo non è più in vendita); i contanti di una vendita rifiutata restano nel conteggio del cassetto. Se nel frattempo la sessione è stata chiusa, la cassa dice: «La sessione è stata chiusa: queste vendite restano sul dispositivo per un responsabile.» Le vendite restano sul dispositivo finché un responsabile non le ha trattate.
+
+Tre impostazioni dell'attività limitano ciò che viene accettato: **Durata massima offline (minuti)**, **Massimo di vendite offline per sessione di cassa** e **Differenza di prezzo ammessa offline (%)**. Se i dati offline del dispositivo non sono leggibili, non si vende nulla offline finché un responsabile non decide; **Elimina i dati offline** li elimina dopo un avviso, perché le vendite non ancora inviate vanno perse definitivamente.
+
 ### Tag RFID: uno per lotto o uno per pezzo
 
 **Destinatari:** Amministratore · Proprietario
@@ -6494,7 +6506,7 @@ Ciò che sta attorno al lavoro di ogni giorno: il lato di prova di uno spazio e 
 
 In questo capitolo:
 - [Uno spazio ha due lati](help:user.advanced.environments) · [Entrare in un lato](help:user.advanced.enter-environment) · [Uno spazio di prova](help:user.advanced.test-space) · [Chi può distribuire](help:user.advanced.deploy-permissions) · [Distribuire tra i lati](help:user.advanced.deploy) · [Situazione dello spazio e archivio dell'esercizio](help:user.advanced.status-archive)
-- [Il Suo server](help:user.advanced.own-server) · [Quando un'installazione richiede un'app più recente](help:user.advanced.app-floor)
+- [Il Suo server](help:user.advanced.own-server) · [Quando un'installazione richiede un'app più recente](help:user.advanced.app-floor) · [Pubblicare una nuova versione](help:user.advanced.releases)
 - [Assistenti](help:user.advanced.assistants) · [Collegare un assistente](help:user.advanced.assistants-connect) · [Approvazioni](help:user.advanced.assistants-approve) · [Che cosa possono fare gli assistenti](help:user.advanced.assistants-policy)
 - [Il registratore di attività](help:user.advanced.recorder) · [Registrare un'attività](help:user.advanced.recorder-record) · [Rivedere una registrazione](help:user.advanced.recorder-review) · [Creare una guida](help:user.advanced.guide-make) · [Seguire una guida](help:user.advanced.guide-play) · [Il menu circolare](help:user.advanced.guide-circle) · [Modificare una guida](help:user.advanced.guide-edit) · [Riservatezza delle registrazioni](help:user.advanced.recorder-privacy)
 - [Lo spazio dimostrativo](help:user.advanced.demo) · [Modalità ripresa](help:user.advanced.filming)
@@ -6670,6 +6682,28 @@ Un'installazione può stabilire che con essa si usi solo un'app più recente. Vu
 - La soglia è una cortesia per le app che la conoscono, non un lucchetto: le regole su denaro e permessi le decide il server, qualunque sia l'app.
 
 **Vedi anche:** [Gestire il proprio server](help:user.advanced.own-server) · [Piattaforme](help:user.advanced.platforms)
+
+### Pubblicare una nuova versione: prima il server
+
+**Destinatari:** Operatore
+
+Lei gestisce un'installazione e sta arrivando una nuova versione dell'app. Il server viene sempre aggiornato prima dell'app, e un'app precedente non viene mai esclusa senza preavviso.
+
+**Passaggi**
+
+1. Aggiorni prima il server: applichi le sue nuove migrazioni, poi le sue funzioni. Per i membri non cambia nulla: un'app già installata continua a funzionare, perché il server aggiunge soltanto.
+2. Pubblichi l'app. Prima di ogni caricamento, il treno di rilascio legge l'installazione a cui consegna e si ferma, indicando le migrazioni mancanti, quando l'installazione è indietro, rifiuta la nuova app o non può essere letta. Una volta pubblicata l'app, la versione del server vi risulta *Aggiornato*, e un'app precedente indica *Il server è più recente di questa app: aggiorni l'app appena possibile*.
+3. Attenda il periodo di supporto: [Profili](app:/profiles) → **Impostazioni della piattaforma (valori predefiniti)** → **Versioni dell'app** → **Periodo di supporto delle app precedenti**. Decorre dal giorno in cui la nuova app è disponibile sul canale di distribuzione più lento, non dal giorno in cui è stata costruita: la revisione di uno store può richiedere giorni.
+4. Solo allora alzi l'app più vecchia accettata dall'installazione, in una migrazione a sé. Un'app al di sotto mostra **Questa app deve essere aggiornata** con il modo di aggiornarla sulla sua piattaforma; nulla di ciò che il membro ha inserito va perso.
+
+**Da sapere**
+
+- Un'app più recente del suo server indica *Serve un aggiornamento: questa app richiede lo schema …*. È il caso che l'ordine «prima il server» evita.
+- Per annullare un innalzamento, riabbassi l'app più vecchia accettata, o tolga il limite, in una nuova migrazione: un'app bloccata torna a funzionare al prossimo avvio o al ritorno in primo piano.
+- Il treno di rilascio legge soltanto l'installazione: non applica alcuna migrazione e non cambia chi può pubblicare.
+- Non alzi mai l'app più vecchia accettata nella migrazione che per prima richiede la nuova app: i tester di quell'installazione resterebbero bloccati appena viene applicata.
+
+**Vedi anche:** [Gestire il proprio server](help:user.advanced.own-server)
 
 ### Assistenti: che cosa sono
 

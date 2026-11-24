@@ -6,6 +6,7 @@
 // and a refusal send nothing, and anything else may not have reached the
 // server (a retry with the same id is safe). The letter is in the
 // customer's language and the invoice's currency.
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/money/application/reminder_mail_commands.dart';
 import 'package:deskilo/features/money/data/supabase_reminder_mail.dart';
 import 'package:deskilo/features/money/domain/reminder_mail.dart';
@@ -76,13 +77,13 @@ void main() {
   test('the function\'s refusals become domain refusals', () {
     expect(
       SupabaseReminderMail.refusalOf(
-        const FunctionException(status: 409, details: {'code': '40001'}),
+        const FunctionException(status: 409, details: {'code': PgCode.serializationFailure}),
       ),
       isA<ReminderMailLevelChanged>(),
     );
     expect(
       SupabaseReminderMail.refusalOf(
-        const FunctionException(status: 409, details: {'code': '55000'}),
+        const FunctionException(status: 409, details: {'code': PgCode.objectNotInPrerequisiteState}),
       ),
       isA<ReminderMailAwaitsDecision>(),
     );

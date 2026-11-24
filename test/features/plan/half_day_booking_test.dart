@@ -7,6 +7,7 @@
 // half-day boundary, and the booking sheet's "Until" affordance
 // disappears (the end is fixed). Flexible workspaces keep the old chips.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/theme/seat_state_colors.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
@@ -277,7 +278,7 @@ void main() {
         refused(
           message: 'bookings must cover a half-day '
               '(00:00-13:00, 13:00-24:00) or the full day',
-          code: 'DKK04', // #3810: the code 0739 raises
+          code: DkCode.dkk04, // #3810: the code 0739 raises
         ),
       ),
     );

@@ -106,7 +106,8 @@ LIQUID runs over the whole file before it is read as XML:
   values are XML-escaped for you; an absent field is empty, never nil.
 
 PLACEHOLDERS: ${InvoicePdfTemplate.placeholders.join(', ')}
-  lines iterate {label, qty, unit_price, net, vat_rate, amount, negative};
+  lines iterate {label, qty, unit_price, net, vat_rate, amount, negative} and, on a traced goods line,
+  {track_ids (one text), tracks (each {kind, code, quantity, expires_on, text})};
   vat iterates {rate, net, amount}.
 
 RULES

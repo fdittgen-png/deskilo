@@ -6,6 +6,7 @@
 // These tests pin the domain predicate and the fake's mirror of the
 // server contract, including the pinned error substrings the UI maps.
 
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_refusal.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -84,7 +85,7 @@ void main() {
         ));
       await expectLater(
         repo.checkIn('res-1'),
-        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK17')),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk17)),
       );
       expect(repo.reservations.single.status, ReservationStatus.reserved);
     });
@@ -97,7 +98,7 @@ void main() {
         ));
       await expectLater(
         repo.checkIn('res-1'),
-        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK18')),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', DkCode.dkk18)),
       );
     });
 

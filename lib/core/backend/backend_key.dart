@@ -15,6 +15,8 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
+import '../trace/trace_logger.dart';
+
 /// The shape a pasted credential has. Only [publishable] and
 /// [legacyAnon] may be sent, stored or shared.
 enum BackendKeyKind {
@@ -91,7 +93,8 @@ Map<String, Object?>? _jwtClaims(String segment) {
     }
     final decoded = jsonDecode(utf8.decode(base64.decode(s)));
     return decoded is Map<String, Object?> ? decoded : null;
-  } on FormatException {
+  } on FormatException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'backend', 'backend_key: FormatException handled', error: e, stackTrace: st);
     return null;
   }
 }

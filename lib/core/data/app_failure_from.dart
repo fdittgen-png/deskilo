@@ -27,6 +27,7 @@ final _httpStatus = RegExp(r'^\d{3}$');
 /// - Anything else: [Defect].
 AppFailure appFailureFrom(Object error) {
   if (error is AppFailure) return error;
+  if (error is TypedRefusal) return Refusal(cause: error);
   final code = serverErrorCode(error);
   if (code != null && _httpStatus.hasMatch(code)) {
     return TransportFailure(error, status: int.parse(code));
@@ -47,12 +48,16 @@ AppFailure appFailureFrom(Object error) {
 /// Runs [action] and answers with its outcome: done, refused (definite), or
 /// not reached. An error of the app is answered as [CommandUnreached] with a
 /// [Defect], never rethrown: the screen says so and the trace keeps it.
-Future<CommandOutcome<T>> runCommand<T>(Future<T> Function() action) async {
+/// [what] names the command in the trace.
+Future<CommandOutcome<T>> runCommand<T>(
+  Future<T> Function() action, {
+  String what = 'a command did not complete',
+}) async {
   try {
     return CommandDone(await action());
   } on Object catch (e, st) {
     final failure = appFailureFrom(e);
-    TraceLogger.instance.warn('command', 'a command did not complete: $failure', stackTrace: st);
+    TraceLogger.instance.warn('command', '$what: $failure', error: e, stackTrace: st);
     return switch (failure) {
       final Refusal r => CommandRefused(r),
       final other => CommandUnreached(other),

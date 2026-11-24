@@ -5,6 +5,7 @@
 // server refuses one anyway because the list was stale, the refusal is said in
 // its own words rather than as a generic failure.
 
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/money/demo_credit_moves.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,7 +25,7 @@ class _MovedMeanwhile extends FakeMoneyRepository {
     int? amountCents,
   }) async => throw const PostgrestException(
     message: 'this credit was moved: it cannot pay an invoice',
-    code: '22023',
+    code: PgCode.invalidParameterValue,
   );
 }
 

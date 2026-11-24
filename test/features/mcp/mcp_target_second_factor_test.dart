@@ -14,6 +14,7 @@ import 'dart:convert';
 
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
@@ -148,7 +149,7 @@ class _Wire {
       case '/rest/v1/rpc/public_network_descriptor':
         // #1832 — a server from before negotiation: the baseline.
         return http.Response(
-          jsonEncode({'code': 'PGRST202', 'message': 'not found'}),
+          jsonEncode({'code': PgCode.pgrstFunctionNotFound, 'message': 'not found'}),
           404,
           headers: {'content-type': 'application/json'},
           request: request,

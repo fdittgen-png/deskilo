@@ -11,6 +11,8 @@
 // sentence without the server's own fields. Both halves are tested
 // here: the refusal now says which, and the trace carries the server's
 // answer in one greppable field.
+import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/trace/act_trace.dart';
 import 'package:deskilo/features/reservations/presentation/booking_error_text.dart';
@@ -24,15 +26,15 @@ const _fallback = 'Could not reserve — the seat may have just been taken.';
 
 /// #3810 — the codes 0739 raises with the membership refusals.
 String? _codeOf(String serverMessage) => serverMessage.contains('not an active member')
-    ? 'DKK27'
+    ? DkCode.dkk27
     : serverMessage.contains('not a member of this workspace')
-        ? 'DKK28'
+        ? DkCode.dkk28
         : null;
 
 String _map(String serverMessage) => bookingErrorText(
       englishL10n,
       refused(
-          message: serverMessage, code: _codeOf(serverMessage) ?? 'P0001'),
+          message: serverMessage, code: _codeOf(serverMessage) ?? PgCode.raiseException),
       _fallback,
     );
 
@@ -77,12 +79,12 @@ void main() {
     test('code, message, details and hint reach one field', () {
       final line = ActTrace.serverAnswer(const PostgrestException(
         message: 'not an active member',
-        code: 'P0001',
+        code: PgCode.raiseException,
         details: 'members.status=paused',
         hint: 'reactivate in Members',
       ));
       for (final part in [
-        'P0001',
+        PgCode.raiseException,
         'not_an_active_member',
         'members.status=paused',
         'reactivate_in_Members',

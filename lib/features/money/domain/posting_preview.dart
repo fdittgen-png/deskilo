@@ -12,6 +12,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import 'accounting_tax.dart';
 import 'book_chart.dart';
 
@@ -106,7 +107,8 @@ PostingPreview previewInvoicePosting({
   var tax = AccountingAmount(net.currency, 0);
   try {
     exponentOf(net.currency);
-  } on AccountingException {
+  } on AccountingException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'money', 'posting_preview: AccountingException handled', error: e, stackTrace: st);
     return PostingPreview(const [], [
       PostingBlocker(PostingBlock.unsupportedCurrency, net.currency),
     ]);
@@ -126,7 +128,8 @@ PostingPreview previewInvoicePosting({
     } else {
       try {
         tax = tax + t.amount;
-      } on AccountingException {
+      } on AccountingException catch (e, st) {
+        TraceLogger.instance.log(TraceLevel.debug, 'money', 'posting_preview: AccountingException handled', error: e, stackTrace: st);
         r.blockers.add(const PostingBlocker(PostingBlock.outOfRange, 'tax'));
       }
     }
@@ -134,7 +137,8 @@ PostingPreview previewInvoicePosting({
   AccountingAmount gross;
   try {
     gross = net + tax;
-  } on AccountingException {
+  } on AccountingException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'money', 'posting_preview: AccountingException handled', error: e, stackTrace: st);
     r.blockers.add(const PostingBlocker(PostingBlock.outOfRange, 'gross'));
     return PostingPreview(const [], r.blockers);
   }
@@ -160,7 +164,8 @@ PostingPreview previewPaymentPosting({
 }) {
   try {
     exponentOf(payment.currency);
-  } on AccountingException {
+  } on AccountingException catch (e, st) {
+    TraceLogger.instance.log(TraceLevel.debug, 'money', 'posting_preview: AccountingException handled', error: e, stackTrace: st);
     return PostingPreview(const [], [
       PostingBlocker(PostingBlock.unsupportedCurrency, payment.currency),
     ]);

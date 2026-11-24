@@ -21,6 +21,7 @@ import '../../../../core/demo/presentation/demo_entry_sheet.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_error_summary.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_bar.dart';
@@ -442,7 +443,8 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
           _answered = false;
           _touched.clear();
           _chosen.clear();
-        } on SetupJourneyConflict {
+        } on SetupJourneyConflict catch (e, st) {
+          TraceLogger.instance.log(TraceLevel.info, 'workspace', 'setup_levels_screen: SetupJourneyConflict handled', error: e, stackTrace: st);
           // The features are applied; the answers someone else saved are
           // shown instead of these, never overwritten.
           messenger.showSnackBar(
@@ -452,7 +454,8 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
           _answered = false;
           _touched.clear();
           _chosen.clear();
-        } on FeatureFlagsConflict {
+        } on FeatureFlagsConflict catch (e, st) {
+          TraceLogger.instance.log(TraceLevel.info, 'workspace', 'setup_levels_screen: FeatureFlagsConflict handled', error: e, stackTrace: st);
           // Nothing was written: the owner looks again at what is there.
           messenger.showSnackBar(
             SnackBar(content: Text(l10n.setupLevelsConflict)),

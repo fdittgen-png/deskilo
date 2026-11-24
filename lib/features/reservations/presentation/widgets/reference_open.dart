@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../plan/domain/desk.dart';
 import '../../../plan/domain/floor_plan.dart';
@@ -121,7 +122,8 @@ Future<void> openReservationById(
     reservation = await ref
         .read(reservationRepositoryProvider)
         .fetchById(reservationId);
-  } on ReservationUnreadable {
+  } on ReservationUnreadable catch (caught, caughtStack) {
+    TraceLogger.instance.log(TraceLevel.info, 'reservations', 'reference_open: ReservationUnreadable handled', error: caught, stackTrace: caughtStack);
     // #3884 -- it exists; this version cannot show it. Not "gone".
     if (context.mounted) AppSnack.error(context, l10n.reservationUnreadable);
     return;

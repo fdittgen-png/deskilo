@@ -3207,6 +3207,19 @@ Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade**
 
 **Tagesabschluss.** Wer die Finanzen sehen darf, öffnet **Tagesabschluss** in der Kassenschublade und tippt auf **Tag abschließen**, sobald jede Kasse geschlossen ist (eine noch offene Kasse wird genannt und verweigert den Abschluss). Die geschlossenen Sitzungen des Tages werden zu einem nummerierten Bericht: jede Sitzung mit Erwartetem, Gezähltem, Differenz und Grund, die Einnahmen nach Zahlungsart und Steuersatz, das ein- und entnommene Bargeld, die Erstattungen und der Bereich der Belegnummern. **Abgeschlossene Tage** listet die bereits erstellten Berichte; ein abgeschlossener Tag wird nie geändert. Das ist die eigene Aufzeichnung des Betriebs; den rechtlichen Inhalt, den ein Land vom Tagesabschluss verlangt, liefert ein eigenes Modul.
 
+<!-- anchor: user.money.till-offline -->
+### Wenn die Kasse offline ist
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie verkaufen an der Kasse und die Verbindung geht verloren: Sie möchten weiter verkaufen und sicher sein, dass nichts verloren geht oder doppelt gezählt wird.
+
+Schalten Sie **Offline verkaufen, nur bar** ein (die Funktion Kassensitzungen wird vorausgesetzt). Bekommt ein Aufruf an den Server keine Antwort, meldet die Kasse **Offline – nur Barzahlung. Die Verkäufe bleiben auf diesem Gerät und werden gesendet, sobald die Verbindung wieder da ist.** und verkauft weiter, nur gegen Bargeld, zu den Preisen, die sie zuletzt online kannte; ein Artikel ohne Preis auf dem Gerät wird nicht verkauft. Jeder Verkauf bleibt auf dem Gerät unter der nächsten Nummer seiner Kassensitzung; der Beleg trägt **Offline erfasst** mit dieser Nummer und **Nicht signiert. Der Beleg wird an den Server gesendet, sobald die Verbindung wieder da ist.** – eine Belegnummer erhält er erst, wenn der Server ihn empfangen hat.
+
+Die Kasse sucht ihre Verbindung von selbst wieder, **Verbindung jetzt suchen** tut es sofort. Ist die Verbindung zurück, werden die Verkäufe der Reihe nach gesendet, jeder unter der Nummer, mit der er entstand; ein bereits empfangener Verkauf wird also nie doppelt gezählt. Die Kasse sagt dann, wie viele erfasst wurden und, für jeden vom Server abgelehnten Verkauf, warum (zum Beispiel: der Preis hat sich stärker geändert als erlaubt, oder der Artikel wird nicht mehr verkauft); das Bargeld eines abgelehnten Verkaufs bleibt in der Kassenzählung. Wurde die Sitzung inzwischen geschlossen, sagt die Kasse: „Die Sitzung wurde geschlossen: Diese Verkäufe bleiben für eine Leitung auf dem Gerät.“ Die Verkäufe bleiben auf dem Gerät, bis eine Leitung sie bearbeitet hat.
+
+Drei Einstellungen des Betriebs begrenzen, was angenommen wird: **Längste Offline-Zeit (Minuten)**, **Höchstzahl Offline-Verkäufe je Kassensitzung** und **Erlaubte Preisabweichung offline (%)**. Sind die Offline-Daten des Geräts nicht lesbar, wird offline nichts verkauft, bis eine Leitung entscheidet; **Offline-Daten verwerfen** verwirft sie nach einer Warnung, denn noch nicht gesendete Verkäufe gehen endgültig verloren.
+
 <!-- anchor: user.money.stock.rfid -->
 ### RFID-Tags: eines pro Charge oder eines pro Stück
 
@@ -6870,7 +6883,7 @@ Das, was die tägliche Arbeit umgibt: die Testseite eines Space und die echte, A
 
 In diesem Kapitel:
 - [Ein Space hat zwei Seiten](#ein-space-hat-zwei-seiten) · [Eine Seite betreten](#die-echte-oder-die-testseite-betreten) · [Ein Testspace](#wofür-ein-testspace-da-ist) · [Wer ausrollen darf](#wer-ausrollen-und-in-die-produktion-darf) · [Zwischen den Seiten ausrollen](#zwischen-den-beiden-seiten-ausrollen) · [Status des Workspace und das Jahresarchiv](#status-des-workspace-und-das-jahresarchiv)
-- [Ihr eigener Server](#einen-eigenen-server-betreiben) · [Wenn eine Installation eine neuere App verlangt](#wenn-eine-installation-eine-neuere-app-verlangt)
+- [Ihr eigener Server](#einen-eigenen-server-betreiben) · [Wenn eine Installation eine neuere App verlangt](#wenn-eine-installation-eine-neuere-app-verlangt) · [Eine neue Version veröffentlichen](#eine-neue-version-veröffentlichen-zuerst-der-server)
 - [Assistenten](#assistenten-was-sie-sind) · [Einen Assistenten verbinden](#einen-assistenten-verbinden) · [Freigaben](#freigaben-und-bestätigungen-für-assistenten) · [Was Assistenten dürfen](#was-assistenten-in-einem-workspace-dürfen)
 - [Der Aufgabenrekorder](#der-aufgabenrekorder-und-geführte-touren) · [Eine Aufgabe aufzeichnen](#eine-aufgabe-aufzeichnen) · [Eine Aufzeichnung prüfen](#eine-aufzeichnung-prüfen-bearbeiten-und-exportieren) · [Eine Anleitung erstellen](#aus-einer-aufzeichnung-eine-anleitung-erstellen) · [Einer Anleitung folgen](#einer-anleitung-folgen) · [Das Kreismenü](#das-kreismenü) · [Eine Anleitung bearbeiten](#eine-anleitung-bearbeiten-oder-reparieren) · [Datenschutz der Aufzeichnungen](#was-eine-aufzeichnung-behält)
 - [Der Demo-Workspace](#der-demo-workspace) · [Aufnahmemodus](#aufnahmemodus)
@@ -7054,6 +7067,29 @@ Eine Installation kann festlegen, dass nur eine neuere App mit ihr benutzt werde
 - Die Untergrenze ist ein Entgegenkommen an Apps, die sie kennen, keine Sperre: Geld- und Berechtigungsregeln entscheidet der Server, egal welche App anfragt.
 
 **Siehe auch:** [Einen eigenen Server betreiben](#einen-eigenen-server-betreiben) · [Plattformen](#deskilo-auf-ihren-geräten)
+
+<!-- anchor: user.advanced.releases -->
+### Eine neue Version veröffentlichen: zuerst der Server
+
+**Zielgruppe:** Betreiber:in
+
+Sie betreiben eine Installation, und eine neue Version der App kommt. Der Server wird immer vor der App aktualisiert, und eine ältere App wird nie ohne Vorwarnung ausgesperrt.
+
+**Schritte**
+
+1. Aktualisieren Sie zuerst den Server: Wenden Sie seine neuen Migrationen an, danach seine Funktionen. Für die Mitglieder ändert sich nichts: Eine bereits installierte App arbeitet weiter, denn der Server fügt nur hinzu.
+2. Veröffentlichen Sie die App. Vor jedem Upload liest der Release-Zug die Installation, an die er ausliefert, und hält an, mit den fehlenden Migrationen, wenn die Installation zurückliegt, die neue App ablehnt oder nicht gelesen werden kann. Ist die App erschienen, zeigt sie für die Serverversion *Aktuell*, und eine ältere App zeigt *Der Server ist neuer als diese App — aktualisieren Sie die App, sobald Sie können*.
+3. Warten Sie die Unterstützungsfrist ab: [Profile](https://fdittgen-png.github.io/deskilo/#/profiles) → **Plattform-Einstellungen (Standardwerte)** → **App-Versionen** → **Unterstützungsfrist für ältere Apps**. Sie zählt ab dem Tag, an dem die neue App auf dem langsamsten Vertriebskanal verfügbar ist, nicht ab dem Tag, an dem sie gebaut wurde: Eine Store-Prüfung kann Tage dauern.
+4. Erst dann heben Sie die älteste App an, die die Installation annimmt, in einer eigenen Migration. Eine App darunter zeigt **Diese App braucht ein Update** mit dem Weg zum Update auf ihrer Plattform; nichts, was das Mitglied eingegeben hat, geht verloren.
+
+**Gut zu wissen**
+
+- Eine App, die neuer als ihr Server ist, zeigt *Aktualisierung nötig: diese App braucht Schema …*. Genau das verhindert die Reihenfolge „zuerst der Server“.
+- Um eine Anhebung rückgängig zu machen, senken Sie die älteste angenommene App in einer neuen Migration wieder ab oder entfernen die Grenze: Eine gesperrte App arbeitet beim nächsten Start oder bei der Rückkehr in den Vordergrund wieder.
+- Der Release-Zug liest die Installation nur: Er wendet keine Migration an und ändert nicht, wer veröffentlichen darf.
+- Heben Sie die älteste angenommene App nie in der Migration an, die die neue App als erste braucht: Die Tester dieser Installation wären gesperrt, sobald sie angewendet ist.
+
+**Siehe auch:** [Einen eigenen Server betreiben](#einen-eigenen-server-betreiben)
 
 <!-- anchor: user.advanced.assistants -->
 ### Assistenten: was sie sind

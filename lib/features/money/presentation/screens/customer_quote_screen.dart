@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -42,7 +43,7 @@ class _CustomerQuoteScreenState extends ConsumerState<CustomerQuoteScreen> {
 
   Future<void> _run(
     String workspaceId,
-    Future<QuoteCommandOutcome<Object?>> Function(CustomerQuoteCommands) act, {
+    Future<CommandOutcome<Object?>> Function(CustomerQuoteCommands) act, {
     bool leave = false,
   }) async {
     setState(() {
@@ -58,12 +59,12 @@ class _CustomerQuoteScreenState extends ConsumerState<CustomerQuoteScreen> {
     setState(() {
       _busy = false;
       _said = switch (outcome) {
-        QuoteDone() => null,
-        QuoteRefused(:final refusal) => quoteRefusalText(l10n, refusal),
-        QuoteUnreached() => l10n.quoteUnreached,
+        CommandDone() => null,
+        CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)) => quoteRefusalText(l10n, refusal),
+        _ => l10n.quoteUnreached,
       };
     });
-    if (leave && outcome is QuoteDone) context.go('/money/quotes');
+    if (leave && outcome is CommandDone) context.go('/money/quotes');
   }
 
   /// The answer sheet, or the conversion sheet; the quote is read again after
@@ -164,7 +165,7 @@ class _Content extends ConsumerWidget {
   final bool busy;
   final String? said;
   final void Function(
-    Future<QuoteCommandOutcome<Object?>> Function(CustomerQuoteCommands) act, {
+    Future<CommandOutcome<Object?>> Function(CustomerQuoteCommands) act, {
     bool leave,
   }) onRun;
 

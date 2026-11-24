@@ -21,6 +21,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/storage/prefs_stores.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/workspace.dart';
 import '../providers/workspace_host_providers.dart';
@@ -159,7 +160,8 @@ class CreationDraft {
     Object? json;
     try {
       json = jsonDecode(raw);
-    } on FormatException {
+    } on FormatException catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.debug, 'workspace', 'creation_intent: FormatException handled', error: e, stackTrace: st);
       return null;
     }
     if (json is! Map || json['v'] != _version || json['userId'] != userId) {

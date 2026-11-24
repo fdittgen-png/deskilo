@@ -140,8 +140,8 @@ class NfcUidReader {
     try {
       await NfcManager.instance.stopSession();
     } on Object catch (e, st) {
-      // trace-exempt: stopping an already-stopped session is benign.
-      debugPrint('nfc stop ignored: $e\n$st');
+      // Stopping an already-stopped session is benign: noted, not an error.
+      TraceLogger.instance.log(TraceLevel.debug, 'nfc', 'stop ignored', error: e, stackTrace: st);
     }
   }
 

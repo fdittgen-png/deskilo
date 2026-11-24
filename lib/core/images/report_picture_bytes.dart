@@ -13,6 +13,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:image/image.dart' as img;
 
+import '../trace/traced_compute.dart';
 import 'report_picture_sizes.dart';
 
 /// A picture ready to be stored: its bytes and the content type read from
@@ -191,9 +192,11 @@ Future<ReportPicture> _asPng(_Source source, _Decoded first) async {
 }
 
 /// JPEG encoding runs off the interface's thread where there is one.
-Future<Uint8List> _encodeJpeg(_Decoded picture, int quality) => compute(
+Future<Uint8List> _encodeJpeg(_Decoded picture, int quality) => tracedCompute(
   _jpegOf,
   (picture.rgba, picture.image.width, picture.image.height, quality),
+  area: 'images',
+  what: 'a report picture encoding',
 );
 
 Uint8List _jpegOf((Uint8List, int, int, int) job) {

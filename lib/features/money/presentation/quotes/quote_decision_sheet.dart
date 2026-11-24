@@ -8,10 +8,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../application/customer_quote_commands.dart';
 import '../../domain/customer_quote.dart';
 import '../../providers/business_day_provider.dart';
 import '../../providers/customer_quote_providers.dart';
@@ -73,16 +73,16 @@ abstract final class QuoteDecisionSheet {
               evidence: state.evidence.text.trim(),
             ),
           );
-          if (outcome is QuoteDone) {
+          if (outcome is CommandDone) {
             // the server kept the answer: the quote and the list are read again now
             ref
               ..invalidate(customerQuotesProvider(workspaceId))
               ..invalidate(customerQuoteProvider((workspaceId: workspaceId, quoteId: quote.id)));
           }
           return switch (outcome) {
-            QuoteDone() => null,
-            QuoteRefused(:final refusal) => quoteRefusalText(l10n, refusal),
-            QuoteUnreached() => l10n.quoteUnreached,
+            CommandDone() => null,
+            CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)) => quoteRefusalText(l10n, refusal),
+            _ => l10n.quoteUnreached,
           };
         },
         builder: (context, refresh) => _fields(context, state, refresh, revision, ref.read(businessDayProvider)),
