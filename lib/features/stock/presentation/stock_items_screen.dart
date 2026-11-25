@@ -23,6 +23,9 @@ import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../money/domain/service_item.dart';
+import '../../money/presentation/widgets/service_sheet.dart';
+import '../../money/providers/money_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -308,87 +311,109 @@ class _RegistryRow extends ConsumerWidget {
     // #4169: the editors are for a person who may manage the stock; the server asks the same.
     final mayManage = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
     final lotsOn = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockLots);
+    // #4470: the price is the service's own; the server lets the owner and `manageServices` write it, apart from the stock.
+    final mayEditService = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageServices);
+    final services = ref.watch(allServicesProvider).value ?? const <ServiceItem>[]; // empty-ok: no service read, no Edit shown
+    final service = mayEditService ? services.where((s) => s.id == row.itemId).firstOrNull : null;
     return ListTile(
       key: ValueKey('stock-item-${row.key}'),
       title: Text(row.label),
       subtitle: Text(_details(context)),
-      trailing: !mayManage
+      trailing: !mayManage && service == null
           ? null
           : Wrap(
               children: [
-                IconButton(
-                  key: ValueKey('stock-home-${row.key}'),
-                  icon: const Icon(Icons.place_outlined),
-                  tooltip: l10n.stockRegistryHomePlace,
-                  onPressed: () async {
-                    final saved = await showStockHomeSheet(
-                      context,
-                      ref.read(stockRegistryProvider),
-                      workspaceId: workspaceId,
-                      row: row,
-                      places: places,
-                      separator: separator,
-                    );
-                    if (saved) onHomeChanged();
-                  },
-                ),
-                if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockItemGroups))
+                if (service != null)
                   IconButton(
-                    key: ValueKey('stock-item-group-${row.itemId}'),
-                    icon: const Icon(Icons.folder_copy_outlined),
-                    tooltip: l10n.itemGroupAssignOpen,
-                    onPressed: () => showItemGroupAssign(context, workspaceId: workspaceId, itemId: row.itemId, itemName: row.itemName),
+                    key: ValueKey('stock-item-edit-${row.itemId}'),
+                    icon: const Icon(Icons.edit_outlined),
+                    tooltip: l10n.stockItemEditDetails,
+                    onPressed: () async {
+                      await ServiceEditor.open(
+                        context,
+                        ref,
+                        workspaceId: workspaceId,
+                        service: service,
+                        categories: [for (final s in services) s.category],
+                      );
+                      onHomeChanged();
+                    },
                   ),
-                if (ref.watch(stockTagsProvider))
-                  IconButton(
-                    key: ValueKey('stock-tags-${row.itemId}'),
-                    icon: const Icon(Icons.nfc),
-                    tooltip: l10n.stockTagsOpen,
-                    onPressed: () => showStockTagsDialog(
-                      context,
-                      workspaceId: workspaceId,
-                      owner: TagOwner.item(row.itemId),
-                      name: row.itemName,
+                if (mayManage) ...[
+                    IconButton(
+                      key: ValueKey('stock-home-${row.key}'),
+                      icon: const Icon(Icons.place_outlined),
+                      tooltip: l10n.stockRegistryHomePlace,
+                      onPressed: () async {
+                        final saved = await showStockHomeSheet(
+                          context,
+                          ref.read(stockRegistryProvider),
+                          workspaceId: workspaceId,
+                          row: row,
+                          places: places,
+                          separator: separator,
+                        );
+                        if (saved) onHomeChanged();
+                      },
                     ),
-                  ),
-                if (showTools) ...[
-                  IconButton(
-                    key: ValueKey('stock-edit-item-${row.itemId}'),
-                    icon: const Icon(Icons.tune),
-                    tooltip: l10n.stockEditItem,
-                    onPressed: () => showStockItemEditor(
-                      context,
-                      ref.read(stockConfigCommandsProvider),
-                      workspaceId: workspaceId,
-                      itemId: row.itemId,
-                      itemName: row.itemName,
-                      options: (lots: lotsOn, keep: false, groups: itemGroupsIfOn(ref)),
-                    ),
-                  ),
-                  IconButton(
-                    key: ValueKey('stock-edit-variants-${row.itemId}'),
-                    icon: const Icon(Icons.style_outlined),
-                    tooltip: l10n.stockVariantsEdit,
-                    onPressed: () => showStockVariantsEditor(
-                      context,
-                      ref.read(stockConfigCommandsProvider),
-                      workspaceId: workspaceId,
-                      itemId: row.itemId,
-                      itemName: row.itemName,
-                    ),
-                  ),
-                  IconButton(
-                    key: ValueKey('stock-edit-mappings-${row.itemId}'),
-                    icon: const Icon(Icons.link),
-                    tooltip: l10n.stockMappingsEdit,
-                    onPressed: () => showStockMappings(
-                      context,
-                      ref.read(stockConfigCommandsProvider),
-                      workspaceId: workspaceId,
-                      itemId: row.itemId,
-                      itemName: row.itemName,
-                    ),
-                  ),
+                    if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockItemGroups))
+                      IconButton(
+                        key: ValueKey('stock-item-group-${row.itemId}'),
+                        icon: const Icon(Icons.folder_copy_outlined),
+                        tooltip: l10n.itemGroupAssignOpen,
+                        onPressed: () => showItemGroupAssign(context, workspaceId: workspaceId, itemId: row.itemId, itemName: row.itemName),
+                      ),
+                    if (ref.watch(stockTagsProvider))
+                      IconButton(
+                        key: ValueKey('stock-tags-${row.itemId}'),
+                        icon: const Icon(Icons.nfc),
+                        tooltip: l10n.stockTagsOpen,
+                        onPressed: () => showStockTagsDialog(
+                          context,
+                          workspaceId: workspaceId,
+                          owner: TagOwner.item(row.itemId),
+                          name: row.itemName,
+                        ),
+                      ),
+                    if (showTools) ...[
+                      IconButton(
+                        key: ValueKey('stock-edit-item-${row.itemId}'),
+                        icon: const Icon(Icons.tune),
+                        tooltip: l10n.stockEditItem,
+                        onPressed: () => showStockItemEditor(
+                          context,
+                          ref.read(stockConfigCommandsProvider),
+                          workspaceId: workspaceId,
+                          itemId: row.itemId,
+                          itemName: row.itemName,
+                          options: (lots: lotsOn, keep: false, groups: itemGroupsIfOn(ref)),
+                        ),
+                      ),
+                      IconButton(
+                        key: ValueKey('stock-edit-variants-${row.itemId}'),
+                        icon: const Icon(Icons.style_outlined),
+                        tooltip: l10n.stockVariantsEdit,
+                        onPressed: () => showStockVariantsEditor(
+                          context,
+                          ref.read(stockConfigCommandsProvider),
+                          workspaceId: workspaceId,
+                          itemId: row.itemId,
+                          itemName: row.itemName,
+                        ),
+                      ),
+                      IconButton(
+                        key: ValueKey('stock-edit-mappings-${row.itemId}'),
+                        icon: const Icon(Icons.link),
+                        tooltip: l10n.stockMappingsEdit,
+                        onPressed: () => showStockMappings(
+                          context,
+                          ref.read(stockConfigCommandsProvider),
+                          workspaceId: workspaceId,
+                          itemId: row.itemId,
+                          itemName: row.itemName,
+                        ),
+                      ),
+                    ],
                 ],
               ],
             ),

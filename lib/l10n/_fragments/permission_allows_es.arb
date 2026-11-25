@@ -39,5 +39,6 @@
   "permAllowsManageStock": "Dar entrada, mover y dar salida a mercancías.",
   "permAllowsApproveStockAdjustments": "Aprobar el ajuste que propone un recuento.",
   "rolesFilterPermissions": "Filtrar los permisos",
-  "permAllowsCountStock": "Contar las líneas de una tarea de recuento cíclico sin ver lo que contiene el registro: las tareas y el recuento de cada línea, nada más."
+  "permAllowsCountStock": "Contar las líneas de una tarea de recuento cíclico sin ver lo que contiene el registro: las tareas y el recuento de cada línea, nada más.",
+  "permAllowsConfigureTill": "Crear, publicar, copiar y restablecer el diseño de una caja: sus teclas, páginas y herramientas. Los cajeros usan el diseño publicado sin este derecho."
 }

@@ -722,6 +722,10 @@ window.SETUP_REGISTRY={
   [
    "unitsOfMeasure",
    false
+  ],
+  [
+   "counterTillLayout",
+   false
   ]
  ],
  "requires": {
@@ -850,7 +854,8 @@ window.SETUP_REGISTRY={
   "stockTagReads": "stockTags",
   "stockExpiryReport": "stockManagement",
   "stockHandlingUnits": "stockManagement",
-  "counterOfflineCash": "counterTillSessions"
+  "counterOfflineCash": "counterTillSessions",
+  "counterTillLayout": "counterTillSessions"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -900,7 +905,8 @@ window.SETUP_REGISTRY={
   "manageStock",
   "approveStockAdjustments",
   "manageBillingCustomers",
-  "countStock"
+  "countStock",
+  "configureTill"
  ],
  "defaultMatrix": {
   "co_owner": [
@@ -943,7 +949,8 @@ window.SETUP_REGISTRY={
    "manageStock",
    "approveStockAdjustments",
    "manageBillingCustomers",
-   "countStock"
+   "countStock",
+   "configureTill"
   ],
   "admin": [
    "manageMembers",
@@ -962,6 +969,7 @@ window.SETUP_REGISTRY={
    "deployToDev",
    "accessProd",
    "viewAnalytics",
+   "configureTill",
    "useMessages",
    "makeReservations",
    "viewCalendar",
@@ -1569,7 +1577,8 @@ window.SETUP_PROCESSES=[
      "carnets",
      "counterReceipts",
      "counterTillSessions",
-     "counterOfflineCash"
+     "counterOfflineCash",
+     "counterTillLayout"
     ]
    }
   ]
@@ -2111,7 +2120,8 @@ window.SETUP_LEVELS={
       "stockExpiryReport",
       "stockHandlingUnits",
       "counterOfflineCash",
-      "unitsOfMeasure"
+      "unitsOfMeasure",
+      "counterTillLayout"
      ],
      "needs": {
       "money": "invoices"

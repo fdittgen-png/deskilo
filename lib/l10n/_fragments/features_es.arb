@@ -381,5 +381,7 @@
   "featureUnitsOfMeasureDesc": "El propietario y los administradores mantienen las unidades de medida del negocio y sus conversiones (1 km = 1000 m, 1 kg = 1000 g). Los artículos, los presupuestos y las facturas se miden con ellas. Las unidades básicas siempre están; al activar esta opción aparece la pantalla para mantenerlas.",
   "@featureUnitsOfMeasureDesc": {
     "description": "#4442 feature description"
-  }
+  },
+  "featureCounterTillLayoutTitle": "Diseños de caja",
+  "featureCounterTillLayoutDesc": "Organice cada caja según su oficio: qué teclas van dónde, sus páginas y herramientas junto a la cesta como un teclado numérico, una calculadora o un campo de escaneo. Parta de una plantilla, publíquela y una caja la adopta en su siguiente sesión. Desactivado, cada caja conserva sus teclas generadas."
 }

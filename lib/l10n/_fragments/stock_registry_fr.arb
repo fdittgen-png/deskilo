@@ -15,5 +15,6 @@
   "stockRegistryHomeTitle": "Emplacement de rangement de {item}",
   "stockRegistryHomeHelp": "Où cet article est rangé, pour que la réception, l’inventaire et le prélèvement sachent où il va. C’est un conseil : le stock peut être ailleurs, et le changer ne déplace rien.",
   "stockRegistryHomeNone": "Pas d’emplacement de rangement",
-  "stockReasonHomeInvalid": "Choisissez un emplacement de cette entreprise en service, qui ne soit ni un fournisseur, ni un client, ni une perte, ni un transit."
+  "stockReasonHomeInvalid": "Choisissez un emplacement de cette entreprise en service, qui ne soit ni un fournisseur, ni un client, ni une perte, ni un transit.",
+  "stockItemEditDetails": "Modifier le nom, le prix et la TVA"
 }

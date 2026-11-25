@@ -898,7 +898,12 @@ window.SETUP_L10N={
    "optPerHourDefault": "{n} per hour (default)",
    "optKilobytes": "{n} KB",
    "optKilobytesDefault": "{n} KB (default)",
-   "optReportsOff": "None (error reports off)"
+   "optReportsOff": "None (error reports off)",
+   "counterLayoutMaxCells": "Till layout size",
+   "counterLayoutMaxCellsHint": "The most cells one till layout may hold. Set in the app's settings.",
+   "counterLayoutCashierReorder": "Cashiers reorder the keys",
+   "counterLayoutCashierReorderHint": "A cashier may reorder a till's keys on their own device. Set in the app's settings.",
+   "optCells": "{n} cells"
   },
   "feature": {
    "calendarTab": [
@@ -1620,6 +1625,10 @@ window.SETUP_L10N={
    "unitsOfMeasure": [
     "Units of measure",
     "The owner and the admins keep the business's own units of measure and their conversions (1 km = 1000 m, 1 kg = 1000 g). Items, quotes and invoices are measured in them. The built-in units are always there; switching this on adds the screen to maintain them."
+   ],
+   "counterTillLayout": [
+    "Till layouts",
+    "Lay out each till for your trade: which keys sit where, its pages, and tools beside the basket such as a numeric keypad, a calculator or a scan field. Start from a template, publish it, and a till takes it at its next session. Off, every till keeps its generated keys."
    ]
   },
   "process": {
@@ -1810,7 +1819,8 @@ window.SETUP_L10N={
    "manageStock": "Move goods in and out of stock",
    "approveStockAdjustments": "Approve stock adjustments",
    "manageBillingCustomers": "Manage billing customers",
-   "countStock": "Count stock, blind"
+   "countStock": "Count stock, blind",
+   "configureTill": "Lay out the tills"
   },
   "domain": {
    "payment": "Payment",
@@ -2935,7 +2945,12 @@ window.SETUP_L10N={
    "optPerHourDefault": "{n} par heure (par défaut)",
    "optKilobytes": "{n} Ko",
    "optKilobytesDefault": "{n} Ko (par défaut)",
-   "optReportsOff": "Aucun (rapports d'erreur désactivés)"
+   "optReportsOff": "Aucun (rapports d'erreur désactivés)",
+   "counterLayoutMaxCells": "Taille d'une disposition de caisse",
+   "counterLayoutMaxCellsHint": "Le nombre maximal de cases d'une disposition de caisse. Réglé dans les paramètres de l'application.",
+   "counterLayoutCashierReorder": "Les caissiers réordonnent les touches",
+   "counterLayoutCashierReorderHint": "Un caissier peut réordonner les touches d'une caisse sur son appareil. Réglé dans les paramètres de l'application.",
+   "optCells": "{n} cases"
   },
   "feature": {
    "calendarTab": [
@@ -3657,6 +3672,10 @@ window.SETUP_L10N={
    "unitsOfMeasure": [
     "Unités de mesure",
     "Le propriétaire et les administrateurs tiennent les unités de mesure de l’entreprise et leurs conversions (1 km = 1000 m, 1 kg = 1000 g). Les articles, les devis et les factures sont mesurés avec elles. Les unités de base sont toujours là ; activer cette option ajoute l’écran pour les gérer."
+   ],
+   "counterTillLayout": [
+    "Dispositions de caisse",
+    "Disposez chaque caisse selon votre métier : quelles touches où, ses pages et des outils à côté du panier comme un pavé numérique, une calculatrice ou un champ de scan. Partez d'un modèle, publiez-le, et une caisse le prend à sa prochaine session. Désactivé, chaque caisse garde ses touches générées."
    ]
   },
   "process": {
@@ -3847,7 +3866,8 @@ window.SETUP_L10N={
    "manageStock": "Entrer et sortir des marchandises du stock",
    "approveStockAdjustments": "Approuver les ajustements de stock",
    "manageBillingCustomers": "Gérer les clients facturés",
-   "countStock": "Compter le stock, à l’aveugle"
+   "countStock": "Compter le stock, à l’aveugle",
+   "configureTill": "Disposer les caisses"
   },
   "domain": {
    "payment": "Paiement",
@@ -4972,7 +4992,12 @@ window.SETUP_L10N={
    "optPerHourDefault": "{n} pro Stunde (Standard)",
    "optKilobytes": "{n} KB",
    "optKilobytesDefault": "{n} KB (Standard)",
-   "optReportsOff": "Keine (Fehlerberichte aus)"
+   "optReportsOff": "Keine (Fehlerberichte aus)",
+   "counterLayoutMaxCells": "Größe des Kassenlayouts",
+   "counterLayoutMaxCellsHint": "Die meisten Zellen eines Kassenlayouts. In den Einstellungen der App festgelegt.",
+   "counterLayoutCashierReorder": "Kassierer ordnen die Tasten",
+   "counterLayoutCashierReorderHint": "Ein Kassierer darf die Tasten einer Kasse auf seinem Gerät umordnen. In den Einstellungen der App festgelegt.",
+   "optCells": "{n} Zellen"
   },
   "feature": {
    "calendarTab": [
@@ -5694,6 +5719,10 @@ window.SETUP_L10N={
    "unitsOfMeasure": [
     "Maßeinheiten",
     "Inhaber und Administratoren pflegen die eigenen Maßeinheiten des Betriebs und ihre Umrechnungen (1 km = 1000 m, 1 kg = 1000 g). Artikel, Angebote und Rechnungen werden darin gemessen. Die Standardeinheiten sind immer vorhanden; mit dieser Option erscheint die Seite, auf der sie gepflegt werden."
+   ],
+   "counterTillLayout": [
+    "Kassenlayouts",
+    "Gestalten Sie jede Kasse für Ihr Geschäft: welche Tasten wo liegen, ihre Seiten und Werkzeuge neben dem Warenkorb wie ein Ziffernblock, ein Rechner oder ein Scanfeld. Beginnen Sie mit einer Vorlage, veröffentlichen Sie sie, und eine Kasse übernimmt sie mit ihrer nächsten Sitzung. Aus: Jede Kasse behält ihre erzeugten Tasten."
    ]
   },
   "process": {
@@ -5884,7 +5913,8 @@ window.SETUP_L10N={
    "manageStock": "Waren ein- und auslagern",
    "approveStockAdjustments": "Bestandskorrekturen genehmigen",
    "manageBillingCustomers": "Rechnungskunden verwalten",
-   "countStock": "Bestand blind zählen"
+   "countStock": "Bestand blind zählen",
+   "configureTill": "Kassen gestalten"
   },
   "domain": {
    "payment": "Zahlung",
@@ -7009,7 +7039,12 @@ window.SETUP_L10N={
    "optPerHourDefault": "{n} por hora (por defecto)",
    "optKilobytes": "{n} KB",
    "optKilobytesDefault": "{n} KB (por defecto)",
-   "optReportsOff": "Ninguno (informes de error desactivados)"
+   "optReportsOff": "Ninguno (informes de error desactivados)",
+   "counterLayoutMaxCells": "Tamaño del diseño de caja",
+   "counterLayoutMaxCellsHint": "El máximo de celdas de un diseño de caja. Se ajusta en la configuración de la aplicación.",
+   "counterLayoutCashierReorder": "Los cajeros reordenan las teclas",
+   "counterLayoutCashierReorderHint": "Un cajero puede reordenar las teclas de una caja en su dispositivo. Se ajusta en la configuración de la aplicación.",
+   "optCells": "{n} celdas"
   },
   "feature": {
    "calendarTab": [
@@ -7731,6 +7766,10 @@ window.SETUP_L10N={
    "unitsOfMeasure": [
     "Unidades de medida",
     "El propietario y los administradores mantienen las unidades de medida del negocio y sus conversiones (1 km = 1000 m, 1 kg = 1000 g). Los artículos, los presupuestos y las facturas se miden con ellas. Las unidades básicas siempre están; al activar esta opción aparece la pantalla para mantenerlas."
+   ],
+   "counterTillLayout": [
+    "Diseños de caja",
+    "Organice cada caja según su oficio: qué teclas van dónde, sus páginas y herramientas junto a la cesta como un teclado numérico, una calculadora o un campo de escaneo. Parta de una plantilla, publíquela y una caja la adopta en su siguiente sesión. Desactivado, cada caja conserva sus teclas generadas."
    ]
   },
   "process": {
@@ -7921,7 +7960,8 @@ window.SETUP_L10N={
    "manageStock": "Entrar y sacar mercancías del almacén",
    "approveStockAdjustments": "Aprobar ajustes de existencias",
    "manageBillingCustomers": "Gestionar clientes facturados",
-   "countStock": "Contar el stock a ciegas"
+   "countStock": "Contar el stock a ciegas",
+   "configureTill": "Organizar las cajas"
   },
   "domain": {
    "payment": "Pago",
@@ -9046,7 +9086,12 @@ window.SETUP_L10N={
    "optPerHourDefault": "{n} all'ora (predefinito)",
    "optKilobytes": "{n} KB",
    "optKilobytesDefault": "{n} KB (predefinito)",
-   "optReportsOff": "Nessuna (segnalazioni di errore disattivate)"
+   "optReportsOff": "Nessuna (segnalazioni di errore disattivate)",
+   "counterLayoutMaxCells": "Dimensione del layout di cassa",
+   "counterLayoutMaxCellsHint": "Il numero massimo di celle di un layout di cassa. Impostato nelle impostazioni dell'app.",
+   "counterLayoutCashierReorder": "I cassieri riordinano i tasti",
+   "counterLayoutCashierReorderHint": "Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo. Impostato nelle impostazioni dell'app.",
+   "optCells": "{n} celle"
   },
   "feature": {
    "calendarTab": [
@@ -9768,6 +9813,10 @@ window.SETUP_L10N={
    "unitsOfMeasure": [
     "Unità di misura",
     "Il titolare e gli amministratori gestiscono le unità di misura dell’attività e le loro conversioni (1 km = 1000 m, 1 kg = 1000 g). Articoli, preventivi e fatture sono misurati con esse. Le unità di base ci sono sempre; attivando questa opzione compare la schermata per gestirle."
+   ],
+   "counterTillLayout": [
+    "Layout di cassa",
+    "Organizzi ogni cassa per il Suo mestiere: quali tasti dove, le sue pagine e gli strumenti accanto al carrello come un tastierino numerico, una calcolatrice o un campo di scansione. Parta da un modello, lo pubblichi e una cassa lo adotta alla sessione successiva. Disattivato, ogni cassa mantiene i tasti generati."
    ]
   },
   "process": {
@@ -9958,7 +10007,8 @@ window.SETUP_L10N={
    "manageStock": "Movimentare la merce in entrata e in uscita",
    "approveStockAdjustments": "Approvare le rettifiche di magazzino",
    "manageBillingCustomers": "Gestire i clienti fatturati",
-   "countStock": "Contare il magazzino alla cieca"
+   "countStock": "Contare il magazzino alla cieca",
+   "configureTill": "Organizzare le casse"
   },
   "domain": {
    "payment": "Pagamento",

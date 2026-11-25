@@ -32,7 +32,7 @@ import 'counter_readiness_panel.dart';
 import 'counter_receipt_view.dart';
 import 'till_basket.dart';
 import 'till_cash_dialog.dart';
-import 'till_keys.dart';
+import 'till_layout/till_layout_keys.dart';
 import 'till_offline_mode.dart';
 import 'till_offline_panel.dart';
 import 'till_offline_report.dart';
@@ -450,7 +450,7 @@ class _TillState extends ConsumerState<_Till> {
           children: [
             if (widget.scan != null) TillScanField(onScan: _scanned),
             Expanded(
-              child: TillKeys(key: const ValueKey('till-keys'), items: widget.keys, onTap: (i) => unawaited(_ring(i))),
+              child: TillKeysOrLayout(key: const ValueKey('till-keys-area'), workspaceId: widget.workspaceId, tillId: widget.till?.id, items: widget.keys, onTap: (i) => unawaited(_ring(i)), onPayCash: () => unawaited(_pay(_session.state.value)), onNext: _session.next),
             ),
           ],
         );

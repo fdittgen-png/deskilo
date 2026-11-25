@@ -11953,6 +11953,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Counter receipts';
 
   @override
+  String get featureCounterTillLayoutDesc =>
+      'Lay out each till for your trade: which keys sit where, its pages, and tools beside the basket such as a numeric keypad, a calculator or a scan field. Start from a template, publish it, and a till takes it at its next session. Off, every till keeps its generated keys.';
+
+  @override
+  String get featureCounterTillLayoutTitle => 'Till layouts';
+
+  @override
   String get featureCounterTillSessionsDesc =>
       'Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed.';
 
@@ -25546,6 +25553,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Approve the adjustment a stock count proposes.';
 
   @override
+  String get permAllowsConfigureTill =>
+      'Build, publish, copy and reset the layout of a till: its keys, pages and tools. Cashiers use the published layout without this right.';
+
+  @override
   String get permAllowsCountStock =>
       'Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.';
 
@@ -25694,6 +25705,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get permApproveStockAdjustments => 'Approve stock adjustments';
+
+  @override
+  String get permConfigureTill => 'Lay out the tills';
 
   @override
   String get permCountStock => 'Count stock, blind';
@@ -32489,6 +32503,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.';
 
   @override
+  String get settingHintCounterLayoutCashierReorder =>
+      'A cashier may reorder a till\'s keys on their own device without changing the published layout.';
+
+  @override
+  String get settingHintCounterLayoutMaxCells =>
+      'The most cells one till layout may hold, over all its pages and sizes. A larger layout is refused when it is saved.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.';
 
@@ -32930,6 +32952,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Fiscal rules for counter sales';
 
   @override
+  String get settingLabelCounterLayoutCashierReorder =>
+      'Cashiers reorder the keys';
+
+  @override
+  String get settingLabelCounterLayoutMaxCells => 'Till layout size';
+
+  @override
   String get settingLabelCounterOfflineMaxMinutes =>
       'Longest offline period (minutes)';
 
@@ -33285,6 +33314,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingUnitCards => 'cards';
+
+  @override
+  String get settingUnitCells => 'cells';
 
   @override
   String get settingUnitCharacters => 'characters';
@@ -35798,6 +35830,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get standaloneFactTotal => 'a total above zero';
 
   @override
+  String get standaloneFactTotalMismatch =>
+      'the lines do not add up to the accepted total';
+
+  @override
   String get standaloneFactUnknownSubject => 'the customer';
 
   @override
@@ -36809,6 +36845,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockItemAddTitle => 'Add an item';
+
+  @override
+  String get stockItemEditDetails => 'Edit name, price and VAT';
 
   @override
   String get stockItemNewBarcode => 'Barcode (optional)';
@@ -41416,6 +41455,170 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tillKeysTitle => 'Items to ring up';
+
+  @override
+  String get tillLayoutAdd => 'Add a widget';
+
+  @override
+  String get tillLayoutChooseFunction => 'Which function?';
+
+  @override
+  String get tillLayoutChooseItem => 'Which item?';
+
+  @override
+  String get tillLayoutEdit => 'Lay out this till';
+
+  @override
+  String get tillLayoutFnCard => 'Take a card';
+
+  @override
+  String get tillLayoutFnDeposit => 'Deposit return';
+
+  @override
+  String get tillLayoutFnDiscount => 'Discount on a line';
+
+  @override
+  String get tillLayoutFnDrawer => 'Open the drawer';
+
+  @override
+  String get tillLayoutFnPrice => 'Change a price';
+
+  @override
+  String get tillLayoutFnQuantity => 'Quantity ×';
+
+  @override
+  String get tillLayoutFnReprint => 'Reprint the last receipt';
+
+  @override
+  String get tillLayoutFnVoid => 'Void a line';
+
+  @override
+  String get tillLayoutGone => 'No longer for sale';
+
+  @override
+  String tillLayoutInvalid(String reason) {
+    return 'This layout cannot be saved: $reason';
+  }
+
+  @override
+  String get tillLayoutKindCalculator => 'Calculator';
+
+  @override
+  String get tillLayoutKindCashNotes => 'Suggested cash notes';
+
+  @override
+  String get tillLayoutKindCategory => 'Category key';
+
+  @override
+  String get tillLayoutKindCustomer => 'Customer and note';
+
+  @override
+  String get tillLayoutKindFunction => 'Function key';
+
+  @override
+  String get tillLayoutKindItem => 'Item key';
+
+  @override
+  String get tillLayoutKindKeypad => 'Numeric keypad';
+
+  @override
+  String get tillLayoutKindPasses => 'Studio passes';
+
+  @override
+  String get tillLayoutKindTotal => 'Total and change';
+
+  @override
+  String get tillLayoutKindUnknown => 'A widget this app does not know';
+
+  @override
+  String get tillLayoutNoRoom =>
+      'There is no free place for this widget on this grid.';
+
+  @override
+  String get tillLayoutPageDesk => 'Desk';
+
+  @override
+  String get tillLayoutPageDrinks => 'Drinks';
+
+  @override
+  String get tillLayoutPageFood => 'Food';
+
+  @override
+  String get tillLayoutPageSale => 'Sale';
+
+  @override
+  String get tillLayoutPublish => 'Publish to the till';
+
+  @override
+  String get tillLayoutPublished =>
+      'Published. The till takes it at its next session.';
+
+  @override
+  String get tillLayoutReload => 'Reload';
+
+  @override
+  String get tillLayoutRemoveCell => 'Remove this widget';
+
+  @override
+  String get tillLayoutSizeDesk => 'Desk width';
+
+  @override
+  String get tillLayoutSizePhone => 'Phone width';
+
+  @override
+  String get tillLayoutSizeTablet => 'Tablet width';
+
+  @override
+  String get tillLayoutStale => 'Someone changed this layout; reload it.';
+
+  @override
+  String get tillLayoutStartFrom => 'Start from a template';
+
+  @override
+  String get tillLayoutStepDown => 'Move down';
+
+  @override
+  String get tillLayoutStepLeft => 'Move left';
+
+  @override
+  String get tillLayoutStepNarrower => 'One column narrower';
+
+  @override
+  String get tillLayoutStepRight => 'Move right';
+
+  @override
+  String get tillLayoutStepShorter => 'One row shorter';
+
+  @override
+  String get tillLayoutStepTaller => 'One row taller';
+
+  @override
+  String get tillLayoutStepUp => 'Move up';
+
+  @override
+  String get tillLayoutStepWider => 'One column wider';
+
+  @override
+  String get tillLayoutTemplateBakery =>
+      'Bakery and weighed goods: a keypad beside large keys';
+
+  @override
+  String get tillLayoutTemplateCafe =>
+      'Café and bar: category pages, no scan field';
+
+  @override
+  String get tillLayoutTemplateHardware =>
+      'Hardware and catalogue: scan field and keypad first';
+
+  @override
+  String get tillLayoutTemplateRetail =>
+      'Retail: scan field, basket and pay keys';
+
+  @override
+  String get tillLayoutTemplateStudio => 'Studio desk: passes and sessions';
+
+  @override
+  String get tillLayoutTitle => 'Till layout';
 
   @override
   String get tillLeaveBody =>

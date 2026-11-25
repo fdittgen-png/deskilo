@@ -39,5 +39,6 @@
   "permAllowsManageStock": "Faire entrer, déplacer et sortir des marchandises.",
   "permAllowsApproveStockAdjustments": "Approuver l'ajustement proposé par un inventaire.",
   "rolesFilterPermissions": "Filtrer les permissions",
-  "permAllowsCountStock": "Compter les lignes d’une tâche d’inventaire tournant sans voir ce que le registre contient : les tâches et le comptage de chaque ligne, rien d’autre."
+  "permAllowsCountStock": "Compter les lignes d’une tâche d’inventaire tournant sans voir ce que le registre contient : les tâches et le comptage de chaque ligne, rien d’autre.",
+  "permAllowsConfigureTill": "Créer, publier, copier et réinitialiser la disposition d'une caisse : ses touches, pages et outils. Les caissiers utilisent la disposition publiée sans ce droit."
 }

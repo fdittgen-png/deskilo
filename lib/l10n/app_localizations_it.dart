@@ -12042,6 +12042,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Scontrini di cassa';
 
   @override
+  String get featureCounterTillLayoutDesc =>
+      'Organizzi ogni cassa per il Suo mestiere: quali tasti dove, le sue pagine e gli strumenti accanto al carrello come un tastierino numerico, una calcolatrice o un campo di scansione. Parta da un modello, lo pubblichi e una cassa lo adotta alla sessione successiva. Disattivato, ogni cassa mantiene i tasti generati.';
+
+  @override
+  String get featureCounterTillLayoutTitle => 'Layout di cassa';
+
+  @override
   String get featureCounterTillSessionsDesc =>
       'Apra una cassa con il suo fondo, conti il cassetto alla chiusura e chiuda la giornata con il suo rapporto. Una vendita richiede una cassa aperta; il contante atteso si ricava da quanto incassato, mai digitato.';
 
@@ -25759,6 +25766,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Approvare la rettifica proposta da un inventario.';
 
   @override
+  String get permAllowsConfigureTill =>
+      'Creare, pubblicare, copiare e ripristinare il layout di una cassa: tasti, pagine e strumenti. I cassieri usano il layout pubblicato senza questo diritto.';
+
+  @override
   String get permAllowsCountStock =>
       'Contare le righe di un compito di inventario ciclico senza vedere ciò che il registro contiene: i compiti e il conteggio di ogni riga, nient’altro.';
 
@@ -25909,6 +25920,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get permApproveStockAdjustments =>
       'Approvare le rettifiche di magazzino';
+
+  @override
+  String get permConfigureTill => 'Organizzare le casse';
 
   @override
   String get permCountStock => 'Contare il magazzino alla cieca';
@@ -32767,6 +32781,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ciò che dichiara sulle regole fiscali di una vendita al banco: nessuna significa che al Suo esercizio non si applica alcun obbligo fiscale di registratore (una Sua dichiarazione, annotata su ogni scontrino); registratore richiesto significa che si applica. Lo scontrino è emesso solo dove l\'operazione del Suo paese è supportata nel caso dichiarato.';
 
   @override
+  String get settingHintCounterLayoutCashierReorder =>
+      'Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo senza cambiare il layout pubblicato.';
+
+  @override
+  String get settingHintCounterLayoutMaxCells =>
+      'Il numero massimo di celle di un layout di cassa, su tutte le pagine e dimensioni. Un layout più grande viene rifiutato al salvataggio.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Per quanto tempo dopo la perdita della connessione una vendita in contanti fatta offline è ancora accettata all\'invio. Le vendite successive sono rifiutate ed elencate per il titolare.';
 
@@ -33216,6 +33238,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Regole fiscali delle vendite al banco';
 
   @override
+  String get settingLabelCounterLayoutCashierReorder =>
+      'I cassieri riordinano i tasti';
+
+  @override
+  String get settingLabelCounterLayoutMaxCells =>
+      'Dimensione del layout di cassa';
+
+  @override
   String get settingLabelCounterOfflineMaxMinutes =>
       'Durata massima offline (minuti)';
 
@@ -33599,6 +33629,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingUnitCards => 'schede';
+
+  @override
+  String get settingUnitCells => 'celle';
 
   @override
   String get settingUnitCharacters => 'caratteri';
@@ -36130,6 +36163,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get standaloneFactTotal => 'un totale superiore a zero';
 
   @override
+  String get standaloneFactTotalMismatch =>
+      'le righe non corrispondono al totale accettato';
+
+  @override
   String get standaloneFactUnknownSubject => 'il cliente';
 
   @override
@@ -37148,6 +37185,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockItemAddTitle => 'Aggiungi un articolo';
+
+  @override
+  String get stockItemEditDetails => 'Modifica nome, prezzo e IVA';
 
   @override
   String get stockItemNewBarcode => 'Codice a barre (facoltativo)';
@@ -41808,6 +41848,172 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tillKeysTitle => 'Articoli da battere';
+
+  @override
+  String get tillLayoutAdd => 'Aggiungere un elemento';
+
+  @override
+  String get tillLayoutChooseFunction => 'Quale funzione?';
+
+  @override
+  String get tillLayoutChooseItem => 'Quale articolo?';
+
+  @override
+  String get tillLayoutEdit => 'Organizzare questa cassa';
+
+  @override
+  String get tillLayoutFnCard => 'Incassare con carta';
+
+  @override
+  String get tillLayoutFnDeposit => 'Reso cauzione';
+
+  @override
+  String get tillLayoutFnDiscount => 'Sconto su una riga';
+
+  @override
+  String get tillLayoutFnDrawer => 'Aprire il cassetto';
+
+  @override
+  String get tillLayoutFnPrice => 'Cambiare un prezzo';
+
+  @override
+  String get tillLayoutFnQuantity => 'Quantità ×';
+
+  @override
+  String get tillLayoutFnReprint => 'Ristampare l\'ultimo scontrino';
+
+  @override
+  String get tillLayoutFnVoid => 'Annullare una riga';
+
+  @override
+  String get tillLayoutGone => 'Non più in vendita';
+
+  @override
+  String tillLayoutInvalid(String reason) {
+    return 'Questo layout non può essere salvato: $reason';
+  }
+
+  @override
+  String get tillLayoutKindCalculator => 'Calcolatrice';
+
+  @override
+  String get tillLayoutKindCashNotes => 'Banconote suggerite';
+
+  @override
+  String get tillLayoutKindCategory => 'Tasto categoria';
+
+  @override
+  String get tillLayoutKindCustomer => 'Cliente e nota';
+
+  @override
+  String get tillLayoutKindFunction => 'Tasto funzione';
+
+  @override
+  String get tillLayoutKindItem => 'Tasto articolo';
+
+  @override
+  String get tillLayoutKindKeypad => 'Tastierino numerico';
+
+  @override
+  String get tillLayoutKindPasses => 'Abbonamenti dello studio';
+
+  @override
+  String get tillLayoutKindTotal => 'Totale e resto';
+
+  @override
+  String get tillLayoutKindUnknown => 'Un elemento che questa app non conosce';
+
+  @override
+  String get tillLayoutNoRoom =>
+      'Non c\'è posto libero per questo elemento su questa griglia.';
+
+  @override
+  String get tillLayoutPageDesk => 'Banco';
+
+  @override
+  String get tillLayoutPageDrinks => 'Bevande';
+
+  @override
+  String get tillLayoutPageFood => 'Cibo';
+
+  @override
+  String get tillLayoutPageSale => 'Vendita';
+
+  @override
+  String get tillLayoutPublish => 'Pubblicare sulla cassa';
+
+  @override
+  String get tillLayoutPublished =>
+      'Pubblicato. La cassa lo adotta alla sessione successiva.';
+
+  @override
+  String get tillLayoutReload => 'Ricaricare';
+
+  @override
+  String get tillLayoutRemoveCell => 'Rimuovere questo elemento';
+
+  @override
+  String get tillLayoutSizeDesk => 'Larghezza desktop';
+
+  @override
+  String get tillLayoutSizePhone => 'Larghezza telefono';
+
+  @override
+  String get tillLayoutSizeTablet => 'Larghezza tablet';
+
+  @override
+  String get tillLayoutStale =>
+      'Qualcuno ha modificato questo layout; lo ricarichi.';
+
+  @override
+  String get tillLayoutStartFrom => 'Partire da un modello';
+
+  @override
+  String get tillLayoutStepDown => 'Sposta in basso';
+
+  @override
+  String get tillLayoutStepLeft => 'Sposta a sinistra';
+
+  @override
+  String get tillLayoutStepNarrower => 'Una colonna più stretta';
+
+  @override
+  String get tillLayoutStepRight => 'Sposta a destra';
+
+  @override
+  String get tillLayoutStepShorter => 'Una riga più bassa';
+
+  @override
+  String get tillLayoutStepTaller => 'Una riga più alta';
+
+  @override
+  String get tillLayoutStepUp => 'Sposta in alto';
+
+  @override
+  String get tillLayoutStepWider => 'Una colonna più larga';
+
+  @override
+  String get tillLayoutTemplateBakery =>
+      'Panetteria e merce pesata: un tastierino accanto a tasti grandi';
+
+  @override
+  String get tillLayoutTemplateCafe =>
+      'Caffè e bar: pagine per categoria, senza campo di scansione';
+
+  @override
+  String get tillLayoutTemplateHardware =>
+      'Ferramenta e catalogo: prima campo di scansione e tastierino';
+
+  @override
+  String get tillLayoutTemplateRetail =>
+      'Negozio: campo di scansione, carrello e tasti di pagamento';
+
+  @override
+  String get tillLayoutTemplateStudio =>
+      'Reception dello studio: abbonamenti e sessioni';
+
+  @override
+  String get tillLayoutTitle => 'Layout della cassa';
 
   @override
   String get tillLeaveBody =>

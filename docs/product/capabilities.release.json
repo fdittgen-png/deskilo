@@ -1584,6 +1584,12 @@
       "capabilities": []
     },
     {
+      "key": "counterTillLayout",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "counterTillSessions",
       "maturity": "beta",
       "lifecycle": "active",

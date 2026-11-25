@@ -12089,6 +12089,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Tickets de caisse';
 
   @override
+  String get featureCounterTillLayoutDesc =>
+      'Disposez chaque caisse selon votre métier : quelles touches où, ses pages et des outils à côté du panier comme un pavé numérique, une calculatrice ou un champ de scan. Partez d\'un modèle, publiez-le, et une caisse le prend à sa prochaine session. Désactivé, chaque caisse garde ses touches générées.';
+
+  @override
+  String get featureCounterTillLayoutTitle => 'Dispositions de caisse';
+
+  @override
   String get featureCounterTillSessionsDesc =>
       'Ouvrez une caisse avec son fond, comptez le tiroir à la fermeture et clôturez la journée avec son rapport. Une vente exige une caisse ouverte ; les espèces attendues se déduisent de ce qui a été encaissé, jamais saisies.';
 
@@ -25833,6 +25840,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Approuver l\'ajustement proposé par un inventaire.';
 
   @override
+  String get permAllowsConfigureTill =>
+      'Créer, publier, copier et réinitialiser la disposition d\'une caisse : ses touches, pages et outils. Les caissiers utilisent la disposition publiée sans ce droit.';
+
+  @override
   String get permAllowsCountStock =>
       'Compter les lignes d’une tâche d’inventaire tournant sans voir ce que le registre contient : les tâches et le comptage de chaque ligne, rien d’autre.';
 
@@ -25984,6 +25995,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get permApproveStockAdjustments =>
       'Approuver les ajustements de stock';
+
+  @override
+  String get permConfigureTill => 'Disposer les caisses';
 
   @override
   String get permCountStock => 'Compter le stock, à l’aveugle';
@@ -32867,6 +32881,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce que vous déclarez sur les règles fiscales d\'une vente au comptoir : aucune signifie qu\'aucune obligation fiscale de caisse ne s\'applique à votre entreprise (votre propre déclaration, inscrite sur chaque ticket) ; caisse requise signifie qu\'une obligation s\'applique. Un ticket n\'est émis que là où l\'opération de votre pays est prise en charge dans le cas que vous déclarez.';
 
   @override
+  String get settingHintCounterLayoutCashierReorder =>
+      'Un caissier peut réordonner les touches d\'une caisse sur son propre appareil sans changer la disposition publiée.';
+
+  @override
+  String get settingHintCounterLayoutMaxCells =>
+      'Le nombre maximal de cases d\'une disposition de caisse, toutes pages et tailles confondues. Une disposition plus grande est refusée à l\'enregistrement.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Combien de temps après la perte de connexion de la caisse une vente en espèces faite hors ligne est encore acceptée à l\'envoi. Les ventes plus tardives sont refusées et listées pour le gérant.';
 
@@ -33316,6 +33338,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Règles fiscales des ventes au comptoir';
 
   @override
+  String get settingLabelCounterLayoutCashierReorder =>
+      'Les caissiers réordonnent les touches';
+
+  @override
+  String get settingLabelCounterLayoutMaxCells =>
+      'Taille d\'une disposition de caisse';
+
+  @override
   String get settingLabelCounterOfflineMaxMinutes =>
       'Durée maximale hors ligne (minutes)';
 
@@ -33694,6 +33724,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingUnitCards => 'cartes';
+
+  @override
+  String get settingUnitCells => 'cases';
 
   @override
   String get settingUnitCharacters => 'caractères';
@@ -36247,6 +36280,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get standaloneFactTotal => 'un total supérieur à zéro';
 
   @override
+  String get standaloneFactTotalMismatch =>
+      'les lignes ne correspondent pas au total accepté';
+
+  @override
   String get standaloneFactUnknownSubject => 'le client';
 
   @override
@@ -37270,6 +37307,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockItemAddTitle => 'Ajouter un article';
+
+  @override
+  String get stockItemEditDetails => 'Modifier le nom, le prix et la TVA';
 
   @override
   String get stockItemNewBarcode => 'Code-barres (facultatif)';
@@ -41935,6 +41975,173 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tillKeysTitle => 'Articles à encaisser';
+
+  @override
+  String get tillLayoutAdd => 'Ajouter un élément';
+
+  @override
+  String get tillLayoutChooseFunction => 'Quelle fonction ?';
+
+  @override
+  String get tillLayoutChooseItem => 'Quel article ?';
+
+  @override
+  String get tillLayoutEdit => 'Disposer cette caisse';
+
+  @override
+  String get tillLayoutFnCard => 'Prendre une carte';
+
+  @override
+  String get tillLayoutFnDeposit => 'Retour de consigne';
+
+  @override
+  String get tillLayoutFnDiscount => 'Remise sur une ligne';
+
+  @override
+  String get tillLayoutFnDrawer => 'Ouvrir le tiroir';
+
+  @override
+  String get tillLayoutFnPrice => 'Changer un prix';
+
+  @override
+  String get tillLayoutFnQuantity => 'Quantité ×';
+
+  @override
+  String get tillLayoutFnReprint => 'Réimprimer le dernier ticket';
+
+  @override
+  String get tillLayoutFnVoid => 'Annuler une ligne';
+
+  @override
+  String get tillLayoutGone => 'Plus en vente';
+
+  @override
+  String tillLayoutInvalid(String reason) {
+    return 'Cette disposition ne peut pas être enregistrée : $reason';
+  }
+
+  @override
+  String get tillLayoutKindCalculator => 'Calculatrice';
+
+  @override
+  String get tillLayoutKindCashNotes => 'Billets suggérés';
+
+  @override
+  String get tillLayoutKindCategory => 'Touche catégorie';
+
+  @override
+  String get tillLayoutKindCustomer => 'Client et note';
+
+  @override
+  String get tillLayoutKindFunction => 'Touche de fonction';
+
+  @override
+  String get tillLayoutKindItem => 'Touche article';
+
+  @override
+  String get tillLayoutKindKeypad => 'Pavé numérique';
+
+  @override
+  String get tillLayoutKindPasses => 'Abonnements du studio';
+
+  @override
+  String get tillLayoutKindTotal => 'Total et monnaie';
+
+  @override
+  String get tillLayoutKindUnknown =>
+      'Un élément que cette application ne connaît pas';
+
+  @override
+  String get tillLayoutNoRoom =>
+      'Il n\'y a pas de place libre pour cet élément sur cette grille.';
+
+  @override
+  String get tillLayoutPageDesk => 'Accueil';
+
+  @override
+  String get tillLayoutPageDrinks => 'Boissons';
+
+  @override
+  String get tillLayoutPageFood => 'Plats';
+
+  @override
+  String get tillLayoutPageSale => 'Vente';
+
+  @override
+  String get tillLayoutPublish => 'Publier sur la caisse';
+
+  @override
+  String get tillLayoutPublished =>
+      'Publiée. La caisse la prend à sa prochaine session.';
+
+  @override
+  String get tillLayoutReload => 'Recharger';
+
+  @override
+  String get tillLayoutRemoveCell => 'Retirer cet élément';
+
+  @override
+  String get tillLayoutSizeDesk => 'Largeur bureau';
+
+  @override
+  String get tillLayoutSizePhone => 'Largeur téléphone';
+
+  @override
+  String get tillLayoutSizeTablet => 'Largeur tablette';
+
+  @override
+  String get tillLayoutStale =>
+      'Quelqu\'un a modifié cette disposition ; rechargez-la.';
+
+  @override
+  String get tillLayoutStartFrom => 'Partir d\'un modèle';
+
+  @override
+  String get tillLayoutStepDown => 'Déplacer vers le bas';
+
+  @override
+  String get tillLayoutStepLeft => 'Déplacer à gauche';
+
+  @override
+  String get tillLayoutStepNarrower => 'Une colonne de moins';
+
+  @override
+  String get tillLayoutStepRight => 'Déplacer à droite';
+
+  @override
+  String get tillLayoutStepShorter => 'Une rangée de moins';
+
+  @override
+  String get tillLayoutStepTaller => 'Une rangée de plus';
+
+  @override
+  String get tillLayoutStepUp => 'Déplacer vers le haut';
+
+  @override
+  String get tillLayoutStepWider => 'Une colonne de plus';
+
+  @override
+  String get tillLayoutTemplateBakery =>
+      'Boulangerie et produits pesés : un pavé numérique à côté de grandes touches';
+
+  @override
+  String get tillLayoutTemplateCafe =>
+      'Café et bar : pages par catégorie, sans champ de scan';
+
+  @override
+  String get tillLayoutTemplateHardware =>
+      'Quincaillerie et catalogue : champ de scan et pavé numérique d\'abord';
+
+  @override
+  String get tillLayoutTemplateRetail =>
+      'Commerce : champ de scan, panier et touches de paiement';
+
+  @override
+  String get tillLayoutTemplateStudio =>
+      'Accueil de studio : abonnements et séances';
+
+  @override
+  String get tillLayoutTitle => 'Disposition de la caisse';
 
   @override
   String get tillLeaveBody =>

@@ -193,6 +193,10 @@
   "@standaloneFactTotal": {
     "description": "#4165 standalone invoice composer: standaloneFactTotal"
   },
+  "standaloneFactTotalMismatch": "le righe non corrispondono al totale accettato",
+  "@standaloneFactTotalMismatch": {
+    "description": "#4405 previewed document: standaloneFactTotalMismatch"
+  },
   "standaloneFactCurrency": "la valuta dell’attività",
   "@standaloneFactCurrency": {
     "description": "#4165 standalone invoice composer: standaloneFactCurrency"

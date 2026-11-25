@@ -159,5 +159,9 @@
   "permAllowsCountStock": "Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.",
   "@permAllowsCountStock": {
     "description": "#4295 permission description"
+  },
+  "permAllowsConfigureTill": "Build, publish, copy and reset the layout of a till: its keys, pages and tools. Cashiers use the published layout without this right.",
+  "@permAllowsConfigureTill": {
+    "description": "#4448 the right to lay out the tills: what it allows"
   }
 }

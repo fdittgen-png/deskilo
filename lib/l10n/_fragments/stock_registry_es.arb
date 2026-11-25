@@ -15,5 +15,6 @@
   "stockRegistryHomeTitle": "Ubicación habitual de {item}",
   "stockRegistryHomeHelp": "Dónde va este artículo, para que la recepción, el recuento y la preparación sepan adónde ir. Es una indicación: el stock puede estar en otro sitio y cambiarla no mueve nada.",
   "stockRegistryHomeNone": "Sin ubicación habitual",
-  "stockReasonHomeInvalid": "Elija una ubicación de esta empresa en uso que no sea de proveedor, cliente, pérdida ni tránsito."
+  "stockReasonHomeInvalid": "Elija una ubicación de esta empresa en uso que no sea de proveedor, cliente, pérdida ni tránsito.",
+  "stockItemEditDetails": "Editar nombre, precio e IVA"
 }

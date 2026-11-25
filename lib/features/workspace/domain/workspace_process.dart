@@ -144,6 +144,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.counterTillSessions,
       // #4373
       WorkspaceFeature.counterOfflineCash,
+      // #4448
+      WorkspaceFeature.counterTillLayout,
     ]),
   ]),
   // #4449 — the goods the business keeps, moves, counts and traces: out of pricing, into a process of their own.
