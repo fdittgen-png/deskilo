@@ -94,6 +94,9 @@ abstract final class Routes {
   static const stockPlacesAdd = '/stock/places?add=1';
   static const stockSettings = '/stock/settings';
   static const tillReceipts = '/till/receipts';
+
+  /// #4448 -- the layout editor of one till: `/till/layout/<till id>?name=<till name>`.
+  static const tillLayout = '/till/layout';
   static const validation = '/validation';
   static const vat = '/vat';
   static const vatDeclarations = '/vat-declarations';

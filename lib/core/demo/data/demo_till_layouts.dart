@@ -5,17 +5,13 @@
 // id that answers the same version again. The front counter starts on the Retail template; the bakery counter on the
 // Bakery template with a keypad and a calculator.
 import 'package:flutter/foundation.dart' show visibleForTesting;
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../features/money/domain/till_layout.dart';
 import '../../../features/money/domain/till_layout_port.dart';
 import '../../../features/money/domain/till_layout_templates.dart';
-import '../../codes/dk_code.dart';
 import '../../settings/setting_defaults.g.dart';
 import 'demo_stock_registry.dart';
 
-PostgrestException _refused(String code, String message, String reason) =>
-    PostgrestException(message: message, code: code, details: '{"reason":"$reason"}');
 
 /// The Demo's front counter, laid out with the Retail template.
 const _frontTill = 'demo-till-front';
@@ -59,9 +55,9 @@ class DemoTillLayouts implements TillLayoutPort {
     final again = _answered[requestId];
     if (again != null) return again;
     final current = _drafts[tillId]?.version ?? 0;
-    if (current != expectedVersion) throw _refused(DkCode.dkl10, 'someone changed this layout: reload it', 'version');
+    if (current != expectedVersion) throw const TillLayoutRefused(TillLayoutRefusalKind.stale);
     final problems = validateTillLayout(layout, maxCells: maxCells, knownItems: _items);
-    if (problems.isNotEmpty) throw _refused(DkCode.dkl02, 'this layout cannot be saved', problems.first.toString());
+    if (problems.isNotEmpty) throw TillLayoutRefused(TillLayoutRefusalKind.invalid, problems.first.toString());
     final saved = TillLayout(name: layout.name.trim(), pages: layout.pages, version: current + 1);
     _drafts[tillId] = saved;
     return _answered[requestId] = saved.version;
@@ -72,9 +68,9 @@ class DemoTillLayouts implements TillLayoutPort {
     final again = _answered[requestId];
     if (again != null) return again;
     final draft = _drafts[tillId];
-    if (draft == null || draft.version != expectedVersion) throw _refused(DkCode.dkl10, 'someone changed this layout: reload it', 'version');
+    if (draft == null || draft.version != expectedVersion) throw const TillLayoutRefused(TillLayoutRefusalKind.stale);
     final problems = validateTillLayout(draft, maxCells: maxCells, knownItems: _items);
-    if (problems.isNotEmpty) throw _refused(DkCode.dkl02, 'this layout cannot be published', problems.first.toString());
+    if (problems.isNotEmpty) throw TillLayoutRefused(TillLayoutRefusalKind.invalid, problems.first.toString());
     final version = (_published[tillId]?.version ?? 0) + 1;
     _published[tillId] = TillLayout(name: draft.name, pages: draft.pages, version: version, status: TillLayoutStatus.published);
     return _answered[requestId] = version;

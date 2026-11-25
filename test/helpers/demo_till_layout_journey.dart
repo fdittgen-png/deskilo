@@ -4,18 +4,17 @@
 // the Bakery template with a calculator, saves it, publishes it; a second save over the version that moved is refused,
 // an invalid layout is refused with its problem, and the same request answers the same version. Shared by the scenario
 // checklist and the journey test.
-import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/demo_till_layouts.dart';
 import 'package:deskilo/features/money/domain/till_layout.dart';
+import 'package:deskilo/features/money/domain/till_layout_port.dart';
 import 'package:deskilo/features/money/domain/till_layout_templates.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
-Future<String?> _refusal(Future<Object?> Function() act) async {
+Future<TillLayoutRefusalKind?> _refusal(Future<Object?> Function() act) async {
   try {
     await act();
     return null;
-  } on PostgrestException catch (e) {
-    return e.code;
+  } on TillLayoutRefused catch (e) {
+    return e.kind;
   }
 }
 
@@ -40,8 +39,8 @@ Future<bool> tillLayoutJourney() async {
   return before != null &&
       v1 == 1 &&
       again == v1 &&
-      stale == DkCode.dkl10 &&
-      invalid == DkCode.dkl02 &&
+      stale == TillLayoutRefusalKind.stale &&
+      invalid == TillLayoutRefusalKind.invalid &&
       published == before.version + 1 &&
       kinds.containsAll([TillWidgetKind.keypad, TillWidgetKind.calculator]) &&
       validateTillLayout(after, maxCells: store.maxCells).isEmpty;

@@ -41450,6 +41450,170 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillKeysTitle => 'Items to ring up';
 
   @override
+  String get tillLayoutAdd => 'Add a widget';
+
+  @override
+  String get tillLayoutChooseFunction => 'Which function?';
+
+  @override
+  String get tillLayoutChooseItem => 'Which item?';
+
+  @override
+  String get tillLayoutEdit => 'Lay out this till';
+
+  @override
+  String get tillLayoutFnCard => 'Take a card';
+
+  @override
+  String get tillLayoutFnDeposit => 'Deposit return';
+
+  @override
+  String get tillLayoutFnDiscount => 'Discount on a line';
+
+  @override
+  String get tillLayoutFnDrawer => 'Open the drawer';
+
+  @override
+  String get tillLayoutFnPrice => 'Change a price';
+
+  @override
+  String get tillLayoutFnQuantity => 'Quantity ×';
+
+  @override
+  String get tillLayoutFnReprint => 'Reprint the last receipt';
+
+  @override
+  String get tillLayoutFnVoid => 'Void a line';
+
+  @override
+  String tillLayoutInvalid(String reason) {
+    return 'This layout cannot be saved: $reason';
+  }
+
+  @override
+  String get tillLayoutKindCalculator => 'Calculator';
+
+  @override
+  String get tillLayoutKindCashNotes => 'Suggested cash notes';
+
+  @override
+  String get tillLayoutKindCategory => 'Category key';
+
+  @override
+  String get tillLayoutKindCustomer => 'Customer and note';
+
+  @override
+  String get tillLayoutKindFunction => 'Function key';
+
+  @override
+  String get tillLayoutKindItem => 'Item key';
+
+  @override
+  String get tillLayoutKindKeypad => 'Numeric keypad';
+
+  @override
+  String get tillLayoutKindPasses => 'Studio passes';
+
+  @override
+  String get tillLayoutKindTotal => 'Total and change';
+
+  @override
+  String get tillLayoutKindUnknown => 'A widget this app does not know';
+
+  @override
+  String get tillLayoutNoRoom =>
+      'There is no free place for this widget on this grid.';
+
+  @override
+  String get tillLayoutPageDesk => 'Desk';
+
+  @override
+  String get tillLayoutPageDrinks => 'Drinks';
+
+  @override
+  String get tillLayoutPageFood => 'Food';
+
+  @override
+  String get tillLayoutPageSale => 'Sale';
+
+  @override
+  String get tillLayoutPublish => 'Publish to the till';
+
+  @override
+  String get tillLayoutPublished =>
+      'Published. The till takes it at its next session.';
+
+  @override
+  String get tillLayoutReload => 'Reload';
+
+  @override
+  String get tillLayoutRemoveCell => 'Remove this widget';
+
+  @override
+  String get tillLayoutSaved => 'Draft saved.';
+
+  @override
+  String get tillLayoutSizeDesk => 'Desk width';
+
+  @override
+  String get tillLayoutSizePhone => 'Phone width';
+
+  @override
+  String get tillLayoutSizeTablet => 'Tablet width';
+
+  @override
+  String get tillLayoutStale => 'Someone changed this layout; reload it.';
+
+  @override
+  String get tillLayoutStartFrom => 'Start from a template';
+
+  @override
+  String get tillLayoutStepDown => 'Move down';
+
+  @override
+  String get tillLayoutStepLeft => 'Move left';
+
+  @override
+  String get tillLayoutStepNarrower => 'One column narrower';
+
+  @override
+  String get tillLayoutStepRight => 'Move right';
+
+  @override
+  String get tillLayoutStepShorter => 'One row shorter';
+
+  @override
+  String get tillLayoutStepTaller => 'One row taller';
+
+  @override
+  String get tillLayoutStepUp => 'Move up';
+
+  @override
+  String get tillLayoutStepWider => 'One column wider';
+
+  @override
+  String get tillLayoutTemplateBakery =>
+      'Bakery and weighed goods: a keypad beside large keys';
+
+  @override
+  String get tillLayoutTemplateCafe =>
+      'Café and bar: category pages, no scan field';
+
+  @override
+  String get tillLayoutTemplateHardware =>
+      'Hardware and catalogue: scan field and keypad first';
+
+  @override
+  String get tillLayoutTemplateRetail =>
+      'Retail: scan field, basket and pay keys';
+
+  @override
+  String get tillLayoutTemplateStudio => 'Studio desk: passes and sessions';
+
+  @override
+  String get tillLayoutTitle => 'Till layout';
+
+  @override
   String get tillLeaveBody =>
       'The sale was sent and its answer did not come. Leaving keeps it waiting: open the till again and confirm it. Do not ring it up again.';
 

@@ -41791,6 +41791,173 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillKeysTitle => 'Artículos para cobrar';
 
   @override
+  String get tillLayoutAdd => 'Añadir un elemento';
+
+  @override
+  String get tillLayoutChooseFunction => '¿Qué función?';
+
+  @override
+  String get tillLayoutChooseItem => '¿Qué artículo?';
+
+  @override
+  String get tillLayoutEdit => 'Organizar esta caja';
+
+  @override
+  String get tillLayoutFnCard => 'Cobrar con tarjeta';
+
+  @override
+  String get tillLayoutFnDeposit => 'Devolución de envase';
+
+  @override
+  String get tillLayoutFnDiscount => 'Descuento en una línea';
+
+  @override
+  String get tillLayoutFnDrawer => 'Abrir el cajón';
+
+  @override
+  String get tillLayoutFnPrice => 'Cambiar un precio';
+
+  @override
+  String get tillLayoutFnQuantity => 'Cantidad ×';
+
+  @override
+  String get tillLayoutFnReprint => 'Reimprimir el último ticket';
+
+  @override
+  String get tillLayoutFnVoid => 'Anular una línea';
+
+  @override
+  String tillLayoutInvalid(String reason) {
+    return 'Este diseño no se puede guardar: $reason';
+  }
+
+  @override
+  String get tillLayoutKindCalculator => 'Calculadora';
+
+  @override
+  String get tillLayoutKindCashNotes => 'Billetes sugeridos';
+
+  @override
+  String get tillLayoutKindCategory => 'Tecla de categoría';
+
+  @override
+  String get tillLayoutKindCustomer => 'Cliente y nota';
+
+  @override
+  String get tillLayoutKindFunction => 'Tecla de función';
+
+  @override
+  String get tillLayoutKindItem => 'Tecla de artículo';
+
+  @override
+  String get tillLayoutKindKeypad => 'Teclado numérico';
+
+  @override
+  String get tillLayoutKindPasses => 'Bonos del estudio';
+
+  @override
+  String get tillLayoutKindTotal => 'Total y cambio';
+
+  @override
+  String get tillLayoutKindUnknown =>
+      'Un elemento que esta aplicación no conoce';
+
+  @override
+  String get tillLayoutNoRoom =>
+      'No hay sitio libre para este elemento en esta cuadrícula.';
+
+  @override
+  String get tillLayoutPageDesk => 'Mostrador';
+
+  @override
+  String get tillLayoutPageDrinks => 'Bebidas';
+
+  @override
+  String get tillLayoutPageFood => 'Comida';
+
+  @override
+  String get tillLayoutPageSale => 'Venta';
+
+  @override
+  String get tillLayoutPublish => 'Publicar en la caja';
+
+  @override
+  String get tillLayoutPublished =>
+      'Publicado. La caja lo adopta en su próxima sesión.';
+
+  @override
+  String get tillLayoutReload => 'Volver a cargar';
+
+  @override
+  String get tillLayoutRemoveCell => 'Quitar este elemento';
+
+  @override
+  String get tillLayoutSaved => 'Borrador guardado.';
+
+  @override
+  String get tillLayoutSizeDesk => 'Ancho de escritorio';
+
+  @override
+  String get tillLayoutSizePhone => 'Ancho de teléfono';
+
+  @override
+  String get tillLayoutSizeTablet => 'Ancho de tableta';
+
+  @override
+  String get tillLayoutStale =>
+      'Alguien ha cambiado este diseño; vuelva a cargarlo.';
+
+  @override
+  String get tillLayoutStartFrom => 'Partir de una plantilla';
+
+  @override
+  String get tillLayoutStepDown => 'Mover hacia abajo';
+
+  @override
+  String get tillLayoutStepLeft => 'Mover a la izquierda';
+
+  @override
+  String get tillLayoutStepNarrower => 'Una columna más estrecha';
+
+  @override
+  String get tillLayoutStepRight => 'Mover a la derecha';
+
+  @override
+  String get tillLayoutStepShorter => 'Una fila más baja';
+
+  @override
+  String get tillLayoutStepTaller => 'Una fila más alta';
+
+  @override
+  String get tillLayoutStepUp => 'Mover hacia arriba';
+
+  @override
+  String get tillLayoutStepWider => 'Una columna más ancha';
+
+  @override
+  String get tillLayoutTemplateBakery =>
+      'Panadería y productos pesados: un teclado numérico junto a teclas grandes';
+
+  @override
+  String get tillLayoutTemplateCafe =>
+      'Cafetería y bar: páginas por categoría, sin campo de escaneo';
+
+  @override
+  String get tillLayoutTemplateHardware =>
+      'Ferretería y catálogo: primero campo de escaneo y teclado';
+
+  @override
+  String get tillLayoutTemplateRetail =>
+      'Comercio: campo de escaneo, cesta y teclas de pago';
+
+  @override
+  String get tillLayoutTemplateStudio =>
+      'Recepción de estudio: bonos y sesiones';
+
+  @override
+  String get tillLayoutTitle => 'Diseño de la caja';
+
+  @override
   String get tillLeaveBody =>
       'La venta se envió y no llegó la respuesta. Al salir queda en espera: abra la caja de nuevo y confírmela. No la registre otra vez.';
 

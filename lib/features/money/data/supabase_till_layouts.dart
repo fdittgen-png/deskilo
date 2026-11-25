@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4448 -- the till layouts on the server: the rows of `till_layouts` the person may read, and the two commands.
+import 'dart:convert';
+
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/codes/dk_code.dart';
 import '../domain/till_layout.dart';
 import '../domain/till_layout_port.dart';
 
@@ -42,9 +45,32 @@ class SupabaseTillLayouts implements TillLayoutPort {
 
   int _version(Object? answer) => JsonReader.of(answer, context: 'till_layout').intOrNull('version') ?? 0;
 
+  /// The server's refusal as the editor reads it: the code decides, the detail's reason is kept for an invalid layout.
+  Future<int> _command(Future<Object?> Function() call) async {
+    try {
+      return _version(await call());
+    } on PostgrestException catch (e) {
+      final reason = JsonReader.orEmpty(_details(e.details), context: 'till_layout refusal').stringOr('reason');
+      throw switch (e.code) {
+        DkCode.dkl10 => const TillLayoutRefused(TillLayoutRefusalKind.stale),
+        DkCode.dkl02 => TillLayoutRefused(TillLayoutRefusalKind.invalid, reason),
+        _ => TillLayoutRefused(TillLayoutRefusalKind.other, e.code ?? ''),
+      };
+    }
+  }
+
+  Object? _details(Object? details) {
+    if (details is! String) return details;
+    try {
+      return jsonDecode(details);
+    } on FormatException {
+      return null;   // a detail that is no JSON names no reason
+    }
+  }
+
   @override
   Future<int> save(String workspaceId, {required String requestId, required String tillId, required TillLayout layout, required int expectedVersion}) async =>
-      _version(await _client.rpc('till_layout_save_v1', params: {
+      _command(() => _client.rpc('till_layout_save_v1', params: {
         'p_workspace_id': workspaceId,
         'p_request_id': requestId,
         'p_till_id': tillId,
@@ -55,7 +81,7 @@ class SupabaseTillLayouts implements TillLayoutPort {
 
   @override
   Future<int> publish(String workspaceId, {required String requestId, required String tillId, required int expectedVersion}) async =>
-      _version(await _client.rpc('till_layout_publish_v1', params: {
+      _command(() => _client.rpc('till_layout_publish_v1', params: {
         'p_workspace_id': workspaceId,
         'p_request_id': requestId,
         'p_till_id': tillId,

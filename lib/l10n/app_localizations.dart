@@ -66692,6 +66692,318 @@ abstract class AppLocalizations {
   /// **'Items to ring up'**
   String get tillKeysTitle;
 
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Add a widget'**
+  String get tillLayoutAdd;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Which function?'**
+  String get tillLayoutChooseFunction;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Which item?'**
+  String get tillLayoutChooseItem;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Lay out this till'**
+  String get tillLayoutEdit;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Take a card'**
+  String get tillLayoutFnCard;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit return'**
+  String get tillLayoutFnDeposit;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Discount on a line'**
+  String get tillLayoutFnDiscount;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Open the drawer'**
+  String get tillLayoutFnDrawer;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Change a price'**
+  String get tillLayoutFnPrice;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity ×'**
+  String get tillLayoutFnQuantity;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Reprint the last receipt'**
+  String get tillLayoutFnReprint;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Void a line'**
+  String get tillLayoutFnVoid;
+
+  /// #4448 the till layout editor; the reason is a reference: the server's problem code, as it named it
+  ///
+  /// In en, this message translates to:
+  /// **'This layout cannot be saved: {reason}'**
+  String tillLayoutInvalid(String reason);
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Calculator'**
+  String get tillLayoutKindCalculator;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested cash notes'**
+  String get tillLayoutKindCashNotes;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Category key'**
+  String get tillLayoutKindCategory;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Customer and note'**
+  String get tillLayoutKindCustomer;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Function key'**
+  String get tillLayoutKindFunction;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Item key'**
+  String get tillLayoutKindItem;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Numeric keypad'**
+  String get tillLayoutKindKeypad;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Studio passes'**
+  String get tillLayoutKindPasses;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Total and change'**
+  String get tillLayoutKindTotal;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'A widget this app does not know'**
+  String get tillLayoutKindUnknown;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'There is no free place for this widget on this grid.'**
+  String get tillLayoutNoRoom;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Desk'**
+  String get tillLayoutPageDesk;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Drinks'**
+  String get tillLayoutPageDrinks;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get tillLayoutPageFood;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Sale'**
+  String get tillLayoutPageSale;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Publish to the till'**
+  String get tillLayoutPublish;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Published. The till takes it at its next session.'**
+  String get tillLayoutPublished;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Reload'**
+  String get tillLayoutReload;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this widget'**
+  String get tillLayoutRemoveCell;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Draft saved.'**
+  String get tillLayoutSaved;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Desk width'**
+  String get tillLayoutSizeDesk;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Phone width'**
+  String get tillLayoutSizePhone;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Tablet width'**
+  String get tillLayoutSizeTablet;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Someone changed this layout; reload it.'**
+  String get tillLayoutStale;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Start from a template'**
+  String get tillLayoutStartFrom;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get tillLayoutStepDown;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Move left'**
+  String get tillLayoutStepLeft;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'One column narrower'**
+  String get tillLayoutStepNarrower;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Move right'**
+  String get tillLayoutStepRight;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'One row shorter'**
+  String get tillLayoutStepShorter;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'One row taller'**
+  String get tillLayoutStepTaller;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get tillLayoutStepUp;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'One column wider'**
+  String get tillLayoutStepWider;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Bakery and weighed goods: a keypad beside large keys'**
+  String get tillLayoutTemplateBakery;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Café and bar: category pages, no scan field'**
+  String get tillLayoutTemplateCafe;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware and catalogue: scan field and keypad first'**
+  String get tillLayoutTemplateHardware;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Retail: scan field, basket and pay keys'**
+  String get tillLayoutTemplateRetail;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Studio desk: passes and sessions'**
+  String get tillLayoutTemplateStudio;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Till layout'**
+  String get tillLayoutTitle;
+
   /// #4366 the till: what leaving with a sale waiting to be confirmed does
   ///
   /// In en, this message translates to:

@@ -41914,6 +41914,171 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillKeysTitle => 'Artikel zum Kassieren';
 
   @override
+  String get tillLayoutAdd => 'Element hinzufügen';
+
+  @override
+  String get tillLayoutChooseFunction => 'Welche Funktion?';
+
+  @override
+  String get tillLayoutChooseItem => 'Welcher Artikel?';
+
+  @override
+  String get tillLayoutEdit => 'Diese Kasse gestalten';
+
+  @override
+  String get tillLayoutFnCard => 'Karte annehmen';
+
+  @override
+  String get tillLayoutFnDeposit => 'Pfandrückgabe';
+
+  @override
+  String get tillLayoutFnDiscount => 'Rabatt auf eine Zeile';
+
+  @override
+  String get tillLayoutFnDrawer => 'Schublade öffnen';
+
+  @override
+  String get tillLayoutFnPrice => 'Preis ändern';
+
+  @override
+  String get tillLayoutFnQuantity => 'Menge ×';
+
+  @override
+  String get tillLayoutFnReprint => 'Letzten Beleg nachdrucken';
+
+  @override
+  String get tillLayoutFnVoid => 'Zeile stornieren';
+
+  @override
+  String tillLayoutInvalid(String reason) {
+    return 'Dieses Layout kann nicht gespeichert werden: $reason';
+  }
+
+  @override
+  String get tillLayoutKindCalculator => 'Rechner';
+
+  @override
+  String get tillLayoutKindCashNotes => 'Vorgeschlagene Scheine';
+
+  @override
+  String get tillLayoutKindCategory => 'Kategorietaste';
+
+  @override
+  String get tillLayoutKindCustomer => 'Kunde und Notiz';
+
+  @override
+  String get tillLayoutKindFunction => 'Funktionstaste';
+
+  @override
+  String get tillLayoutKindItem => 'Artikeltaste';
+
+  @override
+  String get tillLayoutKindKeypad => 'Ziffernblock';
+
+  @override
+  String get tillLayoutKindPasses => 'Studiokarten';
+
+  @override
+  String get tillLayoutKindTotal => 'Summe und Rückgeld';
+
+  @override
+  String get tillLayoutKindUnknown => 'Ein Element, das diese App nicht kennt';
+
+  @override
+  String get tillLayoutNoRoom =>
+      'Auf diesem Raster ist kein freier Platz für dieses Element.';
+
+  @override
+  String get tillLayoutPageDesk => 'Theke';
+
+  @override
+  String get tillLayoutPageDrinks => 'Getränke';
+
+  @override
+  String get tillLayoutPageFood => 'Speisen';
+
+  @override
+  String get tillLayoutPageSale => 'Verkauf';
+
+  @override
+  String get tillLayoutPublish => 'An die Kasse veröffentlichen';
+
+  @override
+  String get tillLayoutPublished =>
+      'Veröffentlicht. Die Kasse übernimmt es mit der nächsten Sitzung.';
+
+  @override
+  String get tillLayoutReload => 'Neu laden';
+
+  @override
+  String get tillLayoutRemoveCell => 'Dieses Element entfernen';
+
+  @override
+  String get tillLayoutSaved => 'Entwurf gespeichert.';
+
+  @override
+  String get tillLayoutSizeDesk => 'Desktopbreite';
+
+  @override
+  String get tillLayoutSizePhone => 'Telefonbreite';
+
+  @override
+  String get tillLayoutSizeTablet => 'Tabletbreite';
+
+  @override
+  String get tillLayoutStale =>
+      'Jemand hat dieses Layout geändert; laden Sie es neu.';
+
+  @override
+  String get tillLayoutStartFrom => 'Mit einer Vorlage beginnen';
+
+  @override
+  String get tillLayoutStepDown => 'Nach unten';
+
+  @override
+  String get tillLayoutStepLeft => 'Nach links';
+
+  @override
+  String get tillLayoutStepNarrower => 'Eine Spalte schmaler';
+
+  @override
+  String get tillLayoutStepRight => 'Nach rechts';
+
+  @override
+  String get tillLayoutStepShorter => 'Eine Zeile niedriger';
+
+  @override
+  String get tillLayoutStepTaller => 'Eine Zeile höher';
+
+  @override
+  String get tillLayoutStepUp => 'Nach oben';
+
+  @override
+  String get tillLayoutStepWider => 'Eine Spalte breiter';
+
+  @override
+  String get tillLayoutTemplateBakery =>
+      'Bäckerei und Wiegeware: ein Ziffernblock neben großen Tasten';
+
+  @override
+  String get tillLayoutTemplateCafe =>
+      'Café und Bar: Kategorieseiten, kein Scanfeld';
+
+  @override
+  String get tillLayoutTemplateHardware =>
+      'Baumarkt und Katalog: zuerst Scanfeld und Ziffernblock';
+
+  @override
+  String get tillLayoutTemplateRetail =>
+      'Einzelhandel: Scanfeld, Warenkorb und Bezahltasten';
+
+  @override
+  String get tillLayoutTemplateStudio => 'Studiotheke: Karten und Sitzungen';
+
+  @override
+  String get tillLayoutTitle => 'Kassenlayout';
+
+  @override
   String get tillLeaveBody =>
       'Der Verkauf wurde gesendet, die Antwort blieb aus. Beim Verlassen bleibt er offen: Öffnen Sie die Kasse erneut und bestätigen Sie ihn. Buchen Sie ihn nicht noch einmal.';
 

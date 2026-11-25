@@ -5,6 +5,22 @@
 // problem (DKL02), as `till_layout_save_v1` and `till_layout_publish_v1` do.
 import 'till_layout.dart';
 
+/// Why a save or a publish was refused: another editor moved the version, or the layout breaks a rule (with the first
+/// problem the server named), or something else the editor only reports.
+enum TillLayoutRefusalKind { stale, invalid, other }
+
+class TillLayoutRefused implements Exception {
+  const TillLayoutRefused(this.kind, [this.reason = '']);
+
+  final TillLayoutRefusalKind kind;
+
+  /// The server's first problem (`outside_grid page 0 phone cell 1`), for an invalid layout.
+  final String reason;
+
+  @override
+  String toString() => 'TillLayoutRefused(${kind.name} $reason)';
+}
+
 abstract interface class TillLayoutPort {
   /// The draft of [tillId], or null when none is being edited.
   Future<TillLayout?> draft(String workspaceId, String tillId);

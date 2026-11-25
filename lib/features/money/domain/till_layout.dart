@@ -100,6 +100,10 @@ enum TillLayoutStatus {
 /// The parameter of an item key naming what it sells, and of a function key naming what it runs: the layout format's
 /// own words, the same in till_layout_problems.
 const _itemParam = 'item_id';
+const _labelParam = 'label';
+
+/// The parameters of an item key selling [itemId], shown as [label] until the till reads the item's own name.
+Map<String, Object?> tillItemKeyParams(String itemId, String label) => {_itemParam: itemId, _labelParam: label};
 const tillCellFunctionParam = 'function';
 
 /// One widget placed on a grid: its column and row (from 0), its span, and its parameters (an item key's item id, a
@@ -119,6 +123,9 @@ class TillCell {
 
   /// The item, service or variant an item key sells; null for any other kind.
   String? get itemId => kind == TillWidgetKind.itemKey ? params[_itemParam] as String? : null;
+
+  /// The label written on a key when it was placed, or empty.
+  String get label => '${params[_labelParam] ?? ''}';
 
   /// The function a function key runs; null for any other kind.
   TillFunction? get function => kind == TillWidgetKind.functionKey ? TillFunction.of('${params[tillCellFunctionParam] ?? ''}') : null;
