@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo/features/money/domain/previewed_document.dart';
 import 'package:deskilo/features/money/domain/standalone_invoice.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -190,16 +191,16 @@ class DemoStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
   }
 
   @override
-  Future<StandalonePreview> preview({
+  Future<PreviewedDocument> preview({
     required String workspaceId,
     required String draftId,
     required int revision,
   }) async {
     final d = _drafts[draftId];
-    if (d == null) return const StandalonePreview(missing: ['draft_unknown']);
-    if (d.revision != revision) return const StandalonePreview(missing: ['draft_stale']);
+    if (d == null) return const PreviewedDocument(missing: ['draft_unknown']);
+    if (d.revision != revision) return const PreviewedDocument(missing: ['draft_stale']);
     final built = _build(draftId);
-    return StandalonePreview.fromJson({
+    return PreviewedDocument.fromJson({
       'missing': built.missing,
       'preview': built.preview,
     });

@@ -5,6 +5,7 @@
 // is looked up by the attempt's own request id in the attempt's own workspace.
 import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/application/issue_standalone_invoice.dart';
+import 'package:deskilo/features/money/domain/previewed_document.dart';
 import 'package:deskilo/features/money/domain/standalone_invoice.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -34,7 +35,7 @@ class _Commands implements StandaloneInvoiceCommands {
       throw UnimplementedError();
 
   @override
-  Future<StandalonePreview> preview({
+  Future<PreviewedDocument> preview({
     required String workspaceId,
     required String draftId,
     required int revision,
@@ -164,7 +165,7 @@ void main() {
     });
 
     test('a preview names what is missing, and is never partial', () {
-      final p = StandalonePreview.fromJson({
+      final p = PreviewedDocument.fromJson({
         'missing': ['line_1_quantity', 'due_on'],
         'preview': null,
       });
@@ -174,7 +175,7 @@ void main() {
     });
 
     test('a preview that can be issued carries the server\'s lines, exact quantities and totals', () {
-      final p = StandalonePreview.fromJson({
+      final p = PreviewedDocument.fromJson({
         'missing': <Object?>[],
         'preview': {
           'total_cents': 14400,

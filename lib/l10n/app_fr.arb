@@ -20898,6 +20898,10 @@
   "@standaloneFactTotal": {
     "description": "#4165 standalone invoice composer: standaloneFactTotal"
   },
+  "standaloneFactTotalMismatch": "les lignes ne correspondent pas au total accepté",
+  "@standaloneFactTotalMismatch": {
+    "description": "#4405 previewed document: standaloneFactTotalMismatch"
+  },
   "standaloneFactUnknownSubject": "le client",
   "@standaloneFactUnknownSubject": {
     "description": "#4165 standalone invoice composer: standaloneFactUnknownSubject"

@@ -36173,6 +36173,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get standaloneFactTotal => 'eine Summe über null';
 
   @override
+  String get standaloneFactTotalMismatch =>
+      'die Positionen ergeben nicht die angenommene Summe';
+
+  @override
   String get standaloneFactUnknownSubject => 'der Kunde';
 
   @override

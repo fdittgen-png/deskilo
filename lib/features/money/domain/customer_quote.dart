@@ -5,11 +5,13 @@
 // issuer's recorded decision and the one conversion into an invoice. Nothing
 // here computes an amount: a draft has no total, a sent revision carries the
 // totals the real issuer froze, and expiry is the server's derived answer.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/failure/app_failure.dart';
 import 'customer_quote_lines.dart';
+import 'previewed_document.dart';
 import 'standalone_invoice.dart';
 
 /// Where a quote stands. A quote with anything sent is never deleted.
@@ -61,6 +63,7 @@ class QuoteRevision {
     required this.contentDigest,
     required this.superseded,
     this.amounts = const [],
+    this.frozen = const [],
   });
 
   factory QuoteRevision.fromJson(JsonReader r) => QuoteRevision(
@@ -105,6 +108,9 @@ class QuoteRevision {
 
   /// What each line of a sent revision comes to (same order as [lines]).
   final List<QuoteLineAmounts> amounts;
+
+  /// The lines as the server froze them (a sent revision; none for a draft).
+  final List<InvoiceLine> frozen;
 
   /// Null for a draft: its amounts exist only once the revision is sent.
   final QuoteTotals? totals;
@@ -396,6 +402,26 @@ class QuoteConversionPrep {
   final String reviewDigest;
 
   bool get issuable => missing.isEmpty;
+
+  /// The invoice this conversion would make, as one previewed document: the
+  /// lines the customer accepted ([accepted], frozen), their per-rate tax, and
+  /// the total the issuer would now freeze. No new RPC: the lines are the
+  /// accepted revision's own. The frozen lines must add up to the total that
+  /// was accepted; if they do not, the document is refused with
+  /// [totalMismatchKey], never shown with one of the two.
+  PreviewedDocument documentOf(QuoteRevision accepted) {
+    final lines = accepted.frozen;
+    final disagrees = lines.isNotEmpty && grossOfLines(lines) != acceptedTotalCents;
+    final keys = [...missing, if (disagrees && !missing.contains(totalMismatchKey)) totalMismatchKey];
+    if (keys.isNotEmpty) return PreviewedDocument(missing: keys, currency: currency);
+    return PreviewedDocument(
+      missing: const [],
+      lines: lines,
+      totalCents: wouldBeTotalCents ?? acceptedTotalCents,
+      currency: currency,
+      vatTotals: vatTotalsOfLines(lines),
+    );
+  }
 }
 
 /// The one initial invoice a quote became.

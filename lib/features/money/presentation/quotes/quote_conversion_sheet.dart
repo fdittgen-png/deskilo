@@ -20,9 +20,11 @@ import '../../../../core/time/calendar_days.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/customer_quote.dart';
+import '../../domain/previewed_document.dart';
 import '../../providers/business_day_provider.dart';
 import '../../providers/customer_quote_providers.dart';
 import '../../providers/standalone_invoice_providers.dart';
+import '../standalone/previewed_document_card.dart';
 import '../standalone/standalone_missing_text.dart';
 import 'quote_text.dart';
 
@@ -52,6 +54,7 @@ class _Conversion {
     required this.dueOn,
     this.busy = false,
     this.prep,
+    this.document,
     this.reviewed = false,
     this.said,
     this.requestId,
@@ -62,6 +65,9 @@ class _Conversion {
   final DateTime dueOn;
   final bool busy;
   final QuoteConversionPrep? prep;
+
+  /// What [prep] comes to as a previewed document: the accepted lines, their tax and the total, or what refuses it.
+  final PreviewedDocument? document;
   final bool reviewed;
   final String? said;
 
@@ -78,6 +84,7 @@ class _Conversion {
   _Conversion copy({
     bool? busy,
     QuoteConversionPrep? Function()? prep,
+    PreviewedDocument? Function()? document,
     bool? reviewed,
     String? Function()? said,
     String? Function()? requestId,
@@ -87,6 +94,7 @@ class _Conversion {
     dueOn: dueOn,
     busy: busy ?? this.busy,
     prep: prep == null ? this.prep : prep(),
+    document: document == null ? this.document : document(),
     reviewed: reviewed ?? this.reviewed,
     said: said == null ? this.said : said(),
     requestId: requestId == null ? this.requestId : requestId(),
@@ -95,7 +103,7 @@ class _Conversion {
 
   bool get canIssue {
     final p = prep;
-    return p != null && p.issuable && (!p.contextChanged || reviewed) && !busy;
+    return p != null && p.issuable && (document?.missing.isEmpty ?? false) && (!p.contextChanged || reviewed) && !busy;
   }
 }
 
@@ -149,6 +157,12 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
 
   void _set(_Conversion next) => _state.value = next;
 
+  /// The revision the customer accepted: the lines the invoice is made of.
+  QuoteRevision get _accepted {
+    final accepted = widget.quote.decision?.revision;
+    return widget.quote.revisions.firstWhere((r) => r.revision == accepted, orElse: () => widget.quote.revisions.last);
+  }
+
   /// A change of date makes the checked invoice stale: it is checked again.
   void _edit(_Conversion next) => _set(next);
 
@@ -167,6 +181,7 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
       CommandDone(:final value) => s.copy(
         busy: false,
         prep: () => value,
+        document: () => value.documentOf(_accepted),
         reviewed: false,
         requestId: newRequestId,
       ),
@@ -197,7 +212,7 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
       CommandDone(:final value) => s.copy(busy: false, converted: value),
       // the invoice moved under the review: it is checked again, never issued unseen
       CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)) when refusal.kind == QuoteRefusalKind.needsReview =>
-        s.copy(busy: false, prep: () => null, reviewed: false, said: () => quoteRefusalText(l10n, refusal)),
+        s.copy(busy: false, prep: () => null, document: () => null, reviewed: false, said: () => quoteRefusalText(l10n, refusal)),
       CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)) => s.copy(busy: false, said: () => quoteRefusalText(l10n, refusal)),
       _ => s.copy(busy: false, said: () => l10n.quoteUnreached),
     });
@@ -269,12 +284,16 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
           l10n.quoteConvertWouldBe(money.formatMinor(would)),
           key: const ValueKey('quote-convert-would-be'),
         ),
-      if (!prep.issuable) ...[
+      if (s.document case final document? when document.missing.isNotEmpty) ...[
         const FormGap(),
         Text(
-          l10n.quoteConvertMissing(standaloneMissingList(l10n, prep.missing)),
+          l10n.quoteConvertMissing(standaloneMissingList(l10n, document.missing)),
           key: const ValueKey('quote-convert-missing'),
         ),
+      ],
+      if (s.document case final document? when document.ready && !prep.contextChanged) ...[
+        const FormGap(),
+        PreviewedDocumentCard(key: const ValueKey('quote-convert-document'), preview: document),
       ],
       if (prep.contextChanged) ...[
         const FormGap(),

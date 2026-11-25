@@ -4,6 +4,7 @@
 // standalone draft (stable keys, 0820): a line's own facts, the draft's, and
 // every essential the existing invoice refusals already name.
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/previewed_document.dart';
 import '../widgets/invoice_missing_sales_tax.dart';
 
 String _text(AppLocalizations l, String key) {
@@ -52,6 +53,7 @@ String _draftText(AppLocalizations l, String key) => switch (key) {
     'lines_too_many' => l.standaloneFactTooManyLines,
     'total_amount' => l.standaloneFactAmount,
     'total_not_positive' => l.standaloneFactTotal,
+    totalMismatchKey => l.standaloneFactTotalMismatch,
     'currency' => l.standaloneFactCurrency,
     'unknown_subject' => l.standaloneFactUnknownSubject,
     'stock_sale_place' => l.standaloneFactSalePlace,

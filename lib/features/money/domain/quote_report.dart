@@ -8,11 +8,13 @@
 // never worked out again here.
 library;
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
 import 'customer_quote.dart';
 import 'customer_quote_lines.dart';
+import 'previewed_document.dart';
 import 'standalone_invoice.dart';
 
 /// How the document writes an amount (minor units), a day, an exact decimal
@@ -86,7 +88,7 @@ Map<String, Object?> quoteReportData(
     'net_total': format.money(net),
     'vat_total': format.money(tax),
     'has_vat': tax != 0,
-    'vat': _vatRows(amounts, format),
+    'vat': _vatRows(revision.frozen, format),
     'total': format.money(total),
     'note': revision.notes,
   };
@@ -107,26 +109,16 @@ Map<String, Object?> _row(
 };
 
 /// The sums per rate: what the lines freeze, grouped the way the invoice's
-/// breakdown is (the highest rate first).
+/// breakdown is (the highest rate first) -- the one function the conversion
+/// preview uses too.
 List<Map<String, Object?>> _vatRows(
-  List<QuoteLineAmounts> amounts,
+  List<InvoiceLine> frozen,
   QuoteFormats format,
-) {
-  final byRate = <double, ({int net, int tax})>{};
-  for (final a in amounts) {
-    final before = byRate[a.vatPercent] ?? (net: 0, tax: 0);
-    byRate[a.vatPercent] = (
-      net: before.net + a.netCents,
-      tax: before.tax + a.taxCents,
-    );
-  }
-  final rates = byRate.keys.toList()..sort((a, b) => b.compareTo(a));
-  return [
-    for (final rate in rates)
-      {
-        'rate': format.percent(rate),
-        'net': format.money(byRate[rate]!.net),
-        'amount': format.money(byRate[rate]!.tax),
-      },
-  ];
-}
+) => [
+  for (final total in vatTotalsOfLines(frozen))
+    {
+      'rate': format.percent(total.percent),
+      'net': format.money(total.netCents),
+      'amount': format.money(total.vatCents),
+    },
+];

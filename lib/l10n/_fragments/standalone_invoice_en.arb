@@ -193,6 +193,10 @@
   "@standaloneFactTotal": {
     "description": "#4165 standalone invoice composer: standaloneFactTotal"
   },
+  "standaloneFactTotalMismatch": "the lines do not add up to the accepted total",
+  "@standaloneFactTotalMismatch": {
+    "description": "#4405 previewed document: standaloneFactTotalMismatch"
+  },
   "standaloneFactCurrency": "the business’s currency",
   "@standaloneFactCurrency": {
     "description": "#4165 standalone invoice composer: standaloneFactCurrency"
