@@ -81,39 +81,52 @@ class VatPercentPicker extends ConsumerWidget {
   final bool enabled;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) => switch (ref.watch(vatRatesProvider)) {
+    AsyncData(:final value) => _VatChoice(
+      rates: [
+        for (final r in value) if (r.active) r,
+      ],
+      current: this.value,
+      onChanged: enabled ? onChanged : null,
+      label: label,
+    ),
+    AsyncError(:final error) => ReadFailureBanner(
+      key: const ValueKey('vat-rates-failed'),
+      error: error,
+      onRetry: () => ref.invalidate(vatRatesProvider),
+    ),
+    _ => const LinearProgressIndicator(),
+  };
+}
+
+/// The choice once the rates are read: none, each rate, and a percent that is no rate's, shown as it is and flagged.
+class _VatChoice extends StatelessWidget {
+  const _VatChoice({required this.rates, required this.current, required this.onChanged, required this.label});
+
+  final List<VatRate> rates;
+  final double? current;
+  final ValueChanged<double?>? onChanged;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
     final l = context.l10n;
     final format = appFormatOf(context);
-    return switch (ref.watch(vatRatesProvider)) {
-      AsyncData(:final value) => Builder(
-        builder: (context) {
-          final rates = [
-            for (final r in value) if (r.active) r,
-          ];
-          final listed = vatPercentIsListed(rates, this.value);
-          final current = this.value;
-          // the percent each choice stands for, so none is parsed back from its text
-          final percents = {for (final r in rates) '${r.percent}': r.percent};
-          return AppDropdownField<String>(
-            key: ValueKey('vat-$current'),
-            label: label,
-            value: current == null ? _noVat : '$current',
-            error: listed ? null : l.masterDataUnlisted,
-            items: [
-              if (!listed) ('$current', format.ratePercent(current!)),
-              (_noVat, l.masterDataNoVat),
-              for (final r in rates) ('${r.percent}', '${r.label} (${format.ratePercent(r.percent)})'),
-            ],
-            onChanged: enabled ? (v) => onChanged(v == null || v == _noVat ? null : (percents[v] ?? current)) : null,
-          );
-        },
-      ),
-      AsyncError(:final error) => ReadFailureBanner(
-        key: const ValueKey('vat-rates-failed'),
-        error: error,
-        onRetry: () => ref.invalidate(vatRatesProvider),
-      ),
-      _ => const LinearProgressIndicator(),
-    };
+    final listed = vatPercentIsListed(rates, current);
+    // the percent each choice stands for, so none is parsed back from its text
+    final percents = {for (final r in rates) '${r.percent}': r.percent};
+    final picked = onChanged;
+    return AppDropdownField<String>(
+      key: ValueKey('vat-$current'),
+      label: label,
+      value: current == null ? _noVat : '$current',
+      error: listed ? null : l.masterDataUnlisted,
+      items: [
+        if (!listed) ('$current', format.ratePercent(current!)),
+        (_noVat, l.masterDataNoVat),
+        for (final r in rates) ('${r.percent}', '${r.label} (${format.ratePercent(r.percent)})'),
+      ],
+      onChanged: picked == null ? null : (v) => picked(percents[v]),
+    );
   }
 }

@@ -4680,6 +4680,7 @@ const Set<String> uiKeys = {
   'vat-law-percent',
   'vat-rate',
   'vat-rate-field',
+  'vat-rates-failed',
   'vat-recap-csv',
   'vat-regime-hint',
   'vat-register-347-cancel',
