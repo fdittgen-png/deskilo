@@ -103,6 +103,7 @@ end
 $patch$;
 
 -- ── 4. the answer of 0960 narrows to the business's units ───────────────
+-- restates 0960
 create or replace function public.unit_is_pickable(p_workspace uuid, p_unit text, p_item uuid default null)
 returns boolean language sql stable security definer set search_path = public as $fn$
   select btrim(coalesce(p_unit, '')) = ''

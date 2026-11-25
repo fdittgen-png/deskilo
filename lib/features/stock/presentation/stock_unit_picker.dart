@@ -17,14 +17,14 @@ import '../providers/workspace_units_providers.dart';
 
 /// The units a unit input of [workspaceId] offers: the business's own that are not archived while the units feature is on, the
 /// six of before while it is off.
-List<WorkspaceUnit> stockUnitsOffered(WidgetRef ref, String workspaceId) {
+List<WorkspaceUnit> _unitsOffered(WidgetRef ref, String workspaceId) {
   final on = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.unitsOfMeasure);
   final all = on ? (ref.watch(workspaceUnitListProvider(workspaceId)).value ?? builtInUnits) : builtInUnits;
   return pickableUnits(all, unitsOn: on);
 }
 
 /// Whether [code] (empty: none) is one of [units].
-bool stockUnitIsListed(List<WorkspaceUnit> units, String code) => code.isEmpty || units.any((u) => u.code == code);
+bool _isListed(List<WorkspaceUnit> units, String code) => code.isEmpty || units.any((u) => u.code == code);
 
 /// The codes a unit input of [workspaceId] offers, read when a sheet opens, for the sheet's own check before it saves: a unit that is not
 /// among them (a name typed before) cannot be saved. A business whose units cannot be read is offered the six of before.
@@ -60,8 +60,8 @@ class StockUnitPicker extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final units = stockUnitsOffered(ref, workspaceId);
-    final listed = stockUnitIsListed(units, value);
+    final units = _unitsOffered(ref, workspaceId);
+    final listed = _isListed(units, value);
     final scope = fieldKey == null ? null : FormErrorsScope.maybeOf(context);
     return AppDropdownField<String>(
       key: ValueKey('stock-unit-pick-$value'),
