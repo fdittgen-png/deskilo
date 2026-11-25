@@ -894,4 +894,35 @@ grep -qx "replayed 2" "$scratch/contender22" || { echo "::error::the second devi
 expect "(S) each offline sale is one receipt" "$(q "select count(*) from public.counter_receipts where till_session_id = '$ssession' and state = 'finalized' and source_kind = 'offline_till'")" "2"
 expect "(S) and one received row" "$(q "select count(*) from public.counter_offline_sales where till_session_id = '$ssession' and state = 'accepted'")" "2"
 
+# (S2) two DIFFERENT devices of that session each send their own sale number 1 at once (#4451): the second waits for the session's lock,
+# then both are accepted as receipts of their own (the receipt source names the device); sent again, both replay and nothing is deducted twice.
+sdevA=$(uid); sdevB=$(uid); sreqA=$(uid); sreqB=$(uid)
+smk() { echo "[{\"seq\": 1, \"device_id\": \"$1\", \"request_id\": \"$2\", \"occurred_at\": \"$(date -u -v-90M +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -d '90 minutes ago' +%Y-%m-%dT%H:%M:%SZ)\", \"cash_given_minor\": 120, \"change_minor\": 0, \"body\": {\"lines\": [{\"item_id\": \"$sitem\", \"quantity\": \"1\", \"unit_price\": \"1.20\"}]}}]"; }
+sdA=$(smk "$sdevA" "$sreqA"); sdB=$(smk "$sdevB" "$sreqB")
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder23" 2>&1 <<SQL &
+begin;
+$as_owner
+select 'sent ' || (public.counter_offline_sync_v1('$ws', '$ssession', '$ssince', '$sdA'::jsonb) ->> 'accepted');
+reset role;
+\\! touch '$scratch/ready23'
+select pg_sleep(4);
+commit;
+SQL
+holder23=$!
+wait_marker "$scratch/ready23" "$scratch/holder23"
+PGAPPNAME="transfer-race-offline-devices" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender23" 2>&1 <<SQL &
+begin;
+$as_owner
+select 'sent ' || (public.counter_offline_sync_v1('$ws', '$ssession', '$ssince', '$sdB'::jsonb) ->> 'accepted');
+commit;
+SQL
+contender23=$!
+wait_lock "transfer-race-offline-devices"
+wait "$holder23" || { echo "::error::device A failed: $(tr '\n' ' ' < "$scratch/holder23")" >&2; exit 1; }
+wait "$contender23" || { echo "::error::device B failed: $(tr '\n' ' ' < "$scratch/contender23")" >&2; exit 1; }
+grep -qx "sent 1" "$scratch/holder23" || { echo "::error::device A's sale 1 was not accepted: $(tr '\n' ' ' < "$scratch/holder23")" >&2; exit 1; }
+grep -qx "sent 1" "$scratch/contender23" || { echo "::error::device B's sale 1 was not accepted beside device A's: $(tr '\n' ' ' < "$scratch/contender23")" >&2; exit 1; }
+expect "(S2) two devices, sale number 1 each: two more receipts" "$(q "select count(*) from public.counter_receipts where till_session_id = '$ssession' and state = 'finalized' and source_kind = 'offline_till'")" "4"
+expect "(S2) each with a source of its own" "$(q "select count(distinct source_ref) from public.counter_receipts where till_session_id = '$ssession' and source_kind = 'offline_till'")" "4"
+
 echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders; two put-aways cannot over-allocate a line; two sessions crossing a reorder point raise one alert"
