@@ -95,6 +95,33 @@ void main() {
     );
   });
 
+  test('a frozen line the package cannot interpret is a read failure, never a line worth nothing', () {
+    final revision = ((_sentOnTheServer['revisions']! as List).single as Map).cast<String, Object?>();
+    final line = Map<String, Object?>.of(((revision['lines']! as List).single as Map).cast<String, Object?>());
+    final commercial = Map<String, Object?>.of((line['commercial']! as Map).cast<String, Object?>())..['version'] = 9;
+    Object? read(Map<String, Object?> frozen) => CustomerQuote.fromJson({
+      ..._sentOnTheServer,
+      'revisions': [
+        {
+          ...revision,
+          'lines': [frozen],
+        },
+      ],
+    });
+
+    expect(
+      () => read({...line, 'commercial': commercial}),
+      throwsA(isA<JsonShapeException>().having((e) => e.key, 'key', 'lines[0].commercial')),
+    );
+    expect(
+      () => read({...line, 'amount_cents': 500}..remove('commercial')),
+      throwsA(isA<JsonShapeException>()),
+      reason: 'amounts with no frozen facts is not a text line',
+    );
+    final text = (read({'kind': 'text', 'label': 'Thank you', 'quantity': 1}) as CustomerQuote).current!;
+    expect(text.lines.single.description, 'Thank you');
+  });
+
   test('a draft revision keeps the lines as they were entered', () {
     final draft = {
       ..._sentOnTheServer,
