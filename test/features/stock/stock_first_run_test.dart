@@ -21,6 +21,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
+import '../../helpers/screens/stock_items_app.dart';
 
 final _en = AppLocalizationsEn();
 
@@ -58,9 +59,12 @@ class _Registry implements StockRegistry {
 }
 
 Future<void> _open(WidgetTester tester, Widget home, _Stock stock, Size size, {Set<WorkspacePermission>? held, bool noPlaces = false}) async {
+  // #4480 -- the items list opens its items at their addresses: it is pumped under the app's item routes.
+  final items = home is StockItemsScreen;
   await pumpApp(
     tester,
-    home,
+    items ? null : home,
+    router: items ? stockItemsRouter(list: home) : null,
     size: size,
     overrides: [
       ...standardTestOverrides(),

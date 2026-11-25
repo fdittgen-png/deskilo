@@ -8,43 +8,45 @@
 // retail price, last known cost (or "cost not shown"), home address and what is on hand, filtered
 // by a place or by "no home place", read in bounded pages. A barcode typed or scanned into the
 // search opens its item.
+// #4480 -- a row reads at a glance (the name, one line of facts, a badge for what the item needs) and opens the
+// item at its own address, `/stock/items/<id>`: beside the list from the expanded window class, a page of its own
+// below it. The item's editors are reached from its page, one worded action per section; "no home place" is a chip.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/list_detail_route.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/scan/scan_scope.dart';
+import '../../../core/storage/pane_width_store.dart';
 import '../../../core/text/collation.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/adaptive/page_measures.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/form_kit.dart';
+import '../../../core/ui/kit/filter_chips.dart';
+import '../../../core/ui/kit/kit_metrics.dart';
+import '../../../core/ui/kit/list_detail_scaffold.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../money/domain/service_item.dart';
-import '../../money/presentation/widgets/service_sheet.dart';
-import '../../money/providers/money_providers.dart';
-import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/stock_walk.dart';
 import '../domain/stock_code_resolver.dart';
 import '../domain/stock_config.dart';
+import '../domain/stock_item_attention.dart';
 import '../domain/stock_registry.dart';
-import '../domain/stock_tags.dart';
+import '../providers/stock_item_providers.dart';
 import '../providers/stock_providers.dart';
-import 'item_group_assign_dialog.dart';
-import 'stock_home_sheet.dart';
 import 'stock_item_add.dart';
-import 'stock_item_editor.dart';
-import 'stock_mapping_editor.dart';
+import 'stock_item_page.dart';
+import 'stock_item_row.dart';
 import 'stock_page_shell.dart';
 import 'stock_read_failed.dart';
 import 'stock_screen_scan.dart';
-import 'stock_tags_dialog.dart';
-import 'stock_variants_editor.dart';
 
 class StockItemsScreen extends ConsumerWidget {
   const StockItemsScreen({super.key, this.addFirst = false});
@@ -59,25 +61,50 @@ class StockItemsScreen extends ConsumerWidget {
       title: l10n.stockItemsTitle,
       anchor: HelpAnchor.moneyStockRegistry,
       helpTopic: l10n.permModuleStock,
-      reading: true,
-      body: (context, ref, workspaceId) => Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: Text(l10n.stockItemsIntro, style: Theme.of(context).textTheme.bodyMedium),
-          ),
-          Expanded(child: _Items(workspaceId: workspaceId, addFirst: addFirst)),
-        ],
+      body: (context, ref, workspaceId) => OpenRecord(
+        listPath: Routes.stockItems,
+        builder: (context, id) {
+          final open = stockItemBesideList(context) ? id : null;
+          return ListDetailScaffold(
+            id: 'stock-items',
+            paneStore: ref.watch(paneWidthStoreProvider),
+            selected: open,
+            onClose: () => closeRecord(context, Routes.stockItems),
+            detail: (context, id) => StockItemPage(
+              key: ValueKey('stock-item-panel-$id'),
+              itemId: id,
+              onClose: () => closeRecord(context, Routes.stockItems),
+            ),
+            // the list keeps its reading width, beside the item or alone
+            list: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: AppSpacing.mdAll,
+                      child: Text(l10n.stockItemsIntro, style: Theme.of(context).textTheme.bodyMedium),
+                    ),
+                    Expanded(child: _Items(workspaceId: workspaceId, addFirst: addFirst, open: open)),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
 }
 
 class _Items extends ConsumerStatefulWidget {
-  const _Items({required this.workspaceId, this.addFirst = false});
+  const _Items({required this.workspaceId, this.addFirst = false, this.open});
 
   final String workspaceId;
   final bool addFirst;
+
+  /// The item open beside the list, marked in it.
+  final String? open;
 
   @override
   ConsumerState<_Items> createState() => _ItemsState();
@@ -124,7 +151,7 @@ class _ItemsState extends ConsumerState<_Items> {
   }
 
   /// A search submitted that is a whole barcode, or shows nothing, is a code typed by hand: it goes the way a scanner's goes.
-  void _submitted(String text, bool mayManage) {
+  void _submitted(String text) {
     final code = text.trim();
     if (code.isEmpty) return;
     final separator = ref.read(stockAddressSeparatorProvider);
@@ -132,44 +159,99 @@ class _ItemsState extends ConsumerState<_Items> {
     // A list that still shows rows is a search by name or address; only a whole barcode among them, or nothing shown at
     // all, is a code typed by hand.
     if (shown.isNotEmpty && !shown.any((r) => r.barcode == code)) return;
-    unawaited(_fromScanner(code, mayManage));
+    unawaited(_fromScanner(code));
   }
 
-  /// A scanner's code (#4359): an item opens, a place filters the list by it.
-  Future<void> _fromScanner(String code, bool mayManage) async {
+  /// A scanner's code (#4359): an item opens its page (#4480), a place filters the list by it.
+  Future<void> _fromScanner(String code) async {
     final answer = await StockScreenScan(ref).resolve(context, widget.workspaceId, code);
     if (answer == null || !mounted) return;
     final item = answer.item;
     final place = answer.place;
     if (answer.kind == ScannedKind.place && place != null && !_noHome) {
       setState(() => _place = place.id);
-    } else if (item != null && item.id.isNotEmpty && mayManage) {
-      final lotsOn = ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockLots);
-      await showStockItemEditor(
-        context,
-        ref.read(stockConfigCommandsProvider),
-        workspaceId: widget.workspaceId,
-        itemId: item.id,
-        itemName: item.name,
-        options: (lots: lotsOn, keep: false, groups: itemGroupsIfOn(ref)),
-      );
+    } else if (item != null && item.id.isNotEmpty) {
+      openRecord(context, Routes.stockItems, item.id);
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ScanScope(
+    enabled: StockScreenScan(ref).on,
+    onScan: (code) => unawaited(_fromScanner(code)),
+    child: _content(context),
+  );
+
+  /// Search, the place, and "all" or "without a home place" above the list.
+  Widget _filters(BuildContext context, List<StockPlaceConfig> places, String separator) {
+    final l10n = context.l10n;
     final mayManage = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
-    return ScanScope(
-      enabled: StockScreenScan(ref).on,
-      onScan: (code) => unawaited(_fromScanner(code, mayManage)),
-      child: _content(context, mayManage),
+    return Padding(
+      padding: AppSpacing.mdH,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (mayManage) ...[
+            FilledButton.icon(
+              key: const ValueKey('stock-item-add'),
+              icon: const Icon(Icons.add),
+              label: Text(l10n.stockItemAddButton),
+              onPressed: () => unawaited(_add()),
+            ),
+            const FormGap.small(),
+          ],
+          AppTextField(
+            key: const ValueKey('stock-registry-search'),
+            controller: _search,
+            fieldKey: 'search',
+            label: l10n.stockRegistrySearch,
+            onChanged: (v) => setState(() => _query = v),
+            onSubmitted: _submitted,
+          ),
+          const FormGap.small(),
+          Wrap(
+            spacing: AppSpacing.md,
+            runSpacing: AppSpacing.sm,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: KitMetrics.dropdownMaxWidth),
+                child: AppDropdownField<String?>(
+                  key: const ValueKey('stock-registry-place'),
+                  label: l10n.stockRegistryPlaceFilter,
+                  value: _place,
+                  items: [
+                    (null, l10n.stockRegistryAllPlaces),
+                    for (final p in [...places.where((p) => !p.virtual)]..sort((a, b) => a.addressPath.compareTo(b.addressPath)))
+                      (p.id, p.addressPath.split(stockAddressJoint).join(separator)),
+                  ],
+                  onChanged: _noHome ? null : (v) => setState(() => _place = v),
+                ),
+              ),
+              FilterChips<bool>(
+                options: [
+                  (value: false, label: l10n.stockItemFilterAll, key: const ValueKey('stock-registry-all')),
+                  (value: true, label: l10n.stockItemFilterNoHome, key: const ValueKey('stock-registry-no-home')),
+                ],
+                selected: _noHome,
+                onSelected: (v) => setState(() {
+                  _noHome = v;
+                  if (v) _place = null;
+                }),
+              ),
+            ],
+          ),
+          const FormGap.small(),
+        ],
+      ),
     );
   }
 
-  Widget _content(BuildContext context, bool mayManage) {
+  Widget _content(BuildContext context) {
     final l10n = context.l10n;
     final separator = ref.watch(stockAddressSeparatorProvider);
     final places = ref.watch(stockPlaceConfigsProvider(widget.workspaceId)).value ?? const <StockPlaceConfig>[]; // empty-ok: the places only feed a filter and a choice
+    final low = ref.watch(stockLowKeysProvider(widget.workspaceId));
     final walk = ref.watch(stockRegistryWalkProvider(_filter));
     if (walk.error != null) {
       return Center(
@@ -182,75 +264,26 @@ class _ItemsState extends ConsumerState<_Items> {
       );
     }
     final shown = [for (final r in walk.rows) if (_matches(r, separator)) r];
-    final seen = <String>{};
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-          child: Column(
-            children: [
-              if (mayManage)
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: FilledButton.icon(
-                    key: const ValueKey('stock-item-add'),
-                    icon: const Icon(Icons.add),
-                    label: Text(l10n.stockItemAddButton),
-                    onPressed: () => unawaited(_add()),
-                  ),
-                ),
-              const FormGap.small(),
-              AppTextField(
-                key: const ValueKey('stock-registry-search'),
-                controller: _search,
-                fieldKey: 'search',
-                label: l10n.stockRegistrySearch,
-                onChanged: (v) => setState(() => _query = v),
-                onSubmitted: (v) => _submitted(v, mayManage),
-              ),
-              const FormGap.small(),
-              AppDropdownField<String?>(
-                key: const ValueKey('stock-registry-place'),
-                label: l10n.stockRegistryPlaceFilter,
-                value: _place,
-                items: [
-                  (null, l10n.stockRegistryAllPlaces),
-                  for (final p in [...places.where((p) => !p.virtual)]..sort((a, b) => a.addressPath.compareTo(b.addressPath)))
-                    (p.id, p.addressPath.split(stockAddressJoint).join(separator)),
-                ],
-                onChanged: _noHome
-                    ? null
-                    : (v) => setState(() => _place = v),
-              ),
-              SwitchListTile(
-                key: const ValueKey('stock-registry-no-home'),
-                contentPadding: EdgeInsets.zero,
-                title: Text(l10n.stockRegistryNoHomeFilter),
-                value: _noHome,
-                onChanged: (v) => setState(() {
-                  _noHome = v;
-                  if (v) _place = null;
-                }),
-              ),
-            ],
-          ),
-        ),
+        _filters(context, places, separator),
         Expanded(
           child: walk.loading && walk.rows.isEmpty
               ? const LoadingView()
               : shown.isEmpty
               ? EmptyState(key: const ValueKey('stock-items-empty'), icon: Icons.inventory_2_outlined, title: l10n.stockItemsEmpty)
               : ListView(
+                  key: const ValueKey('stock-items-list'),
                   children: [
                     for (final r in shown)
-                      _RegistryRow(
-                        workspaceId: widget.workspaceId,
+                      StockItemRow(
                         row: r,
-                        // the item's own tools sit on its first row only
-                        showTools: seen.add(r.itemId),
-                        places: places,
+                        attention: stockAttentionOf(r, low),
                         separator: separator,
-                        onHomeChanged: _reload,
+                        selected: r.itemId == widget.open,
+                        onOpen: () => widget.open == null
+                            ? openRecord(context, Routes.stockItems, r.itemId)
+                            : moveToRecord(context, Routes.stockItems, r.itemId),
                       ),
                     if (!walk.complete && walk.next != null)
                       TextButton(
@@ -264,159 +297,6 @@ class _ItemsState extends ConsumerState<_Items> {
                 ),
         ),
       ],
-    );
-  }
-}
-
-class _RegistryRow extends ConsumerWidget {
-  const _RegistryRow({
-    required this.workspaceId,
-    required this.row,
-    required this.showTools,
-    required this.places,
-    required this.separator,
-    required this.onHomeChanged,
-  });
-
-  final String workspaceId;
-  final StockRegistryRow row;
-  final bool showTools;
-  final List<StockPlaceConfig> places;
-  final String separator;
-  final VoidCallback onHomeChanged;
-
-  String _details(BuildContext context) {
-    final l10n = context.l10n;
-    final format = appFormatOf(context);
-    final cost = !row.costVisible
-        ? l10n.stockRegistryCostHidden
-        : row.costMinor == null
-        ? l10n.stockRegistryCostUnknown
-        : l10n.stockRegistryCost(format.money(row.costMinor!));
-    return [
-      if (row.barcode != null) row.barcode!,
-      if (row.unit.isNotEmpty) row.unit,
-      if (row.priceCents != null) l10n.stockRegistryPrice(format.money(row.priceCents!)),
-      cost,
-      if (row.homeAddressPath == null) l10n.stockRegistryNoHome,
-      if (row.homeAddressPath != null)
-        l10n.stockRegistryHome(row.homeAddressPath!.split(stockAddressJoint).join(separator)),
-      l10n.stockRegistryOnHand(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(row.onHand), row.unit)),
-    ].join(' · ');
-  }
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
-    // #4169: the editors are for a person who may manage the stock; the server asks the same.
-    final mayManage = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
-    final lotsOn = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockLots);
-    // #4470: the price is the service's own; the server lets the owner and `manageServices` write it, apart from the stock.
-    final mayEditService = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageServices);
-    final services = ref.watch(allServicesProvider).value ?? const <ServiceItem>[]; // empty-ok: no service read, no Edit shown
-    final service = mayEditService ? services.where((s) => s.id == row.itemId).firstOrNull : null;
-    return ListTile(
-      key: ValueKey('stock-item-${row.key}'),
-      title: Text(row.label),
-      subtitle: Text(_details(context)),
-      trailing: !mayManage && service == null
-          ? null
-          : Wrap(
-              children: [
-                if (service != null)
-                  IconButton(
-                    key: ValueKey('stock-item-edit-${row.itemId}'),
-                    icon: const Icon(Icons.edit_outlined),
-                    tooltip: l10n.stockItemEditDetails,
-                    onPressed: () async {
-                      await ServiceEditor.open(
-                        context,
-                        ref,
-                        workspaceId: workspaceId,
-                        service: service,
-                        categories: [for (final s in services) s.category],
-                      );
-                      onHomeChanged();
-                    },
-                  ),
-                if (mayManage) ...[
-                    IconButton(
-                      key: ValueKey('stock-home-${row.key}'),
-                      icon: const Icon(Icons.place_outlined),
-                      tooltip: l10n.stockRegistryHomePlace,
-                      onPressed: () async {
-                        final saved = await showStockHomeSheet(
-                          context,
-                          ref.read(stockRegistryProvider),
-                          workspaceId: workspaceId,
-                          row: row,
-                          places: places,
-                          separator: separator,
-                        );
-                        if (saved) onHomeChanged();
-                      },
-                    ),
-                    if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockItemGroups))
-                      IconButton(
-                        key: ValueKey('stock-item-group-${row.itemId}'),
-                        icon: const Icon(Icons.folder_copy_outlined),
-                        tooltip: l10n.itemGroupAssignOpen,
-                        onPressed: () => showItemGroupAssign(context, workspaceId: workspaceId, itemId: row.itemId, itemName: row.itemName),
-                      ),
-                    if (ref.watch(stockTagsProvider))
-                      IconButton(
-                        key: ValueKey('stock-tags-${row.itemId}'),
-                        icon: const Icon(Icons.nfc),
-                        tooltip: l10n.stockTagsOpen,
-                        onPressed: () => showStockTagsDialog(
-                          context,
-                          workspaceId: workspaceId,
-                          owner: TagOwner.item(row.itemId),
-                          name: row.itemName,
-                        ),
-                      ),
-                    if (showTools) ...[
-                      IconButton(
-                        key: ValueKey('stock-edit-item-${row.itemId}'),
-                        icon: const Icon(Icons.tune),
-                        tooltip: l10n.stockEditItem,
-                        onPressed: () => showStockItemEditor(
-                          context,
-                          ref.read(stockConfigCommandsProvider),
-                          workspaceId: workspaceId,
-                          itemId: row.itemId,
-                          itemName: row.itemName,
-                          options: (lots: lotsOn, keep: false, groups: itemGroupsIfOn(ref)),
-                        ),
-                      ),
-                      IconButton(
-                        key: ValueKey('stock-edit-variants-${row.itemId}'),
-                        icon: const Icon(Icons.style_outlined),
-                        tooltip: l10n.stockVariantsEdit,
-                        onPressed: () => showStockVariantsEditor(
-                          context,
-                          ref.read(stockConfigCommandsProvider),
-                          workspaceId: workspaceId,
-                          itemId: row.itemId,
-                          itemName: row.itemName,
-                        ),
-                      ),
-                      IconButton(
-                        key: ValueKey('stock-edit-mappings-${row.itemId}'),
-                        icon: const Icon(Icons.link),
-                        tooltip: l10n.stockMappingsEdit,
-                        onPressed: () => showStockMappings(
-                          context,
-                          ref.read(stockConfigCommandsProvider),
-                          workspaceId: workspaceId,
-                          itemId: row.itemId,
-                          itemName: row.itemName,
-                        ),
-                      ),
-                    ],
-                ],
-              ],
-            ),
     );
   }
 }

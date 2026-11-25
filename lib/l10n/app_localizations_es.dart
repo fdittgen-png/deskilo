@@ -37152,7 +37152,58 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockItemAddTitle => 'Añadir un artículo';
 
   @override
+  String get stockItemAttentionLow => 'Existencias bajas';
+
+  @override
+  String get stockItemAttentionNoPlace => 'Sin ubicación';
+
+  @override
+  String get stockItemAttentionNoPrice => 'Sin precio';
+
+  @override
   String get stockItemEditDetails => 'Editar nombre, precio e IVA';
+
+  @override
+  String get stockItemEditGroup => 'Cambiar de grupo';
+
+  @override
+  String get stockItemEditHome => 'Cambiar la ubicación habitual';
+
+  @override
+  String get stockItemEditSettings => 'Editar unidades, códigos y seguimiento';
+
+  @override
+  String get stockItemEditSuppliers => 'Editar artículos del proveedor';
+
+  @override
+  String get stockItemEditTags => 'Editar etiquetas';
+
+  @override
+  String get stockItemEditVariants => 'Editar variantes';
+
+  @override
+  String get stockItemFactBarcode => 'Código de barras';
+
+  @override
+  String get stockItemFactCost => 'Último coste conocido';
+
+  @override
+  String get stockItemFactGroup => 'Grupo';
+
+  @override
+  String get stockItemFactPrice => 'Precio';
+
+  @override
+  String get stockItemFactUnit => 'Unidad';
+
+  @override
+  String get stockItemFactVat => 'IVA';
+
+  @override
+  String get stockItemFilterAll => 'Todos los artículos';
+
+  @override
+  String get stockItemFilterNoHome => 'Sin ubicación habitual';
 
   @override
   String get stockItemNewBarcode => 'Código de barras (opcional)';
@@ -37185,6 +37236,40 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockItemNewUnit => 'Contado en';
+
+  @override
+  String get stockItemNoGroup => 'En ningún grupo';
+
+  @override
+  String get stockItemNoSuppliers =>
+      'Ningún artículo de proveedor designa aún este artículo.';
+
+  @override
+  String get stockItemNoVariants => 'Este artículo no tiene variantes.';
+
+  @override
+  String get stockItemNothingOnHand => 'No hay nada en existencias.';
+
+  @override
+  String get stockItemPlacesTitle => 'Dónde está';
+
+  @override
+  String get stockItemSectionGroupTags => 'Grupo y etiquetas';
+
+  @override
+  String get stockItemSectionOverview => 'Resumen';
+
+  @override
+  String get stockItemSectionStock => 'Existencias';
+
+  @override
+  String get stockItemSectionSuppliers => 'Artículos del proveedor';
+
+  @override
+  String get stockItemSectionVariants => 'Variantes';
+
+  @override
+  String get stockItemSeeWhere => 'Ver todas las ubicaciones';
 
   @override
   String get stockItemsEmpty =>

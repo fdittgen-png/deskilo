@@ -36847,7 +36847,58 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockItemAddTitle => 'Add an item';
 
   @override
+  String get stockItemAttentionLow => 'Low stock';
+
+  @override
+  String get stockItemAttentionNoPlace => 'No place';
+
+  @override
+  String get stockItemAttentionNoPrice => 'No price';
+
+  @override
   String get stockItemEditDetails => 'Edit name, price and VAT';
+
+  @override
+  String get stockItemEditGroup => 'Change group';
+
+  @override
+  String get stockItemEditHome => 'Change home place';
+
+  @override
+  String get stockItemEditSettings => 'Edit units, codes and tracking';
+
+  @override
+  String get stockItemEditSuppliers => 'Edit supplier items';
+
+  @override
+  String get stockItemEditTags => 'Edit tags';
+
+  @override
+  String get stockItemEditVariants => 'Edit variants';
+
+  @override
+  String get stockItemFactBarcode => 'Barcode';
+
+  @override
+  String get stockItemFactCost => 'Last known cost';
+
+  @override
+  String get stockItemFactGroup => 'Group';
+
+  @override
+  String get stockItemFactPrice => 'Price';
+
+  @override
+  String get stockItemFactUnit => 'Unit';
+
+  @override
+  String get stockItemFactVat => 'VAT';
+
+  @override
+  String get stockItemFilterAll => 'All items';
+
+  @override
+  String get stockItemFilterNoHome => 'Without a home place';
 
   @override
   String get stockItemNewBarcode => 'Barcode (optional)';
@@ -36880,6 +36931,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockItemNewUnit => 'Counted in';
+
+  @override
+  String get stockItemNoGroup => 'In no group';
+
+  @override
+  String get stockItemNoSuppliers => 'No supplier article names this item yet.';
+
+  @override
+  String get stockItemNoVariants => 'This item has no variants.';
+
+  @override
+  String get stockItemNothingOnHand => 'None of it is in stock.';
+
+  @override
+  String get stockItemPlacesTitle => 'Where it is';
+
+  @override
+  String get stockItemSectionGroupTags => 'Group and tags';
+
+  @override
+  String get stockItemSectionOverview => 'Overview';
+
+  @override
+  String get stockItemSectionStock => 'Stock';
+
+  @override
+  String get stockItemSectionSuppliers => 'Supplier items';
+
+  @override
+  String get stockItemSectionVariants => 'Variants';
+
+  @override
+  String get stockItemSeeWhere => 'See every place';
 
   @override
   String get stockItemsEmpty =>
