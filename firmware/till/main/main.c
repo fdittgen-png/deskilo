@@ -111,23 +111,29 @@ static void set_phase(int phase, const char *status) {
     xSemaphoreGive(s_lock);
 }
 
-// Asks Deskilo to finish the attempt kept in flash, as often as it takes: the same request, the same payload. Only a proven
-// answer moves the sale on; anything else keeps it uncertain and the next customer waits.
-static void settle(const pending_t *p) {
-    char number[32] = "", why[96] = "";
-    pay_result_t r = api_finalize_cash(p, number, sizeof number, why, sizeof why);
-    if (r == PAY_UNCERTAIN && strstr(why, "401")) {   // the session ran out: sign in again and ask the same thing
+static int save_attempt(const void *a) { return pending_save((const pending_t *)a) == ESP_OK ? 0 : 1; }
+
+// Sends the attempt; a session that ran out (401) is renewed and the SAME request asked once more.
+static pay_result_t send_attempt(const void *a, char *number, int ncap, char *why, int cap) {
+    const pending_t *p = (const pending_t *)a;
+    pay_result_t r = api_finalize_cash(p, number, ncap, why, cap);
+    if (r == PAY_UNCERTAIN && strstr(why, "401")) {
         char w2[96];
-        if (api_sign_in(w2, sizeof w2)) r = api_finalize_cash(p, number, sizeof number, why, sizeof why);
+        if (api_sign_in(w2, sizeof w2)) r = api_finalize_cash(p, number, ncap, why, cap);
     }
+    return r;
+}
+
+// What an answer does to the sale: only a proven one moves it on; anything else keeps it uncertain and the next customer waits.
+static void conclude(const pending_t *p, pay_result_t r, const char *number, const char *why) {
     if (r == PAY_DONE) {
         paid_t paid = {.total_minor = p->total_minor, .given_minor = p->given_minor};
         snprintf(paid.number, sizeof paid.number, "%s", number);
         snprintf(paid.currency, sizeof paid.currency, "%s", p->currency);
-        if (pending_settle(&paid) != ESP_OK) trace("paid %s, but the answer is not kept yet", number);   // replay finds it again
+        if (pending_settle(&paid) != ESP_OK) trace("paid %s, but the answer is not kept yet", number);   // a replay finds it again
         char ch[40], st[120];
         money(ch, sizeof ch, p->given_minor - p->total_minor, p->currency);
-        snprintf(st, sizeof st, "Paid %s  -  change %s", number, ch);
+        snprintf(st, sizeof st, "Paid %.30s  -  change %s", number, ch);
         trace("paid %s: %lld, given %lld", number, (long long)p->total_minor, (long long)p->given_minor);
         xSemaphoreTake(s_lock, portMAX_DELAY);
         snprintf(S.paid_number, sizeof S.paid_number, "%s", number);
@@ -138,13 +144,23 @@ static void settle(const pending_t *p) {
     } else if (r == PAY_REFUSED) {
         pending_drop();
         fail("pay", why);
-        char st[96];
+        char st[120];
         snprintf(st, sizeof st, "Not paid: %.80s", why);
         set_phase(PH_SELL, st);
+    } else if (r == PAY_NOT_STARTED) {
+        trace("payment not started: %s", why);
+        set_phase(PH_SELL, "Payment not started: storage failed");
     } else {
         trace("payment result unknown: %s (request %.8s)", why, p->request_id);
         set_phase(PH_UNCERTAIN, "Result unknown: asking Deskilo again ...");
     }
+}
+
+// Asks Deskilo again about the attempt kept in flash: the same request, the same payload.
+static void settle(const pending_t *p) {
+    char number[32] = "", why[96] = "";
+    pay_result_t r = send_attempt(p, number, sizeof number, why, sizeof why);
+    conclude(p, r, number, why);
 }
 
 static void net_task(void *arg) {
@@ -240,18 +256,16 @@ static void net_task(void *arg) {
             snprintf(p.currency, sizeof p.currency, "%s", S.roll.currency);
             xSemaphoreGive(s_lock);
             // the server's total, unchanged since it was shown, and enough cash: else nothing is sent
-            if (p.given_minor < p.total_minor || api_draft_total() != p.total_minor) { set_phase(PH_CASH, "Not enough cash"); continue; }
+            int64_t change;
+            if (!pay_cash_enough(p.total_minor, p.given_minor, &change) || api_draft_total() != p.total_minor) { set_phase(PH_CASH, "Not enough cash"); continue; }
             api_new_id(p.request_id);
             snprintf(p.workspace, sizeof p.workspace, "%.36s", g_cfg.workspace);
             snprintf(p.server, sizeof p.server, "%.95s", g_cfg.url);
-            if (pending_save(&p) != ESP_OK) {   // no record, no request
-                trace("payment not started: the attempt could not be stored");
-                set_phase(PH_SELL, "Payment not started: storage failed");
-                continue;
-            }
             trace("paying %.8s rev %d: %lld cash, given %lld (request %.8s)", p.receipt_id, p.revision, (long long)p.total_minor, (long long)p.given_minor, p.request_id);
             set_phase(PH_PAYING, "Paying ...");
-            settle(&p);
+            char number[32] = "", pwhy[96] = "";
+            pay_result_t r = pay_run(&p, save_attempt, send_attempt, number, sizeof number, pwhy, sizeof pwhy);   // kept first, then sent
+            conclude(&p, r, number, pwhy);
             continue;
         }
         if (c.kind == CMD_RETRY) continue;

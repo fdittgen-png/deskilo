@@ -165,31 +165,7 @@ void api_new_id(char *out) {
 }
 
 static void copy(char *d, size_t cap, const cJSON *s);
-// Amounts come as a decimal string ("1000") on the wire (E01): read with checked integer conversion, never through a float.
-// An integer JSON number is accepted only while it is exact (|n| < 2^53); anything else is refused.
-bool minor_from_json(const void *item, int64_t *out) {
-    const cJSON *v = (const cJSON *)item;
-    if (cJSON_IsString(v)) {
-        const char *t = v->valuestring;
-        // digits only, an optional leading minus, no leading zero, no sign on zero: what strtoll would also take (spaces, +) is refused
-        if (!t[0] || (t[0] == '0' && t[1]) || (t[0] == '-' && (t[1] == '0' || !t[1]))) return false;
-        for (const char *c = t[0] == '-' ? t + 1 : t; *c; c++) if (*c < '0' || *c > '9') return false;
-        errno = 0;
-        char *end;
-        long long n = strtoll(t, &end, 10);
-        if (errno || *end) return false;
-        *out = n;
-        return true;
-    }
-    if (cJSON_IsNumber(v)) {
-        double d = v->valuedouble;
-        if (d != (double)(long long)d || d > 9007199254740991.0 || d < -9007199254740991.0) return false;
-        *out = (long long)d;
-        return true;
-    }
-    return false;
-}
-static int minor_of(const cJSON *v) { int64_t n = 0; return minor_from_json(v, &n) && n >= INT32_MIN && n <= INT32_MAX ? (int)n : 0; }
+static int minor_of(const cJSON *v) { int64_t n = 0; return pay_minor_from_json(v, &n) && n >= INT32_MIN && n <= INT32_MAX ? (int)n : 0; }
 static int64_t s_draft_total;
 int64_t api_draft_total(void) { return s_draft_total; }
 void api_reset_draft(void) { s_receipt[0] = 0; s_revision = 0; }
@@ -229,7 +205,7 @@ bool api_draft(const basket_line_t *b, int n, roll_t *out, char *why, int cap) {
     const cJSON *tot = cJSON_GetObjectItem(j, "totals");
     const cJSON *gross = tot ? cJSON_GetObjectItem(tot, "gross_minor") : NULL;
     out->total_minor = minor_of(gross);
-    if (!minor_from_json(gross, &s_draft_total)) s_draft_total = -1;   // an unreadable total is never payable
+    if (!pay_minor_from_json(gross, &s_draft_total)) s_draft_total = -1;   // an unreadable total is never payable
     copy(out->currency, sizeof out->currency, tot ? cJSON_GetObjectItem(tot, "currency") : NULL);
     const cJSON *ls = cJSON_GetObjectItem(j, "lines"), *l;
     cJSON_ArrayForEach(l, ls) {
@@ -303,24 +279,5 @@ pay_result_t api_finalize_cash(const pending_t *p, char *number, int number_cap,
              "\"p_tenders\":[{\"kind\":\"cash\",\"amount_minor\":%lld}]}",
              p->workspace, p->request_id, p->receipt_id, p->revision, (long long)p->total_minor);
     int st = http(HTTP_METHOD_POST, "/rest/v1/rpc/counter_receipt_finalize_v1", body, true);
-    cJSON *j = cJSON_Parse(s_resp);
-    pay_result_t r = PAY_UNCERTAIN;
-    if (st == 200 && j) {
-        const cJSON *n = cJSON_GetObjectItem(j, "number"), *rid = cJSON_GetObjectItem(j, "receipt_id");
-        // a success is proven only by the receipt it names: the one this attempt paid, with its number
-        if (cJSON_IsString(n) && n->valuestring[0] && (!rid || (cJSON_IsString(rid) && !strcmp(rid->valuestring, p->receipt_id)))) {
-            snprintf(number, number_cap, "%s", n->valuestring);
-            r = PAY_DONE;
-        } else snprintf(why, cap, "answer without a receipt number");
-    } else if (st >= 400 && st < 500 && j) {
-        // a business refusal (DK...) is raised before the server commits: the transaction is rolled back, nothing was paid.
-        // A 401 (the session ran out) or any other 4xx without such a code proves nothing.
-        const cJSON *code = cJSON_GetObjectItem(j, "code"), *msg = cJSON_GetObjectItem(j, "message");
-        if (cJSON_IsString(code) && !strncmp(code->valuestring, "DK", 2)) {
-            snprintf(why, cap, "%s %.70s", code->valuestring, cJSON_IsString(msg) ? msg->valuestring : "");
-            r = PAY_REFUSED;
-        } else snprintf(why, cap, "no proof (%d)", st);
-    } else snprintf(why, cap, st < 0 ? "no answer" : "no proof (%d)", st);
-    cJSON_Delete(j);
-    return r;
+    return pay_classify(st, st > 0 ? s_resp : NULL, p->receipt_id, number, number_cap, why, cap);
 }
