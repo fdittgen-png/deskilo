@@ -65,8 +65,9 @@ class StockItemView extends ConsumerWidget {
 
   String get _name => service?.name ?? _main.itemName;
 
-  void _saved(BuildContext context, WidgetRef ref) =>
-      reloadStockRegistry(context, ref);
+  void _saved(BuildContext context, WidgetRef ref) {
+    if (context.mounted) reloadStockRegistry(ref);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

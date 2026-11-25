@@ -36,6 +36,7 @@ class StockPageShell extends ConsumerWidget {
     this.bottom,
     this.floatingActionButton,
     this.reading = false,
+    this.impliesBack = true,
   });
 
   final String title;
@@ -63,6 +64,10 @@ class StockPageShell extends ConsumerWidget {
   /// The body is drawn in the reading column, centred.
   final bool reading;
 
+  /// Whether the bar shows the way back of a pushed page; false for a page standing beside its list, which has its
+  /// own close (#4480).
+  final bool impliesBack;
+
   /// The page's content for the open business, built with this page's [WidgetRef] (what the body watches is the
   /// page's own dependency, not the screen's around it).
   final Widget Function(BuildContext context, WidgetRef ref, String workspaceId)
@@ -87,6 +92,7 @@ class StockPageShell extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(title),
+        automaticallyImplyLeading: impliesBack,
         bottom: bottom,
         actions: [
           if (anchor case final a?) HelpDot(helpTopic ?? title, anchor: a),

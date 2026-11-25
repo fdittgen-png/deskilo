@@ -25,9 +25,8 @@ import 'stock_tags_dialog.dart';
 import 'stock_variants_editor.dart';
 
 /// Reads the registry again, from its first page: the list and the item's page show what was saved.
-void reloadStockRegistry(BuildContext context, WidgetRef ref) {
-  if (context.mounted) ref.invalidate(stockRegistryWalkProvider);
-}
+void reloadStockRegistry(WidgetRef ref) =>
+    ref.invalidate(stockRegistryWalkProvider);
 
 /// The item's group (where the business keeps groups) and its tags (where it keeps them).
 class StockItemGroupSection extends ConsumerWidget {
@@ -173,7 +172,7 @@ class StockItemVariantsSection extends ConsumerWidget {
               );
               if (!saved || !context.mounted) return;
               ref.invalidate(stockItemVariantsProvider(key));
-              reloadStockRegistry(context, ref);
+              reloadStockRegistry(ref);
             },
           ),
       ],

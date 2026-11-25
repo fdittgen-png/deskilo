@@ -4232,6 +4232,7 @@ const Set<String> uiKeys = {
   'stock-receive-submit',
   'stock-receive-to',
   'stock-registry-all',
+  'stock-registry-home-filter',
   'stock-registry-more',
   'stock-registry-no-home',
   'stock-registry-place',

@@ -12,9 +12,6 @@ import '../domain/stock_reorder.dart';
 import '../domain/stock_variants.dart';
 import 'stock_providers.dart';
 
-/// One item of one business.
-typedef StockItemKey = ({String workspaceId, String itemId});
-
 /// The registry rows (by `StockRegistryRow.key`) at or below a reorder point, where the business keeps reorder
 /// points; none otherwise, and none while the list is unread.
 final stockLowKeysProvider = Provider.autoDispose.family<Set<String>, String>((
@@ -34,7 +31,7 @@ final stockLowKeysProvider = Provider.autoDispose.family<Set<String>, String>((
 
 /// The name of the group the item is in; null when it is in none.
 final stockItemGroupNameProvider = FutureProvider.autoDispose
-    .family<String?, StockItemKey>((ref, key) async {
+    .family<String?, ({String workspaceId, String itemId})>((ref, key) async {
       final groups = ref.watch(itemGroupsProvider);
       final effective = await groups.effective(key.workspaceId, key.itemId);
       final id = effective.groupId;
@@ -45,7 +42,7 @@ final stockItemGroupNameProvider = FutureProvider.autoDispose
 
 /// The item's variants in use, as its variants editor saved them.
 final stockItemVariantsProvider = FutureProvider.autoDispose
-    .family<List<StockVariant>, StockItemKey>(
+    .family<List<StockVariant>, ({String workspaceId, String itemId})>(
       (ref, key) =>
           StockReads(ref.watch(stockConfigCommandsProvider))
               .activeVariants(key.workspaceId, key.itemId),
@@ -53,7 +50,7 @@ final stockItemVariantsProvider = FutureProvider.autoDispose
 
 /// The supplier articles of the item, with the suppliers they name.
 final stockItemMappingsProvider = FutureProvider.autoDispose
-    .family<StockMappingsRead, StockItemKey>(
+    .family<StockMappingsRead, ({String workspaceId, String itemId})>(
       (ref, key) =>
           StockReads(ref.watch(stockConfigCommandsProvider))
               .mappingsOf(key.workspaceId, key.itemId),

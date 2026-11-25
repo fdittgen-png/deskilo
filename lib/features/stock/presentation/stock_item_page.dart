@@ -12,18 +12,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/navigation/list_detail_route.dart';
-import '../../../core/ui/adaptive/page_measures.dart';
 import '../../../core/ui/adaptive/window_class.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../money/domain/service_item.dart';
 import '../../money/providers/money_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/stock_walk.dart';
 import '../domain/stock_registry.dart';
 import '../providers/stock_providers.dart';
 import 'stock_item_view.dart';
+import 'stock_page_shell.dart';
 import 'stock_read_failed.dart';
 
 /// Whether the window holds an item beside the items list: from the expanded window class (a tablet on its side,
@@ -54,86 +54,99 @@ class StockItemPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    final filter = (
-      workspaceId: workspaceId ?? '',
-      placeId: null,
-      noHome: false,
-    );
-    final walk = workspaceId == null
-        ? null
-        : ref.watch(stockRegistryWalkProvider(filter));
-    final rows = walk == null
+    final rows = workspaceId == null
         ? const <StockRegistryRow>[]
-        : [
-            for (final r in walk.rows)
-              if (r.itemId == itemId) r,
-          ];
-    final services =
-        ref.watch(allServicesProvider).value ?? const <ServiceItem>[]; // empty-ok: an unread service leaves the registry's name and price, and no Edit
-    final service = services.where((s) => s.id == itemId).firstOrNull;
-    Widget body;
-    if (walk == null) {
-      body = const LoadingView();
-    } else {
-      final notifier = ref.read(stockRegistryWalkProvider(filter).notifier);
-      // The registry is read by name, so an item's rows stand together: read on while none is found yet, or while the
-      // last row read is still this item's (its next variant may be on the next page).
-      if (walk.error == null &&
-          walk.canLoadMore &&
-          (rows.isEmpty || walk.rows.last.itemId == itemId)) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (context.mounted) unawaited(notifier.loadMore());
-        });
-      }
-      body = rows.isNotEmpty
-          ? StockItemView(
-              workspaceId: workspaceId!,
-              itemId: itemId,
-              rows: rows,
-              service: service,
-              services: services,
-            )
-          : walk.error != null
-          ? Center(
-              child: StockReadFailed(
-                keyName: 'stock-item',
-                error: walk.error!,
-                onRetry: walk.rows.isEmpty
-                    ? () => unawaited(notifier.reload())
-                    : () => unawaited(notifier.loadMore()),
-              ),
-            )
-          : walk.loading || walk.canLoadMore
-          ? const LoadingView()
-          : Center(
-              child: Text(
-                l10n.searchRecordUnreadable,
-                key: const ValueKey('stock-item-unreadable'),
-              ),
-            );
-    }
-    return Scaffold(
+        : _rowsOf(ref.watch(stockRegistryWalkProvider(_registry(workspaceId))));
+    final service = _serviceOf(ref);
+    return StockPageShell(
       key: ValueKey('stock-item-page-$itemId'),
-      appBar: AppBar(
-        title: Text(
+      title:
           service?.name ?? rows.firstOrNull?.itemName ?? l10n.stockItemsTitle,
-          overflow: TextOverflow.ellipsis,
+      anchor: HelpAnchor.moneyStockItem,
+      helpTopic: l10n.stockItemsTitle,
+      reading: true,
+      impliesBack: onClose == null,
+      actions: (context, _) => [
+        if (onClose case final close?)
+          CloseButton(
+            key: const ValueKey('stock-item-close'),
+            onPressed: close,
+          ),
+      ],
+      body: (context, ref, workspaceId) =>
+          _ItemBody(workspaceId: workspaceId, itemId: itemId),
+    );
+  }
+
+  ServiceItem? _serviceOf(WidgetRef ref) {
+    final services = ref.watch(allServicesProvider).value;
+    return services?.where((s) => s.id == itemId).firstOrNull;
+  }
+
+  List<StockRegistryRow> _rowsOf(StockWalkState<StockRegistryRow> walk) => [
+    for (final r in walk.rows)
+      if (r.itemId == itemId) r,
+  ];
+}
+
+/// The registry the item is read from: the list's own walk, unfiltered.
+({String workspaceId, String? placeId, bool noHome}) _registry(
+  String workspaceId,
+) => (workspaceId: workspaceId, placeId: null, noHome: false);
+
+/// The item's sections once its rows are read; the progress, the failed read or "cannot be opened" before.
+class _ItemBody extends ConsumerWidget {
+  const _ItemBody({required this.workspaceId, required this.itemId});
+
+  final String workspaceId;
+  final String itemId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final walk = ref.watch(stockRegistryWalkProvider(_registry(workspaceId)));
+    final notifier = ref.read(
+      stockRegistryWalkProvider(_registry(workspaceId)).notifier,
+    );
+    final rows = [
+      for (final r in walk.rows)
+        if (r.itemId == itemId) r,
+    ];
+    // The registry is read by name, so an item's rows stand together: read on while none is found yet, or while the
+    // last row read is still this item's (its next variant may be on the next page).
+    final readOn = rows.isEmpty || walk.rows.last.itemId == itemId;
+    if (walk.error == null && walk.canLoadMore && readOn) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (context.mounted) unawaited(notifier.loadMore());
+      });
+    }
+    if (rows.isNotEmpty) {
+      final services =
+          ref.watch(allServicesProvider).value ??
+          const <ServiceItem>[]; // empty-ok: no Edit then
+      return StockItemView(
+        workspaceId: workspaceId,
+        itemId: itemId,
+        rows: rows,
+        service: services.where((s) => s.id == itemId).firstOrNull,
+        services: services,
+      );
+    }
+    if (walk.error case final error?) {
+      return Center(
+        child: StockReadFailed(
+          keyName: 'stock-item',
+          error: error,
+          onRetry: () => unawaited(
+            walk.rows.isEmpty ? notifier.reload() : notifier.loadMore(),
+          ),
         ),
-        automaticallyImplyLeading: onClose == null,
-        actions: [
-          HelpDot(l10n.stockItemsTitle, anchor: HelpAnchor.moneyStockItem),
-          if (onClose case final close?)
-            CloseButton(
-              key: const ValueKey('stock-item-close'),
-              onPressed: close,
-            ),
-        ],
-      ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
-          child: body,
-        ),
+      );
+    }
+    if (walk.loading || walk.canLoadMore) return const LoadingView();
+    return Center(
+      child: Text(
+        context.l10n.searchRecordUnreadable,
+        key: const ValueKey('stock-item-unreadable'),
       ),
     );
   }

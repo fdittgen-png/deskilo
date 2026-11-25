@@ -229,6 +229,7 @@ class _ItemsState extends ConsumerState<_Items> {
                 ),
               ),
               FilterChips<bool>(
+                key: const ValueKey('stock-registry-home-filter'),
                 options: [
                   (value: false, label: l10n.stockItemFilterAll, key: const ValueKey('stock-registry-all')),
                   (value: true, label: l10n.stockItemFilterNoHome, key: const ValueKey('stock-registry-no-home')),
