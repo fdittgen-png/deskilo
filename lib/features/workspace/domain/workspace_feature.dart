@@ -446,9 +446,7 @@ enum WorkspaceFeature {
   stockExpiryReport,
   stockHandlingUnits,
   counterOfflineCash,
-  /// #4442 the units of measure of a business and their conversions (feature_manifest_stock.dart).
   unitsOfMeasure,
-  /// #4448 the till layout editor (feature_manifest_stock.dart).
   counterTillLayout;
 
   /// The key of this feature inside `workspaces.feature_flags`.
