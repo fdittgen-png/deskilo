@@ -19,9 +19,10 @@ void main() {
   // 35→38 (2026-11-13): #3824 viewStock, manageStock, approveStockAdjustments.
   // 38→39 (2026-11-20): #4164 manageBillingCustomers — the billing customers.
   // 39→40 (2026-11-22): #4295 countStock — the blind count of a cycle count task.
-  test('the catalog carries 40 permissions, wire names equal to Dart names',
+  // 40→41 (2026-11-25): #4448 configureTill — lay out the tills.
+  test('the catalog carries 41 permissions, wire names equal to Dart names',
       () {
-    expect(WorkspacePermission.values, hasLength(40));
+    expect(WorkspacePermission.values, hasLength(41));
     for (final p in WorkspacePermission.values) {
       expect(p.wireName, p.name);
     }

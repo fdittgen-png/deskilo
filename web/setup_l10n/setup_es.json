@@ -893,5 +893,10 @@
  "optPerHourDefault": "{n} por hora (por defecto)",
  "optKilobytes": "{n} KB",
  "optKilobytesDefault": "{n} KB (por defecto)",
- "optReportsOff": "Ninguno (informes de error desactivados)"
+ "optReportsOff": "Ninguno (informes de error desactivados)",
+ "counterLayoutMaxCells": "Tamaño del diseño de caja",
+ "counterLayoutMaxCellsHint": "El máximo de celdas de un diseño de caja. Se ajusta en la configuración de la aplicación.",
+ "counterLayoutCashierReorder": "Los cajeros reordenan las teclas",
+ "counterLayoutCashierReorderHint": "Un cajero puede reordenar las teclas de una caja en su dispositivo. Se ajusta en la configuración de la aplicación.",
+ "optCells": "{n} celdas"
 }

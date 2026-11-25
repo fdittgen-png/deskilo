@@ -11953,6 +11953,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Counter receipts';
 
   @override
+  String get featureCounterTillLayoutDesc =>
+      'Lay out each till for your trade: which keys sit where, its pages, and tools beside the basket such as a numeric keypad, a calculator or a scan field. Start from a template, publish it, and a till takes it at its next session. Off, every till keeps its generated keys.';
+
+  @override
+  String get featureCounterTillLayoutTitle => 'Till layouts';
+
+  @override
   String get featureCounterTillSessionsDesc =>
       'Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed.';
 
@@ -25546,6 +25553,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Approve the adjustment a stock count proposes.';
 
   @override
+  String get permAllowsConfigureTill =>
+      'Build, publish, copy and reset the layout of a till: its keys, pages and tools. Cashiers use the published layout without this right.';
+
+  @override
   String get permAllowsCountStock =>
       'Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.';
 
@@ -25694,6 +25705,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get permApproveStockAdjustments => 'Approve stock adjustments';
+
+  @override
+  String get permConfigureTill => 'Lay out the tills';
 
   @override
   String get permCountStock => 'Count stock, blind';
@@ -32489,6 +32503,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.';
 
   @override
+  String get settingHintCounterLayoutCashierReorder =>
+      'A cashier may reorder a till\'s keys on their own device without changing the published layout.';
+
+  @override
+  String get settingHintCounterLayoutMaxCells =>
+      'The most cells one till layout may hold, over all its pages and sizes. A larger layout is refused when it is saved.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.';
 
@@ -32928,6 +32950,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Fiscal rules for counter sales';
+
+  @override
+  String get settingLabelCounterLayoutCashierReorder =>
+      'Cashiers reorder the keys';
+
+  @override
+  String get settingLabelCounterLayoutMaxCells => 'Till layout size';
 
   @override
   String get settingLabelCounterOfflineMaxMinutes =>

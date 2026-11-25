@@ -12033,6 +12033,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Tickets de caja';
 
   @override
+  String get featureCounterTillLayoutDesc =>
+      'Organice cada caja según su oficio: qué teclas van dónde, sus páginas y herramientas junto a la cesta como un teclado numérico, una calculadora o un campo de escaneo. Parta de una plantilla, publíquela y una caja la adopta en su siguiente sesión. Desactivado, cada caja conserva sus teclas generadas.';
+
+  @override
+  String get featureCounterTillLayoutTitle => 'Diseños de caja';
+
+  @override
   String get featureCounterTillSessionsDesc =>
       'Abra una caja con su fondo, cuente el cajón al cierre y cierre el día con su informe. Una venta necesita una caja abierta; el efectivo esperado se deriva de lo cobrado, nunca se escribe.';
 
@@ -25720,6 +25727,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Aprobar el ajuste que propone un recuento.';
 
   @override
+  String get permAllowsConfigureTill =>
+      'Crear, publicar, copiar y restablecer el diseño de una caja: sus teclas, páginas y herramientas. Los cajeros usan el diseño publicado sin este derecho.';
+
+  @override
   String get permAllowsCountStock =>
       'Contar las líneas de una tarea de recuento cíclico sin ver lo que contiene el registro: las tareas y el recuento de cada línea, nada más.';
 
@@ -25870,6 +25881,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get permApproveStockAdjustments => 'Aprobar ajustes de existencias';
+
+  @override
+  String get permConfigureTill => 'Organizar las cajas';
 
   @override
   String get permCountStock => 'Contar el stock a ciegas';
@@ -32729,6 +32743,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.';
 
   @override
+  String get settingHintCounterLayoutCashierReorder =>
+      'Un cajero puede reordenar las teclas de una caja en su propio dispositivo sin cambiar el diseño publicado.';
+
+  @override
+  String get settingHintCounterLayoutMaxCells =>
+      'El máximo de celdas que puede tener un diseño de caja, sumando todas sus páginas y tamaños. Un diseño mayor se rechaza al guardarlo.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Cuánto tiempo después de perder la conexión la caja aún se acepta una venta en efectivo hecha sin conexión al enviarla. Las posteriores se rechazan y se listan para el responsable.';
 
@@ -33178,6 +33200,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Normas fiscales de las ventas en mostrador';
+
+  @override
+  String get settingLabelCounterLayoutCashierReorder =>
+      'Los cajeros reordenan las teclas';
+
+  @override
+  String get settingLabelCounterLayoutMaxCells => 'Tamaño del diseño de caja';
 
   @override
   String get settingLabelCounterOfflineMaxMinutes =>

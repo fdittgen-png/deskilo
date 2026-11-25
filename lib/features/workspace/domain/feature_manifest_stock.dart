@@ -178,4 +178,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     tier: FeatureTier.platform,
     defaultOn: false,
   ),
+  // #4448 — the till layout editor: the owner or an admin arranges each till's keys, pages and tools (keypad, calculator,
+  // scan field) from a trade template, as a draft, then publishes it. Asked for, under till sessions (the issue's
+  // `counterTill` parent does not exist; till sessions is the till's own flag, as E04 ruled for the embedded terminal).
+  // Off: every till keeps the generated layout of #4366.
+  WorkspaceFeature.counterTillLayout: FeatureManifestEntry(
+    feature: WorkspaceFeature.counterTillLayout,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.counterTillSessions,
+    defaultOn: false,
+  ),
 };

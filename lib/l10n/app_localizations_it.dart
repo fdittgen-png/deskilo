@@ -12042,6 +12042,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Scontrini di cassa';
 
   @override
+  String get featureCounterTillLayoutDesc =>
+      'Organizzi ogni cassa per il Suo mestiere: quali tasti dove, le sue pagine e gli strumenti accanto al carrello come un tastierino numerico, una calcolatrice o un campo di scansione. Parta da un modello, lo pubblichi e una cassa lo adotta alla sessione successiva. Disattivato, ogni cassa mantiene i tasti generati.';
+
+  @override
+  String get featureCounterTillLayoutTitle => 'Layout di cassa';
+
+  @override
   String get featureCounterTillSessionsDesc =>
       'Apra una cassa con il suo fondo, conti il cassetto alla chiusura e chiuda la giornata con il suo rapporto. Una vendita richiede una cassa aperta; il contante atteso si ricava da quanto incassato, mai digitato.';
 
@@ -25759,6 +25766,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Approvare la rettifica proposta da un inventario.';
 
   @override
+  String get permAllowsConfigureTill =>
+      'Creare, pubblicare, copiare e ripristinare il layout di una cassa: tasti, pagine e strumenti. I cassieri usano il layout pubblicato senza questo diritto.';
+
+  @override
   String get permAllowsCountStock =>
       'Contare le righe di un compito di inventario ciclico senza vedere ciò che il registro contiene: i compiti e il conteggio di ogni riga, nient’altro.';
 
@@ -25909,6 +25920,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get permApproveStockAdjustments =>
       'Approvare le rettifiche di magazzino';
+
+  @override
+  String get permConfigureTill => 'Organizzare le casse';
 
   @override
   String get permCountStock => 'Contare il magazzino alla cieca';
@@ -32767,6 +32781,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ciò che dichiara sulle regole fiscali di una vendita al banco: nessuna significa che al Suo esercizio non si applica alcun obbligo fiscale di registratore (una Sua dichiarazione, annotata su ogni scontrino); registratore richiesto significa che si applica. Lo scontrino è emesso solo dove l\'operazione del Suo paese è supportata nel caso dichiarato.';
 
   @override
+  String get settingHintCounterLayoutCashierReorder =>
+      'Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo senza cambiare il layout pubblicato.';
+
+  @override
+  String get settingHintCounterLayoutMaxCells =>
+      'Il numero massimo di celle di un layout di cassa, su tutte le pagine e dimensioni. Un layout più grande viene rifiutato al salvataggio.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Per quanto tempo dopo la perdita della connessione una vendita in contanti fatta offline è ancora accettata all\'invio. Le vendite successive sono rifiutate ed elencate per il titolare.';
 
@@ -33214,6 +33236,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Regole fiscali delle vendite al banco';
+
+  @override
+  String get settingLabelCounterLayoutCashierReorder =>
+      'I cassieri riordinano i tasti';
+
+  @override
+  String get settingLabelCounterLayoutMaxCells =>
+      'Dimensione del layout di cassa';
 
   @override
   String get settingLabelCounterOfflineMaxMinutes =>

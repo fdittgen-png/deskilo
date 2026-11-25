@@ -7291,6 +7291,8 @@
   },
   "featureCounterReceiptsDesc": "Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.",
   "featureCounterReceiptsTitle": "Kassenbelege",
+  "featureCounterTillLayoutDesc": "Gestalten Sie jede Kasse für Ihr Geschäft: welche Tasten wo liegen, ihre Seiten und Werkzeuge neben dem Warenkorb wie ein Ziffernblock, ein Rechner oder ein Scanfeld. Beginnen Sie mit einer Vorlage, veröffentlichen Sie sie, und eine Kasse übernimmt sie mit ihrer nächsten Sitzung. Aus: Jede Kasse behält ihre erzeugten Tasten.",
+  "featureCounterTillLayoutTitle": "Kassenlayouts",
   "featureCounterTillSessionsDesc": "Eine Kasse mit ihrem Wechselgeld eröffnen, die Schublade beim Abschluss zählen und den Tag mit seinem Bericht abschließen. Ein Verkauf braucht eine geöffnete Kasse; das erwartete Bargeld wird aus dem Eingenommenen abgeleitet, nie eingetippt.",
   "featureCounterTillSessionsTitle": "Kassensitzungen und Tagesabschluss",
   "featureCountriesEuName": "der Europäischen Union",
@@ -14720,6 +14722,7 @@
   "permAllowsAccessProd": "Die Produktionsseite eines Entwicklungs- und Produktionspaars betreten.",
   "permAllowsApproveExpenses": "Von Mitgliedern eingereichte Ausgaben genehmigen.",
   "permAllowsApproveStockAdjustments": "Die von einer Inventur vorgeschlagene Korrektur genehmigen.",
+  "permAllowsConfigureTill": "Das Layout einer Kasse erstellen, veröffentlichen, kopieren und zurücksetzen: ihre Tasten, Seiten und Werkzeuge. Kassierer nutzen das veröffentlichte Layout ohne dieses Recht.",
   "permAllowsCountStock": "Die Zeilen einer Inventuraufgabe zählen, ohne zu sehen, was das Buch führt: die Aufgaben und das Zählen jeder Zeile, sonst nichts.",
   "permAllowsDeployToDev": "Den Entwicklungs-Space aus der Produktion auffrischen.",
   "permAllowsDeployToProd": "Konfiguration und Stammdaten von der Entwicklung in die Produktion übertragen.",
@@ -14762,6 +14765,7 @@
     "description": "Permission label (#513)"
   },
   "permApproveStockAdjustments": "Bestandskorrekturen genehmigen",
+  "permConfigureTill": "Kassen gestalten",
   "permCountStock": "Bestand blind zählen",
   "permDeployToDev": "In die Entwicklung ausrollen",
   "@permDeployToDev": {
@@ -19346,6 +19350,8 @@
   "settingHintCounterCustomerlessSales": "Erlaubt: Ein Verkauf kann ohne Kundennamen erfolgen. Abgelehnt: Jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an.",
   "settingHintCounterDocumentChannel": "Geteilt (Nachricht oder Mail), gedruckt oder beides. Der Beleg ist in jedem Fall dasselbe unveränderliche Dokument.",
   "settingHintCounterFiscalObligation": "Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.",
+  "settingHintCounterLayoutCashierReorder": "Ein Kassierer darf die Tasten einer Kasse auf seinem eigenen Gerät umordnen, ohne das veröffentlichte Layout zu ändern.",
+  "settingHintCounterLayoutMaxCells": "Die meisten Zellen, die ein Kassenlayout über alle Seiten und Größen haben darf. Ein größeres Layout wird beim Speichern abgelehnt.",
   "settingHintCounterOfflineMaxMinutes": "Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.",
   "@settingHintCounterOfflineMaxMinutes": {
     "description": "#4373 setting hint"
@@ -19606,6 +19612,8 @@
   "settingLabelCounterCustomerlessSales": "Verkäufe ohne genannten Kunden",
   "settingLabelCounterDocumentChannel": "Wie ein Kassenbeleg die Kasse verlässt",
   "settingLabelCounterFiscalObligation": "Steuerliche Vorgaben für Kassenverkäufe",
+  "settingLabelCounterLayoutCashierReorder": "Kassierer ordnen die Tasten",
+  "settingLabelCounterLayoutMaxCells": "Größe des Kassenlayouts",
   "settingLabelCounterOfflineMaxMinutes": "Längste Offline-Zeit (Minuten)",
   "@settingLabelCounterOfflineMaxMinutes": {
     "description": "#4373 setting label"

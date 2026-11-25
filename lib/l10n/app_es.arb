@@ -7291,6 +7291,8 @@
   },
   "featureCounterReceiptsDesc": "Una venta en el mostrador da un ticket inmutable, numerado una sola vez, con el cobro recibido. Solo se ofrece donde la operación del país está soportada, y dice claramente cuándo no lo está.",
   "featureCounterReceiptsTitle": "Tickets de caja",
+  "featureCounterTillLayoutDesc": "Organice cada caja según su oficio: qué teclas van dónde, sus páginas y herramientas junto a la cesta como un teclado numérico, una calculadora o un campo de escaneo. Parta de una plantilla, publíquela y una caja la adopta en su siguiente sesión. Desactivado, cada caja conserva sus teclas generadas.",
+  "featureCounterTillLayoutTitle": "Diseños de caja",
   "featureCounterTillSessionsDesc": "Abra una caja con su fondo, cuente el cajón al cierre y cierre el día con su informe. Una venta necesita una caja abierta; el efectivo esperado se deriva de lo cobrado, nunca se escribe.",
   "featureCounterTillSessionsTitle": "Sesiones de caja y cierre del día",
   "featureCountriesEuName": "la Unión Europea",
@@ -14720,6 +14722,7 @@
   "permAllowsAccessProd": "Entrar en la producción de un par de desarrollo y producción.",
   "permAllowsApproveExpenses": "Aprobar los gastos que presentan los miembros.",
   "permAllowsApproveStockAdjustments": "Aprobar el ajuste que propone un recuento.",
+  "permAllowsConfigureTill": "Crear, publicar, copiar y restablecer el diseño de una caja: sus teclas, páginas y herramientas. Los cajeros usan el diseño publicado sin este derecho.",
   "permAllowsCountStock": "Contar las líneas de una tarea de recuento cíclico sin ver lo que contiene el registro: las tareas y el recuento de cada línea, nada más.",
   "permAllowsDeployToDev": "Actualizar el espacio de desarrollo desde producción.",
   "permAllowsDeployToProd": "Llevar la configuración y los datos maestros de desarrollo a producción.",
@@ -14762,6 +14765,7 @@
     "description": "Permission label (#513)"
   },
   "permApproveStockAdjustments": "Aprobar ajustes de existencias",
+  "permConfigureTill": "Organizar las cajas",
   "permCountStock": "Contar el stock a ciegas",
   "permDeployToDev": "Desplegar en desarrollo",
   "@permDeployToDev": {
@@ -19346,6 +19350,8 @@
   "settingHintCounterCustomerlessSales": "Permitidas: se puede vender sin nombrar un cliente. Rechazadas: cada venta nombra uno. Una venta sin cliente nunca crea una cuenta, un miembro ni una suscripción.",
   "settingHintCounterDocumentChannel": "Compartido (mensaje o correo), impreso o ambos. El ticket es el mismo documento inmutable en todos los casos.",
   "settingHintCounterFiscalObligation": "Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.",
+  "settingHintCounterLayoutCashierReorder": "Un cajero puede reordenar las teclas de una caja en su propio dispositivo sin cambiar el diseño publicado.",
+  "settingHintCounterLayoutMaxCells": "El máximo de celdas que puede tener un diseño de caja, sumando todas sus páginas y tamaños. Un diseño mayor se rechaza al guardarlo.",
   "settingHintCounterOfflineMaxMinutes": "Cuánto tiempo después de perder la conexión la caja aún se acepta una venta en efectivo hecha sin conexión al enviarla. Las posteriores se rechazan y se listan para el responsable.",
   "@settingHintCounterOfflineMaxMinutes": {
     "description": "#4373 setting hint"
@@ -19606,6 +19612,8 @@
   "settingLabelCounterCustomerlessSales": "Ventas sin cliente nombrado",
   "settingLabelCounterDocumentChannel": "Cómo sale el ticket del mostrador",
   "settingLabelCounterFiscalObligation": "Normas fiscales de las ventas en mostrador",
+  "settingLabelCounterLayoutCashierReorder": "Los cajeros reordenan las teclas",
+  "settingLabelCounterLayoutMaxCells": "Tamaño del diseño de caja",
   "settingLabelCounterOfflineMaxMinutes": "Tiempo máximo sin conexión (minutos)",
   "@settingLabelCounterOfflineMaxMinutes": {
     "description": "#4373 setting label"

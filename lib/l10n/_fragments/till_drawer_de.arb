@@ -104,5 +104,9 @@
   "tillDrawerConsoleTitle": "Terminal-Konsole",
   "tillDrawerConsoleEmpty": "Auf keinem Terminal ist ein Verkauf offen. Was ein Terminal erfasst, erscheint hier, sobald es gewählt wird, mit den Preisen von Deskilo.",
   "tillDrawerConsoleLine": "{quantity} × {label}",
-  "tillDrawerConsoleRevision": "Offener Verkauf, Änderung {revision}"
+  "tillDrawerConsoleRevision": "Offener Verkauf, Änderung {revision}",
+  "settingLabelCounterLayoutMaxCells": "Größe des Kassenlayouts",
+  "settingHintCounterLayoutMaxCells": "Die meisten Zellen, die ein Kassenlayout über alle Seiten und Größen haben darf. Ein größeres Layout wird beim Speichern abgelehnt.",
+  "settingLabelCounterLayoutCashierReorder": "Kassierer ordnen die Tasten",
+  "settingHintCounterLayoutCashierReorder": "Ein Kassierer darf die Tasten einer Kasse auf seinem eigenen Gerät umordnen, ohne das veröffentlichte Layout zu ändern."
 }

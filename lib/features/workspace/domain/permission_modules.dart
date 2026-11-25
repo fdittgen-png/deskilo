@@ -51,6 +51,7 @@ PermissionModule _moduleOf(WorkspacePermission permission) =>
       WorkspacePermission.manageStock ||
       WorkspacePermission.approveStockAdjustments => PermissionModule.stock,
       WorkspacePermission.countStock => PermissionModule.stock,
+      WorkspacePermission.configureTill => PermissionModule.money,
       WorkspacePermission.manageDocuments ||
       WorkspacePermission.designDocuments ||
       WorkspacePermission.exportData ||

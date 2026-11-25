@@ -104,5 +104,9 @@
   "tillDrawerConsoleTitle": "Console du terminal",
   "tillDrawerConsoleEmpty": "Aucune vente n'est ouverte sur un terminal. Ce qu'un terminal enregistre s'affiche ici dès qu'il est choisi, avec les prix donnés par Deskilo.",
   "tillDrawerConsoleLine": "{quantity} × {label}",
-  "tillDrawerConsoleRevision": "Vente ouverte, modification {revision}"
+  "tillDrawerConsoleRevision": "Vente ouverte, modification {revision}",
+  "settingLabelCounterLayoutMaxCells": "Taille d'une disposition de caisse",
+  "settingHintCounterLayoutMaxCells": "Le nombre maximal de cases d'une disposition de caisse, toutes pages et tailles confondues. Une disposition plus grande est refusée à l'enregistrement.",
+  "settingLabelCounterLayoutCashierReorder": "Les caissiers réordonnent les touches",
+  "settingHintCounterLayoutCashierReorder": "Un caissier peut réordonner les touches d'une caisse sur son propre appareil sans changer la disposition publiée."
 }

@@ -7291,6 +7291,8 @@
   },
   "featureCounterReceiptsDesc": "Une vente au comptoir donne un ticket immuable, numéroté une seule fois, avec le règlement reçu. Il n'est proposé que là où l'opération du pays est prise en charge, et dit clairement quand elle ne l'est pas.",
   "featureCounterReceiptsTitle": "Tickets de caisse",
+  "featureCounterTillLayoutDesc": "Disposez chaque caisse selon votre métier : quelles touches où, ses pages et des outils à côté du panier comme un pavé numérique, une calculatrice ou un champ de scan. Partez d'un modèle, publiez-le, et une caisse le prend à sa prochaine session. Désactivé, chaque caisse garde ses touches générées.",
+  "featureCounterTillLayoutTitle": "Dispositions de caisse",
   "featureCounterTillSessionsDesc": "Ouvrez une caisse avec son fond, comptez le tiroir à la fermeture et clôturez la journée avec son rapport. Une vente exige une caisse ouverte ; les espèces attendues se déduisent de ce qui a été encaissé, jamais saisies.",
   "featureCounterTillSessionsTitle": "Sessions de caisse et clôture de journée",
   "featureCountriesEuName": "l'Union européenne",
@@ -14720,6 +14722,7 @@
   "permAllowsAccessProd": "Entrer dans la production d'une paire développement et production.",
   "permAllowsApproveExpenses": "Approuver les dépenses soumises par les membres.",
   "permAllowsApproveStockAdjustments": "Approuver l'ajustement proposé par un inventaire.",
+  "permAllowsConfigureTill": "Créer, publier, copier et réinitialiser la disposition d'une caisse : ses touches, pages et outils. Les caissiers utilisent la disposition publiée sans ce droit.",
   "permAllowsCountStock": "Compter les lignes d’une tâche d’inventaire tournant sans voir ce que le registre contient : les tâches et le comptage de chaque ligne, rien d’autre.",
   "permAllowsDeployToDev": "Rafraîchir l'espace de développement depuis la production.",
   "permAllowsDeployToProd": "Pousser la configuration et les données de base du développement vers la production.",
@@ -14762,6 +14765,7 @@
     "description": "Permission label (#513)"
   },
   "permApproveStockAdjustments": "Approuver les ajustements de stock",
+  "permConfigureTill": "Disposer les caisses",
   "permCountStock": "Compter le stock, à l’aveugle",
   "permDeployToDev": "Déployer en développement",
   "@permDeployToDev": {
@@ -19346,6 +19350,8 @@
   "settingHintCounterCustomerlessSales": "Autorisées : une vente peut se faire sans nommer de client. Refusées : chaque vente en nomme un. Une vente sans client ne crée jamais de compte, de membre ni d'abonnement.",
   "settingHintCounterDocumentChannel": "Partagé (message ou courriel), imprimé, ou les deux. Le ticket est le même document immuable dans tous les cas.",
   "settingHintCounterFiscalObligation": "Ce que vous déclarez sur les règles fiscales d'une vente au comptoir : aucune signifie qu'aucune obligation fiscale de caisse ne s'applique à votre entreprise (votre propre déclaration, inscrite sur chaque ticket) ; caisse requise signifie qu'une obligation s'applique. Un ticket n'est émis que là où l'opération de votre pays est prise en charge dans le cas que vous déclarez.",
+  "settingHintCounterLayoutCashierReorder": "Un caissier peut réordonner les touches d'une caisse sur son propre appareil sans changer la disposition publiée.",
+  "settingHintCounterLayoutMaxCells": "Le nombre maximal de cases d'une disposition de caisse, toutes pages et tailles confondues. Une disposition plus grande est refusée à l'enregistrement.",
   "settingHintCounterOfflineMaxMinutes": "Combien de temps après la perte de connexion de la caisse une vente en espèces faite hors ligne est encore acceptée à l'envoi. Les ventes plus tardives sont refusées et listées pour le gérant.",
   "@settingHintCounterOfflineMaxMinutes": {
     "description": "#4373 setting hint"
@@ -19606,6 +19612,8 @@
   "settingLabelCounterCustomerlessSales": "Ventes sans client nommé",
   "settingLabelCounterDocumentChannel": "Comment le ticket quitte le comptoir",
   "settingLabelCounterFiscalObligation": "Règles fiscales des ventes au comptoir",
+  "settingLabelCounterLayoutCashierReorder": "Les caissiers réordonnent les touches",
+  "settingLabelCounterLayoutMaxCells": "Taille d'une disposition de caisse",
   "settingLabelCounterOfflineMaxMinutes": "Durée maximale hors ligne (minutes)",
   "@settingLabelCounterOfflineMaxMinutes": {
     "description": "#4373 setting label"

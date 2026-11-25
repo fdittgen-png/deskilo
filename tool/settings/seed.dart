@@ -2208,8 +2208,45 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       note: 'How many days this installation keeps an error report. Older reports are deleted when a new one arrives.',
     ),
   ),
+  (
+    since: 'till_layouts',
+    row: (
+      key: 'counter.layout_max_cells',
+      type: 'int',
+      defaultValue: 200,
+      min: 20,
+      max: 600,
+      unit: 'cells',
+      group: 'business',
+      scopes: ['workspace'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'till layouts (#4448)',
+      note: 'The most cells one till layout may hold, over all its pages and its phone, tablet and desk grids together. A larger layout is refused when it is saved; the tills already published keep theirs.',
+    ),
+  ),
+  (
+    since: 'till_layouts',
+    row: (
+      key: 'counter.layout_cashier_reorder',
+      type: 'bool',
+      defaultValue: false,
+      min: null,
+      max: null,
+      unit: '',
+      group: 'business',
+      scopes: ['workspace'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'till layouts (#4448)',
+      note: 'Whether a cashier may reorder the keys of a till on their own device, without changing the published layout. Off: every device shows the layout as it was published.',
+    ),
+  ),
 ];
-
 String _q(String s) => "'${s.replaceAll("'", "''")}'";
 
 String _num(num? n) => n == null ? 'null' : '$n';

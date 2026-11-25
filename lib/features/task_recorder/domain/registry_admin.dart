@@ -59,6 +59,7 @@ const Set<String> workspacePermissionKeys = {
   'approveStockAdjustments',
   'manageBillingCustomers',
   'countStock',
+  'configureTill',
 };
 
 /// The event types a validation rule can be for (EventType.dbName, the

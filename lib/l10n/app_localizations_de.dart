@@ -12057,6 +12057,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Kassenbelege';
 
   @override
+  String get featureCounterTillLayoutDesc =>
+      'Gestalten Sie jede Kasse für Ihr Geschäft: welche Tasten wo liegen, ihre Seiten und Werkzeuge neben dem Warenkorb wie ein Ziffernblock, ein Rechner oder ein Scanfeld. Beginnen Sie mit einer Vorlage, veröffentlichen Sie sie, und eine Kasse übernimmt sie mit ihrer nächsten Sitzung. Aus: Jede Kasse behält ihre erzeugten Tasten.';
+
+  @override
+  String get featureCounterTillLayoutTitle => 'Kassenlayouts';
+
+  @override
   String get featureCounterTillSessionsDesc =>
       'Eine Kasse mit ihrem Wechselgeld eröffnen, die Schublade beim Abschluss zählen und den Tag mit seinem Bericht abschließen. Ein Verkauf braucht eine geöffnete Kasse; das erwartete Bargeld wird aus dem Eingenommenen abgeleitet, nie eingetippt.';
 
@@ -25788,6 +25795,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die von einer Inventur vorgeschlagene Korrektur genehmigen.';
 
   @override
+  String get permAllowsConfigureTill =>
+      'Das Layout einer Kasse erstellen, veröffentlichen, kopieren und zurücksetzen: ihre Tasten, Seiten und Werkzeuge. Kassierer nutzen das veröffentlichte Layout ohne dieses Recht.';
+
+  @override
   String get permAllowsCountStock =>
       'Die Zeilen einer Inventuraufgabe zählen, ohne zu sehen, was das Buch führt: die Aufgaben und das Zählen jeder Zeile, sonst nichts.';
 
@@ -25938,6 +25949,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get permApproveStockAdjustments => 'Bestandskorrekturen genehmigen';
+
+  @override
+  String get permConfigureTill => 'Kassen gestalten';
 
   @override
   String get permCountStock => 'Bestand blind zählen';
@@ -32813,6 +32827,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.';
 
   @override
+  String get settingHintCounterLayoutCashierReorder =>
+      'Ein Kassierer darf die Tasten einer Kasse auf seinem eigenen Gerät umordnen, ohne das veröffentlichte Layout zu ändern.';
+
+  @override
+  String get settingHintCounterLayoutMaxCells =>
+      'Die meisten Zellen, die ein Kassenlayout über alle Seiten und Größen haben darf. Ein größeres Layout wird beim Speichern abgelehnt.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.';
 
@@ -33254,6 +33276,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Steuerliche Vorgaben für Kassenverkäufe';
+
+  @override
+  String get settingLabelCounterLayoutCashierReorder =>
+      'Kassierer ordnen die Tasten';
+
+  @override
+  String get settingLabelCounterLayoutMaxCells => 'Größe des Kassenlayouts';
 
   @override
   String get settingLabelCounterOfflineMaxMinutes =>

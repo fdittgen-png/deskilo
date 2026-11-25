@@ -104,5 +104,9 @@
   "tillDrawerConsoleTitle": "Consola del terminal",
   "tillDrawerConsoleEmpty": "No hay ninguna venta abierta en un terminal. Lo que registra un terminal aparece aquí en cuanto se elige, con los precios que le da Deskilo.",
   "tillDrawerConsoleLine": "{quantity} × {label}",
-  "tillDrawerConsoleRevision": "Venta abierta, cambio {revision}"
+  "tillDrawerConsoleRevision": "Venta abierta, cambio {revision}",
+  "settingLabelCounterLayoutMaxCells": "Tamaño del diseño de caja",
+  "settingHintCounterLayoutMaxCells": "El máximo de celdas que puede tener un diseño de caja, sumando todas sus páginas y tamaños. Un diseño mayor se rechaza al guardarlo.",
+  "settingLabelCounterLayoutCashierReorder": "Los cajeros reordenan las teclas",
+  "settingHintCounterLayoutCashierReorder": "Un cajero puede reordenar las teclas de una caja en su propio dispositivo sin cambiar el diseño publicado."
 }

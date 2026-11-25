@@ -19366,6 +19366,18 @@ abstract class AppLocalizations {
   /// **'Counter receipts'**
   String get featureCounterReceiptsTitle;
 
+  /// #4448 feature description: the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Lay out each till for your trade: which keys sit where, its pages, and tools beside the basket such as a numeric keypad, a calculator or a scan field. Start from a template, publish it, and a till takes it at its next session. Off, every till keeps its generated keys.'**
+  String get featureCounterTillLayoutDesc;
+
+  /// #4448 feature name: the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Till layouts'**
+  String get featureCounterTillLayoutTitle;
+
   /// #4367 feature description
   ///
   /// In en, this message translates to:
@@ -40814,6 +40826,12 @@ abstract class AppLocalizations {
   /// **'Approve the adjustment a stock count proposes.'**
   String get permAllowsApproveStockAdjustments;
 
+  /// #4448 the right to lay out the tills: what it allows
+  ///
+  /// In en, this message translates to:
+  /// **'Build, publish, copy and reset the layout of a till: its keys, pages and tools. Cashiers use the published layout without this right.'**
+  String get permAllowsConfigureTill;
+
   /// #4295 permission description
   ///
   /// In en, this message translates to:
@@ -41047,6 +41065,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Approve stock adjustments'**
   String get permApproveStockAdjustments;
+
+  /// #4448 the right to lay out the tills: its name
+  ///
+  /// In en, this message translates to:
+  /// **'Lay out the tills'**
+  String get permConfigureTill;
 
   /// #4295 permission name
   ///
@@ -52104,6 +52128,18 @@ abstract class AppLocalizations {
   /// **'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.'**
   String get settingHintCounterFiscalObligation;
 
+  /// #4448 a till layout setting
+  ///
+  /// In en, this message translates to:
+  /// **'A cashier may reorder a till\'s keys on their own device without changing the published layout.'**
+  String get settingHintCounterLayoutCashierReorder;
+
+  /// #4448 a till layout setting
+  ///
+  /// In en, this message translates to:
+  /// **'The most cells one till layout may hold, over all its pages and sizes. A larger layout is refused when it is saved.'**
+  String get settingHintCounterLayoutMaxCells;
+
   /// #4373 setting hint
   ///
   /// In en, this message translates to:
@@ -52799,6 +52835,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fiscal rules for counter sales'**
   String get settingLabelCounterFiscalObligation;
+
+  /// #4448 a till layout setting
+  ///
+  /// In en, this message translates to:
+  /// **'Cashiers reorder the keys'**
+  String get settingLabelCounterLayoutCashierReorder;
+
+  /// #4448 a till layout setting
+  ///
+  /// In en, this message translates to:
+  /// **'Till layout size'**
+  String get settingLabelCounterLayoutMaxCells;
 
   /// #4373 setting label
   ///
