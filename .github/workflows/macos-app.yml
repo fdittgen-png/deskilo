@@ -113,7 +113,7 @@ jobs:
           channel: stable
           cache: true
 
-      - uses: ruby/setup-ruby@4e97ecde5048e1e0816923020652678063ffbf65 # v1
+      - uses: ruby/setup-ruby@be3c7df29b3349ec6bcfc6b4792f1cf9f5237d18 # v1
         if: ${{ github.event_name != 'pull_request' }}
         with:
           ruby-version: "3.3"
