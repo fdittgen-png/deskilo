@@ -6270,6 +6270,7 @@ const List<String> uiKeyPatterns = [
   'stock-transfer-receive-{}',
   'stock-transfer-status-{}',
   'stock-transfer-{}',
+  'stock-unit-pick-{}',
   'stock-unit-{}',
   'stock-unit-{}-default-purchase',
   'stock-unit-{}-default-sale',

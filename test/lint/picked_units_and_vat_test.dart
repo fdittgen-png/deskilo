@@ -2,7 +2,7 @@
 //
 // #4471 -- a unit and a VAT rate are picked from the master data, never typed. A text input whose label names a unit or a VAT
 // rate is refused, except in the editors OF that master data. The two stock inputs still typed (an item's extra unit name, a
-// group's purchase unit) are the ceiling until they are picked: it only falls, so one picked there must leave the list.
+// group's purchase unit) were the ceiling until picked; none is left, so the ceiling is empty and stays so.
 import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
@@ -17,11 +17,8 @@ const _editors = {
   'lib/features/money/presentation/widgets/vat_rate_editor.dart',
 };
 
-/// Typed today, to be picked by #4471 B: `file#label`.
-const _stillTyped = <String>{
-  'lib/features/stock/presentation/item_group_sheet.dart#itemGroupPurchaseUnit',
-  'lib/features/stock/presentation/stock_item_editor.dart#stockEditUnitName',
-};
+/// Typed today: none. Every unit and VAT rate input is picked (#4471).
+const _stillTyped = <String>{};
 
 final _input = RegExp(r'\b(AppTextField|TextField|TextFormField)\(');
 final _label = RegExp(r'\blabel(?:Text)?:\s*(?:\w+\.)?(\w+)');

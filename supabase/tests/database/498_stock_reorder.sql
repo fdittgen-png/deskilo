@@ -77,6 +77,9 @@ insert into public.services (id, workspace_id, name, price_cents, active, invent
   (pg_temp.u(302), pg_temp.u(101), 'Mugs', 300, true, 'piece', 'none', true),
   (pg_temp.u(303), pg_temp.u(101), 'Filters', 100, true, 'piece', 'none', true),
   (pg_temp.u(304), pg_temp.u(102), 'Foreign', 100, true, 'piece', 'none', true);
+-- #4471: an item's own unit is one of the business's units, so the fixtures say which
+insert into public.workspace_units (workspace_id, code, label, dimension, factor_num, factor_den) values
+  (pg_temp.u(101), 'carton', 'Carton', 'count', 1, 1);
 insert into public.item_units (workspace_id, item_id, unit, factor_num, factor_den) values (pg_temp.u(101), pg_temp.u(302), 'carton', 6, 1);
 insert into public.suppliers (id, workspace_id, supplier_number, name) values
   (pg_temp.u(401), pg_temp.u(101), 'S-1', 'Roaster Co'), (pg_temp.u(402), pg_temp.u(101), 'S-2', 'Other Co');
