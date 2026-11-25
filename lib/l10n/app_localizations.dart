@@ -67154,6 +67154,12 @@ abstract class AppLocalizations {
   /// **'Nothing is numbered and nothing is taken until the country\'s operation is supported.'**
   String get tillNotReadyHint;
 
+  /// #4476 Reprint with no sale yet
+  ///
+  /// In en, this message translates to:
+  /// **'No sale to print again yet.'**
+  String get tillNothingToReprint;
+
   /// #4373 the till sells offline: the banner
   ///
   /// In en, this message translates to:
@@ -67487,6 +67493,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The registry names no counter operation for {country}: nothing is supported, and the till sells nothing.'**
   String tillReadinessUnknownCountry(String country);
+
+  /// #4476 a receipt printed again
+  ///
+  /// In en, this message translates to:
+  /// **'COPY {n} — not a new receipt'**
+  String tillReceiptCopy(int n);
 
   /// #4184 the counter receipt document; the number is a reference
   ///

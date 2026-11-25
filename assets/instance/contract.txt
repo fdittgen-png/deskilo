@@ -453,6 +453,16 @@ constraint counter_offline_sales.counter_offline_sales_workspace_id_synced_by_me
 constraint counter_offline_sales.counter_offline_sales_workspace_id_till_session_id_fkey FOREIGN KEY (workspace_id, till_session_id) REFERENCES counter_till_sessions(workspace_id, id)
 constraint counter_offline_sales.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint counter_offline_sales.system_company_present CHECK ((company_id IS NOT NULL))
+constraint counter_receipt_copies.counter_receipt_copies_copy_no_check CHECK ((copy_no >= 1))
+constraint counter_receipt_copies.counter_receipt_copies_pkey PRIMARY KEY (id)
+constraint counter_receipt_copies.counter_receipt_copies_workspace_id_actor_member_id_fkey FOREIGN KEY (workspace_id, actor_member_id) REFERENCES members(workspace_id, id)
+constraint counter_receipt_copies.counter_receipt_copies_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint counter_receipt_copies.counter_receipt_copies_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint counter_receipt_copies.counter_receipt_copies_workspace_id_receipt_id_copy_no_key UNIQUE (workspace_id, receipt_id, copy_no)
+constraint counter_receipt_copies.counter_receipt_copies_workspace_id_receipt_id_fkey FOREIGN KEY (workspace_id, receipt_id) REFERENCES counter_receipts(workspace_id, id)
+constraint counter_receipt_copies.counter_receipt_copies_workspace_id_request_id_key UNIQUE (workspace_id, request_id)
+constraint counter_receipt_copies.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint counter_receipt_copies.system_company_present CHECK ((company_id IS NOT NULL))
 constraint counter_receipt_lines.counter_receipt_lines_gross_minor_check CHECK ((gross_minor >= 0))
 constraint counter_receipt_lines.counter_receipt_lines_line_no_check CHECK ((line_no >= 1))
 constraint counter_receipt_lines.counter_receipt_lines_net_minor_check CHECK ((net_minor >= 0))
@@ -3261,6 +3271,8 @@ routine public.counter_open_session(p_workspace_id uuid, p_till text) -> uuid | 
 routine public.counter_operation_row(p_workspace_id uuid, p_operation text) -> counter_country_operations | function | definer | stable | exec:service_role | body:59a85833376f
 routine public.counter_operation_state(p_workspace_id uuid, p_operation text) -> text | function | definer | stable | exec:service_role | body:b59b96f02cf4
 routine public.counter_readiness_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9e12e5da4551
+routine public.counter_receipt_copies_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:c25aadf4ae3d
+routine public.counter_receipt_copy_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e203bedaa5d9
 routine public.counter_receipt_correct_v1(p_workspace_id uuid, p_request_id uuid, p_original_id uuid, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1452fbfd8264
 routine public.counter_receipt_decode(p_frozen jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:928178fe46df
 routine public.counter_receipt_draft_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7c2cb5fd1066
@@ -4920,6 +4932,8 @@ trigger counter_day_closes.counter_day_closes_frozen CREATE TRIGGER counter_day_
 trigger counter_day_closes.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_day_closes FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_offline_sales.counter_offline_sales_frozen CREATE TRIGGER counter_offline_sales_frozen BEFORE DELETE OR UPDATE ON public.counter_offline_sales FOR EACH ROW EXECUTE FUNCTION counter_offline_frozen_guard()
 trigger counter_offline_sales.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_offline_sales FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger counter_receipt_copies.counter_receipt_copies_frozen CREATE TRIGGER counter_receipt_copies_frozen BEFORE DELETE OR UPDATE ON public.counter_receipt_copies FOR EACH ROW EXECUTE FUNCTION counter_receipt_copies_frozen()
+trigger counter_receipt_copies.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_receipt_copies FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_receipt_lines.counter_receipt_lines_frozen CREATE TRIGGER counter_receipt_lines_frozen BEFORE DELETE OR UPDATE ON public.counter_receipt_lines FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()
 trigger counter_receipt_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_receipt_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_receipts.counter_receipts_frozen CREATE TRIGGER counter_receipts_frozen BEFORE DELETE OR UPDATE ON public.counter_receipts FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()

@@ -11,14 +11,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../domain/counter_till.dart';
 import '../../domain/till_keypad.dart';
 import '../../domain/till_layout.dart';
 import '../../providers/till_layout_providers.dart';
+import '../../providers/till_providers.dart';
+import '../counter_receipt_view.dart';
 import '../till_keys.dart';
 import '../till_session.dart';
+import '../till_text.dart';
 import 'till_layout_tools.dart';
 import 'till_layout_words.dart';
 import 'till_price_dialogs.dart';
@@ -57,16 +62,35 @@ class TillKeysOrLayout extends ConsumerWidget {
     final sold = items.value;
     // no layout, or the items not read yet (or not readable): the generated keys say so in their own way
     if (layout == null || layout.pages.isEmpty || sold == null) return generated;
-    return _LaidOut(key: const ValueKey('till-layout-laid-out'), layout: layout, items: sold, session: session, onTap: onTap, onPayCash: onPayCash);
+    return _LaidOut(
+      key: const ValueKey('till-layout-laid-out'),
+      layout: layout,
+      items: sold,
+      session: session,
+      copies: ref.watch(tillCopyPortProvider),
+      onTap: onTap,
+      onPayCash: onPayCash,
+    );
   }
 }
 
 class _LaidOut extends StatefulWidget {
-  const _LaidOut({super.key, required this.layout, required this.items, required this.session, required this.onTap, required this.onPayCash});
+  const _LaidOut({
+    super.key,
+    required this.layout,
+    required this.items,
+    required this.session,
+    required this.copies,
+    required this.onTap,
+    required this.onPayCash,
+  });
 
   final TillLayout layout;
   final List<TillKey> items;
   final TillSession session;
+
+  /// #4476 -- where the till prints copies of a receipt; null where it does not.
+  final TillCopyPort? copies;
   final void Function(TillKey key, String? typed) onTap;
   final VoidCallback onPayCash;
 
@@ -113,9 +137,30 @@ class _LaidOutState extends State<_LaidOut> {
     },
     TillFunction.priceOverride => () => unawaited(_pricing(discount: false)),
     TillFunction.lineDiscount => () => unawaited(_pricing(discount: true)),
-    // a deposit return and a reprint come with #4476's next steps; the drawer opens with the receipt printer (#4368)
+    TillFunction.reprintLast => () => unawaited(_reprint()),
+    // a deposit return comes with #4476's next step; the drawer opens with the receipt printer and its pulse (#4368)
     _ => null,
   };
+
+  /// #4476 -- the last sale's receipt again, counted by the server as its next copy and shown marked as that copy.
+  Future<void> _reprint() async {
+    final l10n = context.l10n;
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    final receipt = widget.session.lastSold;
+    final copies = widget.copies;
+    if (receipt == null || copies == null) {
+      messenger?.showSnackBar(SnackBar(content: Text(l10n.tillNothingToReprint)));
+      return;
+    }
+    try {
+      final n = await copies.copy(widget.session.workspaceId, requestId: newRequestId(), receiptId: receipt);
+      if (!mounted) return;
+      await showCounterReceiptSheet(context, workspaceId: widget.session.workspaceId, receiptId: receipt, copy: n);
+    } on Object catch (e, st) {
+      TraceLogger.instance.error('money', 'a receipt copy was not printed', error: e, stackTrace: st);
+      messenger?.showSnackBar(SnackBar(content: Text(tillProblemText(l10n, e))));
+    }
+  }
 
   /// #4476 -- the last line at another price with its reason, or with a discount: the keypad's number is the start.
   Future<void> _pricing({required bool discount}) async {

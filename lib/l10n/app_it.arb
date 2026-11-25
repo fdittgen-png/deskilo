@@ -24309,6 +24309,7 @@
   },
   "tillNotReady": "Non ancora pronto nel Suo paese: {operation}",
   "tillNotReadyHint": "Non viene numerato né incassato nulla finché l'operazione del paese non è supportata.",
+  "tillNothingToReprint": "Ancora nessuna vendita da ristampare.",
   "tillOfflineBanner": "Offline: solo contanti. Le vendite restano su questo dispositivo e vengono inviate quando la connessione torna.",
   "@tillOfflineBanner": {
     "description": "#4373 the till sells offline: the banner"
@@ -24480,6 +24481,7 @@
   "tillReadinessUnavailable": "Non disponibile",
   "tillReadinessUnconfirmed": "Non ancora confermata da un professionista fiscale.",
   "tillReadinessUnknownCountry": "Il registro non indica alcuna operazione di cassa per {country}: nulla è supportato e la cassa non vende nulla.",
+  "tillReceiptCopy": "COPIA {n} — non è un nuovo scontrino",
   "tillReceiptCorrects": "Corregge lo scontrino {number}",
   "tillReceiptDisagrees": "Gli importi di questo scontrino non concordano tra loro. Viene mostrato così come è stato fissato; ne informi la Sua amministrazione.",
   "tillReceiptIssuedUnder": "Emesso secondo: {specification} ({version})",

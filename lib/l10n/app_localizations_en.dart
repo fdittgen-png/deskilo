@@ -41702,6 +41702,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Nothing is numbered and nothing is taken until the country\'s operation is supported.';
 
   @override
+  String get tillNothingToReprint => 'No sale to print again yet.';
+
+  @override
   String get tillOfflineBanner =>
       'Offline — cash only. Sales are kept on this device and sent when the connection returns.';
 
@@ -41923,6 +41926,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String tillReadinessUnknownCountry(String country) {
     return 'The registry names no counter operation for $country: nothing is supported, and the till sells nothing.';
+  }
+
+  @override
+  String tillReceiptCopy(int n) {
+    return 'COPY $n — not a new receipt';
   }
 
   @override

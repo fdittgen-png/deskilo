@@ -24309,6 +24309,7 @@
   },
   "tillNotReady": "Pas encore prêt dans votre pays : {operation}",
   "tillNotReadyHint": "Rien n'est numéroté ni encaissé tant que l'opération du pays n'est pas prise en charge.",
+  "tillNothingToReprint": "Aucune vente à réimprimer pour l'instant.",
   "tillOfflineBanner": "Hors ligne — espèces uniquement. Les ventes sont conservées sur cet appareil et envoyées au retour de la connexion.",
   "@tillOfflineBanner": {
     "description": "#4373 the till sells offline: the banner"
@@ -24480,6 +24481,7 @@
   "tillReadinessUnavailable": "Indisponible",
   "tillReadinessUnconfirmed": "Pas encore confirmé par un professionnel de la fiscalité.",
   "tillReadinessUnknownCountry": "Le registre ne nomme aucune opération de caisse pour {country} : rien n'est pris en charge et la caisse ne vend rien.",
+  "tillReceiptCopy": "DUPLICATA {n} — pas un nouveau ticket",
   "tillReceiptCorrects": "Corrige le ticket {number}",
   "tillReceiptDisagrees": "Les montants de ce ticket ne concordent pas entre eux. Il est affiché tel qu'il a été figé ; prévenez votre administrateur.",
   "tillReceiptIssuedUnder": "Émis selon : {specification} ({version})",

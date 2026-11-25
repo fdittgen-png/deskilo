@@ -12,6 +12,7 @@ import 'package:deskilo/features/money/domain/till_layout.dart';
 import 'package:deskilo/features/money/presentation/till_layout/till_layout_keys.dart';
 import 'package:deskilo/features/money/presentation/till_session.dart';
 import 'package:deskilo/features/money/providers/till_layout_providers.dart';
+import 'package:deskilo/features/money/providers/till_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,6 +36,7 @@ Future<DemoTillLayouts> _published() async {
     TillCell(kindWire: TillWidgetKind.functionKey.wire, col: 1, row: 1, params: const {tillCellFunctionParam: 'next_customer'}),
     TillCell(kindWire: TillWidgetKind.functionKey.wire, col: 2, row: 0, params: const {tillCellFunctionParam: 'price_override'}),
     TillCell(kindWire: TillWidgetKind.functionKey.wire, col: 3, row: 0, params: const {tillCellFunctionParam: 'line_discount'}),
+    TillCell(kindWire: TillWidgetKind.functionKey.wire, col: 2, row: 1, params: const {tillCellFunctionParam: 'reprint_last'}),
     TillCell(kindWire: TillWidgetKind.keypad.wire, col: 0, row: 2, colSpan: 2, rowSpan: 3),
     TillCell(kindWire: TillWidgetKind.calculator.wire, col: 2, row: 2, colSpan: 2, rowSpan: 3),
   ]);
@@ -55,7 +57,8 @@ Future<void> _settle(WidgetTester tester) async {
 
 Future<List<String>> _open(WidgetTester tester, DemoTillLayouts store, {required bool on}) async {
   final calls = <String>[];
-  _session = TillSession(port: DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20), workspaceId: 'ws-1');
+  final till = DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20);
+  _session = TillSession(port: till, workspaceId: 'ws-1');
   await pumpApp(
     tester,
     Scaffold(
@@ -72,6 +75,7 @@ Future<List<String>> _open(WidgetTester tester, DemoTillLayouts store, {required
       ...standardTestOverrides(),
       tillLayoutPortProvider.overrideWithValue(store),
       tillLayoutsOnProvider.overrideWithValue(on),
+      tillPortProvider.overrideWithValue(till),
     ],
   );
   await tester.pump();
@@ -170,6 +174,21 @@ void main() {
     await _settle(tester);
     expect(_session.state.value.draft?.totals.grossMinor, 189);
     expect(_session.state.value.lines.single.price, isNull, reason: 'a discount replaces a changed price');
+  });
+
+  testWidgets('Reprint shows the last sale again marked as its copy, and says so when there is none', (tester) async {
+    await _open(tester, await tester.runAsync(_published) as DemoTillLayouts, on: true);
+    await tester.tap(find.text(_en.tillLayoutFnReprint));
+    await tester.pumpAndSettle();
+    expect(find.text(_en.tillNothingToReprint), findsOneWidget);
+    unawaited(_session.add(itemId: 'demo-item-milk', name: 'Oat milk', unit: 'l'));
+    await _settle(tester);
+    unawaited(_session.payCash(10000));
+    await _settle(tester);
+    expect(_session.lastSold, isNotNull);
+    await tester.tap(find.text(_en.tillLayoutFnReprint));
+    await tester.pumpAndSettle();
+    expect(find.text(_en.tillReceiptCopy(1)), findsOneWidget);
   });
 
   testWidgets('with till layouts off, the till keeps its generated keys', (tester) async {

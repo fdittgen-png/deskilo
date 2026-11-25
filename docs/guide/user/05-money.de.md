@@ -838,6 +838,8 @@ An der Kasse wirken die Tasten so, wie Sie sie platziert haben. Der **Ziffernblo
 
 **Preis ändern** ändert den Preis der letzten Zeile: Geben Sie den neuen Preis (oder vorher auf dem Ziffernblock) und einen **Grund** ein, den der Beleg neben dem Preis des Artikels festhält. Dafür braucht es das Recht **Preis an der Kasse ändern** (standardmäßig Inhaber und Administratoren); ohne es sagt die Kasse das, und die Zeile bleibt beim Preis des Artikels. **Rabatt auf eine Zeile** zieht einen Prozentsatz vom Artikelpreis der letzten Zeile ab, höchstens **Größter Rabatt an der Kasse** (standardmäßig 0, also kein Rabatt an der Kasse); ein größerer Rabatt wird mit der Grenze abgelehnt. Eine Zeile nimmt einen Rabatt oder einen geänderten Preis, nicht beides. Ein Verkauf, den die Kasse nach dem Offline-Verkauf sendet, behält seinen Preis innerhalb der Offline-Preistoleranz.
 
+**Letzten Beleg nachdrucken** zeigt den Beleg des letzten Verkaufs erneut, gekennzeichnet als **KOPIE 1**, **KOPIE 2** usw. Eine Kopie erhält nie eine neue Belegnummer, und jede gedruckte Kopie wird gezählt.
+
 <!-- anchor: user.money.till-offline -->
 ### Wenn die Kasse offline ist
 

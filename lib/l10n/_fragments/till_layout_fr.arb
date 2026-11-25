@@ -68,5 +68,7 @@
   "tillPriceReasonMissing": "Un prix modifié a besoin d'un motif.",
   "tillDiscountBeyond": "Cette remise dépasse ce que l'entreprise autorise (au plus {max} %).",
   "tillDiscountInvalid": "Une remise est un pourcentage du prix de l'article, sur une ligne sans prix modifié.",
-  "tillRingUpFirst": "Enregistrez d'abord un article."
+  "tillRingUpFirst": "Enregistrez d'abord un article.",
+  "tillReceiptCopy": "DUPLICATA {n} — pas un nouveau ticket",
+  "tillNothingToReprint": "Aucune vente à réimprimer pour l'instant."
 }

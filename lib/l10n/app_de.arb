@@ -24309,6 +24309,7 @@
   },
   "tillNotReady": "In Ihrem Land noch nicht bereit: {operation}",
   "tillNotReadyHint": "Es wird nichts nummeriert und nichts kassiert, solange der Vorgang des Landes nicht unterstützt wird.",
+  "tillNothingToReprint": "Noch kein Verkauf zum erneuten Drucken.",
   "tillOfflineBanner": "Offline – nur Barzahlung. Die Verkäufe bleiben auf diesem Gerät und werden gesendet, sobald die Verbindung wieder da ist.",
   "@tillOfflineBanner": {
     "description": "#4373 the till sells offline: the banner"
@@ -24480,6 +24481,7 @@
   "tillReadinessUnavailable": "Nicht verfügbar",
   "tillReadinessUnconfirmed": "Noch nicht von einer Steuerberatung bestätigt.",
   "tillReadinessUnknownCountry": "Das Register nennt für {country} keinen Kassenvorgang: nichts ist unterstützt, und die Kasse verkauft nichts.",
+  "tillReceiptCopy": "KOPIE {n} — kein neuer Beleg",
   "tillReceiptCorrects": "Berichtigt Beleg {number}",
   "tillReceiptDisagrees": "Die Beträge dieses Belegs stimmen nicht miteinander überein. Er wird gezeigt, wie er festgeschrieben wurde; sagen Sie es Ihrer Verwaltung.",
   "tillReceiptIssuedUnder": "Ausgestellt nach: {specification} ({version})",

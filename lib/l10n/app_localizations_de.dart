@@ -42169,6 +42169,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Es wird nichts nummeriert und nichts kassiert, solange der Vorgang des Landes nicht unterstützt wird.';
 
   @override
+  String get tillNothingToReprint => 'Noch kein Verkauf zum erneuten Drucken.';
+
+  @override
   String get tillOfflineBanner =>
       'Offline – nur Barzahlung. Die Verkäufe bleiben auf diesem Gerät und werden gesendet, sobald die Verbindung wieder da ist.';
 
@@ -42393,6 +42396,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String tillReadinessUnknownCountry(String country) {
     return 'Das Register nennt für $country keinen Kassenvorgang: nichts ist unterstützt, und die Kasse verkauft nichts.';
+  }
+
+  @override
+  String tillReceiptCopy(int n) {
+    return 'KOPIE $n — kein neuer Beleg';
   }
 
   @override

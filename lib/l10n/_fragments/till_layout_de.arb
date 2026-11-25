@@ -68,5 +68,7 @@
   "tillPriceReasonMissing": "Ein geänderter Preis braucht einen Grund.",
   "tillDiscountBeyond": "Dieser Rabatt liegt über dem, was das Unternehmen erlaubt (höchstens {max} %).",
   "tillDiscountInvalid": "Ein Rabatt ist ein Prozentsatz vom Artikelpreis, auf einer Zeile ohne geänderten Preis.",
-  "tillRingUpFirst": "Erfassen Sie zuerst einen Artikel."
+  "tillRingUpFirst": "Erfassen Sie zuerst einen Artikel.",
+  "tillReceiptCopy": "KOPIE {n} — kein neuer Beleg",
+  "tillNothingToReprint": "Noch kein Verkauf zum erneuten Drucken."
 }

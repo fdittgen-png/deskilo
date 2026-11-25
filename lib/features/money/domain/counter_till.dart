@@ -451,3 +451,12 @@ class TillKey {
   /// The item whose deposit is added with this one, or null.
   final String? depositItemId;
 }
+
+/// #4476 -- a copy of a finalized receipt, printed again: counted by the server and never numbered again. Its number
+/// among the copies (1, 2, ...) is what the copy shows.
+abstract interface class TillCopyPort {
+  Future<int> copy(String workspaceId, {required String requestId, required String receiptId});
+}
+
+/// The copy's number in the server's answer (`copy_no`).
+int tillCopyNumberOf(Object? json) => JsonReader.of(json, context: 'counter_receipt_copy').integer('copy_no');

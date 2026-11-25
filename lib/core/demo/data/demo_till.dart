@@ -134,7 +134,7 @@ class _Rec {
 /// #4436 -- one traced line a sale froze: its receipt, when, and the track IDs it took, as `counter_line_tracks` keeps them.
 typedef DemoSoldLine = ({String lineId, String receiptId, String number, DateTime at, List<TillTrack> tracks});
 
-class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
+class DemoTill implements TillPort, TillOfflinePort, CounterBookPort, TillCopyPort {
   DemoTill({
     required this.country,
     required this.currency,
@@ -475,6 +475,21 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
     final seen = {for (final r in rows) r.seq};
     final top = seen.fold<int>(0, (a, b) => a > b ? a : b);
     return [for (var n = 1; n <= top; n++) if (!seen.contains(n)) n];
+  }
+
+  /// #4476 -- the copies printed of each receipt, and the copy each request printed.
+  final Map<String, int> _copies = {};
+  final Map<String, int> _copied = {};
+
+  @override
+  Future<int> copy(String workspaceId, {required String requestId, required String receiptId}) async {
+    _line();
+    final again = _copied[requestId];
+    if (again != null) return again;
+    if (_frozen[receiptId] == null) throw _refused(DkCode.dkl04, 'only a finalized receipt has copies', reason: 'receipt');
+    final n = (_copies[receiptId] ?? 0) + 1;
+    _copies[receiptId] = n;
+    return _copied[requestId] = n;
   }
 
   @override

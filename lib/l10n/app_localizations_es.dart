@@ -42048,6 +42048,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se numera ni se cobra nada mientras la operación del país no esté admitida.';
 
   @override
+  String get tillNothingToReprint => 'Aún no hay ninguna venta que reimprimir.';
+
+  @override
   String get tillOfflineBanner =>
       'Sin conexión: solo efectivo. Las ventas se guardan en este dispositivo y se envían cuando vuelve la conexión.';
 
@@ -42271,6 +42274,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String tillReadinessUnknownCountry(String country) {
     return 'El registro no nombra ninguna operación de caja para $country: nada está admitido y la caja no vende nada.';
+  }
+
+  @override
+  String tillReceiptCopy(int n) {
+    return 'COPIA $n — no es un tique nuevo';
   }
 
   @override

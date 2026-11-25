@@ -92,6 +92,9 @@ class TillSession {
     });
   }
 
+  /// #4476 -- the receipt of the last sale this till made, kept past the next customer: what Reprint prints again.
+  String? lastSold;
+
   /// Whether the basket may still be changed: not once it is sold, and not while a sale is waiting to be confirmed.
   bool get _open => _now.sold == null && !_now.unconfirmed && _now.card == null;
 
@@ -390,6 +393,7 @@ class TillSession {
         TraceLogger.instance.warn('money', 'till sale ${sold.number} made after the till was closed');
         return;
       }
+      lastSold = sold.receiptId;
       _set(_now.copyWith(sold: () => sold, change: () => _givenMinor - total).withCard(null).withUnconfirmed(value: false));
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'till sale not confirmed', error: e, stackTrace: st);

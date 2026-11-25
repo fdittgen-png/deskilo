@@ -29,11 +29,12 @@ String _rate(AppFormat format, CounterReceiptTax tax) {
 }
 
 /// The lines of [doc] as words, one per line of the document, in the order a receipt prints them.
-List<String> _counterReceiptLines(AppLocalizations l10n, AppFormat format, CounterReceiptDocument doc) {
+List<String> _counterReceiptLines(AppLocalizations l10n, AppFormat format, CounterReceiptDocument doc, {int? copy}) {
   final money = format.moneyIn(doc.currency);
   final corrects = doc.corrects;
   final op = doc.operation;
   return [
+    if (copy != null) l10n.tillReceiptCopy(copy),
     l10n.tillReceiptNumber(doc.number),
     if (doc.issuedAt != null) format.dateTime(doc.issuedAt!),
     if (corrects != null) l10n.tillReceiptCorrects(corrects.number),
@@ -46,25 +47,26 @@ List<String> _counterReceiptLines(AppLocalizations l10n, AppFormat format, Count
 
 /// The receipt as one text: what is shared.
 @visibleForTesting
-String counterReceiptText(AppLocalizations l10n, AppFormat format, CounterReceiptDocument doc) =>
-    _counterReceiptLines(l10n, format, doc).join('\n');
+String counterReceiptText(AppLocalizations l10n, AppFormat format, CounterReceiptDocument doc, {int? copy}) =>
+    _counterReceiptLines(l10n, format, doc, copy: copy).join('\n');
 
-/// Shows the finalized receipt [receiptId] of the business [workspaceId].
-Future<void> showCounterReceiptSheet(BuildContext context, {required String workspaceId, required String receiptId}) =>
+/// Shows the finalized receipt [receiptId] of the business [workspaceId]; [copy] marks it as that copy (#4476).
+Future<void> showCounterReceiptSheet(BuildContext context, {required String workspaceId, required String receiptId, int? copy}) =>
     showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
       useSafeArea: true,
-      builder: (_) => _CounterReceiptSheet(workspaceId: workspaceId, receiptId: receiptId),
+      builder: (_) => _CounterReceiptSheet(workspaceId: workspaceId, receiptId: receiptId, copy: copy),
     );
 
 /// The receipt read through the versioned reader, with its way out of the counter.
 class _CounterReceiptSheet extends ConsumerWidget {
-  const _CounterReceiptSheet({required this.workspaceId, required this.receiptId});
+  const _CounterReceiptSheet({required this.workspaceId, required this.receiptId, this.copy});
 
   final String workspaceId;
   final String receiptId;
+  final int? copy;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -81,7 +83,7 @@ class _CounterReceiptSheet extends ConsumerWidget {
               retryKey: const ValueKey('counter-receipt-retry'),
               refusal: e is CounterReceiptUnreadable ? l10n.tillReceiptUnreadable : knownRefusalText(l10n, e),
             ),
-            data: (doc) => _CounterReceiptView(document: doc, channel: _channel(ref)),
+            data: (doc) => _CounterReceiptView(document: doc, channel: _channel(ref), copy: copy),
           ),
     );
   }
@@ -92,9 +94,12 @@ class _CounterReceiptSheet extends ConsumerWidget {
 
 /// The document itself.
 class _CounterReceiptView extends ConsumerWidget {
-  const _CounterReceiptView({required this.document, this.channel = 'share'});
+  const _CounterReceiptView({required this.document, this.channel = 'share', this.copy});
 
   final CounterReceiptDocument document;
+
+  /// #4476 -- the copy this is (1, 2, ...), or null for the receipt as issued.
+  final int? copy;
 
   /// How the receipt leaves the counter (`share`, `print`, `both`).
   final String channel;
@@ -103,7 +108,7 @@ class _CounterReceiptView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final format = appFormatOf(context);
-    final lines = _counterReceiptLines(l10n, format, document);
+    final lines = _counterReceiptLines(l10n, format, document, copy: copy);
     return SingleChildScrollView(
       key: const ValueKey('counter-receipt'),
       child: Column(

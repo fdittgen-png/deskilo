@@ -24309,6 +24309,7 @@
   },
   "tillNotReady": "Aún no está listo en su país: {operation}",
   "tillNotReadyHint": "No se numera ni se cobra nada mientras la operación del país no esté admitida.",
+  "tillNothingToReprint": "Aún no hay ninguna venta que reimprimir.",
   "tillOfflineBanner": "Sin conexión: solo efectivo. Las ventas se guardan en este dispositivo y se envían cuando vuelve la conexión.",
   "@tillOfflineBanner": {
     "description": "#4373 the till sells offline: the banner"
@@ -24480,6 +24481,7 @@
   "tillReadinessUnavailable": "No disponible",
   "tillReadinessUnconfirmed": "Aún no confirmada por un profesional fiscal.",
   "tillReadinessUnknownCountry": "El registro no nombra ninguna operación de caja para {country}: nada está admitido y la caja no vende nada.",
+  "tillReceiptCopy": "COPIA {n} — no es un tique nuevo",
   "tillReceiptCorrects": "Corrige el ticket {number}",
   "tillReceiptDisagrees": "Los importes de este ticket no concuerdan entre sí. Se muestra tal como se fijó; avise a su administración.",
   "tillReceiptIssuedUnder": "Emitido según: {specification} ({version})",

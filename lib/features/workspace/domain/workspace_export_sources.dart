@@ -451,6 +451,7 @@ const List<ExportSource> workspaceExportSources = [
   // #4184, #4185, #4367 — the counter: receipts, lines, tenders, refunds, tills, sessions, cash entries, day closes.
   ExportSource.everyColumn('counter_receipts'), ExportSource.everyColumn('counter_receipt_lines'), ExportSource.everyColumn('counter_tenders'), ExportSource.everyColumn('counter_refunds'),
   ExportSource.everyColumn('counter_tills'), ExportSource.everyColumn('counter_till_sessions'), ExportSource.everyColumn('counter_cash_entries'), ExportSource.everyColumn('counter_day_closes'), ExportSource.everyColumn('counter_offline_sales'),
+  ExportSource.everyColumn('counter_receipt_copies'), // #4476 — the copies printed of a receipt
   // #4362 — the tags bound to items, places and pieces, and the named pieces.
   ExportSource.everyColumn('stock_tags'), ExportSource.everyColumn('stock_tagged_units'),
   ExportSource.everyColumn('stock_handling_units'), ExportSource.everyColumn('stock_handling_unit_lines'), ExportSource.everyColumn('stock_handling_unit_pieces'), // #4435

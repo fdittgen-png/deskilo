@@ -42098,6 +42098,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non viene numerato né incassato nulla finché l\'operazione del paese non è supportata.';
 
   @override
+  String get tillNothingToReprint => 'Ancora nessuna vendita da ristampare.';
+
+  @override
   String get tillOfflineBanner =>
       'Offline: solo contanti. Le vendite restano su questo dispositivo e vengono inviate quando la connessione torna.';
 
@@ -42327,6 +42330,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String tillReadinessUnknownCountry(String country) {
     return 'Il registro non indica alcuna operazione di cassa per $country: nulla è supportato e la cassa non vende nulla.';
+  }
+
+  @override
+  String tillReceiptCopy(int n) {
+    return 'COPIA $n — non è un nuovo scontrino';
   }
 
   @override

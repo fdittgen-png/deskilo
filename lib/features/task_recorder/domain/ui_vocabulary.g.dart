@@ -16629,6 +16629,7 @@ const Set<String> uiLabelKeys = {
   'tillNextCustomer',
   'tillNotForCounter',
   'tillNotReadyHint',
+  'tillNothingToReprint',
   'tillOfflineBanner',
   'tillOfflineClosedSession',
   'tillOfflineDiscard',

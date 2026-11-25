@@ -3,7 +3,8 @@
 // #4476 -- a till line's price at the till: the line sends its changed price, its reason and its discount, and keeps
 // them through a new quantity; on the Demo till (the server's rules) a discount within the business's limit is taken off
 // the item's price and one beyond it is refused in words naming the limit, a changed price without its reason or
-// without the right is refused in words, and the line comes back to the item's price.
+// without the right is refused in words, and the line comes back to the item's price. A sale's receipt is printed again
+// as copy 1, then 2, never numbered again; the same request answers the same copy; a receipt not finalized has none.
 import 'package:deskilo/core/demo/data/demo_till.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/presentation/till_session.dart';
@@ -69,5 +70,18 @@ void main() {
     expect(await s.setPricing(0, discount: '0'), isFalse);
     expect(await s.setPricing(3, discount: '5'), isFalse);
     expect(_total(s), 210);
+  });
+
+  test('the last sale is printed again as copy 1, then 2; the same request answers the same copy', () async {
+    final s = await _basket();
+    await s.payCash(10000);
+    final receipt = s.lastSold!;
+    s.next();
+    expect(s.lastSold, receipt, reason: 'kept past the next customer');
+    final till = s.port as TillCopyPort;
+    expect(await till.copy('ws', requestId: 'c1', receiptId: receipt), 1);
+    expect(await till.copy('ws', requestId: 'c2', receiptId: receipt), 2);
+    expect(await till.copy('ws', requestId: 'c1', receiptId: receipt), 1);
+    await expectLater(till.copy('ws', requestId: 'c3', receiptId: 'no-such-receipt'), throwsA(isA<Object>()));
   });
 }

@@ -42227,6 +42227,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Rien n\'est numéroté ni encaissé tant que l\'opération du pays n\'est pas prise en charge.';
 
   @override
+  String get tillNothingToReprint =>
+      'Aucune vente à réimprimer pour l\'instant.';
+
+  @override
   String get tillOfflineBanner =>
       'Hors ligne — espèces uniquement. Les ventes sont conservées sur cet appareil et envoyées au retour de la connexion.';
 
@@ -42453,6 +42457,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String tillReadinessUnknownCountry(String country) {
     return 'Le registre ne nomme aucune opération de caisse pour $country : rien n\'est pris en charge et la caisse ne vend rien.';
+  }
+
+  @override
+  String tillReceiptCopy(int n) {
+    return 'DUPLICATA $n — pas un nouveau ticket';
   }
 
   @override

@@ -3249,6 +3249,8 @@ Alla cassa, i tasti agiscono come li ha posizionati. Il **tastierino numerico** 
 
 **Cambiare un prezzo** modifica il prezzo dell'ultima riga: digiti il nuovo prezzo (o prima sul tastierino) e un **Motivo**, che lo scontrino conserva accanto al prezzo dell'articolo. Serve il diritto **Modificare un prezzo alla cassa** (titolari e amministratori per impostazione predefinita); senza, la cassa lo dice e la riga resta al prezzo dell'articolo. **Sconto su una riga** toglie una percentuale dal prezzo dell'articolo dell'ultima riga, al massimo **Sconto massimo alla cassa** (0 per impostazione predefinita, cioè nessuno sconto alla cassa); uno sconto maggiore è rifiutato indicando il limite. Una riga prende uno sconto o un prezzo modificato, non entrambi. Una vendita che la cassa invia dopo aver venduto offline mantiene il suo prezzo, entro la tolleranza di prezzo offline.
 
+**Ristampare l'ultimo scontrino** mostra di nuovo lo scontrino dell'ultima vendita, contrassegnato **COPIA 1**, **COPIA 2** e così via. Una copia non prende mai un nuovo numero di scontrino, e ogni copia stampata viene contata.
+
 <!-- anchor: user.money.till-offline -->
 ### Quando la cassa è offline
 
