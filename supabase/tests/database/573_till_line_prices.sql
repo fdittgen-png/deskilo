@@ -3,9 +3,10 @@
 -- to change a price, with a reason, sets another. A cashier sells at the item's price (none sent, or the same one sent);
 -- a cashier's other price, or a line priced by hand, is refused (DKN01); the owner's other price needs a reason (DKL02)
 -- and keeps it with the list price; a discount is refused beyond the limit, taken off the item's price within it, and
--- never beside a price; a sale the offline till sends keeps its tolerance; the same request answers again. Rolled back.
+-- never beside a price; a body claiming to come offline gets no tolerance; a base quantity changes nothing of the price
+-- judged; the same request answers again. Rolled back.
 begin;
-select plan(14);
+select plan(16);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -82,10 +83,14 @@ select is(pg_temp.total(pg_temp.draft(2, 101, 908, null, null, pg_temp.item(', "
 select is(left(pg_temp.draft(2, 101, 909, null, null, pg_temp.item(', "discount_percent": "15"')), 9), 'ERR DKN01', 'beyond it the discount is refused');
 select is(pg_temp.draft(1, 101, 910, null, null, pg_temp.item(', "discount_percent": "5", "unit_price": "4", "price_reason": "x"')), 'ERR DKL02 {"reason": "price_and_discount"}', 'a line takes a discount or a price, not both');
 
--- the offline till: the price it held, within the business's tolerance
+-- the offline tolerance is the sync's own (555 and 570 run it); a body that only says it came offline gets none
 insert into public.setting_values (scope, workspace_id, key, value) values ('workspace', pg_temp.u(101), 'counter.offline_price_tolerance_percent', '10'::jsonb);
-select is(pg_temp.total(pg_temp.draft(2, 101, 911, null, null, '{"source_kind": "offline_till", "lines": [{"item_id": "' || pg_temp.u(301) || '", "quantity": "1", "unit_price": "5.2"}]}')), '520', 'a sale the offline till sends keeps a price within the tolerance');
-select is(pg_temp.draft(2, 101, 912, null, null, '{"source_kind": "offline_till", "lines": [{"item_id": "' || pg_temp.u(301) || '", "quantity": "1", "unit_price": "6"}]}'), 'ERR DKN01 {"reason": "price"}', 'and not one beyond it');
+select is(pg_temp.draft(2, 101, 911, null, null, '{"source_kind": "offline_till", "lines": [{"item_id": "' || pg_temp.u(301) || '", "quantity": "1", "unit_price": "5.2"}]}'), 'ERR DKN01 {"reason": "price"}', 'a body that says it came offline gets no tolerance');
+
+-- the price of one base unit is what is judged: a base quantity is no way around it
+select is(pg_temp.draft(2, 101, 912, null, null, pg_temp.item(', "base_quantity": "10"')), 'ERR DKN01 {"reason": "price"}', 'the item''s price over ten base units is another price');
+select is(pg_temp.total(pg_temp.draft(2, 101, 913, null, null, pg_temp.item(', "unit_price": "50", "base_quantity": "10"'))), '500', 'ten base units at ten times the price is the item''s price');
+select is(pg_temp.total(pg_temp.draft(2, 101, 914, null, null, pg_temp.item(', "discount_percent": "10", "base_quantity": "10"'))), '450', 'a discount sells per one base unit, whatever base quantity is sent');
 
 select * from finish();
 rollback;

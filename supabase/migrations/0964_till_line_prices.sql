@@ -9,11 +9,15 @@
 --   a line with a discount_percent   the item's price less that percent, rounded to the currency's minor unit; refused
 --                                    beyond counter.max_discount_percent (DKN01 {"reason": "discount_limit"}), with a price
 --                                    of its own (DKL02 {"reason": "price_and_discount"}) or without an item.
+--   any other line                   judged by the price one base unit sells at (the unit_price sent, or the item's, over
+--                                    the base_quantity sent); a discount sells per one base unit.
 --   a line with its own unit_price   the item's price needs nothing more; another price needs overrideTillPrice (DKN01
 --                                    {"reason": "price"}) and a price_reason of 1 to 200 characters (DKL02 {"reason":
 --                                    "price_reason"}); a line without an item, priced by hand, needs overrideTillPrice.
 --                                    A sale sent by the offline till keeps the tolerance of
---                                    counter.offline_price_tolerance_percent instead, as its sync checks.
+--                                    counter.offline_price_tolerance_percent instead: only inside counter_offline_sync_v1,
+--                                    patched below to mark its transaction (deskilo.counter_offline_sync); a body that
+--                                    only says source_kind offline_till gets no tolerance.
 --   every line                       keeps list_price (the item's price) beside the price sold, for the receipt.
 -- The draft's digest is taken from the body as sent, so the same request answers again unchanged.
 
@@ -33,6 +37,8 @@ declare
   v_max int := coalesce((public.setting_value(p_workspace_id, 'counter.max_discount_percent') #>> '{}')::int, 0);
   v_tolerance int := coalesce((public.setting_value(p_workspace_id, 'counter.offline_price_tolerance_percent') #>> '{}')::int, 0);
   v_reason text;
+  -- the offline tolerance holds only for the server's own sync (0944), which marks its transaction; a body's word is not enough
+  v_offline boolean := p_kind = 'offline_till' and coalesce(current_setting('deskilo.counter_offline_sync', true), '') = 'on';
 begin
   if coalesce(jsonb_typeof(p_lines), '') <> 'array' then
     return p_lines;   -- counter_lines_of names what is missing
@@ -68,17 +74,18 @@ begin
       end if;
       e := e || jsonb_build_object(
         'unit_price', trim_scale(round(v_item.price_cents * (100 - v_pct) / 100) / v_scale)::text,
+        'base_quantity', '1',
         'list_price', trim_scale(v_list)::text);
-    elsif coalesce(e ->> 'unit_price', '') <> '' then
+    else
+      -- the price one base unit sells at: the one sent, or the item's, over the base quantity sent (absent reads 1)
       begin
         v_base := coalesce(nullif(e ->> 'base_quantity', ''), '1')::numeric;
-        v_price := case when v_base > 0 then (e ->> 'unit_price')::numeric / v_base end;
+        v_price := case when v_base > 0 then coalesce(nullif(e ->> 'unit_price', '')::numeric, v_list) / v_base end;
       exception when invalid_text_representation or numeric_value_out_of_range or division_by_zero then
-        v_price := null;   -- counter_lines_of refuses a price it cannot read
+        v_price := null;   -- counter_lines_of refuses a price or a base quantity it cannot read
       end;
       if v_price is not null and (v_list is null or v_price <> v_list) then
-        if p_kind = 'offline_till' and v_list is not null and v_list > 0
-           and abs(v_price - v_list) * 100 <= v_tolerance * v_list then
+        if v_offline and v_list is not null and v_list > 0 and abs(v_price - v_list) * 100 <= v_tolerance * v_list then
           null;   -- the offline till sold at the price it held, within the business's tolerance
         else
           if not public.has_permission(p_workspace_id, 'overrideTillPrice') then
@@ -120,6 +127,17 @@ begin
   execute pg_temp.anchor_replace(v_def,
     'v_calc := public.counter_lines_of(p_workspace_id, p_body -> ''lines'', v_cur, v_basis, v_tp);',
     'v_calc := public.counter_lines_of(p_workspace_id, public.counter_line_prices(p_workspace_id, v_kind, p_body -> ''lines''), v_cur, v_basis, v_tp);');
+end
+$patch$;
+
+do $patch$
+declare
+  v_def text := pg_get_functiondef('public.counter_offline_sync_v1(uuid,uuid,timestamp with time zone,jsonb)'::regprocedure);
+begin
+  execute pg_temp.anchor_replace(v_def,
+    'v_draft := public.counter_receipt_draft_v1(p_workspace_id, v_req, null, null,',
+    'perform set_config(''deskilo.counter_offline_sync'', ''on'', true);
+        v_draft := public.counter_receipt_draft_v1(p_workspace_id, v_req, null, null,');
 end
 $patch$;
 
