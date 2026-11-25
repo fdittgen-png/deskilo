@@ -178,6 +178,14 @@ class _LaidOutState extends State<_LaidOut> {
           return OutlinedButton(key: key, onPressed: null, child: Text('${c.label}\n${l10n.tillLayoutGone}', textAlign: TextAlign.center));
         }
         return FilledButton.tonal(key: key, onPressed: () => _item(item), child: Text(item.name, textAlign: TextAlign.center));
+      case TillWidgetKind.categoryKey:
+        final target = c.targetPage;
+        final opens = target != null && target >= 0 && target < widget.layout.pages.length;
+        return FilledButton.tonal(
+          key: key,
+          onPressed: opens ? () => setState(() => _page = target) : null,
+          child: Text(c.label.isEmpty ? tillWidgetName(l10n, c.kind) : c.label, textAlign: TextAlign.center),
+        );
       case TillWidgetKind.functionKey:
         final f = c.function!;
         return FilledButton(key: key, onPressed: _function(f), child: Text(tillFunctionName(l10n, f), textAlign: TextAlign.center));

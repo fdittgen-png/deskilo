@@ -41862,6 +41862,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillLayoutChooseItem => 'Quale articolo?';
 
   @override
+  String get tillLayoutChoosePage => 'Quale pagina apre?';
+
+  @override
   String tillLayoutCopied(String till) {
     return 'Copiato come bozza di $till. Lo pubblichi lì.';
   }

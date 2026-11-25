@@ -41933,6 +41933,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillLayoutChooseItem => 'Welcher Artikel?';
 
   @override
+  String get tillLayoutChoosePage => 'Welche Seite öffnet sie?';
+
+  @override
   String tillLayoutCopied(String till) {
     return 'Als Entwurf von $till kopiert. Dort veröffentlichen.';
   }

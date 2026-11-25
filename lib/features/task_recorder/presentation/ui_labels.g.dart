@@ -4844,6 +4844,7 @@ Map<String, _Getter> _part10() => {
   'tillCashGiven': (l) => l.tillCashGiven,
   'tillDrawerLoadFailed': (l) => l.tillDrawerLoadFailed,
   'tillDrawerTillActive': (l) => l.tillDrawerTillActive,
+  'tillLayoutChoosePage': (l) => l.tillLayoutChoosePage,
   'tillLayoutKindCalculator': (l) => l.tillLayoutKindCalculator,
   'tillLayoutPublished': (l) => l.tillLayoutPublished,
   'tillLayoutStepDown': (l) => l.tillLayoutStepDown,

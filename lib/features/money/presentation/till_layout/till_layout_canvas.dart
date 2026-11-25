@@ -77,7 +77,7 @@ class TillLayoutCanvas extends StatelessWidget {
 String _cellLabel(AppLocalizations l10n, TillCell c) {
   final f = c.function;
   if (f != null) return tillFunctionName(l10n, f);
-  if (c.kind == TillWidgetKind.itemKey && c.label.isNotEmpty) return c.label;
+  if ((c.kind == TillWidgetKind.itemKey || c.kind == TillWidgetKind.categoryKey) && c.label.isNotEmpty) return c.label;
   return tillWidgetName(l10n, c.kind);
 }
 
@@ -134,16 +134,17 @@ Future<T?> _choose<T>(BuildContext context, List<(T, String, String)> choices, {
 );
 
 /// Asks which widget to add: a tool, a function key with its function, or an item key with an item of the business.
-Future<TillPickedWidget?> showTillWidgetPicker(BuildContext context, Future<List<ServiceItem>> Function() loadItems) async {
+Future<TillPickedWidget?> showTillWidgetPicker(BuildContext context, Future<List<ServiceItem>> Function() loadItems, {List<String> pages = const []}) async {
   final l10n = context.l10n;
   final kind = await _choose(context, [
     for (final k in TillWidgetKind.values)
-      if (k != TillWidgetKind.unknown && k != TillWidgetKind.categoryKey) (k, 'till-layout-add-${k.wire}', tillWidgetName(l10n, k)),
+      if (k != TillWidgetKind.unknown && (k != TillWidgetKind.categoryKey || pages.length > 1)) (k, 'till-layout-add-${k.wire}', tillWidgetName(l10n, k)),
   ]);
   if (kind == null || !context.mounted) return null;
   return switch (kind) {
     TillWidgetKind.functionKey => _pickFunction(context, kind),
     TillWidgetKind.itemKey => _pickItem(context, loadItems, kind),
+    TillWidgetKind.categoryKey => _pickPage(context, pages, kind),
     _ => (kind: kind, params: const <String, Object?>{}),
   };
 }
@@ -155,6 +156,14 @@ Future<TillPickedWidget?> _pickFunction(BuildContext context, TillWidgetKind kin
       if (f != TillFunction.unknown) (f, 'till-layout-fn-${f.wire}', tillFunctionName(l10n, f)),
   ]);
   return f == null ? null : (kind: kind, params: {tillCellFunctionParam: f.wire});
+}
+
+/// A category key opens another page of the layout: which one.
+Future<TillPickedWidget?> _pickPage(BuildContext context, List<String> pages, TillWidgetKind kind) async {
+  final page = await _choose(context, heading: context.l10n.tillLayoutChoosePage, [
+    for (var i = 0; i < pages.length; i++) (i, 'till-layout-page-pick-$i', pages[i]),
+  ]);
+  return page == null ? null : (kind: kind, params: tillCategoryKeyParams(page, pages[page]));
 }
 
 Future<TillPickedWidget?> _pickItem(BuildContext context, Future<List<ServiceItem>> Function() loadItems, TillWidgetKind kind) async {

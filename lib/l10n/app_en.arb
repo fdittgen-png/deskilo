@@ -54106,6 +54106,10 @@
   "@tillLayoutChooseItem": {
     "description": "#4448 the till layout editor"
   },
+  "tillLayoutChoosePage": "Which page does it open?",
+  "@tillLayoutChoosePage": {
+    "description": "#4448 a category key opens another page of the till layout"
+  },
   "tillLayoutCopied": "Copied as {till}'s draft. Publish it there.",
   "@tillLayoutCopied": {
     "description": "#4448 copying a till layout; till is the other till's name",

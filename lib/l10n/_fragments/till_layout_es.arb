@@ -54,5 +54,6 @@
   "tillLayoutCalcPush": "A la última línea",
   "tillLayoutCopy": "Copiar a otra caja",
   "tillLayoutCopied": "Copiado como borrador de {till}. Publíquelo allí.",
-  "tillLayoutCopyTo": "¿Copiar a qué caja?"
+  "tillLayoutCopyTo": "¿Copiar a qué caja?",
+  "tillLayoutChoosePage": "¿Qué página abre?"
 }

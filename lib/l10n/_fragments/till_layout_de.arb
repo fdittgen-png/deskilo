@@ -54,5 +54,6 @@
   "tillLayoutCalcPush": "Auf die letzte Zeile",
   "tillLayoutCopy": "Auf eine andere Kasse kopieren",
   "tillLayoutCopied": "Als Entwurf von {till} kopiert. Dort veröffentlichen.",
-  "tillLayoutCopyTo": "Auf welche Kasse kopieren?"
+  "tillLayoutCopyTo": "Auf welche Kasse kopieren?",
+  "tillLayoutChoosePage": "Welche Seite öffnet sie?"
 }

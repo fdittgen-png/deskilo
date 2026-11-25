@@ -66728,6 +66728,12 @@ abstract class AppLocalizations {
   /// **'Which item?'**
   String get tillLayoutChooseItem;
 
+  /// #4448 a category key opens another page of the till layout
+  ///
+  /// In en, this message translates to:
+  /// **'Which page does it open?'**
+  String get tillLayoutChoosePage;
+
   /// #4448 copying a till layout; till is the other till's name
   ///
   /// In en, this message translates to:

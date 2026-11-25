@@ -78,7 +78,7 @@ class _TillLayoutScreenState extends ConsumerState<TillLayoutScreen> {
   Future<void> _add() async {
     final grid = _edit.grid;
     if (grid == null) return;
-    final picked = await showTillWidgetPicker(context, _items);
+    final picked = await showTillWidgetPicker(context, _items, pages: [for (final p in _edit.layout!.pages) p.name]);
     if (picked == null || !mounted) return;
     final added = addCell(grid, picked.kind, params: picked.params);
     if (added == null) {

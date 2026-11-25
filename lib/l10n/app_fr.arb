@@ -24223,6 +24223,7 @@
   "tillLayoutCalcPush": "Sur la dernière ligne",
   "tillLayoutChooseFunction": "Quelle fonction ?",
   "tillLayoutChooseItem": "Quel article ?",
+  "tillLayoutChoosePage": "Quelle page ouvre-t-elle ?",
   "tillLayoutCopied": "Copiée comme brouillon de {till}. Publiez-la là-bas.",
   "tillLayoutCopy": "Copier sur une autre caisse",
   "tillLayoutCopyTo": "Copier sur quelle caisse ?",

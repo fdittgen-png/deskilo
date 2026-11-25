@@ -110,6 +110,28 @@ void main() {
     expect(_session.state.value.lines.last.quantity, '6');
   });
 
+  testWidgets('a category key opens the page it names', (tester) async {
+    final store = DemoTillLayouts(items: {'demo-item-milk'});
+    TillGrid grid(List<TillCell> cells) => TillGrid(cols: 2, rows: 1, cells: cells);
+    final layout = TillLayout(name: 'Bar', pages: [
+      TillPage(name: 'Drinks', grids: {for (final s in TillLayoutSize.values) s: grid([
+        TillCell(kindWire: TillWidgetKind.categoryKey.wire, col: 0, row: 0, params: tillCategoryKeyParams(1, 'To food')),
+      ])}),
+      TillPage(name: 'Food', grids: {for (final s in TillLayoutSize.values) s: grid([
+        TillCell(kindWire: TillWidgetKind.itemKey.wire, col: 0, row: 0, params: tillItemKeyParams('demo-item-milk', 'Oat milk')),
+      ])}),
+    ]);
+    await tester.runAsync(() async {
+      final v = await store.save('ws-1', requestId: 'c1', tillId: _till, layout: layout, expectedVersion: 0);
+      await store.publish('ws-1', requestId: 'c2', tillId: _till, expectedVersion: v);
+    });
+    await _open(tester, store, on: true);
+    expect(find.text('Oat milk'), findsNothing);
+    await tester.tap(find.text('To food'));
+    await tester.pump();
+    expect(find.text('Oat milk'), findsOneWidget);
+  });
+
   testWidgets('with till layouts off, the till keeps its generated keys', (tester) async {
     await _open(tester, await tester.runAsync(_published) as DemoTillLayouts, on: false);
     expect(find.byKey(const ValueKey('till-keys')), findsOneWidget);

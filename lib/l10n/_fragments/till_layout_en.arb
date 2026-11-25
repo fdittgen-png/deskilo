@@ -232,5 +232,9 @@
   "tillLayoutCopyTo": "Copy to which till?",
   "@tillLayoutCopyTo": {
     "description": "#4448 copying a till layout to another till"
+  },
+  "tillLayoutChoosePage": "Which page does it open?",
+  "@tillLayoutChoosePage": {
+    "description": "#4448 a category key opens another page of the till layout"
   }
 }
