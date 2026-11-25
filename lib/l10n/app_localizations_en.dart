@@ -41928,7 +41928,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String tillReceiptCopy(int copy) {
+  String tillReceiptCopy(String copy) {
     return 'COPY $copy — not a new receipt';
   }
 

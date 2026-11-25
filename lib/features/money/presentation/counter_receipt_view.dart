@@ -34,7 +34,7 @@ List<String> _counterReceiptLines(AppLocalizations l10n, AppFormat format, Count
   final corrects = doc.corrects;
   final op = doc.operation;
   return [
-    if (copy != null) l10n.tillReceiptCopy(copy),
+    if (copy != null) l10n.tillReceiptCopy('$copy'),
     l10n.tillReceiptNumber(doc.number),
     if (doc.issuedAt != null) format.dateTime(doc.issuedAt!),
     if (corrects != null) l10n.tillReceiptCorrects(corrects.number),

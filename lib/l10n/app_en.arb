@@ -54698,10 +54698,10 @@
   },
   "tillReceiptCopy": "COPY {copy} — not a new receipt",
   "@tillReceiptCopy": {
-    "description": "#4476 a receipt printed again; copy is its number among the copies (an ordinal label, not a count)",
+    "description": "#4476 a receipt printed again; copy is its number among the copies, a label (1, 2, ...)",
     "placeholders": {
       "copy": {
-        "type": "int"
+        "type": "String"
       }
     }
   },

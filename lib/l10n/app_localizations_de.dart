@@ -42398,7 +42398,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String tillReceiptCopy(int copy) {
+  String tillReceiptCopy(String copy) {
     return 'KOPIE $copy — kein neuer Beleg';
   }
 

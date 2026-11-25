@@ -42332,7 +42332,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String tillReceiptCopy(int copy) {
+  String tillReceiptCopy(String copy) {
     return 'COPIA $copy — non è un nuovo scontrino';
   }
 

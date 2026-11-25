@@ -42459,7 +42459,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String tillReceiptCopy(int copy) {
+  String tillReceiptCopy(String copy) {
     return 'DUPLICATA $copy — pas un nouveau ticket';
   }
 

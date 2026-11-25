@@ -188,7 +188,7 @@ void main() {
     expect(_session.lastSold, isNotNull);
     await tester.tap(find.text(_en.tillLayoutFnReprint));
     await tester.pumpAndSettle();
-    expect(find.text(_en.tillReceiptCopy(1)), findsOneWidget);
+    expect(find.text(_en.tillReceiptCopy('1')), findsOneWidget);
   });
 
   testWidgets('with till layouts off, the till keeps its generated keys', (tester) async {

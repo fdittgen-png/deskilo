@@ -67494,11 +67494,11 @@ abstract class AppLocalizations {
   /// **'The registry names no counter operation for {country}: nothing is supported, and the till sells nothing.'**
   String tillReadinessUnknownCountry(String country);
 
-  /// #4476 a receipt printed again; copy is its number among the copies (an ordinal label, not a count)
+  /// #4476 a receipt printed again; copy is its number among the copies, a label (1, 2, ...)
   ///
   /// In en, this message translates to:
   /// **'COPY {copy} — not a new receipt'**
-  String tillReceiptCopy(int copy);
+  String tillReceiptCopy(String copy);
 
   /// #4184 the counter receipt document; the number is a reference
   ///

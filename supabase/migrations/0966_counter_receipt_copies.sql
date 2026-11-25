@@ -84,6 +84,7 @@ grant execute on function public.counter_receipt_copy_v1(uuid, uuid, uuid) to au
 
 -- the copies go out with the business's records: export_workspace_records restated from 0951 (its live definition; nothing
 -- patched it since) with 'counter_receipt_copies' added to its tables, nothing else changed
+-- restates 0951
 create or replace function public.export_workspace_records(p_workspace_id uuid)
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 declare
