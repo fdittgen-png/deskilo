@@ -1140,6 +1140,7 @@ const Set<String> uiKeys = {
   'demo-seat-s2',
   'demo-series-bruno',
   'demo-service-charge',
+  'demo-service-day-desk',
   'demo-setup-card',
   'demo-setup-details',
   'demo-setup-reset',

@@ -13,6 +13,7 @@ import 'package:deskilo/features/money/domain/counter_book.dart';
 import 'package:deskilo/features/money/domain/counter_receipt_document.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/domain/till_offline.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../codes/dk_code.dart';
@@ -37,6 +38,7 @@ const _beansName = 'Coffee beans';
 const _unstocked = <String, int>{'demo-item-shirt': 1900, 'demo-item-basket': 3900, 'demo-item-apples': 1800, demoDayDeskItem: 2500};
 
 /// #4185 -- the service the Demo's counter sells: a day at a hot desk, no stock behind it.
+@visibleForTesting
 const demoDayDeskItem = 'demo-service-day-desk';
 
 /// One registry row of the declared case `none`, as `counter_country_operations` carries it (0893).
