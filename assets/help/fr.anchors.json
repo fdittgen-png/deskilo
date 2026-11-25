@@ -141,6 +141,7 @@
   "user.money.stock.nfc": "Puces avec le NFC du téléphone",
   "user.money.till": "Caisse",
   "user.money.till-drawer": "Ouvrir la caisse, compter et fermer",
+  "user.money.till-layout": "Disposer votre caisse",
   "user.money.till-offline": "Quand la caisse est hors ligne",
   "user.money.till.receipts": "Tickets et réponses de carte à la caisse",
   "user.money.stock.rfid": "Puces RFID : une par lot ou une par pièce",

@@ -819,6 +819,19 @@ Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade**
 
 **Tagesabschluss.** Wer die Finanzen sehen darf, öffnet **Tagesabschluss** in der Kassenschublade und tippt auf **Tag abschließen**, sobald jede Kasse geschlossen ist (eine noch offene Kasse wird genannt und verweigert den Abschluss). Die geschlossenen Sitzungen des Tages werden zu einem nummerierten Bericht: jede Sitzung mit Erwartetem, Gezähltem, Differenz und Grund, die Einnahmen nach Zahlungsart und Steuersatz, das ein- und entnommene Bargeld, die Erstattungen und der Bereich der Belegnummern. **Abgeschlossene Tage** listet die bereits erstellten Berichte; ein abgeschlossener Tag wird nie geändert. Das ist die eigene Aufzeichnung des Betriebs; den rechtlichen Inhalt, den ein Land vom Tagesabschluss verlangt, liefert ein eigenes Modul.
 
+<!-- anchor: user.money.till-layout -->
+### Ihre Kasse gestalten
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie verkaufen an einer Theke und möchten, dass die Kasse zu Ihrem Verkauf passt: große Tasten für gewogenes Brot, Kategorieseiten für eine Bar, zuerst ein Scanfeld für einen Baumarkt.
+
+Schalten Sie **Kassenlayouts** ein (setzt Kassensitzungen voraus). In **Kassenschublade** drückt jemand, der die Kassen gestalten darf (standardmäßig Inhaber und Administratoren), die Layout-Schaltfläche einer Kasse. Eine Kasse ohne Layout beginnt mit einer Vorlage: **Einzelhandel**, **Bäckerei und Wiegeware**, **Café und Bar**, **Studiotheke** oder **Baumarkt und Katalog** (#4448).
+
+Das Layout hat ein Raster für jede Breite, in der die Kasse benutzt wird: **Telefonbreite**, **Tabletbreite** und **Desktopbreite**. **Element hinzufügen** setzt eine Artikeltaste, eine Funktionstaste (etwa **Bar kassieren** oder **Nächster Kunde**), einen Ziffernblock, einen Rechner, den Warenkorb, Summe und Rückgeld oder ein anderes Werkzeug an den ersten freien Platz, an den es passt. Tippen Sie ein Element an, um es auszuwählen; die Schaltflächen unter dem Raster verschieben es und machen es Schritt für Schritt breiter, schmaler, höher oder niedriger. Ein Schritt, der das Raster verlassen, auf einem anderen Element liegen oder ein Werkzeug zu klein machen würde, wird nicht angeboten.
+
+**Speichern** behält einen Entwurf; **An die Kasse veröffentlichen** macht ihn zum Layout der Kasse. Eine bereits geöffnete Kasse behält ihr Layout bis zur nächsten Sitzung: Die Kasse ändert sich nie während eines laufenden Verkaufs. Hat jemand anderes das Layout geändert, seit Sie es geöffnet haben, wird das Speichern mit **Jemand hat dieses Layout geändert; laden Sie es neu.** abgelehnt. Ein Layout, das der Server nicht annehmen kann, wird mit seinem ersten Problem abgelehnt. Eine Kasse ohne veröffentlichtes Layout behält die Tasten, die sie aus Ihren Artikeln erzeugt.
+
 <!-- anchor: user.money.till-offline -->
 ### Wenn die Kasse offline ist
 

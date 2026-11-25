@@ -3086,6 +3086,18 @@ Appuyez sur **Ouvrir la caisse**, saisissez le **Fond de caisse** (ou, si votre 
 
 **Clôture de la journée.** Une personne qui peut voir les finances ouvre **Clôture de la journée** depuis le tiroir-caisse et appuie sur **Clôturer la journée** quand chaque caisse est fermée (une caisse encore ouverte est nommée et refuse la clôture). Les sessions fermées du jour forment un rapport numéroté : chaque session avec l'attendu, le compté, l'écart et son motif, les encaissements par moyen de paiement et par taux de taxe, les espèces entrées et sorties, les remboursements et la plage des numéros de tickets. **Journées clôturées** liste les rapports déjà faits ; une journée clôturée ne change jamais. C'est le registre propre de l'entreprise ; le contenu légal qu'un pays demande à une clôture de journée vient avec son propre module.
 
+### Disposer votre caisse
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous vendez au comptoir et voulez une caisse adaptée à votre façon de vendre : de grandes touches pour le pain pesé, des pages par catégorie pour un bar, un champ de scan d'abord pour une quincaillerie.
+
+Activez **Dispositions de caisse** (il faut les sessions de caisse). Dans **Tiroir-caisse**, une personne qui peut disposer les caisses (par défaut les propriétaires et les administrateurs) appuie sur le bouton de disposition d'une caisse. Une caisse sans disposition part d'un modèle : **Commerce**, **Boulangerie et produits pesés**, **Café et bar**, **Accueil de studio** ou **Quincaillerie et catalogue** (#4448).
+
+La disposition a une grille pour chaque largeur où la caisse est utilisée : **Largeur téléphone**, **Largeur tablette** et **Largeur bureau**. **Ajouter un élément** place une touche article, une touche de fonction (comme **Encaisser en espèces** ou **Client suivant**), un pavé numérique, une calculatrice, le panier, le total et la monnaie ou un autre outil à la première place libre où il tient. Touchez un élément pour le sélectionner ; les boutons sous la grille le déplacent et l'élargissent, le rétrécissent, l'allongent ou le raccourcissent d'un pas à la fois. Un pas qui sortirait de la grille, chevaucherait un autre élément ou rendrait un outil trop petit n'est pas proposé.
+
+**Enregistrer** garde un brouillon ; **Publier sur la caisse** en fait la disposition de la caisse. Une caisse déjà ouverte garde sa disposition jusqu'à sa prochaine session : la caisse ne change jamais pendant une vente. Si quelqu'un d'autre a modifié la disposition depuis que vous l'avez ouverte, l'enregistrement est refusé avec **Quelqu'un a modifié cette disposition ; rechargez-la.** Une disposition que le serveur ne peut pas accepter est refusée avec son premier problème. Une caisse sans disposition publiée garde les touches qu'elle génère à partir de vos articles.
+
 ### Quand la caisse est hors ligne
 
 **Public:** Administrateur·rice · Propriétaire

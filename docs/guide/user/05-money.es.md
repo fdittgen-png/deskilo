@@ -819,6 +819,19 @@ Pulse **Abrir la caja**, escriba el **Fondo del cajón** (o, si su negocio cuent
 
 **Cierre del día.** Quien puede ver las finanzas abre **Cierre del día** desde el cajón de caja y pulsa **Cerrar el día** cuando cada caja está cerrada (una caja aún abierta se nombra y rechaza el cierre). Las sesiones cerradas del día forman un informe numerado: cada sesión con lo esperado, lo contado, la diferencia y su motivo, los cobros por medio de pago y por tipo de impuesto, el efectivo entrado y salido, los reembolsos y el rango de números de tickets. **Días cerrados** lista los informes ya hechos; un día cerrado no se cambia nunca. Es el registro propio del negocio; el contenido legal que un país exige al cierre del día llega con su propio módulo.
 
+<!-- anchor: user.money.till-layout -->
+### Organizar su caja
+
+**Público:** Administrador/a · Propietario
+
+Vende en un mostrador y quiere que la caja se adapte a su forma de vender: teclas grandes para el pan pesado, páginas por categoría para un bar, primero un campo de escaneo para una ferretería.
+
+Active **Diseños de caja** (requiere las sesiones de caja). En **Cajón de caja**, alguien que puede organizar las cajas (por defecto propietarios y administradores) pulsa el botón de diseño de una caja. Una caja sin diseño parte de una plantilla: **Comercio**, **Panadería y productos pesados**, **Cafetería y bar**, **Recepción de estudio** o **Ferretería y catálogo** (#4448).
+
+El diseño tiene una cuadrícula para cada ancho en que se usa la caja: **Ancho de teléfono**, **Ancho de tableta** y **Ancho de escritorio**. **Añadir un elemento** coloca una tecla de artículo, una tecla de función (como **Cobrar en efectivo** o **Siguiente cliente**), un teclado numérico, una calculadora, la cesta, el total y el cambio u otra herramienta en el primer sitio libre donde cabe. Toque un elemento para seleccionarlo; los botones bajo la cuadrícula lo mueven y lo hacen más ancho, más estrecho, más alto o más bajo paso a paso. No se ofrece un paso que saldría de la cuadrícula, se superpondría a otro elemento o dejaría una herramienta demasiado pequeña.
+
+**Guardar** conserva un borrador; **Publicar en la caja** lo convierte en el diseño que usa la caja. Una caja ya abierta conserva su diseño hasta su próxima sesión: la caja nunca cambia durante una venta. Si otra persona cambió el diseño desde que lo abrió, se rechaza el guardado con **Alguien ha cambiado este diseño; vuelva a cargarlo.** Un diseño que el servidor no puede aceptar se rechaza con su primer problema. Una caja sin diseño publicado conserva las teclas que genera a partir de sus artículos.
+
 <!-- anchor: user.money.till-offline -->
 ### Cuando la caja está sin conexión
 
