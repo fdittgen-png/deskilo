@@ -1,34 +1,64 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4166 -- the lines of a SENT quote revision as the server froze them: the
-// invoice line snapshot, read for what the customer was offered (its words and
-// exact facts) and for what each line comes to (its frozen amounts and rate).
+// invoice line snapshot, decoded ONCE by the package's own decoder
+// (`invoiceLineFromSnapshot`), then read for what the customer was offered
+// (its words and exact facts) and for what each line comes to (its frozen
+// amounts and rate). No second reader of the snapshot lives here.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
 import 'standalone_invoice.dart';
 
-/// A line of a sent revision as the server froze it: the invoice line
-/// snapshot, whose words are `label` and whose quantity, unit and price are the
-/// exact facts of its `commercial` member. A line without one reads as what it
-/// has, never as a failure.
-StandaloneLine frozenQuoteLine(JsonReader r) {
-  final facts = r.objectOrNull('commercial');
-  final unit = facts?.objectOrNull('unit');
-  final price = facts?.objectOrNull('unit_price');
+/// Reads one frozen line of a sent revision, or refuses it: a line whose
+/// `commercial` member the package cannot interpret is a read failure
+/// ([JsonShapeException], worded by the screen's read-failure path), never a
+/// line worth nothing. Only a text line (no member, no amount) stands as its
+/// label.
+InvoiceLine requireFrozenLine(InvoiceLine line, int index) {
+  final facts = line.commercial;
+  if (facts is CommercialLineV1) return line;
+  if (facts == null && line.amountCents == 0 && line.netCents == null) return line;
+  throw JsonShapeException(
+    'customer_quote_v1',
+    'lines[$index].commercial',
+    'a version 1 line',
+    switch (facts) {
+      CommercialLineUnsupported(:final reason, :final field) =>
+        field.isEmpty ? reason.name : '${reason.name}:$field',
+      _ => 'a line with amounts and no frozen facts',
+    },
+  );
+}
+
+/// A line of a sent revision as the server froze it: its words are `label`,
+/// and its quantity, unit and price are the exact facts of its `commercial`
+/// member (see [requireFrozenLine]); a text line reads as its label alone.
+StandaloneLine frozenQuoteLine(InvoiceLine line) {
+  final facts = line.commercial;
+  if (facts is! CommercialLineV1) {
+    return StandaloneLine(
+      description: line.label,
+      quantity: '',
+      unitCode: '',
+      unitLabel: '',
+      unitPrice: '',
+    );
+  }
   return StandaloneLine(
-    lineId: facts?.stringOrNull('line_id'),
-    description: r.stringOr('label'),
-    quantity: facts?.stringOr('quantity') ?? '',
-    unitCode: unit?.stringOr('code') ?? '',
-    unitLabel: unit?.stringOr('label') ?? '',
-    unEceCode: unit?.stringOr('un_ece_code') ?? '',
-    unitPrice: price?.stringOr('amount') ?? '',
-    grossPrice: price?.stringOr('basis') == 'gross',
-    baseQuantity: price?.stringOr('base_quantity', '1') ?? '1',
-    supply: r.stringOr('supply', 'general'),
+    lineId: facts.lineId.isEmpty ? null : facts.lineId,
+    description: line.label,
+    quantity: facts.quantity.text,
+    unitCode: facts.unit.code,
+    unitLabel: facts.unit.label,
+    unEceCode: facts.unit.unEceCode,
+    unitPrice: facts.unitPrice.amount.text,
+    grossPrice: facts.unitPrice.gross,
+    baseQuantity: facts.unitPrice.baseQuantity.text,
+    supply: facts.supply.wire,
     // #4433 -- a goods line keeps the item it sells beside the frozen facts
-    itemId: r.objectOrNull('stock')?.stringOrNull('item_id'),
+    itemId: facts.itemId.isEmpty ? null : facts.itemId,
   );
 }
 
@@ -43,14 +73,14 @@ class QuoteLineAmounts {
     required this.vatPercent,
   });
 
-  factory QuoteLineAmounts.fromJson(JsonReader r) {
-    final amounts = r.objectOrNull('commercial')?.objectOrNull('amounts');
-    int minor(String key) => int.tryParse(amounts?.stringOr(key) ?? '') ?? 0;
+  factory QuoteLineAmounts.of(InvoiceLine line) {
+    final facts = line.commercial;
+    final amounts = facts is CommercialLineV1 ? facts.amounts : null;
     return QuoteLineAmounts(
-      netCents: minor('net_minor'),
-      taxCents: minor('tax_minor'),
-      grossCents: minor('gross_minor'),
-      vatPercent: r.doubleOrNull('vat_percent') ?? 0,
+      netCents: amounts?.netMinor ?? 0,
+      taxCents: amounts?.taxMinor ?? 0,
+      grossCents: amounts?.grossMinor ?? 0,
+      vatPercent: line.vatPercent,
     );
   }
 

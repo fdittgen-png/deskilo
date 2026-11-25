@@ -5,6 +5,7 @@
 // issuer's recorded decision and the one conversion into an invoice. Nothing
 // here computes an amount: a draft has no total, a sent revision carries the
 // totals the real issuer froze, and expiry is the server's derived answer.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
@@ -63,31 +64,37 @@ class QuoteRevision {
     this.amounts = const [],
   });
 
-  factory QuoteRevision.fromJson(JsonReader r) => QuoteRevision(
+  factory QuoteRevision.fromJson(JsonReader r) {
+    final sent = r.stringOr('status') == 'sent';
+    // A SENT revision is the invoice line snapshot the issuer froze, decoded
+    // once by the package; the working draft keeps the lines as entered.
+    final frozen = sent
+        ? [
+            for (final (i, l) in r.objects('lines', (row) => invoiceLineFromSnapshot(row.json)).indexed)
+              requireFrozenLine(l, i),
+          ]
+        : const <InvoiceLine>[];
+    return QuoteRevision(
     revision: r.integer('revision'),
-    sent: r.stringOr('status') == 'sent',
+    sent: sent,
     draftVersion: r.integer('draft_version'),
     issuedOn: DateTime.parse(r.string('issued_on')),
     validUntil: DateTime.parse(r.string('valid_until')),
     buyerReference: r.stringOr('buyer_reference'),
     purchaseOrder: r.stringOr('purchase_order'),
     notes: r.stringOr('notes'),
-    // The working draft keeps the lines as they were entered; a SENT revision
-    // is the invoice line snapshot the issuer froze (label, commercial facts).
-    lines: r.objects(
-      'lines',
-      r.stringOr('status') == 'sent' ? frozenQuoteLine : StandaloneLine.fromJson,
-    ),
+    lines: sent
+        ? [for (final l in frozen) frozenQuoteLine(l)]
+        : r.objects('lines', StandaloneLine.fromJson),
     // What each frozen line comes to, in the order of [lines]; none for a draft.
-    amounts: r.stringOr('status') == 'sent'
-        ? r.objects('lines', QuoteLineAmounts.fromJson)
-        : const [],
+    amounts: [for (final l in frozen) QuoteLineAmounts.of(l)],
     totals: r.objectOrNull('totals') == null
         ? null
         : QuoteTotals.fromJson(r.objectOrNull('totals')!),
     contentDigest: r.stringOr('content_digest'),
     superseded: r.isTrue('superseded'),
   );
+  }
 
   final int revision;
 

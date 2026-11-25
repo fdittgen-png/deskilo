@@ -218,10 +218,15 @@ void main() {
         'supply': 'general',
         'vat_percent': pct,
         'commercial': {
+          'version': 1,
+          'line_id': 'L-$label',
           'quantity': '1',
           'unit': {'code': 'unit', 'label': 'x'},
-          'unit_price': {'amount': net, 'basis': 'net', 'base_quantity': '1'},
+          'unit_price': {'amount': net, 'currency': 'EUR', 'basis': 'net', 'base_quantity': '1'},
+          'supply': 'general',
+          'tax_facts': <String, Object?>{},
           'amounts': {
+            'currency': 'EUR',
             'net_minor': net,
             'tax_minor': tax,
             'gross_minor': '${int.parse(net) + int.parse(tax)}',
