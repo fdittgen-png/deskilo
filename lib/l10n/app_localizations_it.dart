@@ -37199,22 +37199,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockItemEditDetails => 'Modifica nome, prezzo e IVA';
 
   @override
-  String get stockItemEditGroup => 'Cambiare gruppo';
+  String get stockItemEditGroup => 'Modifica il gruppo';
 
   @override
-  String get stockItemEditHome => 'Cambiare l’ubicazione abituale';
+  String get stockItemEditHome => 'Modifica l’ubicazione abituale';
 
   @override
-  String get stockItemEditSettings => 'Modificare unità, codici e tracciamento';
+  String get stockItemEditSettings => 'Modifica unità, codici e tracciamento';
 
   @override
-  String get stockItemEditSuppliers => 'Modificare gli articoli del fornitore';
+  String get stockItemEditSuppliers => 'Modifica gli articoli del fornitore';
 
   @override
-  String get stockItemEditTags => 'Modificare i tag';
+  String get stockItemEditTags => 'Modifica i tag';
 
   @override
-  String get stockItemEditVariants => 'Modificare le varianti';
+  String get stockItemEditVariants => 'Modifica le varianti';
 
   @override
   String get stockItemFactBarcode => 'Codice a barre';
@@ -37304,7 +37304,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockItemSectionVariants => 'Varianti';
 
   @override
-  String get stockItemSeeWhere => 'Vedere tutte le ubicazioni';
+  String get stockItemSeeWhere => 'Tutte le ubicazioni';
 
   @override
   String get stockItemsEmpty =>

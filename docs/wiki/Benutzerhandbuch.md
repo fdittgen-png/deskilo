@@ -3145,12 +3145,35 @@ Die **Meldebestände** (unter den beiden Listen) machen einen Artikel knapp. Jed
 
 Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es ist, was es kostet und einbringt, wohin es gehört und wie viel es gibt.
 
-Öffnen Sie **Lager → Artikel**. Jede Zeile zeigt **Barcode**, **Einheit**, **Preis** (den Verkaufspreis aus dem Katalog), **zuletzt bekannte Kosten**, **festen Lagerort** und den **Bestand**. Die Kosten erscheinen nur, wenn Ihre Rolle Finanzen sehen oder Einkäufe verwalten darf; sonst steht in der Zeile *Kosten nicht angezeigt*. Kosten, die noch keine Lieferung geliefert hat, bleiben *Kosten unbekannt*, nie null.
+Öffnen Sie **Lager → Artikel**. Jede Zeile zeigt den Namen des Artikels, darunter seinen Preis, den Bestand und seinen festen Lagerort, und ein Abzeichen, wenn dem Artikel etwas fehlt: *Niedriger Bestand*, *Kein Preis* oder *Kein Lagerort*. Die Zeile trägt keine Tasten: Tippen Sie sie an, um den Artikel zu öffnen, wo alles über ihn steht und geändert wird ([Die Seite eines Artikels](#die-seite-eines-artikels)).
 
-- **Fester Lagerort**: Tippen Sie auf das Orts-Symbol einer Zeile, um zu sagen, wohin der Artikel gehört: Gang, Fach oder Behälter. Eine Variante ohne eigenen festen Lagerort hat den ihres Artikels. Es ist ein Hinweis für Einlagerung, Zählung und Kommissionierung: Bestand kann anderswo liegen, und eine Änderung bewegt nichts und schreibt keine Historie um.
-- **Filtern** Sie nach einem Lagerort, um zu sehen, was dort und darunter eingelagert ist, oder schalten Sie *Nur Artikel ohne festen Lagerort* ein, um zu sehen, was noch einen braucht.
+- **Filtern** Sie nach einem Lagerort, um zu sehen, was dort und darunter eingelagert ist, oder wählen Sie den Chip *Ohne festen Lagerort*, um zu sehen, was noch einen braucht.
 - **Suchen** Sie nach Name, Barcode oder Adresse. Einen Barcode in die Suche eingeben oder scannen und bestätigen öffnet diesen Artikel.
 - Lange Listen werden seitenweise geladen: Wählen Sie *Mehr anzeigen*.
+- Die zuletzt bekannten Kosten erscheinen auf der Seite des Artikels nur, wenn Ihre Rolle Finanzen sehen oder Einkäufe verwalten darf; sonst steht dort *Kosten nicht angezeigt*. Kosten, die noch keine Lieferung geliefert hat, bleiben *Kosten unbekannt*, nie null.
+
+<!-- anchor: user.money.stock.item -->
+### Die Seite eines Artikels
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten alles über einen Artikel an einem Ort sehen und jeden Teil dort ändern, wo Sie ihn lesen.
+
+Tippen Sie einen Artikel unter **Lager → Artikel** an. Auf einem Telefon öffnet er sich als eigene Seite; auf einem quer gehaltenen Tablet oder einem Computer öffnet er sich neben der Liste, die ihre Suche und Filter behält. Jeder Teil der Seite hat seine eigene Aktion, benannt nach dem, was sie ändert:
+
+- **Übersicht**: Preis, MwSt., Einheit, Barcode und zuletzt bekannte Kosten. **Name, Preis und MwSt. bearbeiten** öffnet den Editor der Leistung.
+- **Bestand**: der Bestand und der feste Lagerort des Artikels oder jeder Variante, und **Wo er liegt**: die ersten Orte, an denen er liegt (**Alle Orte ansehen** zeigt alle). **Festen Lagerort ändern** sagt, wohin der Artikel gehört: Gang, Fach oder Behälter. Es ist ein Hinweis für Einlagerung, Zählung und Kommissionierung: Bestand kann anderswo liegen, und eine Änderung bewegt nichts. **Einheiten, Codes und Verfolgung bearbeiten** öffnet die Lagereinstellungen des Artikels.
+- **Gruppe und Tags**, wo das Unternehmen sie nutzt: die Gruppe des Artikels. **Gruppe ändern** verschiebt ihn und zeigt, woher jede Einstellung kommt; **Tags bearbeiten** bindet seine Tags oder nimmt sie außer Dienst.
+- **Varianten**: die Varianten im Verkauf mit ihren eigenen Preisen. **Varianten bearbeiten** fügt welche hinzu oder ändert sie.
+- **Lieferantenartikel**: die Artikel von Lieferanten, die auf diesen Artikel verweisen. **Lieferantenartikel bearbeiten** ordnet einen weiteren zu.
+
+**Gut zu wissen**
+
+- **Name, Preis und MwSt. bearbeiten** braucht das Recht, Leistungen zu verwalten; jede andere Aktion das Recht, das Lager zu verwalten. Wer das Lager nur sehen darf, liest Übersicht, Bestand und Varianten ohne Aktion.
+- Die Abzeichen oben auf der Seite nennen, was dem Artikel noch fehlt.
+- Nach dem Speichern zeigt die Seite den neuen Wert sofort, die Liste ebenso.
+
+**Siehe auch:** [Das Artikelregister](#das-artikelregister) · [Artikelgruppen](#artikelgruppen)
 
 <!-- anchor: user.money.stock.groups -->
 ### Artikelgruppen
@@ -3161,7 +3184,7 @@ Sie möchten einmal festlegen, was eine Familie von Artikeln gemeinsam hat – w
 
 Öffnen Sie **Lager → Artikelgruppen** (dafür ist die Funktion *Artikelgruppen* unter der Lagerverwaltung nötig). Eine Gruppe hat einen Namen, steht oben oder in einer anderen Gruppe (eine Ebene Untergruppen, nicht mehr) und trägt die Einstellungen, die Sie wählen: **Nachverfolgung**, **Haltbarkeit**, **Tag-Modus**, **Lagereinheit**, **Zählen alle n Tage**, **Mindestalter** und **Nach Gewicht verkauft**. Eine Einstellung, die Sie auf *Nicht festgelegt* lassen, wird auf dieser Ebene nicht entschieden.
 
-- **Ein Artikel folgt seiner Gruppe, solange er keinen eigenen Wert hat.** Es gilt der eigene Wert des Artikels, sonst der seiner Untergruppe, sonst der seiner Gruppe. Öffnen Sie **Gruppe und geerbte Einstellungen** eines Artikels (das Ordner-Symbol in seiner Zeile unter **Lager → Artikel**), um zu sehen, woher jede Einstellung kommt (*Von Getränke seit 3. Dez.* oder *Eigener Wert*), ihn in eine andere Gruppe zu verschieben und einen eigenen Wert mit **Wert der Gruppe verwenden** zurückzugeben. In den **Lagereinstellungen** des Artikels steht *Eigener Wert* neben einer Einstellung, bei der der Artikel gegenüber seiner Gruppe einen eigenen Wert behält (Nachverfolgung, Haltbarkeit, Bestandseinheit).
+- **Ein Artikel folgt seiner Gruppe, solange er keinen eigenen Wert hat.** Es gilt der eigene Wert des Artikels, sonst der seiner Untergruppe, sonst der seiner Gruppe. Öffnen Sie einen Artikel unter **Lager → Artikel** und wählen Sie **Gruppe ändern**, um zu sehen, woher jede Einstellung kommt (*Von Getränke seit 3. Dez.* oder *Eigener Wert*), ihn in eine andere Gruppe zu verschieben und einen eigenen Wert mit **Wert der Gruppe verwenden** zurückzugeben. In den **Lagereinstellungen** des Artikels steht *Eigener Wert* neben einer Einstellung, bei der der Artikel gegenüber seiner Gruppe einen eigenen Wert behält (Nachverfolgung, Haltbarkeit, Bestandseinheit).
 - **Jede Änderung wird vorab gezeigt.** Beim Speichern einer Gruppe sehen Sie zuerst, was die Änderung erreicht: *gilt für 1, 1 behalten ihren eigenen Wert, 0 sind nicht erreichbar*. Erst das zweite Speichern wendet sie an; jede Änderung dazwischen verlangt eine neue Vorschau. Ein Artikel, den die Änderung nicht erreichen kann (etwa eine Einheit bei einem Artikel mit Bewegungen), wird aufgeführt, und die Änderung der Gruppe wird für die anderen trotzdem gespeichert.
 - **Vorschläge und Preise.** Eine Gruppe kann einem neuen Artikel eine **Standard-Einkaufseinheit** mit ihrem Faktor (eine Zahl oder ein Bruch wie 1/3), einen **Meldebestand und eine Nachbestellmenge** und eine **Lagerzone** vorschlagen: Sie werden als Ausgangswert in einen neuen Artikel kopiert und erreichen keinen bestehenden. **Steuersatz**, **Leistungsart**, **Preisrundung** und **Zielmarge auf die Kosten** zeigt und setzt nur, wer Leistungen verwalten und die Finanzen sehen darf; für alle anderen werden sie weder angezeigt noch durch ein Speichern geändert.
 - **Verlauf.** Das Blatt der Gruppe listet jede Änderung mit der Zahl der erreichten Artikel; die Herkunftszeile eines Artikels nennt, seit wann.
@@ -3190,7 +3213,7 @@ Ein Barcode-Scanner im Tastaturmodus (er tippt den Code und drückt die Eingabet
 
 Sie möchten einen NFC-Chip einem Artikel oder Lagerplatz zuordnen und Chips bei der Arbeit lesen – mit dem Telefon, das Sie ohnehin haben.
 
-Ist die Funktion *Tags* eingeschaltet und liest Ihr Telefon NFC, zeigen **Lager → Artikel** und **Lager → Lagerplätze** an jeder Zeile eine Tag-Taste, und die Scan-Leiste eines Warenblatts zeigt **Tag lesen**. Auf einem Gerät ohne NFC (ein Desktop, die meisten Tablets, ein Telefon mit ausgeschaltetem NFC) fehlt die Taste: Nutzen Sie dort einen Scanner oder ein Handlesegerät.
+Ist die Funktion *Tags* eingeschaltet und liest Ihr Telefon NFC, lesen **Tags bearbeiten** auf der Seite eines Artikels und die Tag-Taste an jeder Zeile von **Lager → Lagerplätze** einen Tag, und die Scan-Leiste eines Warenblatts zeigt **Tag lesen**. Auf einem Gerät ohne NFC (ein Desktop, die meisten Tablets, ein Telefon mit ausgeschaltetem NFC) fehlt die Taste: Nutzen Sie dort einen Scanner oder ein Handlesegerät.
 
 - **Tag zuordnen.** Öffnen Sie die Tags eines Artikels oder Lagerplatzes, tippen Sie auf **Tag lesen** und halten Sie den Chip an die Rückseite des Telefons. Ein Lesevorgang ordnet einen Tag zu. Liest man denselben Chip nochmals, heißt es, er sei hier schon zugeordnet, und nichts Neues entsteht; ein Chip, der etwas anderem zugeordnet ist, wird abgelehnt und nennt, welchem. Ein Eigentümer kann mehrere Tags tragen. Der Server nimmt den Code in jeder Schreibweise und mit Leerzeichen, Doppelpunkten oder Bindestrichen.
 - **Tag außer Betrieb nehmen**, der verloren, beschädigt oder ersetzt ist: Wählen Sie den Grund. Ein kürzlich außer Betrieb genommener Tag kann nicht sofort wieder zugeordnet werden (die Wartezeit ist eine Lagereinstellung), und ein Tag an einem Stück, das noch auf Lager ist, kann nicht außer Betrieb genommen werden.
@@ -3274,7 +3297,7 @@ Sie kassieren am Tresen mit Karte oder müssen einen Verkauf nachträglich korri
 
 Sie entscheiden, ob ein Tag an einem Artikel eine Charge oder ein einzelnes Stück bezeichnet und was ein Massenlesen zählt.
 
-Mit der Funktion *Tags* hat ein Artikel einen **Tag-Modus**, der an seiner Gruppe steht und beim Artikel bleibt, solange er keinen eigenen Wert hat. Öffnen Sie die Gruppeneinstellungen eines Artikels (**Lager → Artikel**, das Ordnersymbol in seiner Zeile) und lesen Sie **Etikett an diesem Artikel**: Es sagt, woher der Wert kommt (*Von Drinks seit 3. Dez.* oder *Eigener Wert*), lässt dem Artikel einen eigenen Wert geben, und **Wert der Gruppe verwenden** gibt ihn zurück.
+Mit der Funktion *Tags* hat ein Artikel einen **Tag-Modus**, der an seiner Gruppe steht und beim Artikel bleibt, solange er keinen eigenen Wert hat. Öffnen Sie die Gruppeneinstellungen eines Artikels (**Gruppe ändern** auf seiner Seite unter **Lager → Artikel**) und lesen Sie **Etikett an diesem Artikel**: Es sagt, woher der Wert kommt (*Von Drinks seit 3. Dez.* oder *Eigener Wert*), lässt dem Artikel einen eigenen Wert geben, und **Wert der Gruppe verwenden** gibt ihn zurück.
 
 - **Keine Tags.** Der Artikel trägt kein Tag.
 - **Ein Tag pro Charge.** Ein Tag bezeichnet eine Charge oder eine Verpackung: eine Kiste, einen Eimer, einen Karton. Beim Lesen zählt eine Charge, nie ein Stück.

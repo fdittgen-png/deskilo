@@ -16,7 +16,7 @@
   "stockItemSeeWhere": "Voir tous les emplacements",
   "stockItemNoVariants": "Cet article n’a pas de variantes.",
   "stockItemNoSuppliers": "Aucun article fournisseur ne désigne encore cet article.",
-  "stockItemEditSettings": "Modifier unités, codes et suivi",
+  "stockItemEditSettings": "Modifier les unités, les codes et le suivi",
   "stockItemEditHome": "Changer l’emplacement de rangement",
   "stockItemEditGroup": "Changer de groupe",
   "stockItemEditTags": "Modifier les puces",

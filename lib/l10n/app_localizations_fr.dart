@@ -37327,7 +37327,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockItemEditHome => 'Changer l’emplacement de rangement';
 
   @override
-  String get stockItemEditSettings => 'Modifier unités, codes et suivi';
+  String get stockItemEditSettings =>
+      'Modifier les unités, les codes et le suivi';
 
   @override
   String get stockItemEditSuppliers => 'Modifier les articles fournisseur';
