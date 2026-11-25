@@ -41469,6 +41469,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillLayoutChooseItem => 'Which item?';
 
   @override
+  String tillLayoutCopied(String till) {
+    return 'Copied as $till\'s draft. Publish it there.';
+  }
+
+  @override
+  String get tillLayoutCopy => 'Copy to another till';
+
+  @override
+  String get tillLayoutCopyTo => 'Copy to which till?';
+
+  @override
   String get tillLayoutEdit => 'Lay out this till';
 
   @override

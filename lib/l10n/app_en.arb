@@ -54106,6 +54106,23 @@
   "@tillLayoutChooseItem": {
     "description": "#4448 the till layout editor"
   },
+  "tillLayoutCopied": "Copied as {till}'s draft. Publish it there.",
+  "@tillLayoutCopied": {
+    "description": "#4448 copying a till layout; till is the other till's name",
+    "placeholders": {
+      "till": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLayoutCopy": "Copy to another till",
+  "@tillLayoutCopy": {
+    "description": "#4448 copying a till layout to another till"
+  },
+  "tillLayoutCopyTo": "Copy to which till?",
+  "@tillLayoutCopyTo": {
+    "description": "#4448 copying a till layout to another till"
+  },
   "tillLayoutEdit": "Lay out this till",
   "@tillLayoutEdit": {
     "description": "#4448 the till layout editor"

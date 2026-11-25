@@ -51,5 +51,8 @@
   "tillLayoutInvalid": "Cette disposition ne peut pas être enregistrée : {reason}",
   "tillLayoutReload": "Recharger",
   "tillLayoutGone": "Plus en vente",
-  "tillLayoutCalcPush": "Sur la dernière ligne"
+  "tillLayoutCalcPush": "Sur la dernière ligne",
+  "tillLayoutCopy": "Copier sur une autre caisse",
+  "tillLayoutCopied": "Copiée comme brouillon de {till}. Publiez-la là-bas.",
+  "tillLayoutCopyTo": "Copier sur quelle caisse ?"
 }

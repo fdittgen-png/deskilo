@@ -215,5 +215,22 @@
   "tillLayoutCalcPush": "Onto the last line",
   "@tillLayoutCalcPush": {
     "description": "#4448 the calculator's result becomes the last basket line's quantity"
+  },
+  "tillLayoutCopy": "Copy to another till",
+  "@tillLayoutCopy": {
+    "description": "#4448 copying a till layout to another till"
+  },
+  "tillLayoutCopied": "Copied as {till}'s draft. Publish it there.",
+  "@tillLayoutCopied": {
+    "description": "#4448 copying a till layout; till is the other till's name",
+    "placeholders": {
+      "till": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLayoutCopyTo": "Copy to which till?",
+  "@tillLayoutCopyTo": {
+    "description": "#4448 copying a till layout to another till"
   }
 }

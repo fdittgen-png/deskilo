@@ -118,6 +118,9 @@ class TillCellToolbar extends StatelessWidget {
 typedef TillPickedWidget = ({TillWidgetKind kind, Map<String, Object?> params});
 
 /// One choice of a picker sheet: a heading line when [heading] is given, then a tile per [choices] entry.
+/// A choice in a sheet, under [heading]: the till to copy a layout to.
+Future<T?> showTillChoice<T>(BuildContext context, String heading, List<(T, String, String)> choices) => _choose(context, choices, heading: heading);
+
 Future<T?> _choose<T>(BuildContext context, List<(T, String, String)> choices, {String? heading}) => showAppSheet<T>(
   context: context,
   showDragHandle: true,

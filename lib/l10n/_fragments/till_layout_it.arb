@@ -51,5 +51,8 @@
   "tillLayoutInvalid": "Questo layout non può essere salvato: {reason}",
   "tillLayoutReload": "Ricaricare",
   "tillLayoutGone": "Non più in vendita",
-  "tillLayoutCalcPush": "Sull'ultima riga"
+  "tillLayoutCalcPush": "Sull'ultima riga",
+  "tillLayoutCopy": "Copiare su un'altra cassa",
+  "tillLayoutCopied": "Copiato come bozza di {till}. Lo pubblichi lì.",
+  "tillLayoutCopyTo": "Copiare su quale cassa?"
 }

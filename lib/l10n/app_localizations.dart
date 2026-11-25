@@ -66728,6 +66728,24 @@ abstract class AppLocalizations {
   /// **'Which item?'**
   String get tillLayoutChooseItem;
 
+  /// #4448 copying a till layout; till is the other till's name
+  ///
+  /// In en, this message translates to:
+  /// **'Copied as {till}\'s draft. Publish it there.'**
+  String tillLayoutCopied(String till);
+
+  /// #4448 copying a till layout to another till
+  ///
+  /// In en, this message translates to:
+  /// **'Copy to another till'**
+  String get tillLayoutCopy;
+
+  /// #4448 copying a till layout to another till
+  ///
+  /// In en, this message translates to:
+  /// **'Copy to which till?'**
+  String get tillLayoutCopyTo;
+
   /// #4448 the till layout editor
   ///
   /// In en, this message translates to:

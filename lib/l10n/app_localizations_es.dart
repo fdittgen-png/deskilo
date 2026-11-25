@@ -41810,6 +41810,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillLayoutChooseItem => '¿Qué artículo?';
 
   @override
+  String tillLayoutCopied(String till) {
+    return 'Copiado como borrador de $till. Publíquelo allí.';
+  }
+
+  @override
+  String get tillLayoutCopy => 'Copiar a otra caja';
+
+  @override
+  String get tillLayoutCopyTo => '¿Copiar a qué caja?';
+
+  @override
   String get tillLayoutEdit => 'Organizar esta caja';
 
   @override

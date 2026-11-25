@@ -51,5 +51,8 @@
   "tillLayoutInvalid": "Este diseño no se puede guardar: {reason}",
   "tillLayoutReload": "Volver a cargar",
   "tillLayoutGone": "Ya no está a la venta",
-  "tillLayoutCalcPush": "A la última línea"
+  "tillLayoutCalcPush": "A la última línea",
+  "tillLayoutCopy": "Copiar a otra caja",
+  "tillLayoutCopied": "Copiado como borrador de {till}. Publíquelo allí.",
+  "tillLayoutCopyTo": "¿Copiar a qué caja?"
 }

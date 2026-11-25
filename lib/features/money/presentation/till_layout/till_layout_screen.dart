@@ -19,11 +19,13 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/service_item.dart';
+import '../../domain/till_drawer.dart';
 import '../../domain/till_layout.dart';
 import '../../domain/till_layout_edits.dart';
 import '../../domain/till_layout_port.dart';
 import '../../domain/till_layout_templates.dart';
 import '../../providers/money_providers.dart' show servicesProvider;
+import '../../providers/till_drawer_providers.dart';
 import '../../providers/till_layout_providers.dart';
 import 'till_layout_canvas.dart';
 import 'till_layout_editing.dart';
@@ -107,6 +109,26 @@ class _TillLayoutScreenState extends ConsumerState<TillLayoutScreen> {
     }
   }
 
+  /// The layout as it stands, saved as another till's draft over that till's own version; published there by its editor.
+  Future<void> _copy() async {
+    final l10n = context.l10n;
+    final tills = await guardRead(
+      domain: 'till',
+      message: 'the tills could not be read to copy a layout',
+      read: () => ref.read(tillDrawerProvider(widget.workspaceId).future),
+      fallback: (_) => const <DrawerTill>[],
+    );
+    if (!mounted) return;
+    final to = await showTillChoice(context, l10n.tillLayoutCopyTo, [for (final t in tills) if (t.id != widget.tillId) (t, 'till-layout-copy-${t.id}', t.name)]);
+    if (to == null || !mounted) return;
+    final target = await _port.draft(widget.workspaceId, to.id);
+    await _run(
+      (id) => _port.save(widget.workspaceId, requestId: id, tillId: to.id, layout: TillLayout(name: to.name, pages: _edit.layout!.pages), expectedVersion: target?.version ?? 0),
+      l10n.tillLayoutCopied(to.name),
+      publish: true,   // this till's own draft keeps its version
+    );
+  }
+
   Future<void> _save() => _run(
     (id) => _port.save(widget.workspaceId, requestId: id, tillId: widget.tillId, layout: _edit.layout!, expectedVersion: _edit.version),
     context.l10n.quoteDraftSaved,
@@ -130,7 +152,16 @@ class _TillLayoutScreenState extends ConsumerState<TillLayoutScreen> {
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.tillLayoutTitle),
-        actions: [HelpDot(l10n.tillLayoutTitle, anchor: HelpAnchor.moneyTillLayout)],
+        actions: [
+          if (layout != null)
+            IconButton(
+              key: const ValueKey('till-layout-copy'),
+              tooltip: l10n.tillLayoutCopy,
+              icon: const Icon(Icons.copy_all_outlined),
+              onPressed: busy ? null : _copy,
+            ),
+          HelpDot(l10n.tillLayoutTitle, anchor: HelpAnchor.moneyTillLayout),
+        ],
       ),
       // save and publish sit at the bottom, where a phone has the width for both
       bottomNavigationBar: layout == null
