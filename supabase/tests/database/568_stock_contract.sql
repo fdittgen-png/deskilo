@@ -140,9 +140,11 @@ insert into public.stock_locations (workspace_id, kind, code, name, parent_id) v
 insert into public.stock_locations (workspace_id, kind, code, name, parent_id) values
   (pg_temp.u(101), 'shelf', 'BRANCH-S1', 'Branch shelf', pg_temp.loc('BRANCH'));
 
--- the openings: received from the supplier
-select pg_temp.call(format('select public.stock_move_v1(%L, %L, %L::jsonb, ''receipt'')::text', pg_temp.u(101), pg_temp.u(pg_temp.req(o)), pg_temp.lines(l)))
-  from (values ('O1', 'BEANS 10 SUPPLIER>MAIN'), ('O2', 'MUGS 24 SUPPLIER>SHELF'), ('O3', 'SYRUP 2 SUPPLIER>MAIN')) v(o, l);
+-- the openings: received from the supplier (inside a block, so their answers print no line a TAP reader could count)
+do $o$ begin
+  perform pg_temp.call(format('select public.stock_move_v1(%L, %L, %L::jsonb, ''receipt'')::text', pg_temp.u(101), pg_temp.u(pg_temp.req(o)), pg_temp.lines(l)))
+    from (values ('O1', 'BEANS 10 SUPPLIER>MAIN'), ('O2', 'MUGS 24 SUPPLIER>SHELF'), ('O3', 'SYRUP 2 SUPPLIER>MAIN')) v(o, l);
+end $o$;
 -- S01
 select is(pg_temp.bal('MUGS@SHELF=24 MUGS@MAIN=0'), 'MUGS@SHELF=24 MUGS@MAIN=0', 'S01 given');
 select is(pg_temp.run('S01', 'transfer', 'MUGS 4 SHELF>MAIN', ''), 'ok', 'S01 a transfer inside a site moves the goods');
