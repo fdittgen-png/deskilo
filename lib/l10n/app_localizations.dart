@@ -33424,6 +33424,18 @@ abstract class AppLocalizations {
   /// **'Managed profile'**
   String get managedProfileTitle;
 
+  /// #4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit
+  ///
+  /// In en, this message translates to:
+  /// **'No unit'**
+  String get masterDataNoUnit;
+
+  /// #4471 a unit or a VAT rate is picked from the master data: masterDataNoVat
+  ///
+  /// In en, this message translates to:
+  /// **'No VAT'**
+  String get masterDataNoVat;
+
   /// #3563 Helper under a field that names master data (a country, a currency): what can be typed.
   ///
   /// In en, this message translates to:
@@ -33435,6 +33447,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This is not a valid entry. Pick one from the list.'**
   String get masterDataUnknownCode;
+
+  /// #4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted
+  ///
+  /// In en, this message translates to:
+  /// **'This is not in the list: pick one'**
+  String get masterDataUnlisted;
 
   /// #1801 mcp_settings
   ///

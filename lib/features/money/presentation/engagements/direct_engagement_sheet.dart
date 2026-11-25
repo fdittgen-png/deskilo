@@ -17,6 +17,7 @@ import '../../../../core/ui/form_kit.dart';
 import '../../application/service_fulfilment_commands.dart';
 import '../../domain/billing_customer.dart';
 import '../../domain/service_fulfilment.dart';
+import '../widgets/master_data_pickers.dart';
 import 'engagement_text.dart';
 
 /// Opens the sheet; true when an engagement was committed.
@@ -97,11 +98,16 @@ Future<bool> showDirectEngagementSheet(
           inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,\s]'))],
         ),
         const FormGap(),
-        AppTextField(
+        // #4471 -- the unit is one of the business's units of measure, never typed.
+        UnitPickerField(
           key: const ValueKey('engagement-direct-unit'),
-          controller: fields['unit'],
-          fieldKey: 'unit',
+          workspaceId: workspaceId,
+          value: fields['unit'].text,
           label: l10n.standaloneInvoiceLineUnit,
+          onChanged: (code) {
+            fields['unit'].text = code;
+            refresh();
+          },
         ),
       ],
     ),

@@ -9,6 +9,7 @@
 // #3608 — the order is a long task (purchase_order_page.dart); the summary
 // beside its form follows what is typed ([PurchaseOrderForm.changes]).
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show VatRate;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,13 +20,15 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../stock/domain/workspace_units.dart';
 import '../../domain/purchase_order.dart';
 import '../../domain/service_item.dart';
+import 'master_data_pickers.dart';
 
 /// The form's state: its controllers, the chosen supplier, date and items,
 /// and the request id the current entries go under.
 class PurchaseOrderForm {
-  PurchaseOrderForm(this.order, this.items, this.currency, String locale)
+  PurchaseOrderForm(this.order, this.items, this.currency, String locale, {required this.workspaceId})
     : supplierId = order?.supplierId,
       expectedOn = order?.expectedOn,
       lines = order == null ? 1 : order.lines.length,
@@ -54,6 +57,9 @@ class PurchaseOrderForm {
   final PurchaseOrder? order;
   final List<ServiceItem> items;
 
+  /// The business whose units and VAT rates the lines are picked from (#4471).
+  final String workspaceId;
+
   /// The order's currency (a new order's is the space's).
   final String currency;
   final FormControllers fields;
@@ -62,6 +68,10 @@ class PurchaseOrderForm {
   DateInputProblem? expectedProblem;
   int lines;
   final List<String?> itemIds;
+
+  /// What the pickers offered the last time the form was drawn: a unit or a percent outside them cannot be saved (#4471).
+  List<WorkspaceUnit> _unitsOffered = builtInUnits;
+  List<VatRate> _ratesOffered = const [];
 
   /// The last check's problems, for the fields that are not text fields
   /// (the supplier picker reads its own here).
@@ -121,12 +131,16 @@ class PurchaseOrderForm {
                 allowNegative: false,
               ).minor ??
               -1,
-          vatRatePercent: fields['vat-$i'].text.trim().isEmpty
-              ? null
-              : (_number(fields['vat-$i'].text) ?? -1),
+          vatRatePercent: _vatOf(i),
         ),
     ],
   );
+
+  /// The VAT percent line [i] holds: none, or the percent of the rate that was picked (-1: not a number).
+  double? _vatOf(int i) {
+    final text = fields['vat-$i'].text.trim();
+    return text.isEmpty ? null : (double.tryParse(text) ?? _number(text) ?? -1);
+  }
 
   /// Same entries: same id (a lost answer is replayed, not doubled).
   String requestFor(PurchaseOrderDraft d) {
@@ -164,7 +178,10 @@ class PurchaseOrderForm {
       }
       if (one.contains(PurchaseOrderProblem.lineVatRate)) {
         out['vat-$i'] = l10n.purchaseOrderBadVatRate;
+      } else if (!vatPercentIsListed(_ratesOffered, l.vatRatePercent)) {
+        out['vat-$i'] = l10n.masterDataUnlisted;
       }
+      if (!unitIsListed(_unitsOffered, l.unit)) out['unit-$i'] = l10n.masterDataUnlisted;
     }
     shown = out;
     return out;
@@ -222,6 +239,8 @@ class PurchaseOrderForm {
     VoidCallback refresh,
   ) {
     _watchLines();
+    _unitsOffered = unitsOffered(ref, workspaceId);
+    _ratesOffered = vatRatesOffered(ref);
     return [
       DropdownButtonFormField<String?>(
         key: const ValueKey('purchase-order-supplier'),
@@ -358,11 +377,16 @@ class PurchaseOrderForm {
       label: l10n.purchasesQuantity,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
     ),
-    AppTextField(
+    UnitPickerField(
       key: ValueKey('purchase-order-unit-$i'),
-      controller: fields['unit-$i'],
+      workspaceId: workspaceId,
+      value: fields['unit-$i'].text,
       label: l10n.purchaseOrderUnit,
-      maxLength: 20,
+      errorText: shown['unit-$i'],
+      onChanged: (code) {
+        fields['unit-$i'].text = code;
+        refresh();
+      },
     ),
     AppAmountField(
       key: ValueKey('purchase-order-price-$i'),
@@ -372,12 +396,14 @@ class PurchaseOrderForm {
       currency: currency,
       allowNegative: false,
     ),
-    AppTextField(
+    VatPercentPicker(
       key: ValueKey('purchase-order-vat-$i'),
-      controller: fields['vat-$i'],
-      fieldKey: 'vat-$i',
+      value: _vatOf(i),
       label: l10n.purchaseOrderVatRate,
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      onChanged: (percent) {
+        fields['vat-$i'].text = percent == null ? '' : _qtyText(percent);
+        refresh();
+      },
     ),
   ];
 }

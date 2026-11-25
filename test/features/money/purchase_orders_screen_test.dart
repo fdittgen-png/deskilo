@@ -17,6 +17,7 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show VatRate;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/misc.dart';
@@ -74,8 +75,23 @@ Future<(FakePurchaseOrderRepository, Widget)> _app(
       supplierRepositoryProvider.overrideWithValue(suppliers),
       purchaseOrderRepositoryProvider.overrideWithValue(orders),
       servicesProvider.overrideWith((ref) async => const <ServiceItem>[]),
+      vatRatesProvider.overrideWith(
+        (ref) async => const [
+          VatRate(id: 'r-std', label: 'Standard', percent: 20),
+          VatRate(id: 'r-red', label: 'Reduced', percent: 5.5),
+        ],
+      ),
     ]),
   );
+}
+
+/// Opens the picker under [key] and chooses the option whose text starts with [option].
+Future<void> _pick(WidgetTester tester, String key, String option) async {
+  await tester.ensureVisible(find.byKey(ValueKey(key)));
+  await tester.tap(find.byKey(ValueKey(key)));
+  await tester.pumpAndSettle();
+  await tester.tap(find.textContaining(option).last);
+  await tester.pumpAndSettle();
 }
 
 Future<void> _settle(WidgetTester tester) async {
@@ -121,10 +137,7 @@ void main() {
       find.byKey(const ValueKey('purchase-order-price-0')),
       '12,50',
     );
-    await tester.enterText(
-      find.byKey(const ValueKey('purchase-order-vat-0')),
-      '5.5',
-    );
+    await _pick(tester, 'purchase-order-vat-0', 'Reduced');
     await tester.tap(find.byKey(const ValueKey('purchase-order-save')));
     await _settle(tester);
     expect(orders.orders, hasLength(2));
@@ -310,10 +323,7 @@ void main() {
         find.byKey(const ValueKey('purchase-order-price-0')),
         '12,50',
       );
-      await tester.enterText(
-        find.byKey(const ValueKey('purchase-order-vat-0')),
-        '5.5',
-      );
+      await _pick(tester, 'purchase-order-vat-0', 'Reduced');
       await tester.pump();
       for (final amount in ['62.50', '3.44', '65.94']) {
         expect(
@@ -431,4 +441,77 @@ void main() {
       expect(orders.orders, hasLength(1));
     });
   });
+
+  // #4471 -- a unit and a VAT rate are picked from the master data, never typed.
+  for (final (label, size) in [('390 wide', const Size(390, 900)), ('1440 wide', const Size(1440, 900))]) {
+    group('the unit and the VAT rate of a line are picked ($label)', () {
+      testWidgets('a new line offers pickers, no text field, and saves what was picked', (tester) async {
+        tester.view.physicalSize = size;
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        final (orders, app) = await _app({WorkspacePermission.managePurchases});
+        await tester.pumpWidget(app);
+        await _settle(tester);
+        await tester.tap(find.byKey(const ValueKey('purchase-order-new')));
+        await _settle(tester);
+        expect(tester.takeException(), isNull);
+        for (final key in ['purchase-order-unit-0', 'purchase-order-vat-0']) {
+          expect(find.descendant(of: find.byKey(ValueKey(key)), matching: find.byType(TextField)), findsNothing, reason: '$key is not typed');
+        }
+        await tester.tap(find.byKey(const ValueKey('purchase-order-supplier')));
+        await _settle(tester);
+        await tester.tap(find.textContaining('Alpha').last);
+        await _settle(tester);
+        await tester.enterText(find.byKey(const ValueKey('purchase-order-desc-0')), 'Coffee beans');
+        await tester.enterText(find.byKey(const ValueKey('purchase-order-qty-0')), '5');
+        await tester.enterText(find.byKey(const ValueKey('purchase-order-price-0')), '12,50');
+        await _pick(tester, 'purchase-order-unit-0', 'kg');
+        await _pick(tester, 'purchase-order-vat-0', 'Reduced');
+        await tester.ensureVisible(find.byKey(const ValueKey('purchase-order-save')));
+        await tester.tap(find.byKey(const ValueKey('purchase-order-save')));
+        await _settle(tester);
+        final line = orders.orders.last.lines.single;
+        expect((line.unit, line.vatRatePercent), ('kg', 5.5));
+      });
+
+      testWidgets('an old free unit and percent are shown, flagged, and must be replaced before saving', (tester) async {
+        tester.view.physicalSize = size;
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        final (orders, app) = await _app({WorkspacePermission.managePurchases});
+        final first = orders.orders.single;
+        await orders.save(
+          'ws',
+          'old-free',
+          PurchaseOrderDraft(
+            supplierId: first.supplierId,
+            lines: const [
+              PurchaseOrderLineDraft(description: 'Old line', quantity: 1, unitPriceCents: 100, unit: 'box', vatRatePercent: 55),
+            ],
+          ),
+        );
+        await tester.pumpWidget(app);
+        await _settle(tester);
+        await openOrder(tester, '2026-0002');
+        await tester.tap(find.byKey(const ValueKey('purchase-order-edit-2026-0002')));
+        await _settle(tester);
+        expect(tester.takeException(), isNull);
+        expect(find.text('box'), findsOneWidget);
+        expect(find.textContaining('55'), findsWidgets);
+        expect(find.text('This is not in the list: pick one'), findsNWidgets(2));
+        await tester.ensureVisible(find.byKey(const ValueKey('purchase-order-save')));
+        await tester.tap(find.byKey(const ValueKey('purchase-order-save')));
+        await _settle(tester);
+        expect(orders.orders.last.lines.single.unit, 'box', reason: 'nothing was saved');
+        await _pick(tester, 'purchase-order-unit-0', 'kg');
+        await _pick(tester, 'purchase-order-vat-0', 'Standard');
+        expect(find.text('This is not in the list: pick one'), findsNothing);
+        await tester.ensureVisible(find.byKey(const ValueKey('purchase-order-save')));
+        await tester.tap(find.byKey(const ValueKey('purchase-order-save')));
+        await _settle(tester);
+        final line = orders.orders.last.lines.single;
+        expect((line.unit, line.vatRatePercent), ('kg', 20));
+      });
+    });
+  }
 }

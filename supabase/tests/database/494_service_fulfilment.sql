@@ -8,7 +8,7 @@
 -- (a stale one is refused with the current revision); the issuer writes, a finance reader
 -- reads, a coworker, a stranger, a customer and a delegated token get nothing.
 begin;
-select plan(88);
+select plan(89);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004178' || lpad(n::text, 4, '0'))::uuid;
@@ -36,6 +36,9 @@ values (pg_temp.u(101), 'Fulfilment 4178', 'FR', 'EUR', 'Europe/Paris', pg_temp.
         '{"invoicing": true, "billingCustomers": true, "serviceFulfilment": true}',
         'vat_registered', 'FR40303265045', '30326504500014', '4 avenue de Castelnau', 'Pézenas', '34120',
         '4 avenue de Castelnau, 34120 Pézenas', '{"admin": ["issueInvoices", "viewFinances", "manageBillingCustomers"]}');
+-- #4471: a unit is one of the business's units: the engagement below is counted in sessions
+insert into public.workspace_units (workspace_id, code, label, dimension, factor_num, factor_den)
+values (pg_temp.u(101), 'session', 'Session', 'count', 1, 1);
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status, joined_at)
 values (pg_temp.u(201), pg_temp.u(101), pg_temp.u(1), true, true, 'active', '2026-01-01'),
        (pg_temp.u(202), pg_temp.u(101), pg_temp.u(2), false, true, 'active', '2026-01-01'),
@@ -208,6 +211,8 @@ select is(pg_temp.open_direct(1, pg_temp.u(101), 9, jsonb_build_object('subject_
   'ERR DKF01', 'a customer the business does not have is refused');
 select is(pg_temp.open_direct(1, pg_temp.u(101), 9, jsonb_build_object('subject_id', current_setting('t.customer'), 'description', 'x', 'quantity', '0')),
   'ERR DKF06', 'a zero quantity is refused');
+select is(pg_temp.open_direct(1, pg_temp.u(101), 9, jsonb_build_object('subject_id', current_setting('t.customer'), 'description', 'x', 'quantity', '1', 'unit', 'box')),
+  'ERR DKF06', '#4471: a unit that is not one of the business''s units is refused');
 select is(pg_temp.open_direct(1, pg_temp.u(101), 9, jsonb_build_object('subject_id', current_setting('t.customer'), 'description', ' ', 'quantity', '1')),
   'ERR DKF06', 'and no description');
 select is(pg_temp.open_direct(1, pg_temp.u(101), 9, jsonb_build_object('subject_id', current_setting('t.customer'), 'description', 'x',
