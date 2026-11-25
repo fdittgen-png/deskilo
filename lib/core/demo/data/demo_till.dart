@@ -33,8 +33,7 @@ const _tracedLots = <String, String>{'demo-item-milk': 'MILK-12', 'demo-item-bas
 /// The Demo's bag of coffee beans, which the seeded book sells.
 const _beansName = 'Coffee beans';
 
-/// The prices of Demo items the stock registry does not carry (the T-shirt the variants are edited on, and the day desk the
-/// counter sells as a service), in cents.
+/// The prices, in cents, of Demo items the stock registry does not carry (the variants' T-shirt, the counter's day desk).
 const _unstocked = <String, int>{'demo-item-shirt': 1900, 'demo-item-basket': 3900, 'demo-item-apples': 1800, demoDayDeskItem: 2500};
 
 /// #4185 -- the service the Demo's counter sells: a day at a hot desk, no stock behind it.
