@@ -54106,6 +54106,10 @@
   "@tillLayoutAdd": {
     "description": "#4448 the till layout editor"
   },
+  "tillLayoutCalcPush": "Onto the last line",
+  "@tillLayoutCalcPush": {
+    "description": "#4448 the calculator's result becomes the last basket line's quantity"
+  },
   "tillLayoutChooseFunction": "Which function?",
   "@tillLayoutChooseFunction": {
     "description": "#4448 the till layout editor"
@@ -54113,6 +54117,27 @@
   "tillLayoutChooseItem": "Which item?",
   "@tillLayoutChooseItem": {
     "description": "#4448 the till layout editor"
+  },
+  "tillLayoutChoosePage": "Which page does it open?",
+  "@tillLayoutChoosePage": {
+    "description": "#4448 a category key opens another page of the till layout"
+  },
+  "tillLayoutCopied": "Copied as {till}'s draft. Publish it there.",
+  "@tillLayoutCopied": {
+    "description": "#4448 copying a till layout; till is the other till's name",
+    "placeholders": {
+      "till": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLayoutCopy": "Copy to another till",
+  "@tillLayoutCopy": {
+    "description": "#4448 copying a till layout to another till"
+  },
+  "tillLayoutCopyTo": "Copy to which till?",
+  "@tillLayoutCopyTo": {
+    "description": "#4448 copying a till layout to another till"
   },
   "tillLayoutEdit": "Lay out this till",
   "@tillLayoutEdit": {
@@ -54238,6 +54263,18 @@
   "tillLayoutRemoveCell": "Remove this widget",
   "@tillLayoutRemoveCell": {
     "description": "#4448 the till layout editor"
+  },
+  "tillLayoutReset": "Reset to the generated keys",
+  "@tillLayoutReset": {
+    "description": "#4448 resetting a till to the keys it generates"
+  },
+  "tillLayoutResetConfirm": "This till goes back to the keys it makes from your items. Its layout and its draft are removed.",
+  "@tillLayoutResetConfirm": {
+    "description": "#4448 resetting a till to the keys it generates"
+  },
+  "tillLayoutResetDone": "This till uses its generated keys again.",
+  "@tillLayoutResetDone": {
+    "description": "#4448 resetting a till to the keys it generates"
   },
   "tillLayoutSizeDesk": "Desk width",
   "@tillLayoutSizeDesk": {

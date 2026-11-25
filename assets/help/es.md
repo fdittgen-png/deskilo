@@ -3098,6 +3098,10 @@ El diseño tiene una cuadrícula para cada ancho en que se usa la caja: **Ancho 
 
 **Guardar** conserva un borrador; **Publicar en la caja** lo convierte en el diseño que usa la caja. Una caja ya abierta conserva su diseño hasta su próxima sesión: la caja nunca cambia durante una venta. Si otra persona cambió el diseño desde que lo abrió, se rechaza el guardado con **Alguien ha cambiado este diseño; vuelva a cargarlo.** Un diseño que el servidor no puede aceptar se rechaza con su primer problema. Una caja sin diseño publicado conserva las teclas que genera a partir de sus artículos.
 
+En la caja, las teclas funcionan como las colocó. El **teclado numérico** escribe una cantidad con el separador decimal de su idioma (1,5); la siguiente tecla de artículo vende esa cantidad, y un artículo pesado la toma como su peso en lugar de preguntarlo. **Cantidad ×** pone la cantidad escrita en la última línea. La **calculadora** cuenta con exactitud, y **A la última línea** hace de su resultado la cantidad de la última línea; nunca fija un precio. Una **tecla de categoría** abre la página que nombra.
+
+**Copiar a otra caja** guarda el diseño como borrador de otra caja, para publicarlo allí. **Volver a las teclas generadas** elimina, tras confirmar, el diseño y el borrador de esta caja: la caja vuelve a usar las teclas que crea a partir de sus artículos. En la demo, el **Bakery counter** muestra la plantilla Panadería con su teclado y su calculadora.
+
 ### Cuando la caja está sin conexión
 
 **Público:** Administrador/a · Propietario

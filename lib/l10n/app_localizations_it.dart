@@ -41862,10 +41862,27 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillLayoutAdd => 'Aggiungere un elemento';
 
   @override
+  String get tillLayoutCalcPush => 'Sull\'ultima riga';
+
+  @override
   String get tillLayoutChooseFunction => 'Quale funzione?';
 
   @override
   String get tillLayoutChooseItem => 'Quale articolo?';
+
+  @override
+  String get tillLayoutChoosePage => 'Quale pagina apre?';
+
+  @override
+  String tillLayoutCopied(String till) {
+    return 'Copiato come bozza di $till. Lo pubblichi lì.';
+  }
+
+  @override
+  String get tillLayoutCopy => 'Copiare su un\'altra cassa';
+
+  @override
+  String get tillLayoutCopyTo => 'Copiare su quale cassa?';
 
   @override
   String get tillLayoutEdit => 'Organizzare questa cassa';
@@ -41960,6 +41977,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tillLayoutRemoveCell => 'Rimuovere questo elemento';
+
+  @override
+  String get tillLayoutReset => 'Tornare ai tasti generati';
+
+  @override
+  String get tillLayoutResetConfirm =>
+      'Questa cassa torna ai tasti che crea dai Suoi articoli. Il suo layout e la sua bozza vengono rimossi.';
+
+  @override
+  String get tillLayoutResetDone =>
+      'Questa cassa usa di nuovo i tasti generati.';
 
   @override
   String get tillLayoutSizeDesk => 'Larghezza desktop';

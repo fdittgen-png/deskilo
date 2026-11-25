@@ -3243,6 +3243,10 @@ Il layout ha una griglia per ogni larghezza in cui la cassa è usata: **Larghezz
 
 **Salvare** conserva una bozza; **Pubblicare sulla cassa** la rende il layout usato dalla cassa. Una cassa già aperta conserva il suo layout fino alla sessione successiva: la cassa non cambia mai durante una vendita. Se qualcun altro ha modificato il layout da quando lo ha aperto, il salvataggio viene rifiutato con **Qualcuno ha modificato questo layout; lo ricarichi.** Un layout che il server non può accettare viene rifiutato con il suo primo problema. Una cassa senza layout pubblicato mantiene i tasti che genera dai Suoi articoli.
 
+Alla cassa, i tasti agiscono come li ha posizionati. Il **tastierino numerico** digita una quantità con il separatore decimale della Sua lingua (1,5); il tasto articolo successivo vende quella quantità, e un articolo pesato la prende come peso invece di chiederlo. **Quantità ×** mette invece la quantità digitata sull'ultima riga. La **calcolatrice** calcola in modo esatto, e **Sull'ultima riga** rende il suo risultato la quantità dell'ultima riga; non fissa mai un prezzo. Un **tasto categoria** apre la pagina che indica.
+
+**Copiare su un'altra cassa** salva il layout come bozza di un'altra cassa, da pubblicare lì. **Tornare ai tasti generati** rimuove, dopo conferma, il layout e la bozza di questa cassa: la cassa usa di nuovo i tasti che crea dai Suoi articoli. Nella demo, il **Bakery counter** mostra il modello Panetteria con tastierino e calcolatrice.
+
 <!-- anchor: user.money.till-offline -->
 ### Quando la cassa è offline
 

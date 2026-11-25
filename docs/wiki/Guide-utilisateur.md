@@ -3243,6 +3243,10 @@ La disposition a une grille pour chaque largeur où la caisse est utilisée : **
 
 **Enregistrer** garde un brouillon ; **Publier sur la caisse** en fait la disposition de la caisse. Une caisse déjà ouverte garde sa disposition jusqu'à sa prochaine session : la caisse ne change jamais pendant une vente. Si quelqu'un d'autre a modifié la disposition depuis que vous l'avez ouverte, l'enregistrement est refusé avec **Quelqu'un a modifié cette disposition ; rechargez-la.** Une disposition que le serveur ne peut pas accepter est refusée avec son premier problème. Une caisse sans disposition publiée garde les touches qu'elle génère à partir de vos articles.
 
+À la caisse, les touches agissent comme vous les avez placées. Le **pavé numérique** saisit une quantité avec le séparateur décimal de votre langue (1,5) ; la touche d'article suivante vend cette quantité, et un article pesé la prend comme poids au lieu de la demander. **Quantité ×** place plutôt la quantité saisie sur la dernière ligne. La **calculatrice** compte exactement, et **Sur la dernière ligne** fait de son résultat la quantité de la dernière ligne ; elle ne fixe jamais un prix. Une **touche de catégorie** ouvre la page qu'elle nomme.
+
+**Copier sur une autre caisse** enregistre la disposition comme brouillon d'une autre caisse, à publier là-bas. **Revenir aux touches générées** supprime, après confirmation, la disposition et le brouillon de cette caisse : la caisse utilise de nouveau les touches qu'elle crée à partir de vos articles. Dans la démo, le **Bakery counter** montre le modèle Boulangerie avec son pavé et sa calculatrice.
+
 <!-- anchor: user.money.till-offline -->
 ### Quand la caisse est hors ligne
 

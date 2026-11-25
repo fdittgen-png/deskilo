@@ -3098,6 +3098,10 @@ The layout has a grid for each width the till is used at: **Phone width**, **Tab
 
 **Save** keeps a draft; **Publish to the till** makes it the layout the till uses. A till already open keeps its layout until its next session: the till never changes under a running sale. When someone else changed the layout since you opened it, the save is refused with **Someone changed this layout; reload it.** A layout the server cannot accept is refused with its first problem. A till without a published layout keeps the keys it generates from your items.
 
+At the till, the layout's keys work as you placed them. The **numeric keypad** types a quantity in your language's decimal mark (1,5 in French, 1.5 in English); the next item key you press sells that quantity, and a weighed item takes it as its weight instead of asking. **Quantity ×** puts the typed quantity on the last line instead. The **calculator** counts exactly, and **Onto the last line** makes its result the last line's quantity; it never sets a price. A **category key** opens the page it names.
+
+**Copy to another till** saves the layout as another till's draft, to publish there. **Reset to the generated keys** removes this till's layout and draft after you confirm: the till uses the keys it generates from your items again. In the Demo, the **Bakery counter** shows the Bakery template with its keypad and calculator.
+
 ### When the till is offline
 
 **Audience:** Administrator · Owner

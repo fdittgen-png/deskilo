@@ -88,6 +88,11 @@ class SupabaseTillLayouts implements TillLayoutPort {
       }));
 
   @override
+  Future<void> reset(String workspaceId, {required String requestId, required String tillId}) => _command(
+    () => _client.rpc('till_layout_reset_v1', params: {'p_workspace_id': workspaceId, 'p_request_id': requestId, 'p_till_id': tillId}),
+  );
+
+  @override
   Future<int> publish(String workspaceId, {required String requestId, required String tillId, required int expectedVersion}) async =>
       _command(() => _client.rpc('till_layout_publish_v1', params: {
         'p_workspace_id': workspaceId,

@@ -41469,10 +41469,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillLayoutAdd => 'Add a widget';
 
   @override
+  String get tillLayoutCalcPush => 'Onto the last line';
+
+  @override
   String get tillLayoutChooseFunction => 'Which function?';
 
   @override
   String get tillLayoutChooseItem => 'Which item?';
+
+  @override
+  String get tillLayoutChoosePage => 'Which page does it open?';
+
+  @override
+  String tillLayoutCopied(String till) {
+    return 'Copied as $till\'s draft. Publish it there.';
+  }
+
+  @override
+  String get tillLayoutCopy => 'Copy to another till';
+
+  @override
+  String get tillLayoutCopyTo => 'Copy to which till?';
 
   @override
   String get tillLayoutEdit => 'Lay out this till';
@@ -41567,6 +41584,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tillLayoutRemoveCell => 'Remove this widget';
+
+  @override
+  String get tillLayoutReset => 'Reset to the generated keys';
+
+  @override
+  String get tillLayoutResetConfirm =>
+      'This till goes back to the keys it makes from your items. Its layout and its draft are removed.';
+
+  @override
+  String get tillLayoutResetDone => 'This till uses its generated keys again.';
 
   @override
   String get tillLayoutSizeDesk => 'Desk width';

@@ -66728,6 +66728,12 @@ abstract class AppLocalizations {
   /// **'Add a widget'**
   String get tillLayoutAdd;
 
+  /// #4448 the calculator's result becomes the last basket line's quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Onto the last line'**
+  String get tillLayoutCalcPush;
+
   /// #4448 the till layout editor
   ///
   /// In en, this message translates to:
@@ -66739,6 +66745,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Which item?'**
   String get tillLayoutChooseItem;
+
+  /// #4448 a category key opens another page of the till layout
+  ///
+  /// In en, this message translates to:
+  /// **'Which page does it open?'**
+  String get tillLayoutChoosePage;
+
+  /// #4448 copying a till layout; till is the other till's name
+  ///
+  /// In en, this message translates to:
+  /// **'Copied as {till}\'s draft. Publish it there.'**
+  String tillLayoutCopied(String till);
+
+  /// #4448 copying a till layout to another till
+  ///
+  /// In en, this message translates to:
+  /// **'Copy to another till'**
+  String get tillLayoutCopy;
+
+  /// #4448 copying a till layout to another till
+  ///
+  /// In en, this message translates to:
+  /// **'Copy to which till?'**
+  String get tillLayoutCopyTo;
 
   /// #4448 the till layout editor
   ///
@@ -66919,6 +66949,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove this widget'**
   String get tillLayoutRemoveCell;
+
+  /// #4448 resetting a till to the keys it generates
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to the generated keys'**
+  String get tillLayoutReset;
+
+  /// #4448 resetting a till to the keys it generates
+  ///
+  /// In en, this message translates to:
+  /// **'This till goes back to the keys it makes from your items. Its layout and its draft are removed.'**
+  String get tillLayoutResetConfirm;
+
+  /// #4448 resetting a till to the keys it generates
+  ///
+  /// In en, this message translates to:
+  /// **'This till uses its generated keys again.'**
+  String get tillLayoutResetDone;
 
   /// #4448 the till layout editor
   ///
