@@ -114,13 +114,14 @@ void main() {
 
       testWidgets('an empty form names each of its problems and saves nothing', (tester) async {
         final units = await _open(tester, size);
+        final held = (await units.units('ws-1')).length;
         await tester.tap(find.byKey(const ValueKey('measure-units-new')));
         await _frames(tester);
         await tester.tap(find.byKey(const ValueKey('measure-unit-save')));
         await _frames(tester);
         expect(find.text(_en.measureReasonName), findsOneWidget);
         expect(find.text(_en.measureReasonDimension), findsOneWidget);
-        expect((await units.units('ws-1')).length, 13);
+        expect((await units.units('ws-1')).length, held, reason: 'nothing was saved');
       });
 
       testWidgets('a built-in takes the business\'s own word, and its factor cannot be typed', (tester) async {
