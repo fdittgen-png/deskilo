@@ -105,6 +105,7 @@ class _PurchaseOrderPageState extends ConsumerState<PurchaseOrderPage> {
         items.value!,
         order?.currency ?? format.currencyCode,
         format.locale,
+        workspaceId: workspaceId,
       );
     }
     final form = _form!;

@@ -21191,12 +21191,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get managedProfileTitle => 'Perfil gestionado';
 
   @override
+  String get masterDataNoUnit => 'Sin unidad';
+
+  @override
+  String get masterDataNoVat => 'Sin IVA';
+
+  @override
   String get masterDataSearchHint =>
       'Escriba un nombre o un código, o elija de la lista';
 
   @override
   String get masterDataUnknownCode =>
       'No es una entrada válida. Elija una de la lista.';
+
+  @override
+  String get masterDataUnlisted => 'Esto no está en la lista: elija uno';
 
   @override
   String get mcpApiReference => 'Referencia de la API';

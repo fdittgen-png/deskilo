@@ -12,13 +12,17 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../providers/money_providers.dart';
+import 'master_data_pickers.dart';
 
 /// The item, quantity and unit of a bill line, as typed: [itemId] null
 /// buys no item.
 typedef PurchaseItemEntry = ({String? itemId, String quantity, String unit});
 
 class PurchaseItemFields extends ConsumerStatefulWidget {
-  const PurchaseItemFields({super.key, required this.onChanged});
+  const PurchaseItemFields({super.key, required this.workspaceId, required this.onChanged});
+
+  /// The business whose units the line picks from (#4471).
+  final String workspaceId;
 
   final ValueChanged<PurchaseItemEntry> onChanged;
 
@@ -28,20 +32,19 @@ class PurchaseItemFields extends ConsumerStatefulWidget {
 
 class _PurchaseItemFieldsState extends ConsumerState<PurchaseItemFields> {
   final _quantity = TextEditingController();
-  final _unit = TextEditingController();
+  String _unit = '';
   String? _itemId;
 
   @override
   void dispose() {
     _quantity.dispose();
-    _unit.dispose();
     super.dispose();
   }
 
   void _report() => widget.onChanged((
     itemId: _itemId,
     quantity: _quantity.text,
-    unit: _unit.text,
+    unit: _unit,
   ));
 
   @override
@@ -90,12 +93,16 @@ class _PurchaseItemFieldsState extends ConsumerState<PurchaseItemFields> {
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             onChanged: (_) => _report(),
           ),
-          AppTextField(
+          // #4471 — the unit is one of the business's units of measure, never typed.
+          UnitPickerField(
             key: const ValueKey('purchase-unit'),
-            controller: _unit,
+            workspaceId: widget.workspaceId,
+            value: _unit,
             label: l10n.purchasesUnit,
-            maxLength: 20,
-            onChanged: (_) => _report(),
+            onChanged: (code) {
+              setState(() => _unit = code);
+              _report();
+            },
           ),
         ],
       ],

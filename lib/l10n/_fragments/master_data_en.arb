@@ -6,5 +6,17 @@
   "masterDataUnknownCode": "This is not a valid entry. Pick one from the list.",
   "@masterDataUnknownCode": {
     "description": "#3563 Error under a master-data field (country, currency) whose value is outside the catalogue; shown for a stored value too."
+  },
+  "masterDataUnlisted": "This is not in the list: pick one",
+  "@masterDataUnlisted": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
+  },
+  "masterDataNoUnit": "No unit",
+  "@masterDataNoUnit": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
+  },
+  "masterDataNoVat": "No VAT",
+  "@masterDataNoVat": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
   }
 }

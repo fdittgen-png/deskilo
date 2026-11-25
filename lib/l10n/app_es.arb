@@ -12826,8 +12826,20 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataNoUnit": "Sin unidad",
+  "@masterDataNoUnit": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
+  },
+  "masterDataNoVat": "Sin IVA",
+  "@masterDataNoVat": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
+  },
   "masterDataSearchHint": "Escriba un nombre o un código, o elija de la lista",
   "masterDataUnknownCode": "No es una entrada válida. Elija una de la lista.",
+  "masterDataUnlisted": "Esto no está en la lista: elija uno",
+  "@masterDataUnlisted": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
+  },
   "mcpApiReference": "Referencia de la API",
   "mcpApiReferenceHint": "Qué puede llamar un asistente y cómo se autoriza",
   "mcpAssistantsTitle": "Asistentes",

@@ -21281,12 +21281,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get managedProfileTitle => 'Profil géré';
 
   @override
+  String get masterDataNoUnit => 'Aucune unité';
+
+  @override
+  String get masterDataNoVat => 'Sans TVA';
+
+  @override
   String get masterDataSearchHint =>
       'Saisissez un nom ou un code, ou choisissez dans la liste';
 
   @override
   String get masterDataUnknownCode =>
       'Ce n\'est pas une entrée valide. Choisissez-en une dans la liste.';
+
+  @override
+  String get masterDataUnlisted =>
+      'Ce n\'est pas dans la liste : choisissez-en un';
 
   @override
   String get mcpApiReference => 'Référence de l’API';

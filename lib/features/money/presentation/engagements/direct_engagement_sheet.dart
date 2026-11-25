@@ -17,6 +17,7 @@ import '../../../../core/ui/form_kit.dart';
 import '../../application/service_fulfilment_commands.dart';
 import '../../domain/billing_customer.dart';
 import '../../domain/service_fulfilment.dart';
+import '../widgets/master_data_pickers.dart';
 import 'engagement_text.dart';
 
 /// Opens the sheet; true when an engagement was committed.
@@ -27,9 +28,10 @@ Future<bool> showDirectEngagementSheet(
   required List<BillingParty> customers,
 }) {
   final l10n = context.l10n;
-  final fields = FormControllers({'description': '', 'quantity': '1', 'unit': ''});
+  final fields = FormControllers({'description': '', 'quantity': '1'});
   final locale = Localizations.localeOf(context).toLanguageTag();
   String? customer;
+  var unit = '';
   String? requestId;
   var committed = false;
   return showAppFormSheet(
@@ -54,7 +56,7 @@ Future<bool> showDirectEngagementSheet(
             subjectId: customer!,
             description: fields['description'].text.trim(),
             quantity: quantity.text,
-            unit: fields['unit'].text.trim(),
+            unit: unit,
           ),
         );
         switch (outcome) {
@@ -97,11 +99,16 @@ Future<bool> showDirectEngagementSheet(
           inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,\s]'))],
         ),
         const FormGap(),
-        AppTextField(
+        // #4471 -- the unit is one of the business's units of measure, never typed.
+        UnitPickerField(
           key: const ValueKey('engagement-direct-unit'),
-          controller: fields['unit'],
-          fieldKey: 'unit',
+          workspaceId: workspaceId,
+          value: unit,
           label: l10n.standaloneInvoiceLineUnit,
+          onChanged: (code) {
+            unit = code;
+            refresh();
+          },
         ),
       ],
     ),
