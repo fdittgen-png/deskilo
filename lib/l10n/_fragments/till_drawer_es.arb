@@ -100,5 +100,9 @@
   "tillDayRefusalClosed": "Este día ya está cerrado.",
   "tillDayRefusalNothing": "No se cerró ninguna sesión este día: no hay nada que cerrar.",
   "tillDayRefusalFuture": "Un día no puede cerrarse antes de empezar.",
-  "tillDrawerManage": "Cajas y cajones"
+  "tillDrawerManage": "Cajas y cajones",
+  "tillDrawerConsoleTitle": "Consola del terminal",
+  "tillDrawerConsoleEmpty": "No hay ninguna venta abierta en un terminal. Lo que registra un terminal aparece aquí en cuanto se elige, con los precios que le da Deskilo.",
+  "tillDrawerConsoleLine": "{quantity} × {label}",
+  "tillDrawerConsoleRevision": "Venta abierta, cambio {revision}"
 }

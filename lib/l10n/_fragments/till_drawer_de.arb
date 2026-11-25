@@ -100,5 +100,9 @@
   "tillDayRefusalClosed": "Dieser Tag ist bereits abgeschlossen.",
   "tillDayRefusalNothing": "An diesem Tag wurde keine Sitzung geschlossen: Es gibt nichts abzuschließen.",
   "tillDayRefusalFuture": "Ein Tag kann nicht abgeschlossen werden, bevor er begonnen hat.",
-  "tillDrawerManage": "Kassen und Schubladen"
+  "tillDrawerManage": "Kassen und Schubladen",
+  "tillDrawerConsoleTitle": "Terminal-Konsole",
+  "tillDrawerConsoleEmpty": "Auf keinem Terminal ist ein Verkauf offen. Was ein Terminal erfasst, erscheint hier, sobald es gewählt wird, mit den Preisen von Deskilo.",
+  "tillDrawerConsoleLine": "{quantity} × {label}",
+  "tillDrawerConsoleRevision": "Offener Verkauf, Änderung {revision}"
 }

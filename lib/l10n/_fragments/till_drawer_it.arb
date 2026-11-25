@@ -100,5 +100,9 @@
   "tillDayRefusalClosed": "Questa giornata è già chiusa.",
   "tillDayRefusalNothing": "Nessuna sessione è stata chiusa in questa giornata: non c'è nulla da chiudere.",
   "tillDayRefusalFuture": "Una giornata non può essere chiusa prima di iniziare.",
-  "tillDrawerManage": "Casse e cassetti"
+  "tillDrawerManage": "Casse e cassetti",
+  "tillDrawerConsoleTitle": "Console del terminale",
+  "tillDrawerConsoleEmpty": "Nessuna vendita è aperta su un terminale. Ciò che un terminale registra appare qui appena viene scelto, con i prezzi dati da Deskilo.",
+  "tillDrawerConsoleLine": "{quantity} × {label}",
+  "tillDrawerConsoleRevision": "Vendita aperta, modifica {revision}"
 }

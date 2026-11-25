@@ -101,7 +101,10 @@ void main() {
       repo.invoiceReceipts['ws-1|req-1'] = 'inv-9';
       final out = await issuance.look(_attempt, unknown);
       expect(out, isA<CommandDone<StandaloneIssued>>());
-      expect((out as CommandDone<StandaloneIssued>).value.invoiceId, 'inv-9');
+      final issued = (out as CommandDone<StandaloneIssued>).value;
+      expect(issued.invoiceId, 'inv-9');
+      expect(issued.number, isNull, reason: 'a receipt does not carry the number; none is made up');
+      expect(issued.replayed, isTrue);
     });
 
     test('another workspace\'s receipt for the same request id is not this attempt\'s', () async {

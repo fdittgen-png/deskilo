@@ -270,7 +270,10 @@ class StandaloneIssued {
   }
 
   final String invoiceId;
-  final String number;
+
+  /// The number the invoice froze; null when the invoice was found by its
+  /// receipt, which does not carry it.
+  final String? number;
 
   /// True when the server recognised the request and answered the invoice an
   /// earlier attempt made.
