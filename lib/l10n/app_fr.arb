@@ -24226,6 +24226,7 @@
   "tillLayoutFnQuantity": "Quantité ×",
   "tillLayoutFnReprint": "Réimprimer le dernier ticket",
   "tillLayoutFnVoid": "Annuler une ligne",
+  "tillLayoutGone": "Plus en vente",
   "tillLayoutInvalid": "Cette disposition ne peut pas être enregistrée : {reason}",
   "tillLayoutKindCalculator": "Calculatrice",
   "tillLayoutKindCashNotes": "Billets suggérés",

@@ -66764,6 +66764,12 @@ abstract class AppLocalizations {
   /// **'Void a line'**
   String get tillLayoutFnVoid;
 
+  /// #4448 a key of a published till layout whose item is no longer sold: shown disabled
+  ///
+  /// In en, this message translates to:
+  /// **'No longer for sale'**
+  String get tillLayoutGone;
+
   /// #4448 the till layout editor; the reason is a reference: the server's problem code, as it named it
   ///
   /// In en, this message translates to:

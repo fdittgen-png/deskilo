@@ -42006,6 +42006,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillLayoutFnVoid => 'Annuler une ligne';
 
   @override
+  String get tillLayoutGone => 'Plus en vente';
+
+  @override
   String tillLayoutInvalid(String reason) {
     return 'Cette disposition ne peut pas être enregistrée : $reason';
   }

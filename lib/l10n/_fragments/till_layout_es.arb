@@ -50,5 +50,6 @@
   "tillLayoutPublished": "Publicado. La caja lo adopta en su próxima sesión.",
   "tillLayoutStale": "Alguien ha cambiado este diseño; vuelva a cargarlo.",
   "tillLayoutInvalid": "Este diseño no se puede guardar: {reason}",
-  "tillLayoutReload": "Volver a cargar"
+  "tillLayoutReload": "Volver a cargar",
+  "tillLayoutGone": "Ya no está a la venta"
 }

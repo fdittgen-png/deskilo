@@ -24226,6 +24226,7 @@
   "tillLayoutFnQuantity": "Quantità ×",
   "tillLayoutFnReprint": "Ristampare l'ultimo scontrino",
   "tillLayoutFnVoid": "Annullare una riga",
+  "tillLayoutGone": "Non più in vendita",
   "tillLayoutInvalid": "Questo layout non può essere salvato: {reason}",
   "tillLayoutKindCalculator": "Calcolatrice",
   "tillLayoutKindCashNotes": "Banconote suggerite",

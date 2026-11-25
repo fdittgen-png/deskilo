@@ -41950,6 +41950,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillLayoutFnVoid => 'Zeile stornieren';
 
   @override
+  String get tillLayoutGone => 'Nicht mehr im Verkauf';
+
+  @override
   String tillLayoutInvalid(String reason) {
     return 'Dieses Layout kann nicht gespeichert werden: $reason';
   }

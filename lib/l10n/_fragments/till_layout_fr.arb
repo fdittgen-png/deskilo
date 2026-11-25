@@ -50,5 +50,6 @@
   "tillLayoutPublished": "Publiée. La caisse la prend à sa prochaine session.",
   "tillLayoutStale": "Quelqu'un a modifié cette disposition ; rechargez-la.",
   "tillLayoutInvalid": "Cette disposition ne peut pas être enregistrée : {reason}",
-  "tillLayoutReload": "Recharger"
+  "tillLayoutReload": "Recharger",
+  "tillLayoutGone": "Plus en vente"
 }

@@ -41827,6 +41827,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillLayoutFnVoid => 'Anular una línea';
 
   @override
+  String get tillLayoutGone => 'Ya no está a la venta';
+
+  @override
   String tillLayoutInvalid(String reason) {
     return 'Este diseño no se puede guardar: $reason';
   }

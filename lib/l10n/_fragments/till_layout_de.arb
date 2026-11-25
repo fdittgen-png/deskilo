@@ -50,5 +50,6 @@
   "tillLayoutPublished": "Veröffentlicht. Die Kasse übernimmt es mit der nächsten Sitzung.",
   "tillLayoutStale": "Jemand hat dieses Layout geändert; laden Sie es neu.",
   "tillLayoutInvalid": "Dieses Layout kann nicht gespeichert werden: {reason}",
-  "tillLayoutReload": "Neu laden"
+  "tillLayoutReload": "Neu laden",
+  "tillLayoutGone": "Nicht mehr im Verkauf"
 }

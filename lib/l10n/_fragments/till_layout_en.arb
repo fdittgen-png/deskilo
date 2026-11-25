@@ -211,5 +211,9 @@
   "tillLayoutReload": "Reload",
   "@tillLayoutReload": {
     "description": "#4448 the till layout editor"
+  },
+  "tillLayoutGone": "No longer for sale",
+  "@tillLayoutGone": {
+    "description": "#4448 a key of a published till layout whose item is no longer sold: shown disabled"
   }
 }

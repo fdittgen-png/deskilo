@@ -50,5 +50,6 @@
   "tillLayoutPublished": "Pubblicato. La cassa lo adotta alla sessione successiva.",
   "tillLayoutStale": "Qualcuno ha modificato questo layout; lo ricarichi.",
   "tillLayoutInvalid": "Questo layout non può essere salvato: {reason}",
-  "tillLayoutReload": "Ricaricare"
+  "tillLayoutReload": "Ricaricare",
+  "tillLayoutGone": "Non più in vendita"
 }

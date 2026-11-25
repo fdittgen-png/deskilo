@@ -41879,6 +41879,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillLayoutFnVoid => 'Annullare una riga';
 
   @override
+  String get tillLayoutGone => 'Non più in vendita';
+
+  @override
   String tillLayoutInvalid(String reason) {
     return 'Questo layout non può essere salvato: $reason';
   }

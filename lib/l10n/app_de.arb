@@ -24226,6 +24226,7 @@
   "tillLayoutFnQuantity": "Menge ×",
   "tillLayoutFnReprint": "Letzten Beleg nachdrucken",
   "tillLayoutFnVoid": "Zeile stornieren",
+  "tillLayoutGone": "Nicht mehr im Verkauf",
   "tillLayoutInvalid": "Dieses Layout kann nicht gespeichert werden: {reason}",
   "tillLayoutKindCalculator": "Rechner",
   "tillLayoutKindCashNotes": "Vorgeschlagene Scheine",

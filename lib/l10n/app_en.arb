@@ -54130,6 +54130,10 @@
   "@tillLayoutFnVoid": {
     "description": "#4448 the till layout editor"
   },
+  "tillLayoutGone": "No longer for sale",
+  "@tillLayoutGone": {
+    "description": "#4448 a key of a published till layout whose item is no longer sold: shown disabled"
+  },
   "tillLayoutInvalid": "This layout cannot be saved: {reason}",
   "@tillLayoutInvalid": {
     "description": "#4448 the till layout editor; the reason is a reference: the server's problem code, as it named it",

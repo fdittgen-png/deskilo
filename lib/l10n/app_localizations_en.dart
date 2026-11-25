@@ -41486,6 +41486,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillLayoutFnVoid => 'Void a line';
 
   @override
+  String get tillLayoutGone => 'No longer for sale';
+
+  @override
   String tillLayoutInvalid(String reason) {
     return 'This layout cannot be saved: $reason';
   }
