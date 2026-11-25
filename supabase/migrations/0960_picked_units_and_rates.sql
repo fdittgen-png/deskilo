@@ -323,4 +323,4 @@ end
 $fn$;
 revoke execute on function public.service_fulfilment_direct_scope(uuid, jsonb) from public, anon, authenticated;
 
-select public.set_deskilo_schema_version(959);
+select public.set_deskilo_schema_version(960);
