@@ -33658,6 +33658,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingUnitCards => 'Karten';
 
   @override
+  String get settingUnitCells => 'Zellen';
+
+  @override
   String get settingUnitCharacters => 'Zeichen';
 
   @override

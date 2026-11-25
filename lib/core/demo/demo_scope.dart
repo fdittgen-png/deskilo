@@ -155,6 +155,7 @@ import 'demo_house_reveal.dart';
 import 'demo_organisation_overview.dart';
 import 'demo_space_pick.dart';
 import 'demo_space_routing.dart';
+import 'demo_till_layout_overrides.dart';
 import 'seed/demo_house_seed.dart' show demoHouseCountry, demoHouseCurrency;
 import 'seed/demo_organisation_seed.dart';
 import 'seed/demo_reachable_seed.dart';
@@ -277,7 +278,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // holds answers per space (demo_space_routing.dart).
       workspaceListRepositoryProvider.overrideWithValue(fixture.workspaces),
       ...demoSpaceOverrides(fixture),
-      ...demoGuestPassOverrides(fixture), demoCustomerStatementOverride(fixture), // #3308, #3673
+      ...demoGuestPassOverrides(fixture), demoCustomerStatementOverride(fixture), ...demoTillLayoutOverrides(), // #3308, #3673, #4448
       placeFeedbackRepositoryProvider.overrideWithValue(FakePlaceFeedbackRepository()),
       usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2590
       viesRepositoryProvider.overrideWithValue(DemoViesRepository(vatIdOf: (memberId) => demoVatIdOf(fixture.profiles, memberId), now: () => fixture.seededAt)), // #2354 #3963

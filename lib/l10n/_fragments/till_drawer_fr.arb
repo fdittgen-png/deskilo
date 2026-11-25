@@ -108,5 +108,6 @@
   "settingLabelCounterLayoutMaxCells": "Taille d'une disposition de caisse",
   "settingHintCounterLayoutMaxCells": "Le nombre maximal de cases d'une disposition de caisse, toutes pages et tailles confondues. Une disposition plus grande est refusée à l'enregistrement.",
   "settingLabelCounterLayoutCashierReorder": "Les caissiers réordonnent les touches",
-  "settingHintCounterLayoutCashierReorder": "Un caissier peut réordonner les touches d'une caisse sur son propre appareil sans changer la disposition publiée."
+  "settingHintCounterLayoutCashierReorder": "Un caissier peut réordonner les touches d'une caisse sur son propre appareil sans changer la disposition publiée.",
+  "settingUnitCells": "cases"
 }

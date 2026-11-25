@@ -108,5 +108,6 @@
   "settingLabelCounterLayoutMaxCells": "Größe des Kassenlayouts",
   "settingHintCounterLayoutMaxCells": "Die meisten Zellen, die ein Kassenlayout über alle Seiten und Größen haben darf. Ein größeres Layout wird beim Speichern abgelehnt.",
   "settingLabelCounterLayoutCashierReorder": "Kassierer ordnen die Tasten",
-  "settingHintCounterLayoutCashierReorder": "Ein Kassierer darf die Tasten einer Kasse auf seinem eigenen Gerät umordnen, ohne das veröffentlichte Layout zu ändern."
+  "settingHintCounterLayoutCashierReorder": "Ein Kassierer darf die Tasten einer Kasse auf seinem eigenen Gerät umordnen, ohne das veröffentlichte Layout zu ändern.",
+  "settingUnitCells": "Zellen"
 }

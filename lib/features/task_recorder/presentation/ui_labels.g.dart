@@ -2960,6 +2960,7 @@ Map<String, _Getter> _part6() => {
   'settingLabelBiBatchTimeBudgetMs': (l) => l.settingLabelBiBatchTimeBudgetMs,
   'settingLabelMcpNoticeReadRetentionDays': (l) => l.settingLabelMcpNoticeReadRetentionDays,
   'settingOriginWorkspace': (l) => l.settingOriginWorkspace,
+  'settingUnitCells': (l) => l.settingUnitCells,
   'settingUnitSeconds': (l) => l.settingUnitSeconds,
   'settingsTitle': (l) => l.settingsTitle,
   'settlementDocumentationOnly': (l) => l.settlementDocumentationOnly,

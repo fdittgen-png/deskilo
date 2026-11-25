@@ -158,6 +158,7 @@ Future<void> main() async {
         counterDocumentChannelFromApp, // #4184
         counterSettingsEditorFromApp, // #4184
         counterBookPortFromApp, // #4185
+        tillLayoutPortFromApp, // #4448
         businessDayFromApp, // #4426
         privateValuesFromAccount, // #2552
         eventSourceOpenersFromMoney, // #2573

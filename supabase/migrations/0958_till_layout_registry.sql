@@ -2,25 +2,14 @@
 -- risk: additive
 -- apps: additive
 --
--- #4448 -- a till's layout: which keys and tools sit where on the till, per till, as a draft being edited and the one
--- published. A till with no layout keeps the generated one of #4366; nothing here changes a sale.
+-- #4448 -- the till layouts' registry entries: what lets the next migration's table and commands exist.
 --
---   public.till_layouts            one draft and one published layout per till: its name, its version (the optimistic
---                                  save's), its status and the layout (pages, grids per size, cells).
---   public.till_layout_problems    the rules a layout must meet, the same as the app's validateTillLayout
---                                  (lib/features/money/domain/till_layout.dart): known kinds and functions, cells inside
---                                  their grid and at least their kind's span, no two cells on one place, the cell cap,
---                                  item keys naming an item of the business. Answers the problems, first one first.
---   till_layout_save_v1            the one way in for a draft: a request id and the version the editor read; a stale
---                                  version is refused (DKL10, "Someone changed this layout; reload it"), an invalid
---                                  layout is refused with its first problem (DKL02), the right configureTill (DKN01) and
---                                  the flag counterTillLayout (DKG01) are checked first. Answers the draft's id and version.
---   till_layout_publish_v1         the draft at the version the editor read becomes the till's published layout. A till
---                                  session already open keeps what it loaded until it loads again (the app's rule).
---   configureTill                  a new right, an admin default: role_permission_catalog, has_permission_raw and
---                                  member_permission_raw restated from their live definitions with it added.
---   counterTillLayout              a new flag under counterTillSessions (the issue's `counterTill` parent does not
---                                  exist); counter.layout_max_cells and counter.layout_cashier_reorder, two settings.
+--   counterTillLayout             a new flag under counterTillSessions (the issue's `counterTill` parent does not exist;
+--                                 till sessions is the till's own flag, as E04 ruled for the embedded terminal).
+--   configureTill                 a new right, an admin default: role_permission_catalog, has_permission_raw and
+--                                 member_permission_raw restated from their live definitions with it added, and the
+--                                 template field registry regenerated with it.
+--   counter.layout_max_cells, counter.layout_cashier_reorder   two settings, seeded below.
 -- BEGIN GENERATED SEED (dart run tool/build_settings_seed.dart)
 insert into public.setting_definitions
   (key, type, default_value, min_value, max_value, unit, group_key, scopes,
@@ -31,262 +20,6 @@ values
 on conflict (key) do nothing;
 -- END GENERATED SEED
 
-create table public.till_layouts (
-  id uuid primary key default gen_random_uuid(),
-  workspace_id uuid not null references public.workspaces(id) on delete cascade,
-  till_id uuid not null references public.counter_tills(id) on delete cascade,
-  name text not null check (char_length(btrim(name)) between 1 and 60),
-  version integer not null default 1 check (version >= 1),
-  status text not null default 'draft' check (status in ('draft', 'published')),
-  layout jsonb not null check (jsonb_typeof(layout) = 'object'),
-  constraint till_layouts_one_per_status unique (till_id, status)
-);
-select public.ensure_system_columns('till_layouts');
-create index till_layouts_workspace on public.till_layouts (workspace_id);
-
--- The widget catalogue: each kind's wire word and the smallest span it is usable at (TillWidgetKind).
-create or replace function public.till_layout_kinds()
-returns table (kind text, min_cols integer, min_rows integer) language sql immutable set search_path = public as $fn$
-  values ('item_key', 1, 1), ('category_key', 1, 1), ('function_key', 1, 1), ('keypad', 2, 3), ('calculator', 2, 3),
-         ('scan_field', 2, 1), ('basket', 2, 2), ('total_display', 2, 1), ('customer_note', 2, 1), ('studio_passes', 2, 2),
-         ('cash_notes', 2, 1)
-$fn$;
-revoke execute on function public.till_layout_kinds() from public, anon;
-
--- The function keys: each an existing till command (TillFunction).
-create or replace function public.till_layout_functions()
-returns setof text language sql immutable set search_path = public as $fn$
-  values ('pay_cash'), ('pay_card'), ('next_customer'), ('void_line'), ('line_discount'), ('quantity_times'),
-         ('price_override'), ('deposit_return'), ('open_drawer'), ('reprint_last')
-$fn$;
-revoke execute on function public.till_layout_functions() from public, anon;
-
--- The largest layout in bytes, as tillLayoutMaxBytes: far above the largest cell cap (600 cells of a few hundred bytes).
-create or replace function public.till_layout_max_bytes()
-returns integer language sql immutable set search_path = public as $fn$ select 262144 $fn$;
-revoke execute on function public.till_layout_max_bytes() from public, anon;
-
--- The largest grid side, as tillLayoutMaxGridSide.
-create or replace function public.till_layout_max_grid_side()
-returns integer language sql immutable set search_path = public as $fn$ select 24 $fn$;
-revoke execute on function public.till_layout_max_grid_side() from public, anon;
-
-create or replace function public.till_layout_problems(p_workspace_id uuid, p_name text, p_layout jsonb, p_max_cells integer)
-returns text[] language plpgsql stable security definer set search_path = public as $fn$
-declare
-  v_out text[] := '{}';
-  v_pages jsonb := coalesce(p_layout -> 'pages', '[]'::jsonb);
-  v_page jsonb;
-  v_size text;
-  v_grid jsonb;
-  v_cells jsonb;
-  v_cell jsonb;
-  v_other jsonb;
-  v_cols integer;
-  v_rows integer;
-  v_p integer := 0;
-  v_i integer;
-  v_j integer;
-  v_count integer := 0;
-  v_c integer; v_r integer; v_cs integer; v_rs integer;
-  v_min record;
-  v_side integer := public.till_layout_max_grid_side();
-  v_item text;
-begin
-  -- bounded before any walk: a layout past the byte cap or the cell cap is refused without looking at its cells, so a
-  -- huge layout never costs the quadratic overlap check
-  if octet_length(p_layout::text) > public.till_layout_max_bytes() then
-    return array['too_large'];
-  end if;
-  if p_name is null or btrim(p_name) = '' then v_out := array_append(v_out, 'no_name'); end if;
-  if jsonb_typeof(v_pages) <> 'array' or jsonb_array_length(v_pages) = 0 then
-    return array_append(v_out, 'no_pages');
-  end if;
-  for v_page in select value from jsonb_array_elements(v_pages) loop
-    for v_size, v_grid in select key, value from jsonb_each(coalesce(v_page -> 'grids', '{}'::jsonb)) loop
-      -- every size counts, the ones this server does not know included
-      v_count := v_count + case when jsonb_typeof(v_grid -> 'cells') = 'array' then jsonb_array_length(v_grid -> 'cells') else 0 end;
-    end loop;
-  end loop;
-  if v_count > p_max_cells then return array_append(v_out, 'too_large'); end if;
-  for v_page in select value from jsonb_array_elements(v_pages) loop
-    if jsonb_typeof(v_page -> 'grids') is distinct from 'object' or v_page -> 'grids' = '{}'::jsonb then
-      v_out := array_append(v_out, format('no_grid page %s', v_p));
-    end if;
-    for v_size, v_grid in select key, value from jsonb_each(coalesce(v_page -> 'grids', '{}'::jsonb)) loop
-      if v_size not in ('phone', 'tablet', 'desk') then continue; end if;   -- a size this server does not know is kept, not drawn
-      v_cols := (v_grid ->> 'cols')::integer;
-      v_rows := (v_grid ->> 'rows')::integer;
-      if v_cols is null or v_rows is null or v_cols < 1 or v_rows < 1 or v_cols > v_side or v_rows > v_side then
-        v_out := array_append(v_out, format('bad_grid page %s %s', v_p, v_size));
-        continue;
-      end if;
-      v_cells := case when jsonb_typeof(v_grid -> 'cells') = 'array' then v_grid -> 'cells' else '[]'::jsonb end;
-      for v_i in 0 .. jsonb_array_length(v_cells) - 1 loop
-        v_cell := v_cells -> v_i;
-        v_c := coalesce((v_cell ->> 'col')::integer, 0);
-        v_r := coalesce((v_cell ->> 'row')::integer, 0);
-        v_cs := coalesce((v_cell ->> 'col_span')::integer, 1);
-        v_rs := coalesce((v_cell ->> 'row_span')::integer, 1);
-        select * into v_min from public.till_layout_kinds() k where k.kind = v_cell ->> 'kind';
-        if not found then
-          v_out := array_append(v_out, format('unknown_kind page %s %s cell %s', v_p, v_size, v_i));
-          v_min := null;
-        end if;
-        if v_c < 0 or v_r < 0 or v_cs < 1 or v_rs < 1 or v_c + v_cs > v_cols or v_r + v_rs > v_rows then
-          v_out := array_append(v_out, format('outside_grid page %s %s cell %s', v_p, v_size, v_i));
-        elsif v_min is not null and (v_cs < v_min.min_cols or v_rs < v_min.min_rows) then
-          v_out := array_append(v_out, format('too_small page %s %s cell %s', v_p, v_size, v_i));
-        end if;
-        for v_j in 0 .. v_i - 1 loop
-          v_other := v_cells -> v_j;
-          if v_c < coalesce((v_other ->> 'col')::integer, 0) + coalesce((v_other ->> 'col_span')::integer, 1)
-             and coalesce((v_other ->> 'col')::integer, 0) < v_c + v_cs
-             and v_r < coalesce((v_other ->> 'row')::integer, 0) + coalesce((v_other ->> 'row_span')::integer, 1)
-             and coalesce((v_other ->> 'row')::integer, 0) < v_r + v_rs then
-            v_out := array_append(v_out, format('overlap page %s %s cell %s', v_p, v_size, v_i));
-          end if;
-        end loop;
-        if v_cell ->> 'kind' = 'function_key'
-           and coalesce(v_cell #>> '{params,function}', '') not in (select f from public.till_layout_functions() f) then
-          v_out := array_append(v_out, format('unknown_function page %s %s cell %s', v_p, v_size, v_i));
-        end if;
-        if v_cell ->> 'kind' = 'item_key' then
-          v_item := v_cell #>> '{params,item_id}';
-          if v_item is null or v_item !~* '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
-             or not exists (select 1 from public.services s where s.id = v_item::uuid and s.workspace_id = p_workspace_id) then
-            v_out := array_append(v_out, format('unknown_item page %s %s cell %s', v_p, v_size, v_i));
-          end if;
-        end if;
-      end loop;
-    end loop;
-    v_p := v_p + 1;
-  end loop;
-  return v_out;
-end
-$fn$;
-revoke execute on function public.till_layout_problems(uuid, text, jsonb, integer) from public, anon, authenticated;
-
-alter table public.till_layouts enable row level security;
-revoke all on public.till_layouts from public, anon, authenticated;
-grant select on public.till_layouts to authenticated;
-create policy mcp_delegated_deny on public.till_layouts as restrictive for all to authenticated
-  using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
-
--- published layouts are read by who sells at the till and by who lays it out; drafts only by who lays it out
-create policy till_layouts_select on public.till_layouts for select to authenticated
-  using (public.feature_effective(workspace_id, 'counterTillLayout')
-         and (workspace_id in (select public.workspaces_permitting(array['configureTill']))
-              or (status = 'published' and workspace_id in (select public.workspaces_permitting(array['issueInvoices'])))));
-
-alter table public.till_layouts add column last_request_id uuid;
-
-create or replace function public.till_layout_actor(p_workspace_id uuid)
-returns uuid language plpgsql stable security definer set search_path = public as $fn$
-begin
-  if auth.uid() is null or public.mcp_is_delegated() then
-    raise exception 'not allowed to lay out the tills' using errcode = 'DKN01';
-  end if;
-  if not public.has_permission(p_workspace_id, 'configureTill') then
-    raise exception 'not allowed to lay out the tills' using errcode = 'DKN01';
-  end if;
-  if not public.feature_effective(p_workspace_id, 'counterTillLayout') then
-    raise exception 'till layouts are off in this business' using errcode = 'DKG01';
-  end if;
-  return auth.uid();
-end
-$fn$;
-revoke execute on function public.till_layout_actor(uuid) from public, anon, authenticated;
-
-create or replace function public.till_layout_save_v1(
-  p_workspace_id uuid,
-  p_request_id uuid,
-  p_till_id uuid,
-  p_name text,
-  p_expected_version integer,
-  p_layout jsonb
-) returns jsonb language plpgsql volatile security definer set search_path = public as $fn$
-declare
-  v_row public.till_layouts%rowtype;
-  v_problems text[];
-  v_cap integer;
-begin
-  perform public.till_layout_actor(p_workspace_id);
-  if p_request_id is null then
-    raise exception 'a request id is needed' using errcode = 'DKL02', detail = 'request_id';
-  end if;
-  if not exists (select 1 from public.counter_tills t where t.id = p_till_id and t.workspace_id = p_workspace_id) then
-    raise exception 'no such till in this business' using errcode = 'DKL02', detail = 'till';
-  end if;
-  -- one editor at a time per till: the second waits here and then meets the version the first wrote
-  perform pg_advisory_xact_lock(hashtextextended('till_layout:' || p_till_id::text, 0));
-  select * into v_row from public.till_layouts where till_id = p_till_id and status = 'draft';
-  if found and v_row.last_request_id = p_request_id then
-    return jsonb_build_object('id', v_row.id, 'version', v_row.version, 'replayed', true);
-  end if;
-  if coalesce(v_row.version, 0) <> coalesce(p_expected_version, 0) then
-    raise exception 'Someone changed this layout; reload it' using errcode = 'DKL10', detail = 'version';
-  end if;
-  v_cap := coalesce((public.setting_value(p_workspace_id, 'counter.layout_max_cells') #>> '{}')::integer, 200);
-  v_problems := public.till_layout_problems(p_workspace_id, p_name, p_layout, v_cap);
-  if cardinality(v_problems) > 0 then
-    raise exception 'this layout cannot be saved: %', v_problems[1] using errcode = 'DKL02', detail = v_problems[1];
-  end if;
-  if v_row.id is null then
-    insert into public.till_layouts (workspace_id, till_id, name, version, status, layout, last_request_id)
-    values (p_workspace_id, p_till_id, btrim(p_name), 1, 'draft', p_layout, p_request_id)
-    returning * into v_row;
-  else
-    update public.till_layouts set name = btrim(p_name), layout = p_layout, version = version + 1, last_request_id = p_request_id
-     where id = v_row.id returning * into v_row;
-  end if;
-  return jsonb_build_object('id', v_row.id, 'version', v_row.version, 'replayed', false);
-end
-$fn$;
-revoke execute on function public.till_layout_save_v1(uuid, uuid, uuid, text, integer, jsonb) from public, anon;
-grant execute on function public.till_layout_save_v1(uuid, uuid, uuid, text, integer, jsonb) to authenticated;
-
-create or replace function public.till_layout_publish_v1(
-  p_workspace_id uuid,
-  p_request_id uuid,
-  p_till_id uuid,
-  p_expected_version integer
-) returns jsonb language plpgsql volatile security definer set search_path = public as $fn$
-declare
-  v_draft public.till_layouts%rowtype;
-  v_pub public.till_layouts%rowtype;
-  v_problems text[];
-begin
-  perform public.till_layout_actor(p_workspace_id);
-  perform pg_advisory_xact_lock(hashtextextended('till_layout:' || p_till_id::text, 0));
-  select * into v_pub from public.till_layouts where till_id = p_till_id and status = 'published' and workspace_id = p_workspace_id;
-  if found and v_pub.last_request_id = p_request_id then
-    return jsonb_build_object('id', v_pub.id, 'version', v_pub.version, 'replayed', true);
-  end if;
-  select * into v_draft from public.till_layouts where till_id = p_till_id and status = 'draft' and workspace_id = p_workspace_id;
-  if not found or v_draft.version <> p_expected_version then
-    raise exception 'Someone changed this layout; reload it' using errcode = 'DKL10', detail = 'version';
-  end if;
-  -- the items may have changed since the draft was saved: the published layout meets the rules today
-  v_problems := public.till_layout_problems(p_workspace_id, v_draft.name, v_draft.layout,
-    coalesce((public.setting_value(p_workspace_id, 'counter.layout_max_cells') #>> '{}')::integer, 200));
-  if cardinality(v_problems) > 0 then
-    raise exception 'this layout cannot be published: %', v_problems[1] using errcode = 'DKL02', detail = v_problems[1];
-  end if;
-  if v_pub.id is null then
-    insert into public.till_layouts (workspace_id, till_id, name, version, status, layout, last_request_id)
-    values (p_workspace_id, p_till_id, v_draft.name, 1, 'published', v_draft.layout, p_request_id)
-    returning * into v_pub;
-  else
-    update public.till_layouts set name = v_draft.name, layout = v_draft.layout, version = version + 1, last_request_id = p_request_id
-     where id = v_pub.id returning * into v_pub;
-  end if;
-  return jsonb_build_object('id', v_pub.id, 'version', v_pub.version, 'replayed', false);
-end
-$fn$;
-revoke execute on function public.till_layout_publish_v1(uuid, uuid, uuid, integer) from public, anon;
-grant execute on function public.till_layout_publish_v1(uuid, uuid, uuid, integer) to authenticated;
-
 -- BEGIN FEATURE REGISTRY ROWS (dart run tool/build_feature_registry_sql.dart)
 insert into public.feature_registry_entries (feature_key, parent, default_on, core, countries) values
 ('counterTillLayout', 'counterTillSessions', false, false, null)
@@ -294,6 +27,7 @@ on conflict (feature_key) do update set parent = excluded.parent, default_on = e
 -- END FEATURE REGISTRY ROWS
 
 -- configureTill: the catalog, restated whole from its live definition with the new right appended
+-- restates 0873: the live definition with configureTill appended, nothing else changed
 create or replace function public.role_permission_catalog()
  returns text[]
  language sql
@@ -313,6 +47,7 @@ as $function$
 $function$;
 
 -- configureTill is an admin default: both readers of the admin defaults, restated from their live definitions with it added
+-- restates 0185: the live definition (pg_get_functiondef on dev), configureTill added to the admin defaults, nothing else
 create or replace function public.has_permission_raw(ws uuid, perm text)
  returns boolean
  language sql
@@ -339,6 +74,7 @@ as $function$
         or (not m.is_admin and not m.is_owner and m.co_owner <> 'active' and w.role_permissions ? 'member' and w.role_permissions->'member' ? perm)));
 $function$;
 
+-- restates 0804: the live definition, configureTill added to the admin defaults, nothing else
 create or replace function public.member_permission_raw(p_member_id uuid, perm text)
  returns boolean
  language sql
@@ -365,6 +101,7 @@ as $function$
         or (not m.is_admin and not m.is_owner and m.co_owner <> 'active' and w.role_permissions ? 'member' and w.role_permissions->'member' ? perm)));
 $function$;
 
+-- restates 0954: regenerated by tool/build_template_field_registry_sql.dart, configureTill added to the role lists
 create or replace function public.template_field_registry()
 returns jsonb
 language sql
@@ -829,5 +566,11 @@ as $registry$
     {"id":"workspace.whatsapp_group","entity":"identity","type":"text","portability":"never","absent":"inherit","reason":"the source's own identity","process":"operations"}
   ]$json$::jsonb
 $registry$;
+
+-- the restated functions keep the posture they had
+revoke execute on function public.role_permission_catalog() from public, anon;
+revoke execute on function public.has_permission_raw(uuid, text) from public, anon;
+revoke execute on function public.member_permission_raw(uuid, text) from public, anon;
+revoke execute on function public.template_field_registry() from public, anon;
 
 select public.set_deskilo_schema_version(958);

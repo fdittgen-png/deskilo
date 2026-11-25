@@ -2120,8 +2120,7 @@ window.SETUP_LEVELS={
       "stockExpiryReport",
       "stockHandlingUnits",
       "counterOfflineCash",
-      "unitsOfMeasure",
-      "counterTillLayout"
+      "unitsOfMeasure"
      ],
      "needs": {
       "money": "invoices"

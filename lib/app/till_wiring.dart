@@ -13,9 +13,11 @@ import '../features/money/data/supabase_counter_book.dart';
 import '../features/money/data/supabase_counter_offline.dart';
 import '../features/money/data/supabase_counter_till.dart';
 import '../features/money/data/supabase_till_drawer.dart';
+import '../features/money/data/supabase_till_layouts.dart';
 import '../features/money/domain/till_drawer.dart';
 import '../features/money/providers/counter_book_providers.dart';
 import '../features/money/providers/till_drawer_providers.dart';
+import '../features/money/providers/till_layout_providers.dart';
 import '../features/money/providers/till_providers.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/domain/workspace_permission.dart';
@@ -86,6 +88,9 @@ final Override counterSettingsEditorFromApp = counterSettingsEditorProvider.over
 );
 
 /// #4185 -- the counter's book (its receipts, corrections, refunds, returns and card answers) on the same server.
+/// #4448 -- the till layouts on the same server.
+final Override tillLayoutPortFromApp = tillLayoutPortProvider.overrideWith((ref) => SupabaseTillLayouts(ref.watch(selectedWorkspaceClientProvider)));
+
 final Override counterBookPortFromApp = counterBookPortProvider.overrideWith(
   (ref) => SupabaseCounterBook(ref.watch(selectedWorkspaceClientProvider)),
 );

@@ -43457,6 +43457,10 @@
   "@settingUnitCards": {
     "description": "#2579 report limits"
   },
+  "settingUnitCells": "cells",
+  "@settingUnitCells": {
+    "description": "#4448 the unit of counter.layout_max_cells: grid cells of a till layout"
+  },
   "settingUnitCharacters": "characters",
   "@settingUnitCharacters": {
     "description": "#2472 personal directory: Unit of a setting counted in characters."

@@ -108,5 +108,6 @@
   "settingLabelCounterLayoutMaxCells": "Tamaño del diseño de caja",
   "settingHintCounterLayoutMaxCells": "El máximo de celdas que puede tener un diseño de caja, sumando todas sus páginas y tamaños. Un diseño mayor se rechaza al guardarlo.",
   "settingLabelCounterLayoutCashierReorder": "Los cajeros reordenan las teclas",
-  "settingHintCounterLayoutCashierReorder": "Un cajero puede reordenar las teclas de una caja en su propio dispositivo sin cambiar el diseño publicado."
+  "settingHintCounterLayoutCashierReorder": "Un cajero puede reordenar las teclas de una caja en su propio dispositivo sin cambiar el diseño publicado.",
+  "settingUnitCells": "celdas"
 }

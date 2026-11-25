@@ -14603,6 +14603,7 @@ const Set<String> uiLabelKeys = {
   'settingUnitAttempts',
   'settingUnitBytes',
   'settingUnitCards',
+  'settingUnitCells',
   'settingUnitCharacters',
   'settingUnitCurrencyUnits',
   'settingUnitDays',

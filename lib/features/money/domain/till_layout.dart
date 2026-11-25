@@ -5,6 +5,7 @@
 // command, a tool is an existing panel. A till without a layout keeps the generated one of #4366.
 //
 // The server (till_layout_save_v1) validates the same rules as [validateTillLayout]; the Demo's store runs this one.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
 /// The three sizes a till is laid out for, by the width it is drawn at.
 enum TillLayoutSize {
@@ -134,14 +135,17 @@ class TillCell {
     if (params.isNotEmpty) 'params': {for (final k in params.keys.toList()..sort()) k: params[k]},
   };
 
-  factory TillCell.fromJson(Map<String, Object?> j) => TillCell(
-    kindWire: '${j['kind'] ?? ''}',
-    col: _int(j['col']),
-    row: _int(j['row']),
-    colSpan: _int(j['col_span'], 1),
-    rowSpan: _int(j['row_span'], 1),
-    params: Map<String, Object?>.from((j['params'] as Map?) ?? const {}),
-  );
+  factory TillCell.fromJson(Object? json) {
+    final r = JsonReader.orEmpty(json, context: 'till_layout cell');
+    return TillCell(
+      kindWire: r.stringOr('kind'),
+      col: r.intOrNull('col') ?? 0,
+      row: r.intOrNull('row') ?? 0,
+      colSpan: r.intOrNull('col_span') ?? 1,
+      rowSpan: r.intOrNull('row_span') ?? 1,
+      params: r.objectOrAbsent('params').json,
+    );
+  }
 }
 
 /// The grid of one page at one size, and the cells on it.
@@ -156,11 +160,15 @@ class TillGrid {
 
   Map<String, Object?> toJson() => {'cols': cols, 'rows': rows, 'cells': [for (final c in cells) c.toJson()]};
 
-  factory TillGrid.fromJson(Map<String, Object?> j) => TillGrid(
-    cols: _int(j['cols']),
-    rows: _int(j['rows']),
-    cells: [for (final c in (j['cells'] as List?) ?? const []) TillCell.fromJson(Map<String, Object?>.from(c as Map))],
-  );
+  factory TillGrid.fromJson(Object? json) {
+    final r = JsonReader.orEmpty(json, context: 'till_layout grid');
+    final cells = r.json['cells'];
+    return TillGrid(
+      cols: r.intOrNull('cols') ?? 0,
+      rows: r.intOrNull('rows') ?? 0,
+      cells: [if (cells is List) for (final c in cells) TillCell.fromJson(c)],
+    );
+  }
 }
 
 /// One page (tab) of a till: its name and its grid per size.
@@ -175,13 +183,14 @@ class TillPage {
     'grids': {for (final s in TillLayoutSize.values) if (grids[s] != null) s.wire: grids[s]!.toJson()},
   };
 
-  factory TillPage.fromJson(Map<String, Object?> j) {
+  factory TillPage.fromJson(Object? json) {
+    final r = JsonReader.orEmpty(json, context: 'till_layout page');
     final grids = <TillLayoutSize, TillGrid>{};
-    for (final e in ((j['grids'] as Map?) ?? const {}).entries) {
-      final size = TillLayoutSize.of('${e.key}');
-      if (size != null) grids[size] = TillGrid.fromJson(Map<String, Object?>.from(e.value as Map));
+    for (final e in r.objectOrAbsent('grids').json.entries) {
+      final size = TillLayoutSize.of(e.key);
+      if (size != null) grids[size] = TillGrid.fromJson(e.value);
     }
-    return TillPage(name: '${j['name'] ?? ''}', grids: grids);
+    return TillPage(name: r.stringOr('name'), grids: grids);
   }
 }
 
@@ -197,13 +206,10 @@ class TillLayout {
   /// The layout as the server stores it (the `layout` column): name and status live in their own columns.
   Map<String, Object?> toJson() => {'pages': [for (final p in pages) p.toJson()]};
 
-  factory TillLayout.fromJson(Map<String, Object?> layout, {required String name, int version = 0, TillLayoutStatus status = TillLayoutStatus.draft}) =>
-      TillLayout(
-        name: name,
-        version: version,
-        status: status,
-        pages: [for (final p in (layout['pages'] as List?) ?? const []) TillPage.fromJson(Map<String, Object?>.from(p as Map))],
-      );
+  factory TillLayout.fromJson(Object? layout, {required String name, int version = 0, TillLayoutStatus status = TillLayoutStatus.draft}) {
+    final pages = JsonReader.orEmpty(layout, context: 'till_layout').json['pages'];
+    return TillLayout(name: name, version: version, status: status, pages: [if (pages is List) for (final p in pages) TillPage.fromJson(p)]);
+  }
 
   int get cellCount => pages.fold(0, (a, p) => a + p.grids.values.fold(0, (b, g) => b + g.cells.length));
 }
@@ -232,41 +238,50 @@ const int tillLayoutMaxGridSide = 24;
 /// Every problem of [layout]: the rules the server applies when it is saved. [maxCells] is the size cap (the
 /// `counter.till_layout_max_cells` setting); [knownItems], when given, are the item ids the business sells.
 List<TillLayoutProblem> validateTillLayout(TillLayout layout, {required int maxCells, Set<String>? knownItems}) {
-  final out = <TillLayoutProblem>[];
-  if (layout.name.trim().isEmpty) out.add(const TillLayoutProblem(TillLayoutProblemCode.noName));
-  if (layout.pages.isEmpty) out.add(const TillLayoutProblem(TillLayoutProblemCode.noPages));
+  final out = <TillLayoutProblem>[
+    if (layout.name.trim().isEmpty) const TillLayoutProblem(TillLayoutProblemCode.noName),
+    if (layout.pages.isEmpty) const TillLayoutProblem(TillLayoutProblemCode.noPages),
+  ];
   // past the cap nothing else is looked at, as on the server: a huge layout never costs the overlap check
   if (layout.cellCount > maxCells) return [...out, const TillLayoutProblem(TillLayoutProblemCode.tooLarge)];
   for (var p = 0; p < layout.pages.length; p++) {
     final page = layout.pages[p];
     if (page.grids.isEmpty) out.add(TillLayoutProblem(TillLayoutProblemCode.noGrid, page: p));
     for (final e in page.grids.entries) {
-      final g = e.value;
-      if (g.cols < 1 || g.rows < 1 || g.cols > tillLayoutMaxGridSide || g.rows > tillLayoutMaxGridSide) {
-        out.add(TillLayoutProblem(TillLayoutProblemCode.badGrid, page: p, size: e.key));
-        continue;
-      }
-      for (var i = 0; i < g.cells.length; i++) {
-        final c = g.cells[i];
-        TillLayoutProblem at(TillLayoutProblemCode code) => TillLayoutProblem(code, page: p, size: e.key, cell: i);
-        if (c.kind == TillWidgetKind.unknown) out.add(at(TillLayoutProblemCode.unknownKind));
-        if (c.col < 0 || c.row < 0 || c.colSpan < 1 || c.rowSpan < 1 || c.col + c.colSpan > g.cols || c.row + c.rowSpan > g.rows) {
-          out.add(at(TillLayoutProblemCode.outsideGrid));
-        } else if (c.colSpan < c.kind.minCols || c.rowSpan < c.kind.minRows) {
-          out.add(at(TillLayoutProblemCode.tooSmall));
-        }
-        for (var j = 0; j < i; j++) {
-          if (c.overlaps(g.cells[j])) out.add(at(TillLayoutProblemCode.overlap));
-        }
-        if (c.function == TillFunction.unknown) out.add(at(TillLayoutProblemCode.unknownFunction));
-        final item = c.itemId;
-        if (knownItems != null && c.kind == TillWidgetKind.itemKey && (item == null || !knownItems.contains(item))) {
-          out.add(at(TillLayoutProblemCode.unknownItem));
-        }
-      }
+      out.addAll(_gridProblems(e.value, page: p, size: e.key, knownItems: knownItems));
     }
   }
   return out;
 }
 
-int _int(Object? v, [int fallback = 0]) => v is int ? v : (v is num ? v.toInt() : int.tryParse('$v') ?? fallback);
+bool _gridFits(TillGrid g) => g.cols >= 1 && g.rows >= 1 && g.cols <= tillLayoutMaxGridSide && g.rows <= tillLayoutMaxGridSide;
+
+/// The problems of one grid: its own size, then each cell in order.
+List<TillLayoutProblem> _gridProblems(TillGrid g, {required int page, required TillLayoutSize size, Set<String>? knownItems}) {
+  if (!_gridFits(g)) return [TillLayoutProblem(TillLayoutProblemCode.badGrid, page: page, size: size)];
+  return [
+    for (var i = 0; i < g.cells.length; i++)
+      for (final code in _cellProblems(g, i, knownItems)) TillLayoutProblem(code, page: page, size: size, cell: i),
+  ];
+}
+
+bool _inside(TillCell c, TillGrid g) =>
+    c.col >= 0 && c.row >= 0 && c.colSpan >= 1 && c.rowSpan >= 1 && c.col + c.colSpan <= g.cols && c.row + c.rowSpan <= g.rows;
+
+/// What is wrong with cell [i] of [g]: its kind, its place, its span, a cell before it on the same place, its function,
+/// its item.
+List<TillLayoutProblemCode> _cellProblems(TillGrid g, int i, Set<String>? knownItems) {
+  final c = g.cells[i];
+  final item = c.itemId;
+  return [
+    if (c.kind == TillWidgetKind.unknown) TillLayoutProblemCode.unknownKind,
+    if (!_inside(c, g))
+      TillLayoutProblemCode.outsideGrid
+    else if (c.colSpan < c.kind.minCols || c.rowSpan < c.kind.minRows)
+      TillLayoutProblemCode.tooSmall,
+    for (var j = 0; j < i; j++)
+      if (c.overlaps(g.cells[j])) TillLayoutProblemCode.overlap,
+    if (c.function == TillFunction.unknown) TillLayoutProblemCode.unknownFunction,
+    if (knownItems != null && c.kind == TillWidgetKind.itemKey && (item == null || !knownItems.contains(item))) TillLayoutProblemCode.unknownItem,
+  ];
+}

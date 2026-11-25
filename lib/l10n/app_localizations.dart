@@ -53454,6 +53454,12 @@ abstract class AppLocalizations {
   /// **'cards'**
   String get settingUnitCards;
 
+  /// #4448 the unit of counter.layout_max_cells: grid cells of a till layout
+  ///
+  /// In en, this message translates to:
+  /// **'cells'**
+  String get settingUnitCells;
+
   /// #2472 personal directory: Unit of a setting counted in characters.
   ///
   /// In en, this message translates to:

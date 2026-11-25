@@ -33726,6 +33726,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingUnitCards => 'cartes';
 
   @override
+  String get settingUnitCells => 'cases';
+
+  @override
   String get settingUnitCharacters => 'caractères';
 
   @override

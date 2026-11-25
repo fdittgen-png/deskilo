@@ -369,6 +369,7 @@ final Map<String, String Function(AppLocalizations)> _unitLabels = {
   'pages': (l) => l.settingUnitPages,
   'cards': (l) => l.settingUnitCards,
   'tags': (l) => l.settingUnitTags,
+  'cells': (l) => l.settingUnitCells,
   'bytes': (l) => l.settingUnitBytes,
   'url': (l) => l.settingUnitUrl,
   'url template': (l) => l.settingUnitUrlTemplate,

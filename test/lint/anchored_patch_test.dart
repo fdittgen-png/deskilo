@@ -29,6 +29,10 @@ import 'lint_sources.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #4448/0958 restates has_permission_raw from the LIVE dev definition (pg_get_functiondef at schema 956, the body every
+  // later patch left: the custom roles branch, the co-owner, admin and member branches and the adminInvoicing grant) and
+  // adds only 'configureTill' to the admin defaults; pgTAP 571 green on dev with 0958 and 0959, rolled back.
+  'has_permission_raw@0958',
   // #4436/0947 restates counter_receipt_finalize_v1 from the LIVE dev body (pg_get_functiondef at schema 943:
   // md5(prosrc) 82076ff9fd420cc1a000a8265d50d298, the 0939 body, which carries 0908's share lock on the sale's till
   // session). The diff to it adds only the goods items' lock before their lots are planned and the plan around what

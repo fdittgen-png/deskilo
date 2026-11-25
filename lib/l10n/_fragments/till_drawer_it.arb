@@ -108,5 +108,6 @@
   "settingLabelCounterLayoutMaxCells": "Dimensione del layout di cassa",
   "settingHintCounterLayoutMaxCells": "Il numero massimo di celle di un layout di cassa, su tutte le pagine e dimensioni. Un layout più grande viene rifiutato al salvataggio.",
   "settingLabelCounterLayoutCashierReorder": "I cassieri riordinano i tasti",
-  "settingHintCounterLayoutCashierReorder": "Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo senza cambiare il layout pubblicato."
+  "settingHintCounterLayoutCashierReorder": "Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo senza cambiare il layout pubblicato.",
+  "settingUnitCells": "celle"
 }

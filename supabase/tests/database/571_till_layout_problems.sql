@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4448 (0958): the rules of a till layout on the server, the same as the app's validateTillLayout. A valid layout has no
+-- #4448 (0958, 0959): the rules of a till layout on the server, the same as the app's validateTillLayout. A valid layout has no
 -- problem; a cell past its grid, two cells on one place, a tool below its span, an unknown kind or function, an item key
 -- naming no item of this business (another business's item included), the cell cap, no name, no page and a bad grid are
 -- each named with where they are; a size the server does not know is kept, not judged. The save and publish commands:
@@ -114,8 +114,8 @@ select is(pg_temp.f(pg_temp.save(2, 101, 902, 401, 1, current_setting('t.lay')::
 select is(left(pg_temp.save(1, 101, 903, 401, 1, current_setting('t.lay')::jsonb), 9), 'ERR DKL10', 'a save at a version another editor moved is refused');
 select is(left(pg_temp.save(4, 101, 904, 401, 2, current_setting('t.lay')::jsonb), 9), 'ERR DKN01', 'a seller without the right does not lay out a till');
 select is(pg_temp.save(1, 101, 905, 401, 2, pg_temp.lay('{"kind": "basket", "col": 3, "row": 0, "col_span": 2, "row_span": 2}')),
-  'ERR DKL02 outside_grid page 0 phone cell 0', 'an invalid layout is refused with its first problem');
-select is(pg_temp.save(1, 101, 906, 402, 0, current_setting('t.lay')::jsonb), 'ERR DKL02 till', 'another business''s till is not this business''s');
+  'ERR DKL02 {"reason": "outside_grid page 0 phone cell 0"}', 'an invalid layout is refused with its first problem');
+select is(pg_temp.save(1, 101, 906, 402, 0, current_setting('t.lay')::jsonb), 'ERR DKL02 {"reason": "till"}', 'another business''s till is not this business''s');
 select is(left(pg_temp.save(1, 102, 907, 402, 0, current_setting('t.lay')::jsonb), 9), 'ERR DKG01', 'a business without till layouts saves none');
 select is(pg_temp.f(pg_temp.publish(2, 911, 2), 'version'), '1', 'the draft at the version read is published');
 select is(left(pg_temp.publish(1, 912, 1), 9), 'ERR DKL10', 'publishing a version that moved is refused');

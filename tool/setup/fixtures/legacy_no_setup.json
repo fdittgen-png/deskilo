@@ -404,7 +404,8 @@
    "viewCalendar",
    "viewDirectory",
    "viewMyMoney",
-   "viewDocuments"
+   "viewDocuments",
+   "configureTill"
   ],
   "co_owner": [
    "manageRoles",
@@ -446,7 +447,8 @@
    "manageStock",
    "approveStockAdjustments",
    "manageBillingCustomers",
-   "countStock"
+   "countStock",
+   "configureTill"
   ],
   "member": [
    "useMessages",

@@ -19892,6 +19892,7 @@
   "@settingUnitCards": {
     "description": "#2579 report limits"
   },
+  "settingUnitCells": "cases",
   "settingUnitCharacters": "caractères",
   "settingUnitCurrencyUnits": "unités monétaires",
   "@settingUnitCurrencyUnits": {

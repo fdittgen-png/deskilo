@@ -33592,6 +33592,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingUnitCards => 'tarjetas';
 
   @override
+  String get settingUnitCells => 'celdas';
+
+  @override
   String get settingUnitCharacters => 'caracteres';
 
   @override

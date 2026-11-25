@@ -115,6 +115,7 @@ import '../../helpers/demo_plan_booking_journeys.dart';
 import '../../helpers/demo_settings_shell_journeys.dart';
 import '../../helpers/demo_standalone_journey.dart';
 import '../../helpers/demo_till_drawer_journey.dart';
+import '../../helpers/demo_till_layout_journey.dart';
 import '../../helpers/demo_till_offline_journey.dart';
 import '../../helpers/demo_vies_export_journeys.dart';
 import '../../helpers/demo_whatsapp_journeys.dart';
@@ -1863,6 +1864,13 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'the bakery sells three cash sales offline from the prices the till held, sends them in order when the connection returns '
     '(none twice), counts the drawer exactly and closes the day with them; a sale sent into the closed session is refused',
     (_) => tillOfflineJourney(),
+  ),
+  // #4448 — the owner lays out the bakery counter from the Bakery template with a calculator and publishes it.
+  WorkspaceFeature.counterTillLayout: _action(
+    _owner,
+    'the owner starts the bakery counter from the Bakery template, adds a calculator beside the keypad, saves and publishes it; '
+    'a save over a version that moved and an invalid layout are refused, and the same request answers the same version',
+    (_) => tillLayoutJourney(),
   ),
 };
 

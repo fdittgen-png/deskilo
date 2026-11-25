@@ -33631,6 +33631,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingUnitCards => 'schede';
 
   @override
+  String get settingUnitCells => 'celle';
+
+  @override
   String get settingUnitCharacters => 'caratteri';
 
   @override
