@@ -69,6 +69,6 @@
   "tillDiscountBeyond": "Este descuento supera lo que la empresa permite (como máximo {max} %).",
   "tillDiscountInvalid": "Un descuento es un porcentaje del precio del artículo, en una línea sin precio cambiado.",
   "tillRingUpFirst": "Registre primero un artículo.",
-  "tillReceiptCopy": "COPIA {n} — no es un tique nuevo",
+  "tillReceiptCopy": "COPIA {copy} — no es un tique nuevo",
   "tillNothingToReprint": "Aún no hay ninguna venta que reimprimir."
 }

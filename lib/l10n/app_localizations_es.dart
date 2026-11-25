@@ -41515,7 +41515,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String tillDiscountBeyond(String max) {
+  String tillDiscountBeyond(int max) {
     return 'Este descuento supera lo que la empresa permite (como máximo $max %).';
   }
 
@@ -42277,8 +42277,8 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String tillReceiptCopy(int n) {
-    return 'COPIA $n — no es un tique nuevo';
+  String tillReceiptCopy(int copy) {
+    return 'COPIA $copy — no es un tique nuevo';
   }
 
   @override

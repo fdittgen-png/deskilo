@@ -50,7 +50,7 @@ begin
       continue;
     end if;
     v_item := null;
-    begin v_item_id := nullif(e ->> 'item_id', '')::uuid; exception when others then v_item_id := null; end;
+    begin v_item_id := nullif(e ->> 'item_id', '')::uuid; exception when invalid_text_representation then v_item_id := null; end;
     if v_item_id is not null then
       select * into v_item from public.services s where s.id = v_item_id and s.workspace_id = p_workspace_id and s.active;
     end if;
@@ -113,8 +113,8 @@ revoke execute on function public.counter_line_prices(uuid, text, jsonb) from pu
 -- the draft passes its lines through the price rules first: an anchored patch of the live definition (0894, 0908)
 create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text) returns text language plpgsql as $f$
 begin
-  if position(p_old in p_def) = 0 then
-    raise exception 'anchor not found: %', left(p_old, 80);
+  if (length(p_def) - length(replace(p_def, p_old, ''))) / length(p_old) <> 1 then
+    perform public.refuse('DKG11', jsonb_build_object('field', left(p_old, 60), 'reason', 'anchor_missing'), '0964: anchor not found exactly once');
   end if;
   return replace(p_def, p_old, p_new);
 end

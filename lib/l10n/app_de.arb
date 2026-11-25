@@ -24481,7 +24481,7 @@
   "tillReadinessUnavailable": "Nicht verfügbar",
   "tillReadinessUnconfirmed": "Noch nicht von einer Steuerberatung bestätigt.",
   "tillReadinessUnknownCountry": "Das Register nennt für {country} keinen Kassenvorgang: nichts ist unterstützt, und die Kasse verkauft nichts.",
-  "tillReceiptCopy": "KOPIE {n} — kein neuer Beleg",
+  "tillReceiptCopy": "KOPIE {copy} — kein neuer Beleg",
   "tillReceiptCorrects": "Berichtigt Beleg {number}",
   "tillReceiptDisagrees": "Die Beträge dieses Belegs stimmen nicht miteinander überein. Er wird gezeigt, wie er festgeschrieben wurde; sagen Sie es Ihrer Verwaltung.",
   "tillReceiptIssuedUnder": "Ausgestellt nach: {specification} ({version})",

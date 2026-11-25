@@ -69,6 +69,6 @@
   "tillDiscountBeyond": "Questo sconto supera quanto l'azienda consente (al massimo {max} %).",
   "tillDiscountInvalid": "Uno sconto è una percentuale del prezzo dell'articolo, su una riga senza prezzo modificato.",
   "tillRingUpFirst": "Registri prima un articolo.",
-  "tillReceiptCopy": "COPIA {n} — non è un nuovo scontrino",
+  "tillReceiptCopy": "COPIA {copy} — non è un nuovo scontrino",
   "tillNothingToReprint": "Ancora nessuna vendita da ristampare."
 }

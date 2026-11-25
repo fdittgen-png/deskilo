@@ -66247,7 +66247,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'This discount is beyond what the business allows (at most {max} %).'**
-  String tillDiscountBeyond(String max);
+  String tillDiscountBeyond(int max);
 
   /// #4476 the till price keys
   ///
@@ -67494,11 +67494,11 @@ abstract class AppLocalizations {
   /// **'The registry names no counter operation for {country}: nothing is supported, and the till sells nothing.'**
   String tillReadinessUnknownCountry(String country);
 
-  /// #4476 a receipt printed again
+  /// #4476 a receipt printed again; copy is its number among the copies (an ordinal label, not a count)
   ///
   /// In en, this message translates to:
-  /// **'COPY {n} — not a new receipt'**
-  String tillReceiptCopy(int n);
+  /// **'COPY {copy} — not a new receipt'**
+  String tillReceiptCopy(int copy);
 
   /// #4184 the counter receipt document; the number is a reference
   ///

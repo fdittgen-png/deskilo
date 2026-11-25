@@ -6,6 +6,7 @@
 // without the right is refused in words, and the line comes back to the item's price. A sale's receipt is printed again
 // as copy 1, then 2, never numbered again; the same request answers the same copy; a receipt not finalized has none.
 import 'package:deskilo/core/demo/data/demo_till.dart';
+import 'package:deskilo/core/demo/data/demo_till_parts.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/presentation/till_session.dart';
 import 'package:deskilo/features/money/presentation/till_text.dart';
@@ -17,7 +18,7 @@ final _en = AppLocalizationsEn();
 Future<TillSession> _basket({bool mayChangePrice = true}) async {
   var n = 0;
   final s = TillSession(
-    port: DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20, mayChangePrice: mayChangePrice),
+    port: DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20, pricing: DemoTillPricing(mayChangePrice: mayChangePrice)),
     workspaceId: 'ws',
     requestIds: () => 'req-${++n}',
   );
@@ -44,7 +45,7 @@ void main() {
     expect(await s.setPricing(0, discount: '10'), isTrue);
     expect(_total(s), 189);
     await s.setPricing(0, discount: '15');
-    expect(_said(s), _en.tillDiscountBeyond('${DemoTill.demoMaxDiscountPercent}'));
+    expect(_said(s), _en.tillDiscountBeyond(DemoTillPricing.demoMaxDiscountPercent));
   });
 
   test('a changed price needs its reason, and the right', () async {

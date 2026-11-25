@@ -53701,7 +53701,7 @@
     "description": "#4476 a discount refused beyond the limit; max is the percent allowed",
     "placeholders": {
       "max": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -54701,11 +54701,11 @@
       }
     }
   },
-  "tillReceiptCopy": "COPY {n} — not a new receipt",
+  "tillReceiptCopy": "COPY {copy} — not a new receipt",
   "@tillReceiptCopy": {
-    "description": "#4476 a receipt printed again",
+    "description": "#4476 a receipt printed again; copy is its number among the copies (an ordinal label, not a count)",
     "placeholders": {
-      "n": {
+      "copy": {
         "type": "int"
       }
     }

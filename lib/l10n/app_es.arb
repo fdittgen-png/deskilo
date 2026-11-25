@@ -24481,7 +24481,7 @@
   "tillReadinessUnavailable": "No disponible",
   "tillReadinessUnconfirmed": "Aún no confirmada por un profesional fiscal.",
   "tillReadinessUnknownCountry": "El registro no nombra ninguna operación de caja para {country}: nada está admitido y la caja no vende nada.",
-  "tillReceiptCopy": "COPIA {n} — no es un tique nuevo",
+  "tillReceiptCopy": "COPIA {copy} — no es un tique nuevo",
   "tillReceiptCorrects": "Corrige el ticket {number}",
   "tillReceiptDisagrees": "Los importes de este ticket no concuerdan entre sí. Se muestra tal como se fijó; avise a su administración.",
   "tillReceiptIssuedUnder": "Emitido según: {specification} ({version})",

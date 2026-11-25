@@ -15,6 +15,7 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../domain/counter_till.dart';
 import '../../domain/till_keypad.dart';
 import '../../domain/till_layout.dart';
@@ -145,11 +146,10 @@ class _LaidOutState extends State<_LaidOut> {
   /// #4476 -- the last sale's receipt again, counted by the server as its next copy and shown marked as that copy.
   Future<void> _reprint() async {
     final l10n = context.l10n;
-    final messenger = ScaffoldMessenger.maybeOf(context);
     final receipt = widget.session.lastSold;
     final copies = widget.copies;
     if (receipt == null || copies == null) {
-      messenger?.showSnackBar(SnackBar(content: Text(l10n.tillNothingToReprint)));
+      AppSnack.info(context, l10n.tillNothingToReprint);
       return;
     }
     try {
@@ -158,14 +158,14 @@ class _LaidOutState extends State<_LaidOut> {
       await showCounterReceiptSheet(context, workspaceId: widget.session.workspaceId, receiptId: receipt, copy: n);
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'a receipt copy was not printed', error: e, stackTrace: st);
-      messenger?.showSnackBar(SnackBar(content: Text(tillProblemText(l10n, e))));
+      if (mounted) AppSnack.error(context, tillProblemText(l10n, e));
     }
   }
 
   /// #4476 -- the last line at another price with its reason, or with a discount: the keypad's number is the start.
   Future<void> _pricing({required bool discount}) async {
     if (_last < 0) {
-      ScaffoldMessenger.maybeOf(context)?.showSnackBar(SnackBar(content: Text(context.l10n.tillRingUpFirst)));
+      AppSnack.info(context, context.l10n.tillRingUpFirst);
       return;
     }
     final index = _last;

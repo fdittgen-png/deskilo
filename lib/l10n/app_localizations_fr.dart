@@ -41692,7 +41692,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String tillDiscountBeyond(String max) {
+  String tillDiscountBeyond(int max) {
     return 'Cette remise dépasse ce que l\'entreprise autorise (au plus $max %).';
   }
 
@@ -42460,8 +42460,8 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String tillReceiptCopy(int n) {
-    return 'DUPLICATA $n — pas un nouveau ticket';
+  String tillReceiptCopy(int copy) {
+    return 'DUPLICATA $copy — pas un nouveau ticket';
   }
 
   @override

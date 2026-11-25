@@ -41175,7 +41175,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String tillDiscountBeyond(String max) {
+  String tillDiscountBeyond(int max) {
     return 'This discount is beyond what the business allows (at most $max %).';
   }
 
@@ -41929,8 +41929,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String tillReceiptCopy(int n) {
-    return 'COPY $n — not a new receipt';
+  String tillReceiptCopy(int copy) {
+    return 'COPY $copy — not a new receipt';
   }
 
   @override
