@@ -45,9 +45,17 @@ class _NoPlaces extends DemoStockConfigCommands {
   Future<List<StockPlaceConfig>> places(String workspaceId) => Future.error(Exception('places down'));
 }
 
-Future<DemoItemGroups> _open(WidgetTester tester, Size size, {Widget? home, bool places = true, bool finance = false}) async {
+Future<DemoItemGroups> _open(
+  WidgetTester tester,
+  Size size, {
+  Widget? home,
+  bool places = true,
+  bool finance = false,
+  Future<void> Function(DemoItemGroups groups)? seed,
+}) async {
   final config = places ? DemoStockConfigCommands('ws-1') : _NoPlaces();
   final groups = DemoItemGroups('ws-1', config, () => DateTime(2026, 11, 22));
+  await seed?.call(groups);
   await pumpApp(
     tester,
     home ?? const ItemGroupsScreen(),
@@ -125,19 +133,19 @@ void main() {
         final w = await _open(tester, size);
         await _tap(tester, 'item-group-add');
         await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Dry goods');
-        await tester.enterText(find.byKey(const ValueKey('item-group-purchase-unit')), 'carton');
+        await _choose(tester, 'item-group-purchase-unit', 'kg');
         await tester.enterText(find.byKey(const ValueKey('item-group-factor')), '12');
         await tester.enterText(find.byKey(const ValueKey('item-group-reorder-point')), '5.5');
         await tester.enterText(find.byKey(const ValueKey('item-group-reorder-qty')), '20');
         await _choose(tester, 'item-group-home-zone', 'Back room');
         await _tap(tester, 'item-group-save');
         final saved = (await w.groups('ws-1')).firstWhere((g) => g.name == 'Dry goods');
-        expect(saved.params['default_purchase_unit'], 'carton');
+        expect(saved.params['default_purchase_unit'], 'kg');
         expect((saved.params['default_purchase_factor_num'], saved.params['default_purchase_factor_den']), (12, 1));
         expect(saved.params['reorder_point_default'], '5.5');
         expect(saved.params['reorder_quantity_default'], '20');
         expect(saved.params['home_zone_id'], 'demo-place-back');
-        expect(find.textContaining('carton'), findsWidgets, reason: 'the group line says what it proposes');
+        expect(find.textContaining('kg'), findsWidgets, reason: 'the group line says what it proposes');
       });
 
       testWidgets('a group carries what the till reads: category, key colour, deposit amount and label template; a colour is #rrggbb', (tester) async {
@@ -162,11 +170,39 @@ void main() {
         expect(saved.params['label_template'], 'shelf-small');
       });
 
+      testWidgets('#4471 an old free purchase unit is shown, flagged and must be replaced from the list before the group is saved', (tester) async {
+        final w = await _open(
+          tester,
+          size,
+          seed: (groups) => groups.save(
+            'ws-1',
+            requestId: 'old-free-unit',
+            groupId: 'old-group',
+            expectedRevision: 0,
+            body: const ItemGroupDraft(
+              name: 'Old group',
+              parentId: null,
+              parameters: {'default_purchase_unit': 'carton', 'default_purchase_factor_num': 12, 'default_purchase_factor_den': 1},
+            ),
+          ),
+        );
+        await _tap(tester, 'item-group-old-group');
+        expect(tester.takeException(), isNull);
+        expect(find.descendant(of: find.byKey(const ValueKey('item-group-purchase-unit')), matching: find.text('carton')), findsWidgets);
+        expect(find.descendant(of: find.byKey(const ValueKey('item-group-purchase-unit')), matching: find.text(_en.masterDataUnlisted)), findsOneWidget);
+        await _tap(tester, 'item-group-save');
+        expect(find.byKey(const ValueKey('item-group-save')), findsOneWidget, reason: 'nothing was saved: the sheet stays');
+        await _choose(tester, 'item-group-purchase-unit', 'kg');
+        await _tap(tester, 'item-group-save');
+        final saved = (await w.groups('ws-1')).firstWhere((g) => g.id == 'old-group');
+        expect(saved.params['default_purchase_unit'], 'kg');
+      });
+
       testWidgets('a purchase unit needs its factor, a factor is one number or a fraction above zero, and a third is exact', (tester) async {
         final w = await _open(tester, size);
         await _tap(tester, 'item-group-add');
         await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Syrups');
-        await tester.enterText(find.byKey(const ValueKey('item-group-purchase-unit')), 'bottle');
+        await _choose(tester, 'item-group-purchase-unit', 'l');
         await _tap(tester, 'item-group-save');
         expect(find.text(_en.stockReasonOutOfRange), findsOneWidget, reason: 'a unit without a factor');
         await tester.enterText(find.byKey(const ValueKey('item-group-factor')), '1/0');

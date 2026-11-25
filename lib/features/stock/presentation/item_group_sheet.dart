@@ -32,6 +32,7 @@ import 'item_group_text.dart';
 import 'measure_unit_text.dart';
 import 'stock_config_text.dart';
 import 'stock_quantity_field.dart';
+import 'stock_unit_picker.dart';
 
 /// The units a group may set for its items (the registry's units of count, mass and volume).
 
@@ -47,9 +48,11 @@ Future<bool> showItemGroupSheet(
   required ItemGroup? group,
   required List<ItemGroup> groups,
   GroupChoices choices = const (places: <StockPlaceConfig>[], vat: <StockVatChoice>[], finance: false, items: <StockItem>[], units: <WorkspaceUnit>[]),
-}) {
+}) async {
   final l10n = context.l10n;
-  final draft = _GroupDraft(port, workspaceId, group, groups, choices, appFormatOf(context));
+  final unitCodes = await stockUnitCodes(context, workspaceId);
+  if (!context.mounted) return false;
+  final draft = _GroupDraft(port, workspaceId, group, groups, choices, appFormatOf(context), unitCodes);
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -73,7 +76,7 @@ String _shownQuantity(AppFormat format, Object? held) {
 }
 
 class _GroupDraft {
-  _GroupDraft(this.port, this.workspaceId, this.group, this.groups, this.choices, this.format)
+  _GroupDraft(this.port, this.workspaceId, this.group, this.groups, this.choices, this.format, this.unitCodes)
     : _id = group?.id ?? newRequestId(),
       parentId = group?.parentId,
       tracking = group?.params['tracking'] as String?,
@@ -108,6 +111,9 @@ class _GroupDraft {
   final ItemGroup? group;
   final List<ItemGroup> groups;
   final GroupChoices choices;
+
+  /// The codes of the units the business offers: a purchase unit that is none of them cannot be saved (#4471).
+  final Set<String> unitCodes;
   final AppFormat format;
   String get locale => format.locale;
 
@@ -201,6 +207,7 @@ class _GroupDraft {
     if (fields.text('factor').isNotEmpty && _factor == null) 'factor': l10n.stockReasonOutOfRange,
     if (fields.text('purchaseUnit').isNotEmpty && fields.text('factor').isEmpty) 'factor': l10n.stockReasonOutOfRange,
     if (fields.text('purchaseUnit').isEmpty && fields.text('factor').isNotEmpty) 'purchaseUnit': l10n.stockReasonNameMalformed,
+    if (fields.text('purchaseUnit').isNotEmpty && !unitCodes.contains(fields.text('purchaseUnit'))) 'purchaseUnit': l10n.masterDataUnlisted,
     if (fields.text('reorderPoint').isNotEmpty && _decimal('reorderPoint') == null) 'reorderPoint': l10n.stockReasonOutOfRange,
     if (fields.text('reorderQty').isNotEmpty && (_decimal('reorderQty') == null || _isZero(_decimal('reorderQty')!))) 'reorderQty': l10n.stockReasonOutOfRange,
     if (financeAllowed && fields.text('margin').isNotEmpty && marginBpsOfPercent(decimalTextFromInput(fields.text('margin'), locale: locale, grouping: false) ?? '') == null) 'margin': l10n.stockReasonOutOfRange,
@@ -363,7 +370,18 @@ class _GroupDraft {
       const FormGap(),
       Text(l10n.itemGroupProposalHint, key: const ValueKey('item-group-proposals'), style: Theme.of(context).textTheme.bodySmall),
       const FormGap.small(),
-      AppTextField(key: const ValueKey('item-group-purchase-unit'), controller: fields['purchaseUnit'], fieldKey: 'purchaseUnit', label: l10n.itemGroupPurchaseUnit, onChanged: (_) => _preview = null),
+      StockUnitPicker(
+        key: const ValueKey('item-group-purchase-unit'),
+        workspaceId: workspaceId,
+        fieldKey: 'purchaseUnit',
+        value: fields.text('purchaseUnit'),
+        label: l10n.itemGroupPurchaseUnit,
+        none: l10n.masterDataNoUnit,
+        onChanged: (code) => edit(() {
+          fields['purchaseUnit'].text = code;
+          _preview = null;
+        }),
+      ),
       const FormGap(),
       AppTextField(key: const ValueKey('item-group-factor'), controller: fields['factor'], fieldKey: 'factor', label: l10n.itemGroupPurchaseFactor, onChanged: (_) => _preview = null),
       const FormGap(),

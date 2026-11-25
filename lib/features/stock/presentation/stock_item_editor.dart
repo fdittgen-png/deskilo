@@ -21,6 +21,7 @@ import '../domain/stock_config.dart';
 import '../domain/stock_config_check.dart';
 import '../domain/stock_config_commands.dart';
 import 'stock_config_text.dart';
+import 'stock_unit_picker.dart';
 
 /// Opens the editor of [itemId]; true when something was saved. [options] says whether lots are asked for, whether the
 /// item is kept in stock and, when the business has item groups, the port that tells which values the item keeps of its own.
@@ -45,7 +46,9 @@ Future<bool> showStockItemEditor(
   if (config == null || !context.mounted) return false;
   final own = await _ownValues(StockReads(commands, groups: options.groups), workspaceId, itemId);
   if (!context.mounted) return false;
-  final editor = _ItemDraft(config, lotsOn: options.lots, keepInStock: options.keep, own: own);
+  final unitCodes = await stockUnitCodes(context, workspaceId);
+  if (!context.mounted) return false;
+  final editor = _ItemDraft(config, workspaceId: workspaceId, unitCodes: unitCodes, lotsOn: options.lots, keepInStock: options.keep, own: own);
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -111,7 +114,7 @@ Future<Set<String>> _ownValues(StockReads reads, String workspaceId, String item
 );
 
 class _ItemDraft {
-  _ItemDraft(this.config, {required this.lotsOn, bool keepInStock = false, this.own = const {}})
+  _ItemDraft(this.config, {required this.workspaceId, required this.unitCodes, required this.lotsOn, bool keepInStock = false, this.own = const {}})
     : tracking = config.tracking,
       shelfLife = TextEditingController(text: config.shelfLifeDays?.toString() ?? ''),
       stockable = keepInStock || config.stockable,
@@ -121,6 +124,12 @@ class _ItemDraft {
       codes = [for (final c in config.codes) _CodeRow(c)];
 
   final StockItemConfig config;
+
+  /// The business whose units an extra unit of the item is picked from (#4471).
+  final String workspaceId;
+
+  /// The codes of the units the business offers: an extra unit that is none of them cannot be saved.
+  final Set<String> unitCodes;
 
   /// Whether lots and expiry are asked for in this business (stockLots).
   final bool lotsOn;
@@ -173,6 +182,9 @@ class _ItemDraft {
       codes: [for (final c in codes) c.draft],
     ).entries)
       e.key: stockRefusalText(l10n, e.value),
+    // #4471 -- an extra unit is one of the business's units, never a name typed
+    for (final (i, u) in units.indexed)
+      if (u.unit.text.trim().isNotEmpty && !unitCodes.contains(u.unit.text.trim())) stockUnitField(i, 'unit'): l10n.masterDataUnlisted,
   };
 
   Future<String?> save(AppLocalizations l10n, StockConfigCommands commands, String workspaceId) async {
@@ -309,11 +321,16 @@ class _ItemDraft {
         children: [
           Expanded(
             flex: 3,
-            child: AppTextField(
-              controller: u.unit,
-              fieldKey: stockUnitField(i, 'unit'),
-              label: l10n.stockEditUnitName,
+            child: StockUnitPicker(
               key: ValueKey('stock-unit-$i-name'),
+              workspaceId: workspaceId,
+              fieldKey: stockUnitField(i, 'unit'),
+              value: u.unit.text.trim(),
+              label: l10n.stockEditUnitName,
+              onChanged: (code) {
+                u.unit.text = code;
+                refresh();
+              },
             ),
           ),
           const SizedBox(width: 8),

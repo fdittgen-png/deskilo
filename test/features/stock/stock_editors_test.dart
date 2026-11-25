@@ -107,6 +107,10 @@ class _Registry implements StockRegistry {
 }
 
 class _Config implements StockConfigCommands {
+  _Config({this.legacyUnit = false});
+
+  /// Whether the item still holds a unit name typed before the units were picked from the master data (#4471).
+  final bool legacyUnit;
   StockConfigFailure? failWith;
   final savedItems = <(StockItemConfig, String)>[];
   final savedPlaces = <({Map<String, Object?> place, String? id, int? rev})>[];
@@ -114,12 +118,19 @@ class _Config implements StockConfigCommands {
   static const _wine = StockItemConfig(
     itemId: 'i-Wine', revision: 4, stockable: true, purchasable: true, sellable: true,
     inventoryUnit: 'l', tracking: 'none', shelfLifeDays: null,
-    units: [StockUnitDraft(unit: 'third', factorNum: 1, factorDen: 3)],
+    units: [StockUnitDraft(unit: 'kg', factorNum: 1, factorDen: 3)],
     codes: [StockCodeDraft(code: 'OWN-1', kind: 'own')],
   );
 
+  static final _legacyWine = StockItemConfig(
+    itemId: _wine.itemId, revision: _wine.revision, stockable: true, purchasable: true, sellable: true,
+    inventoryUnit: 'l', tracking: 'none', shelfLifeDays: null,
+    units: const [StockUnitDraft(unit: 'third', factorNum: 1, factorDen: 3)],
+    codes: const [StockCodeDraft(code: 'OWN-1', kind: 'own')],
+  );
+
   @override
-  Future<StockItemConfig?> item(String workspaceId, String itemId) async => _wine;
+  Future<StockItemConfig?> item(String workspaceId, String itemId) async => legacyUnit ? _legacyWine : _wine;
 
   @override
   Future<List<StockPlaceConfig>> places(String workspaceId) async => const [
@@ -363,13 +374,42 @@ void main() {
         await tester.ensureVisible(find.byKey(const ValueKey('stock-item-add-unit')));
         await tester.tap(find.byKey(const ValueKey('stock-item-add-unit')));
         await _settle(tester);
-        await tester.enterText(find.byKey(const ValueKey('stock-unit-1-name')), 'case');
+        await tester.ensureVisible(find.byKey(const ValueKey('stock-unit-1-name')));
+        await tester.tap(find.byKey(const ValueKey('stock-unit-1-name')));
+        await _settle(tester);
+        await tester.tap(find.text('l').last);
+        await _settle(tester);
         await tester.enterText(find.byKey(const ValueKey('stock-unit-1-num')), '12');
         await tester.ensureVisible(find.byKey(const ValueKey('stock-item-save')));
         await tester.tap(find.byKey(const ValueKey('stock-item-save')));
         await _settle(tester);
         final (saved, _) = config.savedItems.single;
-        expect(saved.units.map((u) => (u.unit, u.factorNum, u.factorDen)), [('third', 1, 3), ('case', 12, 1)]);
+        expect(saved.units.map((u) => (u.unit, u.factorNum, u.factorDen)), [('kg', 1, 3), ('l', 12, 1)]);
+      });
+
+      testWidgets('#4471 an old free extra unit is shown, flagged and must be replaced from the list before the item is saved', (tester) async {
+        final config = _Config(legacyUnit: true);
+        await _open(tester, config, size, held: _manage);
+        await tester.tap(find.byKey(const ValueKey('stock-edit-item-i-Wine')));
+        await _settle(tester);
+        expect(tester.takeException(), isNull);
+        final unit = find.byKey(const ValueKey('stock-unit-0-name'));
+        await tester.ensureVisible(unit);
+        expect(find.descendant(of: unit, matching: find.text('third')), findsWidgets);
+        expect(find.descendant(of: unit, matching: find.text(_en.masterDataUnlisted)), findsOneWidget);
+        await tester.ensureVisible(find.byKey(const ValueKey('stock-item-save')));
+        await tester.tap(find.byKey(const ValueKey('stock-item-save')));
+        await _settle(tester);
+        expect(config.savedItems, isEmpty, reason: 'nothing was saved: the name is no unit');
+        await tester.tap(unit);
+        await _settle(tester);
+        await tester.tap(find.text('g').last);
+        await _settle(tester);
+        expect(find.text(_en.masterDataUnlisted), findsNothing);
+        await tester.ensureVisible(find.byKey(const ValueKey('stock-item-save')));
+        await tester.tap(find.byKey(const ValueKey('stock-item-save')));
+        await _settle(tester);
+        expect(config.savedItems.single.$1.units.map((u) => (u.unit, u.factorNum, u.factorDen)), [('g', 1, 3)]);
       });
 
       testWidgets('lots and expiry are offered only when asked for, and saved with the shelf life', (tester) async {

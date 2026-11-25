@@ -93,14 +93,16 @@ select is(public.workspace_unit_uses(pg_temp.u(101), 'drum'), 1::bigint, 'the it
 select alike(pg_temp.save_unit(1, 902, '{"code": "drum", "factor_num": 60}'), 'ERR DKG11%unit_in_use%', 'so the drum keeps its factor');
 
 -- ── a packaging unit converts through it ──
+-- #4471: a packaging unit is a unit of the business, so the spool is made first (one code keeps one meaning)
+select pg_temp.save_unit(1, 9030, '{"code": "spool", "label": "Spool", "dimension": "count", "factor_num": 1, "factor_den": 1}');
 select is(pg_temp.save_item(1, 301, pg_temp.rev(301), 503, '{"units": [{"unit": "spool", "factor_num": 2, "factor_den": 1}]}')::jsonb ->> 'replayed', 'false',
   'a spool of 2 drums is a packaging unit of the cable');
-select alike(pg_temp.save_item(1, 301, pg_temp.rev(301), 504, '{"units": [{"unit": "spool", "factor_num": 2, "factor_den": 1}, {"unit": "km", "factor_num": 5, "factor_den": 1}]}'),
-  'ERR DKG11%registry_unit%', 'a packaging unit may not take the code of a unit of the business (km, which the six did not hold)');
+select alike(pg_temp.save_item(1, 301, pg_temp.rev(301), 504, '{"units": [{"unit": "spool", "factor_num": 2, "factor_den": 1}, {"unit": "bogus", "factor_num": 5, "factor_den": 1}]}'),
+  'ERR DKG11%unit_unknown%', 'a packaging unit that is not a unit of the business is refused');
 select alike(pg_temp.save_item(1, 301, pg_temp.rev(301), 505, '{"units": [{"unit": "spool", "factor_num": 2, "factor_den": 1}, {"unit": "drum", "factor_num": 5, "factor_den": 1}]}'),
-  'ERR DKG11%registry_unit%', 'nor the code of the business''s own drum');
-select alike(pg_temp.save_unit(1, 903, '{"code": "spool", "label": "Spool", "dimension": "length", "factor_num": 3, "factor_den": 1}'), 'ERR DKG11%code_duplicate%',
-  'the reverse: a unit cannot take the code of an item''s packaging unit (the spool), so one code keeps one meaning');
+  'ERR DKG11%registry_unit%', 'and the item''s own inventory unit (the drum) is not a package of itself');
+select alike(pg_temp.save_unit(1, 903, '{"code": "spool", "label": "Spool", "dimension": "length", "factor_num": 3, "factor_den": 1}'), 'ERR DKG11%',
+  'a unit the cable''s packaging uses (the spool) does not change its dimension: one code keeps one meaning');
 select is(public.stock_to_inventory(pg_temp.u(301), 'spool', 3), 6::numeric, '3 spools are 6 drums');
 select is(public.stock_to_inventory(pg_temp.u(301), 'm', 100), 2::numeric, '100 m are 2 drums');
 select is(public.stock_to_inventory(pg_temp.u(301), 'km', 1), 20::numeric, '1 km is 20 drums');
