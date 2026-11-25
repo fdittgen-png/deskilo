@@ -3256,7 +3256,7 @@ routine public.counter_offline_frozen_guard() -> trigger | function | invoker | 
 routine public.counter_offline_gap_list(p_session_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:567066e980a1
 routine public.counter_offline_gaps(p_session_id uuid, p_devices uuid[]) -> jsonb | function | definer | stable | exec:service_role | body:d75982a0db7c
 routine public.counter_offline_list_v1(p_workspace_id uuid, p_session_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:965bd6b91c33
-routine public.counter_offline_sync_v1(p_workspace_id uuid, p_session_id uuid, p_offline_since timestamp with time zone, p_sales jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:eef50bcac091
+routine public.counter_offline_sync_v1(p_workspace_id uuid, p_session_id uuid, p_offline_since timestamp with time zone, p_sales jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c2c7dc024112
 routine public.counter_open_session(p_workspace_id uuid, p_till text) -> uuid | function | definer | volatile | exec:service_role | body:3fb1d7861f42
 routine public.counter_operation_row(p_workspace_id uuid, p_operation text) -> counter_country_operations | function | definer | stable | exec:service_role | body:59a85833376f
 routine public.counter_operation_state(p_workspace_id uuid, p_operation text) -> text | function | definer | stable | exec:service_role | body:b59b96f02cf4
@@ -4504,7 +4504,7 @@ routine public.setup_current_levels(p_flags jsonb, p_country text) -> jsonb | fu
 routine public.setup_hours_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4f359045c81a
 routine public.setup_invitation_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:5852379a5e56
 routine public.setup_level_arguments() -> text[] | function | invoker | immutable | exec:service_role | body:7f746fc5ea32
-routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:9ed7fc536a6e
+routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:70ca1abb6b2f
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
 routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c01c658a9993
 routine public.setup_member_rights_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fa33dc1d0dfa
@@ -4723,14 +4723,13 @@ routine public.template_snapshot(p_template workspace_templates, p_workspace_id 
 routine public.template_supported_schema_versions() -> integer[] | function | invoker | immutable | exec:authenticated,service_role | body:53e229c024d6
 routine public.template_walk_payload(p_configuration jsonb, p_floor_plan jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:fb9a295f1ab3
 routine public.template_wording_check(p_workspace_id uuid, p_config jsonb) -> void | function | definer | stable | exec:service_role | body:2d5eb567bc03
-routine public.till_layout_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:73e35c0c5af8
 routine public.till_layout_functions() -> SETOF text | function | invoker | immutable | exec:service_role | body:98a5ac6a6fb5
 routine public.till_layout_kinds() -> TABLE(kind text, min_cols integer, min_rows integer) | function | invoker | immutable | exec:service_role | body:d3df071d1c14
 routine public.till_layout_max_bytes() -> integer | function | invoker | immutable | exec:service_role | body:c09ad6eba05a
 routine public.till_layout_max_grid_side() -> integer | function | invoker | immutable | exec:service_role | body:3a779ffed504
 routine public.till_layout_problems(p_workspace_id uuid, p_name text, p_layout jsonb, p_max_cells integer) -> text[] | function | definer | stable | exec:service_role | body:2d530c19efb2
-routine public.till_layout_publish_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_expected_version integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:85417ebd3d87
-routine public.till_layout_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_expected_version integer, p_layout jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1bd8eb40bc0c
+routine public.till_layout_publish_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_expected_version integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f51623025526
+routine public.till_layout_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_expected_version integer, p_layout jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5ae3fc7e2d12
 routine public.toggle_message_star(p_kind text, p_message_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:88ca42478a05
 routine public.touch_conversation() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1a8384fd9011
 routine public.touch_last_seen() -> void | function | definer | volatile | exec:authenticated,service_role | body:2d50fbe02f88
