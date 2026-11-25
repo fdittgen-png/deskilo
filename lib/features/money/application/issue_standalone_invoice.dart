@@ -73,7 +73,7 @@ class StandaloneIssuance {
         CommandReceiptState.applied => CommandDone(
           StandaloneIssued(
             invoiceId: receipt.invoiceId!,
-            number: '',
+            number: null,
             replayed: true,
           ),
         ),
