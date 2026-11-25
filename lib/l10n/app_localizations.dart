@@ -58985,6 +58985,12 @@ abstract class AppLocalizations {
   /// **'Add an item'**
   String get stockItemAddTitle;
 
+  /// #4470 Stock items: tooltip of the button that opens the service editor for the item
+  ///
+  /// In en, this message translates to:
+  /// **'Edit name, price and VAT'**
+  String get stockItemEditDetails;
+
   /// #4350 a new item from the Stock page
   ///
   /// In en, this message translates to:

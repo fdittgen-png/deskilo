@@ -37276,6 +37276,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockItemAddTitle => 'Ajouter un article';
 
   @override
+  String get stockItemEditDetails => 'Modifier le nom, le prix et la TVA';
+
+  @override
   String get stockItemNewBarcode => 'Code-barres (facultatif)';
 
   @override

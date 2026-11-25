@@ -36815,6 +36815,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockItemAddTitle => 'Add an item';
 
   @override
+  String get stockItemEditDetails => 'Edit name, price and VAT';
+
+  @override
   String get stockItemNewBarcode => 'Barcode (optional)';
 
   @override

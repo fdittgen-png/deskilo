@@ -21598,6 +21598,7 @@
   "stockItemAddNone": "Jede Leistung wird bereits im Lager geführt, oder es gibt noch keine. Legen Sie zuerst eine Leistung an und kommen Sie dann zurück.",
   "stockItemAddOpenServices": "Leistungen öffnen",
   "stockItemAddTitle": "Artikel hinzufügen",
+  "stockItemEditDetails": "Name, Preis und MwSt. bearbeiten",
   "stockItemNewBarcode": "Barcode (optional)",
   "stockItemNewHome": "Heimatort (optional)",
   "stockItemNewName": "Name",

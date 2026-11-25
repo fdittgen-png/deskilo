@@ -7296,6 +7296,7 @@ Map<String, _Getter> _part16() => {
   'stockCycleTaskDone': (l) => l.stockCycleTaskDone,
   'stockEditCodeOwn': (l) => l.stockEditCodeOwn,
   'stockEditTracking': (l) => l.stockEditTracking,
+  'stockItemEditDetails': (l) => l.stockItemEditDetails,
   'stockItemNewPriceInvalid': (l) => l.stockItemNewPriceInvalid,
   'stockMoveReasonOpening': (l) => l.stockMoveReasonOpening,
   'stockPlaceBarcode': (l) => l.stockPlaceBarcode,

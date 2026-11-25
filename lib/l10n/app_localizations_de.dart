@@ -37207,6 +37207,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockItemAddTitle => 'Artikel hinzufügen';
 
   @override
+  String get stockItemEditDetails => 'Name, Preis und MwSt. bearbeiten';
+
+  @override
   String get stockItemNewBarcode => 'Barcode (optional)';
 
   @override

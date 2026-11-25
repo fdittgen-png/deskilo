@@ -21598,6 +21598,7 @@
   "stockItemAddNone": "Tutti i servizi sono già tenuti in magazzino, oppure non ce n’è ancora nessuno. Aggiunga prima un servizio, poi torni.",
   "stockItemAddOpenServices": "Apri servizi",
   "stockItemAddTitle": "Aggiungi un articolo",
+  "stockItemEditDetails": "Modifica nome, prezzo e IVA",
   "stockItemNewBarcode": "Codice a barre (facoltativo)",
   "stockItemNewHome": "Posizione abituale (facoltativa)",
   "stockItemNewName": "Nome",
