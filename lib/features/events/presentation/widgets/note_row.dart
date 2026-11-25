@@ -143,7 +143,7 @@ class NoteRow extends ConsumerWidget {
               // blue = the recipient read it. A broadcast has many
               // readers and no single read state — it stays grey.
               if (sentByMe) ...[
-                const SizedBox(width: 4),
+                const SizedBox(width: AppSpacing.xs),
                 NoteCheck(note: note),
               ],
             ],

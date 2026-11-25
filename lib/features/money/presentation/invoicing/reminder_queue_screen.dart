@@ -346,8 +346,8 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
                       Padding(
                         key: ValueKey('reminder-queue-check-${c.customerId}'),
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
+                          horizontal: AppSpacing.md,
+                          vertical: AppSpacing.sm,
                         ),
                         child: Row(
                           children: [

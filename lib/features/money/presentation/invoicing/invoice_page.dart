@@ -294,7 +294,7 @@ class InvoicePage extends ConsumerWidget {
           key: const ValueKey('invoice-page-replaced-by'),
           onTap: () => openInvoicePage(context, replacement.id),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
             child: Text(
               l.invoicePageCancelledReplaced(replacement.number),
               style: TextStyle(color: theme.colorScheme.primary),

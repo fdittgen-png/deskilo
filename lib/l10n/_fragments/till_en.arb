@@ -190,9 +190,9 @@
       }
     }
   },
-  "tillScanUnknown": "{code} is not something this till sells.",
+  "tillScanUnknown": "The code {code} names no item. Nothing was added.",
   "@tillScanUnknown": {
-    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "description": "#4366 the till",
     "placeholders": {
       "code": {
         "type": "String"
@@ -207,5 +207,78 @@
         "type": "String"
       }
     }
+  },
+  "tillWeighFirst": "Weigh this item first.",
+  "@tillWeighFirst": {
+    "description": "#4366 the till"
+  },
+  "tillWeightTitle": "Weight in {unit}",
+  "@tillWeightTitle": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "tillWeightHint": "The exact weight from the scale, for example 0.350.",
+  "@tillWeightHint": {
+    "description": "#4366 the till"
+  },
+  "tillAgeQuestion": "This item is for customers aged {age} or over. Is the customer at least {age}?",
+  "@tillAgeQuestion": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillAgeNo": "No, do not sell",
+  "@tillAgeNo": {
+    "description": "#4366 the till"
+  },
+  "tillAgeYes": "Yes, {age} or over",
+  "@tillAgeYes": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillAgeConfirmedLine": "age {age}+ confirmed",
+  "@tillAgeConfirmedLine": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDepositLine": "deposit",
+  "@tillDepositLine": {
+    "description": "#4366 the till"
+  },
+  "tillDepositMissing": "The deposit of {name} is not for sale at the counter. Nothing was added.",
+  "@tillDepositMissing": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tillCategoryAll": "All",
+  "@tillCategoryAll": {
+    "description": "#4366 the till"
+  },
+  "tillScanLabel": "Scan a code",
+  "@tillScanLabel": {
+    "description": "#4366 the till"
+  },
+  "tillNotForCounter": "This item is not for sale at the counter.",
+  "@tillNotForCounter": {
+    "description": "#4366 the till"
   }
 }

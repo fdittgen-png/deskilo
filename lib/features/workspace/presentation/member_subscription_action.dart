@@ -6,6 +6,7 @@ import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../money/providers/money_providers.dart';
 import '../application/set_member_subscription.dart';
@@ -62,13 +63,13 @@ Future<void> pickMemberSubscription(
             ],
           ),
           if (member.overagePolicy == OveragePolicy.payg) ...[
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             Text(
               l10n.memberNoSubscriptionPaygHint,
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           // The owner may always negotiate a free value, even when
           // allow_custom hides it from member-facing pickers.
           TextField(

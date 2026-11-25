@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/l10n/context_l10n.dart';
 import '../core/theme/app_radius.dart';
+import '../core/theme/app_spacing.dart';
 import '../core/theme/app_typography.dart';
 import '../core/ui/motion.dart';
 import 'boot.dart';
@@ -62,7 +63,7 @@ class _SplashScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             Text(
               context.l10n.appTitle,
               // The theme's titleLarge is already the w700 page title.

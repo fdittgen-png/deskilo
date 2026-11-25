@@ -105,7 +105,7 @@ class ValidationTrail extends StatelessWidget {
                   size: 14,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
-                const SizedBox(width: 4),
+                const SizedBox(width: AppSpacing.xs),
                 Flexible(
                   child: Text(
                     l10n.validationTrailAwaiting(_outstanding),
@@ -168,13 +168,13 @@ class _TrailEntry extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 4),
+        const SizedBox(width: AppSpacing.xs),
         Icon(
           decision.accept ? Icons.check_circle_outline : Icons.cancel_outlined,
           size: 14,
           color: color,
         ),
-        const SizedBox(width: 4),
+        const SizedBox(width: AppSpacing.xs),
         Flexible(child: Text(what, style: theme.textTheme.bodySmall)),
       ],
     );

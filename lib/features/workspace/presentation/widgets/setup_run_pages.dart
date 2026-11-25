@@ -20,6 +20,7 @@ import '../../domain/member.dart';
 import '../../domain/payment_instructions.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
+import '../../providers/business_kind_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'setup_draft_frame.dart';
 import 'setup_kiosk_step.dart';
@@ -174,9 +175,7 @@ class _PricingHost extends ConsumerWidget {
     carnetsOn: ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.carnets),
-    hasPlaces: ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.placeBooking),
+    hasPlaces: ref.watch(businessShapeProvider).places,
     draft: setupDraftFrameFor(workspace.id, 'pricing'),
   );
 }
@@ -192,9 +191,7 @@ class _ServicesHost extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) => pages.services(
     workspaceId: workspace.id,
     currencyCode: workspace.currencyCode,
-    hasPlaces: ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.placeBooking),
+    hasPlaces: ref.watch(businessShapeProvider).places,
   );
 }
 

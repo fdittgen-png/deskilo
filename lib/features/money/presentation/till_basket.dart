@@ -10,8 +10,10 @@ import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/form_kit.dart';
+import '../../../l10n/app_localizations.dart';
 import '../domain/counter_till.dart';
 import '../domain/till_offline.dart';
+import 'till_card_panel.dart';
 import 'till_offline_mode.dart';
 import 'till_offline_panel.dart';
 import 'till_session.dart';
@@ -31,6 +33,8 @@ class TillBasket extends StatelessWidget {
     this.onSendOffline,
     this.onDiscardOffline,
     this.onReceipt,
+    this.onCard,
+    this.onCardAnswer,
   });
 
   final TillState state;
@@ -47,6 +51,12 @@ class TillBasket extends StatelessWidget {
   final VoidCallback? onDiscardOffline;
   /// #4184 -- opens the frozen document of the sale just made.
   final void Function(String receiptId)? onReceipt;
+
+  /// #4185 -- asks the terminal for the total by card; null where the till takes no card.
+  final VoidCallback? onCard;
+
+  /// #4185 -- records the terminal's answer to the card asked: `accepted`, `refused` or `unknown`.
+  final void Function(String outcome)? onCardAnswer;
 
   @override
   Widget build(BuildContext context) {
@@ -85,23 +95,28 @@ class TillBasket extends StatelessWidget {
         const Divider(height: 1),
         Padding(
           padding: const EdgeInsets.all(AppSpacing.md),
-          child: sold != null
-              ? _Sold(
-                  sold: sold,
-                  change: state.change,
-                  money: money,
-                  offlineSale: offline.sale,
-                  onNext: state.busy ? null : onNext,
-                  // a sale recorded offline has no frozen document until the server has received it
-                  onReceipt: onReceipt == null || offline.sale != null ? null : () => onReceipt!(sold.receiptId),
-                )
-              : state.unconfirmed
-              ? _Unconfirmed(state: state, onConfirm: onConfirm)
-              : _Footer(state: state, money: money, offline: offline.active, onPay: onPay, onRetry: onRetry),
+          child: _bottom(sold, money),
         ),
       ],
     );
   }
+
+  /// What the fixed bottom of the basket shows: the sale made, its answer awaited, the card asked, or the footer to pay.
+  Widget _bottom(TillSold? sold, MoneyFormat money) => sold != null
+                ? _Sold(
+                    sold: sold,
+                    change: state.change,
+                    money: money,
+                    offlineSale: offline.sale,
+                    onNext: state.busy ? null : onNext,
+                    // a sale recorded offline has no frozen document until the server has received it
+                    onReceipt: onReceipt == null || offline.sale != null ? null : () => onReceipt!(sold.receiptId),
+                  )
+                : state.unconfirmed
+                ? _Unconfirmed(state: state, onConfirm: onConfirm)
+                : state.card != null
+                ? TillCardPanel(state: state, money: money, onAnswer: onCardAnswer, onNext: onNext)
+                : _Footer(state: state, money: money, offline: offline.active, onPay: onPay, onRetry: onRetry, onCard: offline.active ? null : onCard);
 }
 
 class _Line extends StatelessWidget {
@@ -116,21 +131,29 @@ class _Line extends StatelessWidget {
   final VoidCallback? onQuantity;
   final VoidCallback? onRemove;
 
+  /// The quantity and unit, what the line was confirmed for (age) and what it is (a deposit), and the track IDs once sold.
+  Widget _subtitle(AppLocalizations l10n) {
+    final text = Text(
+      [
+        '${line.quantity} ${line.unit}'.trim(),
+        if (line.ageConfirmed != null) l10n.tillAgeConfirmedLine('${line.ageConfirmed}'),
+        if (line.depositFor != null) l10n.tillDepositLine,
+      ].join(' · '),
+    );
+    if (tracks.isEmpty) return text;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [text, Text(tillTracksText(l10n, tracks), key: ValueKey('till-tracks-${line.itemId}'))],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return ListTile(
       key: ValueKey('till-line-${line.itemId}'),
       title: Text(line.name, maxLines: 2, overflow: TextOverflow.ellipsis),
-      subtitle: tracks.isEmpty
-          ? Text('${line.quantity} ${line.unit}'.trim())
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('${line.quantity} ${line.unit}'.trim()),
-                Text(tillTracksText(l10n, tracks), key: ValueKey('till-tracks-${line.itemId}')),
-              ],
-            ),
+      subtitle: _subtitle(l10n),
       onTap: onQuantity,
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -177,7 +200,7 @@ class _Unconfirmed extends StatelessWidget {
 }
 
 class _Footer extends StatelessWidget {
-  const _Footer({required this.state, required this.money, required this.offline, required this.onPay, required this.onRetry});
+  const _Footer({required this.state, required this.money, required this.offline, required this.onPay, required this.onRetry, required this.onCard});
 
   final TillState state;
   final MoneyFormat money;
@@ -186,6 +209,7 @@ class _Footer extends StatelessWidget {
   final bool offline;
   final VoidCallback onPay;
   final VoidCallback onRetry;
+  final VoidCallback? onCard;
 
   @override
   Widget build(BuildContext context) {
@@ -221,6 +245,15 @@ class _Footer extends StatelessWidget {
           onPressed: draft == null || state.busy ? null : onPay,
           child: Text(l10n.tillPayCash),
         ),
+        if (onCard != null) ...[
+          const FormGap.small(),
+          OutlinedButton(
+            key: const ValueKey('till-pay-card'),
+            style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(56)),
+            onPressed: draft == null || state.busy ? null : onCard,
+            child: Text(l10n.counterSalePayCard),
+          ),
+        ],
       ],
     );
   }
@@ -276,13 +309,16 @@ class _Sold extends StatelessWidget {
 }
 
 /// Asks the quantity of [current]'s line as an exact decimal; answers what was typed, or null when cancelled.
-Future<String?> showTillQuantityDialog(BuildContext context, {required TillLine current}) =>
-    showDialog<String>(context: context, builder: (_) => _QuantityDialog(current: current));
+///
+/// [weigh] asks the weight of a weighed item in its unit, from nothing: no weight is not a quantity.
+Future<String?> showTillQuantityDialog(BuildContext context, {required TillLine current, bool weigh = false}) =>
+    showDialog<String>(context: context, builder: (_) => _QuantityDialog(current: current, weigh: weigh));
 
 class _QuantityDialog extends StatefulWidget {
-  const _QuantityDialog({required this.current});
+  const _QuantityDialog({required this.current, required this.weigh});
 
   final TillLine current;
+  final bool weigh;
 
   @override
   State<_QuantityDialog> createState() => _QuantityDialogState();
@@ -305,8 +341,8 @@ class _QuantityDialogState extends State<_QuantityDialog> {
       content: AppTextField(
         key: const ValueKey('till-quantity'),
         controller: _text,
-        label: l10n.tillQuantityTitle,
-        helper: l10n.tillQuantityHint,
+        label: widget.weigh ? l10n.tillWeightTitle(widget.current.unit) : l10n.tillQuantityTitle,
+        helper: widget.weigh ? l10n.tillWeightHint : l10n.tillQuantityHint,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         autofocus: true,

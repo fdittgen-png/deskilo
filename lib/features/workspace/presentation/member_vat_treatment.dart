@@ -57,7 +57,7 @@ Future<void> pickMemberVatTreatment(
               l10n.memberVatTreatmentExplainer,
               style: Theme.of(context).textTheme.bodySmall,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Wrap(
               spacing: 8,
               runSpacing: 4,
@@ -91,7 +91,7 @@ Future<void> pickMemberVatTreatment(
               ),
             ],
             if (chosen == VatTreatment.exempt) ...[
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextField(
                 key: const Key('vat-treatment-reason'),
                 controller: reason,

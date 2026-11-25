@@ -28,6 +28,7 @@ import '../../../../core/navigation/routes.dart';
 import '../../../../core/shortcuts/app_shortcuts.dart';
 import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/storage/pane_width_store.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/kit/list_detail_scaffold.dart';
@@ -237,7 +238,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
             child: Row(
               children: [
                 Icon(e.$2, size: 20),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.md),
                 Flexible(child: Text(e.$3)),
               ],
             ),
@@ -248,7 +249,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
         // The worded button is a whole target, not just its words.
         constraints: const BoxConstraints(minHeight: 48),
         child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

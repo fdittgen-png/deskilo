@@ -13,6 +13,7 @@ import 'package:deskilo/core/demo/data/demo_till.dart';
 import 'package:deskilo/core/share/text_sharer.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/providers/till_providers.dart';
+import 'package:deskilo/features/stock/domain/stock_code_resolver.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
@@ -76,6 +77,27 @@ class _FlakyReadiness extends DemoTill {
 /// What the till handed to the share sheet.
 final _shared = <String>[];
 
+const _milkItem = StockItem(id: 'demo-item-milk', name: 'Oat milk', unit: 'l');
+const _mugsItem = StockItem(id: 'demo-item-mugs', name: 'Mugs', unit: 'piece');
+const _milkWithDeposit = StockItem(id: 'demo-item-milk', name: 'Oat milk', unit: 'l', depositItemId: 'demo-item-mugs');
+const _cider = StockItem(id: 'demo-item-syrup', name: 'Syrup', unit: 'l', minAge: 18);
+
+/// The codes of the Demo shop: a barcode names the item that carries it.
+class _Codes implements StockCodeResolver {
+  static const _byCode = {
+    '3256540000032': ('demo-item-milk', 'Oat milk', 'l'),
+    '4006381333931': ('demo-item-mugs', 'Mugs', 'piece'),
+    '5000112548167': ('demo-item-syrup', 'Syrup', 'l'),
+  };
+
+  @override
+  Future<StockCodeResolution> resolve(String workspaceId, String code) async {
+    final hit = _byCode[code];
+    if (hit == null) return StockCodeResolution.unknown(code);
+    return StockCodeResolution(kind: ScannedKind.item, code: code, item: ScannedItem(id: hit.$1, name: hit.$2, unit: hit.$3));
+  }
+}
+
 Future<void> _open(WidgetTester tester, TillPort till, Size size, {Future<List<StockItem>> Function()? items}) async {
   _shared.clear();
   final config = DemoStockConfigCommands('ws-1');
@@ -89,6 +111,8 @@ Future<void> _open(WidgetTester tester, TillPort till, Size size, {Future<List<S
       stockQueriesProvider.overrideWithValue(items == null ? DemoStockQueries(ledger) : _Items(ledger, items)),
       tillPortProvider.overrideWithValue(till),
       textSharerProvider.overrideWithValue((text) async => _shared.add(text)),
+      stockCodeResolverProvider.overrideWithValue(_Codes()),
+      stockScanningProvider.overrideWithValue(true),
     ],
   );
   await _settle(tester);
@@ -123,16 +147,115 @@ void main() {
         expect(find.textContaining('4.20'), findsWidgets);
       });
 
-      testWidgets('a weighed quantity is typed exactly and the line is priced again', (tester) async {
+      testWidgets('a weighed key asks the weight in its unit and prices the exact weight', (tester) async {
         await _open(tester, _ready(), size);
         await _tap(tester, 'till-key-demo-item-beans');
-        await tester.tap(find.byKey(const ValueKey('till-line-demo-item-beans')));
-        await _settle(tester);
+        expect(find.text(_en.tillWeightTitle('kg')), findsOneWidget);
         await tester.enterText(find.byKey(const ValueKey('till-quantity')), '0,350');
         await _tap(tester, 'till-quantity-confirm');
         expect(find.textContaining('0.35 kg'), findsOneWidget);
         // 24.00 x 0.350 = 8.40
         expect(find.textContaining('8.40'), findsWidgets);
+        // weighing the same item again adds to its line, exactly
+        await _tap(tester, 'till-key-demo-item-beans');
+        await tester.enterText(find.byKey(const ValueKey('till-quantity')), '0.150');
+        await _tap(tester, 'till-quantity-confirm');
+        expect(find.textContaining('0.5 kg'), findsOneWidget);
+        expect(find.textContaining('12.00'), findsWidgets);
+      });
+
+      testWidgets('a weighed item with no weight is refused in words and nothing is rung up', (tester) async {
+        await _open(tester, _ready(), size);
+        await _tap(tester, 'till-key-demo-item-beans');
+        await tester.enterText(find.byKey(const ValueKey('till-quantity')), '0');
+        await _tap(tester, 'till-quantity-confirm');
+        expect(find.text(_en.tillWeighFirst), findsOneWidget);
+        expect(find.byKey(const ValueKey('till-line-demo-item-beans')), findsNothing);
+      });
+
+      testWidgets('the keys sit under the categories of their items, in the colour of their settings', (tester) async {
+        await _open(tester, _ready(), size);
+        expect(find.byKey(const ValueKey('till-category-all')), findsOneWidget);
+        expect(find.byKey(const ValueKey('till-key-demo-item-milk')), findsOneWidget);
+        await _tap(tester, 'till-category-Coffee');
+        expect(find.byKey(const ValueKey('till-key-demo-item-beans')), findsOneWidget);
+        expect(find.byKey(const ValueKey('till-key-demo-item-milk')), findsNothing);
+        final beans = tester.widget<FilledButton>(find.byKey(const ValueKey('till-key-demo-item-beans')));
+        expect(beans.style?.backgroundColor?.resolve({}), const Color(0xFF6D4C41));
+        await _tap(tester, 'till-category-all');
+        expect(find.byKey(const ValueKey('till-key-demo-item-milk')), findsOneWidget);
+      });
+
+      testWidgets('a scanned code rings the item up, a repeat scan adds one more, an unknown code is said', (tester) async {
+        await _open(tester, _ready(), size);
+        Future<void> scan(String code) async {
+          await tester.enterText(find.byKey(const ValueKey('till-scan')), code);
+          await tester.testTextInput.receiveAction(TextInputAction.done);
+          await _settle(tester);
+        }
+
+        await scan('3256540000032');
+        expect(find.byKey(const ValueKey('till-line-demo-item-milk')), findsOneWidget);
+        expect(find.textContaining('1 l'), findsOneWidget);
+        await scan('3256540000032');
+        expect(find.textContaining('2 l'), findsOneWidget);
+        await scan('0000000000000');
+        expect(find.text(_en.tillScanUnknown('0000000000000')), findsOneWidget);
+        await scan('5000112548167');
+        expect(find.byKey(const ValueKey('till-line-demo-item-syrup')), findsOneWidget);
+      });
+
+      testWidgets('a scanned item that is not on the till is not for sale at the counter', (tester) async {
+        await _open(tester, _ready(), size, items: () async => [_milkItem]);
+        await tester.enterText(find.byKey(const ValueKey('till-scan')), '4006381333931');
+        await tester.testTextInput.receiveAction(TextInputAction.done);
+        await _settle(tester);
+        expect(find.text(_en.tillNotForCounter), findsOneWidget);
+        expect(find.byKey(const ValueKey('till-line-demo-item-mugs')), findsNothing);
+      });
+
+      testWidgets('an age-restricted item asks the customer age once and keeps the confirmation on its line', (tester) async {
+        await _open(tester, _ready(), size, items: () async => [_cider]);
+        await _tap(tester, 'till-key-demo-item-syrup');
+        expect(find.text(_en.tillAgeQuestion('18')), findsOneWidget);
+        await _tap(tester, 'till-age-no');
+        expect(find.byKey(const ValueKey('till-line-demo-item-syrup')), findsNothing);
+        await _tap(tester, 'till-key-demo-item-syrup');
+        await _tap(tester, 'till-age-yes');
+        expect(find.textContaining(_en.tillAgeConfirmedLine('18')), findsOneWidget);
+        await _tap(tester, 'till-key-demo-item-syrup');
+        expect(find.byKey(const ValueKey('till-age-yes')), findsNothing, reason: 'the age of this line is already confirmed');
+        expect(find.textContaining('2 l'), findsOneWidget);
+      });
+
+      testWidgets('an item with a deposit rings its deposit line up with it, follows its quantity and leaves with it', (tester) async {
+        await _open(tester, _ready(), size, items: () async => [_milkWithDeposit, _mugsItem]);
+        await _tap(tester, 'till-key-demo-item-milk');
+        expect(find.byKey(const ValueKey('till-line-demo-item-mugs')), findsOneWidget);
+        expect(find.textContaining(_en.tillDepositLine), findsOneWidget);
+        await _tap(tester, 'till-key-demo-item-milk');
+        // two litres and two deposits: 2 x 2.10 + 2 x 8.90
+        expect(find.textContaining('22.00'), findsWidgets);
+        await _tap(tester, 'till-remove-demo-item-milk');
+        expect(find.byKey(const ValueKey('till-line-demo-item-mugs')), findsNothing);
+        expect(find.text(_en.tillBasketEmpty), findsOneWidget);
+      });
+
+      testWidgets('a deposit that is not on the till is refused in words and the item is not rung up either', (tester) async {
+        await _open(tester, _ready(), size, items: () async => [_milkWithDeposit]);
+        await _tap(tester, 'till-key-demo-item-milk');
+        expect(find.text(_en.tillDepositMissing('Oat milk')), findsOneWidget);
+        expect(find.byKey(const ValueKey('till-line-demo-item-milk')), findsNothing);
+      });
+
+      testWidgets('cash offers notes worked out from the currency and says the change', (tester) async {
+        await _open(tester, _ready(), size);
+        await _tap(tester, 'till-key-demo-item-milk');
+        await _tap(tester, 'till-pay');
+        expect(find.byKey(const ValueKey('till-cash-note-500')), findsOneWidget);
+        await _tap(tester, 'till-cash-note-500');
+        expect(find.byKey(const ValueKey('till-change')), findsOneWidget);
+        expect(find.textContaining('2.90'), findsOneWidget);
       });
 
       testWidgets('a quantity that is not an exact quantity above zero is refused in words', (tester) async {
@@ -148,9 +271,9 @@ void main() {
 
       testWidgets('cash short of the total is refused before anything is sent', (tester) async {
         await _open(tester, _ready(), size);
-        await _tap(tester, 'till-key-demo-item-beans');
+        await _tap(tester, 'till-key-demo-item-milk');
         await _tap(tester, 'till-pay');
-        await tester.enterText(find.byKey(const ValueKey('till-cash-given')), '5');
+        await tester.enterText(find.byKey(const ValueKey('till-cash-given')), '1');
         await _tap(tester, 'till-cash-confirm');
         expect(find.text(_en.tillCashShort), findsOneWidget);
         expect(find.byKey(const ValueKey('till-receipt')), findsNothing);
@@ -273,4 +396,38 @@ void main() {
       });
     });
   }
+
+  testWidgets('the shop\'s Saturday morning: scans and a weighed line over three customers, each paid in cash and followed by the next', (tester) async {
+    await _open(tester, _ready(), const Size(1024, 768));
+
+    Future<void> scan(String code) async {
+      await tester.enterText(find.byKey(const ValueKey('till-scan')), code);
+      await tester.testTextInput.receiveAction(TextInputAction.done);
+      await _settle(tester);
+    }
+
+    // the first customer: two oat milks by scanner, paid with a note
+    await scan('3256540000032');
+    await scan('3256540000032');
+    await _tap(tester, 'till-pay');
+    await _tap(tester, 'till-cash-note-500');
+    expect(find.text(_en.tillReceiptNumber('R-00001')), findsOneWidget);
+    expect(find.textContaining('0.80'), findsOneWidget, reason: '5.00 given for 4.20');
+    await _tap(tester, 'till-next');
+    // the second: 350 g of beans from the scale and a mug, paid exactly
+    await _tap(tester, 'till-key-demo-item-beans');
+    await tester.enterText(find.byKey(const ValueKey('till-quantity')), '0,350');
+    await _tap(tester, 'till-quantity-confirm');
+    await scan('4006381333931');
+    expect(find.textContaining('17.30'), findsWidgets, reason: '8.40 + 8.90');
+    await _tap(tester, 'till-pay');
+    await _tap(tester, 'till-cash-exact');
+    expect(find.text(_en.tillReceiptNumber('R-00002')), findsOneWidget);
+    await _tap(tester, 'till-next');
+    // the third: a syrup rung up from its key
+    await _tap(tester, 'till-key-demo-item-syrup');
+    await _tap(tester, 'till-pay');
+    await _tap(tester, 'till-cash-exact');
+    expect(find.text(_en.tillReceiptNumber('R-00003')), findsOneWidget);
+  });
 }

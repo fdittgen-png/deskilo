@@ -110,5 +110,25 @@
   "itemGroupReasonGroupUnknown": "Este grupo no existe.",
   "itemGroupReasonNotOverridable": "Este ajuste no puede tener un valor propio.",
   "itemGroupReasonHasMovements": "ya tiene movimientos",
-  "itemGroupFailed": "No se pudieron leer los grupos de artículos."
+  "itemGroupFailed": "No se pudieron leer los grupos de artículos.",
+  "itemGroupTillCategory": "Categoría en caja",
+  "@itemGroupTillCategory": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupKeyColour": "Color de la tecla rápida (#rrggbb)",
+  "@itemGroupKeyColour": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositItem": "Artículo de depósito",
+  "@itemGroupDepositItem": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositAmount": "Importe del depósito (céntimos)",
+  "@itemGroupDepositAmount": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupLabelTemplate": "Plantilla de etiqueta",
+  "@itemGroupLabelTemplate": {
+    "description": "#4366 item groups: the till parameters"
+  }
 }

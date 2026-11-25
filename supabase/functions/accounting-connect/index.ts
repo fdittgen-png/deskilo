@@ -81,7 +81,7 @@ export type { Deps } from "./connection.ts";
 
 /** The most a request body may weigh: ids and a display name. A protocol
  * bound on the request's shape, not a choice. */
-export const MAX_BODY_BYTES = 4096;
+export const MAX_BODY_BYTES = 4096; // not-mirrored: the request size of the function
 
 /** The page the browser shows after the redirect: plain words, no data. */
 const page = (text: string, status = 200) =>

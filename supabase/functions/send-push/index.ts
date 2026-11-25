@@ -328,7 +328,7 @@ export function classify(status: number | null, body: unknown): Outcome {
 /** #2020 — at most one retry, and only when the wait fits the call:
  * Retry-After in seconds (default 1 s), capped at [MAX_RETRY_WAIT_MS];
  * a longer wait is reported retryable instead of slept through. */
-export const MAX_RETRY_WAIT_MS = 5_000;
+export const MAX_RETRY_WAIT_MS = 5_000; // not-mirrored: a network wait of the function
 
 export function retryWaitMs(retryAfter: string | null): number | null {
   const s = retryAfter === null ? 1 : Number(retryAfter);

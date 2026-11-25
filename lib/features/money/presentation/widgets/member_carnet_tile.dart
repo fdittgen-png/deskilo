@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../application/carnets.dart';
@@ -35,7 +36,7 @@ class MemberCarnetTile extends ConsumerWidget {
         children: [
           if (products.isEmpty)
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               child: Text(l10n.carnetsEmpty),
             ),
           for (final p in products)

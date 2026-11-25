@@ -4279,6 +4279,65 @@
   },
   "counterLotsExpired": "Solo {held} de los {asked} pedidos se pueden vender aquí: {expired} más han caducado. No se vendió nada.",
   "counterLotsShort": "Solo hay aquí {held} de los {asked} pedidos. No se vendió nada.",
+  "counterSaleAnswerRefHint": "Tal como figura en el diario o el comprobante del terminal (opcional).",
+  "counterSaleAnswerRefLabel": "Referencia de la transacción del terminal",
+  "counterSaleAtMost": "Como máximo {left}.",
+  "counterSaleCardAccepted": "Aceptada",
+  "counterSaleCardAskedHint": "Introduzca el importe en el terminal de pago con la referencia {reference} y registre después lo que respondió el terminal.",
+  "counterSaleCardAskedTitle": "Tarjeta en el terminal: {amount}",
+  "counterSaleCardDeclined": "El terminal rechazó la tarjeta: no se cobró nada. Acepte otro pago.",
+  "counterSaleCardNoAnswer": "Sin respuesta",
+  "counterSaleCardRefused": "Rechazada",
+  "counterSaleCardWaiting": "La respuesta de la tarjeta no se resuelve aquí. No vuelva a pedir la tarjeta: la venta espera en Tickets, donde alguien que puede ver las finanzas registra la respuesta del terminal según su diario (referencia {reference}) y la completa una sola vez.",
+  "counterSaleComplete": "Completar la venta",
+  "counterSaleCompleted": "Venta {number} completada.",
+  "counterSaleCorrect": "Corregir esta venta",
+  "counterSaleCorrectHint": "Una corrección es un ticket nuevo que abona la venta; la venta en sí nunca cambia. No devuelve dinero ni recoge mercancía: son pasos aparte.",
+  "counterSaleCorrectLineLabel": "{label}: cantidad a abonar (como máximo {left})",
+  "counterSaleCorrectNothing": "Indique la cantidad de al menos una línea.",
+  "counterSaleCorrectReason": "Motivo",
+  "counterSaleCorrectSubmit": "Emitir la corrección",
+  "counterSaleCorrectTitle": "Corrección de {number}",
+  "counterSaleCorrected": "Corrección {number} emitida.",
+  "counterSaleCorrection": "Corrección {number} de {original}",
+  "counterSaleDraft": "Venta sin terminar de {amount}",
+  "counterSaleIssuedTitle": "Emitidos",
+  "counterSaleLeft": "{quantity} por corregir",
+  "counterSaleOpenReceipts": "Tickets",
+  "counterSalePayCard": "Cobrar con tarjeta",
+  "counterSaleQuantityInvalid": "Una cantidad exacta mayor que cero, con seis decimales como máximo.",
+  "counterSaleReceiptsEmpty": "Todavía no hay tickets. Una venta hecha en la caja aparece aquí.",
+  "counterSaleReceiptsTitle": "Tickets de caja",
+  "counterSaleReconcile": "Conciliar",
+  "counterSaleRecordAnswer": "Registrar la respuesta del terminal",
+  "counterSaleReference": "Referencia del terminal {reference}",
+  "counterSaleRefund": "Devolver dinero",
+  "counterSaleRefundAmount": "Importe (como máximo {left})",
+  "counterSaleRefundDone": "Devolución registrada.",
+  "counterSaleRefundInvalid": "Un importe mayor que cero.",
+  "counterSaleRefundSubmit": "Devolver",
+  "counterSaleRefundTitle": "Devolución sobre {number}",
+  "counterSaleRefunded": "Devuelto {refunded} de {total}",
+  "counterSaleReturn": "Recoger la mercancía",
+  "counterSaleReturnDone": "Mercancía devuelta al stock.",
+  "counterSaleReturnLineLabel": "{label}: cantidad devuelta al stock (como máximo {left})",
+  "counterSaleReturnSubmit": "Recoger",
+  "counterSaleReturnTitle": "Mercancía recogida sobre {number}",
+  "counterSaleSale": "Venta {number}",
+  "counterSaleShare": "Compartir el ticket",
+  "counterSaleShareTitle": "Ticket",
+  "counterSaleStateReconcile": "aceptada para una oferta que cambió: por conciliar",
+  "counterSaleStateRefused": "rechazada",
+  "counterSaleStateRequested": "solicitada, sin respuesta registrada",
+  "counterSaleStateUnknown": "respuesta desconocida",
+  "counterSaleTax": "de los cuales impuestos {amount}",
+  "counterSaleTaxLabel": "Impuestos incluidos",
+  "counterSaleTenderCash": "Efectivo",
+  "counterSaleTenderLine": "{kind} {amount}: {state}",
+  "counterSaleTenderOther": "Otro",
+  "counterSaleTotal": "Total {amount}",
+  "counterSaleTotalLabel": "Total",
+  "counterSaleWaitingTitle": "A la espera de una respuesta de tarjeta",
   "countryChangeBody": "En {country} estas funciones no están disponibles y dejan de funcionar: {features}. Sus interruptores se conservan: vuelven si restablece el país.",
   "@countryChangeBody": {
     "description": "#2454 country change",
@@ -11317,6 +11376,14 @@
   "itemGroupCountEvery": "Contar cada (días)",
   "itemGroupDelete": "Eliminar el grupo",
   "itemGroupDeleted": "Grupo eliminado.",
+  "itemGroupDepositAmount": "Importe del depósito (céntimos)",
+  "@itemGroupDepositAmount": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositItem": "Artículo de depósito",
+  "@itemGroupDepositItem": {
+    "description": "#4366 item groups: the till parameters"
+  },
   "itemGroupFailed": "No se pudieron leer los grupos de artículos.",
   "itemGroupFinanceHint": "Estos ajustes requieren el derecho a gestionar servicios y a ver las finanzas.",
   "@itemGroupFinanceHint": {
@@ -11334,6 +11401,14 @@
   "itemGroupHomeZone": "Zona de almacén por defecto",
   "@itemGroupHomeZone": {
     "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
+  "itemGroupKeyColour": "Color de la tecla rápida (#rrggbb)",
+  "@itemGroupKeyColour": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupLabelTemplate": "Plantilla de etiqueta",
+  "@itemGroupLabelTemplate": {
+    "description": "#4366 item groups: the till parameters"
   },
   "itemGroupMargin": "Margen objetivo sobre el coste (%)",
   "@itemGroupMargin": {
@@ -11414,6 +11489,10 @@
   },
   "itemGroupTagNone": "Sin etiquetas",
   "itemGroupTagUnit": "Una etiqueta por pieza",
+  "itemGroupTillCategory": "Categoría en caja",
+  "@itemGroupTillCategory": {
+    "description": "#4366 item groups: the till parameters"
+  },
   "itemGroupTrackingSerial": "Por pieza (serie)",
   "itemGroupUseGroup": "Usar el valor del grupo",
   "itemGroupYes": "Sí",
@@ -23956,12 +24035,47 @@
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
   },
+  "tillAgeConfirmedLine": "edad {age}+ confirmada",
+  "@tillAgeConfirmedLine": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillAgeNo": "No, no vender",
+  "@tillAgeNo": {
+    "description": "#4366 the till"
+  },
+  "tillAgeQuestion": "Este artículo es para clientes de {age} años o más. ¿Tiene el cliente al menos {age}?",
+  "@tillAgeQuestion": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillAgeYes": "Sí, {age} o más",
+  "@tillAgeYes": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
   "tillBasketEmpty": "Toque un artículo para empezar una venta.",
   "tillBasketTitle": "Cesta",
   "tillCashExact": "Importe exacto",
   "tillCashGiven": "Efectivo entregado",
   "tillCashInvalid": "Introduzca el importe entregado como número.",
   "tillCashShort": "El efectivo entregado es inferior al total.",
+  "tillCategoryAll": "Todos",
+  "@tillCategoryAll": {
+    "description": "#4366 the till"
+  },
   "tillChangeDue": "Cambio a devolver: {amount}",
   "tillConfirmSale": "Confirmar la venta",
   "@tillConfirmSale": {
@@ -23998,6 +24112,19 @@
   "tillDayToday": "Día a cerrar: {date}",
   "tillDeclarationNone": "ninguna obligación de caja fiscal",
   "tillDeclarationRegister": "se exige una caja fiscal",
+  "tillDepositLine": "depósito",
+  "@tillDepositLine": {
+    "description": "#4366 the till"
+  },
+  "tillDepositMissing": "El depósito de {name} no está a la venta en el mostrador. No se ha añadido nada.",
+  "@tillDepositMissing": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "tillDrawerAddTill": "Añadir una caja",
   "tillDrawerAmountInvalid": "Escriba un importe.",
   "tillDrawerAmountZero": "El importe debe ser mayor que cero.",
@@ -24091,6 +24218,10 @@
     "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
   },
   "tillNextCustomer": "Siguiente cliente",
+  "tillNotForCounter": "Este artículo no está a la venta en el mostrador.",
+  "@tillNotForCounter": {
+    "description": "#4366 the till"
+  },
   "tillNotReady": "Aún no está listo en su país: {operation}",
   "tillNotReadyHint": "No se numera ni se cobra nada mientras la operación del país no esté admitida.",
   "tillOfflineBanner": "Sin conexión: solo efectivo. Las ventas se guardan en este dispositivo y se envían cuando vuelve la conexión.",
@@ -24274,9 +24405,13 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
-  "tillScanUnknown": "{code} no es algo que venda esta caja.",
+  "tillScanLabel": "Escanear un código",
+  "@tillScanLabel": {
+    "description": "#4366 the till"
+  },
+  "tillScanUnknown": "El código {code} no designa ningún artículo. No se ha añadido nada.",
   "@tillScanUnknown": {
-    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "description": "#4366 the till",
     "placeholders": {
       "code": {
         "type": "String"
@@ -24304,6 +24439,23 @@
     "description": "#4436 the till: a piece a sold line took, named by its tag",
     "placeholders": {
       "code": {
+        "type": "String"
+      }
+    }
+  },
+  "tillWeighFirst": "Pese primero este artículo.",
+  "@tillWeighFirst": {
+    "description": "#4366 the till"
+  },
+  "tillWeightHint": "El peso exacto de la balanza, por ejemplo 0,350.",
+  "@tillWeightHint": {
+    "description": "#4366 the till"
+  },
+  "tillWeightTitle": "Peso en {unit}",
+  "@tillWeightTitle": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "unit": {
         "type": "String"
       }
     }

@@ -30,7 +30,7 @@ String _moneyFaceLabel(AppLocalizations l10n, MoneyFace face) => switch (face) {
 
 /// The #486 section label of the classic column: small caps, muted.
 Widget moneySectionLabel(BuildContext context, String text) => Padding(
-      padding: const EdgeInsets.only(top: 12, bottom: 4),
+      padding: const EdgeInsets.only(top: AppSpacing.md, bottom: AppSpacing.xs),
       child: Text(
         text.toUpperCase(),
         style: Theme.of(context).textTheme.labelSmall?.copyWith(

@@ -11,6 +11,7 @@ import 'package:deskilo/core/public_network/public_network_codec.dart';
 import 'package:deskilo/core/public_network/public_network_operations.dart';
 import 'package:deskilo/features/directory/data/supabase_publication_repository.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
+import 'package:deskilo/features/directory/domain/publication_draft.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -182,12 +183,12 @@ void main() {
       'plans': 'Keep', 'latitude': '43.4', 'longitude': '3.4',
       'services': <Object>[],
     }});
-    final patch = draft.patch({'description': 'After'});
+    final patch = draft.diff(draft.copyWith(texts: {'description': 'After'}));
     expect(patch.fields, {'description': 'After'});
     expect(patch.mode, PublicationWriteMode.patch);
-    expect(draft.fields['plans'], 'Keep');
-    expect(draft.fields['latitude'], 43.4);
-    expect(draft.fields.containsKey('services'), isFalse);
+    expect(draft.text('plans'), 'Keep');
+    expect(draft.place?.latitude, 43.4);
+    expect(draft.diff(draft).fields, isEmpty);
   });
 
   test('invalid typed values are refused before transport', () async {

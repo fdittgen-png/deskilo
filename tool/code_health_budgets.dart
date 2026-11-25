@@ -36,8 +36,22 @@
 //                        page: `context.go|push|replace|pushReplacement('/`
 //                        and `location: '/`, per lib/ file (#4422); the path
 //                        is a `Routes` symbol instead
+//   rawInsets            an `EdgeInsets` (or `EdgeInsetsDirectional`) call
+//                        with a non-zero number in it, per presentation
+//                        library (#4421); an `AppSpacing` token instead. A
+//                        PDF widget (`pw.`) prints at paper size: not counted
+//   rawGap               a `SizedBox` with a non-zero number as its width,
+//                        height or dimension (#4421)
+//   rawDurationMs        `Duration(milliseconds: <number>)` (#4421); a
+//                        `MotionTokens` or `AppDurations` token instead
+//   rawElevation         `elevation: <non-zero number>` (#4421)
+//   rawAlpha             `withValues(alpha: <number>)`, `withAlpha(<number>)`
+//                        or `withOpacity(<number>)` (#4421)
+//   rawMaxWidth          `maxWidth: <number>` in lib/features, per file: a
+//                        page measure is the route's (`measure:`) or a
+//                        named width (#4421)
 //
-// The last seven have a default of none: any use without an entry fails.
+// The last thirteen have a default of none: any use without an entry fails.
 //
 // The reason an entry is exempt lives in
 // docs/design/CODE_HEALTH_BUDGET_REASONS.txt, `<category> <key> // <reason>`;
@@ -76,6 +90,12 @@ const List<String> budgetCategories = [
   'rawSpinner',
   'helpCards',
   'inlineRoute',
+  'rawInsets',
+  'rawGap',
+  'rawDurationMs',
+  'rawElevation',
+  'rawAlpha',
+  'rawMaxWidth',
 ];
 
 /// What a category allows without an entry, and how much headroom an entry
@@ -92,6 +112,12 @@ const Map<String, ({int floor, int headroom})> _rules = {
   'rawSpinner': (floor: 0, headroom: 0),
   'helpCards': (floor: 0, headroom: 0),
   'inlineRoute': (floor: 0, headroom: 0),
+  'rawInsets': (floor: 0, headroom: 0),
+  'rawGap': (floor: 0, headroom: 0),
+  'rawDurationMs': (floor: 0, headroom: 0),
+  'rawElevation': (floor: 0, headroom: 0),
+  'rawAlpha': (floor: 0, headroom: 0),
+  'rawMaxWidth': (floor: 0, headroom: 0),
 };
 
 /// The budgets as held in the JSON.
@@ -166,6 +192,7 @@ class BudgetActuals {
     this.rawSpinner = const {},
     this.helpCards = const {},
     this.inlineRoute = const {},
+    this.rawTokens = const {},
   });
 
   final int partOfFiles;
@@ -185,6 +212,10 @@ class BudgetActuals {
   final Map<String, int> helpCards;
   final Map<String, int> inlineRoute;
 
+  /// #4421 — the raw-measure categories (`rawInsets` … `rawMaxWidth`), each
+  /// per library or file.
+  final Map<String, Map<String, int>> rawTokens;
+
   /// The measured value per key of [category].
   Map<String, int> of(String category) => switch (category) {
         'fileLength' => lines,
@@ -198,6 +229,8 @@ class BudgetActuals {
         'rawSpinner' => rawSpinner,
         'helpCards' => helpCards,
         'inlineRoute' => inlineRoute,
+        _ when rawTokenPatterns.containsKey(category) =>
+          rawTokens[category] ?? const {},
         _ => throw ArgumentError(category),
       };
 }
@@ -287,6 +320,60 @@ int inlineRouteCountOf(String source) => _inlineRoute
     })
     .length;
 
+/// A number written as a literal: not part of a name or a member access.
+final RegExp _numberLiteral = RegExp(r'(?<![\w.$])(\d+(?:\.\d+)?)(?![\w.])');
+
+bool _hasNonZero(String text) => _numberLiteral
+    .allMatches(text)
+    .any((m) => double.parse(m.group(1)!) != 0);
+
+/// #4421 — what each raw-measure category counts: a match outside a comment
+/// line that the test accepts.
+final Map<String, ({RegExp pattern, bool Function(Match) counts})>
+rawTokenPatterns = {
+  'rawInsets': (
+    pattern: RegExp(
+      r'(?<!pw\.)\bEdgeInsets(?:Directional)?\.(?:all|symmetric|only|fromLTRB|fromSTEB)'
+      r'\(([^()]*)\)',
+    ),
+    counts: (m) => _hasNonZero(m.group(1)!),
+  ),
+  'rawGap': (
+    pattern: RegExp(r'(?<!pw\.)\bSizedBox(?:\.square)?\(([^()]*)\)'),
+    counts: (m) => RegExp(r'\b(?:width|height|dimension):\s*([^,)]*)')
+        .allMatches(m.group(1)!)
+        .any((a) => _hasNonZero(a.group(1)!)),
+  ),
+  'rawDurationMs': (
+    pattern: RegExp(r'\bDuration\(\s*milliseconds:\s*\d'),
+    counts: (_) => true,
+  ),
+  'rawElevation': (
+    pattern: RegExp(r'\belevation:\s*(\d+(?:\.\d+)?)(?![\w.])'),
+    counts: (m) => double.parse(m.group(1)!) != 0,
+  ),
+  'rawAlpha': (
+    pattern: RegExp(
+      r'\b(?:withValues\(\s*alpha:|withAlpha\(|withOpacity\()\s*\d',
+    ),
+    counts: (_) => true,
+  ),
+  'rawMaxWidth': (
+    pattern: RegExp(r'\bmaxWidth:\s*(\d+(?:\.\d+)?)(?![\w.])'),
+    counts: (m) => double.parse(m.group(1)!) != 0,
+  ),
+};
+
+/// The matches of [category] in [source], comment lines skipped.
+int rawTokenCountOf(String category, String source) {
+  final rule = rawTokenPatterns[category]!;
+  return rule.pattern.allMatches(source).where((m) {
+    final start = source.lastIndexOf('\n', m.start) + 1;
+    return !source.substring(start, m.start).trimLeft().startsWith('//') &&
+        rule.counts(m);
+  }).length;
+}
+
 bool _isPresentation(String path) =>
     path != 'lib/app/theme.dart' &&
     (path.contains('/presentation/') || path.startsWith('lib/app/'));
@@ -327,11 +414,16 @@ BudgetActuals measureBudgetActuals() {
   final fontWeight = <String, int>{};
   final rawSpinner = <String, int>{};
   final inlineRoute = <String, int>{};
+  final rawTokens = <String, Map<String, int>>{};
   for (final file in files) {
     final path = file.path.replaceAll(r'\', '/');
     final isPart = _isPartFile(file);
     final routes = inlineRouteCountOf(file.readAsStringSync());
     if (routes > 0) inlineRoute[path] = routes;
+    if (path.startsWith('lib/features/')) {
+      final widths = rawTokenCountOf('rawMaxWidth', file.readAsStringSync());
+      if (widths > 0) (rawTokens['rawMaxWidth'] ??= {})[path] = widths;
+    }
     if (path.contains('/presentation/') || path.startsWith('lib/app/')) {
       final n = _rawSpinnerCall.allMatches(file.readAsStringSync()).length;
       if (n > 0) rawSpinner[path] = n;
@@ -348,6 +440,11 @@ BudgetActuals measureBudgetActuals() {
       count(fontSize, 'fontSize:');
       count(colorLiteral, 'Color(0x');
       count(fontWeight, 'fontWeight: FontWeight');
+      for (final c in rawTokenPatterns.keys) {
+        if (c == 'rawMaxWidth') continue;
+        final n = rawTokenCountOf(c, lib);
+        if (n > 0) (rawTokens[c] ??= {})[path] = n;
+      }
     }
   }
   final helpCards = <String, int>{};
@@ -377,6 +474,7 @@ BudgetActuals measureBudgetActuals() {
     rawSpinner: rawSpinner,
     helpCards: helpCards,
     inlineRoute: inlineRoute,
+    rawTokens: rawTokens,
   );
 }
 

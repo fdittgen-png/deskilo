@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/reservation_repository.dart';
@@ -48,7 +49,7 @@ Future<SeriesPattern?> pickSeriesPattern(
             l10n.repeatWeekly,
             Icons.view_week_outlined,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
         ],
       ),
     ),
@@ -106,7 +107,7 @@ Future<T?> pickHalfDayWindow<T>(
             ),
             onTap: () => Navigator.of(sheetContext).pop(fullDay),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
         ],
       ),
     ),

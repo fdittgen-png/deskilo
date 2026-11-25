@@ -71,12 +71,13 @@ Future<_Setup> _open(
   Set<WorkspacePermission>? permissions,
   bool withQuotes = true,
   List<Override> extra = const [],
+  FakeCustomerQuoteRepository Function(DateTime Function() clock)? quotesOf,
 }) async {
   tester.view.physicalSize = const Size(900, 1600);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   var clockNow = _now;
-  final quotes = FakeCustomerQuoteRepository(clock: () => clockNow);
+  final quotes = (quotesOf ?? (clock) => FakeCustomerQuoteRepository(clock: clock))(() => clockNow);
   final customers = FakeBillingCustomerRepository();
   final router = GoRouter(
     routes: [
@@ -148,6 +149,30 @@ final _dayOverrides = [
   businessDayProvider.overrideWithValue(_businessDay),
   invoiceDueDaysProvider.overrideWithValue(21),
 ];
+
+/// A server that finds the invoice of the accepted quote not issuable yet: it names what is missing by its stable keys.
+class _NotIssuable extends FakeCustomerQuoteRepository {
+  _NotIssuable({required super.clock});
+
+  @override
+  Future<QuoteConversionPrep> prepareConversion(
+    String workspaceId,
+    String quoteId, {
+    required DateTime serviceDate,
+    required DateTime dueOn,
+  }) async {
+    final ready = await super.prepareConversion(workspaceId, quoteId, serviceDate: serviceDate, dueOn: dueOn);
+    return QuoteConversionPrep(
+      draftRevision: ready.draftRevision,
+      missing: const ['buyer_address', 'due_on'],
+      acceptedTotalCents: ready.acceptedTotalCents,
+      wouldBeTotalCents: null,
+      currency: ready.currency,
+      contextChanged: false,
+      reviewDigest: ready.reviewDigest,
+    );
+  }
+}
 
 void main() {
   testWidgets('the list shows each quote with its reference, status and the '
@@ -345,6 +370,8 @@ void main() {
         .convert(setup.workspaceId, 'quote-1', draftRevision: 1, requestId: 'r1');
     expect(outcome, isA<CommandDone<QuoteConverted>>());
     expect((outcome as CommandDone<QuoteConverted>).value.replayed, isTrue);
+    // the number is the server's to say: a found invoice names none rather than an empty one
+    expect(outcome.value.number, isNull);
   });
 
   testWidgets('the editor offers the business\'s day as the issue date, not the device\'s', (tester) async {
@@ -373,5 +400,31 @@ void main() {
     await _settle(tester);
     expect(tester.widget<AppDateField>(find.byKey(const ValueKey('quote-convert-service-date'))).value, _businessDay);
     expect(tester.widget<AppDateField>(find.byKey(const ValueKey('quote-convert-due-date'))).value, addCalendarDays(_businessDay, 21));
+  });
+
+  testWidgets('#4405 what the server finds missing is worded, never shown as its raw keys, and no total is invented', (tester) async {
+    final setup = await _open(
+      tester,
+      const CustomerQuoteScreen(quoteId: 'quote-1'),
+      quotesOf: (clock) => _NotIssuable(clock: clock),
+    );
+    await setup.quotes.recordDecision(
+      setup.workspaceId,
+      'quote-1',
+      QuoteDecisionInput(accepted: true, revision: 1, decidedOn: setup.today, source: 'email'),
+    );
+    ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
+        .invalidate(customerQuoteProvider((workspaceId: setup.workspaceId, quoteId: 'quote-1')));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('quote-convert')));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('quote-convert-check')));
+    await _settle(tester);
+    final said = tester.widget<Text>(find.byKey(const ValueKey('quote-convert-missing'))).data!;
+    expect(said, contains(_en.standaloneFactDueDate));
+    expect(said, isNot(contains('due_on')));
+    expect(said, contains(_en.invoiceMissingBuyerAddress));
+    expect(said, isNot(contains('buyer_address')));
+    expect(find.byKey(const ValueKey('quote-convert-would-be')), findsNothing);
   });
 }

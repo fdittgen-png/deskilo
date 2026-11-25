@@ -189,6 +189,8 @@ es biTotal
 es bookReportTotal
 es calendarViewAgenda
 es conversationAdmin
+es counterSaleTotal
+es counterSaleTotalLabel
 es countryNameAT
 es countryNameAU
 es countryNameBG
@@ -296,6 +298,8 @@ fr carnetsTitle
 fr consentVersion
 fr consentVersionNumber
 fr conversationAdmin
+fr counterSaleTotal
+fr counterSaleTotalLabel
 fr countryNameCA
 fr countryNameFR
 fr countryNameLU

@@ -5,12 +5,13 @@
 // and show it without importing the session back.
 import 'package:flutter/foundation.dart';
 
+import '../../../core/failure/app_failure.dart' show TypedRefusal;
 import '../domain/counter_till.dart';
 
 /// What the till shows: the basket, its price, a sale made, or the refusal of the last act.
 @immutable
 class TillState {
-  const TillState({this.lines = const [], this.draft, this.sold, this.busy = false, this.problem, this.change, this.unconfirmed = false});
+  const TillState({this.lines = const [], this.draft, this.sold, this.busy = false, this.problem, this.change, this.unconfirmed = false, this.card, this.cardUnknown = false});
 
   final List<TillLine> lines;
   final TillDraft? draft;
@@ -26,6 +27,13 @@ class TillState {
   /// The sale was sent and its answer did not come: it may have been made. Nothing else is done to the basket until the
   /// sale is confirmed (sent again under the same request id, which the server answers with the sale it made).
   final bool unconfirmed;
+
+  /// #4185 -- the card authorization asked of the terminal for this sale, while its answer is awaited.
+  final TillCardAsked? card;
+
+  /// #4185 -- the terminal's answer was lost: the card is never asked again for this sale; someone who may see the
+  /// finances settles it from the receipts, where the sale is completed once.
+  final bool cardUnknown;
 
   bool get empty => lines.isEmpty;
 
@@ -44,16 +52,36 @@ class TillState {
     problem: problem == null ? this.problem : problem(),
     change: change == null ? this.change : change(),
     unconfirmed: unconfirmed,
+    card: card,
+    cardUnknown: cardUnknown,
   );
+
+  /// The same state with the card asked of the terminal set (null: none asked).
+  TillState withCard(TillCardAsked? asked) =>
+      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: unconfirmed, card: asked, cardUnknown: cardUnknown);
+
+  /// The same state with the terminal's answer marked as lost, or not.
+  TillState withCardUnknown({required bool value}) =>
+      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: unconfirmed, card: card, cardUnknown: value);
 
   /// The same state with the sale marked as waiting to be confirmed, or not.
   TillState withUnconfirmed({required bool value}) =>
-      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: value);
+      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: value, card: card, cardUnknown: cardUnknown);
 }
 
 /// The cash given is less than the total: said by the till itself before anything is sent.
 class TillCashShort implements Exception {
   const TillCashShort();
+}
+
+/// #4185 -- the terminal declined the card: nothing was taken, the sale is still to be paid.
+class TillCardDeclined implements TypedRefusal {
+  const TillCardDeclined();
+}
+
+/// A weighed or counted line was rung up without a quantity above zero: the till asks for the weight first.
+class TillQuantityMissing implements TypedRefusal {
+  const TillQuantityMissing();
 }
 
 /// The server's draft does not describe the basket on the screen: it is not sold.

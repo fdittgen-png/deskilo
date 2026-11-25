@@ -31,7 +31,7 @@ class FeatureSurfaceHeading extends StatelessWidget {
     final theme = Theme.of(context);
     return Padding(
       key: ValueKey('feature-surface-${surface.name}'),
-      padding: const EdgeInsets.fromLTRB(16, 24, 16, 4),
+      padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.xl, AppSpacing.lg, AppSpacing.xs),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -147,7 +147,7 @@ class FeatureTile extends ConsumerWidget {
     final split = splitFeatureDescription(description);
     final held = (value && inactive) || unavailableNote != null;
     return Padding(
-      padding: EdgeInsets.only(left: child ? 24 : 0),
+      padding: EdgeInsets.only(left: child ? AppSpacing.xl : 0),
       child: SwitchListTile(
         key: ValueKey('feature-${entry.feature.name}'),
         // #1190 — 102 of these at roughly 230 px each was thirteen
@@ -254,7 +254,7 @@ class _MoreAboutState extends State<_MoreAbout> {
           onTap: () => setState(() => _open = !_open),
           child: Padding(
             padding: widget.roomy
-                ? const EdgeInsets.symmetric(vertical: 16, horizontal: 12)
+                ? const EdgeInsets.symmetric(vertical: AppSpacing.lg, horizontal: AppSpacing.md)
                 : const EdgeInsets.symmetric(vertical: 2),
             child: Text(
               _open

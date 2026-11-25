@@ -131,7 +131,7 @@ class ContextBubble extends ConsumerWidget {
                   ),
                 if (marks.starred.contains(message.id))
                   Padding(
-                    padding: const EdgeInsets.only(right: 4),
+                    padding: const EdgeInsets.only(right: AppSpacing.xs),
                     child: Icon(
                       Icons.star,
                       key: ValueKey('context-starred-${message.id}'),
@@ -141,7 +141,7 @@ class ContextBubble extends ConsumerWidget {
                   ),
                 if (marks.edited.contains(message.id))
                   Padding(
-                    padding: const EdgeInsets.only(right: 4),
+                    padding: const EdgeInsets.only(right: AppSpacing.xs),
                     child: Text(
                       l10n.messengerEdited,
                       key: ValueKey('context-edited-${message.id}'),
@@ -153,7 +153,7 @@ class ContextBubble extends ConsumerWidget {
                   style: theme.textTheme.labelSmall?.copyWith(color: muted),
                 ),
                 if (mine) ...[
-                  const SizedBox(width: 4),
+                  const SizedBox(width: AppSpacing.xs),
                   Icon(
                     read ? Icons.done_all : Icons.done,
                     key: ValueKey(

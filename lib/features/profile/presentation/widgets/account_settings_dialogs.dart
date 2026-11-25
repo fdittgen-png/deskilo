@@ -175,7 +175,7 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
                 labelText: l10n.workspaceCountryLabel,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               key: const ValueKey('address-vat-id'),
               controller: _vatId,

@@ -73,9 +73,9 @@
       }
     }
   },
-  "tillScanUnknown": "{code} ist nichts, was diese Kasse verkauft.",
+  "tillScanUnknown": "Der Code {code} bezeichnet keinen Artikel. Nichts wurde hinzugefügt.",
   "@tillScanUnknown": {
-    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "description": "#4366 the till",
     "placeholders": {
       "code": {
         "type": "String"
@@ -90,5 +90,78 @@
         "type": "String"
       }
     }
+  },
+  "tillWeighFirst": "Wiegen Sie diesen Artikel zuerst.",
+  "@tillWeighFirst": {
+    "description": "#4366 the till"
+  },
+  "tillWeightTitle": "Gewicht in {unit}",
+  "@tillWeightTitle": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "tillWeightHint": "Das genaue Gewicht der Waage, zum Beispiel 0,350.",
+  "@tillWeightHint": {
+    "description": "#4366 the till"
+  },
+  "tillAgeQuestion": "Dieser Artikel ist für Kundschaft ab {age} Jahren. Ist die Person mindestens {age}?",
+  "@tillAgeQuestion": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillAgeNo": "Nein, nicht verkaufen",
+  "@tillAgeNo": {
+    "description": "#4366 the till"
+  },
+  "tillAgeYes": "Ja, {age} oder älter",
+  "@tillAgeYes": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillAgeConfirmedLine": "Alter {age}+ bestätigt",
+  "@tillAgeConfirmedLine": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDepositLine": "Pfand",
+  "@tillDepositLine": {
+    "description": "#4366 the till"
+  },
+  "tillDepositMissing": "Das Pfand von {name} ist an der Kasse nicht verkäuflich. Nichts wurde hinzugefügt.",
+  "@tillDepositMissing": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tillCategoryAll": "Alle",
+  "@tillCategoryAll": {
+    "description": "#4366 the till"
+  },
+  "tillScanLabel": "Code scannen",
+  "@tillScanLabel": {
+    "description": "#4366 the till"
+  },
+  "tillNotForCounter": "Dieser Artikel ist an der Kasse nicht verkäuflich.",
+  "@tillNotForCounter": {
+    "description": "#4366 the till"
   }
 }

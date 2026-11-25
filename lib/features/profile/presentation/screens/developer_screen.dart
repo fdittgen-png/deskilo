@@ -312,7 +312,7 @@ class _TraceTile extends StatelessWidget {
           visualDensity: VisualDensity.compact,
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.sm),
         Expanded(
           child: Text(
             DateFormat('yyyy-MM-dd HH:mm:ss')
@@ -340,7 +340,7 @@ class _TraceTile extends StatelessWidget {
       children: [
         if (entry.error != null) SelectableText(entry.error!, style: mono),
         if (_stackPreview != null) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           SelectableText(_stackPreview!, style: mono),
         ],
       ],

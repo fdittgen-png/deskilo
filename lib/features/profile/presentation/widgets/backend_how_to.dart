@@ -66,7 +66,7 @@ class BackendHowTo extends ConsumerWidget {
         children: [
           for (var i = 0; i < steps.length; i++)
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

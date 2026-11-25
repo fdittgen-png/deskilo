@@ -237,6 +237,7 @@ void main() {
         'revisions': [
           {
             'revision': 2,
+            'draft_version': 1,
             'status': 'sent',
             'issued_on': '2026-11-01',
             'valid_until': '2026-12-01',

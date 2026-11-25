@@ -20,6 +20,7 @@ import 'package:deskilo_document_model/layout_units.dart';
 import 'package:deskilo_document_model/paper.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_spacing.dart';
 import '../../domain/address_window.dart';
 import '../../domain/invoice_report.dart';
 import 'report_page_style.dart';
@@ -126,7 +127,7 @@ class LayoutPageView extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 8),
+                  padding: const EdgeInsets.only(top: AppSpacing.sm),
                   child: Text(pageOne, style: ReportPage.small),
                 ),
               ),
@@ -291,7 +292,7 @@ class _Box {
                     }),
               ),
       LayoutRule() => Container(
-          margin: const EdgeInsets.symmetric(vertical: 8),
+          margin: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
           height: 2,
           color: ReportPage.accent),
       LayoutSpacer(:final size) => SizedBox(height: size?.resolve(h) ?? 8),
@@ -306,7 +307,7 @@ class _Box {
             for (var i = 0; i < columns.length; i++)
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(left: i == 0 ? 0 : 16),
+                  padding: EdgeInsets.only(left: i == 0 ? 0 : AppSpacing.lg),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,

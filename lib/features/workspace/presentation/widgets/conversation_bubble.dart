@@ -313,7 +313,7 @@ class ConversationBubble extends ConsumerWidget {
                     children: [
                       if (marks.starred.contains(note.id))
                         Padding(
-                          padding: const EdgeInsets.only(right: 4),
+                          padding: const EdgeInsets.only(right: AppSpacing.xs),
                           child: Icon(Icons.star,
                               key: ValueKey('note-starred-${note.id}'),
                               size: 12,
@@ -321,7 +321,7 @@ class ConversationBubble extends ConsumerWidget {
                         ),
                       if (marks.edited.contains(note.id))
                         Padding(
-                          padding: const EdgeInsets.only(right: 4),
+                          padding: const EdgeInsets.only(right: AppSpacing.xs),
                           child: Text(
                             l10n.messengerEdited,
                             key: ValueKey('note-edited-${note.id}'),
@@ -331,7 +331,7 @@ class ConversationBubble extends ConsumerWidget {
                         ),
                       if (note.noForward)
                         Padding(
-                          padding: const EdgeInsets.only(right: 4),
+                          padding: const EdgeInsets.only(right: AppSpacing.xs),
                           child: Icon(Icons.lock_outline,
                               key: ValueKey('note-locked-${note.id}'),
                               size: 12,
@@ -344,7 +344,7 @@ class ConversationBubble extends ConsumerWidget {
                         ),
                       ),
                       if (mine) ...[
-                        const SizedBox(width: 4),
+                        const SizedBox(width: AppSpacing.xs),
                         NoteCheck(note: note, unreadColor: fgMuted),
                       ],
                     ],

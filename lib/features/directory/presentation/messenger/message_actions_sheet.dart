@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/messaging_windows.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -125,7 +126,7 @@ Widget _actionsBody(
       children: [
         if (!message.isNotice)
           Padding(
-            padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
+            padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, AppSpacing.xs),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

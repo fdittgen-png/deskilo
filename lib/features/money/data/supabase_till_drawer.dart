@@ -1,12 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/till_day.dart';
 import '../domain/till_drawer.dart';
 
 /// #4367 -- the till sessions' commands and the table reads behind the port. A refusal is thrown as the server sent it
 /// (`knownRefusalText` and the drawer's own words read its code and reason); an answer of the wrong shape throws.
+/// The table of the till sessions, read by this file and by the counter's book.
+const String counterTillSessionsTable = 'counter_till_sessions';
+
 class SupabaseTillDrawer implements TillDrawerPort {
   SupabaseTillDrawer(this._client);
 
@@ -24,11 +28,10 @@ class SupabaseTillDrawer implements TillDrawerPort {
   @override
   Future<List<DrawerTill>> tills(String workspaceId) async {
     final tills = await _client.from('counter_tills').select('id, name, active, site_id').eq('workspace_id', workspaceId).order('name', ascending: true);
-    final sessions = await _client
-        .from('counter_till_sessions')
-        .select('id, till_id, float_minor, opened_by_member_id')
-        .eq('workspace_id', workspaceId)
-        .eq('state', 'open');
+    final sessions = await fetchAllPages(
+      table: counterTillSessionsTable,
+      build: () => _client.from(counterTillSessionsTable).select('id, till_id, float_minor, opened_by_member_id').eq('workspace_id', workspaceId).eq('state', 'open').order('id', ascending: true),
+    );
     final open = {for (final s in sessions.map(drawerSessionFromRow)) s.tillId: s};
     return [
       for (final t in tills) DrawerTill.fromJson(t, session: open[(t as Map)['id']]),

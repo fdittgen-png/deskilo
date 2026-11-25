@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_radius.dart';
+import '../../../core/theme/app_spacing.dart';
 
 /// A workspace on the map: a pill with its name. The selected one grows,
 /// takes the accent and points at its place; the others stay quiet.
@@ -51,8 +52,8 @@ class DirectoryMapPin extends StatelessWidget {
                 onTap: onTap,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
+                    horizontal: AppSpacing.md,
+                    vertical: AppSpacing.sm,
                   ),
                   child: Text(
                     name,

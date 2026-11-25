@@ -76,7 +76,7 @@ class BillingParty {
     final capacity = r.stringOrNull('capacity');
     return BillingParty(
       subjectId: r.string('subject_id'),
-      revision: r.intOrNull('revision') ?? 1,
+      revision: r.integer('revision'),
       status: r.stringOr('status', 'customer'),
       capacity: capacity == 'business' || capacity == 'consumer'
           ? capacity

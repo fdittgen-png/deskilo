@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/app_snack.dart';
 import '../providers/sales_tax_providers.dart';
 import 'invoice_actions.dart';
@@ -57,7 +58,7 @@ class SalesTaxWorksheetButton extends ConsumerWidget {
     final workspace = salesTaxWorkspace(ref);
     if (workspace == null) return const SizedBox.shrink();
     return Padding(
-      padding: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.only(top: AppSpacing.sm),
       child: Align(
         alignment: AlignmentDirectional.centerStart,
         child: OutlinedButton.icon(

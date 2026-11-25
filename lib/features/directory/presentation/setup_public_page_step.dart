@@ -29,6 +29,7 @@ import '../../../core/ui/setup_step_layout.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/dictionary_labels.dart';
 import '../domain/public_workspace.dart';
+import '../domain/publication_draft.dart';
 import '../providers/directory_providers.dart';
 import '../providers/discovery_listing_providers.dart';
 
@@ -57,9 +58,9 @@ class SetupPublicPageStep extends ConsumerStatefulWidget {
 }
 
 class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
-  late Future<Map<String, Object?>> _read = _readPage();
+  late Future<OwnPublicPage> _read = _readPage();
 
-  Future<Map<String, Object?>> _readPage() =>
+  Future<OwnPublicPage> _readPage() =>
       ref.read(publicationActionsProvider).ownPage(widget.workspaceId);
   final _controllers = {
     for (final field in _edited) field: TextEditingController(),
@@ -67,9 +68,10 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
   final _published = ValueNotifier<bool>(false);
   final _busy = ValueNotifier<bool>(false);
 
-  /// The document as last read or saved, and the inherited fields that
-  /// still follow the workspace information.
-  Map<String, Object?>? _document;
+  /// The page as last read or saved, the name it stores, and the
+  /// inherited fields that still follow the workspace information.
+  PublicationDraft? _stored;
+  String? _name;
   Set<String> _following = const {};
 
   /// Whether the page was published when last read or saved.
@@ -89,7 +91,7 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
       for (final field in _edited) {
         _controllers[field]!.text = switch (answers?[field]) {
           final String typed => typed,
-          _ => _document?[field] as String? ?? '',
+          _ => _stored?.text(field) ?? '',
         };
       }
     },
@@ -105,30 +107,28 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
     super.dispose();
   }
 
-  void _prefill(Map<String, Object?> page) {
-    if (_document != null) return;
-    final doc = Map<String, Object?>.from(page['document'] as Map);
-    _document = doc;
-    _following = publicFollowing(page);
-    _published.value = _storedPublished = page['published'] == true;
+  void _prefill(OwnPublicPage page) {
+    if (_stored != null) return;
+    _stored = page.draft;
+    _name = page.name;
+    _following = page.following;
+    _published.value = _storedPublished = page.published;
     for (final field in _edited) {
-      _controllers[field]!.text = doc[field] as String? ?? '';
+      _controllers[field]!.text = page.draft.text(field) ?? '';
     }
   }
 
   Future<void> _save() async {
     final l10n = context.l10n;
-    final stored = _document ?? const <String, Object?>{};
+    final stored = _stored ?? const PublicationDraft();
     final changed = {
       for (final field in _edited)
-        if (_controllers[field]!.text.trim() != (stored[field] ?? '')) field,
+        if (_controllers[field]!.text.trim() != (stored.text(field) ?? '')) field,
     };
-    final document = PublicationDraft.fromPage({'document': stored}).patch({
-      for (final field in _edited) field: _controllers[field]!.text.trim(),
-    });
+    final document = stored.diff(stored.copyWith(texts: _typed()));
     final following = _following.difference(changed);
     _busy.value = true;
-    Map<String, Object?>? saved;
+    PublicWorkspace? saved;
     final ok = await runGuarded(
       context,
       domain: 'directory',
@@ -146,7 +146,11 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
     if (!mounted) return;
     _busy.value = false;
     if (!ok) return;
-    _document = saved ?? _document;
+    final answer = saved;
+    if (answer != null) {
+      _stored = PublicationDraft.fromDocument(answer.document);
+      _name = storedPageName(answer);
+    }
     _following = following;
     _storedPublished = _published.value;
     ref.invalidate(discoveryListingProvider);
@@ -155,7 +159,7 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
   }
 
   @override
-  Widget build(BuildContext context) => FutureBuilder<Map<String, Object?>>(
+  Widget build(BuildContext context) => FutureBuilder<OwnPublicPage>(
     future: _read,
     builder: (context, snapshot) {
       if (snapshot.hasError) {
@@ -176,18 +180,21 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
         preview: ListenableBuilder(
           listenable: Listenable.merge([_published, ..._controllers.values]),
           builder: (context, _) => _Preview(
-            name: _document?['name'] as String? ?? widget.workspaceName,
-            document: {
-              ...?_document,
-              for (final field in _edited)
-                field: _controllers[field]!.text.trim(),
-            },
+            name: _name ?? widget.workspaceName,
+            draft: (_stored ?? const PublicationDraft()).copyWith(
+              texts: _typed(),
+            ),
             published: _published.value,
           ),
         ),
       );
     },
   );
+
+  /// What the owner typed in the fields of this step.
+  Map<String, String> _typed() => {
+    for (final field in _edited) field: _controllers[field]!.text.trim(),
+  };
 
   Widget _form(BuildContext context) {
     final l10n = context.l10n;
@@ -262,16 +269,15 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
 class _Preview extends StatelessWidget {
   const _Preview({
     required this.name,
-    required this.document,
+    required this.draft,
     required this.published,
   });
 
   final String name;
-  final Map<String, Object?> document;
+  final PublicationDraft draft;
   final bool published;
 
-  String _text(String field) =>
-      document[field] is String ? document[field] as String : '';
+  String _text(String field) => draft.text(field) ?? '';
 
   static String _host(AppLocalizations l10n, String type) => switch (type) {
     'association' => l10n.portalAssociation,
@@ -300,7 +306,7 @@ class _Preview extends StatelessWidget {
         ),
         Padding(
           padding: AppSpacing.smAll,
-          child: Text(_host(l10n, _text('host_type'))),
+          child: Text(_host(l10n, draft.hostType ?? '')),
         ),
         for (final field in _edited)
           if (_text(field).isNotEmpty)

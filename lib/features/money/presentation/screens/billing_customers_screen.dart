@@ -14,6 +14,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -91,7 +92,7 @@ class _BillingCustomersScreenState
           ? const SizedBox.shrink()
           : Center(
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 720),
+                constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
                 child: _body(context, workspace.id, canManage, open),
               ),
             ),

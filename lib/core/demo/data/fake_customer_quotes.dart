@@ -422,7 +422,7 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
     final q = _find(workspaceId, quoteId);
     final invoice = q.invoiceId;
     if (invoice != null) {
-      return QuoteConverted(invoiceId: invoice, number: q.invoiceNumber ?? '', replayed: true);
+      return QuoteConverted(invoiceId: invoice, number: q.invoiceNumber, replayed: true);
     }
     if (q.status != QuoteStatus.accepted) throw const QuoteRefusal(QuoteRefusalKind.state);
     final commands = invoicing;
@@ -441,7 +441,7 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
       ..status = QuoteStatus.converted
       ..invoiceId = 'demo-quote-invoice-${q.id}'
       ..invoiceNumber = 'INV-${(_invoice++).toString().padLeft(4, '0')}';
-    return QuoteConverted(invoiceId: q.invoiceId!, number: q.invoiceNumber!, replayed: false);
+    return QuoteConverted(invoiceId: q.invoiceId!, number: q.invoiceNumber, replayed: false);
   }
 
   @override

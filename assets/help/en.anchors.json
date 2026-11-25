@@ -142,6 +142,7 @@
   "user.money.till": "Till",
   "user.money.till-drawer": "Open the till, count and close it",
   "user.money.till-offline": "When the till is offline",
+  "user.money.till.receipts": "Receipts and card answers at the till",
   "user.money.stock.rfid": "RFID tags: one per batch or one per piece",
   "user.money.stock.units": "Handling units",
   "user.money.stock.expiry": "The expiry report",

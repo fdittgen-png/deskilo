@@ -313,5 +313,25 @@
   "itemGroupFailed": "The item groups could not be read.",
   "@itemGroupFailed": {
     "description": "#4361 G12 item groups: itemGroupFailed"
+  },
+  "itemGroupTillCategory": "Till category",
+  "@itemGroupTillCategory": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupKeyColour": "Quick-key colour (#rrggbb)",
+  "@itemGroupKeyColour": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositItem": "Deposit item",
+  "@itemGroupDepositItem": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositAmount": "Deposit amount (minor units)",
+  "@itemGroupDepositAmount": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupLabelTemplate": "Label template",
+  "@itemGroupLabelTemplate": {
+    "description": "#4366 item groups: the till parameters"
   }
 }

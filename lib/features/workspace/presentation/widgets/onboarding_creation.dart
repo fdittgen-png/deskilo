@@ -6,6 +6,7 @@ import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/i18n/time_zone_picker.dart';
 import '../../../../core/i18n/time_zones.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/currency_field.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -241,7 +242,7 @@ class PlaceFields extends ConsumerWidget {
               onChanged: field.didChange,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           // The zone is picked from the IANA database the clock installs from
           // (search by city or zone id), never typed (#3563).
           TextFormField(
@@ -265,7 +266,7 @@ class PlaceFields extends ConsumerWidget {
                 ? null
                 : (l10n.workspaceTimezoneUnknown),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
       ],
     );
   }

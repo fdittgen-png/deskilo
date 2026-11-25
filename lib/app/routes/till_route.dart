@@ -19,6 +19,7 @@ import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../route_access.dart';
 import '../route_env.dart';
+import 'counter_receipts_route.dart';
 
 @visibleForTesting
 class TillRoute extends ConsumerWidget {
@@ -34,7 +35,21 @@ class TillRoute extends ConsumerWidget {
         ? const AsyncValue<List<TillKey>>.loading()
         : ref
               .watch(stockItemsProvider(workspaceId))
-              .whenData((items) => [for (final i in items) if (i.active) TillKey(id: i.id, name: i.name, unit: i.unit, grossMinor: prices[i.id])]);
+              .whenData((items) => [
+                for (final i in items)
+                  if (i.active)
+                    TillKey(
+                      id: i.id,
+                      name: i.name,
+                      unit: i.unit,
+                      grossMinor: prices[i.id],
+                      category: i.tillCategory,
+                      colour: i.quickKeyColour,
+                      minAge: i.minAge,
+                      weighed: i.soldByWeight,
+                      depositItemId: i.depositItemId,
+                    ),
+              ]);
     return TillScreen(
       workspaceId: workspaceId,
       currency: workspace?.currencyCode ?? '',
@@ -90,6 +105,10 @@ List<RouteBase> tillRoutes(RouteEnv env) => [
         const RouteAccess(features: [WorkspaceFeature.counterReceipts], to: '/money'),
       ),
       builder: (context, state) => const TillRoute(),
+      routes: [
+        // #4185 — the receipts the till made: share, correct, give back, take back, settle a card answer.
+        GoRoute(path: 'receipts', builder: (context, state) => const CounterReceiptsRoute()),
+      ],
     ),
     // #4367 — the cash drawer of the tills: open with a float, cash in and out, count and close.
     GoRoute(

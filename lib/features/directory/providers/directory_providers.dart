@@ -10,6 +10,7 @@ import '../data/supabase_account_contact_repository.dart';
 import '../data/supabase_directory_participant_repository.dart';
 import '../data/supabase_public_discovery_repository.dart';
 import '../data/supabase_publication_repository.dart';
+import '../domain/account_rows_from_json.dart';
 import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
 
@@ -96,14 +97,17 @@ Future<bool> adminVisibility(Ref ref, String workspace) =>
 Future<bool> employmentStatus(Ref ref, String member) =>
     ref.watch(accountContactRepositoryProvider()).employment(member);
 @riverpod
-Future<List<Map<String, dynamic>>> accountContacts(
+Future<List<AccountPersonRow>> accountContacts(
   Ref ref,
   String query, {
   String source = '',
   String? before,
-}) => ref
-    .watch(accountContactRepositoryProvider(source: source))
-    .search(query, before: before);
+}) async => [
+  for (final row in await ref
+      .watch(accountContactRepositoryProvider(source: source))
+      .search(query, before: before))
+    AccountPersonRow(row),
+];
 /// Who I can write to, by shared workspace.
 @riverpod
 Future<List<ReachablePerson>> reachablePeople(
@@ -113,14 +117,17 @@ Future<List<ReachablePerson>> reachablePeople(
     .watch(accountContactRepositoryProvider(source: source))
     .reachablePeople();
 @riverpod
-Future<List<Map<String, dynamic>>> accountConversations(
+Future<List<AccountConversationRow>> accountConversations(
   Ref ref, {
   String source = '',
   DateTime? beforeAt,
   String? beforeId,
-}) => ref
-    .watch(accountContactRepositoryProvider(source: source))
-    .conversations(beforeAt: beforeAt, beforeId: beforeId);
+}) async => [
+  for (final row in await ref
+      .watch(accountContactRepositoryProvider(source: source))
+      .conversations(beforeAt: beforeAt, beforeId: beforeId))
+    AccountConversationRow(row),
+];
 @riverpod
 Future<List<Map<String, dynamic>>> accountMessages(
   Ref ref,

@@ -2,12 +2,14 @@
 //
 // #4366 -- taking cash: the amount the customer gave, "exact" for the total, the change said by the till. Answers the
 // amount in minor units, or null when it was cancelled.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show Currencies;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/ui/form_kit.dart';
+import '../domain/till_quantity.dart';
 
 /// Asks the cash given for [totalMinor] of [currency]; a typed amount that is not a number is said under its field.
 Future<int?> showTillCashDialog(BuildContext context, {required int totalMinor, required String currency}) =>
@@ -74,6 +76,20 @@ class _CashDialogState extends State<_CashDialog> {
                 onPressed: () => Navigator.of(context).pop(widget.totalMinor),
                 child: Text(l10n.tillCashExact),
               ),
+            ),
+            // the notes a customer may hand over, worked out from the currency's own decimals
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final amount in tillCashSuggestions(widget.totalMinor, minorDigits: Currencies.minorDigits(widget.currency)))
+                  if (amount != widget.totalMinor)
+                    ActionChip(
+                      key: ValueKey('till-cash-note-$amount'),
+                      label: Text(money.formatMinor(amount)),
+                      onPressed: () => Navigator.of(context).pop(amount),
+                    ),
+              ],
             ),
           ],
         ),

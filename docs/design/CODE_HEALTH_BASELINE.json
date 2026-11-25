@@ -9,6 +9,8 @@
 
       "lib/core/backend/secondary_federation.dart": 528,
 
+      "lib/core/demo/data/demo_till.dart": 654,
+
       "lib/core/demo/data/messenger_repository.dart": 590,
 
       "lib/core/demo/data/money_repository.dart": 522,
@@ -54,6 +56,8 @@
       "lib/features/reservations/presentation/reserve_seat_actions.dart": 834,
 
       "lib/features/reservations/presentation/widgets/booking_sheet.dart": 644,
+
+      "lib/features/stock/presentation/item_group_sheet.dart": 544,
 
       "lib/features/task_recorder/application/recorder_controller.dart": 548,
 
@@ -138,7 +142,7 @@
 
       "lib/features/money/presentation/screens/vat_screen.dart": 7,
 
-      "lib/features/money/presentation/standalone/standalone_invoice_screen.dart": 10,
+      "lib/features/money/presentation/standalone/standalone_invoice_screen.dart": 8,
 
       "lib/features/money/presentation/widgets/billing_rules_dialog.dart": 6,
 
@@ -645,17 +649,371 @@
 
       "lib/features/money/presentation/till_drawer/till_drawer_screen.dart": 1,
 
+      "lib/features/money/presentation/till_screen.dart": 1
+    },
+    "rawInsets": {
+      "lib/app/shell/shell_swipe_coach_mark.dart": 1,
+
+      "lib/features/auth/presentation/widgets/badge_sign_in_sheet.dart": 1,
+
+      "lib/features/calendar/presentation/screens/calendar_screen.dart": 1,
+
+      "lib/features/calendar/presentation/widgets/calendar_feed.dart": 1,
+
+      "lib/features/calendar/presentation/widgets/calendar_month_grid.dart": 1,
+
+      "lib/features/calendar/presentation/widgets/calendar_week_strip.dart": 2,
+
+      "lib/features/calendar/presentation/widgets/day_timeline_axis.dart": 1,
+
+      "lib/features/directory/presentation/directory_map.dart": 2,
+
+      "lib/features/directory/presentation/messenger/environment_pill.dart": 1,
+
+      "lib/features/directory/presentation/messenger/message_actions_sheet.dart": 1,
+
+      "lib/features/directory/presentation/messenger/reaction_strip.dart": 1,
+
+      "lib/features/events/presentation/screens/events_screen.dart": 1,
+
+      "lib/features/events/presentation/widgets/validation_policy_card.dart": 1,
+
+      "lib/features/events/presentation/widgets/validation_trail.dart": 2,
+
+      "lib/features/me/presentation/me_personal_shell.dart": 1,
+
+      "lib/features/me/presentation/public_profile_tile.dart": 1,
+
+      "lib/features/members/presentation/screens/directory_screen.dart": 1,
+
+      "lib/features/members/presentation/widgets/directory_chips.dart": 1,
+
+      "lib/features/members/presentation/widgets/directory_member_row.dart": 2,
+
+      "lib/features/members/presentation/widgets/member_contact_card.dart": 2,
+
+      "lib/features/members/presentation/widgets/member_header_cards.dart": 1,
+
+      "lib/features/members/presentation/widgets/member_money_card.dart": 3,
+
+      "lib/features/money/presentation/screens/customer_quote_editor_screen.dart": 1,
+
+      "lib/features/money/presentation/screens/invoices_screen.dart": 1,
+
+      "lib/features/money/presentation/screens/money_online_payment.dart": 1,
+
+      "lib/features/money/presentation/standalone/standalone_invoice_screen.dart": 5,
+
+      "lib/features/money/presentation/standalone/standalone_line_form.dart": 1,
+
+      "lib/features/money/presentation/till_drawer/cash_entry_sheet.dart": 1,
+
+      "lib/features/money/presentation/till_drawer/drawer_inputs.dart": 1,
+
+      "lib/features/money/presentation/widgets/account_card.dart": 1,
+
+      "lib/features/money/presentation/widgets/bill_view_cards.dart": 1,
+
+      "lib/features/money/presentation/widgets/billing_editor_sections.dart": 1,
+
+      "lib/features/money/presentation/widgets/dev_label.dart": 1,
+
+      "lib/features/money/presentation/widgets/finance_document_views.dart": 1,
+
+      "lib/features/money/presentation/widgets/invoice_detail_sections.dart": 2,
+
+      "lib/features/money/presentation/widgets/invoice_preview_body.dart": 2,
+
+      "lib/features/money/presentation/widgets/invoice_process_sheet.dart": 2,
+
+      "lib/features/money/presentation/widgets/report_layout_preview.dart": 2,
+
+      "lib/features/money/presentation/widgets/report_markup_guide.dart": 1,
+
+      "lib/features/money/presentation/widgets/report_preview.dart": 2,
+
+      "lib/features/money/presentation/widgets/report_template_toolbar.dart": 3,
+
+      "lib/features/money/presentation/widgets/report_visual_editor.dart": 6,
+
+      "lib/features/money/presentation/widgets/report_visual_editor_actions.dart": 3,
+
+      "lib/features/money/presentation/widgets/usage_face.dart": 2,
+
+      "lib/features/reservations/presentation/widgets/booking_controls.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/booking_sheet.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/month_grid.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/place_feedback_bar.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/seat_legend.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/seat_list_view.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/space_act_form.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/week_grid_cells.dart": 1,
+
+      "lib/features/stock/presentation/item_group_sheet.dart": 2,
+
+      "lib/features/stock/presentation/item_groups_screen.dart": 1,
+
+      "lib/features/stock/presentation/purchase_order_putaway.dart": 1,
+
+      "lib/features/stock/presentation/stock_item_add.dart": 2,
+
+      "lib/features/task_recorder/presentation/guide_host/guide_bubble.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/conversation_day_separator.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/feature_maturity_badge.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/feature_tile.dart": 5,
+
+      "lib/features/workspace/presentation/widgets/invitation_join_panel.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/member_note_body.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/member_note_composer.dart": 2,
+
+      "lib/features/workspace/presentation/widgets/ref_picker_filters_panel.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/setup_week_strip.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/workspace_avatar.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/workspace_emblem.dart": 1
+    },
+    "rawGap": {
+      "lib/app/boot_splash.dart": 1,
+
+      "lib/app/shell/shell_bottom_bar.dart": 1,
+
+      "lib/app/shell/shell_swipe_coach_mark.dart": 2,
+
+      "lib/features/auth/presentation/widgets/badge_pin_tile.dart": 2,
+
+      "lib/features/auth/presentation/widgets/badge_sign_in_sheet.dart": 1,
+
+      "lib/features/calendar/presentation/screens/calendar_screen.dart": 1,
+
+      "lib/features/calendar/presentation/widgets/day_timeline_cells.dart": 1,
+
+      "lib/features/calendar/presentation/widgets/month_day_picker.dart": 1,
+
+      "lib/features/directory/presentation/directory_carousel.dart": 1,
+
+      "lib/features/editor/presentation/widgets/editor_toolbar.dart": 1,
+
+      "lib/features/events/presentation/widgets/validation_policy_card.dart": 1,
+
+      "lib/features/me/presentation/me_home_tab.dart": 1,
+
+      "lib/features/me/presentation/space_row_controls.dart": 3,
+
+      "lib/features/members/presentation/widgets/directory_chips.dart": 1,
+
+      "lib/features/money/presentation/standalone/standalone_invoice_screen.dart": 1,
+
+      "lib/features/money/presentation/standalone/standalone_line_form.dart": 1,
+
+      "lib/features/money/presentation/till_drawer/drawer_inputs.dart": 1,
+
+      "lib/features/money/presentation/widgets/bill_view_cards.dart": 2,
+
+      "lib/features/money/presentation/widgets/billing_band_row.dart": 1,
+
+      "lib/features/money/presentation/widgets/dev_label.dart": 1,
+
+      "lib/features/money/presentation/widgets/expense_schedule_sheet.dart": 1,
+
+      "lib/features/money/presentation/widgets/invoice_detail_sections.dart": 1,
+
+      "lib/features/money/presentation/widgets/invoice_journey_view.dart": 1,
+
+      "lib/features/money/presentation/widgets/statement_desk.dart": 1,
+
+      "lib/features/money/presentation/widgets/usage_face.dart": 1,
+
+      "lib/features/profile/presentation/widgets/backend_how_to.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/place_feedback_bar.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/seat_legend.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/space_act_form.dart": 2,
+
+      "lib/features/reservations/presentation/widgets/space_scan_sheet.dart": 1,
+
+      "lib/features/stock/presentation/stock_item_editor.dart": 2,
+
+      "lib/features/stock/presentation/stock_nfc_button.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/bi_share_chart.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/conversation_bubble.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/ref_picker_filters_panel.dart": 1
+    },
+    "rawDurationMs": {
+      "lib/app/shell/shell_bar_visibility.dart": 1,
+
+      "lib/app/shell/shell_swipe_coach_mark.dart": 1,
+
+      "lib/app/shell/space_entry.dart": 1,
+
+      "lib/features/directory/presentation/directory_carousel.dart": 1,
+
+      "lib/features/directory/presentation/directory_map.dart": 1,
+
+      "lib/features/directory/presentation/directory_map_pins.dart": 1,
+
+      "lib/features/editor/presentation/widgets/space_properties_sheet.dart": 1,
+
+      "lib/features/search/presentation/search_palette.dart": 1,
+
+      "lib/features/stock/presentation/stock_bulk_read_sheet.dart": 1,
+
+      "lib/features/stock/presentation/stock_camera_scan.dart": 1,
+
+      "lib/features/task_recorder/presentation/guide_host/guide_attention.dart": 2,
+
+      "lib/features/task_recorder/presentation/guide_host/guide_host.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/conversation_thread.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/template_gallery.dart": 1
+    },
+    "rawElevation": {
+      "lib/app/shell/shell_swipe_coach_mark.dart": 1,
+
+      "lib/features/directory/presentation/directory_map_notices.dart": 1,
+
+      "lib/features/directory/presentation/directory_screen.dart": 2,
+
+      "lib/features/directory/presentation/messenger/recipient_typeahead.dart": 1,
+
+      "lib/features/me/presentation/me_spaces_list.dart": 1,
+
+      "lib/features/money/presentation/screens/billing_screen.dart": 1,
+
+      "lib/features/money/presentation/widgets/finance_selection_bar.dart": 1,
+
+      "lib/features/money/presentation/widgets/report_preview.dart": 1,
+
+      "lib/features/money/presentation/widgets/service_sheet.dart": 1,
+
+      "lib/features/profile/presentation/screens/consent_screen.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/booking_controls.dart": 1,
+
+      "lib/features/task_recorder/presentation/guide_host/guide_bubble.dart": 1,
+
+      "lib/features/task_recorder/presentation/guide_host/guide_bubble_menu.dart": 1,
+
+      "lib/features/task_recorder/presentation/guide_host/guide_host.dart": 1,
+
+      "lib/features/task_recorder/presentation/widgets/recording_indicator.dart": 2,
+
+      "lib/features/workspace/presentation/widgets/setup_choices_bar.dart": 1
+    },
+    "rawAlpha": {
+      "lib/app/desk_calendar/desk_day_grid.dart": 1,
+
+      "lib/app/desk_calendar/desk_month_grid.dart": 2,
+
+      "lib/app/desk_calendar/desk_week_grid.dart": 2,
+
+      "lib/app/shell/shell_bottom_bar.dart": 3,
+
+      "lib/app/shell/shell_swipe_coach_mark.dart": 1,
+
+      "lib/features/calendar/presentation/screens/calendar_screen.dart": 1,
+
+      "lib/features/calendar/presentation/widgets/calendar_item_row.dart": 1,
+
+      "lib/features/calendar/presentation/widgets/day_timeline_axis.dart": 1,
+
+      "lib/features/calendar/presentation/widgets/day_timeline_cells.dart": 4,
+
+      "lib/features/directory/presentation/directory_map_pins.dart": 1,
+
+      "lib/features/members/presentation/widgets/directory_member_row.dart": 1,
+
+      "lib/features/plan/presentation/widgets/drop_target_paint.dart": 1,
+
+      "lib/features/plan/presentation/widgets/floor_plan_chrome_layers.dart": 3,
+
+      "lib/features/plan/presentation/widgets/floor_plan_space_layers.dart": 8,
+
+      "lib/features/plan/presentation/widgets/plan_decor_paint.dart": 1,
+
+      "lib/features/plan/presentation/widgets/plan_paint_helpers.dart": 2,
+
+      "lib/features/reservations/presentation/widgets/month_grid.dart": 2,
+
+      "lib/features/reservations/presentation/widgets/seat_list_view.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/week_grid.dart": 2,
+
+      "lib/features/reservations/presentation/widgets/week_grid_cells.dart": 2,
+
+      "lib/features/task_recorder/presentation/guide_host/guide_attention.dart": 3,
+
+      "lib/features/workspace/presentation/widgets/bi_charts.dart": 4
+    },
+    "rawMaxWidth": {
+      "lib/features/auth/presentation/screens/auth_screen.dart": 1,
+
+      "lib/features/directory/presentation/messenger/starred_messages_screen.dart": 1,
+
+      "lib/features/directory/presentation/messenger/unified_inbox_view.dart": 1,
+
+      "lib/features/kiosk/presentation/screens/kiosk_gate_screen.dart": 1,
+
+      "lib/features/me/presentation/me_home_tab.dart": 1,
+
+      "lib/features/me/presentation/public_person_screen.dart": 1,
+
+      "lib/features/members/presentation/screens/managed_profile_screen.dart": 1,
+
+      "lib/features/members/presentation/screens/member_page.dart": 1,
+
+      "lib/features/money/presentation/screens/my_payment_terms_screen.dart": 1,
+
+      "lib/features/money/presentation/till_drawer/day_report_view.dart": 1,
+
+      "lib/features/money/presentation/till_drawer/till_day_screen.dart": 1,
+
+      "lib/features/money/presentation/till_drawer/till_drawer_screen.dart": 1,
+
       "lib/features/money/presentation/till_screen.dart": 1,
 
-      "lib/features/stock/presentation/stock_chain_section.dart": 1,
+      "lib/features/money/presentation/widgets/report_layout_preview_dialog.dart": 1,
 
-      "lib/features/stock/presentation/stock_cycle_counts_screen.dart": 1,
+      "lib/features/money/presentation/widgets/report_preview.dart": 1,
 
-      "lib/features/stock/presentation/stock_document_goods_block.dart": 1,
+      "lib/features/profile/presentation/screens/personal_info_screen.dart": 1,
 
-      "lib/features/stock/presentation/stock_first_run.dart": 2,
+      "lib/features/reservations/presentation/widgets/booking_controls.dart": 1,
 
-      "lib/features/stock/presentation/stock_screen.dart": 2
+      "lib/features/stock/presentation/stock_bulk_read_sheet.dart": 1,
+
+      "lib/features/stock/presentation/stock_first_run.dart": 1,
+
+      "lib/features/stock/presentation/stock_screen.dart": 1,
+
+      "lib/features/stock/presentation/stock_where_is_screen.dart": 1,
+
+      "lib/features/task_recorder/presentation/guide_host/guide_host.dart": 1,
+
+      "lib/features/workspace/presentation/screens/onboarding_screen.dart": 1,
+
+      "lib/features/workspace/presentation/screens/pending_approval_screen.dart": 1,
+
+      "lib/features/workspace/presentation/widgets/bi_charts.dart": 1
     }
   },
   "functions": [
@@ -720,7 +1078,7 @@
     {"id":"lib/features/directory/presentation/messenger/account_group_sheet.dart#_GroupSheet.build(BuildContext context,WidgetRef ref)","cog":37,"cyc":31,"len":164,"params":2},
     {"id":"lib/features/directory/presentation/messenger/context_bubble.dart#ContextBubble.build(BuildContext context,WidgetRef ref)","cog":26,"cyc":22,"len":151,"params":2},
     {"id":"lib/features/directory/presentation/messenger/message_actions_sheet.dart#showMessageActions(BuildContext context,WidgetRef ref,MessageRef message,{bool forwarding,Future<void> Function()? onDelete,VoidCallback? onChanged,VoidCallback? onInfo})","cog":2,"cyc":3,"len":39,"params":7},
-    {"id":"lib/features/directory/presentation/public_page_editor.dart#_EditorState.build(BuildContext context)","cog":38,"cyc":23,"len":104,"params":1},
+    {"id":"lib/features/directory/presentation/public_page_editor.dart#_EditorState.build(BuildContext context)","cog":38,"cyc":23,"len":103,"params":1},
     {"id":"lib/features/editor/presentation/screens/editor_screen.dart#_LevelList.build(BuildContext context,WidgetRef ref)","cog":20,"cyc":10,"len":150,"params":2},
     {"id":"lib/features/editor/presentation/widgets/seat_properties_sheet.dart#showSeatPropertiesSheet(BuildContext context,WidgetRef ref,{required String levelId,required FloorPlan plan,required Seat seat})","cog":46,"cyc":21,"len":246,"params":5},
     {"id":"lib/features/editor/presentation/widgets/space_properties_sheet.dart#showSpacePropertiesSheet(BuildContext context,{required String title,required String nameLabel,required String name,required bool bookable,required int priceCents,required String keyPrefix})","cog":6,"cyc":6,"len":103,"params":7},

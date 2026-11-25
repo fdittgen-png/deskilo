@@ -4,7 +4,7 @@
 #   lib/features/stock/** -- the stock lane (StockRefusal);
 #   lib/features/money/**/*till*, *counter* -- the till lane;
 #   customer_quote_editor_screen, standalone_invoice_screen, standalone_line_form -- the document composer lane.
-# total 948 in 167 files
+# total 944 in 166 files
 1 lib/core/demo/presentation/demo_setup_card.dart
 3 lib/features/auth/presentation/screens/linked_accounts_screen.dart
 2 lib/features/calendar/presentation/screens/calendar_screen.dart
@@ -15,8 +15,7 @@
 11 lib/features/directory/presentation/messenger/message_history_sheet.dart
 5 lib/features/directory/presentation/messenger/unified_inbox_view.dart
 9 lib/features/directory/presentation/public_facet_labels.dart
-2 lib/features/directory/presentation/public_facets_editor.dart
-5 lib/features/directory/presentation/public_page_editor.dart
+4 lib/features/directory/presentation/public_page_editor.dart
 1 lib/features/directory/presentation/public_profile_facts.dart
 3 lib/features/directory/presentation/public_workspace_view.dart
 9 lib/features/directory/presentation/setup_public_page_step.dart
@@ -111,7 +110,7 @@
 3 lib/features/reservations/presentation/widgets/booking_range_text.dart
 1 lib/features/stock/presentation/item_group_assign_dialog.dart
 1 lib/features/stock/presentation/item_group_sheet.dart
-34 lib/features/stock/presentation/item_group_text.dart
+33 lib/features/stock/presentation/item_group_text.dart
 10 lib/features/stock/presentation/purchase_order_putaway.dart
 10 lib/features/stock/presentation/stock_chain_section.dart
 1 lib/features/stock/presentation/stock_item_editor.dart

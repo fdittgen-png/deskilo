@@ -26,15 +26,13 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../application/issue_standalone_invoice.dart';
-import '../../domain/invoice_goods.dart';
 import '../../domain/standalone_invoice.dart';
 import '../../providers/business_day_provider.dart';
-import '../../providers/line_units_provider.dart';
 import '../../providers/money_providers.dart'
-    show invoicingBusinessProvider, memberLabelsProvider, vatRatesProvider;
+    show invoicingBusinessProvider, memberLabelsProvider;
 import '../../providers/standalone_invoice_providers.dart';
 import '../invoicing/invoicing_customer_actions.dart' show invoicesPath;
-import 'standalone_line_form.dart';
+import 'document_composer.dart';
 import 'standalone_missing_text.dart';
 
 class StandaloneInvoiceScreen extends ConsumerStatefulWidget {
@@ -45,12 +43,7 @@ class StandaloneInvoiceScreen extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<StandaloneInvoiceScreen> {
-  final _reference = TextEditingController();
-  final _order = TextEditingController();
-  final List<StandaloneLineForm> _lines = [StandaloneLineForm()];
-  String? _customer;
-  DateTime? _serviceDate;
-  DateTime? _dueOn;
+  final _doc = CommercialDocumentDraft();
 
   StandaloneSaved? _saved;
   StandalonePreview? _preview;
@@ -64,11 +57,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
 
   @override
   void dispose() {
-    _reference.dispose();
-    _order.dispose();
-    for (final l in _lines) {
-      l.dispose();
-    }
+    _doc.dispose();
     super.dispose();
   }
 
@@ -80,14 +69,14 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
     _refused = false;
   });
 
-  DateTime _service(DateTime today) => _serviceDate ?? today;
+  DateTime _service(DateTime today) => _doc.startDate ?? today;
 
   /// The due date proposed until a person sets one: the registered default term.
   DateTime _due(DateTime today) =>
-      _dueOn ?? addCalendarDays(_service(today), ref.read(invoiceDueDaysProvider));
+      _doc.endDate ?? addCalendarDays(_service(today), ref.read(invoiceDueDaysProvider));
 
   StandaloneDraft? _draft(DateTime today) {
-    final customer = _customer;
+    final customer = _doc.subject;
     if (customer == null) return null;
     return StandaloneDraft(
       draftId: _saved?.draftId,
@@ -95,9 +84,9 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
       subjectMemberId: customer,
       serviceDate: _service(today),
       dueOn: _due(today),
-      buyerReference: _reference.text.trim(),
-      purchaseOrder: _order.text.trim(),
-      lines: [for (final l in _lines) l.toLine(context)],
+      buyerReference: _doc.reference.text.trim(),
+      purchaseOrder: _doc.order.text.trim(),
+      lines: _doc.toLines(context),
     );
   }
 
@@ -109,7 +98,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
     try {
       final saved = await commands.saveDraft(workspaceId: workspaceId, draft: draft);
       if (!mounted) return;
-      attachLineIds(_lines, saved.lines);
+      _doc.takeLineIds(saved.lines);
       final preview = await commands.preview(
         workspaceId: workspaceId,
         draftId: saved.draftId,
@@ -215,8 +204,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          ..._header(context, locked),
-          ..._linesSection(context, workspaceId, locked),
+          _composer(context, workspaceId, locked),
           ..._status(context),
           const FormGap(),
           _actions(context, workspaceId, locked),
@@ -240,117 +228,34 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
     ),
   );
 
-  List<Widget> _header(BuildContext context, bool locked) {
+  Widget _composer(BuildContext context, String workspaceId, bool locked) {
     final l = context.l10n;
     final names = ref.watch(memberLabelsProvider);
-    final customers = names.entries.toList()
-      ..sort((a, b) => compareNames(a.value, b.value));
+    final customers = names.entries.toList()..sort((a, b) => compareNames(a.value, b.value));
     final today = ref.watch(businessDayProvider);
     ref.watch(invoiceDueDaysProvider); // the due date offered follows the payment term when it is read
-    return [
-      DropdownButtonFormField<String>(
-        key: const ValueKey('standalone-customer'),
-        isExpanded: true,
-        initialValue: _customer,
-        decoration: InputDecoration(labelText: l.invoicingColCustomer),
-        hint: Text(l.standaloneInvoiceCustomerChoose),
-        items: [
-          for (final c in customers)
-            DropdownMenuItem(
-              value: c.key,
-              child: Text(c.value, overflow: TextOverflow.ellipsis),
-            ),
-        ],
-        onChanged: locked
-            ? null
-            : (v) {
-                _customer = v;
-                _edited();
-              },
+    return DocumentComposer(
+      key: const ValueKey('standalone-composer'),
+      workspaceId: workspaceId,
+      draft: _doc,
+      words: DocumentComposerWords(
+        keyPrefix: 'standalone',
+        customerHint: l.standaloneInvoiceCustomerChoose,
+        startLabel: l.standaloneInvoiceServiceDate,
+        startKey: 'standalone-service-date',
+        endLabel: l.standaloneInvoiceDueDate,
+        endKey: 'standalone-due-date',
+        referenceLabel: l.standaloneInvoiceBuyerReference,
+        orderLabel: l.standaloneInvoiceOrderNumber,
       ),
-      const FormGap(),
-      AppDateField(
-        key: const ValueKey('standalone-service-date'),
-        label: l.standaloneInvoiceServiceDate,
-        value: _service(today),
-        enabled: !locked,
-        onChanged: (d) {
-          _serviceDate = d.date;
-          _edited();
-        },
-      ),
-      const FormGap(),
-      AppDateField(
-        key: const ValueKey('standalone-due-date'),
-        label: l.standaloneInvoiceDueDate,
-        value: _due(today),
-        enabled: !locked,
-        onChanged: (d) {
-          _dueOn = d.date;
-          _edited();
-        },
-      ),
-      const FormGap(),
-      AppTextField(
-        key: const ValueKey('standalone-reference'),
-        controller: _reference,
-        label: l.standaloneInvoiceBuyerReference,
-        enabled: !locked,
-        onChanged: (_) => _edited(),
-      ),
-      const FormGap(),
-      AppTextField(
-        key: const ValueKey('standalone-order'),
-        controller: _order,
-        label: l.standaloneInvoiceOrderNumber,
-        enabled: !locked,
-        onChanged: (_) => _edited(),
-      ),
-      const FormGap(),
-    ];
-  }
-
-  List<Widget> _linesSection(BuildContext context, String workspaceId, bool locked) {
-    final l = context.l10n;
-    final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: the rates only offer a choice; none leaves the business's default
-    // #4433 -- with the goods ledger on, a line may sell an item kept in stock, and name its pieces where they are tagged
-    final keys = ref.watch(enabledFeatureKeysProvider);
-    final goods = featureOn(keys, 'stockManagement', byDefault: false)
-        ? ref.watch(invoiceGoodsItemsProvider(workspaceId)).value ?? const <InvoiceGoodsItem>[] // empty-ok: the items only offer a choice; none leaves every line a service
-        : const <InvoiceGoodsItem>[];
-    final pieces = featureOn(keys, 'stockTags', byDefault: false);
-    return [
-      Text(l.standaloneInvoiceLines, style: Theme.of(context).textTheme.titleMedium?.strong),
-      for (final (i, line) in _lines.indexed)
-        StandaloneLineEditor(
-          key: ValueKey('standalone-line-editor-$i'),
-          index: i,
-          form: line,
-          rates: rates,
-          goods: goods,
-          pieces: pieces,
-          units: ref.watch(lineUnitsProvider(workspaceId)),
-          enabled: !locked,
-          onChanged: _edited,
-          onRemove: _lines.length > 1
-              ? () => setState(() {
-                  _lines.removeAt(i).dispose();
-                  _edited();
-                })
-              : null,
-        ),
-      TextButton.icon(
-        key: const ValueKey('standalone-add-line'),
-        onPressed: locked
-            ? null
-            : () => setState(() {
-                _lines.add(StandaloneLineForm());
-                _edited();
-              }),
-        icon: const Icon(Icons.add),
-        label: Text(l.standaloneInvoiceAddLine),
-      ),
-    ];
+      customers: [for (final c in customers) (id: c.key, name: c.value)],
+      startShown: _service(today),
+      endShown: _due(today),
+      locked: locked,
+      pieces: true,
+      onChanged: _edited,
+      onReferenceChanged: _edited,
+    );
   }
 
   /// The banner (unknown answer, or what is missing) and the checked invoice.
@@ -386,7 +291,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
         Expanded(
           child: OutlinedButton(
             key: const ValueKey('standalone-check'),
-            onPressed: locked || _customer == null ? null : () => _check(workspaceId),
+            onPressed: locked || _doc.subject == null ? null : () => _check(workspaceId),
             child: Text(l.standaloneInvoicePreview),
           ),
         ),

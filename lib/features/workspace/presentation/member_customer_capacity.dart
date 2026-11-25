@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/set_member_customer_capacity.dart';
@@ -39,7 +40,7 @@ Future<void> pickMemberCustomerCapacity(
               l10n.customerCapacityExplainer,
               style: Theme.of(context).textTheme.bodySmall,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Wrap(
               spacing: 8,
               runSpacing: 4,

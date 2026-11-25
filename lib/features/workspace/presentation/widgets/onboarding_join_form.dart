@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../domain/invite_uri.dart';
 
 /// Join presentation; commands and pending state belong to the entry flow.
@@ -41,13 +42,13 @@ class OnboardingJoinForm extends StatelessWidget {
                   ? (l10n.workspaceInviteCodeInvalid)
                   : null,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xl),
             FilledButton(
               key: const ValueKey('invitation-review-button'),
               onPressed: busy ? null : onJoin,
               child: Text(l10n.invitationReviewButton),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             // Alternatives, not steps: either fills the same field.
             Wrap(
               alignment: WrapAlignment.center,

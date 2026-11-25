@@ -195,7 +195,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
               // The invite is always role-bound; there is no role-less QR
               // and no owner segment by design.
               if (isOwner) ...[
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -233,7 +233,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                   ],
                 ),
               ],
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xl),
               if (code == null || payload == null) ...[
                 // Admin segment while the personal code is minted (or
                 // after a failed mint — the retry button re-mints).
@@ -262,7 +262,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                   size: 240,
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xl),
               // Selectable so the owner can copy the ID with a long
               // press too, not only via the Copy button.
               SelectableText(
@@ -273,7 +273,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                     .headlineSmall
                     ?.copyWith(letterSpacing: 3),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 isAdminInvite
                     ? (l10n.inviteAdminExplainer)
@@ -281,7 +281,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -301,7 +301,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                     ),
                   ),
                   if (!isAdminInvite) ...[
-                    const SizedBox(width: 12),
+                    const SizedBox(width: AppSpacing.md),
                     FilledButton.icon(
                       key: const ValueKey('workspace-code-edit'),
                       onPressed: () => _editCode(context),
@@ -313,7 +313,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                   ],
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               OutlinedButton.icon(
                 key: const ValueKey('workspace-code-share-png'),
                 onPressed: () => _sharePng(context, code, payload),
@@ -323,7 +323,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                 ),
               ),
               if (isAdminInvite) ...[
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 // Each admin invitation is single-use — mint the next
                 // one right here for the next person.
                 OutlinedButton.icon(
@@ -334,7 +334,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                 ),
               ],
               ],
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               // Personal invitation (0049): a ready-made explanation of
               // download → account → join, over WhatsApp, SMS, or any
               // share target, in the invitee's language.
@@ -349,7 +349,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                 icon: const Icon(Icons.person_add_alt),
                 label: Text(l10n.inviteSectionTitle),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               Text(
                 l10n.inviteOwnerNote,
                 textAlign: TextAlign.center,

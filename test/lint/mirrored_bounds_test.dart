@@ -2,7 +2,12 @@
 //
 // #4419 -- a limit that lives on the server and in the app cannot differ between them, and a new
 // copy cannot be added without saying where its source is. `_mirrors` pairs a Dart constant with
-// the SQL that is its source (the latest migration that states it); each pair is compared. A
+// its source: the SQL (the latest migration that states it) or the edge function that holds it;
+// each pair is compared. A TypeScript `MAX_…` or `…_LIMIT` constant of supabase/functions is a row
+// or carries the marker; the ones several functions share live once in _shared/limits.ts.
+// Pinned elsewhere, with a shape a row does not have: a definer's text clip
+// (text_limits_pinned_test) and the payment resend windows, which are settings
+// (payment_resend_window_test). A
 // numeric constant in a `*Limits` class, or named like a bound (`max…Length`, `…MaxBytes`, `…Limit`), that
 // has no row below and no `// not-mirrored: <why>` on its line or the line above is counted;
 // the count only falls (a row or a marker takes a constant out of it).
@@ -15,15 +20,17 @@ import 'lint_sources.dart';
 /// One Dart constant and the SQL it mirrors: the constant [name] of [dartFile] is compared with the number
 /// [sql] captures in group 1, read in the latest migration that matches it.
 class Mirror {
-  const Mirror(this.label, this.dartFile, this.name, this.sql, {this.migration});
+  const Mirror(this.label, this.dartFile, this.name, this.sql, {this.migration, this.source});
   final String label;
   /// The migration (its number, `0089`) the bound is read in; null: the latest one that matches [sql].
   final String? migration;
+  /// A file that holds the source instead of a migration (an edge function); [sql] is read there.
+  final String? source;
   final String dartFile;
   final String name;
   final String sql;
 
-  RegExp get dart => RegExp('const\\s+(?:int|double|num)\\s+$name\\s*=\\s*([0-9]+);');
+  RegExp get dart => RegExp('const\\s+(?:(?:int|double|num)\\s+)?$name\\s*=\\s*([0-9]+);');
 }
 
 const _service = 'lib/features/money/domain/service_item.dart';
@@ -42,7 +49,39 @@ const _mirrors = <Mirror>[
       migration: '0907'),
   Mirror('kDrawerReasonMaxLength (0907)', _drawer, 'kDrawerReasonMaxLength',
       r'difference_reason is null or char_length\(difference_reason\) <= (\d+)', migration: '0907'),
+  // #3556 -- the app refuses a selection over the payment function's limit before anything is sent.
+  Mirror('maxClaimedInvoices (create-payment-order)', 'lib/features/money/domain/payment_claims.dart',
+      'maxClaimedInvoices', r'export const MAX_CLAIMED_INVOICES = (\d+);',
+      source: 'supabase/functions/create-payment-order/request.ts'),
+  // #4318 -- the public services a public page carries.
+  Mirror('publicPageServiceLimit (public_page_service_limit())', 'lib/features/money/domain/public_page.dart',
+      'publicPageServiceLimit', r'function public\.public_page_service_limit\(\)[^$]*\$\$\s*select\s+(\d+)\s*\$\$'),
+  // #1870 -- the exact range of an amount, on the edge money boundary.
+  Mirror('maxSafeMinor (money.ts)', 'packages/deskilo_money_kernel/lib/src/accounting_amount.dart', 'maxSafeMinor',
+      r'MAX_SAFE_MINOR = (\d+)n;', source: 'supabase/functions/_shared/money.ts'),
+  Mirror('PurchaseOrderLimits.maxLines (0681)', _order, 'maxLines',
+      r"jsonb_array_length\(p_payload -> 'lines'\) not between 1 and (\d+)"),
+  Mirror('PurchaseOrderLimits.maxQuantity (0681)', _order, 'maxQuantity',
+      r'quantity numeric not null check \(quantity > 0 and quantity <= (\d+)\)', migration: '0681'),
+  // the scale of a stored quantity: the stock ledger's numeric(18, 6)
+  Mirror('exactQuantityScale (0847)', 'packages/deskilo_money_kernel/lib/src/exact_quantity.dart',
+      'exactQuantityScale', r'loaded numeric\(18, (\d+)\)', migration: '0847'),
 ];
+
+const _order = 'lib/features/money/domain/purchase_order.dart';
+
+final _tsBound = RegExp(r'^\s*(?:export\s+)?const\s+(MAX_\w+|\w+_LIMIT)\s*=\s*[0-9]');
+
+/// The TypeScript bound constants of [source] with no `// not-mirrored:` marker on their line or above.
+List<String> unlistedTsBounds(String source) {
+  final lines = source.split('\n');
+  return [
+    for (var i = 0; i < lines.length; i++)
+      if (_tsBound.firstMatch(lines[i]) case final m?
+          when !lines[i].contains('not-mirrored:') && !(i > 0 && lines[i - 1].contains('not-mirrored:')))
+        m.group(1)!,
+  ];
+}
 
 /// RATCHET: numeric bound constants of `lib/` with no mirror row and no `// not-mirrored:` marker.
 /// Only falls: give a constant its row (its SQL source), or the marker with the reason it has none.
@@ -100,8 +139,8 @@ void main() {
           ? all
           : all.where((f) => f.uri.pathSegments.last.startsWith('${m.migration}_')).toList();
       final dart = _number(File(m.dartFile).readAsStringSync(), m.dart, m.label);
-      File? source;
-      for (final f in migrations) {
+      File? source = m.source == null ? null : File(m.source!);
+      for (final f in source == null ? migrations : const <File>[]) {
         if (RegExp(m.sql).hasMatch(f.readAsStringSync())) {
           source = f;
           break;
@@ -117,6 +156,26 @@ void main() {
     for (final m in _mirrors) {
       expect(m.dart.hasMatch(File(m.dartFile).readAsStringSync()), isTrue, reason: m.label);
     }
+  });
+
+  test('a TypeScript bound with no marker is seen', () {
+    expect(unlistedTsBounds('export const MAX_PAGES = 10;\nconst PAGE_LIMIT = 5;'), ['MAX_PAGES', 'PAGE_LIMIT']);
+    expect(unlistedTsBounds('export const MAX_PAGES = 10; // not-mirrored: a run budget'), isEmpty);
+    expect(unlistedTsBounds('export const MAX_BODY_BYTES = MAIL_BODY_MAX_BYTES;'), isEmpty);
+  });
+
+  test('every TypeScript bound of an edge function is a row or says why it has none', () {
+    final mirrored = {
+      for (final m in _mirrors)
+        if (m.source != null) m.source!: RegExp(r'MAX_\w+|\w+_LIMIT').firstMatch(m.sql)!.group(0)!,
+    };
+    final unlisted = [
+      for (final f in filesWithExtension('supabase/functions', '.ts', recursive: true))
+        if (!f.path.endsWith('_test.ts'))
+          for (final name in unlistedTsBounds(f.readAsStringSync()))
+            if (mirrored[f.path.replaceAll('\\', '/')] != name) '${f.path}: $name',
+    ];
+    expect(unlisted, isEmpty, reason: 'give it a row in _mirrors, or a // not-mirrored: <why> marker');
   });
 
   test('the unlisted bound constants only fall', () {

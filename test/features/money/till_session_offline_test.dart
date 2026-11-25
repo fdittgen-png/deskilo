@@ -32,6 +32,14 @@ class _Server implements TillPort, TillOfflinePort {
   final List<OfflineSale> received = [];
 
   @override
+  Future<TillCardAsked> requestCard(String workspaceId, {required String requestId, required String receiptId, required int amountMinor}) =>
+      throw UnimplementedError('this fake takes no card');
+
+  @override
+  Future<({String state, String? reconciliation})> resolveCard(String workspaceId, {required String requestId, required String tenderId, required String outcome, String providerRef = ''}) =>
+      throw UnimplementedError('this fake takes no card');
+
+  @override
   Future<TillReadiness> readiness(String workspaceId) async {
     if (down) throw StateError('no connection');
     return const TillReadiness(country: 'FR', fiscalObligation: 'none', ready: true, operations: []);

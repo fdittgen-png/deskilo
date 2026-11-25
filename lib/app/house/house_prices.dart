@@ -25,6 +25,7 @@ import '../../core/format/amount_input.dart';
 import '../../core/i18n/country_names.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/routes.dart';
+import '../../core/theme/app_spacing.dart';
 import '../../core/ui/adaptive/task_surface.dart';
 import '../../core/ui/form_kit.dart';
 import '../../core/ui/master_data_field.dart';
@@ -71,7 +72,7 @@ class HousePricesCard extends ConsumerWidget {
     return Card(
       key: const ValueKey('house-prices-card'),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
@@ -261,7 +262,7 @@ class _HousePricesPageState extends ConsumerState<HousePricesPage> {
     return SafeArea(
       child: ListView(
         key: const ValueKey('house-prices-page'),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
           Text(
             l10n.housePricesTitle,
@@ -302,7 +303,7 @@ class _HousePricesPageState extends ConsumerState<HousePricesPage> {
                 onPressed: () => Navigator.of(context).pop(),
                 child: Text(l10n.houseLater),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.sm),
               FilledButton(
                 key: const ValueKey('house-prices-done'),
                 onPressed: rows.isEmpty ? () => unawaited(_done()) : null,

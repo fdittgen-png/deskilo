@@ -9,10 +9,12 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import '../core/backend/auth_secret_store.dart';
 import '../core/settings/settings.dart' show SettingScope;
 import '../features/money/data/secure_offline_store.dart';
+import '../features/money/data/supabase_counter_book.dart';
 import '../features/money/data/supabase_counter_offline.dart';
 import '../features/money/data/supabase_counter_till.dart';
 import '../features/money/data/supabase_till_drawer.dart';
 import '../features/money/domain/till_drawer.dart';
+import '../features/money/providers/counter_book_providers.dart';
 import '../features/money/providers/till_drawer_providers.dart';
 import '../features/money/providers/till_providers.dart';
 import '../features/workspace/domain/workspace_feature.dart';
@@ -81,4 +83,9 @@ final Override counterSettingsEditorFromApp = counterSettingsEditorProvider.over
       canEdit: ref.watch(myPermissionsProvider).contains(WorkspacePermission.workspaceSettings),
     ),
   ),
+);
+
+/// #4185 -- the counter's book (its receipts, corrections, refunds, returns and card answers) on the same server.
+final Override counterBookPortFromApp = counterBookPortProvider.overrideWith(
+  (ref) => SupabaseCounterBook(ref.watch(selectedWorkspaceClientProvider)),
 );

@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_pdf_template.dart';
@@ -385,7 +386,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
                 constraints: const BoxConstraints(
                     minHeight: KitMetrics.minTarget),
                 child: Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(AppSpacing.sm),
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
                   const Icon(Icons.zoom_in, size: 20),
                   Text(
@@ -403,14 +404,14 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
         // The desk the paper lies on.
         Container(
           color: ReportPage.backdrop,
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(AppSpacing.md),
           child: widget.sideBySide
               ? Row(
                   key: const ValueKey('report-designer-side-by-side'),
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(child: _zoomed(design)),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: AppSpacing.md),
                     Expanded(child: _zoomed(preview)),
                   ],
                 )

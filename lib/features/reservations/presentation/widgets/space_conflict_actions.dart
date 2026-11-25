@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 import 'message_reserver.dart';
@@ -50,7 +51,7 @@ class SpaceConflictActions extends ConsumerWidget {
 
     if (mine) {
       return Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: AppSpacing.sm),
         child: OutlinedButton.icon(
           key: const ValueKey('space-manage-mine'),
           onPressed: busy
@@ -73,7 +74,7 @@ class SpaceConflictActions extends ConsumerWidget {
     // in the else branch rather than beside it.
     if (!canMessageReserver(ref, blocking)) return const SizedBox.shrink();
     return Padding(
-      padding: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.only(top: AppSpacing.sm),
       child: MessageReserverButton(
         widgetKey: const ValueKey('space-conflict-message'),
         blocking: blocking,

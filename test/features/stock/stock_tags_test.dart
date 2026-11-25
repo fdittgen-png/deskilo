@@ -81,7 +81,7 @@ Future<void> _frames(WidgetTester tester) async {
 class _World {
   _World() {
     ledger = DemoStockLedger('ws-1', config);
-    operations = DemoStockOperations(ledger, config);
+    operations = DemoStockOperations(ledger);
     resolver = DemoStockCodeResolver('ws-1', config, DemoStockRegistry('ws-1', ledger, config), tags);
   }
 

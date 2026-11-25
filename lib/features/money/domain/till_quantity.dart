@@ -41,3 +41,28 @@ int? tillLineAmount(int unitMinor, String quantity) {
   final scaled = unitMinor * _units(quantity);
   return (scaled + _scale ~/ 2) ~/ _scale;
 }
+
+/// The cash a customer may hand over for [totalMinor], from the currency's own decimal structure and not a table of
+/// notes: the amount itself, then the total rounded up to the next whole 1, 2, 5, 10, 20, 50, 100... units of the
+/// currency, the nearest first, without repeats; at most [count] amounts. [minorDigits] is the currency's decimals.
+List<int> tillCashSuggestions(int totalMinor, {required int minorDigits, int count = 4}) {
+  if (totalMinor <= 0 || minorDigits < 0 || count < 1) return const [];
+  var unit = 1;
+  for (var i = 0; i < minorDigits; i++) {
+    unit *= 10;
+  }
+  final out = <int>[totalMinor];
+  // 1-2-5 steps of a whole currency unit, up to a thousand times the total's own size
+  var decade = 1;
+  while (out.length < count && decade <= totalMinor * 10) {
+    for (final step in const [1, 2, 5]) {
+      final size = step * decade * unit;
+      final up = ((totalMinor + size - 1) ~/ size) * size;
+      if (!out.contains(up)) out.add(up);
+      if (out.length == count) break;
+    }
+    decade *= 10;
+  }
+  out.sort();
+  return out;
+}

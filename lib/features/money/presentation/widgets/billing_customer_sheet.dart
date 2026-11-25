@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/failure/app_failure.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/country_field.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -144,7 +145,7 @@ class _BillingCustomerForm {
             label: l10n.billingCustomerCourtesy,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.md),
         Expanded(
           child: AppTextField(
             controller: fields['firstName'],
@@ -179,7 +180,7 @@ class _BillingCustomerForm {
             autofillHints: const [AutofillHints.postalCode],
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.md),
         Expanded(
           child: AppTextField(
             controller: fields['city'],

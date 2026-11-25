@@ -116,7 +116,7 @@ class TillReadiness {
 
 /// A line of the basket as the till sends it: an item and an exact quantity; the server prices it.
 class TillLine {
-  const TillLine({required this.itemId, required this.name, required this.quantity, required this.unit, this.pieces = const []});
+  const TillLine({required this.itemId, required this.name, required this.quantity, required this.unit, this.pieces = const [], this.ageConfirmed, this.depositFor});
 
   final String itemId;
   final String name;
@@ -129,14 +129,29 @@ class TillLine {
   /// exactly these pieces, and the server refuses a quantity that is not their number.
   final List<String> pieces;
 
+  /// The age the operator confirmed the customer has for this line (the item's minimum), kept on the line; null when
+  /// the item has no age limit.
+  final int? ageConfirmed;
+
+  /// The item whose deposit this line is: it follows that line's quantity and goes with it. Null for an ordinary line.
+  final String? depositFor;
+
   /// The line at quantity [q]. Named pieces stay only when [q] is exactly their number: any other quantity (a tap on the item's key, a
   /// typed number) leaves the line a plain quantity of the item, because the server refuses a quantity that is not the number of its
   /// named pieces (DKG25) and would say so only after the cash was taken.
-  TillLine withQuantity(String q) => TillLine(itemId: itemId, name: name, quantity: q, unit: unit, pieces: tillQuantityOf(q) == '${pieces.length}' ? pieces : const []);
+  TillLine withQuantity(String q) => TillLine(
+    itemId: itemId,
+    name: name,
+    quantity: q,
+    unit: unit,
+    pieces: tillQuantityOf(q) == '${pieces.length}' ? pieces : const [],
+    ageConfirmed: ageConfirmed,
+    depositFor: depositFor,
+  );
 
   /// The line with the piece tagged [tag] added: one more, named.
   TillLine withPiece(String tag) =>
-      TillLine(itemId: itemId, name: name, quantity: '${pieces.length + 1}', unit: unit, pieces: [...pieces, tag]);
+      TillLine(itemId: itemId, name: name, quantity: '${pieces.length + 1}', unit: unit, pieces: [...pieces, tag], ageConfirmed: ageConfirmed, depositFor: depositFor);
 
   Map<String, Object?> toJson() => {
     'item_id': itemId,
@@ -233,14 +248,32 @@ class TillDraft {
   }
 }
 
-/// A tender: `cash` or `other`, an exact amount in minor units.
+/// A tender: `cash` or `other`, an exact amount in minor units; or (#4185) an accepted card authorization of the sale,
+/// named by its [tenderId] (the server knows its amount).
 class TillTender {
-  const TillTender({required this.kind, required this.amountMinor});
+  const TillTender({required this.kind, required this.amountMinor, this.tenderId});
 
   final String kind;
   final int amountMinor;
+  final String? tenderId;
 
-  Map<String, Object?> toJson() => {'kind': kind, 'amount_minor': amountMinor};
+  Map<String, Object?> toJson() => tenderId != null ? {'tender_id': tenderId} : {'kind': kind, 'amount_minor': amountMinor};
+}
+
+/// #4185 -- a card authorization asked of the terminal for a sale: the server's record of it, before any answer.
+class TillCardAsked {
+  const TillCardAsked({required this.tenderId, required this.providerKey, required this.amountMinor});
+
+  final String tenderId;
+
+  /// The key the authorization is asked under: typed on the terminal, and what its journal is searched for.
+  final String providerKey;
+  final int amountMinor;
+
+  factory TillCardAsked.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'counter_tender_request');
+    return TillCardAsked(tenderId: r.string('tender_id'), providerKey: r.stringOr('provider_key'), amountMinor: r.intOrNull('amount_minor') ?? 0);
+  }
 }
 
 /// #4436 -- a track ID a goods line took: a lot (its code as received, the quantity taken from it, in the item's
@@ -320,11 +353,27 @@ abstract interface class TillPort {
 
   /// #4184 -- the finalized receipt [receiptId] as its frozen document, read by the versioned reader.
   Future<CounterReceiptDocument> receipt(String workspaceId, String receiptId);
+  /// #4185 -- records that a card authorization of [amountMinor] is asked for the open draft [receiptId].
+  Future<TillCardAsked> requestCard(String workspaceId, {required String requestId, required String receiptId, required int amountMinor});
+
+  /// #4185 -- records the terminal's answer to [tenderId]: `accepted`, `refused` or `unknown`; answers the state and
+  /// whether the money waits for a reconciliation (`needed`).
+  Future<({String state, String? reconciliation})> resolveCard(String workspaceId, {required String requestId, required String tenderId, required String outcome, String providerRef = ''});
 }
 
 /// #4366 -- an item the till offers as a key: what a tap rings up.
 class TillKey {
-  const TillKey({required this.id, required this.name, required this.unit, this.grossMinor});
+  const TillKey({
+    required this.id,
+    required this.name,
+    required this.unit,
+    this.grossMinor,
+    this.category,
+    this.colour,
+    this.minAge,
+    this.weighed = false,
+    this.depositItemId,
+  });
 
   final String id;
   final String name;
@@ -333,4 +382,19 @@ class TillKey {
   /// #4373 -- the item's price, gross, minor units of one unit, when the route knows it: what the till falls back on when it sells
   /// offline. The server prices every online sale; this is never used for one.
   final int? grossMinor;
+
+  /// The group of keys it sits under (the item's till category); null for the keys without one.
+  final String? category;
+
+  /// The key's colour as `#rrggbb`, or null for the default.
+  final String? colour;
+
+  /// The age a customer must be, confirmed by the operator on the line; null when there is no limit.
+  final int? minAge;
+
+  /// Sold by weight: the key asks the weight in [unit] instead of ringing up one.
+  final bool weighed;
+
+  /// The item whose deposit is added with this one, or null.
+  final String? depositItemId;
 }

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/loading_view.dart';
+import '../domain/account_rows_from_json.dart';
 import '../providers/directory_providers.dart';
 
 /// #1824 — the account messenger's two lists, ONE SERVER each, so every
@@ -29,10 +30,10 @@ class ContactResults extends ConsumerStatefulWidget {
 class _ContactResultsState extends ConsumerState<ContactResults> {
   final _pages = <String>[];
 
-  Widget _person(BuildContext context, Map<String, dynamic> person) {
+  Widget _person(BuildContext context, AccountPersonRow person) {
     final l = context.l10n;
-    final id = '${person['id']}';
-    final name = '${person['name'] ?? ''}';
+    final id = person.id;
+    final name = person.name;
     return ListTile(
       key: ValueKey('account-messenger-person-$id'),
       title: Text(name),
@@ -59,7 +60,7 @@ class _ContactResultsState extends ConsumerState<ContactResults> {
             TextButton(
               key: const ValueKey('account-messenger-sections-text-button'),
               onPressed: () =>
-                  setState(() => _pages.add(people.last['id'] as String)),
+                  setState(() => _pages.add(people.last.id)),
               child: Text(MaterialLocalizations.of(context).nextPageTooltip),
             ),
           if (_pages.isNotEmpty)
@@ -103,12 +104,12 @@ class _AccountConversationListState
   final _pages = <({DateTime at, String id})>[];
 
   /// One conversation: its unread count, and its server when not this one.
-  Widget _row(BuildContext context, Map<String, dynamic> conversation) {
+  Widget _row(BuildContext context, AccountConversationRow conversation) {
     final l = context.l10n;
-    final id = '${conversation['id']}';
-    final name = '${conversation['name'] ?? ''}';
-    final recipient = conversation['recipient'] as String?;
-    final unread = (conversation['unread'] as num?)?.toInt() ?? 0;
+    final id = conversation.id;
+    final name = conversation.name;
+    final recipient = conversation.recipient;
+    final unread = conversation.unread;
     return ListTile(
       key: ValueKey('account-conversation-$id'),
       title: Text(name),
@@ -159,10 +160,8 @@ class _AccountConversationListState
                       ? null
                       : () => setState(
                           () => _pages.add((
-                            at: DateTime.parse(
-                              conversations.last['updated_at'] as String,
-                            ),
-                            id: conversations.last['id'] as String,
+                            at: conversations.last.updatedAt,
+                            id: conversations.last.id,
                           )),
                         ),
                   icon: const Icon(Icons.chevron_right),

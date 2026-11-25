@@ -397,7 +397,7 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
       builder: (context) => SheetShell(
         title: l10n.backendScan,
         children: [
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           ScanCameraBox(
             cameraKey: const ValueKey('backend-scan-camera'),
             defaultFront: false,

@@ -46,7 +46,7 @@ class SetupQuestionGroup extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     // #4223 — a business whose kind keeps places off reads its own examples.
-    final hasPlaces = !ref.watch(keepsPlacesOffProvider);
+    final hasPlaces = ref.watch(businessShapeProvider).places;
     String question(String key) =>
         l10n.setupQuestionFor(key, hasPlaces: hasPlaces);
     return Card(

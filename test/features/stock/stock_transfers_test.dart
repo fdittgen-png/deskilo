@@ -29,7 +29,7 @@ final _en = AppLocalizationsEn();
 class _World {
   _World() {
     ledger = DemoStockLedger('ws-1', config);
-    operations = DemoStockOperations(ledger, config);
+    operations = DemoStockOperations(ledger);
   }
 
   final config = DemoStockConfigCommands('ws-1');

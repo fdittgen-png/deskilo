@@ -9,6 +9,7 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../workspace/domain/overage_policy.dart';
 import '../../domain/bill_sections.dart';
 import '../../domain/invoice_line_text.dart';
@@ -45,7 +46,7 @@ class BillInvoiceCard extends StatelessWidget {
     return Card(
       key: const ValueKey('bill-invoice-card'),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -61,7 +62,7 @@ class BillInvoiceCard extends StatelessWidget {
                 invoiceStatusChip(context, settlement.lifecycle),
               ],
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             BillLine(
               label: l10n.billInvoiceTotal,
               detail: appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(invoice.issuedAt)),
@@ -77,7 +78,7 @@ class BillInvoiceCard extends StatelessWidget {
               ),
             ],
             if (isCreditNote) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 settlement.lifecycle == InvoiceLifecycle.refunded
                     ? (l10n.billCreditNoteRefunded)
@@ -150,7 +151,7 @@ class BillEntitlementCard extends StatelessWidget {
     return Card(
       key: const Key('entitlement-card'),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -158,7 +159,7 @@ class BillEntitlementCard extends StatelessWidget {
               l10n.entitlementTitle,
               style: theme.labelLarge?.copyWith(color: scheme.onSurfaceVariant),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Row(
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
@@ -171,7 +172,7 @@ class BillEntitlementCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: Text(
                     leftLabel,
@@ -224,7 +225,7 @@ class BillSubscriptionCard extends StatelessWidget {
     final l10n = context.l10n;
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -299,7 +300,7 @@ class BillServicesCard extends StatelessWidget {
     final l10n = context.l10n;
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -307,7 +308,7 @@ class BillServicesCard extends StatelessWidget {
               l10n.billServices,
               style: Theme.of(context).textTheme.titleSmall,
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             for (final entry in sections.serviceEntries)
               BillLine(
                 label: entry.description.isEmpty

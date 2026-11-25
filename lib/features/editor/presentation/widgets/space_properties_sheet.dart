@@ -49,7 +49,7 @@ Future<SpaceProperties?> showSpacePropertiesSheet(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(title, style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             TextField(
               key: ValueKey('$keyPrefix-name-field'),
               controller: nameField,
@@ -81,7 +81,7 @@ Future<SpaceProperties?> showSpacePropertiesSheet(
               alignment: Alignment.topCenter,
               child: isBookable
                   ? Padding(
-                      padding: const EdgeInsets.only(top: 4),
+                      padding: const EdgeInsets.only(top: AppSpacing.xs),
                       child: TextField(
                         key: ValueKey('$keyPrefix-price-field'),
                         controller: price,
@@ -95,7 +95,7 @@ Future<SpaceProperties?> showSpacePropertiesSheet(
                     )
                   : const SizedBox(width: double.infinity),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             FilledButton(
               key: ValueKey('space-properties-sheet-save-$keyPrefix'),
               onPressed: () => Navigator.of(context).pop(true),

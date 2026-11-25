@@ -8,6 +8,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/settings/booking_windows.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../reservations/domain/reservation.dart';
@@ -117,7 +118,7 @@ Future<MySeatAction?> showMySeatSheet(
               ),
               onTap: () => Navigator.of(context).pop(MySeatAction.requestDeletion),
             ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
         ],
       ),
     ),
@@ -198,7 +199,7 @@ Future<String?> showCheckInOtherSheet(
               ),
               onTap: () => Navigator.of(context).pop('remove'),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
           ],
         ),
       ),

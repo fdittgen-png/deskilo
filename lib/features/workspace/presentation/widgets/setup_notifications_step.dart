@@ -95,7 +95,7 @@ class _SetupNotificationsStepState
         definition != null &&
         definition.editable &&
         settings!.revision != 'defaults';
-    final placesOff = ref.watch(keepsPlacesOffProvider);
+    final placesOff = !ref.watch(businessShapeProvider).places;
     final stored = definition == null
         ? SettingDefaults.bookingCheckInReminderLeadMinutes
         : settings!.read<int>(_leadKey);

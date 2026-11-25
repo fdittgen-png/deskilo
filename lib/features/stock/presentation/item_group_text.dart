@@ -7,6 +7,13 @@ import '../../../l10n/app_localizations.dart';
 import '../domain/item_groups.dart';
 import '../domain/purchase_factor.dart';
 
+/// The names of the till's parameters of an item group, as the server keeps them.
+const groupParamCategory = 'till_category';
+const groupParamColour = 'quick_key_colour';
+const groupParamDepositItem = 'deposit_item_id';
+const groupParamDepositMinor = 'deposit_minor';
+const groupParamLabelTemplate = 'label_template';
+
 String itemGroupParamLabel(AppLocalizations l10n, String param) => switch (param) {
   'tracking' => l10n.stockEditTracking,
   'shelf_life_days' => l10n.stockEditShelfLife,
@@ -15,6 +22,11 @@ String itemGroupParamLabel(AppLocalizations l10n, String param) => switch (param
   'count_every_days' => l10n.itemGroupCountEvery,
   'min_age' => l10n.itemGroupMinAge,
   'sold_by_weight' => l10n.itemGroupSoldByWeight,
+  groupParamCategory => l10n.itemGroupTillCategory,
+  groupParamColour => l10n.itemGroupKeyColour,
+  groupParamDepositItem => l10n.itemGroupDepositItem,
+  groupParamDepositMinor => l10n.itemGroupDepositAmount,
+  groupParamLabelTemplate => l10n.itemGroupLabelTemplate,
   'default_purchase_unit' => l10n.itemGroupPurchaseUnit,
   'default_purchase_factor_num' || 'default_purchase_factor_den' => l10n.itemGroupPurchaseFactor,
   'reorder_point_default' => l10n.itemGroupReorderPoint,
@@ -46,7 +58,7 @@ String itemGroupValueText(AppLocalizations l10n, String param, Object? value) {
     'supply_class' => value == 'property' ? l10n.itemGroupSupplyProperty : l10n.itemGroupSupplyGeneral,
     'price_rounding' => value == 'none' ? l10n.itemGroupRoundingNone : '$value',
     'target_margin_bps' => ratePercentText((value as num) / 100, locale: l10n.localeName),
-    'vat_rate_id' || 'home_zone_id' => l10n.itemGroupSet,
+    'vat_rate_id' || 'home_zone_id' || groupParamDepositItem => l10n.itemGroupSet,
     _ => '$value',
   };
 }

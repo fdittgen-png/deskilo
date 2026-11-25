@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/kit/page_bar.dart';
+import '../../domain/account_rows_from_json.dart';
 import '../../domain/messenger.dart';
 import '../../providers/directory_providers.dart';
 import '../../providers/messenger_providers.dart';
@@ -68,7 +70,7 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final results = _query.isEmpty
-        ? const AsyncData<List<Map<String, dynamic>>>([])
+        ? const AsyncData<List<AccountPersonRow>>([])
         : ref.watch(accountContactsProvider(_query));
     final ready = _title.text.trim().isNotEmpty && _people.isNotEmpty && !_busy;
     return Scaffold(
@@ -77,7 +79,7 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
       body: Align(
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 640),
+          constraints: const BoxConstraints(maxWidth: kFormColumnWidth),
           child: ListView(
             padding: AppSpacing.mdAll,
             children: [
@@ -129,13 +131,12 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
               ),
               if (results.hasValue)
                 for (final p in results.value!)
-                  if (!_people.containsKey('${p['id']}'))
+                  if (!_people.containsKey(p.id))
                     ListTile(
-                      key: ValueKey('create-group-person-${p['id']}'),
+                      key: ValueKey('create-group-person-${p.id}'),
                       leading: const Icon(Icons.person_add_alt_outlined),
-                      title: Text('${p['name'] ?? ''}'),
-                      onTap: () => setState(
-                          () => _people['${p['id']}'] = '${p['name'] ?? ''}'),
+                      title: Text(p.name),
+                      onTap: () => setState(() => _people[p.id] = p.name),
                     ),
               const SizedBox(height: AppSpacing.lg),
               FilledButton(

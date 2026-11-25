@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 
 /// #1851 — the explicit opt-in before an alpha or beta feature is
 /// switched on. True only when the owner confirms; dismissing it writes
@@ -37,7 +38,7 @@ Future<bool> confirmExperimentalOptIn(
               if (i < stages.length)
                 Padding(
                   key: ValueKey('feature-opt-in-stage-$i'),
-                  padding: const EdgeInsets.only(top: 8),
+                  padding: const EdgeInsets.only(top: AppSpacing.sm),
                   child: Text(
                     l10n.featureOptInStage(name, stages[i]),
                   ),
@@ -45,7 +46,7 @@ Future<bool> confirmExperimentalOptIn(
             if (alsoOn.isNotEmpty)
               Padding(
                 key: const ValueKey('feature-opt-in-also-on'),
-                padding: const EdgeInsets.only(top: 12),
+                padding: const EdgeInsets.only(top: AppSpacing.md),
                 child: Text(
                   l10n.featureOptInAlsoOn(alsoOn.length, alsoOn.join(', ')),
                 ),

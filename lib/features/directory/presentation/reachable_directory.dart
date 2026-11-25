@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/text/initials.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/loading_view.dart';
 import '../domain/messenger.dart';
@@ -56,7 +57,7 @@ class ReachableSection extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 12),
+          padding: const EdgeInsets.only(top: AppSpacing.md),
           child: Text(
             context.l10n.portalReachableHeading,
             key: const ValueKey('reachable-heading'),
@@ -125,7 +126,7 @@ class _PersonalDirectorySections extends ConsumerWidget {
       children: [
         if (directory.status != RelationshipStatus.ready)
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
             child: Text(
               l.portalDirectoryPartial,
               key: const ValueKey('reachable-partial'),
@@ -133,7 +134,7 @@ class _PersonalDirectorySections extends ConsumerWidget {
           ),
         if (listed.isEmpty)
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
             child: Text(
               l.portalReachableEmpty,
               key: const ValueKey('reachable-empty-personal'),
@@ -190,7 +191,7 @@ class _PersonalDirectorySections extends ConsumerWidget {
       children: [
         if (page?.status == RelationshipStatus.unavailable)
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
             child: Text(
               l.portalDirectoryUnverified,
               key: ValueKey('reachable-unverified-${workspace.networkId}'),
@@ -275,7 +276,7 @@ class _ReachableDirectory extends ConsumerWidget {
     }
     if (byWorkspace.isEmpty) {
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
         child: Text(
           l.portalReachableEmpty,
           key: ValueKey('reachable-empty-$source'),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../domain/reservation_repository.dart';
 
@@ -30,7 +31,7 @@ Future<void> showSeriesResultDialog(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(l10n.seriesSkippedTitle),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 for (final d in result.skipped)
                   Text(dateFormat.format(WorkspaceTime.dateOf(d))),
               ],

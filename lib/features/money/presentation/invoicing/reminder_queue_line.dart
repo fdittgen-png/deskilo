@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/reminder_queue.dart';
@@ -66,7 +67,7 @@ class ReminderQueueLineView extends ConsumerWidget {
     final email = queue.emailOf(line);
     return Padding(
       key: ValueKey('reminder-queue-line-${line.invoiceId}'),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

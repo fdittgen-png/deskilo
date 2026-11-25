@@ -193,7 +193,17 @@ class StockPlace {
 
 /// A stock item a filter can name.
 class StockItem {
-  const StockItem({required this.id, required this.name, required this.unit, this.active = true});
+  const StockItem({
+    required this.id,
+    required this.name,
+    required this.unit,
+    this.active = true,
+    this.tillCategory,
+    this.quickKeyColour,
+    this.minAge,
+    this.soldByWeight = false,
+    this.depositItemId,
+  });
 
   final String id;
   final String name;
@@ -202,6 +212,14 @@ class StockItem {
   /// Whether the item is on sale: a turned-off item stays in the stock's history but is not rung up.
   final bool active;
 
+  /// #4366 -- the settings in force the till reads (the group's value, or the item's own): the category its key sits
+  /// under, the key's colour (`#rrggbb`), the age a customer must have, whether it is weighed, and its deposit item.
+  final String? tillCategory;
+  final String? quickKeyColour;
+  final int? minAge;
+  final bool soldByWeight;
+  final String? depositItemId;
+
   factory StockItem.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'services');
     return StockItem(
@@ -209,6 +227,11 @@ class StockItem {
       name: r.stringOr('name'),
       unit: r.stringOr('inventory_unit'),
       active: r.boolOr('active', fallback: true),
+      tillCategory: r.stringOrNull('till_category'),
+      quickKeyColour: r.stringOrNull('quick_key_colour'),
+      minAge: r.intOrNull('min_age'),
+      soldByWeight: r.boolOr('sold_by_weight', fallback: false),
+      depositItemId: r.stringOrNull('deposit_item_id'),
     );
   }
 }

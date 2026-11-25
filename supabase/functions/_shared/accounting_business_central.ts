@@ -127,7 +127,7 @@ const DESCRIPTION_LENGTH = 100;
 
 /** The most a list is followed through `@odata.nextLink`: far above any
  * company's chart. spec: "Server-driven paging". */
-const MAX_PAGES = 50;
+const MAX_PAGES = 50; // not-mirrored: a read's own page budget against the provider
 
 /** Each target's localisation, as the company's
  * `companyInformation.countryRegionCode` reads it: the app descriptor's

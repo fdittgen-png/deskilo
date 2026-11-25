@@ -62,7 +62,7 @@ Future<(_Camera, DemoStockLedger)> _open(WidgetTester tester, Size size, {bool f
       ...standardTestOverrides(),
       stockQueriesProvider.overrideWithValue(DemoStockQueries(ledger)),
       stockConfigCommandsProvider.overrideWithValue(config),
-      stockOperationsProvider.overrideWithValue(DemoStockOperations(ledger, config)),
+      stockOperationsProvider.overrideWithValue(DemoStockOperations(ledger)),
       stockCodeResolverProvider.overrideWithValue(DemoStockCodeResolver('ws-1', config, DemoStockRegistry('ws-1', ledger, config))),
       stockScanningProvider.overrideWithValue(true),
       goodsScanWidgetBuilderProvider.overrideWithValue(camera.builder),

@@ -8,6 +8,7 @@ import '../../../../core/backend/schema_version.dart';
 import '../../../../core/instance/schema_compatibility.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'server_full_check.dart';
 
@@ -57,7 +58,7 @@ class ServerFactsCard extends ConsumerWidget {
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 8),
+                padding: const EdgeInsetsDirectional.only(start: AppSpacing.sm),
                 child: TextButton.icon(
                   key: const ValueKey('backend-open-dashboard'),
                   icon: const Icon(Icons.open_in_new),

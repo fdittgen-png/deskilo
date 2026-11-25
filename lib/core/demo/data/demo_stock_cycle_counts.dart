@@ -7,9 +7,11 @@
 // store its counts page reads, so the approval flow is the one already there; a blind counter is told
 // the line is counted and never what the ledger held; a skip needs a reason; a task is complete when
 // every line is counted or skipped. Nothing leaves the process.
+import 'package:deskilo/features/stock/domain/stock_count_tasks.dart';
 import 'package:deskilo/features/stock/domain/stock_cycle_counts.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_registry.dart';
+import 'package:deskilo/features/stock/domain/stock_reversal_book.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -20,8 +22,6 @@ import 'demo_stock_ledger.dart';
 import 'demo_stock_tags.dart';
 
 PostgrestException _refused(String code, String message) => PostgrestException(message: message, code: code);
-
-final _quantity = RegExp(r'^[0-9]{1,12}(\.[0-9]{1,6})?$');
 
 String _day(DateTime at) => at.toIso8601String().substring(0, 10);
 
@@ -39,14 +39,21 @@ class DemoStockCycleCounts implements StockCycleCounts {
   final Set<WorkspacePermission> Function() _held;
   final DateTime Function() _now;
 
-  final Map<String, CountPlan> _plans = {};
-  final List<({String taskId, String planId, String planName, String dueOn})> _tasks = [];
-  final Map<String, List<CountTaskLine>> _lines = {};
-  final Map<String, CountTaskState> _state = {};
-  final Map<String, String> _taskOfLine = {};
+  /// The tasks and the rules of their lines: the domain's (#4403).
+  final CountTaskBook _book = CountTaskBook();
   final Map<String, CountLineResult> _answers = {};
-  final Map<String, ({DateTime at, int counts, int exact})> _history = {};
   bool _seeded = false;
+
+  /// Runs [run] for the reference business, a refusal leaving as the server's own (its code and message).
+  Future<T> _run<T>(String workspaceId, String what, Future<T> Function() run) async {
+    if (!_mine(workspaceId)) throw _refused(DkCode.dkg04, 'not a $what of this business');
+    await _seed();
+    try {
+      return await run();
+    } on StockCodeRefused catch (e, st) {
+      Error.throwWithStackTrace(_refused(e.code, e.message), st);
+    }
+  }
 
   bool _mine(String id) => id == _workspaceId;
 
@@ -55,14 +62,15 @@ class DemoStockCycleCounts implements StockCycleCounts {
     final cost = costs[r.itemId];
     if (cost == null) return null;
     final scaled = r.quantity.micro * BigInt.parse(cost);
-    return ((scaled + BigInt.from(500000)) ~/ BigInt.from(1000000)).toInt();
+    final unit = BigInt.from(10).pow(exactQuantityScale);
+    return ((scaled + unit ~/ BigInt.two) ~/ unit).toInt();
   }
 
   Future<void> _seed() async {
     if (_seeded) return;
     _seeded = true;
     final now = _now();
-    _plans['demo-count-plan-1'] = CountPlan(
+    final plan = _book.plans['demo-count-plan-1'] = CountPlan(
       id: 'demo-count-plan-1',
       name: 'High-value shelf',
       scope: CountScope.highValue,
@@ -79,10 +87,7 @@ class DemoStockCycleCounts implements StockCycleCounts {
       for (final r in await _ledger.onHand())
         if ((_value(r, costs) ?? 0) >= 2000) r,
     ];
-    const taskId = 'demo-count-task-1';
-    _tasks.add((taskId: taskId, planId: 'demo-count-plan-1', planName: 'High-value shelf', dueOn: _day(due)));
-    _state[taskId] = rows.isEmpty ? CountTaskState.complete : CountTaskState.open;
-    _lines[taskId] = [
+    _book.addTask('demo-count-task-1', plan, _day(due), [
       for (var i = 0; i < rows.length; i++)
         CountTaskLine(
           lineId: 'demo-count-line-${i + 1}',
@@ -92,14 +97,11 @@ class DemoStockCycleCounts implements StockCycleCounts {
           locationId: rows[i].locationId,
           state: CountLineState.pending,
         ),
-    ];
-    for (final l in _lines[taskId]!) {
-      _taskOfLine[l.lineId] = taskId;
-    }
+    ]);
     // what the earlier counts said: the beans were counted three times, twice exactly
     if (rows.any((r) => r.itemId == 'demo-item-beans')) {
       final r = rows.firstWhere((x) => x.itemId == 'demo-item-beans');
-      _history['${r.itemId}|${r.locationId}'] = (at: now.subtract(const Duration(days: 23)), counts: 3, exact: 2);
+      _book.remember(r.itemId, r.locationId, (at: now.subtract(const Duration(days: 23)), counts: 3, exact: 2));
     }
   }
 
@@ -107,26 +109,15 @@ class DemoStockCycleCounts implements StockCycleCounts {
   Future<List<CountPlan>> plans(String workspaceId) async {
     if (!_mine(workspaceId)) return const [];
     await _seed();
-    return _plans.values.toList();
+    return _book.plans.values.toList();
   }
 
   @override
-  Future<void> savePlan(String workspaceId, CountPlanDraft d) async {
-    if (!_mine(workspaceId)) throw _refused(DkCode.dkg04, 'not a plan of this business');
-    await _seed();
-    final name = d.name.trim();
-    if (name.isEmpty || name.length > 80 || !RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(d.nextDueOn)) {
-      throw _refused(DkCode.dkg07, 'a plan has a name, a scope (places, items or high value) and a due day');
-    }
-    if ((d.intervalDays != null && (d.intervalDays! < 1 || d.intervalDays! > 366)) || (d.highValueMinor != null && d.highValueMinor! < 1)) {
-      throw _refused(DkCode.dkg07, 'a plan repeats every 1 to 366 days, or once');
-    }
-    if ((d.scope == CountScope.places && d.locationIds.isEmpty) || (d.scope == CountScope.items && d.itemIds.isEmpty)) {
-      throw _refused(DkCode.dkg07, 'the scope names what to count (at most 200)');
-    }
-    _plans[d.planId] = CountPlan(
+  Future<void> savePlan(String workspaceId, CountPlanDraft d) => _run(workspaceId, 'plan', () async {
+    CountTaskBook.checkPlan(d);
+    _book.plans[d.planId] = CountPlan(
       id: d.planId,
-      name: name,
+      name: d.name.trim(),
       scope: d.scope,
       locationIds: d.locationIds,
       itemIds: d.itemIds,
@@ -135,125 +126,54 @@ class DemoStockCycleCounts implements StockCycleCounts {
       nextDueOn: d.nextDueOn,
       active: d.active,
     );
-  }
+  });
 
   @override
   Future<List<CountTaskSummary>> tasks(String workspaceId, {CountTaskState? state}) async {
     if (!_mine(workspaceId)) return const [];
     await _seed();
-    return [
-      for (final t in _tasks.reversed)
-        if (state == null || _state[t.taskId] == state)
-          CountTaskSummary(
-            taskId: t.taskId,
-            planId: t.planId,
-            planName: t.planName,
-            dueOn: t.dueOn,
-            state: _state[t.taskId]!,
-            lines: _lines[t.taskId]!.length,
-            pending: _lines[t.taskId]!.where((l) => l.state == CountLineState.pending).length,
-          ),
-    ];
+    return _book.summaries(state: state);
   }
 
   @override
-  Future<CountTask> task(String workspaceId, String taskId) async {
-    if (!_mine(workspaceId)) throw _refused(DkCode.dkg04, 'not a task of this business');
-    await _seed();
-    final t = _tasks.where((x) => x.taskId == taskId).firstOrNull;
-    if (t == null) throw _refused(DkCode.dkg04, 'not a task of this business');
-    return CountTask(taskId: taskId, dueOn: t.dueOn, state: _state[taskId]!, lines: List.unmodifiable(_lines[taskId]!));
-  }
+  Future<CountTask> task(String workspaceId, String taskId) => _run(workspaceId, 'task', () async => _book.task(taskId));
 
-  CountLineResult _close(String taskId, String lineId, {String? state, ExactQuantity? observed, ExactQuantity? baseline}) {
-    if (_lines[taskId]!.every((l) => l.state != CountLineState.pending)) _state[taskId] = CountTaskState.complete;
-    return CountLineResult(
-      lineId: lineId,
-      taskState: _state[taskId]!,
-      state: state,
-      observed: observed,
-      baseline: baseline,
-      difference: observed == null || baseline == null ? null : observed - baseline,
-    );
-  }
-
-  void _setLine(String taskId, String lineId, CountLineState state, {String? reason}) {
-    final lines = _lines[taskId]!;
-    final i = lines.indexWhere((l) => l.lineId == lineId);
-    final l = lines[i];
-    lines[i] = CountTaskLine(
-      lineId: l.lineId,
-      itemId: l.itemId,
-      variantId: l.variantId,
-      lotId: l.lotId,
-      locationId: l.locationId,
-      state: state,
-      skipReason: reason,
-    );
+  bool _sees() {
+    final held = _held();
+    return held.contains(WorkspacePermission.manageStock) || held.contains(WorkspacePermission.approveStockAdjustments);
   }
 
   @override
   Future<CountLineResult> countLine(String workspaceId, String lineId, String observed, String requestId) async {
     if (_answers[requestId] case final done?) return done;
-    if (!_mine(workspaceId)) throw _refused(DkCode.dkg04, 'not a line of this business');
-    await _seed();
-    final taskId = _taskOfLine[lineId];
-    if (taskId == null) throw _refused(DkCode.dkg04, 'not a line of this business');
-    if (_state[taskId] != CountTaskState.open) throw _refused(DkCode.dkg19, 'this task is no longer open');
-    final line = _lines[taskId]!.firstWhere((l) => l.lineId == lineId);
-    if (line.state == CountLineState.skipped) throw _refused(DkCode.dkg19, 'this line was skipped');
-    if (!_quantity.hasMatch(observed.trim())) throw _refused(DkCode.dkg07, 'a count has a quantity');
-    final seen = ExactQuantity.parse(observed.trim());
-    final baseline = _ledger.balance(line.itemId, line.locationId, lotId: line.lotId);
-    await _reversals.recordCount(workspaceId, (
-      countId: 'cycle-$lineId',
-      itemId: line.itemId,
-      locationId: line.locationId,
-      observed: observed.trim(),
-      requestId: requestId,
-      variantId: line.variantId,
-      lotId: line.lotId,
-      reason: 'cycle count',
-    ));
-    _setLine(taskId, lineId, CountLineState.counted);
-    final key = '${line.itemId}|${line.locationId}';
-    final before = _history[key];
-    _history[key] = (at: _now(), counts: (before?.counts ?? 0) + 1, exact: (before?.exact ?? 0) + (seen == baseline ? 1 : 0));
-    final held = _held();
-    final sees = held.contains(WorkspacePermission.manageStock) || held.contains(WorkspacePermission.approveStockAdjustments);
-    return _answers[requestId] = _close(taskId, lineId, state: 'recorded', observed: sees ? seen : null, baseline: sees ? baseline : null);
+    return _answers[requestId] = await _run(workspaceId, 'line', () async {
+      final line = _book.lineToCount(lineId, observed.trim());
+      final baseline = _ledger.balance(line.itemId, line.locationId, lotId: line.lotId);
+      await _reversals.recordCount(workspaceId, (
+        countId: 'cycle-$lineId',
+        itemId: line.itemId,
+        locationId: line.locationId,
+        observed: observed.trim(),
+        requestId: requestId,
+        variantId: line.variantId,
+        lotId: line.lotId,
+        reason: 'cycle count',
+      ));
+      return _book.counted(lineId, ExactQuantity.parse(observed.trim()), baseline, sees: _sees(), at: _now());
+    });
   }
 
   @override
   Future<CountLineResult> skipLine(String workspaceId, String lineId, String reason, String requestId) async {
     if (_answers[requestId] case final done?) return done;
-    final why = reason.trim();
-    if (why.isEmpty || why.length > 300) throw _refused(DkCode.dkg07, 'a line is skipped with a reason of 1 to 300 characters');
-    if (!_mine(workspaceId)) throw _refused(DkCode.dkg04, 'not a line of this business');
-    await _seed();
-    final taskId = _taskOfLine[lineId];
-    if (taskId == null) throw _refused(DkCode.dkg04, 'not a line of this business');
-    final line = _lines[taskId]!.firstWhere((l) => l.lineId == lineId);
-    if (line.state == CountLineState.counted) throw _refused(DkCode.dkg19, 'this line was counted');
-    if (_state[taskId] != CountTaskState.open) throw _refused(DkCode.dkg19, 'this task is no longer open');
-    _setLine(taskId, lineId, CountLineState.skipped, reason: why);
-    return _answers[requestId] = _close(taskId, lineId, state: 'skipped');
+    return _answers[requestId] = await _run(workspaceId, 'line', () async => _book.skip(lineId, reason));
   }
 
   @override
   Future<List<CountHistoryRow>> history(String workspaceId) async {
     if (!_mine(workspaceId)) return const [];
     await _seed();
-    return [
-      for (final e in _history.entries)
-        CountHistoryRow(
-          itemId: e.key.split('|').first,
-          locationId: e.key.split('|').last,
-          lastCountedAt: e.value.at,
-          counts: e.value.counts,
-          exact: e.value.exact,
-        ),
-    ];
+    return _book.history;
   }
 
   final Map<String, BulkCountResult> _bulk = {};
@@ -263,13 +183,8 @@ class DemoStockCycleCounts implements StockCycleCounts {
     if (_bulk[requestId] case final done?) {
       return BulkCountResult(taskState: done.taskState, lines: done.lines, leftOut: done.leftOut, missing: done.missing, replayed: true);
     }
-    if (!_mine(workspaceId) || !_lines.containsKey(taskId)) {
-      if (_mine(workspaceId)) await _seed();
-      if (!_mine(workspaceId) || !_lines.containsKey(taskId)) throw _refused(DkCode.dkg04, 'not a task of this business');
-    }
-    if (_state[taskId] != CountTaskState.open) throw _refused(DkCode.dkg19, 'this task is no longer open');
-    final held = _held();
-    final sees = held.contains(WorkspacePermission.manageStock) || held.contains(WorkspacePermission.approveStockAdjustments);
+    final pending = await _run(workspaceId, 'task', () async => _book.openLines(taskId));
+    final sees = _sees();
     final seen = <String>{};
     final byItem = <String, int>{};
     final left = <BulkLeftOut>[];
@@ -289,14 +204,14 @@ class DemoStockCycleCounts implements StockCycleCounts {
       }
     }
     final counted = <BulkCountedLine>[];
-    for (final line in [..._lines[taskId]!]) {
+    for (final line in pending) {
       final n = byItem[line.itemId];
-      if (line.state != CountLineState.pending || n == null) continue;
+      if (n == null) continue;
       await countLine(workspaceId, line.lineId, '$n', 'bulk-$requestId-${line.lineId}');
       counted.add(BulkCountedLine(lineId: line.lineId, itemId: line.itemId, locationId: line.locationId, read: n, state: 'counted'));
     }
     return _bulk[requestId] = BulkCountResult(
-      taskState: _state[taskId]!,
+      taskState: _book.stateOf(taskId),
       lines: counted,
       leftOut: left,
       missing: sees ? const [] : null,

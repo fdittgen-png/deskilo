@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_spacing.dart';
 
 /// One way out of a space: the menu lists one per side of the row.
 class SpaceLeaveItem {
@@ -145,7 +146,7 @@ class SpaceRowControls extends StatelessWidget {
                 child: Row(
                   children: [
                     const Icon(Icons.dns_outlined, size: 18),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.sm),
                     Flexible(
                       child: Text(
                         context.l10n.spaceHostedOn(server),

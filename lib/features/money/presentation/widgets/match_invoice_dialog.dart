@@ -6,6 +6,7 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../application/payment_candidates.dart';
 
 /// What the match dialog returns (0068): the selected REGISTERED
@@ -108,7 +109,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
             ),
             if (widget.payments.isEmpty)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
                 child: Text(
                   l10n.invoiceMatchNoPayments,
                   key: const ValueKey('invoice-match-no-payments'),
@@ -142,7 +143,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
                 ),
               ),
             if (over) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 l10n.invoiceMatchOver(widget.currency
                         .formatMinor(paid - widget.dueCents)),
@@ -170,14 +171,14 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
               ),
             ],
             if (under) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 l10n.invoiceMatchUnder(widget.currency
                         .formatMinor(widget.dueCents - paid)),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               key: const ValueKey('invoice-match-note'),
               controller: _note,

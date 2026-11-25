@@ -16,6 +16,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/rights_labels.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_bar.dart';
@@ -84,7 +85,7 @@ class _Body extends ConsumerWidget {
     final date = appFormatOf(context).dates(DateShape.date);
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 720),
+        constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
         child: ListView(
           padding: AppSpacing.gutterAll,
           children: [

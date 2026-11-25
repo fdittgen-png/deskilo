@@ -191,7 +191,7 @@ class _ShellSwipeCoachMarkState extends State<ShellSwipeCoachMark>
                   elevation: 6,
                   shadowColor: Colors.black.withValues(alpha: 0.4),
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 10, 8, 10),
+                    padding: const EdgeInsets.fromLTRB(14, 10, AppSpacing.sm, 10),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -218,7 +218,7 @@ class _ShellSwipeCoachMarkState extends State<ShellSwipeCoachMark>
                           style: TextButton.styleFrom(
                             foregroundColor: theme.colorScheme.inversePrimary,
                             visualDensity: VisualDensity.compact,
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                             minimumSize: const Size(0, 32),
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
