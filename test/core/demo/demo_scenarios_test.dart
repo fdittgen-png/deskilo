@@ -1554,7 +1554,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       } on StockConfigRefused catch (e) {
         refused = e.reason == StockRefusal.registryUnit;
       }
-      return metres && kilometres && refused && all.length == 14;
+      return metres && kilometres && refused && all.length == 18; // the 13 built-ins, the 4 packaging units of the Demo, the drum
     },
   ),
   // #4431 — the expiry report: what expired and what is about to, by date, the five basket pieces one by one, and a place keeps
