@@ -187,10 +187,6 @@
   "@tillLayoutPublish": {
     "description": "#4448 the till layout editor"
   },
-  "tillLayoutSaved": "Draft saved.",
-  "@tillLayoutSaved": {
-    "description": "#4448 the till layout editor"
-  },
   "tillLayoutPublished": "Published. The till takes it at its next session.",
   "@tillLayoutPublished": {
     "description": "#4448 the till layout editor"

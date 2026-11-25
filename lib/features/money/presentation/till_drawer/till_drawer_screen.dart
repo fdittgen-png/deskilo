@@ -17,25 +17,16 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/domain/workspace_permission.dart';
-import '../../../workspace/providers/workspace_providers.dart' show enabledFeaturesSyncProvider, myPermissionsProvider;
 import '../../application/till_drawer_commands.dart';
 import '../../domain/till_drawer.dart';
 import '../../providers/till_drawer_providers.dart';
+import '../../providers/till_layout_providers.dart';
 import 'cash_entry_sheet.dart';
 import 'close_sheet.dart';
 import 'drawer_text.dart';
 import 'open_sheet.dart';
 import 'terminal_console.dart';
 import 'till_edit_sheet.dart';
-
-/// #4448 — whether the person may open a till's layout editor: the right, where till layouts are on.
-final _mayLayOut = Provider.autoDispose<bool>(
-  (ref) =>
-      ref.watch(myPermissionsProvider).contains(WorkspacePermission.configureTill) &&
-      ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.counterTillLayout),
-);
 
 /// The drawer screen. [canManage] is whether the person may add and edit tills (the sites' managers).
 class TillDrawerScreen extends ConsumerWidget {
@@ -183,12 +174,12 @@ class _TillCard extends ConsumerWidget {
             Row(
               children: [
                 Expanded(child: Text(till.name, style: Theme.of(context).textTheme.titleMedium)),
-                if (ref.watch(_mayLayOut))
+                if (ref.watch(mayLayOutTillsProvider))
                   IconButton(
                     key: ValueKey('drawer-layout-${till.id}'),
                     tooltip: l10n.tillLayoutEdit,
                     icon: const Icon(Icons.dashboard_customize_outlined),
-                    onPressed: () => context.push(Uri(path: '${Routes.tillLayout}/${till.id}', queryParameters: {'name': till.name}).toString()),
+                    onPressed: () => context.push(Routes.tillLayoutOf(till.id, till.name)),
                   ),
                 if (canManage)
                   IconButton(

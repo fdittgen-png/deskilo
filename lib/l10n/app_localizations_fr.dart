@@ -42074,9 +42074,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillLayoutRemoveCell => 'Retirer cet élément';
 
   @override
-  String get tillLayoutSaved => 'Brouillon enregistré.';
-
-  @override
   String get tillLayoutSizeDesk => 'Largeur bureau';
 
   @override

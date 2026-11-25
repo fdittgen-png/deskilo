@@ -54219,10 +54219,6 @@
   "@tillLayoutRemoveCell": {
     "description": "#4448 the till layout editor"
   },
-  "tillLayoutSaved": "Draft saved.",
-  "@tillLayoutSaved": {
-    "description": "#4448 the till layout editor"
-  },
   "tillLayoutSizeDesk": "Desk width",
   "@tillLayoutSizeDesk": {
     "description": "#4448 the till layout editor"

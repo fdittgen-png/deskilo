@@ -41553,9 +41553,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillLayoutRemoveCell => 'Remove this widget';
 
   @override
-  String get tillLayoutSaved => 'Draft saved.';
-
-  @override
   String get tillLayoutSizeDesk => 'Desk width';
 
   @override

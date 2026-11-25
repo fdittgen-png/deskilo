@@ -13,15 +13,20 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/guarded.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../domain/service_item.dart';
 import '../../domain/till_layout.dart';
 import '../../domain/till_layout_edits.dart';
 import '../../domain/till_layout_port.dart';
 import '../../domain/till_layout_templates.dart';
+import '../../providers/money_providers.dart' show servicesProvider;
 import '../../providers/till_layout_providers.dart';
 import 'till_layout_canvas.dart';
+import 'till_layout_editing.dart';
 import 'till_layout_words.dart';
 
 class TillLayoutScreen extends ConsumerStatefulWidget {
@@ -36,14 +41,7 @@ class TillLayoutScreen extends ConsumerStatefulWidget {
 }
 
 class _TillLayoutScreenState extends ConsumerState<TillLayoutScreen> {
-  TillLayout? _layout;
-  int _version = 0;
-  bool _loaded = false;
-  bool _dirty = false;
-  bool _busy = false;
-  int _page = 0;
-  int? _selected;
-  TillLayoutSize _size = TillLayoutSize.phone;
+  final _edit = TillLayoutEditing();
 
   TillLayoutPort get _port => ref.read(tillLayoutPortProvider);
 
@@ -53,61 +51,50 @@ class _TillLayoutScreenState extends ConsumerState<TillLayoutScreen> {
     unawaited(_load());
   }
 
+  @override
+  void dispose() {
+    _edit.dispose();
+    super.dispose();
+  }
+
   Future<void> _load() async {
     final draft = await _port.draft(widget.workspaceId, widget.tillId);
     final published = draft == null ? await _port.published(widget.workspaceId, widget.tillId) : null;
-    if (!mounted) return;
-    setState(() {
-      // the published layout is the starting point of a new draft; nothing published: a template is chosen
-      _layout = draft ?? (published == null ? null : TillLayout(name: published.name, pages: published.pages));
-      _version = draft?.version ?? 0;
-      _loaded = true;
-      _dirty = draft == null && published != null;
-    });
+    if (mounted) _edit.loadedWith(draft: draft, published: published);
   }
 
-  void _start(TillLayoutTemplate t) => setState(() {
-    _layout = t.build(widget.tillName, pageName: (p) => tillTemplatePageName(context.l10n, p));
-    _dirty = true;
-  });
+  void _start(TillLayoutTemplate t) => _edit.start(t.build(widget.tillName, pageName: (p) => tillTemplatePageName(context.l10n, p)));
 
-  TillGrid? get _grid => _layout?.pages[_page].grids[_size];
-
-  void _replaceGrid(TillGrid g, {int? select}) {
-    final layout = _layout!;
-    final page = layout.pages[_page];
-    final pages = [...layout.pages]..[_page] = TillPage(name: page.name, grids: {...page.grids, _size: g});
-    setState(() {
-      _layout = TillLayout(name: layout.name, pages: pages, version: layout.version);
-      _selected = select;
-      _dirty = true;
-    });
-  }
+  /// The business's items for an item key; a failed read offers none, and the trace keeps why.
+  Future<List<ServiceItem>> _items() => guardRead(
+    domain: 'till',
+    message: 'the items could not be read for a till key',
+    read: () => ref.read(servicesProvider.future),
+    fallback: (_) => const <ServiceItem>[],
+  );
 
   Future<void> _add() async {
-    final grid = _grid;
+    final grid = _edit.grid;
     if (grid == null) return;
-    final picked = await showTillWidgetPicker(context, ref);
+    final picked = await showTillWidgetPicker(context, _items);
     if (picked == null || !mounted) return;
     final added = addCell(grid, picked.kind, params: picked.params);
     if (added == null) {
       AppSnack.info(context, context.l10n.tillLayoutNoRoom);
       return;
     }
-    _replaceGrid(added, select: added.cells.length - 1);
+    _edit.replaceGrid(added, select: added.cells.length - 1);
   }
 
   Future<void> _run(Future<int> Function(String requestId) command, String done, {required bool publish}) async {
-    setState(() => _busy = true);
+    _edit.running(on: true);
     try {
       final version = await command(newRequestId());
       if (!mounted) return;
-      setState(() {
-        if (!publish) _version = version;
-        _dirty = false;
-      });
+      _edit.done(savedVersion: publish ? null : version);
       AppSnack.success(context, done);
-    } on TillLayoutRefused catch (e) {
+    } on TillLayoutRefused catch (e, st) {
+      TraceLogger.instance.warn('till', 'a till layout was refused: ${e.kind.name}', error: e, stackTrace: st);
       if (!mounted) return;
       final l10n = context.l10n;
       AppSnack.error(context, switch (e.kind) {
@@ -116,26 +103,30 @@ class _TillLayoutScreenState extends ConsumerState<TillLayoutScreen> {
         TillLayoutRefusalKind.other => l10n.tillDrawerFailed,
       });
     } finally {
-      if (mounted) setState(() => _busy = false);
+      if (mounted) _edit.running(on: false);
     }
   }
 
   Future<void> _save() => _run(
-    (id) => _port.save(widget.workspaceId, requestId: id, tillId: widget.tillId, layout: _layout!, expectedVersion: _version),
-    context.l10n.tillLayoutSaved,
+    (id) => _port.save(widget.workspaceId, requestId: id, tillId: widget.tillId, layout: _edit.layout!, expectedVersion: _edit.version),
+    context.l10n.quoteDraftSaved,
     publish: false,
   );
 
   Future<void> _publish() => _run(
-    (id) => _port.publish(widget.workspaceId, requestId: id, tillId: widget.tillId, expectedVersion: _version),
+    (id) => _port.publish(widget.workspaceId, requestId: id, tillId: widget.tillId, expectedVersion: _edit.version),
     context.l10n.tillLayoutPublished,
     publish: true,
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ListenableBuilder(listenable: _edit, builder: (context, _) => _page(context));
+
+  Widget _page(BuildContext context) {
     final l10n = context.l10n;
-    final layout = _layout;
+    final layout = _edit.layout;
+    final busy = _edit.busy;
+    final dirty = _edit.dirty;
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.tillLayoutTitle),
@@ -152,7 +143,7 @@ class _TillLayoutScreenState extends ConsumerState<TillLayoutScreen> {
                     Expanded(
                       child: OutlinedButton(
                         key: const ValueKey('till-layout-save'),
-                        onPressed: _busy || !_dirty ? null : _save,
+                        onPressed: busy || !dirty ? null : _save,
                         child: Text(l10n.commonSave),
                       ),
                     ),
@@ -160,7 +151,7 @@ class _TillLayoutScreenState extends ConsumerState<TillLayoutScreen> {
                     Expanded(
                       child: FilledButton(
                         key: const ValueKey('till-layout-publish'),
-                        onPressed: _busy || _dirty || _version == 0 ? null : _publish,
+                        onPressed: busy || dirty || _edit.version == 0 ? null : _publish,
                         child: Text(l10n.tillLayoutPublish),
                       ),
                     ),
@@ -172,33 +163,24 @@ class _TillLayoutScreenState extends ConsumerState<TillLayoutScreen> {
           ? null
           : FloatingActionButton.extended(
               key: const ValueKey('till-layout-add'),
-              onPressed: _busy ? null : _add,
+              onPressed: busy ? null : _add,
               icon: const Icon(Icons.add),
               label: Text(l10n.tillLayoutAdd),
             ),
-      body: !_loaded
+      body: !_edit.loaded
           ? const LoadingView()
           : layout == null
           ? _Templates(onPick: _start)
           : _Editor(
               layout: layout,
-              page: _page,
-              size: _size,
-              selected: _selected,
-              onPage: (p) => setState(() {
-                _page = p;
-                _selected = null;
-              }),
-              onSize: (s) => setState(() {
-                _size = s;
-                _selected = null;
-              }),
-              onSelect: (i) => setState(() => _selected = i),
-              onStep: (step) {
-                final next = stepCell(_grid!, _selected!, step);
-                if (next != null) _replaceGrid(next, select: _selected);
-              },
-              onRemove: () => _replaceGrid(removeCell(_grid!, _selected!)),
+              page: _edit.page,
+              size: _edit.size,
+              selected: _edit.selected,
+              onPage: _edit.showPage,
+              onSize: _edit.showSize,
+              onSelect: _edit.select,
+              onStep: _edit.step,
+              onRemove: _edit.remove,
             ),
     );
   }
@@ -260,7 +242,7 @@ class _Editor extends StatelessWidget {
     final grid = layout.pages[page].grids[size];
     final sel = selected;
     return ListView(
-      padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, kFloatingActionButtonMargin * 6),
+      padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, kFabSafeBottom),
       children: [
         SegmentedButton<TillLayoutSize>(
           key: const ValueKey('till-layout-size'),

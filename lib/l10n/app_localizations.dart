@@ -66893,12 +66893,6 @@ abstract class AppLocalizations {
   /// #4448 the till layout editor
   ///
   /// In en, this message translates to:
-  /// **'Draft saved.'**
-  String get tillLayoutSaved;
-
-  /// #4448 the till layout editor
-  ///
-  /// In en, this message translates to:
   /// **'Desk width'**
   String get tillLayoutSizeDesk;
 

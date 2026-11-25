@@ -95,8 +95,11 @@ abstract final class Routes {
   static const stockSettings = '/stock/settings';
   static const tillReceipts = '/till/receipts';
 
-  /// #4448 -- the layout editor of one till: `/till/layout/<till id>?name=<till name>`.
-  static const tillLayout = '/till/layout';
+  /// #4448 -- the layout editor of one till (`?name=` its name); [tillLayoutOf] fills in the till.
+  static const tillLayout = '/till/layout/:tillId';
+
+  static String tillLayoutOf(String tillId, String name) =>
+      Uri(path: tillLayout.replaceFirst(':tillId', tillId), queryParameters: {'name': name}).toString();
   static const validation = '/validation';
   static const vat = '/vat';
   static const vatDeclarations = '/vat-declarations';

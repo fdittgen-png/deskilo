@@ -46,7 +46,6 @@
   "tillLayoutChooseItem": "Quale articolo?",
   "tillLayoutNoRoom": "Non c'è posto libero per questo elemento su questa griglia.",
   "tillLayoutPublish": "Pubblicare sulla cassa",
-  "tillLayoutSaved": "Bozza salvata.",
   "tillLayoutPublished": "Pubblicato. La cassa lo adotta alla sessione successiva.",
   "tillLayoutStale": "Qualcuno ha modificato questo layout; lo ricarichi.",
   "tillLayoutInvalid": "Questo layout non può essere salvato: {reason}",

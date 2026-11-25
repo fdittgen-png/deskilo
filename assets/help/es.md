@@ -3092,7 +3092,7 @@ Pulse **Abrir la caja**, escriba el **Fondo del cajón** (o, si su negocio cuent
 
 Vende en un mostrador y quiere que la caja se adapte a su forma de vender: teclas grandes para el pan pesado, páginas por categoría para un bar, primero un campo de escaneo para una ferretería.
 
-Active **Diseños de caja** (requiere las sesiones de caja). En **Cajón de caja**, alguien que puede organizar las cajas (por defecto propietarios y administradores) pulsa el botón de diseño de una caja. Una caja sin diseño parte de una plantilla: **Comercio**, **Panadería y productos pesados**, **Cafetería y bar**, **Recepción de estudio** o **Ferretería y catálogo** (#4448).
+Active **Diseños de caja** (requiere las sesiones de caja). En **Cajón de caja**, alguien que puede organizar las cajas (por defecto propietarios y administradores) pulsa el botón de diseño de una caja. Una caja sin diseño parte de una plantilla: **Comercio**, **Panadería y productos pesados**, **Cafetería y bar**, **Recepción de estudio** o **Ferretería y catálogo**.
 
 El diseño tiene una cuadrícula para cada ancho en que se usa la caja: **Ancho de teléfono**, **Ancho de tableta** y **Ancho de escritorio**. **Añadir un elemento** coloca una tecla de artículo, una tecla de función (como **Cobrar en efectivo** o **Siguiente cliente**), un teclado numérico, una calculadora, la cesta, el total y el cambio u otra herramienta en el primer sitio libre donde cabe. Toque un elemento para seleccionarlo; los botones bajo la cuadrícula lo mueven y lo hacen más ancho, más estrecho, más alto o más bajo paso a paso. No se ofrece un paso que saldría de la cuadrícula, se superpondría a otro elemento o dejaría una herramienta demasiado pequeña.
 

@@ -46,7 +46,6 @@
   "tillLayoutChooseItem": "Quel article ?",
   "tillLayoutNoRoom": "Il n'y a pas de place libre pour cet élément sur cette grille.",
   "tillLayoutPublish": "Publier sur la caisse",
-  "tillLayoutSaved": "Brouillon enregistré.",
   "tillLayoutPublished": "Publiée. La caisse la prend à sa prochaine session.",
   "tillLayoutStale": "Quelqu'un a modifié cette disposition ; rechargez-la.",
   "tillLayoutInvalid": "Cette disposition ne peut pas être enregistrée : {reason}",

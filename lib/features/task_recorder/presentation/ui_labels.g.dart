@@ -5238,7 +5238,6 @@ Map<String, _Getter> _part11() => {
   'tillDrawerDenomValue': (l) => l.tillDrawerDenomValue,
   'tillDrawerFloat': (l) => l.tillDrawerFloat,
   'tillLayoutPageFood': (l) => l.tillLayoutPageFood,
-  'tillLayoutSaved': (l) => l.tillLayoutSaved,
   'tillLeaveGo': (l) => l.tillLeaveGo,
   'tillOfflineClosedSession': (l) => l.tillOfflineClosedSession,
   'tillReadinessConfirmed': (l) => l.tillReadinessConfirmed,

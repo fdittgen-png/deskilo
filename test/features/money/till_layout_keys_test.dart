@@ -8,8 +8,6 @@ import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/domain/till_layout.dart';
 import 'package:deskilo/features/money/presentation/till_layout/till_layout_keys.dart';
 import 'package:deskilo/features/money/providers/till_layout_providers.dart';
-import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
-import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -54,7 +52,7 @@ Future<List<String>> _open(WidgetTester tester, DemoTillLayouts store, {required
     overrides: [
       ...standardTestOverrides(),
       tillLayoutPortProvider.overrideWithValue(store),
-      enabledFeaturesSyncProvider.overrideWithValue({if (on) WorkspaceFeature.counterTillLayout}),
+      tillLayoutsOnProvider.overrideWithValue(on),
     ],
   );
   await tester.pump();

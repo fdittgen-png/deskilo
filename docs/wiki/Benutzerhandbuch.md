@@ -3237,7 +3237,7 @@ Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade**
 
 Sie verkaufen an einer Theke und möchten, dass die Kasse zu Ihrem Verkauf passt: große Tasten für gewogenes Brot, Kategorieseiten für eine Bar, zuerst ein Scanfeld für einen Baumarkt.
 
-Schalten Sie **Kassenlayouts** ein (setzt Kassensitzungen voraus). In **Kassenschublade** drückt jemand, der die Kassen gestalten darf (standardmäßig Inhaber und Administratoren), die Layout-Schaltfläche einer Kasse. Eine Kasse ohne Layout beginnt mit einer Vorlage: **Einzelhandel**, **Bäckerei und Wiegeware**, **Café und Bar**, **Studiotheke** oder **Baumarkt und Katalog** (#4448).
+Schalten Sie **Kassenlayouts** ein (setzt Kassensitzungen voraus). In **Kassenschublade** drückt jemand, der die Kassen gestalten darf (standardmäßig Inhaber und Administratoren), die Layout-Schaltfläche einer Kasse. Eine Kasse ohne Layout beginnt mit einer Vorlage: **Einzelhandel**, **Bäckerei und Wiegeware**, **Café und Bar**, **Studiotheke** oder **Baumarkt und Katalog**.
 
 Das Layout hat ein Raster für jede Breite, in der die Kasse benutzt wird: **Telefonbreite**, **Tabletbreite** und **Desktopbreite**. **Element hinzufügen** setzt eine Artikeltaste, eine Funktionstaste (etwa **Bar kassieren** oder **Nächster Kunde**), einen Ziffernblock, einen Rechner, den Warenkorb, Summe und Rückgeld oder ein anderes Werkzeug an den ersten freien Platz, an den es passt. Tippen Sie ein Element an, um es auszuwählen; die Schaltflächen unter dem Raster verschieben es und machen es Schritt für Schritt breiter, schmaler, höher oder niedriger. Ein Schritt, der das Raster verlassen, auf einem anderen Element liegen oder ein Werkzeug zu klein machen würde, wird nicht angeboten.
 

@@ -3237,7 +3237,7 @@ Premere **Aprire la cassa**, digitare il **Fondo cassa nel cassetto** (o, se l'a
 
 Vende al banco e vuole che la cassa si adatti al Suo modo di vendere: tasti grandi per il pane pesato, pagine per categoria per un bar, prima un campo di scansione per una ferramenta.
 
-Attivi **Layout di cassa** (richiede le sessioni di cassa). In **Cassetto di cassa**, chi può organizzare le casse (per impostazione i titolari e gli amministratori) preme il pulsante di layout di una cassa. Una cassa senza layout parte da un modello: **Negozio**, **Panetteria e merce pesata**, **Caffè e bar**, **Reception dello studio** o **Ferramenta e catalogo** (#4448).
+Attivi **Layout di cassa** (richiede le sessioni di cassa). In **Cassetto di cassa**, chi può organizzare le casse (per impostazione i titolari e gli amministratori) preme il pulsante di layout di una cassa. Una cassa senza layout parte da un modello: **Negozio**, **Panetteria e merce pesata**, **Caffè e bar**, **Reception dello studio** o **Ferramenta e catalogo**.
 
 Il layout ha una griglia per ogni larghezza in cui la cassa è usata: **Larghezza telefono**, **Larghezza tablet** e **Larghezza desktop**. **Aggiungere un elemento** colloca un tasto articolo, un tasto funzione (come **Incassare in contanti** o **Cliente successivo**), un tastierino numerico, una calcolatrice, il carrello, il totale e il resto o un altro strumento nel primo posto libero in cui entra. Tocchi un elemento per selezionarlo; i pulsanti sotto la griglia lo spostano e lo rendono più largo, più stretto, più alto o più basso un passo alla volta. Un passo che uscirebbe dalla griglia, si sovrapporrebbe a un altro elemento o renderebbe uno strumento troppo piccolo non viene offerto.
 

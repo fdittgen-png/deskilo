@@ -13,3 +13,10 @@ final tillPublishedLayoutProvider = FutureProvider.autoDispose.family<TillLayout
   (ref, k) => ref.watch(tillLayoutPortProvider).published(k.workspaceId, k.tillId),
   retry: (_, _) => null,
 );
+
+/// Whether till layouts are on in the open business. The app wires it from the business's features
+/// (`tillLayoutsOnFromApp`), so the till reads it without reaching into the workspace.
+final tillLayoutsOnProvider = Provider<bool>((ref) => false);
+
+/// Whether the person may lay out the tills: the right, where till layouts are on. Wired by the app (`mayLayOutTillsFromApp`).
+final mayLayOutTillsProvider = Provider<bool>((ref) => false);

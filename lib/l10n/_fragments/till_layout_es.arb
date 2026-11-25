@@ -46,7 +46,6 @@
   "tillLayoutChooseItem": "¿Qué artículo?",
   "tillLayoutNoRoom": "No hay sitio libre para este elemento en esta cuadrícula.",
   "tillLayoutPublish": "Publicar en la caja",
-  "tillLayoutSaved": "Borrador guardado.",
   "tillLayoutPublished": "Publicado. La caja lo adopta en su próxima sesión.",
   "tillLayoutStale": "Alguien ha cambiado este diseño; vuelva a cargarlo.",
   "tillLayoutInvalid": "Este diseño no se puede guardar: {reason}",

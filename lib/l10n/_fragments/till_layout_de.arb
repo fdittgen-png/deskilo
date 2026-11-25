@@ -46,7 +46,6 @@
   "tillLayoutChooseItem": "Welcher Artikel?",
   "tillLayoutNoRoom": "Auf diesem Raster ist kein freier Platz für dieses Element.",
   "tillLayoutPublish": "An die Kasse veröffentlichen",
-  "tillLayoutSaved": "Entwurf gespeichert.",
   "tillLayoutPublished": "Veröffentlicht. Die Kasse übernimmt es mit der nächsten Sitzung.",
   "tillLayoutStale": "Jemand hat dieses Layout geändert; laden Sie es neu.",
   "tillLayoutInvalid": "Dieses Layout kann nicht gespeichert werden: {reason}",

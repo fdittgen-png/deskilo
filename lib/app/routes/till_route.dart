@@ -76,6 +76,10 @@ class _TillDrawerRoute extends ConsumerWidget {
   }
 }
 
+/// The till id and the till's name in the layout editor's address ([Routes.tillLayoutOf]).
+const _tillParam = 'tillId';
+const _nameQuery = 'name';
+
 /// #4448 — the layout editor: the open business and the till named in the address.
 class _TillLayoutRoute extends ConsumerWidget {
   const _TillLayoutRoute({required this.tillId, required this.tillName});
@@ -138,11 +142,11 @@ List<RouteBase> tillRoutes(RouteEnv env) => [
     ),
     // #4448 — the layout editor of one till: who may lay out the tills, where till layouts are on.
     GoRoute(
-      path: '${Routes.tillLayout}/:tillId',
+      path: Routes.tillLayout,
       redirect: env.guard(
         const RouteAccess(features: [WorkspaceFeature.counterTillLayout], permission: WorkspacePermission.configureTill, to: '/till/drawer'),
       ),
-      builder: (context, state) => _TillLayoutRoute(tillId: state.pathParameters['tillId'] ?? '', tillName: state.uri.queryParameters['name'] ?? ''),
+      builder: (context, state) => _TillLayoutRoute(tillId: state.pathParameters[_tillParam] ?? '', tillName: state.uri.queryParameters[_nameQuery] ?? ''),
     ),
     // #4367 — the day close: the finances close the business day and read its report.
     GoRoute(

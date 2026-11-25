@@ -9,8 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/providers/workspace_providers.dart' show enabledFeaturesSyncProvider;
 import '../../domain/counter_till.dart';
 import '../../domain/till_layout.dart';
 import '../../providers/till_layout_providers.dart';
@@ -42,15 +40,17 @@ class TillKeysOrLayout extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final generated = TillKeys(key: const ValueKey('till-keys'), items: items, onTap: onTap);
     final till = tillId;
-    if (till == null || !ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.counterTillLayout)) return generated;
+    if (till == null || !ref.watch(tillLayoutsOnProvider)) return generated;
     final layout = ref.watch(tillPublishedLayoutProvider((workspaceId: workspaceId, tillId: till))).value;
-    if (layout == null || layout.pages.isEmpty) return generated;
-    return _LaidOut(layout: layout, items: items.value ?? const [], onTap: onTap, onPayCash: onPayCash, onNext: onNext);
+    final sold = items.value;
+    // no layout, or the items not read yet (or not readable): the generated keys say so in their own way
+    if (layout == null || layout.pages.isEmpty || sold == null) return generated;
+    return _LaidOut(key: const ValueKey('till-layout-laid-out'), layout: layout, items: sold, onTap: onTap, onPayCash: onPayCash, onNext: onNext);
   }
 }
 
 class _LaidOut extends StatefulWidget {
-  const _LaidOut({required this.layout, required this.items, required this.onTap, required this.onPayCash, required this.onNext});
+  const _LaidOut({super.key, required this.layout, required this.items, required this.onTap, required this.onPayCash, required this.onNext});
 
   final TillLayout layout;
   final List<TillKey> items;

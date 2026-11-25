@@ -3,13 +3,14 @@
 // #4448 -- where a till's layouts live: the draft being edited and the one published. Every write goes under a request id
 // and the version the editor read; the server refuses a stale version (DKL10) and an invalid layout with its first
 // problem (DKL02), as `till_layout_save_v1` and `till_layout_publish_v1` do.
+import '../../../core/failure/app_failure.dart' show TypedRefusal;
 import 'till_layout.dart';
 
 /// Why a save or a publish was refused: another editor moved the version, or the layout breaks a rule (with the first
 /// problem the server named), or something else the editor only reports.
 enum TillLayoutRefusalKind { stale, invalid, other }
 
-class TillLayoutRefused implements Exception {
+class TillLayoutRefused implements TypedRefusal {
   const TillLayoutRefused(this.kind, [this.reason = '']);
 
   final TillLayoutRefusalKind kind;

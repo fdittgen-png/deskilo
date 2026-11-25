@@ -41946,9 +41946,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillLayoutRemoveCell => 'Rimuovere questo elemento';
 
   @override
-  String get tillLayoutSaved => 'Bozza salvata.';
-
-  @override
   String get tillLayoutSizeDesk => 'Larghezza desktop';
 
   @override

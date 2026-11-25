@@ -7,6 +7,9 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/codes/dk_code.dart';
+import '../../../core/data/app_failure_from.dart';
+import '../../../core/failure/app_failure.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/till_layout.dart';
 import '../domain/till_layout_port.dart';
 
@@ -49,22 +52,27 @@ class SupabaseTillLayouts implements TillLayoutPort {
   Future<int> _command(Future<Object?> Function() call) async {
     try {
       return _version(await call());
-    } on PostgrestException catch (e) {
-      final reason = JsonReader.orEmpty(_details(e.details), context: 'till_layout refusal').stringOr('reason');
-      throw switch (e.code) {
+    } on Object catch (e, st) {
+      final failure = appFailureFrom(e);
+      TraceLogger.instance.log(TraceLevel.info, 'till', 'a till layout command: $failure', error: e, stackTrace: st);
+      if (failure is! Refusal) rethrow;
+      final refused = switch (failure.code) {
         DkCode.dkl10 => const TillLayoutRefused(TillLayoutRefusalKind.stale),
-        DkCode.dkl02 => TillLayoutRefused(TillLayoutRefusalKind.invalid, reason),
-        _ => TillLayoutRefused(TillLayoutRefusalKind.other, e.code ?? ''),
+        DkCode.dkl02 => TillLayoutRefused(TillLayoutRefusalKind.invalid, _reason(failure.details)),
+        _ => TillLayoutRefused(TillLayoutRefusalKind.other, failure.code ?? ''),
       };
+      Error.throwWithStackTrace(refused, st);
     }
   }
 
-  Object? _details(Object? details) {
-    if (details is! String) return details;
+  /// The `reason` of a refusal's JSON detail, or empty: a detail that is not our JSON is no hint.
+  String _reason(String? details) {
+    if (details == null) return '';
     try {
-      return jsonDecode(details);
-    } on FormatException {
-      return null;   // a detail that is no JSON names no reason
+      return JsonReader.orEmpty(jsonDecode(details), context: 'till_layout refusal').stringOr('reason');
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'till', 'a refusal detail without a reason', error: e, stackTrace: st);
+      return '';
     }
   }
 

@@ -450,7 +450,7 @@ class _TillState extends ConsumerState<_Till> {
           children: [
             if (widget.scan != null) TillScanField(onScan: _scanned),
             Expanded(
-              child: TillKeysOrLayout(workspaceId: widget.workspaceId, tillId: widget.till?.id, items: widget.keys, onTap: (i) => unawaited(_ring(i)), onPayCash: () => unawaited(_pay(_session.state.value)), onNext: _session.next),
+              child: TillKeysOrLayout(key: const ValueKey('till-keys-area'), workspaceId: widget.workspaceId, tillId: widget.till?.id, items: widget.keys, onTap: (i) => unawaited(_ring(i)), onPayCash: () => unawaited(_pay(_session.state.value)), onNext: _session.next),
             ),
           ],
         );

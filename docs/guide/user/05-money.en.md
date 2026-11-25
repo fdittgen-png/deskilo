@@ -826,7 +826,7 @@ Press **Open the till**, type the **Float in the drawer** (or, when your busines
 
 You sell at a counter and want the till to fit how you sell: large keys for weighed bread, category pages for a bar, a scan field first for a hardware shop.
 
-Turn on **Till layouts** (it needs till sessions). In **Till drawer**, someone who may lay out the tills (owners and administrators by default) presses the layout button of a till. A till without a layout starts from a template: **Retail**, **Bakery and weighed goods**, **Café and bar**, **Studio desk** or **Hardware and catalogue** (#4448).
+Turn on **Till layouts** (it needs till sessions). In **Till drawer**, someone who may lay out the tills (owners and administrators by default) presses the layout button of a till. A till without a layout starts from a template: **Retail**, **Bakery and weighed goods**, **Café and bar**, **Studio desk** or **Hardware and catalogue**.
 
 The layout has a grid for each width the till is used at: **Phone width**, **Tablet width** and **Desk width**. **Add a widget** places an item key, a function key (such as **Take cash** or **Next customer**), a numeric keypad, a calculator, the basket, the total and change, or another tool at the first free place it fits. Tap a widget to select it; the buttons under the grid move it and make it wider, narrower, taller or shorter one step at a time. A step that would leave the grid, lie on another widget or make a tool too small to use is not offered.
 

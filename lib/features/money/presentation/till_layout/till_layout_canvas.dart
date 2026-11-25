@@ -3,15 +3,15 @@
 // #4448 -- the editor's grid: each cell drawn at its place and span, a tap selects it; the toolbar of the selected cell
 // moves and resizes it one step at a time, every button disabled when its step would not fit; the picker of a new widget.
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/service_item.dart';
 import '../../domain/till_layout.dart';
 import '../../domain/till_layout_edits.dart';
-import '../../providers/money_providers.dart' show servicesProvider;
 import 'till_layout_words.dart';
 
 /// The height of one grid row in the editor.
@@ -44,10 +44,10 @@ class TillLayoutCanvas extends StatelessWidget {
                   width: grid.cells[i].colSpan * colWidth,
                   height: grid.cells[i].rowSpan * _rowHeight,
                   child: Padding(
-                    padding: const EdgeInsets.all(2),
+                    padding: AppSpacing.xsAll,
                     child: Material(
                       color: i == selected ? scheme.primaryContainer : scheme.surfaceContainerHighest,
-                      borderRadius: BorderRadius.circular(6),
+                      borderRadius: AppRadius.smAll,
                       child: InkWell(
                         key: ValueKey('till-layout-cell-$i'),
                         onTap: () => onSelect(i),
@@ -117,53 +117,49 @@ class TillCellToolbar extends StatelessWidget {
 /// A widget chosen in the picker: its kind and, for a key, what it sells or runs.
 typedef TillPickedWidget = ({TillWidgetKind kind, Map<String, Object?> params});
 
+/// One choice of a picker sheet: a heading line when [heading] is given, then a tile per [choices] entry.
+Future<T?> _choose<T>(BuildContext context, List<(T, String, String)> choices, {String? heading}) => showAppSheet<T>(
+  context: context,
+  showDragHandle: true,
+  builder: (c) => ListView(
+    shrinkWrap: true,
+    children: [
+      if (heading != null) ListTile(title: Text(heading, style: Theme.of(c).textTheme.titleMedium)),
+      for (final (value, key, words) in choices) ListTile(key: ValueKey(key), title: Text(words), onTap: () => Navigator.of(c).pop(value)),
+    ],
+  ),
+);
+
 /// Asks which widget to add: a tool, a function key with its function, or an item key with an item of the business.
-Future<TillPickedWidget?> showTillWidgetPicker(BuildContext context, WidgetRef ref) async {
+Future<TillPickedWidget?> showTillWidgetPicker(BuildContext context, Future<List<ServiceItem>> Function() loadItems) async {
   final l10n = context.l10n;
-  final kind = await showModalBottomSheet<TillWidgetKind>(
-    context: context,
-    showDragHandle: true,
-    builder: (c) => ListView(
-      shrinkWrap: true,
-      children: [
-        for (final k in TillWidgetKind.values)
-          if (k != TillWidgetKind.unknown && k != TillWidgetKind.categoryKey)
-            ListTile(key: ValueKey('till-layout-add-${k.wire}'), title: Text(tillWidgetName(l10n, k)), onTap: () => Navigator.of(c).pop(k)),
-      ],
-    ),
-  );
+  final kind = await _choose(context, [
+    for (final k in TillWidgetKind.values)
+      if (k != TillWidgetKind.unknown && k != TillWidgetKind.categoryKey) (k, 'till-layout-add-${k.wire}', tillWidgetName(l10n, k)),
+  ]);
   if (kind == null || !context.mounted) return null;
-  if (kind == TillWidgetKind.functionKey) {
-    final f = await showModalBottomSheet<TillFunction>(
-      context: context,
-      showDragHandle: true,
-      builder: (c) => ListView(
-        shrinkWrap: true,
-        children: [
-          ListTile(title: Text(l10n.tillLayoutChooseFunction, style: Theme.of(c).textTheme.titleMedium)),
-          for (final f in TillFunction.values)
-            if (f != TillFunction.unknown)
-              ListTile(key: ValueKey('till-layout-fn-${f.wire}'), title: Text(tillFunctionName(l10n, f)), onTap: () => Navigator.of(c).pop(f)),
-        ],
-      ),
-    );
-    return f == null ? null : (kind: kind, params: {tillCellFunctionParam: f.wire});
-  }
-  if (kind == TillWidgetKind.itemKey) {
-    final items = [for (final s in ref.read(servicesProvider).value ?? const <ServiceItem>[]) if (s.active) s];
-    if (!context.mounted) return null;
-    final item = await showModalBottomSheet<ServiceItem>(
-      context: context,
-      showDragHandle: true,
-      builder: (c) => ListView(
-        shrinkWrap: true,
-        children: [
-          ListTile(title: Text(l10n.tillLayoutChooseItem, style: Theme.of(c).textTheme.titleMedium)),
-          for (final s in items) ListTile(key: ValueKey('till-layout-item-${s.id}'), title: Text(s.name), onTap: () => Navigator.of(c).pop(s)),
-        ],
-      ),
-    );
-    return item == null ? null : (kind: kind, params: tillItemKeyParams(item.id, item.name));
-  }
-  return (kind: kind, params: const <String, Object?>{});
+  return switch (kind) {
+    TillWidgetKind.functionKey => _pickFunction(context, kind),
+    TillWidgetKind.itemKey => _pickItem(context, loadItems, kind),
+    _ => (kind: kind, params: const <String, Object?>{}),
+  };
+}
+
+Future<TillPickedWidget?> _pickFunction(BuildContext context, TillWidgetKind kind) async {
+  final l10n = context.l10n;
+  final f = await _choose(context, heading: l10n.tillLayoutChooseFunction, [
+    for (final f in TillFunction.values)
+      if (f != TillFunction.unknown) (f, 'till-layout-fn-${f.wire}', tillFunctionName(l10n, f)),
+  ]);
+  return f == null ? null : (kind: kind, params: {tillCellFunctionParam: f.wire});
+}
+
+Future<TillPickedWidget?> _pickItem(BuildContext context, Future<List<ServiceItem>> Function() loadItems, TillWidgetKind kind) async {
+  final l10n = context.l10n;
+  final items = await loadItems();
+  if (!context.mounted) return null;
+  final item = await _choose(context, heading: l10n.tillLayoutChooseItem, [
+    for (final s in items) if (s.active) (s, 'till-layout-item-${s.id}', s.name),
+  ]);
+  return item == null ? null : (kind: kind, params: tillItemKeyParams(item.id, item.name));
 }
