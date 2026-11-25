@@ -90,6 +90,7 @@ class QuoteRevision {
         : r.objects('lines', StandaloneLine.fromJson),
     // What each frozen line comes to, in the order of [lines]; none for a draft.
     amounts: [for (final l in frozen) QuoteLineAmounts.of(l)],
+    frozen: frozen,
     totals: r.objectOrNull('totals') == null
         ? null
         : QuoteTotals.fromJson(r.objectOrNull('totals')!),

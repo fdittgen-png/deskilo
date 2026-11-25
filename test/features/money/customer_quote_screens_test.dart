@@ -340,6 +340,7 @@ void main() {
     await _settle(tester);
     expect(find.byKey(const ValueKey('quote-convert-accepted')), findsOneWidget);
     expect(find.textContaining('144'), findsWidgets);
+    expect(find.byKey(const ValueKey('quote-convert-document')), findsOneWidget, reason: 'the accepted lines, their tax and the total');
     await tester.tap(find.byKey(const ValueKey('quote-convert-issue')));
     await _settle(tester);
     expect(find.byKey(const ValueKey('quote-convert-done')), findsOneWidget);
