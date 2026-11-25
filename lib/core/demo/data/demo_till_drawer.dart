@@ -61,6 +61,8 @@ class DemoTillDrawer implements TillDrawerPort {
   static const _seeded = [
     DrawerTill(id: 'demo-till-front', name: 'Front counter', active: true),
     DrawerTill(id: 'demo-till-market', name: 'Market stall', active: true),
+    // #4448 -- laid out with the Bakery template, a keypad and a calculator (demo_till_layouts.dart)
+    DrawerTill(id: 'demo-till-bakery', name: 'Bakery counter', active: true),
   ];
 
   /// The business's settings, read when an act needs them; the registry defaults until the app wires the real ones.

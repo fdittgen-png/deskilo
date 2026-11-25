@@ -23,6 +23,10 @@ Future<bool> tillLayoutJourney() async {
   const ws = 'ws-1';
   final store = DemoTillLayouts()..seed();
   final before = await store.published(ws, demoBakeryTill);
+  // the Demo's bakery counter sells from the first tap: the goods as keys, the keypad and the calculator, all within the rules
+  final seeded = {for (final c in before!.pages.first.grids[TillLayoutSize.desk]!.cells) c.kind};
+  final sells = seeded.containsAll([TillWidgetKind.itemKey, TillWidgetKind.keypad, TillWidgetKind.calculator]) &&
+      validateTillLayout(before, maxCells: store.maxCells).isEmpty;
   final layout = withCalculator(TillLayoutTemplate.bakery.build('Bakery counter', pageName: (p) => p.name));
   final v1 = await store.save(ws, requestId: 'l-1', tillId: demoBakeryTill, layout: layout, expectedVersion: 0);
   final again = await store.save(ws, requestId: 'l-1', tillId: demoBakeryTill, layout: layout, expectedVersion: 0);
@@ -36,7 +40,7 @@ Future<bool> tillLayoutJourney() async {
   final published = await store.publish(ws, requestId: 'l-4', tillId: demoBakeryTill, expectedVersion: v1);
   final after = await store.published(ws, demoBakeryTill);
   final kinds = {for (final c in after!.pages.first.grids[TillLayoutSize.desk]!.cells) c.kind};
-  return before != null &&
+  return sells &&
       v1 == 1 &&
       again == v1 &&
       stale == TillLayoutRefusalKind.stale &&
