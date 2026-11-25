@@ -17,4 +17,5 @@
 #define LV_USE_LOG 0
 #define LV_USE_ASSERT_NULL 1
 #define LV_USE_ASSERT_MALLOC 1
+#define LV_USE_QRCODE 1
 #endif

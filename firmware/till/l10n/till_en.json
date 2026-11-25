@@ -53,5 +53,9 @@
   "btn_items": "Items",
   "btn_keypad": "123",
   "st_qty": "Quantity %d: tap a product",
-  "st_updated": "%d products"
+  "st_updated": "%d products",
+  "pair_title": "Scan with the Deskilo app",
+  "pair_code": "Code %s",
+  "pair_hint": "Hold BOOT for 3 seconds to show this code again. Tap or press BOOT to close.",
+  "btn_pairing": "Show pairing code"
 }

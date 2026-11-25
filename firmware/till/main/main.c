@@ -19,6 +19,7 @@
 #include "lvgl.h"
 #include "net.h"
 #include "ui.h"
+#include "device.h"
 #include "money_text.h"
 #include "pending.h"
 #include "trace.h"
@@ -293,6 +294,20 @@ static void save_cal(const touch_cal_t *cal) {
 }
 static uint32_t s_seen;
 // Hands the screen a copy of the shared state whenever its version changed.
+// ---- the pairing code (#4474): BOOT held for 3 s shows it, on every board; pressed again, it closes ----
+static char s_pairing[192];
+static device_t s_device;
+static void boot_cb(lv_timer_t *t) {
+    static int held = -1;   // -1: BOOT was down at start (calibration); wait for its release before counting
+    bool down = board_boot_button();
+    if (held < 0) { if (!down) held = 0; return; }
+    if (down) {
+        held++;
+        // closing needs only a press; opening needs the 3 s hold, so a brushed button never covers a sale
+        if ((ui_pairing_shown() && held == 1) || held == 30) ui_toggle_pairing(s_pairing, s_device.fingerprint);
+    } else held = 0;
+}
+
 static void refresh_cb(lv_timer_t *t) {
     static shared_t copy;
     xSemaphoreTake(s_lock, portMAX_DELAY);
@@ -315,6 +330,10 @@ void app_main(void) {
     touch_cal_t cal;
     if (touch_cal_load(&cal)) board_touch_set_cal(&cal);   // the calibration taken on this board, else the vendor's range
     bool calibrate = board_boot_button();                   // BOOT held at start: calibrate before anything else
+    if (device_identity(&s_device) == ESP_OK) {
+        device_pairing_payload(&s_device, BOARD_PROFILE, esp_app_get_description()->version, s_pairing, sizeof s_pairing);
+        trace("device %.8s, code %s", s_device.id, s_device.fingerprint);
+    } else trace("the device identity cannot be read: the board shows no pairing code");
     lv_init();
     static lv_color_t buf1[BOARD_LCD_W * BUF_LINES], buf2[BOARD_LCD_W * BUF_LINES];
     lv_disp_draw_buf_init(&s_draw, buf1, buf2, BOARD_LCD_W * BUF_LINES);
@@ -338,6 +357,7 @@ void app_main(void) {
     s_cmd = xQueueCreate(8, sizeof(cmd_t));
     if (!cfg_complete()) {
         ui_build_not_set_up();
+        ui_toggle_pairing(s_pairing, s_device.fingerprint);   // a board not set up shows its code by itself
         trace("not set up: no settings on this board");
     } else {
         if (!strcmp(g_cfg.role, "till")) ui_build_till(); else ui_build_roll();
@@ -345,6 +365,7 @@ void app_main(void) {
         xTaskCreatePinnedToCore(net_task, "net", 12288, NULL, 4, NULL, 0);
     }
     if (calibrate) ui_calibrate();
+    lv_timer_create(boot_cb, 100, NULL);
     board_backlight(true);
     ESP_LOGI(TAG, "up (%s): free heap %lu", g_cfg.role[0] ? g_cfg.role : "no settings", (unsigned long)esp_get_free_heap_size());
     for (;;) {

@@ -115,7 +115,11 @@ bool board_touch(int *x, int *y) {
 }
 
 bool board_boot_button(void) {
-    gpio_config_t c = {.pin_bit_mask = 1ULL << 0, .mode = GPIO_MODE_INPUT, .pull_up_en = GPIO_PULLUP_ENABLE};
-    gpio_config(&c);
+    static bool ready;
+    if (!ready) {
+        gpio_config_t c = {.pin_bit_mask = 1ULL << 0, .mode = GPIO_MODE_INPUT, .pull_up_en = GPIO_PULLUP_ENABLE};
+        gpio_config(&c);
+        ready = true;
+    }
     return gpio_get_level(0) == 0;
 }

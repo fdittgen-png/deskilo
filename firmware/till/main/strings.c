@@ -60,6 +60,10 @@ static const char *const TEXTS[5][S__COUNT] = {
         "123",
         "Quantity %d: tap a product",
         "%d products",
+        "Scan with the Deskilo app",
+        "Code %s",
+        "Hold BOOT for 3 seconds to show this code again. Tap or press BOOT to close.",
+        "Show pairing code",
     },
     { /* de */
         "DesKilo Kasse",
@@ -117,6 +121,10 @@ static const char *const TEXTS[5][S__COUNT] = {
         "123",
         "Menge %d: Produkt antippen",
         "%d Produkte",
+        "Mit der Deskilo-App scannen",
+        "Code %s",
+        "BOOT 3 Sekunden halten, um diesen Code erneut zu zeigen. Tippen oder BOOT drücken zum Schließen.",
+        "Kopplungscode zeigen",
     },
     { /* fr */
         "Caisse DesKilo",
@@ -174,6 +182,10 @@ static const char *const TEXTS[5][S__COUNT] = {
         "123",
         "Quantité %d : touchez un produit",
         "%d produits",
+        "Scannez avec l'application Deskilo",
+        "Code %s",
+        "Maintenez BOOT 3 secondes pour revoir ce code. Touchez ou appuyez sur BOOT pour fermer.",
+        "Afficher le code d'appairage",
     },
     { /* es */
         "Caja DesKilo",
@@ -231,6 +243,10 @@ static const char *const TEXTS[5][S__COUNT] = {
         "123",
         "Cantidad %d: toque un producto",
         "%d productos",
+        "Escanee con la aplicación Deskilo",
+        "Código %s",
+        "Mantenga BOOT 3 segundos para volver a mostrar este código. Toque o pulse BOOT para cerrar.",
+        "Mostrar el código de emparejamiento",
     },
     { /* it */
         "Cassa DesKilo",
@@ -288,6 +304,10 @@ static const char *const TEXTS[5][S__COUNT] = {
         "123",
         "Quantità %d: tocchi un prodotto",
         "%d prodotti",
+        "Scansioni con l'app Deskilo",
+        "Codice %s",
+        "Tenga premuto BOOT 3 secondi per rivedere questo codice. Tocchi o prema BOOT per chiudere.",
+        "Mostrare il codice di abbinamento",
     },
 };
 

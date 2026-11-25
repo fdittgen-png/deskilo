@@ -6,6 +6,9 @@
 #include <stdint.h>
 #include "esp_err.h"
 
+// #4474 -- the board profile this firmware is built for: named in the pairing code, so the app sends the matching image.
+#define BOARD_PROFILE "lcdwiki_e32r40t_v1"
+
 #define BOARD_LCD_W 480   // landscape, after the controller's rotation
 #define BOARD_LCD_H 320
 

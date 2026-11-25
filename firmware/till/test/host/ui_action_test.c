@@ -189,6 +189,25 @@ static void one_language(const char *lang) {
     CHECK(find(lv_scr_act(), T(S_BTN_KEYPAD)) != NULL, "and the quantity is used once");
 }
 
+static void pairing(void) {
+    s_lang = "pairing";
+    strings_set_lang("de");
+    const char *code = "deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=lcdwiki_e32r40t_v1&fw=1.0&fp=AB12-CD34";
+    ui_toggle_pairing(code, "AB12-CD34");
+    pump(50);
+    CHECK(ui_pairing_shown(), "the pairing code is shown");
+    CHECK(find_prefix(lv_layer_top(), T(S_PAIR_TITLE)) != NULL, "with what to do, in the board's language");
+    bool qr = false;
+    for (uint32_t i = 0; i < lv_obj_get_child_cnt(lv_layer_top()); i++) {
+        lv_obj_t *o = lv_layer_top()->spec_attr->children[i];
+        for (uint32_t j = 0; j < lv_obj_get_child_cnt(o); j++) qr |= lv_obj_check_type(lv_obj_get_child(o, j), &lv_qrcode_class);
+    }
+    CHECK(qr, "and a QR code");
+    ui_toggle_pairing(NULL, NULL);
+    pump(50);
+    CHECK(!ui_pairing_shown(), "shown again, it closes");
+}
+
 static void calibration(void) {
     s_lang = "calibration";
     strings_set_lang("en");
@@ -214,6 +233,7 @@ int main(void) {
     const char *langs[] = {"en", "de", "fr", "es", "it"};
     for (int i = 0; i < 5; i++) one_language(langs[i]);
     calibration();
+    pairing();
     printf("%d passed, %d failed\n", passed, failed);
     return failed ? 1 : 0;
 }

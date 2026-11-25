@@ -58,6 +58,10 @@ typedef enum {
     S_BTN_KEYPAD,
     S_ST_QTY,
     S_ST_UPDATED,
+    S_PAIR_TITLE,
+    S_PAIR_CODE,
+    S_PAIR_HINT,
+    S_BTN_PAIRING,
     S__COUNT
 } str_id_t;
 

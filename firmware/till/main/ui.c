@@ -128,6 +128,49 @@ static void trace_box_cb(lv_timer_t *t) {
 }
 
 static void calibrate_cb(lv_event_t *e);
+
+// ---- the pairing code (#4474): the QR the app scans, over everything, on every board ----
+static lv_obj_t *s_pairing;
+static char s_pair_payload[192], s_pair_fp[12];
+bool ui_pairing_shown(void) { return s_pairing != NULL; }
+static void pairing_close_cb(lv_event_t *e) {
+    if (s_pairing) { lv_obj_del(s_pairing); s_pairing = NULL; }
+}
+void ui_toggle_pairing(const char *payload, const char *fp) {
+    if (s_pairing) { pairing_close_cb(NULL); return; }
+    if (payload) snprintf(s_pair_payload, sizeof s_pair_payload, "%s", payload);
+    if (fp) snprintf(s_pair_fp, sizeof s_pair_fp, "%s", fp);
+    lv_coord_t w = lv_disp_get_hor_res(NULL), h = lv_disp_get_ver_res(NULL);
+    s_pairing = lv_obj_create(lv_layer_top());
+    lv_obj_set_size(s_pairing, w, h);
+    lv_obj_set_pos(s_pairing, 0, 0);
+    lv_obj_set_style_bg_color(s_pairing, lv_color_white(), 0);
+    lv_obj_set_style_radius(s_pairing, 0, 0);
+    lv_obj_clear_flag(s_pairing, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_add_flag(s_pairing, LV_OBJ_FLAG_CLICKABLE);
+    lv_obj_add_event_cb(s_pairing, pairing_close_cb, LV_EVENT_CLICKED, NULL);
+    bool wide = w > h;
+    lv_coord_t side = (wide ? h : w) - 40;   // the QR as large as the short side allows, with its quiet zone
+    lv_obj_t *qr = lv_qrcode_create(s_pairing, side, lv_color_black(), lv_color_white());
+    lv_qrcode_update(qr, s_pair_payload, strlen(s_pair_payload));
+    lv_obj_align(qr, wide ? LV_ALIGN_LEFT_MID : LV_ALIGN_TOP_MID, wide ? 4 : 0, wide ? 0 : 4);
+    lv_obj_t *t = lv_label_create(s_pairing);
+    char text[256];
+    snprintf(text, sizeof text, "%s\n\n", T(S_PAIR_TITLE));
+    size_t n = strlen(text);
+    snprintf(text + n, sizeof text - n, T(S_PAIR_CODE), s_pair_fp);
+    n = strlen(text);
+    snprintf(text + n, sizeof text - n, "\n\n%s", T(S_PAIR_HINT));
+    lv_label_set_text(t, text);
+    lv_label_set_long_mode(t, LV_LABEL_LONG_WRAP);
+    lv_obj_set_style_text_font(t, &till_font_14, 0);
+    lv_obj_set_width(t, wide ? w - side - 24 : w - 16);
+    lv_obj_align(t, wide ? LV_ALIGN_RIGHT_MID : LV_ALIGN_BOTTOM_MID, wide ? -4 : 0, wide ? 0 : -4);
+}
+static void pairing_cb(lv_event_t *e) {
+    if (s_settings) { lv_obj_del(s_settings); s_settings = NULL; }
+    ui_toggle_pairing(NULL, NULL);
+}
 static void close_settings_cb(lv_event_t *e) { lv_obj_del(s_settings); s_settings = NULL; }
 static void clear_cb(lv_event_t *e) { s_port.factory_reset(); }
 static void open_settings_cb(lv_event_t *e) {
@@ -152,6 +195,10 @@ static void open_settings_cb(lv_event_t *e) {
     lv_obj_align(b3, LV_ALIGN_BOTTOM_MID, 0, 0);
     lv_obj_add_event_cb(b3, calibrate_cb, LV_EVENT_CLICKED, NULL);
     lv_label_set_text(lv_label_create(b3), T(S_BTN_CALIBRATE));
+    lv_obj_t *b4 = lv_btn_create(s_settings);
+    lv_obj_align(b4, LV_ALIGN_TOP_RIGHT, 0, 0);
+    lv_obj_add_event_cb(b4, pairing_cb, LV_EVENT_CLICKED, NULL);
+    lv_label_set_text(lv_label_create(b4), T(S_BTN_PAIRING));
     lv_label_set_text(lv_label_create(b2), T(S_BTN_CLEAR));
 }
 

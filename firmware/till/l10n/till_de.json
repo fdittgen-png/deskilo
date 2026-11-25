@@ -53,5 +53,9 @@
   "btn_items": "Artikel",
   "btn_keypad": "123",
   "st_qty": "Menge %d: Produkt antippen",
-  "st_updated": "%d Produkte"
+  "st_updated": "%d Produkte",
+  "pair_title": "Mit der Deskilo-App scannen",
+  "pair_code": "Code %s",
+  "pair_hint": "BOOT 3 Sekunden halten, um diesen Code erneut zu zeigen. Tippen oder BOOT drücken zum Schließen.",
+  "btn_pairing": "Kopplungscode zeigen"
 }

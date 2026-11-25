@@ -53,5 +53,9 @@
   "btn_items": "Articoli",
   "btn_keypad": "123",
   "st_qty": "Quantità %d: tocchi un prodotto",
-  "st_updated": "%d prodotti"
+  "st_updated": "%d prodotti",
+  "pair_title": "Scansioni con l'app Deskilo",
+  "pair_code": "Codice %s",
+  "pair_hint": "Tenga premuto BOOT 3 secondi per rivedere questo codice. Tocchi o prema BOOT per chiudere.",
+  "btn_pairing": "Mostrare il codice di abbinamento"
 }
