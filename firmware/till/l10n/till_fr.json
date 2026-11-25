@@ -45,5 +45,13 @@
   "why_signin_bad": "réponse de connexion illisible (%d)",
   "why_products": "produits non lus (%d)",
   "why_roll": "ticket non lu (%d)",
-  "why_draft": "brouillon refusé %s %s"
+  "why_draft": "brouillon refusé %s %s",
+  "btn_calibrate": "Calibrer le tactile",
+  "cal_hint": "Touchez le centre de la croix (%d sur 4)",
+  "cal_saved": "Tactile calibré",
+  "cal_retry": "Les touches étaient trop proches : recommencez",
+  "btn_items": "Articles",
+  "btn_keypad": "123",
+  "st_qty": "Quantité %d : touchez un produit",
+  "st_updated": "%d produits"
 }

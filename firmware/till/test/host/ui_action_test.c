@@ -21,6 +21,19 @@ static int sent_kind = -1, sent_index = -1, sent_count;
 static int64_t sent_value;
 static void rec_send(int kind, int index, int64_t value) { sent_kind = kind; sent_index = index; sent_value = value; sent_count++; }
 static void rec_reset(void) {}
+// the raw touch for the calibration test: four presses at the corners, raw Y following the screen's X right to left
+static int raw_step = -1, raw_ticks;
+static const int RAW_X[4] = {3500, 3500, 600, 600}, RAW_Y[4] = {3600, 700, 700, 3600};
+static bool rec_raw(int *rx, int *ry) {
+    if (raw_step < 0 || raw_step > 3) return false;
+    int phase = raw_ticks++ % 6;   // per cross: three polls down, three up
+    if (phase < 3) { *rx = RAW_X[raw_step]; *ry = RAW_Y[raw_step]; return true; }
+    if (phase == 5) raw_step++;
+    return false;
+}
+static touch_cal_t saved_cal;
+static int cal_saves;
+static void rec_save_cal(const touch_cal_t *c) { saved_cal = *c; cal_saves++; }
 static void forget(void) { sent_kind = sent_index = -1; sent_value = 0; sent_count = 0; }
 
 // ---- a display in memory and a pointer ----
@@ -33,7 +46,9 @@ static void flush(lv_disp_drv_t *d, const lv_area_t *a, lv_color_t *c) { (void)a
 static void read(lv_indev_drv_t *d, lv_indev_data_t *data) { (void)d; data->point.x = px; data->point.y = py; data->state = pressed ? LV_INDEV_STATE_PR : LV_INDEV_STATE_REL; }
 static void pump(int ms) { for (int t = 0; t < ms; t += 5) { lv_tick_inc(5); lv_timer_handler(); } }
 
+// The first VISIBLE label with [text]: a hidden panel's buttons (the keypad behind the keys) are not on screen.
 static lv_obj_t *find(lv_obj_t *o, const char *text) {
+    if (lv_obj_has_flag(o, LV_OBJ_FLAG_HIDDEN)) return NULL;
     if (lv_obj_check_type(o, &lv_label_class) && !strcmp(lv_label_get_text(o), text)) return o;
     for (uint32_t i = 0; i < lv_obj_get_child_cnt(o); i++) {
         lv_obj_t *f = find(lv_obj_get_child(o, i), text);
@@ -42,6 +57,7 @@ static lv_obj_t *find(lv_obj_t *o, const char *text) {
     return NULL;
 }
 static lv_obj_t *find_prefix(lv_obj_t *o, const char *prefix) {
+    if (lv_obj_has_flag(o, LV_OBJ_FLAG_HIDDEN)) return NULL;
     if (lv_obj_check_type(o, &lv_label_class) && !strncmp(lv_label_get_text(o), prefix, strlen(prefix))) return o;
     for (uint32_t i = 0; i < lv_obj_get_child_cnt(o); i++) {
         lv_obj_t *f = find_prefix(lv_obj_get_child(o, i), prefix);
@@ -93,7 +109,7 @@ static void one_language(const char *lang) {
     strings_set_lang(lang);
     lv_obj_t *scr = lv_obj_create(NULL);
     lv_scr_load(scr);
-    static const ui_port_t port = {.send = rec_send, .factory_reset = rec_reset};
+    static const ui_port_t port = {.send = rec_send, .factory_reset = rec_reset, .raw_touch = rec_raw, .save_cal = rec_save_cal};
     ui_init(&port);
     ui_build_till();
 
@@ -152,7 +168,39 @@ static void one_language(const char *lang) {
     snprintf(s.status, sizeof s.status, T(S_ST_NOT_PAID), "DKL01 this operation is not supported here");
     ui_refresh(&s); pump(50);
     CHECK(find(lv_scr_act(), s.status) != NULL, "a refusal is shown with its code and words");
+    // the update button reads the products again
+    forget();
+    CHECK(press(LV_SYMBOL_REFRESH) && sent_kind == CMD_REFRESH, "the update button asks for the products again");
+
+    // the keypad: 3 typed, back on the items the switch says x3, the next product goes with 3
+    s = state(PH_SELL, 0);
+    ui_refresh(&s); pump(50);
+    CHECK(press(T(S_BTN_KEYPAD)), "the 123 switch shows the keypad");
+    press("3");
+    CHECK(press(T(S_BTN_ITEMS)), "the switch goes back to the items");
+    CHECK(find(lv_scr_act(), "x3") != NULL, "the switch shows the quantity waiting");
+    forget();
+    lv_obj_t *k2 = find_prefix(lv_scr_act(), "Cake");
+    if (k2) {
+        lv_area_t a; lv_obj_get_coords(lv_obj_get_parent(k2), &a);
+        px = (a.x1 + a.x2) / 2; py = (a.y1 + a.y2) / 2; pressed = 1; pump(60); pressed = 0; pump(60);
+    }
+    CHECK(sent_kind == CMD_TAP && sent_index == 1 && sent_value == 3, "the next product goes with the quantity typed");
+    CHECK(find(lv_scr_act(), T(S_BTN_KEYPAD)) != NULL, "and the quantity is used once");
 }
+
+static void calibration(void) {
+    s_lang = "calibration";
+    strings_set_lang("en");
+    raw_step = 0; raw_ticks = 0; cal_saves = 0;
+    ui_calibrate();
+    pump(2000);
+    CHECK(cal_saves == 1, "four touches give one calibration");
+    CHECK(saved_cal.swap == 1, "the raw axis that follows the screen's X is found (Y here)");
+    CHECK(saved_cal.rx0 == 3600 && saved_cal.rx1 == 700, "the left and right crosses give the X range");
+    CHECK(saved_cal.ry0 == 3500 && saved_cal.ry1 == 600, "the top and bottom crosses give the Y range");
+}
+
 
 int main(void) {
     lv_init();
@@ -165,6 +213,7 @@ int main(void) {
     lv_indev_drv_register(&indev);
     const char *langs[] = {"en", "de", "fr", "es", "it"};
     for (int i = 0; i < 5; i++) one_language(langs[i]);
+    calibration();
     printf("%d passed, %d failed\n", passed, failed);
     return failed ? 1 : 0;
 }

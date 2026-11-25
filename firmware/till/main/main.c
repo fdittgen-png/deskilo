@@ -63,10 +63,12 @@ static void set_status(const char *t) { with_lock(set_status_fn, (void *)t); }
 static void roll_set_fn(void *a) { S.roll = *(roll_t *)a; S.has_roll = S.roll.n > 0; }
 static void products_set_fn(void *a) { S.n_products = 0; }
 
-static void add_to_basket(const char *id) {
+// [qty] of product [id]: the quantity typed on the keypad, or one.
+static void add_to_basket(const char *id, int qty) {
+    if (qty < 1) qty = 1;
     for (int i = 0; i < s_basket_n; i++)
-        if (!strcmp(s_basket[i].item_id, id)) { s_basket[i].qty++; return; }
-    if (s_basket_n < MAX_PRODUCTS) { strncpy(s_basket[s_basket_n].item_id, id, 39); s_basket[s_basket_n].item_id[39] = 0; s_basket[s_basket_n++].qty = 1; }
+        if (!strcmp(s_basket[i].item_id, id)) { s_basket[i].qty += qty; return; }
+    if (s_basket_n < MAX_PRODUCTS) { strncpy(s_basket[s_basket_n].item_id, id, 39); s_basket[s_basket_n].item_id[39] = 0; s_basket[s_basket_n++].qty = qty; }
 }
 
 static void set_phase(int phase, const char *status) {
@@ -235,6 +237,16 @@ static void net_task(void *arg) {
             continue;
         }
         if (c.kind == CMD_RETRY) continue;
+        if (c.kind == CMD_REFRESH) {   // the products read again: added ones appear without a restart
+            int n = api_products(prods, MAX_PRODUCTS, why, sizeof why);
+            xSemaphoreTake(s_lock, portMAX_DELAY);
+            if (n >= 0) { memcpy(S.products, prods, sizeof prods); S.n_products = n; snprintf(S.status, sizeof S.status, T(S_ST_UPDATED), n); }
+            else snprintf(S.status, sizeof S.status, "%s", why);
+            S.version++;
+            xSemaphoreGive(s_lock);
+            if (n < 0) fail("products", why); else trace("products read again: %d", n);
+            continue;
+        }
         if (c.kind == CMD_NEXT) {
             s_basket_n = 0;
             api_reset_draft();
@@ -247,7 +259,7 @@ static void net_task(void *arg) {
         product_t p;
         xSemaphoreTake(s_lock, portMAX_DELAY); bool in = c.index >= 0 && c.index < S.n_products; if (in) p = S.products[c.index]; xSemaphoreGive(s_lock);
         if (!in) continue;
-        add_to_basket(p.id);
+        add_to_basket(p.id, c.value > 0 && c.value < 1000 ? (int)c.value : 1);
         set_status(T(S_ST_SENDING));
         bool ok = api_draft(s_basket, s_basket_n, &roll, why, sizeof why);
         if (!ok && strstr(why, "401")) { api_sign_in(why, sizeof why); ok = api_draft(s_basket, s_basket_n, &roll, why, sizeof why); }
@@ -275,6 +287,10 @@ static void tick(void *arg) { lv_tick_inc(2); }
 
 static void ui_send(int kind, int index, int64_t value) { cmd_t c = {kind, index, value}; xQueueSend(s_cmd, &c, 0); }
 static void ui_reset(void) { cfg_erase(); esp_restart(); }
+static void save_cal(const touch_cal_t *cal) {
+    board_touch_set_cal(cal);
+    if (touch_cal_save(cal) != ESP_OK) trace("touch calibration not kept: it holds until the next restart");
+}
 static uint32_t s_seen;
 // Hands the screen a copy of the shared state whenever its version changed.
 static void refresh_cb(lv_timer_t *t) {
@@ -296,6 +312,9 @@ void app_main(void) {
         S.phase = PH_BLOCKED;
     }
     ESP_ERROR_CHECK(board_init());
+    touch_cal_t cal;
+    if (touch_cal_load(&cal)) board_touch_set_cal(&cal);   // the calibration taken on this board, else the vendor's range
+    bool calibrate = board_boot_button();                   // BOOT held at start: calibrate before anything else
     lv_init();
     static lv_color_t buf1[BOARD_LCD_W * BUF_LINES], buf2[BOARD_LCD_W * BUF_LINES];
     lv_disp_draw_buf_init(&s_draw, buf1, buf2, BOARD_LCD_W * BUF_LINES);
@@ -314,7 +333,7 @@ void app_main(void) {
     ESP_ERROR_CHECK(esp_timer_create(&t, &h));
     ESP_ERROR_CHECK(esp_timer_start_periodic(h, 2000));
     s_lock = xSemaphoreCreateMutex();
-    static const ui_port_t port = {.send = ui_send, .factory_reset = ui_reset};
+    static const ui_port_t port = {.send = ui_send, .factory_reset = ui_reset, .raw_touch = board_touch_raw, .save_cal = save_cal};
     ui_init(&port);
     s_cmd = xQueueCreate(8, sizeof(cmd_t));
     if (!cfg_complete()) {
@@ -325,6 +344,7 @@ void app_main(void) {
         lv_timer_create(refresh_cb, 200, NULL);
         xTaskCreatePinnedToCore(net_task, "net", 12288, NULL, 4, NULL, 0);
     }
+    if (calibrate) ui_calibrate();
     board_backlight(true);
     ESP_LOGI(TAG, "up (%s): free heap %lu", g_cfg.role[0] ? g_cfg.role : "no settings", (unsigned long)esp_get_free_heap_size());
     for (;;) {

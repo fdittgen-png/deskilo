@@ -50,6 +50,14 @@ typedef enum {
     S_WHY_PRODUCTS,
     S_WHY_ROLL,
     S_WHY_DRAFT,
+    S_BTN_CALIBRATE,
+    S_CAL_HINT,
+    S_CAL_SAVED,
+    S_CAL_RETRY,
+    S_BTN_ITEMS,
+    S_BTN_KEYPAD,
+    S_ST_QTY,
+    S_ST_UPDATED,
     S__COUNT
 } str_id_t;
 

@@ -64,3 +64,22 @@ esp_err_t pending_drop(void) {
     nvs_close(h);
     return e;
 }
+
+esp_err_t touch_cal_save(const touch_cal_t *cal) {
+    nvs_handle_t h;
+    esp_err_t e = nvs_open_from_partition(PART, "touch", NVS_READWRITE, &h);
+    if (e != ESP_OK) return e;
+    e = nvs_set_blob(h, "cal", cal, sizeof *cal);
+    if (e == ESP_OK) e = nvs_commit(h);
+    nvs_close(h);
+    return e;
+}
+
+bool touch_cal_load(touch_cal_t *out) {
+    nvs_handle_t h;
+    if (nvs_open_from_partition(PART, "touch", NVS_READONLY, &h) != ESP_OK) return false;
+    size_t n = sizeof *out;
+    bool ok = nvs_get_blob(h, "cal", out, &n) == ESP_OK && n == sizeof *out;
+    nvs_close(h);
+    return ok;
+}

@@ -45,5 +45,13 @@
   "why_signin_bad": "Anmeldeantwort unlesbar (%d)",
   "why_products": "Produkte nicht gelesen (%d)",
   "why_roll": "Beleg nicht gelesen (%d)",
-  "why_draft": "Entwurf abgelehnt %s %s"
+  "why_draft": "Entwurf abgelehnt %s %s",
+  "btn_calibrate": "Touch kalibrieren",
+  "cal_hint": "Berühren Sie die Mitte des Kreuzes (%d von 4)",
+  "cal_saved": "Touch kalibriert",
+  "cal_retry": "Die Berührungen lagen zu nah beieinander: noch einmal",
+  "btn_items": "Artikel",
+  "btn_keypad": "123",
+  "st_qty": "Menge %d: Produkt antippen",
+  "st_updated": "%d Produkte"
 }

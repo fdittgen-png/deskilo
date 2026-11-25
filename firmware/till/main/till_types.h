@@ -20,7 +20,7 @@ typedef struct {
 typedef struct { char item_id[40]; int qty; } basket_line_t;
 
 // The commands the screen sends to the network task.
-enum { CMD_TAP, CMD_NEXT, CMD_REPORT, CMD_PAY, CMD_CASH, CMD_RETRY };
+enum { CMD_TAP, CMD_NEXT, CMD_REPORT, CMD_PAY, CMD_CASH, CMD_RETRY, CMD_REFRESH };
 // The sale's phase: selling; the cash being counted; sent; paid; sent without a proven answer; a payment of another binding
 // waits and nothing is sold here.
 enum { PH_SELL, PH_CASH, PH_PAYING, PH_PAID, PH_UNCERTAIN, PH_BLOCKED };

@@ -45,5 +45,13 @@
   "why_signin_bad": "respuesta de inicio de sesión ilegible (%d)",
   "why_products": "productos no leídos (%d)",
   "why_roll": "ticket no leído (%d)",
-  "why_draft": "borrador rechazado %s %s"
+  "why_draft": "borrador rechazado %s %s",
+  "btn_calibrate": "Calibrar la pantalla táctil",
+  "cal_hint": "Toque el centro de la cruz (%d de 4)",
+  "cal_saved": "Pantalla táctil calibrada",
+  "cal_retry": "Los toques estaban demasiado juntos: vuelva a intentarlo",
+  "btn_items": "Artículos",
+  "btn_keypad": "123",
+  "st_qty": "Cantidad %d: toque un producto",
+  "st_updated": "%d productos"
 }

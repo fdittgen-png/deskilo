@@ -35,3 +35,8 @@ esp_err_t pending_settle(const paid_t *paid);
 bool pending_last_paid(paid_t *out);
 // A payment the server refused before it committed anything: the attempt is forgotten, nothing was paid.
 esp_err_t pending_drop(void);
+
+// #4456 -- the touch calibration, kept in the same partition: re-provisioning the settings does not undo it.
+#include "board.h"
+esp_err_t touch_cal_save(const touch_cal_t *cal);
+bool touch_cal_load(touch_cal_t *out);

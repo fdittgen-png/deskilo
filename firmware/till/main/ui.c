@@ -26,7 +26,47 @@ static int64_t s_cash_due;
 static char s_cash_cur[4];
 static lv_obj_t *s_settings;
 
-static void key_cb(lv_event_t *e) { s_port.send(CMD_TAP, (int)(intptr_t)lv_event_get_user_data(e), 0); }
+// ---- the quantity keypad: switched with the product keys; the quantity typed goes with the next product tapped ----
+static lv_obj_t *s_keypad, *s_keypad_label, *s_switch_label;
+static int s_products;   // the keys in use, shown again when the keypad goes away
+static bool s_keypad_on;
+static int s_qty;   // 0: none typed, the product is added once
+
+static void qty_show(void) {
+    char t[64];
+    snprintf(t, sizeof t, T(S_ST_QTY), s_qty > 0 ? s_qty : 1);
+    if (s_keypad_label) lv_label_set_text(s_keypad_label, t);
+    if (s_switch_label) {
+        char sw[16];
+        if (s_keypad_on) snprintf(sw, sizeof sw, "%s", T(S_BTN_ITEMS));
+        else if (s_qty > 0) snprintf(sw, sizeof sw, "x%d", s_qty);
+        else snprintf(sw, sizeof sw, "%s", T(S_BTN_KEYPAD));
+        lv_label_set_text(s_switch_label, sw);
+    }
+}
+static void keys_visible(bool show);
+static void switch_cb(lv_event_t *e) {
+    s_keypad_on = !s_keypad_on;
+    if (s_keypad_on) lv_obj_clear_flag(s_keypad, LV_OBJ_FLAG_HIDDEN); else lv_obj_add_flag(s_keypad, LV_OBJ_FLAG_HIDDEN);
+    keys_visible(!s_keypad_on);
+    qty_show();
+}
+static void qty_key_cb(lv_event_t *e) {
+    int d = (int)(intptr_t)lv_event_get_user_data(e);
+    if (d < 0) s_qty = 0;                          // C
+    else if (s_qty < 999) s_qty = s_qty * 10 + d;  // at most three digits
+    qty_show();
+}
+static void keys_visible(bool show) {
+    for (int i = 0; i < MAX_PRODUCTS; i++) {
+        if (show && i < s_products) lv_obj_clear_flag(s_keys[i], LV_OBJ_FLAG_HIDDEN); else lv_obj_add_flag(s_keys[i], LV_OBJ_FLAG_HIDDEN);
+    }
+}
+static void key_cb(lv_event_t *e) {
+    s_port.send(CMD_TAP, (int)(intptr_t)lv_event_get_user_data(e), s_qty > 0 ? s_qty : 1);
+    s_qty = 0;
+    qty_show();
+}
 static void next_cb(lv_event_t *e) { s_port.send(CMD_NEXT, 0, 0); }
 
 static const char *or_unset(const char *v) { return v[0] ? v : T(S_NOT_SET); }
@@ -87,6 +127,7 @@ static void trace_box_cb(lv_timer_t *t) {
     lv_label_set_text(s_trace_label, tail);
 }
 
+static void calibrate_cb(lv_event_t *e);
 static void close_settings_cb(lv_event_t *e) { lv_obj_del(s_settings); s_settings = NULL; }
 static void clear_cb(lv_event_t *e) { s_port.factory_reset(); }
 static void open_settings_cb(lv_event_t *e) {
@@ -107,7 +148,95 @@ static void open_settings_cb(lv_event_t *e) {
     lv_obj_set_style_bg_color(b2, lv_color_hex(0xB00020), 0);
     lv_obj_align(b2, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
     lv_obj_add_event_cb(b2, clear_cb, LV_EVENT_LONG_PRESSED, NULL);
+    lv_obj_t *b3 = lv_btn_create(s_settings);
+    lv_obj_align(b3, LV_ALIGN_BOTTOM_MID, 0, 0);
+    lv_obj_add_event_cb(b3, calibrate_cb, LV_EVENT_CLICKED, NULL);
+    lv_label_set_text(lv_label_create(b3), T(S_BTN_CALIBRATE));
     lv_label_set_text(lv_label_create(b2), T(S_BTN_CLEAR));
+}
+
+static void update_cb(lv_event_t *e) { s_port.send(CMD_REFRESH, 0, 0); }
+
+// ---- the touch calibration: four crosses near the corners, the raw reading of each, a mapping from them ----
+static const int CAL_X[4] = {40, 440, 440, 40}, CAL_Y[4] = {40, 40, 280, 280};
+static lv_obj_t *s_cal, *s_cal_cross, *s_cal_text;
+static lv_timer_t *s_cal_timer;
+static int s_cal_step, s_cal_n, s_cal_rx[4], s_cal_ry[4];
+static long s_cal_sx, s_cal_sy;
+static bool s_cal_down;
+
+static void cal_show(void) {
+    lv_obj_set_pos(s_cal_cross, CAL_X[s_cal_step] - 20, CAL_Y[s_cal_step] - 20);
+    char t[96];
+    snprintf(t, sizeof t, T(S_CAL_HINT), s_cal_step + 1);
+    lv_label_set_text(s_cal_text, t);
+}
+
+static void cal_finish(void) {
+    // which raw axis follows the screen's X: the one that changes between the left and the right crosses
+    int dx_rx = abs((s_cal_rx[1] + s_cal_rx[2]) - (s_cal_rx[0] + s_cal_rx[3]));
+    int dx_ry = abs((s_cal_ry[1] + s_cal_ry[2]) - (s_cal_ry[0] + s_cal_ry[3]));
+    int swap = dx_ry > dx_rx;
+    const int *ax = swap ? s_cal_ry : s_cal_rx, *ay = swap ? s_cal_rx : s_cal_ry;
+    touch_cal_t c = {.swap = swap,
+                     .x0 = CAL_X[0], .rx0 = (ax[0] + ax[3]) / 2, .x1 = CAL_X[1], .rx1 = (ax[1] + ax[2]) / 2,
+                     .y0 = CAL_Y[0], .ry0 = (ay[0] + ay[1]) / 2, .y1 = CAL_Y[2], .ry1 = (ay[2] + ay[3]) / 2};
+    if (abs(c.rx1 - c.rx0) < 400 || abs(c.ry1 - c.ry0) < 300) {   // touches too close together: nothing is kept
+        s_cal_step = 0;
+        lv_label_set_text(s_cal_text, T(S_CAL_RETRY));
+        lv_obj_set_pos(s_cal_cross, CAL_X[0] - 20, CAL_Y[0] - 20);
+        return;
+    }
+    s_port.save_cal(&c);
+    lv_timer_del(s_cal_timer);
+    s_cal_timer = NULL;
+    lv_obj_del(s_cal);
+    s_cal = NULL;
+    trace("touch calibrated: swap %ld, x %ld..%ld, y %ld..%ld", (long)c.swap, (long)c.rx0, (long)c.rx1, (long)c.ry0, (long)c.ry1);
+}
+
+// Polls the raw touch: a press is averaged, its release takes the cross's reading and moves to the next one.
+static void cal_poll(lv_timer_t *t) {
+    int rx, ry;
+    if (s_port.raw_touch && s_port.raw_touch(&rx, &ry)) {
+        s_cal_down = true;
+        s_cal_sx += rx; s_cal_sy += ry; s_cal_n++;
+        return;
+    }
+    if (!s_cal_down) return;
+    s_cal_down = false;
+    if (s_cal_n > 0) {
+        s_cal_rx[s_cal_step] = (int)(s_cal_sx / s_cal_n);
+        s_cal_ry[s_cal_step] = (int)(s_cal_sy / s_cal_n);
+        s_cal_step++;
+    }
+    s_cal_sx = s_cal_sy = 0; s_cal_n = 0;
+    if (s_cal_step == 4) cal_finish(); else cal_show();
+}
+
+void ui_calibrate(void) {
+    if (s_cal) return;
+    s_cal = lv_obj_create(lv_layer_top());
+    lv_obj_set_size(s_cal, 480, 320);
+    lv_obj_set_pos(s_cal, 0, 0);
+    lv_obj_set_style_bg_color(s_cal, lv_color_white(), 0);
+    lv_obj_set_style_radius(s_cal, 0, 0);
+    lv_obj_clear_flag(s_cal, LV_OBJ_FLAG_SCROLLABLE);
+    s_cal_text = lv_label_create(s_cal);
+    lv_obj_set_style_text_font(s_cal_text, &till_font_16, 0);
+    lv_obj_align(s_cal_text, LV_ALIGN_CENTER, 0, 0);
+    s_cal_cross = lv_label_create(s_cal);
+    lv_obj_set_style_text_font(s_cal_cross, &till_font_28, 0);
+    lv_obj_set_style_text_color(s_cal_cross, lv_color_hex(0xB00020), 0);
+    lv_label_set_text(s_cal_cross, LV_SYMBOL_PLUS);
+    s_cal_step = 0; s_cal_n = 0; s_cal_sx = s_cal_sy = 0; s_cal_down = false;
+    cal_show();
+    s_cal_timer = lv_timer_create(cal_poll, 20, NULL);
+}
+
+static void calibrate_cb(lv_event_t *e) {
+    if (s_settings) { lv_obj_del(s_settings); s_settings = NULL; }
+    ui_calibrate();
 }
 
 static void build_common(const char *title) {
@@ -124,6 +253,12 @@ static void build_common(const char *title) {
         lv_obj_align(g, LV_ALIGN_TOP_RIGHT, -8, 4);
         lv_obj_add_event_cb(g, open_settings_cb, LV_EVENT_LONG_PRESSED, NULL);
         lv_label_set_text(lv_label_create(g), LV_SYMBOL_SETTINGS);
+        // the products read again without a restart
+        lv_obj_t *u = lv_btn_create(scr);
+        lv_obj_set_size(u, 44, 34);
+        lv_obj_align(u, LV_ALIGN_TOP_RIGHT, -58, 4);
+        lv_obj_add_event_cb(u, update_cb, LV_EVENT_CLICKED, NULL);
+        lv_label_set_text(lv_label_create(u), LV_SYMBOL_REFRESH);
     }
     s_status = lv_label_create(scr);
     lv_obj_set_style_text_color(s_status, lv_color_hex(0x9fd3ff), 0);
@@ -131,7 +266,7 @@ static void build_common(const char *title) {
     // stay readable (the trace box keeps the whole text too)
     lv_obj_set_style_text_font(s_status, &till_font_14, 0);
     lv_label_set_long_mode(s_status, LV_LABEL_LONG_WRAP);
-    lv_obj_set_size(s_status, 268, 36);
+    lv_obj_set_size(s_status, 200, 36);
     lv_obj_align(s_status, LV_ALIGN_TOP_LEFT, 150, 6);
     lv_label_set_text(s_status, "");
 }
@@ -215,6 +350,31 @@ void ui_build_till(void) {
         lv_obj_set_style_text_align(l, LV_TEXT_ALIGN_CENTER, 0);
         lv_obj_center(l);
     }
+    // the keypad sits where the product keys are; the switch beside the update button shows which one is up
+    s_keypad = lv_obj_create(scr);
+    lv_obj_set_size(s_keypad, 468, 148);
+    lv_obj_align(s_keypad, LV_ALIGN_TOP_LEFT, 6, 46);
+    lv_obj_clear_flag(s_keypad, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_set_style_pad_all(s_keypad, 4, 0);
+    s_keypad_label = lv_label_create(s_keypad);
+    lv_obj_set_style_text_font(s_keypad_label, &till_font_16, 0);
+    lv_obj_align(s_keypad_label, LV_ALIGN_TOP_LEFT, 4, 0);
+    static const char *digits[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "C"};
+    for (int i = 0; i < 11; i++) {
+        lv_obj_t *b = lv_btn_create(s_keypad);
+        lv_obj_set_size(b, 66, 50);
+        lv_obj_align(b, LV_ALIGN_TOP_LEFT, (i % 6) * 74, 26 + (i / 6) * 58);
+        lv_obj_add_event_cb(b, qty_key_cb, LV_EVENT_CLICKED, (void *)(intptr_t)(i == 10 ? -1 : (i == 9 ? 0 : i + 1)));
+        lv_label_set_text(lv_label_create(b), digits[i]);
+    }
+    lv_obj_add_flag(s_keypad, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_t *sw = lv_btn_create(scr);
+    lv_obj_set_size(sw, 58, 34);
+    lv_obj_align(sw, LV_ALIGN_TOP_RIGHT, -108, 4);
+    lv_obj_add_event_cb(sw, switch_cb, LV_EVENT_CLICKED, NULL);
+    s_switch_label = lv_label_create(sw);
+    lv_obj_center(s_switch_label);
+    qty_show();
     build_trace_box(198, 58);
     s_basket_label = lv_label_create(scr);
     lv_obj_set_style_text_color(s_basket_label, lv_color_white(), 0);
@@ -279,13 +439,14 @@ void ui_refresh(const shared_t *cp) {
         } else lv_label_set_text(s_total, "");
         return;
     }
+    s_products = cp->n_products;
     for (int i = 0; i < MAX_PRODUCTS; i++) {   // till
         if (i < copy.n_products) {
             char a[24];
             money(a, sizeof a, copy.products[i].price_minor, "");
             char txt[96]; snprintf(txt, sizeof txt, "%s\n%d.%02d", copy.products[i].name, copy.products[i].price_minor / 100, copy.products[i].price_minor % 100);
             lv_label_set_text(lv_obj_get_child(s_keys[i], 0), txt);
-            lv_obj_clear_flag(s_keys[i], LV_OBJ_FLAG_HIDDEN);
+            if (!s_keypad_on) lv_obj_clear_flag(s_keys[i], LV_OBJ_FLAG_HIDDEN);
         } else lv_obj_add_flag(s_keys[i], LV_OBJ_FLAG_HIDDEN);
     }
     if (copy.has_roll) {

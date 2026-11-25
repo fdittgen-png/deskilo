@@ -45,5 +45,13 @@
   "why_signin_bad": "risposta di accesso illeggibile (%d)",
   "why_products": "prodotti non letti (%d)",
   "why_roll": "scontrino non letto (%d)",
-  "why_draft": "bozza rifiutata %s %s"
+  "why_draft": "bozza rifiutata %s %s",
+  "btn_calibrate": "Calibrare il touch",
+  "cal_hint": "Tocchi il centro della croce (%d di 4)",
+  "cal_saved": "Touch calibrato",
+  "cal_retry": "I tocchi erano troppo vicini: riprovi",
+  "btn_items": "Articoli",
+  "btn_keypad": "123",
+  "st_qty": "Quantità %d: tocchi un prodotto",
+  "st_updated": "%d prodotti"
 }

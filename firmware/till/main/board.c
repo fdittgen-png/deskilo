@@ -76,21 +76,46 @@ static uint16_t xpt_read(uint8_t cmd) {
     return (uint16_t)(((rx[1] << 8) | rx[2]) >> 3) & 0x0FFF;
 }
 
-// XPT2046 raw range of the 4.0" panel; calibrated on the real board in E10. Landscape: the panel's Y axis runs along the screen's X.
-#define RAW_MIN 200
-#define RAW_MAX 3900
-static int scale(int raw, int out) {
-    if (raw < RAW_MIN) raw = RAW_MIN;
-    if (raw > RAW_MAX) raw = RAW_MAX;
-    return (raw - RAW_MIN) * (out - 1) / (RAW_MAX - RAW_MIN);
+// XPT2046 raw range of the 4.0" panel as the vendor gives it; a calibration replaces it (touch_cal_t). Landscape: the panel's
+// Y axis runs along the screen's X, right to left.
+touch_cal_t board_touch_cal_default(void) {
+    return (touch_cal_t){.swap = 1, .x0 = 0, .rx0 = 3900, .x1 = BOARD_LCD_W - 1, .rx1 = 200,
+                         .y0 = 0, .ry0 = 3900, .y1 = BOARD_LCD_H - 1, .ry1 = 200};
+}
+static touch_cal_t s_cal;
+static bool s_cal_set;
+void board_touch_set_cal(const touch_cal_t *cal) { s_cal = *cal; s_cal_set = true; }
+
+static int map_axis(int raw, int s0, int r0, int s1, int r1, int out) {
+    if (r1 == r0) return 0;
+    int v = s0 + (raw - r0) * (s1 - s0) / (r1 - r0);
+    return v < 0 ? 0 : (v > out - 1 ? out - 1 : v);
 }
 
-bool board_touch(int *x, int *y) {
+bool board_touch_raw(int *rx, int *ry) {
     if (gpio_get_level(PIN_TOUCH_IRQ) != 0) return false;
     int sx = 0, sy = 0;
     for (int i = 0; i < 4; i++) { sx += xpt_read(0xD0); sy += xpt_read(0x90); }
-    sx /= 4; sy /= 4;
-    *x = BOARD_LCD_W - 1 - scale(sy, BOARD_LCD_W);   // the panel's X runs right to left against the touch
-    *y = BOARD_LCD_H - 1 - scale(sx, BOARD_LCD_H);
+    *rx = sx / 4;
+    *ry = sy / 4;
     return true;
+}
+
+bool board_touch(int *x, int *y) {
+    int rx, ry;
+    if (!board_touch_raw(&rx, &ry)) return false;
+    if (!s_cal_set) {
+        touch_cal_t d = board_touch_cal_default();
+        board_touch_set_cal(&d);
+    }
+    int ax = s_cal.swap ? ry : rx, ay = s_cal.swap ? rx : ry;
+    *x = map_axis(ax, s_cal.x0, s_cal.rx0, s_cal.x1, s_cal.rx1, BOARD_LCD_W);
+    *y = map_axis(ay, s_cal.y0, s_cal.ry0, s_cal.y1, s_cal.ry1, BOARD_LCD_H);
+    return true;
+}
+
+bool board_boot_button(void) {
+    gpio_config_t c = {.pin_bit_mask = 1ULL << 0, .mode = GPIO_MODE_INPUT, .pull_up_en = GPIO_PULLUP_ENABLE};
+    gpio_config(&c);
+    return gpio_get_level(0) == 0;
 }
