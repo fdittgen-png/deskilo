@@ -23,6 +23,8 @@
 //   pairBudget           imports behind a feature -> feature pair that has a
 //                        budget (a pair without one is only named by
 //                        _knownPairs in test/lint/layering_test.dart)
+//   demoFeatureImports   import lines of lib/core/demo into a feature, per
+//                        feature (#4404): the Demo only gets fewer of them
 //   genericError         `workspaceGenericError` uses per library (#1305)
 //   fontSize             raw `fontSize:` per presentation library (#1304)
 //   colorLiteral         raw `Color(0x` per presentation library (#1304)
@@ -96,6 +98,7 @@ const List<String> budgetCategories = [
   'rawElevation',
   'rawAlpha',
   'rawMaxWidth',
+  'demoFeatureImports',
 ];
 
 /// What a category allows without an entry, and how much headroom an entry
@@ -118,6 +121,7 @@ const Map<String, ({int floor, int headroom})> _rules = {
   'rawElevation': (floor: 0, headroom: 0),
   'rawAlpha': (floor: 0, headroom: 0),
   'rawMaxWidth': (floor: 0, headroom: 0),
+  'demoFeatureImports': (floor: 0, headroom: 0),
 };
 
 /// The budgets as held in the JSON.
@@ -193,6 +197,7 @@ class BudgetActuals {
     this.helpCards = const {},
     this.inlineRoute = const {},
     this.rawTokens = const {},
+    this.demoFeatureImports = const {},
   });
 
   final int partOfFiles;
@@ -212,6 +217,9 @@ class BudgetActuals {
   final Map<String, int> helpCards;
   final Map<String, int> inlineRoute;
 
+  /// #4404 -- import lines of lib/core/demo into each feature.
+  final Map<String, int> demoFeatureImports;
+
   /// #4421 — the raw-measure categories (`rawInsets` … `rawMaxWidth`), each
   /// per library or file.
   final Map<String, Map<String, int>> rawTokens;
@@ -229,6 +237,7 @@ class BudgetActuals {
         'rawSpinner' => rawSpinner,
         'helpCards' => helpCards,
         'inlineRoute' => inlineRoute,
+        'demoFeatureImports' => demoFeatureImports,
         _ when rawTokenPatterns.containsKey(category) =>
           rawTokens[category] ?? const {},
         _ => throw ArgumentError(category),
@@ -475,6 +484,7 @@ BudgetActuals measureBudgetActuals() {
     helpCards: helpCards,
     inlineRoute: inlineRoute,
     rawTokens: rawTokens,
+    demoFeatureImports: layering.demoToFeatureImports(files),
   );
 }
 
