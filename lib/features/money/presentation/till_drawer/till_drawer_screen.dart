@@ -23,6 +23,7 @@ import 'cash_entry_sheet.dart';
 import 'close_sheet.dart';
 import 'drawer_text.dart';
 import 'open_sheet.dart';
+import 'terminal_console.dart';
 import 'till_edit_sheet.dart';
 
 /// The drawer screen. [canManage] is whether the person may add and edit tills (the sites' managers).
@@ -89,30 +90,30 @@ class _Tills extends ConsumerWidget {
               ),
             ),
           ),
-          data: (tills) => tills.isEmpty
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.lg),
-                    child: Text(
-                      canManage ? l10n.tillDrawerNoTills : l10n.tillDrawerNoTillsPerson,
-                      key: const ValueKey('drawer-no-tills'),
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleMedium,
+          // the terminal console first: a terminal rings up a sale with or without a till set up here
+          data: (tills) => Align(
+            alignment: Alignment.topCenter,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 720),
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, kFabSafeBottom),
+                children: [
+                  TerminalConsole(workspaceId: workspaceId),
+                  if (tills.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.all(AppSpacing.lg),
+                      child: Text(
+                        canManage ? l10n.tillDrawerNoTills : l10n.tillDrawerNoTillsPerson,
+                        key: const ValueKey('drawer-no-tills'),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     ),
-                  ),
-                )
-              : Align(
-                  alignment: Alignment.topCenter,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 720),
-                    child: ListView(
-                      padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, kFabSafeBottom),
-                      children: [
-                        for (final t in tills) _TillCard(workspaceId: workspaceId, currency: currency, till: t, canManage: canManage),
-                      ],
-                    ),
-                  ),
-                ),
+                  for (final t in tills) _TillCard(workspaceId: workspaceId, currency: currency, till: t, canManage: canManage),
+                ],
+              ),
+            ),
+          ),
         );
   }
 }

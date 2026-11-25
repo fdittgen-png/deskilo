@@ -66272,6 +66272,30 @@ abstract class AppLocalizations {
   /// **'Till closed'**
   String get tillDrawerClosedTitle;
 
+  /// #4450 the terminal console of the till drawer: the open sale a terminal rings up
+  ///
+  /// In en, this message translates to:
+  /// **'No sale is open on a terminal. What a terminal rings up appears here as it is chosen, with the prices Deskilo gives it.'**
+  String get tillDrawerConsoleEmpty;
+
+  /// #4450 the terminal console of the till drawer: the open sale a terminal rings up; the quantity arrives formatted as the server froze it, the label is the product name
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} × {label}'**
+  String tillDrawerConsoleLine(String quantity, String label);
+
+  /// #4450 the terminal console of the till drawer: the open sale a terminal rings up; the revision is the draft's change counter, a reference
+  ///
+  /// In en, this message translates to:
+  /// **'Open sale, change {revision}'**
+  String tillDrawerConsoleRevision(String revision);
+
+  /// #4450 the terminal console of the till drawer: the open sale a terminal rings up
+  ///
+  /// In en, this message translates to:
+  /// **'Terminal console'**
+  String get tillDrawerConsoleTitle;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:

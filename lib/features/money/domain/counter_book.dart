@@ -370,9 +370,17 @@ CounterRefundCheck counterRefundCheck(int? amountMinor, int leftMinor) {
   return amountMinor > leftMinor ? CounterRefundCheck.beyond : CounterRefundCheck.ok;
 }
 
+/// How often the till drawer's terminal console reads the open draft again: a tap on a terminal shows within moments,
+/// for one small read.
+const Duration terminalConsoleBeat = Duration(seconds: 2);
+
 /// The counter's book on the server. Every write goes under a request id: the same id again answers what it did.
 abstract interface class CounterBookPort {
   Future<CounterBook> book(String workspaceId);
+
+  /// The business's newest open draft with its lines -- what a terminal is ringing up now, as the server priced it; null
+  /// when no sale is open.
+  Future<CounterBookReceipt?> openDraft(String workspaceId);
 
   /// A correction of sale [originalId]: a new receipt; answers its number.
   Future<String> correct(String workspaceId, {required String requestId, required String originalId, required List<CounterBookQuantity> lines, required String reason});

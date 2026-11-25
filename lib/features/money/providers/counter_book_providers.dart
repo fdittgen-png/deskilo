@@ -12,3 +12,9 @@ final counterBookProvider = FutureProvider.autoDispose.family<CounterBook, Strin
   (ref, workspaceId) => ref.watch(counterBookPortProvider).book(workspaceId),
   retry: (_, _) => null,
 );
+
+/// The terminal console (till drawer): the business's newest open draft, read again on the console's beat.
+final counterOpenDraftProvider = FutureProvider.autoDispose.family<CounterBookReceipt?, String>(
+  (ref, workspaceId) => ref.watch(counterBookPortProvider).openDraft(workspaceId),
+  retry: (_, _) => null,
+);

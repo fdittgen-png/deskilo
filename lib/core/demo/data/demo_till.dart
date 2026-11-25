@@ -479,6 +479,10 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
   // ── the book ──
 
   @override
+  Future<CounterBookReceipt?> openDraft(String workspaceId) async =>
+      _book.values.where((r) => r.state == 'draft' && r.lines.isNotEmpty).lastOrNull?.read();
+
+  @override
   Future<CounterBook> book(String workspaceId) async {
     final shown = [
       for (final r in _book.values)

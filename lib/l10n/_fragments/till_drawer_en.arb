@@ -590,5 +590,34 @@
   "tillDrawerManage": "Tills and drawers",
   "@tillDrawerManage": {
     "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerConsoleTitle": "Terminal console",
+  "tillDrawerConsoleEmpty": "No sale is open on a terminal. What a terminal rings up appears here as it is chosen, with the prices Deskilo gives it.",
+  "tillDrawerConsoleLine": "{quantity} × {label}",
+  "tillDrawerConsoleRevision": "Open sale, change {revision}",
+  "@tillDrawerConsoleTitle": {
+    "description": "#4450 the terminal console of the till drawer: the open sale a terminal rings up"
+  },
+  "@tillDrawerConsoleEmpty": {
+    "description": "#4450 the terminal console of the till drawer: the open sale a terminal rings up"
+  },
+  "@tillDrawerConsoleLine": {
+    "description": "#4450 the terminal console of the till drawer: the open sale a terminal rings up; the quantity arrives formatted as the server froze it, the label is the product name",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "@tillDrawerConsoleRevision": {
+    "description": "#4450 the terminal console of the till drawer: the open sale a terminal rings up; the revision is the draft's change counter, a reference",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      }
+    }
   }
 }
