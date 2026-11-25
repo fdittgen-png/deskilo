@@ -199,6 +199,38 @@ class _Moved extends FakeCustomerQuoteRepository {
   }
 }
 
+/// A server that commits the conversion and then loses the answer, and whose next read of the quote fails too: the sheet cannot know.
+class _LostAnswer extends FakeCustomerQuoteRepository {
+  _LostAnswer({required super.clock});
+
+  var _lost = false;
+  var _readFails = false;
+
+  @override
+  Future<QuoteConverted> convert(
+    String workspaceId,
+    String quoteId, {
+    required int draftRevision,
+    required String requestId,
+    String? reviewedDigest,
+  }) async {
+    final done = await super.convert(workspaceId, quoteId, draftRevision: draftRevision, requestId: requestId, reviewedDigest: reviewedDigest);
+    if (_lost) return done;
+    _lost = true;
+    _readFails = true;
+    throw Exception('the answer was lost');
+  }
+
+  @override
+  Future<CustomerQuote> quote(String workspaceId, String quoteId) async {
+    if (_readFails) {
+      _readFails = false;
+      throw Exception('the read failed too');
+    }
+    return super.quote(workspaceId, quoteId);
+  }
+}
+
 void main() {
   testWidgets('the list shows each quote with its reference, status and the '
       'amount its sent revision froze', (tester) async {
@@ -480,6 +512,41 @@ void main() {
       expect(find.byKey(const ValueKey('quote-convert-differs')), findsOneWidget);
       expect(find.byKey(const ValueKey('quote-convert-document')), findsNothing, reason: 'the accepted lines do not add up to the new total');
       expect(tester.widget<FilledButton>(find.byKey(const ValueKey('quote-convert-issue'))).onPressed, isNull, reason: 'a review comes first');
+    });
+  }
+
+  for (final (label, size) in [('390 wide', const Size(390, 900)), ('1440 wide', const Size(1440, 900))]) {
+    testWidgets('#4405 an answer that did not come is looked for again in the quote, never guessed, and the invoice is found ($label)', (tester) async {
+      final setup = await _open(
+        tester,
+        const CustomerQuoteScreen(quoteId: 'quote-1'),
+        quotesOf: (clock) => _LostAnswer(clock: clock),
+        size: size,
+      );
+      await setup.quotes.recordDecision(
+        setup.workspaceId,
+        'quote-1',
+        QuoteDecisionInput(accepted: true, revision: 1, decidedOn: setup.today, source: 'email'),
+      );
+      ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
+          .invalidate(customerQuoteProvider((workspaceId: setup.workspaceId, quoteId: 'quote-1')));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('quote-convert')));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('quote-convert-check')));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('quote-convert-issue')));
+      await _settle(tester);
+      expect(tester.takeException(), isNull);
+      expect(find.byKey(const ValueKey('quote-convert-unknown')), findsOneWidget, reason: 'the answer is not known: it is said so');
+      expect(find.byKey(const ValueKey('quote-convert-done')), findsNothing);
+      expect(tester.widget<OutlinedButton>(find.byKey(const ValueKey('quote-convert-check'))).onPressed, isNull, reason: 'nothing else is offered while it is unknown');
+      final issue = find.byKey(const ValueKey('quote-convert-issue'));
+      if (issue.evaluate().isNotEmpty) expect(tester.widget<FilledButton>(issue).onPressed, isNull, reason: 'nothing is sent twice');
+      await tester.tap(find.byKey(const ValueKey('quote-convert-look')));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('quote-convert-done')), findsOneWidget, reason: 'the quote records its invoice');
+      expect(find.byKey(const ValueKey('quote-convert-unknown')), findsNothing);
     });
   }
 }
