@@ -41853,6 +41853,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillLayoutAdd => 'Aggiungere un elemento';
 
   @override
+  String get tillLayoutCalcPush => 'Sull\'ultima riga';
+
+  @override
   String get tillLayoutChooseFunction => 'Quale funzione?';
 
   @override

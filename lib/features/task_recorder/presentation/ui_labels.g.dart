@@ -9497,6 +9497,7 @@ Map<String, _Getter> _part21() => {
   'tillDrawerNoTillsPerson': (l) => l.tillDrawerNoTillsPerson,
   'tillDrawerRefusalAboveLimit': (l) => l.tillDrawerRefusalAboveLimit,
   'tillDrawerStateOff': (l) => l.tillDrawerStateOff,
+  'tillLayoutCalcPush': (l) => l.tillLayoutCalcPush,
   'tillLayoutChooseFunction': (l) => l.tillLayoutChooseFunction,
   'tillLayoutReload': (l) => l.tillLayoutReload,
   'tillLayoutSizeTablet': (l) => l.tillLayoutSizeTablet,

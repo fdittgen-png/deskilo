@@ -54094,6 +54094,10 @@
   "@tillLayoutAdd": {
     "description": "#4448 the till layout editor"
   },
+  "tillLayoutCalcPush": "Onto the last line",
+  "@tillLayoutCalcPush": {
+    "description": "#4448 the calculator's result becomes the last basket line's quantity"
+  },
   "tillLayoutChooseFunction": "Which function?",
   "@tillLayoutChooseFunction": {
     "description": "#4448 the till layout editor"

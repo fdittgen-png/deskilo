@@ -24220,6 +24220,7 @@
   "tillKeysEmpty": "Il n'y a encore rien à vendre. Ajoutez d'abord des articles dans le stock.",
   "tillKeysTitle": "Articles à encaisser",
   "tillLayoutAdd": "Ajouter un élément",
+  "tillLayoutCalcPush": "Sur la dernière ligne",
   "tillLayoutChooseFunction": "Quelle fonction ?",
   "tillLayoutChooseItem": "Quel article ?",
   "tillLayoutEdit": "Disposer cette caisse",

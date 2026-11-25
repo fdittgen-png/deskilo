@@ -211,5 +211,9 @@
   "tillLayoutGone": "No longer for sale",
   "@tillLayoutGone": {
     "description": "#4448 a key of a published till layout whose item is no longer sold: shown disabled"
+  },
+  "tillLayoutCalcPush": "Onto the last line",
+  "@tillLayoutCalcPush": {
+    "description": "#4448 the calculator's result becomes the last basket line's quantity"
   }
 }

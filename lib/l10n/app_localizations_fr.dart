@@ -41980,6 +41980,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillLayoutAdd => 'Ajouter un élément';
 
   @override
+  String get tillLayoutCalcPush => 'Sur la dernière ligne';
+
+  @override
   String get tillLayoutChooseFunction => 'Quelle fonction ?';
 
   @override

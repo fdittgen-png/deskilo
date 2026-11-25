@@ -24220,6 +24220,7 @@
   "tillKeysEmpty": "Es gibt noch nichts zu verkaufen. Legen Sie zuerst Artikel im Lager an.",
   "tillKeysTitle": "Artikel zum Kassieren",
   "tillLayoutAdd": "Element hinzufügen",
+  "tillLayoutCalcPush": "Auf die letzte Zeile",
   "tillLayoutChooseFunction": "Welche Funktion?",
   "tillLayoutChooseItem": "Welcher Artikel?",
   "tillLayoutEdit": "Diese Kasse gestalten",

@@ -4,15 +4,22 @@
 // without till layouts, keeps the generated keys of #4366 unchanged. An item key whose item is no longer sold is shown
 // "No longer for sale" and disabled: never a crash, and the rest of the sale goes on. The layout is read once per till
 // screen, so a layout published during a sale reaches the till at its next session.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart' show NumberFormat;
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/counter_till.dart';
+import '../../domain/till_keypad.dart';
 import '../../domain/till_layout.dart';
 import '../../providers/till_layout_providers.dart';
 import '../till_keys.dart';
+import '../till_session.dart';
+import 'till_layout_tools.dart';
 import 'till_layout_words.dart';
 
 /// The height of one row of a laid-out till.
@@ -24,39 +31,43 @@ class TillKeysOrLayout extends ConsumerWidget {
     required this.workspaceId,
     required this.tillId,
     required this.items,
+    required this.session,
     required this.onTap,
     required this.onPayCash,
-    required this.onNext,
   });
 
   final String workspaceId;
   final String? tillId;
   final AsyncValue<List<TillKey>> items;
-  final void Function(TillKey) onTap;
+
+  /// The till's own commands: the card, the next customer, a line taken out or given a quantity.
+  final TillSession session;
+
+  /// An item key: rung up like a generated key, with the quantity typed on the keypad when there is one.
+  final void Function(TillKey key, String? typed) onTap;
   final VoidCallback onPayCash;
-  final VoidCallback onNext;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final generated = TillKeys(key: const ValueKey('till-keys'), items: items, onTap: onTap);
+    final generated = TillKeys(key: const ValueKey('till-keys'), items: items, onTap: (k) => onTap(k, null));
     final till = tillId;
     if (till == null || !ref.watch(tillLayoutsOnProvider)) return generated;
     final layout = ref.watch(tillPublishedLayoutProvider((workspaceId: workspaceId, tillId: till))).value;
     final sold = items.value;
     // no layout, or the items not read yet (or not readable): the generated keys say so in their own way
     if (layout == null || layout.pages.isEmpty || sold == null) return generated;
-    return _LaidOut(key: const ValueKey('till-layout-laid-out'), layout: layout, items: sold, onTap: onTap, onPayCash: onPayCash, onNext: onNext);
+    return _LaidOut(key: const ValueKey('till-layout-laid-out'), layout: layout, items: sold, session: session, onTap: onTap, onPayCash: onPayCash);
   }
 }
 
 class _LaidOut extends StatefulWidget {
-  const _LaidOut({super.key, required this.layout, required this.items, required this.onTap, required this.onPayCash, required this.onNext});
+  const _LaidOut({super.key, required this.layout, required this.items, required this.session, required this.onTap, required this.onPayCash});
 
   final TillLayout layout;
   final List<TillKey> items;
-  final void Function(TillKey) onTap;
+  final TillSession session;
+  final void Function(TillKey key, String? typed) onTap;
   final VoidCallback onPayCash;
-  final VoidCallback onNext;
 
   @override
   State<_LaidOut> createState() => _LaidOutState();
@@ -64,6 +75,44 @@ class _LaidOut extends StatefulWidget {
 
 class _LaidOutState extends State<_LaidOut> {
   int _page = 0;
+
+  /// What the keypad has typed: the quantity of the next item key, or of the last line with Quantity ×.
+  final _typed = ValueNotifier(const TillKeypadEntry());
+
+  @override
+  void dispose() {
+    _typed.dispose();
+    super.dispose();
+  }
+
+  int get _last => widget.session.state.value.lines.length - 1;
+
+  /// [quantity] onto the basket's last line; nothing when the basket is empty.
+  void _onLast(String quantity) {
+    if (_last >= 0) unawaited(widget.session.setQuantity(_last, quantity));
+  }
+
+  void _item(TillKey item) {
+    final typed = _typed.value;
+    _typed.value = const TillKeypadEntry();
+    widget.onTap(item, typed.isEmpty ? null : typed.text);
+  }
+
+  VoidCallback? _function(TillFunction f) => switch (f) {
+    TillFunction.payCash => widget.onPayCash,
+    TillFunction.payCard => () => unawaited(widget.session.payCard()),
+    TillFunction.nextCustomer => widget.session.next,
+    TillFunction.voidLine => () {
+      if (_last >= 0) unawaited(widget.session.remove(_last));
+    },
+    TillFunction.quantityTimes => () {
+      final typed = _typed.value;
+      _typed.value = const TillKeypadEntry();
+      if (!typed.isEmpty) _onLast(typed.text);
+    },
+    // a discount, a price override, a deposit return, the drawer and a reprint have no till command yet: shown, not active
+    _ => null,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -128,18 +177,16 @@ class _LaidOutState extends State<_LaidOut> {
         if (item == null) {
           return OutlinedButton(key: key, onPressed: null, child: Text('${c.label}\n${l10n.tillLayoutGone}', textAlign: TextAlign.center));
         }
-        return FilledButton.tonal(key: key, onPressed: () => widget.onTap(item), child: Text(item.name, textAlign: TextAlign.center));
+        return FilledButton.tonal(key: key, onPressed: () => _item(item), child: Text(item.name, textAlign: TextAlign.center));
       case TillWidgetKind.functionKey:
         final f = c.function!;
-        final run = switch (f) {
-          TillFunction.payCash => widget.onPayCash,
-          TillFunction.nextCustomer => widget.onNext,
-          // the other functions are reached in the basket for now; their key is shown, not yet wired here
-          _ => null,
-        };
-        return FilledButton(key: key, onPressed: run, child: Text(tillFunctionName(l10n, f), textAlign: TextAlign.center));
+        return FilledButton(key: key, onPressed: _function(f), child: Text(tillFunctionName(l10n, f), textAlign: TextAlign.center));
+      case TillWidgetKind.keypad:
+        return TillKeypadTool(key: key, typed: _typed, separator: NumberFormat.decimalPattern(appFormatOf(context).locale).symbols.DECIMAL_SEP);
+      case TillWidgetKind.calculator:
+        return TillCalculatorTool(key: key, onQuantity: _onLast);
       default:
-        // the tools have their place beside the keys today (the basket, its total and the scan field)
+        // the basket, its total and the scan field have their place beside the keys
         return Card(key: key, child: Center(child: Text(tillWidgetName(l10n, c.kind), textAlign: TextAlign.center)));
     }
   }

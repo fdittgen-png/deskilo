@@ -66710,6 +66710,12 @@ abstract class AppLocalizations {
   /// **'Add a widget'**
   String get tillLayoutAdd;
 
+  /// #4448 the calculator's result becomes the last basket line's quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Onto the last line'**
+  String get tillLayoutCalcPush;
+
   /// #4448 the till layout editor
   ///
   /// In en, this message translates to:

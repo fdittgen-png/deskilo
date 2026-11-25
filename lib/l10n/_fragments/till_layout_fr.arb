@@ -50,5 +50,6 @@
   "tillLayoutStale": "Quelqu'un a modifié cette disposition ; rechargez-la.",
   "tillLayoutInvalid": "Cette disposition ne peut pas être enregistrée : {reason}",
   "tillLayoutReload": "Recharger",
-  "tillLayoutGone": "Plus en vente"
+  "tillLayoutGone": "Plus en vente",
+  "tillLayoutCalcPush": "Sur la dernière ligne"
 }

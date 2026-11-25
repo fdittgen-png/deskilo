@@ -50,5 +50,6 @@
   "tillLayoutStale": "Jemand hat dieses Layout geändert; laden Sie es neu.",
   "tillLayoutInvalid": "Dieses Layout kann nicht gespeichert werden: {reason}",
   "tillLayoutReload": "Neu laden",
-  "tillLayoutGone": "Nicht mehr im Verkauf"
+  "tillLayoutGone": "Nicht mehr im Verkauf",
+  "tillLayoutCalcPush": "Auf die letzte Zeile"
 }

@@ -41460,6 +41460,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillLayoutAdd => 'Add a widget';
 
   @override
+  String get tillLayoutCalcPush => 'Onto the last line';
+
+  @override
   String get tillLayoutChooseFunction => 'Which function?';
 
   @override

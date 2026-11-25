@@ -50,5 +50,6 @@
   "tillLayoutStale": "Qualcuno ha modificato questo layout; lo ricarichi.",
   "tillLayoutInvalid": "Questo layout non può essere salvato: {reason}",
   "tillLayoutReload": "Ricaricare",
-  "tillLayoutGone": "Non più in vendita"
+  "tillLayoutGone": "Non più in vendita",
+  "tillLayoutCalcPush": "Sull'ultima riga"
 }
