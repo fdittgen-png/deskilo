@@ -105,6 +105,12 @@ end;
 $$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
+-- #4471: a bill's unit is one of its business's units, so the business declares the two it buys in.
+insert into public.workspace_units (workspace_id, code, label, dimension, factor_num, factor_den) values
+ (pg_temp.u('b1'), 'unit', 'Unit', 'count', 1, 1),
+ (pg_temp.u('b1'), 'ream', 'Ream', 'count', 1, 1)
+on conflict do nothing;
+
 set local role authenticated;
 select set_config('t.b1', pg_temp.bill('f1', '2025-02-10', 'd1', 100, 2000)::text, true);
 select set_config('t.b2', pg_temp.bill('f1', '2025-03-05', 'd1', 100, 3000)::text, true);
