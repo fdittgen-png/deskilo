@@ -1169,6 +1169,7 @@ const Set<String> uiKeys = {
   'demo-tag-4',
   'demo-term-charges',
   'demo-term-rent',
+  'demo-till-bakery',
   'demo-till-front',
   'demo-till-market',
   'demo-today',

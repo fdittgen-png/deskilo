@@ -2209,7 +2209,7 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
-    since: 'till_layouts',
+    since: 'till_layout_registry',
     row: (
       key: 'counter.layout_max_cells',
       type: 'int',
@@ -2228,7 +2228,7 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
-    since: 'till_layouts',
+    since: 'till_layout_registry',
     row: (
       key: 'counter.layout_cashier_reorder',
       type: 'bool',

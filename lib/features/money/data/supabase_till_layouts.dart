@@ -8,7 +8,7 @@ import '../domain/till_layout.dart';
 import '../domain/till_layout_port.dart';
 
 /// The table of the till layouts.
-const tillLayoutsTable = 'till_layouts';
+const _tillLayoutsTable = 'till_layouts';
 
 class SupabaseTillLayouts implements TillLayoutPort {
   const SupabaseTillLayouts(this._client);
@@ -17,7 +17,7 @@ class SupabaseTillLayouts implements TillLayoutPort {
 
   Future<TillLayout?> _read(String workspaceId, String tillId, TillLayoutStatus status) async {
     final rows = await _client
-        .from(tillLayoutsTable)
+        .from(_tillLayoutsTable)
         .select('name, version, status, layout')
         .eq('workspace_id', workspaceId)
         .eq('till_id', tillId)
@@ -25,7 +25,7 @@ class SupabaseTillLayouts implements TillLayoutPort {
         .order('version', ascending: false)
         .limit(1);
     if ((rows as List).isEmpty) return null;
-    final r = JsonReader.of(rows.first, context: tillLayoutsTable);
+    final r = JsonReader.of(rows.first, context: _tillLayoutsTable);
     return TillLayout.fromJson(
       r.objectOrAbsent('layout').json,
       name: r.string('name'),

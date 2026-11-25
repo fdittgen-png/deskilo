@@ -4,6 +4,7 @@
 // (validateTillLayout, the cell cap of the settings, the items the Demo sells), the version the editor read, the request
 // id that answers the same version again. The front counter starts on the Retail template; the bakery counter on the
 // Bakery template with a keypad and a calculator.
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../features/money/domain/till_layout.dart';
@@ -17,9 +18,10 @@ PostgrestException _refused(String code, String message, String reason) =>
     PostgrestException(message: message, code: code, details: '{"reason":"$reason"}');
 
 /// The Demo's front counter, laid out with the Retail template.
-const demoFrontTill = 'demo-till-front';
+const _frontTill = 'demo-till-front';
 
 /// The Demo's bakery counter, laid out with the Bakery template and a calculator.
+@visibleForTesting
 const demoBakeryTill = 'demo-till-bakery';
 
 class DemoTillLayouts implements TillLayoutPort {
@@ -42,7 +44,7 @@ class DemoTillLayouts implements TillLayoutPort {
     };
     final retail = TillLayoutTemplate.retail.build('Front counter', pageName: name);
     final bakery = withCalculator(TillLayoutTemplate.bakery.build('Bakery counter', pageName: name));
-    _published[demoFrontTill] = TillLayout(name: retail.name, pages: retail.pages, version: 1, status: TillLayoutStatus.published);
+    _published[_frontTill] = TillLayout(name: retail.name, pages: retail.pages, version: 1, status: TillLayoutStatus.published);
     _published[demoBakeryTill] = TillLayout(name: bakery.name, pages: bakery.pages, version: 1, status: TillLayoutStatus.published);
   }
 
@@ -79,6 +81,7 @@ class DemoTillLayouts implements TillLayoutPort {
   }
 }
 
+@visibleForTesting
 /// [layout] with a calculator on the desk grid of its first page, in the first free place it fits (the bakery's).
 TillLayout withCalculator(TillLayout layout) {
   final page = layout.pages.first;

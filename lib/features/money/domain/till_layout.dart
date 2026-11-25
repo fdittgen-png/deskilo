@@ -5,7 +5,10 @@
 // command, a tool is an existing panel. A till without a layout keeps the generated one of #4366.
 //
 // The server (till_layout_save_v1) validates the same rules as [validateTillLayout]; the Demo's store runs this one.
+import 'dart:convert';
+
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
+import 'package:meta/meta.dart';
 
 /// The three sizes a till is laid out for, by the width it is drawn at.
 enum TillLayoutSize {
@@ -94,6 +97,11 @@ enum TillLayoutStatus {
   static TillLayoutStatus of(String wire) => values.firstWhere((s) => s.wire == wire && s != unknown, orElse: () => unknown);
 }
 
+/// The parameter of an item key naming what it sells, and of a function key naming what it runs: the layout format's
+/// own words, the same in till_layout_problems.
+const _itemParam = 'item_id';
+const tillCellFunctionParam = 'function';
+
 /// One widget placed on a grid: its column and row (from 0), its span, and its parameters (an item key's item id, a
 /// function key's function, a category key's group or page, a label, a colour, a fixed quantity).
 class TillCell {
@@ -110,10 +118,10 @@ class TillCell {
   TillWidgetKind get kind => TillWidgetKind.of(kindWire);
 
   /// The item, service or variant an item key sells; null for any other kind.
-  String? get itemId => kind == TillWidgetKind.itemKey ? params['item_id'] as String? : null;
+  String? get itemId => kind == TillWidgetKind.itemKey ? params[_itemParam] as String? : null;
 
   /// The function a function key runs; null for any other kind.
-  TillFunction? get function => kind == TillWidgetKind.functionKey ? TillFunction.of('${params['function'] ?? ''}') : null;
+  TillFunction? get function => kind == TillWidgetKind.functionKey ? TillFunction.of('${params[tillCellFunctionParam] ?? ''}') : null;
 
   bool overlaps(TillCell o) => col < o.col + o.colSpan && o.col < col + colSpan && row < o.row + o.rowSpan && o.row < row + rowSpan;
 
@@ -162,11 +170,10 @@ class TillGrid {
 
   factory TillGrid.fromJson(Object? json) {
     final r = JsonReader.orEmpty(json, context: 'till_layout grid');
-    final cells = r.json['cells'];
     return TillGrid(
       cols: r.intOrNull('cols') ?? 0,
       rows: r.intOrNull('rows') ?? 0,
-      cells: [if (cells is List) for (final c in cells) TillCell.fromJson(c)],
+      cells: [for (final c in r.listOrAbsent('cells')) TillCell.fromJson(c)],
     );
   }
 }
@@ -207,8 +214,8 @@ class TillLayout {
   Map<String, Object?> toJson() => {'pages': [for (final p in pages) p.toJson()]};
 
   factory TillLayout.fromJson(Object? layout, {required String name, int version = 0, TillLayoutStatus status = TillLayoutStatus.draft}) {
-    final pages = JsonReader.orEmpty(layout, context: 'till_layout').json['pages'];
-    return TillLayout(name: name, version: version, status: status, pages: [if (pages is List) for (final p in pages) TillPage.fromJson(p)]);
+    final pages = JsonReader.orEmpty(layout, context: 'till_layout').listOrAbsent('pages');
+    return TillLayout(name: name, version: version, status: status, pages: [for (final p in pages) TillPage.fromJson(p)]);
   }
 
   int get cellCount => pages.fold(0, (a, p) => a + p.grids.values.fold(0, (b, g) => b + g.cells.length));
@@ -230,9 +237,11 @@ class TillLayoutProblem {
 }
 
 /// The largest layout the server stores, in bytes of its JSON (`till_layout_max_bytes()`).
+@visibleForTesting
 const int tillLayoutMaxBytes = 262144;
 
 /// The largest grid side a page may have at any size.
+@visibleForTesting
 const int tillLayoutMaxGridSide = 24;
 
 /// Every problem of [layout]: the rules the server applies when it is saved. [maxCells] is the size cap (the
@@ -242,8 +251,10 @@ List<TillLayoutProblem> validateTillLayout(TillLayout layout, {required int maxC
     if (layout.name.trim().isEmpty) const TillLayoutProblem(TillLayoutProblemCode.noName),
     if (layout.pages.isEmpty) const TillLayoutProblem(TillLayoutProblemCode.noPages),
   ];
-  // past the cap nothing else is looked at, as on the server: a huge layout never costs the overlap check
-  if (layout.cellCount > maxCells) return [...out, const TillLayoutProblem(TillLayoutProblemCode.tooLarge)];
+  // past either cap nothing else is looked at, as on the server: a huge layout never costs the overlap check
+  if (layout.cellCount > maxCells || utf8.encode(jsonEncode(layout.toJson())).length > tillLayoutMaxBytes) {
+    return [...out, const TillLayoutProblem(TillLayoutProblemCode.tooLarge)];
+  }
   for (var p = 0; p < layout.pages.length; p++) {
     final page = layout.pages[p];
     if (page.grids.isEmpty) out.add(TillLayoutProblem(TillLayoutProblemCode.noGrid, page: p));

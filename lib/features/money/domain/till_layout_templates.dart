@@ -56,7 +56,7 @@ TillPage _page(String name, _Place place) => TillPage(
 
 TillCell _tool(TillWidgetKind kind, int col, int row, int cs, int rs) => TillCell(kindWire: kind.wire, col: col, row: row, colSpan: cs, rowSpan: rs);
 TillCell _fn(TillFunction f, int col, int row, [int cs = 1]) =>
-    TillCell(kindWire: TillWidgetKind.functionKey.wire, col: col, row: row, colSpan: cs, params: {'function': f.wire});
+    TillCell(kindWire: TillWidgetKind.functionKey.wire, col: col, row: row, colSpan: cs, params: {tillCellFunctionParam: f.wire});
 
 /// The basket on the left half, the total under it, the pay and next keys on the bottom row.
 List<TillCell> _payRow(int cols, int rows) => [
@@ -72,9 +72,10 @@ List<TillCell> _retail(int cols, int rows) => [
   _tool(TillWidgetKind.scanField, cols ~/ 2, 0, cols - cols ~/ 2, 1),
 ];
 
+/// The keypad takes half of the right side (at least its own width), so a calculator fits beside it on the larger grids.
 List<TillCell> _bakery(int cols, int rows) => [
   ..._payRow(cols, rows),
-  _tool(TillWidgetKind.keypad, cols ~/ 2, 0, cols - cols ~/ 2, 3),
+  _tool(TillWidgetKind.keypad, cols ~/ 2, 0, (cols - cols ~/ 2) ~/ 2 < 2 ? 2 : (cols - cols ~/ 2) ~/ 2, 3),
   _fn(TillFunction.quantityTimes, cols ~/ 2, 3),
 ];
 

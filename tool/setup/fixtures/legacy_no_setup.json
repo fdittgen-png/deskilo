@@ -399,13 +399,13 @@
    "deployToDev",
    "accessProd",
    "viewAnalytics",
+   "configureTill",
    "useMessages",
    "makeReservations",
    "viewCalendar",
    "viewDirectory",
    "viewMyMoney",
-   "viewDocuments",
-   "configureTill"
+   "viewDocuments"
   ],
   "co_owner": [
    "manageRoles",
