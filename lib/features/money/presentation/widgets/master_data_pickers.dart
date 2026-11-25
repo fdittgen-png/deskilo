@@ -83,6 +83,7 @@ class VatPercentPicker extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => switch (ref.watch(vatRatesProvider)) {
     AsyncData(:final value) => _VatChoice(
+      key: const ValueKey('vat-choice'),
       rates: [
         for (final r in value) if (r.active) r,
       ],
@@ -101,7 +102,7 @@ class VatPercentPicker extends ConsumerWidget {
 
 /// The choice once the rates are read: none, each rate, and a percent that is no rate's, shown as it is and flagged.
 class _VatChoice extends StatelessWidget {
-  const _VatChoice({required this.rates, required this.current, required this.onChanged, required this.label});
+  const _VatChoice({super.key, required this.rates, required this.current, required this.onChanged, required this.label});
 
   final List<VatRate> rates;
   final double? current;

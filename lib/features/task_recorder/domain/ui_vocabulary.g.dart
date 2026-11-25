@@ -4649,6 +4649,7 @@ const Set<String> uiKeys = {
   'vat-add-rate',
   'vat-annual-summary',
   'vat-catalogue-note',
+  'vat-choice',
   'vat-decl',
   'vat-decl-basis',
   'vat-decl-filed-confirm',
