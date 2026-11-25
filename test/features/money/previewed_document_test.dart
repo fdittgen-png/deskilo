@@ -108,9 +108,12 @@ void main() {
       expect(d.ready, isFalse);
     });
 
-    test('a changed total on the server side is its own to report: the lines still stand against what was accepted', () {
+    test('a total that moved since the acceptance names the new total alone: the accepted lines never stand under it', () {
       final d = _prep(wouldBe: 15000).documentOf(_accepted(lines));
-      expect(d.ready, isTrue);
+      expect(d.missing, isEmpty);
+      expect(d.ready, isFalse);
+      expect(d.lines, isEmpty);
+      expect(d.vatTotals, isEmpty);
       expect(d.totalCents, 15000);
     });
   });
