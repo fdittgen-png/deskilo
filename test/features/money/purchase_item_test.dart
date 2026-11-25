@@ -6,11 +6,13 @@
 // absent while the figures are off.
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/features/enabled_feature_keys.dart';
+import 'package:deskilo/features/money/domain/line_unit.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/presentation/widgets/purchases_sheet.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/money/providers/pickable_units_provider.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +34,9 @@ Widget _app(FakePurchaseRepository repo, {required bool figures}) => _scope([
   memberLabelsProvider.overrideWithValue({}),
   spaceCurrencyProvider.overrideWithValue('EUR'),
   servicesProvider.overrideWith((ref) async => const [_coffee]),
+  pickableUnitsProvider.overrideWith(
+    (ref, workspaceId) => const [LineUnit(code: 'piece'), LineUnit(code: 'kg'), LineUnit(code: 'h')],
+  ),
   enabledFeatureKeysProvider.overrideWithValue({
         if (figures) purchaseAnalyticsKey,
       }),

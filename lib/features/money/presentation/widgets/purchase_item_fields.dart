@@ -11,7 +11,6 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/money_providers.dart';
 import 'master_data_pickers.dart';
 
@@ -20,7 +19,10 @@ import 'master_data_pickers.dart';
 typedef PurchaseItemEntry = ({String? itemId, String quantity, String unit});
 
 class PurchaseItemFields extends ConsumerStatefulWidget {
-  const PurchaseItemFields({super.key, required this.onChanged});
+  const PurchaseItemFields({super.key, required this.workspaceId, required this.onChanged});
+
+  /// The business whose units the line picks from (#4471).
+  final String workspaceId;
 
   final ValueChanged<PurchaseItemEntry> onChanged;
 
@@ -94,7 +96,7 @@ class _PurchaseItemFieldsState extends ConsumerState<PurchaseItemFields> {
           // #4471 — the unit is one of the business's units of measure, never typed.
           UnitPickerField(
             key: const ValueKey('purchase-unit'),
-            workspaceId: ref.watch(currentWorkspaceProvider).value?.id ?? '',
+            workspaceId: widget.workspaceId,
             value: _unit,
             label: l10n.purchasesUnit,
             onChanged: (code) {

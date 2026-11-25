@@ -20,9 +20,11 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../stock/domain/workspace_units.dart';
+import '../../domain/line_unit.dart';
 import '../../domain/purchase_order.dart';
 import '../../domain/service_item.dart';
+import '../../providers/money_providers.dart' show vatRatesProvider;
+import '../../providers/pickable_units_provider.dart';
 import 'master_data_pickers.dart';
 
 /// The form's state: its controllers, the chosen supplier, date and items,
@@ -37,6 +39,11 @@ class PurchaseOrderForm {
         for (final l in order?.lines ?? const <PurchaseOrderLine>[])
           l.serviceId,
       ],
+      vatPercents = [
+        if (order == null) null,
+        for (final l in order?.lines ?? const <PurchaseOrderLine>[])
+          l.vatRatePercent,
+      ],
       fields = FormControllers({
         'note': order?.note ?? '',
         'email': order?.recipientEmail ?? '',
@@ -50,7 +57,6 @@ class PurchaseOrderForm {
             currency: currency,
             locale: locale,
           ),
-          'vat-$i': l.vatRatePercent == null ? '' : _qtyText(l.vatRatePercent!),
         },
       });
 
@@ -69,9 +75,12 @@ class PurchaseOrderForm {
   int lines;
   final List<String?> itemIds;
 
+  /// The VAT percent of each line: none, or the percent of the rate that was picked (#4471).
+  final List<double?> vatPercents;
+
   /// What the pickers offered the last time the form was drawn: a unit or a percent outside them cannot be saved (#4471).
-  List<WorkspaceUnit> _unitsOffered = builtInUnits;
-  List<VatRate> _ratesOffered = const [];
+  List<LineUnit> _unitsOffered = const [];
+  List<VatRate>? _ratesOffered;
 
   /// The last check's problems, for the fields that are not text fields
   /// (the supplier picker reads its own here).
@@ -87,7 +96,7 @@ class PurchaseOrderForm {
   /// Watches the entries of every line the form shows, once each.
   void _watchLines() {
     for (var i = 0; i < lines; i++) {
-      for (final k in const ['qty', 'price', 'vat']) {
+      for (final k in const ['qty', 'price']) {
         final c = fields['$k-$i'];
         if (_watched.add(c)) c.addListener(_bump);
       }
@@ -131,16 +140,10 @@ class PurchaseOrderForm {
                 allowNegative: false,
               ).minor ??
               -1,
-          vatRatePercent: _vatOf(i),
+          vatRatePercent: vatPercents[i],
         ),
     ],
   );
-
-  /// The VAT percent line [i] holds: none, or the percent of the rate that was picked (-1: not a number).
-  double? _vatOf(int i) {
-    final text = fields['vat-$i'].text.trim();
-    return text.isEmpty ? null : (double.tryParse(text) ?? _number(text) ?? -1);
-  }
 
   /// Same entries: same id (a lost answer is replayed, not doubled).
   String requestFor(PurchaseOrderDraft d) {
@@ -178,7 +181,7 @@ class PurchaseOrderForm {
       }
       if (one.contains(PurchaseOrderProblem.lineVatRate)) {
         out['vat-$i'] = l10n.purchaseOrderBadVatRate;
-      } else if (!vatPercentIsListed(_ratesOffered, l.vatRatePercent)) {
+      } else if (_ratesOffered case final rates? when !vatPercentIsListed(rates, l.vatRatePercent)) {
         out['vat-$i'] = l10n.masterDataUnlisted;
       }
       if (!unitIsListed(_unitsOffered, l.unit)) out['unit-$i'] = l10n.masterDataUnlisted;
@@ -239,8 +242,13 @@ class PurchaseOrderForm {
     VoidCallback refresh,
   ) {
     _watchLines();
-    _unitsOffered = unitsOffered(ref, workspaceId);
-    _ratesOffered = vatRatesOffered(ref);
+    _unitsOffered = ref.watch(pickableUnitsProvider(workspaceId));
+    _ratesOffered = switch (ref.watch(vatRatesProvider)) {
+      AsyncData(:final value) => [
+        for (final r in value) if (r.active) r,
+      ],
+      _ => null,
+    };
     return [
       DropdownButtonFormField<String?>(
         key: const ValueKey('purchase-order-supplier'),
@@ -301,6 +309,7 @@ class PurchaseOrderForm {
             : () {
                 lines++;
                 itemIds.add(null);
+                vatPercents.add(null);
                 _bump();
                 refresh();
               },
@@ -333,13 +342,15 @@ class PurchaseOrderForm {
             onPressed: () {
               // Shift the later lines up, then drop the last one.
               for (var j = i; j < lines - 1; j++) {
-                for (final k in ['desc', 'qty', 'unit', 'price', 'vat']) {
+                for (final k in ['desc', 'qty', 'unit', 'price']) {
                   fields['$k-$j'].text = fields['$k-${j + 1}'].text;
                 }
                 itemIds[j] = itemIds[j + 1];
+                vatPercents[j] = vatPercents[j + 1];
               }
               lines--;
               itemIds.removeLast();
+              vatPercents.removeLast();
               _bump();
               refresh();
             },
@@ -399,10 +410,11 @@ class PurchaseOrderForm {
     ),
     VatPercentPicker(
       key: ValueKey('purchase-order-vat-$i'),
-      value: _vatOf(i),
+      value: vatPercents[i],
       label: l10n.purchaseOrderVatRate,
       onChanged: (percent) {
-        fields['vat-$i'].text = percent == null ? '' : _qtyText(percent);
+        vatPercents[i] = percent;
+        _bump();
         refresh();
       },
     ),

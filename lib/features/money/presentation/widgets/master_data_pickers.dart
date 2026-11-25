@@ -9,23 +9,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../stock/domain/workspace_units.dart';
-import '../../../stock/providers/workspace_units_providers.dart';
-import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/providers/workspace_providers.dart';
+import '../../../../core/ui/async_read_body.dart';
+import '../../../../core/ui/dropdown_field.dart';
+import '../../domain/line_unit.dart';
 import '../../providers/money_providers.dart' show vatRatesProvider;
+import '../../providers/pickable_units_provider.dart';
 import '../standalone/line_unit_text.dart';
 
 /// Whether [code] (the empty one is "none yet") is a unit [units] offers.
-bool unitIsListed(List<WorkspaceUnit> units, String code) => code.isEmpty || units.any((u) => u.code == code);
-
-/// The units a unit input offers in [workspaceId]: the business's own that are not archived while the units feature is on, the
-/// six of before while it is off. A business whose units are still being read is offered the six of before.
-List<WorkspaceUnit> unitsOffered(WidgetRef ref, String workspaceId) {
-  final on = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.unitsOfMeasure);
-  final all = on ? (ref.watch(workspaceUnitListProvider(workspaceId)).value ?? builtInUnits) : builtInUnits;
-  return pickableUnits(all, unitsOn: on);
-}
+bool unitIsListed(List<LineUnit> units, String code) => code.isEmpty || units.any((u) => u.code == code);
 
 /// What a unit is: its code, an optional unit chosen from the master data.
 class UnitPickerField extends ConsumerWidget {
@@ -49,24 +41,24 @@ class UnitPickerField extends ConsumerWidget {
   final bool enabled;
   final String? errorText;
 
-  /// Whether a unit must be chosen: a row with none says so; otherwise "no unit" is offered.
+  /// Whether a unit must be chosen: otherwise "no unit" is offered.
   final bool required;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
-    final units = unitsOffered(ref, workspaceId);
+    final units = ref.watch(pickableUnitsProvider(workspaceId));
     final listed = unitIsListed(units, value);
-    return DropdownButtonFormField<String>(
+    return AppDropdownField<String>(
+      // a value that changes from outside (a line removed above) is drawn again
       key: ValueKey('unit-$value'),
-      initialValue: value,
-      isExpanded: true,
-      decoration: InputDecoration(labelText: label, errorText: listed ? errorText : l.masterDataUnlisted),
+      label: label,
+      value: value.isEmpty && required ? null : value,
+      error: listed ? errorText : l.masterDataUnlisted,
       items: [
-        if (!listed) DropdownMenuItem(value: value, child: Text(value, overflow: TextOverflow.ellipsis)),
-        if (!required) DropdownMenuItem(value: '', child: Text(l.masterDataNoUnit)),
-        for (final u in units)
-          DropdownMenuItem(value: u.code, child: Text(lineUnitName(l, code: u.code, label: u.label), overflow: TextOverflow.ellipsis)),
+        if (!listed) (value, value),
+        if (!required) ('', l.masterDataNoUnit),
+        for (final u in units) (u.code, lineUnitName(l, code: u.code, label: u.label)),
       ],
       onChanged: enabled ? (v) => onChanged(v ?? '') : null,
     );
@@ -76,8 +68,7 @@ class UnitPickerField extends ConsumerWidget {
 /// Whether [percent] (null: none) is the rate of one of [rates].
 bool vatPercentIsListed(List<VatRate> rates, double? percent) => percent == null || rates.any((r) => r.percent == percent);
 
-/// The active VAT rates a VAT input offers; none while they are being read.
-List<VatRate> vatRatesOffered(WidgetRef ref) => [for (final r in ref.watch(vatRatesProvider).value ?? const <VatRate>[]) if (r.active) r];
+const _noVat = 'none';
 
 /// The percent of a VAT rate, picked from the business's active rates; the percent is never typed.
 class VatPercentPicker extends ConsumerWidget {
@@ -93,19 +84,36 @@ class VatPercentPicker extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final format = appFormatOf(context);
-    final rates = vatRatesOffered(ref);
-    final listed = vatPercentIsListed(rates, value);
-    return DropdownButtonFormField<double?>(
-      key: ValueKey('vat-$value'),
-      initialValue: value,
-      isExpanded: true,
-      decoration: InputDecoration(labelText: label, errorText: listed ? null : l.masterDataUnlisted),
-      items: [
-        if (!listed) DropdownMenuItem<double?>(value: value, child: Text(format.ratePercent(value!))),
-        DropdownMenuItem<double?>(child: Text(l.masterDataNoVat)),
-        for (final r in rates) DropdownMenuItem<double?>(value: r.percent, child: Text('${r.label} (${format.ratePercent(r.percent)})')),
-      ],
-      onChanged: enabled ? onChanged : null,
-    );
+    return switch (ref.watch(vatRatesProvider)) {
+      AsyncData(:final value) => Builder(
+        builder: (context) {
+          final rates = [
+            for (final r in value) if (r.active) r,
+          ];
+          final listed = vatPercentIsListed(rates, this.value);
+          final current = this.value;
+          // the percent each choice stands for, so none is parsed back from its text
+          final percents = {for (final r in rates) '${r.percent}': r.percent};
+          return AppDropdownField<String>(
+            key: ValueKey('vat-$current'),
+            label: label,
+            value: current == null ? _noVat : '$current',
+            error: listed ? null : l.masterDataUnlisted,
+            items: [
+              if (!listed) ('$current', format.ratePercent(current!)),
+              (_noVat, l.masterDataNoVat),
+              for (final r in rates) ('${r.percent}', '${r.label} (${format.ratePercent(r.percent)})'),
+            ],
+            onChanged: enabled ? (v) => onChanged(v == null || v == _noVat ? null : (percents[v] ?? current)) : null,
+          );
+        },
+      ),
+      AsyncError(:final error) => ReadFailureBanner(
+        key: const ValueKey('vat-rates-failed'),
+        error: error,
+        onRetry: () => ref.invalidate(vatRatesProvider),
+      ),
+      _ => const LinearProgressIndicator(),
+    };
   }
 }

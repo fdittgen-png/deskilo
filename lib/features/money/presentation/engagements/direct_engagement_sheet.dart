@@ -28,9 +28,10 @@ Future<bool> showDirectEngagementSheet(
   required List<BillingParty> customers,
 }) {
   final l10n = context.l10n;
-  final fields = FormControllers({'description': '', 'quantity': '1', 'unit': ''});
+  final fields = FormControllers({'description': '', 'quantity': '1'});
   final locale = Localizations.localeOf(context).toLanguageTag();
   String? customer;
+  var unit = '';
   String? requestId;
   var committed = false;
   return showAppFormSheet(
@@ -55,7 +56,7 @@ Future<bool> showDirectEngagementSheet(
             subjectId: customer!,
             description: fields['description'].text.trim(),
             quantity: quantity.text,
-            unit: fields['unit'].text.trim(),
+            unit: unit,
           ),
         );
         switch (outcome) {
@@ -102,10 +103,10 @@ Future<bool> showDirectEngagementSheet(
         UnitPickerField(
           key: const ValueKey('engagement-direct-unit'),
           workspaceId: workspaceId,
-          value: fields['unit'].text,
+          value: unit,
           label: l10n.standaloneInvoiceLineUnit,
           onChanged: (code) {
-            fields['unit'].text = code;
+            unit = code;
             refresh();
           },
         ),

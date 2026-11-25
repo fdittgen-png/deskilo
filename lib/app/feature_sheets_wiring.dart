@@ -15,11 +15,14 @@ import '../features/money/domain/line_unit.dart';
 import '../features/money/presentation/purchase_order_stock_seam.dart';
 import '../features/money/presentation/screens/tax_reference_screen.dart';
 import '../features/money/providers/line_units_provider.dart';
+import '../features/money/providers/pickable_units_provider.dart';
 import '../features/stock/domain/workspace_units.dart';
 import '../features/stock/presentation/purchase_order_stock_seam_impl.dart';
 import '../features/stock/presentation/stock_event_names.dart';
 import '../features/stock/providers/stock_providers.dart';
 import '../features/stock/providers/workspace_units_providers.dart' as stock_units;
+import '../features/workspace/domain/workspace_feature.dart';
+import '../features/workspace/providers/workspace_providers.dart';
 import 'stock_expiry_print.dart';
 import 'stock_service_creator.dart';
 
@@ -45,6 +48,14 @@ final List<Override> featureSheetsFromApp = [
         LineUnit(code: u.code, label: u.label, unEceCode: u.unEceCode),
     ],
   ),
+  // #4471 — the units a form picks from: the business's own, or the six of before (money never imports the stock).
+  pickableUnitsProvider.overrideWith((ref, workspaceId) {
+    final on = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.unitsOfMeasure);
+    final all = on ? (ref.watch(stock_units.workspaceUnitListProvider(workspaceId)).value ?? builtInUnits) : builtInUnits;
+    return [
+      for (final u in pickableUnits(all, unitsOn: on)) LineUnit(code: u.code, label: u.label, unEceCode: u.unEceCode),
+    ];
+  }),
   // #4294 — the names the low-stock notice of the inbox reads (events never import the stock).
   eventNameSourcesProvider.overrideWithValue(const [stockEventNames]),
 ];

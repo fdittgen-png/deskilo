@@ -6,10 +6,12 @@
 // list and its print, nothing else.
 import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
+import 'package:deskilo/features/money/domain/line_unit.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/presentation/widgets/purchase_order_record.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/money/providers/pickable_units_provider.dart';
 import 'package:deskilo/features/money/providers/purchase_order_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -75,6 +77,9 @@ Future<(FakePurchaseOrderRepository, Widget)> _app(
       supplierRepositoryProvider.overrideWithValue(suppliers),
       purchaseOrderRepositoryProvider.overrideWithValue(orders),
       servicesProvider.overrideWith((ref) async => const <ServiceItem>[]),
+      pickableUnitsProvider.overrideWith(
+        (ref, workspaceId) => const [LineUnit(code: 'piece'), LineUnit(code: 'kg'), LineUnit(code: 'h')],
+      ),
       vatRatesProvider.overrideWith(
         (ref) async => const [
           VatRate(id: 'r-std', label: 'Standard', percent: 20),
@@ -498,7 +503,15 @@ void main() {
         expect(tester.takeException(), isNull);
         expect(find.text('box'), findsOneWidget);
         expect(find.textContaining('55'), findsWidgets);
-        expect(find.text('This is not in the list: pick one'), findsNWidgets(2));
+        for (final key in ['purchase-order-unit-0', 'purchase-order-vat-0']) {
+          await tester.ensureVisible(find.byKey(ValueKey(key)));
+          await tester.pump();
+          expect(
+            find.descendant(of: find.byKey(ValueKey(key)), matching: find.text('This is not in the list: pick one')),
+            findsOneWidget,
+            reason: '$key is flagged',
+          );
+        }
         await tester.ensureVisible(find.byKey(const ValueKey('purchase-order-save')));
         await tester.tap(find.byKey(const ValueKey('purchase-order-save')));
         await _settle(tester);
