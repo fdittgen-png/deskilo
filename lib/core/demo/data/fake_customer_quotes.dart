@@ -114,7 +114,7 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
     required DateTime validUntil,
   }) {
     final q = _Quote('quote-${_next++}', subjectId);
-    q.revisions.add(_Rev(1, issuedOn, validUntil, lines));
+    q.revisions.add(_Rev(1, issuedOn, validUntil, _withIds(lines)));
     _of(workspaceId).add(q);
   }
 
