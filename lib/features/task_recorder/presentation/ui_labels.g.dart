@@ -10193,6 +10193,7 @@ Map<String, _Getter> _part23() => {
   'meDataPersonalTitle': (l) => l.meDataPersonalTitle,
   'meManageSpaces': (l) => l.meManageSpaces,
   'meNextNothingWeek': (l) => l.meNextNothingWeek,
+  'measureDimensionPackage': (l) => l.measureDimensionPackage,
   'memberEInvoiceAddressLabel': (l) => l.memberEInvoiceAddressLabel,
   'memberNotesWrite': (l) => l.memberNotesWrite,
   'memberRolesAdd': (l) => l.memberRolesAdd,

@@ -22642,6 +22642,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get measureDimensionMass => 'Mass';
 
   @override
+  String get measureDimensionPackage => 'Package';
+
+  @override
   String get measureDimensionTime => 'Time';
 
   @override

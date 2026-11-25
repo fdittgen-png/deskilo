@@ -5,7 +5,7 @@
 -- built-in unit behaves exactly as it did (a wine counted in litres, received in centilitres); a unit is bound to its business by
 -- the key. Rolled back.
 begin;
-select plan(24);
+select plan(25);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -107,6 +107,10 @@ select is(public.stock_to_inventory(pg_temp.u(301), 'spool', 3), 6::numeric, '3 
 select is(public.stock_to_inventory(pg_temp.u(301), 'm', 100), 2::numeric, '100 m are 2 drums');
 select is(public.stock_to_inventory(pg_temp.u(301), 'km', 1), 20::numeric, '1 km is 20 drums');
 select is(pg_temp.try(format($q$select public.stock_to_inventory(%L, 'kg', 1)$q$, pg_temp.u(301))), 'ERR DKG02', 'a mass is not a length: the item does not list it');
+-- #4479: a packaging unit has no ratio to any unit: it converts only through an item's own factor
+select pg_temp.save_unit(1, 9040, '{"code": "pallet", "label": "Pallet", "dimension": "package", "factor_num": 1, "factor_den": 1}');
+select is(pg_temp.try(format($q$select public.stock_to_inventory(%L, 'pallet', 1)$q$, pg_temp.u(301))), 'ERR DKG02',
+  'a package unit is not converted by ratio: with no factor of the item it is refused, never read as one drum');
 select is((select num::text || '/' || den::text from public.stock_unit_factor(pg_temp.u(301), 'm')), '1/50', 'the factor of a metre in drums is 1/50');
 select is(pg_temp.receive(601, 301, 3, 'spool') like '{%', true, 'a delivery of 3 spools is received');
 select is(pg_temp.held(301), 6::numeric, 'and the cable holds 6 drums');

@@ -36100,6 +36100,12 @@ abstract class AppLocalizations {
   /// **'Mass'**
   String get measureDimensionMass;
 
+  /// #4479 dimension: a packaging unit, which converts only through an item's own factor
+  ///
+  /// In en, this message translates to:
+  /// **'Package'**
+  String get measureDimensionPackage;
+
   /// #4442 dimension: time
   ///
   /// In en, this message translates to:

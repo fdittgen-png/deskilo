@@ -12104,6 +12104,7 @@ const Set<String> uiLabelKeys = {
   'measureDimensionCount',
   'measureDimensionLength',
   'measureDimensionMass',
+  'measureDimensionPackage',
   'measureDimensionTime',
   'measureDimensionVolume',
   'measureReasonDimension',

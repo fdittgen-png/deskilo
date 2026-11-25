@@ -103,6 +103,10 @@
   "@measureDimensionTime": {
     "description": "#4442 dimension: time"
   },
+  "measureDimensionPackage": "Conditionnement",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
+  },
   "measureReasonInUse": "Cette unité est utilisée : sa dimension et son facteur ne peuvent plus changer. Créez plutôt une nouvelle unité.",
   "@measureReasonInUse": {
     "description": "#4442 refusal: a unit in use keeps its factor"

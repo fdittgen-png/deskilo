@@ -26,7 +26,16 @@ class DemoWorkspaceUnits implements WorkspaceUnits {
   final Map<String, List<WorkspaceUnit>> _units = {};
   final Map<String, ({String digest, WorkspaceUnit answer})> _requests = {};
 
-  List<WorkspaceUnit> _of(String workspaceId) => _units.putIfAbsent(workspaceId, () => [...builtInUnits]);
+  /// The packaging units the Demo's items and orders name (a box of 6, a carton of 12, a third of a litre, a roll): units of the business
+  /// of the `package` dimension, which convert only through an item's own factor (#4479).
+  static const _demoPackages = [
+    WorkspaceUnit(code: 'box', label: 'Box', dimension: UnitDimension.package, factorNum: 1, factorDen: 1),
+    WorkspaceUnit(code: 'carton', label: 'Carton', dimension: UnitDimension.package, factorNum: 1, factorDen: 1),
+    WorkspaceUnit(code: 'third', label: 'Third', dimension: UnitDimension.package, factorNum: 1, factorDen: 1),
+    WorkspaceUnit(code: 'roll', label: 'Roll', dimension: UnitDimension.package, factorNum: 1, factorDen: 1),
+  ];
+
+  List<WorkspaceUnit> _of(String workspaceId) => _units.putIfAbsent(workspaceId, () => [...builtInUnits, ..._demoPackages]);
 
   @override
   Future<List<WorkspaceUnit>> units(String workspaceId) async {

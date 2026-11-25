@@ -29882,6 +29882,10 @@
   "@measureDimensionMass": {
     "description": "#4442 dimension: mass"
   },
+  "measureDimensionPackage": "Package",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
+  },
   "measureDimensionTime": "Time",
   "@measureDimensionTime": {
     "description": "#4442 dimension: time"

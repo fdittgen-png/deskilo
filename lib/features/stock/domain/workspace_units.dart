@@ -17,7 +17,10 @@ enum UnitDimension {
   volume,
   length,
   area,
-  time;
+  time,
+
+  /// A packaging unit (a carton, a box): it has no ratio to any other unit and converts only through an item's own factor.
+  package;
 
   static UnitDimension? fromWire(Object? wire) {
     for (final d in values) {
