@@ -68,11 +68,8 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
     _refused = false;
   });
 
-  DateTime _service(DateTime today) => _doc.startDate ?? today;
-
   /// The due date proposed until a person sets one: the registered default term.
-  DateTime _due(DateTime today) =>
-      _doc.endDate ?? addCalendarDays(_service(today), ref.read(invoiceDueDaysProvider));
+  DateTime _due(DateTime today) => _doc.endOn(today, (start) => addCalendarDays(start, ref.read(invoiceDueDaysProvider)));
 
   StandaloneDraft? _draft(DateTime today) {
     final customer = _doc.subject;
@@ -81,10 +78,10 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
       draftId: _saved?.draftId,
       revision: _saved?.revision,
       subjectMemberId: customer,
-      serviceDate: _service(today),
+      serviceDate: _doc.startOn(today),
       dueOn: _due(today),
-      buyerReference: _doc.reference.text.trim(),
-      purchaseOrder: _doc.order.text.trim(),
+      buyerReference: _doc.referenceText,
+      purchaseOrder: _doc.orderText,
       lines: _doc.toLines(context),
     );
   }
@@ -248,7 +245,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
         orderLabel: l.standaloneInvoiceOrderNumber,
       ),
       customers: [for (final c in customers) (id: c.key, name: c.value)],
-      startShown: _service(today),
+      startShown: _doc.startOn(today),
       endShown: _due(today),
       locked: locked,
       pieces: true,
