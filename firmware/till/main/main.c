@@ -329,7 +329,7 @@ void app_main(void) {
     ESP_ERROR_CHECK(board_init());
     touch_cal_t cal;
     if (touch_cal_load(&cal)) board_touch_set_cal(&cal);   // the calibration taken on this board, else the vendor's range
-    bool calibrate = board_boot_button();                   // BOOT held at start: calibrate before anything else
+    bool calibrate = BOARD_HAS_TOUCH && board_boot_button();   // BOOT held at start on a touch board: calibrate first
     if (device_identity(&s_device) == ESP_OK) {
         device_pairing_payload(&s_device, BOARD_PROFILE, esp_app_get_description()->version, s_pairing, sizeof s_pairing);
         trace("device %.8s, code %s", s_device.id, s_device.fingerprint);
@@ -355,7 +355,8 @@ void app_main(void) {
     static const ui_port_t port = {.send = ui_send, .factory_reset = ui_reset, .raw_touch = board_touch_raw, .save_cal = save_cal};
     ui_init(&port);
     s_cmd = xQueueCreate(8, sizeof(cmd_t));
-    if (!cfg_complete()) {
+    // a board without touch has no till or roll screen: until its own roles (price tag #4472, seat #4473) it shows its code
+    if (!cfg_complete() || !BOARD_HAS_TOUCH) {
         ui_build_not_set_up();
         ui_toggle_pairing(s_pairing, s_device.fingerprint);   // a board not set up shows its code by itself
         trace("not set up: no settings on this board");

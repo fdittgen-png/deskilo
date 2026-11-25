@@ -1,1 +1,5 @@
-idf_component_register(SRCS "main.c" "board.c" "cfg.c" "net.c" "trace.c" "pending.c" "pay_logic.c" "device.c" "strings.c" "ui.c" "money_text.c" "till_font_14.c" "till_font_16.c" "till_font_20.c" "till_font_28.c" INCLUDE_DIRS "." PRIV_REQUIRES driver esp_lcd esp_driver_gpio esp_driver_spi esp_system nvs_flash esp_wifi esp_event esp_netif esp_http_client esp-tls mbedtls json lwip esp_timer esp_app_format)
+set(board_src "board.c")
+if(CONFIG_DESKILO_BOARD_IDEASPARK)
+    set(board_src "board_ideaspark.c")
+endif()
+idf_component_register(SRCS "main.c" ${board_src} "cfg.c" "net.c" "trace.c" "pending.c" "pay_logic.c" "device.c" "strings.c" "ui.c" "money_text.c" "till_font_14.c" "till_font_16.c" "till_font_20.c" "till_font_28.c" INCLUDE_DIRS "." PRIV_REQUIRES driver esp_lcd esp_driver_gpio esp_driver_spi esp_system nvs_flash esp_wifi esp_event esp_netif esp_http_client esp-tls mbedtls json lwip esp_timer esp_app_format)

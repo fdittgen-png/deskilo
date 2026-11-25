@@ -6,12 +6,27 @@
 #include <stdint.h>
 #include "esp_err.h"
 
-// #4474 -- the board profile this firmware is built for: named in the pairing code, so the app sends the matching image.
-#define BOARD_PROFILE "lcdwiki_e32r40t_v1"
+#include "sdkconfig.h"
 
+// #4474 -- the board profile this firmware is built for: named in the pairing code, so the app sends the matching image.
+#if CONFIG_DESKILO_BOARD_IDEASPARK
+// ideaspark ESP32 (ESP-WROOM-32) with a 1.9 in ST7789 170x320, portrait; no touch: BOOT (IO0) is its one button.
+// Pins as the board's published examples use them; checked on the board in E10.
+#define BOARD_PROFILE "ideaspark_st7789_v1"
+#define BOARD_LCD_W 170
+#define BOARD_LCD_H 320
+#define BOARD_HAS_TOUCH 0
+#define PIN_LCD_MOSI 23
+#define PIN_LCD_SCLK 18
+#define PIN_LCD_CS   15
+#define PIN_LCD_DC   2
+#define PIN_LCD_RST  4
+#define PIN_LCD_BL   32
+#else
+#define BOARD_PROFILE "lcdwiki_e32r40t_v1"
 #define BOARD_LCD_W 480   // landscape, after the controller's rotation
 #define BOARD_LCD_H 320
-
+#define BOARD_HAS_TOUCH 1
 #define PIN_LCD_MISO 12
 #define PIN_LCD_MOSI 13
 #define PIN_LCD_SCLK 14
@@ -20,6 +35,7 @@
 #define PIN_LCD_BL   27
 #define PIN_TOUCH_CS 33
 #define PIN_TOUCH_IRQ 36
+#endif
 
 esp_err_t board_init(void);
 void board_backlight(bool on);
