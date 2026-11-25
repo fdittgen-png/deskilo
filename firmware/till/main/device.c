@@ -39,7 +39,3 @@ esp_err_t device_identity(device_t *out) {
     memset(secret, 0, sizeof secret);
     return e;
 }
-
-void device_pairing_payload(const device_t *d, const char *board_profile, const char *firmware, char *out, int cap) {
-    snprintf(out, cap, "deskilo-device:v1?id=%s&board=%s&fw=%s&fp=%s", d->id, board_profile, firmware, d->fingerprint);
-}

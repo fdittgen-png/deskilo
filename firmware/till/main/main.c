@@ -20,6 +20,7 @@
 #include "net.h"
 #include "ui.h"
 #include "device.h"
+#include "boot_button.h"
 #include "money_text.h"
 #include "pending.h"
 #include "trace.h"
@@ -297,15 +298,9 @@ static uint32_t s_seen;
 // ---- the pairing code (#4474): BOOT held for 3 s shows it, on every board; pressed again, it closes ----
 static char s_pairing[192];
 static device_t s_device;
+static boot_button_t s_boot;
 static void boot_cb(lv_timer_t *t) {
-    static int held = -1;   // -1: BOOT was down at start (calibration); wait for its release before counting
-    bool down = board_boot_button();
-    if (held < 0) { if (!down) held = 0; return; }
-    if (down) {
-        held++;
-        // closing needs only a press; opening needs the 3 s hold, so a brushed button never covers a sale
-        if ((ui_pairing_shown() && held == 1) || held == 30) ui_toggle_pairing(s_pairing, s_device.fingerprint);
-    } else held = 0;
+    if (boot_button_poll(&s_boot, board_boot_button(), ui_pairing_shown())) ui_toggle_pairing(s_pairing, s_device.fingerprint);
 }
 
 static void refresh_cb(lv_timer_t *t) {
@@ -366,6 +361,7 @@ void app_main(void) {
         xTaskCreatePinnedToCore(net_task, "net", 12288, NULL, 4, NULL, 0);
     }
     if (calibrate) ui_calibrate();
+    boot_button_init(&s_boot);
     lv_timer_create(boot_cb, 100, NULL);
     board_backlight(true);
     ESP_LOGI(TAG, "up (%s): free heap %lu", g_cfg.role[0] ? g_cfg.role : "no settings", (unsigned long)esp_get_free_heap_size());

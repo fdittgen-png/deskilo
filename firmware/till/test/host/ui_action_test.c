@@ -208,6 +208,39 @@ static void pairing(void) {
     CHECK(!ui_pairing_shown(), "shown again, it closes");
 }
 
+// #4474 -- the pairing screen on the ideaspark's portrait 170x320: the QR and its words fit on the glass.
+static lv_disp_draw_buf_t draw2;
+static lv_color_t buf2[170 * 40];
+static lv_disp_drv_t disp2;
+static void portrait_pairing(void) {
+    s_lang = "portrait";
+    strings_set_lang("fr");
+    lv_disp_draw_buf_init(&draw2, buf2, NULL, 170 * 40);
+    lv_disp_drv_init(&disp2);
+    disp2.hor_res = 170; disp2.ver_res = 320; disp2.flush_cb = flush; disp2.draw_buf = &draw2;
+    lv_disp_t *d = lv_disp_drv_register(&disp2);
+    lv_disp_t *was = lv_disp_get_default();
+    lv_disp_set_default(d);
+    ui_toggle_pairing("deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=ideaspark_st7789_v1&fw=1.0&fp=AB12-CD34", "AB12-CD34");
+    pump(50);
+    lv_obj_t *top = lv_disp_get_layer_top(d);
+    bool inside = true, qr = false;
+    for (uint32_t i = 0; i < lv_obj_get_child_cnt(top); i++) {
+        lv_obj_t *o = lv_obj_get_child(top, i);
+        for (uint32_t j = 0; j < lv_obj_get_child_cnt(o); j++) {
+            lv_obj_t *c = lv_obj_get_child(o, j);
+            lv_area_t a;
+            lv_obj_get_coords(c, &a);
+            qr |= lv_obj_check_type(c, &lv_qrcode_class);
+            inside &= a.x1 >= 0 && a.y1 >= 0 && a.x2 < 170 && a.y2 < 320;
+        }
+    }
+    CHECK(qr, "the QR is drawn on the portrait screen");
+    CHECK(inside, "and it and its words fit on the 170 x 320 glass");
+    ui_toggle_pairing(NULL, NULL);
+    lv_disp_set_default(was);
+}
+
 static void calibration(void) {
     s_lang = "calibration";
     strings_set_lang("en");
@@ -234,6 +267,7 @@ int main(void) {
     for (int i = 0; i < 5; i++) one_language(langs[i]);
     calibration();
     pairing();
+    portrait_pairing();
     printf("%d passed, %d failed\n", passed, failed);
     return failed ? 1 : 0;
 }
