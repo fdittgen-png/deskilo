@@ -819,6 +819,19 @@ Press **Open the till**, type the **Float in the drawer** (or, when your busines
 
 **Day close.** Someone who may see the finances opens **Day close** from the till drawer and presses **Close the day** once every till is closed (a till still open is named and refuses it). The day's closed sessions become one numbered report: each session with what was expected, counted, the difference and its reason, the takings by tender and by tax rate, the cash paid in and out, the refunds and the range of receipt numbers. **Closed days** lists the reports already made; a closed day is never changed. This is the business's own record; the legal content a country asks of a day close comes with its own module.
 
+<!-- anchor: user.money.till-layout -->
+### Lay out your till
+
+**Audience:** Administrator · Owner
+
+You sell at a counter and want the till to fit how you sell: large keys for weighed bread, category pages for a bar, a scan field first for a hardware shop.
+
+Turn on **Till layouts** (it needs till sessions). In **Till drawer**, someone who may lay out the tills (owners and administrators by default) presses the layout button of a till. A till without a layout starts from a template: **Retail**, **Bakery and weighed goods**, **Café and bar**, **Studio desk** or **Hardware and catalogue**.
+
+The layout has a grid for each width the till is used at: **Phone width**, **Tablet width** and **Desk width**. **Add a widget** places an item key, a function key (such as **Take cash** or **Next customer**), a numeric keypad, a calculator, the basket, the total and change, or another tool at the first free place it fits. Tap a widget to select it; the buttons under the grid move it and make it wider, narrower, taller or shorter one step at a time. A step that would leave the grid, lie on another widget or make a tool too small to use is not offered.
+
+**Save** keeps a draft; **Publish to the till** makes it the layout the till uses. A till already open keeps its layout until its next session: the till never changes under a running sale. When someone else changed the layout since you opened it, the save is refused with **Someone changed this layout; reload it.** A layout the server cannot accept is refused with its first problem. A till without a published layout keeps the keys it generates from your items.
+
 <!-- anchor: user.money.till-offline -->
 ### When the till is offline
 

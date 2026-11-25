@@ -170,6 +170,7 @@ signed-out on  /templates/detail -> /auth
 signed-out on  /till -> /auth
 signed-out on  /till/day -> /auth
 signed-out on  /till/drawer -> /auth
+signed-out on  /till/layout/:tillId -> /auth
 signed-out on  /till/receipts -> /auth
 signed-out on  /validation -> /auth
 signed-out on  /vat -> /auth
@@ -350,6 +351,7 @@ signed-out off /templates/detail -> /auth
 signed-out off /till -> /auth
 signed-out off /till/day -> /auth
 signed-out off /till/drawer -> /auth
+signed-out off /till/layout/:tillId -> /auth
 signed-out off /till/receipts -> /auth
 signed-out off /validation -> /auth
 signed-out off /vat -> /auth
@@ -530,6 +532,7 @@ no-space on  /templates/detail -> /onboarding
 no-space on  /till -> /me
 no-space on  /till/day -> /me
 no-space on  /till/drawer -> /me
+no-space on  /till/layout/:tillId -> /me
 no-space on  /till/receipts -> /me
 no-space on  /validation -> /me
 no-space on  /vat -> /me
@@ -710,6 +713,7 @@ no-space off /templates/detail -> /onboarding
 no-space off /till -> /me
 no-space off /till/day -> /me
 no-space off /till/drawer -> /me
+no-space off /till/layout/:tillId -> /me
 no-space off /till/receipts -> /me
 no-space off /validation -> /me
 no-space off /vat -> /me
@@ -890,6 +894,7 @@ member on  /templates/detail -> /onboarding
 member on  /till -> /calendar
 member on  /till/day -> /calendar
 member on  /till/drawer -> /calendar
+member on  /till/layout/:tillId -> /calendar
 member on  /till/receipts -> /calendar
 member on  /validation -> /calendar
 member on  /vat -> /calendar
@@ -1070,6 +1075,7 @@ member off /templates/detail -> /onboarding
 member off /till -> /messages
 member off /till/day -> /messages
 member off /till/drawer -> /messages
+member off /till/layout/:tillId -> /messages
 member off /till/receipts -> /messages
 member off /validation -> /messages
 member off /vat -> /messages
@@ -1250,6 +1256,7 @@ admin on  /templates/detail -> /onboarding
 admin on  /till -> /calendar
 admin on  /till/day -> /calendar
 admin on  /till/drawer -> /calendar
+admin on  /till/layout/:tillId -> /calendar
 admin on  /till/receipts -> /money
 admin on  /validation -> /calendar
 admin on  /vat -> /calendar
@@ -1431,6 +1438,7 @@ admin off /templates/detail -> /onboarding
 admin off /till -> /messages
 admin off /till/day -> /messages
 admin off /till/drawer -> /messages
+admin off /till/layout/:tillId -> /messages
 admin off /till/receipts -> /messages
 admin off /validation -> /messages
 admin off /vat -> /messages
@@ -1611,6 +1619,7 @@ owner on  /templates/detail -> /onboarding
 owner on  /till -> /money
 owner on  /till/day -> /money
 owner on  /till/drawer -> /money
+owner on  /till/layout/:tillId -> /money
 owner on  /till/receipts -> /money
 owner on  /validation -> (open)
 owner on  /vat -> (open)
@@ -1792,6 +1801,7 @@ owner off /templates/detail -> /onboarding
 owner off /till -> /messages
 owner off /till/day -> /messages
 owner off /till/drawer -> /messages
+owner off /till/layout/:tillId -> /messages
 owner off /till/receipts -> /messages
 owner off /validation -> (open)
 owner off /vat -> /messages

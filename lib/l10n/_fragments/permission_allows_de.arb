@@ -39,5 +39,6 @@
   "permAllowsManageStock": "Waren einlagern, umlagern und auslagern.",
   "permAllowsApproveStockAdjustments": "Die von einer Inventur vorgeschlagene Korrektur genehmigen.",
   "rolesFilterPermissions": "Berechtigungen filtern",
-  "permAllowsCountStock": "Die Zeilen einer Inventuraufgabe zählen, ohne zu sehen, was das Buch führt: die Aufgaben und das Zählen jeder Zeile, sonst nichts."
+  "permAllowsCountStock": "Die Zeilen einer Inventuraufgabe zählen, ohne zu sehen, was das Buch führt: die Aufgaben und das Zählen jeder Zeile, sonst nichts.",
+  "permAllowsConfigureTill": "Das Layout einer Kasse erstellen, veröffentlichen, kopieren und zurücksetzen: ihre Tasten, Seiten und Werkzeuge. Kassierer nutzen das veröffentlichte Layout ohne dieses Recht."
 }

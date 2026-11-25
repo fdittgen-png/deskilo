@@ -12057,6 +12057,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Kassenbelege';
 
   @override
+  String get featureCounterTillLayoutDesc =>
+      'Gestalten Sie jede Kasse für Ihr Geschäft: welche Tasten wo liegen, ihre Seiten und Werkzeuge neben dem Warenkorb wie ein Ziffernblock, ein Rechner oder ein Scanfeld. Beginnen Sie mit einer Vorlage, veröffentlichen Sie sie, und eine Kasse übernimmt sie mit ihrer nächsten Sitzung. Aus: Jede Kasse behält ihre erzeugten Tasten.';
+
+  @override
+  String get featureCounterTillLayoutTitle => 'Kassenlayouts';
+
+  @override
   String get featureCounterTillSessionsDesc =>
       'Eine Kasse mit ihrem Wechselgeld eröffnen, die Schublade beim Abschluss zählen und den Tag mit seinem Bericht abschließen. Ein Verkauf braucht eine geöffnete Kasse; das erwartete Bargeld wird aus dem Eingenommenen abgeleitet, nie eingetippt.';
 
@@ -25788,6 +25795,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die von einer Inventur vorgeschlagene Korrektur genehmigen.';
 
   @override
+  String get permAllowsConfigureTill =>
+      'Das Layout einer Kasse erstellen, veröffentlichen, kopieren und zurücksetzen: ihre Tasten, Seiten und Werkzeuge. Kassierer nutzen das veröffentlichte Layout ohne dieses Recht.';
+
+  @override
   String get permAllowsCountStock =>
       'Die Zeilen einer Inventuraufgabe zählen, ohne zu sehen, was das Buch führt: die Aufgaben und das Zählen jeder Zeile, sonst nichts.';
 
@@ -25938,6 +25949,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get permApproveStockAdjustments => 'Bestandskorrekturen genehmigen';
+
+  @override
+  String get permConfigureTill => 'Kassen gestalten';
 
   @override
   String get permCountStock => 'Bestand blind zählen';
@@ -32813,6 +32827,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.';
 
   @override
+  String get settingHintCounterLayoutCashierReorder =>
+      'Ein Kassierer darf die Tasten einer Kasse auf seinem eigenen Gerät umordnen, ohne das veröffentlichte Layout zu ändern.';
+
+  @override
+  String get settingHintCounterLayoutMaxCells =>
+      'Die meisten Zellen, die ein Kassenlayout über alle Seiten und Größen haben darf. Ein größeres Layout wird beim Speichern abgelehnt.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.';
 
@@ -33256,6 +33278,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Steuerliche Vorgaben für Kassenverkäufe';
 
   @override
+  String get settingLabelCounterLayoutCashierReorder =>
+      'Kassierer ordnen die Tasten';
+
+  @override
+  String get settingLabelCounterLayoutMaxCells => 'Größe des Kassenlayouts';
+
+  @override
   String get settingLabelCounterOfflineMaxMinutes =>
       'Längste Offline-Zeit (Minuten)';
 
@@ -33627,6 +33656,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingUnitCards => 'Karten';
+
+  @override
+  String get settingUnitCells => 'Zellen';
 
   @override
   String get settingUnitCharacters => 'Zeichen';
@@ -41887,6 +41919,171 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tillKeysTitle => 'Artikel zum Kassieren';
+
+  @override
+  String get tillLayoutAdd => 'Element hinzufügen';
+
+  @override
+  String get tillLayoutChooseFunction => 'Welche Funktion?';
+
+  @override
+  String get tillLayoutChooseItem => 'Welcher Artikel?';
+
+  @override
+  String get tillLayoutEdit => 'Diese Kasse gestalten';
+
+  @override
+  String get tillLayoutFnCard => 'Karte annehmen';
+
+  @override
+  String get tillLayoutFnDeposit => 'Pfandrückgabe';
+
+  @override
+  String get tillLayoutFnDiscount => 'Rabatt auf eine Zeile';
+
+  @override
+  String get tillLayoutFnDrawer => 'Schublade öffnen';
+
+  @override
+  String get tillLayoutFnPrice => 'Preis ändern';
+
+  @override
+  String get tillLayoutFnQuantity => 'Menge ×';
+
+  @override
+  String get tillLayoutFnReprint => 'Letzten Beleg nachdrucken';
+
+  @override
+  String get tillLayoutFnVoid => 'Zeile stornieren';
+
+  @override
+  String get tillLayoutGone => 'Nicht mehr im Verkauf';
+
+  @override
+  String tillLayoutInvalid(String reason) {
+    return 'Dieses Layout kann nicht gespeichert werden: $reason';
+  }
+
+  @override
+  String get tillLayoutKindCalculator => 'Rechner';
+
+  @override
+  String get tillLayoutKindCashNotes => 'Vorgeschlagene Scheine';
+
+  @override
+  String get tillLayoutKindCategory => 'Kategorietaste';
+
+  @override
+  String get tillLayoutKindCustomer => 'Kunde und Notiz';
+
+  @override
+  String get tillLayoutKindFunction => 'Funktionstaste';
+
+  @override
+  String get tillLayoutKindItem => 'Artikeltaste';
+
+  @override
+  String get tillLayoutKindKeypad => 'Ziffernblock';
+
+  @override
+  String get tillLayoutKindPasses => 'Studiokarten';
+
+  @override
+  String get tillLayoutKindTotal => 'Summe und Rückgeld';
+
+  @override
+  String get tillLayoutKindUnknown => 'Ein Element, das diese App nicht kennt';
+
+  @override
+  String get tillLayoutNoRoom =>
+      'Auf diesem Raster ist kein freier Platz für dieses Element.';
+
+  @override
+  String get tillLayoutPageDesk => 'Theke';
+
+  @override
+  String get tillLayoutPageDrinks => 'Getränke';
+
+  @override
+  String get tillLayoutPageFood => 'Speisen';
+
+  @override
+  String get tillLayoutPageSale => 'Verkauf';
+
+  @override
+  String get tillLayoutPublish => 'An die Kasse veröffentlichen';
+
+  @override
+  String get tillLayoutPublished =>
+      'Veröffentlicht. Die Kasse übernimmt es mit der nächsten Sitzung.';
+
+  @override
+  String get tillLayoutReload => 'Neu laden';
+
+  @override
+  String get tillLayoutRemoveCell => 'Dieses Element entfernen';
+
+  @override
+  String get tillLayoutSizeDesk => 'Desktopbreite';
+
+  @override
+  String get tillLayoutSizePhone => 'Telefonbreite';
+
+  @override
+  String get tillLayoutSizeTablet => 'Tabletbreite';
+
+  @override
+  String get tillLayoutStale =>
+      'Jemand hat dieses Layout geändert; laden Sie es neu.';
+
+  @override
+  String get tillLayoutStartFrom => 'Mit einer Vorlage beginnen';
+
+  @override
+  String get tillLayoutStepDown => 'Nach unten';
+
+  @override
+  String get tillLayoutStepLeft => 'Nach links';
+
+  @override
+  String get tillLayoutStepNarrower => 'Eine Spalte schmaler';
+
+  @override
+  String get tillLayoutStepRight => 'Nach rechts';
+
+  @override
+  String get tillLayoutStepShorter => 'Eine Zeile niedriger';
+
+  @override
+  String get tillLayoutStepTaller => 'Eine Zeile höher';
+
+  @override
+  String get tillLayoutStepUp => 'Nach oben';
+
+  @override
+  String get tillLayoutStepWider => 'Eine Spalte breiter';
+
+  @override
+  String get tillLayoutTemplateBakery =>
+      'Bäckerei und Wiegeware: ein Ziffernblock neben großen Tasten';
+
+  @override
+  String get tillLayoutTemplateCafe =>
+      'Café und Bar: Kategorieseiten, kein Scanfeld';
+
+  @override
+  String get tillLayoutTemplateHardware =>
+      'Baumarkt und Katalog: zuerst Scanfeld und Ziffernblock';
+
+  @override
+  String get tillLayoutTemplateRetail =>
+      'Einzelhandel: Scanfeld, Warenkorb und Bezahltasten';
+
+  @override
+  String get tillLayoutTemplateStudio => 'Studiotheke: Karten und Sitzungen';
+
+  @override
+  String get tillLayoutTitle => 'Kassenlayout';
 
   @override
   String get tillLeaveBody =>

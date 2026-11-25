@@ -893,5 +893,10 @@
  "optPerHourDefault": "{n} per hour (default)",
  "optKilobytes": "{n} KB",
  "optKilobytesDefault": "{n} KB (default)",
- "optReportsOff": "None (error reports off)"
+ "optReportsOff": "None (error reports off)",
+ "counterLayoutMaxCells": "Till layout size",
+ "counterLayoutMaxCellsHint": "The most cells one till layout may hold. Set in the app's settings.",
+ "counterLayoutCashierReorder": "Cashiers reorder the keys",
+ "counterLayoutCashierReorderHint": "A cashier may reorder a till's keys on their own device. Set in the app's settings.",
+ "optCells": "{n} cells"
 }

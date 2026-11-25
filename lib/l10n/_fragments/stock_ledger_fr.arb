@@ -54,5 +54,6 @@
   "@refusalStockCountSelf": {
     "description": "#4172 refusal"
   },
-  "permCountStock": "Compter le stock, à l’aveugle"
+  "permCountStock": "Compter le stock, à l’aveugle",
+  "permConfigureTill": "Disposer les caisses"
 }

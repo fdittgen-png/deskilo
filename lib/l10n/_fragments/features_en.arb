@@ -977,5 +977,13 @@
   "featureUnitsOfMeasureDesc": "The owner and the admins keep the business's own units of measure and their conversions (1 km = 1000 m, 1 kg = 1000 g). Items, quotes and invoices are measured in them. The built-in units are always there; switching this on adds the screen to maintain them.",
   "@featureUnitsOfMeasureDesc": {
     "description": "#4442 feature description"
+  },
+  "featureCounterTillLayoutTitle": "Till layouts",
+  "featureCounterTillLayoutDesc": "Lay out each till for your trade: which keys sit where, its pages, and tools beside the basket such as a numeric keypad, a calculator or a scan field. Start from a template, publish it, and a till takes it at its next session. Off, every till keeps its generated keys.",
+  "@featureCounterTillLayoutTitle": {
+    "description": "#4448 feature name: the till layout editor"
+  },
+  "@featureCounterTillLayoutDesc": {
+    "description": "#4448 feature description: the till layout editor"
   }
 }

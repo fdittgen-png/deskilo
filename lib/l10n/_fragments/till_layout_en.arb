@@ -1,0 +1,215 @@
+{
+  "tillLayoutTitle": "Till layout",
+  "@tillLayoutTitle": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutEdit": "Lay out this till",
+  "@tillLayoutEdit": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStartFrom": "Start from a template",
+  "@tillLayoutStartFrom": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateRetail": "Retail: scan field, basket and pay keys",
+  "@tillLayoutTemplateRetail": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateBakery": "Bakery and weighed goods: a keypad beside large keys",
+  "@tillLayoutTemplateBakery": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateCafe": "Café and bar: category pages, no scan field",
+  "@tillLayoutTemplateCafe": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateStudio": "Studio desk: passes and sessions",
+  "@tillLayoutTemplateStudio": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateHardware": "Hardware and catalogue: scan field and keypad first",
+  "@tillLayoutTemplateHardware": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageSale": "Sale",
+  "@tillLayoutPageSale": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageDrinks": "Drinks",
+  "@tillLayoutPageDrinks": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageFood": "Food",
+  "@tillLayoutPageFood": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageDesk": "Desk",
+  "@tillLayoutPageDesk": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutSizePhone": "Phone width",
+  "@tillLayoutSizePhone": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutSizeTablet": "Tablet width",
+  "@tillLayoutSizeTablet": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutSizeDesk": "Desk width",
+  "@tillLayoutSizeDesk": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindItem": "Item key",
+  "@tillLayoutKindItem": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCategory": "Category key",
+  "@tillLayoutKindCategory": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindFunction": "Function key",
+  "@tillLayoutKindFunction": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindKeypad": "Numeric keypad",
+  "@tillLayoutKindKeypad": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCalculator": "Calculator",
+  "@tillLayoutKindCalculator": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindTotal": "Total and change",
+  "@tillLayoutKindTotal": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCustomer": "Customer and note",
+  "@tillLayoutKindCustomer": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindPasses": "Studio passes",
+  "@tillLayoutKindPasses": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCashNotes": "Suggested cash notes",
+  "@tillLayoutKindCashNotes": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindUnknown": "A widget this app does not know",
+  "@tillLayoutKindUnknown": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnCard": "Take a card",
+  "@tillLayoutFnCard": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnVoid": "Void a line",
+  "@tillLayoutFnVoid": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnDiscount": "Discount on a line",
+  "@tillLayoutFnDiscount": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnQuantity": "Quantity ×",
+  "@tillLayoutFnQuantity": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnPrice": "Change a price",
+  "@tillLayoutFnPrice": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnDeposit": "Deposit return",
+  "@tillLayoutFnDeposit": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnDrawer": "Open the drawer",
+  "@tillLayoutFnDrawer": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnReprint": "Reprint the last receipt",
+  "@tillLayoutFnReprint": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepLeft": "Move left",
+  "@tillLayoutStepLeft": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepRight": "Move right",
+  "@tillLayoutStepRight": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepUp": "Move up",
+  "@tillLayoutStepUp": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepDown": "Move down",
+  "@tillLayoutStepDown": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepWider": "One column wider",
+  "@tillLayoutStepWider": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepNarrower": "One column narrower",
+  "@tillLayoutStepNarrower": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepTaller": "One row taller",
+  "@tillLayoutStepTaller": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepShorter": "One row shorter",
+  "@tillLayoutStepShorter": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutRemoveCell": "Remove this widget",
+  "@tillLayoutRemoveCell": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutAdd": "Add a widget",
+  "@tillLayoutAdd": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutChooseFunction": "Which function?",
+  "@tillLayoutChooseFunction": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutChooseItem": "Which item?",
+  "@tillLayoutChooseItem": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutNoRoom": "There is no free place for this widget on this grid.",
+  "@tillLayoutNoRoom": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPublish": "Publish to the till",
+  "@tillLayoutPublish": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPublished": "Published. The till takes it at its next session.",
+  "@tillLayoutPublished": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStale": "Someone changed this layout; reload it.",
+  "@tillLayoutStale": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutInvalid": "This layout cannot be saved: {reason}",
+  "@tillLayoutInvalid": {
+    "description": "#4448 the till layout editor; the reason is a reference: the server's problem code, as it named it",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLayoutReload": "Reload",
+  "@tillLayoutReload": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutGone": "No longer for sale",
+  "@tillLayoutGone": {
+    "description": "#4448 a key of a published till layout whose item is no longer sold: shown disabled"
+  }
+}

@@ -604,6 +604,8 @@ public.tax_exemption_certificates.tax_exemption_certificates_select
 public.tax_reference.mcp_delegated_deny
 public.tax_reference.personal_native_session
 public.tax_reference.tax_reference_select
+public.till_layouts.mcp_delegated_deny
+public.till_layouts.till_layouts_select
 public.trace_reports.mcp_delegated_deny
 public.trace_reports.personal_native_session
 public.usage_records.mcp_delegated_deny

@@ -819,6 +819,19 @@ Premere **Aprire la cassa**, digitare il **Fondo cassa nel cassetto** (o, se l'a
 
 **Chiusura della giornata.** Chi può vedere le finanze apre **Chiusura della giornata** dal cassetto di cassa e preme **Chiudere la giornata** quando ogni cassa è chiusa (una cassa ancora aperta viene indicata e rifiuta la chiusura). Le sessioni chiuse della giornata diventano un rapporto numerato: ogni sessione con atteso, contato, differenza e motivo, gli incassi per mezzo di pagamento e per aliquota, i contanti versati e prelevati, i rimborsi e l'intervallo dei numeri degli scontrini. **Giornate chiuse** elenca i rapporti già fatti; una giornata chiusa non cambia mai. È la registrazione propria dell'attività; il contenuto legale che un paese richiede alla chiusura della giornata arriva con un proprio modulo.
 
+<!-- anchor: user.money.till-layout -->
+### Organizzare la Sua cassa
+
+**Destinatari:** Amministratore · Proprietario
+
+Vende al banco e vuole che la cassa si adatti al Suo modo di vendere: tasti grandi per il pane pesato, pagine per categoria per un bar, prima un campo di scansione per una ferramenta.
+
+Attivi **Layout di cassa** (richiede le sessioni di cassa). In **Cassetto di cassa**, chi può organizzare le casse (per impostazione i titolari e gli amministratori) preme il pulsante di layout di una cassa. Una cassa senza layout parte da un modello: **Negozio**, **Panetteria e merce pesata**, **Caffè e bar**, **Reception dello studio** o **Ferramenta e catalogo**.
+
+Il layout ha una griglia per ogni larghezza in cui la cassa è usata: **Larghezza telefono**, **Larghezza tablet** e **Larghezza desktop**. **Aggiungere un elemento** colloca un tasto articolo, un tasto funzione (come **Incassare in contanti** o **Cliente successivo**), un tastierino numerico, una calcolatrice, il carrello, il totale e il resto o un altro strumento nel primo posto libero in cui entra. Tocchi un elemento per selezionarlo; i pulsanti sotto la griglia lo spostano e lo rendono più largo, più stretto, più alto o più basso un passo alla volta. Un passo che uscirebbe dalla griglia, si sovrapporrebbe a un altro elemento o renderebbe uno strumento troppo piccolo non viene offerto.
+
+**Salvare** conserva una bozza; **Pubblicare sulla cassa** la rende il layout usato dalla cassa. Una cassa già aperta conserva il suo layout fino alla sessione successiva: la cassa non cambia mai durante una vendita. Se qualcun altro ha modificato il layout da quando lo ha aperto, il salvataggio viene rifiutato con **Qualcuno ha modificato questo layout; lo ricarichi.** Un layout che il server non può accettare viene rifiutato con il suo primo problema. Una cassa senza layout pubblicato mantiene i tasti che genera dai Suoi articoli.
+
 <!-- anchor: user.money.till-offline -->
 ### Quando la cassa è offline
 

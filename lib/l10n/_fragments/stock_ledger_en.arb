@@ -111,5 +111,9 @@
   "permCountStock": "Count stock, blind",
   "@permCountStock": {
     "description": "#4295 permission name"
+  },
+  "permConfigureTill": "Lay out the tills",
+  "@permConfigureTill": {
+    "description": "#4448 the right to lay out the tills: its name"
   }
 }

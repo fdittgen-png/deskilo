@@ -118,7 +118,7 @@ const _templatePermissions = ['manageRoles', 'manageMembers', 'manageValidation'
   'deployToProd', 'deployToDev', 'accessProd', 'viewAnalytics',
   'useMessages', 'makeReservations', 'viewCalendar', 'viewDirectory',
   'viewMyMoney', 'viewDocuments', 'managePurchases', 'recordOutgoingPayments', 'manageLease', 'managePrivacy',
-  'viewStock', 'manageStock', 'approveStockAdjustments', 'manageBillingCustomers', 'countStock'];
+  'viewStock', 'manageStock', 'approveStockAdjustments', 'manageBillingCustomers', 'countStock', 'configureTill'];
 
 /// The overridable terms of `lexiconAllowList`, pinned by the same lint.
 const _templateLexiconTerms = ['legendFree', 'legendReserved', 'legendOccupied', 'legendMine',

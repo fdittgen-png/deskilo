@@ -15938,6 +15938,14 @@
   "@featureCounterReceiptsTitle": {
     "description": "#4184 feature name"
   },
+  "featureCounterTillLayoutDesc": "Lay out each till for your trade: which keys sit where, its pages, and tools beside the basket such as a numeric keypad, a calculator or a scan field. Start from a template, publish it, and a till takes it at its next session. Off, every till keeps its generated keys.",
+  "@featureCounterTillLayoutDesc": {
+    "description": "#4448 feature description: the till layout editor"
+  },
+  "featureCounterTillLayoutTitle": "Till layouts",
+  "@featureCounterTillLayoutTitle": {
+    "description": "#4448 feature name: the till layout editor"
+  },
   "featureCounterTillSessionsDesc": "Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed.",
   "@featureCounterTillSessionsDesc": {
     "description": "#4367 feature description"
@@ -33763,6 +33771,10 @@
   "@permAllowsApproveStockAdjustments": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
   },
+  "permAllowsConfigureTill": "Build, publish, copy and reset the layout of a till: its keys, pages and tools. Cashiers use the published layout without this right.",
+  "@permAllowsConfigureTill": {
+    "description": "#4448 the right to lay out the tills: what it allows"
+  },
   "permAllowsCountStock": "Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.",
   "@permAllowsCountStock": {
     "description": "#4295 permission description"
@@ -33918,6 +33930,10 @@
   "permApproveStockAdjustments": "Approve stock adjustments",
   "@permApproveStockAdjustments": {
     "description": "a permission in the role matrix (#3824)"
+  },
+  "permConfigureTill": "Lay out the tills",
+  "@permConfigureTill": {
+    "description": "#4448 the right to lay out the tills: its name"
   },
   "permCountStock": "Count stock, blind",
   "@permCountStock": {
@@ -42530,6 +42546,14 @@
   "@settingHintCounterFiscalObligation": {
     "description": "#4184 setting label/hint"
   },
+  "settingHintCounterLayoutCashierReorder": "A cashier may reorder a till's keys on their own device without changing the published layout.",
+  "@settingHintCounterLayoutCashierReorder": {
+    "description": "#4448 a till layout setting"
+  },
+  "settingHintCounterLayoutMaxCells": "The most cells one till layout may hold, over all its pages and sizes. A larger layout is refused when it is saved.",
+  "@settingHintCounterLayoutMaxCells": {
+    "description": "#4448 a till layout setting"
+  },
   "settingHintCounterOfflineMaxMinutes": "How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.",
   "@settingHintCounterOfflineMaxMinutes": {
     "description": "#4373 setting hint"
@@ -42994,6 +43018,14 @@
   "@settingLabelCounterFiscalObligation": {
     "description": "#4184 setting label/hint"
   },
+  "settingLabelCounterLayoutCashierReorder": "Cashiers reorder the keys",
+  "@settingLabelCounterLayoutCashierReorder": {
+    "description": "#4448 a till layout setting"
+  },
+  "settingLabelCounterLayoutMaxCells": "Till layout size",
+  "@settingLabelCounterLayoutMaxCells": {
+    "description": "#4448 a till layout setting"
+  },
   "settingLabelCounterOfflineMaxMinutes": "Longest offline period (minutes)",
   "@settingLabelCounterOfflineMaxMinutes": {
     "description": "#4373 setting label"
@@ -43424,6 +43456,10 @@
   "settingUnitCards": "cards",
   "@settingUnitCards": {
     "description": "#2579 report limits"
+  },
+  "settingUnitCells": "cells",
+  "@settingUnitCells": {
+    "description": "#4448 the unit of counter.layout_max_cells: grid cells of a till layout"
   },
   "settingUnitCharacters": "characters",
   "@settingUnitCharacters": {
@@ -54053,6 +54089,219 @@
   "tillKeysTitle": "Items to ring up",
   "@tillKeysTitle": {
     "description": "#4366 the till"
+  },
+  "tillLayoutAdd": "Add a widget",
+  "@tillLayoutAdd": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutChooseFunction": "Which function?",
+  "@tillLayoutChooseFunction": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutChooseItem": "Which item?",
+  "@tillLayoutChooseItem": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutEdit": "Lay out this till",
+  "@tillLayoutEdit": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnCard": "Take a card",
+  "@tillLayoutFnCard": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnDeposit": "Deposit return",
+  "@tillLayoutFnDeposit": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnDiscount": "Discount on a line",
+  "@tillLayoutFnDiscount": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnDrawer": "Open the drawer",
+  "@tillLayoutFnDrawer": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnPrice": "Change a price",
+  "@tillLayoutFnPrice": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnQuantity": "Quantity ×",
+  "@tillLayoutFnQuantity": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnReprint": "Reprint the last receipt",
+  "@tillLayoutFnReprint": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnVoid": "Void a line",
+  "@tillLayoutFnVoid": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutGone": "No longer for sale",
+  "@tillLayoutGone": {
+    "description": "#4448 a key of a published till layout whose item is no longer sold: shown disabled"
+  },
+  "tillLayoutInvalid": "This layout cannot be saved: {reason}",
+  "@tillLayoutInvalid": {
+    "description": "#4448 the till layout editor; the reason is a reference: the server's problem code, as it named it",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLayoutKindCalculator": "Calculator",
+  "@tillLayoutKindCalculator": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCashNotes": "Suggested cash notes",
+  "@tillLayoutKindCashNotes": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCategory": "Category key",
+  "@tillLayoutKindCategory": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCustomer": "Customer and note",
+  "@tillLayoutKindCustomer": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindFunction": "Function key",
+  "@tillLayoutKindFunction": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindItem": "Item key",
+  "@tillLayoutKindItem": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindKeypad": "Numeric keypad",
+  "@tillLayoutKindKeypad": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindPasses": "Studio passes",
+  "@tillLayoutKindPasses": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindTotal": "Total and change",
+  "@tillLayoutKindTotal": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindUnknown": "A widget this app does not know",
+  "@tillLayoutKindUnknown": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutNoRoom": "There is no free place for this widget on this grid.",
+  "@tillLayoutNoRoom": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageDesk": "Desk",
+  "@tillLayoutPageDesk": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageDrinks": "Drinks",
+  "@tillLayoutPageDrinks": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageFood": "Food",
+  "@tillLayoutPageFood": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageSale": "Sale",
+  "@tillLayoutPageSale": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPublish": "Publish to the till",
+  "@tillLayoutPublish": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPublished": "Published. The till takes it at its next session.",
+  "@tillLayoutPublished": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutReload": "Reload",
+  "@tillLayoutReload": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutRemoveCell": "Remove this widget",
+  "@tillLayoutRemoveCell": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutSizeDesk": "Desk width",
+  "@tillLayoutSizeDesk": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutSizePhone": "Phone width",
+  "@tillLayoutSizePhone": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutSizeTablet": "Tablet width",
+  "@tillLayoutSizeTablet": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStale": "Someone changed this layout; reload it.",
+  "@tillLayoutStale": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStartFrom": "Start from a template",
+  "@tillLayoutStartFrom": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepDown": "Move down",
+  "@tillLayoutStepDown": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepLeft": "Move left",
+  "@tillLayoutStepLeft": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepNarrower": "One column narrower",
+  "@tillLayoutStepNarrower": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepRight": "Move right",
+  "@tillLayoutStepRight": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepShorter": "One row shorter",
+  "@tillLayoutStepShorter": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepTaller": "One row taller",
+  "@tillLayoutStepTaller": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepUp": "Move up",
+  "@tillLayoutStepUp": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepWider": "One column wider",
+  "@tillLayoutStepWider": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateBakery": "Bakery and weighed goods: a keypad beside large keys",
+  "@tillLayoutTemplateBakery": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateCafe": "Café and bar: category pages, no scan field",
+  "@tillLayoutTemplateCafe": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateHardware": "Hardware and catalogue: scan field and keypad first",
+  "@tillLayoutTemplateHardware": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateRetail": "Retail: scan field, basket and pay keys",
+  "@tillLayoutTemplateRetail": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateStudio": "Studio desk: passes and sessions",
+  "@tillLayoutTemplateStudio": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTitle": "Till layout",
+  "@tillLayoutTitle": {
+    "description": "#4448 the till layout editor"
   },
   "tillLeaveBody": "The sale was sent and its answer did not come. Leaving keeps it waiting: open the till again and confirm it. Do not ring it up again.",
   "@tillLeaveBody": {
