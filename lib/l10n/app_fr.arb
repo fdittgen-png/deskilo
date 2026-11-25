@@ -21594,6 +21594,7 @@
   "stockItemAddNone": "Tous les services sont déjà tenus en stock, ou il n’y en a pas encore. Ajoutez d’abord un service, puis revenez.",
   "stockItemAddOpenServices": "Ouvrir les services",
   "stockItemAddTitle": "Ajouter un article",
+  "stockItemEditDetails": "Modifier le nom, le prix et la TVA",
   "stockItemNewBarcode": "Code-barres (facultatif)",
   "stockItemNewHome": "Emplacement d’origine (facultatif)",
   "stockItemNewName": "Nom",

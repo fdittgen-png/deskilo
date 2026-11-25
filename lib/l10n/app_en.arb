@@ -47912,6 +47912,10 @@
   "@stockItemAddTitle": {
     "description": "#4350 adding an item, and the first-run stock page"
   },
+  "stockItemEditDetails": "Edit name, price and VAT",
+  "@stockItemEditDetails": {
+    "description": "#4470 Stock items: tooltip of the button that opens the service editor for the item"
+  },
   "stockItemNewBarcode": "Barcode (optional)",
   "@stockItemNewBarcode": {
     "description": "#4350 a new item from the Stock page"

@@ -5,6 +5,8 @@
 // look sees no editor; a mistake is shown under its field before anything is
 // sent; a save sends the complete lists at the revision it read; a stale
 // revision and a refusal are said, in the sheet, and nothing is shown saved.
+import 'package:deskilo/core/demo/data/money_repository.dart';
+import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/stock/domain/stock_code_resolver.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_config_commands.dart';
@@ -53,7 +55,12 @@ class _Queries implements StockQueries {
 
 /// The registry as the server answers it: Wine has its home shelf and a known cost, Tea has none.
 class _Registry implements StockRegistry {
-  _Registry({this.costVisible = true, this.withCreme = false, this.paged = false});
+  _Registry({this.costVisible = true, this.withCreme = false, this.paged = false, this.money});
+
+  /// #4470: the services' price is the registry's price, as on the server.
+  final FakeMoneyRepository? money;
+
+  int? _price(String id, int fallback) => money?.services.where((s) => s.id == id).firstOrNull?.priceCents ?? fallback;
 
   /// One row a page (#4401: the registry is walked a page at a time).
   final bool paged;
@@ -72,12 +79,12 @@ class _Registry implements StockRegistry {
 
   List<StockRegistryRow> get _all => [
     StockRegistryRow(
-      itemId: 'i-Wine', itemName: 'Wine', unit: 'l', barcode: '3017620422003', priceCents: 1250,
+      itemId: 'i-Wine', itemName: 'Wine', unit: 'l', barcode: '3017620422003', priceCents: _price('i-Wine', 1250),
       cost: '700', costVisible: costVisible, homeLocationId: 'p-S4', homeCode: 'S4',
       homeAddressPath: 'MAIN\u001fSALES\u001fA03\u001fB02\u001fS4', onHand: ExactQuantity.parse('12'),
     ),
     StockRegistryRow(
-      itemId: 'i-Tea', itemName: 'Tea', unit: 'piece', barcode: '4006381333931', priceCents: 300,
+      itemId: 'i-Tea', itemName: 'Tea', unit: 'piece', barcode: '4006381333931', priceCents: _price('i-Tea', 300),
       costVisible: costVisible, onHand: ExactQuantity.parse('0'),
     ),
     if (withCreme)
@@ -180,6 +187,7 @@ Future<void> _open(
   bool lots = false,
   String? separator,
   _Registry? registry,
+  FakeMoneyRepository? money,
   Widget screen = const StockItemsScreen(),
 }) async {
   await pumpApp(
@@ -187,7 +195,7 @@ Future<void> _open(
     screen,
     size: size,
     overrides: [
-      ...standardTestOverrides(),
+      ...standardTestOverrides(money: money),
       stockQueriesProvider.overrideWithValue(_Queries()),
       stockConfigCommandsProvider.overrideWithValue(config),
       stockRegistryProvider.overrideWithValue(registry ?? _Registry()),
@@ -213,6 +221,45 @@ const _manage = {WorkspacePermission.viewStock, WorkspacePermission.manageStock}
 void main() {
   for (final (name, size) in [('phone', const Size(390, 844)), ('desk', const Size(1440, 900))]) {
     group('on a $name', () {
+      testWidgets('the price is changed from the item row, and the row shows it (#4470)', (tester) async {
+        final money = FakeMoneyRepository()
+          ..services.addAll(const [
+            ServiceItem(id: 'i-Wine', workspaceId: 'ws-1', name: 'Wine', priceCents: 1250, active: true),
+            ServiceItem(id: 'i-Tea', workspaceId: 'ws-1', name: 'Tea', priceCents: 300, active: true),
+          ]);
+        await _open(
+          tester,
+          _Config(),
+          size,
+          held: {..._manage, WorkspacePermission.manageServices},
+          money: money,
+          registry: _Registry(money: money),
+        );
+        final edit = find.byKey(const ValueKey('stock-item-edit-i-Tea'));
+        expect(edit, findsOneWidget);
+        expect(tester.getSize(edit).shortestSide, greaterThanOrEqualTo(48));
+        expect(find.byTooltip(_en.stockItemEditDetails), findsNWidgets(2));
+        await tester.ensureVisible(edit);
+        await tester.pump();
+        await tester.tap(edit);
+        await _settle(tester);
+        await tester.enterText(find.byKey(const ValueKey('services-price')), '15');
+        await tester.ensureVisible(find.byKey(const ValueKey('services-save')));
+        await tester.tap(find.byKey(const ValueKey('services-save')));
+        await _settle(tester);
+        expect(money.services.singleWhere((s) => s.id == 'i-Tea').priceCents, 1500);
+        final tea = tester.widget<ListTile>(find.byKey(const ValueKey('stock-item-i-Tea')));
+        expect((tea.subtitle! as Text).data, contains(_en.stockRegistryPrice('€15.00')));
+      });
+
+      testWidgets('a member who manages the stock but not the services has no Edit for the price (#4470)', (tester) async {
+        final money = FakeMoneyRepository()
+          ..services.add(const ServiceItem(id: 'i-Tea', workspaceId: 'ws-1', name: 'Tea', priceCents: 300, active: true));
+        await _open(tester, _Config(), size, held: _manage, money: money, registry: _Registry(money: money));
+        expect(find.byKey(const ValueKey('stock-item-edit-i-Tea')), findsNothing);
+        expect(find.byKey(const ValueKey('stock-edit-item-i-Tea')), findsOneWidget, reason: 'the stock settings stay');
+      });
+
       testWidgets('the registry shows barcode, unit, price, cost, home address and what is on hand', (tester) async {
         await _open(tester, _Config(), size, held: _manage);
         final wine = tester.widget<ListTile>(find.byKey(const ValueKey('stock-item-i-Wine')));
