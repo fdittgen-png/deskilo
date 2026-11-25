@@ -87,7 +87,7 @@ List<InvoiceVatTotal> vatTotalsOfLines(List<InvoiceLine> lines) {
 }
 
 /// The gross total of frozen [lines], the sum of their own frozen amounts.
-int grossOfLines(List<InvoiceLine> lines) => lines.fold(0, (sum, l) {
+int _grossOfLines(List<InvoiceLine> lines) => lines.fold(0, (sum, l) {
   final facts = l.commercial;
   return sum + (facts is CommercialLineV1 ? facts.amounts.grossMinor : 0);
 });
@@ -101,7 +101,7 @@ extension QuoteConversionDocument on QuoteConversionPrep {
   /// [totalMismatchKey], never shown with one of the two.
   PreviewedDocument documentOf(QuoteRevision accepted) {
     final lines = accepted.frozen;
-    final disagrees = lines.isNotEmpty && grossOfLines(lines) != acceptedTotalCents;
+    final disagrees = lines.isNotEmpty && _grossOfLines(lines) != acceptedTotalCents;
     final keys = [...missing, if (disagrees && !missing.contains(totalMismatchKey)) totalMismatchKey];
     if (keys.isNotEmpty) return PreviewedDocument(missing: keys, currency: currency);
     // The issuer's total moved since the acceptance: the accepted lines never
