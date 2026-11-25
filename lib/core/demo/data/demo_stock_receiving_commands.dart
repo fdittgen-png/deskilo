@@ -15,6 +15,7 @@ import 'package:deskilo/features/stock/domain/stock_ledger_rules.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../demo_replay.dart';
 import 'demo_stock_config_commands.dart';
 import 'demo_stock_ledger.dart';
 import 'demo_stock_tags.dart';
@@ -35,7 +36,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
   final DemoStockLedger _ledger;
 
   final List<({ReceiptAllocation row, String receiptId})> _rows = [];
-  final Map<String, PutAwayResult> _answers = {};
+  final _answers = Replay<PutAwayResult>();
   int _next = 1;
 
   static StockConfigRefused _refused(String field, StockRefusal reason) => StockConfigRefused(field, reason);
@@ -60,10 +61,10 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     List<PutAwayAllocation> allocations,
     String requestId,
   ) async {
-    if (_answers[requestId] case final done?) return (receiptId: done.receiptId, replayed: true, allocations: done.allocations);
+    if (_answers.seen(requestId) case final done?) return (receiptId: done.receiptId, replayed: true, allocations: done.allocations);
     if (!_mine(workspaceId)) throw _refused('receipt', StockRefusal.receiptUnknown);
     final written = await _apply(receiptId, allocations);
-    return _answers[requestId] = (receiptId: receiptId, replayed: false, allocations: written);
+    return _answers.keep(requestId, (receiptId: receiptId, replayed: false, allocations: written));
   }
 
   @override
@@ -73,7 +74,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     List<PutAwayAllocation> allocations,
     String requestId,
   ) async {
-    if (_answers[requestId] case final done?) return (receiptId: done.receiptId, replayed: true, allocations: done.allocations);
+    if (_answers.seen(requestId) case final done?) return (receiptId: done.receiptId, replayed: true, allocations: done.allocations);
     if (!_mine(workspaceId)) throw _refused('receipt', StockRefusal.receiptUnknown);
     final i = _orders.orders.indexWhere((o) => o.id == delivery.orderId);
     if (i < 0) throw _refused('request', StockRefusal.malformed);
@@ -94,7 +95,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
       );
       final receipt = _orders.receipts.last;
       final written = await _apply(receipt.id, allocations);
-      return _answers[requestId] = (receiptId: receipt.id, replayed: false, allocations: written);
+      return _answers.keep(requestId, (receiptId: receipt.id, replayed: false, allocations: written));
     } on Object {
       // both halves or neither
       _orders.orders[i] = savedOrder;

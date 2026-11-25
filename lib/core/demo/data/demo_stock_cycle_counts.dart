@@ -18,6 +18,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../codes/dk_code.dart';
+import '../demo_replay.dart';
 import 'demo_stock_ledger.dart';
 import 'demo_stock_tags.dart';
 
@@ -41,7 +42,7 @@ class DemoStockCycleCounts implements StockCycleCounts {
 
   /// The tasks and the rules of their lines: the domain's (#4403).
   final CountTaskBook _book = CountTaskBook();
-  final Map<String, CountLineResult> _answers = {};
+  final _answers = Replay<CountLineResult>();
   bool _seeded = false;
 
   /// Runs [run] for the reference business, a refusal leaving as the server's own (its code and message).
@@ -145,8 +146,7 @@ class DemoStockCycleCounts implements StockCycleCounts {
 
   @override
   Future<CountLineResult> countLine(String workspaceId, String lineId, String observed, String requestId) async {
-    if (_answers[requestId] case final done?) return done;
-    return _answers[requestId] = await _run(workspaceId, 'line', () async {
+    return _answers.once(requestId, () => _run(workspaceId, 'line', () async {
       final line = _book.lineToCount(lineId, observed.trim());
       final baseline = _ledger.balance(line.itemId, line.locationId, lotId: line.lotId);
       await _reversals.recordCount(workspaceId, (
@@ -160,13 +160,12 @@ class DemoStockCycleCounts implements StockCycleCounts {
         reason: 'cycle count',
       ));
       return _book.counted(lineId, ExactQuantity.parse(observed.trim()), baseline, sees: _sees(), at: _now());
-    });
+    }));
   }
 
   @override
   Future<CountLineResult> skipLine(String workspaceId, String lineId, String reason, String requestId) async {
-    if (_answers[requestId] case final done?) return done;
-    return _answers[requestId] = await _run(workspaceId, 'line', () async => _book.skip(lineId, reason));
+    return _answers.once(requestId, () => _run(workspaceId, 'line', () async => _book.skip(lineId, reason)));
   }
 
   @override

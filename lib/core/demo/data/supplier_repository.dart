@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 
+import '../demo_table.dart';
+
 /// #2567 — suppliers in memory. The server verifies an identifier against
 /// its jurisdiction's pattern; the demo only checks the prefix-and-body
 /// shape, which is enough to show a merge key and a number sequence.
 class FakeSupplierRepository implements SupplierRepository {
-  final List<Supplier> suppliers = [];
-  final List<SupplierReview> reviews = [];
+  final suppliers = DemoTable<Supplier>((s) => s.id);
+  final reviews = DemoTable<SupplierReview>((r) => r.id);
   final Map<String, List<SupplierBankRevision>> bank = {};
 
   static String _canonical(String raw) {
@@ -55,8 +57,8 @@ class FakeSupplierRepository implements SupplierRepository {
         suppliers.any((s) => s.id != draft.id && s.number == number)) {
       throw StateError('this supplier number is already used');
     }
-    final i = suppliers.indexWhere((s) => s.id == draft.id);
-    final id = draft.id ?? 'demo-supplier-${suppliers.length + 1}';
+    final i = suppliers.indexOfId(draft.id);
+    final id = draft.id ?? suppliers.nextId('supplier');
     final next = Supplier(
       id: id,
       number: number.isNotEmpty
@@ -75,18 +77,14 @@ class FakeSupplierRepository implements SupplierRepository {
       status: i >= 0 ? suppliers[i].status : SupplierStatus.active,
       bankRevision: i >= 0 ? suppliers[i].bankRevision : 0,
     );
-    if (i >= 0) {
-      suppliers[i] = next;
-    } else {
-      suppliers.add(next);
-    }
+    suppliers.upsert(next);
     return id;
   }
 
   Supplier _by(String id) => suppliers.firstWhere((s) => s.id == id);
 
   void _replace(Supplier s, {SupplierStatus? status, int? bankRevision}) {
-    final i = suppliers.indexWhere((x) => x.id == s.id);
+    final i = suppliers.indexOfId(s.id);
     suppliers[i] = Supplier(
       id: s.id,
       number: s.number,
@@ -143,7 +141,7 @@ class FakeSupplierRepository implements SupplierRepository {
 
   @override
   Future<String> resolveReview(String reviewId, String? supplierId) async {
-    final i = reviews.indexWhere((r) => r.id == reviewId);
+    final i = reviews.indexOfId(reviewId);
     if (i < 0) throw StateError('unknown review candidate');
     final review = reviews.removeAt(i);
     return supplierId ??
