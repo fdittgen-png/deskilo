@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4476 -- a till line's price refused (0964), read from its keys: another price without the right (DKN01 "price"),
+// #4476 -- a till line's price refused (0965), read from its keys: another price without the right (DKN01 "price"),
 // without its reason (DKL02 "price_reason"), a discount beyond the business's limit (DKN01 "discount_limit", with the
 // limit) or one that is not a percentage or sits beside a price (DKL02 "discount", "price_and_discount"). Never the
 // server's sentence.

@@ -66,7 +66,7 @@
   "tillPriceUnreadable": "Digiti un numero, ad esempio 4,50.",
   "tillPriceNotAllowed": "Non può modificare un prezzo alla cassa. La riga è venduta al prezzo dell'articolo.",
   "tillPriceReasonMissing": "Un prezzo modificato ha bisogno di un motivo.",
-  "tillDiscountBeyond": "Questo sconto supera quanto l'azienda consente (al massimo {max} %).",
+  "tillDiscountBeyond": "Questo sconto supera quanto l'azienda consente alla cassa.",
   "tillDiscountInvalid": "Uno sconto è una percentuale del prezzo dell'articolo, su una riga senza prezzo modificato.",
   "tillRingUpFirst": "Registri prima un articolo.",
   "tillReceiptCopy": "COPIA {copy} — non è un nuovo scontrino",

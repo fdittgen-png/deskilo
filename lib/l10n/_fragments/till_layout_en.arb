@@ -277,14 +277,9 @@
   "@tillPriceReasonMissing": {
     "description": "#4476 the till price keys"
   },
-  "tillDiscountBeyond": "This discount is beyond what the business allows (at most {max} %).",
+  "tillDiscountBeyond": "This discount is beyond what the business allows at the till.",
   "@tillDiscountBeyond": {
-    "description": "#4476 a discount refused beyond the limit; max is the percent allowed",
-    "placeholders": {
-      "max": {
-        "type": "int"
-      }
-    }
+    "description": "#4476 a discount refused beyond the business's limit"
   },
   "tillDiscountInvalid": "A discount is a percentage off the item's price, on a line without a changed price.",
   "@tillDiscountInvalid": {

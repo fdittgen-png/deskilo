@@ -39,13 +39,13 @@ void main() {
     expect(priced.withPricing().toJson(), {'item_id': 'i', 'quantity': '1'}, reason: 'back to the item\'s price');
   });
 
-  test('a discount within the limit is taken off the item\'s price; beyond it, refused naming the limit', () async {
+  test('a discount within the limit is taken off the item\'s price; beyond it, refused in words', () async {
     final s = await _basket();
     expect(_total(s), 210);
     expect(await s.setPricing(0, discount: '10'), isTrue);
     expect(_total(s), 189);
     await s.setPricing(0, discount: '15');
-    expect(_said(s), _en.tillDiscountBeyond(DemoTillPricing.demoMaxDiscountPercent));
+    expect(_said(s), _en.tillDiscountBeyond);
   });
 
   test('a changed price needs its reason, and the right', () async {

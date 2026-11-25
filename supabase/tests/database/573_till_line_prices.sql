@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4476 (0963, 0964): a till line's price is the item's price unless a discount within the business's limit or the right
+-- #4476 (0964, 0965): a till line's price is the item's price unless a discount within the business's limit or the right
 -- to change a price, with a reason, sets another. A cashier sells at the item's price (none sent, or the same one sent);
 -- a cashier's other price, or a line priced by hand, is refused (DKN01); the owner's other price needs a reason (DKL02)
 -- and keeps it with the list price; a discount is refused beyond the limit, taken off the item's price within it, and

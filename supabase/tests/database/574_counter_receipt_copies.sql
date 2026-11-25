@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4476 (0965): a copy of a counter receipt is counted, never numbered again. A cashier prints copies 1 and 2 of a
+-- #4476 (0966): a copy of a counter receipt is counted, never numbered again. A cashier prints copies 1 and 2 of a
 -- finalized receipt and the receipt sequence does not move; the same request answers the same copy; a draft, another
 -- business's receipt and a member who works no counter are refused; a copy is never edited or deleted. Rolled back.
 begin;

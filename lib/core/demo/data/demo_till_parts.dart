@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// The Demo till's pure parts: #4476 -- what it does as the server does (0964, 0965): a line's price is the item's unless
+// The Demo till's pure parts: #4476 -- what it does as the server does (0965, 0966): a line's price is the item's unless
 // the right and a reason change it, or a discount within the business's limit; a finalized receipt is printed again as
 // its next copy, and the same request answers the same copy (exact, in minor units and millionths). With them the frozen
 // line it keeps, a tender with a new state, and the gaps in an offline session's numbers.

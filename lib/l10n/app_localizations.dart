@@ -66243,11 +66243,11 @@ abstract class AppLocalizations {
   /// **'The deposit of {name} is not for sale at the counter. Nothing was added.'**
   String tillDepositMissing(String name);
 
-  /// #4476 a discount refused beyond the limit; max is the percent allowed
+  /// #4476 a discount refused beyond the business's limit
   ///
   /// In en, this message translates to:
-  /// **'This discount is beyond what the business allows (at most {max} %).'**
-  String tillDiscountBeyond(int max);
+  /// **'This discount is beyond what the business allows at the till.'**
+  String get tillDiscountBeyond;
 
   /// #4476 the till price keys
   ///

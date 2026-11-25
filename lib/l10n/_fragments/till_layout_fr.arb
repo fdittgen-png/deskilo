@@ -66,7 +66,7 @@
   "tillPriceUnreadable": "Saisissez un nombre, par exemple 4,50.",
   "tillPriceNotAllowed": "Vous ne pouvez pas modifier un prix à la caisse. La ligne est vendue au prix de l'article.",
   "tillPriceReasonMissing": "Un prix modifié a besoin d'un motif.",
-  "tillDiscountBeyond": "Cette remise dépasse ce que l'entreprise autorise (au plus {max} %).",
+  "tillDiscountBeyond": "Cette remise dépasse ce que l'entreprise autorise à la caisse.",
   "tillDiscountInvalid": "Une remise est un pourcentage du prix de l'article, sur une ligne sans prix modifié.",
   "tillRingUpFirst": "Enregistrez d'abord un article.",
   "tillReceiptCopy": "DUPLICATA {copy} — pas un nouveau ticket",

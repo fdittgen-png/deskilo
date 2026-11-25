@@ -24143,7 +24143,7 @@
       }
     }
   },
-  "tillDiscountBeyond": "Cette remise dépasse ce que l'entreprise autorise (au plus {max} %).",
+  "tillDiscountBeyond": "Cette remise dépasse ce que l'entreprise autorise à la caisse.",
   "tillDiscountField": "Remise (%)",
   "tillDiscountInvalid": "Une remise est un pourcentage du prix de l'article, sur une ligne sans prix modifié.",
   "tillDrawerAddTill": "Ajouter une caisse",

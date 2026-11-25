@@ -4852,6 +4852,7 @@ Map<String, _Getter> _part10() => {
   'templateRegionUse': (l) => l.templateRegionUse,
   'tillBasketTitle': (l) => l.tillBasketTitle,
   'tillCashGiven': (l) => l.tillCashGiven,
+  'tillDiscountBeyond': (l) => l.tillDiscountBeyond,
   'tillDrawerLoadFailed': (l) => l.tillDrawerLoadFailed,
   'tillDrawerTillActive': (l) => l.tillDrawerTillActive,
   'tillLayoutChoosePage': (l) => l.tillLayoutChoosePage,

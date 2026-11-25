@@ -24143,7 +24143,7 @@
       }
     }
   },
-  "tillDiscountBeyond": "Este descuento supera lo que la empresa permite (como máximo {max} %).",
+  "tillDiscountBeyond": "Este descuento supera lo que la empresa permite en la caja.",
   "tillDiscountField": "Descuento (%)",
   "tillDiscountInvalid": "Un descuento es un porcentaje del precio del artículo, en una línea sin precio cambiado.",
   "tillDrawerAddTill": "Añadir una caja",

@@ -212,7 +212,7 @@ const Map<String, String> _notExported = {
           'are in export_my_personal_data_v1 (workspace_refs: status and '
           'freshness), and no other person\'s fact is exported',
   'counter_receipt_copies':
-      '#4476 (0965) — the copies of a counter receipt printed again: the '
+      '#4476 (0966) — the copies of a counter receipt printed again: the '
           'business\'s record that a copy exists, with the member who printed '
           'it as a reference only. It is in the workspace records export with '
           'the receipts; an erasure leaves the member row exited and cleared, so '

@@ -41635,9 +41635,8 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String tillDiscountBeyond(int max) {
-    return 'Dieser Rabatt liegt über dem, was das Unternehmen erlaubt (höchstens $max %).';
-  }
+  String get tillDiscountBeyond =>
+      'Dieser Rabatt liegt über dem, was das Unternehmen an der Kasse erlaubt.';
 
   @override
   String get tillDiscountField => 'Rabatt (%)';

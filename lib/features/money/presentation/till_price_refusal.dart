@@ -9,7 +9,7 @@ import '../../../l10n/app_localizations.dart';
 String? tillPriceRefusalText(AppLocalizations l10n, Object error) => switch (tillPriceRefusalOf(error)) {
   (reason: TillPriceRefusal.notAllowed, max: _) => l10n.tillPriceNotAllowed,
   (reason: TillPriceRefusal.reasonMissing, max: _) => l10n.tillPriceReasonMissing,
-  (reason: TillPriceRefusal.discountBeyond, :final max) => l10n.tillDiscountBeyond(max),
+  (reason: TillPriceRefusal.discountBeyond, max: _) => l10n.tillDiscountBeyond,
   (reason: TillPriceRefusal.discountInvalid, max: _) => l10n.tillDiscountInvalid,
   null => null,
 };

@@ -114,7 +114,7 @@ revoke execute on function public.counter_line_prices(uuid, text, jsonb) from pu
 create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text) returns text language plpgsql as $f$
 begin
   if (length(p_def) - length(replace(p_def, p_old, ''))) / length(p_old) <> 1 then
-    perform public.refuse('DKG11', jsonb_build_object('field', left(p_old, 60), 'reason', 'anchor_missing'), '0964: anchor not found exactly once');
+    perform public.refuse('DKG11', jsonb_build_object('field', left(p_old, 60), 'reason', 'anchor_missing'), '0966: anchor not found exactly once');
   end if;
   return replace(p_def, p_old, p_new);
 end
@@ -141,4 +141,4 @@ begin
 end
 $patch$;
 
-select public.set_deskilo_schema_version(964);
+select public.set_deskilo_schema_version(965);

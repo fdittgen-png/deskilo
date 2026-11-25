@@ -24143,7 +24143,7 @@
       }
     }
   },
-  "tillDiscountBeyond": "Questo sconto supera quanto l'azienda consente (al massimo {max} %).",
+  "tillDiscountBeyond": "Questo sconto supera quanto l'azienda consente alla cassa.",
   "tillDiscountField": "Sconto (%)",
   "tillDiscountInvalid": "Uno sconto è una percentuale del prezzo dell'articolo, su una riga senza prezzo modificato.",
   "tillDrawerAddTill": "Aggiungere una cassa",

@@ -24143,7 +24143,7 @@
       }
     }
   },
-  "tillDiscountBeyond": "Dieser Rabatt liegt über dem, was das Unternehmen erlaubt (höchstens {max} %).",
+  "tillDiscountBeyond": "Dieser Rabatt liegt über dem, was das Unternehmen an der Kasse erlaubt.",
   "tillDiscountField": "Rabatt (%)",
   "tillDiscountInvalid": "Ein Rabatt ist ein Prozentsatz vom Artikelpreis, auf einer Zeile ohne geänderten Preis.",
   "tillDrawerAddTill": "Kasse hinzufügen",

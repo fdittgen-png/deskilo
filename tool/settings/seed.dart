@@ -2216,7 +2216,7 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       defaultValue: 0,
       min: 0,
       max: 100,
-      unit: 'percent',
+      unit: '',
       group: 'business',
       scopes: ['workspace'],
       editPermission: 'workspaceSettings',

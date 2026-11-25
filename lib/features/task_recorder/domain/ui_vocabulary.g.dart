@@ -16497,6 +16497,7 @@ const Set<String> uiLabelKeys = {
   'tillDeclarationNone',
   'tillDeclarationRegister',
   'tillDepositLine',
+  'tillDiscountBeyond',
   'tillDiscountField',
   'tillDiscountInvalid',
   'tillDrawerAddTill',

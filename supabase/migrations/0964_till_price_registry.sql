@@ -13,7 +13,7 @@ insert into public.setting_definitions
   (key, type, default_value, min_value, max_value, unit, group_key, scopes,
    edit_permission, floor_value, editable, choices, source, note)
 values
-('counter.max_discount_percent', 'int', '0'::jsonb, 0, 100, 'percent', 'business', array['workspace'], 'workspaceSettings', null, true, null, 'till discounts (#4476)', 'The largest discount, in percent, a cashier may give on a till line. 0 means no discount at the till. A larger discount is refused; a price other than the item''s needs the right to change a price at the till and a reason.')
+('counter.max_discount_percent', 'int', '0'::jsonb, 0, 100, '', 'business', array['workspace'], 'workspaceSettings', null, true, null, 'till discounts (#4476)', 'The largest discount, in percent, a cashier may give on a till line. 0 means no discount at the till. A larger discount is refused; a price other than the item''s needs the right to change a price at the till and a reason.')
 on conflict (key) do nothing;
 -- END GENERATED SEED
 
@@ -564,4 +564,4 @@ revoke execute on function public.has_permission_raw(uuid, text) from public, an
 revoke execute on function public.member_permission_raw(uuid, text) from public, anon;
 revoke execute on function public.template_field_registry() from public, anon;
 
-select public.set_deskilo_schema_version(963);
+select public.set_deskilo_schema_version(964);
