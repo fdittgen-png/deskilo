@@ -4726,8 +4726,9 @@ routine public.template_wording_check(p_workspace_id uuid, p_config jsonb) -> vo
 routine public.till_layout_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:73e35c0c5af8
 routine public.till_layout_functions() -> SETOF text | function | invoker | immutable | exec:service_role | body:98a5ac6a6fb5
 routine public.till_layout_kinds() -> TABLE(kind text, min_cols integer, min_rows integer) | function | invoker | immutable | exec:service_role | body:d3df071d1c14
+routine public.till_layout_max_bytes() -> integer | function | invoker | immutable | exec:service_role | body:c09ad6eba05a
 routine public.till_layout_max_grid_side() -> integer | function | invoker | immutable | exec:service_role | body:3a779ffed504
-routine public.till_layout_problems(p_workspace_id uuid, p_name text, p_layout jsonb, p_max_cells integer) -> text[] | function | definer | stable | exec:service_role | body:96c82aa538a7
+routine public.till_layout_problems(p_workspace_id uuid, p_name text, p_layout jsonb, p_max_cells integer) -> text[] | function | definer | stable | exec:service_role | body:2d530c19efb2
 routine public.till_layout_publish_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_expected_version integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:85417ebd3d87
 routine public.till_layout_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_expected_version integer, p_layout jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1bd8eb40bc0c
 routine public.toggle_message_star(p_kind text, p_message_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:88ca42478a05

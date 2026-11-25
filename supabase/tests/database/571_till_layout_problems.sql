@@ -7,7 +7,7 @@
 -- version is refused; an invalid layout is refused with its first problem; another business's till and a business
 -- without the flag are refused; a seller reads the published layout and never the draft. Rolled back.
 begin;
-select plan(27);
+select plan(29);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -95,6 +95,10 @@ select is(pg_temp.check(pg_temp.lay('{"kind": "item_key", "col": 0, "row": 0, "p
   'unknown_item page 0 phone cell 0', 'an item key naming no item is refused, never cast');
 select is(pg_temp.check(pg_temp.lay(pg_temp.item(pg_temp.u(301), 0, 0) || ', ' || pg_temp.item(pg_temp.u(301), 1, 0)), 1),
   'too_large', 'the cell cap counts every cell');
+select is(pg_temp.check(pg_temp.lay(pg_temp.item(pg_temp.u(301), 0, 0) || ', ' || pg_temp.item(pg_temp.u(301), 0, 0)), 1),
+  'too_large', 'past the cap nothing else is judged: the overlap is not even looked at');
+select is(pg_temp.check(jsonb_build_object('pages', jsonb_build_array(jsonb_build_object('name', repeat('x', 300000), 'grids', '{}'::jsonb)))),
+  'too_large', 'a layout past the byte cap is refused before it is walked');
 select is(pg_temp.check(pg_temp.lay(''), 200, ' '), 'no_name', 'a layout needs a name');
 select is(pg_temp.check('{"pages": []}'::jsonb), 'no_pages', 'a layout needs a page');
 select is(pg_temp.check(pg_temp.lay('', 0, 4)), 'bad_grid page 0 phone', 'a grid without columns is refused');

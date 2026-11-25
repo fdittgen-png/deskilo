@@ -223,6 +223,9 @@ class TillLayoutProblem {
   String toString() => [code.name, if (page != null) 'page $page', if (size != null) size!.wire, if (cell != null) 'cell $cell'].join(' ');
 }
 
+/// The largest layout the server stores, in bytes of its JSON (`till_layout_max_bytes()`).
+const int tillLayoutMaxBytes = 262144;
+
 /// The largest grid side a page may have at any size.
 const int tillLayoutMaxGridSide = 24;
 
@@ -232,7 +235,8 @@ List<TillLayoutProblem> validateTillLayout(TillLayout layout, {required int maxC
   final out = <TillLayoutProblem>[];
   if (layout.name.trim().isEmpty) out.add(const TillLayoutProblem(TillLayoutProblemCode.noName));
   if (layout.pages.isEmpty) out.add(const TillLayoutProblem(TillLayoutProblemCode.noPages));
-  if (layout.cellCount > maxCells) out.add(const TillLayoutProblem(TillLayoutProblemCode.tooLarge));
+  // past the cap nothing else is looked at, as on the server: a huge layout never costs the overlap check
+  if (layout.cellCount > maxCells) return [...out, const TillLayoutProblem(TillLayoutProblemCode.tooLarge)];
   for (var p = 0; p < layout.pages.length; p++) {
     final page = layout.pages[p];
     if (page.grids.isEmpty) out.add(TillLayoutProblem(TillLayoutProblemCode.noGrid, page: p));

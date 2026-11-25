@@ -61,6 +61,11 @@ returns setof text language sql immutable set search_path = public as $fn$
 $fn$;
 revoke execute on function public.till_layout_functions() from public, anon;
 
+-- The largest layout in bytes, as tillLayoutMaxBytes: far above the largest cell cap (600 cells of a few hundred bytes).
+create or replace function public.till_layout_max_bytes()
+returns integer language sql immutable set search_path = public as $fn$ select 262144 $fn$;
+revoke execute on function public.till_layout_max_bytes() from public, anon;
+
 -- The largest grid side, as tillLayoutMaxGridSide.
 create or replace function public.till_layout_max_grid_side()
 returns integer language sql immutable set search_path = public as $fn$ select 24 $fn$;
@@ -88,16 +93,22 @@ declare
   v_side integer := public.till_layout_max_grid_side();
   v_item text;
 begin
+  -- bounded before any walk: a layout past the byte cap or the cell cap is refused without looking at its cells, so a
+  -- huge layout never costs the quadratic overlap check
+  if octet_length(p_layout::text) > public.till_layout_max_bytes() then
+    return array['too_large'];
+  end if;
   if p_name is null or btrim(p_name) = '' then v_out := array_append(v_out, 'no_name'); end if;
   if jsonb_typeof(v_pages) <> 'array' or jsonb_array_length(v_pages) = 0 then
     return array_append(v_out, 'no_pages');
   end if;
   for v_page in select value from jsonb_array_elements(v_pages) loop
     for v_size, v_grid in select key, value from jsonb_each(coalesce(v_page -> 'grids', '{}'::jsonb)) loop
-      v_count := v_count + coalesce(jsonb_array_length(v_grid -> 'cells'), 0);
+      -- every size counts, the ones this server does not know included
+      v_count := v_count + case when jsonb_typeof(v_grid -> 'cells') = 'array' then jsonb_array_length(v_grid -> 'cells') else 0 end;
     end loop;
   end loop;
-  if v_count > p_max_cells then v_out := array_append(v_out, 'too_large'); end if;
+  if v_count > p_max_cells then return array_append(v_out, 'too_large'); end if;
   for v_page in select value from jsonb_array_elements(v_pages) loop
     if jsonb_typeof(v_page -> 'grids') is distinct from 'object' or v_page -> 'grids' = '{}'::jsonb then
       v_out := array_append(v_out, format('no_grid page %s', v_p));
@@ -110,7 +121,7 @@ begin
         v_out := array_append(v_out, format('bad_grid page %s %s', v_p, v_size));
         continue;
       end if;
-      v_cells := coalesce(v_grid -> 'cells', '[]'::jsonb);
+      v_cells := case when jsonb_typeof(v_grid -> 'cells') = 'array' then v_grid -> 'cells' else '[]'::jsonb end;
       for v_i in 0 .. jsonb_array_length(v_cells) - 1 loop
         v_cell := v_cells -> v_i;
         v_c := coalesce((v_cell ->> 'col')::integer, 0);
