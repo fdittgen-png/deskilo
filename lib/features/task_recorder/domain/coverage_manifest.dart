@@ -399,6 +399,8 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/stock/settings', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/till', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/till/drawer', CoverageStatus.planned, owner: '#1884'),
+  // #4448 -- the till layout editor, opened from the drawer.
+  RouteCoverage('/till/layout/:tillId', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/till/day', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/till/receipts', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes', CoverageStatus.planned, owner: '#1884'),
