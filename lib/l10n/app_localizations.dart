@@ -66932,6 +66932,24 @@ abstract class AppLocalizations {
   /// **'Remove this widget'**
   String get tillLayoutRemoveCell;
 
+  /// #4448 resetting a till to the keys it generates
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to the generated keys'**
+  String get tillLayoutReset;
+
+  /// #4448 resetting a till to the keys it generates
+  ///
+  /// In en, this message translates to:
+  /// **'This till goes back to the keys it makes from your items. Its layout and its draft are removed.'**
+  String get tillLayoutResetConfirm;
+
+  /// #4448 resetting a till to the keys it generates
+  ///
+  /// In en, this message translates to:
+  /// **'This till uses its generated keys again.'**
+  String get tillLayoutResetDone;
+
   /// #4448 the till layout editor
   ///
   /// In en, this message translates to:

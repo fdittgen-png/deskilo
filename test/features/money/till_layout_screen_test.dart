@@ -119,4 +119,29 @@ void main() {
     expect(copied?.pages.first.grids[TillLayoutSize.desk]?.cells.any((c) => c.kind == TillWidgetKind.keypad), isTrue);
     expect(find.text(_en.tillLayoutCopied('Bakery counter')), findsOneWidget);
   });
+
+  testWidgets('a reset, once confirmed, takes the till back to its generated keys', (tester) async {
+    final store = DemoTillLayouts();
+    await pumpApp(
+      tester,
+      const TillLayoutScreen(workspaceId: 'ws-1', tillId: _till, tillName: 'Front counter'),
+      overrides: [...standardTestOverrides(), tillLayoutPortProvider.overrideWithValue(store)],
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    await _tap(tester, const ValueKey('till-layout-template-bakery'));
+    await _tap(tester, const ValueKey('till-layout-reset'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('till-layout-reset-cancel')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('till-layout-template-bakery')), findsNothing, reason: 'cancelled: the layout stays');
+    await _tap(tester, const ValueKey('till-layout-reset'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('till-layout-reset-confirm')));
+    await tester.pumpAndSettle();
+    expect(await store.draft('ws-1', _till), isNull);
+    expect(await store.published('ws-1', _till), isNull);
+    expect(find.text(_en.tillLayoutResetDone), findsOneWidget);
+    expect(find.byKey(const ValueKey('till-layout-template-bakery')), findsOneWidget, reason: 'back to choosing a start');
+  });
 }

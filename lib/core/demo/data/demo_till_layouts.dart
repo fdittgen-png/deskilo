@@ -66,6 +66,14 @@ class DemoTillLayouts implements TillLayoutPort {
   }
 
   @override
+  Future<void> reset(String workspaceId, {required String requestId, required String tillId}) async {
+    if (_answered.containsKey(requestId)) return;
+    _drafts.remove(tillId);
+    _published.remove(tillId);
+    _answered[requestId] = 0;
+  }
+
+  @override
   Future<int> publish(String workspaceId, {required String requestId, required String tillId, required int expectedVersion}) async {
     final again = _answered[requestId];
     if (again != null) return again;

@@ -236,5 +236,17 @@
   "tillLayoutChoosePage": "Which page does it open?",
   "@tillLayoutChoosePage": {
     "description": "#4448 a category key opens another page of the till layout"
+  },
+  "tillLayoutReset": "Reset to the generated keys",
+  "@tillLayoutReset": {
+    "description": "#4448 resetting a till to the keys it generates"
+  },
+  "tillLayoutResetConfirm": "This till goes back to the keys it makes from your items. Its layout and its draft are removed.",
+  "@tillLayoutResetConfirm": {
+    "description": "#4448 resetting a till to the keys it generates"
+  },
+  "tillLayoutResetDone": "This till uses its generated keys again.",
+  "@tillLayoutResetDone": {
+    "description": "#4448 resetting a till to the keys it generates"
   }
 }

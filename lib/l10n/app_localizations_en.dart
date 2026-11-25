@@ -41577,6 +41577,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillLayoutRemoveCell => 'Remove this widget';
 
   @override
+  String get tillLayoutReset => 'Reset to the generated keys';
+
+  @override
+  String get tillLayoutResetConfirm =>
+      'This till goes back to the keys it makes from your items. Its layout and its draft are removed.';
+
+  @override
+  String get tillLayoutResetDone => 'This till uses its generated keys again.';
+
+  @override
   String get tillLayoutSizeDesk => 'Desk width';
 
   @override

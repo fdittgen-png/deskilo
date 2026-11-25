@@ -55,5 +55,8 @@
   "tillLayoutCopy": "Copiare su un'altra cassa",
   "tillLayoutCopied": "Copiato come bozza di {till}. Lo pubblichi lì.",
   "tillLayoutCopyTo": "Copiare su quale cassa?",
-  "tillLayoutChoosePage": "Quale pagina apre?"
+  "tillLayoutChoosePage": "Quale pagina apre?",
+  "tillLayoutReset": "Tornare ai tasti generati",
+  "tillLayoutResetConfirm": "Questa cassa torna ai tasti che crea dai Suoi articoli. Il suo layout e la sua bozza vengono rimossi.",
+  "tillLayoutResetDone": "Questa cassa usa di nuovo i tasti generati."
 }

@@ -4729,6 +4729,7 @@ routine public.till_layout_max_bytes() -> integer | function | invoker | immutab
 routine public.till_layout_max_grid_side() -> integer | function | invoker | immutable | exec:service_role | body:3a779ffed504
 routine public.till_layout_problems(p_workspace_id uuid, p_name text, p_layout jsonb, p_max_cells integer) -> text[] | function | definer | stable | exec:service_role | body:2d530c19efb2
 routine public.till_layout_publish_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_expected_version integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f51623025526
+routine public.till_layout_reset_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f320b4400f09
 routine public.till_layout_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_expected_version integer, p_layout jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5ae3fc7e2d12
 routine public.toggle_message_star(p_kind text, p_message_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:88ca42478a05
 routine public.touch_conversation() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1a8384fd9011

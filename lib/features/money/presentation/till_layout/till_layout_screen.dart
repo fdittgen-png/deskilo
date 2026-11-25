@@ -129,6 +129,28 @@ class _TillLayoutScreenState extends ConsumerState<TillLayoutScreen> {
     );
   }
 
+  /// Back to the generated keys, once confirmed: the draft and the published layout are removed.
+  Future<void> _reset() async {
+    final l10n = context.l10n;
+    final sure = await showDialog<bool>(
+      context: context,
+      builder: (d) => AlertDialog(
+        title: Text(l10n.tillLayoutReset),
+        content: Text(l10n.tillLayoutResetConfirm),
+        actions: [
+          TextButton(key: const ValueKey('till-layout-reset-cancel'), onPressed: () => Navigator.of(d).pop(false), child: Text(MaterialLocalizations.of(d).cancelButtonLabel)),
+          FilledButton(key: const ValueKey('till-layout-reset-confirm'), onPressed: () => Navigator.of(d).pop(true), child: Text(l10n.tillLayoutReset)),
+        ],
+      ),
+    );
+    if (sure != true || !mounted) return;
+    await _run((id) async {
+      await _port.reset(widget.workspaceId, requestId: id, tillId: widget.tillId);
+      return 0;
+    }, l10n.tillLayoutResetDone, publish: true);
+    if (mounted) _edit.loadedWith();
+  }
+
   Future<void> _save() => _run(
     (id) => _port.save(widget.workspaceId, requestId: id, tillId: widget.tillId, layout: _edit.layout!, expectedVersion: _edit.version),
     context.l10n.quoteDraftSaved,
@@ -153,6 +175,13 @@ class _TillLayoutScreenState extends ConsumerState<TillLayoutScreen> {
       appBar: AppBar(
         title: PageTitle(l10n.tillLayoutTitle),
         actions: [
+          if (layout != null)
+            IconButton(
+              key: const ValueKey('till-layout-reset'),
+              tooltip: l10n.tillLayoutReset,
+              icon: const Icon(Icons.restart_alt),
+              onPressed: busy ? null : _reset,
+            ),
           if (layout != null)
             IconButton(
               key: const ValueKey('till-layout-copy'),

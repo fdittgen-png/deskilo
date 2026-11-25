@@ -42041,6 +42041,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillLayoutRemoveCell => 'Dieses Element entfernen';
 
   @override
+  String get tillLayoutReset => 'Auf die erzeugten Tasten zurücksetzen';
+
+  @override
+  String get tillLayoutResetConfirm =>
+      'Diese Kasse kehrt zu den Tasten zurück, die sie aus Ihren Artikeln erzeugt. Ihr Layout und ihr Entwurf werden entfernt.';
+
+  @override
+  String get tillLayoutResetDone =>
+      'Diese Kasse nutzt wieder ihre erzeugten Tasten.';
+
+  @override
   String get tillLayoutSizeDesk => 'Desktopbreite';
 
   @override

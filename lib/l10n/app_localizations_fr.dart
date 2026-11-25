@@ -42098,6 +42098,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillLayoutRemoveCell => 'Retirer cet élément';
 
   @override
+  String get tillLayoutReset => 'Revenir aux touches générées';
+
+  @override
+  String get tillLayoutResetConfirm =>
+      'Cette caisse revient aux touches qu\'elle crée à partir de vos articles. Sa disposition et son brouillon sont supprimés.';
+
+  @override
+  String get tillLayoutResetDone =>
+      'Cette caisse utilise de nouveau ses touches générées.';
+
+  @override
   String get tillLayoutSizeDesk => 'Largeur bureau';
 
   @override

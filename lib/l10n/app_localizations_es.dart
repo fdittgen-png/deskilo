@@ -41919,6 +41919,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillLayoutRemoveCell => 'Quitar este elemento';
 
   @override
+  String get tillLayoutReset => 'Volver a las teclas generadas';
+
+  @override
+  String get tillLayoutResetConfirm =>
+      'Esta caja vuelve a las teclas que crea a partir de sus artículos. Su diseño y su borrador se eliminan.';
+
+  @override
+  String get tillLayoutResetDone =>
+      'Esta caja vuelve a usar sus teclas generadas.';
+
+  @override
   String get tillLayoutSizeDesk => 'Ancho de escritorio';
 
   @override

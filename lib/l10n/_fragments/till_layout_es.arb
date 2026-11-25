@@ -55,5 +55,8 @@
   "tillLayoutCopy": "Copiar a otra caja",
   "tillLayoutCopied": "Copiado como borrador de {till}. Publíquelo allí.",
   "tillLayoutCopyTo": "¿Copiar a qué caja?",
-  "tillLayoutChoosePage": "¿Qué página abre?"
+  "tillLayoutChoosePage": "¿Qué página abre?",
+  "tillLayoutReset": "Volver a las teclas generadas",
+  "tillLayoutResetConfirm": "Esta caja vuelve a las teclas que crea a partir de sus artículos. Su diseño y su borrador se eliminan.",
+  "tillLayoutResetDone": "Esta caja vuelve a usar sus teclas generadas."
 }

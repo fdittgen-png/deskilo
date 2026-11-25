@@ -41970,6 +41970,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillLayoutRemoveCell => 'Rimuovere questo elemento';
 
   @override
+  String get tillLayoutReset => 'Tornare ai tasti generati';
+
+  @override
+  String get tillLayoutResetConfirm =>
+      'Questa cassa torna ai tasti che crea dai Suoi articoli. Il suo layout e la sua bozza vengono rimossi.';
+
+  @override
+  String get tillLayoutResetDone =>
+      'Questa cassa usa di nuovo i tasti generati.';
+
+  @override
   String get tillLayoutSizeDesk => 'Larghezza desktop';
 
   @override
