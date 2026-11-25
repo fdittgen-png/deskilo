@@ -3589,7 +3589,7 @@ routine public.item_group_actor(p_workspace_id uuid) -> uuid | function | define
 routine public.item_group_assign_core(p_workspace_id uuid, p_me uuid, p_request_id uuid, p_item_id uuid, p_expected integer, p_group_id uuid, p_dry boolean) -> jsonb | function | definer | volatile | exec:service_role | body:49189b5b2b06
 routine public.item_group_assign_v1(p_workspace_id uuid, p_request_id uuid, p_item_id uuid, p_expected_revision integer, p_group_id uuid, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:47ed274ddf48
 routine public.item_group_business_default(p_workspace_id uuid, p_param text) -> jsonb | function | definer | stable | exec:service_role | body:e29d304b68f6
-routine public.item_group_check_value(p_workspace_id uuid, p_param text, p_value jsonb) -> void | function | definer | stable | exec:service_role | body:bb9727998a99
+routine public.item_group_check_value(p_workspace_id uuid, p_param text, p_value jsonb) -> void | function | definer | stable | exec:service_role | body:832b3c0b7c21
 routine public.item_group_delete_v1(p_workspace_id uuid, p_request_id uuid, p_group_id uuid, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:94fd91e75513
 routine public.item_group_finance_guard(p_workspace_id uuid, p_params text[]) -> void | function | definer | stable | exec:service_role | body:12cba0630cf1
 routine public.item_group_history_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:2b985ba95c55
@@ -4154,7 +4154,7 @@ routine public.purchase_request_begin(p_workspace_id uuid, p_request_id uuid, p_
 routine public.purchase_request_end(p_workspace_id uuid, p_request_id uuid, p_operation text, p_digest text, p_result jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:d966beee0b55
 routine public.purchase_resource_site(p_workspace_id uuid, p_kind text, p_id uuid) -> TABLE(found boolean, site_id uuid) | function | definer | stable | exec:service_role | body:da2892f9638b
 routine public.purchase_state_of_event(p_status text) -> text | function | invoker | immutable | exec:service_role | body:d221debfbdf6
-routine public.purchase_write_lines(p_workspace_id uuid, p_purchase_id uuid, p_lines jsonb) -> void | function | definer | volatile | exec:service_role | body:5efec05cf1f6
+routine public.purchase_write_lines(p_workspace_id uuid, p_purchase_id uuid, p_lines jsonb) -> void | function | definer | volatile | exec:service_role | body:41bce3deca9b
 routine public.purge_expired_field_answer_holds() -> integer | function | definer | volatile | exec:service_role | body:8dcbf0fddd71
 routine public.push_delivery_headers(p_anon_key text) -> jsonb | function | definer | volatile | exec:service_role | body:a8a21aab9941
 routine public.put_away_receipt_v1(p_workspace_id uuid, p_receipt_id uuid, p_request_id uuid, p_allocations jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:90a795dd947a
@@ -4355,12 +4355,12 @@ routine public.save_mcp_policy(p_workspace_id uuid, p_expected_revision integer,
 routine public.save_premises_lease_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_payload jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:61eb984039bb
 routine public.save_purchase_draft_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:68d6e1c38dc4
 routine public.save_purchase_order_mail_settings_v1(p_workspace_id uuid, p_sender_email text, p_sender_name text, p_api_key text, p_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:db57f3672cba
-routine public.save_purchase_order_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f20d8a983bef
+routine public.save_purchase_order_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:32c34ef50517
 routine public.save_room_rental_v1(p_workspace_id uuid, p_office_id uuid, p_supplier_id uuid, p_available_from date, p_available_until date, p_cost_kind text, p_cost_cents bigint, p_period text, p_status text, p_document_id uuid, p_revision integer, p_audience_all boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:558593482042
 routine public.save_setup_journey(p_workspace_id uuid, p_answers jsonb, p_levels jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3ea7b7ed1f4c
 routine public.save_setup_step_draft(p_workspace_id uuid, p_step text, p_payload jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fdb127d50874
 routine public.save_standalone_invoice_draft_v1(p_workspace_id uuid, p_draft_id uuid, p_expected_revision integer, p_subject uuid, p_service_date date, p_due_on date, p_buyer_reference text, p_purchase_order text, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:469627be70ed
-routine public.save_stock_item_v1(p_workspace_id uuid, p_item_id uuid, p_expected_revision integer, p_request_id uuid, p_item jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2742619c88b6
+routine public.save_stock_item_v1(p_workspace_id uuid, p_item_id uuid, p_expected_revision integer, p_request_id uuid, p_item jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1585f1452f4c
 routine public.save_stock_location_v1(p_workspace_id uuid, p_place_id uuid, p_expected_revision integer, p_request_id uuid, p_place jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7caa3b8e9970
 routine public.save_stock_reorder_point_v1(p_workspace_id uuid, p_point_id uuid, p_expected_revision integer, p_request_id uuid, p_point jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:222f8211fec5
 routine public.save_supplier(p_workspace_id uuid, p_supplier_id uuid, p_name text, p_tax_id text, p_tax_id_kind text, p_street text, p_postal_code text, p_city text, p_country_code text, p_contact text, p_number text, p_subdivision text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:527806d558d6
@@ -4391,7 +4391,7 @@ routine public.send_member_note(p_workspace_id uuid, p_to_member_id uuid, p_body
 routine public.send_workspace_application_message(p_event_id uuid, p_body text, p_expected_account uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:f316d7071863
 routine public.service_fulfilment_actor(p_workspace uuid) -> members | function | definer | stable | exec:service_role | body:1a9e2c1cd693
 routine public.service_fulfilment_digest(p_text text) -> text | function | invoker | immutable | exec:service_role | body:98b5527e39bb
-routine public.service_fulfilment_direct_scope(p_workspace uuid, p_scope jsonb) -> jsonb | function | definer | stable | exec:service_role | body:f246972368da
+routine public.service_fulfilment_direct_scope(p_workspace uuid, p_scope jsonb) -> jsonb | function | definer | stable | exec:service_role | body:e43c4dc05ddc
 routine public.service_fulfilment_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:5371d420b58e
 routine public.service_fulfilment_invoice_ids(f service_fulfilments) -> SETOF uuid | function | definer | stable | exec:service_role | body:d4d01d76053d
 routine public.service_fulfilment_json(f service_fulfilments) -> jsonb | function | definer | stable | exec:service_role | body:11d89631a565
@@ -4737,6 +4737,7 @@ routine public.touch_last_seen() -> void | function | definer | volatile | exec:
 routine public.transition_service_fulfilment_v1(p_workspace_id uuid, p_fulfilment_id uuid, p_expected_revision integer, p_to text, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e1ef6dfd4ba8
 routine public.unarchive_conversation_on_message() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1ef58a6f7319
 routine public.unblock_account(p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:913dd34e1777
+routine public.unit_is_pickable(p_workspace uuid, p_unit text, p_item uuid) -> boolean | function | definer | stable | exec:service_role | body:eab23831ab44
 routine public.unmatch_bank_line_in_v1(p_line_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:afb740029be2
 routine public.unreconcile_bank_line_out_v1(p_line_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:afe6df043a4c
 routine public.unset_my_kiosk(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:f2b9fedee125
@@ -4760,6 +4761,7 @@ routine public.vat_declarations_guard() -> trigger | function | invoker | volati
 routine public.vat_input_amounts(p_workspace_id uuid, p_start date, p_end date) -> TABLE(expense_id uuid, tax_point date, percent numeric, category text, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:f52b62e95390
 routine public.vat_input_split(p_gross bigint, p_percent numeric, p_share numeric) -> TABLE(net_cents bigint, deductible_cents bigint) | function | invoker | immutable | exec:service_role | body:95597107b5ee
 routine public.vat_percent_components(p_country text, p_percent numeric) -> jsonb | function | definer | stable | exec:service_role | body:6cecb7e04f44
+routine public.vat_percent_is_known(p_workspace uuid, p_percent numeric) -> boolean | function | definer | stable | exec:service_role | body:26147489c0ec
 routine public.vat_period_overlaps_filed(p_workspace_id uuid, p_start date, p_end date) -> boolean | function | definer | stable | exec:service_role | body:7da21367be94
 routine public.vat_rate_family(p_rate_id uuid) -> SETOF vat_rates | function | definer | stable | exec:service_role | body:be13b7375d62
 routine public.vat_rate_id_by_label(p_workspace_id uuid, p_label text) -> uuid | function | definer | stable | exec:service_role | body:c5e190aea085
