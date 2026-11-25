@@ -122,13 +122,25 @@ void main() {
       find.byKey(const ValueKey('purchase-quantity')),
       '100',
     );
-    await tester.enterText(find.byKey(const ValueKey('purchase-unit')), 'box');
+    // #4471 -- the unit is picked from the business's units, never typed
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('purchase-unit')),
+        matching: find.byType(TextField),
+      ),
+      findsNothing,
+    );
+    await tester.ensureVisible(find.byKey(const ValueKey('purchase-unit')));
+    await tester.tap(find.byKey(const ValueKey('purchase-unit')));
+    await _step(tester);
+    await tester.tap(find.text('kg').last);
+    await _step(tester);
     await _save(tester);
     final saved = (await repo.fetchPurchases('ws')).single;
     final line = (await repo.fetchDetail('ws', saved.id)).lines.single;
     expect(
       (line.serviceId, line.quantity, line.unit),
-      ('svc-coffee', 100.0, 'box'),
+      ('svc-coffee', 100.0, 'kg'),
     );
   });
 

@@ -385,6 +385,7 @@ class PurchaseOrderForm {
       errorText: shown['unit-$i'],
       onChanged: (code) {
         fields['unit-$i'].text = code;
+        shown = {...shown}..remove('unit-$i');
         refresh();
       },
     ),
