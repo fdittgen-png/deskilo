@@ -10,6 +10,7 @@ import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/demo_counter_day.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
 
@@ -34,7 +35,8 @@ Future<void> _open(WidgetTester tester, CounterBookPort port, Size size) async {
 }
 
 void main() {
-  for (final size in const [Size(390, 800), Size(1440, 900)]) {
+  // phone, tablet, desk
+  for (final size in const [Size(390, 800), Size(820, 1180), Size(1440, 900)]) {
     group('the receipts at ${size.width.toInt()}', () {
       testWidgets('the sale waiting for a card answer and the cash sale are listed, with their acts', (tester) async {
         final till = DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20)..seed();
@@ -46,6 +48,21 @@ void main() {
         expect(find.byKey(ValueKey('counter-correct-${cash.id}')), findsOneWidget);
         final card = book.waiting.single.openAuthorizations.single;
         expect(find.byKey(ValueKey('counter-answer-${card.id}')), findsOneWidget);
+      });
+
+      testWidgets('the Demo day reads on the receipts: the service, the declined card paid in cash, the correction', (tester) async {
+        final till = DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20);
+        final day = await tester.runAsync(() => runCounterDay(till));
+        await _open(tester, till, size);
+        expect(find.text(_en.counterSaleWaitingTitle), findsNothing);
+        final list = find.byWidgetPredicate((w) => w is Scrollable && w.axisDirection == AxisDirection.down).first;
+        for (final id in [day!.serviceSale, day.declinedSale, day.recoveredSale, day.correction]) {
+          // from the top each time: the receipts are newest first, and a phone shows a few at once
+          await tester.drag(list, const Offset(0, 20000));
+          await tester.pump();
+          await tester.scrollUntilVisible(find.byKey(ValueKey('counter-receipt-$id')), 300, scrollable: list);
+          expect(find.byKey(ValueKey('counter-receipt-$id')), findsOneWidget);
+        }
       });
 
       testWidgets('a book that cannot be read says so with a retry, and is never shown as empty', (tester) async {
