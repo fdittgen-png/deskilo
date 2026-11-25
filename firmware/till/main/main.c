@@ -18,6 +18,7 @@
 #include "freertos/task.h"
 #include "lvgl.h"
 #include "net.h"
+#include "pending.h"
 #include "trace.h"
 
 static const char *TAG = "till";
@@ -35,12 +36,20 @@ typedef struct {
     roll_t roll;
     bool has_roll;
     bool online;
+    // #4456 the payment: where the sale stands, what is due and given, and the receipt it got
+    int phase;
+    int64_t due, given;
+    char paid_number[32];
     uint32_t version;
 } shared_t;
 static shared_t S;
 static SemaphoreHandle_t s_lock;
 static QueueHandle_t s_cmd;
-enum { CMD_TAP, CMD_NEXT, CMD_REPORT };
+enum { CMD_TAP, CMD_NEXT, CMD_REPORT, CMD_PAY, CMD_CASH, CMD_RETRY };
+// The sale's phase: selling; the cash being counted; sent; paid; sent without a proven answer; a payment of another binding
+// waits and nothing is sold here.
+enum { PH_SELL, PH_CASH, PH_PAYING, PH_PAID, PH_UNCERTAIN, PH_BLOCKED };
+static int64_t s_cash_given;   // set by the keypad before CMD_CASH
 typedef struct { int kind; int index; } cmd_t;
 static basket_line_t s_basket[MAX_PRODUCTS];
 static int s_basket_n;
@@ -70,11 +79,18 @@ static int exponent_of(const char *c) {
     if (!strcmp(c, "KWD") || !strcmp(c, "BHD") || !strcmp(c, "OMR") || !strcmp(c, "TND") || !strcmp(c, "JOD")) return 3;
     return 2;
 }
-static void money(char *out, size_t cap, int minor, const char *cur) {
-    int e = exponent_of(cur), div = 1;
+static void money(char *out, size_t cap, int64_t minor, const char *cur) {
+    int e = exponent_of(cur);
+    int64_t div = 1;
     for (int i = 0; i < e; i++) div *= 10;
-    if (e == 0) snprintf(out, cap, "%d %s", minor, cur);
-    else snprintf(out, cap, "%d.%0*d %s", minor / div, e, minor % div, cur);
+    const char *sign = minor < 0 ? "-" : "";
+    int64_t a = minor < 0 ? -minor : minor;
+    char t[64];   // room for any int64 and a currency: the caller's buffer only cuts the end
+    if (e == 0) snprintf(t, sizeof t, "%s%lld %.3s", sign, (long long)a, cur);
+    else snprintf(t, sizeof t, "%s%lld.%0*lld %.3s", sign, (long long)(a / div), e, (long long)(a % div), cur);
+    size_t n = strlen(t) < cap - 1 ? strlen(t) : cap - 1;
+    memcpy(out, t, n);
+    out[n] = 0;
 }
 
 // ---- the network task ----
@@ -85,6 +101,50 @@ static void add_to_basket(const char *id) {
     for (int i = 0; i < s_basket_n; i++)
         if (!strcmp(s_basket[i].item_id, id)) { s_basket[i].qty++; return; }
     if (s_basket_n < MAX_PRODUCTS) { strncpy(s_basket[s_basket_n].item_id, id, 39); s_basket[s_basket_n].item_id[39] = 0; s_basket[s_basket_n++].qty = 1; }
+}
+
+static void set_phase(int phase, const char *status) {
+    xSemaphoreTake(s_lock, portMAX_DELAY);
+    S.phase = phase;
+    if (status) snprintf(S.status, sizeof S.status, "%s", status);
+    S.version++;
+    xSemaphoreGive(s_lock);
+}
+
+// Asks Deskilo to finish the attempt kept in flash, as often as it takes: the same request, the same payload. Only a proven
+// answer moves the sale on; anything else keeps it uncertain and the next customer waits.
+static void settle(const pending_t *p) {
+    char number[32] = "", why[96] = "";
+    pay_result_t r = api_finalize_cash(p, number, sizeof number, why, sizeof why);
+    if (r == PAY_UNCERTAIN && strstr(why, "401")) {   // the session ran out: sign in again and ask the same thing
+        char w2[96];
+        if (api_sign_in(w2, sizeof w2)) r = api_finalize_cash(p, number, sizeof number, why, sizeof why);
+    }
+    if (r == PAY_DONE) {
+        paid_t paid = {.total_minor = p->total_minor, .given_minor = p->given_minor};
+        snprintf(paid.number, sizeof paid.number, "%s", number);
+        snprintf(paid.currency, sizeof paid.currency, "%s", p->currency);
+        if (pending_settle(&paid) != ESP_OK) trace("paid %s, but the answer is not kept yet", number);   // replay finds it again
+        char ch[40], st[120];
+        money(ch, sizeof ch, p->given_minor - p->total_minor, p->currency);
+        snprintf(st, sizeof st, "Paid %s  -  change %s", number, ch);
+        trace("paid %s: %lld, given %lld", number, (long long)p->total_minor, (long long)p->given_minor);
+        xSemaphoreTake(s_lock, portMAX_DELAY);
+        snprintf(S.paid_number, sizeof S.paid_number, "%s", number);
+        S.given = p->given_minor;
+        S.due = p->total_minor;
+        xSemaphoreGive(s_lock);
+        set_phase(PH_PAID, st);
+    } else if (r == PAY_REFUSED) {
+        pending_drop();
+        fail("pay", why);
+        char st[96];
+        snprintf(st, sizeof st, "Not paid: %.80s", why);
+        set_phase(PH_SELL, st);
+    } else {
+        trace("payment result unknown: %s (request %.8s)", why, p->request_id);
+        set_phase(PH_UNCERTAIN, "Result unknown: asking Deskilo again ...");
+    }
 }
 
 static void net_task(void *arg) {
@@ -108,12 +168,33 @@ static void net_task(void *arg) {
         S.version++;
         xSemaphoreGive(s_lock);
         if (n < 0) fail("products", why); else trace("%d products", n);
+        pending_t p;
+        if (pending_load(&p)) {
+            // a payment sent before the restart: settled first, under the binding it was made in, before anything is sold
+            if (strcmp(p.workspace, g_cfg.workspace) || strcmp(p.server, g_cfg.url)) {
+                trace("a payment of another business is pending (%.8s): nothing is sold here", p.request_id);
+                set_phase(PH_BLOCKED, "A payment of another setup is pending: settle it there first");
+            } else {
+                trace("restart with a payment pending (%.8s)", p.request_id);
+                set_phase(PH_UNCERTAIN, "Result unknown: asking Deskilo again ...");
+                settle(&p);
+            }
+        }
     } else set_status("Waiting for a receipt ...");
     TickType_t last_refresh = xTaskGetTickCount();
     for (;;) {
         cmd_t c;
         bool got = xQueueReceive(s_cmd, &c, strcmp(g_cfg.role, "roll") == 0 ? pdMS_TO_TICKS(1500) : pdMS_TO_TICKS(1000)) == pdTRUE;
         if (xTaskGetTickCount() - last_refresh > pdMS_TO_TICKS(40 * 60 * 1000)) { if (api_sign_in(why, sizeof why)) last_refresh = xTaskGetTickCount(); }
+        static int idle;
+        int phase_now;
+        xSemaphoreTake(s_lock, portMAX_DELAY); phase_now = S.phase; xSemaphoreGive(s_lock);
+        if (phase_now == PH_UNCERTAIN && ((got && c.kind == CMD_RETRY) || (!got && ++idle >= 10))) {
+            idle = 0;
+            pending_t p;
+            if (pending_load(&p)) settle(&p); else set_phase(PH_SELL, "Choose a product");
+            continue;
+        }
         if (got && c.kind == CMD_REPORT) { set_status(api_report(g_cfg.role, "till.traces_sent", "") ? "Traces sent to Deskilo" : "Traces not sent"); continue; }
         if (!strcmp(g_cfg.role, "roll")) {
             bool ok = api_roll(&roll, why, sizeof why);
@@ -133,14 +214,56 @@ static void net_task(void *arg) {
             continue;
         }
         if (!got) continue;
+        if (c.kind == CMD_NEXT && (phase_now == PH_UNCERTAIN || phase_now == PH_PAYING || phase_now == PH_BLOCKED)) {
+            set_status(phase_now == PH_BLOCKED ? "A payment of another setup is pending" : "The sale's result is not known yet: it is settled first");
+            continue;
+        }
+        if (c.kind == CMD_PAY) {
+            if (phase_now != PH_SELL) continue;
+            int64_t due = api_draft_total();
+            xSemaphoreTake(s_lock, portMAX_DELAY);
+            bool payable = S.has_roll && S.roll.revision > 0 && due > 0 && due == S.roll.total_minor;
+            if (payable) { S.due = due; S.phase = PH_CASH; S.version++; }
+            xSemaphoreGive(s_lock);
+            if (!payable) set_status("Nothing to pay yet: add a product");
+            continue;
+        }
+        if (c.kind == CMD_CASH) {
+            if (phase_now != PH_CASH) continue;
+            if (c.index == 0) { set_phase(PH_SELL, "Payment cancelled"); continue; }
+            pending_t p = {0};
+            xSemaphoreTake(s_lock, portMAX_DELAY);
+            p.total_minor = S.due;
+            p.given_minor = s_cash_given;
+            snprintf(p.receipt_id, sizeof p.receipt_id, "%.36s", S.roll.receipt_id);
+            p.revision = S.roll.revision;
+            snprintf(p.currency, sizeof p.currency, "%s", S.roll.currency);
+            xSemaphoreGive(s_lock);
+            // the server's total, unchanged since it was shown, and enough cash: else nothing is sent
+            if (p.given_minor < p.total_minor || api_draft_total() != p.total_minor) { set_phase(PH_CASH, "Not enough cash"); continue; }
+            api_new_id(p.request_id);
+            snprintf(p.workspace, sizeof p.workspace, "%.36s", g_cfg.workspace);
+            snprintf(p.server, sizeof p.server, "%.95s", g_cfg.url);
+            if (pending_save(&p) != ESP_OK) {   // no record, no request
+                trace("payment not started: the attempt could not be stored");
+                set_phase(PH_SELL, "Payment not started: storage failed");
+                continue;
+            }
+            trace("paying %.8s rev %d: %lld cash, given %lld (request %.8s)", p.receipt_id, p.revision, (long long)p.total_minor, (long long)p.given_minor, p.request_id);
+            set_phase(PH_PAYING, "Paying ...");
+            settle(&p);
+            continue;
+        }
+        if (c.kind == CMD_RETRY) continue;
         if (c.kind == CMD_NEXT) {
             s_basket_n = 0;
             api_reset_draft();
             memset(&roll, 0, sizeof roll);
-            xSemaphoreTake(s_lock, portMAX_DELAY); S.roll = roll; S.has_roll = false; snprintf(S.status, sizeof S.status, "Next customer"); S.version++; xSemaphoreGive(s_lock);
+            xSemaphoreTake(s_lock, portMAX_DELAY); S.roll = roll; S.has_roll = false; S.phase = PH_SELL; S.paid_number[0] = 0; snprintf(S.status, sizeof S.status, "Next customer"); S.version++; xSemaphoreGive(s_lock);
             trace("next customer");
             continue;
         }
+        if (phase_now != PH_SELL) continue;   // the basket is frozen from the cash count on
         product_t p;
         xSemaphoreTake(s_lock, portMAX_DELAY); bool in = c.index >= 0 && c.index < S.n_products; if (in) p = S.products[c.index]; xSemaphoreGive(s_lock);
         if (!in) continue;
@@ -160,6 +283,10 @@ static void net_task(void *arg) {
 // ---- the screen ----
 static lv_obj_t *s_status, *s_total, *s_roll_list, *s_basket_label;
 static lv_obj_t *s_keys[MAX_PRODUCTS];
+static lv_obj_t *s_pay, *s_retry, *s_cash, *s_cash_text, *s_cash_ok;
+static int64_t s_typed;   // the cash typed on the keypad, in minor units
+static int64_t s_cash_due;
+static char s_cash_cur[4];
 static lv_obj_t *s_settings;
 static uint32_t s_seen;
 
@@ -282,6 +409,72 @@ static void build_common(const char *title) {
     lv_label_set_text(s_status, "");
 }
 
+static void pay_cb(lv_event_t *e) { cmd_t c = {CMD_PAY, 0}; xQueueSend(s_cmd, &c, 0); }
+static void retry_cb(lv_event_t *e) { cmd_t c = {CMD_RETRY, 0}; xQueueSend(s_cmd, &c, 0); }
+
+static void cash_show(void) {
+    char due[40], given[40], change[40], t[160];
+    money(due, sizeof due, s_cash_due, s_cash_cur);
+    money(given, sizeof given, s_typed, s_cash_cur);
+    if (s_typed >= s_cash_due) money(change, sizeof change, s_typed - s_cash_due, s_cash_cur); else snprintf(change, sizeof change, "-");
+    snprintf(t, sizeof t, "Total   %s\nGiven   %s\nChange  %s", due, given, change);
+    lv_label_set_text(s_cash_text, t);
+    if (s_typed >= s_cash_due) lv_obj_clear_state(s_cash_ok, LV_STATE_DISABLED); else lv_obj_add_state(s_cash_ok, LV_STATE_DISABLED);
+}
+static void cash_key_cb(lv_event_t *e) {
+    const char *k = lv_label_get_text(lv_obj_get_child(lv_event_get_target(e), 0));
+    if (!strcmp(k, "C")) s_typed = 0;
+    else if (strchr(k, '=')) s_typed = s_cash_due;                // exact amount
+    else if (s_typed < 100000000000LL) {                          // at most 12 digits: never an overflow
+        for (const char *d = k; *d; d++) s_typed = s_typed * 10 + (*d - '0');
+    }
+    cash_show();
+}
+static void cash_done_cb(lv_event_t *e) {
+    int ok = (int)(intptr_t)lv_event_get_user_data(e);
+    if (ok && s_typed < s_cash_due) return;                       // too little: nothing is sent
+    s_cash_given = s_typed;
+    cmd_t c = {CMD_CASH, ok};
+    xQueueSend(s_cmd, &c, 0);
+}
+static void cash_open(int64_t due, const char *cur) {
+    if (s_cash) return;
+    s_cash_due = due; s_typed = 0;
+    snprintf(s_cash_cur, sizeof s_cash_cur, "%s", cur);
+    s_cash = lv_obj_create(lv_scr_act());
+    lv_obj_set_size(s_cash, 472, 312);
+    lv_obj_center(s_cash);
+    lv_obj_clear_flag(s_cash, LV_OBJ_FLAG_SCROLLABLE);
+    s_cash_text = lv_label_create(s_cash);
+    lv_obj_set_style_text_font(s_cash_text, &lv_font_montserrat_20, 0);
+    lv_obj_align(s_cash_text, LV_ALIGN_TOP_LEFT, 0, 0);
+    static const char *keys[] = {"7", "8", "9", "4", "5", "6", "1", "2", "3", "C", "0", "00"};
+    for (int i = 0; i < 12; i++) {   // a 3 x 4 keypad on the right
+        lv_obj_t *b = lv_btn_create(s_cash);
+        lv_obj_set_size(b, 62, 46);
+        lv_obj_align(b, LV_ALIGN_TOP_RIGHT, -(2 - i % 3) * 68, (i / 3) * 52);
+        lv_label_set_text(lv_label_create(b), keys[i]);
+        lv_obj_add_event_cb(b, cash_key_cb, LV_EVENT_CLICKED, NULL);
+    }
+    lv_obj_t *exact = lv_btn_create(s_cash);   // "=": the exact amount, under the totals
+    lv_obj_set_size(exact, 120, 46);
+    lv_obj_align(exact, LV_ALIGN_TOP_LEFT, 0, 112);
+    lv_label_set_text(lv_label_create(exact), "Exact  =");
+    lv_obj_add_event_cb(exact, cash_key_cb, LV_EVENT_CLICKED, NULL);
+    lv_obj_t *cancel = lv_btn_create(s_cash);
+    lv_obj_align(cancel, LV_ALIGN_BOTTOM_LEFT, 0, 0);
+    lv_label_set_text(lv_label_create(cancel), "Cancel");
+    lv_obj_add_event_cb(cancel, cash_done_cb, LV_EVENT_CLICKED, (void *)(intptr_t)0);
+    s_cash_ok = lv_btn_create(s_cash);
+    lv_obj_set_size(s_cash_ok, 200, 46);
+    lv_obj_align(s_cash_ok, LV_ALIGN_BOTTOM_LEFT, 110, 0);
+    lv_obj_set_style_bg_color(s_cash_ok, lv_color_hex(0x1B7F3B), 0);
+    lv_label_set_text(lv_label_create(s_cash_ok), "Cash received");
+    lv_obj_add_event_cb(s_cash_ok, cash_done_cb, LV_EVENT_CLICKED, (void *)(intptr_t)1);
+    cash_show();
+}
+static void cash_close(void) { if (s_cash) { lv_obj_del(s_cash); s_cash = NULL; } }
+
 static void build_till(void) {
     build_common("DesKilo Kasse");
     lv_obj_t *scr = lv_scr_act();
@@ -308,6 +501,19 @@ static void build_till(void) {
     lv_obj_align(n, LV_ALIGN_BOTTOM_RIGHT, -8, -8);
     lv_obj_add_event_cb(n, next_cb, LV_EVENT_CLICKED, NULL);
     lv_label_set_text(lv_label_create(n), "Next customer");
+    s_pay = lv_btn_create(scr);
+    lv_obj_set_size(s_pay, 120, 50);
+    lv_obj_align(s_pay, LV_ALIGN_BOTTOM_RIGHT, -166, -8);
+    lv_obj_set_style_bg_color(s_pay, lv_color_hex(0x1B7F3B), 0);
+    lv_obj_add_event_cb(s_pay, pay_cb, LV_EVENT_CLICKED, NULL);
+    lv_label_set_text(lv_label_create(s_pay), "Pay cash");
+    lv_obj_add_state(s_pay, LV_STATE_DISABLED);
+    s_retry = lv_btn_create(scr);
+    lv_obj_set_size(s_retry, 120, 50);
+    lv_obj_align(s_retry, LV_ALIGN_BOTTOM_RIGHT, -166, -8);
+    lv_obj_add_event_cb(s_retry, retry_cb, LV_EVENT_CLICKED, NULL);
+    lv_label_set_text(lv_label_create(s_retry), "Ask again");
+    lv_obj_add_flag(s_retry, LV_OBJ_FLAG_HIDDEN);
 }
 
 static void build_roll(void) {
@@ -370,11 +576,21 @@ static void refresh_cb(lv_timer_t *t) {
         char tt[80]; snprintf(tt, sizeof tt, "%d x  %s", items, m);
         lv_label_set_text(s_basket_label, tt);
     } else lv_label_set_text(s_basket_label, "");
+    // the payment: Pay only on a priced basket while selling; the cash count while counting; Ask again while uncertain
+    bool payable = copy.phase == PH_SELL && copy.has_roll && copy.roll.total_minor > 0;
+    if (payable) lv_obj_clear_state(s_pay, LV_STATE_DISABLED); else lv_obj_add_state(s_pay, LV_STATE_DISABLED);
+    if (copy.phase == PH_UNCERTAIN) { lv_obj_add_flag(s_pay, LV_OBJ_FLAG_HIDDEN); lv_obj_clear_flag(s_retry, LV_OBJ_FLAG_HIDDEN); }
+    else { lv_obj_clear_flag(s_pay, LV_OBJ_FLAG_HIDDEN); lv_obj_add_flag(s_retry, LV_OBJ_FLAG_HIDDEN); }
+    if (copy.phase == PH_CASH) cash_open(copy.due, copy.roll.currency); else cash_close();
 }
 
 void app_main(void) {
     trace_init();
     ESP_ERROR_CHECK(cfg_load());
+    if (pending_init() != ESP_OK) {   // the attempts area unreadable: a pending payment may be in it, so nothing is sold
+        trace("the payment store cannot be read: nothing is sold until it is looked at");
+        S.phase = PH_BLOCKED;
+    }
     ESP_ERROR_CHECK(board_init());
     lv_init();
     static lv_color_t buf1[BOARD_LCD_W * BUF_LINES], buf2[BOARD_LCD_W * BUF_LINES];

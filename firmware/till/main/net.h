@@ -4,6 +4,8 @@
 #pragma once
 #include <stdbool.h>
 #include "esp_err.h"
+#include "pending.h"
+#include <stdint.h>
 
 #define MAX_PRODUCTS 8
 #define MAX_LINES 24
@@ -33,3 +35,20 @@ bool api_roll(roll_t *out, char *why, int cap);
 const char *api_last_code(void);
 // Sends the trace ring to Deskilo as a trace report of this board; the installation's operator reads it in the app.
 bool api_report(const char *role, const char *failure_type, const char *failure_code);
+
+// #4456 (E05) -- the end of a payment, as far as the board can prove it.
+typedef enum {
+    PAY_DONE,       // the server issued the receipt (number filled)
+    PAY_REFUSED,    // the server refused before it committed anything: nothing was paid (why filled)
+    PAY_UNCERTAIN,  // no proof either way: the attempt stays, and is asked again under the same request id
+} pay_result_t;
+
+// Pays receipt [p->receipt_id] at revision [p->revision] in cash: one tender of the SALE TOTAL (the change is the board's
+// business). Sends exactly what [p] holds, so a retry is the same request.
+pay_result_t api_finalize_cash(const pending_t *p, char *number, int number_cap, char *why, int cap);
+// A decimal string or integer field of the wire as minor units; false for anything else (exponent, fraction, overflow).
+bool minor_from_json(const void *cjson_item, int64_t *out);
+// The draft's priced total and currency as the server answered them last (valid after api_draft returned true).
+int64_t api_draft_total(void);
+// A new random request id (UUID v4) into out[37].
+void api_new_id(char *out);
