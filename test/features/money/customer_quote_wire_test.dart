@@ -95,6 +95,28 @@ void main() {
     );
   });
 
+  test('a frozen line the package cannot interpret reads as its label: no guessed quantity, no amount', () {
+    final revision = ((_sentOnTheServer['revisions']! as List).single as Map).cast<String, Object?>();
+    final line = Map<String, Object?>.of(((revision['lines']! as List).single as Map).cast<String, Object?>());
+    final commercial = Map<String, Object?>.of((line['commercial']! as Map).cast<String, Object?>())..['version'] = 9;
+    final unreadable = CustomerQuote.fromJson({
+      ..._sentOnTheServer,
+      'revisions': [
+        {
+          ...revision,
+          'lines': [
+            {...line, 'commercial': commercial},
+          ],
+        },
+      ],
+    }).current!;
+
+    expect(unreadable.lines.single.description, 'Consulting');
+    expect(unreadable.lines.single.quantity, isEmpty);
+    expect(unreadable.amounts.single.netCents, 0);
+    expect(unreadable.amounts.single.grossCents, 0);
+  });
+
   test('a draft revision keeps the lines as they were entered', () {
     final draft = {
       ..._sentOnTheServer,
