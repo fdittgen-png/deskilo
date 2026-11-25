@@ -11,7 +11,6 @@ import 'package:meta/meta.dart';
 
 import '../../../core/failure/app_failure.dart';
 import 'customer_quote_lines.dart';
-import 'previewed_document.dart';
 import 'standalone_invoice.dart';
 
 /// Where a quote stands. A quote with anything sent is never deleted.
@@ -409,33 +408,8 @@ class QuoteConversionPrep {
   final String reviewDigest;
 
   bool get issuable => missing.isEmpty;
-
   /// What an issue would come to now differs from what was accepted.
   bool get totalMoved => wouldBeTotalCents != null && wouldBeTotalCents != acceptedTotalCents;
-
-  /// The invoice this conversion would make, as one previewed document: the
-  /// lines the customer accepted ([accepted], frozen), their per-rate tax, and
-  /// the total the issuer would now freeze. No new RPC: the lines are the
-  /// accepted revision's own. The frozen lines must add up to the total that
-  /// was accepted; if they do not, the document is refused with
-  /// [totalMismatchKey], never shown with one of the two.
-  PreviewedDocument documentOf(QuoteRevision accepted) {
-    final lines = accepted.frozen;
-    final disagrees = lines.isNotEmpty && grossOfLines(lines) != acceptedTotalCents;
-    final keys = [...missing, if (disagrees && !missing.contains(totalMismatchKey)) totalMismatchKey];
-    if (keys.isNotEmpty) return PreviewedDocument(missing: keys, currency: currency);
-    // The issuer's total moved since the acceptance: the accepted lines never
-    // stand under the new total as if they added up. The document names the
-    // new total alone; the review path words both totals.
-    if (totalMoved) return PreviewedDocument(missing: const [], totalCents: wouldBeTotalCents!, currency: currency);
-    return PreviewedDocument(
-      missing: const [],
-      lines: lines,
-      totalCents: wouldBeTotalCents ?? acceptedTotalCents,
-      currency: currency,
-      vatTotals: vatTotalsOfLines(lines),
-    );
-  }
 }
 
 /// The one initial invoice a quote became.

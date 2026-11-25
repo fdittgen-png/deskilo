@@ -3228,6 +3228,7 @@ const Set<String> uiKeys = {
   'quote-convert-accepted',
   'quote-convert-check',
   'quote-convert-differs',
+  'quote-convert-document',
   'quote-convert-done',
   'quote-convert-due-date',
   'quote-convert-issue',

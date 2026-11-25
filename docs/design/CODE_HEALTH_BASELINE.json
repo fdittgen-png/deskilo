@@ -702,7 +702,7 @@
 
       "lib/features/money/presentation/screens/money_online_payment.dart": 1,
 
-      "lib/features/money/presentation/standalone/standalone_invoice_screen.dart": 5,
+      "lib/features/money/presentation/standalone/standalone_invoice_screen.dart": 2,
 
       "lib/features/money/presentation/standalone/standalone_line_form.dart": 1,
 

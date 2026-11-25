@@ -52,9 +52,9 @@ class _Conversion {
   const _Conversion({
     required this.serviceDate,
     required this.dueOn,
+    required this.accepted,
     this.busy = false,
     this.prep,
-    this.document,
     this.reviewed = false,
     this.said,
     this.requestId,
@@ -66,8 +66,11 @@ class _Conversion {
   final bool busy;
   final QuoteConversionPrep? prep;
 
+  /// The revision the customer accepted: the lines the invoice is made of.
+  final QuoteRevision accepted;
+
   /// What [prep] comes to as a previewed document: the accepted lines, their tax and the total, or what refuses it.
-  final PreviewedDocument? document;
+  PreviewedDocument? get document => prep?.documentOf(accepted);
   final bool reviewed;
   final String? said;
 
@@ -79,12 +82,12 @@ class _Conversion {
   _Conversion withDates({DateTime? serviceDate, DateTime? dueOn}) => _Conversion(
     serviceDate: serviceDate ?? this.serviceDate,
     dueOn: dueOn ?? this.dueOn,
+    accepted: accepted,
   );
 
   _Conversion copy({
     bool? busy,
     QuoteConversionPrep? Function()? prep,
-    PreviewedDocument? Function()? document,
     bool? reviewed,
     String? Function()? said,
     String? Function()? requestId,
@@ -92,9 +95,9 @@ class _Conversion {
   }) => _Conversion(
     serviceDate: serviceDate,
     dueOn: dueOn,
+    accepted: accepted,
     busy: busy ?? this.busy,
     prep: prep == null ? this.prep : prep(),
-    document: document == null ? this.document : document(),
     reviewed: reviewed ?? this.reviewed,
     said: said == null ? this.said : said(),
     requestId: requestId == null ? this.requestId : requestId(),
@@ -128,6 +131,7 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
       _Conversion(
         serviceDate: today,
         dueOn: addCalendarDays(today, ref.read(invoiceDueDaysProvider)),
+        accepted: _accepted,
       ),
     );
     // The business's calendar and the payment term can arrive after the sheet opens: a date the person has not set follows
@@ -181,7 +185,6 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
       CommandDone(:final value) => s.copy(
         busy: false,
         prep: () => value,
-        document: () => value.documentOf(_accepted),
         reviewed: false,
         requestId: newRequestId,
       ),
@@ -212,7 +215,7 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
       CommandDone(:final value) => s.copy(busy: false, converted: value),
       // the invoice moved under the review: it is checked again, never issued unseen
       CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)) when refusal.kind == QuoteRefusalKind.needsReview =>
-        s.copy(busy: false, prep: () => null, document: () => null, reviewed: false, said: () => quoteRefusalText(l10n, refusal)),
+        s.copy(busy: false, prep: () => null, reviewed: false, said: () => quoteRefusalText(l10n, refusal)),
       CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)) => s.copy(busy: false, said: () => quoteRefusalText(l10n, refusal)),
       _ => s.copy(busy: false, said: () => l10n.quoteUnreached),
     });

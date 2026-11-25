@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../domain/previewed_document.dart';
 
@@ -26,13 +27,13 @@ class PreviewedDocumentCard extends StatelessWidget {
     final tax = preview.vatTotals.fold<int>(0, (s, t) => s + t.vatCents);
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: AppSpacing.mdAll,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             for (final line in preview.lines)
               Padding(
-                padding: const EdgeInsets.only(bottom: 6),
+                padding: const EdgeInsets.only(bottom: AppSpacing.xs),
                 child: Row(
                   children: [
                     Expanded(
@@ -56,7 +57,7 @@ class PreviewedDocumentCard extends StatelessWidget {
   }
 
   Widget _row(String label, String value, {bool bold = false}) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 2),
+    padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
     child: Row(
       children: [
         Expanded(child: Text(label)),
