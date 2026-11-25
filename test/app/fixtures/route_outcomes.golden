@@ -149,6 +149,7 @@ signed-out on  /stock/cycle-counts/:taskId -> /auth
 signed-out on  /stock/expiry -> /auth
 signed-out on  /stock/groups -> /auth
 signed-out on  /stock/items -> /auth
+signed-out on  /stock/items/:itemId -> /auth
 signed-out on  /stock/movements -> /auth
 signed-out on  /stock/movements/:id -> /auth
 signed-out on  /stock/places -> /auth
@@ -330,6 +331,7 @@ signed-out off /stock/cycle-counts/:taskId -> /auth
 signed-out off /stock/expiry -> /auth
 signed-out off /stock/groups -> /auth
 signed-out off /stock/items -> /auth
+signed-out off /stock/items/:itemId -> /auth
 signed-out off /stock/movements -> /auth
 signed-out off /stock/movements/:id -> /auth
 signed-out off /stock/places -> /auth
@@ -511,6 +513,7 @@ no-space on  /stock/cycle-counts/:taskId -> /me
 no-space on  /stock/expiry -> /me
 no-space on  /stock/groups -> /me
 no-space on  /stock/items -> /me
+no-space on  /stock/items/:itemId -> /me
 no-space on  /stock/movements -> /me
 no-space on  /stock/movements/:id -> /me
 no-space on  /stock/places -> /me
@@ -692,6 +695,7 @@ no-space off /stock/cycle-counts/:taskId -> /me
 no-space off /stock/expiry -> /me
 no-space off /stock/groups -> /me
 no-space off /stock/items -> /me
+no-space off /stock/items/:itemId -> /me
 no-space off /stock/movements -> /me
 no-space off /stock/movements/:id -> /me
 no-space off /stock/places -> /me
@@ -873,6 +877,7 @@ member on  /stock/cycle-counts/:taskId -> /calendar
 member on  /stock/expiry -> /calendar
 member on  /stock/groups -> /calendar
 member on  /stock/items -> /calendar
+member on  /stock/items/:itemId -> /calendar
 member on  /stock/movements -> /calendar
 member on  /stock/movements/:id -> /calendar
 member on  /stock/places -> /calendar
@@ -1054,6 +1059,7 @@ member off /stock/cycle-counts/:taskId -> /messages
 member off /stock/expiry -> /messages
 member off /stock/groups -> /messages
 member off /stock/items -> /messages
+member off /stock/items/:itemId -> /messages
 member off /stock/movements -> /messages
 member off /stock/movements/:id -> /messages
 member off /stock/places -> /messages
@@ -1235,6 +1241,7 @@ admin on  /stock/cycle-counts/:taskId -> /calendar
 admin on  /stock/expiry -> /calendar
 admin on  /stock/groups -> /calendar
 admin on  /stock/items -> /calendar
+admin on  /stock/items/:itemId -> /calendar
 admin on  /stock/movements -> /calendar
 admin on  /stock/movements/:id -> /calendar
 admin on  /stock/places -> /calendar
@@ -1417,6 +1424,7 @@ admin off /stock/cycle-counts/:taskId -> /messages
 admin off /stock/expiry -> /messages
 admin off /stock/groups -> /messages
 admin off /stock/items -> /messages
+admin off /stock/items/:itemId -> /messages
 admin off /stock/movements -> /messages
 admin off /stock/movements/:id -> /messages
 admin off /stock/places -> /messages
@@ -1598,6 +1606,7 @@ owner on  /stock/cycle-counts/:taskId -> /reserve
 owner on  /stock/expiry -> /reserve
 owner on  /stock/groups -> /reserve
 owner on  /stock/items -> /reserve
+owner on  /stock/items/:itemId -> /reserve
 owner on  /stock/movements -> /reserve
 owner on  /stock/movements/:id -> /reserve
 owner on  /stock/places -> /reserve
@@ -1780,6 +1789,7 @@ owner off /stock/cycle-counts/:taskId -> /messages
 owner off /stock/expiry -> /messages
 owner off /stock/groups -> /messages
 owner off /stock/items -> /messages
+owner off /stock/items/:itemId -> /messages
 owner off /stock/movements -> /messages
 owner off /stock/movements/:id -> /messages
 owner off /stock/places -> /messages

@@ -11371,7 +11371,6 @@
     "description": "#3587 list view: one line per customer"
   },
   "itemGroupAssignNone": "Keine Gruppe",
-  "itemGroupAssignOpen": "Gruppe und geerbte Einstellungen",
   "itemGroupAssignTitle": "Gruppe von {item}",
   "itemGroupClose": "Schließen",
   "itemGroupConfirm": "Prüfen Sie, was das erreicht, und speichern Sie dann erneut, um es anzuwenden.",
@@ -21429,10 +21428,6 @@
   "@stockEditInventoryUnitChoice": {
     "description": "#4169 the stock editors: a label or message"
   },
-  "stockEditItem": "Lagereinstellungen",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Lagereinstellungen von {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -22224,7 +22219,6 @@
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockRegistryAllPlaces": "Alle Lagerorte",
-  "stockRegistryCost": "Kosten {amount}",
   "stockRegistryCostHidden": "Kosten nicht angezeigt",
   "stockRegistryCostUnknown": "Kosten unbekannt",
   "stockRegistryHome": "Lagerort {address}",
@@ -22234,10 +22228,8 @@
   "stockRegistryHomeTitle": "Fester Lagerort von {item}",
   "stockRegistryMore": "Mehr anzeigen",
   "stockRegistryNoHome": "kein fester Lagerort",
-  "stockRegistryNoHomeFilter": "Nur Artikel ohne festen Lagerort",
   "stockRegistryOnHand": "{quantity} vorrätig",
   "stockRegistryPlaceFilter": "Lagerort",
-  "stockRegistryPrice": "Preis {amount}",
   "stockRegistrySearch": "Artikel nach Name, Barcode oder Adresse suchen",
   "stockReorderCreateDraft": "Bestellentwurf erstellen",
   "stockReorderDraftCreated": "Bestellentwurf {number} erstellt. Nichts wurde bestellt oder gesendet.",
@@ -22583,10 +22575,6 @@
   },
   "stockVariantsAdd": "Variante hinzufügen",
   "@stockVariantsAdd": {
-    "description": "#4169 the stock editors: a label or message"
-  },
-  "stockVariantsEdit": "Varianten",
-  "@stockVariantsEdit": {
     "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsHint": "Eine Variante ist je ein Wert jeder Dimension, etwa rot und Größe M. Der Bestand wird je Variante geführt.",

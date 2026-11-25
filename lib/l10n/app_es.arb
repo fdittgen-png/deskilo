@@ -11371,7 +11371,6 @@
     "description": "#3587 list view: one line per customer"
   },
   "itemGroupAssignNone": "Sin grupo",
-  "itemGroupAssignOpen": "Grupo y ajustes heredados",
   "itemGroupAssignTitle": "Grupo de {item}",
   "itemGroupClose": "Cerrar",
   "itemGroupConfirm": "Compruebe lo que alcanza y guarde de nuevo para aplicarlo.",
@@ -21429,10 +21428,6 @@
   "@stockEditInventoryUnitChoice": {
     "description": "#4169 the stock editors: a label or message"
   },
-  "stockEditItem": "Ajustes de existencias",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Ajustes de existencias de {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -22224,7 +22219,6 @@
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockRegistryAllPlaces": "Todas las ubicaciones",
-  "stockRegistryCost": "coste {amount}",
   "stockRegistryCostHidden": "coste no mostrado",
   "stockRegistryCostUnknown": "coste desconocido",
   "stockRegistryHome": "ubicación {address}",
@@ -22234,10 +22228,8 @@
   "stockRegistryHomeTitle": "Ubicación habitual de {item}",
   "stockRegistryMore": "Mostrar más",
   "stockRegistryNoHome": "sin ubicación habitual",
-  "stockRegistryNoHomeFilter": "Solo artículos sin ubicación habitual",
   "stockRegistryOnHand": "{quantity} disponibles",
   "stockRegistryPlaceFilter": "Ubicación habitual",
-  "stockRegistryPrice": "precio {amount}",
   "stockRegistrySearch": "Buscar un artículo por nombre, código de barras o dirección",
   "stockReorderCreateDraft": "Crear borrador de pedido",
   "stockReorderDraftCreated": "Borrador de pedido {number} creado. No se pidió ni se envió nada.",
@@ -22583,10 +22575,6 @@
   },
   "stockVariantsAdd": "Añadir una variante",
   "@stockVariantsAdd": {
-    "description": "#4169 the stock editors: a label or message"
-  },
-  "stockVariantsEdit": "Variantes",
-  "@stockVariantsEdit": {
     "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsHint": "Una variante es un valor de cada dimensión, por ejemplo rojo y talla M. Las existencias se llevan por variante.",

@@ -30073,12 +30073,6 @@ abstract class AppLocalizations {
   /// **'No group'**
   String get itemGroupAssignNone;
 
-  /// #4361 G12 item groups: itemGroupAssignOpen
-  ///
-  /// In en, this message translates to:
-  /// **'Group and inherited settings'**
-  String get itemGroupAssignOpen;
-
   /// #4361 G12 item groups: itemGroupAssignTitle
   ///
   /// In en, this message translates to:
@@ -58724,12 +58718,6 @@ abstract class AppLocalizations {
   /// #4169 the stock editors: a label or message
   ///
   /// In en, this message translates to:
-  /// **'Stock settings'**
-  String get stockEditItem;
-
-  /// #4169 the stock editors: a label or message
-  ///
-  /// In en, this message translates to:
   /// **'Stock settings of {item}'**
   String stockEditItemTitle(String item);
 
@@ -60374,12 +60362,6 @@ abstract class AppLocalizations {
   /// #4293 the registry of the stock: a label or a message
   ///
   /// In en, this message translates to:
-  /// **'cost {amount}'**
-  String stockRegistryCost(String amount);
-
-  /// #4293 the registry of the stock: a label or a message
-  ///
-  /// In en, this message translates to:
   /// **'cost not shown'**
   String get stockRegistryCostHidden;
 
@@ -60434,12 +60416,6 @@ abstract class AppLocalizations {
   /// #4293 the registry of the stock: a label or a message
   ///
   /// In en, this message translates to:
-  /// **'Only items with no home place'**
-  String get stockRegistryNoHomeFilter;
-
-  /// #4293 the registry of the stock: a label or a message
-  ///
-  /// In en, this message translates to:
   /// **'{quantity} on hand'**
   String stockRegistryOnHand(String quantity);
 
@@ -60448,12 +60424,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home place'**
   String get stockRegistryPlaceFilter;
-
-  /// #4293 the registry of the stock: a label or a message
-  ///
-  /// In en, this message translates to:
-  /// **'price {amount}'**
-  String stockRegistryPrice(String amount);
 
   /// #4293 the registry of the stock: a label or a message
   ///
@@ -61719,12 +61689,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add a variant'**
   String get stockVariantsAdd;
-
-  /// #4169 the stock editors: a label or message
-  ///
-  /// In en, this message translates to:
-  /// **'Variants'**
-  String get stockVariantsEdit;
 
   /// #4169 the stock editors: a label or message
   ///

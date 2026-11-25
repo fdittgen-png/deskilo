@@ -1,9 +1,5 @@
 {
   "@@locale": "de",
-  "stockEditItem": "Lagereinstellungen",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Lagereinstellungen von {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -268,10 +264,6 @@
   "stockReasonOther": "Das ist nicht gültig.",
   "@stockReasonOther": {
     "description": "#4169 the stock editors: a text under a field the server refused"
-  },
-  "stockVariantsEdit": "Varianten",
-  "@stockVariantsEdit": {
-    "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsTitle": "Varianten von {item}",
   "@stockVariantsTitle": {

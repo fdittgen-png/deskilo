@@ -11371,7 +11371,6 @@
     "description": "#3587 list view: one line per customer"
   },
   "itemGroupAssignNone": "Nessun gruppo",
-  "itemGroupAssignOpen": "Gruppo e impostazioni ereditate",
   "itemGroupAssignTitle": "Gruppo di {item}",
   "itemGroupClose": "Chiudi",
   "itemGroupConfirm": "Controlli cosa raggiunge, poi salvi di nuovo per applicarla.",
@@ -21429,10 +21428,6 @@
   "@stockEditInventoryUnitChoice": {
     "description": "#4169 the stock editors: a label or message"
   },
-  "stockEditItem": "Impostazioni di magazzino",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Impostazioni di magazzino di {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -22224,7 +22219,6 @@
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockRegistryAllPlaces": "Tutte le ubicazioni",
-  "stockRegistryCost": "costo {amount}",
   "stockRegistryCostHidden": "costo non mostrato",
   "stockRegistryCostUnknown": "costo sconosciuto",
   "stockRegistryHome": "ubicazione {address}",
@@ -22234,10 +22228,8 @@
   "stockRegistryHomeTitle": "Ubicazione abituale di {item}",
   "stockRegistryMore": "Mostra altri",
   "stockRegistryNoHome": "nessuna ubicazione abituale",
-  "stockRegistryNoHomeFilter": "Solo articoli senza ubicazione abituale",
   "stockRegistryOnHand": "{quantity} disponibili",
   "stockRegistryPlaceFilter": "Ubicazione abituale",
-  "stockRegistryPrice": "prezzo {amount}",
   "stockRegistrySearch": "Cerchi un articolo per nome, codice a barre o indirizzo",
   "stockReorderCreateDraft": "Crea bozza d’ordine",
   "stockReorderDraftCreated": "Bozza d’ordine {number} creata. Nulla è stato ordinato o inviato.",
@@ -22583,10 +22575,6 @@
   },
   "stockVariantsAdd": "Aggiungere una variante",
   "@stockVariantsAdd": {
-    "description": "#4169 the stock editors: a label or message"
-  },
-  "stockVariantsEdit": "Varianti",
-  "@stockVariantsEdit": {
     "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsHint": "Una variante è un valore per ciascuna dimensione, ad esempio rosso e taglia M. La giacenza è tenuta per variante.",

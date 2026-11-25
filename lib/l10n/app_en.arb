@@ -24831,10 +24831,6 @@
   "@itemGroupAssignNone": {
     "description": "#4361 G12 item groups: itemGroupAssignNone"
   },
-  "itemGroupAssignOpen": "Group and inherited settings",
-  "@itemGroupAssignOpen": {
-    "description": "#4361 G12 item groups: itemGroupAssignOpen"
-  },
   "itemGroupAssignTitle": "Group of {item}",
   "@itemGroupAssignTitle": {
     "description": "#4361 G12 item groups: itemGroupAssignTitle",
@@ -47709,10 +47705,6 @@
   "@stockEditInventoryUnitChoice": {
     "description": "#4169 the stock editors: a label or message"
   },
-  "stockEditItem": "Stock settings",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Stock settings of {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -48933,15 +48925,6 @@
   "@stockRegistryAllPlaces": {
     "description": "#4293 the registry of the stock: a label or a message"
   },
-  "stockRegistryCost": "cost {amount}",
-  "@stockRegistryCost": {
-    "description": "#4293 the registry of the stock: a label or a message",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "stockRegistryCostHidden": "cost not shown",
   "@stockRegistryCostHidden": {
     "description": "#4293 the registry of the stock: a label or a message"
@@ -48988,10 +48971,6 @@
   "@stockRegistryNoHome": {
     "description": "#4293 the registry of the stock: a label or a message"
   },
-  "stockRegistryNoHomeFilter": "Only items with no home place",
-  "@stockRegistryNoHomeFilter": {
-    "description": "#4293 the registry of the stock: a label or a message"
-  },
   "stockRegistryOnHand": "{quantity} on hand",
   "@stockRegistryOnHand": {
     "description": "#4293 the registry of the stock: a label or a message",
@@ -49004,15 +48983,6 @@
   "stockRegistryPlaceFilter": "Home place",
   "@stockRegistryPlaceFilter": {
     "description": "#4293 the registry of the stock: a label or a message"
-  },
-  "stockRegistryPrice": "price {amount}",
-  "@stockRegistryPrice": {
-    "description": "#4293 the registry of the stock: a label or a message",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
   },
   "stockRegistrySearch": "Find an item by name, barcode or address",
   "@stockRegistrySearch": {
@@ -50183,10 +50153,6 @@
   },
   "stockVariantsAdd": "Add a variant",
   "@stockVariantsAdd": {
-    "description": "#4169 the stock editors: a label or message"
-  },
-  "stockVariantsEdit": "Variants",
-  "@stockVariantsEdit": {
     "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsHint": "A variant is one value of each dimension, such as red and size M. Stock is kept per variant.",
