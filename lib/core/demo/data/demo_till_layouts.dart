@@ -40,8 +40,8 @@ class DemoTillLayouts implements TillLayoutPort {
       TillTemplatePage.desk => 'Desk',
     };
     // a template names no item: the Demo's counters carry the Demo's goods as keys, so they sell from the first tap
-    final retail = withItems(TillLayoutTemplate.retail.build('Front counter', pageName: name));
-    final bakery = withItems(withCalculator(TillLayoutTemplate.bakery.build('Bakery counter', pageName: name)));
+    final retail = _withItems(TillLayoutTemplate.retail.build('Front counter', pageName: name));
+    final bakery = _withItems(withCalculator(TillLayoutTemplate.bakery.build('Bakery counter', pageName: name)));
     _published[_frontTill] = TillLayout(name: retail.name, pages: retail.pages, version: 1, status: TillLayoutStatus.published);
     _published[demoBakeryTill] = TillLayout(name: bakery.name, pages: bakery.pages, version: 1, status: TillLayoutStatus.published);
   }
@@ -91,7 +91,7 @@ class DemoTillLayouts implements TillLayoutPort {
 const _demoItems = [('demo-item-beans', 'Coffee beans'), ('demo-item-milk', 'Oat milk'), ('demo-item-mugs', 'Mugs'), ('demo-item-syrup', 'Syrup')];
 
 /// [layout] with a key for each of the Demo's goods on every grid of its first page, at the first free places.
-TillLayout withItems(TillLayout layout) {
+TillLayout _withItems(TillLayout layout) {
   final page = layout.pages.first;
   final grids = <TillLayoutSize, TillGrid>{};
   for (final e in page.grids.entries) {

@@ -8,8 +8,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart' show NumberFormat;
 
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -190,7 +190,7 @@ class _LaidOutState extends State<_LaidOut> {
         final f = c.function!;
         return FilledButton(key: key, onPressed: _function(f), child: Text(tillFunctionName(l10n, f), textAlign: TextAlign.center));
       case TillWidgetKind.keypad:
-        return TillKeypadTool(key: key, typed: _typed, separator: NumberFormat.decimalPattern(appFormatOf(context).locale).symbols.DECIMAL_SEP);
+        return TillKeypadTool(key: key, typed: _typed, separator: decimalSeparatorOf(appFormatOf(context).locale));
       case TillWidgetKind.calculator:
         return TillCalculatorTool(key: key, onQuantity: _onLast);
       default:

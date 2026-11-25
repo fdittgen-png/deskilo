@@ -17,6 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
+import '../../helpers/real_async.dart';
 
 final _en = AppLocalizationsEn();
 const _till = 'till-1';
@@ -106,7 +107,7 @@ void main() {
     expect(tester.widget<Text>(find.byKey(const ValueKey('till-calc-shown'))).data, '6');
     await tester.ensureVisible(find.byKey(const ValueKey('till-calc-push')));
     await tester.tap(find.byKey(const ValueKey('till-calc-push')));
-    await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
+    await tester.runAsync(() => untilReal(() => _session.state.value.lines.last.quantity == '6', what: 'the quantity onto the last line'));
     expect(_session.state.value.lines.last.quantity, '6');
   });
 

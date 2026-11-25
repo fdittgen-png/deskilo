@@ -3,6 +3,9 @@
 // #4448 -- the till's numeric keypad and calculator, without floating point: the keypad builds a quantity as the reader
 // types it (the locale's decimal separator, at most six decimals, as the server takes a quantity); the calculator works
 // on exact decimals in millionths, and its result goes onto a line as a quantity, never as a price it may not set.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity, exactQuantityScale;
+
+import '../../../core/format/decimal_input.dart';
 
 /// What the keypad has typed: digits and at most one decimal separator, shown as typed.
 class TillKeypadEntry {
@@ -35,30 +38,27 @@ class TillKeypadEntry {
 /// The calculator's operations.
 enum TillCalcOp { add, subtract, multiply, divide, percent }
 
-const int _scale = 1000000;
+/// A millionth is the kernel's quantity unit (`numeric(18,6)`).
+final BigInt _scale = BigInt.from(10).pow(exactQuantityScale);
 
-/// A decimal text (a comma or a point) in millionths; null when it is not a number of at most six decimals.
+/// A decimal text (a comma or a point, no grouping) in millionths; null when it is not a number of at most six decimals.
 int? tillMillionths(String text) {
-  final t = text.trim().replaceAll(',', '.');
-  final m = RegExp(r'^(-?)(\d{1,12})(?:\.(\d{1,6}))?$').firstMatch(t);
-  if (m == null) return null;
-  final whole = int.parse(m.group(2)!) * _scale + int.parse((m.group(3) ?? '').padRight(6, '0'));
-  return m.group(1) == '-' ? -whole : whole;
+  final read = exactQuantityFromInput(text.trim(), grouping: false, allowNegative: true).value;
+  if (read == null || read.micro.abs() >= _ceiling) return null;
+  return read.micro.toInt();
 }
 
 /// Millionths as a plain decimal text with a point, trailing zeros dropped (`1.5`, `12`, `-0.25`).
-String tillDecimalText(int millionths) {
-  final sign = millionths < 0 ? '-' : '';
-  final a = millionths.abs();
-  final fraction = (a % _scale).toString().padLeft(6, '0').replaceFirst(RegExp(r'0+$'), '');
-  return '$sign${a ~/ _scale}${fraction.isEmpty ? '' : '.$fraction'}';
-}
+String tillDecimalText(int millionths) => ExactQuantity.fromMicro(BigInt.from(millionths)).text;
+
+/// Twelve whole digits: the most the calculator shows.
+final BigInt _ceiling = BigInt.from(10).pow(12) * _scale;
 
 /// [a] [op] [b], exactly in millionths, rounded half up to six decimals for a division; null when [b] is zero for a
 /// division or the result leaves the twelve whole digits.
 int? tillCalculate(int a, TillCalcOp op, int b) {
   const big = BigInt.from;
-  final scale = big(_scale);
+  final scale = _scale;
   BigInt divRound(BigInt n, BigInt d) {
     final q = n.abs() * big(2) + d.abs();
     final r = q ~/ (d.abs() * big(2));
@@ -79,6 +79,6 @@ int? tillCalculate(int a, TillCalcOp op, int b) {
     case TillCalcOp.percent:
       r = divRound(big(a) * big(b), scale * big(100));
   }
-  if (r.abs() >= BigInt.from(1000000000000) * scale) return null;
+  if (r.abs() >= _ceiling) return null;
   return r.toInt();
 }

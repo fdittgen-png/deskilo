@@ -9,6 +9,9 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/till_keypad.dart';
 
+/// The height of the line that shows what is typed or counted.
+const double _shownHeight = 36;
+
 const _digits = ['7', '8', '9', '4', '5', '6', '1', '2', '3'];
 
 /// A grid of buttons laid out [columns] wide that fills its cell.
@@ -42,12 +45,12 @@ class TillKeypadTool extends StatelessWidget {
         valueListenable: typed,
         builder: (context, entry, _) => Column(
           children: [
-            SizedBox(height: 36, child: Center(child: Text(entry.text, key: const ValueKey('till-keypad-shown'), style: Theme.of(context).textTheme.titleLarge))),
+            SizedBox(height: _shownHeight, child: Center(child: Text(entry.text, key: const ValueKey('till-keypad-shown'), style: Theme.of(context).textTheme.titleLarge))),
             Expanded(
               child: _pad([
                 for (final d in [..._digits, separator, '0'])
                   OutlinedButton(key: ValueKey('till-keypad-$d'), onPressed: () => typed.value = entry.type(d, separator: separator), child: Text(d)),
-                IconButton(key: const ValueKey('till-keypad-back'), onPressed: () => typed.value = entry.back(), icon: const Icon(Icons.backspace_outlined)),
+                IconButton(key: const ValueKey('till-keypad-back'), tooltip: MaterialLocalizations.of(context).deleteButtonTooltip, onPressed: () => typed.value = entry.back(), icon: const Icon(Icons.backspace_outlined)),
               ]),
             ),
           ],
@@ -101,7 +104,7 @@ class _TillCalculatorToolState extends State<TillCalculatorTool> {
         padding: AppSpacing.xsAll,
         child: Column(
           children: [
-            SizedBox(height: 36, child: Center(child: Text(text, key: const ValueKey('till-calc-shown'), style: Theme.of(context).textTheme.titleLarge))),
+            SizedBox(height: _shownHeight, child: Center(child: Text(text, key: const ValueKey('till-calc-shown'), style: Theme.of(context).textTheme.titleLarge))),
             Expanded(
               child: _pad(columns: 4, [
                 for (final d in [..._digits, '.', '0'])
