@@ -82,6 +82,7 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
 
   /// The one issue attempt: the checked invoice, what is missing, the request, an answer that did not come.
   late final _attempt = IssueAttempt<QuoteConversionPrep, QuoteConverted>(
+    // recorder-key-exempt: a repaint callback of a state holder, not a control
     onChanged: () {
       if (mounted) setState(() {});
     },

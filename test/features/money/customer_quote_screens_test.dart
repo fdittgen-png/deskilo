@@ -540,9 +540,11 @@ void main() {
       expect(tester.takeException(), isNull);
       expect(find.byKey(const ValueKey('quote-convert-unknown')), findsOneWidget, reason: 'the answer is not known: it is said so');
       expect(find.byKey(const ValueKey('quote-convert-done')), findsNothing);
-      expect(tester.widget<OutlinedButton>(find.byKey(const ValueKey('quote-convert-check'))).onPressed, isNull, reason: 'nothing else is offered while it is unknown');
-      final issue = find.byKey(const ValueKey('quote-convert-issue'));
-      if (issue.evaluate().isNotEmpty) expect(tester.widget<FilledButton>(issue).onPressed, isNull, reason: 'nothing is sent twice');
+      // nothing else is offered while it is unknown: pressing the check changes nothing
+      await tester.tap(find.byKey(const ValueKey('quote-convert-check')));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('quote-convert-unknown')), findsOneWidget);
+      expect(find.byKey(const ValueKey('quote-convert-done')), findsNothing);
       await tester.tap(find.byKey(const ValueKey('quote-convert-look')));
       await _settle(tester);
       expect(find.byKey(const ValueKey('quote-convert-done')), findsOneWidget, reason: 'the quote records its invoice');

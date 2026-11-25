@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/data/app_failure_from.dart' show runCommand;
 import '../../../../core/failure/app_failure.dart';
 import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/help/help_anchors.dart';
@@ -46,6 +45,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
 
   /// The one issue attempt: the checked invoice, what is missing, the request, an answer that did not come.
   late final _attempt = IssueAttempt<StandaloneSaved, StandaloneIssued>(
+    // recorder-key-exempt: a repaint callback of a state holder, not a control
     onChanged: () {
       if (mounted) setState(() {});
     },
@@ -79,15 +79,9 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
   Future<void> _check(String workspaceId) async {
     final draft = _draft(ref.read(businessDayProvider), _attempt.basis);
     if (draft == null) return;
-    final commands = ref.read(standaloneInvoiceCommandsProvider);
-    await _attempt.check(
-      () => runCommand(() async {
-        final saved = await commands.saveDraft(workspaceId: workspaceId, draft: draft);
-        if (mounted) _doc.takeLineIds(saved.lines);
-        final preview = await commands.preview(workspaceId: workspaceId, draftId: saved.draftId, revision: saved.revision);
-        return (basis: saved, document: preview);
-      }, what: 'standalone invoice check failed'),
-    );
+    await _attempt.check(() => ref.read(standaloneIssuanceProvider).check(workspaceId: workspaceId, draft: draft));
+    // the identities the server kept for the lines, so the next save keeps them
+    if (mounted) _doc.takeLineIds(_attempt.basis?.lines ?? const <StandaloneLine>[]);
   }
 
   Future<void> _issue(String workspaceId) async {

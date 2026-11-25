@@ -2,6 +2,7 @@
 //
 // #4405 -- the one issue attempt of the invoice screen and of the conversion of an accepted quote: a document is checked, issued once
 // under one request, an answer that did not come is looked for under THAT request, and nothing the server refused stands.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/application/issue_attempt.dart';
 import 'package:deskilo/features/money/domain/previewed_document.dart';
@@ -76,7 +77,7 @@ void main() {
 
   test('a refusal is a definite no: the checked document no longer stands and the facts it names are kept', () async {
     await attempt.check(() async => _checked());
-    await attempt.issue(send: (id) async => const CommandRefused<String>(Refusal(message: 'no', cause: 'DKI01')), look: (id, u) async => u);
+    await attempt.issue(send: (id) async => const CommandRefused<String>(Refusal(message: 'no', cause: DkCode.dki01)), look: (id, u) async => u);
     expect(attempt.isUnknown, isFalse);
     expect(attempt.basis, isNull);
     expect(attempt.document, isNull);
@@ -85,7 +86,7 @@ void main() {
   });
 
   test('a check that is refused keeps the refusal; one that got no answer says so', () async {
-    await attempt.check(() async => const CommandRefused<Checked<String>>(Refusal(message: 'no', cause: 'DKI01')));
+    await attempt.check(() async => const CommandRefused<Checked<String>>(Refusal(message: 'no', cause: DkCode.dki01)));
     expect(attempt.refusal, isNotNull);
     expect(attempt.basis, isNull);
     await attempt.check(() async => const CommandUnreached<Checked<String>>(Defect('offline')));

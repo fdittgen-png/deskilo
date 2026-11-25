@@ -105,7 +105,6 @@ fileLength lib/app/routes/money_routes.dart // #4165 the standalone invoice comp
 fileLength lib/core/demo/data/money_repository.dart // #4165 the Demo's standalone invoice commands are one more port of the same in-memory store
 fileLength lib/features/task_recorder/domain/coverage_manifest.dart // #4165 one route row of the composer; the manifest is one list by design
 fileLength lib/features/workspace/domain/feature_manifest_part3.dart // #4165 one manifest entry of the standaloneInvoicing feature; the part is one map by design
-setState lib/features/money/presentation/standalone/standalone_invoice_screen.dart // #4165 the composer holds one draft, its checked revision, its request id and its outcome on one screen; a controller is the next step
 fileLength lib/core/demo/data/demo_till.dart // #4185 the Demo's till is one in-memory server: its readiness registry, offline sales and the counter's book (card tenders, corrections, refunds, returns) share one state, so the port cannot be split without a second copy of it
 fileLength lib/features/stock/presentation/item_group_sheet.dart // #4366 the item group sheet carries the till's six parameters (category, colour, minimum age, deposit item, weighed, label template) beside the stock ones; one sheet edits one group
 inlineRoute lib/features/money/presentation/till_screen.dart // #4422 owned by the till lane while its v2.2 work is open
