@@ -29,6 +29,7 @@ esp_err_t cfg_load(void) {
     get(h, "workspace", g_cfg.workspace, sizeof g_cfg.workspace);
     get(h, "ws_name", g_cfg.workspace_name, sizeof g_cfg.workspace_name);
     get(h, "till", g_cfg.till, sizeof g_cfg.till);
+    get(h, "lang", g_cfg.lang, sizeof g_cfg.lang);
     nvs_close(h);
     return ESP_OK;
 }

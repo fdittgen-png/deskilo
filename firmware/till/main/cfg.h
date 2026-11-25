@@ -17,6 +17,7 @@ typedef struct {
     char workspace[40];  // the company: a uuid
     char workspace_name[48];
     char till[40];       // the till: a uuid
+    char lang[6];        // the screen's language: en, de, fr, es or it (English when unset)
 } cfg_t;
 
 extern cfg_t g_cfg;

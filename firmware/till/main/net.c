@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "net.h"
 #include "trace.h"
+#include "strings.h"
 #include "esp_app_desc.h"
 #include "esp_mac.h"
 #include <errno.h>
@@ -123,14 +124,14 @@ bool api_sign_in(char *why, int cap) {
     char body[260];
     snprintf(body, sizeof body, "{\"refresh_token\":\"%s\"}", g_cfg.refresh);
     int st = http(HTTP_METHOD_POST, "/auth/v1/token?grant_type=refresh_token", body, false);
-    if (st != 200) { say(why, cap, "sign-in refused (%d)", st); return false; }
+    if (st != 200) { say(why, cap, T(S_WHY_SIGNIN), st); return false; }
     cJSON *j = cJSON_Parse(s_resp);
     const cJSON *a = cJSON_GetObjectItem(j, "access_token"), *r = cJSON_GetObjectItem(j, "refresh_token");
     bool ok = cJSON_IsString(a) && cJSON_IsString(r) && strlen(a->valuestring) < sizeof s_access;
     if (ok) {
         strcpy(s_access, a->valuestring);
         if (strcmp(r->valuestring, g_cfg.refresh) != 0) cfg_save_refresh(r->valuestring);   // the server rotates it: keep the new one
-    } else say(why, cap, "sign-in answer unreadable (%d)", st);
+    } else say(why, cap, T(S_WHY_SIGNIN_BAD), st);
     cJSON_Delete(j);
     return ok;
 }
@@ -139,7 +140,7 @@ int api_products(product_t *out, int max, char *why, int cap) {
     char path[320];
     snprintf(path, sizeof path, "/rest/v1/services?select=id,name,price_cents&workspace_id=eq.%s&active=eq.true&sellable=eq.true&order=sort_order.asc.nullslast,name.asc&limit=%d", g_cfg.workspace, max);
     int st = http(HTTP_METHOD_GET, path, NULL, true);
-    if (st != 200) { say(why, cap, "products not read (%d)", st); return -1; }
+    if (st != 200) { say(why, cap, T(S_WHY_PRODUCTS), st); return -1; }
     cJSON *j = cJSON_Parse(s_resp);
     int n = 0;
     cJSON *it;
@@ -191,7 +192,7 @@ bool api_draft(const basket_line_t *b, int n, roll_t *out, char *why, int cap) {
     if (st != 200 || !j) {
         const cJSON *msg = j ? cJSON_GetObjectItem(j, "message") : NULL;
         const cJSON *code = j ? cJSON_GetObjectItem(j, "code") : NULL;
-        if (why) snprintf(why, cap, "draft refused %s %s", cJSON_IsString(code) ? code->valuestring : "", cJSON_IsString(msg) ? msg->valuestring : "");
+        if (why) snprintf(why, cap, T(S_WHY_DRAFT), cJSON_IsString(code) ? code->valuestring : "", cJSON_IsString(msg) ? msg->valuestring : "");
         if (code && cJSON_IsString(code) && strcmp(code->valuestring, "DKL10") == 0) { s_receipt[0] = 0; }   // the receipt moved: start the draft again
         cJSON_Delete(j);
         return false;
@@ -225,7 +226,7 @@ bool api_roll(roll_t *out, char *why, int cap) {
     snprintf(path, sizeof path, "/rest/v1/counter_receipts?select=id,revision,currency,counter_receipt_lines(line_no,quantity,gross_minor,label:frozen-%%3E%%3Elabel)&workspace_id=eq.%s&state=eq.draft&order=modified_datetime.desc&limit=1", g_cfg.workspace);
     int st = http(HTTP_METHOD_GET, path, NULL, true);
     memset(out, 0, sizeof *out);
-    if (st != 200) { say(why, cap, "roll not read (%d)", st); return false; }
+    if (st != 200) { say(why, cap, T(S_WHY_ROLL), st); return false; }
     cJSON *j = cJSON_Parse(s_resp);
     const cJSON *r = cJSON_IsArray(j) ? cJSON_GetArrayItem(j, 0) : NULL;
     if (!r) { cJSON_Delete(j); if (why) why[0] = 0; return false; }

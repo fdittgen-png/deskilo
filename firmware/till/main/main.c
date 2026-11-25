@@ -20,6 +20,12 @@
 #include "net.h"
 #include "pending.h"
 #include "trace.h"
+#include "strings.h"
+
+LV_FONT_DECLARE(till_font_14)
+LV_FONT_DECLARE(till_font_16)
+LV_FONT_DECLARE(till_font_20)
+LV_FONT_DECLARE(till_font_28)
 
 static const char *TAG = "till";
 #define BUF_LINES 32   // one partial buffer: 480 x 32 x 2 bytes = 30 KiB (two buffers, 60 KiB of the 520 KB SRAM)
@@ -133,7 +139,7 @@ static void conclude(const pending_t *p, pay_result_t r, const char *number, con
         if (pending_settle(&paid) != ESP_OK) trace("paid %s, but the answer is not kept yet", number);   // a replay finds it again
         char ch[40], st[120];
         money(ch, sizeof ch, p->given_minor - p->total_minor, p->currency);
-        snprintf(st, sizeof st, "Paid %.30s  -  change %s", number, ch);
+        snprintf(st, sizeof st, T(S_ST_PAID), number, ch);
         trace("paid %s: %lld, given %lld", number, (long long)p->total_minor, (long long)p->given_minor);
         xSemaphoreTake(s_lock, portMAX_DELAY);
         snprintf(S.paid_number, sizeof S.paid_number, "%s", number);
@@ -145,14 +151,14 @@ static void conclude(const pending_t *p, pay_result_t r, const char *number, con
         pending_drop();
         fail("pay", why);
         char st[120];
-        snprintf(st, sizeof st, "Not paid: %.80s", why);
+        snprintf(st, sizeof st, T(S_ST_NOT_PAID), why);
         set_phase(PH_SELL, st);
     } else if (r == PAY_NOT_STARTED) {
         trace("payment not started: %s", why);
-        set_phase(PH_SELL, "Payment not started: storage failed");
+        set_phase(PH_SELL, T(S_ST_NOT_STARTED));
     } else {
         trace("payment result unknown: %s (request %.8s)", why, p->request_id);
-        set_phase(PH_UNCERTAIN, "Result unknown: asking Deskilo again ...");
+        set_phase(PH_UNCERTAIN, T(S_ST_UNKNOWN));
     }
 }
 
@@ -169,10 +175,10 @@ static void net_task(void *arg) {
     char why[96] = "", seen_receipt[40] = "x";   // "x": the first answer is always traced
     int seen_revision = -1;
     trace("start: role %s, firmware %s", g_cfg.role, esp_app_get_description()->version);
-    set_status("Wi-Fi ...");
+    set_status(T(S_ST_WIFI));
     if (net_connect(g_cfg.ssid, g_cfg.wifi_pass) != ESP_OK) { trace("Wi-Fi or time failed"); set_status("Wi-Fi or time failed: check Settings"); vTaskDelete(NULL); }
     trace("Wi-Fi up");
-    set_status("Signing in ...");
+    set_status(T(S_ST_SIGNING_IN));
     if (!api_sign_in(why, sizeof why)) { trace("%s", why); set_status(why); vTaskDelete(NULL); }   // no session: nothing to report with
     trace("signed in");
     xSemaphoreTake(s_lock, portMAX_DELAY); S.online = true; xSemaphoreGive(s_lock);
@@ -180,7 +186,7 @@ static void net_task(void *arg) {
         int n = api_products(prods, MAX_PRODUCTS, why, sizeof why);
         xSemaphoreTake(s_lock, portMAX_DELAY);
         if (n >= 0) { memcpy(S.products, prods, sizeof prods); S.n_products = n; }
-        snprintf(S.status, sizeof S.status, "%s", n < 0 ? why : (n == 0 ? "No product is for sale in this company" : "Choose a product"));
+        snprintf(S.status, sizeof S.status, "%s", n < 0 ? why : (n == 0 ? T(S_ST_NO_PRODUCTS) : T(S_ST_CHOOSE)));
         S.version++;
         xSemaphoreGive(s_lock);
         if (n < 0) fail("products", why); else trace("%d products", n);
@@ -189,14 +195,14 @@ static void net_task(void *arg) {
             // a payment sent before the restart: settled first, under the binding it was made in, before anything is sold
             if (strcmp(p.workspace, g_cfg.workspace) || strcmp(p.server, g_cfg.url)) {
                 trace("a payment of another business is pending (%.8s): nothing is sold here", p.request_id);
-                set_phase(PH_BLOCKED, "A payment of another setup is pending: settle it there first");
+                set_phase(PH_BLOCKED, T(S_ST_PENDING_OTHER));
             } else {
                 trace("restart with a payment pending (%.8s)", p.request_id);
-                set_phase(PH_UNCERTAIN, "Result unknown: asking Deskilo again ...");
+                set_phase(PH_UNCERTAIN, T(S_ST_UNKNOWN));
                 settle(&p);
             }
         }
-    } else set_status("Waiting for a receipt ...");
+    } else set_status(T(S_ST_WAITING));
     TickType_t last_refresh = xTaskGetTickCount();
     for (;;) {
         cmd_t c;
@@ -208,16 +214,16 @@ static void net_task(void *arg) {
         if (phase_now == PH_UNCERTAIN && ((got && c.kind == CMD_RETRY) || (!got && ++idle >= 10))) {
             idle = 0;
             pending_t p;
-            if (pending_load(&p)) settle(&p); else set_phase(PH_SELL, "Choose a product");
+            if (pending_load(&p)) settle(&p); else set_phase(PH_SELL, T(S_ST_CHOOSE));
             continue;
         }
-        if (got && c.kind == CMD_REPORT) { set_status(api_report(g_cfg.role, "till.traces_sent", "") ? "Traces sent to Deskilo" : "Traces not sent"); continue; }
+        if (got && c.kind == CMD_REPORT) { set_status(api_report(g_cfg.role, "till.traces_sent", "") ? T(S_ST_TRACES_SENT) : T(S_ST_TRACES_NOT_SENT)); continue; }
         if (!strcmp(g_cfg.role, "roll")) {
             bool ok = api_roll(&roll, why, sizeof why);
             xSemaphoreTake(s_lock, portMAX_DELAY);
             bool changed = ok ? (strcmp(seen_receipt, roll.receipt_id) || seen_revision != roll.revision) : (seen_receipt[0] != 0 || why[0]);
-            if (ok) { S.roll = roll; S.has_roll = true; snprintf(S.status, sizeof S.status, "Receipt %.8s  rev %d", roll.receipt_id, roll.revision); }
-            else { S.has_roll = false; snprintf(S.status, sizeof S.status, "%s", why[0] ? why : "Waiting for a receipt ..."); }
+            if (ok) { S.roll = roll; S.has_roll = true; snprintf(S.status, sizeof S.status, T(S_ST_RECEIPT), roll.receipt_id, roll.revision); }
+            else { S.has_roll = false; snprintf(S.status, sizeof S.status, "%s", why[0] ? why : T(S_ST_WAITING)); }
             S.version++;
             xSemaphoreGive(s_lock);
             if (changed) {
@@ -231,7 +237,7 @@ static void net_task(void *arg) {
         }
         if (!got) continue;
         if (c.kind == CMD_NEXT && (phase_now == PH_UNCERTAIN || phase_now == PH_PAYING || phase_now == PH_BLOCKED)) {
-            set_status(phase_now == PH_BLOCKED ? "A payment of another setup is pending" : "The sale's result is not known yet: it is settled first");
+            set_status(phase_now == PH_BLOCKED ? T(S_ST_PENDING_OTHER) : T(S_ST_SETTLE_FIRST));
             continue;
         }
         if (c.kind == CMD_PAY) {
@@ -241,12 +247,12 @@ static void net_task(void *arg) {
             bool payable = S.has_roll && S.roll.revision > 0 && due > 0 && due == S.roll.total_minor;
             if (payable) { S.due = due; S.phase = PH_CASH; S.version++; }
             xSemaphoreGive(s_lock);
-            if (!payable) set_status("Nothing to pay yet: add a product");
+            if (!payable) set_status(T(S_ST_NOTHING_TO_PAY));
             continue;
         }
         if (c.kind == CMD_CASH) {
             if (phase_now != PH_CASH) continue;
-            if (c.index == 0) { set_phase(PH_SELL, "Payment cancelled"); continue; }
+            if (c.index == 0) { set_phase(PH_SELL, T(S_ST_CANCELLED)); continue; }
             pending_t p = {0};
             xSemaphoreTake(s_lock, portMAX_DELAY);
             p.total_minor = S.due;
@@ -257,12 +263,12 @@ static void net_task(void *arg) {
             xSemaphoreGive(s_lock);
             // the server's total, unchanged since it was shown, and enough cash: else nothing is sent
             int64_t change;
-            if (!pay_cash_enough(p.total_minor, p.given_minor, &change) || api_draft_total() != p.total_minor) { set_phase(PH_CASH, "Not enough cash"); continue; }
+            if (!pay_cash_enough(p.total_minor, p.given_minor, &change) || api_draft_total() != p.total_minor) { set_phase(PH_CASH, T(S_ST_NOT_ENOUGH)); continue; }
             api_new_id(p.request_id);
             snprintf(p.workspace, sizeof p.workspace, "%.36s", g_cfg.workspace);
             snprintf(p.server, sizeof p.server, "%.95s", g_cfg.url);
             trace("paying %.8s rev %d: %lld cash, given %lld (request %.8s)", p.receipt_id, p.revision, (long long)p.total_minor, (long long)p.given_minor, p.request_id);
-            set_phase(PH_PAYING, "Paying ...");
+            set_phase(PH_PAYING, T(S_ST_PAYING));
             char number[32] = "", pwhy[96] = "";
             pay_result_t r = pay_run(&p, save_attempt, send_attempt, number, sizeof number, pwhy, sizeof pwhy);   // kept first, then sent
             conclude(&p, r, number, pwhy);
@@ -273,7 +279,7 @@ static void net_task(void *arg) {
             s_basket_n = 0;
             api_reset_draft();
             memset(&roll, 0, sizeof roll);
-            xSemaphoreTake(s_lock, portMAX_DELAY); S.roll = roll; S.has_roll = false; S.phase = PH_SELL; S.paid_number[0] = 0; snprintf(S.status, sizeof S.status, "Next customer"); S.version++; xSemaphoreGive(s_lock);
+            xSemaphoreTake(s_lock, portMAX_DELAY); S.roll = roll; S.has_roll = false; S.phase = PH_SELL; S.paid_number[0] = 0; snprintf(S.status, sizeof S.status, T(S_ST_NEXT)); S.version++; xSemaphoreGive(s_lock);
             trace("next customer");
             continue;
         }
@@ -282,11 +288,11 @@ static void net_task(void *arg) {
         xSemaphoreTake(s_lock, portMAX_DELAY); bool in = c.index >= 0 && c.index < S.n_products; if (in) p = S.products[c.index]; xSemaphoreGive(s_lock);
         if (!in) continue;
         add_to_basket(p.id);
-        set_status("Sending ...");
+        set_status(T(S_ST_SENDING));
         bool ok = api_draft(s_basket, s_basket_n, &roll, why, sizeof why);
         if (!ok && strstr(why, "401")) { api_sign_in(why, sizeof why); ok = api_draft(s_basket, s_basket_n, &roll, why, sizeof why); }
         xSemaphoreTake(s_lock, portMAX_DELAY);
-        if (ok) { S.roll = roll; S.has_roll = true; snprintf(S.status, sizeof S.status, "%s added", p.name); }
+        if (ok) { S.roll = roll; S.has_roll = true; snprintf(S.status, sizeof S.status, T(S_ST_ADDED), p.name); }
         else snprintf(S.status, sizeof S.status, "%s", why);
         S.version++;
         xSemaphoreGive(s_lock);
@@ -318,7 +324,7 @@ static void tick(void *arg) { lv_tick_inc(2); }
 static void key_cb(lv_event_t *e) { cmd_t c = {CMD_TAP, (int)(intptr_t)lv_event_get_user_data(e)}; xQueueSend(s_cmd, &c, 0); }
 static void next_cb(lv_event_t *e) { cmd_t c = {CMD_NEXT, 0}; xQueueSend(s_cmd, &c, 0); }
 
-static const char *or_unset(const char *v) { return v[0] ? v : "(not set)"; }
+static const char *or_unset(const char *v) { return v[0] ? v : T(S_NOT_SET); }
 
 // ---- the trace box: the newest lines on the screen; a tap shows them all and can send them to Deskilo ----
 static lv_obj_t *s_trace_box, *s_trace_label, *s_traces;
@@ -337,17 +343,17 @@ static void open_traces_cb(lv_event_t *e) {
     lv_obj_t *t = lv_label_create(list);
     lv_obj_set_width(t, 420);
     lv_label_set_long_mode(t, LV_LABEL_LONG_WRAP);
-    lv_obj_set_style_text_font(t, &lv_font_montserrat_14, 0);
-    lv_label_set_text(t, all[0] ? all : "(no trace yet)");
+    lv_obj_set_style_text_font(t, &till_font_14, 0);
+    lv_label_set_text(t, all[0] ? all : T(S_NO_TRACE));
     lv_obj_scroll_to_y(list, LV_COORD_MAX, LV_ANIM_OFF);   // the newest at hand
     lv_obj_t *b1 = lv_btn_create(s_traces);
     lv_obj_align(b1, LV_ALIGN_BOTTOM_LEFT, 0, 0);
     lv_obj_add_event_cb(b1, close_traces_cb, LV_EVENT_CLICKED, NULL);
-    lv_label_set_text(lv_label_create(b1), "Close");
+    lv_label_set_text(lv_label_create(b1), T(S_BTN_CLOSE));
     lv_obj_t *b2 = lv_btn_create(s_traces);
     lv_obj_align(b2, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
     lv_obj_add_event_cb(b2, send_traces_cb, LV_EVENT_CLICKED, NULL);
-    lv_label_set_text(lv_label_create(b2), "Send to Deskilo");
+    lv_label_set_text(lv_label_create(b2), T(S_BTN_SEND));
 }
 static void build_trace_box(int y, int h) {
     s_trace_box = lv_obj_create(lv_scr_act());
@@ -362,7 +368,7 @@ static void build_trace_box(int y, int h) {
     s_trace_label = lv_label_create(s_trace_box);
     lv_obj_set_width(s_trace_label, 452);
     lv_label_set_long_mode(s_trace_label, LV_LABEL_LONG_CLIP);
-    lv_obj_set_style_text_font(s_trace_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(s_trace_label, &till_font_14, 0);
     lv_obj_set_style_text_color(s_trace_label, lv_color_hex(0x8FA3B8), 0);
     lv_label_set_text(s_trace_label, "");
 }
@@ -384,19 +390,19 @@ static void open_settings_cb(lv_event_t *e) {
     lv_obj_set_size(s_settings, 460, 300);
     lv_obj_center(s_settings);
     lv_obj_t *t = lv_label_create(s_settings);
-    lv_label_set_text_fmt(t, "Settings\nRole:      %s\nWi-Fi:     %s\nCompany:   %s\nUser:      %s\nSession:   %s",
-        or_unset(g_cfg.role), or_unset(g_cfg.ssid), or_unset(g_cfg.workspace_name), g_cfg.email[0] ? "signed in" : "(not set)", g_cfg.refresh[0] ? "kept" : "(not set)");
-    lv_obj_set_style_text_font(t, &lv_font_montserrat_16, 0);
+    lv_label_set_text_fmt(t, T(S_SETTINGS),
+        or_unset(g_cfg.role), or_unset(g_cfg.ssid), or_unset(g_cfg.workspace_name), g_cfg.email[0] ? T(S_SIGNED_IN) : T(S_NOT_SET), g_cfg.refresh[0] ? T(S_KEPT) : T(S_NOT_SET));
+    lv_obj_set_style_text_font(t, &till_font_16, 0);
     lv_obj_align(t, LV_ALIGN_TOP_LEFT, 0, 0);
     lv_obj_t *b1 = lv_btn_create(s_settings);
     lv_obj_align(b1, LV_ALIGN_BOTTOM_LEFT, 0, 0);
     lv_obj_add_event_cb(b1, close_settings_cb, LV_EVENT_CLICKED, NULL);
-    lv_label_set_text(lv_label_create(b1), "Close");
+    lv_label_set_text(lv_label_create(b1), T(S_BTN_CLOSE));
     lv_obj_t *b2 = lv_btn_create(s_settings);
     lv_obj_set_style_bg_color(b2, lv_color_hex(0xB00020), 0);
     lv_obj_align(b2, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
     lv_obj_add_event_cb(b2, clear_cb, LV_EVENT_LONG_PRESSED, NULL);
-    lv_label_set_text(lv_label_create(b2), "Hold: clear settings");
+    lv_label_set_text(lv_label_create(b2), T(S_BTN_CLEAR));
 }
 
 static void build_common(const char *title) {
@@ -404,7 +410,7 @@ static void build_common(const char *title) {
     lv_obj_set_style_bg_color(scr, lv_color_hex(0x101820), 0);
     lv_obj_t *t = lv_label_create(scr);
     lv_obj_set_style_text_color(t, lv_color_white(), 0);
-    lv_obj_set_style_text_font(t, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(t, &till_font_20, 0);
     lv_label_set_text(t, title);
     lv_obj_align(t, LV_ALIGN_TOP_LEFT, 10, 8);
     if (strcmp(g_cfg.role, "roll") != 0) {   // the customer's roll has no settings; the till's need a long press, a staff gesture
@@ -416,7 +422,7 @@ static void build_common(const char *title) {
     }
     s_status = lv_label_create(scr);
     lv_obj_set_style_text_color(s_status, lv_color_hex(0x9fd3ff), 0);
-    lv_obj_set_style_text_font(s_status, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(s_status, &till_font_16, 0);
     lv_label_set_long_mode(s_status, LV_LABEL_LONG_DOT);
     lv_obj_set_width(s_status, 330);
     lv_obj_align(s_status, LV_ALIGN_TOP_LEFT, 150, 10);
@@ -431,7 +437,7 @@ static void cash_show(void) {
     money(due, sizeof due, s_cash_due, s_cash_cur);
     money(given, sizeof given, s_typed, s_cash_cur);
     if (s_typed >= s_cash_due) money(change, sizeof change, s_typed - s_cash_due, s_cash_cur); else snprintf(change, sizeof change, "-");
-    snprintf(t, sizeof t, "Total   %s\nGiven   %s\nChange  %s", due, given, change);
+    snprintf(t, sizeof t, T(S_CASH_LINES), due, given, change);
     lv_label_set_text(s_cash_text, t);
     if (s_typed >= s_cash_due) lv_obj_clear_state(s_cash_ok, LV_STATE_DISABLED); else lv_obj_add_state(s_cash_ok, LV_STATE_DISABLED);
 }
@@ -460,7 +466,7 @@ static void cash_open(int64_t due, const char *cur) {
     lv_obj_center(s_cash);
     lv_obj_clear_flag(s_cash, LV_OBJ_FLAG_SCROLLABLE);
     s_cash_text = lv_label_create(s_cash);
-    lv_obj_set_style_text_font(s_cash_text, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(s_cash_text, &till_font_20, 0);
     lv_obj_align(s_cash_text, LV_ALIGN_TOP_LEFT, 0, 0);
     static const char *keys[] = {"7", "8", "9", "4", "5", "6", "1", "2", "3", "C", "0", "00"};
     for (int i = 0; i < 12; i++) {   // a 3 x 4 keypad on the right
@@ -473,24 +479,24 @@ static void cash_open(int64_t due, const char *cur) {
     lv_obj_t *exact = lv_btn_create(s_cash);   // "=": the exact amount, under the totals
     lv_obj_set_size(exact, 120, 46);
     lv_obj_align(exact, LV_ALIGN_TOP_LEFT, 0, 112);
-    lv_label_set_text(lv_label_create(exact), "Exact  =");
+    lv_label_set_text(lv_label_create(exact), T(S_BTN_EXACT));
     lv_obj_add_event_cb(exact, cash_key_cb, LV_EVENT_CLICKED, NULL);
     lv_obj_t *cancel = lv_btn_create(s_cash);
     lv_obj_align(cancel, LV_ALIGN_BOTTOM_LEFT, 0, 0);
-    lv_label_set_text(lv_label_create(cancel), "Cancel");
+    lv_label_set_text(lv_label_create(cancel), T(S_BTN_CANCEL));
     lv_obj_add_event_cb(cancel, cash_done_cb, LV_EVENT_CLICKED, (void *)(intptr_t)0);
     s_cash_ok = lv_btn_create(s_cash);
     lv_obj_set_size(s_cash_ok, 200, 46);
     lv_obj_align(s_cash_ok, LV_ALIGN_BOTTOM_LEFT, 110, 0);
     lv_obj_set_style_bg_color(s_cash_ok, lv_color_hex(0x1B7F3B), 0);
-    lv_label_set_text(lv_label_create(s_cash_ok), "Cash received");
+    lv_label_set_text(lv_label_create(s_cash_ok), T(S_BTN_CASH_OK));
     lv_obj_add_event_cb(s_cash_ok, cash_done_cb, LV_EVENT_CLICKED, (void *)(intptr_t)1);
     cash_show();
 }
 static void cash_close(void) { if (s_cash) { lv_obj_del(s_cash); s_cash = NULL; } }
 
 static void build_till(void) {
-    build_common("DesKilo Kasse");
+    build_common(T(S_TITLE_TILL));
     lv_obj_t *scr = lv_scr_act();
     for (int i = 0; i < MAX_PRODUCTS; i++) {
         s_keys[i] = lv_btn_create(scr);
@@ -507,31 +513,31 @@ static void build_till(void) {
     build_trace_box(198, 58);
     s_basket_label = lv_label_create(scr);
     lv_obj_set_style_text_color(s_basket_label, lv_color_white(), 0);
-    lv_obj_set_style_text_font(s_basket_label, &lv_font_montserrat_28, 0);
+    lv_obj_set_style_text_font(s_basket_label, &till_font_28, 0);
     lv_obj_align(s_basket_label, LV_ALIGN_BOTTOM_LEFT, 12, -14);
     lv_label_set_text(s_basket_label, "");
     lv_obj_t *n = lv_btn_create(scr);
     lv_obj_set_size(n, 150, 50);
     lv_obj_align(n, LV_ALIGN_BOTTOM_RIGHT, -8, -8);
     lv_obj_add_event_cb(n, next_cb, LV_EVENT_CLICKED, NULL);
-    lv_label_set_text(lv_label_create(n), "Next customer");
+    lv_label_set_text(lv_label_create(n), T(S_ST_NEXT));
     s_pay = lv_btn_create(scr);
     lv_obj_set_size(s_pay, 120, 50);
     lv_obj_align(s_pay, LV_ALIGN_BOTTOM_RIGHT, -166, -8);
     lv_obj_set_style_bg_color(s_pay, lv_color_hex(0x1B7F3B), 0);
     lv_obj_add_event_cb(s_pay, pay_cb, LV_EVENT_CLICKED, NULL);
-    lv_label_set_text(lv_label_create(s_pay), "Pay cash");
+    lv_label_set_text(lv_label_create(s_pay), T(S_BTN_PAY));
     lv_obj_add_state(s_pay, LV_STATE_DISABLED);
     s_retry = lv_btn_create(scr);
     lv_obj_set_size(s_retry, 120, 50);
     lv_obj_align(s_retry, LV_ALIGN_BOTTOM_RIGHT, -166, -8);
     lv_obj_add_event_cb(s_retry, retry_cb, LV_EVENT_CLICKED, NULL);
-    lv_label_set_text(lv_label_create(s_retry), "Ask again");
+    lv_label_set_text(lv_label_create(s_retry), T(S_BTN_RETRY));
     lv_obj_add_flag(s_retry, LV_OBJ_FLAG_HIDDEN);
 }
 
 static void build_roll(void) {
-    build_common("Receipt");
+    build_common(T(S_TITLE_ROLL));
     lv_obj_t *scr = lv_scr_act();
     s_roll_list = lv_obj_create(scr);
     lv_obj_set_size(s_roll_list, 464, 158);
@@ -542,7 +548,7 @@ static void build_roll(void) {
     build_trace_box(210, 46);
     s_total = lv_label_create(scr);
     lv_obj_set_style_text_color(s_total, lv_color_white(), 0);
-    lv_obj_set_style_text_font(s_total, &lv_font_montserrat_28, 0);
+    lv_obj_set_style_text_font(s_total, &till_font_28, 0);
     lv_obj_align(s_total, LV_ALIGN_BOTTOM_RIGHT, -12, -12);
     lv_label_set_text(s_total, "");
 }
@@ -565,11 +571,11 @@ static void refresh_cb(lv_timer_t *t) {
                 money(a, sizeof a, copy.roll.lines[i].gross_minor, copy.roll.currency);
                 snprintf(row, sizeof row, "%s x %s   %s", copy.roll.lines[i].qty, copy.roll.lines[i].label, a);
                 lv_obj_t *l = lv_label_create(s_roll_list);
-                lv_obj_set_style_text_font(l, &lv_font_montserrat_16, 0);
+                lv_obj_set_style_text_font(l, &till_font_16, 0);
                 lv_label_set_text(l, row);
             }
             money(m, sizeof m, copy.roll.total_minor, copy.roll.currency);
-            char tt[64]; snprintf(tt, sizeof tt, "Total  %s", m);
+            char tt[64]; snprintf(tt, sizeof tt, T(S_TOTAL), m);
             lv_label_set_text(s_total, tt);
         } else lv_label_set_text(s_total, "");
         return;
@@ -587,7 +593,7 @@ static void refresh_cb(lv_timer_t *t) {
         money(m, sizeof m, copy.roll.total_minor, copy.roll.currency);
         int items = 0;
         for (int i = 0; i < copy.roll.n; i++) items += atoi(copy.roll.lines[i].qty);
-        char tt[80]; snprintf(tt, sizeof tt, "%d x  %s", items, m);
+        char tt[80]; snprintf(tt, sizeof tt, T(S_BASKET), items, m);
         lv_label_set_text(s_basket_label, tt);
     } else lv_label_set_text(s_basket_label, "");
     // the payment: Pay only on a priced basket while selling; the cash count while counting; Ask again while uncertain
@@ -601,6 +607,7 @@ static void refresh_cb(lv_timer_t *t) {
 void app_main(void) {
     trace_init();
     ESP_ERROR_CHECK(cfg_load());
+    strings_set_lang(g_cfg.lang);
     if (pending_init() != ESP_OK) {   // the attempts area unreadable: a pending payment may be in it, so nothing is sold
         trace("the payment store cannot be read: nothing is sold until it is looked at");
         S.phase = PH_BLOCKED;
@@ -626,8 +633,8 @@ void app_main(void) {
     s_lock = xSemaphoreCreateMutex();
     s_cmd = xQueueCreate(8, sizeof(cmd_t));
     if (!cfg_complete()) {
-        build_common("DesKilo Kasse");
-        lv_label_set_text(s_status, "Not set up: run tools/till_provision.py");
+        build_common(T(S_TITLE_TILL));
+        lv_label_set_text(s_status, T(S_ST_NOT_SET_UP));
         build_trace_box(60, 58);
         trace("not set up: no settings on this board");
     } else {

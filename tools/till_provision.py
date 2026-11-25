@@ -31,7 +31,7 @@ def call(url, anon, path, body=None, token=None, method=None):
         sys.exit(f"{path}: {e.code} {e.read().decode(errors='replace')[:300]}")
 
 
-LIMITS = {"role": 8, "ssid": 32, "wifi_pass": 64, "url": 95, "anon": 199, "refresh": 199, "email": 63, "workspace": 36, "ws_name": 47, "till": 36}
+LIMITS = {"lang": 5, "role": 8, "ssid": 32, "wifi_pass": 64, "url": 95, "anon": 199, "refresh": 199, "email": 63, "workspace": 36, "ws_name": 47, "till": 36}
 UUID = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
 
 
@@ -102,6 +102,7 @@ def main():
     ap.add_argument("--port", required=True)
     ap.add_argument("--role", choices=["till", "roll"], required=True)
     ap.add_argument("--url", default=DEFAULT_URL)
+    ap.add_argument("--lang", choices=["en", "de", "fr", "es", "it"], default="en", help="the language of the board's screen")
     ap.add_argument("--anon", default=os.environ.get("SUPABASE_ANON_KEY"), help="the project's public (publishable) key")
     a = ap.parse_args()
     if not a.anon:
@@ -122,7 +123,7 @@ def main():
     if input("Write it? (y/N): ").strip().lower() not in ("y", "yes"):
         call(a.url, a.anon, "/auth/v1/logout", {}, token=token)
         sys.exit("nothing written; the sign-in was ended")
-    rows = [("role", a.role), ("ssid", ssid), ("wifi_pass", wpass), ("url", a.url), ("anon", a.anon), ("refresh", refresh), ("email", email),
+    rows = [("lang", a.lang), ("role", a.role), ("ssid", ssid), ("wifi_pass", wpass), ("url", a.url), ("anon", a.anon), ("refresh", refresh), ("email", email),
             ("workspace", ws["workspace_id"]), ("ws_name", ws["name"]), ("till", till["id"])]
     check(rows)
     work = tempfile.mkdtemp(prefix="till-provision-")   # mode 0700: it holds a refresh token until it is flashed
