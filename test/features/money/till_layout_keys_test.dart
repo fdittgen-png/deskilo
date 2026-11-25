@@ -3,6 +3,8 @@
 // #4448 -- the till draws its published layout: an item key rings its item up, a key whose item is no longer sold says
 // so and is disabled (never a crash), Take cash and Next customer call the till's own commands; with till layouts off,
 // or no published layout, the till keeps the generated keys of #4366 unchanged.
+import 'dart:async';
+
 import 'package:deskilo/core/demo/data/demo_till.dart';
 import 'package:deskilo/core/demo/data/demo_till_layouts.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
@@ -31,6 +33,8 @@ Future<DemoTillLayouts> _published() async {
     TillCell(kindWire: TillWidgetKind.itemKey.wire, col: 1, row: 0, params: tillItemKeyParams('demo-item-gone', 'Old bread')),
     TillCell(kindWire: TillWidgetKind.functionKey.wire, col: 0, row: 1, params: const {tillCellFunctionParam: 'pay_cash'}),
     TillCell(kindWire: TillWidgetKind.functionKey.wire, col: 1, row: 1, params: const {tillCellFunctionParam: 'next_customer'}),
+    TillCell(kindWire: TillWidgetKind.functionKey.wire, col: 2, row: 0, params: const {tillCellFunctionParam: 'price_override'}),
+    TillCell(kindWire: TillWidgetKind.functionKey.wire, col: 3, row: 0, params: const {tillCellFunctionParam: 'line_discount'}),
     TillCell(kindWire: TillWidgetKind.keypad.wire, col: 0, row: 2, colSpan: 2, rowSpan: 3),
     TillCell(kindWire: TillWidgetKind.calculator.wire, col: 2, row: 2, colSpan: 2, rowSpan: 3),
   ]);
@@ -41,6 +45,13 @@ Future<DemoTillLayouts> _published() async {
 }
 
 late TillSession _session;
+
+/// The session's queue runs in the test's own time: a few frames carry a command through the Demo till.
+Future<void> _settle(WidgetTester tester) async {
+  for (var i = 0; i < 5; i++) {
+    await tester.pump(const Duration(milliseconds: 50));
+  }
+}
 
 Future<List<String>> _open(WidgetTester tester, DemoTillLayouts store, {required bool on}) async {
   final calls = <String>[];
@@ -131,6 +142,34 @@ void main() {
     await tester.tap(find.text('To food'));
     await tester.pump();
     expect(find.text('Oat milk'), findsOneWidget);
+  });
+
+  testWidgets('Price override asks the price and its reason for the last line; Discount asks a percentage', (tester) async {
+    await _open(tester, await tester.runAsync(_published) as DemoTillLayouts, on: true);
+    await tester.tap(find.text(_en.tillLayoutFnPrice));
+    await tester.pumpAndSettle();
+    expect(find.text(_en.tillRingUpFirst), findsOneWidget, reason: 'an empty basket has no line to price');
+    // the basket filled in the test's own time, where the session's queue then runs with the frames
+    unawaited(_session.add(itemId: 'demo-item-milk', name: 'Oat milk', unit: 'l'));
+    await _settle(tester);
+    await tester.tap(find.text(_en.tillLayoutFnPrice));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('till-price-amount')), '1.5');
+    await tester.enterText(find.byKey(const ValueKey('till-price-reason')), 'end of day');
+    await tester.tap(find.byKey(const ValueKey('till-price-confirm')));
+    await tester.pumpAndSettle();
+    await _settle(tester);
+    expect(_session.state.value.draft?.totals.grossMinor, 150);
+    expect(_session.state.value.lines.single.priceReason, 'end of day');
+
+    await tester.tap(find.text(_en.tillLayoutFnDiscount));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('till-discount-percent')), '10');
+    await tester.tap(find.byKey(const ValueKey('till-price-confirm')));
+    await tester.pumpAndSettle();
+    await _settle(tester);
+    expect(_session.state.value.draft?.totals.grossMinor, 189);
+    expect(_session.state.value.lines.single.price, isNull, reason: 'a discount replaces a changed price');
   });
 
   testWidgets('with till layouts off, the till keeps its generated keys', (tester) async {

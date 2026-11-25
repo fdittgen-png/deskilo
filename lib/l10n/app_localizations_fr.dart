@@ -25940,6 +25940,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Configurer la borne et attribuer les badges.';
 
   @override
+  String get permAllowsOverrideTillPrice =>
+      'Vendre une ligne de caisse à un autre prix que celui de l\'article, avec un motif que le ticket conserve. Sans ce droit, une ligne de caisse est vendue au prix de l\'article.';
+
+  @override
   String get permAllowsPaymentTermsEdit =>
       'Demander un changement des conditions de paiement d\'un membre ; la validation décide.';
 
@@ -26096,6 +26100,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get permOperateKiosk => 'Opérer le kiosque et les badges';
+
+  @override
+  String get permOverrideTillPrice => 'Modifier un prix à la caisse';
 
   @override
   String get permPaymentTermsEdit =>
@@ -32889,6 +32896,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le nombre maximal de cases d\'une disposition de caisse, toutes pages et tailles confondues. Une disposition plus grande est refusée à l\'enregistrement.';
 
   @override
+  String get settingHintCounterMaxDiscount =>
+      'La remise maximale, en pourcentage, qu\'un caissier peut accorder sur une ligne de caisse. 0 signifie aucune remise à la caisse.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Combien de temps après la perte de connexion de la caisse une vente en espèces faite hors ligne est encore acceptée à l\'envoi. Les ventes plus tardives sont refusées et listées pour le gérant.';
 
@@ -33344,6 +33355,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelCounterLayoutMaxCells =>
       'Taille d\'une disposition de caisse';
+
+  @override
+  String get settingLabelCounterMaxDiscount => 'Remise maximale à la caisse';
 
   @override
   String get settingLabelCounterOfflineMaxMinutes =>
@@ -41678,6 +41692,18 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String tillDiscountBeyond(String max) {
+    return 'Cette remise dépasse ce que l\'entreprise autorise (au plus $max %).';
+  }
+
+  @override
+  String get tillDiscountField => 'Remise (%)';
+
+  @override
+  String get tillDiscountInvalid =>
+      'Une remise est un pourcentage du prix de l\'article, sur une ligne sans prix modifié.';
+
+  @override
   String get tillDrawerAddTill => 'Ajouter une caisse';
 
   @override
@@ -42343,6 +42369,25 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get tillPriceField => 'Nouveau prix';
+
+  @override
+  String get tillPriceNotAllowed =>
+      'Vous ne pouvez pas modifier un prix à la caisse. La ligne est vendue au prix de l\'article.';
+
+  @override
+  String get tillPriceReason => 'Motif';
+
+  @override
+  String get tillPriceReasonHint => 'Conservé sur le ticket.';
+
+  @override
+  String get tillPriceReasonMissing => 'Un prix modifié a besoin d\'un motif.';
+
+  @override
+  String get tillPriceUnreadable => 'Saisissez un nombre, par exemple 4,50.';
+
+  @override
   String get tillPricing => 'Calcul du panier…';
 
   @override
@@ -42470,6 +42515,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tillRetry => 'Réessayer';
+
+  @override
+  String get tillRingUpFirst => 'Enregistrez d\'abord un article.';
 
   @override
   String get tillScanLabel => 'Scanner un code';

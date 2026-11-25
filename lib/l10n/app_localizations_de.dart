@@ -25895,6 +25895,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Den Kiosk einrichten und Badges ausgeben.';
 
   @override
+  String get permAllowsOverrideTillPrice =>
+      'Eine Kassenzeile zu einem anderen Preis als dem des Artikels verkaufen, mit einem Grund, den der Beleg festhält. Ohne dieses Recht wird eine Kassenzeile zum Preis des Artikels verkauft.';
+
+  @override
   String get permAllowsPaymentTermsEdit =>
       'Eine Änderung der Zahlungsbedingungen eines Mitglieds beantragen; die Genehmigung entscheidet.';
 
@@ -26050,6 +26054,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get permOperateKiosk => 'Kiosk und Badges bedienen';
+
+  @override
+  String get permOverrideTillPrice => 'Preis an der Kasse ändern';
 
   @override
   String get permPaymentTermsEdit =>
@@ -32835,6 +32842,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die meisten Zellen, die ein Kassenlayout über alle Seiten und Größen haben darf. Ein größeres Layout wird beim Speichern abgelehnt.';
 
   @override
+  String get settingHintCounterMaxDiscount =>
+      'Der größte Rabatt in Prozent, den eine Kassiererin oder ein Kassierer auf eine Kassenzeile geben darf. 0 heißt: kein Rabatt an der Kasse.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.';
 
@@ -33283,6 +33294,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelCounterLayoutMaxCells => 'Größe des Kassenlayouts';
+
+  @override
+  String get settingLabelCounterMaxDiscount => 'Größter Rabatt an der Kasse';
 
   @override
   String get settingLabelCounterOfflineMaxMinutes =>
@@ -41621,6 +41635,18 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String tillDiscountBeyond(String max) {
+    return 'Dieser Rabatt liegt über dem, was das Unternehmen erlaubt (höchstens $max %).';
+  }
+
+  @override
+  String get tillDiscountField => 'Rabatt (%)';
+
+  @override
+  String get tillDiscountInvalid =>
+      'Ein Rabatt ist ein Prozentsatz vom Artikelpreis, auf einer Zeile ohne geänderten Preis.';
+
+  @override
   String get tillDrawerAddTill => 'Kasse hinzufügen';
 
   @override
@@ -42282,6 +42308,26 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get tillPriceField => 'Neuer Preis';
+
+  @override
+  String get tillPriceNotAllowed =>
+      'Sie dürfen an der Kasse keinen Preis ändern. Die Zeile wird zum Preis des Artikels verkauft.';
+
+  @override
+  String get tillPriceReason => 'Grund';
+
+  @override
+  String get tillPriceReasonHint => 'Wird auf dem Beleg festgehalten.';
+
+  @override
+  String get tillPriceReasonMissing =>
+      'Ein geänderter Preis braucht einen Grund.';
+
+  @override
+  String get tillPriceUnreadable => 'Geben Sie eine Zahl ein, etwa 4,50.';
+
+  @override
   String get tillPricing => 'Warenkorb wird berechnet …';
 
   @override
@@ -42409,6 +42455,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tillRetry => 'Erneut versuchen';
+
+  @override
+  String get tillRingUpFirst => 'Erfassen Sie zuerst einen Artikel.';
 
   @override
   String get tillScanLabel => 'Code scannen';

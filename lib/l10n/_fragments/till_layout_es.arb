@@ -58,5 +58,15 @@
   "tillLayoutChoosePage": "¿Qué página abre?",
   "tillLayoutReset": "Volver a las teclas generadas",
   "tillLayoutResetConfirm": "Esta caja vuelve a las teclas que crea a partir de sus artículos. Su diseño y su borrador se eliminan.",
-  "tillLayoutResetDone": "Esta caja vuelve a usar sus teclas generadas."
+  "tillLayoutResetDone": "Esta caja vuelve a usar sus teclas generadas.",
+  "tillPriceField": "Nuevo precio",
+  "tillPriceReason": "Motivo",
+  "tillPriceReasonHint": "Se conserva en el tique.",
+  "tillDiscountField": "Descuento (%)",
+  "tillPriceUnreadable": "Escriba un número, por ejemplo 4,50.",
+  "tillPriceNotAllowed": "No puede cambiar un precio en la caja. La línea se vende al precio del artículo.",
+  "tillPriceReasonMissing": "Un precio cambiado necesita su motivo.",
+  "tillDiscountBeyond": "Este descuento supera lo que la empresa permite (como máximo {max} %).",
+  "tillDiscountInvalid": "Un descuento es un porcentaje del precio del artículo, en una línea sin precio cambiado.",
+  "tillRingUpFirst": "Registre primero un artículo."
 }

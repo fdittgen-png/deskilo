@@ -836,6 +836,8 @@ Alla cassa, i tasti agiscono come li ha posizionati. Il **tastierino numerico** 
 
 **Copiare su un'altra cassa** salva il layout come bozza di un'altra cassa, da pubblicare lì. **Tornare ai tasti generati** rimuove, dopo conferma, il layout e la bozza di questa cassa: la cassa usa di nuovo i tasti che crea dai Suoi articoli. Nella demo, il **Bakery counter** mostra il modello Panetteria con tastierino e calcolatrice.
 
+**Cambiare un prezzo** modifica il prezzo dell'ultima riga: digiti il nuovo prezzo (o prima sul tastierino) e un **Motivo**, che lo scontrino conserva accanto al prezzo dell'articolo. Serve il diritto **Modificare un prezzo alla cassa** (titolari e amministratori per impostazione predefinita); senza, la cassa lo dice e la riga resta al prezzo dell'articolo. **Sconto su una riga** toglie una percentuale dal prezzo dell'articolo dell'ultima riga, al massimo **Sconto massimo alla cassa** (0 per impostazione predefinita, cioè nessuno sconto alla cassa); uno sconto maggiore è rifiutato indicando il limite. Una riga prende uno sconto o un prezzo modificato, non entrambi. Una vendita che la cassa invia dopo aver venduto offline mantiene il suo prezzo, entro la tolleranza di prezzo offline.
+
 <!-- anchor: user.money.till-offline -->
 ### Quando la cassa è offline
 

@@ -400,6 +400,7 @@
    "accessProd",
    "viewAnalytics",
    "configureTill",
+   "overrideTillPrice",
    "useMessages",
    "makeReservations",
    "viewCalendar",
@@ -448,7 +449,8 @@
    "approveStockAdjustments",
    "manageBillingCustomers",
    "countStock",
-   "configureTill"
+   "configureTill",
+   "overrideTillPrice"
   ],
   "member": [
    "useMessages",

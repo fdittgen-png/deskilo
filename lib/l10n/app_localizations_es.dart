@@ -25827,6 +25827,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Configurar el quiosco y entregar las tarjetas.';
 
   @override
+  String get permAllowsOverrideTillPrice =>
+      'Vender una línea de caja a un precio distinto del del artículo, con un motivo que el tique conserva. Sin este derecho, una línea de caja se vende al precio del artículo.';
+
+  @override
   String get permAllowsPaymentTermsEdit =>
       'Solicitar un cambio de las condiciones de pago de un miembro; la validación decide.';
 
@@ -25981,6 +25985,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get permOperateKiosk => 'Operar el quiosco y las tarjetas';
+
+  @override
+  String get permOverrideTillPrice => 'Cambiar un precio en la caja';
 
   @override
   String get permPaymentTermsEdit => 'Solicitar cambios de condiciones de pago';
@@ -32751,6 +32758,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El máximo de celdas que puede tener un diseño de caja, sumando todas sus páginas y tamaños. Un diseño mayor se rechaza al guardarlo.';
 
   @override
+  String get settingHintCounterMaxDiscount =>
+      'El descuento máximo, en porcentaje, que un cajero puede aplicar a una línea de caja. 0 significa ningún descuento en la caja.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Cuánto tiempo después de perder la conexión la caja aún se acepta una venta en efectivo hecha sin conexión al enviarla. Las posteriores se rechazan y se listan para el responsable.';
 
@@ -33207,6 +33218,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelCounterLayoutMaxCells => 'Tamaño del diseño de caja';
+
+  @override
+  String get settingLabelCounterMaxDiscount => 'Descuento máximo en la caja';
 
   @override
   String get settingLabelCounterOfflineMaxMinutes =>
@@ -41501,6 +41515,18 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String tillDiscountBeyond(String max) {
+    return 'Este descuento supera lo que la empresa permite (como máximo $max %).';
+  }
+
+  @override
+  String get tillDiscountField => 'Descuento (%)';
+
+  @override
+  String get tillDiscountInvalid =>
+      'Un descuento es un porcentaje del precio del artículo, en una línea sin precio cambiado.';
+
+  @override
   String get tillDrawerAddTill => 'Añadir una caja';
 
   @override
@@ -42162,6 +42188,25 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get tillPriceField => 'Nuevo precio';
+
+  @override
+  String get tillPriceNotAllowed =>
+      'No puede cambiar un precio en la caja. La línea se vende al precio del artículo.';
+
+  @override
+  String get tillPriceReason => 'Motivo';
+
+  @override
+  String get tillPriceReasonHint => 'Se conserva en el tique.';
+
+  @override
+  String get tillPriceReasonMissing => 'Un precio cambiado necesita su motivo.';
+
+  @override
+  String get tillPriceUnreadable => 'Escriba un número, por ejemplo 4,50.';
+
+  @override
   String get tillPricing => 'Calculando la cesta…';
 
   @override
@@ -42288,6 +42333,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tillRetry => 'Reintentar';
+
+  @override
+  String get tillRingUpFirst => 'Registre primero un artículo.';
 
   @override
   String get tillScanLabel => 'Escanear un código';

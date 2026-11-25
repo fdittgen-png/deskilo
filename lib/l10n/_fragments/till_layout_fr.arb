@@ -58,5 +58,15 @@
   "tillLayoutChoosePage": "Quelle page ouvre-t-elle ?",
   "tillLayoutReset": "Revenir aux touches générées",
   "tillLayoutResetConfirm": "Cette caisse revient aux touches qu'elle crée à partir de vos articles. Sa disposition et son brouillon sont supprimés.",
-  "tillLayoutResetDone": "Cette caisse utilise de nouveau ses touches générées."
+  "tillLayoutResetDone": "Cette caisse utilise de nouveau ses touches générées.",
+  "tillPriceField": "Nouveau prix",
+  "tillPriceReason": "Motif",
+  "tillPriceReasonHint": "Conservé sur le ticket.",
+  "tillDiscountField": "Remise (%)",
+  "tillPriceUnreadable": "Saisissez un nombre, par exemple 4,50.",
+  "tillPriceNotAllowed": "Vous ne pouvez pas modifier un prix à la caisse. La ligne est vendue au prix de l'article.",
+  "tillPriceReasonMissing": "Un prix modifié a besoin d'un motif.",
+  "tillDiscountBeyond": "Cette remise dépasse ce que l'entreprise autorise (au plus {max} %).",
+  "tillDiscountInvalid": "Une remise est un pourcentage du prix de l'article, sur une ligne sans prix modifié.",
+  "tillRingUpFirst": "Enregistrez d'abord un article."
 }

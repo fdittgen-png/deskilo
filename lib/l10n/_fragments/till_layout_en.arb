@@ -248,5 +248,50 @@
   "tillLayoutResetDone": "This till uses its generated keys again.",
   "@tillLayoutResetDone": {
     "description": "#4448 resetting a till to the keys it generates"
+  },
+  "tillPriceField": "New price",
+  "@tillPriceField": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceReason": "Reason",
+  "@tillPriceReason": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceReasonHint": "Kept on the receipt.",
+  "@tillPriceReasonHint": {
+    "description": "#4476 the till price keys"
+  },
+  "tillDiscountField": "Discount (%)",
+  "@tillDiscountField": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceUnreadable": "Type a number, such as 4.50.",
+  "@tillPriceUnreadable": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceNotAllowed": "You may not change a price at the till. The line is sold at the item's price.",
+  "@tillPriceNotAllowed": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceReasonMissing": "A changed price needs its reason.",
+  "@tillPriceReasonMissing": {
+    "description": "#4476 the till price keys"
+  },
+  "tillDiscountBeyond": "This discount is beyond what the business allows (at most {max} %).",
+  "@tillDiscountBeyond": {
+    "description": "#4476 a discount refused beyond the limit; max is the percent allowed",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDiscountInvalid": "A discount is a percentage off the item's price, on a line without a changed price.",
+  "@tillDiscountInvalid": {
+    "description": "#4476 the till price keys"
+  },
+  "tillRingUpFirst": "Ring up an item first.",
+  "@tillRingUpFirst": {
+    "description": "#4476 the till price keys"
   }
 }

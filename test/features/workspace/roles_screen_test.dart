@@ -72,6 +72,8 @@ void main() {
           WorkspacePermission.viewAnalytics,
           // #4448 — admins lay out the tills.
           WorkspacePermission.configureTill,
+          // #4476 — admins change a price at the till.
+          WorkspacePermission.overrideTillPrice,
         },
       );
       expect(defaultPermissionsFor(PermissionRole.member), isEmpty);

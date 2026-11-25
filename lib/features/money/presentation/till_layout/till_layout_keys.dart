@@ -21,6 +21,7 @@ import '../till_keys.dart';
 import '../till_session.dart';
 import 'till_layout_tools.dart';
 import 'till_layout_words.dart';
+import 'till_price_dialogs.dart';
 
 /// The height of one row of a laid-out till.
 const double _rowHeight = 72;
@@ -110,9 +111,30 @@ class _LaidOutState extends State<_LaidOut> {
       _typed.value = const TillKeypadEntry();
       if (!typed.isEmpty) _onLast(typed.text);
     },
-    // a discount, a price override, a deposit return, the drawer and a reprint have no till command yet: shown, not active
+    TillFunction.priceOverride => () => unawaited(_pricing(discount: false)),
+    TillFunction.lineDiscount => () => unawaited(_pricing(discount: true)),
+    // a deposit return and a reprint come with #4476's next steps; the drawer opens with the receipt printer (#4368)
     _ => null,
   };
+
+  /// #4476 -- the last line at another price with its reason, or with a discount: the keypad's number is the start.
+  Future<void> _pricing({required bool discount}) async {
+    if (_last < 0) {
+      ScaffoldMessenger.maybeOf(context)?.showSnackBar(SnackBar(content: Text(context.l10n.tillRingUpFirst)));
+      return;
+    }
+    final index = _last;
+    final line = widget.session.state.value.lines[index];
+    final typed = _typed.value.isEmpty ? null : _typed.value.text;
+    _typed.value = const TillKeypadEntry();
+    if (discount) {
+      final percent = await showTillDiscountDialog(context, line, typed: typed);
+      if (percent != null) await widget.session.setPricing(index, discount: percent);
+    } else {
+      final set = await showTillPriceDialog(context, line, typed: typed);
+      if (set != null) await widget.session.setPricing(index, price: set.price, reason: set.reason);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

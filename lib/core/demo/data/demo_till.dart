@@ -9,9 +9,12 @@
 // obligation): France, Germany and Spain are supported with the specification each row rests on, Italy is
 // unavailable, and a country the registry does not name has no operation at all. A sale freezes its version-1
 // document, read back through the same versioned reader as the server's.
+import 'dart:math' show pow;
+
 import 'package:deskilo/features/money/domain/counter_book.dart';
 import 'package:deskilo/features/money/domain/counter_receipt_document.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
+import 'package:deskilo/features/money/domain/till_keypad.dart';
 import 'package:deskilo/features/money/domain/till_offline.dart';
 import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
@@ -22,8 +25,11 @@ import 'demo_stock_registry.dart';
 import 'demo_till_drawer.dart';
 
 /// The server's refusal: its SQLSTATE as the code, its words as the message.
-PostgrestException _refused(String code, String message, {String? reason}) =>
-    PostgrestException(message: message, code: code, details: reason == null ? null : '{"reason":"$reason"}');
+PostgrestException _refused(String code, String message, {String? reason, int? max}) => PostgrestException(
+  message: message,
+  code: code,
+  details: reason == null ? null : '{"reason":"$reason"${max == null ? '' : ',"max":$max'}}',
+);
 
 /// #4436 -- the Demo's traced item at the counter: the oat milk is tracked by lot, and a sale takes it from the lot on
 /// hand that expires first and is not expired yet (MILK-09 is past its date, so MILK-12; the expiry report's lots). The
@@ -129,7 +135,24 @@ class _Rec {
 typedef DemoSoldLine = ({String lineId, String receiptId, String number, DateTime at, List<TillTrack> tracks});
 
 class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
-  DemoTill({required this.country, required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2, this.drawer, this.clock});
+  DemoTill({
+    required this.country,
+    required this.currency,
+    required this.vatPercent,
+    this.ready = true,
+    this.minorDigits = 2,
+    this.drawer,
+    this.clock,
+    this.maxDiscountPercent = demoMaxDiscountPercent,
+    this.mayChangePrice = true,
+  });
+
+  /// #4476 -- the Demo business's `counter.max_discount_percent`: the largest discount at its tills.
+  static const demoMaxDiscountPercent = 10;
+  final int maxDiscountPercent;
+
+  /// #4476 -- whether the Demo's cashier holds the right to change a price at the till (the Demo's owner does).
+  final bool mayChangePrice;
 
   final String country;
   final String currency;
@@ -232,7 +255,7 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
     for (final l in lines) {
       final unit = DemoStockRegistry.catalogue[l.itemId]?.$2 ?? _unstocked[l.itemId];
       if (unit == null) throw _refused(DkCode.dkl02, 'line_${priced.length + 1}_unit_price');
-      final amount = _times(unit, l.quantity);
+      final amount = _times(_priceOf(l, unit), l.quantity);
       gross += amount;
       tax += _tax(amount);
       priced.add(TillPricedLine(label: l.name, grossMinor: amount, quantity: l.quantity));
@@ -283,6 +306,27 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
   };
 
   /// [unit] (minor units of one inventory unit) times [quantity] (an exact decimal text), half away from zero.
+  /// #4476 -- the unit price of [l] in minor units: the item's [listed] one, another with the right and a reason, or a
+  /// discount within the limit; refused as the server refuses it.
+  int _priceOf(TillLine l, int listed) {
+    const million = 1000 * 1000;
+    final discount = l.discount;
+    if (discount != null) {
+      if (l.price != null) throw _refused(DkCode.dkl02, 'a discount or a price, not both', reason: 'price_and_discount');
+      final pct = tillMillionths(discount);
+      if (pct == null || pct <= 0 || pct > 100 * million) throw _refused(DkCode.dkl02, 'a discount is a percentage', reason: 'discount');
+      if (pct > maxDiscountPercent * million) throw _refused(DkCode.dkn01, 'beyond the limit', reason: 'discount_limit', max: maxDiscountPercent);
+      return (listed * (100 * million - pct) / (100 * million)).round();
+    }
+    final price = l.price == null ? null : tillMillionths(l.price!);
+    if (price == null) return listed;
+    final minor = (price * pow(10, minorDigits) / million).round();
+    if (minor == listed) return listed;
+    if (!mayChangePrice) throw _refused(DkCode.dkn01, 'not allowed to change a price', reason: 'price');
+    if ((l.priceReason ?? '').trim().isEmpty) throw _refused(DkCode.dkl02, 'a changed price needs its reason', reason: 'price_reason');
+    return minor;
+  }
+
   int _times(int unit, String quantity) => (unit * counterQuantityUnits(quantity) / 1000000).round();
 
   CounterBookTender _with(CounterBookTender t, {String? state, String? reconciliation, String? providerRef}) => CounterBookTender(

@@ -115,5 +115,9 @@
   "permConfigureTill": "Lay out the tills",
   "@permConfigureTill": {
     "description": "#4448 the right to lay out the tills: its name"
+  },
+  "permOverrideTillPrice": "Change a price at the till",
+  "@permOverrideTillPrice": {
+    "description": "#4476 the right to change a till line price, with a reason"
   }
 }

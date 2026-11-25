@@ -33,6 +33,12 @@ const _reviewed = {
   // later patch left: the custom roles branch, the co-owner, admin and member branches and the adminInvoicing grant) and
   // adds only 'configureTill' to the admin defaults; pgTAP 571 green on dev with 0958 and 0959, rolled back.
   'has_permission_raw@0958',
+  // #4476/0963 restates has_permission_raw from 0958's text (the live dev body at schema 959, nothing patched it since) and
+  // adds only 'overrideTillPrice' to the admin defaults; pgTAP 573 green on dev with 0963 and 0964, rolled back.
+  'has_permission_raw@0963',
+  // #4476/0964 patches counter_receipt_draft_v1 at one asserted anchor of its live dev body (0894 + 0908): its lines pass
+  // counter_line_prices first. pgTAP 573 green, and every counter suite (520-532, 553-570) unchanged with it, rolled back.
+  'counter_receipt_draft_v1@0964',
   // #4436/0947 restates counter_receipt_finalize_v1 from the LIVE dev body (pg_get_functiondef at schema 943:
   // md5(prosrc) 82076ff9fd420cc1a000a8265d50d298, the 0939 body, which carries 0908's share lock on the sale's till
   // session). The diff to it adds only the goods items' lock before their lots are planned and the plan around what

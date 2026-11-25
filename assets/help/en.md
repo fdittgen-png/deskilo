@@ -3102,6 +3102,8 @@ At the till, the layout's keys work as you placed them. The **numeric keypad** t
 
 **Copy to another till** saves the layout as another till's draft, to publish there. **Reset to the generated keys** removes this till's layout and draft after you confirm: the till uses the keys it generates from your items again. In the Demo, the **Bakery counter** shows the Bakery template with its keypad and calculator.
 
+**Change a price** changes the price of the last line: type the new price (or type it on the keypad first) and a **Reason**, which the receipt keeps beside the item's own price. It needs the right **Change a price at the till** (owners and administrators by default); without it the till says so, and the line stays at the item's price. **Discount on a line** takes a percentage off the item's price of the last line, at most **Largest discount at the till** (0 by default, which means no discount at the till); a larger discount is refused with the limit named. A line takes a discount or a changed price, not both. A sale the till sends after selling offline keeps the price it held, within the offline price tolerance.
+
 ### When the till is offline
 
 **Audience:** Administrator · Owner

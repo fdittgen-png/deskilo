@@ -55,5 +55,6 @@
     "description": "#4172 refusal"
   },
   "permCountStock": "Bestand blind zählen",
-  "permConfigureTill": "Kassen gestalten"
+  "permConfigureTill": "Kassen gestalten",
+  "permOverrideTillPrice": "Preis an der Kasse ändern"
 }

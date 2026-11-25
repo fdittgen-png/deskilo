@@ -898,5 +898,7 @@
  "counterLayoutMaxCellsHint": "Il numero massimo di celle di un layout di cassa. Impostato nelle impostazioni dell'app.",
  "counterLayoutCashierReorder": "I cassieri riordinano i tasti",
  "counterLayoutCashierReorderHint": "Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo. Impostato nelle impostazioni dell'app.",
- "optCells": "{n} celle"
+ "optCells": "{n} celle",
+ "counterMaxDiscount": "Sconto massimo alla cassa",
+ "counterMaxDiscountHint": "Lo sconto massimo che un cassiere può applicare a una riga. Impostato nelle impostazioni dell'app."
 }

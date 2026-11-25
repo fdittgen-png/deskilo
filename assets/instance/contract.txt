@@ -3450,7 +3450,7 @@ routine public.hand_payment_intent(p_intent uuid) -> boolean | function | define
 routine public.handle_new_user() -> trigger | function | definer | volatile | exec:service_role | body:283ccda0aedd
 routine public.has_badge_pin() -> boolean | function | definer | stable | exec:authenticated,service_role | body:b706db9793bb
 routine public.has_permission(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:3fbfe0580efb
-routine public.has_permission_raw(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:e8d9c8f36c7a
+routine public.has_permission_raw(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:1adae2fd39bd
 routine public.hmrc_actor(p_workspace_id uuid, p_purpose text) -> uuid | function | definer | stable | exec:service_role | body:51b3589ac90b
 routine public.hmrc_connection_manageable_v1(p_connection_id uuid, p_purpose text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0bf13fd3e12b
 routine public.hmrc_connection_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f9328e95d3ce
@@ -3850,7 +3850,7 @@ routine public.member_pause_money(p_member_id uuid, p_from date, p_to date) -> j
 routine public.member_paused_on(p_member_id uuid, p_day date, p_current text) -> boolean | function | definer | stable | exec:service_role | body:165156d1fbaa
 routine public.member_pct_in(p_member_id uuid, p_first date, p_current integer) -> integer | function | definer | stable | exec:service_role | body:bcacb274bd3a
 routine public.member_period_invoiced(p_member_id uuid, p_first date) -> boolean | function | definer | stable | exec:service_role | body:56e095a7be0e
-routine public.member_permission_raw(p_member_id uuid, perm text) -> boolean | function | definer | stable | exec:service_role | body:ee7b8ff0efe6
+routine public.member_permission_raw(p_member_id uuid, perm text) -> boolean | function | definer | stable | exec:service_role | body:57156b566566
 routine public.member_price_negotiation(p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:748e36d6fe4e
 routine public.member_profile_projection(p_subject uuid, p_purposes text[], p_viewer uuid) -> jsonb | function | definer | stable | exec:service_role | body:505d01342812
 routine public.member_profile_purposes(p_workspace uuid, p_subject uuid) -> text[] | function | definer | stable | exec:service_role | body:60fbc840b60d
@@ -4320,7 +4320,7 @@ routine public.rights_due_on(p_received timestamp with time zone, p_timezone tex
 routine public.rights_outcome_valid(p_outcome jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:6f796d1ba736
 routine public.rights_requests_guard() -> trigger | function | invoker | volatile | exec:service_role | body:dbf713b357cb
 routine public.role_holds(ws uuid, p_role text, perm text) -> boolean | function | definer | stable | exec:service_role | body:f5ded1680290
-routine public.role_permission_catalog() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:7b095f858a49
+routine public.role_permission_catalog() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:f9ccdc51674c
 routine public.rollback_deployment(p_deployment_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c05549d60433
 routine public.room_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:586b028bb1cc
 routine public.room_audience_has(p_rental uuid, p_member uuid) -> boolean | function | definer | stable | exec:service_role | body:e7423e536921
@@ -4707,7 +4707,7 @@ routine public.tell_owners_kiosk_device(p_workspace_id uuid, p_change text, p_de
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:2b0f523b1734
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:eb7d4d99d37c
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:41d51bce65a7
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
