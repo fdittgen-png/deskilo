@@ -6,14 +6,35 @@
 // (its words and exact facts) and for what each line comes to (its frozen
 // amounts and rate). No second reader of the snapshot lives here.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
 import 'standalone_invoice.dart';
 
+/// Reads one frozen line of a sent revision, or refuses it: a line whose
+/// `commercial` member the package cannot interpret is a read failure
+/// ([JsonShapeException], worded by the screen's read-failure path), never a
+/// line worth nothing. Only a text line (no member, no amount) stands as its
+/// label.
+InvoiceLine requireFrozenLine(InvoiceLine line, int index) {
+  final facts = line.commercial;
+  if (facts is CommercialLineV1) return line;
+  if (facts == null && line.amountCents == 0 && line.netCents == null) return line;
+  throw JsonShapeException(
+    'customer_quote_v1',
+    'lines[$index].commercial',
+    'a version 1 line',
+    switch (facts) {
+      CommercialLineUnsupported(:final reason, :final field) =>
+        field.isEmpty ? reason.name : '${reason.name}:$field',
+      _ => 'a line with amounts and no frozen facts',
+    },
+  );
+}
+
 /// A line of a sent revision as the server froze it: its words are `label`,
 /// and its quantity, unit and price are the exact facts of its `commercial`
-/// member. A line the decoder cannot interpret reads as its label alone,
-/// never as a failure and never with a guessed quantity.
+/// member (see [requireFrozenLine]); a text line reads as its label alone.
 StandaloneLine frozenQuoteLine(InvoiceLine line) {
   final facts = line.commercial;
   if (facts is! CommercialLineV1) {

@@ -69,7 +69,10 @@ class QuoteRevision {
     // A SENT revision is the invoice line snapshot the issuer froze, decoded
     // once by the package; the working draft keeps the lines as entered.
     final frozen = sent
-        ? r.objects('lines', (row) => invoiceLineFromSnapshot(row.json))
+        ? [
+            for (final (i, l) in r.objects('lines', (row) => invoiceLineFromSnapshot(row.json)).indexed)
+              requireFrozenLine(l, i),
+          ]
         : const <InvoiceLine>[];
     return QuoteRevision(
     revision: r.integer('revision'),
