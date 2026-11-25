@@ -7,20 +7,7 @@
 #include "pending.h"
 #include <stdint.h>
 
-#define MAX_PRODUCTS 8
-#define MAX_LINES 24
-
-typedef struct { char id[40]; char name[40]; int price_minor; } product_t;
-typedef struct { char label[48]; char qty[16]; int gross_minor; } roll_line_t;
-typedef struct {
-    roll_line_t lines[MAX_LINES];
-    int n;
-    int total_minor;
-    char currency[4];
-    int revision;
-    char receipt_id[40];
-} roll_t;
-typedef struct { char item_id[40]; int qty; } basket_line_t;
+#include "till_types.h"
 
 esp_err_t net_connect(const char *ssid, const char *pass);   // Wi-Fi and the time (TLS needs it)
 bool net_online(void);
