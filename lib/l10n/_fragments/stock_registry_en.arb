@@ -91,5 +91,9 @@
   "stockReasonHomeInvalid": "Choose a place of this business that is in use and is not a supplier, customer, loss or transit place.",
   "@stockReasonHomeInvalid": {
     "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockItemEditDetails": "Edit name, price and VAT",
+  "@stockItemEditDetails": {
+    "description": "#4470 Stock items: tooltip of the button that opens the service editor for the item"
   }
 }
