@@ -8102,6 +8102,7 @@ Map<String, _Getter> _part18() => {
   'spaceScanUnknownTag': (l) => l.spaceScanUnknownTag,
   'standaloneFactDueDate': (l) => l.standaloneFactDueDate,
   'standaloneFactDueDatePast': (l) => l.standaloneFactDueDatePast,
+  'standaloneFactTotalMismatch': (l) => l.standaloneFactTotalMismatch,
   'standaloneFactUnknownSubject': (l) => l.standaloneFactUnknownSubject,
   'standaloneInvoicePreviewNet': (l) => l.standaloneInvoicePreviewNet,
   'standaloneUnitPiece': (l) => l.standaloneUnitPiece,

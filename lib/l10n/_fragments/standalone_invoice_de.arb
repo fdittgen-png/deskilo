@@ -193,6 +193,10 @@
   "@standaloneFactTotal": {
     "description": "#4165 standalone invoice composer: standaloneFactTotal"
   },
+  "standaloneFactTotalMismatch": "die Positionen ergeben nicht die angenommene Summe",
+  "@standaloneFactTotalMismatch": {
+    "description": "#4405 previewed document: standaloneFactTotalMismatch"
+  },
   "standaloneFactCurrency": "die Währung des Betriebs",
   "@standaloneFactCurrency": {
     "description": "#4165 standalone invoice composer: standaloneFactCurrency"

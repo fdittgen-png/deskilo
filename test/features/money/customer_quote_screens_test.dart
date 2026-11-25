@@ -72,8 +72,9 @@ Future<_Setup> _open(
   bool withQuotes = true,
   List<Override> extra = const [],
   FakeCustomerQuoteRepository Function(DateTime Function() clock)? quotesOf,
+  Size size = const Size(900, 1600),
 }) async {
-  tester.view.physicalSize = const Size(900, 1600);
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   var clockNow = _now;
@@ -170,6 +171,30 @@ class _NotIssuable extends FakeCustomerQuoteRepository {
       currency: ready.currency,
       contextChanged: false,
       reviewDigest: ready.reviewDigest,
+    );
+  }
+}
+
+/// A server whose invoice would now come to more than what was accepted: its context moved since the acceptance.
+class _Moved extends FakeCustomerQuoteRepository {
+  _Moved({required super.clock});
+
+  @override
+  Future<QuoteConversionPrep> prepareConversion(
+    String workspaceId,
+    String quoteId, {
+    required DateTime serviceDate,
+    required DateTime dueOn,
+  }) async {
+    final ready = await super.prepareConversion(workspaceId, quoteId, serviceDate: serviceDate, dueOn: dueOn);
+    return QuoteConversionPrep(
+      draftRevision: ready.draftRevision,
+      missing: const [],
+      acceptedTotalCents: ready.acceptedTotalCents,
+      wouldBeTotalCents: ready.acceptedTotalCents + 1000,
+      currency: ready.currency,
+      contextChanged: true,
+      reviewDigest: 'moved',
     );
   }
 }
@@ -340,6 +365,7 @@ void main() {
     await _settle(tester);
     expect(find.byKey(const ValueKey('quote-convert-accepted')), findsOneWidget);
     expect(find.textContaining('144'), findsWidgets);
+    expect(find.byKey(const ValueKey('quote-convert-document')), findsOneWidget, reason: 'the accepted lines, their tax and the total');
     await tester.tap(find.byKey(const ValueKey('quote-convert-issue')));
     await _settle(tester);
     expect(find.byKey(const ValueKey('quote-convert-done')), findsOneWidget);
@@ -427,4 +453,33 @@ void main() {
     expect(said, isNot(contains('buyer_address')));
     expect(find.byKey(const ValueKey('quote-convert-would-be')), findsNothing);
   });
+
+  for (final (label, size) in [('390 wide', const Size(390, 900)), ('1440 wide', const Size(1440, 900))]) {
+    testWidgets('#4405 a total that moved since the acceptance names both totals and never shows the accepted lines under the new one ($label)', (tester) async {
+      final setup = await _open(
+        tester,
+        const CustomerQuoteScreen(quoteId: 'quote-1'),
+        quotesOf: (clock) => _Moved(clock: clock),
+        size: size,
+      );
+      await setup.quotes.recordDecision(
+        setup.workspaceId,
+        'quote-1',
+        QuoteDecisionInput(accepted: true, revision: 1, decidedOn: setup.today, source: 'email'),
+      );
+      ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
+          .invalidate(customerQuoteProvider((workspaceId: setup.workspaceId, quoteId: 'quote-1')));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('quote-convert')));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('quote-convert-check')));
+      await _settle(tester);
+      expect(tester.takeException(), isNull);
+      expect(find.byKey(const ValueKey('quote-convert-accepted')), findsOneWidget);
+      expect(find.byKey(const ValueKey('quote-convert-would-be')), findsOneWidget);
+      expect(find.byKey(const ValueKey('quote-convert-differs')), findsOneWidget);
+      expect(find.byKey(const ValueKey('quote-convert-document')), findsNothing, reason: 'the accepted lines do not add up to the new total');
+      expect(tester.widget<FilledButton>(find.byKey(const ValueKey('quote-convert-issue'))).onPressed, isNull, reason: 'a review comes first');
+    });
+  }
 }

@@ -6,7 +6,6 @@
 // original. The draft is kept across a resize, a refusal and an unknown
 // answer; an issue is sent once under its request id and a lost answer is
 // looked up, never resent blindly. Nothing here computes an amount.
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,17 +14,16 @@ import '../../../../core/failure/app_failure.dart';
 import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
-import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/collation.dart';
-import '../../../../core/theme/app_typography.dart';
 import '../../../../core/time/calendar_days.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../application/issue_standalone_invoice.dart';
+import '../../domain/previewed_document.dart';
 import '../../domain/standalone_invoice.dart';
 import '../../providers/business_day_provider.dart';
 import '../../providers/money_providers.dart'
@@ -33,6 +31,7 @@ import '../../providers/money_providers.dart'
 import '../../providers/standalone_invoice_providers.dart';
 import '../invoicing/invoicing_customer_actions.dart' show invoicesPath;
 import 'document_composer.dart';
+import 'previewed_document_card.dart';
 import 'standalone_missing_text.dart';
 
 class StandaloneInvoiceScreen extends ConsumerStatefulWidget {
@@ -46,7 +45,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
   final _doc = CommercialDocumentDraft();
 
   StandaloneSaved? _saved;
-  StandalonePreview? _preview;
+  PreviewedDocument? _preview;
   bool _busy = false;
   List<String> _missing = const [];
   bool _refused = false;
@@ -280,7 +279,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
               ? l.standaloneInvoiceRefused
               : standaloneMissingSentence(l, _missing),
         ),
-      if (preview != null && preview.ready) _PreviewCard(preview: preview),
+      if (preview != null && preview.ready) PreviewedDocumentCard(key: const ValueKey('standalone-preview'), preview: preview),
     ];
   }
 
@@ -306,60 +305,4 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
       ],
     );
   }
-}
-
-/// What the server would freeze: each line with its exact quantity and unit,
-/// the tax and the total, as it answered.
-class _PreviewCard extends StatelessWidget {
-  const _PreviewCard({required this.preview});
-
-  final StandalonePreview preview;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final format = appFormatOf(context).moneyNamed(preview.currency);
-    final net = preview.vatTotals.fold<int>(0, (s, t) => s + t.netCents);
-    final tax = preview.vatTotals.fold<int>(0, (s, t) => s + t.vatCents);
-    return Card(
-      key: const ValueKey('standalone-preview'),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            for (final line in preview.lines)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 6),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '${line.label} · ${line.quantityText ?? ''} '
-                        '${line.exactFacts?.unit.label ?? ''}',
-                      ),
-                    ),
-                    Text(format.formatMinor(line.exactFacts?.amounts.netMinor ?? line.amountCents)),
-                  ],
-                ),
-              ),
-            const Divider(),
-            _row(l.standaloneInvoicePreviewNet, format.formatMinor(net)),
-            _row(l.standaloneInvoicePreviewTax, format.formatMinor(tax)),
-            _row(l.standaloneInvoicePreviewTotal, format.formatMinor(preview.totalCents), bold: true),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _row(String label, String value, {bool bold = false}) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 2),
-    child: Row(
-      children: [
-        Expanded(child: Text(label)),
-        Text(value, style: bold ? const TextStyle().strong : null),
-      ],
-    ),
-  );
 }

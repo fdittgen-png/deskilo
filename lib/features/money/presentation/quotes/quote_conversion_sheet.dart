@@ -20,9 +20,11 @@ import '../../../../core/time/calendar_days.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/customer_quote.dart';
+import '../../domain/previewed_document.dart';
 import '../../providers/business_day_provider.dart';
 import '../../providers/customer_quote_providers.dart';
 import '../../providers/standalone_invoice_providers.dart';
+import '../standalone/previewed_document_card.dart';
 import '../standalone/standalone_missing_text.dart';
 import 'quote_text.dart';
 
@@ -50,6 +52,7 @@ class _Conversion {
   const _Conversion({
     required this.serviceDate,
     required this.dueOn,
+    required this.accepted,
     this.busy = false,
     this.prep,
     this.reviewed = false,
@@ -62,6 +65,12 @@ class _Conversion {
   final DateTime dueOn;
   final bool busy;
   final QuoteConversionPrep? prep;
+
+  /// The revision the customer accepted: the lines the invoice is made of.
+  final QuoteRevision accepted;
+
+  /// What [prep] comes to as a previewed document: the accepted lines, their tax and the total, or what refuses it.
+  PreviewedDocument? get document => prep?.documentOf(accepted);
   final bool reviewed;
   final String? said;
 
@@ -73,6 +82,7 @@ class _Conversion {
   _Conversion withDates({DateTime? serviceDate, DateTime? dueOn}) => _Conversion(
     serviceDate: serviceDate ?? this.serviceDate,
     dueOn: dueOn ?? this.dueOn,
+    accepted: accepted,
   );
 
   _Conversion copy({
@@ -85,6 +95,7 @@ class _Conversion {
   }) => _Conversion(
     serviceDate: serviceDate,
     dueOn: dueOn,
+    accepted: accepted,
     busy: busy ?? this.busy,
     prep: prep == null ? this.prep : prep(),
     reviewed: reviewed ?? this.reviewed,
@@ -95,7 +106,7 @@ class _Conversion {
 
   bool get canIssue {
     final p = prep;
-    return p != null && p.issuable && (!p.contextChanged || reviewed) && !busy;
+    return p != null && p.issuable && (document?.missing.isEmpty ?? false) && (!p.contextChanged || reviewed) && !busy;
   }
 }
 
@@ -120,6 +131,7 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
       _Conversion(
         serviceDate: today,
         dueOn: addCalendarDays(today, ref.read(invoiceDueDaysProvider)),
+        accepted: _accepted,
       ),
     );
     // The business's calendar and the payment term can arrive after the sheet opens: a date the person has not set follows
@@ -148,6 +160,12 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
   }
 
   void _set(_Conversion next) => _state.value = next;
+
+  /// The revision the customer accepted: the lines the invoice is made of.
+  QuoteRevision get _accepted {
+    final accepted = widget.quote.decision?.revision;
+    return widget.quote.revisions.firstWhere((r) => r.revision == accepted, orElse: () => widget.quote.revisions.last);
+  }
 
   /// A change of date makes the checked invoice stale: it is checked again.
   void _edit(_Conversion next) => _set(next);
@@ -269,12 +287,16 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
           l10n.quoteConvertWouldBe(money.formatMinor(would)),
           key: const ValueKey('quote-convert-would-be'),
         ),
-      if (!prep.issuable) ...[
+      if (s.document case final document? when document.missing.isNotEmpty) ...[
         const FormGap(),
         Text(
-          l10n.quoteConvertMissing(standaloneMissingList(l10n, prep.missing)),
+          l10n.quoteConvertMissing(standaloneMissingList(l10n, document.missing)),
           key: const ValueKey('quote-convert-missing'),
         ),
+      ],
+      if (s.document case final document? when document.ready && !prep.contextChanged) ...[
+        const FormGap(),
+        PreviewedDocumentCard(key: const ValueKey('quote-convert-document'), preview: document),
       ],
       if (prep.contextChanged) ...[
         const FormGap(),

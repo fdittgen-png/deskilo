@@ -6,6 +6,7 @@
 // answer is looked up by its request id.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../domain/previewed_document.dart';
 import '../domain/standalone_invoice.dart';
 
 class SupabaseStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
@@ -35,11 +36,11 @@ class SupabaseStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
   );
 
   @override
-  Future<StandalonePreview> preview({
+  Future<PreviewedDocument> preview({
     required String workspaceId,
     required String draftId,
     required int revision,
-  }) async => StandalonePreview.fromJson(
+  }) async => PreviewedDocument.fromJson(
     await _client.rpc<Object?>(
       'preview_standalone_invoice_v1',
       params: {

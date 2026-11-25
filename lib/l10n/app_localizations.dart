@@ -57347,6 +57347,12 @@ abstract class AppLocalizations {
   /// **'a total above zero'**
   String get standaloneFactTotal;
 
+  /// #4405 previewed document: standaloneFactTotalMismatch
+  ///
+  /// In en, this message translates to:
+  /// **'the lines do not add up to the accepted total'**
+  String get standaloneFactTotalMismatch;
+
   /// #4165 standalone invoice composer: standaloneFactUnknownSubject
   ///
   /// In en, this message translates to:

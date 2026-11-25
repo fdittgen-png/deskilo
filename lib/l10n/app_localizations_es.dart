@@ -36095,6 +36095,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get standaloneFactTotal => 'un total mayor que cero';
 
   @override
+  String get standaloneFactTotalMismatch =>
+      'las líneas no suman el total aceptado';
+
+  @override
   String get standaloneFactUnknownSubject => 'el cliente';
 
   @override
