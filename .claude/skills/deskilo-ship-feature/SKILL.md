@@ -43,7 +43,7 @@ Lessons by topic, with their incidents: [reference.md](reference.md).
 Edit ALL of these in the same commit:
 1. `lib/features/workspace/domain/workspace_feature.dart` — enum value
    (append at the end) + `featureManifest` entry (`requires:`, default) — the
-   entries live in `feature_manifest_partN.dart` beside it (#2386): append to the last part.
+   entries live in plain libraries beside it, in display order: `feature_manifest_early/mid/late.dart` (#2386, #4408): append to the late one (a stock flag to `feature_manifest_stock.dart`).
 2. `feature_names.dart` — label; `features_screen.dart` — description.
 3. ARB fragments: keys `featureXxx`, `featureXxxDesc` + the feature's strings (§2 Strings).
 4. `dart run tool/build_setup_l10n.dart` and commit `web/setup_l10n.js` AND

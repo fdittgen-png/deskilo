@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'workspace_feature.dart';
+import 'workspace_feature.dart';
 
-// #2386 — the feature registry's data, part 3 of 3 in display
-// order. A new flag's entry goes at the end of the last part; a stock
-// flag (#3823) goes in feature_manifest_stock.dart.
-const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
+// #2386, #4408 — the feature registry in display order, last of three: a new flag ends this map; a stock flag goes in the stock one.
+const Map<WorkspaceFeature, FeatureManifestEntry> lateFeatureManifest = {
   // #1277 — the words themselves, so `everywhere`: the legend, the shell
   // destinations and the booking sheet all read them. Off by default —
   // a space that never renames anything is not shown the control, and
