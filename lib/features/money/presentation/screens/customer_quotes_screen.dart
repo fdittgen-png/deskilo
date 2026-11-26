@@ -18,10 +18,10 @@ import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/async_read_body.dart';
+import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/kit/records_table.dart';
-import '../../../../core/ui/kit/status_chip.dart';
 import '../../domain/customer_quote.dart';
 import '../../providers/billing_customer_providers.dart';
 import '../../providers/customer_quote_providers.dart';
@@ -110,19 +110,6 @@ class _Body extends ConsumerWidget {
   }
 }
 
-/// What a quote's state says about its row: an answer that came is done, one
-/// that waits is on its way, a validity that ran out asks for a look.
-StatusTone _tone(CustomerQuote q) {
-  if (q.expired && q.status == QuoteStatus.sent) return StatusTone.warn;
-  return switch (q.status) {
-    QuoteStatus.sent => StatusTone.info,
-    QuoteStatus.accepted || QuoteStatus.converted => StatusTone.ok,
-    QuoteStatus.draft ||
-    QuoteStatus.declined ||
-    QuoteStatus.cancelled => StatusTone.neutral,
-  };
-}
-
 class _QuotesTable extends StatelessWidget {
   const _QuotesTable({
     required this.quotes,
@@ -157,15 +144,10 @@ class _QuotesTable extends StatelessWidget {
       keyOf: (q) => q.id,
       searchText: (q) => '${q.reference ?? ''} ${customer(q)}',
       onOpen: (q) => context.go(Routes.moneyQuote(q.id)),
-      empty: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.md),
-          child: Text(
-            l10n.quotesEmpty,
-            key: const ValueKey('quotes-empty'),
-            textAlign: TextAlign.center,
-          ),
-        ),
+      empty: EmptyState(
+        key: const ValueKey('quotes-empty'),
+        icon: Icons.request_quote_outlined,
+        title: l10n.quotesEmpty,
       ),
       chips: [
         RecordChip(
@@ -216,7 +198,7 @@ class _QuotesTable extends StatelessWidget {
           sortKey: (q) => q.status.index,
           cell: (_, q) => Align(
             alignment: AlignmentDirectional.centerStart,
-            child: StatusChip(label: quoteStatusLabel(l10n, q), tone: _tone(q)),
+            child: quoteStatusChip(l10n, q),
           ),
         ),
         RecordColumn(

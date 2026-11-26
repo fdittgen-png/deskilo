@@ -6,9 +6,12 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../application/receivables.dart' show InvoiceStatusKind;
 import '../../domain/billing_customer.dart';
 import '../../domain/customer_quote.dart';
+import '../invoicing/invoicing_words.dart' show statusToneOf;
 
 /// The status a person reads: a sent quote past its validity says expired.
 String quoteStatusLabel(AppLocalizations l10n, CustomerQuote q) {
@@ -22,6 +25,29 @@ String quoteStatusLabel(AppLocalizations l10n, CustomerQuote q) {
     QuoteStatus.converted => l10n.quoteStatusConverted,
   };
 }
+
+/// The tone of a quote's state: the invoice's tone for the same meaning
+/// (`statusToneOf`), so one meaning has one colour on every money page — a
+/// draft and a cancelled offer say nothing to act on, a sent one waits for
+/// its customer, an accepted or invoiced one is done, a declined one is a
+/// refusal, and a validity that ran out asks for a look.
+StatusTone _statusTone(CustomerQuote q) => statusToneOf(
+  q.expired && q.status == QuoteStatus.sent
+      ? InvoiceStatusKind.onHold
+      : switch (q.status) {
+          QuoteStatus.draft => InvoiceStatusKind.draft,
+          QuoteStatus.sent => InvoiceStatusKind.awaitingCustomer,
+          QuoteStatus.accepted ||
+          QuoteStatus.converted => InvoiceStatusKind.paid,
+          QuoteStatus.declined => InvoiceStatusKind.eInvoiceRejected,
+          QuoteStatus.cancelled => InvoiceStatusKind.cancelled,
+        },
+);
+
+/// The state of [q] as the list and the quote's own page say it: its words
+/// on its tone.
+StatusChip quoteStatusChip(AppLocalizations l10n, CustomerQuote q, {Key? key}) =>
+    StatusChip(key: key, label: quoteStatusLabel(l10n, q), tone: _statusTone(q));
 
 /// What to say for a refusal of the server; nothing was written.
 String quoteRefusalText(AppLocalizations l10n, QuoteRefusal refusal) =>

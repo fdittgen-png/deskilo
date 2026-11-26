@@ -201,9 +201,17 @@ class _Content extends ConsumerWidget {
         key: const ValueKey('quote-title'),
         style: theme.textTheme.titleLarge,
       ),
-      Text(
-        [quoteStatusLabel(l10n, quote), ?names[quote.subjectId]].join(' · '),
-        key: const ValueKey('quote-status'),
+      const FormGap.small(),
+      // The state is a word on its tone, as in the list; the customer beside it.
+      Wrap(
+        spacing: AppSpacing.sm,
+        runSpacing: AppSpacing.xs,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          quoteStatusChip(l10n, quote, key: const ValueKey('quote-status')),
+          if (names[quote.subjectId] case final name?)
+            Text(name, key: const ValueKey('quote-customer')),
+        ],
       ),
       if (said != null) ...[
         const FormGap(),
