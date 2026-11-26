@@ -44,7 +44,9 @@ jobs:
   preview:
     name: database preview
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # #4492 -- the database tests alone take eleven minutes now (572 files): at
+    # 20 a check named in `race` was cut off before it could answer.
+    timeout-minutes: 40
     # The local stack pulls the Supabase images from GHCR as this job (#3144).
     permissions:
       contents: read
