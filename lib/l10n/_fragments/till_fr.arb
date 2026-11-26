@@ -180,7 +180,7 @@
   "@tillPrinted": {
     "description": "#4368 the till's receipt printer"
   },
-  "tillNotPrinted": "Ticket non imprimé — la vente est terminée. Imprimer à nouveau.",
+  "tillNotPrinted": "Ticket non imprimé — la vente est terminée. Imprimez à nouveau, ou affichez le ticket pour le partager.",
   "@tillNotPrinted": {
     "description": "#4368 the till's receipt printer"
   },

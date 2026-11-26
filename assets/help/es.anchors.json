@@ -140,6 +140,7 @@
   "user.money.stock.scanning": "Trabajar con un escáner",
   "user.money.stock.nfc": "Etiquetas con el NFC del teléfono",
   "user.money.till": "Caja",
+  "user.money.till-printer": "Imprimir el tique y abrir el cajón",
   "user.money.till-drawer": "Abrir la caja, contar y cerrar",
   "user.money.till-layout": "Organizar su caja",
   "user.money.till-offline": "Cuando la caja está sin conexión",

@@ -41711,7 +41711,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tillNotPrinted =>
-      'Receipt not printed — the sale is complete. Print again.';
+      'Receipt not printed — the sale is complete. Print again, or show the receipt to share it.';
 
   @override
   String tillNotReady(String operation) {

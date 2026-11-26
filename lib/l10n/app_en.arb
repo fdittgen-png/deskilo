@@ -54412,7 +54412,7 @@
   "@tillNotForCounter": {
     "description": "#4366 the till"
   },
-  "tillNotPrinted": "Receipt not printed — the sale is complete. Print again.",
+  "tillNotPrinted": "Receipt not printed — the sale is complete. Print again, or show the receipt to share it.",
   "@tillNotPrinted": {
     "description": "#4368 the till's receipt printer"
   },

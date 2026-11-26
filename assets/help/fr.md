@@ -3070,6 +3070,18 @@ Là où votre pays n'autorise pas encore la caisse, elle nomme l'opération manq
 
 Un article tracé indique d'où il a été pris. Quand vous vendez un article suivi par lot sans choisir de lot, la vente le prend dans les lots en stock, celui qui expire le premier d'abord et jamais un lot périmé ; sous la ligne vendue, la caisse affiche le code de chaque lot tel qu'il a été reçu, avec la quantité prise, par exemple **Lot SUP-A × 2 · Lot SUP-B × 1**, et chaque pièce par son étiquette. Si l'entreprise utilise un lecteur, scannez l'étiquette d'une pièce pour l'ajouter : la vente prend exactement les pièces scannées, et la même pièce deux fois est refusée. Ces identifiants de traçabilité sont figés avec le ticket : modifier plus tard un lot ou une étiquette ne change jamais un ticket déjà émis. Dans le stock, la traçabilité d'un lot ou d'une pièce indique le ticket qui l'a vendu.
 
+### Imprimer le ticket et ouvrir le tiroir
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous vendez au comptoir avec une imprimante de tickets sur votre réseau (80 ou 58 mm, ESC/POS), peut-être avec un tiroir-caisse branché dessus.
+
+Activez **Imprimante de tickets** (il faut les sessions de caisse). L'appareil de chaque caisse règle sa propre imprimante : après une vente, appuyez sur **Configurer l'imprimante de tickets**, ou ouvrez **Imprimante de tickets**, puis saisissez l'adresse de l'imprimante sur votre réseau (Adresse de l'imprimante) et son port (9100 sauf indication contraire de l'imprimante), la largeur du papier, la page de codes, si un tiroir-caisse y est relié et si une vente s'imprime d'elle-même, après demande ou seulement à la demande. **Impression d'essai** imprime une page de test.
+
+Après une vente en espèces, le tiroir s'ouvre. **Imprimer le ticket** imprime le ticket ; **Imprimer une copie** l'imprime de nouveau marqué **DUPLICATA 1**, **DUPLICATA 2**, etc. : un duplicata est compté et ne prend jamais un nouveau numéro de ticket. La touche **Ouvrir le tiroir** d'une disposition de caisse ouvre le tiroir hors vente. Quand l'imprimante est injoignable, la caisse affiche **Ticket non imprimé — la vente est terminée. Imprimez à nouveau, ou affichez le ticket pour le partager.** : la vente est terminée dans tous les cas, et le ticket peut être affiché et partagé. Dans un navigateur rien ne s'imprime : l'impression demande l'application.
+
+Testé à ce jour : les octets par rapport aux fichiers de référence et un récepteur local. Aucun modèle d'imprimante n'a encore été essayé.
+
 ### Ouvrir la caisse, compter et fermer
 
 **Public:** Administrateur·rice · Propriétaire

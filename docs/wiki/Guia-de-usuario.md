@@ -3213,6 +3213,19 @@ Donde su país aún no permite la caja, esta nombra la operación que falta y no
 
 Un artículo trazado indica de dónde se tomó. Cuando vende un artículo seguido por lote sin elegir un lote, la venta lo toma de los lotes en existencia, primero el que caduca antes y nunca uno caducado; bajo la línea vendida, la caja muestra el código de cada lote tal como se recibió, con la cantidad tomada, por ejemplo **Lote SUP-A × 2 · Lote SUP-B × 1**, y cada pieza por su etiqueta. Si la empresa usa un lector, escanee la etiqueta de una pieza para añadirla: la venta toma exactamente las piezas escaneadas, y la misma pieza dos veces se rechaza. Estos identificadores de trazabilidad quedan fijados con el ticket: cambiar más tarde un lote o una etiqueta nunca altera un ticket ya emitido. En las existencias, la trazabilidad de un lote o de una pieza indica el ticket que lo vendió.
 
+<!-- anchor: user.money.till-printer -->
+### Imprimir el tique y abrir el cajón
+
+**Público:** Administrador/a · Propietario
+
+Vende en un mostrador con una impresora de tiques en su red (80 o 58 mm, ESC/POS), quizá con un cajón conectado a ella.
+
+Active **Impresora de tiques** (requiere las sesiones de caja). El dispositivo de cada caja configura su propia impresora: tras una venta pulse **Configurar la impresora de tickets**, o abra **Impresora de tickets**, e introduzca la dirección de la impresora en su red (Dirección de la impresora) y su puerto (9100 salvo que la impresora indique otro), el ancho del papel, la página de códigos, si tiene un cajón conectado y si una venta se imprime sola, tras preguntar o solo cuando se pide. **Impresión de prueba** imprime una página de prueba.
+
+Tras una venta en efectivo se abre el cajón. **Imprimir el ticket** imprime el tique; **Imprimir una copia** lo imprime de nuevo marcado **COPIA 1**, **COPIA 2**, etc.: una copia se cuenta y nunca toma un nuevo número de tique. La tecla **Abrir el cajón** de un diseño de caja abre el cajón fuera de una venta. Cuando la impresora no responde, la caja dice **Tique no impreso — la venta está completa. Imprima de nuevo, o muestre el tique para compartirlo.**: la venta está completa en todo caso, y el tique puede mostrarse y compartirse. En un navegador no se imprime nada: imprimir necesita la aplicación.
+
+Probado hasta ahora: los bytes frente a archivos de referencia y un receptor local. Aún no se ha probado ningún modelo de impresora.
+
 <!-- anchor: user.money.till-drawer -->
 ### Abrir la caja, contar y cerrar
 

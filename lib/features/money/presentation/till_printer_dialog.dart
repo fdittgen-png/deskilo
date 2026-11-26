@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/help/help_anchors.dart';
+import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/dropdown_field.dart';
@@ -129,7 +131,7 @@ class _PrinterDialogState extends ConsumerState<_PrinterDialog> {
     final l10n = context.l10n;
     return AlertDialog(
       key: const ValueKey('till-printer-dialog'),
-      title: Text(l10n.tillPrinterTitle),
+      title: Row(children: [Expanded(child: Text(l10n.tillPrinterTitle)), HelpDot(l10n.tillPrinterTitle, anchor: HelpAnchor.moneyTillPrinter)]),
       content: SizedBox(
         width: 420,
         child: !_loaded

@@ -3070,6 +3070,18 @@ Where your country does not yet allow the counter, the till says which operation
 
 A traced good names what it was taken from. When you sell an item tracked by lot without choosing a lot, the sale takes it from the lots on hand, the first to expire first and never an expired one; under the sold line the till shows each lot's code as received with the quantity taken from it, for example **Lot SUP-A × 2 · Lot SUP-B × 1**, and each piece by its tag. Where the business uses a scanner, scan a piece's tag to ring up that piece: the sale takes exactly the pieces scanned, and the same piece twice is refused. These track IDs are frozen with the receipt: changing a lot or a tag later never alters a receipt already issued. In the stock, the trace of a lot or a piece names the receipt that sold it.
 
+### Print the receipt and open the drawer
+
+**Audience:** Administrator · Owner
+
+You sell at a counter with a receipt printer on your network (80 or 58 mm, ESC/POS), perhaps with a cash drawer plugged into it.
+
+Turn on **Receipt printer** (it needs till sessions). Each till's device sets its own printer: after a sale press **Set up the receipt printer**, or open **Receipt printer**, and enter the printer's address on your network (Printer address) and its port (9100 unless the printer says otherwise), the paper width, the code page, whether a cash drawer hangs on it, and whether a sale prints by itself, after asking, or only when asked. **Test print** prints a test page.
+
+After a cash sale the drawer opens. **Print the receipt** prints the receipt; **Print a copy** prints it again marked **COPY 1**, **COPY 2**, and so on: a copy is counted and never takes a new receipt number. The **Open the drawer** key of a till layout opens the drawer outside a sale. When the printer cannot be reached the till says **Receipt not printed — the sale is complete. Print again, or show the receipt to share it.**: the sale is complete either way, and the receipt can be shown and shared. In a browser nothing prints: printing needs the app.
+
+Tested so far: the bytes against goldens and a local listener. No printer model has been tried yet.
+
 ### Open the till, count and close it
 
 **Audience:** Administrator · Owner

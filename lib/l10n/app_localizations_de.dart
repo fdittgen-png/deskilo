@@ -42178,7 +42178,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tillNotPrinted =>
-      'Beleg nicht gedruckt — der Verkauf ist abgeschlossen. Erneut drucken.';
+      'Beleg nicht gedruckt — der Verkauf ist abgeschlossen. Erneut drucken oder den Beleg zeigen und teilen.';
 
   @override
   String tillNotReady(String operation) {

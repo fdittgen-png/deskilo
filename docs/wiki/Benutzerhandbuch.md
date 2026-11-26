@@ -3213,6 +3213,19 @@ Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang 
 
 Ein rückverfolgter Artikel nennt, woraus er entnommen wurde. Verkaufen Sie einen chargengeführten Artikel, ohne eine Charge zu wählen, entnimmt der Verkauf ihn den vorrätigen Chargen, die zuerst ablaufende zuerst und nie eine abgelaufene; unter der verkauften Zeile zeigt die Kasse den Code jeder Charge wie beim Wareneingang mit der entnommenen Menge, zum Beispiel **Charge SUP-A × 2 · Charge SUP-B × 1**, und jedes Stück mit seinem Tag. Nutzt das Unternehmen einen Scanner, scannen Sie den Tag eines Stücks, um dieses Stück zu buchen: Der Verkauf nimmt genau die gescannten Stücke, und dasselbe Stück zweimal wird abgelehnt. Diese Rückverfolgungs-IDs werden mit dem Beleg festgeschrieben: Eine spätere Änderung einer Charge oder eines Tags ändert einen bereits ausgestellten Beleg nie. Im Lager nennt die Rückverfolgung einer Charge oder eines Stücks den Beleg, mit dem es verkauft wurde.
 
+<!-- anchor: user.money.till-printer -->
+### Den Beleg drucken und die Kassenlade öffnen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie verkaufen an einer Theke mit einem Bondrucker in Ihrem Netz (80 oder 58 mm, ESC/POS), vielleicht mit einer daran angeschlossenen Kassenlade.
+
+Schalten Sie **Bondrucker** ein (es braucht Kassensitzungen). Jedes Gerät einer Kasse stellt seinen eigenen Drucker ein: Tippen Sie nach einem Verkauf auf **Bondrucker einrichten** oder öffnen Sie **Bondrucker** und geben Sie die Adresse des Druckers in Ihrem Netz (Adresse des Druckers) und seinen Port ein (9100, sofern der Drucker nichts anderes sagt), die Papierbreite, den Zeichensatz, ob eine Kassenlade daran hängt und ob ein Verkauf von selbst, nach Rückfrage oder nur auf Wunsch druckt. **Testdruck** druckt eine Testseite.
+
+Nach einem Barverkauf öffnet sich die Kassenlade. **Beleg drucken** druckt den Beleg; **Kopie drucken** druckt ihn erneut als **KOPIE 1**, **KOPIE 2** usw.: Eine Kopie wird gezählt und erhält nie eine neue Belegnummer. Die Taste **Schublade öffnen** eines Kassenlayouts öffnet die Lade außerhalb eines Verkaufs. Ist der Drucker nicht erreichbar, sagt die Kasse **Beleg nicht gedruckt — der Verkauf ist abgeschlossen. Erneut drucken oder den Beleg zeigen und teilen.**: Der Verkauf ist in jedem Fall abgeschlossen, und der Beleg kann gezeigt und geteilt werden. Im Browser wird nichts gedruckt: Drucken braucht die App.
+
+Bisher getestet: die Bytes gegen Referenzdateien und ein lokaler Empfänger. Noch kein Druckermodell wurde ausprobiert.
+
 <!-- anchor: user.money.till-drawer -->
 ### Kasse öffnen, zählen und schließen
 

@@ -3070,6 +3070,18 @@ Dove il suo paese non consente ancora la cassa, questa indica l'operazione manca
 
 Un articolo tracciato indica da dove è stato preso. Quando vende un articolo gestito a lotti senza scegliere un lotto, la vendita lo preleva dai lotti in giacenza, prima quello che scade per primo e mai uno scaduto; sotto la riga venduta la cassa mostra il codice di ogni lotto come è stato ricevuto, con la quantità prelevata, per esempio **Lotto SUP-A × 2 · Lotto SUP-B × 1**, e ogni pezzo con la sua etichetta. Se l'azienda usa un lettore, scansioni l'etichetta di un pezzo per aggiungerlo: la vendita preleva esattamente i pezzi scansionati, e lo stesso pezzo due volte viene rifiutato. Questi identificativi di tracciabilità sono fissati con lo scontrino: modificare in seguito un lotto o un'etichetta non altera mai uno scontrino già emesso. Nel magazzino, la tracciabilità di un lotto o di un pezzo indica lo scontrino che lo ha venduto.
 
+### Stampare lo scontrino e aprire il cassetto
+
+**Destinatari:** Amministratore · Proprietario
+
+Vende al banco con una stampante di scontrini nella Sua rete (80 o 58 mm, ESC/POS), forse con un cassetto collegato.
+
+Attivi **Stampante di scontrini** (servono le sessioni di cassa). Il dispositivo di ogni cassa imposta la propria stampante: dopo una vendita prema **Configura la stampante di scontrini**, oppure apra **Stampante di scontrini**, e inserisca l'indirizzo della stampante nella Sua rete (Indirizzo della stampante) e la porta (9100 salvo indicazione diversa della stampante), la larghezza della carta, la tabella di codici, se vi è collegato un cassetto e se una vendita si stampa da sé, dopo una domanda o solo su richiesta. **Stampa di prova** stampa una pagina di prova.
+
+Dopo una vendita in contanti il cassetto si apre. **Stampa lo scontrino** stampa lo scontrino; **Stampa una copia** lo stampa di nuovo contrassegnato **COPIA 1**, **COPIA 2** e così via: una copia è contata e non prende mai un nuovo numero di scontrino. Il tasto **Aprire il cassetto** di un layout di cassa apre il cassetto fuori da una vendita. Quando la stampante non risponde, la cassa dice **Scontrino non stampato — la vendita è completa. Stampi di nuovo, o mostri lo scontrino per condividerlo.**: la vendita è comunque completa, e lo scontrino può essere mostrato e condiviso. In un browser non si stampa nulla: stampare richiede l'app.
+
+Provato finora: i byte rispetto ai file di riferimento e un ricevitore locale. Nessun modello di stampante è stato ancora provato.
+
 ### Aprire la cassa, contare e chiudere
 
 **Destinatari:** Amministratore · Proprietario

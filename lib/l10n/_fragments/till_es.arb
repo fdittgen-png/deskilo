@@ -180,7 +180,7 @@
   "@tillPrinted": {
     "description": "#4368 the till's receipt printer"
   },
-  "tillNotPrinted": "Ticket no impreso — la venta está completa. Imprimir de nuevo.",
+  "tillNotPrinted": "Tique no impreso — la venta está completa. Imprima de nuevo, o muestre el tique para compartirlo.",
   "@tillNotPrinted": {
     "description": "#4368 the till's receipt printer"
   },

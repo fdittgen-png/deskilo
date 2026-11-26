@@ -140,6 +140,7 @@
   "user.money.stock.scanning": "Mit einem Scanner arbeiten",
   "user.money.stock.nfc": "Tags mit dem NFC des Telefons",
   "user.money.till": "Kasse",
+  "user.money.till-printer": "Den Beleg drucken und die Kassenlade öffnen",
   "user.money.till-drawer": "Kasse öffnen, zählen und schließen",
   "user.money.till-layout": "Ihre Kasse gestalten",
   "user.money.till-offline": "Wenn die Kasse offline ist",

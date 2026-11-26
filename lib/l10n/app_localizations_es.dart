@@ -42057,7 +42057,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tillNotPrinted =>
-      'Ticket no impreso — la venta está completa. Imprimir de nuevo.';
+      'Tique no impreso — la venta está completa. Imprima de nuevo, o muestre el tique para compartirlo.';
 
   @override
   String tillNotReady(String operation) {

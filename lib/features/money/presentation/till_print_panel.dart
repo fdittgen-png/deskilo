@@ -9,6 +9,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/help/help_anchors.dart';
+import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -149,7 +151,12 @@ class _TillPrintPanelState extends ConsumerState<TillPrintPanel> {
             _Print.failed => Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(l10n.tillNotPrinted, key: const ValueKey('till-not-printed'), style: TextStyle(color: Theme.of(context).colorScheme.error)),
+                Row(
+                  children: [
+                    Expanded(child: Text(l10n.tillNotPrinted, key: const ValueKey('till-not-printed'), style: TextStyle(color: Theme.of(context).colorScheme.error))),
+                    HelpDot(l10n.tillPrinterTitle, anchor: HelpAnchor.moneyTillPrinter),
+                  ],
+                ),
                 TextButton(key: const ValueKey('till-print-again'), onPressed: _print, child: Text(l10n.tillPrintCopy)),
               ],
             ),

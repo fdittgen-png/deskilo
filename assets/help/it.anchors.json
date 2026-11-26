@@ -140,6 +140,7 @@
   "user.money.stock.scanning": "Lavorare con uno scanner",
   "user.money.stock.nfc": "Tag con l’NFC del telefono",
   "user.money.till": "Cassa",
+  "user.money.till-printer": "Stampare lo scontrino e aprire il cassetto",
   "user.money.till-drawer": "Aprire la cassa, contare e chiudere",
   "user.money.till-layout": "Organizzare la Sua cassa",
   "user.money.till-offline": "Quando la cassa è offline",

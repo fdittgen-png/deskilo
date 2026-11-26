@@ -24312,7 +24312,7 @@
   "@tillNotForCounter": {
     "description": "#4366 the till"
   },
-  "tillNotPrinted": "Beleg nicht gedruckt — der Verkauf ist abgeschlossen. Erneut drucken.",
+  "tillNotPrinted": "Beleg nicht gedruckt — der Verkauf ist abgeschlossen. Erneut drucken oder den Beleg zeigen und teilen.",
   "@tillNotPrinted": {
     "description": "#4368 the till's receipt printer"
   },

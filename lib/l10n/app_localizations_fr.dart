@@ -42236,7 +42236,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tillNotPrinted =>
-      'Ticket non imprimé — la vente est terminée. Imprimer à nouveau.';
+      'Ticket non imprimé — la vente est terminée. Imprimez à nouveau, ou affichez le ticket pour le partager.';
 
   @override
   String tillNotReady(String operation) {

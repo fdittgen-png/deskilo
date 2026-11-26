@@ -24312,7 +24312,7 @@
   "@tillNotForCounter": {
     "description": "#4366 the till"
   },
-  "tillNotPrinted": "Scontrino non stampato — la vendita è completa. Stampa di nuovo.",
+  "tillNotPrinted": "Scontrino non stampato — la vendita è completa. Stampi di nuovo, o mostri lo scontrino per condividerlo.",
   "@tillNotPrinted": {
     "description": "#4368 the till's receipt printer"
   },

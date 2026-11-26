@@ -42107,7 +42107,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tillNotPrinted =>
-      'Scontrino non stampato — la vendita è completa. Stampa di nuovo.';
+      'Scontrino non stampato — la vendita è completa. Stampi di nuovo, o mostri lo scontrino per condividerlo.';
 
   @override
   String tillNotReady(String operation) {

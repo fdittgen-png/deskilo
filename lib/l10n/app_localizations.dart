@@ -67175,7 +67175,7 @@ abstract class AppLocalizations {
   /// #4368 the till's receipt printer
   ///
   /// In en, this message translates to:
-  /// **'Receipt not printed — the sale is complete. Print again.'**
+  /// **'Receipt not printed — the sale is complete. Print again, or show the receipt to share it.'**
   String get tillNotPrinted;
 
   /// #4366 the till
