@@ -151,10 +151,6 @@
   "@itemGroupDeleted": {
     "description": "#4361 G12 item groups: itemGroupDeleted"
   },
-  "itemGroupAssignOpen": "Group and inherited settings",
-  "@itemGroupAssignOpen": {
-    "description": "#4361 G12 item groups: itemGroupAssignOpen"
-  },
   "itemGroupAssignTitle": "Group of {item}",
   "@itemGroupAssignTitle": {
     "description": "#4361 G12 item groups: itemGroupAssignTitle",

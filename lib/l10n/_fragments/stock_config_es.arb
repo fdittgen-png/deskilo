@@ -1,9 +1,5 @@
 {
   "@@locale": "es",
-  "stockEditItem": "Ajustes de existencias",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Ajustes de existencias de {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -268,10 +264,6 @@
   "stockReasonOther": "Esto no es válido.",
   "@stockReasonOther": {
     "description": "#4169 the stock editors: a text under a field the server refused"
-  },
-  "stockVariantsEdit": "Variantes",
-  "@stockVariantsEdit": {
-    "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsTitle": "Variantes de {item}",
   "@stockVariantsTitle": {

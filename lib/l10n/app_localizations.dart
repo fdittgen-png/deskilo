@@ -30073,12 +30073,6 @@ abstract class AppLocalizations {
   /// **'No group'**
   String get itemGroupAssignNone;
 
-  /// #4361 G12 item groups: itemGroupAssignOpen
-  ///
-  /// In en, this message translates to:
-  /// **'Group and inherited settings'**
-  String get itemGroupAssignOpen;
-
   /// #4361 G12 item groups: itemGroupAssignTitle
   ///
   /// In en, this message translates to:
@@ -58772,12 +58766,6 @@ abstract class AppLocalizations {
   /// #4169 the stock editors: a label or message
   ///
   /// In en, this message translates to:
-  /// **'Stock settings'**
-  String get stockEditItem;
-
-  /// #4169 the stock editors: a label or message
-  ///
-  /// In en, this message translates to:
   /// **'Stock settings of {item}'**
   String stockEditItemTitle(String item);
 
@@ -59087,11 +59075,113 @@ abstract class AppLocalizations {
   /// **'Add an item'**
   String get stockItemAddTitle;
 
+  /// #4480 Stock items: the badge on an item's row and page for something the item needs
+  ///
+  /// In en, this message translates to:
+  /// **'Low stock'**
+  String get stockItemAttentionLow;
+
+  /// #4480 Stock items: the badge on an item's row and page for something the item needs
+  ///
+  /// In en, this message translates to:
+  /// **'No place'**
+  String get stockItemAttentionNoPlace;
+
+  /// #4480 Stock items: the badge on an item's row and page for something the item needs
+  ///
+  /// In en, this message translates to:
+  /// **'No price'**
+  String get stockItemAttentionNoPrice;
+
   /// #4470 Stock items: tooltip of the button that opens the service editor for the item
   ///
   /// In en, this message translates to:
   /// **'Edit name, price and VAT'**
   String get stockItemEditDetails;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Change group'**
+  String get stockItemEditGroup;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Change home place'**
+  String get stockItemEditHome;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Edit units, codes and tracking'**
+  String get stockItemEditSettings;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Edit supplier items'**
+  String get stockItemEditSuppliers;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Edit tags'**
+  String get stockItemEditTags;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Edit variants'**
+  String get stockItemEditVariants;
+
+  /// #4480 the page of one stock item: the label above one of its facts
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode'**
+  String get stockItemFactBarcode;
+
+  /// #4480 the page of one stock item: the label above one of its facts
+  ///
+  /// In en, this message translates to:
+  /// **'Last known cost'**
+  String get stockItemFactCost;
+
+  /// #4480 the page of one stock item: the label above one of its facts
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get stockItemFactGroup;
+
+  /// #4480 the page of one stock item: the label above one of its facts
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get stockItemFactPrice;
+
+  /// #4480 the page of one stock item: the label above one of its facts
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get stockItemFactUnit;
+
+  /// #4480 the page of one stock item: the label above one of its facts
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get stockItemFactVat;
+
+  /// #4480 Stock items: a filter chip above the list
+  ///
+  /// In en, this message translates to:
+  /// **'All items'**
+  String get stockItemFilterAll;
+
+  /// #4480 Stock items: a filter chip above the list
+  ///
+  /// In en, this message translates to:
+  /// **'Without a home place'**
+  String get stockItemFilterNoHome;
 
   /// #4350 a new item from the Stock page
   ///
@@ -59152,6 +59242,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Counted in'**
   String get stockItemNewUnit;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'In no group'**
+  String get stockItemNoGroup;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier article names this item yet.'**
+  String get stockItemNoSuppliers;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'This item has no variants.'**
+  String get stockItemNoVariants;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'None of it is in stock.'**
+  String get stockItemNothingOnHand;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Where it is'**
+  String get stockItemPlacesTitle;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Group and tags'**
+  String get stockItemSectionGroupTags;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get stockItemSectionOverview;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Stock'**
+  String get stockItemSectionStock;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier items'**
+  String get stockItemSectionSuppliers;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Variants'**
+  String get stockItemSectionVariants;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'See every place'**
+  String get stockItemSeeWhere;
 
   /// the stock pages and group (#4299)
   ///
@@ -60272,12 +60428,6 @@ abstract class AppLocalizations {
   /// #4293 the registry of the stock: a label or a message
   ///
   /// In en, this message translates to:
-  /// **'cost {amount}'**
-  String stockRegistryCost(String amount);
-
-  /// #4293 the registry of the stock: a label or a message
-  ///
-  /// In en, this message translates to:
   /// **'cost not shown'**
   String get stockRegistryCostHidden;
 
@@ -60332,12 +60482,6 @@ abstract class AppLocalizations {
   /// #4293 the registry of the stock: a label or a message
   ///
   /// In en, this message translates to:
-  /// **'Only items with no home place'**
-  String get stockRegistryNoHomeFilter;
-
-  /// #4293 the registry of the stock: a label or a message
-  ///
-  /// In en, this message translates to:
   /// **'{quantity} on hand'**
   String stockRegistryOnHand(String quantity);
 
@@ -60346,12 +60490,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home place'**
   String get stockRegistryPlaceFilter;
-
-  /// #4293 the registry of the stock: a label or a message
-  ///
-  /// In en, this message translates to:
-  /// **'price {amount}'**
-  String stockRegistryPrice(String amount);
 
   /// #4293 the registry of the stock: a label or a message
   ///
@@ -61617,12 +61755,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add a variant'**
   String get stockVariantsAdd;
-
-  /// #4169 the stock editors: a label or message
-  ///
-  /// In en, this message translates to:
-  /// **'Variants'**
-  String get stockVariantsEdit;
 
   /// #4169 the stock editors: a label or message
   ///

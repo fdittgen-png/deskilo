@@ -19034,9 +19034,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get itemGroupAssignNone => 'Sin grupo';
 
   @override
-  String get itemGroupAssignOpen => 'Grupo y ajustes heredados';
-
-  @override
   String itemGroupAssignTitle(String item) {
     return 'Grupo de $item';
   }
@@ -36999,9 +36996,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockEditInventoryUnitChoice => 'Unidad de inventario';
 
   @override
-  String get stockEditItem => 'Ajustes de existencias';
-
-  @override
   String stockEditItemTitle(String item) {
     return 'Ajustes de existencias de $item';
   }
@@ -37178,7 +37172,58 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockItemAddTitle => 'Añadir un artículo';
 
   @override
+  String get stockItemAttentionLow => 'Existencias bajas';
+
+  @override
+  String get stockItemAttentionNoPlace => 'Sin ubicación';
+
+  @override
+  String get stockItemAttentionNoPrice => 'Sin precio';
+
+  @override
   String get stockItemEditDetails => 'Editar nombre, precio e IVA';
+
+  @override
+  String get stockItemEditGroup => 'Cambiar de grupo';
+
+  @override
+  String get stockItemEditHome => 'Cambiar la ubicación habitual';
+
+  @override
+  String get stockItemEditSettings => 'Editar unidades, códigos y seguimiento';
+
+  @override
+  String get stockItemEditSuppliers => 'Editar artículos del proveedor';
+
+  @override
+  String get stockItemEditTags => 'Editar etiquetas';
+
+  @override
+  String get stockItemEditVariants => 'Editar variantes';
+
+  @override
+  String get stockItemFactBarcode => 'Código de barras';
+
+  @override
+  String get stockItemFactCost => 'Último coste conocido';
+
+  @override
+  String get stockItemFactGroup => 'Grupo';
+
+  @override
+  String get stockItemFactPrice => 'Precio';
+
+  @override
+  String get stockItemFactUnit => 'Unidad';
+
+  @override
+  String get stockItemFactVat => 'IVA';
+
+  @override
+  String get stockItemFilterAll => 'Todos los artículos';
+
+  @override
+  String get stockItemFilterNoHome => 'Sin ubicación habitual';
 
   @override
   String get stockItemNewBarcode => 'Código de barras (opcional)';
@@ -37211,6 +37256,40 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockItemNewUnit => 'Contado en';
+
+  @override
+  String get stockItemNoGroup => 'En ningún grupo';
+
+  @override
+  String get stockItemNoSuppliers =>
+      'Ningún artículo de proveedor designa aún este artículo.';
+
+  @override
+  String get stockItemNoVariants => 'Este artículo no tiene variantes.';
+
+  @override
+  String get stockItemNothingOnHand => 'No hay nada en existencias.';
+
+  @override
+  String get stockItemPlacesTitle => 'Dónde está';
+
+  @override
+  String get stockItemSectionGroupTags => 'Grupo y etiquetas';
+
+  @override
+  String get stockItemSectionOverview => 'Resumen';
+
+  @override
+  String get stockItemSectionStock => 'Existencias';
+
+  @override
+  String get stockItemSectionSuppliers => 'Artículos del proveedor';
+
+  @override
+  String get stockItemSectionVariants => 'Variantes';
+
+  @override
+  String get stockItemSeeWhere => 'Ver todas las ubicaciones';
 
   @override
   String get stockItemsEmpty =>
@@ -37916,11 +37995,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockRegistryAllPlaces => 'Todas las ubicaciones';
 
   @override
-  String stockRegistryCost(String amount) {
-    return 'coste $amount';
-  }
-
-  @override
   String get stockRegistryCostHidden => 'coste no mostrado';
 
   @override
@@ -37953,21 +38027,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockRegistryNoHome => 'sin ubicación habitual';
 
   @override
-  String get stockRegistryNoHomeFilter =>
-      'Solo artículos sin ubicación habitual';
-
-  @override
   String stockRegistryOnHand(String quantity) {
     return '$quantity disponibles';
   }
 
   @override
   String get stockRegistryPlaceFilter => 'Ubicación habitual';
-
-  @override
-  String stockRegistryPrice(String amount) {
-    return 'precio $amount';
-  }
 
   @override
   String get stockRegistrySearch =>
@@ -38759,9 +38824,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockVariantsAdd => 'Añadir una variante';
-
-  @override
-  String get stockVariantsEdit => 'Variantes';
 
   @override
   String get stockVariantsHint =>

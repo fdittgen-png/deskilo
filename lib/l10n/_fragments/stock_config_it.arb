@@ -1,9 +1,5 @@
 {
   "@@locale": "it",
-  "stockEditItem": "Impostazioni di magazzino",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Impostazioni di magazzino di {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -268,10 +264,6 @@
   "stockReasonOther": "Questo non è valido.",
   "@stockReasonOther": {
     "description": "#4169 the stock editors: a text under a field the server refused"
-  },
-  "stockVariantsEdit": "Varianti",
-  "@stockVariantsEdit": {
-    "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsTitle": "Varianti di {item}",
   "@stockVariantsTitle": {
