@@ -24,6 +24,17 @@ const _fees = {
   'member-1': 9500,
 };
 
+/// #4492 — ONE price rule, as the first space's (#3601): the fee bands the
+/// members' plan fee and the live statement read are the fees the invoices
+/// charge (a 50 % plan as Mehmet's, a full plan as Lena's), so a member's
+/// plan, statement and invoice say one amount. The store's default bands
+/// (150 / 250) are another space's prices.
+void alignLeipzigBandsWithFees(FakeMoneyRepository money) {
+  for (final (index, member) in [(1, 'de-member-mehmet'), (2, 'de-member-lena')]) {
+    money.feeBands[index] = money.feeBands[index].copyWith(feeCents: _fees[member]!);
+  }
+}
+
 String _nameOf(String memberId) =>
     demoSecondCast.firstWhere((p) => p.memberId == memberId).name;
 
@@ -32,6 +43,7 @@ String _nameOf(String memberId) =>
 void seedLeipzigMoney(FakeMoneyRepository money, DateTime now) {
   final thisMonth = DateTime(now.year, now.month);
   final lastMonth = DateTime(now.year, now.month - 1);
+  alignLeipzigBandsWithFees(money);
   money
     ..invoices.clear()
     ..services.clear()
