@@ -57,14 +57,17 @@ esp_err_t net_connect(const char *ssid, const char *pass) {
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &w));
     ESP_ERROR_CHECK(esp_wifi_start());
+    // #4450 -- a till on a USB supply answers taps: without the modem sleep that is the station's default, an answer no
+    // longer waits for the access point's next beacon (about 100 ms, more on some) before the radio hears it.
+    ESP_ERROR_CHECK(esp_wifi_set_ps(WIFI_PS_NONE));
     if (!(xEventGroupWaitBits(s_ev, BIT_UP, pdFALSE, pdTRUE, pdMS_TO_TICKS(30000)) & BIT_UP)) return ESP_ERR_TIMEOUT;
     esp_sntp_setoperatingmode(SNTP_OPMODE_POLL);
     esp_sntp_setservername(0, "pool.ntp.org");
     esp_sntp_init();
-    for (int i = 0; i < 40; i++) {   // certificates are checked against the date: wait for the clock
+    for (int i = 0; i < 200; i++) {   // certificates are checked against the date: wait for the clock (20 s at most)
         time_t now = time(NULL);
         if (now > 1700000000) return ESP_OK;
-        vTaskDelay(pdMS_TO_TICKS(500));
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
     return ESP_ERR_TIMEOUT;
 }
