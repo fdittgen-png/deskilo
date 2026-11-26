@@ -194,6 +194,7 @@ String featureDescription(AppLocalizations l10n, WorkspaceFeature feature) => sw
       WorkspaceFeature.unitsOfMeasure => l10n.featureUnitsOfMeasureDesc,
       WorkspaceFeature.counterTillLayout => l10n.featureCounterTillLayoutDesc,
       WorkspaceFeature.counterReceiptPrinter => l10n.featureCounterReceiptPrinterDesc,
+      WorkspaceFeature.counterEmbeddedTerminal => l10n.featureCounterEmbeddedTerminalDesc,
 };
 
 /// #2454 — "Available in the European Union, Norway": the countries a
