@@ -64,21 +64,23 @@ abstract interface class UnitConversions {
   required Iterable<UnitConversion> general,
 }) {
   if (from == null || from == to) return (num: 1, den: 1);
-  if (inventoryUnit != null) {
-    if (to == inventoryUnit) {
-      for (final u in itemUnits) {
-        if (u.unit == from) return (num: u.factorNum, den: u.factorDen);
-      }
-    } else if (from == inventoryUnit) {
-      for (final u in itemUnits) {
-        if (u.unit == to) return (num: u.factorDen, den: u.factorNum);
-      }
-    }
+  return _itemStep(from, to, inventoryUnit, itemUnits) ?? _generalStep(from, to, general);
+}
+
+/// The item's own conversion between its unit and its inventory unit, either way round.
+({int num, int den})? _itemStep(String from, String to, String? inventoryUnit, List<StockUnitDraft> itemUnits) {
+  for (final u in itemUnits) {
+    if (inventoryUnit == null) break;
+    if (to == inventoryUnit && u.unit == from) return (num: u.factorNum, den: u.factorDen);
+    if (from == inventoryUnit && u.unit == to) return (num: u.factorDen, den: u.factorNum);
   }
+  return null;
+}
+
+/// The business's general conversion of the pair, written either way round.
+({int num, int den})? _generalStep(String from, String to, Iterable<UnitConversion> general) {
   for (final c in general) {
     if (c.fromUnit == from && c.toUnit == to) return (num: c.factorNum, den: c.factorDen);
-  }
-  for (final c in general) {
     if (c.fromUnit == to && c.toUnit == from) return (num: c.factorDen, den: c.factorNum);
   }
   return null;

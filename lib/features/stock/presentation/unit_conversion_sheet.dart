@@ -6,7 +6,6 @@
 // The server decides what is refused and the sheet says it in words.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../core/format/decimal_input.dart';
 import '../../../core/i18n/format_controller.dart';
@@ -21,6 +20,11 @@ import '../domain/unit_conversions.dart';
 import '../domain/workspace_units.dart';
 import 'measure_unit_text.dart';
 import 'stock_config_text.dart';
+import 'stock_quantity_field.dart';
+
+const _fromField = 'from';
+const _toField = 'to';
+const _factorField = 'factor';
 
 /// Opens the form of [conversion] (null: a new one) over the business's [units]. [onDone] runs once it is saved.
 Future<void> showUnitConversionSheet(
@@ -38,12 +42,12 @@ Future<void> showUnitConversionSheet(
       if (!u.archived && u.dimension != UnitDimension.package) u,
   ];
   final fields = FormControllers({
-    'factor': conversion == null ? '' : _factorText(conversion, locale),
+    _factorField: conversion == null ? '' : _factorText(conversion, locale),
   });
   final requestId = newRequestId();
   String? from = conversion?.fromUnit;
   String? to = conversion?.toUnit;
-  ExactQuantity? factor() => exactQuantityFromInput(fields['factor'].text, locale: locale).value;
+  ExactQuantity? factor() => exactQuantityFromInput(fields[_factorField].text, locale: locale).value;
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -52,9 +56,9 @@ Future<void> showUnitConversionSheet(
       submitKey: const ValueKey('unit-conversion-save'),
       onDispose: fields.dispose,
       validate: () => {
-        if (from == null) 'from_unit': l10n.stockReasonUnitUnknown,
-        if (to == null) 'to_unit': l10n.stockReasonUnitUnknown else if (to == from) 'to_unit': l10n.stockReasonConversionSameUnit,
-        if (factor() == null || factorOfQuantity(factor()!) == null) 'factor': l10n.stockReasonFactorInvalid,
+        if (from == null) _fromField: l10n.stockReasonUnitUnknown,
+        if (to == null) _toField: l10n.stockReasonUnitUnknown else if (to == from) _toField: l10n.stockReasonConversionSameUnit,
+        if (factor() == null || factorOfQuantity(factor()!) == null) _factorField: l10n.stockReasonFactorInvalid,
       },
       onSubmit: () async {
         final fraction = factorOfQuantity(factor()!)!;
@@ -72,54 +76,44 @@ Future<void> showUnitConversionSheet(
         }
       },
       builder: (context, refresh) => [
-        // the sheet's builder runs above the form's error scope: the dropdowns read it from inside
-        Builder(
-          builder: (scope) => AppDropdownField<String>(
-            key: const ValueKey('unit-conversion-from'),
-            label: l10n.unitConversionFrom,
-            value: from,
-            error: FormErrorsScope.maybeOf(scope)?.errors['from_unit'],
-            items: [for (final u in offered) (u.code, measureUnitName(l10n, u))],
-            onChanged: conversion != null
-                ? null
-                : (v) {
-                    from = v;
-                    FormErrorsScope.maybeOf(scope)?.onEdit('from_unit');
-                    refresh();
-                  },
-          ),
-        ),
+        _unitField(_fromField, l10n.unitConversionFrom, from, offered, conversion != null ? null : (v) {
+          from = v;
+          refresh();
+        }),
         const FormGap(),
-        Builder(
-          builder: (scope) => AppDropdownField<String>(
-            key: const ValueKey('unit-conversion-to'),
-            label: l10n.unitConversionTo,
-            value: to,
-            error: FormErrorsScope.maybeOf(scope)?.errors['to_unit'],
-            items: [for (final u in offered) (u.code, measureUnitName(l10n, u))],
-            onChanged: conversion != null
-                ? null
-                : (v) {
-                    to = v;
-                    FormErrorsScope.maybeOf(scope)?.onEdit('to_unit');
-                    refresh();
-                  },
-          ),
-        ),
+        _unitField(_toField, l10n.unitConversionTo, to, offered, conversion != null ? null : (v) {
+          to = v;
+          refresh();
+        }),
         const FormGap(),
-        AppTextField(
+        StockQuantityField(
           key: const ValueKey('unit-conversion-factor'),
-          controller: fields['factor'],
-          fieldKey: 'factor',
+          controller: fields[_factorField],
+          fieldKey: _factorField,
           label: l10n.unitConversionFactor,
           helper: from == null || to == null ? null : l10n.unitConversionFactorHelp(_nameOf(l10n, offered, from!), _nameOf(l10n, offered, to!)),
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         ),
       ],
     ),
   );
 }
+
+/// One unit dropdown of the form: the problem under it is the sheet's, and picking clears it. A null [onPick] shows the unit, unchanged.
+Widget _unitField(String errorKey, String label, String? value, List<WorkspaceUnit> offered, void Function(String)? onPick) => Builder(
+  builder: (scope) => AppDropdownField<String>(
+    key: ValueKey('unit-conversion-$errorKey'),
+    label: label,
+    value: value,
+    error: FormErrorsScope.maybeOf(scope)?.errors[errorKey],
+    items: [for (final u in offered) (u.code, measureUnitName(scope.l10n, u))],
+    onChanged: onPick == null
+        ? null
+        : (v) {
+            FormErrorsScope.maybeOf(scope)?.onEdit(errorKey);
+            if (v != null) onPick(v);
+          },
+  ),
+);
 
 String _nameOf(AppLocalizations l10n, List<WorkspaceUnit> units, String code) {
   final unit = units.where((u) => u.code == code).firstOrNull;

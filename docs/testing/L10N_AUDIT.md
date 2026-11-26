@@ -12,10 +12,10 @@ Positions read: label, field label, field hint, field helper, field error, field
 |---|---|---|---|---|
 | `lib/core/demo/data/demo_stock_config_commands.dart:273` | label | Red | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/data/demo_stock_config_commands.dart:274` | label | Blue | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/data/demo_workspace_units.dart:32` | label | Box | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/data/demo_workspace_units.dart:33` | label | Carton | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/data/demo_workspace_units.dart:34` | label | Third | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/data/demo_workspace_units.dart:35` | label | Roll | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/data/demo_workspace_units.dart:35` | label | Box | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/data/demo_workspace_units.dart:36` | label | Carton | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/data/demo_workspace_units.dart:37` | label | Third | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/data/demo_workspace_units.dart:38` | label | Roll | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:57` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:69` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:81` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
