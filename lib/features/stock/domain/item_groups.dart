@@ -26,16 +26,26 @@ const itemGroupEditable = [
   'supply_class',
 ];
 
+/// The names of the unit proposals of a group, as the server keeps them (#4479): bought in, sold in, each with its factor to the inventory
+/// unit, and the price of one sale unit.
+const groupParamPurchaseUnit = 'default_purchase_unit';
+const groupParamPurchaseFactorNum = 'default_purchase_factor_num';
+const groupParamPurchaseFactorDen = 'default_purchase_factor_den';
+const groupParamSaleUnit = 'default_sale_unit';
+const groupParamSaleFactorNum = 'default_sale_factor_num';
+const groupParamSaleFactorDen = 'default_sale_factor_den';
+const groupParamSalePrice = 'default_sale_price_cents';
+
 /// The proposals a group carries: copied into a new item as a starting point, never inherited and never linked, so a
 /// change of one reaches no item.
 const itemGroupProposals = [
-  'default_purchase_unit',
-  'default_purchase_factor_num',
-  'default_purchase_factor_den',
-  'default_sale_unit',
-  'default_sale_factor_num',
-  'default_sale_factor_den',
-  'default_sale_price_cents',
+  groupParamPurchaseUnit,
+  groupParamPurchaseFactorNum,
+  groupParamPurchaseFactorDen,
+  groupParamSaleUnit,
+  groupParamSaleFactorNum,
+  groupParamSaleFactorDen,
+  groupParamSalePrice,
   'reorder_point_default',
   'reorder_quantity_default',
   'home_zone_id',

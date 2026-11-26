@@ -37,7 +37,7 @@ void main() {
     );
     expect(GroupUnitProposals.initial(group, _format), {
       'purchaseUnit': 'kg',
-      'factor': '1/3',
+      'purchaseFactor': '1/3',
       'saleUnit': 'l',
       'saleFactor': '12',
       'salePrice': '11.00',
