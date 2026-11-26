@@ -17,7 +17,9 @@ import 'lint_sources.dart';
 const _notForTheApp = <String, String>{
   'DKL03':
       'the server\'s guard that a finalized counter receipt, its lines and a tender\'s amount are never edited: '
-      'no screen edits them, and a correction is a new receipt (0893)',
+      'no screen edits them, and a correction is a new receipt (0893); the same guard code for what only the server\'s '
+      'own role could reach on the other posted rows: the site of a posted row, a recorded original, a posted table '
+      'emptied in one statement (0980)',
   'DKL09':
       'the versioned reader of a frozen counter receipt refusing a version it does not know: a reader\'s guard, '
       'never a user action (0893)',
