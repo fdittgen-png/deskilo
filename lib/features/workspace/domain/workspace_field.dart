@@ -106,6 +106,19 @@ class WorkspaceFieldOption {
   /// than blank and therefore not.
   String labelIn(String locale, {String fallbackLocale = 'en'}) =>
       labels[locale] ?? labels[fallbackLocale] ?? key;
+
+  /// This choice with only what is given changed. The key is never given:
+  /// the answers point at it.
+  WorkspaceFieldOption copyWith({
+    Map<String, String>? labels,
+    int? sortOrder,
+    bool? active,
+  }) => WorkspaceFieldOption(
+    key: key,
+    labels: labels ?? this.labels,
+    sortOrder: sortOrder ?? this.sortOrder,
+    active: active ?? this.active,
+  );
 }
 
 /// One question.
@@ -147,6 +160,38 @@ class WorkspaceField {
 
   /// Only for a choice question, in `sortOrder` then key order.
   final List<WorkspaceFieldOption> options;
+
+  /// This question with only what is given changed. An editor builds what it
+  /// saves from the question it read with this, so what it does not show (the
+  /// group, the help texts, the place in the list, a rule it has no control
+  /// for) is saved as it was read, never as a default.
+  WorkspaceField copyWith({
+    String? key,
+    WorkspaceFieldType? type,
+    Map<String, String>? labels,
+    bool? required,
+    bool? personalData,
+    WorkspaceFieldVisibility? visibility,
+    Set<WorkspaceFieldContext>? contexts,
+    Map<String, Object?>? validation,
+    bool? active,
+    List<WorkspaceFieldOption>? options,
+  }) => WorkspaceField(
+    id: id,
+    key: key ?? this.key,
+    type: type ?? this.type,
+    labels: labels ?? this.labels,
+    helpTexts: helpTexts,
+    required: required ?? this.required,
+    personalData: personalData ?? this.personalData,
+    visibility: visibility ?? this.visibility,
+    contexts: contexts ?? this.contexts,
+    groupKey: groupKey,
+    sortOrder: sortOrder,
+    validation: validation ?? this.validation,
+    active: active ?? this.active,
+    options: options ?? this.options,
+  );
 
   String labelIn(String locale, {String fallbackLocale = 'en'}) =>
       labels[locale] ?? labels[fallbackLocale] ?? key;
