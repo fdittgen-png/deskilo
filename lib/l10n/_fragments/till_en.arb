@@ -165,6 +165,127 @@
   "@tillLeaveGo": {
     "description": "#4366 the till: leave the till with the sale still waiting"
   },
+  "tillPrintReceipt": "Print the receipt",
+  "@tillPrintReceipt": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintCopy": "Print a copy",
+  "@tillPrintCopy": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinting": "Printing…",
+  "@tillPrinting": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinted": "Receipt printed.",
+  "@tillPrinted": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillNotPrinted": "Receipt not printed — the sale is complete. Print again, or show the receipt to share it.",
+  "@tillNotPrinted": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterSet": "Set up the receipt printer",
+  "@tillPrinterSet": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTitle": "Receipt printer",
+  "@tillPrinterTitle": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHost": "Printer address",
+  "@tillPrinterHost": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostHint": "A name or an address on this network, for example 192.168.1.50",
+  "@tillPrinterHostHint": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPort": "Port",
+  "@tillPrinterPort": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaper": "Paper width",
+  "@tillPrinterPaper": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage": "Code page",
+  "@tillPrinterCodePage": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage437": "PC437 (without the euro sign)",
+  "@tillPrinterCodePage437": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage858": "PC858 (with the euro sign)",
+  "@tillPrinterCodePage858": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterDrawer": "A cash drawer is attached to the printer",
+  "@tillPrinterDrawer": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterMode": "Print after a sale",
+  "@tillPrinterMode": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeNever": "Only when asked",
+  "@tillPrinterModeNever": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAsk": "Offer it",
+  "@tillPrinterModeAsk": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAlways": "Always",
+  "@tillPrinterModeAlways": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTest": "Test print",
+  "@tillPrinterTest": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTestSent": "Test page sent.",
+  "@tillPrinterTestSent": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostRequired": "Enter the printer's address.",
+  "@tillPrinterHostRequired": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPortInvalid": "The port is a number from 1 to 65535.",
+  "@tillPrinterPortInvalid": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptTax": "of which tax",
+  "@tillReceiptTax": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintTotal": "TOTAL",
+  "@tillPrintTotal": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptCash": "Cash",
+  "@tillReceiptCash": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptChange": "Change",
+  "@tillReceiptChange": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptThanks": "Thank you",
+  "@tillReceiptThanks": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaperWidth": "{mm} mm",
+  "@tillPrinterPaperWidth": {
+    "description": "#4368 the till's receipt printer: a paper width in millimetres, the number arrives formatted",
+    "placeholders": {
+      "mm": {
+        "type": "String"
+      }
+    }
+  },
   "tillFailed": "The till could not do that. Try again.",
   "@tillFailed": {
     "description": "#4366 the till"
@@ -280,5 +401,21 @@
   "tillNotForCounter": "This item is not for sale at the counter.",
   "@tillNotForCounter": {
     "description": "#4366 the till"
+  },
+  "tillDrawerNotSet": "No cash drawer is set on this till's printer.",
+  "@tillDrawerNotSet": {
+    "description": "#4368 the Open drawer key"
+  },
+  "tillDrawerOpened": "The drawer is open.",
+  "@tillDrawerOpened": {
+    "description": "#4368 the Open drawer key"
+  },
+  "tillDrawerKickFailed": "The drawer did not open. Check the printer it hangs on.",
+  "@tillDrawerKickFailed": {
+    "description": "#4368 the Open drawer key"
+  },
+  "tillDayReportNotPrinted": "The day report was not printed. Check the printer and try again.",
+  "@tillDayReportNotPrinted": {
+    "description": "#4368 the day report could not be printed"
   }
 }

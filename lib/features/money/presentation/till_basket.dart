@@ -16,6 +16,7 @@ import '../domain/till_offline.dart';
 import 'till_card_panel.dart';
 import 'till_offline_mode.dart';
 import 'till_offline_panel.dart';
+import 'till_print_panel.dart';
 import 'till_session.dart';
 import 'till_text.dart';
 
@@ -118,6 +119,9 @@ class TillBasket extends StatelessWidget {
                     onNext: state.busy ? null : onNext,
                     // a sale recorded offline has no frozen document until the server has received it
                     onReceipt: onReceipt == null || offline.sale != null ? null : () => onReceipt!(sold.receiptId),
+                    print: offline.sale != null || state.draft == null
+                        ? null
+                        : TillPrintPanel(sold: sold, draft: state.draft!, lines: state.lines, changeMinor: state.change ?? 0, cash: state.soldCash),
                   )
                 : state.unconfirmed
                 ? _Unconfirmed(state: state, onConfirm: onConfirm)
@@ -273,7 +277,7 @@ class _Footer extends StatelessWidget {
 }
 
 class _Sold extends StatelessWidget {
-  const _Sold({required this.sold, required this.change, required this.money, required this.offlineSale, required this.onNext, this.onReceipt});
+  const _Sold({required this.sold, required this.change, required this.money, required this.offlineSale, required this.onNext, this.onReceipt, this.print});
 
   final TillSold sold;
 
@@ -283,6 +287,9 @@ class _Sold extends StatelessWidget {
   final MoneyFormat money;
   final VoidCallback? onNext;
   final VoidCallback? onReceipt;
+
+  /// #4368 -- the receipt on the till's printer, and the drawer; null for a sale recorded offline (no number yet).
+  final Widget? print;
 
   @override
   Widget build(BuildContext context) {
@@ -309,6 +316,7 @@ class _Sold extends StatelessWidget {
             onPressed: onReceipt,
             label: Text(l10n.tillReceiptShow),
           ),
+        ?print,
         const FormGap(),
         FilledButton(
           key: const ValueKey('till-next'),

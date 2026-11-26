@@ -827,6 +827,19 @@ A traced good names what it was taken from. When you sell an item tracked by lot
 
 To choose the lot yourself, press **Choose the lot** on the line: the lots on hand are listed with their date and what is left, the first to expire first. A lot past its date is shown and cannot be chosen. **The first to expire (chosen by the stock)** leaves the choice to the stock again. An item that is not tracked by lot says it has no lot to choose.
 
+<!-- anchor: user.money.till-printer -->
+### Print the receipt and open the drawer
+
+**Audience:** Administrator · Owner
+
+You sell at a counter with a receipt printer on your network (80 or 58 mm, ESC/POS), perhaps with a cash drawer plugged into it.
+
+Turn on **Receipt printer** (it needs till sessions). Each till's device sets its own printer: after a sale press **Set up the receipt printer**, or open **Receipt printer**, and enter the printer's address on your network (Printer address) and its port (9100 unless the printer says otherwise), the paper width, the code page, whether a cash drawer hangs on it, and whether a sale prints by itself, after asking, or only when asked. **Test print** prints a test page.
+
+After a cash sale the drawer opens. **Print the receipt** prints the receipt; **Print a copy** prints it again marked **COPY 1**, **COPY 2**, and so on: a copy is counted and never takes a new receipt number. The **Open the drawer** key of a till layout opens the drawer outside a sale. When the printer cannot be reached the till says **Receipt not printed — the sale is complete. Print again, or show the receipt to share it.**: the sale is complete either way, and the receipt can be shown and shared. In a browser nothing prints: printing needs the app.
+
+Tested so far: the bytes against goldens and a local listener. No printer model has been tried yet.
+
 <!-- anchor: user.money.till-drawer -->
 ### Open the till, count and close it
 

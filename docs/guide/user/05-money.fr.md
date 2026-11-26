@@ -827,6 +827,19 @@ Un article tracé indique d'où il a été pris. Quand vous vendez un article su
 
 Pour choisir le lot vous-même, appuyez sur **Choisir le lot** sur la ligne : les lots en stock sont listés avec leur date et ce qu'il en reste, le premier à expirer en premier. Un lot dont la date est dépassée est affiché et ne peut pas être choisi. **Le premier à expirer (choisi par le stock)** rend le choix au stock. Un article qui n'est pas suivi par lot dit qu'il n'a pas de lot à choisir.
 
+<!-- anchor: user.money.till-printer -->
+### Imprimer le ticket et ouvrir le tiroir
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous vendez au comptoir avec une imprimante de tickets sur votre réseau (80 ou 58 mm, ESC/POS), peut-être avec un tiroir-caisse branché dessus.
+
+Activez **Imprimante de tickets** (il faut les sessions de caisse). L'appareil de chaque caisse règle sa propre imprimante : après une vente, appuyez sur **Configurer l'imprimante de tickets**, ou ouvrez **Imprimante de tickets**, puis saisissez l'adresse de l'imprimante sur votre réseau (Adresse de l'imprimante) et son port (9100 sauf indication contraire de l'imprimante), la largeur du papier, la page de codes, si un tiroir-caisse y est relié et si une vente s'imprime d'elle-même, après demande ou seulement à la demande. **Impression d'essai** imprime une page de test.
+
+Après une vente en espèces, le tiroir s'ouvre. **Imprimer le ticket** imprime le ticket ; **Imprimer une copie** l'imprime de nouveau marqué **DUPLICATA 1**, **DUPLICATA 2**, etc. : un duplicata est compté et ne prend jamais un nouveau numéro de ticket. La touche **Ouvrir le tiroir** d'une disposition de caisse ouvre le tiroir hors vente. Quand l'imprimante est injoignable, la caisse affiche **Ticket non imprimé — la vente est terminée. Imprimez à nouveau, ou affichez le ticket pour le partager.** : la vente est terminée dans tous les cas, et le ticket peut être affiché et partagé. Dans un navigateur rien ne s'imprime : l'impression demande l'application.
+
+Testé à ce jour : les octets par rapport aux fichiers de référence et un récepteur local. Aucun modèle d'imprimante n'a encore été essayé.
+
 <!-- anchor: user.money.till-drawer -->
 ### Ouvrir la caisse, compter et fermer
 

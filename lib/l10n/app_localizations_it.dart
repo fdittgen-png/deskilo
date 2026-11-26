@@ -12035,6 +12035,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Vendere offline, solo in contanti';
 
   @override
+  String get featureCounterReceiptPrinterDesc =>
+      'Stampare lo scontrino su una stampante di scontrini della rete locale (80 o 58 mm) e aprire il cassetto che comanda dopo una vendita in contanti. Ogni cassa imposta la propria stampante. Disattivato, lo scontrino è mostrato e condiviso, non si stampa nulla.';
+
+  @override
+  String get featureCounterReceiptPrinterTitle => 'Stampante di scontrini';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'Una vendita al banco dà uno scontrino immutabile, numerato una sola volta, con il pagamento ricevuto. È offerto solo dove l\'operazione del paese è supportata e dice chiaramente quando non lo è.';
 
@@ -41587,6 +41594,10 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get tillDayReportNotPrinted =>
+      'Il rapporto del giorno non è stato stampato. Verifichi la stampante e riprovi.';
+
+  @override
   String tillDayReportTitle(String number) {
     return 'Rapporto della giornata $number';
   }
@@ -41848,6 +41859,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'I contanti con cui inizia il cassetto, contati ora.';
 
   @override
+  String get tillDrawerKickFailed =>
+      'Il cassetto non si è aperto. Verifichi la stampante a cui è collegato.';
+
+  @override
   String get tillDrawerLoadFailed => 'Non è stato possibile leggere le casse.';
 
   @override
@@ -41865,6 +41880,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessuna cassa è ancora stata creata. La aggiunge chi gestisce le sedi.';
 
   @override
+  String get tillDrawerNotSet =>
+      'Nessun cassetto è impostato sulla stampante di questa cassa.';
+
+  @override
   String get tillDrawerOpenAction => 'Aprire la cassa';
 
   @override
@@ -41878,6 +41897,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String tillDrawerOpenTitle(String till) {
     return 'Aprire $till';
   }
+
+  @override
+  String get tillDrawerOpened => 'Il cassetto è aperto.';
 
   @override
   String get tillDrawerRefusalAboveLimit =>
@@ -42197,6 +42219,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillNotForCounter => 'Questo articolo non è in vendita al banco.';
 
   @override
+  String get tillNotPrinted =>
+      'Scontrino non stampato — la vendita è completa. Stampi di nuovo, o mostri lo scontrino per condividerlo.';
+
+  @override
   String tillNotReady(String operation) {
     return 'Non ancora pronto nel Suo paese: $operation';
   }
@@ -42375,6 +42401,82 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillPricing => 'Calcolo del carrello…';
 
   @override
+  String get tillPrintCopy => 'Stampa una copia';
+
+  @override
+  String get tillPrintReceipt => 'Stampa lo scontrino';
+
+  @override
+  String get tillPrintTotal => 'TOTALE';
+
+  @override
+  String get tillPrinted => 'Scontrino stampato.';
+
+  @override
+  String get tillPrinterCodePage => 'Tabella dei caratteri';
+
+  @override
+  String get tillPrinterCodePage437 => 'PC437 (senza il simbolo dell\'euro)';
+
+  @override
+  String get tillPrinterCodePage858 => 'PC858 (con il simbolo dell\'euro)';
+
+  @override
+  String get tillPrinterDrawer => 'Un cassetto è collegato alla stampante';
+
+  @override
+  String get tillPrinterHost => 'Indirizzo della stampante';
+
+  @override
+  String get tillPrinterHostHint =>
+      'Un nome o un indirizzo di questa rete, ad esempio 192.168.1.50';
+
+  @override
+  String get tillPrinterHostRequired =>
+      'Inserisca l\'indirizzo della stampante.';
+
+  @override
+  String get tillPrinterMode => 'Stampa dopo una vendita';
+
+  @override
+  String get tillPrinterModeAlways => 'Sempre';
+
+  @override
+  String get tillPrinterModeAsk => 'Proporlo';
+
+  @override
+  String get tillPrinterModeNever => 'Solo su richiesta';
+
+  @override
+  String get tillPrinterPaper => 'Larghezza della carta';
+
+  @override
+  String tillPrinterPaperWidth(String mm) {
+    return '$mm mm';
+  }
+
+  @override
+  String get tillPrinterPort => 'Porta';
+
+  @override
+  String get tillPrinterPortInvalid => 'La porta è un numero da 1 a 65535.';
+
+  @override
+  String get tillPrinterSet => 'Configura la stampante di scontrini';
+
+  @override
+  String get tillPrinterTest => 'Stampa di prova';
+
+  @override
+  String get tillPrinterTestSent => 'Pagina di prova inviata.';
+
+  @override
+  String get tillPrinterTitle => 'Stampante di scontrini';
+
+  @override
+  String get tillPrinting => 'Stampa in corso…';
+
+  @override
   String get tillQuantityHint =>
       'Una quantità esatta, per esempio 1 oppure 0,350.';
 
@@ -42441,6 +42543,12 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get tillReceiptCash => 'Contanti';
+
+  @override
+  String get tillReceiptChange => 'Resto';
+
+  @override
   String tillReceiptCopy(String copy) {
     return 'COPIA $copy — non è un nuovo scontrino';
   }
@@ -42485,9 +42593,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillReceiptShow => 'Mostrare lo scontrino';
 
   @override
+  String get tillReceiptTax => 'di cui imposta';
+
+  @override
   String tillReceiptTaxLine(String percent, String tax, String net) {
     return 'IVA $percent: $tax su $net';
   }
+
+  @override
+  String get tillReceiptThanks => 'Grazie';
 
   @override
   String tillReceiptTotal(String amount) {

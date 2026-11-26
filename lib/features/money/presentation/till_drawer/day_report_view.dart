@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/till_day.dart';
+import 'day_report_print.dart';
 
 /// Shows [report] full screen; closed with the back button or the close icon.
 Future<void> showDayReport(BuildContext context, DayReport report, {required String currency}) => showDialog<void>(
@@ -17,6 +18,7 @@ Future<void> showDayReport(BuildContext context, DayReport report, {required Str
     child: Scaffold(
       appBar: AppBar(
         title: Text(c.l10n.tillDayReportTitle(report.number)),
+        actions: [DayReportPrintButton(report: report, currency: currency)], // #4368
         leading: IconButton(key: const ValueKey('day-report-close'), tooltip: MaterialLocalizations.of(c).closeButtonTooltip, icon: const Icon(Icons.close), onPressed: () => Navigator.of(c).pop()),
       ),
       body: _DayReportView(report: report, currency: currency),
@@ -24,7 +26,8 @@ Future<void> showDayReport(BuildContext context, DayReport report, {required Str
   ),
 );
 
-String _tenderName(AppLocalizations l10n, String kind) => switch (kind) {
+/// A tender's name in the day report's words.
+String dayTenderName(AppLocalizations l10n, String kind) => switch (kind) {
   'cash' => l10n.tillDayTenderCash,
   'card' => l10n.paymentMethodCard,
   _ => l10n.tillDayTenderOther,
@@ -76,7 +79,7 @@ class _DayReportView extends StatelessWidget {
             if (report.salesByTender.isNotEmpty) ...[
               const FormGap.small(),
               Text(l10n.tillDayByTender, style: title),
-              for (final e in report.salesByTender.entries) Text(l10n.tillDayAmountLine(_tenderName(l10n, e.key), m(e.value))),
+              for (final e in report.salesByTender.entries) Text(l10n.tillDayAmountLine(dayTenderName(l10n, e.key), m(e.value))),
             ],
             if (report.salesByRate.isNotEmpty) ...[
               const FormGap.small(),

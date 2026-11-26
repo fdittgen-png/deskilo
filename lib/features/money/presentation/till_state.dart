@@ -11,7 +11,7 @@ import '../domain/counter_till.dart';
 /// What the till shows: the basket, its price, a sale made, or the refusal of the last act.
 @immutable
 class TillState {
-  const TillState({this.lines = const [], this.draft, this.sold, this.busy = false, this.problem, this.change, this.unconfirmed = false, this.card, this.cardUnknown = false});
+  const TillState({this.lines = const [], this.draft, this.sold, this.busy = false, this.problem, this.change, this.unconfirmed = false, this.card, this.cardUnknown = false, this.soldCash = false});
 
   final List<TillLine> lines;
   final TillDraft? draft;
@@ -35,6 +35,9 @@ class TillState {
   /// finances settles it from the receipts, where the sale is completed once.
   final bool cardUnknown;
 
+  /// #4368 -- the sale just made took cash: the drawer an attached printer drives opens for it.
+  final bool soldCash;
+
   bool get empty => lines.isEmpty;
 
   TillState copyWith({
@@ -54,19 +57,24 @@ class TillState {
     unconfirmed: unconfirmed,
     card: card,
     cardUnknown: cardUnknown,
+    soldCash: soldCash,
   );
 
   /// The same state with the card asked of the terminal set (null: none asked).
   TillState withCard(TillCardAsked? asked) =>
-      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: unconfirmed, card: asked, cardUnknown: cardUnknown);
+      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: unconfirmed, card: asked, cardUnknown: cardUnknown, soldCash: soldCash);
 
   /// The same state with the terminal's answer marked as lost, or not.
   TillState withCardUnknown({required bool value}) =>
-      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: unconfirmed, card: card, cardUnknown: value);
+      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: unconfirmed, card: card, cardUnknown: value, soldCash: soldCash);
+
+  /// #4368 -- the same state with the sale just made marked as taking cash, or not.
+  TillState withSoldCash({required bool value}) =>
+      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: unconfirmed, card: card, cardUnknown: cardUnknown, soldCash: value);
 
   /// The same state with the sale marked as waiting to be confirmed, or not.
   TillState withUnconfirmed({required bool value}) =>
-      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: value, card: card, cardUnknown: cardUnknown);
+      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: value, card: card, cardUnknown: cardUnknown, soldCash: soldCash);
 }
 
 /// The cash given is less than the total: said by the till itself before anything is sent.

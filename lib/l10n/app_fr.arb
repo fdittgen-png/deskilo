@@ -7289,6 +7289,8 @@
   "@featureCounterOfflineCashTitle": {
     "description": "#4373 feature name"
   },
+  "featureCounterReceiptPrinterDesc": "Imprimer le ticket de caisse sur une imprimante de tickets du réseau local (80 ou 58 mm) et ouvrir le tiroir-caisse qu'elle commande après une vente en espèces. Chaque caisse règle sa propre imprimante. Désactivé, le ticket est affiché et partagé, rien n'est imprimé.",
+  "featureCounterReceiptPrinterTitle": "Imprimante de tickets",
   "featureCounterReceiptsDesc": "Une vente au comptoir donne un ticket immuable, numéroté une seule fois, avec le règlement reçu. Il n'est proposé que là où l'opération du pays est prise en charge, et dit clairement quand elle ne l'est pas.",
   "featureCounterReceiptsTitle": "Tickets de caisse",
   "featureCounterTillLayoutDesc": "Disposez chaque caisse selon votre métier : quelles touches où, ses pages et des outils à côté du panier comme un pavé numérique, une calculatrice ou un champ de scan. Partez d'un modèle, publiez-le, et une caisse le prend à sa prochaine session. Désactivé, chaque caisse garde ses touches générées.",
@@ -24160,6 +24162,7 @@
   "tillDayRefusalNothing": "Aucune session n'a été fermée ce jour : il n'y a rien à clôturer.",
   "tillDayRefusalTillOpen": "La caisse {name} est encore ouverte. Comptez-la et fermez-la d'abord.",
   "tillDayReportDate": "Journée d'activité : {date}",
+  "tillDayReportNotPrinted": "Le rapport du jour n'a pas été imprimé. Vérifiez l'imprimante et réessayez.",
   "tillDayReportTitle": "Rapport de journée {number}",
   "tillDaySalesTotal": "Ventes : {amount}",
   "tillDaySessionLine": "{till} : attendu {expected}, compté {counted}, écart {difference}",
@@ -24238,15 +24241,18 @@
   "tillDrawerFailed": "La caisse n'a pas pu le faire. Réessayez.",
   "tillDrawerFloat": "Fond de caisse",
   "tillDrawerFloatHelp": "Les espèces avec lesquelles le tiroir démarre, comptées maintenant.",
+  "tillDrawerKickFailed": "Le tiroir-caisse ne s'est pas ouvert. Vérifiez l'imprimante à laquelle il est relié.",
   "tillDrawerLoadFailed": "Les caisses n'ont pas pu être lues.",
   "tillDrawerManage": "Caisses et tiroirs",
   "tillDrawerNameMissing": "Donnez un nom à la caisse.",
   "tillDrawerNoTills": "Il n'y a pas encore de caisse. Ajoutez la première pour compter un tiroir.",
   "tillDrawerNoTillsPerson": "Aucune caisse n'est encore créée. Une personne qui gère les sites l'ajoute.",
+  "tillDrawerNotSet": "Aucun tiroir-caisse n'est réglé sur l'imprimante de cette caisse.",
   "tillDrawerOpenAction": "Ouvrir la caisse",
   "tillDrawerOpenFirstBody": "Ouvrez une caisse avec son fond de caisse avant de vendre.",
   "tillDrawerOpenFirstTitle": "Aucune caisse n'est ouverte",
   "tillDrawerOpenTitle": "Ouvrir {till}",
+  "tillDrawerOpened": "Le tiroir-caisse est ouvert.",
   "tillDrawerRefusalAboveLimit": "Une sortie de cette importance est enregistrée par une personne qui peut enregistrer des paiements sortants.",
   "tillDrawerRefusalAlreadyOpen": "Cette caisse est déjà ouverte. Comptez-la et fermez-la avant de la rouvrir ou de la désactiver.",
   "tillDrawerRefusalDenominations": "Les comptages par coupure ne font pas le montant.",
@@ -24354,6 +24360,10 @@
   "tillNotForCounter": "Cet article n'est pas en vente au comptoir.",
   "@tillNotForCounter": {
     "description": "#4366 the till"
+  },
+  "tillNotPrinted": "Ticket non imprimé — la vente est terminée. Imprimez à nouveau, ou affichez le ticket pour le partager.",
+  "@tillNotPrinted": {
+    "description": "#4368 the till's receipt printer"
   },
   "tillNotReady": "Pas encore prêt dans votre pays : {operation}",
   "tillNotReadyHint": "Rien n'est numéroté ni encaissé tant que l'opération du pays n'est pas prise en charge.",
@@ -24513,6 +24523,107 @@
   "tillPriceReasonMissing": "Un prix modifié a besoin d'un motif.",
   "tillPriceUnreadable": "Saisissez un nombre, par exemple 4,50.",
   "tillPricing": "Calcul du panier…",
+  "tillPrintCopy": "Imprimer une copie",
+  "@tillPrintCopy": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintReceipt": "Imprimer le ticket",
+  "@tillPrintReceipt": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintTotal": "TOTAL À PAYER",
+  "@tillPrintTotal": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinted": "Ticket imprimé.",
+  "@tillPrinted": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage": "Page de codes",
+  "@tillPrinterCodePage": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage437": "PC437 (sans le signe euro)",
+  "@tillPrinterCodePage437": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage858": "PC858 (avec le signe euro)",
+  "@tillPrinterCodePage858": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterDrawer": "Un tiroir-caisse est branché sur l'imprimante",
+  "@tillPrinterDrawer": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHost": "Adresse de l'imprimante",
+  "@tillPrinterHost": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostHint": "Un nom ou une adresse de ce réseau, par exemple 192.168.1.50",
+  "@tillPrinterHostHint": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostRequired": "Saisissez l'adresse de l'imprimante.",
+  "@tillPrinterHostRequired": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterMode": "Imprimer après une vente",
+  "@tillPrinterMode": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAlways": "Toujours",
+  "@tillPrinterModeAlways": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAsk": "Le proposer",
+  "@tillPrinterModeAsk": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeNever": "Seulement sur demande",
+  "@tillPrinterModeNever": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaper": "Largeur du papier",
+  "@tillPrinterPaper": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaperWidth": "{mm} mm",
+  "@tillPrinterPaperWidth": {
+    "description": "#4368 the till's receipt printer: a paper width in millimetres, the number arrives formatted",
+    "placeholders": {
+      "mm": {
+        "type": "String"
+      }
+    }
+  },
+  "tillPrinterPort": "Port réseau",
+  "@tillPrinterPort": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPortInvalid": "Le port est un nombre de 1 à 65535.",
+  "@tillPrinterPortInvalid": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterSet": "Configurer l'imprimante de tickets",
+  "@tillPrinterSet": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTest": "Impression d'essai",
+  "@tillPrinterTest": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTestSent": "Page d'essai envoyée.",
+  "@tillPrinterTestSent": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTitle": "Imprimante de tickets",
+  "@tillPrinterTitle": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinting": "Impression…",
+  "@tillPrinting": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillQuantityHint": "Une quantité exacte, par exemple 1 ou 0,350.",
   "tillQuantityRefused": "Saisissez une quantité supérieure à zéro, avec au plus six décimales.",
   "tillQuantityTitle": "Quantité vendue",
@@ -24529,6 +24640,14 @@
   "tillReadinessUnavailable": "Indisponible",
   "tillReadinessUnconfirmed": "Pas encore confirmé par un professionnel de la fiscalité.",
   "tillReadinessUnknownCountry": "Le registre ne nomme aucune opération de caisse pour {country} : rien n'est pris en charge et la caisse ne vend rien.",
+  "tillReceiptCash": "Espèces",
+  "@tillReceiptCash": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptChange": "Rendu",
+  "@tillReceiptChange": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillReceiptCopy": "DUPLICATA {copy} — pas un nouveau ticket",
   "tillReceiptCorrects": "Corrige le ticket {number}",
   "tillReceiptDisagrees": "Les montants de ce ticket ne concordent pas entre eux. Il est affiché tel qu'il a été figé ; prévenez votre administrateur.",
@@ -24538,7 +24657,15 @@
   "tillReceiptPrintNote": "Aucune imprimante de tickets n'est reliée à l'application : imprimez depuis le menu de partage.",
   "tillReceiptShare": "Partager le ticket",
   "tillReceiptShow": "Afficher le ticket",
+  "tillReceiptTax": "dont taxe",
+  "@tillReceiptTax": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillReceiptTaxLine": "TVA {percent} : {tax} sur {net}",
+  "tillReceiptThanks": "Merci",
+  "@tillReceiptThanks": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillReceiptTotal": "Total {amount}",
   "tillReceiptUnreadable": "Ce ticket a été écrit par une version plus récente de DesKilo : mettez l'application à jour pour le lire.",
   "tillRemoveLine": "Retirer {name} du panier",

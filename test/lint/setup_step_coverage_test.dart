@@ -80,6 +80,8 @@ const _switches = <WorkspaceFeature>{
   WorkspaceFeature.unitsOfMeasure,
   // #4448 — asked for on the till drawer, not in the setup guide.
   WorkspaceFeature.counterTillLayout,
+  // #4368 — asked for at the till, where its device's printer is set.
+  WorkspaceFeature.counterReceiptPrinter,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,
   WorkspaceFeature.seatDayTimeline,

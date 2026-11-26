@@ -30,9 +30,13 @@ class UnitPickerField extends ConsumerWidget {
     this.enabled = true,
     this.errorText,
     this.required = false,
+    this.itemId,
   });
 
   final String workspaceId;
+
+  /// #4479 -- the stocked item the row is for: only the units it converts from are offered.
+  final String? itemId;
 
   /// The unit code the row holds; '' while none is chosen.
   final String value;
@@ -47,7 +51,10 @@ class UnitPickerField extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
-    final units = ref.watch(pickableUnitsProvider(workspaceId));
+    final all = ref.watch(pickableUnitsProvider(workspaceId));
+    final item = itemId;
+    final only = item == null ? null : ref.watch(itemOrderUnitsProvider((workspaceId: workspaceId, itemId: item))).value;
+    final units = only == null ? all : [for (final u in all) if (only.any((o) => o.code == u.code)) u];
     final listed = unitIsListed(units, value);
     return AppDropdownField<String>(
       // a value that changes from outside (a line removed above) is drawn again

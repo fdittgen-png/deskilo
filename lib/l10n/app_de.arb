@@ -7289,6 +7289,8 @@
   "@featureCounterOfflineCashTitle": {
     "description": "#4373 feature name"
   },
+  "featureCounterReceiptPrinterDesc": "Den Kassenbon auf einem Bondrucker im lokalen Netz drucken (80 oder 58 mm) und nach einem Barverkauf die angeschlossene Kassenlade öffnen. Jede Kasse stellt ihren eigenen Drucker ein. Aus: Der Beleg wird gezeigt und geteilt, nichts wird gedruckt.",
+  "featureCounterReceiptPrinterTitle": "Bondrucker",
   "featureCounterReceiptsDesc": "Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.",
   "featureCounterReceiptsTitle": "Kassenbelege",
   "featureCounterTillLayoutDesc": "Gestalten Sie jede Kasse für Ihr Geschäft: welche Tasten wo liegen, ihre Seiten und Werkzeuge neben dem Warenkorb wie ein Ziffernblock, ein Rechner oder ein Scanfeld. Beginnen Sie mit einer Vorlage, veröffentlichen Sie sie, und eine Kasse übernimmt sie mit ihrer nächsten Sitzung. Aus: Jede Kasse behält ihre erzeugten Tasten.",
@@ -24160,6 +24162,7 @@
   "tillDayRefusalNothing": "An diesem Tag wurde keine Sitzung geschlossen: Es gibt nichts abzuschließen.",
   "tillDayRefusalTillOpen": "Die Kasse {name} ist noch offen. Zählen und schließen Sie sie zuerst.",
   "tillDayReportDate": "Geschäftstag: {date}",
+  "tillDayReportNotPrinted": "Der Tagesbericht wurde nicht gedruckt. Prüfen Sie den Drucker und versuchen Sie es erneut.",
   "tillDayReportTitle": "Tagesbericht {number}",
   "tillDaySalesTotal": "Verkäufe: {amount}",
   "tillDaySessionLine": "{till}: erwartet {expected}, gezählt {counted}, Differenz {difference}",
@@ -24238,15 +24241,18 @@
   "tillDrawerFailed": "Die Kasse konnte das nicht ausführen. Versuchen Sie es erneut.",
   "tillDrawerFloat": "Wechselgeld in der Schublade",
   "tillDrawerFloatHelp": "Das Bargeld, mit dem die Schublade beginnt, jetzt gezählt.",
+  "tillDrawerKickFailed": "Die Kassenlade ging nicht auf. Prüfen Sie den Drucker, an dem sie hängt.",
   "tillDrawerLoadFailed": "Die Kassen konnten nicht gelesen werden.",
   "tillDrawerManage": "Kassen und Schubladen",
   "tillDrawerNameMissing": "Geben Sie der Kasse einen Namen.",
   "tillDrawerNoTills": "Es gibt noch keine Kasse. Legen Sie die erste an, um eine Schublade zu zählen.",
   "tillDrawerNoTillsPerson": "Es ist noch keine Kasse angelegt. Wer die Standorte verwaltet, legt sie an.",
+  "tillDrawerNotSet": "Am Drucker dieser Kasse ist keine Kassenlade eingestellt.",
   "tillDrawerOpenAction": "Kasse öffnen",
   "tillDrawerOpenFirstBody": "Öffnen Sie vor dem Verkauf eine Kasse mit ihrem Wechselgeld.",
   "tillDrawerOpenFirstTitle": "Keine Kasse ist offen",
   "tillDrawerOpenTitle": "{till} öffnen",
+  "tillDrawerOpened": "Die Kassenlade ist offen.",
   "tillDrawerRefusalAboveLimit": "Eine so hohe Entnahme erfasst jemand, der ausgehende Zahlungen erfassen darf.",
   "tillDrawerRefusalAlreadyOpen": "Diese Kasse ist schon offen. Zählen und schließen Sie sie, bevor Sie sie erneut öffnen oder abschalten.",
   "tillDrawerRefusalDenominations": "Die Zählungen nach Stückelung ergeben nicht den Betrag.",
@@ -24354,6 +24360,10 @@
   "tillNotForCounter": "Dieser Artikel ist an der Kasse nicht verkäuflich.",
   "@tillNotForCounter": {
     "description": "#4366 the till"
+  },
+  "tillNotPrinted": "Beleg nicht gedruckt — der Verkauf ist abgeschlossen. Erneut drucken oder den Beleg zeigen und teilen.",
+  "@tillNotPrinted": {
+    "description": "#4368 the till's receipt printer"
   },
   "tillNotReady": "In Ihrem Land noch nicht bereit: {operation}",
   "tillNotReadyHint": "Es wird nichts nummeriert und nichts kassiert, solange der Vorgang des Landes nicht unterstützt wird.",
@@ -24513,6 +24523,107 @@
   "tillPriceReasonMissing": "Ein geänderter Preis braucht einen Grund.",
   "tillPriceUnreadable": "Geben Sie eine Zahl ein, etwa 4,50.",
   "tillPricing": "Warenkorb wird berechnet …",
+  "tillPrintCopy": "Kopie drucken",
+  "@tillPrintCopy": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintReceipt": "Beleg drucken",
+  "@tillPrintReceipt": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintTotal": "SUMME",
+  "@tillPrintTotal": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinted": "Beleg gedruckt.",
+  "@tillPrinted": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage": "Zeichensatz",
+  "@tillPrinterCodePage": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage437": "PC437 (ohne Eurozeichen)",
+  "@tillPrinterCodePage437": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage858": "PC858 (mit Eurozeichen)",
+  "@tillPrinterCodePage858": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterDrawer": "Eine Kassenlade hängt am Drucker",
+  "@tillPrinterDrawer": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHost": "Adresse des Druckers",
+  "@tillPrinterHost": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostHint": "Ein Name oder eine Adresse in diesem Netz, zum Beispiel 192.168.1.50",
+  "@tillPrinterHostHint": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostRequired": "Geben Sie die Adresse des Druckers ein.",
+  "@tillPrinterHostRequired": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterMode": "Nach einem Verkauf drucken",
+  "@tillPrinterMode": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAlways": "Immer",
+  "@tillPrinterModeAlways": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAsk": "Anbieten",
+  "@tillPrinterModeAsk": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeNever": "Nur auf Wunsch",
+  "@tillPrinterModeNever": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaper": "Papierbreite",
+  "@tillPrinterPaper": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaperWidth": "{mm} mm",
+  "@tillPrinterPaperWidth": {
+    "description": "#4368 the till's receipt printer: a paper width in millimetres, the number arrives formatted",
+    "placeholders": {
+      "mm": {
+        "type": "String"
+      }
+    }
+  },
+  "tillPrinterPort": "Netzwerkport",
+  "@tillPrinterPort": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPortInvalid": "Der Port ist eine Zahl von 1 bis 65535.",
+  "@tillPrinterPortInvalid": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterSet": "Bondrucker einrichten",
+  "@tillPrinterSet": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTest": "Testdruck",
+  "@tillPrinterTest": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTestSent": "Testseite gesendet.",
+  "@tillPrinterTestSent": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTitle": "Bondrucker",
+  "@tillPrinterTitle": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinting": "Wird gedruckt…",
+  "@tillPrinting": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillQuantityHint": "Eine genaue Menge, zum Beispiel 1 oder 0,350.",
   "tillQuantityRefused": "Geben Sie eine Menge über null mit höchstens sechs Dezimalstellen ein.",
   "tillQuantityTitle": "Verkaufte Menge",
@@ -24529,6 +24640,14 @@
   "tillReadinessUnavailable": "Nicht verfügbar",
   "tillReadinessUnconfirmed": "Noch nicht von einer Steuerberatung bestätigt.",
   "tillReadinessUnknownCountry": "Das Register nennt für {country} keinen Kassenvorgang: nichts ist unterstützt, und die Kasse verkauft nichts.",
+  "tillReceiptCash": "Bar",
+  "@tillReceiptCash": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptChange": "Rückgeld",
+  "@tillReceiptChange": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillReceiptCopy": "KOPIE {copy} — kein neuer Beleg",
   "tillReceiptCorrects": "Berichtigt Beleg {number}",
   "tillReceiptDisagrees": "Die Beträge dieses Belegs stimmen nicht miteinander überein. Er wird gezeigt, wie er festgeschrieben wurde; sagen Sie es Ihrer Verwaltung.",
@@ -24538,7 +24657,15 @@
   "tillReceiptPrintNote": "Mit der App ist kein Belegdrucker verbunden: Drucken Sie über das Teilen-Menü.",
   "tillReceiptShare": "Beleg teilen",
   "tillReceiptShow": "Beleg anzeigen",
+  "tillReceiptTax": "davon Steuer",
+  "@tillReceiptTax": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillReceiptTaxLine": "MwSt. {percent}: {tax} auf {net}",
+  "tillReceiptThanks": "Vielen Dank",
+  "@tillReceiptThanks": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillReceiptTotal": "Summe {amount}",
   "tillReceiptUnreadable": "Dieser Beleg wurde von einer neueren Version von DesKilo geschrieben: Aktualisieren Sie die App, um ihn zu lesen.",
   "tillRemoveLine": "{name} aus dem Warenkorb nehmen",

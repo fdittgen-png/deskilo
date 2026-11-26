@@ -12026,6 +12026,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Vender sin conexión, solo en efectivo';
 
   @override
+  String get featureCounterReceiptPrinterDesc =>
+      'Imprimir el tique de caja en una impresora de tiques de la red local (80 o 58 mm) y abrir el cajón que controla tras una venta en efectivo. Cada caja configura su propia impresora. Desactivado, el tique se muestra y se comparte, no se imprime nada.';
+
+  @override
+  String get featureCounterReceiptPrinterTitle => 'Impresora de tiques';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'Una venta en el mostrador da un ticket inmutable, numerado una sola vez, con el cobro recibido. Solo se ofrece donde la operación del país está soportada, y dice claramente cuándo no lo está.';
 
@@ -41536,6 +41543,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get tillDayReportNotPrinted =>
+      'El informe del día no se imprimió. Compruebe la impresora e inténtelo de nuevo.';
+
+  @override
   String tillDayReportTitle(String number) {
     return 'Informe del día $number';
   }
@@ -41797,6 +41808,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El efectivo con el que empieza el cajón, contado ahora.';
 
   @override
+  String get tillDrawerKickFailed =>
+      'El cajón no se abrió. Compruebe la impresora a la que está conectado.';
+
+  @override
   String get tillDrawerLoadFailed => 'No se pudieron leer las cajas.';
 
   @override
@@ -41814,6 +41829,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Todavía no se ha creado ninguna caja. La añade quien gestiona las sedes.';
 
   @override
+  String get tillDrawerNotSet =>
+      'No hay cajón configurado en la impresora de esta caja.';
+
+  @override
   String get tillDrawerOpenAction => 'Abrir la caja';
 
   @override
@@ -41827,6 +41846,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String tillDrawerOpenTitle(String till) {
     return 'Abrir $till';
   }
+
+  @override
+  String get tillDrawerOpened => 'El cajón está abierto.';
 
   @override
   String get tillDrawerRefusalAboveLimit =>
@@ -42147,6 +42169,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este artículo no está a la venta en el mostrador.';
 
   @override
+  String get tillNotPrinted =>
+      'Tique no impreso — la venta está completa. Imprima de nuevo, o muestre el tique para compartirlo.';
+
+  @override
   String tillNotReady(String operation) {
     return 'Aún no está listo en su país: $operation';
   }
@@ -42321,6 +42347,82 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillPricing => 'Calculando la cesta…';
 
   @override
+  String get tillPrintCopy => 'Imprimir una copia';
+
+  @override
+  String get tillPrintReceipt => 'Imprimir el ticket';
+
+  @override
+  String get tillPrintTotal => 'TOTAL A PAGAR';
+
+  @override
+  String get tillPrinted => 'Ticket impreso.';
+
+  @override
+  String get tillPrinterCodePage => 'Página de códigos';
+
+  @override
+  String get tillPrinterCodePage437 => 'PC437 (sin el signo del euro)';
+
+  @override
+  String get tillPrinterCodePage858 => 'PC858 (con el signo del euro)';
+
+  @override
+  String get tillPrinterDrawer =>
+      'Hay un cajón de efectivo conectado a la impresora';
+
+  @override
+  String get tillPrinterHost => 'Dirección de la impresora';
+
+  @override
+  String get tillPrinterHostHint =>
+      'Un nombre o una dirección de esta red, por ejemplo 192.168.1.50';
+
+  @override
+  String get tillPrinterHostRequired => 'Escriba la dirección de la impresora.';
+
+  @override
+  String get tillPrinterMode => 'Imprimir tras una venta';
+
+  @override
+  String get tillPrinterModeAlways => 'Siempre';
+
+  @override
+  String get tillPrinterModeAsk => 'Ofrecerlo';
+
+  @override
+  String get tillPrinterModeNever => 'Solo si se pide';
+
+  @override
+  String get tillPrinterPaper => 'Ancho del papel';
+
+  @override
+  String tillPrinterPaperWidth(String mm) {
+    return '$mm mm';
+  }
+
+  @override
+  String get tillPrinterPort => 'Puerto';
+
+  @override
+  String get tillPrinterPortInvalid => 'El puerto es un número de 1 a 65535.';
+
+  @override
+  String get tillPrinterSet => 'Configurar la impresora de tickets';
+
+  @override
+  String get tillPrinterTest => 'Impresión de prueba';
+
+  @override
+  String get tillPrinterTestSent => 'Página de prueba enviada.';
+
+  @override
+  String get tillPrinterTitle => 'Impresora de tickets';
+
+  @override
+  String get tillPrinting => 'Imprimiendo…';
+
+  @override
   String get tillQuantityHint => 'Una cantidad exacta, por ejemplo 1 o 0,350.';
 
   @override
@@ -42385,6 +42487,12 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get tillReceiptCash => 'Efectivo';
+
+  @override
+  String get tillReceiptChange => 'Cambio';
+
+  @override
   String tillReceiptCopy(String copy) {
     return 'COPIA $copy — no es un tique nuevo';
   }
@@ -42429,9 +42537,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillReceiptShow => 'Mostrar el ticket';
 
   @override
+  String get tillReceiptTax => 'de los cuales impuesto';
+
+  @override
   String tillReceiptTaxLine(String percent, String tax, String net) {
     return 'IVA $percent: $tax sobre $net';
   }
+
+  @override
+  String get tillReceiptThanks => 'Gracias';
 
   @override
   String tillReceiptTotal(String amount) {

@@ -112,6 +112,7 @@ import '../../helpers/demo_outbox_journeys.dart';
 import '../../helpers/demo_pass_einvoice_journeys.dart';
 import '../../helpers/demo_payment_journeys.dart';
 import '../../helpers/demo_plan_booking_journeys.dart';
+import '../../helpers/demo_receipt_printer_journey.dart';
 import '../../helpers/demo_settings_shell_journeys.dart';
 import '../../helpers/demo_standalone_journey.dart';
 import '../../helpers/demo_till_drawer_journey.dart';
@@ -1871,6 +1872,13 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'the owner starts the bakery counter from the Bakery template, adds a calculator beside the keypad, saves and publishes it; '
     'a save over a version that moved and an invalid layout are refused, and the same request answers the same version',
     (_) => tillLayoutJourney(),
+  ),
+  // #4368 — a cash sale's receipt printed with the drawer opened, its copy counted, a printer off refused.
+  WorkspaceFeature.counterReceiptPrinter: _action(
+    _owner,
+    'a cash sale prints its receipt and opens the drawer; a second print is the copy the server counted, COPY 1, never a '
+    'new receipt; a printer that cannot be reached is refused and the sale stays made',
+    (_) => receiptPrinterJourney(),
   ),
 };
 

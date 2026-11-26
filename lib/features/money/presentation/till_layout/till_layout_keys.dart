@@ -19,7 +19,9 @@ import '../../../../core/ui/app_snack.dart';
 import '../../domain/counter_till.dart';
 import '../../domain/till_keypad.dart';
 import '../../domain/till_layout.dart';
+import '../../domain/till_print_job.dart';
 import '../../providers/till_layout_providers.dart';
+import '../../providers/till_printer_providers.dart';
 import '../../providers/till_providers.dart';
 import '../counter_receipt_view.dart';
 import '../till_keys.dart';
@@ -69,9 +71,29 @@ class TillKeysOrLayout extends ConsumerWidget {
       items: sold,
       session: session,
       copies: ref.watch(tillCopyPortProvider),
+      onOpenDrawer: ref.watch(tillPrinterOnProvider) ? () => unawaited(_openDrawer(context, ref)) : null,
       onTap: onTap,
       onPayCash: onPayCash,
     );
+  }
+
+  /// #4368 / #4476 -- the Open drawer key: the drawer the till's printer drives opens, outside a sale. Said in words when
+  /// no drawer is set on this device's printer, or when it did not open.
+  Future<void> _openDrawer(BuildContext context, WidgetRef ref) async {
+    final l10n = context.l10n;
+    final settings = await ref.read(tillPrinterSettingsProvider.future);
+    if (!context.mounted) return;
+    if (!settings.configured || !settings.drawer) {
+      AppSnack.info(context, l10n.tillDrawerNotSet);
+      return;
+    }
+    try {
+      await ref.read(receiptSenderProvider(settings)).send(tillPrintJob(settings: settings, kickDrawer: true));
+      if (context.mounted) AppSnack.info(context, l10n.tillDrawerOpened);
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('money', 'the cash drawer did not open', error: e, stackTrace: st);
+      if (context.mounted) AppSnack.error(context, l10n.tillDrawerKickFailed);
+    }
   }
 }
 
@@ -82,6 +104,7 @@ class _LaidOut extends StatefulWidget {
     required this.items,
     required this.session,
     required this.copies,
+    this.onOpenDrawer,
     required this.onTap,
     required this.onPayCash,
   });
@@ -92,6 +115,9 @@ class _LaidOut extends StatefulWidget {
 
   /// #4476 -- where the till prints copies of a receipt; null where it does not.
   final TillCopyPort? copies;
+
+  /// #4368 -- opens the drawer the till's printer drives; null where the business prints no receipts.
+  final VoidCallback? onOpenDrawer;
   final void Function(TillKey key, String? typed) onTap;
   final VoidCallback onPayCash;
 
@@ -139,7 +165,8 @@ class _LaidOutState extends State<_LaidOut> {
     TillFunction.priceOverride => () => unawaited(_pricing(discount: false)),
     TillFunction.lineDiscount => () => unawaited(_pricing(discount: true)),
     TillFunction.reprintLast => () => unawaited(_reprint()),
-    // a deposit return comes with #4476's next step; the drawer opens with the receipt printer and its pulse (#4368)
+    TillFunction.openDrawer => widget.onOpenDrawer,
+    // a deposit return comes with #4478
     _ => null,
   };
 

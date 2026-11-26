@@ -93,6 +93,10 @@ class StockLedger {
 
   /// The business's general conversions (1 kg = 1000 g): what an entered unit may convert through when the item has no conversion of its own.
   final Iterable<UnitConversion> Function() _conversions;
+
+  /// #4479 -- the factor of [unit] to the inventory unit of [item] (its own conversion, else the business's general one, one step); null: none.
+  ({int num, int den})? configFactor(StockItemConfig item, String unit) =>
+      unitFactor(from: unit, to: item.inventoryUnit, inventoryUnit: item.inventoryUnit, itemUnits: item.units, general: _conversions());
   final DateTime Function() _now;
 
   /// What a retried request id answered.

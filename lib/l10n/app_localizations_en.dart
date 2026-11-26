@@ -11946,6 +11946,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureCounterOfflineCashTitle => 'Selling offline, cash only';
 
   @override
+  String get featureCounterReceiptPrinterDesc =>
+      'Print the till\'s receipt on a receipt printer on your local network (80 or 58 mm), and open the cash drawer it drives after a cash sale. Each till sets its own printer. Off, the receipt is shown and shared, nothing prints.';
+
+  @override
+  String get featureCounterReceiptPrinterTitle => 'Receipt printer';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country\'s operation is supported, and says plainly where it is not.';
 
@@ -41195,6 +41202,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tillDayReportNotPrinted =>
+      'The day report was not printed. Check the printer and try again.';
+
+  @override
   String tillDayReportTitle(String number) {
     return 'Day report $number';
   }
@@ -41454,6 +41465,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The cash the drawer starts with, counted now.';
 
   @override
+  String get tillDrawerKickFailed =>
+      'The drawer did not open. Check the printer it hangs on.';
+
+  @override
   String get tillDrawerLoadFailed => 'The tills could not be read.';
 
   @override
@@ -41471,6 +41486,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'No till has been set up yet. Someone who manages the sites adds it.';
 
   @override
+  String get tillDrawerNotSet =>
+      'No cash drawer is set on this till\'s printer.';
+
+  @override
   String get tillDrawerOpenAction => 'Open the till';
 
   @override
@@ -41484,6 +41503,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String tillDrawerOpenTitle(String till) {
     return 'Open $till';
   }
+
+  @override
+  String get tillDrawerOpened => 'The drawer is open.';
 
   @override
   String get tillDrawerRefusalAboveLimit =>
@@ -41800,6 +41822,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillNotForCounter => 'This item is not for sale at the counter.';
 
   @override
+  String get tillNotPrinted =>
+      'Receipt not printed — the sale is complete. Print again, or show the receipt to share it.';
+
+  @override
   String tillNotReady(String operation) {
     return 'Not ready in your country: $operation';
   }
@@ -41972,6 +41998,81 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillPricing => 'Pricing the basket…';
 
   @override
+  String get tillPrintCopy => 'Print a copy';
+
+  @override
+  String get tillPrintReceipt => 'Print the receipt';
+
+  @override
+  String get tillPrintTotal => 'TOTAL';
+
+  @override
+  String get tillPrinted => 'Receipt printed.';
+
+  @override
+  String get tillPrinterCodePage => 'Code page';
+
+  @override
+  String get tillPrinterCodePage437 => 'PC437 (without the euro sign)';
+
+  @override
+  String get tillPrinterCodePage858 => 'PC858 (with the euro sign)';
+
+  @override
+  String get tillPrinterDrawer => 'A cash drawer is attached to the printer';
+
+  @override
+  String get tillPrinterHost => 'Printer address';
+
+  @override
+  String get tillPrinterHostHint =>
+      'A name or an address on this network, for example 192.168.1.50';
+
+  @override
+  String get tillPrinterHostRequired => 'Enter the printer\'s address.';
+
+  @override
+  String get tillPrinterMode => 'Print after a sale';
+
+  @override
+  String get tillPrinterModeAlways => 'Always';
+
+  @override
+  String get tillPrinterModeAsk => 'Offer it';
+
+  @override
+  String get tillPrinterModeNever => 'Only when asked';
+
+  @override
+  String get tillPrinterPaper => 'Paper width';
+
+  @override
+  String tillPrinterPaperWidth(String mm) {
+    return '$mm mm';
+  }
+
+  @override
+  String get tillPrinterPort => 'Port';
+
+  @override
+  String get tillPrinterPortInvalid => 'The port is a number from 1 to 65535.';
+
+  @override
+  String get tillPrinterSet => 'Set up the receipt printer';
+
+  @override
+  String get tillPrinterTest => 'Test print';
+
+  @override
+  String get tillPrinterTestSent => 'Test page sent.';
+
+  @override
+  String get tillPrinterTitle => 'Receipt printer';
+
+  @override
+  String get tillPrinting => 'Printing…';
+
+  @override
   String get tillQuantityHint => 'An exact quantity, for example 1 or 0.350.';
 
   @override
@@ -42036,6 +42137,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tillReceiptCash => 'Cash';
+
+  @override
+  String get tillReceiptChange => 'Change';
+
+  @override
   String tillReceiptCopy(String copy) {
     return 'COPY $copy — not a new receipt';
   }
@@ -42080,9 +42187,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillReceiptShow => 'Show the receipt';
 
   @override
+  String get tillReceiptTax => 'of which tax';
+
+  @override
   String tillReceiptTaxLine(String percent, String tax, String net) {
     return 'VAT $percent: $tax on $net';
   }
+
+  @override
+  String get tillReceiptThanks => 'Thank you';
 
   @override
   String tillReceiptTotal(String amount) {

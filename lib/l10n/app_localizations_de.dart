@@ -12050,6 +12050,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureCounterOfflineCashTitle => 'Offline verkaufen, nur bar';
 
   @override
+  String get featureCounterReceiptPrinterDesc =>
+      'Den Kassenbon auf einem Bondrucker im lokalen Netz drucken (80 oder 58 mm) und nach einem Barverkauf die angeschlossene Kassenlade öffnen. Jede Kasse stellt ihren eigenen Drucker ein. Aus: Der Beleg wird gezeigt und geteilt, nichts wird gedruckt.';
+
+  @override
+  String get featureCounterReceiptPrinterTitle => 'Bondrucker';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.';
 
@@ -41659,6 +41666,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get tillDayReportNotPrinted =>
+      'Der Tagesbericht wurde nicht gedruckt. Prüfen Sie den Drucker und versuchen Sie es erneut.';
+
+  @override
   String tillDayReportTitle(String number) {
     return 'Tagesbericht $number';
   }
@@ -41921,6 +41932,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das Bargeld, mit dem die Schublade beginnt, jetzt gezählt.';
 
   @override
+  String get tillDrawerKickFailed =>
+      'Die Kassenlade ging nicht auf. Prüfen Sie den Drucker, an dem sie hängt.';
+
+  @override
   String get tillDrawerLoadFailed => 'Die Kassen konnten nicht gelesen werden.';
 
   @override
@@ -41938,6 +41953,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Es ist noch keine Kasse angelegt. Wer die Standorte verwaltet, legt sie an.';
 
   @override
+  String get tillDrawerNotSet =>
+      'Am Drucker dieser Kasse ist keine Kassenlade eingestellt.';
+
+  @override
   String get tillDrawerOpenAction => 'Kasse öffnen';
 
   @override
@@ -41951,6 +41970,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String tillDrawerOpenTitle(String till) {
     return '$till öffnen';
   }
+
+  @override
+  String get tillDrawerOpened => 'Die Kassenlade ist offen.';
 
   @override
   String get tillDrawerRefusalAboveLimit =>
@@ -42271,6 +42293,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Artikel ist an der Kasse nicht verkäuflich.';
 
   @override
+  String get tillNotPrinted =>
+      'Beleg nicht gedruckt — der Verkauf ist abgeschlossen. Erneut drucken oder den Beleg zeigen und teilen.';
+
+  @override
   String tillNotReady(String operation) {
     return 'In Ihrem Land noch nicht bereit: $operation';
   }
@@ -42445,6 +42471,83 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillPricing => 'Warenkorb wird berechnet …';
 
   @override
+  String get tillPrintCopy => 'Kopie drucken';
+
+  @override
+  String get tillPrintReceipt => 'Beleg drucken';
+
+  @override
+  String get tillPrintTotal => 'SUMME';
+
+  @override
+  String get tillPrinted => 'Beleg gedruckt.';
+
+  @override
+  String get tillPrinterCodePage => 'Zeichensatz';
+
+  @override
+  String get tillPrinterCodePage437 => 'PC437 (ohne Eurozeichen)';
+
+  @override
+  String get tillPrinterCodePage858 => 'PC858 (mit Eurozeichen)';
+
+  @override
+  String get tillPrinterDrawer => 'Eine Kassenlade hängt am Drucker';
+
+  @override
+  String get tillPrinterHost => 'Adresse des Druckers';
+
+  @override
+  String get tillPrinterHostHint =>
+      'Ein Name oder eine Adresse in diesem Netz, zum Beispiel 192.168.1.50';
+
+  @override
+  String get tillPrinterHostRequired =>
+      'Geben Sie die Adresse des Druckers ein.';
+
+  @override
+  String get tillPrinterMode => 'Nach einem Verkauf drucken';
+
+  @override
+  String get tillPrinterModeAlways => 'Immer';
+
+  @override
+  String get tillPrinterModeAsk => 'Anbieten';
+
+  @override
+  String get tillPrinterModeNever => 'Nur auf Wunsch';
+
+  @override
+  String get tillPrinterPaper => 'Papierbreite';
+
+  @override
+  String tillPrinterPaperWidth(String mm) {
+    return '$mm mm';
+  }
+
+  @override
+  String get tillPrinterPort => 'Netzwerkport';
+
+  @override
+  String get tillPrinterPortInvalid =>
+      'Der Port ist eine Zahl von 1 bis 65535.';
+
+  @override
+  String get tillPrinterSet => 'Bondrucker einrichten';
+
+  @override
+  String get tillPrinterTest => 'Testdruck';
+
+  @override
+  String get tillPrinterTestSent => 'Testseite gesendet.';
+
+  @override
+  String get tillPrinterTitle => 'Bondrucker';
+
+  @override
+  String get tillPrinting => 'Wird gedruckt…';
+
+  @override
   String get tillQuantityHint =>
       'Eine genaue Menge, zum Beispiel 1 oder 0,350.';
 
@@ -42510,6 +42613,12 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get tillReceiptCash => 'Bar';
+
+  @override
+  String get tillReceiptChange => 'Rückgeld';
+
+  @override
   String tillReceiptCopy(String copy) {
     return 'KOPIE $copy — kein neuer Beleg';
   }
@@ -42554,9 +42663,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillReceiptShow => 'Beleg anzeigen';
 
   @override
+  String get tillReceiptTax => 'davon Steuer';
+
+  @override
   String tillReceiptTaxLine(String percent, String tax, String net) {
     return 'MwSt. $percent: $tax auf $net';
   }
+
+  @override
+  String get tillReceiptThanks => 'Vielen Dank';
 
   @override
   String tillReceiptTotal(String amount) {

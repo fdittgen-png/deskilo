@@ -58,6 +58,7 @@ abstract final class HelpAnchor {
   static const moneyTillDrawer = 'user.money.till-drawer';
   static const moneyTillLayout = 'user.money.till-layout';
   static const moneyTillOffline = 'user.money.till-offline';
+  static const moneyTillPrinter = 'user.money.till-printer';
   static const moneyTillReceipts = 'user.money.till.receipts';
 
   /// #3527 — the Sales, Purchases and Cash pages.

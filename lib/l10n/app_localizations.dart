@@ -19354,6 +19354,18 @@ abstract class AppLocalizations {
   /// **'Selling offline, cash only'**
   String get featureCounterOfflineCashTitle;
 
+  /// #4368 the receipt printer feature
+  ///
+  /// In en, this message translates to:
+  /// **'Print the till\'s receipt on a receipt printer on your local network (80 or 58 mm), and open the cash drawer it drives after a cash sale. Each till sets its own printer. Off, the receipt is shown and shared, nothing prints.'**
+  String get featureCounterReceiptPrinterDesc;
+
+  /// #4368 the receipt printer feature
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt printer'**
+  String get featureCounterReceiptPrinterTitle;
+
   /// #4184 feature description
   ///
   /// In en, this message translates to:
@@ -66316,6 +66328,12 @@ abstract class AppLocalizations {
   /// **'Business day: {date}'**
   String tillDayReportDate(String date);
 
+  /// #4368 the day report could not be printed
+  ///
+  /// In en, this message translates to:
+  /// **'The day report was not printed. Check the printer and try again.'**
+  String get tillDayReportNotPrinted;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -66728,6 +66746,12 @@ abstract class AppLocalizations {
   /// **'The cash the drawer starts with, counted now.'**
   String get tillDrawerFloatHelp;
 
+  /// #4368 the Open drawer key
+  ///
+  /// In en, this message translates to:
+  /// **'The drawer did not open. Check the printer it hangs on.'**
+  String get tillDrawerKickFailed;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -66758,6 +66782,12 @@ abstract class AppLocalizations {
   /// **'No till has been set up yet. Someone who manages the sites adds it.'**
   String get tillDrawerNoTillsPerson;
 
+  /// #4368 the Open drawer key
+  ///
+  /// In en, this message translates to:
+  /// **'No cash drawer is set on this till\'s printer.'**
+  String get tillDrawerNotSet;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -66781,6 +66811,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open {till}'**
   String tillDrawerOpenTitle(String till);
+
+  /// #4368 the Open drawer key
+  ///
+  /// In en, this message translates to:
+  /// **'The drawer is open.'**
+  String get tillDrawerOpened;
 
   /// #4367 till sessions: the cash drawer
   ///
@@ -67340,6 +67376,12 @@ abstract class AppLocalizations {
   /// **'This item is not for sale at the counter.'**
   String get tillNotForCounter;
 
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt not printed — the sale is complete. Print again, or show the receipt to share it.'**
+  String get tillNotPrinted;
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -67592,6 +67634,150 @@ abstract class AppLocalizations {
   /// **'Pricing the basket…'**
   String get tillPricing;
 
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Print a copy'**
+  String get tillPrintCopy;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Print the receipt'**
+  String get tillPrintReceipt;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'TOTAL'**
+  String get tillPrintTotal;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt printed.'**
+  String get tillPrinted;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Code page'**
+  String get tillPrinterCodePage;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'PC437 (without the euro sign)'**
+  String get tillPrinterCodePage437;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'PC858 (with the euro sign)'**
+  String get tillPrinterCodePage858;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'A cash drawer is attached to the printer'**
+  String get tillPrinterDrawer;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Printer address'**
+  String get tillPrinterHost;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'A name or an address on this network, for example 192.168.1.50'**
+  String get tillPrinterHostHint;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the printer\'s address.'**
+  String get tillPrinterHostRequired;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Print after a sale'**
+  String get tillPrinterMode;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Always'**
+  String get tillPrinterModeAlways;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Offer it'**
+  String get tillPrinterModeAsk;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Only when asked'**
+  String get tillPrinterModeNever;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Paper width'**
+  String get tillPrinterPaper;
+
+  /// #4368 the till's receipt printer: a paper width in millimetres, the number arrives formatted
+  ///
+  /// In en, this message translates to:
+  /// **'{mm} mm'**
+  String tillPrinterPaperWidth(String mm);
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Port'**
+  String get tillPrinterPort;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'The port is a number from 1 to 65535.'**
+  String get tillPrinterPortInvalid;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Set up the receipt printer'**
+  String get tillPrinterSet;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Test print'**
+  String get tillPrinterTest;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Test page sent.'**
+  String get tillPrinterTestSent;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt printer'**
+  String get tillPrinterTitle;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Printing…'**
+  String get tillPrinting;
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -67692,6 +67878,18 @@ abstract class AppLocalizations {
   /// **'The registry names no counter operation for {country}: nothing is supported, and the till sells nothing.'**
   String tillReadinessUnknownCountry(String country);
 
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get tillReceiptCash;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get tillReceiptChange;
+
   /// #4476 a receipt printed again; copy is its number among the copies, a label (1, 2, ...)
   ///
   /// In en, this message translates to:
@@ -67751,11 +67949,23 @@ abstract class AppLocalizations {
   /// **'Show the receipt'**
   String get tillReceiptShow;
 
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'of which tax'**
+  String get tillReceiptTax;
+
   /// #4184 the counter receipt document; percent, tax and net arrive formatted
   ///
   /// In en, this message translates to:
   /// **'VAT {percent}: {tax} on {net}'**
   String tillReceiptTaxLine(String percent, String tax, String net);
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you'**
+  String get tillReceiptThanks;
 
   /// #4184 the counter receipt document; amount arrives formatted
   ///

@@ -3094,6 +3094,18 @@ Un articolo tracciato indica da dove è stato preso. Quando vende un articolo ge
 
 Per scegliere il lotto da sé, prema **Scegliere il lotto** sulla riga: i lotti disponibili sono elencati con la data e quanto resta, il primo a scadere per primo. Un lotto scaduto è mostrato e non può essere scelto. **Il primo a scadere (scelto dal magazzino)** restituisce la scelta al magazzino. Un articolo non tracciato per lotto dice che non ha un lotto da scegliere.
 
+### Stampare lo scontrino e aprire il cassetto
+
+**Destinatari:** Amministratore · Proprietario
+
+Vende al banco con una stampante di scontrini nella Sua rete (80 o 58 mm, ESC/POS), forse con un cassetto collegato.
+
+Attivi **Stampante di scontrini** (servono le sessioni di cassa). Il dispositivo di ogni cassa imposta la propria stampante: dopo una vendita prema **Configura la stampante di scontrini**, oppure apra **Stampante di scontrini**, e inserisca l'indirizzo della stampante nella Sua rete (Indirizzo della stampante) e la porta (9100 salvo indicazione diversa della stampante), la larghezza della carta, la tabella di codici, se vi è collegato un cassetto e se una vendita si stampa da sé, dopo una domanda o solo su richiesta. **Stampa di prova** stampa una pagina di prova.
+
+Dopo una vendita in contanti il cassetto si apre. **Stampa lo scontrino** stampa lo scontrino; **Stampa una copia** lo stampa di nuovo contrassegnato **COPIA 1**, **COPIA 2** e così via: una copia è contata e non prende mai un nuovo numero di scontrino. Il tasto **Aprire il cassetto** di un layout di cassa apre il cassetto fuori da una vendita. Quando la stampante non risponde, la cassa dice **Scontrino non stampato — la vendita è completa. Stampi di nuovo, o mostri lo scontrino per condividerlo.**: la vendita è comunque completa, e lo scontrino può essere mostrato e condiviso. In un browser non si stampa nulla: stampare richiede l'app.
+
+Provato finora: i byte rispetto ai file di riferimento e un ricevitore locale. Nessun modello di stampante è stato ancora provato.
+
 ### Aprire la cassa, contare e chiudere
 
 **Destinatari:** Amministratore · Proprietario

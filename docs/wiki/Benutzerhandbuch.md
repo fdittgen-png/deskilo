@@ -3238,6 +3238,19 @@ Ein rückverfolgter Artikel nennt, woraus er entnommen wurde. Verkaufen Sie eine
 
 Um die Charge selbst zu wählen, tippen Sie auf der Zeile auf **Charge wählen**: Die vorrätigen Chargen stehen mit ihrem Datum und dem Rest da, die zuerst ablaufende zuerst. Eine abgelaufene Charge wird gezeigt und kann nicht gewählt werden. **Die zuerst ablaufende (vom Bestand gewählt)** überlässt die Wahl wieder dem Bestand. Ein Artikel ohne Chargenverfolgung sagt, dass es keine Charge zu wählen gibt.
 
+<!-- anchor: user.money.till-printer -->
+### Den Beleg drucken und die Kassenlade öffnen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie verkaufen an einer Theke mit einem Bondrucker in Ihrem Netz (80 oder 58 mm, ESC/POS), vielleicht mit einer daran angeschlossenen Kassenlade.
+
+Schalten Sie **Bondrucker** ein (es braucht Kassensitzungen). Jedes Gerät einer Kasse stellt seinen eigenen Drucker ein: Tippen Sie nach einem Verkauf auf **Bondrucker einrichten** oder öffnen Sie **Bondrucker** und geben Sie die Adresse des Druckers in Ihrem Netz (Adresse des Druckers) und seinen Port ein (9100, sofern der Drucker nichts anderes sagt), die Papierbreite, den Zeichensatz, ob eine Kassenlade daran hängt und ob ein Verkauf von selbst, nach Rückfrage oder nur auf Wunsch druckt. **Testdruck** druckt eine Testseite.
+
+Nach einem Barverkauf öffnet sich die Kassenlade. **Beleg drucken** druckt den Beleg; **Kopie drucken** druckt ihn erneut als **KOPIE 1**, **KOPIE 2** usw.: Eine Kopie wird gezählt und erhält nie eine neue Belegnummer. Die Taste **Schublade öffnen** eines Kassenlayouts öffnet die Lade außerhalb eines Verkaufs. Ist der Drucker nicht erreichbar, sagt die Kasse **Beleg nicht gedruckt — der Verkauf ist abgeschlossen. Erneut drucken oder den Beleg zeigen und teilen.**: Der Verkauf ist in jedem Fall abgeschlossen, und der Beleg kann gezeigt und geteilt werden. Im Browser wird nichts gedruckt: Drucken braucht die App.
+
+Bisher getestet: die Bytes gegen Referenzdateien und ein lokaler Empfänger. Noch kein Druckermodell wurde ausprobiert.
+
 <!-- anchor: user.money.till-drawer -->
 ### Kasse öffnen, zählen und schließen
 

@@ -141,6 +141,7 @@
   "user.money.stock.scanning": "Working with a scanner",
   "user.money.stock.nfc": "Tags with the phone's NFC",
   "user.money.till": "Till",
+  "user.money.till-printer": "Print the receipt and open the drawer",
   "user.money.till-drawer": "Open the till, count and close it",
   "user.money.till-layout": "Lay out your till",
   "user.money.till-offline": "When the till is offline",
