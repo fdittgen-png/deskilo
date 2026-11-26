@@ -604,7 +604,7 @@ Vous voulez que vos factures et vos lettres s'impriment sur le papier qu'utilise
 
 **Public:** Propriétaire · Administrateur·rice avec l'autorisation
 
-Les données de base sont les listes avec lesquelles votre entreprise est configurée et que ses sélecteurs lisent : les unités, les taux de TVA, les articles, les fournisseurs et le reste. **Données de base** montre chaque sorte en un seul endroit, par groupe. Chaque carte nomme la sorte, dit en une ligne ce qu’elle est et combien d’enregistrements elle contient, et ouvre l’écran qui la modifie (#4485).
+Les données de base sont les listes avec lesquelles votre entreprise est configurée et que ses sélecteurs lisent : les unités, les taux de TVA, les articles, les fournisseurs et le reste. **Données de base** montre chaque sorte en un seul endroit, par groupe. Chaque carte nomme la sorte, dit en une ligne ce qu’elle est et combien d’enregistrements elle contient, et ouvre l’écran qui la modifie.
 
 **Étapes**
 
@@ -664,7 +664,7 @@ Vos articles, devis et factures sont mesurés dans des unités, et certaines se 
 - Une unité utilisée (un article compté avec elle, un mouvement de stock, un devis ou une ligne de facture) garde pour toujours sa dimension et son facteur : une correction est une nouvelle unité. Une unité que personne n’utilise peut être archivée (**Archiver**) puis affichée de nouveau (**Afficher de nouveau**).
 - Une conversion est exacte : 2,5 km font 2500 m. Deux sortes d’unités ne se convertissent jamais, et un résultat que six décimales ne peuvent pas contenir est refusé, jamais arrondi.
 - Seuls le propriétaire et les administrateurs autorisés à modifier les réglages de l’espace tiennent les unités.
-- Les unités sont toujours là (#4485). La fonctionnalité **Unités de mesure** sous **Fonctionnalités** décide si les devis et les factures proposent vos propres unités et si les sélecteurs d’un article proposent toutes les unités ; tant qu’elle est désactivée, ils ne proposent que les unités habituelles.
+- Les unités sont toujours là. La fonctionnalité **Unités de mesure** sous **Fonctionnalités** décide si les devis et les factures proposent vos propres unités et si les sélecteurs d’un article proposent toutes les unités ; tant qu’elle est désactivée, ils ne proposent que les unités habituelles.
 
 **Voir aussi:** [Papier des documents](help:user.workspace.settings.paper)
 

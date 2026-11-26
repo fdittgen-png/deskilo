@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/help/help_anchors.dart';
 import '../../core/help/help_dot.dart';
 import '../../core/l10n/context_l10n.dart';
+import '../../core/text/collation.dart';
 import '../../core/theme/app_radius.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/ui/adaptive/window_class.dart';
@@ -47,10 +48,10 @@ class _MasterDataPageState extends ConsumerState<MasterDataPage> {
     final features = ref.watch(enabledFeaturesSyncProvider);
     final held = ref.watch(myPermissionsProvider);
     final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    final query = _query.toLowerCase();
+    final query = foldForSearch(_query);
     final kinds = [
       for (final k in masterDataKindsFor(features.contains, held))
-        if (query.isEmpty || k.title(l10n).toLowerCase().contains(query)) k,
+        if (query.isEmpty || foldForSearch(k.title(l10n)).contains(query)) k,
     ];
     return Scaffold(
       appBar: pageBar(
@@ -125,11 +126,19 @@ class _Group extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          HelpDotTitle(
-            title,
-            title,
-            anchor: group.anchor,
-            style: Theme.of(context).textTheme.titleMedium,
+          Row(
+            children: [
+              Expanded(
+                child: Semantics(
+                  header: true,
+                  child: Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+              ),
+              HelpDot(title, anchor: group.anchor),
+            ],
           ),
           const SizedBox(height: AppSpacing.sm),
           LayoutBuilder(

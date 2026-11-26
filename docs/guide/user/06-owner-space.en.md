@@ -604,7 +604,7 @@ You want your invoices and letters printed on the paper your country uses.
 
 **Audience:** Owner · Administrator with the permission
 
-Master data is the lists your business is set up with and that its pickers read: the units, the VAT rates, the items, the suppliers and the rest. **Master data** shows every kind in one place, grouped. Each card names the kind, says in one line what it is and how many records it holds, and opens the screen that edits it (#4485).
+Master data is the lists your business is set up with and that its pickers read: the units, the VAT rates, the items, the suppliers and the rest. **Master data** shows every kind in one place, grouped. Each card names the kind, says in one line what it is and how many records it holds, and opens the screen that edits it.
 
 **Steps**
 
@@ -664,7 +664,7 @@ Your items, quotes and invoices are measured in units, and some units convert in
 - A unit that is in use (an item counted in it, a stock movement, a quote or an invoice line) keeps its dimension and its factor for good: a correction is a new unit. A unit nobody uses can be archived (**Archive**) and shown again (**Show again**).
 - A conversion is exact: 2.5 km is 2500 m. Two kinds of unit never convert, and an answer that six decimals cannot hold is refused, never rounded.
 - Only the owner and the administrators allowed to change the workspace settings maintain the units.
-- The units are always here (#4485). The **Units of measure** feature under **Features** decides whether quotes and invoices offer your own units and whether the pickers of an item offer every unit; while it is off they offer the usual units only.
+- The units are always here. The **Units of measure** feature under **Features** decides whether quotes and invoices offer your own units and whether the pickers of an item offer every unit; while it is off they offer the usual units only.
 
 **See also:** [Paper of the documents](help:user.workspace.settings.paper)
 

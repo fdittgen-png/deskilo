@@ -604,7 +604,7 @@ Vuole che le sue fatture e lettere siano stampate sulla carta che usa il suo pae
 
 **Destinatari:** Proprietario · Amministratore con il permesso
 
-I dati anagrafici sono gli elenchi con cui è configurata l’attività e che i suoi selettori leggono: le unità, le aliquote IVA, gli articoli, i fornitori e il resto. **Dati anagrafici** mostra ogni tipo in un unico posto, per gruppi. Ogni scheda nomina il tipo, dice in una riga che cos’è e quanti record contiene, e apre la schermata che lo modifica (#4485).
+I dati anagrafici sono gli elenchi con cui è configurata l’attività e che i suoi selettori leggono: le unità, le aliquote IVA, gli articoli, i fornitori e il resto. **Dati anagrafici** mostra ogni tipo in un unico posto, per gruppi. Ogni scheda nomina il tipo, dice in una riga che cos’è e quanti record contiene, e apre la schermata che lo modifica.
 
 **Passaggi**
 
@@ -664,7 +664,7 @@ I suoi articoli, preventivi e fatture sono misurati in unità, e alcune unità s
 - Un’unità in uso (un articolo contato con essa, un movimento di magazzino, un preventivo o una riga di fattura) mantiene per sempre grandezza e fattore: una correzione è una nuova unità. Un’unità che nessuno usa può essere archiviata (**Archivia**) e mostrata di nuovo (**Mostra di nuovo**).
 - Una conversione è esatta: 2,5 km sono 2500 m. Due tipi di unità non si convertono mai, e un risultato che sei decimali non possono contenere viene rifiutato, mai arrotondato.
 - Solo il proprietario e gli amministratori autorizzati a modificare le impostazioni dello spazio gestiscono le unità.
-- Le unità sono sempre qui (#4485). La funzionalità **Unità di misura** in **Funzionalità** decide se i preventivi e le fatture offrono le unità proprie dell’attività e se i selettori di un articolo offrono ogni unità; finché è disattivata, offrono solo le unità consuete.
+- Le unità sono sempre qui. La funzionalità **Unità di misura** in **Funzionalità** decide se i preventivi e le fatture offrono le unità proprie dell’attività e se i selettori di un articolo offrono ogni unità; finché è disattivata, offrono solo le unità consuete.
 
 **Vedi anche:** [Carta dei documenti](help:user.workspace.settings.paper)
 

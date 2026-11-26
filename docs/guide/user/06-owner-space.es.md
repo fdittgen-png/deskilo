@@ -604,7 +604,7 @@ Usted quiere que sus facturas y cartas se impriman en el papel que usa su país.
 
 **Público:** Propietario · Administrador/a con el permiso
 
-Los datos maestros son las listas con las que está configurada su empresa y que leen sus selectores: las unidades, los tipos de IVA, los artículos, los proveedores y el resto. **Datos maestros** muestra cada tipo en un solo lugar, por grupos. Cada tarjeta nombra el tipo, dice en una línea qué es y cuántos registros contiene, y abre la pantalla que lo edita (#4485).
+Los datos maestros son las listas con las que está configurada su empresa y que leen sus selectores: las unidades, los tipos de IVA, los artículos, los proveedores y el resto. **Datos maestros** muestra cada tipo en un solo lugar, por grupos. Cada tarjeta nombra el tipo, dice en una línea qué es y cuántos registros contiene, y abre la pantalla que lo edita.
 
 **Pasos**
 
@@ -664,7 +664,7 @@ Sus artículos, presupuestos y facturas se miden en unidades, y algunas se convi
 - Una unidad en uso (un artículo contado con ella, un movimiento de stock, un presupuesto o una línea de factura) conserva para siempre su dimensión y su factor: una corrección es una unidad nueva. Una unidad que nadie usa puede archivarse (**Archivar**) y mostrarse de nuevo (**Mostrar de nuevo**).
 - Una conversión es exacta: 2,5 km son 2500 m. Dos clases de unidad nunca se convierten, y un resultado que seis decimales no pueden contener se rechaza, nunca se redondea.
 - Solo el propietario y los administradores autorizados a cambiar los ajustes del espacio mantienen las unidades.
-- Las unidades están siempre aquí (#4485). La función **Unidades de medida** en **Funciones** decide si los presupuestos y las facturas ofrecen sus propias unidades y si los selectores de un artículo ofrecen todas las unidades; mientras está desactivada, solo ofrecen las unidades habituales.
+- Las unidades están siempre aquí. La función **Unidades de medida** en **Funciones** decide si los presupuestos y las facturas ofrecen sus propias unidades y si los selectores de un artículo ofrecen todas las unidades; mientras está desactivada, solo ofrecen las unidades habituales.
 
 **Véase también:** [Papel de los documentos](help:user.workspace.settings.paper)
 

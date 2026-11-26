@@ -604,7 +604,7 @@ Sie möchten, dass Ihre Rechnungen und Briefe auf dem Papier gedruckt werden, da
 
 **Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
 
-Stammdaten sind die Listen, mit denen Ihr Unternehmen eingerichtet ist und die seine Auswahlfelder lesen: die Einheiten, die Steuersätze, die Artikel, die Lieferanten und der Rest. **Stammdaten** zeigt jede Art an einem Ort, nach Gruppen. Jede Karte nennt die Art, sagt in einer Zeile, was sie ist und wie viele Einträge sie enthält, und öffnet den Bildschirm, der sie bearbeitet (#4485).
+Stammdaten sind die Listen, mit denen Ihr Unternehmen eingerichtet ist und die seine Auswahlfelder lesen: die Einheiten, die Steuersätze, die Artikel, die Lieferanten und der Rest. **Stammdaten** zeigt jede Art an einem Ort, nach Gruppen. Jede Karte nennt die Art, sagt in einer Zeile, was sie ist und wie viele Einträge sie enthält, und öffnet den Bildschirm, der sie bearbeitet.
 
 **Schritte**
 
@@ -664,7 +664,7 @@ Ihre Artikel, Angebote und Rechnungen werden in Einheiten gemessen, und manche E
 - Eine Einheit in Verwendung (ein darin gezählter Artikel, eine Lagerbewegung, ein Angebot oder eine Rechnungszeile) behält Größe und Faktor für immer: Eine Korrektur ist eine neue Einheit. Eine Einheit, die niemand verwendet, lässt sich archivieren (**Archivieren**) und wieder anzeigen (**Wieder anzeigen**).
 - Eine Umrechnung ist exakt: 2,5 km sind 2500 m. Zwei Arten von Einheiten rechnen sich nie um, und ein Ergebnis, das sechs Nachkommastellen nicht fassen, wird abgelehnt, nie gerundet.
 - Nur Inhaber und Administratoren mit der Berechtigung, die Einstellungen des Workspace zu ändern, pflegen die Einheiten.
-- Die Einheiten sind immer da (#4485). Die Funktion **Maßeinheiten** unter **Funktionen** entscheidet, ob Angebote und Rechnungen Ihre eigenen Einheiten anbieten und ob die Auswahlfelder eines Artikels jede Einheit anbieten; solange sie aus ist, bieten sie nur die üblichen Einheiten an.
+- Die Einheiten sind immer da. Die Funktion **Maßeinheiten** unter **Funktionen** entscheidet, ob Angebote und Rechnungen Ihre eigenen Einheiten anbieten und ob die Auswahlfelder eines Artikels jede Einheit anbieten; solange sie aus ist, bieten sie nur die üblichen Einheiten an.
 
 **Siehe auch:** [Papier der Dokumente](help:user.workspace.settings.paper)
 

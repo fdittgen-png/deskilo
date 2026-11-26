@@ -262,10 +262,12 @@ void main() {
   testWidgets('the Workspace setup group opens the Master data page', (tester) async {
     await _pump(tester, web: true);
     await tester.tap(find.byTooltip('Open navigation menu'));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 1));
     await _reveal(tester, 'drawer-master-data');
     await tester.tap(find.byKey(const ValueKey('drawer-master-data')));
-    await tester.pumpAndSettle();
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
     expect(find.byKey(const ValueKey('master-data-list')), findsOneWidget);
     expect(find.byKey(const ValueKey('master-data-card-units')), findsOneWidget);
   });
