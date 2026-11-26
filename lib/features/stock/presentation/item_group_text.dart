@@ -29,6 +29,9 @@ String itemGroupParamLabel(AppLocalizations l10n, String param) => switch (param
   groupParamLabelTemplate => l10n.itemGroupLabelTemplate,
   'default_purchase_unit' => l10n.itemGroupPurchaseUnit,
   'default_purchase_factor_num' || 'default_purchase_factor_den' => l10n.itemGroupPurchaseFactor,
+  'default_sale_unit' => l10n.itemGroupSaleUnit,
+  'default_sale_factor_num' || 'default_sale_factor_den' => l10n.itemGroupSaleFactor,
+  'default_sale_price_cents' => l10n.itemGroupSalePrice,
   'reorder_point_default' => l10n.itemGroupReorderPoint,
   'reorder_quantity_default' => l10n.itemGroupReorderQty,
   'home_zone_id' => l10n.itemGroupHomeZone,
@@ -69,12 +72,13 @@ String itemGroupSummary(AppLocalizations l10n, ItemGroup g) => [
     if (g.params[p] != null) l10n.labelWithValue(itemGroupParamLabel(l10n, p), itemGroupValueText(l10n, p, g.params[p])),
   for (final p in itemGroupProposals)
     // the factor is one number: its numerator speaks for the pair
-    if (g.params[p] != null && p != 'default_purchase_factor_den') l10n.labelWithValue(itemGroupParamLabel(l10n, p), _proposalText(l10n, g, p)),
+    if (g.params[p] != null && p != 'default_purchase_factor_den' && p != 'default_sale_factor_den') l10n.labelWithValue(itemGroupParamLabel(l10n, p), _proposalText(l10n, g, p)),
 ].join(' · ');
 
 /// A proposal of [g] as a person reads it: the factor as one number or a fraction, the home zone as set.
 String _proposalText(AppLocalizations l10n, ItemGroup g, String p) => switch (p) {
   'default_purchase_factor_num' => purchaseFactorText((g.params[p]! as num).toInt(), ((g.params['default_purchase_factor_den'] ?? 1) as num).toInt()),
+  'default_sale_factor_num' => purchaseFactorText((g.params[p]! as num).toInt(), ((g.params['default_sale_factor_den'] ?? 1) as num).toInt()),
   'home_zone_id' || 'target_margin_bps' || 'price_rounding' => itemGroupValueText(l10n, p, g.params[p]),
   _ => '${g.params[p]}',
 };

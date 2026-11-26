@@ -11465,6 +11465,18 @@
   "@itemGroupRoundingNone": {
     "description": "#4361 G12 finance parameters of an item group"
   },
+  "itemGroupSaleFactor": "Was eine davon in der Lagereinheit ergibt (Verkauf)",
+  "@itemGroupSaleFactor": {
+    "description": "#4479 what one sale unit makes of the inventory unit"
+  },
+  "itemGroupSalePrice": "Preis von einer beim Verkauf",
+  "@itemGroupSalePrice": {
+    "description": "#4479 the price of one sale unit"
+  },
+  "itemGroupSaleUnit": "Verkauft in (Einheit)",
+  "@itemGroupSaleUnit": {
+    "description": "#4479 a group's proposed sale unit"
+  },
   "itemGroupSet": "Gesetzt",
   "@itemGroupSet": {
     "description": "#4361 G12 finance parameters of an item group"
