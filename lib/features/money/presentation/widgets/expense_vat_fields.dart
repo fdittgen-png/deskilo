@@ -13,6 +13,7 @@ import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/cache/read_failure.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/format/decimal_input.dart';
 import '../../../../core/help/help_anchors.dart';
@@ -20,8 +21,10 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -84,7 +87,12 @@ class ExpenseVatChoice {
 }
 
 /// The rates an expense may carry here, highest first; empty when the
-/// space is not VAT-registered or input VAT is off.
+/// space is not VAT-registered, input VAT is off, or the space has no rate.
+///
+/// A read of the rates that failed is thrown, never answered as empty: an
+/// empty answer says "no VAT here", and the form would then file an expense
+/// without the VAT its space deducts. A form reads them before it opens
+/// ([whenExpenseVatRead]) or shows the failure with a way to try again.
 Future<List<double>> expenseVatPercents(WidgetRef ref, String vatRegime) async {
   if (!ref
           .read(enabledFeaturesSyncProvider)
@@ -92,16 +100,14 @@ Future<List<double>> expenseVatPercents(WidgetRef ref, String vatRegime) async {
       vatRegimeFromWire(vatRegime) != VatRegime.vatRegistered) {
     return const [];
   }
-  var rates = const <VatRate>[];
+  final List<VatRate> rates;
   try {
     rates = await ref.read(vatRatesProvider.future);
-  } on Object catch (e, st) {
-    TraceLogger.instance.warn(
-      'money',
-      'expense VAT rates failed',
-      error: e,
-      stackTrace: st,
-    );
+  } on Object {
+    // The caller's guarded read traces it; the failed read is dropped here so
+    // the next try asks the server again.
+    ref.invalidate(vatRatesProvider);
+    rethrow;
   }
   return {
     for (final r in rates)
@@ -109,8 +115,45 @@ Future<List<double>> expenseVatPercents(WidgetRef ref, String vatRegime) async {
   }.toList()..sort((a, b) => b.compareTo(a));
 }
 
+/// Runs [open], a form that asks an expense for its VAT, once the rates it
+/// will offer have been read. When they could not be read, says why on
+/// [context] and answers [unopened]: the form stays closed rather than open as
+/// if the space had no VAT, and opening it again reads the rates again.
+Future<T> whenExpenseVatRead<T>(
+  BuildContext context,
+  WidgetRef ref,
+  Future<T> Function() open, {
+  required T unopened,
+}) async {
+  final workspace = ref.read(currentWorkspaceProvider).value;
+  Object? unread;
+  if (workspace != null) {
+    await guardRead<List<double>?>(
+      domain: 'money',
+      message: 'expense VAT rates failed',
+      read: () => expenseVatPercents(ref, workspace.vatRegime),
+      fallback: (e) {
+        unread = e;
+        return null;
+      },
+    );
+  }
+  final failed = unread;
+  if (failed == null) return open();
+  if (context.mounted) {
+    final l10n = context.l10n;
+    AppSnack.error(context, switch (classifyReadFailure(failed)) {
+      ReadFailure.transient => l10n.readStateOffline,
+      ReadFailure.denied => l10n.readStateDenied,
+      ReadFailure.other => l10n.readStateFailed,
+    });
+  }
+  return unopened;
+}
+
 /// #2573 — the rates a receipt line may carry in the current space, and its
-/// currency; null while no space is open.
+/// currency; null while no space is open. Throws what the read of the rates
+/// threw (see [expenseVatPercents]).
 Future<({List<double> percents, MoneyFormat currency})?> receiptVatContext(
   WidgetRef ref,
 ) async {

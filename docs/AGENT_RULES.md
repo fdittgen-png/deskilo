@@ -68,6 +68,19 @@ wording, a capability -- each with its reason); a literal that is not listed
 fails, and so does a listed line that moved. The rule applies to every new
 feature from now on, not only to VAT.
 
+## Data integrity: a read, an edit and a failure mean one thing each (#4489)
+
+The contract is [`docs/domain/contracts/data-integrity.md`](domain/contracts/data-integrity.md); these are the rules a change obeys.
+
+- **A failed read is never an empty answer.** A read a form needs before it may file something (rates, units, a catalogue) has three outcomes: answered (empty included), still reading, failed. A failure is said with a way to ask again (`ReadFailureBanner`, or the form does not open); it never becomes `const []`, `0`, a default object or "no VAT". `guardRead`'s fallback says the failure; it does not invent the value. `test/lint/failed_read_is_not_empty_test.dart` counts both shapes per area, down only.
+- **An edit keeps what it did not touch.** An editor builds what it saves from the record it read (`copyWith` on the loaded value), never from its controls alone: a field the editor does not show, a translation in another language, a rule it has no control for, a retired child, an order — all are saved as read. Removing something is an explicit act of the person, never the result of leaving a control empty that was never filled from the record. Every editor of a record with more fields than controls has a test "a one-field save keeps the rest".
+- **A child is edited by its key.** A choice, a label row, a line: its key or id never comes from its text or its position, and is never an input once it exists. Reword, retire, reorder and add are separate acts.
+- **A stored reference the current list does not offer is kept.** A picker offers the stored value with the list's, shows it, and saves it unchanged until the person picks another. A list of what the installation supports (operating countries) is not the list of what may be stored (a person's country).
+- **A reference is an id or an immutable key, never a label, a percentage or a leaf code.** Two rows with the same label or the same percentage stay two rows; a match by text offers candidates, it never picks the first.
+- **A fault is an error in the trace once; an answer is a warning.** `Unreadable` and `Defect` are errors (they may be reported); a refusal the server worded, a lost connection and a held request are not. Catch through `runCommand`, `guardSave`, `guardRead` or `runGuarded`, which apply this; when a failure is thrown again, it is thrown with the stack of its first catch (`Error.throwWithStackTrace(e, st)`, `CommandRefused.stack`).
+- **Nothing proves a write did not commit except the server saying so.** A timeout, a lost answer or an answer that could not be read after the request left is unknown, never "refused": the same request id is reconciled (`IssueAttempt`), never a new one.
+- **Every door keeps the same rule.** A rule a Dart picker enforces is also the server's (a constraint or the command's own check), and holds through `web/setup.html`, an import and a direct call. A picker alone is not a fix.
+
 ## Feature management (lifetime rule, #502)
 
 - EVERY user-facing functionality ships behind a `WorkspaceFeature` flag — for the lifetime of this project. A new functionality lands with: the enum value, a `featureManifest` entry (defaultOn/requires), `featureXxx`/`featureXxxDesc` l10n keys ×5, `features.contains(...)` gates on its UI surfaces, its assessment line in `feature_lifecycle.dart` (a new shipped feature starts **beta by owner decision**, `_ownerBeta`, basis `ownerDecision`, never stable; evidence ids move it to basis `evidence`, and only evidence raises it to stable — #2519; `unreviewed` is for a reserved flag nothing consumes) and its row in the generated process catalogue (#1863 retired the count pin: `test/lint/feature_registry_test.dart` now checks completeness, stable keys, tiers and dependencies).

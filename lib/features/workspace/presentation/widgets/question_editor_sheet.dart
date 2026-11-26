@@ -11,6 +11,11 @@
 // The key is written once and never again. Answers point at it, so a
 // renamed key is a lost answer; the server enforces that too, and the
 // field is simply not offered when editing an existing question.
+//
+// An edit changes what its controls show and keeps the rest. What is saved is
+// a copy of the question as it was read: the group, the help texts, the rules
+// this sheet has no control for and every choice's key, labels, order and
+// state stay as read unless the person changes them here.
 import 'package:flutter/material.dart';
 
 import '../../../../core/format/decimal_input.dart';
@@ -18,6 +23,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_field.dart';
+import 'question_choice_tile.dart';
 import 'workspace_fields_section.dart';
 
 /// The label of [type], in the reader's language.
@@ -105,6 +111,12 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
   late final TextEditingController _choices;
   late final TextEditingController _rule;
 
+  /// The choices the question already has, each with its edits.
+  late final List<QuestionChoiceDraft> _existing;
+
+  /// Whether the person moved a choice: only then is the order rewritten.
+  bool _reordered = false;
+
   late WorkspaceFieldType _type;
   late Set<WorkspaceFieldContext> _contexts;
   late WorkspaceFieldVisibility _visibility;
@@ -121,12 +133,12 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
       for (final locale in _locales)
         locale: TextEditingController(text: initial?.labels[locale] ?? ''),
     };
-    _choices = TextEditingController(
-      text: [
-        for (final o in initial?.options ?? const <WorkspaceFieldOption>[])
-          o.key,
-      ].join('\n'),
-    );
+    // New choices only: the existing ones are edited as what they are, below.
+    _choices = TextEditingController();
+    _existing = [
+      for (final o in initial?.options ?? const <WorkspaceFieldOption>[])
+        QuestionChoiceDraft(o, _locales),
+    ];
     _rule = TextEditingController(
       text: '${initial?.validation['max_length'] ?? initial?.validation['max'] ?? ''}',
     );
@@ -147,43 +159,119 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
     }
     _choices.dispose();
     _rule.dispose();
+    for (final choice in _existing) {
+      choice.dispose();
+    }
     super.dispose();
   }
 
   bool get _isNew => widget.initial == null;
 
-  /// The question as it stands, which is also what the preview renders.
+  /// The question as it stands, which is also what the preview renders: the
+  /// question as it was read, with what this sheet's controls own changed.
   WorkspaceField get _draft {
+    final read = widget.initial;
+    final labels = {...?read?.labels};
+    for (final MapEntry(key: locale, value: typed) in _labels.entries) {
+      final text = typed.text.trim();
+      if (text.isEmpty) {
+        labels.remove(locale);
+      } else {
+        labels[locale] = text;
+      }
+    }
+    // The rules belong to the answer type: they are kept while it is the
+    // same, and this sheet owns one of them, the maximum.
+    final validation = <String, Object?>{
+      if (read != null && read.type == _type) ...read.validation,
+    };
     final rule = parseDecimalInput(_rule.text, grouping: false);
-    return WorkspaceField(
-      id: widget.initial?.id ?? '',
-      key: _key.text.trim(),
-      type: _type,
-      labels: {
-        for (final entry in _labels.entries)
-          if (entry.value.text.trim().isNotEmpty)
-            entry.key: entry.value.text.trim(),
-      },
-      required: _required,
-      personalData: _personal,
-      visibility: _visibility,
-      contexts: _contexts,
-      sortOrder: widget.initial?.sortOrder ?? 0,
-      validation: {
-        if (rule != null && _isTextual) 'max_length': rule.toInt(),
-        if (rule != null && _isNumeric) 'max': rule,
-      },
-      active: _active,
-      options: [
-        for (final line in _choices.text.split('\n'))
-          if (line.trim().isNotEmpty)
-            WorkspaceFieldOption(
-              key: line.trim().toLowerCase().replaceAll(RegExp(r'[^a-z0-9_]'), '_'),
-              labels: {for (final l in _locales) l: line.trim()},
-            ),
-      ],
-    );
+    if (_isTextual) _setRule(validation, 'max_length', rule?.toInt());
+    if (_isNumeric) _setRule(validation, 'max', rule);
+    return (read ??
+            WorkspaceField(id: '', key: '', type: _type, labels: const {}))
+        .copyWith(
+          key: _isNew ? _key.text.trim() : null,
+          type: _type,
+          labels: labels,
+          validation: validation,
+          options: _draftOptions,
+        )
+        .asked(
+          required: _required,
+          personalData: _personal,
+          visibility: _visibility,
+          contexts: _contexts,
+          active: _active,
+        );
   }
+
+  static void _setRule(Map<String, Object?> rules, String key, Object? value) {
+    if (value == null) {
+      rules.remove(key);
+    } else {
+      rules[key] = value;
+    }
+  }
+
+  /// The choices as they stand: the existing ones with their edits, in their
+  /// order (renumbered only when the person moved one), then the lines typed
+  /// as new choices. A new line never takes the key of another choice.
+  List<WorkspaceFieldOption> get _draftOptions {
+    final options = [
+      for (final (i, choice) in _existing.indexed)
+        choice.edited(sortOrder: _reordered ? i : null),
+    ];
+    final taken = {for (final o in options) o.key};
+    var next = options.fold(-1, (last, o) => o.sortOrder > last ? o.sortOrder : last) + 1;
+    for (final line in _choices.text.split('\n')) {
+      final label = line.trim();
+      if (label.isEmpty) continue;
+      final base = label.toLowerCase().replaceAll(RegExp(r'[^a-z0-9_]'), '_');
+      var key = base;
+      for (var n = 2; !taken.add(key); n++) {
+        key = '${base}_$n';
+      }
+      options.add(
+        WorkspaceFieldOption(
+          key: key,
+          labels: {for (final l in _locales) l: label},
+          sortOrder: next++,
+        ),
+      );
+    }
+    return options;
+  }
+
+  void _refresh() => setState(() {});
+
+  void _move(int from, int to) {
+    _existing.insert(to, _existing.removeAt(from));
+    _reordered = true;
+    _refresh();
+  }
+
+  /// The choices of a choice question: the existing ones, each edited as what
+  /// it is, then the lines that add new ones.
+  List<Widget> _choiceFields(AppLocalizations l10n) => [
+    for (final (i, choice) in _existing.indexed)
+      QuestionChoiceTile(
+        key: QuestionChoiceTile.keyFor(choice.read.key),
+        choice: choice,
+        workspaceLocale: widget.workspaceLocale,
+        enabled: !widget.saving,
+        onChanged: _refresh,
+        onMoveUp: i == 0 ? null : () => _move(i, i - 1),
+        onMoveDown: i == _existing.length - 1 ? null : () => _move(i, i + 1),
+      ),
+    TextField(
+      key: QuestionEditorSheet.choicesKey,
+      controller: _choices,
+      maxLines: 4,
+      decoration: InputDecoration(labelText: l10n.questionEditorChoices),
+      onChanged: (_) => _refresh(),
+    ),
+  ];
 
   bool get _isTextual =>
       _type == WorkspaceFieldType.text || _type == WorkspaceFieldType.longText;
@@ -199,7 +287,14 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
       RegExp(r'^[a-z][a-z0-9_]{1,40}$').hasMatch(_key.text.trim()) &&
       _contexts.isNotEmpty &&
       (_labels[widget.workspaceLocale]?.text.trim().isNotEmpty ?? false) &&
-      (!_type.isChoice || _draft.options.isNotEmpty);
+      (!_type.isChoice ||
+          (_draft.options.isNotEmpty &&
+              // 0248 wants every choice worded in the workspace's language.
+              _existing.every(
+                (c) =>
+                    c.labels[widget.workspaceLocale]?.text.trim().isNotEmpty ??
+                    true,
+              )));
 
   @override
   Widget build(BuildContext context) {
@@ -261,17 +356,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                     onChanged: (_) => setState(() {}),
                   ),
                 ),
-              if (_type.isChoice)
-                TextField(
-                  key: QuestionEditorSheet.choicesKey,
-                  controller: _choices,
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    labelText:
-                        l10n.questionEditorChoices,
-                  ),
-                  onChanged: (_) => setState(() {}),
-                ),
+              if (_type.isChoice) ..._choiceFields(l10n),
               if (_isTextual || _isNumeric)
                 TextField(
                   key: const ValueKey('question-editor-sheet-editor-max-length'),

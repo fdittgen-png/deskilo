@@ -6,6 +6,7 @@
 // the exact repository call, the preview shows the postal standard, and
 // the tile reflects the value afterwards.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/country/country_catalog.dart';
 import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:flutter/material.dart';
@@ -161,5 +162,41 @@ void main() {
           .initialValue,
       'DE',
     );
+  });
+  testWidgets('a stored country the catalogue does not offer is shown and saved as it was read', (tester) async {
+    // Brazil is nowhere a workspace may be based, and a person may live there.
+    expect(CountryCatalog.isKnown('BR'), isFalse);
+    final profile = FakeProfileRepository(
+      profiles: [
+        const Profile(
+          id: 'user-1',
+          displayName: 'Test User',
+          identity: PersonalInfo(
+            firstName: 'Ana',
+            lastName: 'Souza',
+            street: 'Rua das Flores 12',
+            countryCode: 'BR',
+          ),
+        ),
+      ],
+    );
+    await pumpSettings(tester, profile);
+    await openForm(tester);
+    expect(
+      tester
+          .widget<DropdownButtonFormField<String>>(find.byKey(const ValueKey('personal-info-country')))
+          .initialValue,
+      'BR',
+    );
+
+    await type(tester, 'company', 'Souza Lda');
+    await tester.ensureVisible(find.byKey(const ValueKey('personal-info-save')));
+    await tester.tap(find.byKey(const ValueKey('personal-info-save')));
+    await tester.pumpAndSettle();
+
+    final saved = profile.lastPersonalInfo;
+    expect(saved, isNotNull);
+    expect(saved!.company, 'Souza Lda');
+    expect(saved.countryCode, 'BR', reason: 'editing the company does not erase the country');
   });
 }
