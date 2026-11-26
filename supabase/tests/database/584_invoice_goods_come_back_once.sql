@@ -1,13 +1,14 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4492 (row 2): stock and money agree on a standalone invoice. What an invoice's goods lines say left is what left
--- stock, once; and what comes back, by whichever of the two doors (the customer return or correction of the sale
+-- #4492 (row 2; 0975): stock and money agree on a standalone invoice. What an invoice's goods lines say left is what
+-- left stock, once; and what comes back, by whichever of the two doors (the customer return or correction of the sale
 -- movement, `stock_return_v1`; the void of the invoice, `void_invoice`), comes back once: never more than was sold.
 -- The measure is one query: what the ledger says is still at the customer for an invoice (out to the customer less
 -- back from the customer) is its quantity while it stands, nothing once it is voided, and never below zero. Each
 -- scenario has an item of its own, ten received. The value the business states for its stock is what was received
--- less the cost frozen on what was sold, and a void restores it. Rolled back.
+-- less the cost frozen on what was sold, and a void restores it. Before 0975 the two doors did not count each other:
+-- A, B, C and the measure failed (a mug returned and its invoice voided: 11 on hand of 10 received). Rolled back.
 begin;
-select plan(19);
+select plan(23);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -63,16 +64,17 @@ create or replace function pg_temp.disagreeing() returns text language sql as $f
            where i.workspace_id = pg_temp.u(101)) x
    where x.out_now < 0 or x.out_now > x.sold or (x.voided and x.out_now <> 0)
 $f$;
-create or replace function pg_temp.goods(p_item int, p_qty text, p_unit text default 'piece') returns jsonb language sql as $f$
-  select jsonb_build_object('description', 'Goods', 'quantity', p_qty, 'unit_price', '10', 'basis', 'net',
-    'supply', 'goods', 'item_id', pg_temp.u(p_item), 'unit', jsonb_build_object('code', p_unit, 'label', p_unit, 'un_ece_code', 'C62'))
+create or replace function pg_temp.goods(p_item int, p_qty text, p_unit text default 'piece', p_units jsonb default null) returns jsonb language sql as $f$
+  select jsonb_strip_nulls(jsonb_build_object('description', 'Goods', 'quantity', p_qty, 'unit_price', '10', 'basis', 'net',
+    'supply', 'goods', 'item_id', pg_temp.u(p_item), 'unit', jsonb_build_object('code', p_unit, 'label', p_unit, 'un_ece_code', 'C62'),
+    'units', p_units))
 $f$;
 -- an invoice of one goods line, issued: its id, or what refused it
-create or replace function pg_temp.invoice(p_req int, p_item int, p_qty text, p_unit text default 'piece') returns text language plpgsql as $f$
+create or replace function pg_temp.invoice(p_req int, p_item int, p_qty text, p_unit text default 'piece', p_units jsonb default null) returns text language plpgsql as $f$
 declare v_draft text; v_out text;
 begin
   v_draft := pg_temp.run_as(1, format($q$select public.save_standalone_invoice_draft_v1(%L, null, null, %L, %L, %L, '', '', %L)::text$q$,
-    pg_temp.u(101), pg_temp.u(203), pg_temp.today(), pg_temp.today() + 30, jsonb_build_array(pg_temp.goods(p_item, p_qty, p_unit))));
+    pg_temp.u(101), pg_temp.u(203), pg_temp.today(), pg_temp.today() + 30, jsonb_build_array(pg_temp.goods(p_item, p_qty, p_unit, p_units))));
   if v_draft not like '{%' then return 'draft ' || v_draft; end if;
   v_out := pg_temp.run_as(1, format('select public.issue_standalone_invoice_v1(%L, %L, 1, %L)::text', pg_temp.u(101), v_draft::jsonb ->> 'draft_id', pg_temp.u(p_req)));
   if v_out not like '{%' then return 'issue ' || v_out; end if;
@@ -82,12 +84,12 @@ create or replace function pg_temp.inv(p_key text) returns uuid language sql sta
   select case when current_setting(p_key, true) ~ '^[0-9a-f-]{36}$' then current_setting(p_key, true)::uuid end
 $f$;
 -- a return of an invoice's first sale movement, by the stock door: `customer` (back to MAIN) or `correction`
-create or replace function pg_temp.back(p_req int, p_kind text, p_invoice uuid, p_qty text) returns text language sql as $f$
+create or replace function pg_temp.back(p_req int, p_kind text, p_invoice uuid, p_qty text, p_units jsonb default null) returns text language sql as $f$
   select left(pg_temp.run_as(1, format('select public.stock_return_v1(%L, %L, %L, %L, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(p_req),
     pg_temp.u(p_req + 10000), p_kind, jsonb_build_array(jsonb_strip_nulls(jsonb_build_object(
       'return_line_id', pg_temp.u(p_req + 20000),
       'source_movement_id', (select m.id from public.stock_movements m where m.invoice_id = p_invoice and m.reason = 'sale' order by m.line_no, m.part limit 1),
-      'quantity', p_qty, 'location', case when p_kind = 'customer' then pg_temp.loc('MAIN') end))))), 9)
+      'quantity', p_qty, 'location', case when p_kind = 'customer' then pg_temp.loc('MAIN') end, 'units', p_units))))), 9)
 $f$;
 create or replace function pg_temp.void(p_invoice uuid) returns text language sql as $f$
   select pg_temp.run_as(1, format('select public.void_invoice(%L)::text', p_invoice))
@@ -107,6 +109,12 @@ create or replace function pg_temp.lots(p_item int) returns text language sql as
     from public.stock_balances b join public.stock_lots l on l.id = b.lot_id
    where b.item_id = pg_temp.u(p_item) and b.location_id = pg_temp.loc('MAIN')
 $f$;
+-- the pieces of an item that are at MAIN, and those at the customer
+create or replace function pg_temp.pieces(p_item int) returns text language sql as $f$
+  select count(*) filter (where location_id = pg_temp.loc('MAIN')) || ' at MAIN, '
+         || count(*) filter (where location_id = pg_temp.place('customer')) || ' at the customer'
+    from public.stock_tagged_units where workspace_id = pg_temp.u(101) and item_id = pg_temp.u(p_item)
+$f$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
@@ -115,7 +123,7 @@ select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'a
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags, role_permissions,
                                vat_regime, vat_id, legal_id, street, city, postal_code, address)
 values (pg_temp.u(101), 'Goods once', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1),
-        '{"invoicing": true, "standaloneInvoicing": true, "services": true, "stockManagement": true, "stockLots": true, "stockReturns": true}',
+        '{"invoicing": true, "standaloneInvoicing": true, "services": true, "stockManagement": true, "stockLots": true, "stockTags": true, "stockReturns": true}',
         '{"admin": ["manageStock"]}',
         'vat_registered', 'FR40303265045', '30326504500014', '4 avenue de Castelnau', 'Pézenas', '34120',
         '4 avenue de Castelnau, 34120 Pézenas');
@@ -132,7 +140,8 @@ insert into public.services (id, workspace_id, name, price_cents, active, invent
   (pg_temp.u(402), pg_temp.u(101), 'Cups', 1000, true, 'piece', 'none', true, 'none', null),
   (pg_temp.u(403), pg_temp.u(101), 'Plates', 1000, true, 'piece', 'none', true, 'none', null),
   (pg_temp.u(404), pg_temp.u(101), 'Honey', 800, true, 'piece', 'expiry', true, 'none', null),
-  (pg_temp.u(405), pg_temp.u(101), 'Glasses', 1000, true, 'piece', 'none', true, 'none', null);
+  (pg_temp.u(405), pg_temp.u(101), 'Glasses', 1000, true, 'piece', 'none', true, 'none', null),
+  (pg_temp.u(406), pg_temp.u(101), 'Baskets', 4000, true, 'piece', 'serial', true, 'per_unit', null);
 insert into public.item_units (workspace_id, item_id, unit, factor_num, factor_den) values (pg_temp.u(101), pg_temp.u(405), 'box', 6, 1);
 
 -- ── the stock: ten of each, the honey in two lots at 3.00 a jar ──
@@ -144,7 +153,11 @@ select ok(pg_temp.run_as(1, format('select public.stock_move_v1(%L, %L, %L::json
   jsonb_build_object('item_id', pg_temp.u(404), 'quantity', '5', 'from', pg_temp.place('supplier'), 'to', pg_temp.loc('MAIN'),
                      'new_lot', jsonb_build_object('code', 'LATE', 'expires_on', pg_temp.today() + 90, 'total_cost_minor', 1500)),
   jsonb_build_object('item_id', pg_temp.u(404), 'quantity', '5', 'from', pg_temp.place('supplier'), 'to', pg_temp.loc('MAIN'),
-                     'new_lot', jsonb_build_object('code', 'EARLY', 'expires_on', pg_temp.today() + 10, 'total_cost_minor', 1500))))) like '{%',
+                     'new_lot', jsonb_build_object('code', 'EARLY', 'expires_on', pg_temp.today() + 10, 'total_cost_minor', 1500)),
+  jsonb_build_object('item_id', pg_temp.u(406), 'quantity', '3', 'from', pg_temp.place('supplier'), 'to', pg_temp.loc('MAIN'),
+                     'units', jsonb_build_array(jsonb_build_object('tag', 'E28068940000401561D6A001'), jsonb_build_object('tag', 'E28068940000401561D6A002'),
+                                                jsonb_build_object('tag', 'E28068940000401561D6A003')),
+                     'new_lot', jsonb_build_object('code', 'BASKETS', 'total_cost_minor', 9000))))) like '{%',
   'fixture: the goods are received at MAIN');
 
 -- ── A: a part comes back by the stock door, then the invoice is voided ──
@@ -157,6 +170,9 @@ select is(pg_temp.void(pg_temp.inv('i.a')) || '|' || pg_temp.on_hand(401) || '|'
   'A the void brings back the three still at the customer, not the four sold');
 select is(pg_temp.back(703, 'customer', pg_temp.inv('i.a'), '1') || '|' || pg_temp.on_hand(401), 'ERR DKG17|10',
   'A and nothing more comes back for a voided invoice');
+select is(pg_temp.run_as(1, format('select public.stock_reversible_v1(%L, array[%L]::uuid[]) -> 0 ->> ''remaining''', pg_temp.u(101),
+    (select m.id from public.stock_movements m where m.invoice_id = pg_temp.inv('i.a') and m.reason = 'sale'))), '0.000000',
+  'A the read of what can still be reversed on that sale says nothing: the void is a return in the one record');
 
 -- ── B: the invoice is voided, then a return is asked for by the stock door ──
 do $d$ begin perform set_config('i.b', pg_temp.invoice(711, 402, '3'), false); end $d$;
@@ -175,17 +191,17 @@ select is(pg_temp.void(pg_temp.inv('i.c')) || '|' || pg_temp.on_hand(403) || '|'
   'C the void of that invoice has nothing left to bring back');
 
 -- ── the value of the stock and the cost of what was sold ──
-select is(pg_temp.stock_value(), '3000', 'V ten jars at 3.00 are the value the business states');
+select is(pg_temp.stock_value(), '12000', 'V ten jars at 3.00 and three baskets at 30.00 are the value the business states');
 do $d$ begin perform set_config('i.v', pg_temp.invoice(731, 404, '7'), false); end $d$;
 select is((select string_agg(l.lot_code || ':' || trim_scale(m.quantity)::text, ',' order by m.line_no, m.part)
              from public.stock_movements m join public.stock_lots l on l.id = m.lot_id
             where m.invoice_id = pg_temp.inv('i.v') and m.reason = 'sale'), 'EARLY:5,LATE:2',
   'V seven jars leave from the earliest expiry first: ' || current_setting('i.v'));
-select is(pg_temp.stock_value() || '+' || pg_temp.cost_of(pg_temp.inv('i.v')), '900+2100',
+select is(pg_temp.stock_value() || '+' || pg_temp.cost_of(pg_temp.inv('i.v')), '9900+2100',
   'V what is left and the cost frozen on what was sold are together what was received');
 select is(pg_temp.void(pg_temp.inv('i.v')) || '|' || pg_temp.stock_value() || '+' || pg_temp.cost_of(pg_temp.inv('i.v')) || '|'
           || pg_temp.lots(404),
-  '|3000+0|EARLY:5,LATE:5', 'V the void puts each jar back in its lot at its cost');
+  '|12000+0|EARLY:5,LATE:5', 'V the void puts each jar back in its lot at its cost');
 
 -- ── a line in another unit of the item ──
 do $d$ begin perform set_config('i.u', pg_temp.invoice(741, 405, '1', 'box'), false); end $d$;
@@ -197,8 +213,19 @@ select is((select trim_scale(m.entered_quantity)::text || ' ' || m.entered_unit 
 select is(pg_temp.void(pg_temp.inv('i.u')) || '|' || pg_temp.on_hand(405) || '|' || pg_temp.still_out(pg_temp.inv('i.u')), '|10|0',
   'U and its void brings the six back');
 
+-- ── pieces: one of two comes back by the stock door, then the invoice is voided ──
+do $d$ begin perform set_config('i.p', pg_temp.invoice(751, 406, '2', 'piece', jsonb_build_array(
+  jsonb_build_object('tag', 'E28068940000401561D6A001'), jsonb_build_object('tag', 'E28068940000401561D6A002'))), false); end $d$;
+select is(pg_temp.on_hand(406) || '|' || pg_temp.still_out(pg_temp.inv('i.p')) || '|' || pg_temp.pieces(406), '1|2|1 at MAIN, 2 at the customer',
+  'P two named baskets are sold: ' || current_setting('i.p'));
+select is(pg_temp.back(752, 'customer', pg_temp.inv('i.p'), '1', jsonb_build_array(jsonb_build_object('tag', 'E28068940000401561D6A001')))
+          || '|' || pg_temp.on_hand(406) || '|' || pg_temp.pieces(406), '{"kind": |2|2 at MAIN, 1 at the customer',
+  'P the customer brings one of them back');
+select is(pg_temp.void(pg_temp.inv('i.p')) || '|' || pg_temp.on_hand(406) || '|' || pg_temp.still_out(pg_temp.inv('i.p')) || '|' || pg_temp.pieces(406),
+  '|3|0|3 at MAIN, 0 at the customer', 'P the void brings back the other one, and only that one');
+
 -- ── the measure over every invoice of the business ──
-select is((select count(*)::int from public.invoices where workspace_id = pg_temp.u(101)), 5, 'five invoices were issued');
+select is((select count(*)::int from public.invoices where workspace_id = pg_temp.u(101)), 6, 'six invoices were issued');
 select is(pg_temp.disagreeing(), '', 'for every invoice the goods at the customer are its quantity while it stands and nothing once voided');
 
 select * from finish();
