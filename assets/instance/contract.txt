@@ -463,13 +463,11 @@ constraint counter_receipt_copies.counter_receipt_copies_workspace_id_receipt_id
 constraint counter_receipt_copies.counter_receipt_copies_workspace_id_request_id_key UNIQUE (workspace_id, request_id)
 constraint counter_receipt_copies.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint counter_receipt_copies.system_company_present CHECK ((company_id IS NOT NULL))
-constraint counter_receipt_lines.counter_receipt_lines_gross_minor_check CHECK ((gross_minor >= 0))
+constraint counter_receipt_lines.counter_receipt_lines_amount_sign CHECK (((((frozen ->> 'kind'::text) IS DISTINCT FROM 'deposit_return'::text) AND (net_minor >= 0) AND (tax_minor >= 0) AND (gross_minor >= 0)) OR (((frozen ->> 'kind'::text) = 'deposit_return'::text) AND (net_minor <= 0) AND (tax_minor <= 0) AND (gross_minor <= 0))))
 constraint counter_receipt_lines.counter_receipt_lines_line_no_check CHECK ((line_no >= 1))
-constraint counter_receipt_lines.counter_receipt_lines_net_minor_check CHECK ((net_minor >= 0))
 constraint counter_receipt_lines.counter_receipt_lines_pkey PRIMARY KEY (id)
 constraint counter_receipt_lines.counter_receipt_lines_quantity_check CHECK ((quantity > (0)::numeric))
 constraint counter_receipt_lines.counter_receipt_lines_receipt_id_line_no_key UNIQUE (receipt_id, line_no)
-constraint counter_receipt_lines.counter_receipt_lines_tax_minor_check CHECK ((tax_minor >= 0))
 constraint counter_receipt_lines.counter_receipt_lines_workspace_id_corrects_line_id_fkey FOREIGN KEY (workspace_id, corrects_line_id) REFERENCES counter_receipt_lines(workspace_id, id)
 constraint counter_receipt_lines.counter_receipt_lines_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint counter_receipt_lines.counter_receipt_lines_workspace_id_id_key UNIQUE (workspace_id, id)
@@ -492,8 +490,7 @@ constraint counter_receipts.counter_receipts_session_fkey FOREIGN KEY (workspace
 constraint counter_receipts.counter_receipts_source_kind_check CHECK ((source_kind ~ '^[a-z_]{1,32}$'::text))
 constraint counter_receipts.counter_receipts_source_ref_check CHECK ((char_length(source_ref) <= 200))
 constraint counter_receipts.counter_receipts_state_check CHECK ((state = ANY (ARRAY['draft'::text, 'finalized'::text])))
-constraint counter_receipts.counter_receipts_tax_minor_check CHECK (((tax_minor IS NULL) OR (tax_minor >= 0)))
-constraint counter_receipts.counter_receipts_total_minor_check CHECK (((total_minor IS NULL) OR (total_minor >= 0)))
+constraint counter_receipts.counter_receipts_total_minor_sign CHECK (((total_minor IS NULL) OR (total_minor >= 0) OR (state = 'draft'::text)))
 constraint counter_receipts.counter_receipts_workspace_id_corrects_receipt_id_fkey FOREIGN KEY (workspace_id, corrects_receipt_id) REFERENCES counter_receipts(workspace_id, id)
 constraint counter_receipts.counter_receipts_workspace_id_created_by_member_id_fkey FOREIGN KEY (workspace_id, created_by_member_id) REFERENCES members(workspace_id, id)
 constraint counter_receipts.counter_receipts_workspace_id_finalized_by_member_id_fkey FOREIGN KEY (workspace_id, finalized_by_member_id) REFERENCES members(workspace_id, id)
@@ -1119,6 +1116,7 @@ constraint item_units.item_units_factor_den_check CHECK ((factor_den > 0))
 constraint item_units.item_units_factor_num_check CHECK ((factor_num > 0))
 constraint item_units.item_units_item_id_unit_key UNIQUE (item_id, unit)
 constraint item_units.item_units_pkey PRIMARY KEY (id)
+constraint item_units.item_units_price_cents_check CHECK (((price_cents IS NULL) OR ((price_cents >= 0) AND (price_cents <= 2000000000))))
 constraint item_units.item_units_unit_check CHECK (((char_length(btrim(unit)) >= 1) AND (char_length(btrim(unit)) <= 30)))
 constraint item_units.item_units_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint item_units.item_units_workspace_id_item_id_fkey FOREIGN KEY (workspace_id, item_id) REFERENCES services(workspace_id, id) ON DELETE CASCADE
@@ -3260,17 +3258,17 @@ routine public.cost_allocation_rules_v1(p_workspace_id uuid) -> jsonb | function
 routine public.counter_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:66c1d614d21a
 routine public.counter_adapters() -> text[] | function | invoker | immutable | exec:service_role | body:eea3a873b58c
 routine public.counter_cash_entry_v1(p_workspace_id uuid, p_request_id uuid, p_session_id uuid, p_kind text, p_amount_minor bigint, p_reason text, p_purchase_document_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:717b11c0e3ac
-routine public.counter_day_close_v1(p_workspace_id uuid, p_request_id uuid, p_site_id uuid, p_business_date date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:56cbabae9905
+routine public.counter_day_close_v1(p_workspace_id uuid, p_request_id uuid, p_site_id uuid, p_business_date date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:574e10fa7ef5
 routine public.counter_day_report_v1(p_workspace_id uuid, p_day_close_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e7ad269ace0
 routine public.counter_denominations_total(p_denominations jsonb) -> bigint | function | invoker | immutable | exec:service_role | body:fe05c177ae65
 routine public.counter_finance_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:95d8874f4ca3
 routine public.counter_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:a9c6b6fdca6f
 routine public.counter_goods_parts(p_workspace_id uuid, p_item_id uuid, p_variant_id uuid, p_from uuid, p_quantity text, p_unit text, p_input jsonb, p_taken jsonb) -> jsonb | function | definer | stable | exec:service_role | body:2cf395fe5aa1
-routine public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d83f1a38055e
+routine public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fdc5b32c6744
 routine public.counter_item_lots_v1(p_workspace_id uuid, p_item_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e794467544c8
 routine public.counter_line_compute(p_workspace_id uuid, p_line jsonb, p_index integer, p_currency text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:36efd33a36e8
-routine public.counter_line_prices(p_workspace_id uuid, p_kind text, p_lines jsonb) -> jsonb | function | definer | stable | exec:service_role | body:218e59935c16
-routine public.counter_lines_of(p_workspace_id uuid, p_lines jsonb, p_currency text, p_basis text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:bfe50aa31258
+routine public.counter_line_prices(p_workspace_id uuid, p_kind text, p_lines jsonb) -> jsonb | function | definer | stable | exec:service_role | body:672c0c73ce0d
+routine public.counter_lines_of(p_workspace_id uuid, p_lines jsonb, p_currency text, p_basis text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:4a10e5651bcf
 routine public.counter_offline_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:7b010a54dd5a
 routine public.counter_offline_body_total(p_workspace_id uuid, p_body jsonb, p_digits integer) -> bigint | function | definer | stable | exec:service_role | body:2628b4f30ce6
 routine public.counter_offline_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:46b7fe95de2a
@@ -3284,10 +3282,10 @@ routine public.counter_operation_state(p_workspace_id uuid, p_operation text) ->
 routine public.counter_readiness_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9e12e5da4551
 routine public.counter_receipt_copies_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:c25aadf4ae3d
 routine public.counter_receipt_copy_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1bf513d62361
-routine public.counter_receipt_correct_v1(p_workspace_id uuid, p_request_id uuid, p_original_id uuid, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1452fbfd8264
+routine public.counter_receipt_correct_v1(p_workspace_id uuid, p_request_id uuid, p_original_id uuid, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:181ef537604f
 routine public.counter_receipt_decode(p_frozen jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:928178fe46df
 routine public.counter_receipt_draft_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a9d71bcb21be
-routine public.counter_receipt_finalize_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_tenders jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:36e7b2ba62d8
+routine public.counter_receipt_finalize_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_tenders jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ef62bdcefa83
 routine public.counter_refund_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_refunds jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5bdff69dd04a
 routine public.counter_refunds_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:581cb131a084
 routine public.counter_require_operation(p_workspace_id uuid, p_operation text) -> counter_country_operations | function | definer | stable | exec:service_role | body:d1fc60a0d6e8
@@ -3626,6 +3624,7 @@ routine public.item_group_save_v1(p_workspace_id uuid, p_request_id uuid, p_grou
 routine public.item_groups_depth() -> trigger | function | invoker | volatile | exec:service_role | body:d4c86b15b62f
 routine public.item_groups_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0e98a226efa1
 routine public.item_override_save_v1(p_workspace_id uuid, p_request_id uuid, p_item_id uuid, p_expected_revision integer, p_parameter text, p_mode text, p_value jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:87a3cb7e4190
+routine public.item_unit_price(p_workspace_id uuid, p_item_id uuid, p_unit text) -> bigint | function | definer | stable | exec:service_role | body:9df00776aceb
 routine public.join_by_invitation(p_code text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ad163de0b3f1
 routine public.join_workspace(p_invite_code text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:71d677dd0dc5
 routine public.jsonb_text_array(p jsonb) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:d77408f879dc
@@ -4383,7 +4382,7 @@ routine public.save_room_rental_v1(p_workspace_id uuid, p_office_id uuid, p_supp
 routine public.save_setup_journey(p_workspace_id uuid, p_answers jsonb, p_levels jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3ea7b7ed1f4c
 routine public.save_setup_step_draft(p_workspace_id uuid, p_step text, p_payload jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fdb127d50874
 routine public.save_standalone_invoice_draft_v1(p_workspace_id uuid, p_draft_id uuid, p_expected_revision integer, p_subject uuid, p_service_date date, p_due_on date, p_buyer_reference text, p_purchase_order text, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:469627be70ed
-routine public.save_stock_item_v1(p_workspace_id uuid, p_item_id uuid, p_expected_revision integer, p_request_id uuid, p_item jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1585f1452f4c
+routine public.save_stock_item_v1(p_workspace_id uuid, p_item_id uuid, p_expected_revision integer, p_request_id uuid, p_item jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1ed870a9e2ef
 routine public.save_stock_location_v1(p_workspace_id uuid, p_place_id uuid, p_expected_revision integer, p_request_id uuid, p_place jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7caa3b8e9970
 routine public.save_stock_reorder_point_v1(p_workspace_id uuid, p_point_id uuid, p_expected_revision integer, p_request_id uuid, p_point jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:222f8211fec5
 routine public.save_supplier(p_workspace_id uuid, p_supplier_id uuid, p_name text, p_tax_id text, p_tax_id_kind text, p_street text, p_postal_code text, p_city text, p_country_code text, p_contact text, p_number text, p_subdivision text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:527806d558d6
