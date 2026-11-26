@@ -20,15 +20,12 @@ import '../../codes/dk_code.dart';
 import '../../jurisdiction/installed_invoice_mentions.dart';
 import 'demo_stock_registry.dart';
 import 'demo_till_drawer.dart';
+import 'demo_till_lots.dart';
 import 'demo_till_parts.dart';
 
 /// The server's refusal: its SQLSTATE as the code, its words as the message.
 PostgrestException _refused(String code, String message, {String? reason, int? max}) => demoTillRefused(code, message, reason: reason, max: max);
 
-/// #4436 -- the Demo's traced item at the counter: the oat milk is tracked by lot, and a sale takes it from the lot on
-/// hand that expires first and is not expired yet (MILK-09 is past its date, so MILK-12; the expiry report's lots). The
-/// gift basket is tracked piece by piece: its pieces are of lot BASKET-1, and a sale names each piece scanned by its tag.
-const _tracedLots = <String, String>{'demo-item-milk': 'MILK-12', 'demo-item-basket': 'BASKET-1'};
 
 /// The Demo's bag of coffee beans, which the seeded book sells.
 const _beansName = 'Coffee beans';
@@ -128,7 +125,7 @@ class _Rec {
 /// #4436 -- one traced line a sale froze: its receipt, when, and the track IDs it took, as `counter_line_tracks` keeps them.
 typedef DemoSoldLine = ({String lineId, String receiptId, String number, DateTime at, List<TillTrack> tracks});
 
-class DemoTill implements TillPort, TillOfflinePort, CounterBookPort, TillCopyPort {
+class DemoTill implements TillPort, TillOfflinePort, CounterBookPort, TillCopyPort, TillLotsSource {
   DemoTill({required this.country, required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2, this.drawer, this.clock, this.pricing = const DemoTillPricing()});
 
   /// #4476 -- the Demo business's discount limit and its cashier's right to change a price.
@@ -149,6 +146,8 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort, TillCopyPo
 
   /// The Demo's clock, stamping a sale; without it a sale is not kept for the trace.
   final DateTime Function()? clock;
+  @override
+  TillLotsPort get lotsPort => DemoTillLots(clock: clock); // #4366 -- the lots it sells from (demo_till_lots.dart)
 
   final List<DemoSoldLine> _soldLines = [];
 
@@ -316,7 +315,7 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort, TillCopyPo
     }
     final traced = [
       for (final (i, l) in (_lines[receiptId] ?? const <TillLine>[]).indexed)
-        if (_tracedLots[l.itemId] case final lot?)
+        if (l.lot?.code ?? demoTracedLots[l.itemId] case final lot?)
           TillSoldLine(
             lineNo: i + 1,
             tracks: [

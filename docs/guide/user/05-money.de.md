@@ -802,6 +802,8 @@ Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang 
 
 Ein rückverfolgter Artikel nennt, woraus er entnommen wurde. Verkaufen Sie einen chargengeführten Artikel, ohne eine Charge zu wählen, entnimmt der Verkauf ihn den vorrätigen Chargen, die zuerst ablaufende zuerst und nie eine abgelaufene; unter der verkauften Zeile zeigt die Kasse den Code jeder Charge wie beim Wareneingang mit der entnommenen Menge, zum Beispiel **Charge SUP-A × 2 · Charge SUP-B × 1**, und jedes Stück mit seinem Tag. Nutzt das Unternehmen einen Scanner, scannen Sie den Tag eines Stücks, um dieses Stück zu buchen: Der Verkauf nimmt genau die gescannten Stücke, und dasselbe Stück zweimal wird abgelehnt. Diese Rückverfolgungs-IDs werden mit dem Beleg festgeschrieben: Eine spätere Änderung einer Charge oder eines Tags ändert einen bereits ausgestellten Beleg nie. Im Lager nennt die Rückverfolgung einer Charge oder eines Stücks den Beleg, mit dem es verkauft wurde.
 
+Um die Charge selbst zu wählen, tippen Sie auf der Zeile auf **Charge wählen**: Die vorrätigen Chargen stehen mit ihrem Datum und dem Rest da, die zuerst ablaufende zuerst. Eine abgelaufene Charge wird gezeigt und kann nicht gewählt werden. **Die zuerst ablaufende (vom Bestand gewählt)** überlässt die Wahl wieder dem Bestand. Ein Artikel ohne Chargenverfolgung sagt, dass es keine Charge zu wählen gibt.
+
 <!-- anchor: user.money.till-drawer -->
 ### Kasse öffnen, zählen und schließen
 

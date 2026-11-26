@@ -19,6 +19,13 @@ final tillCopyPortProvider = Provider<TillCopyPort?>((ref) => switch (ref.watch(
   _ => null,
 });
 
+/// #4366 -- the lots a till may sell an item from: the till port itself where it reads them, null where it does not.
+final tillLotsPortProvider = Provider<TillLotsPort?>((ref) => switch (ref.watch(tillPortProvider)) {
+  final TillLotsPort lots => lots,
+  final TillLotsSource source => source.lotsPort,
+  _ => null,
+});
+
 /// #4366 -- whether the country allows this business's till to sell, and why not when it does not. Read again when the
 /// screen opens: a country's operation can move between two shifts.
 final tillReadinessProvider = FutureProvider.autoDispose.family<TillReadiness, String>(

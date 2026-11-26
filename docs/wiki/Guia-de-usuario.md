@@ -3213,6 +3213,8 @@ Donde su país aún no permite la caja, esta nombra la operación que falta y no
 
 Un artículo trazado indica de dónde se tomó. Cuando vende un artículo seguido por lote sin elegir un lote, la venta lo toma de los lotes en existencia, primero el que caduca antes y nunca uno caducado; bajo la línea vendida, la caja muestra el código de cada lote tal como se recibió, con la cantidad tomada, por ejemplo **Lote SUP-A × 2 · Lote SUP-B × 1**, y cada pieza por su etiqueta. Si la empresa usa un lector, escanee la etiqueta de una pieza para añadirla: la venta toma exactamente las piezas escaneadas, y la misma pieza dos veces se rechaza. Estos identificadores de trazabilidad quedan fijados con el ticket: cambiar más tarde un lote o una etiqueta nunca altera un ticket ya emitido. En las existencias, la trazabilidad de un lote o de una pieza indica el ticket que lo vendió.
 
+Para elegir el lote usted mismo, pulse **Elegir el lote** en la línea: los lotes en existencia aparecen con su fecha y lo que queda, el primero en caducar primero. Un lote caducado se muestra y no se puede elegir. **El primero en caducar (elegido por el stock)** devuelve la elección al stock. Un artículo que no se sigue por lote dice que no tiene lote que elegir.
+
 <!-- anchor: user.money.till-drawer -->
 ### Abrir la caja, contar y cerrar
 

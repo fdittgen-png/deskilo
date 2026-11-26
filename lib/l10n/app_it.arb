@@ -24330,6 +24330,13 @@
   "@tillLeaveTitle": {
     "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
   },
+  "tillLotChoose": "Scegliere il lotto",
+  "tillLotExpired": "Scaduto ({date}): non si vende",
+  "tillLotExpires": "Da consumare entro il {date}",
+  "tillLotFirstToExpire": "Il primo a scadere (scelto dal magazzino)",
+  "tillLotLine": "Lotto {code}",
+  "tillLotNone": "{item} non ha un lotto da scegliere: si vende così com'è.",
+  "tillLotOnHand": "{quantity} {unit} disponibili",
   "tillNextCustomer": "Cliente successivo",
   "tillNotForCounter": "Questo articolo non è in vendita al banco.",
   "@tillNotForCounter": {

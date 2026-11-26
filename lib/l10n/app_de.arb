@@ -24330,6 +24330,13 @@
   "@tillLeaveTitle": {
     "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
   },
+  "tillLotChoose": "Charge wählen",
+  "tillLotExpired": "Abgelaufen ({date}): wird nicht verkauft",
+  "tillLotExpires": "Verwendbar bis {date}",
+  "tillLotFirstToExpire": "Die zuerst ablaufende (vom Bestand gewählt)",
+  "tillLotLine": "Charge {code}",
+  "tillLotNone": "{item} hat keine Charge zur Auswahl: Es wird so verkauft.",
+  "tillLotOnHand": "{quantity} {unit} vorrätig",
   "tillNextCustomer": "Nächster Kunde",
   "tillNotForCounter": "Dieser Artikel ist an der Kasse nicht verkäuflich.",
   "@tillNotForCounter": {

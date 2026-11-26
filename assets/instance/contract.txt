@@ -3258,6 +3258,7 @@ routine public.counter_finance_actor(p_workspace_id uuid) -> uuid | function | d
 routine public.counter_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:a9c6b6fdca6f
 routine public.counter_goods_parts(p_workspace_id uuid, p_item_id uuid, p_variant_id uuid, p_from uuid, p_quantity text, p_unit text, p_input jsonb, p_taken jsonb) -> jsonb | function | definer | stable | exec:service_role | body:2cf395fe5aa1
 routine public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d83f1a38055e
+routine public.counter_item_lots_v1(p_workspace_id uuid, p_item_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e794467544c8
 routine public.counter_line_compute(p_workspace_id uuid, p_line jsonb, p_index integer, p_currency text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:36efd33a36e8
 routine public.counter_lines_of(p_workspace_id uuid, p_lines jsonb, p_currency text, p_basis text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:bfe50aa31258
 routine public.counter_offline_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:7b010a54dd5a

@@ -70,5 +70,12 @@
   "tillDiscountInvalid": "Une remise est un pourcentage du prix de l'article, sur une ligne sans prix modifié.",
   "tillRingUpFirst": "Enregistrez d'abord un article.",
   "tillReceiptCopy": "DUPLICATA {copy} — pas un nouveau ticket",
-  "tillNothingToReprint": "Aucune vente à réimprimer pour l'instant."
+  "tillNothingToReprint": "Aucune vente à réimprimer pour l'instant.",
+  "tillLotChoose": "Choisir le lot",
+  "tillLotLine": "Lot {code}",
+  "tillLotFirstToExpire": "Le premier à expirer (choisi par le stock)",
+  "tillLotExpires": "À consommer avant le {date}",
+  "tillLotExpired": "Date dépassée ({date}) : non vendu",
+  "tillLotOnHand": "{quantity} {unit} en stock",
+  "tillLotNone": "{item} n'a pas de lot à choisir : il est vendu tel quel."
 }

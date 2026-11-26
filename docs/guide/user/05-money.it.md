@@ -802,6 +802,8 @@ Dove il suo paese non consente ancora la cassa, questa indica l'operazione manca
 
 Un articolo tracciato indica da dove è stato preso. Quando vende un articolo gestito a lotti senza scegliere un lotto, la vendita lo preleva dai lotti in giacenza, prima quello che scade per primo e mai uno scaduto; sotto la riga venduta la cassa mostra il codice di ogni lotto come è stato ricevuto, con la quantità prelevata, per esempio **Lotto SUP-A × 2 · Lotto SUP-B × 1**, e ogni pezzo con la sua etichetta. Se l'azienda usa un lettore, scansioni l'etichetta di un pezzo per aggiungerlo: la vendita preleva esattamente i pezzi scansionati, e lo stesso pezzo due volte viene rifiutato. Questi identificativi di tracciabilità sono fissati con lo scontrino: modificare in seguito un lotto o un'etichetta non altera mai uno scontrino già emesso. Nel magazzino, la tracciabilità di un lotto o di un pezzo indica lo scontrino che lo ha venduto.
 
+Per scegliere il lotto da sé, prema **Scegliere il lotto** sulla riga: i lotti disponibili sono elencati con la data e quanto resta, il primo a scadere per primo. Un lotto scaduto è mostrato e non può essere scelto. **Il primo a scadere (scelto dal magazzino)** restituisce la scelta al magazzino. Un articolo non tracciato per lotto dice che non ha un lotto da scegliere.
+
 <!-- anchor: user.money.till-drawer -->
 ### Aprire la cassa, contare e chiudere
 

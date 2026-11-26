@@ -54412,6 +54412,62 @@
   "@tillLeaveTitle": {
     "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
   },
+  "tillLotChoose": "Choose the lot",
+  "@tillLotChoose": {
+    "description": "#4366 the seller chooses the lot a till line is sold from"
+  },
+  "tillLotExpired": "Past its date ({date}): not sold",
+  "@tillLotExpired": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotExpires": "Use by {date}",
+  "@tillLotExpires": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotFirstToExpire": "The first to expire (chosen by the stock)",
+  "@tillLotFirstToExpire": {
+    "description": "#4366 the seller chooses the lot a till line is sold from"
+  },
+  "tillLotLine": "Lot {code}",
+  "@tillLotLine": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotNone": "{item} has no lot to choose: it is sold as it is.",
+  "@tillLotNone": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotOnHand": "{quantity} {unit} on hand",
+  "@tillLotOnHand": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
   "tillNextCustomer": "Next customer",
   "@tillNextCustomer": {
     "description": "#4366 the till"

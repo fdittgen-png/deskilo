@@ -42055,6 +42055,38 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillLeaveTitle => 'La venta no está confirmada';
 
   @override
+  String get tillLotChoose => 'Elegir el lote';
+
+  @override
+  String tillLotExpired(String date) {
+    return 'Caducado ($date): no se vende';
+  }
+
+  @override
+  String tillLotExpires(String date) {
+    return 'Consumir antes del $date';
+  }
+
+  @override
+  String get tillLotFirstToExpire =>
+      'El primero en caducar (elegido por el stock)';
+
+  @override
+  String tillLotLine(String code) {
+    return 'Lote $code';
+  }
+
+  @override
+  String tillLotNone(String item) {
+    return '$item no tiene lote que elegir: se vende tal cual.';
+  }
+
+  @override
+  String tillLotOnHand(String quantity, String unit) {
+    return '$quantity $unit en existencia';
+  }
+
+  @override
   String get tillNextCustomer => 'Siguiente cliente';
 
   @override

@@ -67172,6 +67172,48 @@ abstract class AppLocalizations {
   /// **'The sale is not confirmed'**
   String get tillLeaveTitle;
 
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the lot'**
+  String get tillLotChoose;
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'Past its date ({date}): not sold'**
+  String tillLotExpired(String date);
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'Use by {date}'**
+  String tillLotExpires(String date);
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'The first to expire (chosen by the stock)'**
+  String get tillLotFirstToExpire;
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'Lot {code}'**
+  String tillLotLine(String code);
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'{item} has no lot to choose: it is sold as it is.'**
+  String tillLotNone(String item);
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} {unit} on hand'**
+  String tillLotOnHand(String quantity, String unit);
+
   /// #4366 the till
   ///
   /// In en, this message translates to:

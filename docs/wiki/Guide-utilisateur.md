@@ -3213,6 +3213,8 @@ Là où votre pays n'autorise pas encore la caisse, elle nomme l'opération manq
 
 Un article tracé indique d'où il a été pris. Quand vous vendez un article suivi par lot sans choisir de lot, la vente le prend dans les lots en stock, celui qui expire le premier d'abord et jamais un lot périmé ; sous la ligne vendue, la caisse affiche le code de chaque lot tel qu'il a été reçu, avec la quantité prise, par exemple **Lot SUP-A × 2 · Lot SUP-B × 1**, et chaque pièce par son étiquette. Si l'entreprise utilise un lecteur, scannez l'étiquette d'une pièce pour l'ajouter : la vente prend exactement les pièces scannées, et la même pièce deux fois est refusée. Ces identifiants de traçabilité sont figés avec le ticket : modifier plus tard un lot ou une étiquette ne change jamais un ticket déjà émis. Dans le stock, la traçabilité d'un lot ou d'une pièce indique le ticket qui l'a vendu.
 
+Pour choisir le lot vous-même, appuyez sur **Choisir le lot** sur la ligne : les lots en stock sont listés avec leur date et ce qu'il en reste, le premier à expirer en premier. Un lot dont la date est dépassée est affiché et ne peut pas être choisi. **Le premier à expirer (choisi par le stock)** rend le choix au stock. Un article qui n'est pas suivi par lot dit qu'il n'a pas de lot à choisir.
+
 <!-- anchor: user.money.till-drawer -->
 ### Ouvrir la caisse, compter et fermer
 
