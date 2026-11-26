@@ -59699,6 +59699,18 @@ abstract class AppLocalizations {
   /// **'Two variants have the same combination.'**
   String get stockReasonCombinationDuplicate;
 
+  /// #4479 the units of measure: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A conversion needs two different units.'**
+  String get stockReasonConversionSameUnit;
+
+  /// #4479 the units of measure: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This conversion is not defined.'**
+  String get stockReasonConversionUnknown;
+
   /// #4171 receiving into stock: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -59980,6 +59992,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'More than arrived cannot be put away.'**
   String get stockReasonOverAllocated;
+
+  /// #4479 the units of measure: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A packaging unit has no general conversion: its factor is set on the item.'**
+  String get stockReasonPackageUnit;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///
@@ -68218,6 +68236,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unblock'**
   String get unblockAction;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get unitConversionDelete;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'Change a conversion'**
+  String get unitConversionEdit;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'How many'**
+  String get unitConversionFactor;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'How many {to} make one {from}'**
+  String unitConversionFactorHelp(String from, String to);
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get unitConversionFrom;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'1 {from} = {factor} {to}'**
+  String unitConversionLine(String from, String factor, String to);
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'Add a conversion'**
+  String get unitConversionNew;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get unitConversionTo;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'No conversion is defined yet.'**
+  String get unitConversionsEmpty;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'A conversion says how many of one unit make another. It works both ways, in one step. An item\'s own conversion (a carton of 12) wins over these, and a packaging unit has none here.'**
+  String get unitConversionsIntro;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'Conversions'**
+  String get unitConversionsTitle;
 
   /// #3730 the kind of an invoice whose kind a newer server sent and this app does not know.
   ///

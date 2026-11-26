@@ -21941,6 +21941,14 @@
   "@stockReasonCombinationDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonConversionSameUnit": "Eine Umrechnung braucht zwei verschiedene Einheiten.",
+  "@stockReasonConversionSameUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonConversionUnknown": "Diese Umrechnung ist nicht festgelegt.",
+  "@stockReasonConversionUnknown": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonCostInvalid": "Diese Kosten sind ungültig: eine Summe in Nebeneinheiten und ein Kurs nur für eine andere Währung.",
   "@stockReasonCostInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -22086,6 +22094,10 @@
   "stockReasonOverAllocated": "Es kann nicht mehr eingelagert werden, als geliefert wurde.",
   "@stockReasonOverAllocated": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonPackageUnit": "Eine Verpackungseinheit hat keine allgemeine Umrechnung: ihr Faktor steht am Artikel.",
+  "@stockReasonPackageUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
   },
   "stockReasonParentInactive": "Der übergeordnete Lagerort ist nicht mehr in Gebrauch.",
   "@stockReasonParentInactive": {
@@ -24681,6 +24693,69 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Blockierung aufheben",
+  "unitConversionDelete": "Löschen",
+  "@unitConversionDelete": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionEdit": "Umrechnung ändern",
+  "@unitConversionEdit": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactor": "Wie viele",
+  "@unitConversionFactor": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactorHelp": "Wie viele {to} ergeben ein {from}",
+  "@unitConversionFactorHelp": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionFrom": "Von",
+  "@unitConversionFrom": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionLine": "1 {from} = {factor} {to}",
+  "@unitConversionLine": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "factor": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionNew": "Umrechnung hinzufügen",
+  "@unitConversionNew": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionTo": "Nach",
+  "@unitConversionTo": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsEmpty": "Noch keine Umrechnung festgelegt.",
+  "@unitConversionsEmpty": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsIntro": "Eine Umrechnung sagt, wie viele einer Einheit eine andere ergeben. Sie gilt in beide Richtungen, in einem Schritt. Die eigene Umrechnung eines Artikels (ein Karton zu 12) geht diesen vor, und eine Verpackungseinheit hat hier keine.",
+  "@unitConversionsIntro": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsTitle": "Umrechnungen",
+  "@unitConversionsTitle": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
   "unknownWireInvoiceKind": "Eine Art, die diese App-Version nicht kennt",
   "unknownWireKindFeatures": "Diese Art stellt außerdem {count, plural, one{eine Funktion} other{{count} Funktionen}} ein, die diese App-Version nicht kennt. Aktualisieren Sie die App, um sie zu wählen.",
   "unknownWireReadOnly": "Diese App-Version weiß nicht, was dieser Eintrag ist: Er kann gelesen, aber nicht geändert werden. Aktualisieren Sie die App, um damit zu arbeiten.",

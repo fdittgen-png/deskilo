@@ -48485,6 +48485,14 @@
   "@stockReasonCombinationDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonConversionSameUnit": "A conversion needs two different units.",
+  "@stockReasonConversionSameUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonConversionUnknown": "This conversion is not defined.",
+  "@stockReasonConversionUnknown": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonCostInvalid": "This cost is not valid: a total in minor units, and a rate only for another currency.",
   "@stockReasonCostInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -48672,6 +48680,10 @@
   "stockReasonOverAllocated": "More than arrived cannot be put away.",
   "@stockReasonOverAllocated": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonPackageUnit": "A packaging unit has no general conversion: its factor is set on the item.",
+  "@stockReasonPackageUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
   },
   "stockReasonParentInactive": "The place it is inside is no longer in use.",
   "@stockReasonParentInactive": {
@@ -55277,6 +55289,69 @@
   "unblockAction": "Unblock",
   "@unblockAction": {
     "description": "Shown as a text in blocked people card (me)."
+  },
+  "unitConversionDelete": "Delete",
+  "@unitConversionDelete": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionEdit": "Change a conversion",
+  "@unitConversionEdit": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactor": "How many",
+  "@unitConversionFactor": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactorHelp": "How many {to} make one {from}",
+  "@unitConversionFactorHelp": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionFrom": "From",
+  "@unitConversionFrom": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionLine": "1 {from} = {factor} {to}",
+  "@unitConversionLine": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "factor": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionNew": "Add a conversion",
+  "@unitConversionNew": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionTo": "To",
+  "@unitConversionTo": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsEmpty": "No conversion is defined yet.",
+  "@unitConversionsEmpty": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsIntro": "A conversion says how many of one unit make another. It works both ways, in one step. An item's own conversion (a carton of 12) wins over these, and a packaging unit has none here.",
+  "@unitConversionsIntro": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsTitle": "Conversions",
+  "@unitConversionsTitle": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
   },
   "unknownWireInvoiceKind": "A kind this version of the app does not know",
   "@unknownWireInvoiceKind": {

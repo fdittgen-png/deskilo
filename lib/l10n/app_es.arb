@@ -21941,6 +21941,14 @@
   "@stockReasonCombinationDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonConversionSameUnit": "Una conversión necesita dos unidades distintas.",
+  "@stockReasonConversionSameUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonConversionUnknown": "Esta conversión no está definida.",
+  "@stockReasonConversionUnknown": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonCostInvalid": "Este coste no es válido: un total en unidades menores y un tipo solo para otra moneda.",
   "@stockReasonCostInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -22086,6 +22094,10 @@
   "stockReasonOverAllocated": "No se puede colocar más de lo que llegó.",
   "@stockReasonOverAllocated": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonPackageUnit": "Un envase no tiene conversión general: su factor se fija en el artículo.",
+  "@stockReasonPackageUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
   },
   "stockReasonParentInactive": "La ubicación que la contiene ya no está en uso.",
   "@stockReasonParentInactive": {
@@ -24681,6 +24693,69 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Desbloquear",
+  "unitConversionDelete": "Eliminar",
+  "@unitConversionDelete": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionEdit": "Cambiar una conversión",
+  "@unitConversionEdit": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactor": "Cuántas",
+  "@unitConversionFactor": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactorHelp": "Cuántas {to} hacen una {from}",
+  "@unitConversionFactorHelp": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionFrom": "De",
+  "@unitConversionFrom": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionLine": "1 {from} = {factor} {to}",
+  "@unitConversionLine": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "factor": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionNew": "Añadir una conversión",
+  "@unitConversionNew": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionTo": "A",
+  "@unitConversionTo": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsEmpty": "Todavía no hay ninguna conversión definida.",
+  "@unitConversionsEmpty": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsIntro": "Una conversión dice cuántas de una unidad hacen otra. Vale en los dos sentidos, en un solo paso. La conversión propia de un artículo (una caja de 12) prevalece sobre estas, y un envase no tiene aquí.",
+  "@unitConversionsIntro": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsTitle": "Conversiones",
+  "@unitConversionsTitle": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
   "unknownWireInvoiceKind": "Un tipo que esta versión de la aplicación no conoce",
   "unknownWireKindFeatures": "Este tipo también ajusta {count, plural, one{una función} other{{count} funciones}} que esta versión de la aplicación no conoce. Actualice la aplicación para elegirlo.",
   "unknownWireReadOnly": "Esta versión de la aplicación no sabe qué es este registro: puede leerse, no modificarse. Actualice la aplicación para trabajar con él.",

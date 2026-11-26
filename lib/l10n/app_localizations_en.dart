@@ -37247,6 +37247,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Two variants have the same combination.';
 
   @override
+  String get stockReasonConversionSameUnit =>
+      'A conversion needs two different units.';
+
+  @override
+  String get stockReasonConversionUnknown => 'This conversion is not defined.';
+
+  @override
   String get stockReasonCostInvalid =>
       'This cost is not valid: a total in minor units, and a rate only for another currency.';
 
@@ -37418,6 +37425,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get stockReasonOverAllocated =>
       'More than arrived cannot be put away.';
+
+  @override
+  String get stockReasonPackageUnit =>
+      'A packaging unit has no general conversion: its factor is set on the item.';
 
   @override
   String get stockReasonParentInactive =>
@@ -42416,6 +42427,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unblockAction => 'Unblock';
+
+  @override
+  String get unitConversionDelete => 'Delete';
+
+  @override
+  String get unitConversionEdit => 'Change a conversion';
+
+  @override
+  String get unitConversionFactor => 'How many';
+
+  @override
+  String unitConversionFactorHelp(String from, String to) {
+    return 'How many $to make one $from';
+  }
+
+  @override
+  String get unitConversionFrom => 'From';
+
+  @override
+  String unitConversionLine(String from, String factor, String to) {
+    return '1 $from = $factor $to';
+  }
+
+  @override
+  String get unitConversionNew => 'Add a conversion';
+
+  @override
+  String get unitConversionTo => 'To';
+
+  @override
+  String get unitConversionsEmpty => 'No conversion is defined yet.';
+
+  @override
+  String get unitConversionsIntro =>
+      'A conversion says how many of one unit make another. It works both ways, in one step. An item\'s own conversion (a carton of 12) wins over these, and a packaging unit has none here.';
+
+  @override
+  String get unitConversionsTitle => 'Conversions';
 
   @override
   String get unknownWireInvoiceKind =>

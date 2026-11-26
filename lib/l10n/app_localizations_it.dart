@@ -37591,6 +37591,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Due varianti hanno la stessa combinazione.';
 
   @override
+  String get stockReasonConversionSameUnit =>
+      'Una conversione richiede due unità diverse.';
+
+  @override
+  String get stockReasonConversionUnknown =>
+      'Questa conversione non è definita.';
+
+  @override
   String get stockReasonCostInvalid =>
       'Questo costo non è valido: un totale in unità minori e un tasso solo per un’altra valuta.';
 
@@ -37770,6 +37778,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get stockReasonOverAllocated =>
       'Non si può collocare più di quanto è arrivato.';
+
+  @override
+  String get stockReasonPackageUnit =>
+      'Una confezione non ha una conversione generale: il fattore si imposta sull\'articolo.';
 
   @override
   String get stockReasonParentInactive =>
@@ -42823,6 +42835,44 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get unblockAction => 'Sblocca';
+
+  @override
+  String get unitConversionDelete => 'Elimina';
+
+  @override
+  String get unitConversionEdit => 'Modifica una conversione';
+
+  @override
+  String get unitConversionFactor => 'Quante';
+
+  @override
+  String unitConversionFactorHelp(String from, String to) {
+    return 'Quante $to fanno una $from';
+  }
+
+  @override
+  String get unitConversionFrom => 'Da';
+
+  @override
+  String unitConversionLine(String from, String factor, String to) {
+    return '1 $from = $factor $to';
+  }
+
+  @override
+  String get unitConversionNew => 'Aggiungi una conversione';
+
+  @override
+  String get unitConversionTo => 'A';
+
+  @override
+  String get unitConversionsEmpty => 'Nessuna conversione è ancora definita.';
+
+  @override
+  String get unitConversionsIntro =>
+      'Una conversione dice quante unità di una fanno un\'altra. Vale nei due sensi, in un solo passaggio. La conversione propria di un articolo (un cartone da 12) prevale su queste, e una confezione qui non ne ha.';
+
+  @override
+  String get unitConversionsTitle => 'Conversioni';
 
   @override
   String get unknownWireInvoiceKind =>

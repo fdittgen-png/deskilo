@@ -21941,6 +21941,14 @@
   "@stockReasonCombinationDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonConversionSameUnit": "Una conversione richiede due unità diverse.",
+  "@stockReasonConversionSameUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonConversionUnknown": "Questa conversione non è definita.",
+  "@stockReasonConversionUnknown": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonCostInvalid": "Questo costo non è valido: un totale in unità minori e un tasso solo per un’altra valuta.",
   "@stockReasonCostInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -22086,6 +22094,10 @@
   "stockReasonOverAllocated": "Non si può collocare più di quanto è arrivato.",
   "@stockReasonOverAllocated": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonPackageUnit": "Una confezione non ha una conversione generale: il fattore si imposta sull'articolo.",
+  "@stockReasonPackageUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
   },
   "stockReasonParentInactive": "L’ubicazione che la contiene non è più in uso.",
   "@stockReasonParentInactive": {
@@ -24681,6 +24693,69 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Sblocca",
+  "unitConversionDelete": "Elimina",
+  "@unitConversionDelete": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionEdit": "Modifica una conversione",
+  "@unitConversionEdit": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactor": "Quante",
+  "@unitConversionFactor": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactorHelp": "Quante {to} fanno una {from}",
+  "@unitConversionFactorHelp": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionFrom": "Da",
+  "@unitConversionFrom": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionLine": "1 {from} = {factor} {to}",
+  "@unitConversionLine": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "factor": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionNew": "Aggiungi una conversione",
+  "@unitConversionNew": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionTo": "A",
+  "@unitConversionTo": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsEmpty": "Nessuna conversione è ancora definita.",
+  "@unitConversionsEmpty": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsIntro": "Una conversione dice quante unità di una fanno un'altra. Vale nei due sensi, in un solo passaggio. La conversione propria di un articolo (un cartone da 12) prevale su queste, e una confezione qui non ne ha.",
+  "@unitConversionsIntro": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsTitle": "Conversioni",
+  "@unitConversionsTitle": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
   "unknownWireInvoiceKind": "Un tipo che questa versione dell'app non conosce",
   "unknownWireKindFeatures": "Questo tipo imposta anche {count, plural, one{una funzione} other{{count} funzioni}} che questa versione dell'app non conosce. Aggiorni l'app per sceglierlo.",
   "unknownWireReadOnly": "Questa versione dell'app non sa che cosa sia questo record: si può leggere, non modificare. Aggiorni l'app per lavorarci.",

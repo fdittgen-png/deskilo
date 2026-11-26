@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/trace/guarded.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../data/supabase_unit_conversions.dart';
 import '../data/supabase_workspace_units.dart';
+import '../domain/unit_conversions.dart';
 import '../domain/workspace_units.dart';
 
 /// #4442 -- the units of measure of the selected business (the Demo keeps its own in memory).
@@ -41,3 +43,12 @@ Future<List<WorkspaceUnit>> pickableUnitsOf(WidgetRef ref, String workspaceId, {
     fallback: (_) => pickableUnits(builtInUnits, unitsOn: false, keep: keep),
   );
 }
+
+/// #4479 -- the business's general unit conversions (1 kg = 1000 g), behind the port (the Demo keeps its own in memory).
+final unitConversionsProvider = Provider<UnitConversions>((ref) => SupabaseUnitConversions(ref.watch(selectedWorkspaceClientProvider)));
+
+/// #4479 -- the general conversions of [workspaceId], for the Settings screen.
+final unitConversionListProvider = FutureProvider.autoDispose.family<List<UnitConversion>, String>(
+  (ref, workspaceId) => ref.watch(unitConversionsProvider).conversions(workspaceId),
+  retry: (_, _) => null,
+);

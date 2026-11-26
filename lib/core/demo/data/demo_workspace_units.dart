@@ -23,6 +23,9 @@ class DemoWorkspaceUnits implements WorkspaceUnits {
   /// Whether an item of the business has [code] as a packaging unit (a box of 6): one code keeps one meaning.
   bool Function(String workspaceId, String code) packages = (_, _) => false;
 
+  /// A unit was saved (made, or its factor changed): the Demo's conversions follow it (#4479).
+  void Function(String workspaceId, WorkspaceUnit unit, List<WorkspaceUnit> all)? onSaved;
+
   final Map<String, List<WorkspaceUnit>> _units = {};
   final Map<String, ({String digest, WorkspaceUnit answer})> _requests = {};
 
@@ -34,6 +37,9 @@ class DemoWorkspaceUnits implements WorkspaceUnits {
     WorkspaceUnit(code: 'third', label: 'Third', dimension: UnitDimension.package, factorNum: 1, factorDen: 1),
     WorkspaceUnit(code: 'roll', label: 'Roll', dimension: UnitDimension.package, factorNum: 1, factorDen: 1),
   ];
+
+  /// The units of [workspaceId] as they stand now (the Demo's conversions join two of them).
+  List<WorkspaceUnit> heldBy(String workspaceId) => [..._of(workspaceId)];
 
   List<WorkspaceUnit> _of(String workspaceId) => _units.putIfAbsent(workspaceId, () => [...builtInUnits, ..._demoPackages]);
 
@@ -64,6 +70,7 @@ class DemoWorkspaceUnits implements WorkspaceUnits {
       list[at] = unit;
     }
     _requests[requestId] = (digest: digest, answer: unit);
+    onSaved?.call(workspaceId, unit, [...list]);
     return unit;
   }
 

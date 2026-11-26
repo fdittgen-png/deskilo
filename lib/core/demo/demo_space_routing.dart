@@ -41,7 +41,9 @@ import '../../features/plan/providers/accessory_providers.dart';
 import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
+import '../../features/stock/domain/unit_conversions.dart';
 import '../../features/stock/providers/stock_providers.dart';
+import '../../features/stock/providers/workspace_units_providers.dart';
 import '../../features/workspace/domain/member.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
@@ -75,6 +77,7 @@ import 'data/demo_stock_track_find.dart';
 import 'data/demo_stock_where_is.dart';
 import 'data/demo_till.dart';
 import 'data/demo_till_drawer.dart';
+import 'data/demo_unit_conversions.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
 import 'data/money/demo_invoice_goods_catalogue.dart';
@@ -402,12 +405,13 @@ class _DemoStocks {
     // the reference business and the shop keep stock; every other business answers as the reference one does for
     // an id that is not its own: nothing (a business that keeps no stock reads as empty)
     final key = demoOpenSpace(ref) == DemoSpaceKey.shop ? DemoSpaceKey.shop : DemoSpaceKey.home;
-    return _kits.putIfAbsent(key, () => _DemoStock(_fixture, key, ref.watch(clockProvider).now));
+    final conversions = ref.read(unitConversionsProvider);
+    return _kits.putIfAbsent(key, () => _DemoStock(_fixture, key, ref.watch(clockProvider).now, conversions));
   }
 }
 
 class _DemoStock {
-  _DemoStock(DemoFixture fixture, DemoSpaceKey key, DateTime Function() now) {
+  _DemoStock(DemoFixture fixture, DemoSpaceKey key, DateTime Function() now, UnitConversions conversions) {
     id = key.id;
     final money = fixture.space(key).money;
     final candidates = DemoStockCandidates(() async => [
@@ -415,7 +419,7 @@ class _DemoStock {
         if (s.active) (id: s.id, name: s.name),
     ]);
     config = DemoStockConfigCommands(id, candidates: candidates);
-    ledger = DemoStockLedger(id, config, now, candidates);
+    ledger = DemoStockLedger(id, config, now, candidates, conversions is DemoUnitConversions ? () => conversions.rows(id) : null);
     registry = DemoStockRegistry(id, ledger, config);
     config.newItems = (service: (name, price, vat, request) async => (await money.createService(id, name: name, priceCents: price, vatRateId: vat, requestId: request)).id,
         home: (item, place, request) => registry.setHome(id, itemId: item, variantId: null, placeId: place, requestId: request));

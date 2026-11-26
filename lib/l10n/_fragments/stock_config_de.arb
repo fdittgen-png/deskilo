@@ -475,5 +475,17 @@
   "stockRequiredSite": "Wählen Sie einen Standort.",
   "@stockRequiredSite": {
     "description": "#4402 the reorder point sheet: said under the site when none is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockReasonConversionSameUnit": "Eine Umrechnung braucht zwei verschiedene Einheiten.",
+  "@stockReasonConversionSameUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonConversionUnknown": "Diese Umrechnung ist nicht festgelegt.",
+  "@stockReasonConversionUnknown": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonPackageUnit": "Eine Verpackungseinheit hat keine allgemeine Umrechnung: ihr Faktor steht am Artikel.",
+  "@stockReasonPackageUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
   }
 }

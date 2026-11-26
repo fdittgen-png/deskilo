@@ -37713,6 +37713,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Deux variantes ont la même combinaison.';
 
   @override
+  String get stockReasonConversionSameUnit =>
+      'Une conversion demande deux unités différentes.';
+
+  @override
+  String get stockReasonConversionUnknown =>
+      'Cette conversion n\'est pas définie.';
+
+  @override
   String get stockReasonCostInvalid =>
       'Ce coût n’est pas valide : un total en unités mineures, et un taux seulement pour une autre devise.';
 
@@ -37893,6 +37901,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonOverAllocated =>
       'On ne peut pas ranger plus que ce qui est arrivé.';
+
+  @override
+  String get stockReasonPackageUnit =>
+      'Un conditionnement n\'a pas de conversion générale : son facteur se règle sur l\'article.';
 
   @override
   String get stockReasonParentInactive =>
@@ -42950,6 +42962,44 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get unblockAction => 'Débloquer';
+
+  @override
+  String get unitConversionDelete => 'Supprimer';
+
+  @override
+  String get unitConversionEdit => 'Modifier une conversion';
+
+  @override
+  String get unitConversionFactor => 'Combien';
+
+  @override
+  String unitConversionFactorHelp(String from, String to) {
+    return 'Combien de $to font un $from';
+  }
+
+  @override
+  String get unitConversionFrom => 'De';
+
+  @override
+  String unitConversionLine(String from, String factor, String to) {
+    return '1 $from = $factor $to';
+  }
+
+  @override
+  String get unitConversionNew => 'Ajouter une conversion';
+
+  @override
+  String get unitConversionTo => 'Vers';
+
+  @override
+  String get unitConversionsEmpty => 'Aucune conversion n\'est encore définie.';
+
+  @override
+  String get unitConversionsIntro =>
+      'Une conversion dit combien d\'une unité font une autre. Elle vaut dans les deux sens, en une seule étape. La conversion propre à un article (un carton de 12) l\'emporte sur celles-ci, et un conditionnement n\'en a pas ici.';
+
+  @override
+  String get unitConversionsTitle => 'Conversions';
 
   @override
   String get unknownWireInvoiceKind =>

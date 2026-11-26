@@ -478,5 +478,17 @@
   "stockRequiredSite": "Choose a site.",
   "@stockRequiredSite": {
     "description": "#4402 the reorder point sheet: said under the site when none is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockReasonConversionSameUnit": "A conversion needs two different units.",
+  "@stockReasonConversionSameUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonConversionUnknown": "This conversion is not defined.",
+  "@stockReasonConversionUnknown": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonPackageUnit": "A packaging unit has no general conversion: its factor is set on the item.",
+  "@stockReasonPackageUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
   }
 }
