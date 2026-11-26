@@ -27,18 +27,15 @@ class GroupUnitProposals {
 
   /// The starting text of each field, from the group's own parameters.
   static Map<String, String> initial(ItemGroup? group, AppFormat format) {
-    String factor(String key) => group?.params[key == 'purchase' ? groupParamPurchaseFactorNum : groupParamSaleFactorNum] == null
+    String factor(String numKey, String denKey) => group?.params[numKey] == null
         ? ''
-        : purchaseFactorText(
-            (group!.params[key == 'purchase' ? groupParamPurchaseFactorNum : groupParamSaleFactorNum]! as num).toInt(),
-            ((group.params[key == 'purchase' ? groupParamPurchaseFactorDen : groupParamSaleFactorDen] ?? 1) as num).toInt(),
-          );
+        : purchaseFactorText((group!.params[numKey]! as num).toInt(), ((group.params[denKey] ?? 1) as num).toInt());
     final price = group?.params[groupParamSalePrice];
     return {
       'purchaseUnit': '${group?.params[groupParamPurchaseUnit] ?? ''}',
-      'purchaseFactor': factor('purchase'),
+      'purchaseFactor': factor(groupParamPurchaseFactorNum, groupParamPurchaseFactorDen),
       'saleUnit': '${group?.params[groupParamSaleUnit] ?? ''}',
-      'saleFactor': factor('sale'),
+      'saleFactor': factor(groupParamSaleFactorNum, groupParamSaleFactorDen),
       'salePrice': price == null ? '' : amountInputText((price as num).toInt(), currency: format.currencyCode, locale: format.locale),
     };
   }
