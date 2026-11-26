@@ -4831,8 +4831,8 @@ routine public.workspace_template_readable(p_template_id uuid) -> boolean | func
 routine public.workspace_today(p_workspace_id uuid) -> date | function | definer | stable | exec:service_role | body:56c50f5742ec
 routine public.workspace_twin_id(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:02071934850f
 routine public.workspace_unit_archive_v1(p_workspace_id uuid, p_request_id uuid, p_code text, p_archived boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:4cb302832647
-routine public.workspace_unit_convert(p_workspace_id uuid, p_quantity text, p_from text, p_to text) -> text | function | definer | stable | exec:authenticated,service_role | body:abc0fb3a3fca
-routine public.workspace_unit_save_v1(p_workspace_id uuid, p_request_id uuid, p_unit jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:78782902f76f
+routine public.workspace_unit_convert(p_workspace_id uuid, p_quantity text, p_from text, p_to text) -> text | function | definer | stable | exec:authenticated,service_role | body:131d92c2ed34
+routine public.workspace_unit_save_v1(p_workspace_id uuid, p_request_id uuid, p_unit jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9763e57a1800
 routine public.workspace_unit_uses(p_workspace_id uuid, p_code text) -> bigint | function | definer | stable | exec:service_role | body:9a210da765f5
 routine public.workspace_units_guard() -> trigger | function | invoker | volatile | exec:service_role | body:04a18d4d9d9f
 routine public.workspace_units_seed(p_workspace_id uuid) -> void | function | definer | volatile | exec:service_role | body:4dc6ea73cb44
