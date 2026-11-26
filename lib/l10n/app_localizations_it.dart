@@ -37243,15 +37243,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockItemFactCost => 'Ultimo costo noto';
 
   @override
-  String get stockItemFactGroup => 'Gruppo';
-
-  @override
-  String get stockItemFactPrice => 'Prezzo';
-
-  @override
-  String get stockItemFactUnit => 'Unità';
-
-  @override
   String get stockItemFactVat => 'IVA';
 
   @override

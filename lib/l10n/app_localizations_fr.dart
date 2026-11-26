@@ -37367,15 +37367,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockItemFactCost => 'Dernier coût connu';
 
   @override
-  String get stockItemFactGroup => 'Groupe';
-
-  @override
-  String get stockItemFactPrice => 'Prix';
-
-  @override
-  String get stockItemFactUnit => 'Unité';
-
-  @override
   String get stockItemFactVat => 'TVA';
 
   @override

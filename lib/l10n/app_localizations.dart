@@ -59150,24 +59150,6 @@ abstract class AppLocalizations {
   /// #4480 the page of one stock item: the label above one of its facts
   ///
   /// In en, this message translates to:
-  /// **'Group'**
-  String get stockItemFactGroup;
-
-  /// #4480 the page of one stock item: the label above one of its facts
-  ///
-  /// In en, this message translates to:
-  /// **'Price'**
-  String get stockItemFactPrice;
-
-  /// #4480 the page of one stock item: the label above one of its facts
-  ///
-  /// In en, this message translates to:
-  /// **'Unit'**
-  String get stockItemFactUnit;
-
-  /// #4480 the page of one stock item: the label above one of its facts
-  ///
-  /// In en, this message translates to:
   /// **'VAT'**
   String get stockItemFactVat;
 
