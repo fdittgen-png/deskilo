@@ -36903,15 +36903,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockItemFactCost => 'Last known cost';
 
   @override
-  String get stockItemFactGroup => 'Group';
-
-  @override
-  String get stockItemFactPrice => 'Price';
-
-  @override
-  String get stockItemFactUnit => 'Unit';
-
-  @override
   String get stockItemFactVat => 'VAT';
 
   @override
