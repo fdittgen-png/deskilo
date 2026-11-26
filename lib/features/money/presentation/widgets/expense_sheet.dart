@@ -57,8 +57,9 @@ Future<void> showExpenseSheet(
   ServiceItem? supplyItem;
   // #2357 — input VAT: the rate the expense carries, the share the space
   // may deduct and whether it bought a fixed asset.
-  final vatPercents = await expenseVatPercents(ref, workspace.vatRegime);
   if (!context.mounted) return;
+  final vatPercents = await expenseVatPercentsOrSay(context, ref, workspace.vatRegime);
+  if (vatPercents == null || !context.mounted) return;
   final vat = ExpenseVatChoice.of(ref, workspace.countryCode, fields['deductible']);
   void prefillUnit() {
     final cents = appFormatOf(context).parseMinor(fields['amount'].text) ?? 0;

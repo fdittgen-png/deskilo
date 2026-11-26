@@ -236,8 +236,8 @@ Future<bool> _showCreateExpenseScheduleSheet(
   String? supplierId;
   final topic = l10n.helpTopicScheduledExpenses;
   // #2357 — the VAT every occurrence will carry.
-  final vatPercents = await expenseVatPercents(ref, workspace.vatRegime);
-  if (!context.mounted) return false;
+  final vatPercents = await expenseVatPercentsOrSay(context, ref, workspace.vatRegime);
+  if (vatPercents == null || !context.mounted) return false;
   final vat = ExpenseVatChoice.of(ref, workspace.countryCode, TextEditingController(text: '100'));
 
   final submitted = await showAppSheet<bool>(
