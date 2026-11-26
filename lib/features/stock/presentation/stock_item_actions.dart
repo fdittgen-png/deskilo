@@ -89,7 +89,7 @@ class StockItemAction {
 }
 
 /// Opens the actions of the item and of the row it is read from, with the services the service editor proposes
-/// categories from. Built in a widget's build: what decides the actions is watched.
+/// categories from. An editor can be opened from anywhere; [offer] is asked in a build.
 class StockItemActions {
   StockItemActions(
     this.context,
@@ -112,13 +112,24 @@ class StockItemActions {
   String nameOf(StockRegistryRow row) =>
       serviceOf(row.itemId)?.name ?? row.itemName;
 
-  /// Every action the business offers for [row] (group and tags where it keeps them), each saying whether the
-  /// member may use it. Name, price and VAT are offered only where the item's service could be read.
-  List<StockItemAction> of(StockRegistryRow row) {
-    final l10n = context.l10n;
+  /// The actions of a row: every action the business offers for it (group and tags where it keeps them), each
+  /// saying whether the member may use it; name, price and VAT only where the item's service could be read. Called
+  /// in a build, which watches what decides them; the rows' actions are then asked of what it returns.
+  List<StockItemAction> Function(StockRegistryRow row) offer() {
     final held = ref.watch(myPermissionsProvider);
-    final mayStock = held.contains(WorkspacePermission.manageStock);
     final features = ref.watch(enabledFeaturesSyncProvider);
+    final tagsOn = ref.watch(stockTagsProvider);
+    return (row) => _of(row, held: held, features: features, tagsOn: tagsOn);
+  }
+
+  List<StockItemAction> _of(
+    StockRegistryRow row, {
+    required Set<WorkspacePermission> held,
+    required Set<WorkspaceFeature> features,
+    required bool tagsOn,
+  }) {
+    final l10n = context.l10n;
+    final mayStock = held.contains(WorkspacePermission.manageStock);
     final service = serviceOf(row.itemId);
     StockItemAction action(
       StockItemActionKind kind,
@@ -154,7 +165,7 @@ class StockItemActions {
           word: l10n.documentsColGroup,
           label: l10n.documentsColGroup,
         ), () => editGroup(row)),
-      if (ref.watch(stockTagsProvider))
+      if (tagsOn)
         action(StockItemActionKind.tags, Icons.sell_outlined, (
           word: l10n.stockTagsOpen,
           label: l10n.stockTagsOpen,

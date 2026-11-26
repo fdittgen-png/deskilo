@@ -253,6 +253,7 @@ class _ItemsState extends ConsumerState<_Items> {
     final services = ref.watch(allServicesProvider).value ?? const <ServiceItem>[]; // empty-ok: no Edit of name, price and VAT then
     final mayAdd = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
     final acts = StockItemActions(context, ref, workspaceId: widget.workspaceId, services: services);
+    final actionsOf = acts.offer();
     final walk = ref.watch(stockRegistryWalkProvider(_filter));
     if (walk.error != null) {
       return Center(
@@ -309,7 +310,7 @@ class _ItemsState extends ConsumerState<_Items> {
                 row: r,
                 attention: stockAttentionOf(r, low),
                 separator: separator,
-                actions: acts.of(r),
+                actions: actionsOf(r),
                 onOpen: () => _open(r),
               );
             },
@@ -354,7 +355,7 @@ class _ItemsState extends ConsumerState<_Items> {
           child: StockItemsToolbar(
             filters: _filters(places, separator),
             selected: selected == null ? null : acts.nameOf(selected),
-            actions: selected == null ? const [] : acts.of(selected),
+            actions: selected == null ? const [] : actionsOf(selected),
             onOpen: () => _open(selected!),
             onClear: _clear,
             onAdd: mayAdd ? () => unawaited(_add()) : null,
