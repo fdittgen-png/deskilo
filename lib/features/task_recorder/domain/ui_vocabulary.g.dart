@@ -5994,6 +5994,7 @@ const List<String> uiKeyPatterns = [
   'putaway-{}-tags',
   'putaway-{}-tags-count',
   'putaway-{}-total',
+  'putaway-{}-unit',
   'putaway-{}-variant',
   'qty-{}',
   'question-editor-context-{}',

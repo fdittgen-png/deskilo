@@ -341,7 +341,7 @@ class PutAwayDraft {
       ),
       if (!this.context.perUnit.contains(n) && putAwayUnits(item, p.line.unit).length > 1)
         PutAwayUnitField(
-          key: ValueKey('putaway-$n-unit'),
+          fieldKey: 'putaway-$n-unit',
           units: putAwayUnits(item, p.line.unit),
           value: p.unit ?? (p.line.unit.isEmpty ? item.inventoryUnit : p.line.unit),
           onChanged: (u) {

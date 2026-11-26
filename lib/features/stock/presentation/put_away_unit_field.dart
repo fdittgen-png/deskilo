@@ -8,7 +8,10 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/ui/dropdown_field.dart';
 
 class PutAwayUnitField extends StatelessWidget {
-  const PutAwayUnitField({super.key, required this.units, required this.value, required this.onChanged});
+  const PutAwayUnitField({super.key, required this.fieldKey, required this.units, required this.value, required this.onChanged});
+
+  /// The key of the dropdown (the recorder and the tests find it by it).
+  final String fieldKey;
 
   /// The units offered, the line's own among them.
   final List<String> units;
@@ -19,6 +22,7 @@ class PutAwayUnitField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => AppDropdownField<String>(
+    key: ValueKey(fieldKey),
     label: context.l10n.purchaseOrderUnit,
     value: value,
     items: [for (final u in units) (u, u)],
