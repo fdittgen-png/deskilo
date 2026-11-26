@@ -8707,6 +8707,67 @@ class AppLocalizationsEs extends AppLocalizations {
   String get developmentWatermark => 'DESARROLLO';
 
   @override
+  String devicePairingBoard(String id, String model) {
+    return 'Terminal $id · $model';
+  }
+
+  @override
+  String get devicePairingCheck => 'Comprobar el código';
+
+  @override
+  String get devicePairingConnect => 'Conectar un dispositivo';
+
+  @override
+  String devicePairingFingerprint(String fingerprint) {
+    return 'Huella $fingerprint: compárela con la pantalla del terminal.';
+  }
+
+  @override
+  String get devicePairingFound => 'Terminal encontrado';
+
+  @override
+  String get devicePairingLater =>
+      'Conectar el terminal a esta empresa llegará con una próxima actualización: no se le ha enviado nada.';
+
+  @override
+  String get devicePairingNone =>
+      'Todavía no hay ningún terminal de caja conectado a esta empresa.';
+
+  @override
+  String get devicePairingRefusedAlphabet =>
+      'El código de un terminal nunca contiene 0, O, 1, I ni L, ni otros signos: compruebe el carácter en el terminal.';
+
+  @override
+  String get devicePairingRefusedCheck =>
+      'Ningún terminal muestra este código: un carácter es incorrecto o dos están intercambiados. Compárelo con el terminal.';
+
+  @override
+  String get devicePairingRefusedLength =>
+      'El código de un terminal tiene 10 caracteres, como XXXXX-XXXXX.';
+
+  @override
+  String get devicePairingRefusedProfile =>
+      'Este terminal es de un modelo que esta aplicación aún no conoce. Actualice la aplicación y luego conéctelo.';
+
+  @override
+  String get devicePairingScanHint =>
+      'Acerque el código QR del terminal a la cámara. Para mostrarlo, mantenga pulsado el botón BOOT del terminal 3 segundos.';
+
+  @override
+  String get devicePairingSubtitle =>
+      'Terminales de caja: conectar uno por su código QR o su código';
+
+  @override
+  String get devicePairingTitle => 'Dispositivos';
+
+  @override
+  String get devicePairingType => 'Escribir el código';
+
+  @override
+  String get devicePairingTypeHelper =>
+      'Los 10 caracteres junto al código QR del terminal, por ejemplo 3DNGP-UN9CG.';
+
+  @override
   String get directoryApproximate => 'Ubicación aproximada de la dirección';
 
   @override
@@ -12016,6 +12077,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'El archivo del espacio (XML) lleva toda la configuración — tarifas, identidad legal, reglas de reserva y validación, roles, diseños de documentos, sedes, días de cierre — y la importación la aplica, incluso en un espacio que ya tiene reservas. Desactivado: el archivo solo lleva ajustes y plano.';
+
+  @override
+  String get featureCounterEmbeddedTerminalDesc =>
+      'Conectar un terminal de caja, la pequeña pantalla del mostrador que cobra, a esta empresa: Ajustes › Dispositivos lee su código QR o su código escrito y muestra qué terminal es. Desactivado: sin página de dispositivos.';
+
+  @override
+  String get featureCounterEmbeddedTerminalTitle => 'Terminales de caja';
 
   @override
   String get featureCounterOfflineCashDesc =>

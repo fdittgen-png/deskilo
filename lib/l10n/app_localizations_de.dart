@@ -8728,6 +8728,67 @@ class AppLocalizationsDe extends AppLocalizations {
   String get developmentWatermark => 'ENTWICKLUNG';
 
   @override
+  String devicePairingBoard(String id, String model) {
+    return 'Terminal $id · $model';
+  }
+
+  @override
+  String get devicePairingCheck => 'Code prüfen';
+
+  @override
+  String get devicePairingConnect => 'Gerät verbinden';
+
+  @override
+  String devicePairingFingerprint(String fingerprint) {
+    return 'Fingerabdruck $fingerprint: vergleichen Sie ihn mit dem Bildschirm des Terminals.';
+  }
+
+  @override
+  String get devicePairingFound => 'Terminal gefunden';
+
+  @override
+  String get devicePairingLater =>
+      'Das Verbinden des Terminals mit diesem Unternehmen kommt mit einem späteren Update: nichts wurde an es gesendet.';
+
+  @override
+  String get devicePairingNone =>
+      'Mit diesem Unternehmen ist noch kein Kassenterminal verbunden.';
+
+  @override
+  String get devicePairingRefusedAlphabet =>
+      'Der Code eines Terminals enthält nie 0, O, 1, I oder L und keine anderen Zeichen: prüfen Sie das Zeichen auf dem Terminal.';
+
+  @override
+  String get devicePairingRefusedCheck =>
+      'Kein Terminal zeigt diesen Code: ein Zeichen ist falsch, oder zwei sind vertauscht. Vergleichen Sie ihn mit dem Terminal.';
+
+  @override
+  String get devicePairingRefusedLength =>
+      'Der Code eines Terminals hat 10 Zeichen, etwa XXXXX-XXXXX.';
+
+  @override
+  String get devicePairingRefusedProfile =>
+      'Dieses Terminal ist ein Modell, das diese App noch nicht kennt. Aktualisieren Sie die App und verbinden Sie es dann.';
+
+  @override
+  String get devicePairingScanHint =>
+      'Halten Sie den QR-Code des Terminals vor die Kamera. Um ihn anzuzeigen, halten Sie die BOOT-Taste des Terminals 3 Sekunden gedrückt.';
+
+  @override
+  String get devicePairingSubtitle =>
+      'Kassenterminals: eines per QR-Code oder Code verbinden';
+
+  @override
+  String get devicePairingTitle => 'Geräte';
+
+  @override
+  String get devicePairingType => 'Code eintippen';
+
+  @override
+  String get devicePairingTypeHelper =>
+      'Die 10 Zeichen neben dem QR-Code des Terminals, zum Beispiel 3DNGP-UN9CG.';
+
+  @override
   String get directoryApproximate => 'Ungefähre Lage der Adresse';
 
   @override
@@ -12041,6 +12102,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'Die Raumdatei (XML) trägt die gesamte Konfiguration — Tarife, rechtliche Identität, Buchungs- und Freigaberegeln, Rollen, Dokumentvorlagen, Standorte, Schließtage — und der Import wendet sie an, auch auf einen Raum, der schon Buchungen hat. Aus: die Datei trägt nur Einstellungen und Grundriss.';
+
+  @override
+  String get featureCounterEmbeddedTerminalDesc =>
+      'Ein Kassenterminal, den kleinen Bildschirm an der Theke, der Zahlungen annimmt, mit diesem Unternehmen verbinden: Einstellungen › Geräte liest seinen QR-Code oder seinen eingetippten Code und zeigt, welches Terminal es ist. Aus: keine Geräteseite.';
+
+  @override
+  String get featureCounterEmbeddedTerminalTitle => 'Kassenterminals';
 
   @override
   String get featureCounterOfflineCashDesc =>

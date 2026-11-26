@@ -351,6 +351,9 @@ abstract final class HelpAnchor {
   static const workspacePaper = 'user.workspace.settings.paper';
   static const settingsUnits = 'user.workspace.settings.units';
 
+  /// #4466 — Settings › Devices: a till board connected by its QR code or its typed code.
+  static const settingsDevices = 'user.workspace.settings.devices';
+
   /// The free-text address a paper document prints.
   static const workspaceAddress = 'user.workspace.settings.address';
 

@@ -4023,6 +4023,25 @@ Ihre Artikel, Angebote und Rechnungen werden in Einheiten gemessen, und manche E
 
 **Siehe auch:** [Papier der Dokumente](help:user.workspace.settings.paper)
 
+### Geräte
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Ein Kassenterminal ist der kleine Bildschirm an der Theke, der Zahlungen annimmt (#4466). Sie verbinden es unter **Geräte** mit Ihrem Unternehmen: Die App liest den QR-Code des Terminals oder den 10-stelligen Code daneben und zeigt, welches Terminal es ist.
+
+**Schritte**
+
+1. Schalten Sie **Kassenterminals** unter **Funktionen** ein (es braucht **Kassensitzungen und Tagesabschluss** und ist aus, bis Sie es anfordern).
+2. Halten Sie am Terminal die **BOOT**-Taste 3 Sekunden gedrückt: Es zeigt seinen QR-Code und seinen Code, etwa 3DNGP-UN9CG. Ein noch nicht eingerichtetes Terminal zeigt sie von selbst.
+3. Halten Sie in [Geräte](app:/settings/devices) den QR-Code vor die Kamera, oder tippen Sie den Code unter **Code eintippen** ein und tippen Sie auf **Code prüfen**.
+4. Vergleichen Sie das Terminal und seinen **Fingerabdruck** mit dem Bildschirm des Terminals.
+
+**Gut zu wissen**
+
+- Ein Code enthält nie 0, O, 1, I oder L. Ein falsches Zeichen oder zwei vertauschte werden sofort abgelehnt, in Worten unter dem Feld; Groß- und Kleinschreibung, Leerzeichen und Bindestriche spielen keine Rolle.
+- Ohne Kamera (Browser, Desktop) leistet das Eintippen des Codes dasselbe.
+- Das Verbinden des Terminals mit dem Unternehmen kommt mit einem späteren Update: Heute liest und prüft die App das Terminal und sendet ihm nichts.
+
 ### Organisation
 
 **Zielgruppe:** Inhaber

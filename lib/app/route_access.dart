@@ -118,6 +118,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/settings/colours': {_P.workspaceSettings},
   '/settings/questions': {_P.workspaceSettings},
   '/settings/units': {_P.workspaceSettings}, // #4442
+  '/settings/devices': {_P.workspaceSettings}, // #4466
   '/settings/public-page': {_P.workspaceSettings},
   '/legal-identity': {_P.workspaceSettings},
   '/settings/sites': {_P.manageSites},

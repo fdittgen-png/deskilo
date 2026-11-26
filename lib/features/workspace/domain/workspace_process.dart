@@ -148,6 +148,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.counterTillLayout,
       // #4368
       WorkspaceFeature.counterReceiptPrinter,
+      // #4466
+      WorkspaceFeature.counterEmbeddedTerminal,
     ]),
   ]),
   // #4449 — the goods the business keeps, moves, counts and traces: out of pricing, into a process of their own.

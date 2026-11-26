@@ -625,6 +625,26 @@ I suoi articoli, preventivi e fatture sono misurati in unità, e alcune unità s
 
 **Vedi anche:** [Carta dei documenti](help:user.workspace.settings.paper)
 
+<!-- anchor: user.workspace.settings.devices -->
+### Dispositivi
+
+**Destinatari:** Proprietario · Amministratore con il permesso
+
+Un terminale di cassa è il piccolo schermo al banco che incassa (#4466). Lo si collega all'attività da **Dispositivi**: l'app legge il codice QR del terminale, o il codice di 10 caratteri accanto, e mostra di quale terminale si tratta.
+
+**Passaggi**
+
+1. Attivi **Terminali di cassa** in **Funzionalità** (richiede **Sessioni di cassa e chiusura della giornata** ed è disattivato finché non lo richiede).
+2. Sul terminale, tenga premuto il pulsante **BOOT** per 3 secondi: mostra il codice QR e il codice, per esempio 3DNGP-UN9CG. Un terminale non ancora configurato li mostra da sé.
+3. In [Dispositivi](app:/settings/devices), avvicini il codice QR alla fotocamera, oppure digiti il codice in **Digitare il codice** e tocchi **Verificare il codice**.
+4. Confronti il terminale e la sua **Impronta** con lo schermo del terminale.
+
+**Da sapere**
+
+- Un codice non contiene mai 0, O, 1, I o L. Un carattere errato, o due invertiti, viene rifiutato subito, a parole sotto il campo; maiuscole, spazi e trattini non contano.
+- Senza fotocamera (browser, computer), digitare il codice fa lo stesso.
+- Il collegamento del terminale all'attività arriverà con un prossimo aggiornamento: oggi l'app legge e verifica il terminale, e non gli invia nulla.
+
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organizzazione
 

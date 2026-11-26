@@ -97,6 +97,7 @@ const helpAnchorIndex = <String>{
   HelpAnchor.workspaceLanguage,
   HelpAnchor.workspacePaper,
   HelpAnchor.settingsUnits,
+  HelpAnchor.settingsDevices,
   HelpAnchor.organisation,
   HelpAnchor.workspaceAddress,
   HelpAnchor.workspaceWhatsappGroup,

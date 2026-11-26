@@ -4220,6 +4220,26 @@ Sus artículos, presupuestos y facturas se miden en unidades, y algunas se convi
 
 **Véase también:** [Papel de los documentos](#papel-de-los-documentos)
 
+<!-- anchor: user.workspace.settings.devices -->
+### Dispositivos
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Un terminal de caja es la pequeña pantalla del mostrador que cobra (#4466). Lo conecta a su empresa desde **Dispositivos**: la aplicación lee el código QR del terminal, o el código de 10 caracteres junto a él, y muestra qué terminal es.
+
+**Pasos**
+
+1. Active **Terminales de caja** en **Funciones** (necesita **Sesiones de caja y cierre del día** y está desactivado hasta que lo pida).
+2. En el terminal, mantenga pulsado el botón **BOOT** 3 segundos: muestra su código QR y su código, por ejemplo 3DNGP-UN9CG. Un terminal aún no configurado los muestra por sí solo.
+3. En [Dispositivos](https://fdittgen-png.github.io/deskilo/#/settings/devices), acerque el código QR a la cámara, o escriba el código en **Escribir el código** y pulse **Comprobar el código**.
+4. Compare el terminal y su **Huella** con la pantalla del terminal.
+
+**Conviene saber**
+
+- Un código nunca contiene 0, O, 1, I ni L. Un carácter erróneo, o dos intercambiados, se rechaza en el acto, con palabras bajo el campo; mayúsculas, espacios y guiones no importan.
+- Sin cámara (navegador, escritorio), escribir el código hace lo mismo.
+- Conectar el terminal a la empresa llegará con una próxima actualización: hoy la aplicación lee y comprueba el terminal, y no le envía nada.
+
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organización
 
