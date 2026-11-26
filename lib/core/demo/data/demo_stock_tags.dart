@@ -9,6 +9,7 @@ import '../../../features/stock/domain/stock_config.dart';
 import '../../../features/stock/domain/stock_tags.dart';
 import '../../codes/dk_code.dart';
 import '../../settings/setting_defaults.g.dart';
+import '../demo_replay.dart';
 
 class _Bound {
   _Bound(this.id, this.code, this.owner, {this.kind = 'uid', this.pieceId});
@@ -56,7 +57,7 @@ class DemoStockTags implements StockTags {
     for (final t in _active)
       if (t.pieceId != null && t.owner.itemId == itemId) (pieceId: t.pieceId!, code: t.code),
   ];
-  final Map<String, TagBound> _answers = {};
+  final _answers = Replay<TagBound>();
   int _next = 10;
 
   static final _hex = RegExp(r'^[0-9A-F]{4,64}$');
@@ -102,8 +103,7 @@ class DemoStockTags implements StockTags {
 
   @override
   Future<TagBound> bind(String workspaceId, {required String requestId, required String code, required TagOwner owner}) async {
-    final first = _answers[requestId];
-    if (first != null) return first;
+    if (_answers.seen(requestId) case final first?) return first;
     final normalised = normalise(code);
     if (!_hex.hasMatch(normalised)) throw const StockConfigRefused('tag.code', StockRefusal.tagMalformed);
     final held = _active.where((t) => t.code == normalised).firstOrNull;
@@ -124,7 +124,7 @@ class DemoStockTags implements StockTags {
       tag: StockTag(id: bound.id, code: normalised, kind: 'uid', ownerKind: owner.kind, unit: owner.unit),
       replayed: held != null,
     );
-    return _answers[requestId] = answer;
+    return _answers.keep(requestId, answer);
   }
 
   @override

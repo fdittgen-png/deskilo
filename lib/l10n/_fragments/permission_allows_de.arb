@@ -40,5 +40,6 @@
   "permAllowsApproveStockAdjustments": "Die von einer Inventur vorgeschlagene Korrektur genehmigen.",
   "rolesFilterPermissions": "Berechtigungen filtern",
   "permAllowsCountStock": "Die Zeilen einer Inventuraufgabe zählen, ohne zu sehen, was das Buch führt: die Aufgaben und das Zählen jeder Zeile, sonst nichts.",
-  "permAllowsConfigureTill": "Das Layout einer Kasse erstellen, veröffentlichen, kopieren und zurücksetzen: ihre Tasten, Seiten und Werkzeuge. Kassierer nutzen das veröffentlichte Layout ohne dieses Recht."
+  "permAllowsConfigureTill": "Das Layout einer Kasse erstellen, veröffentlichen, kopieren und zurücksetzen: ihre Tasten, Seiten und Werkzeuge. Kassierer nutzen das veröffentlichte Layout ohne dieses Recht.",
+  "permAllowsOverrideTillPrice": "Eine Kassenzeile zu einem anderen Preis als dem des Artikels verkaufen, mit einem Grund, den der Beleg festhält. Ohne dieses Recht wird eine Kassenzeile zum Preis des Artikels verkauft."
 }

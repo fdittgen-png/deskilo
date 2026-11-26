@@ -2209,6 +2209,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
+    since: 'till_price_registry',
+    row: (
+      key: 'counter.max_discount_percent',
+      type: 'int',
+      defaultValue: 0,
+      min: 0,
+      max: 100,
+      unit: '',
+      group: 'business',
+      scopes: ['workspace'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'till discounts (#4476)',
+      note: 'The largest discount, in percent, a cashier may give on a till line. 0 means no discount at the till. A larger discount is refused; a price other than the item\'s needs the right to change a price at the till and a reason.',
+    ),
+  ),
+  (
     since: 'till_layout_registry',
     row: (
       key: 'counter.layout_max_cells',

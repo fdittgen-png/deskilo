@@ -13,6 +13,19 @@ import '../presentation/till_session.dart';
 /// live one (`tillPortFromApp`); the Demo and the tests replace it.
 final tillPortProvider = Provider<TillPort>((ref) => throw UnimplementedError('the till port is wired by the app'));
 
+/// #4476 -- the till's copies of a receipt: the till port itself where it prints them, null where it does not.
+final tillCopyPortProvider = Provider<TillCopyPort?>((ref) => switch (ref.watch(tillPortProvider)) {
+  final TillCopyPort copies => copies,
+  _ => null,
+});
+
+/// #4366 -- the lots a till may sell an item from: the till port itself where it reads them, null where it does not.
+final tillLotsPortProvider = Provider<TillLotsPort?>((ref) => switch (ref.watch(tillPortProvider)) {
+  final TillLotsPort lots => lots,
+  final TillLotsSource source => source.lotsPort,
+  _ => null,
+});
+
 /// #4366 -- whether the country allows this business's till to sell, and why not when it does not. Read again when the
 /// screen opens: a country's operation can move between two shifts.
 final tillReadinessProvider = FutureProvider.autoDispose.family<TillReadiness, String>(

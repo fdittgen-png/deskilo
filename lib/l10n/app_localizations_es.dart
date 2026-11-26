@@ -19034,9 +19034,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get itemGroupAssignNone => 'Sin grupo';
 
   @override
-  String get itemGroupAssignOpen => 'Grupo y ajustes heredados';
-
-  @override
   String itemGroupAssignTitle(String item) {
     return 'Grupo de $item';
   }
@@ -25839,6 +25836,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Configurar el quiosco y entregar las tarjetas.';
 
   @override
+  String get permAllowsOverrideTillPrice =>
+      'Vender una línea de caja a un precio distinto del del artículo, con un motivo que el tique conserva. Sin este derecho, una línea de caja se vende al precio del artículo.';
+
+  @override
   String get permAllowsPaymentTermsEdit =>
       'Solicitar un cambio de las condiciones de pago de un miembro; la validación decide.';
 
@@ -25993,6 +25994,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get permOperateKiosk => 'Operar el quiosco y las tarjetas';
+
+  @override
+  String get permOverrideTillPrice => 'Cambiar un precio en la caja';
 
   @override
   String get permPaymentTermsEdit => 'Solicitar cambios de condiciones de pago';
@@ -32763,6 +32767,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El máximo de celdas que puede tener un diseño de caja, sumando todas sus páginas y tamaños. Un diseño mayor se rechaza al guardarlo.';
 
   @override
+  String get settingHintCounterMaxDiscount =>
+      'El descuento máximo, en porcentaje, que un cajero puede aplicar a una línea de caja. 0 significa ningún descuento en la caja.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Cuánto tiempo después de perder la conexión la caja aún se acepta una venta en efectivo hecha sin conexión al enviarla. Las posteriores se rechazan y se listan para el responsable.';
 
@@ -33219,6 +33227,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelCounterLayoutMaxCells => 'Tamaño del diseño de caja';
+
+  @override
+  String get settingLabelCounterMaxDiscount => 'Descuento máximo en la caja';
 
   @override
   String get settingLabelCounterOfflineMaxMinutes =>
@@ -36985,9 +36996,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockEditInventoryUnitChoice => 'Unidad de inventario';
 
   @override
-  String get stockEditItem => 'Ajustes de existencias';
-
-  @override
   String stockEditItemTitle(String item) {
     return 'Ajustes de existencias de $item';
   }
@@ -37164,7 +37172,49 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockItemAddTitle => 'Añadir un artículo';
 
   @override
+  String get stockItemAttentionLow => 'Existencias bajas';
+
+  @override
+  String get stockItemAttentionNoPlace => 'Sin ubicación';
+
+  @override
+  String get stockItemAttentionNoPrice => 'Sin precio';
+
+  @override
   String get stockItemEditDetails => 'Editar nombre, precio e IVA';
+
+  @override
+  String get stockItemEditGroup => 'Cambiar de grupo';
+
+  @override
+  String get stockItemEditHome => 'Cambiar la ubicación habitual';
+
+  @override
+  String get stockItemEditSettings => 'Editar unidades, códigos y seguimiento';
+
+  @override
+  String get stockItemEditSuppliers => 'Editar artículos del proveedor';
+
+  @override
+  String get stockItemEditTags => 'Editar etiquetas';
+
+  @override
+  String get stockItemEditVariants => 'Editar variantes';
+
+  @override
+  String get stockItemFactBarcode => 'Código de barras';
+
+  @override
+  String get stockItemFactCost => 'Último coste conocido';
+
+  @override
+  String get stockItemFactVat => 'IVA';
+
+  @override
+  String get stockItemFilterAll => 'Todos los artículos';
+
+  @override
+  String get stockItemFilterNoHome => 'Sin ubicación habitual';
 
   @override
   String get stockItemNewBarcode => 'Código de barras (opcional)';
@@ -37197,6 +37247,40 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockItemNewUnit => 'Contado en';
+
+  @override
+  String get stockItemNoGroup => 'En ningún grupo';
+
+  @override
+  String get stockItemNoSuppliers =>
+      'Ningún artículo de proveedor designa aún este artículo.';
+
+  @override
+  String get stockItemNoVariants => 'Este artículo no tiene variantes.';
+
+  @override
+  String get stockItemNothingOnHand => 'No hay nada en existencias.';
+
+  @override
+  String get stockItemPlacesTitle => 'Dónde está';
+
+  @override
+  String get stockItemSectionGroupTags => 'Grupo y etiquetas';
+
+  @override
+  String get stockItemSectionOverview => 'Resumen';
+
+  @override
+  String get stockItemSectionStock => 'Existencias';
+
+  @override
+  String get stockItemSectionSuppliers => 'Artículos del proveedor';
+
+  @override
+  String get stockItemSectionVariants => 'Variantes';
+
+  @override
+  String get stockItemSeeWhere => 'Ver todas las ubicaciones';
 
   @override
   String get stockItemsEmpty =>
@@ -37556,6 +37640,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Dos variantes tienen la misma combinación.';
 
   @override
+  String get stockReasonConversionSameUnit =>
+      'Una conversión necesita dos unidades distintas.';
+
+  @override
+  String get stockReasonConversionUnknown =>
+      'Esta conversión no está definida.';
+
+  @override
   String get stockReasonCostInvalid =>
       'Este coste no es válido: un total en unidades menores y un tipo solo para otra moneda.';
 
@@ -37736,6 +37828,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se puede colocar más de lo que llegó.';
 
   @override
+  String get stockReasonPackageUnit =>
+      'Un envase no tiene conversión general: su factor se fija en el artículo.';
+
+  @override
   String get stockReasonParentInactive =>
       'La ubicación que la contiene ya no está en uso.';
 
@@ -37890,11 +37986,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockRegistryAllPlaces => 'Todas las ubicaciones';
 
   @override
-  String stockRegistryCost(String amount) {
-    return 'coste $amount';
-  }
-
-  @override
   String get stockRegistryCostHidden => 'coste no mostrado';
 
   @override
@@ -37927,21 +38018,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockRegistryNoHome => 'sin ubicación habitual';
 
   @override
-  String get stockRegistryNoHomeFilter =>
-      'Solo artículos sin ubicación habitual';
-
-  @override
   String stockRegistryOnHand(String quantity) {
     return '$quantity disponibles';
   }
 
   @override
   String get stockRegistryPlaceFilter => 'Ubicación habitual';
-
-  @override
-  String stockRegistryPrice(String amount) {
-    return 'precio $amount';
-  }
 
   @override
   String get stockRegistrySearch =>
@@ -38733,9 +38815,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockVariantsAdd => 'Añadir una variante';
-
-  @override
-  String get stockVariantsEdit => 'Variantes';
 
   @override
   String get stockVariantsHint =>
@@ -41513,6 +41592,17 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get tillDiscountBeyond =>
+      'Este descuento supera lo que la empresa permite en la caja.';
+
+  @override
+  String get tillDiscountField => 'Descuento (%)';
+
+  @override
+  String get tillDiscountInvalid =>
+      'Un descuento es un porcentaje del precio del artículo, en una línea sin precio cambiado.';
+
+  @override
   String get tillDrawerAddTill => 'Añadir una caja';
 
   @override
@@ -42018,6 +42108,38 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillLeaveTitle => 'La venta no está confirmada';
 
   @override
+  String get tillLotChoose => 'Elegir el lote';
+
+  @override
+  String tillLotExpired(String date) {
+    return 'Caducado ($date): no se vende';
+  }
+
+  @override
+  String tillLotExpires(String date) {
+    return 'Consumir antes del $date';
+  }
+
+  @override
+  String get tillLotFirstToExpire =>
+      'El primero en caducar (elegido por el stock)';
+
+  @override
+  String tillLotLine(String code) {
+    return 'Lote $code';
+  }
+
+  @override
+  String tillLotNone(String item) {
+    return '$item no tiene lote que elegir: se vende tal cual.';
+  }
+
+  @override
+  String tillLotOnHand(String quantity, String unit) {
+    return '$quantity $unit en existencia';
+  }
+
+  @override
   String get tillNextCustomer => 'Siguiente cliente';
 
   @override
@@ -42032,6 +42154,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get tillNotReadyHint =>
       'No se numera ni se cobra nada mientras la operación del país no esté admitida.';
+
+  @override
+  String get tillNothingToReprint => 'Aún no hay ninguna venta que reimprimir.';
 
   @override
   String get tillOfflineBanner =>
@@ -42174,6 +42299,25 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get tillPriceField => 'Nuevo precio';
+
+  @override
+  String get tillPriceNotAllowed =>
+      'No puede cambiar un precio en la caja. La línea se vende al precio del artículo.';
+
+  @override
+  String get tillPriceReason => 'Motivo';
+
+  @override
+  String get tillPriceReasonHint => 'Se conserva en el tique.';
+
+  @override
+  String get tillPriceReasonMissing => 'Un precio cambiado necesita su motivo.';
+
+  @override
+  String get tillPriceUnreadable => 'Escriba un número, por ejemplo 4,50.';
+
+  @override
   String get tillPricing => 'Calculando la cesta…';
 
   @override
@@ -42241,6 +42385,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String tillReceiptCopy(String copy) {
+    return 'COPIA $copy — no es un tique nuevo';
+  }
+
+  @override
   String tillReceiptCorrects(String number) {
     return 'Corrige el ticket $number';
   }
@@ -42300,6 +42449,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tillRetry => 'Reintentar';
+
+  @override
+  String get tillRingUpFirst => 'Registre primero un artículo.';
 
   @override
   String get tillScanLabel => 'Escanear un código';
@@ -42767,6 +42919,45 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get unblockAction => 'Desbloquear';
+
+  @override
+  String get unitConversionDelete => 'Eliminar';
+
+  @override
+  String get unitConversionEdit => 'Cambiar una conversión';
+
+  @override
+  String get unitConversionFactor => 'Cuántas';
+
+  @override
+  String unitConversionFactorHelp(String from, String to) {
+    return 'Cuántas $to hacen una $from';
+  }
+
+  @override
+  String get unitConversionFrom => 'De';
+
+  @override
+  String unitConversionLine(String from, String factor, String to) {
+    return '1 $from = $factor $to';
+  }
+
+  @override
+  String get unitConversionNew => 'Añadir una conversión';
+
+  @override
+  String get unitConversionTo => 'A';
+
+  @override
+  String get unitConversionsEmpty =>
+      'Todavía no hay ninguna conversión definida.';
+
+  @override
+  String get unitConversionsIntro =>
+      'Una conversión dice cuántas de una unidad hacen otra. Vale en los dos sentidos, en un solo paso. La conversión propia de un artículo (una caja de 12) prevalece sobre estas, y un envase no tiene aquí.';
+
+  @override
+  String get unitConversionsTitle => 'Conversiones';
 
   @override
   String get unknownWireInvoiceKind =>

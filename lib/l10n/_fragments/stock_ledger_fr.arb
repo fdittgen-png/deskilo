@@ -55,5 +55,6 @@
     "description": "#4172 refusal"
   },
   "permCountStock": "Compter le stock, à l’aveugle",
-  "permConfigureTill": "Disposer les caisses"
+  "permConfigureTill": "Disposer les caisses",
+  "permOverrideTillPrice": "Modifier un prix à la caisse"
 }

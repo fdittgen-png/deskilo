@@ -33,7 +33,7 @@ $f$;
 create or replace function pg_temp.draft(p_user int, p_req int, p_receipt uuid, p_rev int, p_desc text) returns text language sql as $f$
   select pg_temp.run_as(pg_temp.u(p_user), format('select public.counter_receipt_draft_v1(%L, %L, %L, %L, %L::jsonb)::text',
     pg_temp.u(101), pg_temp.u(p_req), p_receipt, p_rev,
-    format('{"lines": [{"description": "%s", "quantity": "1", "unit_price": "12.00", "supply": "general", "unit": {"code": "unit", "label": "unit", "un_ece_code": "C62"}}]}', p_desc)))
+    format('{"lines": [{"item_id": "%s", "description": "%s", "quantity": "1"}]}', pg_temp.u(301), p_desc)))
 $f$;
 create or replace function pg_temp.fin(p_user int, p_req int, p_receipt uuid, p_rev int) returns text language sql as $f$
   select pg_temp.run_as(pg_temp.u(p_user), format('select public.counter_receipt_finalize_v1(%L, %L, %L, %L, %L::jsonb)::text',
@@ -65,6 +65,8 @@ insert into public.vat_rates (id, workspace_id, label, percent, category, is_def
 values (pg_temp.u(801), pg_temp.u(101), 'Standard', 20, 'S', true, 'standard');
 insert into public.setting_values (scope, workspace_id, key, value)
 values ('workspace', pg_temp.u(101), 'counter.fiscal_obligation', '"none"'::jsonb);
+-- #4476: an operator sells an item at its price (a price set by hand needs the right to change a price at the till)
+insert into public.services (id, workspace_id, name, price_cents, active) values (pg_temp.u(301), pg_temp.u(101), 'Haircut', 1200, true);
 
 -- ── two operators finalize the same draft ──
 select set_config('t.r1', pg_temp.f(pg_temp.draft(1, 901, null, null, 'Haircut'), 'receipt_id'), false);

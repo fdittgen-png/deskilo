@@ -18,6 +18,7 @@ import '../../../features/money/domain/purchase_order.dart';
 import '../../../features/money/domain/purchase_order_receipt.dart';
 import '../../../features/money/domain/service_item.dart';
 import '../../codes/pg_code.dart';
+import '../demo_table.dart';
 
 class FakePurchaseOrderRepository implements PurchaseOrderRepository {
   FakePurchaseOrderRepository({
@@ -33,8 +34,8 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
   final DateTime Function() now;
   final String currency;
 
-  final List<PurchaseOrder> orders = [];
-  final List<PurchaseOrderSend> sends = [];
+  final orders = DemoTable<PurchaseOrder>((o) => o.id);
+  final sends = DemoTable<PurchaseOrderSend>((s) => s.id);
   final List<PurchaseOrderReceipt> receipts = [];
 
   /// The order each draft bill names (#3307), by the bill's id.
@@ -52,7 +53,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
   Future<List<PurchaseOrder>> fetchOrders(String workspaceId) async =>
       [...orders]..sort((a, b) => b.reference.compareTo(a.reference));
 
-  int _index(String id) => orders.indexWhere((o) => o.id == id);
+  int _index(String id) => orders.indexOfId(id);
 
   /// 0681: an order whose e-mail may be on its way is not edited, marked
   /// sent or cancelled.
@@ -254,7 +255,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
     String attemptId,
     PurchaseOrderMail mail,
   ) async {
-    if (sends.where((s) => s.id == attemptId).firstOrNull case final done?) {
+    if (sends.byId(attemptId) case final done?) {
       return done;
     }
     final i = _index(order.id);
@@ -303,7 +304,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
     String attemptId, {
     required bool delivered,
   }) async {
-    final i = sends.indexWhere((s) => s.id == attemptId);
+    final i = sends.indexOfId(attemptId);
     if (i < 0) throw _refused('unknown send attempt');
     final s = sends[i];
     if (!s.awaitsDecision) {

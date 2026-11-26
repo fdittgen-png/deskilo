@@ -11371,7 +11371,6 @@
     "description": "#3587 list view: one line per customer"
   },
   "itemGroupAssignNone": "Sin grupo",
-  "itemGroupAssignOpen": "Grupo y ajustes heredados",
   "itemGroupAssignTitle": "Grupo de {item}",
   "itemGroupClose": "Cerrar",
   "itemGroupConfirm": "Compruebe lo que alcanza y guarde de nuevo para aplicarlo.",
@@ -14763,6 +14762,7 @@
   "permAllowsManageStock": "Dar entrada, mover y dar salida a mercancías.",
   "permAllowsManageValidation": "Definir qué solicitudes necesitan aprobación y quién las aprueba.",
   "permAllowsOperateKiosk": "Configurar el quiosco y entregar las tarjetas.",
+  "permAllowsOverrideTillPrice": "Vender una línea de caja a un precio distinto del del artículo, con un motivo que el tique conserva. Sin este derecho, una línea de caja se vende al precio del artículo.",
   "permAllowsPaymentTermsEdit": "Solicitar un cambio de las condiciones de pago de un miembro; la validación decide.",
   "permAllowsRecordOutgoingPayments": "Registrar y anular el pago hecho a un miembro por una solicitud aprobada.",
   "permAllowsUseMessages": "Usar las conversaciones, el canal de avisos y las notificaciones.",
@@ -14871,6 +14871,7 @@
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
   },
+  "permOverrideTillPrice": "Cambiar un precio en la caja",
   "permPaymentTermsEdit": "Solicitar cambios de condiciones de pago",
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
@@ -19368,6 +19369,7 @@
   "settingHintCounterFiscalObligation": "Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.",
   "settingHintCounterLayoutCashierReorder": "Un cajero puede reordenar las teclas de una caja en su propio dispositivo sin cambiar el diseño publicado.",
   "settingHintCounterLayoutMaxCells": "El máximo de celdas que puede tener un diseño de caja, sumando todas sus páginas y tamaños. Un diseño mayor se rechaza al guardarlo.",
+  "settingHintCounterMaxDiscount": "El descuento máximo, en porcentaje, que un cajero puede aplicar a una línea de caja. 0 significa ningún descuento en la caja.",
   "settingHintCounterOfflineMaxMinutes": "Cuánto tiempo después de perder la conexión la caja aún se acepta una venta en efectivo hecha sin conexión al enviarla. Las posteriores se rechazan y se listan para el responsable.",
   "@settingHintCounterOfflineMaxMinutes": {
     "description": "#4373 setting hint"
@@ -19630,6 +19632,7 @@
   "settingLabelCounterFiscalObligation": "Normas fiscales de las ventas en mostrador",
   "settingLabelCounterLayoutCashierReorder": "Los cajeros reordenan las teclas",
   "settingLabelCounterLayoutMaxCells": "Tamaño del diseño de caja",
+  "settingLabelCounterMaxDiscount": "Descuento máximo en la caja",
   "settingLabelCounterOfflineMaxMinutes": "Tiempo máximo sin conexión (minutos)",
   "@settingLabelCounterOfflineMaxMinutes": {
     "description": "#4373 setting label"
@@ -21445,10 +21448,6 @@
   "@stockEditInventoryUnitChoice": {
     "description": "#4169 the stock editors: a label or message"
   },
-  "stockEditItem": "Ajustes de existencias",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Ajustes de existencias de {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -21623,7 +21622,21 @@
   "stockItemAddNone": "Todos los servicios ya se mantienen en existencias, o todavía no hay ninguno. Añada primero un servicio y vuelva.",
   "stockItemAddOpenServices": "Abrir servicios",
   "stockItemAddTitle": "Añadir un artículo",
+  "stockItemAttentionLow": "Existencias bajas",
+  "stockItemAttentionNoPlace": "Sin ubicación",
+  "stockItemAttentionNoPrice": "Sin precio",
   "stockItemEditDetails": "Editar nombre, precio e IVA",
+  "stockItemEditGroup": "Cambiar de grupo",
+  "stockItemEditHome": "Cambiar la ubicación habitual",
+  "stockItemEditSettings": "Editar unidades, códigos y seguimiento",
+  "stockItemEditSuppliers": "Editar artículos del proveedor",
+  "stockItemEditTags": "Editar etiquetas",
+  "stockItemEditVariants": "Editar variantes",
+  "stockItemFactBarcode": "Código de barras",
+  "stockItemFactCost": "Último coste conocido",
+  "stockItemFactVat": "IVA",
+  "stockItemFilterAll": "Todos los artículos",
+  "stockItemFilterNoHome": "Sin ubicación habitual",
   "stockItemNewBarcode": "Código de barras (opcional)",
   "stockItemNewHome": "Ubicación habitual (opcional)",
   "stockItemNewName": "Nombre",
@@ -21634,6 +21647,17 @@
   "stockItemNewPriceInvalid": "Introduzca un precio o déjelo vacío.",
   "stockItemNewTitle": "Nuevo artículo",
   "stockItemNewUnit": "Contado en",
+  "stockItemNoGroup": "En ningún grupo",
+  "stockItemNoSuppliers": "Ningún artículo de proveedor designa aún este artículo.",
+  "stockItemNoVariants": "Este artículo no tiene variantes.",
+  "stockItemNothingOnHand": "No hay nada en existencias.",
+  "stockItemPlacesTitle": "Dónde está",
+  "stockItemSectionGroupTags": "Grupo y etiquetas",
+  "stockItemSectionOverview": "Resumen",
+  "stockItemSectionStock": "Existencias",
+  "stockItemSectionSuppliers": "Artículos del proveedor",
+  "stockItemSectionVariants": "Variantes",
+  "stockItemSeeWhere": "Ver todas las ubicaciones",
   "stockItemsEmpty": "Todavía no hay artículos. Un artículo es un servicio que mantiene en existencias: elija Añadir un artículo.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
@@ -21941,6 +21965,14 @@
   "@stockReasonCombinationDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonConversionSameUnit": "Una conversión necesita dos unidades distintas.",
+  "@stockReasonConversionSameUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonConversionUnknown": "Esta conversión no está definida.",
+  "@stockReasonConversionUnknown": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonCostInvalid": "Este coste no es válido: un total en unidades menores y un tipo solo para otra moneda.",
   "@stockReasonCostInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -22087,6 +22119,10 @@
   "@stockReasonOverAllocated": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
   },
+  "stockReasonPackageUnit": "Un envase no tiene conversión general: su factor se fija en el artículo.",
+  "@stockReasonPackageUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonParentInactive": "La ubicación que la contiene ya no está en uso.",
   "@stockReasonParentInactive": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -22212,7 +22248,6 @@
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockRegistryAllPlaces": "Todas las ubicaciones",
-  "stockRegistryCost": "coste {amount}",
   "stockRegistryCostHidden": "coste no mostrado",
   "stockRegistryCostUnknown": "coste desconocido",
   "stockRegistryHome": "ubicación {address}",
@@ -22222,10 +22257,8 @@
   "stockRegistryHomeTitle": "Ubicación habitual de {item}",
   "stockRegistryMore": "Mostrar más",
   "stockRegistryNoHome": "sin ubicación habitual",
-  "stockRegistryNoHomeFilter": "Solo artículos sin ubicación habitual",
   "stockRegistryOnHand": "{quantity} disponibles",
   "stockRegistryPlaceFilter": "Ubicación habitual",
-  "stockRegistryPrice": "precio {amount}",
   "stockRegistrySearch": "Buscar un artículo por nombre, código de barras o dirección",
   "stockReorderCreateDraft": "Crear borrador de pedido",
   "stockReorderDraftCreated": "Borrador de pedido {number} creado. No se pidió ni se envió nada.",
@@ -22571,10 +22604,6 @@
   },
   "stockVariantsAdd": "Añadir una variante",
   "@stockVariantsAdd": {
-    "description": "#4169 the stock editors: a label or message"
-  },
-  "stockVariantsEdit": "Variantes",
-  "@stockVariantsEdit": {
     "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsHint": "Una variante es un valor de cada dimensión, por ejemplo rojo y talla M. Las existencias se llevan por variante.",
@@ -24155,6 +24184,9 @@
       }
     }
   },
+  "tillDiscountBeyond": "Este descuento supera lo que la empresa permite en la caja.",
+  "tillDiscountField": "Descuento (%)",
+  "tillDiscountInvalid": "Un descuento es un porcentaje del precio del artículo, en una línea sin precio cambiado.",
   "tillDrawerAddTill": "Añadir una caja",
   "tillDrawerAmountInvalid": "Escriba un importe.",
   "tillDrawerAmountZero": "El importe debe ser mayor que cero.",
@@ -24311,6 +24343,13 @@
   "@tillLeaveTitle": {
     "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
   },
+  "tillLotChoose": "Elegir el lote",
+  "tillLotExpired": "Caducado ({date}): no se vende",
+  "tillLotExpires": "Consumir antes del {date}",
+  "tillLotFirstToExpire": "El primero en caducar (elegido por el stock)",
+  "tillLotLine": "Lote {code}",
+  "tillLotNone": "{item} no tiene lote que elegir: se vende tal cual.",
+  "tillLotOnHand": "{quantity} {unit} en existencia",
   "tillNextCustomer": "Siguiente cliente",
   "tillNotForCounter": "Este artículo no está a la venta en el mostrador.",
   "@tillNotForCounter": {
@@ -24318,6 +24357,7 @@
   },
   "tillNotReady": "Aún no está listo en su país: {operation}",
   "tillNotReadyHint": "No se numera ni se cobra nada mientras la operación del país no esté admitida.",
+  "tillNothingToReprint": "Aún no hay ninguna venta que reimprimir.",
   "tillOfflineBanner": "Sin conexión: solo efectivo. Las ventas se guardan en este dispositivo y se envían cuando vuelve la conexión.",
   "@tillOfflineBanner": {
     "description": "#4373 the till sells offline: the banner"
@@ -24466,6 +24506,12 @@
       }
     }
   },
+  "tillPriceField": "Nuevo precio",
+  "tillPriceNotAllowed": "No puede cambiar un precio en la caja. La línea se vende al precio del artículo.",
+  "tillPriceReason": "Motivo",
+  "tillPriceReasonHint": "Se conserva en el tique.",
+  "tillPriceReasonMissing": "Un precio cambiado necesita su motivo.",
+  "tillPriceUnreadable": "Escriba un número, por ejemplo 4,50.",
   "tillPricing": "Calculando la cesta…",
   "tillQuantityHint": "Una cantidad exacta, por ejemplo 1 o 0,350.",
   "tillQuantityRefused": "Introduzca una cantidad superior a cero con un máximo de seis decimales.",
@@ -24483,6 +24529,7 @@
   "tillReadinessUnavailable": "No disponible",
   "tillReadinessUnconfirmed": "Aún no confirmada por un profesional fiscal.",
   "tillReadinessUnknownCountry": "El registro no nombra ninguna operación de caja para {country}: nada está admitido y la caja no vende nada.",
+  "tillReceiptCopy": "COPIA {copy} — no es un tique nuevo",
   "tillReceiptCorrects": "Corrige el ticket {number}",
   "tillReceiptDisagrees": "Los importes de este ticket no concuerdan entre sí. Se muestra tal como se fijó; avise a su administración.",
   "tillReceiptIssuedUnder": "Emitido según: {specification} ({version})",
@@ -24499,6 +24546,7 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillRingUpFirst": "Registre primero un artículo.",
   "tillScanLabel": "Escanear un código",
   "@tillScanLabel": {
     "description": "#4366 the till"
@@ -24681,6 +24729,69 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Desbloquear",
+  "unitConversionDelete": "Eliminar",
+  "@unitConversionDelete": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionEdit": "Cambiar una conversión",
+  "@unitConversionEdit": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactor": "Cuántas",
+  "@unitConversionFactor": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactorHelp": "Cuántas {to} hacen una {from}",
+  "@unitConversionFactorHelp": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionFrom": "De",
+  "@unitConversionFrom": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionLine": "1 {from} = {factor} {to}",
+  "@unitConversionLine": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "factor": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionNew": "Añadir una conversión",
+  "@unitConversionNew": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionTo": "A",
+  "@unitConversionTo": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsEmpty": "Todavía no hay ninguna conversión definida.",
+  "@unitConversionsEmpty": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsIntro": "Una conversión dice cuántas de una unidad hacen otra. Vale en los dos sentidos, en un solo paso. La conversión propia de un artículo (una caja de 12) prevalece sobre estas, y un envase no tiene aquí.",
+  "@unitConversionsIntro": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsTitle": "Conversiones",
+  "@unitConversionsTitle": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
   "unknownWireInvoiceKind": "Un tipo que esta versión de la aplicación no conoce",
   "unknownWireKindFeatures": "Este tipo también ajusta {count, plural, one{una función} other{{count} funciones}} que esta versión de la aplicación no conoce. Actualice la aplicación para elegirlo.",
   "unknownWireReadOnly": "Esta versión de la aplicación no sabe qué es este registro: puede leerse, no modificarse. Actualice la aplicación para trabajar con él.",

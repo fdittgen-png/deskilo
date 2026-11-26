@@ -134,6 +134,8 @@ const List<DeskWalkPage> deskWalkPages = [
   // #4299 — the pages of the Stock group.
   ('/stock/movements', PageKind.document, 'stock', 'stock-movements'),
   ('/stock/items', PageKind.document, 'stock', 'stock-items'),
+  // #4480 — an item open beside the items list, its sections and their actions.
+  ('/stock/items/demo-item-shirt', PageKind.document, 'stock', 'stock-item-open'),
   ('/stock/places', PageKind.document, 'stock', 'stock-places'),
   ('/stock/settings', PageKind.document, 'stock', 'stock-settings'),
   (

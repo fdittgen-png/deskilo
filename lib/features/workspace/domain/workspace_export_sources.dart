@@ -413,7 +413,7 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('usage_records'),
   ExportSource.everyColumn('invoice_matches'),
   ExportSource.everyColumn('invoice_reminders'),
-  ExportSource.everyColumn('invoice_dunning_holds'), ExportSource.everyColumn('invoice_line_tracks'), ExportSource.everyColumn('workspace_units'), // #4436, #4442
+  ExportSource.everyColumn('invoice_dunning_holds'), ExportSource.everyColumn('invoice_line_tracks'), ExportSource.everyColumn('workspace_units'), ExportSource.everyColumn('unit_conversions'), // #4436, #4442
   ExportSource.everyColumn('tax_exemption_certificates'),
   ExportSource.everyColumn('suppliers'),
   // #4164 — the billing identity of each customer the business invoices.
@@ -448,9 +448,9 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('supplier_item_mappings'),
   // #4171 — what was put away from a delivery.
   ExportSource.everyColumn('stock_receipt_allocations'),
-  // #4184, #4185, #4367 — the counter: receipts, lines, tenders, refunds, tills, sessions, cash entries, day closes.
+  // #4184, #4185, #4367, #4476 — the counter: receipts, lines, tenders, refunds, tills, sessions, cash entries, day closes, copies.
   ExportSource.everyColumn('counter_receipts'), ExportSource.everyColumn('counter_receipt_lines'), ExportSource.everyColumn('counter_tenders'), ExportSource.everyColumn('counter_refunds'),
-  ExportSource.everyColumn('counter_tills'), ExportSource.everyColumn('counter_till_sessions'), ExportSource.everyColumn('counter_cash_entries'), ExportSource.everyColumn('counter_day_closes'), ExportSource.everyColumn('counter_offline_sales'),
+  ExportSource.everyColumn('counter_tills'), ExportSource.everyColumn('counter_till_sessions'), ExportSource.everyColumn('counter_cash_entries'), ExportSource.everyColumn('counter_day_closes'), ExportSource.everyColumn('counter_offline_sales'), ExportSource.everyColumn('counter_receipt_copies'),
   // #4362 — the tags bound to items, places and pieces, and the named pieces.
   ExportSource.everyColumn('stock_tags'), ExportSource.everyColumn('stock_tagged_units'),
   ExportSource.everyColumn('stock_handling_units'), ExportSource.everyColumn('stock_handling_unit_lines'), ExportSource.everyColumn('stock_handling_unit_pieces'), // #4435

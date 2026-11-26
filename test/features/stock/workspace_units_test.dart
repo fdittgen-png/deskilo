@@ -130,6 +130,11 @@ void main() {
     test('with the feature off: the six of before, as ever', () {
       expect(codes(pickableUnits([...builtInUnits, drum], unitsOn: false)), ['piece', 'g', 'kg', 'ml', 'cl', 'l']);
     });
+    test('with the feature off, a packaging unit the business holds is still offered (the feature hides the screen, not the units)', () {
+      const carton = WorkspaceUnit(code: 'carton', label: 'Carton', dimension: UnitDimension.package, factorNum: 1, factorDen: 1);
+      expect(codes(pickableUnits([...builtInUnits, carton, drum], unitsOn: false)), ['piece', 'g', 'kg', 'ml', 'cl', 'l', 'carton']);
+      expect(codes(pickableUnits([...builtInUnits, carton.copyWith(archived: true)], unitsOn: false)), isNot(contains('carton')));
+    });
     test('with it on: every unit that is not archived, the custom ones included', () {
       expect(codes(pickableUnits([...builtInUnits, drum], unitsOn: true)), [...builtInUnits.map((u) => u.code), 'drum']);
       expect(codes(pickableUnits([...builtInUnits, old], unitsOn: true)), isNot(contains('drum')));

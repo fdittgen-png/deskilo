@@ -165,7 +165,11 @@ enum WorkspacePermission {
 
   /// #4448 — lay out the tills: build, publish, copy and reset a till's layout of keys, pages and tools. Cashiers use the
   /// published layout without it. An admin default.
-  configureTill;
+  configureTill,
+
+  /// #4476 — sell a till line at a price other than the item's, with a reason the receipt keeps. Without it a till line
+  /// is sold at the item's price. An admin default.
+  overrideTillPrice;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;
@@ -217,6 +221,8 @@ Set<WorkspacePermission> defaultPermissionsFor(PermissionRole role) =>
           WorkspacePermission.viewAnalytics,
           // #4448 — admins lay out the tills.
           WorkspacePermission.configureTill,
+          // #4476 — admins change a price at the till, with a reason.
+          WorkspacePermission.overrideTillPrice,
         },
       PermissionRole.member => <WorkspacePermission>{},
     };

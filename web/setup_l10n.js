@@ -903,7 +903,9 @@ window.SETUP_L10N={
    "counterLayoutMaxCellsHint": "The most cells one till layout may hold. Set in the app's settings.",
    "counterLayoutCashierReorder": "Cashiers reorder the keys",
    "counterLayoutCashierReorderHint": "A cashier may reorder a till's keys on their own device. Set in the app's settings.",
-   "optCells": "{n} cells"
+   "optCells": "{n} cells",
+   "counterMaxDiscount": "Largest discount at the till",
+   "counterMaxDiscountHint": "The largest discount a cashier may give on a till line. Set in the app's settings."
   },
   "feature": {
    "calendarTab": [
@@ -1820,7 +1822,8 @@ window.SETUP_L10N={
    "approveStockAdjustments": "Approve stock adjustments",
    "manageBillingCustomers": "Manage billing customers",
    "countStock": "Count stock, blind",
-   "configureTill": "Lay out the tills"
+   "configureTill": "Lay out the tills",
+   "overrideTillPrice": "Change a price at the till"
   },
   "domain": {
    "payment": "Payment",
@@ -2950,7 +2953,9 @@ window.SETUP_L10N={
    "counterLayoutMaxCellsHint": "Le nombre maximal de cases d'une disposition de caisse. Réglé dans les paramètres de l'application.",
    "counterLayoutCashierReorder": "Les caissiers réordonnent les touches",
    "counterLayoutCashierReorderHint": "Un caissier peut réordonner les touches d'une caisse sur son appareil. Réglé dans les paramètres de l'application.",
-   "optCells": "{n} cases"
+   "optCells": "{n} cases",
+   "counterMaxDiscount": "Remise maximale à la caisse",
+   "counterMaxDiscountHint": "La remise maximale qu'un caissier peut accorder sur une ligne. Réglée dans les paramètres de l'application."
   },
   "feature": {
    "calendarTab": [
@@ -3867,7 +3872,8 @@ window.SETUP_L10N={
    "approveStockAdjustments": "Approuver les ajustements de stock",
    "manageBillingCustomers": "Gérer les clients facturés",
    "countStock": "Compter le stock, à l’aveugle",
-   "configureTill": "Disposer les caisses"
+   "configureTill": "Disposer les caisses",
+   "overrideTillPrice": "Modifier un prix à la caisse"
   },
   "domain": {
    "payment": "Paiement",
@@ -4997,7 +5003,9 @@ window.SETUP_L10N={
    "counterLayoutMaxCellsHint": "Die meisten Zellen eines Kassenlayouts. In den Einstellungen der App festgelegt.",
    "counterLayoutCashierReorder": "Kassierer ordnen die Tasten",
    "counterLayoutCashierReorderHint": "Ein Kassierer darf die Tasten einer Kasse auf seinem Gerät umordnen. In den Einstellungen der App festgelegt.",
-   "optCells": "{n} Zellen"
+   "optCells": "{n} Zellen",
+   "counterMaxDiscount": "Größter Rabatt an der Kasse",
+   "counterMaxDiscountHint": "Der größte Rabatt, den eine Kasse auf eine Zeile geben darf. In den Einstellungen der App festgelegt."
   },
   "feature": {
    "calendarTab": [
@@ -5914,7 +5922,8 @@ window.SETUP_L10N={
    "approveStockAdjustments": "Bestandskorrekturen genehmigen",
    "manageBillingCustomers": "Rechnungskunden verwalten",
    "countStock": "Bestand blind zählen",
-   "configureTill": "Kassen gestalten"
+   "configureTill": "Kassen gestalten",
+   "overrideTillPrice": "Preis an der Kasse ändern"
   },
   "domain": {
    "payment": "Zahlung",
@@ -7044,7 +7053,9 @@ window.SETUP_L10N={
    "counterLayoutMaxCellsHint": "El máximo de celdas de un diseño de caja. Se ajusta en la configuración de la aplicación.",
    "counterLayoutCashierReorder": "Los cajeros reordenan las teclas",
    "counterLayoutCashierReorderHint": "Un cajero puede reordenar las teclas de una caja en su dispositivo. Se ajusta en la configuración de la aplicación.",
-   "optCells": "{n} celdas"
+   "optCells": "{n} celdas",
+   "counterMaxDiscount": "Descuento máximo en la caja",
+   "counterMaxDiscountHint": "El descuento máximo que un cajero puede aplicar a una línea. Se ajusta en la configuración de la aplicación."
   },
   "feature": {
    "calendarTab": [
@@ -7961,7 +7972,8 @@ window.SETUP_L10N={
    "approveStockAdjustments": "Aprobar ajustes de existencias",
    "manageBillingCustomers": "Gestionar clientes facturados",
    "countStock": "Contar el stock a ciegas",
-   "configureTill": "Organizar las cajas"
+   "configureTill": "Organizar las cajas",
+   "overrideTillPrice": "Cambiar un precio en la caja"
   },
   "domain": {
    "payment": "Pago",
@@ -9091,7 +9103,9 @@ window.SETUP_L10N={
    "counterLayoutMaxCellsHint": "Il numero massimo di celle di un layout di cassa. Impostato nelle impostazioni dell'app.",
    "counterLayoutCashierReorder": "I cassieri riordinano i tasti",
    "counterLayoutCashierReorderHint": "Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo. Impostato nelle impostazioni dell'app.",
-   "optCells": "{n} celle"
+   "optCells": "{n} celle",
+   "counterMaxDiscount": "Sconto massimo alla cassa",
+   "counterMaxDiscountHint": "Lo sconto massimo che un cassiere può applicare a una riga. Impostato nelle impostazioni dell'app."
   },
   "feature": {
    "calendarTab": [
@@ -10008,7 +10022,8 @@ window.SETUP_L10N={
    "approveStockAdjustments": "Approvare le rettifiche di magazzino",
    "manageBillingCustomers": "Gestire i clienti fatturati",
    "countStock": "Contare il magazzino alla cieca",
-   "configureTill": "Organizzare le casse"
+   "configureTill": "Organizzare le casse",
+   "overrideTillPrice": "Modificare un prezzo alla cassa"
   },
   "domain": {
    "payment": "Pagamento",

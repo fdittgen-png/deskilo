@@ -99,6 +99,8 @@ public.counter_day_closes.counter_day_closes_select
 public.counter_day_closes.mcp_delegated_deny
 public.counter_offline_sales.counter_offline_sales_select
 public.counter_offline_sales.mcp_delegated_deny
+public.counter_receipt_copies.counter_receipt_copies_select
+public.counter_receipt_copies.mcp_delegated_deny
 public.counter_receipt_lines.counter_receipt_lines_select
 public.counter_receipt_lines.mcp_delegated_deny
 public.counter_receipts.counter_receipts_select
@@ -608,6 +610,8 @@ public.till_layouts.mcp_delegated_deny
 public.till_layouts.till_layouts_select
 public.trace_reports.mcp_delegated_deny
 public.trace_reports.personal_native_session
+public.unit_conversions.mcp_delegated_deny
+public.unit_conversions.unit_conversions_select
 public.usage_records.mcp_delegated_deny
 public.usage_records.usage_records_read
 public.validation_policies.mcp_delegated_deny

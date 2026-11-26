@@ -30073,12 +30073,6 @@ abstract class AppLocalizations {
   /// **'No group'**
   String get itemGroupAssignNone;
 
-  /// #4361 G12 item groups: itemGroupAssignOpen
-  ///
-  /// In en, this message translates to:
-  /// **'Group and inherited settings'**
-  String get itemGroupAssignOpen;
-
   /// #4361 G12 item groups: itemGroupAssignTitle
   ///
   /// In en, this message translates to:
@@ -41000,6 +40994,12 @@ abstract class AppLocalizations {
   /// **'Set up the kiosk and hand out badges.'**
   String get permAllowsOperateKiosk;
 
+  /// #4476 the right to change a till line price, with a reason
+  ///
+  /// In en, this message translates to:
+  /// **'Sell a till line at a price other than the item\'s, with a reason the receipt keeps. Without it, a till line is sold at the item\'s price.'**
+  String get permAllowsOverrideTillPrice;
+
   /// #3628 roles at the desk: one line of what the permission allows
   ///
   /// In en, this message translates to:
@@ -41287,6 +41287,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Operate the kiosk and badges'**
   String get permOperateKiosk;
+
+  /// #4476 the right to change a till line price, with a reason
+  ///
+  /// In en, this message translates to:
+  /// **'Change a price at the till'**
+  String get permOverrideTillPrice;
 
   /// #881 member payment conditions: permPaymentTermsEdit
   ///
@@ -52164,6 +52170,12 @@ abstract class AppLocalizations {
   /// **'The most cells one till layout may hold, over all its pages and sizes. A larger layout is refused when it is saved.'**
   String get settingHintCounterLayoutMaxCells;
 
+  /// #4476 the setting counter.max_discount_percent
+  ///
+  /// In en, this message translates to:
+  /// **'The largest discount, in percent, a cashier may give on a till line. 0 means no discount at the till.'**
+  String get settingHintCounterMaxDiscount;
+
   /// #4373 setting hint
   ///
   /// In en, this message translates to:
@@ -52871,6 +52883,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Till layout size'**
   String get settingLabelCounterLayoutMaxCells;
+
+  /// #4476 the setting counter.max_discount_percent
+  ///
+  /// In en, this message translates to:
+  /// **'Largest discount at the till'**
+  String get settingLabelCounterMaxDiscount;
 
   /// #4373 setting label
   ///
@@ -58748,12 +58766,6 @@ abstract class AppLocalizations {
   /// #4169 the stock editors: a label or message
   ///
   /// In en, this message translates to:
-  /// **'Stock settings'**
-  String get stockEditItem;
-
-  /// #4169 the stock editors: a label or message
-  ///
-  /// In en, this message translates to:
   /// **'Stock settings of {item}'**
   String stockEditItemTitle(String item);
 
@@ -59063,11 +59075,95 @@ abstract class AppLocalizations {
   /// **'Add an item'**
   String get stockItemAddTitle;
 
+  /// #4480 Stock items: the badge on an item's row and page for something the item needs
+  ///
+  /// In en, this message translates to:
+  /// **'Low stock'**
+  String get stockItemAttentionLow;
+
+  /// #4480 Stock items: the badge on an item's row and page for something the item needs
+  ///
+  /// In en, this message translates to:
+  /// **'No place'**
+  String get stockItemAttentionNoPlace;
+
+  /// #4480 Stock items: the badge on an item's row and page for something the item needs
+  ///
+  /// In en, this message translates to:
+  /// **'No price'**
+  String get stockItemAttentionNoPrice;
+
   /// #4470 Stock items: tooltip of the button that opens the service editor for the item
   ///
   /// In en, this message translates to:
   /// **'Edit name, price and VAT'**
   String get stockItemEditDetails;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Change group'**
+  String get stockItemEditGroup;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Change home place'**
+  String get stockItemEditHome;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Edit units, codes and tracking'**
+  String get stockItemEditSettings;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Edit supplier items'**
+  String get stockItemEditSuppliers;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Edit tags'**
+  String get stockItemEditTags;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Edit variants'**
+  String get stockItemEditVariants;
+
+  /// #4480 the page of one stock item: the label above one of its facts
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode'**
+  String get stockItemFactBarcode;
+
+  /// #4480 the page of one stock item: the label above one of its facts
+  ///
+  /// In en, this message translates to:
+  /// **'Last known cost'**
+  String get stockItemFactCost;
+
+  /// #4480 the page of one stock item: the label above one of its facts
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get stockItemFactVat;
+
+  /// #4480 Stock items: a filter chip above the list
+  ///
+  /// In en, this message translates to:
+  /// **'All items'**
+  String get stockItemFilterAll;
+
+  /// #4480 Stock items: a filter chip above the list
+  ///
+  /// In en, this message translates to:
+  /// **'Without a home place'**
+  String get stockItemFilterNoHome;
 
   /// #4350 a new item from the Stock page
   ///
@@ -59128,6 +59224,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Counted in'**
   String get stockItemNewUnit;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'In no group'**
+  String get stockItemNoGroup;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier article names this item yet.'**
+  String get stockItemNoSuppliers;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'This item has no variants.'**
+  String get stockItemNoVariants;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'None of it is in stock.'**
+  String get stockItemNothingOnHand;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Where it is'**
+  String get stockItemPlacesTitle;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Group and tags'**
+  String get stockItemSectionGroupTags;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get stockItemSectionOverview;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Stock'**
+  String get stockItemSectionStock;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier items'**
+  String get stockItemSectionSuppliers;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Variants'**
+  String get stockItemSectionVariants;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'See every place'**
+  String get stockItemSeeWhere;
 
   /// the stock pages and group (#4299)
   ///
@@ -59699,6 +59861,18 @@ abstract class AppLocalizations {
   /// **'Two variants have the same combination.'**
   String get stockReasonCombinationDuplicate;
 
+  /// #4479 the units of measure: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A conversion needs two different units.'**
+  String get stockReasonConversionSameUnit;
+
+  /// #4479 the units of measure: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This conversion is not defined.'**
+  String get stockReasonConversionUnknown;
+
   /// #4171 receiving into stock: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -59981,6 +60155,12 @@ abstract class AppLocalizations {
   /// **'More than arrived cannot be put away.'**
   String get stockReasonOverAllocated;
 
+  /// #4479 the units of measure: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A packaging unit has no general conversion: its factor is set on the item.'**
+  String get stockReasonPackageUnit;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -60230,12 +60410,6 @@ abstract class AppLocalizations {
   /// #4293 the registry of the stock: a label or a message
   ///
   /// In en, this message translates to:
-  /// **'cost {amount}'**
-  String stockRegistryCost(String amount);
-
-  /// #4293 the registry of the stock: a label or a message
-  ///
-  /// In en, this message translates to:
   /// **'cost not shown'**
   String get stockRegistryCostHidden;
 
@@ -60290,12 +60464,6 @@ abstract class AppLocalizations {
   /// #4293 the registry of the stock: a label or a message
   ///
   /// In en, this message translates to:
-  /// **'Only items with no home place'**
-  String get stockRegistryNoHomeFilter;
-
-  /// #4293 the registry of the stock: a label or a message
-  ///
-  /// In en, this message translates to:
   /// **'{quantity} on hand'**
   String stockRegistryOnHand(String quantity);
 
@@ -60304,12 +60472,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home place'**
   String get stockRegistryPlaceFilter;
-
-  /// #4293 the registry of the stock: a label or a message
-  ///
-  /// In en, this message translates to:
-  /// **'price {amount}'**
-  String stockRegistryPrice(String amount);
 
   /// #4293 the registry of the stock: a label or a message
   ///
@@ -61575,12 +61737,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add a variant'**
   String get stockVariantsAdd;
-
-  /// #4169 the stock editors: a label or message
-  ///
-  /// In en, this message translates to:
-  /// **'Variants'**
-  String get stockVariantsEdit;
 
   /// #4169 the stock editors: a label or message
   ///
@@ -66243,6 +66399,24 @@ abstract class AppLocalizations {
   /// **'The deposit of {name} is not for sale at the counter. Nothing was added.'**
   String tillDepositMissing(String name);
 
+  /// #4476 a discount refused beyond the business's limit
+  ///
+  /// In en, this message translates to:
+  /// **'This discount is beyond what the business allows at the till.'**
+  String get tillDiscountBeyond;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Discount (%)'**
+  String get tillDiscountField;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'A discount is a percentage off the item\'s price, on a line without a changed price.'**
+  String get tillDiscountInvalid;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -67112,6 +67286,48 @@ abstract class AppLocalizations {
   /// **'The sale is not confirmed'**
   String get tillLeaveTitle;
 
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the lot'**
+  String get tillLotChoose;
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'Past its date ({date}): not sold'**
+  String tillLotExpired(String date);
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'Use by {date}'**
+  String tillLotExpires(String date);
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'The first to expire (chosen by the stock)'**
+  String get tillLotFirstToExpire;
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'Lot {code}'**
+  String tillLotLine(String code);
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'{item} has no lot to choose: it is sold as it is.'**
+  String tillLotNone(String item);
+
+  /// #4366 what is on hand of a lot; quantity arrives formatted in the reader's number format
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} {unit} on hand'**
+  String tillLotOnHand(String quantity, String unit);
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -67135,6 +67351,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing is numbered and nothing is taken until the country\'s operation is supported.'**
   String get tillNotReadyHint;
+
+  /// #4476 Reprint with no sale yet
+  ///
+  /// In en, this message translates to:
+  /// **'No sale to print again yet.'**
+  String get tillNothingToReprint;
 
   /// #4373 the till sells offline: the banner
   ///
@@ -67328,6 +67550,42 @@ abstract class AppLocalizations {
   /// **'Piece {code} is already in the basket.'**
   String tillPieceTwice(String code);
 
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'New price'**
+  String get tillPriceField;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'You may not change a price at the till. The line is sold at the item\'s price.'**
+  String get tillPriceNotAllowed;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get tillPriceReason;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Kept on the receipt.'**
+  String get tillPriceReasonHint;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'A changed price needs its reason.'**
+  String get tillPriceReasonMissing;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Type a number, such as 4.50.'**
+  String get tillPriceUnreadable;
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -67434,6 +67692,12 @@ abstract class AppLocalizations {
   /// **'The registry names no counter operation for {country}: nothing is supported, and the till sells nothing.'**
   String tillReadinessUnknownCountry(String country);
 
+  /// #4476 a receipt printed again; copy is its number among the copies, a label (1, 2, ...)
+  ///
+  /// In en, this message translates to:
+  /// **'COPY {copy} — not a new receipt'**
+  String tillReceiptCopy(String copy);
+
   /// #4184 the counter receipt document; the number is a reference
   ///
   /// In en, this message translates to:
@@ -67516,6 +67780,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again'**
   String get tillRetry;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Ring up an item first.'**
+  String get tillRingUpFirst;
 
   /// #4366 the till
   ///
@@ -68218,6 +68488,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unblock'**
   String get unblockAction;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get unitConversionDelete;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'Change a conversion'**
+  String get unitConversionEdit;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'How many'**
+  String get unitConversionFactor;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'How many {to} make one {from}'**
+  String unitConversionFactorHelp(String from, String to);
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get unitConversionFrom;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'1 {from} = {factor} {to}'**
+  String unitConversionLine(String from, String factor, String to);
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'Add a conversion'**
+  String get unitConversionNew;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get unitConversionTo;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'No conversion is defined yet.'**
+  String get unitConversionsEmpty;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'A conversion says how many of one unit make another. It works both ways, in one step. An item\'s own conversion (a carton of 12) wins over these, and a packaging unit has none here.'**
+  String get unitConversionsIntro;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'Conversions'**
+  String get unitConversionsTitle;
 
   /// #3730 the kind of an invoice whose kind a newer server sent and this app does not know.
   ///

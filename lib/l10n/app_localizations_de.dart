@@ -19082,9 +19082,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get itemGroupAssignNone => 'Keine Gruppe';
 
   @override
-  String get itemGroupAssignOpen => 'Gruppe und geerbte Einstellungen';
-
-  @override
   String itemGroupAssignTitle(String item) {
     return 'Gruppe von $item';
   }
@@ -25908,6 +25905,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Den Kiosk einrichten und Badges ausgeben.';
 
   @override
+  String get permAllowsOverrideTillPrice =>
+      'Eine Kassenzeile zu einem anderen Preis als dem des Artikels verkaufen, mit einem Grund, den der Beleg festhält. Ohne dieses Recht wird eine Kassenzeile zum Preis des Artikels verkauft.';
+
+  @override
   String get permAllowsPaymentTermsEdit =>
       'Eine Änderung der Zahlungsbedingungen eines Mitglieds beantragen; die Genehmigung entscheidet.';
 
@@ -26063,6 +26064,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get permOperateKiosk => 'Kiosk und Badges bedienen';
+
+  @override
+  String get permOverrideTillPrice => 'Preis an der Kasse ändern';
 
   @override
   String get permPaymentTermsEdit =>
@@ -32848,6 +32852,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die meisten Zellen, die ein Kassenlayout über alle Seiten und Größen haben darf. Ein größeres Layout wird beim Speichern abgelehnt.';
 
   @override
+  String get settingHintCounterMaxDiscount =>
+      'Der größte Rabatt in Prozent, den eine Kassiererin oder ein Kassierer auf eine Kassenzeile geben darf. 0 heißt: kein Rabatt an der Kasse.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.';
 
@@ -33296,6 +33304,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelCounterLayoutMaxCells => 'Größe des Kassenlayouts';
+
+  @override
+  String get settingLabelCounterMaxDiscount => 'Größter Rabatt an der Kasse';
 
   @override
   String get settingLabelCounterOfflineMaxMinutes =>
@@ -37072,9 +37083,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockEditInventoryUnitChoice => 'Lagereinheit';
 
   @override
-  String get stockEditItem => 'Lagereinstellungen';
-
-  @override
   String stockEditItemTitle(String item) {
     return 'Lagereinstellungen von $item';
   }
@@ -37252,7 +37260,50 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockItemAddTitle => 'Artikel hinzufügen';
 
   @override
+  String get stockItemAttentionLow => 'Niedriger Bestand';
+
+  @override
+  String get stockItemAttentionNoPlace => 'Kein Lagerort';
+
+  @override
+  String get stockItemAttentionNoPrice => 'Kein Preis';
+
+  @override
   String get stockItemEditDetails => 'Name, Preis und MwSt. bearbeiten';
+
+  @override
+  String get stockItemEditGroup => 'Gruppe ändern';
+
+  @override
+  String get stockItemEditHome => 'Festen Lagerort ändern';
+
+  @override
+  String get stockItemEditSettings =>
+      'Einheiten, Codes und Verfolgung bearbeiten';
+
+  @override
+  String get stockItemEditSuppliers => 'Lieferantenartikel bearbeiten';
+
+  @override
+  String get stockItemEditTags => 'Tags bearbeiten';
+
+  @override
+  String get stockItemEditVariants => 'Varianten bearbeiten';
+
+  @override
+  String get stockItemFactBarcode => 'Barcode';
+
+  @override
+  String get stockItemFactCost => 'Zuletzt bekannte Kosten';
+
+  @override
+  String get stockItemFactVat => 'MwSt.';
+
+  @override
+  String get stockItemFilterAll => 'Alle Artikel';
+
+  @override
+  String get stockItemFilterNoHome => 'Ohne festen Lagerort';
 
   @override
   String get stockItemNewBarcode => 'Barcode (optional)';
@@ -37286,6 +37337,40 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stockItemNewUnit => 'Gezählt in';
+
+  @override
+  String get stockItemNoGroup => 'In keiner Gruppe';
+
+  @override
+  String get stockItemNoSuppliers =>
+      'Noch kein Lieferantenartikel verweist auf diesen Artikel.';
+
+  @override
+  String get stockItemNoVariants => 'Dieser Artikel hat keine Varianten.';
+
+  @override
+  String get stockItemNothingOnHand => 'Nichts davon ist auf Lager.';
+
+  @override
+  String get stockItemPlacesTitle => 'Wo er liegt';
+
+  @override
+  String get stockItemSectionGroupTags => 'Gruppe und Tags';
+
+  @override
+  String get stockItemSectionOverview => 'Übersicht';
+
+  @override
+  String get stockItemSectionStock => 'Bestand';
+
+  @override
+  String get stockItemSectionSuppliers => 'Lieferantenartikel';
+
+  @override
+  String get stockItemSectionVariants => 'Varianten';
+
+  @override
+  String get stockItemSeeWhere => 'Alle Orte ansehen';
 
   @override
   String get stockItemsEmpty =>
@@ -37643,6 +37728,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zwei Varianten haben dieselbe Kombination.';
 
   @override
+  String get stockReasonConversionSameUnit =>
+      'Eine Umrechnung braucht zwei verschiedene Einheiten.';
+
+  @override
+  String get stockReasonConversionUnknown =>
+      'Diese Umrechnung ist nicht festgelegt.';
+
+  @override
   String get stockReasonCostInvalid =>
       'Diese Kosten sind ungültig: eine Summe in Nebeneinheiten und ein Kurs nur für eine andere Währung.';
 
@@ -37824,6 +37917,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Es kann nicht mehr eingelagert werden, als geliefert wurde.';
 
   @override
+  String get stockReasonPackageUnit =>
+      'Eine Verpackungseinheit hat keine allgemeine Umrechnung: ihr Faktor steht am Artikel.';
+
+  @override
   String get stockReasonParentInactive =>
       'Der übergeordnete Lagerort ist nicht mehr in Gebrauch.';
 
@@ -37984,11 +38081,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockRegistryAllPlaces => 'Alle Lagerorte';
 
   @override
-  String stockRegistryCost(String amount) {
-    return 'Kosten $amount';
-  }
-
-  @override
   String get stockRegistryCostHidden => 'Kosten nicht angezeigt';
 
   @override
@@ -38021,20 +38113,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockRegistryNoHome => 'kein fester Lagerort';
 
   @override
-  String get stockRegistryNoHomeFilter => 'Nur Artikel ohne festen Lagerort';
-
-  @override
   String stockRegistryOnHand(String quantity) {
     return '$quantity vorrätig';
   }
 
   @override
   String get stockRegistryPlaceFilter => 'Lagerort';
-
-  @override
-  String stockRegistryPrice(String amount) {
-    return 'Preis $amount';
-  }
 
   @override
   String get stockRegistrySearch =>
@@ -38831,9 +38915,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stockVariantsAdd => 'Variante hinzufügen';
-
-  @override
-  String get stockVariantsEdit => 'Varianten';
 
   @override
   String get stockVariantsHint =>
@@ -41634,6 +41715,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get tillDiscountBeyond =>
+      'Dieser Rabatt liegt über dem, was das Unternehmen an der Kasse erlaubt.';
+
+  @override
+  String get tillDiscountField => 'Rabatt (%)';
+
+  @override
+  String get tillDiscountInvalid =>
+      'Ein Rabatt ist ein Prozentsatz vom Artikelpreis, auf einer Zeile ohne geänderten Preis.';
+
+  @override
   String get tillDrawerAddTill => 'Kasse hinzufügen';
 
   @override
@@ -42140,6 +42232,38 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillLeaveTitle => 'Der Verkauf ist nicht bestätigt';
 
   @override
+  String get tillLotChoose => 'Charge wählen';
+
+  @override
+  String tillLotExpired(String date) {
+    return 'Abgelaufen ($date): wird nicht verkauft';
+  }
+
+  @override
+  String tillLotExpires(String date) {
+    return 'Verwendbar bis $date';
+  }
+
+  @override
+  String get tillLotFirstToExpire =>
+      'Die zuerst ablaufende (vom Bestand gewählt)';
+
+  @override
+  String tillLotLine(String code) {
+    return 'Charge $code';
+  }
+
+  @override
+  String tillLotNone(String item) {
+    return '$item hat keine Charge zur Auswahl: Es wird so verkauft.';
+  }
+
+  @override
+  String tillLotOnHand(String quantity, String unit) {
+    return '$quantity $unit vorrätig';
+  }
+
+  @override
   String get tillNextCustomer => 'Nächster Kunde';
 
   @override
@@ -42154,6 +42278,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get tillNotReadyHint =>
       'Es wird nichts nummeriert und nichts kassiert, solange der Vorgang des Landes nicht unterstützt wird.';
+
+  @override
+  String get tillNothingToReprint => 'Noch kein Verkauf zum erneuten Drucken.';
 
   @override
   String get tillOfflineBanner =>
@@ -42295,6 +42422,26 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get tillPriceField => 'Neuer Preis';
+
+  @override
+  String get tillPriceNotAllowed =>
+      'Sie dürfen an der Kasse keinen Preis ändern. Die Zeile wird zum Preis des Artikels verkauft.';
+
+  @override
+  String get tillPriceReason => 'Grund';
+
+  @override
+  String get tillPriceReasonHint => 'Wird auf dem Beleg festgehalten.';
+
+  @override
+  String get tillPriceReasonMissing =>
+      'Ein geänderter Preis braucht einen Grund.';
+
+  @override
+  String get tillPriceUnreadable => 'Geben Sie eine Zahl ein, etwa 4,50.';
+
+  @override
   String get tillPricing => 'Warenkorb wird berechnet …';
 
   @override
@@ -42363,6 +42510,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String tillReceiptCopy(String copy) {
+    return 'KOPIE $copy — kein neuer Beleg';
+  }
+
+  @override
   String tillReceiptCorrects(String number) {
     return 'Berichtigt Beleg $number';
   }
@@ -42422,6 +42574,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tillRetry => 'Erneut versuchen';
+
+  @override
+  String get tillRingUpFirst => 'Erfassen Sie zuerst einen Artikel.';
 
   @override
   String get tillScanLabel => 'Code scannen';
@@ -42890,6 +43045,44 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get unblockAction => 'Blockierung aufheben';
+
+  @override
+  String get unitConversionDelete => 'Löschen';
+
+  @override
+  String get unitConversionEdit => 'Umrechnung ändern';
+
+  @override
+  String get unitConversionFactor => 'Wie viele';
+
+  @override
+  String unitConversionFactorHelp(String from, String to) {
+    return 'Wie viele $to ergeben ein $from';
+  }
+
+  @override
+  String get unitConversionFrom => 'Von';
+
+  @override
+  String unitConversionLine(String from, String factor, String to) {
+    return '1 $from = $factor $to';
+  }
+
+  @override
+  String get unitConversionNew => 'Umrechnung hinzufügen';
+
+  @override
+  String get unitConversionTo => 'Nach';
+
+  @override
+  String get unitConversionsEmpty => 'Noch keine Umrechnung festgelegt.';
+
+  @override
+  String get unitConversionsIntro =>
+      'Eine Umrechnung sagt, wie viele einer Einheit eine andere ergeben. Sie gilt in beide Richtungen, in einem Schritt. Die eigene Umrechnung eines Artikels (ein Karton zu 12) geht diesen vor, und eine Verpackungseinheit hat hier keine.';
+
+  @override
+  String get unitConversionsTitle => 'Umrechnungen';
 
   @override
   String get unknownWireInvoiceKind =>

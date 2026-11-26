@@ -21,6 +21,7 @@ import 'measure_unit_sheet.dart';
 import 'measure_unit_text.dart';
 import 'stock_config_text.dart';
 import 'stock_page_shell.dart';
+import 'unit_conversions_section.dart';
 
 class UnitsOfMeasureScreen extends ConsumerWidget {
   const UnitsOfMeasureScreen({super.key});
@@ -100,6 +101,8 @@ class _Units extends StatelessWidget {
               _UnitTile(unit: u, base: baseUnitOf(units, d), onEdit: () => onEdit(u), onArchive: () => onArchive(u)),
           ],
         ],
+        // #4479 -- what converts to what is defined, never implied
+        UnitConversionsSection(workspaceId: workspaceId, units: units),
       ],
     );
   }

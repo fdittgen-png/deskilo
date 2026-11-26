@@ -183,9 +183,7 @@ standaloneInvoiceMissingLine number
 stockChainTookLot quantity
 stockCyclePlanValue amount
 stockQuantityWithUnit quantity
-stockRegistryCost amount
 stockRegistryOnHand quantity
-stockRegistryPrice amount
 stockReorderDraftCreated number
 stockReorderGapRow quantity
 stockReorderGroupLine quantity
