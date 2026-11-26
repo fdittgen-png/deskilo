@@ -256,6 +256,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
   List<Widget> _choiceFields(AppLocalizations l10n) => [
     for (final (i, choice) in _existing.indexed)
       QuestionChoiceTile(
+        key: QuestionChoiceTile.keyFor(choice.read.key),
         choice: choice,
         workspaceLocale: widget.workspaceLocale,
         enabled: !widget.saving,
