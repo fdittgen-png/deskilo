@@ -196,23 +196,26 @@ class _ItemsState extends ConsumerState<_Items> {
     _kept = const [];
   });
 
+  /// The grid's selection is [key]: a click, the arrows, an item opened, or none.
+  void _choose(String? key) => setState(() => _selected = key);
+
   /// A click on a row selects it; with an item open beside the grid, the item follows the selection.
   void _select(StockRegistryRow row) {
-    setState(() => _selected = row.key);
+    _choose(row.key);
     final open = widget.open;
     if (open != null && open != row.itemId) moveToRecord(context, Routes.stockItems, row.itemId);
   }
 
   /// Opens the item of [row] (beside the grid at the desk, a page of its own on a phone).
   void _open(StockRegistryRow row) {
-    if (widget.desk) setState(() => _selected = row.key);
+    if (widget.desk) _choose(row.key);
     widget.open == null
         ? openRecord(context, Routes.stockItems, row.itemId)
         : moveToRecord(context, Routes.stockItems, row.itemId);
   }
 
   void _clear() {
-    setState(() => _selected = null);
+    _choose(null);
     if (widget.open != null) closeRecord(context, Routes.stockItems);
   }
 
@@ -222,6 +225,8 @@ class _ItemsState extends ConsumerState<_Items> {
         : RecordsQuery(sortColumn: column),
   );
 
+  void _loadMore() => unawaited(ref.read(stockRegistryWalkProvider(_filter).notifier).loadMore());
+
   @override
   Widget build(BuildContext context) => ScanScope(
     enabled: StockScreenScan(ref).on,
@@ -230,6 +235,7 @@ class _ItemsState extends ConsumerState<_Items> {
   );
 
   Widget _filters(List<StockPlaceConfig> places, String separator) => StockItemsFilters(
+    key: const ValueKey('stock-items-filters'),
     search: _search,
     places: places,
     separator: separator,
@@ -245,15 +251,30 @@ class _ItemsState extends ConsumerState<_Items> {
     }),
   );
 
+  /// The rows to show: those read under the filters, or while a save reads them again the rows read before.
+  List<StockRegistryRow> _rows(StockWalkState<StockRegistryRow> walk) {
+    final rows = walk.rows.isEmpty && walk.loading ? _kept : walk.rows;
+    if (!walk.loading || walk.rows.isNotEmpty) _kept = walk.rows;
+    return rows;
+  }
+
+  /// The selected row among [shown]; an item opened by its address (a scan, a link) is the grid's selection.
+  StockRegistryRow? _selectedOf(List<StockRegistryRow> shown) {
+    final open = widget.open;
+    final selected = shown.where((r) => r.key == _selected).firstOrNull;
+    if (open == null || selected?.itemId == open) return selected;
+    final opened = shown.where((r) => r.itemId == open).firstOrNull ?? selected;
+    _selected = opened?.key;
+    return opened;
+  }
+
   Widget _content(BuildContext context) {
     final l10n = context.l10n;
     final separator = ref.watch(stockAddressSeparatorProvider);
     final places = ref.watch(stockPlaceConfigsProvider(widget.workspaceId)).value ?? const <StockPlaceConfig>[]; // empty-ok: the places only feed a filter and a choice
-    final low = ref.watch(stockLowKeysProvider(widget.workspaceId));
     final services = ref.watch(allServicesProvider).value ?? const <ServiceItem>[]; // empty-ok: no Edit of name, price and VAT then
     final mayAdd = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
     final acts = StockItemActions(context, ref, workspaceId: widget.workspaceId, services: services);
-    final actionsOf = acts.offer();
     final walk = ref.watch(stockRegistryWalkProvider(_filter));
     if (walk.error != null) {
       return Center(
@@ -261,29 +282,22 @@ class _ItemsState extends ConsumerState<_Items> {
           keyName: 'stock-items',
           error: walk.error!,
           // the page that failed is asked again; the first, when nothing was read
-          onRetry: walk.rows.isEmpty ? _reload : () => unawaited(ref.read(stockRegistryWalkProvider(_filter).notifier).loadMore()),
+          onRetry: walk.rows.isEmpty ? _reload : _loadMore,
         ),
       );
     }
-    // While a save reads the list again, the rows read before stay.
-    final rows = walk.rows.isEmpty && walk.loading ? _kept : walk.rows;
-    if (!walk.loading || walk.rows.isNotEmpty) _kept = walk.rows;
+    final rows = _rows(walk);
     final shown = [for (final r in rows) if (_matches(r, separator)) r];
-    final open = widget.open;
-    var selected = shown.where((r) => r.key == _selected).firstOrNull;
-    // An item opened by its address (a scan, a link) is the grid's selection.
-    if (open != null && selected?.itemId != open) {
-      selected = shown.where((r) => r.itemId == open).firstOrNull ?? selected;
-      _selected = selected?.key;
-    }
+    final selected = _selectedOf(shown);
     final more = !walk.complete && walk.next != null
         ? TextButton(
             key: const ValueKey('stock-registry-more'),
-            onPressed: walk.loading ? null : () => unawaited(ref.read(stockRegistryWalkProvider(_filter).notifier).loadMore()),
+            onPressed: walk.loading ? null : _loadMore,
             child: Text(l10n.stockRegistryMore),
           )
         : null;
-    final Widget list = rows.isEmpty && walk.loading
+    final actionsOf = acts.offer();
+    final list = rows.isEmpty && walk.loading
         ? const LoadingView()
         : shown.isEmpty
         ? EmptyState(key: const ValueKey('stock-items-empty'), icon: Icons.inventory_2_outlined, title: l10n.stockItemsEmpty)
@@ -298,27 +312,12 @@ class _ItemsState extends ConsumerState<_Items> {
             onSelect: _select,
             onOpen: _open,
           )
-        : ListView.separated(
-            key: const ValueKey('stock-items-list'),
-            padding: AppSpacing.mdAll,
-            itemCount: shown.length + (more == null ? 0 : 1),
-            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
-            itemBuilder: (context, i) {
-              if (i == shown.length) return more!;
-              final r = shown[i];
-              return StockItemCard(
-                row: r,
-                attention: stockAttentionOf(r, low),
-                separator: separator,
-                actions: actionsOf(r),
-                onOpen: () => _open(r),
-              );
-            },
-          );
+        : _cards(shown, separator, actionsOf, more);
     final intro = Padding(
       padding: AppSpacing.mdAll,
       child: Text(l10n.stockItemsIntro, style: Theme.of(context).textTheme.bodyMedium),
     );
+    final add = mayAdd ? () => unawaited(_add()) : null;
     if (!widget.desk) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -329,12 +328,12 @@ class _ItemsState extends ConsumerState<_Items> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (mayAdd) ...[
+                if (add != null) ...[
                   FilledButton.icon(
                     key: const ValueKey('stock-item-add'),
                     icon: const Icon(Icons.add),
                     label: Text(l10n.stockItemAddButton),
-                    onPressed: () => unawaited(_add()),
+                    onPressed: add,
                   ),
                   const FormGap.small(),
                 ],
@@ -358,13 +357,40 @@ class _ItemsState extends ConsumerState<_Items> {
             actions: selected == null ? const [] : actionsOf(selected),
             onOpen: () => _open(selected!),
             onClear: _clear,
-            onAdd: mayAdd ? () => unawaited(_add()) : null,
+            onAdd: add,
           ),
         ),
         const FormGap.small(),
         Expanded(child: list),
         ?more,
       ],
+    );
+  }
+
+  /// The phone's cards, with "Show more" after the last while the registry has more.
+  Widget _cards(
+    List<StockRegistryRow> shown,
+    String separator,
+    List<StockItemAction> Function(StockRegistryRow row) actionsOf,
+    Widget? more,
+  ) {
+    final low = ref.watch(stockLowKeysProvider(widget.workspaceId));
+    return ListView.separated(
+      key: const ValueKey('stock-items-list'),
+      padding: AppSpacing.mdAll,
+      itemCount: shown.length + (more == null ? 0 : 1),
+      separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
+      itemBuilder: (context, i) {
+        if (i == shown.length) return more!;
+        final r = shown[i];
+        return StockItemCard(
+          row: r,
+          attention: stockAttentionOf(r, low),
+          separator: separator,
+          actions: actionsOf(r),
+          onOpen: () => _open(r),
+        );
+      },
     );
   }
 }

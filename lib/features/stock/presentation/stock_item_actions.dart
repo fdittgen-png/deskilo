@@ -27,7 +27,7 @@ import 'stock_tags_dialog.dart';
 import 'stock_variants_editor.dart';
 
 /// Reads the registry again, from its first page: the list and the item's page show what was saved.
-void reloadStockRegistry(WidgetRef ref) =>
+void _reloadStockRegistry(WidgetRef ref) =>
     ref.invalidate(stockRegistryWalkProvider);
 
 /// The actions of an item, in the order they are offered.
@@ -194,7 +194,7 @@ class StockItemActions {
       service: service,
       categories: [for (final s in services) s.category],
     );
-    if (context.mounted) reloadStockRegistry(ref);
+    if (context.mounted) _reloadStockRegistry(ref);
   }
 
   /// The home place of [row]: the item, or one of its variants.
@@ -210,7 +210,7 @@ class StockItemActions {
           const <StockPlaceConfig>[], // empty-ok: a choice
       separator: ref.read(stockAddressSeparatorProvider),
     );
-    if (saved && context.mounted) reloadStockRegistry(ref);
+    if (saved && context.mounted) _reloadStockRegistry(ref);
   }
 
   /// The units, codes and tracking of the item.
@@ -229,7 +229,7 @@ class StockItemActions {
         groups: itemGroupsIfOn(ref),
       ),
     );
-    if (saved && context.mounted) reloadStockRegistry(ref);
+    if (saved && context.mounted) _reloadStockRegistry(ref);
   }
 
   /// The group the item is in; its name is read again.
@@ -273,7 +273,7 @@ class StockItemActions {
     ref.invalidate(
       stockItemVariantsProvider((workspaceId: workspaceId, itemId: row.itemId)),
     );
-    reloadStockRegistry(ref);
+    _reloadStockRegistry(ref);
   }
 
   /// The supplier articles that name the item; they are read again.

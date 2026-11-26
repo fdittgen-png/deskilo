@@ -32,7 +32,7 @@ import 'stock_item_card.dart';
 import 'stock_item_view.dart';
 
 /// [rows] in the order [sort] asks for, by the sort key of its column among [columns]; equal keys keep their order.
-List<StockRegistryRow> sortStockRows(
+List<StockRegistryRow> _sortRows(
   List<StockRegistryRow> rows,
   List<RecordColumn<StockRegistryRow>> columns,
   RecordsQuery sort,
@@ -253,7 +253,7 @@ class _StockItemsGridState extends ConsumerState<StockItemsGrid> {
   @override
   Widget build(BuildContext context) {
     final all = _columns(context);
-    _shown = sortStockRows(widget.rows, all, widget.sort);
+    _shown = _sortRows(widget.rows, all, widget.sort);
     final shown = _shown;
     return Listener(
       // Rows follow the pointer, as in the kit's tables: short with a mouse, a finger's height touched.
@@ -305,6 +305,7 @@ class _StockItemsGridState extends ConsumerState<StockItemsGrid> {
                         key: _reveal.keyOf(r.key),
                         child: _GridRow(
                           key: ValueKey('stock-item-${r.key}'),
+                          rowKey: r.key,
                           cells: recordCells(
                             columns,
                             [for (final c in columns) c.cell(context, r)],
@@ -333,6 +334,7 @@ class _StockItemsGridState extends ConsumerState<StockItemsGrid> {
 class _GridRow extends StatelessWidget {
   const _GridRow({
     super.key,
+    required this.rowKey,
     required this.cells,
     required this.selected,
     required this.focused,
@@ -340,6 +342,8 @@ class _GridRow extends StatelessWidget {
     required this.onTap,
   });
 
+  /// The row's `StockRegistryRow.key`.
+  final String rowKey;
   final Widget cells;
   final bool selected;
   final bool focused;
@@ -354,6 +358,7 @@ class _GridRow extends StatelessWidget {
       child: Material(
         color: selected ? scheme.secondaryContainer : Colors.transparent,
         child: InkWell(
+          key: ValueKey('stock-item-select-$rowKey'),
           // The grid is one stop of the keyboard: the arrows walk its rows.
           canRequestFocus: false,
           onTap: onTap,

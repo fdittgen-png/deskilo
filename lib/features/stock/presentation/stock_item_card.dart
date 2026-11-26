@@ -40,11 +40,7 @@ String stockItemOnHand(BuildContext context, StockRegistryRow row) => context
     .stockQuantityWithUnit(appFormatOf(context).quantity(row.onHand), row.unit);
 
 /// The facts line of [row]: its price (when it has one), what is on hand and its home place.
-String stockItemFacts(
-  BuildContext context,
-  StockRegistryRow row,
-  String separator,
-) => [
+String _facts(BuildContext context, StockRegistryRow row, String separator) => [
   if (row.priceCents case final price?) appFormatOf(context).money(price),
   context.l10n.stockRegistryOnHand(stockItemOnHand(context, row)),
   stockItemHome(context, row, separator),
@@ -125,7 +121,7 @@ class StockItemCard extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      stockItemFacts(context, row, separator),
+                      _facts(context, row, separator),
                       key: ValueKey('stock-item-facts-${row.key}'),
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: scheme.onSurfaceVariant,
