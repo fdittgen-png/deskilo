@@ -30,6 +30,14 @@
 
 
 static const char *TAG = "till";
+// #4450 -- the screen is drawn by the main task, on core 0. The network task does the TLS arithmetic (seconds of it for a
+// new connection) at a higher priority: on the same core it kept the screen from being drawn, and a touch from being read,
+// for as long. It runs on the other core.
+#if CONFIG_FREERTOS_UNICORE
+#define NET_CORE 0
+#else
+#define NET_CORE 1
+#endif
 #define BUF_LINES 32   // one partial buffer: 480 x 32 x 2 bytes = 30 KiB (two buffers, 60 KiB of the 520 KB SRAM)
 
 static lv_disp_draw_buf_t s_draw;
@@ -382,7 +390,7 @@ void app_main(void) {
     } else {
         if (!strcmp(g_cfg.role, "till")) ui_build_till(); else ui_build_roll();
         lv_timer_create(refresh_cb, 200, NULL);
-        xTaskCreatePinnedToCore(net_task, "net", 12288, NULL, 4, NULL, 0);
+        xTaskCreatePinnedToCore(net_task, "net", 12288, NULL, 4, NULL, NET_CORE);
     }
     if (calibrate) ui_calibrate();
     boot_button_init(&s_boot);
