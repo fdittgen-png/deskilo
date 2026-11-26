@@ -164,10 +164,14 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
               initialValue: _countryCode,
               isExpanded: true,
               items: [
-                for (final country in CountryCatalog.countries)
+                // The stored country is offered even when the catalogue does
+                // not list it: the field shows it and saves it unchanged.
+                for (final code in CountryCatalog.addressCodes(
+                  stored: ref.read(myProfileProvider).value?.countryCode,
+                ))
                   DropdownMenuItem(
-                    value: country.code,
-                    child: Text(localizedCountryName(l10n, country.code)),
+                    value: code,
+                    child: Text(localizedCountryName(l10n, code)),
                   ),
               ],
               onChanged: (value) => setState(() => _countryCode = value),
