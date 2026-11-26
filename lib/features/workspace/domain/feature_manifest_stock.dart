@@ -189,4 +189,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.counterTillSessions,
     defaultOn: false,
   ),
+  // #4368 — the till's receipt on a receipt printer on the local network, and the cash drawer it opens. Under till sessions
+  // (the issue's `counterTill` parent does not exist). Off: the receipt is shown and shared, nothing prints.
+  WorkspaceFeature.counterReceiptPrinter: FeatureManifestEntry(
+    feature: WorkspaceFeature.counterReceiptPrinter,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.counterTillSessions,
+    defaultOn: false,
+  ),
 };

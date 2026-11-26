@@ -430,9 +430,8 @@ enum WorkspaceFeature {
   stockReceiving,
   stockTakeOut,
   serviceFulfilment,
-  /// #4294 — reorder points and low-stock alerts (feature_manifest_stock.dart).
+  /// #4294 reorder points; #4172 returns, corrections, counts; #4295 cycle counts (feature_manifest_stock.dart).
   stockReorder,
-  /// #4172 returns and corrections, counts; #4295 cycle counts (feature_manifest_stock.dart).
   stockReturns,
   stockCounts,
   stockCycleCounts,
@@ -447,7 +446,8 @@ enum WorkspaceFeature {
   stockHandlingUnits,
   counterOfflineCash,
   unitsOfMeasure,
-  counterTillLayout;
+  counterTillLayout,
+  counterReceiptPrinter;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

@@ -7289,6 +7289,8 @@
   "@featureCounterOfflineCashTitle": {
     "description": "#4373 feature name"
   },
+  "featureCounterReceiptPrinterDesc": "Stampare lo scontrino su una stampante di scontrini della rete locale (80 o 58 mm) e aprire il cassetto che comanda dopo una vendita in contanti. Ogni cassa imposta la propria stampante. Disattivato, lo scontrino è mostrato e condiviso, non si stampa nulla.",
+  "featureCounterReceiptPrinterTitle": "Stampante di scontrini",
   "featureCounterReceiptsDesc": "Una vendita al banco dà uno scontrino immutabile, numerato una sola volta, con il pagamento ricevuto. È offerto solo dove l'operazione del paese è supportata e dice chiaramente quando non lo è.",
   "featureCounterReceiptsTitle": "Scontrini di cassa",
   "featureCounterTillLayoutDesc": "Organizzi ogni cassa per il Suo mestiere: quali tasti dove, le sue pagine e gli strumenti accanto al carrello come un tastierino numerico, una calcolatrice o un campo di scansione. Parta da un modello, lo pubblichi e una cassa lo adotta alla sessione successiva. Disattivato, ogni cassa mantiene i tasti generati.",

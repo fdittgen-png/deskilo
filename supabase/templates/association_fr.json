@@ -96,6 +96,7 @@
         "configurableSettings": false,
         "configurationTransfer": false,
         "counterOfflineCash": false,
+        "counterReceiptPrinter": false,
         "counterReceipts": false,
         "counterTillLayout": false,
         "counterTillSessions": false,

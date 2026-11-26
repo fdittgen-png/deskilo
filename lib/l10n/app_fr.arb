@@ -7289,6 +7289,8 @@
   "@featureCounterOfflineCashTitle": {
     "description": "#4373 feature name"
   },
+  "featureCounterReceiptPrinterDesc": "Imprimer le ticket de caisse sur une imprimante de tickets du réseau local (80 ou 58 mm) et ouvrir le tiroir-caisse qu'elle commande après une vente en espèces. Chaque caisse règle sa propre imprimante. Désactivé, le ticket est affiché et partagé, rien n'est imprimé.",
+  "featureCounterReceiptPrinterTitle": "Imprimante de tickets",
   "featureCounterReceiptsDesc": "Une vente au comptoir donne un ticket immuable, numéroté une seule fois, avec le règlement reçu. Il n'est proposé que là où l'opération du pays est prise en charge, et dit clairement quand elle ne l'est pas.",
   "featureCounterReceiptsTitle": "Tickets de caisse",
   "featureCounterTillLayoutDesc": "Disposez chaque caisse selon votre métier : quelles touches où, ses pages et des outils à côté du panier comme un pavé numérique, une calculatrice ou un champ de scan. Partez d'un modèle, publiez-le, et une caisse le prend à sa prochaine session. Désactivé, chaque caisse garde ses touches générées.",

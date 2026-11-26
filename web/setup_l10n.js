@@ -1631,6 +1631,10 @@ window.SETUP_L10N={
    "counterTillLayout": [
     "Till layouts",
     "Lay out each till for your trade: which keys sit where, its pages, and tools beside the basket such as a numeric keypad, a calculator or a scan field. Start from a template, publish it, and a till takes it at its next session. Off, every till keeps its generated keys."
+   ],
+   "counterReceiptPrinter": [
+    "Receipt printer",
+    "Print the till's receipt on a receipt printer on your local network (80 or 58 mm), and open the cash drawer it drives after a cash sale. Each till sets its own printer. Off, the receipt is shown and shared, nothing prints."
    ]
   },
   "process": {
@@ -3681,6 +3685,10 @@ window.SETUP_L10N={
    "counterTillLayout": [
     "Dispositions de caisse",
     "Disposez chaque caisse selon votre métier : quelles touches où, ses pages et des outils à côté du panier comme un pavé numérique, une calculatrice ou un champ de scan. Partez d'un modèle, publiez-le, et une caisse le prend à sa prochaine session. Désactivé, chaque caisse garde ses touches générées."
+   ],
+   "counterReceiptPrinter": [
+    "Imprimante de tickets",
+    "Imprimer le ticket de caisse sur une imprimante de tickets du réseau local (80 ou 58 mm) et ouvrir le tiroir-caisse qu'elle commande après une vente en espèces. Chaque caisse règle sa propre imprimante. Désactivé, le ticket est affiché et partagé, rien n'est imprimé."
    ]
   },
   "process": {
@@ -5731,6 +5739,10 @@ window.SETUP_L10N={
    "counterTillLayout": [
     "Kassenlayouts",
     "Gestalten Sie jede Kasse für Ihr Geschäft: welche Tasten wo liegen, ihre Seiten und Werkzeuge neben dem Warenkorb wie ein Ziffernblock, ein Rechner oder ein Scanfeld. Beginnen Sie mit einer Vorlage, veröffentlichen Sie sie, und eine Kasse übernimmt sie mit ihrer nächsten Sitzung. Aus: Jede Kasse behält ihre erzeugten Tasten."
+   ],
+   "counterReceiptPrinter": [
+    "Bondrucker",
+    "Den Kassenbon auf einem Bondrucker im lokalen Netz drucken (80 oder 58 mm) und nach einem Barverkauf die angeschlossene Kassenlade öffnen. Jede Kasse stellt ihren eigenen Drucker ein. Aus: Der Beleg wird gezeigt und geteilt, nichts wird gedruckt."
    ]
   },
   "process": {
@@ -7781,6 +7793,10 @@ window.SETUP_L10N={
    "counterTillLayout": [
     "Diseños de caja",
     "Organice cada caja según su oficio: qué teclas van dónde, sus páginas y herramientas junto a la cesta como un teclado numérico, una calculadora o un campo de escaneo. Parta de una plantilla, publíquela y una caja la adopta en su siguiente sesión. Desactivado, cada caja conserva sus teclas generadas."
+   ],
+   "counterReceiptPrinter": [
+    "Impresora de tiques",
+    "Imprimir el tique de caja en una impresora de tiques de la red local (80 o 58 mm) y abrir el cajón que controla tras una venta en efectivo. Cada caja configura su propia impresora. Desactivado, el tique se muestra y se comparte, no se imprime nada."
    ]
   },
   "process": {
@@ -9831,6 +9847,10 @@ window.SETUP_L10N={
    "counterTillLayout": [
     "Layout di cassa",
     "Organizzi ogni cassa per il Suo mestiere: quali tasti dove, le sue pagine e gli strumenti accanto al carrello come un tastierino numerico, una calcolatrice o un campo di scansione. Parta da un modello, lo pubblichi e una cassa lo adotta alla sessione successiva. Disattivato, ogni cassa mantiene i tasti generati."
+   ],
+   "counterReceiptPrinter": [
+    "Stampante di scontrini",
+    "Stampare lo scontrino su una stampante di scontrini della rete locale (80 o 58 mm) e aprire il cassetto che comanda dopo una vendita in contanti. Ogni cassa imposta la propria stampante. Disattivato, lo scontrino è mostrato e condiviso, non si stampa nulla."
    ]
   },
   "process": {

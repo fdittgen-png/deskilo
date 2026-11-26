@@ -77,6 +77,7 @@ const Set<String> workspaceFeatureKeys = {
   'counterOfflineCash',
   'unitsOfMeasure',
   'counterTillLayout',
+  'counterReceiptPrinter',
   'notificationGrouping',
   'bookingPolicies',
   'nfcSeatTags',

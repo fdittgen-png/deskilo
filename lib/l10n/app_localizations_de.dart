@@ -12050,6 +12050,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureCounterOfflineCashTitle => 'Offline verkaufen, nur bar';
 
   @override
+  String get featureCounterReceiptPrinterDesc =>
+      'Den Kassenbon auf einem Bondrucker im lokalen Netz drucken (80 oder 58 mm) und nach einem Barverkauf die angeschlossene Kassenlade öffnen. Jede Kasse stellt ihren eigenen Drucker ein. Aus: Der Beleg wird gezeigt und geteilt, nichts wird gedruckt.';
+
+  @override
+  String get featureCounterReceiptPrinterTitle => 'Bondrucker';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.';
 

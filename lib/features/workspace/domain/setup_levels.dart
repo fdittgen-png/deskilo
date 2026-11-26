@@ -302,6 +302,7 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         // #4442
         WorkspaceFeature.unitsOfMeasure,
         WorkspaceFeature.counterTillLayout, // #4448
+        WorkspaceFeature.counterReceiptPrinter, // #4368
       },
     ),
   ],

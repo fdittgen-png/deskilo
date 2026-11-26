@@ -9818,6 +9818,8 @@ const Set<String> uiLabelKeys = {
   'featureConfigurationTransferDesc',
   'featureCounterOfflineCashDesc',
   'featureCounterOfflineCashTitle',
+  'featureCounterReceiptPrinterDesc',
+  'featureCounterReceiptPrinterTitle',
   'featureCounterReceiptsDesc',
   'featureCounterReceiptsTitle',
   'featureCounterTillLayoutDesc',

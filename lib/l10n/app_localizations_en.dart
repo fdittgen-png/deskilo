@@ -11946,6 +11946,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureCounterOfflineCashTitle => 'Selling offline, cash only';
 
   @override
+  String get featureCounterReceiptPrinterDesc =>
+      'Print the till\'s receipt on a receipt printer on your local network (80 or 58 mm), and open the cash drawer it drives after a cash sale. Each till sets its own printer. Off, the receipt is shown and shared, nothing prints.';
+
+  @override
+  String get featureCounterReceiptPrinterTitle => 'Receipt printer';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country\'s operation is supported, and says plainly where it is not.';
 

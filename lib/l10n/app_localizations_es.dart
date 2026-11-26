@@ -12026,6 +12026,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Vender sin conexión, solo en efectivo';
 
   @override
+  String get featureCounterReceiptPrinterDesc =>
+      'Imprimir el tique de caja en una impresora de tiques de la red local (80 o 58 mm) y abrir el cajón que controla tras una venta en efectivo. Cada caja configura su propia impresora. Desactivado, el tique se muestra y se comparte, no se imprime nada.';
+
+  @override
+  String get featureCounterReceiptPrinterTitle => 'Impresora de tiques';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'Una venta en el mostrador da un ticket inmutable, numerado una sola vez, con el cobro recibido. Solo se ofrece donde la operación del país está soportada, y dice claramente cuándo no lo está.';
 

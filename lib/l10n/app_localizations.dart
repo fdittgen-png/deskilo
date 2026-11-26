@@ -19354,6 +19354,18 @@ abstract class AppLocalizations {
   /// **'Selling offline, cash only'**
   String get featureCounterOfflineCashTitle;
 
+  /// #4368 the receipt printer feature
+  ///
+  /// In en, this message translates to:
+  /// **'Print the till\'s receipt on a receipt printer on your local network (80 or 58 mm), and open the cash drawer it drives after a cash sale. Each till sets its own printer. Off, the receipt is shown and shared, nothing prints.'**
+  String get featureCounterReceiptPrinterDesc;
+
+  /// #4368 the receipt printer feature
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt printer'**
+  String get featureCounterReceiptPrinterTitle;
+
   /// #4184 feature description
   ///
   /// In en, this message translates to:

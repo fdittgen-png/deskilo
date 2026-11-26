@@ -12082,6 +12082,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vendre hors ligne, en espèces seulement';
 
   @override
+  String get featureCounterReceiptPrinterDesc =>
+      'Imprimer le ticket de caisse sur une imprimante de tickets du réseau local (80 ou 58 mm) et ouvrir le tiroir-caisse qu\'elle commande après une vente en espèces. Chaque caisse règle sa propre imprimante. Désactivé, le ticket est affiché et partagé, rien n\'est imprimé.';
+
+  @override
+  String get featureCounterReceiptPrinterTitle => 'Imprimante de tickets';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'Une vente au comptoir donne un ticket immuable, numéroté une seule fois, avec le règlement reçu. Il n\'est proposé que là où l\'opération du pays est prise en charge, et dit clairement quand elle ne l\'est pas.';
 

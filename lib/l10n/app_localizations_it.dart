@@ -12035,6 +12035,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Vendere offline, solo in contanti';
 
   @override
+  String get featureCounterReceiptPrinterDesc =>
+      'Stampare lo scontrino su una stampante di scontrini della rete locale (80 o 58 mm) e aprire il cassetto che comanda dopo una vendita in contanti. Ogni cassa imposta la propria stampante. Disattivato, lo scontrino è mostrato e condiviso, non si stampa nulla.';
+
+  @override
+  String get featureCounterReceiptPrinterTitle => 'Stampante di scontrini';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'Una vendita al banco dà uno scontrino immutabile, numerato una sola volta, con il pagamento ricevuto. È offerto solo dove l\'operazione del paese è supportata e dice chiaramente quando non lo è.';
 
