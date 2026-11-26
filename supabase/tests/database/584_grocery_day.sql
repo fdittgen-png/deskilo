@@ -106,9 +106,10 @@ insert into public.setting_values (scope, workspace_id, key, value) values
   ('workspace', pg_temp.u(101), 'counter.fiscal_obligation', '"none"'::jsonb),
   ('workspace', pg_temp.u(101), 'counter.max_discount_percent', '50'::jsonb);
 insert into public.suppliers (id, workspace_id, supplier_number, name, status) values (pg_temp.u(401), pg_temp.u(101), '1', 'Dairy wholesale', 'active');
+-- both are tracked by their date: the put-away sheet asks the lot and the best-before date of such an item
 insert into public.services (id, workspace_id, name, price_cents, active, inventory_unit, tracking, stockable) values
-  (pg_temp.u(301), pg_temp.u(101), 'Yoghurt', 150, true, 'piece', 'lot', true),
-  (pg_temp.u(302), pg_temp.u(101), 'Apple juice', 300, true, 'piece', 'lot', true);
+  (pg_temp.u(301), pg_temp.u(101), 'Yoghurt', 150, true, 'piece', 'expiry', true),
+  (pg_temp.u(302), pg_temp.u(101), 'Apple juice', 300, true, 'piece', 'expiry', true);
 -- a pallet of yoghurt is four cartons of twelve; a carton of juice is six bottles
 insert into public.item_units (workspace_id, item_id, unit, factor_num, factor_den) values
   (pg_temp.u(101), pg_temp.u(301), 'carton', 12, 1), (pg_temp.u(101), pg_temp.u(301), 'pallet', 48, 1), (pg_temp.u(101), pg_temp.u(302), 'carton', 6, 1);
