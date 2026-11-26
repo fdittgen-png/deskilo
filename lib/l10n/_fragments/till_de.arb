@@ -272,10 +272,6 @@
   "@tillReceiptChange": {
     "description": "#4368 the till's receipt printer"
   },
-  "tillReceiptCopy": "*** KOPIE ***",
-  "@tillReceiptCopy": {
-    "description": "#4368 the till's receipt printer"
-  },
   "tillReceiptThanks": "Vielen Dank",
   "@tillReceiptThanks": {
     "description": "#4368 the till's receipt printer"

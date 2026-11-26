@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/i18n/format_controller.dart';
+import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/time/clock.dart';
@@ -19,13 +20,16 @@ import '../domain/counter_till.dart';
 import '../domain/till_print_job.dart';
 import '../domain/till_printer_settings.dart';
 import '../providers/till_printer_providers.dart';
+import '../providers/till_providers.dart';
 import 'till_printer_dialog.dart';
 import 'till_receipt.dart';
 
 enum _Print { idle, printing, printed, failed }
 
 class TillPrintPanel extends ConsumerStatefulWidget {
-  const TillPrintPanel({super.key, required this.sold, required this.draft, required this.lines, required this.changeMinor});
+  const TillPrintPanel({super.key, required this.workspaceId, required this.sold, required this.draft, required this.lines, required this.changeMinor});
+
+  final String workspaceId;
 
   final TillSold sold;
   final TillDraft draft;
@@ -39,7 +43,7 @@ class TillPrintPanel extends ConsumerStatefulWidget {
 class _TillPrintPanelState extends ConsumerState<TillPrintPanel> {
   _Print _state = _Print.idle;
 
-  /// How many times this receipt went to the printer: from the second on it is a copy.
+  /// How many times this receipt went to the printer: from the second on it is a copy the server counts (#4476).
   int _sent = 0;
   bool _drawerKicked = false;
 
@@ -78,9 +82,23 @@ class _TillPrintPanelState extends ConsumerState<TillPrintPanel> {
     }
     setState(() => _state = _Print.printing);
     final l10n = context.l10n;
+    final format = appFormatOf(context);
+    int? copy;
+    if (_sent > 0) {
+      // a print after the first is a copy: counted by the server, never numbered again (a retry after a failure too)
+      final copies = ref.read(tillCopyPortProvider);
+      try {
+        copy = await copies?.copy(widget.workspaceId, requestId: newRequestId(), receiptId: widget.sold.receiptId);
+      } on Object catch (e, st) {
+        TraceLogger.instance.warn('money', 'a receipt copy was not counted: $e', stackTrace: st);
+        if (mounted) setState(() => _state = _Print.failed);
+        return;
+      }
+      if (!mounted) return;
+    }
     final receipt = tillReceiptOf(
       l10n: l10n,
-      fmt: appFormatOf(context),
+      fmt: format,
       business: ref.read(currentWorkspaceProvider).value?.name ?? '',
       sold: widget.sold,
       draft: widget.draft,
@@ -88,7 +106,7 @@ class _TillPrintPanelState extends ConsumerState<TillPrintPanel> {
       at: ref.read(clockProvider).now(),
       givenMinor: widget.sold.totals.grossMinor + widget.changeMinor,
       changeMinor: widget.changeMinor,
-      copy: _sent > 0,
+      copy: copy,
     );
     try {
       await ref.read(receiptSenderProvider(settings)).send(tillPrintJob(receipt: receipt, settings: settings, kickDrawer: !_drawerKicked));

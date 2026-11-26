@@ -12826,20 +12826,8 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
-  "masterDataNoUnit": "Aucune unité",
-  "@masterDataNoUnit": {
-    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
-  },
-  "masterDataNoVat": "Sans TVA",
-  "@masterDataNoVat": {
-    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
-  },
   "masterDataSearchHint": "Saisissez un nom ou un code, ou choisissez dans la liste",
   "masterDataUnknownCode": "Ce n'est pas une entrée valide. Choisissez-en une dans la liste.",
-  "masterDataUnlisted": "Ce n'est pas dans la liste : choisissez-en un",
-  "@masterDataUnlisted": {
-    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
-  },
   "mcpApiReference": "Référence de l’API",
   "mcpApiReferenceHint": "Ce qu’un assistant peut appeler, et comment c’est autorisé",
   "mcpAssistantsTitle": "Assistants",
@@ -13312,10 +13300,6 @@
   "measureDimensionMass": "Masse",
   "@measureDimensionMass": {
     "description": "#4442 dimension: mass"
-  },
-  "measureDimensionPackage": "Conditionnement",
-  "@measureDimensionPackage": {
-    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
   },
   "measureDimensionTime": "Durée",
   "@measureDimensionTime": {
@@ -14763,6 +14747,7 @@
   "permAllowsManageStock": "Faire entrer, déplacer et sortir des marchandises.",
   "permAllowsManageValidation": "Définir quelles demandes doivent être validées et par qui.",
   "permAllowsOperateKiosk": "Configurer la borne et attribuer les badges.",
+  "permAllowsOverrideTillPrice": "Vendre une ligne de caisse à un autre prix que celui de l'article, avec un motif que le ticket conserve. Sans ce droit, une ligne de caisse est vendue au prix de l'article.",
   "permAllowsPaymentTermsEdit": "Demander un changement des conditions de paiement d'un membre ; la validation décide.",
   "permAllowsRecordOutgoingPayments": "Enregistrer et annuler le paiement versé à un membre pour une demande approuvée.",
   "permAllowsUseMessages": "Utiliser les conversations, le fil des alertes et les notifications.",
@@ -14871,6 +14856,7 @@
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
   },
+  "permOverrideTillPrice": "Modifier un prix à la caisse",
   "permPaymentTermsEdit": "Demander un changement de conditions de paiement",
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
@@ -19368,6 +19354,7 @@
   "settingHintCounterFiscalObligation": "Ce que vous déclarez sur les règles fiscales d'une vente au comptoir : aucune signifie qu'aucune obligation fiscale de caisse ne s'applique à votre entreprise (votre propre déclaration, inscrite sur chaque ticket) ; caisse requise signifie qu'une obligation s'applique. Un ticket n'est émis que là où l'opération de votre pays est prise en charge dans le cas que vous déclarez.",
   "settingHintCounterLayoutCashierReorder": "Un caissier peut réordonner les touches d'une caisse sur son propre appareil sans changer la disposition publiée.",
   "settingHintCounterLayoutMaxCells": "Le nombre maximal de cases d'une disposition de caisse, toutes pages et tailles confondues. Une disposition plus grande est refusée à l'enregistrement.",
+  "settingHintCounterMaxDiscount": "La remise maximale, en pourcentage, qu'un caissier peut accorder sur une ligne de caisse. 0 signifie aucune remise à la caisse.",
   "settingHintCounterOfflineMaxMinutes": "Combien de temps après la perte de connexion de la caisse une vente en espèces faite hors ligne est encore acceptée à l'envoi. Les ventes plus tardives sont refusées et listées pour le gérant.",
   "@settingHintCounterOfflineMaxMinutes": {
     "description": "#4373 setting hint"
@@ -19630,6 +19617,7 @@
   "settingLabelCounterFiscalObligation": "Règles fiscales des ventes au comptoir",
   "settingLabelCounterLayoutCashierReorder": "Les caissiers réordonnent les touches",
   "settingLabelCounterLayoutMaxCells": "Taille d'une disposition de caisse",
+  "settingLabelCounterMaxDiscount": "Remise maximale à la caisse",
   "settingLabelCounterOfflineMaxMinutes": "Durée maximale hors ligne (minutes)",
   "@settingLabelCounterOfflineMaxMinutes": {
     "description": "#4373 setting label"
@@ -24155,6 +24143,9 @@
       }
     }
   },
+  "tillDiscountBeyond": "Cette remise dépasse ce que l'entreprise autorise à la caisse.",
+  "tillDiscountField": "Remise (%)",
+  "tillDiscountInvalid": "Une remise est un pourcentage du prix de l'article, sur une ligne sans prix modifié.",
   "tillDrawerAddTill": "Ajouter une caisse",
   "tillDrawerAmountInvalid": "Saisissez un montant.",
   "tillDrawerAmountZero": "Le montant doit être supérieur à zéro.",
@@ -24322,6 +24313,7 @@
   },
   "tillNotReady": "Pas encore prêt dans votre pays : {operation}",
   "tillNotReadyHint": "Rien n'est numéroté ni encaissé tant que l'opération du pays n'est pas prise en charge.",
+  "tillNothingToReprint": "Aucune vente à réimprimer pour l'instant.",
   "tillOfflineBanner": "Hors ligne — espèces uniquement. Les ventes sont conservées sur cet appareil et envoyées au retour de la connexion.",
   "@tillOfflineBanner": {
     "description": "#4373 the till sells offline: the banner"
@@ -24470,6 +24462,12 @@
       }
     }
   },
+  "tillPriceField": "Nouveau prix",
+  "tillPriceNotAllowed": "Vous ne pouvez pas modifier un prix à la caisse. La ligne est vendue au prix de l'article.",
+  "tillPriceReason": "Motif",
+  "tillPriceReasonHint": "Conservé sur le ticket.",
+  "tillPriceReasonMissing": "Un prix modifié a besoin d'un motif.",
+  "tillPriceUnreadable": "Saisissez un nombre, par exemple 4,50.",
   "tillPricing": "Calcul du panier…",
   "tillPrintCopy": "Imprimer une copie",
   "@tillPrintCopy": {
@@ -24596,10 +24594,7 @@
   "@tillReceiptChange": {
     "description": "#4368 the till's receipt printer"
   },
-  "tillReceiptCopy": "*** COPIE ***",
-  "@tillReceiptCopy": {
-    "description": "#4368 the till's receipt printer"
-  },
+  "tillReceiptCopy": "DUPLICATA {copy} — pas un nouveau ticket",
   "tillReceiptCorrects": "Corrige le ticket {number}",
   "tillReceiptDisagrees": "Les montants de ce ticket ne concordent pas entre eux. Il est affiché tel qu'il a été figé ; prévenez votre administrateur.",
   "tillReceiptIssuedUnder": "Émis selon : {specification} ({version})",
@@ -24624,6 +24619,7 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillRingUpFirst": "Enregistrez d'abord un article.",
   "tillScanLabel": "Scanner un code",
   "@tillScanLabel": {
     "description": "#4366 the till"

@@ -21242,22 +21242,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get managedProfileTitle => 'Verwaltetes Profil';
 
   @override
-  String get masterDataNoUnit => 'Keine Einheit';
-
-  @override
-  String get masterDataNoVat => 'Keine MwSt.';
-
-  @override
   String get masterDataSearchHint =>
       'Namen oder Code eingeben oder aus der Liste wählen';
 
   @override
   String get masterDataUnknownCode =>
       'Das ist kein gültiger Eintrag. Wählen Sie einen aus der Liste.';
-
-  @override
-  String get masterDataUnlisted =>
-      'Das steht nicht in der Liste: bitte eines wählen';
 
   @override
   String get mcpApiReference => 'API-Referenz';
@@ -22860,9 +22850,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get measureDimensionMass => 'Masse';
-
-  @override
-  String get measureDimensionPackage => 'Gebinde';
 
   @override
   String get measureDimensionTime => 'Zeit';
@@ -25908,6 +25895,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Den Kiosk einrichten und Badges ausgeben.';
 
   @override
+  String get permAllowsOverrideTillPrice =>
+      'Eine Kassenzeile zu einem anderen Preis als dem des Artikels verkaufen, mit einem Grund, den der Beleg festhält. Ohne dieses Recht wird eine Kassenzeile zum Preis des Artikels verkauft.';
+
+  @override
   String get permAllowsPaymentTermsEdit =>
       'Eine Änderung der Zahlungsbedingungen eines Mitglieds beantragen; die Genehmigung entscheidet.';
 
@@ -26063,6 +26054,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get permOperateKiosk => 'Kiosk und Badges bedienen';
+
+  @override
+  String get permOverrideTillPrice => 'Preis an der Kasse ändern';
 
   @override
   String get permPaymentTermsEdit =>
@@ -32848,6 +32842,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die meisten Zellen, die ein Kassenlayout über alle Seiten und Größen haben darf. Ein größeres Layout wird beim Speichern abgelehnt.';
 
   @override
+  String get settingHintCounterMaxDiscount =>
+      'Der größte Rabatt in Prozent, den eine Kassiererin oder ein Kassierer auf eine Kassenzeile geben darf. 0 heißt: kein Rabatt an der Kasse.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.';
 
@@ -33296,6 +33294,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelCounterLayoutMaxCells => 'Größe des Kassenlayouts';
+
+  @override
+  String get settingLabelCounterMaxDiscount => 'Größter Rabatt an der Kasse';
 
   @override
   String get settingLabelCounterOfflineMaxMinutes =>
@@ -41634,6 +41635,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get tillDiscountBeyond =>
+      'Dieser Rabatt liegt über dem, was das Unternehmen an der Kasse erlaubt.';
+
+  @override
+  String get tillDiscountField => 'Rabatt (%)';
+
+  @override
+  String get tillDiscountInvalid =>
+      'Ein Rabatt ist ein Prozentsatz vom Artikelpreis, auf einer Zeile ohne geänderten Preis.';
+
+  @override
   String get tillDrawerAddTill => 'Kasse hinzufügen';
 
   @override
@@ -42160,6 +42172,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Es wird nichts nummeriert und nichts kassiert, solange der Vorgang des Landes nicht unterstützt wird.';
 
   @override
+  String get tillNothingToReprint => 'Noch kein Verkauf zum erneuten Drucken.';
+
+  @override
   String get tillOfflineBanner =>
       'Offline – nur Barzahlung. Die Verkäufe bleiben auf diesem Gerät und werden gesendet, sobald die Verbindung wieder da ist.';
 
@@ -42297,6 +42312,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String tillPieceTwice(String code) {
     return 'Stück $code ist schon im Warenkorb.';
   }
+
+  @override
+  String get tillPriceField => 'Neuer Preis';
+
+  @override
+  String get tillPriceNotAllowed =>
+      'Sie dürfen an der Kasse keinen Preis ändern. Die Zeile wird zum Preis des Artikels verkauft.';
+
+  @override
+  String get tillPriceReason => 'Grund';
+
+  @override
+  String get tillPriceReasonHint => 'Wird auf dem Beleg festgehalten.';
+
+  @override
+  String get tillPriceReasonMissing =>
+      'Ein geänderter Preis braucht einen Grund.';
+
+  @override
+  String get tillPriceUnreadable => 'Geben Sie eine Zahl ein, etwa 4,50.';
 
   @override
   String get tillPricing => 'Warenkorb wird berechnet …';
@@ -42450,7 +42485,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillReceiptChange => 'Rückgeld';
 
   @override
-  String get tillReceiptCopy => '*** KOPIE ***';
+  String tillReceiptCopy(String copy) {
+    return 'KOPIE $copy — kein neuer Beleg';
+  }
 
   @override
   String tillReceiptCorrects(String number) {
@@ -42518,6 +42555,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tillRetry => 'Erneut versuchen';
+
+  @override
+  String get tillRingUpFirst => 'Erfassen Sie zuerst einen Artikel.';
 
   @override
   String get tillScanLabel => 'Code scannen';

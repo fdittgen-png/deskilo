@@ -9,7 +9,8 @@ import '../../../l10n/app_localizations.dart';
 import '../domain/counter_till.dart';
 import '../domain/escpos_receipt.dart';
 
-/// What the receipt of a sale says. [givenMinor] is the cash the customer handed over, [changeMinor] what came back.
+/// What the receipt of a sale says. [givenMinor] is the cash the customer handed over, [changeMinor] what came back;
+/// [copy] is the copy's number the server counted (#4476), null for the receipt as issued.
 ReceiptPrint tillReceiptOf({
   required AppLocalizations l10n,
   required AppFormat fmt,
@@ -20,7 +21,7 @@ ReceiptPrint tillReceiptOf({
   required DateTime at,
   required int givenMinor,
   required int changeMinor,
-  required bool copy,
+  required int? copy,
 }) {
   final money = fmt.moneyIn(sold.totals.currency);
   final separator = decimalSeparatorOf(fmt.locale);
@@ -43,7 +44,7 @@ ReceiptPrint tillReceiptOf({
     tenders: [ReceiptPrintTender(label: l10n.tillReceiptCash, amount: money.formatMinor(givenMinor))],
     changeLabel: changeMinor > 0 ? l10n.tillReceiptChange : '',
     change: changeMinor > 0 ? money.formatMinor(changeMinor) : '',
-    copyMark: copy ? l10n.tillReceiptCopy : '',
+    copyMark: copy == null ? '' : l10n.tillReceiptCopy('$copy'),
     footer: l10n.tillReceiptThanks,
   );
 }
