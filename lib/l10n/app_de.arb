@@ -12827,6 +12827,16 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataCount": "{count, plural, =0{Keine Einträge} one{{count} Eintrag} other{{count} Einträge}}",
+  "masterDataCustomersDesc": "Wem Sie Rechnungen stellen",
+  "masterDataGroupCatalogue": "Verkaufskatalog",
+  "masterDataGroupMeasures": "Maße und Steuern",
+  "masterDataGroupPartners": "Geschäftspartner",
+  "masterDataGroupPlaces": "Lagerorte und Bestand",
+  "masterDataIntro": "Alle Listen, mit denen das Unternehmen eingerichtet ist, an einem Ort. Tippen Sie auf eine Karte, um ihren Editor zu öffnen.",
+  "masterDataItemGroupsDesc": "Gemeinsame Einstellungen einer Artikelgruppe",
+  "masterDataItemsDesc": "Was Sie lagern und verkaufen",
+  "masterDataNoMatch": "Keine Stammdaten passen zur Suche.",
   "masterDataNoUnit": "Keine Einheit",
   "@masterDataNoUnit": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
@@ -12835,12 +12845,19 @@
   "@masterDataNoVat": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
   },
+  "masterDataPlacesDesc": "Wo Ihre Waren lagern",
   "masterDataSearchHint": "Namen oder Code eingeben oder aus der Liste wählen",
+  "masterDataServicesDesc": "Die Leistungen, die Sie verkaufen",
+  "masterDataSitesDesc": "Ihre Adressen und die Ebenen an jeder",
+  "masterDataSuppliersDesc": "Bei wem Sie einkaufen",
+  "masterDataTills": "Kassen",
+  "masterDataTillsDesc": "Die Kassen am Tresen und ihre Tastenbelegung",
   "masterDataUnknownCode": "Das ist kein gültiger Eintrag. Wählen Sie einen aus der Liste.",
   "masterDataUnlisted": "Das steht nicht in der Liste: bitte eines wählen",
   "@masterDataUnlisted": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
   },
+  "masterDataVatDesc": "Die Sätze, die Ihre Belege berechnen",
   "mcpApiReference": "API-Referenz",
   "mcpApiReferenceHint": "Was ein Assistent aufrufen kann und wie es autorisiert wird",
   "mcpAssistantsTitle": "Assistenten",

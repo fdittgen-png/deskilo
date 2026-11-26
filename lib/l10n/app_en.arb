@@ -27808,6 +27808,51 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataCount": "{count, plural, =0{No records} one{{count} record} other{{count} records}}",
+  "@masterDataCount": {
+    "description": "#4485 how many records a kind of master data holds, on its card",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "masterDataCustomersDesc": "Who you invoice",
+  "@masterDataCustomersDesc": {
+    "description": "#4485 one line under the Billing customers card"
+  },
+  "masterDataGroupCatalogue": "Catalogue",
+  "@masterDataGroupCatalogue": {
+    "description": "#4485 group of the Master data page: items, item groups, services"
+  },
+  "masterDataGroupMeasures": "Measures and taxes",
+  "@masterDataGroupMeasures": {
+    "description": "#4485 group of the Master data page: units and VAT rates"
+  },
+  "masterDataGroupPartners": "Partners",
+  "@masterDataGroupPartners": {
+    "description": "#4485 group of the Master data page: suppliers and customers"
+  },
+  "masterDataGroupPlaces": "Places and stock",
+  "@masterDataGroupPlaces": {
+    "description": "#4485 group of the Master data page: stock places and tills"
+  },
+  "masterDataIntro": "Every list the business is set up with, in one place. Tap a card to open its editor.",
+  "@masterDataIntro": {
+    "description": "#4485 the Master data page's intro and its row in the workspace settings"
+  },
+  "masterDataItemGroupsDesc": "Settings shared by a group of items",
+  "@masterDataItemGroupsDesc": {
+    "description": "#4485 one line under the Item groups card"
+  },
+  "masterDataItemsDesc": "What you stock and sell",
+  "@masterDataItemsDesc": {
+    "description": "#4485 one line under the Items card"
+  },
+  "masterDataNoMatch": "No master data matches the search.",
+  "@masterDataNoMatch": {
+    "description": "#4485 the Master data page's search finds no card"
+  },
   "masterDataNoUnit": "No unit",
   "@masterDataNoUnit": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
@@ -27816,9 +27861,33 @@
   "@masterDataNoVat": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
   },
+  "masterDataPlacesDesc": "Where your goods are kept",
+  "@masterDataPlacesDesc": {
+    "description": "#4485 one line under the stock Places card"
+  },
   "masterDataSearchHint": "Type a name or a code, or pick from the list",
   "@masterDataSearchHint": {
     "description": "#3563 Helper under a field that names master data (a country, a currency): what can be typed."
+  },
+  "masterDataServicesDesc": "The services you sell",
+  "@masterDataServicesDesc": {
+    "description": "#4485 one line under the Services card"
+  },
+  "masterDataSitesDesc": "Your addresses and the levels at each",
+  "@masterDataSitesDesc": {
+    "description": "#4485 one line under the Sites card"
+  },
+  "masterDataSuppliersDesc": "Who you buy from",
+  "@masterDataSuppliersDesc": {
+    "description": "#4485 one line under the Suppliers card"
+  },
+  "masterDataTills": "Tills",
+  "@masterDataTills": {
+    "description": "#4485 card of the Master data page: the tills"
+  },
+  "masterDataTillsDesc": "The tills at the counter and their key layouts",
+  "@masterDataTillsDesc": {
+    "description": "#4485 one line under the Tills card"
   },
   "masterDataUnknownCode": "This is not a valid entry. Pick one from the list.",
   "@masterDataUnknownCode": {
@@ -27827,6 +27896,10 @@
   "masterDataUnlisted": "This is not in the list: pick one",
   "@masterDataUnlisted": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
+  },
+  "masterDataVatDesc": "The rates your documents charge",
+  "@masterDataVatDesc": {
+    "description": "#4485 one line under the VAT rates card"
   },
   "mcpApiReference": "API reference",
   "@mcpApiReference": {

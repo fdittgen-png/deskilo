@@ -394,6 +394,8 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/stock/units', CoverageStatus.planned, owner: '#1884'),
   // #4442 -- Settings > Units of measure.
   RouteCoverage('/settings/units', CoverageStatus.planned, owner: '#1884'),
+  // #4485 -- Settings > Master data.
+  RouteCoverage('/settings/master-data', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/items', CoverageStatus.planned, owner: '#1884'),
   // #4480 -- one item at its own address, beside the list on a wide window.
   RouteCoverage('/stock/items/:itemId', CoverageStatus.planned, owner: '#1884'),

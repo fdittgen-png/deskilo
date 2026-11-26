@@ -75,6 +75,12 @@ joins that set deliberately. What still pins: a **default-off** flag joins
 moves `process_overview_test`'s fixture; a default-ON child of a default-OFF
 parent breaks `template_contract_test` (reference.md "Flags").
 
+A new kind of master data (a list a picker reads, or a configured list of a
+business) gets its card on the Master data page in the same PR: a
+`MasterDataKind` in `lib/app/master_data/master_data_kinds.dart` and a line in
+`test/lint/master_data_registry_test.dart` (AGENT_RULES "Master data lives on
+the Master data page", #4485).
+
 Other registries: validation domains grow in FOUR places (AGENT_RULES); a new
 `WorkspacePermission` needs the SQL catalog (`deskilo-supabase-migration`);
 placeholders have their own pin (`deskilo-reports`); a new configuration domain

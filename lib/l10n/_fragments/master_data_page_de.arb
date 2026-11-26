@@ -1,0 +1,19 @@
+{
+  "masterDataIntro": "Alle Listen, mit denen das Unternehmen eingerichtet ist, an einem Ort. Tippen Sie auf eine Karte, um ihren Editor zu öffnen.",
+  "masterDataGroupMeasures": "Maße und Steuern",
+  "masterDataGroupCatalogue": "Verkaufskatalog",
+  "masterDataGroupPlaces": "Lagerorte und Bestand",
+  "masterDataGroupPartners": "Geschäftspartner",
+  "masterDataTills": "Kassen",
+  "masterDataVatDesc": "Die Sätze, die Ihre Belege berechnen",
+  "masterDataItemsDesc": "Was Sie lagern und verkaufen",
+  "masterDataItemGroupsDesc": "Gemeinsame Einstellungen einer Artikelgruppe",
+  "masterDataServicesDesc": "Die Leistungen, die Sie verkaufen",
+  "masterDataPlacesDesc": "Wo Ihre Waren lagern",
+  "masterDataTillsDesc": "Die Kassen am Tresen und ihre Tastenbelegung",
+  "masterDataSuppliersDesc": "Bei wem Sie einkaufen",
+  "masterDataCustomersDesc": "Wem Sie Rechnungen stellen",
+  "masterDataSitesDesc": "Ihre Adressen und die Ebenen an jeder",
+  "masterDataCount": "{count, plural, =0{Keine Einträge} one{{count} Eintrag} other{{count} Einträge}}",
+  "masterDataNoMatch": "Keine Stammdaten passen zur Suche."
+}
