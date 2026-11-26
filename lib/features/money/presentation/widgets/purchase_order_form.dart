@@ -8,6 +8,8 @@
 // the same entries sends the same request id, so it never saves twice.
 // #3608 — the order is a long task (purchase_order_page.dart); the summary
 // beside its form follows what is typed ([PurchaseOrderForm.changes]).
+import 'dart:async';
+
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show VatRate;
 import 'package:flutter/material.dart';
@@ -319,6 +321,18 @@ class PurchaseOrderForm {
     ];
   }
 
+  /// #4479 -- a line that names a stocked item starts in the unit the supplier sells it in, else its default purchase unit, else its own;
+  /// a unit already chosen that the item converts from is kept.
+  Future<void> _startUnit(BuildContext context, int i, String itemId, VoidCallback refresh) async {
+    final container = ProviderScope.containerOf(context);
+    final found = await container.read(itemOrderUnitsProvider((workspaceId: workspaceId, itemId: itemId, supplierId: supplierId)).future);
+    final current = fields['unit-$i'].text;
+    final start = found?.defaultUnit;
+    if (itemIds[i] != itemId || start == null || (current.isNotEmpty && found!.units.any((u) => u.code == current))) return;
+    fields['unit-$i'].text = start;
+    refresh();
+  }
+
   List<Widget> _line(
     BuildContext context,
     AppLocalizations l10n,
@@ -372,6 +386,7 @@ class PurchaseOrderForm {
       onChanged: (v) {
         itemIds[i] = v;
         refresh();
+        if (v != null) unawaited(_startUnit(context, i, v, refresh));
       },
     ),
     AppTextField(
@@ -392,6 +407,7 @@ class PurchaseOrderForm {
       key: ValueKey('purchase-order-unit-$i'),
       workspaceId: workspaceId,
       itemId: itemIds[i],
+      supplierId: supplierId,
       value: fields['unit-$i'].text,
       label: l10n.purchaseOrderUnit,
       errorText: shown['unit-$i'],

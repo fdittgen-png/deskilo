@@ -41,8 +41,10 @@ const _workspace = Workspace(
 Widget _scope(List<Override> overrides) => purchaseOrdersApp(overrides);
 
 Future<(FakePurchaseOrderRepository, Widget)> _app(
-  Set<WorkspacePermission> permissions,
-) async {
+  Set<WorkspacePermission> permissions, {
+  List<ServiceItem> items = const [],
+  List<Override> extra = const [],
+}) async {
   final suppliers = FakeSupplierRepository();
   final alpha = await suppliers.save('ws', const SupplierDraft(name: 'Alpha'));
   final orders = FakePurchaseOrderRepository(
@@ -76,7 +78,8 @@ Future<(FakePurchaseOrderRepository, Widget)> _app(
       }),
       supplierRepositoryProvider.overrideWithValue(suppliers),
       purchaseOrderRepositoryProvider.overrideWithValue(orders),
-      servicesProvider.overrideWith((ref) async => const <ServiceItem>[]),
+      servicesProvider.overrideWith((ref) async => items),
+      ...extra,
       pickableUnitsProvider.overrideWith(
         (ref, workspaceId) => const [LineUnit(code: 'piece'), LineUnit(code: 'kg'), LineUnit(code: 'h')],
       ),
@@ -477,6 +480,29 @@ void main() {
         await _settle(tester);
         final line = orders.orders.last.lines.single;
         expect((line.unit, line.vatRatePercent), ('kg', 5.5));
+      });
+
+      testWidgets('a line that names a stocked item starts in the unit the supplier sells it in, and offers only what it converts from', (tester) async {
+        tester.view.physicalSize = size;
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        final (_, app) = await _app(
+          {WorkspacePermission.managePurchases},
+          items: const [ServiceItem(id: 'mugs', workspaceId: 'ws', name: 'Mugs', priceCents: 100, active: true)],
+          extra: [
+            itemOrderUnitsProvider.overrideWith(
+              (ref, key) async => const ItemOrderUnits(units: [LineUnit(code: 'piece'), LineUnit(code: 'kg')], defaultUnit: 'kg'),
+            ),
+          ],
+        );
+        await tester.pumpWidget(app);
+        await _settle(tester);
+        await tester.tap(find.byKey(const ValueKey('purchase-order-new')));
+        await _settle(tester);
+        await _pick(tester, 'purchase-order-item-0', 'Mugs');
+        await _settle(tester);
+        expect(tester.takeException(), isNull);
+        expect(find.descendant(of: find.byKey(const ValueKey('purchase-order-unit-0')), matching: find.text('kg')), findsWidgets);
       });
 
       testWidgets('an old free unit and percent are shown, flagged, and must be replaced before saving', (tester) async {
