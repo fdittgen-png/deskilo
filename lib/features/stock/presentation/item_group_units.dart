@@ -27,20 +27,21 @@ class GroupUnitProposals {
 
   /// The starting text of each field, from the group's own parameters.
   static Map<String, String> initial(ItemGroup? group, AppFormat format) {
-    String factor(String key) => group?.params['default_${key}_factor_num'] == null
+    String factor(String key) => group?.params[key == 'purchase' ? groupParamPurchaseFactorNum : groupParamSaleFactorNum] == null
         ? ''
-        : purchaseFactorText((group!.params['default_${key}_factor_num']! as num).toInt(), ((group.params['default_${key}_factor_den'] ?? 1) as num).toInt());
-    final price = group?.params[_priceKey];
+        : purchaseFactorText(
+            (group!.params[key == 'purchase' ? groupParamPurchaseFactorNum : groupParamSaleFactorNum]! as num).toInt(),
+            ((group.params[key == 'purchase' ? groupParamPurchaseFactorDen : groupParamSaleFactorDen] ?? 1) as num).toInt(),
+          );
+    final price = group?.params[groupParamSalePrice];
     return {
-      'purchaseUnit': '${group?.params['default_purchase_unit'] ?? ''}',
-      'factor': factor('purchase'),
-      'saleUnit': '${group?.params['default_sale_unit'] ?? ''}',
+      'purchaseUnit': '${group?.params[groupParamPurchaseUnit] ?? ''}',
+      'purchaseFactor': factor('purchase'),
+      'saleUnit': '${group?.params[groupParamSaleUnit] ?? ''}',
       'saleFactor': factor('sale'),
       'salePrice': price == null ? '' : amountInputText((price as num).toInt(), currency: format.currencyCode, locale: format.locale),
     };
   }
-
-  static const _priceKey = 'default_sale_price_cents';
 
   PurchaseFactor? _factorOf(String key) => fields.text(key).isEmpty ? null : parsePurchaseFactor(fields.text(key));
 
@@ -50,18 +51,18 @@ class GroupUnitProposals {
 
   /// What the group sends for these proposals.
   Map<String, Object?> parameters() => {
-    'default_purchase_unit': fields.text('purchaseUnit').isEmpty ? null : fields.text('purchaseUnit'),
-    'default_purchase_factor_num': _factorOf('factor')?.num,
-    'default_purchase_factor_den': _factorOf('factor')?.den,
-    'default_sale_unit': fields.text('saleUnit').isEmpty ? null : fields.text('saleUnit'),
-    'default_sale_factor_num': _factorOf('saleFactor')?.num,
-    'default_sale_factor_den': _factorOf('saleFactor')?.den,
-    _priceKey: _price,
+    groupParamPurchaseUnit: fields.text('purchaseUnit').isEmpty ? null : fields.text('purchaseUnit'),
+    groupParamPurchaseFactorNum: _factorOf('purchaseFactor')?.num,
+    groupParamPurchaseFactorDen: _factorOf('purchaseFactor')?.den,
+    groupParamSaleUnit: fields.text('saleUnit').isEmpty ? null : fields.text('saleUnit'),
+    groupParamSaleFactorNum: _factorOf('saleFactor')?.num,
+    groupParamSaleFactorDen: _factorOf('saleFactor')?.den,
+    groupParamSalePrice: _price,
   };
 
   /// A unit and its factor go together, the factor is one number or a fraction above zero, the unit is one of the business's, and a price is an amount.
   FieldErrors errors(AppLocalizations l10n) => {
-    for (final (unit, factor) in [('purchaseUnit', 'factor'), ('saleUnit', 'saleFactor')]) ...{
+    for (final (unit, factor) in [('purchaseUnit', 'purchaseFactor'), ('saleUnit', 'saleFactor')]) ...{
       if (fields.text(factor).isNotEmpty && _factorOf(factor) == null) factor: l10n.stockReasonOutOfRange,
       if (fields.text(unit).isNotEmpty && fields.text(factor).isEmpty) factor: l10n.stockReasonOutOfRange,
       if (fields.text(unit).isEmpty && fields.text(factor).isNotEmpty) unit: l10n.stockReasonNameMalformed,
@@ -85,7 +86,7 @@ class GroupUnitProposals {
       }),
     ),
     const FormGap(),
-    AppTextField(key: const ValueKey('item-group-factor'), controller: fields['factor'], fieldKey: 'factor', label: l10n.itemGroupPurchaseFactor, onChanged: (_) => touched()),
+    AppTextField(key: const ValueKey('item-group-factor'), controller: fields['purchaseFactor'], fieldKey: 'purchaseFactor', label: l10n.itemGroupPurchaseFactor, onChanged: (_) => touched()),
     const FormGap(),
     StockUnitPicker(
       key: const ValueKey('item-group-sale-unit'),
@@ -115,3 +116,13 @@ class GroupUnitProposals {
     const FormGap(),
   ];
 }
+
+/// The label of a unit proposal of a group, or null when [param] is none.
+String? groupUnitParamLabel(AppLocalizations l10n, String param) => switch (param) {
+  groupParamPurchaseUnit => l10n.itemGroupPurchaseUnit,
+  groupParamPurchaseFactorNum || groupParamPurchaseFactorDen => l10n.itemGroupPurchaseFactor,
+  groupParamSaleUnit => l10n.itemGroupSaleUnit,
+  groupParamSaleFactorNum || groupParamSaleFactorDen => l10n.itemGroupSaleFactor,
+  groupParamSalePrice => l10n.itemGroupSalePrice,
+  _ => null,
+};
