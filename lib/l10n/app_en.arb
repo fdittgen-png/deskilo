@@ -24839,10 +24839,6 @@
   "@itemGroupAssignNone": {
     "description": "#4361 G12 item groups: itemGroupAssignNone"
   },
-  "itemGroupAssignOpen": "Group and inherited settings",
-  "@itemGroupAssignOpen": {
-    "description": "#4361 G12 item groups: itemGroupAssignOpen"
-  },
   "itemGroupAssignTitle": "Group of {item}",
   "@itemGroupAssignTitle": {
     "description": "#4361 G12 item groups: itemGroupAssignTitle",
@@ -27812,6 +27808,14 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataNoUnit": "No unit",
+  "@masterDataNoUnit": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
+  },
+  "masterDataNoVat": "No VAT",
+  "@masterDataNoVat": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
+  },
   "masterDataSearchHint": "Type a name or a code, or pick from the list",
   "@masterDataSearchHint": {
     "description": "#3563 Helper under a field that names master data (a country, a currency): what can be typed."
@@ -27819,6 +27823,10 @@
   "masterDataUnknownCode": "This is not a valid entry. Pick one from the list.",
   "@masterDataUnknownCode": {
     "description": "#3563 Error under a master-data field (country, currency) whose value is outside the catalogue; shown for a stored value too."
+  },
+  "masterDataUnlisted": "This is not in the list: pick one",
+  "@masterDataUnlisted": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
   },
   "mcpApiReference": "API reference",
   "@mcpApiReference": {
@@ -29877,6 +29885,10 @@
   "measureDimensionMass": "Mass",
   "@measureDimensionMass": {
     "description": "#4442 dimension: mass"
+  },
+  "measureDimensionPackage": "Package",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
   },
   "measureDimensionTime": "Time",
   "@measureDimensionTime": {
@@ -47733,10 +47745,6 @@
   "@stockEditInventoryUnitChoice": {
     "description": "#4169 the stock editors: a label or message"
   },
-  "stockEditItem": "Stock settings",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Stock settings of {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -47976,9 +47984,65 @@
   "@stockItemAddTitle": {
     "description": "#4350 adding an item, and the first-run stock page"
   },
+  "stockItemAttentionLow": "Low stock",
+  "@stockItemAttentionLow": {
+    "description": "#4480 Stock items: the badge on an item's row and page for something the item needs"
+  },
+  "stockItemAttentionNoPlace": "No place",
+  "@stockItemAttentionNoPlace": {
+    "description": "#4480 Stock items: the badge on an item's row and page for something the item needs"
+  },
+  "stockItemAttentionNoPrice": "No price",
+  "@stockItemAttentionNoPrice": {
+    "description": "#4480 Stock items: the badge on an item's row and page for something the item needs"
+  },
   "stockItemEditDetails": "Edit name, price and VAT",
   "@stockItemEditDetails": {
     "description": "#4470 Stock items: tooltip of the button that opens the service editor for the item"
+  },
+  "stockItemEditGroup": "Change group",
+  "@stockItemEditGroup": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditHome": "Change home place",
+  "@stockItemEditHome": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditSettings": "Edit units, codes and tracking",
+  "@stockItemEditSettings": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditSuppliers": "Edit supplier items",
+  "@stockItemEditSuppliers": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditTags": "Edit tags",
+  "@stockItemEditTags": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditVariants": "Edit variants",
+  "@stockItemEditVariants": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemFactBarcode": "Barcode",
+  "@stockItemFactBarcode": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactCost": "Last known cost",
+  "@stockItemFactCost": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactVat": "VAT",
+  "@stockItemFactVat": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFilterAll": "All items",
+  "@stockItemFilterAll": {
+    "description": "#4480 Stock items: a filter chip above the list"
+  },
+  "stockItemFilterNoHome": "Without a home place",
+  "@stockItemFilterNoHome": {
+    "description": "#4480 Stock items: a filter chip above the list"
   },
   "stockItemNewBarcode": "Barcode (optional)",
   "@stockItemNewBarcode": {
@@ -48024,6 +48088,50 @@
   "stockItemNewUnit": "Counted in",
   "@stockItemNewUnit": {
     "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNoGroup": "In no group",
+  "@stockItemNoGroup": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemNoSuppliers": "No supplier article names this item yet.",
+  "@stockItemNoSuppliers": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemNoVariants": "This item has no variants.",
+  "@stockItemNoVariants": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemNothingOnHand": "None of it is in stock.",
+  "@stockItemNothingOnHand": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemPlacesTitle": "Where it is",
+  "@stockItemPlacesTitle": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemSectionGroupTags": "Group and tags",
+  "@stockItemSectionGroupTags": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionOverview": "Overview",
+  "@stockItemSectionOverview": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionStock": "Stock",
+  "@stockItemSectionStock": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionSuppliers": "Supplier items",
+  "@stockItemSectionSuppliers": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionVariants": "Variants",
+  "@stockItemSectionVariants": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSeeWhere": "See every place",
+  "@stockItemSeeWhere": {
+    "description": "#4480 the page of one stock item: a line or a message"
   },
   "stockItemsEmpty": "No items yet. An item is a service you keep in stock: choose Add an item.",
   "@stockItemsEmpty": {
@@ -48493,6 +48601,14 @@
   "@stockReasonCombinationDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonConversionSameUnit": "A conversion needs two different units.",
+  "@stockReasonConversionSameUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonConversionUnknown": "This conversion is not defined.",
+  "@stockReasonConversionUnknown": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonCostInvalid": "This cost is not valid: a total in minor units, and a rate only for another currency.",
   "@stockReasonCostInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -48681,6 +48797,10 @@
   "@stockReasonOverAllocated": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
   },
+  "stockReasonPackageUnit": "A packaging unit has no general conversion: its factor is set on the item.",
+  "@stockReasonPackageUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonParentInactive": "The place it is inside is no longer in use.",
   "@stockReasonParentInactive": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -48845,15 +48965,6 @@
   "@stockRegistryAllPlaces": {
     "description": "#4293 the registry of the stock: a label or a message"
   },
-  "stockRegistryCost": "cost {amount}",
-  "@stockRegistryCost": {
-    "description": "#4293 the registry of the stock: a label or a message",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "stockRegistryCostHidden": "cost not shown",
   "@stockRegistryCostHidden": {
     "description": "#4293 the registry of the stock: a label or a message"
@@ -48900,10 +49011,6 @@
   "@stockRegistryNoHome": {
     "description": "#4293 the registry of the stock: a label or a message"
   },
-  "stockRegistryNoHomeFilter": "Only items with no home place",
-  "@stockRegistryNoHomeFilter": {
-    "description": "#4293 the registry of the stock: a label or a message"
-  },
   "stockRegistryOnHand": "{quantity} on hand",
   "@stockRegistryOnHand": {
     "description": "#4293 the registry of the stock: a label or a message",
@@ -48916,15 +49023,6 @@
   "stockRegistryPlaceFilter": "Home place",
   "@stockRegistryPlaceFilter": {
     "description": "#4293 the registry of the stock: a label or a message"
-  },
-  "stockRegistryPrice": "price {amount}",
-  "@stockRegistryPrice": {
-    "description": "#4293 the registry of the stock: a label or a message",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
   },
   "stockRegistrySearch": "Find an item by name, barcode or address",
   "@stockRegistrySearch": {
@@ -50095,10 +50193,6 @@
   },
   "stockVariantsAdd": "Add a variant",
   "@stockVariantsAdd": {
-    "description": "#4169 the stock editors: a label or message"
-  },
-  "stockVariantsEdit": "Variants",
-  "@stockVariantsEdit": {
     "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsHint": "A variant is one value of each dimension, such as red and size M. Stock is kept per variant.",
@@ -54408,6 +54502,62 @@
   "@tillLeaveTitle": {
     "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
   },
+  "tillLotChoose": "Choose the lot",
+  "@tillLotChoose": {
+    "description": "#4366 the seller chooses the lot a till line is sold from"
+  },
+  "tillLotExpired": "Past its date ({date}): not sold",
+  "@tillLotExpired": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotExpires": "Use by {date}",
+  "@tillLotExpires": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotFirstToExpire": "The first to expire (chosen by the stock)",
+  "@tillLotFirstToExpire": {
+    "description": "#4366 the seller chooses the lot a till line is sold from"
+  },
+  "tillLotLine": "Lot {code}",
+  "@tillLotLine": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotNone": "{item} has no lot to choose: it is sold as it is.",
+  "@tillLotNone": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotOnHand": "{quantity} {unit} on hand",
+  "@tillLotOnHand": {
+    "description": "#4366 what is on hand of a lot; quantity arrives formatted in the reader's number format",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
   "tillNextCustomer": "Next customer",
   "@tillNextCustomer": {
     "description": "#4366 the till"
@@ -55475,6 +55625,69 @@
   "unblockAction": "Unblock",
   "@unblockAction": {
     "description": "Shown as a text in blocked people card (me)."
+  },
+  "unitConversionDelete": "Delete",
+  "@unitConversionDelete": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionEdit": "Change a conversion",
+  "@unitConversionEdit": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactor": "How many",
+  "@unitConversionFactor": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactorHelp": "How many {to} make one {from}",
+  "@unitConversionFactorHelp": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionFrom": "From",
+  "@unitConversionFrom": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionLine": "1 {from} = {factor} {to}",
+  "@unitConversionLine": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "factor": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionNew": "Add a conversion",
+  "@unitConversionNew": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionTo": "To",
+  "@unitConversionTo": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsEmpty": "No conversion is defined yet.",
+  "@unitConversionsEmpty": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsIntro": "A conversion says how many of one unit make another. It works both ways, in one step. An item's own conversion (a carton of 12) wins over these, and a packaging unit has none here.",
+  "@unitConversionsIntro": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsTitle": "Conversions",
+  "@unitConversionsTitle": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
   },
   "unknownWireInvoiceKind": "A kind this version of the app does not know",
   "@unknownWireInvoiceKind": {

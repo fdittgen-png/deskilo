@@ -3,6 +3,7 @@
 // #4442 -- the units of a business as the app reads them: a row decodes with its exact factor and a dimension it knows (one
 // it does not know is an error, never a guess), a draft says only what the person changed, and a conversion is exact through
 // the base unit: 2.5 km is 2500 m, two dimensions never convert, and an answer six decimals cannot hold is refused.
+import 'package:deskilo/core/demo/data/demo_workspace_units.dart';
 import 'package:deskilo/features/stock/domain/workspace_units.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -41,6 +42,22 @@ void main() {
       expect([km.label, km.builtIn, km.archived, km.sortOrder], [null, true, false, 1000]);
       expect(() => WorkspaceUnit.fromJson({'code': 'x', 'dimension': 'luminosity', 'factor_num': 1, 'factor_den': 1}), throwsFormatException);
       expect(() => WorkspaceUnit.fromJson({'code': 'x', 'dimension': 'length', 'factor_num': 1}), throwsA(anything));
+    });
+  });
+
+  group('a packaging unit (#4479)', () {
+    test('is a unit of the package dimension, read as the server writes it', () {
+      final unit = WorkspaceUnit.fromJson({'code': 'carton', 'label': 'Carton', 'dimension': 'package', 'factor_num': 1, 'factor_den': 1});
+      expect(unit.dimension, UnitDimension.package);
+      expect(UnitDimension.fromWire('package'), UnitDimension.package);
+    });
+
+    test('is in the Demo\'s units: the boxes, cartons, thirds and rolls its items and orders name', () async {
+      final units = await DemoWorkspaceUnits().units('ws-1');
+      for (final code in ['box', 'carton', 'third', 'roll']) {
+        expect(units.where((u) => u.code == code).map((u) => u.dimension), [UnitDimension.package], reason: code);
+      }
+      expect(units.where((u) => u.builtIn), hasLength(13), reason: 'the built-ins are the same thirteen');
     });
   });
 
@@ -112,6 +129,11 @@ void main() {
 
     test('with the feature off: the six of before, as ever', () {
       expect(codes(pickableUnits([...builtInUnits, drum], unitsOn: false)), ['piece', 'g', 'kg', 'ml', 'cl', 'l']);
+    });
+    test('with the feature off, a packaging unit the business holds is still offered (the feature hides the screen, not the units)', () {
+      const carton = WorkspaceUnit(code: 'carton', label: 'Carton', dimension: UnitDimension.package, factorNum: 1, factorDen: 1);
+      expect(codes(pickableUnits([...builtInUnits, carton, drum], unitsOn: false)), ['piece', 'g', 'kg', 'ml', 'cl', 'l', 'carton']);
+      expect(codes(pickableUnits([...builtInUnits, carton.copyWith(archived: true)], unitsOn: false)), isNot(contains('carton')));
     });
     test('with it on: every unit that is not archived, the custom ones included', () {
       expect(codes(pickableUnits([...builtInUnits, drum], unitsOn: true)), [...builtInUnits.map((u) => u.code), 'drum']);

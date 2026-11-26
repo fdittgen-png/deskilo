@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'feature_countries.dart';
+import 'feature_manifest_early.dart';
 import 'feature_manifest_entry.dart';
+import 'feature_manifest_late.dart';
+import 'feature_manifest_mid.dart';
 import 'feature_manifest_stock.dart';
 
 export 'feature_countries.dart';
 export 'feature_manifest_entry.dart';
 export 'feature_resolution.dart';
 
-part 'feature_manifest_part1.dart';
-part 'feature_manifest_part2.dart';
-part 'feature_manifest_part3.dart';
 
 /// Per-workspace toggleable features (#146). The owner switches them
 /// on/off for the whole workspace; every member's client applies the
@@ -454,7 +453,7 @@ enum WorkspaceFeature {
 }
 
 /// The declarative feature registry, in DISPLAY order: children follow their parent.
-const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {..._manifest1, ..._manifest2, ..._manifest3, ...stockFeatureManifest, ...organisationFeatureManifest};
+const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {...earlyFeatureManifest, ...midFeatureManifest, ...lateFeatureManifest, ...stockFeatureManifest, ...organisationFeatureManifest};
 
 /// #2566 — a flag nobody has chosen is what a NEW workspace stores for it:
 /// a core flag follows `defaultOn`, a platform flag is off. SQL twin:

@@ -115,6 +115,12 @@ const Map<String, ({int allowed, String reason})> classifiedLiterals = {
   ),
   // #4169 -- the Demo shop's dimension values (Red, Blue): invented stock
   // data stored as a business keeps it, read back by the same port.
+  // #4479 -- the Demo's packaging units are the BUSINESS's own words for its own units (a box, a carton, a roll: master data a
+  // business names itself), shown in the language they were given, as the Demo's colour and zone names are.
+  'lib/core/demo/data/demo_workspace_units.dart': (
+    allowed: 4,
+    reason: 'the Demo business\'s own names for its packaging units, master data and not interface text',
+  ),
   'lib/core/demo/data/demo_stock_config_commands.dart': (
     allowed: 2,
     reason: 'demo records: the values of the Demo shop\'s Colour dimension',

@@ -90,6 +90,7 @@ abstract final class Routes {
   static const setup = '/setup';
   static const setupLaunch = '/setup/launch';
   static const setupLevels = '/setup/levels';
+  static const stockItems = '/stock/items';
   static const stockItemsAdd = '/stock/items?add=1';
   static const stockPlacesAdd = '/stock/places?add=1';
   static const stockSettings = '/stock/settings';

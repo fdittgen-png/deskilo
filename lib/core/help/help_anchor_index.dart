@@ -29,6 +29,7 @@ const helpAnchorIndex = <String>{
   HelpAnchor.moneyStockReorder,
   HelpAnchor.moneyStockValue,
   HelpAnchor.moneyStockRegistry,
+  HelpAnchor.moneyStockItem,
   HelpAnchor.moneyStockGroups,
   HelpAnchor.moneyStockReversals,
   HelpAnchor.moneyStockCycleCounts,

@@ -15,6 +15,7 @@ import 'package:deskilo/features/stock/domain/stock_ledger_rules.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../demo_replay.dart';
 import 'demo_stock_config_commands.dart';
 import 'demo_stock_ledger.dart';
 import 'demo_stock_tags.dart';
@@ -35,7 +36,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
   final DemoStockLedger _ledger;
 
   final List<({ReceiptAllocation row, String receiptId})> _rows = [];
-  final Map<String, PutAwayResult> _answers = {};
+  final _answers = Replay<PutAwayResult>();
   int _next = 1;
 
   static StockConfigRefused _refused(String field, StockRefusal reason) => StockConfigRefused(field, reason);
@@ -60,10 +61,10 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     List<PutAwayAllocation> allocations,
     String requestId,
   ) async {
-    if (_answers[requestId] case final done?) return (receiptId: done.receiptId, replayed: true, allocations: done.allocations);
+    if (_answers.seen(requestId) case final done?) return (receiptId: done.receiptId, replayed: true, allocations: done.allocations);
     if (!_mine(workspaceId)) throw _refused('receipt', StockRefusal.receiptUnknown);
     final written = await _apply(receiptId, allocations);
-    return _answers[requestId] = (receiptId: receiptId, replayed: false, allocations: written);
+    return _answers.keep(requestId, (receiptId: receiptId, replayed: false, allocations: written));
   }
 
   @override
@@ -73,7 +74,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     List<PutAwayAllocation> allocations,
     String requestId,
   ) async {
-    if (_answers[requestId] case final done?) return (receiptId: done.receiptId, replayed: true, allocations: done.allocations);
+    if (_answers.seen(requestId) case final done?) return (receiptId: done.receiptId, replayed: true, allocations: done.allocations);
     if (!_mine(workspaceId)) throw _refused('receipt', StockRefusal.receiptUnknown);
     final i = _orders.orders.indexWhere((o) => o.id == delivery.orderId);
     if (i < 0) throw _refused('request', StockRefusal.malformed);
@@ -94,7 +95,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
       );
       final receipt = _orders.receipts.last;
       final written = await _apply(receipt.id, allocations);
-      return _answers[requestId] = (receiptId: receipt.id, replayed: false, allocations: written);
+      return _answers.keep(requestId, (receiptId: receipt.id, replayed: false, allocations: written));
     } on Object {
       // both halves or neither
       _orders.orders[i] = savedOrder;
@@ -191,21 +192,34 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     final received = receipt.lines[a.lineNo];
     if (line == null || received == null) throw _refused('allocations[$i].line', StockRefusal.lineUnknown);
     final item = line.serviceId == null ? null : await _config.item(workspaceId, line.serviceId!);
-    final unit = line.unit.isEmpty ? item?.inventoryUnit ?? '' : line.unit;
+    final lineUnit = line.unit.isEmpty ? item?.inventoryUnit ?? '' : line.unit;
+    // #4479 -- an allocation may be counted in another unit of the item; what is left, and what was put away, count in the line's
+    final unit = (a.unit ?? '').isEmpty ? lineUnit : a.unit!;
+    final lineFactor = item == null ? null : _ledger.core.configFactor(item, lineUnit);
+    final unitFactor = item == null ? null : _ledger.core.configFactor(item, unit);
+    ExactQuantity inLine(ExactQuantity q, String from) {
+      final f = item == null ? null : _ledger.core.configFactor(item, from);
+      if (from == lineUnit || f == null || lineFactor == null) return q;
+      return q.scaled(f.num * lineFactor.den, f.den * lineFactor.num, round: true).value ?? q;
+    }
     final already = _rows
             .where((r) => r.row.receiptLineId == '${receipt.id}:${a.lineNo}')
-            .fold(ExactQuantity.zero, (s, r) => s + r.row.enteredQuantity) +
+            .fold(ExactQuantity.zero, (s, r) => s + inLine(r.row.enteredQuantity, r.row.enteredUnit)) +
         (running[a.lineNo] ?? ExactQuantity.zero);
+    final leftInLine = exactOfReceived(received) - already;
+    final left = unit == lineUnit || unitFactor == null || lineFactor == null
+        ? leftInLine
+        : leftInLine.scaled(lineFactor.num * unitFactor.den, lineFactor.den * unitFactor.num, round: true).value ?? leftInLine;
     final variants = item != null && (await _config.variants(workspaceId, item.itemId)).any((v) => v.active);
     final (entered: qty, :inventory) = _ledger.core.putAwayPart(
       i,
       item: item,
       unit: unit,
       part: a,
-      left: exactOfReceived(received) - already,
+      left: left,
       hasVariants: variants,
     );
-    running[a.lineNo] = (running[a.lineNo] ?? ExactQuantity.zero) + qty;
+    running[a.lineNo] = (running[a.lineNo] ?? ExactQuantity.zero) + inLine(qty, unit);
     final n = _next++;
     return ReceiptAllocation(
       id: 'demo-alloc-$n',

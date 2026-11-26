@@ -33,6 +33,17 @@ class CommercialDocumentDraft {
   DateTime? startDate;
   DateTime? endDate;
 
+  /// The first date as shown: the one set, else [today].
+  DateTime startOn(DateTime today) => startDate ?? today;
+
+  /// The last date as shown: the one set, else the one [proposed] for the first date shown (the payment term, the validity).
+  DateTime endOn(DateTime today, DateTime Function(DateTime start) proposed) => endDate ?? proposed(startOn(today));
+
+  /// What was typed in the reference, the order and the notes, trimmed.
+  String get referenceText => reference.text.trim();
+  String get orderText => order.text.trim();
+  String get notesText => notes.text.trim();
+
   /// Gives the lines the identities the server kept for them, so the next save keeps them.
   void takeLineIds(List<StandaloneLine> saved) => attachLineIds(lines, saved);
 

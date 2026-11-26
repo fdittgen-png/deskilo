@@ -70,5 +70,12 @@
   "tillDiscountInvalid": "Un descuento es un porcentaje del precio del artículo, en una línea sin precio cambiado.",
   "tillRingUpFirst": "Registre primero un artículo.",
   "tillReceiptCopy": "COPIA {copy} — no es un tique nuevo",
-  "tillNothingToReprint": "Aún no hay ninguna venta que reimprimir."
+  "tillNothingToReprint": "Aún no hay ninguna venta que reimprimir.",
+  "tillLotChoose": "Elegir el lote",
+  "tillLotLine": "Lote {code}",
+  "tillLotFirstToExpire": "El primero en caducar (elegido por el stock)",
+  "tillLotExpires": "Consumir antes del {date}",
+  "tillLotExpired": "Caducado ({date}): no se vende",
+  "tillLotOnHand": "{quantity} {unit} en existencia",
+  "tillLotNone": "{item} no tiene lote que elegir: se vende tal cual."
 }

@@ -81,9 +81,9 @@ class _QuoteForm extends ChangeNotifier {
       subjectId: subject,
       issuedOn: doc.startDate,
       validUntil: doc.endDate,
-      buyerReference: doc.reference.text.trim(),
-      purchaseOrder: doc.order.text.trim(),
-      notes: doc.notes.text.trim(),
+      buyerReference: doc.referenceText,
+      purchaseOrder: doc.orderText,
+      notes: doc.notesText,
       lines: doc.toLines(context),
     );
   }
@@ -274,8 +274,8 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
             noCustomers: l10n.quoteNoCustomers,
           ),
           customers: [for (final c in customers) (id: c.subjectId, name: c.displayName)],
-          startShown: doc.startDate ?? today,
-          endShown: doc.endDate ?? validity.defaultEnd(doc.startDate ?? today),
+          startShown: doc.startOn(today),
+          endShown: doc.endOn(today, validity.defaultEnd),
           locked: locked,
           onChanged: _form.changed,
         ),

@@ -70,6 +70,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   // #4299 — the item registry and the places read like the stock; its settings
   // are for who manages the stock or the configuration.
   '/stock/items': {_P.viewStock, _P.manageStock},
+  '/stock/items/:itemId': {_P.viewStock, _P.manageStock},
   '/stock/places': {_P.viewStock, _P.manageStock},
   '/stock/settings': {_P.manageStock, _P.manageConfiguration},
   '/money/customers': {_P.manageBillingCustomers, _P.issueInvoices, _P.viewFinances},

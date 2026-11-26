@@ -4,7 +4,7 @@ import 'workspace_feature.dart';
 export 'feature_manifest_organisation.dart';
 
 /// #3824 — the stock flags of epic #3823, in display order, after the
-/// registry's three parts (`feature_manifest_part1-3.dart`): the goods
+/// registry's three files (`feature_manifest_early/mid/late.dart`): the goods
 /// ledger and, leaf by leaf, every stock flag under it.
 const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
   // #3824 — the goods ledger: where goods are, in which unit, from which

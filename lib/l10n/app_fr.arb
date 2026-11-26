@@ -11373,7 +11373,6 @@
     "description": "#3587 list view: one line per customer"
   },
   "itemGroupAssignNone": "Aucun groupe",
-  "itemGroupAssignOpen": "Groupe et réglages hérités",
   "itemGroupAssignTitle": "Groupe de {item}",
   "itemGroupClose": "Fermer",
   "itemGroupConfirm": "Vérifiez ce que cela atteint, puis enregistrez à nouveau pour l’appliquer.",
@@ -12828,8 +12827,20 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataNoUnit": "Aucune unité",
+  "@masterDataNoUnit": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
+  },
+  "masterDataNoVat": "Sans TVA",
+  "@masterDataNoVat": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
+  },
   "masterDataSearchHint": "Saisissez un nom ou un code, ou choisissez dans la liste",
   "masterDataUnknownCode": "Ce n'est pas une entrée valide. Choisissez-en une dans la liste.",
+  "masterDataUnlisted": "Ce n'est pas dans la liste : choisissez-en un",
+  "@masterDataUnlisted": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
+  },
   "mcpApiReference": "Référence de l’API",
   "mcpApiReferenceHint": "Ce qu’un assistant peut appeler, et comment c’est autorisé",
   "mcpAssistantsTitle": "Assistants",
@@ -13302,6 +13313,10 @@
   "measureDimensionMass": "Masse",
   "@measureDimensionMass": {
     "description": "#4442 dimension: mass"
+  },
+  "measureDimensionPackage": "Conditionnement",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
   },
   "measureDimensionTime": "Durée",
   "@measureDimensionTime": {
@@ -21435,10 +21450,6 @@
   "@stockEditInventoryUnitChoice": {
     "description": "#4169 the stock editors: a label or message"
   },
-  "stockEditItem": "Réglages du stock",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Réglages du stock de {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -21613,7 +21624,21 @@
   "stockItemAddNone": "Tous les services sont déjà tenus en stock, ou il n’y en a pas encore. Ajoutez d’abord un service, puis revenez.",
   "stockItemAddOpenServices": "Ouvrir les services",
   "stockItemAddTitle": "Ajouter un article",
+  "stockItemAttentionLow": "Stock bas",
+  "stockItemAttentionNoPlace": "Sans emplacement",
+  "stockItemAttentionNoPrice": "Sans prix",
   "stockItemEditDetails": "Modifier le nom, le prix et la TVA",
+  "stockItemEditGroup": "Changer de groupe",
+  "stockItemEditHome": "Changer l’emplacement de rangement",
+  "stockItemEditSettings": "Modifier les unités, les codes et le suivi",
+  "stockItemEditSuppliers": "Modifier les articles fournisseur",
+  "stockItemEditTags": "Modifier les puces",
+  "stockItemEditVariants": "Modifier les variantes",
+  "stockItemFactBarcode": "Code-barres",
+  "stockItemFactCost": "Dernier coût connu",
+  "stockItemFactVat": "TVA",
+  "stockItemFilterAll": "Tous les articles",
+  "stockItemFilterNoHome": "Sans emplacement de rangement",
   "stockItemNewBarcode": "Code-barres (facultatif)",
   "stockItemNewHome": "Emplacement d’origine (facultatif)",
   "stockItemNewName": "Nom",
@@ -21624,6 +21649,17 @@
   "stockItemNewPriceInvalid": "Saisissez un prix, ou laissez vide.",
   "stockItemNewTitle": "Nouvel article",
   "stockItemNewUnit": "Compté en",
+  "stockItemNoGroup": "Dans aucun groupe",
+  "stockItemNoSuppliers": "Aucun article fournisseur ne désigne encore cet article.",
+  "stockItemNoVariants": "Cet article n’a pas de variantes.",
+  "stockItemNothingOnHand": "Aucun n’est en stock.",
+  "stockItemPlacesTitle": "Où il se trouve",
+  "stockItemSectionGroupTags": "Groupe et puces",
+  "stockItemSectionOverview": "Aperçu",
+  "stockItemSectionStock": "Stock",
+  "stockItemSectionSuppliers": "Articles fournisseur",
+  "stockItemSectionVariants": "Variantes",
+  "stockItemSeeWhere": "Voir tous les emplacements",
   "stockItemsEmpty": "Aucun article pour l’instant. Un article est un service que vous tenez en stock : choisissez Ajouter un article.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
@@ -21931,6 +21967,14 @@
   "@stockReasonCombinationDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonConversionSameUnit": "Une conversion demande deux unités différentes.",
+  "@stockReasonConversionSameUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonConversionUnknown": "Cette conversion n'est pas définie.",
+  "@stockReasonConversionUnknown": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonCostInvalid": "Ce coût n’est pas valide : un total en unités mineures, et un taux seulement pour une autre devise.",
   "@stockReasonCostInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -22077,6 +22121,10 @@
   "@stockReasonOverAllocated": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
   },
+  "stockReasonPackageUnit": "Un conditionnement n'a pas de conversion générale : son facteur se règle sur l'article.",
+  "@stockReasonPackageUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonParentInactive": "L’emplacement qui le contient n’est plus utilisé.",
   "@stockReasonParentInactive": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -22202,7 +22250,6 @@
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockRegistryAllPlaces": "Tous les emplacements",
-  "stockRegistryCost": "coût {amount}",
   "stockRegistryCostHidden": "coût non affiché",
   "stockRegistryCostUnknown": "coût inconnu",
   "stockRegistryHome": "rangé en {address}",
@@ -22212,10 +22259,8 @@
   "stockRegistryHomeTitle": "Emplacement de rangement de {item}",
   "stockRegistryMore": "Afficher plus",
   "stockRegistryNoHome": "pas d’emplacement de rangement",
-  "stockRegistryNoHomeFilter": "Seulement les articles sans emplacement de rangement",
   "stockRegistryOnHand": "{quantity} en stock",
   "stockRegistryPlaceFilter": "Emplacement de rangement",
-  "stockRegistryPrice": "prix {amount}",
   "stockRegistrySearch": "Trouver un article par nom, code-barres ou adresse",
   "stockReorderCreateDraft": "Créer un brouillon de commande",
   "stockReorderDraftCreated": "Brouillon de commande {number} créé. Rien n’a été commandé ni envoyé.",
@@ -22561,10 +22606,6 @@
   },
   "stockVariantsAdd": "Ajouter une variante",
   "@stockVariantsAdd": {
-    "description": "#4169 the stock editors: a label or message"
-  },
-  "stockVariantsEdit": "Variantes",
-  "@stockVariantsEdit": {
     "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsHint": "Une variante est une valeur de chaque dimension, par exemple rouge et taille M. Le stock est tenu par variante.",
@@ -24308,6 +24349,13 @@
   "@tillLeaveTitle": {
     "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
   },
+  "tillLotChoose": "Choisir le lot",
+  "tillLotExpired": "Date dépassée ({date}) : non vendu",
+  "tillLotExpires": "À consommer avant le {date}",
+  "tillLotFirstToExpire": "Le premier à expirer (choisi par le stock)",
+  "tillLotLine": "Lot {code}",
+  "tillLotNone": "{item} n'a pas de lot à choisir : il est vendu tel quel.",
+  "tillLotOnHand": "{quantity} {unit} en stock",
   "tillNextCustomer": "Client suivant",
   "tillNotForCounter": "Cet article n'est pas en vente au comptoir.",
   "@tillNotForCounter": {
@@ -24808,6 +24856,69 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Débloquer",
+  "unitConversionDelete": "Supprimer",
+  "@unitConversionDelete": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionEdit": "Modifier une conversion",
+  "@unitConversionEdit": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactor": "Combien",
+  "@unitConversionFactor": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactorHelp": "Combien de {to} font un {from}",
+  "@unitConversionFactorHelp": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionFrom": "De",
+  "@unitConversionFrom": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionLine": "1 {from} = {factor} {to}",
+  "@unitConversionLine": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "factor": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionNew": "Ajouter une conversion",
+  "@unitConversionNew": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionTo": "Vers",
+  "@unitConversionTo": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsEmpty": "Aucune conversion n'est encore définie.",
+  "@unitConversionsEmpty": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsIntro": "Une conversion dit combien d'une unité font une autre. Elle vaut dans les deux sens, en une seule étape. La conversion propre à un article (un carton de 12) l'emporte sur celles-ci, et un conditionnement n'en a pas ici.",
+  "@unitConversionsIntro": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsTitle": "Conversions d'unités",
+  "@unitConversionsTitle": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
   "unknownWireInvoiceKind": "Un type que cette version de l'application ne connaît pas",
   "unknownWireKindFeatures": "Ce type règle aussi {count, plural, one{{count} fonction} other{{count} fonctions}} que cette version de l'application ne connaît pas. Mettez à jour l'application pour le choisir.",
   "unknownWireReadOnly": "Cette version de l'application ne sait pas ce qu'est cet enregistrement : il peut être lu, pas modifié. Mettez à jour l'application pour le traiter.",

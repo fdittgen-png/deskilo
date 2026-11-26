@@ -1,9 +1,5 @@
 {
   "@@locale": "it",
-  "stockEditItem": "Impostazioni di magazzino",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Impostazioni di magazzino di {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -269,10 +265,6 @@
   "@stockReasonOther": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
-  "stockVariantsEdit": "Varianti",
-  "@stockVariantsEdit": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockVariantsTitle": "Varianti di {item}",
   "@stockVariantsTitle": {
     "description": "#4169 the stock editors: a label or message",
@@ -475,5 +467,17 @@
   "stockRequiredSite": "Scegliere una sede.",
   "@stockRequiredSite": {
     "description": "#4402 the reorder point sheet: said under the site when none is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockReasonConversionSameUnit": "Una conversione richiede due unità diverse.",
+  "@stockReasonConversionSameUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonConversionUnknown": "Questa conversione non è definita.",
+  "@stockReasonConversionUnknown": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonPackageUnit": "Una confezione non ha una conversione generale: il fattore si imposta sull'articolo.",
+  "@stockReasonPackageUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
   }
 }

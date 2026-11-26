@@ -70,5 +70,12 @@
   "tillDiscountInvalid": "Ein Rabatt ist ein Prozentsatz vom Artikelpreis, auf einer Zeile ohne geänderten Preis.",
   "tillRingUpFirst": "Erfassen Sie zuerst einen Artikel.",
   "tillReceiptCopy": "KOPIE {copy} — kein neuer Beleg",
-  "tillNothingToReprint": "Noch kein Verkauf zum erneuten Drucken."
+  "tillNothingToReprint": "Noch kein Verkauf zum erneuten Drucken.",
+  "tillLotChoose": "Charge wählen",
+  "tillLotLine": "Charge {code}",
+  "tillLotFirstToExpire": "Die zuerst ablaufende (vom Bestand gewählt)",
+  "tillLotExpires": "Verwendbar bis {date}",
+  "tillLotExpired": "Abgelaufen ({date}): wird nicht verkauft",
+  "tillLotOnHand": "{quantity} {unit} vorrätig",
+  "tillLotNone": "{item} hat keine Charge zur Auswahl: Es wird so verkauft."
 }

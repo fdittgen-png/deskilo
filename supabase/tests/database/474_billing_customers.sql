@@ -65,7 +65,7 @@ end $f$;
 
 -- ── the catalog and the policy ──
 select ok('manageBillingCustomers' = any (public.role_permission_catalog()), 'the right is in the permission catalog');
-select is(cardinality(public.role_permission_catalog()), 42, 'and the catalog holds forty-two rights');
+select is(cardinality(public.role_permission_catalog()), 42, 'and the catalog holds forty-two rights (#4448 configureTill, #4476 overrideTillPrice)');
 select ok((select qual from pg_policies where tablename = 'members' and policyname = 'members_select') like '%customer%',
   'members_select leaves a customer-only row to those who read the billing customers');
 

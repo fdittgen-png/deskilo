@@ -7,7 +7,10 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
 import 'counter_receipt_document.dart';
+import 'till_lots.dart';
 import 'till_quantity.dart';
+
+export 'till_lots.dart';
 
 /// One operation of the counter in the business's country, under the case the owner declared, with the evidence the
 /// registry names for it (#4184): its specification, version and effective date, the adapter, the proof, and whether
@@ -127,6 +130,7 @@ class TillLine {
     this.price,
     this.priceReason,
     this.discount,
+    this.lot,
   });
 
   final String itemId;
@@ -170,6 +174,25 @@ class TillLine {
     price: price,
     priceReason: price == null ? null : reason,
     discount: price == null ? discount : null,
+    lot: lot,
+  );
+
+  /// #4366 -- the lot the seller chose to sell from; null leaves the server to take the one that expires first.
+  final TillLot? lot;
+
+  /// The line sold from [chosen], or (null) from the lot that expires first again.
+  TillLine withLot(TillLot? chosen) => TillLine(
+    itemId: itemId,
+    name: name,
+    quantity: quantity,
+    unit: unit,
+    pieces: pieces,
+    ageConfirmed: ageConfirmed,
+    depositFor: depositFor,
+    price: price,
+    priceReason: priceReason,
+    discount: discount,
+    lot: chosen,
   );
 
   /// The line at quantity [q]. Named pieces stay only when [q] is exactly their number: any other quantity (a tap on the item's key, a
@@ -186,9 +209,10 @@ class TillLine {
     price: price,
     priceReason: priceReason,
     discount: discount,
+    lot: lot,
   );
 
-  /// The line with the piece tagged [tag] added: one more, named.
+  /// The line with the piece tagged [tag] added: one more, named (a piece names its own lot).
   TillLine withPiece(String tag) =>
       TillLine(
         itemId: itemId,
@@ -210,6 +234,7 @@ class TillLine {
     'unit_price': ?price,
     'price_reason': ?priceReason,
     'discount_percent': ?discount,
+    if (pieces.isEmpty && lot != null) 'lot_id': lot!.id,
   };
 }
 

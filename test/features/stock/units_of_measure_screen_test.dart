@@ -4,6 +4,7 @@
 // measure with their conversion line (1 km = 1000 m); a new unit is made from a code, a name, what it measures and its factor
 // (the fields name their own problem); a built-in takes a word of the business's own but not another factor; an unused unit is
 // archived and shown again, a used one is refused in words; a failed read says so and reads again.
+import 'package:deskilo/core/demo/data/demo_unit_conversions.dart';
 import 'package:deskilo/core/demo/data/demo_workspace_units.dart';
 import 'package:deskilo/core/ui/form_kit.dart';
 import 'package:deskilo/features/stock/domain/workspace_units.dart';
@@ -31,13 +32,19 @@ Future<DemoWorkspaceUnits> _open(
   WorkspaceUnits Function(WorkspaceUnits)? wrap,
   Future<void> Function(DemoWorkspaceUnits)? seed,
 }) async {
-  final units = DemoWorkspaceUnits();
+  final conversions = DemoUnitConversions();
+  final units = DemoWorkspaceUnits()..onSaved = conversions.unitSaved;
+  conversions.unitsOf = units.heldBy;
   await seed?.call(units);
   await pumpApp(
     tester,
     const UnitsOfMeasureScreen(),
     size: size,
-    overrides: [...standardTestOverrides(), workspaceUnitsProvider.overrideWithValue(wrap == null ? units : wrap(units))],
+    overrides: [
+      ...standardTestOverrides(),
+      workspaceUnitsProvider.overrideWithValue(wrap == null ? units : wrap(units)),
+      unitConversionsProvider.overrideWithValue(conversions),
+    ],
   );
   await _frames(tester);
   return units;
@@ -114,13 +121,14 @@ void main() {
 
       testWidgets('an empty form names each of its problems and saves nothing', (tester) async {
         final units = await _open(tester, size);
+        final held = (await units.units('ws-1')).length;
         await tester.tap(find.byKey(const ValueKey('measure-units-new')));
         await _frames(tester);
         await tester.tap(find.byKey(const ValueKey('measure-unit-save')));
         await _frames(tester);
         expect(find.text(_en.measureReasonName), findsOneWidget);
         expect(find.text(_en.measureReasonDimension), findsOneWidget);
-        expect((await units.units('ws-1')).length, 13);
+        expect((await units.units('ws-1')).length, held, reason: 'nothing was saved');
       });
 
       testWidgets('a built-in takes the business\'s own word, and its factor cannot be typed', (tester) async {

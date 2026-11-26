@@ -99,7 +99,7 @@ class TillSession {
   bool get _open => _now.sold == null && !_now.unconfirmed && _now.card == null;
 
   String _linesKey(List<TillLine> lines) => [
-    for (final l in lines) '${l.itemId}:${l.quantity}:${l.pieces.join('+')}:${l.price ?? ''}:${l.priceReason ?? ''}:${l.discount ?? ''}',
+    for (final l in lines) '${l.itemId}:${l.quantity}:${l.pieces.join('+')}:${l.price ?? ''}:${l.priceReason ?? ''}:${l.discount ?? ''}:${l.lot?.id ?? ''}',
   ].join(',');
 
   /// Rings up [quantity] (one by default) of [itemId]: a new line, or more on the line it already has. [ageConfirmed] is
@@ -208,6 +208,15 @@ class TillSession {
     });
     return true;
   }
+
+  /// #4366 -- line [index] sold from [lot], or (null) from the lot that expires first again. A line of named pieces takes
+  /// the lots of its pieces: nothing changes.
+  Future<void> setLot(int index, TillLot? lot) => _serial(() {
+    if (!_open || index < 0 || index >= _now.lines.length || _now.lines[index].pieces.isNotEmpty) return Future.value();
+    final lines = [..._now.lines];
+    lines[index] = lines[index].withLot(lot);
+    return _price(lines);
+  });
 
   /// Takes line [index] out; a line's deposit goes with it.
   Future<void> remove(int index) => _serial(() {

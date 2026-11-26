@@ -12,7 +12,6 @@ import 'package:deskilo_task_recording/task_recording.dart';
 import '../../../core/calendar/calendar_item.dart';
 import '../../../core/calendar/calendar_kind_labels.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/presentation/feature_names.dart';
 import '../../workspace/presentation/screens/roles_screen_labels.dart'
@@ -376,7 +375,7 @@ String targetLabel(
       values.where(test).firstOrNull;
   switch (action) {
     case RecorderActions.switchFeature:
-      final feature = find(WorkspaceFeature.values, (f) => f.name == target);
+      final feature = workspaceFeatureOfKey(target);
       if (feature != null) return featureName(l10n, feature);
     case RecorderActions.calendarFilterKind:
       if (target == calendarAllKinds) {

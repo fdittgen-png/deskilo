@@ -32,8 +32,7 @@ import 'item_group_text.dart';
 import 'measure_unit_text.dart';
 import 'stock_config_text.dart';
 import 'stock_quantity_field.dart';
-
-/// The units a group may set for its items (the registry's units of count, mass and volume).
+import 'stock_unit_picker.dart';
 
 /// What a sheet offers beside the group itself: the places a home zone is chosen from, the VAT rates, and whether the
 /// person may see and set what an item costs or sells for (manageServices and viewFinances).
@@ -201,6 +200,7 @@ class _GroupDraft {
     if (fields.text('factor').isNotEmpty && _factor == null) 'factor': l10n.stockReasonOutOfRange,
     if (fields.text('purchaseUnit').isNotEmpty && fields.text('factor').isEmpty) 'factor': l10n.stockReasonOutOfRange,
     if (fields.text('purchaseUnit').isEmpty && fields.text('factor').isNotEmpty) 'purchaseUnit': l10n.stockReasonNameMalformed,
+    if (fields.text('purchaseUnit').isNotEmpty && !choices.units.any((u) => u.code == fields.text('purchaseUnit'))) 'purchaseUnit': l10n.masterDataUnlisted,
     if (fields.text('reorderPoint').isNotEmpty && _decimal('reorderPoint') == null) 'reorderPoint': l10n.stockReasonOutOfRange,
     if (fields.text('reorderQty').isNotEmpty && (_decimal('reorderQty') == null || _isZero(_decimal('reorderQty')!))) 'reorderQty': l10n.stockReasonOutOfRange,
     if (financeAllowed && fields.text('margin').isNotEmpty && marginBpsOfPercent(decimalTextFromInput(fields.text('margin'), locale: locale, grouping: false) ?? '') == null) 'margin': l10n.stockReasonOutOfRange,
@@ -363,7 +363,7 @@ class _GroupDraft {
       const FormGap(),
       Text(l10n.itemGroupProposalHint, key: const ValueKey('item-group-proposals'), style: Theme.of(context).textTheme.bodySmall),
       const FormGap.small(),
-      AppTextField(key: const ValueKey('item-group-purchase-unit'), controller: fields['purchaseUnit'], fieldKey: 'purchaseUnit', label: l10n.itemGroupPurchaseUnit, onChanged: (_) => _preview = null),
+      StockUnitPicker(key: const ValueKey('item-group-purchase-unit'), workspaceId: workspaceId, fieldKey: 'purchaseUnit', value: fields.text('purchaseUnit'), label: l10n.itemGroupPurchaseUnit, none: l10n.masterDataNoUnit, onChanged: (code) => edit(() { fields['purchaseUnit'].text = code; _preview = null; })),
       const FormGap(),
       AppTextField(key: const ValueKey('item-group-factor'), controller: fields['factor'], fieldKey: 'factor', label: l10n.itemGroupPurchaseFactor, onChanged: (_) => _preview = null),
       const FormGap(),

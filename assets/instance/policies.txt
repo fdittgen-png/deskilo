@@ -610,6 +610,8 @@ public.till_layouts.mcp_delegated_deny
 public.till_layouts.till_layouts_select
 public.trace_reports.mcp_delegated_deny
 public.trace_reports.personal_native_session
+public.unit_conversions.mcp_delegated_deny
+public.unit_conversions.unit_conversions_select
 public.usage_records.mcp_delegated_deny
 public.usage_records.usage_records_read
 public.validation_policies.mcp_delegated_deny

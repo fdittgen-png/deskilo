@@ -14,6 +14,7 @@ import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../codes/dk_code.dart';
+import '../demo_replay.dart';
 import 'demo_stock_ledger.dart';
 
 const _owner = 'demo-member-owner';
@@ -25,7 +26,7 @@ class DemoStockReversals implements StockReversals {
 
   final DemoStockLedger _ledger;
   final StockReversalBook _book;
-  final Map<String, StockReturnResult> _answers = {};
+  final _answers = Replay<StockReturnResult>();
 
   T _run<T>(String workspaceId, String code, String message, T Function(StockReversalBook book) run) {
     if (!_ledger.mine(workspaceId)) throw PostgrestException(message: message, code: code);
@@ -48,7 +49,7 @@ class DemoStockReversals implements StockReversals {
     List<StockReturnLineDraft> lines,
     String requestId,
   ) async =>
-      _answers[requestId] ??= _run(workspaceId, DkCode.dkg07, 'a return has lines', (book) => book.makeReturn(returnId, kind, lines));
+      _answers.onceSync(requestId, () => _run(workspaceId, DkCode.dkg07, 'a return has lines', (book) => book.makeReturn(returnId, kind, lines)));
 
   @override
   Future<List<StockCountRow>> counts(String workspaceId) async => _ledger.mine(workspaceId) ? _book.counts : const [];

@@ -133,7 +133,7 @@ select is(left(pg_temp.entry(2, 7043, current_setting('t.sb')::uuid, 'paid_in', 
 select is(pg_temp.f(pg_temp.entry(3, 7044, current_setting('t.sb')::uuid, 'paid_in', 100, 'change'), 'amount_minor'), '100', 'unless it is made by someone who may see the finances');
 select is(pg_temp.till(1, 7045, null, '  till b '), 'ERR DKL12 {"reason": "name_taken"}', 'a till name is unique whatever its case and its spaces');
 select is(pg_temp.run_as(pg_temp.u(5), $q$select (select string_agg(e ->> 'table', ',' order by e ->> 'table') from jsonb_array_elements(public.export_workspace_records('$q$ || pg_temp.u(101) || $q$')) e where e ->> 'table' like 'counter_%')$q$),
-  'counter_receipt_lines,counter_receipts,counter_refunds,counter_tenders,counter_tills', 'an export without the right to see the finances leaves out the sessions, their entries and the day closes');
+  'counter_receipt_copies,counter_receipt_lines,counter_receipts,counter_refunds,counter_tenders,counter_tills', 'an export without the right to see the finances leaves out the sessions, their entries and the day closes');
 select is((select count(*)::int from jsonb_array_elements((select pg_temp.run_as(pg_temp.u(1), format('select public.export_workspace_records(%L)::text', pg_temp.u(101)))::jsonb)) e where e ->> 'table' in ('counter_till_sessions', 'counter_cash_entries', 'counter_day_closes')), 3, 'and with that right it carries them');
 
 select * from finish();

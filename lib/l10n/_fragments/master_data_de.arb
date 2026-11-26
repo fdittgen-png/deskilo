@@ -1,4 +1,16 @@
 {
   "masterDataSearchHint": "Namen oder Code eingeben oder aus der Liste wählen",
-  "masterDataUnknownCode": "Das ist kein gültiger Eintrag. Wählen Sie einen aus der Liste."
+  "masterDataUnknownCode": "Das ist kein gültiger Eintrag. Wählen Sie einen aus der Liste.",
+  "masterDataUnlisted": "Das steht nicht in der Liste: bitte eines wählen",
+  "@masterDataUnlisted": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
+  },
+  "masterDataNoUnit": "Keine Einheit",
+  "@masterDataNoUnit": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
+  },
+  "masterDataNoVat": "Keine MwSt.",
+  "@masterDataNoVat": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
+  }
 }

@@ -9,6 +9,7 @@
 import '../../../features/money/domain/customer_quote.dart';
 import '../../../features/money/domain/quote_validity.dart';
 import '../../../features/money/domain/standalone_invoice.dart';
+import '../demo_table.dart';
 
 class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
   FakeCustomerQuoteRepository({
@@ -34,7 +35,7 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
   QuoteValidity Function() validity = () => const QuoteValidity();
   final DateTime Function() _clock;
 
-  final Map<String, List<_Quote>> _byWorkspace = {};
+  final Map<String, DemoTable<_Quote>> _byWorkspace = {};
   int _next = 1;
   int _reference = 1;
   int _line = 1;
@@ -46,8 +47,8 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
   /// The calls the screens made, for tests.
   final List<String> calls = [];
 
-  List<_Quote> _of(String workspaceId) =>
-      _byWorkspace.putIfAbsent(workspaceId, () => []);
+  DemoTable<_Quote> _of(String workspaceId) =>
+      _byWorkspace.putIfAbsent(workspaceId, () => DemoTable<_Quote>((q) => q.id));
 
   void _check(String call, {bool write = false}) {
     calls.add(call);
@@ -61,10 +62,8 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
     }
   }
 
-  _Quote _find(String workspaceId, String id) => _of(workspaceId).firstWhere(
-    (q) => q.id == id,
-    orElse: () => throw const QuoteRefusal(QuoteRefusalKind.state),
-  );
+  _Quote _find(String workspaceId, String id) =>
+      _of(workspaceId).byId(id) ?? (throw const QuoteRefusal(QuoteRefusalKind.state));
 
   /// Seeds a sent quote (revision 1) for [subjectId].
   void seedSent(

@@ -18909,9 +18909,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemGroupAssignNone => 'No group';
 
   @override
-  String get itemGroupAssignOpen => 'Group and inherited settings';
-
-  @override
   String itemGroupAssignTitle(String item) {
     return 'Group of $item';
   }
@@ -21053,12 +21050,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get managedProfileTitle => 'Managed profile';
 
   @override
+  String get masterDataNoUnit => 'No unit';
+
+  @override
+  String get masterDataNoVat => 'No VAT';
+
+  @override
   String get masterDataSearchHint =>
       'Type a name or a code, or pick from the list';
 
   @override
   String get masterDataUnknownCode =>
       'This is not a valid entry. Pick one from the list.';
+
+  @override
+  String get masterDataUnlisted => 'This is not in the list: pick one';
 
   @override
   String get mcpApiReference => 'API reference';
@@ -22638,6 +22644,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get measureDimensionMass => 'Mass';
+
+  @override
+  String get measureDimensionPackage => 'Package';
 
   @override
   String get measureDimensionTime => 'Time';
@@ -36690,9 +36699,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockEditInventoryUnitChoice => 'Inventory unit';
 
   @override
-  String get stockEditItem => 'Stock settings';
-
-  @override
   String stockEditItemTitle(String item) {
     return 'Stock settings of $item';
   }
@@ -36868,7 +36874,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockItemAddTitle => 'Add an item';
 
   @override
+  String get stockItemAttentionLow => 'Low stock';
+
+  @override
+  String get stockItemAttentionNoPlace => 'No place';
+
+  @override
+  String get stockItemAttentionNoPrice => 'No price';
+
+  @override
   String get stockItemEditDetails => 'Edit name, price and VAT';
+
+  @override
+  String get stockItemEditGroup => 'Change group';
+
+  @override
+  String get stockItemEditHome => 'Change home place';
+
+  @override
+  String get stockItemEditSettings => 'Edit units, codes and tracking';
+
+  @override
+  String get stockItemEditSuppliers => 'Edit supplier items';
+
+  @override
+  String get stockItemEditTags => 'Edit tags';
+
+  @override
+  String get stockItemEditVariants => 'Edit variants';
+
+  @override
+  String get stockItemFactBarcode => 'Barcode';
+
+  @override
+  String get stockItemFactCost => 'Last known cost';
+
+  @override
+  String get stockItemFactVat => 'VAT';
+
+  @override
+  String get stockItemFilterAll => 'All items';
+
+  @override
+  String get stockItemFilterNoHome => 'Without a home place';
 
   @override
   String get stockItemNewBarcode => 'Barcode (optional)';
@@ -36901,6 +36949,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockItemNewUnit => 'Counted in';
+
+  @override
+  String get stockItemNoGroup => 'In no group';
+
+  @override
+  String get stockItemNoSuppliers => 'No supplier article names this item yet.';
+
+  @override
+  String get stockItemNoVariants => 'This item has no variants.';
+
+  @override
+  String get stockItemNothingOnHand => 'None of it is in stock.';
+
+  @override
+  String get stockItemPlacesTitle => 'Where it is';
+
+  @override
+  String get stockItemSectionGroupTags => 'Group and tags';
+
+  @override
+  String get stockItemSectionOverview => 'Overview';
+
+  @override
+  String get stockItemSectionStock => 'Stock';
+
+  @override
+  String get stockItemSectionSuppliers => 'Supplier items';
+
+  @override
+  String get stockItemSectionVariants => 'Variants';
+
+  @override
+  String get stockItemSeeWhere => 'See every place';
 
   @override
   String get stockItemsEmpty =>
@@ -37256,6 +37337,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Two variants have the same combination.';
 
   @override
+  String get stockReasonConversionSameUnit =>
+      'A conversion needs two different units.';
+
+  @override
+  String get stockReasonConversionUnknown => 'This conversion is not defined.';
+
+  @override
   String get stockReasonCostInvalid =>
       'This cost is not valid: a total in minor units, and a rate only for another currency.';
 
@@ -37429,6 +37517,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'More than arrived cannot be put away.';
 
   @override
+  String get stockReasonPackageUnit =>
+      'A packaging unit has no general conversion: its factor is set on the item.';
+
+  @override
   String get stockReasonParentInactive =>
       'The place it is inside is no longer in use.';
 
@@ -37586,11 +37678,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockRegistryAllPlaces => 'All places';
 
   @override
-  String stockRegistryCost(String amount) {
-    return 'cost $amount';
-  }
-
-  @override
   String get stockRegistryCostHidden => 'cost not shown';
 
   @override
@@ -37623,20 +37710,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockRegistryNoHome => 'no home place';
 
   @override
-  String get stockRegistryNoHomeFilter => 'Only items with no home place';
-
-  @override
   String stockRegistryOnHand(String quantity) {
     return '$quantity on hand';
   }
 
   @override
   String get stockRegistryPlaceFilter => 'Home place';
-
-  @override
-  String stockRegistryPrice(String amount) {
-    return 'price $amount';
-  }
 
   @override
   String get stockRegistrySearch => 'Find an item by name, barcode or address';
@@ -38421,9 +38500,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockVariantsAdd => 'Add a variant';
-
-  @override
-  String get stockVariantsEdit => 'Variants';
 
   @override
   String get stockVariantsHint =>
@@ -41708,6 +41784,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillLeaveTitle => 'The sale is not confirmed';
 
   @override
+  String get tillLotChoose => 'Choose the lot';
+
+  @override
+  String tillLotExpired(String date) {
+    return 'Past its date ($date): not sold';
+  }
+
+  @override
+  String tillLotExpires(String date) {
+    return 'Use by $date';
+  }
+
+  @override
+  String get tillLotFirstToExpire =>
+      'The first to expire (chosen by the stock)';
+
+  @override
+  String tillLotLine(String code) {
+    return 'Lot $code';
+  }
+
+  @override
+  String tillLotNone(String item) {
+    return '$item has no lot to choose: it is sold as it is.';
+  }
+
+  @override
+  String tillLotOnHand(String quantity, String unit) {
+    return '$quantity $unit on hand';
+  }
+
+  @override
   String get tillNextCustomer => 'Next customer';
 
   @override
@@ -42572,6 +42680,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unblockAction => 'Unblock';
+
+  @override
+  String get unitConversionDelete => 'Delete';
+
+  @override
+  String get unitConversionEdit => 'Change a conversion';
+
+  @override
+  String get unitConversionFactor => 'How many';
+
+  @override
+  String unitConversionFactorHelp(String from, String to) {
+    return 'How many $to make one $from';
+  }
+
+  @override
+  String get unitConversionFrom => 'From';
+
+  @override
+  String unitConversionLine(String from, String factor, String to) {
+    return '1 $from = $factor $to';
+  }
+
+  @override
+  String get unitConversionNew => 'Add a conversion';
+
+  @override
+  String get unitConversionTo => 'To';
+
+  @override
+  String get unitConversionsEmpty => 'No conversion is defined yet.';
+
+  @override
+  String get unitConversionsIntro =>
+      'A conversion says how many of one unit make another. It works both ways, in one step. An item\'s own conversion (a carton of 12) wins over these, and a packaging unit has none here.';
+
+  @override
+  String get unitConversionsTitle => 'Conversions';
 
   @override
   String get unknownWireInvoiceKind =>

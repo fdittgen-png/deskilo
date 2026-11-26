@@ -28,7 +28,6 @@
   "itemGroupHistoryNone": "Ancora nessuna modifica registrata.",
   "itemGroupDelete": "Elimina il gruppo",
   "itemGroupDeleted": "Gruppo eliminato.",
-  "itemGroupAssignOpen": "Gruppo e impostazioni ereditate",
   "itemGroupAssignTitle": "Gruppo di {item}",
   "itemGroupAssignNone": "Nessun gruppo",
   "itemGroupFrom": "Dal gruppo {group}",

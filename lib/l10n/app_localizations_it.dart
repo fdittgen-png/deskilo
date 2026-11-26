@@ -19059,9 +19059,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get itemGroupAssignNone => 'Nessun gruppo';
 
   @override
-  String get itemGroupAssignOpen => 'Gruppo e impostazioni ereditate';
-
-  @override
   String itemGroupAssignTitle(String item) {
     return 'Gruppo di $item';
   }
@@ -21219,12 +21216,21 @@ class AppLocalizationsIt extends AppLocalizations {
   String get managedProfileTitle => 'Profilo gestito';
 
   @override
+  String get masterDataNoUnit => 'Nessuna unità';
+
+  @override
+  String get masterDataNoVat => 'Senza IVA';
+
+  @override
   String get masterDataSearchHint =>
       'Digiti un nome o un codice, oppure scelga dall\'elenco';
 
   @override
   String get masterDataUnknownCode =>
       'Non è una voce valida. Ne scelga una dall\'elenco.';
+
+  @override
+  String get masterDataUnlisted => 'Non è nell\'elenco: sceglierne uno';
 
   @override
   String get mcpApiReference => 'Riferimento API';
@@ -22829,6 +22835,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get measureDimensionMass => 'Massa';
+
+  @override
+  String get measureDimensionPackage => 'Confezione';
 
   @override
   String get measureDimensionTime => 'Tempo';
@@ -37029,9 +37038,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockEditInventoryUnitChoice => 'Unità di magazzino';
 
   @override
-  String get stockEditItem => 'Impostazioni di magazzino';
-
-  @override
   String stockEditItemTitle(String item) {
     return 'Impostazioni di magazzino di $item';
   }
@@ -37208,7 +37214,49 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockItemAddTitle => 'Aggiungi un articolo';
 
   @override
+  String get stockItemAttentionLow => 'Scorta bassa';
+
+  @override
+  String get stockItemAttentionNoPlace => 'Senza ubicazione';
+
+  @override
+  String get stockItemAttentionNoPrice => 'Senza prezzo';
+
+  @override
   String get stockItemEditDetails => 'Modifica nome, prezzo e IVA';
+
+  @override
+  String get stockItemEditGroup => 'Modifica il gruppo';
+
+  @override
+  String get stockItemEditHome => 'Modifica l’ubicazione abituale';
+
+  @override
+  String get stockItemEditSettings => 'Modifica unità, codici e tracciamento';
+
+  @override
+  String get stockItemEditSuppliers => 'Modifica gli articoli del fornitore';
+
+  @override
+  String get stockItemEditTags => 'Modifica i tag';
+
+  @override
+  String get stockItemEditVariants => 'Modifica le varianti';
+
+  @override
+  String get stockItemFactBarcode => 'Codice a barre';
+
+  @override
+  String get stockItemFactCost => 'Ultimo costo noto';
+
+  @override
+  String get stockItemFactVat => 'IVA';
+
+  @override
+  String get stockItemFilterAll => 'Tutti gli articoli';
+
+  @override
+  String get stockItemFilterNoHome => 'Senza ubicazione abituale';
 
   @override
   String get stockItemNewBarcode => 'Codice a barre (facoltativo)';
@@ -37241,6 +37289,40 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockItemNewUnit => 'Contato in';
+
+  @override
+  String get stockItemNoGroup => 'In nessun gruppo';
+
+  @override
+  String get stockItemNoSuppliers =>
+      'Nessun articolo del fornitore indica ancora questo articolo.';
+
+  @override
+  String get stockItemNoVariants => 'Questo articolo non ha varianti.';
+
+  @override
+  String get stockItemNothingOnHand => 'Non ce n’è nulla in magazzino.';
+
+  @override
+  String get stockItemPlacesTitle => 'Dove si trova';
+
+  @override
+  String get stockItemSectionGroupTags => 'Gruppo e tag';
+
+  @override
+  String get stockItemSectionOverview => 'Panoramica';
+
+  @override
+  String get stockItemSectionStock => 'Magazzino';
+
+  @override
+  String get stockItemSectionSuppliers => 'Articoli del fornitore';
+
+  @override
+  String get stockItemSectionVariants => 'Varianti';
+
+  @override
+  String get stockItemSeeWhere => 'Tutte le ubicazioni';
 
   @override
   String get stockItemsEmpty =>
@@ -37600,6 +37682,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Due varianti hanno la stessa combinazione.';
 
   @override
+  String get stockReasonConversionSameUnit =>
+      'Una conversione richiede due unità diverse.';
+
+  @override
+  String get stockReasonConversionUnknown =>
+      'Questa conversione non è definita.';
+
+  @override
   String get stockReasonCostInvalid =>
       'Questo costo non è valido: un totale in unità minori e un tasso solo per un’altra valuta.';
 
@@ -37781,6 +37871,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non si può collocare più di quanto è arrivato.';
 
   @override
+  String get stockReasonPackageUnit =>
+      'Una confezione non ha una conversione generale: il fattore si imposta sull\'articolo.';
+
+  @override
   String get stockReasonParentInactive =>
       'L’ubicazione che la contiene non è più in uso.';
 
@@ -37937,11 +38031,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockRegistryAllPlaces => 'Tutte le ubicazioni';
 
   @override
-  String stockRegistryCost(String amount) {
-    return 'costo $amount';
-  }
-
-  @override
   String get stockRegistryCostHidden => 'costo non mostrato';
 
   @override
@@ -37974,21 +38063,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockRegistryNoHome => 'nessuna ubicazione abituale';
 
   @override
-  String get stockRegistryNoHomeFilter =>
-      'Solo articoli senza ubicazione abituale';
-
-  @override
   String stockRegistryOnHand(String quantity) {
     return '$quantity disponibili';
   }
 
   @override
   String get stockRegistryPlaceFilter => 'Ubicazione abituale';
-
-  @override
-  String stockRegistryPrice(String amount) {
-    return 'prezzo $amount';
-  }
 
   @override
   String get stockRegistrySearch =>
@@ -38781,9 +38861,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockVariantsAdd => 'Aggiungere una variante';
-
-  @override
-  String get stockVariantsEdit => 'Varianti';
 
   @override
   String get stockVariantsHint =>
@@ -42104,6 +42181,38 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillLeaveTitle => 'La vendita non è confermata';
 
   @override
+  String get tillLotChoose => 'Scegliere il lotto';
+
+  @override
+  String tillLotExpired(String date) {
+    return 'Scaduto ($date): non si vende';
+  }
+
+  @override
+  String tillLotExpires(String date) {
+    return 'Da consumare entro il $date';
+  }
+
+  @override
+  String get tillLotFirstToExpire =>
+      'Il primo a scadere (scelto dal magazzino)';
+
+  @override
+  String tillLotLine(String code) {
+    return 'Lotto $code';
+  }
+
+  @override
+  String tillLotNone(String item) {
+    return '$item non ha un lotto da scegliere: si vende così com\'è.';
+  }
+
+  @override
+  String tillLotOnHand(String quantity, String unit) {
+    return '$quantity $unit disponibili';
+  }
+
+  @override
   String get tillNextCustomer => 'Cliente successivo';
 
   @override
@@ -42981,6 +43090,44 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get unblockAction => 'Sblocca';
+
+  @override
+  String get unitConversionDelete => 'Elimina';
+
+  @override
+  String get unitConversionEdit => 'Modifica una conversione';
+
+  @override
+  String get unitConversionFactor => 'Quante';
+
+  @override
+  String unitConversionFactorHelp(String from, String to) {
+    return 'Quante $to fanno una $from';
+  }
+
+  @override
+  String get unitConversionFrom => 'Da';
+
+  @override
+  String unitConversionLine(String from, String factor, String to) {
+    return '1 $from = $factor $to';
+  }
+
+  @override
+  String get unitConversionNew => 'Aggiungi una conversione';
+
+  @override
+  String get unitConversionTo => 'A';
+
+  @override
+  String get unitConversionsEmpty => 'Nessuna conversione è ancora definita.';
+
+  @override
+  String get unitConversionsIntro =>
+      'Una conversione dice quante unità di una fanno un\'altra. Vale nei due sensi, in un solo passaggio. La conversione propria di un articolo (un cartone da 12) prevale su queste, e una confezione qui non ne ha.';
+
+  @override
+  String get unitConversionsTitle => 'Conversioni';
 
   @override
   String get unknownWireInvoiceKind =>

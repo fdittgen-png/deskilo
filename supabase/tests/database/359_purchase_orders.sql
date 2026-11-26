@@ -4,7 +4,7 @@
 -- a plain member reads and writes nothing; the series counts per space and
 -- year; a sent order and its lines are frozen; a request id replays.
 begin;
-select plan(30);
+select plan(32);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000033070'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -25,6 +25,12 @@ insert into public.suppliers (id, workspace_id, supplier_number, name, status) v
  ('00000000-0000-4000-8000-0000033070f9','00000000-0000-4000-8000-0000033070b2','1','Elsewhere','active');
 insert into public.services (id, workspace_id, name, price_cents, active, stock) values
  ('00000000-0000-4000-8000-0000033070d1','00000000-0000-4000-8000-0000033070b1','Coffee capsules',200,true,10);
+-- #4471: a unit is one of the business's units, a rate one of its rates (the fixtures name theirs)
+insert into public.workspace_units (workspace_id, code, label, dimension, factor_num, factor_den) values
+ ('00000000-0000-4000-8000-0000033070b1', 'capsule', 'Capsule', 'count', 1, 1),
+ ('00000000-0000-4000-8000-0000033070b1', 'roll', 'Roll', 'count', 1, 1);
+insert into public.vat_rates (workspace_id, label, percent, category, is_default, active) values
+ ('00000000-0000-4000-8000-0000033070b1', 'Standard 4471', 20, 'S', false, true);
 
 create function pg_temp.u(p text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-0000033070' || p)::uuid;
@@ -155,6 +161,14 @@ select ok(pg_temp.err('a1', pg_temp.save('a1', gen_random_uuid(), 0, pg_temp.ord
 select ok(pg_temp.err('a1', pg_temp.save('a1', gen_random_uuid(), 0,
     pg_temp.order_payload('f1', '{"recipient_email": "orders@alpha.test, boss@alpha.test"}'))) like '%not an e-mail address%',
   'an address carrying a list or header character is refused');
+
+-- #4471: what is not the master data is refused, in the server's words
+select ok(pg_temp.err('a1', pg_temp.save('a1', gen_random_uuid(), 0, pg_temp.order_payload('f1', jsonb_build_object('lines', jsonb_build_array(
+    jsonb_build_object('description', 'Free', 'quantity', 1, 'unit', 'box', 'unit_price_cents', 100)))))) like 'DKG11%unit_unknown%',
+  'a line in a unit that is not one of the business''s units is refused');
+select ok(pg_temp.err('a1', pg_temp.save('a1', gen_random_uuid(), 0, pg_temp.order_payload('f1', jsonb_build_object('lines', jsonb_build_array(
+    jsonb_build_object('description', 'Free', 'quantity', 1, 'unit', 'roll', 'unit_price_cents', 100, 'vat_rate_percent', 55)))))) like 'DKG11%vat_rate_unknown%',
+  'a line at a rate that is not one of the business''s rates is refused');
 
 reset role;
 update public.workspaces set feature_flags = feature_flags || '{"purchaseOrders": false}' where id = pg_temp.u('b1');

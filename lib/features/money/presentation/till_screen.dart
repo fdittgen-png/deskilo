@@ -462,7 +462,7 @@ class _TillState extends ConsumerState<_Till> {
               key: const ValueKey('till-basket'),
               state: state,
               onQuantity: _setQuantity,
-              onRemove: (i) => unawaited(_session.remove(i)),
+              onRemove: (i) => unawaited(_session.remove(i)), onLot: (i) => unawaited(chooseTillLot(context, ref.read(tillLotsPortProvider), _session, i)),
               onPay: () => unawaited(_pay(state)),
               onNext: _session.next,
               onRetry: () => unawaited(_session.retry()),

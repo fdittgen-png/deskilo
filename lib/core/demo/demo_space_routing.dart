@@ -42,6 +42,7 @@ import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/stock/providers/stock_providers.dart';
+import '../../features/stock/providers/workspace_units_providers.dart';
 import '../../features/workspace/domain/member.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
@@ -399,23 +400,22 @@ class _DemoStocks {
   final Map<DemoSpaceKey, _DemoStock> _kits = {};
 
   _DemoStock of(Ref ref) {
-    // the reference business and the shop keep stock; every other business answers as the reference one does for
-    // an id that is not its own: nothing (a business that keeps no stock reads as empty)
+    // the reference business and the shop keep stock; every other one answers as the reference does for an id not its own: nothing
     final key = demoOpenSpace(ref) == DemoSpaceKey.shop ? DemoSpaceKey.shop : DemoSpaceKey.home;
-    return _kits.putIfAbsent(key, () => _DemoStock(_fixture, key, ref.watch(clockProvider).now));
+    return _kits.putIfAbsent(key, () => _DemoStock(_fixture, key, ref));
   }
 }
 
 class _DemoStock {
-  _DemoStock(DemoFixture fixture, DemoSpaceKey key, DateTime Function() now) {
+  _DemoStock(DemoFixture fixture, DemoSpaceKey key, Ref ref) {
     id = key.id;
-    final money = fixture.space(key).money;
+    final (now, money) = (ref.watch(clockProvider).now, fixture.space(key).money);
     final candidates = DemoStockCandidates(() async => [
       for (final s in await money.fetchServices(id))
         if (s.active) (id: s.id, name: s.name),
     ]);
     config = DemoStockConfigCommands(id, candidates: candidates);
-    ledger = DemoStockLedger(id, config, now, candidates);
+    ledger = DemoStockLedger(id, config, now, candidates, ref.read(unitConversionsProvider));
     registry = DemoStockRegistry(id, ledger, config);
     config.newItems = (service: (name, price, vat, request) async => (await money.createService(id, name: name, priceCents: price, vatRateId: vat, requestId: request)).id,
         home: (item, place, request) => registry.setHome(id, itemId: item, variantId: null, placeId: place, requestId: request));

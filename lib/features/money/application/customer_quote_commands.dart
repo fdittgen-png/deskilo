@@ -117,12 +117,18 @@ class CustomerQuoteCommands {
       CommandRefused(refusal: Refusal(cause: QuoteRefusal())) => true,
       _ => false,
     };
-    if (known) return outcome;
+    return known ? outcome : lookConverted(workspaceId, quoteId, outcome);
+  }
+
+  /// Reads the quote's own record of its conversion: the invoice when there is one, otherwise [unknown] again. Never writes.
+  Future<CommandOutcome<QuoteConverted>> lookConverted(
+    String workspaceId,
+    String quoteId,
+    CommandOutcome<QuoteConverted> unknown,
+  ) async {
     final now = await read(workspaceId, quoteId);
     final invoiceId = now?.invoiceId;
-    return invoiceId == null
-        ? outcome
-        : CommandDone(QuoteConverted(invoiceId: invoiceId, number: null, replayed: true));
+    return invoiceId == null ? unknown : CommandDone(QuoteConverted(invoiceId: invoiceId, number: null, replayed: true));
   }
 
   Future<CommandOutcome<void>> cancel(String workspaceId, String quoteId) =>

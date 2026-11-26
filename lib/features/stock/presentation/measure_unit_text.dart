@@ -17,6 +17,7 @@ String measureDimensionText(AppLocalizations l10n, UnitDimension d) => switch (d
   UnitDimension.length => l10n.measureDimensionLength,
   UnitDimension.area => l10n.measureDimensionArea,
   UnitDimension.time => l10n.measureDimensionTime,
+  UnitDimension.package => l10n.measureDimensionPackage,
 };
 
 /// The sentence under the field a problem is on.

@@ -17,7 +17,10 @@ enum UnitDimension {
   volume,
   length,
   area,
-  time;
+  time,
+
+  /// A packaging unit (a carton, a box): it has no ratio to any other unit and converts only through an item's own factor.
+  package;
 
   static UnitDimension? fromWire(Object? wire) {
     for (final d in values) {
@@ -190,9 +193,12 @@ const List<WorkspaceUnit> builtInUnits = [
 /// The units an item was counted in before a business had units of its own (0747): what the pickers offer while the feature is off.
 const Set<String> _originalStockUnitCodes = {'piece', 'g', 'kg', 'ml', 'cl', 'l'};
 
-/// The units a picker for what an item is counted in offers: the six of before while the feature is off, every unit that is not
-/// archived when it is on, and always [keep] (the unit the item already has, archived or not, so editing it never loses it).
+/// The units a picker for what an item is counted in offers: every unit that is not archived when the units feature is on; while it is
+/// off, the six of before and the packaging units the business already holds (the feature only hides the screen that makes units, not
+/// the units that exist); and always [keep] (the unit the item already has, archived or not, so editing it never loses it).
 List<WorkspaceUnit> pickableUnits(List<WorkspaceUnit> all, {required bool unitsOn, String? keep}) => [
   for (final u in all)
-    if (u.code == keep || (unitsOn ? !u.archived : _originalStockUnitCodes.contains(u.code))) u,
+    if (u.code == keep ||
+        (unitsOn ? !u.archived : (_originalStockUnitCodes.contains(u.code) || (u.dimension == UnitDimension.package && !u.archived))))
+      u,
 ];

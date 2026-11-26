@@ -12,7 +12,7 @@ import '../domain/counter_till.dart';
 /// The table of the counter's receipts, read by this file and by the counter's book.
 const String counterReceiptsTable = 'counter_receipts';
 
-class SupabaseCounterTill implements TillPort, TillCopyPort {
+class SupabaseCounterTill implements TillPort, TillCopyPort, TillLotsPort {
   SupabaseCounterTill(this._client);
 
   final SupabaseClient _client;
@@ -63,6 +63,10 @@ class SupabaseCounterTill implements TillPort, TillCopyPort {
   Future<int> copy(String workspaceId, {required String requestId, required String receiptId}) async => tillCopyNumberOf(
     await _call('counter_receipt_copy_v1', {'p_workspace_id': workspaceId, 'p_request_id': requestId, 'p_receipt_id': receiptId}),
   );
+
+  @override
+  Future<List<TillLot>> lots(String workspaceId, String itemId) async =>
+      tillLotsOf(await _call('counter_item_lots_v1', {'p_workspace_id': workspaceId, 'p_item_id': itemId}));
 
   @override
   Future<CounterReceiptDocument> receipt(String workspaceId, String receiptId) async {

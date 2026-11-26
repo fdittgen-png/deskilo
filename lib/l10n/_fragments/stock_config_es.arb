@@ -1,9 +1,5 @@
 {
   "@@locale": "es",
-  "stockEditItem": "Ajustes de existencias",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Ajustes de existencias de {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -269,10 +265,6 @@
   "@stockReasonOther": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
-  "stockVariantsEdit": "Variantes",
-  "@stockVariantsEdit": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockVariantsTitle": "Variantes de {item}",
   "@stockVariantsTitle": {
     "description": "#4169 the stock editors: a label or message",
@@ -475,5 +467,17 @@
   "stockRequiredSite": "Elija un sitio.",
   "@stockRequiredSite": {
     "description": "#4402 the reorder point sheet: said under the site when none is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockReasonConversionSameUnit": "Una conversión necesita dos unidades distintas.",
+  "@stockReasonConversionSameUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonConversionUnknown": "Esta conversión no está definida.",
+  "@stockReasonConversionUnknown": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonPackageUnit": "Un envase no tiene conversión general: su factor se fija en el artículo.",
+  "@stockReasonPackageUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
   }
 }

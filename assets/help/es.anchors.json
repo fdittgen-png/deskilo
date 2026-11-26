@@ -136,6 +136,7 @@
   "user.money.stock.places": "Ubicaciones y direcciones",
   "user.money.stock.reorder": "Reposición: lo que está bajo y lo que hay que pedir",
   "user.money.stock.registry": "El registro de artículos",
+  "user.money.stock.item": "La página de un artículo",
   "user.money.stock.groups": "Grupos de artículos",
   "user.money.stock.scanning": "Trabajar con un escáner",
   "user.money.stock.nfc": "Etiquetas con el NFC del teléfono",
