@@ -38,6 +38,8 @@ static const char *TAG = "till";
 #else
 #define NET_CORE 1
 #endif
+// #4450 -- how often the screen looks for a new state of the network task: a look is one lock and one comparison.
+#define STATE_POLL_MS 50
 #define BUF_LINES 32   // one partial buffer: 480 x 32 x 2 bytes = 30 KiB (two buffers, 60 KiB of the 520 KB SRAM)
 
 static lv_disp_draw_buf_t s_draw;
@@ -389,7 +391,7 @@ void app_main(void) {
         trace("not set up: no settings on this board");
     } else {
         if (!strcmp(g_cfg.role, "till")) ui_build_till(); else ui_build_roll();
-        lv_timer_create(refresh_cb, 200, NULL);
+        lv_timer_create(refresh_cb, STATE_POLL_MS, NULL);
         xTaskCreatePinnedToCore(net_task, "net", 12288, NULL, 4, NULL, NET_CORE);
     }
     if (calibrate) ui_calibrate();
@@ -399,7 +401,8 @@ void app_main(void) {
     board_backlight(true);
     ESP_LOGI(TAG, "up (%s): free heap %lu", g_cfg.role[0] ? g_cfg.role : "no settings", (unsigned long)esp_get_free_heap_size());
     for (;;) {
-        lv_timer_handler();
-        vTaskDelay(pdMS_TO_TICKS(10));
+        // LVGL says when its next timer is due: the task sleeps until then, 10 ms at most and 1 ms at least
+        uint32_t due = lv_timer_handler();
+        vTaskDelay(pdMS_TO_TICKS(due < 1 ? 1 : (due > 10 ? 10 : due)));
     }
 }
