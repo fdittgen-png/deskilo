@@ -734,12 +734,31 @@ Los **puntos de reposición** (bajo las dos listas) hacen que un artículo esté
 
 Quiere una sola lista que diga, de cada artículo y variante, qué es, cuánto cuesta y se vende, dónde va y cuánto hay.
 
-Abra **Existencias → Artículos**. Cada línea muestra el nombre del artículo, luego su precio, lo que hay disponible y su ubicación habitual, y una insignia cuando al artículo le falta algo: *Existencias bajas*, *Sin precio* o *Sin ubicación*. La línea no lleva botones: tóquela para abrir el artículo, donde se muestra y se cambia todo lo suyo ([La página de un artículo](help:user.money.stock.item)).
+Abra **Existencias → Artículos**. Cada artículo muestra su nombre, luego su precio, lo que hay disponible y su ubicación habitual, y una insignia cuando al artículo le falta algo: *Existencias bajas*, *Sin precio* o *Sin ubicación*. En un teléfono cada artículo es una tarjeta; en una tableta en horizontal o un ordenador los artículos forman una tabla con las columnas **Nombre**, **Precio**, **En existencias**, **Ubicación habitual**, **Grupo** y **Estado**, ordenada con un clic en **Nombre**, **Precio** o **En existencias**. Abra un artículo para verlo y cambiarlo todo ([La página de un artículo](help:user.money.stock.item)), o actúe desde la lista ([Actuar sobre un artículo desde la lista](help:user.money.stock.actions)).
 
 - **Filtre** por una ubicación para ver lo que tiene allí y en las ubicaciones de debajo, o elija el chip *Sin ubicación habitual* para ver lo que aún la necesita.
 - **Busque** por nombre, código de barras o dirección. Escribir o escanear un código de barras en la búsqueda y confirmar abre ese artículo.
 - Las listas largas se cargan por páginas: elija *Mostrar más*.
 - El último coste conocido aparece en la página del artículo solo si su rol puede ver las finanzas o gestionar las compras; si no, dice *coste no mostrado*. Un coste que ninguna entrega ha dado aún sigue como *coste desconocido*, nunca cero.
+
+<!-- anchor: user.money.stock.actions -->
+### Actuar sobre un artículo desde la lista
+
+**Público:** Administrador/a · Propietario
+
+Quiere cambiar una cosa de un artículo —su precio, su ubicación, su grupo— sin abrir su página.
+
+- **En un teléfono**, cada tarjeta termina con una fila de chips, cada uno un icono y una palabra: **Editar** (nombre, precio e IVA), **Ubicación**, **Grupo**, **Etiquetas**, **Ajustes**, **Variantes** y **Proveedores**. Deslice la fila de lado cuando no cabe. Un chip abre el mismo editor que la página del artículo; toque la tarjeta para abrir la página.
+- **En una tableta en horizontal o un ordenador**, haga clic en una línea para seleccionarla: queda resaltada y marcada. La barra sobre la tabla nombra entonces el artículo y ofrece **Editar nombre, precio e IVA**, **Ubicación**, **Grupo**, **Etiquetas**, **Ajustes de existencias**, **Variantes**, **Artículos del proveedor** y **Abrir**. Las flechas mueven la selección; Intro o un doble clic abre el artículo junto a la lista; **Borrar la selección** lo suelta.
+- Sin nada seleccionado, la barra dice *Seleccione un artículo para actuar sobre él* y ofrece **Añadir un artículo**. La búsqueda, la ubicación y *Sin ubicación habitual* están a su izquierda.
+
+**Conviene saber**
+
+- Solo se ofrece lo que su rol permite: en un teléfono los demás chips no aparecen, así que quien solo puede ver las existencias no tiene ninguno; en un ordenador aparecen atenuados. **Editar nombre, precio e IVA** requiere el derecho de gestionar servicios; lo demás, el de gestionar las existencias.
+- Tras guardar, la lista vuelve a leer el artículo: la línea sigue seleccionada y muestra sus nuevos valores.
+- **Grupo** y **Etiquetas** aparecen donde el negocio usa grupos de artículos y etiquetas.
+
+**Véase también:** [El registro de artículos](help:user.money.stock.registry) · [La página de un artículo](help:user.money.stock.item)
 
 <!-- anchor: user.money.stock.item -->
 ### La página de un artículo
@@ -748,7 +767,7 @@ Abra **Existencias → Artículos**. Cada línea muestra el nombre del artículo
 
 Quiere todo lo de un artículo en un solo sitio, y cambiar cada parte donde la lee.
 
-Toque un artículo en **Existencias → Artículos**. En un teléfono se abre como una página propia; en una tableta en horizontal o un ordenador se abre junto a la lista, que conserva su búsqueda y sus filtros. Cada parte de la página tiene su propia acción, nombrada por lo que cambia:
+En un teléfono, toque la tarjeta de un artículo en **Existencias → Artículos**: se abre como una página propia. En una tableta en horizontal o un ordenador, haga doble clic en su línea, pulse Intro sobre ella o elija **Abrir**: se abre junto a la lista, que conserva su búsqueda, sus filtros y su selección. Cada parte de la página tiene su propia acción, nombrada por lo que cambia:
 
 - **Resumen**: el precio, el IVA, la unidad, el código de barras y el último coste conocido. **Editar nombre, precio e IVA** abre el editor del servicio.
 - **Existencias**: lo que hay disponible y la ubicación habitual, del artículo o de cada variante, y **Dónde está**: las primeras ubicaciones que lo tienen (**Ver todas las ubicaciones** las muestra todas). **Cambiar la ubicación habitual** dice dónde va el artículo: su pasillo, estante o cajón. Es una indicación para colocar, contar y preparar: el stock puede estar en otro sitio, y cambiarla no mueve nada. **Editar unidades, códigos y seguimiento** abre los ajustes de existencias del artículo.
