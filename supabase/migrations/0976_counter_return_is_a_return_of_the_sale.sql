@@ -29,6 +29,8 @@
 -- (0973: refused here, it came back when it was rung up), and money: a return refunds nothing and credits nothing.
 -- An app of the last release calls it with the same arguments and reads the same answer; where the goods were brought
 -- back by the stock door before, it is now answered DKL08, the code it already words.
+-- A call with no request id, no correction or no lines (the app sends none) is answered DKL02 where it was the generic
+-- 22023: from 0919 on a migration refuses with a mapped code, as the finalize does since 0947.
 -- Returns made at the counter before this migration stay as they are: a `return_in` in no lot, in no reversal.
 --
 -- The body is the live one (the `effective-schema.sql` of Quality run 45834744067: 0897 with the one line 0973 patched in,
@@ -74,7 +76,7 @@ begin
     raise exception 'goods are not sold here: the goods ledger is off' using errcode = 'DKL07', detail = 'goods_off';
   end if;
   if p_request_id is null or p_correction_id is null or coalesce(jsonb_typeof(p_lines), '') <> 'array' or jsonb_array_length(p_lines) = 0 then
-    raise exception 'a return is recorded with a request id, the correction and its lines' using errcode = '22023';
+    perform public.refuse('DKL02', null, 'a return is recorded with a request id, the correction and its lines');
   end if;
   v_digest := md5(p_correction_id::text || '|' || p_lines::text);
   v_done := public.purchase_request_begin(p_workspace_id, p_request_id, 'counter_goods_return', v_digest);

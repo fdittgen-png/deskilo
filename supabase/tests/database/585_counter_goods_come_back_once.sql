@@ -12,7 +12,7 @@
 -- taken back at the counter, and the stock door still took back three (12 on hand of 10 received); two teas of a lot at
 -- 3.00 taken back left the lot at 8 and two in no lot, the stock worth 24.00 instead of 30.00. Rolled back.
 begin;
-select plan(31);
+select plan(32);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -148,6 +148,8 @@ select is(pg_temp.credit_and_return(1011, pg_temp.rec('r.k'), '2') || '|' || pg_
   'credited, returned 1|9|1', 'K the same two requests sent again answer the same and move nothing');
 select is(pg_temp.take_back(1013, pg_temp.rec('r.correction'), '1') || '|' || pg_temp.on_hand(301),
   'ERR DKL08 {"left": "0", "line": 1, "reason": "return_beyond"}|9', 'K no more comes back than the correction credits, as before');
+select is(left(pg_temp.run_as(pg_temp.u(1), format('select public.counter_goods_return_v1(%L, %L, %L, ''[]''::jsonb)::text', pg_temp.u(101), pg_temp.u(1014),
+  pg_temp.rec('r.correction'))), 9) || '|' || pg_temp.on_hand(301), 'ERR DKL02|9', 'K a return that names no line is refused with a code of the counter''s own');
 select is(pg_temp.stock_back(1021, pg_temp.rec('r.k'), '3') || '|' || pg_temp.on_hand(301) || '|' || pg_temp.at_customer(301),
   'ERR DKG17|9|1', 'K the stock door does not take back the three sold: two of them are back already');
 select is(pg_temp.stock_back(1022, pg_temp.rec('r.k'), '1') || '|' || pg_temp.on_hand(301) || '|' || pg_temp.at_customer(301),
