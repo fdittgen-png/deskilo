@@ -13,12 +13,14 @@ import 'app_failure.dart';
 T valueOrThrow<T>(CommandOutcome<T> outcome) => switch (outcome) {
   CommandDone(:final value) => value,
   CommandHeld(:final eventId) => throw PendingValidationException(eventId),
-  CommandRefused(:final refusal) => Error.throwWithStackTrace(
+  // The stack of the first catch is kept: the adapter's own would point every
+  // failure at this line.
+  CommandRefused(:final refusal, :final stack) => Error.throwWithStackTrace(
     refusal.cause ?? refusal,
-    StackTrace.current,
+    stack ?? StackTrace.current,
   ),
-  CommandUnreached(:final failure) => Error.throwWithStackTrace(
+  CommandUnreached(:final failure, :final stack) => Error.throwWithStackTrace(
     failure.cause ?? failure,
-    StackTrace.current,
+    stack ?? StackTrace.current,
   ),
 };
