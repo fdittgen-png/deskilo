@@ -33,6 +33,27 @@ static int s_products;   // the keys in use, shown again when the keypad goes aw
 static bool s_keypad_on;
 static int s_qty;   // 0: none typed, the product is added once
 
+// #4450 -- what is already on the screen is left alone. LVGL paints a label again whenever its text is set, and a widget
+// whenever its HIDDEN flag is cleared, changed or not; and the state comes in again with every status line. Without these
+// two, each of them painted the whole key grid again.
+static void label_set(lv_obj_t *l, const char *t) { if (strcmp(lv_label_get_text(l), t) != 0) lv_label_set_text(l, t); }
+static void set_hidden(lv_obj_t *o, bool hidden) {
+    if (lv_obj_has_flag(o, LV_OBJ_FLAG_HIDDEN) == hidden) return;
+    if (hidden) lv_obj_add_flag(o, LV_OBJ_FLAG_HIDDEN); else lv_obj_clear_flag(o, LV_OBJ_FLAG_HIDDEN);
+}
+// A key's label is cut with dots when the name is long, so what the label holds is not what was set: the text set is kept here.
+static char s_key_text[MAX_PRODUCTS][96];
+// The roll as it was last drawn: -1 not drawn yet, 0 drawn empty, 1 drawn with s_roll_drawn's lines.
+static int s_roll_state = -1;
+static roll_t s_roll_drawn;
+static bool roll_same(const roll_t *a, const roll_t *b) {
+    if (a->n != b->n || a->total_minor != b->total_minor || strcmp(a->currency, b->currency) != 0) return false;
+    for (int i = 0; i < a->n; i++)
+        if (a->lines[i].gross_minor != b->lines[i].gross_minor || strcmp(a->lines[i].qty, b->lines[i].qty) != 0 ||
+            strcmp(a->lines[i].label, b->lines[i].label) != 0) return false;
+    return true;
+}
+
 static void qty_show(void) {
     char t[64];
     snprintf(t, sizeof t, T(S_ST_QTY), s_qty > 0 ? s_qty : 1);
@@ -402,6 +423,7 @@ static void cash_close(void) { if (s_cash) { lv_obj_del(s_cash); s_cash = NULL; 
 void ui_build_till(void) {
     build_common(T(S_TITLE_TILL));
     lv_obj_t *scr = lv_scr_act();
+    memset(s_key_text, 0, sizeof s_key_text);
     for (int i = 0; i < MAX_PRODUCTS; i++) {
         s_keys[i] = lv_btn_create(scr);
         lv_obj_set_size(s_keys[i], 112, 70);
@@ -468,6 +490,7 @@ void ui_build_till(void) {
 void ui_build_roll(void) {
     build_common(T(S_TITLE_ROLL));
     lv_obj_t *scr = lv_scr_act();
+    s_roll_state = -1;
     s_roll_list = lv_obj_create(scr);
     lv_obj_set_size(s_roll_list, 464, 158);
     lv_obj_align(s_roll_list, LV_ALIGN_TOP_LEFT, 8, 46);
@@ -484,9 +507,13 @@ void ui_build_roll(void) {
 
 void ui_refresh(const shared_t *cp) {
     const shared_t copy = *cp;
-    lv_label_set_text(s_status, copy.status);
+    label_set(s_status, copy.status);
     char m[40];
     if (s_roll_list) {   // roll
+        // the roll is asked for every 1.5 s and mostly comes back the same: the list is built again only for other lines
+        if (s_roll_state == (copy.has_roll ? 1 : 0) && (!copy.has_roll || roll_same(&copy.roll, &s_roll_drawn))) return;
+        s_roll_state = copy.has_roll ? 1 : 0;
+        s_roll_drawn = copy.roll;
         lv_obj_clean(s_roll_list);
         if (copy.has_roll) {
             for (int i = 0; i < copy.roll.n; i++) {
@@ -509,22 +536,25 @@ void ui_refresh(const shared_t *cp) {
             char a[24];
             money(a, sizeof a, copy.products[i].price_minor, "");
             char txt[96]; snprintf(txt, sizeof txt, "%s\n%d.%02d", copy.products[i].name, copy.products[i].price_minor / 100, copy.products[i].price_minor % 100);
-            lv_label_set_text(lv_obj_get_child(s_keys[i], 0), txt);
-            if (!s_keypad_on) lv_obj_clear_flag(s_keys[i], LV_OBJ_FLAG_HIDDEN);
-        } else lv_obj_add_flag(s_keys[i], LV_OBJ_FLAG_HIDDEN);
+            if (strcmp(s_key_text[i], txt) != 0) {
+                snprintf(s_key_text[i], sizeof s_key_text[i], "%s", txt);
+                lv_label_set_text(lv_obj_get_child(s_keys[i], 0), txt);
+            }
+            if (!s_keypad_on) set_hidden(s_keys[i], false);
+        } else set_hidden(s_keys[i], true);
     }
     if (copy.has_roll) {
         money(m, sizeof m, copy.roll.total_minor, copy.roll.currency);
         int items = 0;
         for (int i = 0; i < copy.roll.n; i++) items += atoi(copy.roll.lines[i].qty);
         char tt[80]; snprintf(tt, sizeof tt, T(S_BASKET), items, m);
-        lv_label_set_text(s_basket_label, tt);
-    } else lv_label_set_text(s_basket_label, "");
+        label_set(s_basket_label, tt);
+    } else label_set(s_basket_label, "");
     // the payment: Pay only on a priced basket while selling; the cash count while counting; Ask again while uncertain
     bool payable = copy.phase == PH_SELL && copy.has_roll && copy.roll.total_minor > 0;
     if (payable) lv_obj_clear_state(s_pay, LV_STATE_DISABLED); else lv_obj_add_state(s_pay, LV_STATE_DISABLED);
-    if (copy.phase == PH_UNCERTAIN) { lv_obj_add_flag(s_pay, LV_OBJ_FLAG_HIDDEN); lv_obj_clear_flag(s_retry, LV_OBJ_FLAG_HIDDEN); }
-    else { lv_obj_clear_flag(s_pay, LV_OBJ_FLAG_HIDDEN); lv_obj_add_flag(s_retry, LV_OBJ_FLAG_HIDDEN); }
+    set_hidden(s_pay, copy.phase == PH_UNCERTAIN);
+    set_hidden(s_retry, copy.phase != PH_UNCERTAIN);
     if (copy.phase == PH_CASH) cash_open(copy.due, copy.roll.currency); else cash_close();
 }
 
