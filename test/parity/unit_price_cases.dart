@@ -2,7 +2,7 @@
 //
 // #4479 -- ONE table of what an item costs in one of its units, run against the domain's rule (`unitPriceCents`,
 // lib/features/stock/domain/unit_conversions.dart) in test/parity/unit_price_test.dart and against the server's `item_unit_price` as pgTAP
-// (supabase/tests/database/581_item_unit_price.sql, whose rows are this table's rows to the letter: the parity test prints each as SQL and
+// (supabase/tests/database/582_item_unit_price.sql, whose rows are this table's rows to the letter: the parity test prints each as SQL and
 // finds it there). The inventory unit (or no unit) is the item's price; a unit with a price of its own is that price; else the item's price
 // times what one of the unit makes of the inventory unit, rounded half up once; no conversion is `none` (DKG02), never one.
 //
