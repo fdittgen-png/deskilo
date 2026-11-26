@@ -273,7 +273,7 @@ void main() {
       await tester.pump();
       await tester.ensureVisible(find.byKey(QuestionEditorSheet.saveKey));
       await tester.tap(find.byKey(QuestionEditorSheet.saveKey));
-      await tester.pumpAndSettle();
+      await tester.pump();
       return saved.single;
     }
 
@@ -370,7 +370,7 @@ void main() {
         await tester.tap(find.byKey(QuestionChoiceTile.activeKeyFor('m')));
         await tester.pump();
         await tester.tap(find.byKey(QuestionChoiceTile.upKeyFor('m')));
-        await tester.pumpAndSettle();
+        await tester.pump();
         // "S" would make the key of the choice that exists.
         await tester.enterText(find.byKey(QuestionEditorSheet.choicesKey), 'S\nLarge');
       });

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../domain/workspace_field.dart';
 
 /// What the editor holds of one existing choice: the choice as it was read,
@@ -92,8 +93,9 @@ class QuestionChoiceTile extends StatelessWidget {
     final words = WidgetsLocalizations.of(context);
     final key = choice.read.key;
     final typed = choice.labels[workspaceLocale]?.text.trim() ?? '';
+    // The tile itself carries [keyFor], given by the list: a moved choice
+    // keeps its open state, and the recorder names it.
     return ExpansionTile(
-      key: keyFor(key),
       tilePadding: EdgeInsets.zero,
       childrenPadding: const EdgeInsets.only(bottom: AppSpacing.sm),
       title: Text(
@@ -109,13 +111,11 @@ class QuestionChoiceTile extends StatelessWidget {
             in choice.labels.entries)
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-            child: TextField(
+            child: AppTextField(
               key: labelKeyFor(key, locale),
               controller: controller,
+              label: l10n.questionEditorLabelFor(locale),
               enabled: enabled,
-              decoration: InputDecoration(
-                labelText: l10n.questionEditorLabelFor(locale),
-              ),
               onChanged: (_) => onChanged(),
             ),
           ),

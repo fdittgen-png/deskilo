@@ -159,9 +159,9 @@ Future<T> guardRead<T>({
   }
 }
 
-/// The server's own refusal codes (`DKL04`): a sentence for the person, never
-/// a fault of the app.
-const _ownRefusalPrefix = 'DK';
+/// The server's own refusal codes (`DKL04`, `DK409`): a sentence for the
+/// person, never a fault of the app.
+final _ownRefusalCode = RegExp(r'^DK[A-Z0-9]{3}$');
 
 /// The trace of what a guarded action caught, at the level its kind deserves:
 /// an answer that could not be read or a defect of the app is an error, which
@@ -179,7 +179,7 @@ void _traceCaught(
   final failure = appFailureFrom(error);
   final level = switch (failure) {
     _ when isReportableFailure(failure) => TraceLevel.error,
-    Refusal(:final code?) when code.startsWith(_ownRefusalPrefix) =>
+    Refusal(:final code?) when _ownRefusalCode.hasMatch(code) =>
       TraceLevel.warn,
     _ => otherwise,
   };
