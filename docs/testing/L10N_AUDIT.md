@@ -10,8 +10,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
-| `lib/core/demo/data/demo_stock_config_commands.dart:273` | label | Red | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/data/demo_stock_config_commands.dart:274` | label | Blue | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/data/demo_stock_config_commands.dart:278` | label | Red | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/data/demo_stock_config_commands.dart:279` | label | Blue | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/data/demo_workspace_units.dart:35` | label | Box | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/data/demo_workspace_units.dart:36` | label | Carton | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/data/demo_workspace_units.dart:37` | label | Third | core/demo | KEEP_NON_UI_LITERAL |
