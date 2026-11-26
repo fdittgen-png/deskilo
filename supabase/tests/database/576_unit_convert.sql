@@ -6,7 +6,7 @@
 -- coffee is counted in grams and its kilo is 900 g; mugs are counted in pieces and come in cartons of 12. A row's outcome is the
 -- quantity in the unit asked for, or `none` when no conversion is defined (DKG02). Rolled back.
 begin;
-select plan(23);
+select plan(24);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
