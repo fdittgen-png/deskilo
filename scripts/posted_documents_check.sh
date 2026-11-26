@@ -107,7 +107,8 @@ def kind(answer):
     if answer == 'same': return 'reached'
     if answer == 'norows': return 'no row'
     if answer == '42501': return 'refused (privilege or policy)'
-    if answer == 'P0001' or answer.startswith('DK'): return 'refused (guard)'
+    # 55000 is how the match history's guard answers (0750)
+    if answer in ('P0001', '55000') or answer.startswith('DK'): return 'refused (guard)'
     if answer.startswith('23'): return 'PAST THE GUARDS (stopped by a constraint)'
     if answer == 'no_owner': return 'not tried (no owner)'
     return 'not answered (the attempt itself failed)'
