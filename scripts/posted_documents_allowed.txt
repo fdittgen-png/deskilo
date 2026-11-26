@@ -1,0 +1,9 @@
+# #4492 row 4 -- what the server's own role (the Edge functions, an import) can
+# still do to a POSTED row, as scripts/posted_documents_check.sh found it by
+# trying, each with why it is allowed. One per line:
+#
+#   <table> <attempt>   # why
+#
+# where an attempt is `update:<column>`, `delete`, `truncate` or
+# `truncate_cascade`. An attempt that gets through and is not here fails the
+# check; a line here that no longer gets through is reported, and goes.
