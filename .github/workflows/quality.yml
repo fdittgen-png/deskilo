@@ -1375,6 +1375,8 @@ jobs:
           bash scripts/stock_transfer_race.sh "$DB_URL"
           # #4433 — two invoices taking the last piece at once: one sells it, the other waits and is refused.
           bash scripts/invoice_goods_race.sh "$DB_URL"
+          # #4492 — a return and a void of the same sale at once: they wait for each other, nothing comes back twice.
+          bash scripts/invoice_void_return_race.sh "$DB_URL"
 
       # #1329 — the feature-flag write compares its read-set and merges
       # under ONE row lock. Two real sessions prove there is no window
