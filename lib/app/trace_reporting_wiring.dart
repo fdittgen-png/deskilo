@@ -60,7 +60,7 @@ final traceReportingProvider = Provider<void>((ref) {
     perHour: () =>
         setting('trace.reports_per_hour', SettingDefaults.traceReportsPerHour),
     now: clock.now,
-    warn: (message, error, stack) =>
+    warn: (message, [error, stack]) =>
         trace.warn(traceReportArea, message, error: error, stackTrace: stack),
   );
   ref.onDispose(reporter.dispose);
