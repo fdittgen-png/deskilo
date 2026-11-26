@@ -134,10 +134,13 @@ select set_config('t.tender_site', coalesce((select site_id::text from public.co
 select is(pg_temp.server(format('update public.counter_receipt_lines set receipt_id = %L where receipt_id = %L', pg_temp.f(current_setting('t.d3'), 'receipt_id'), current_setting('t.r1'))),
   'ERR DKL03', 'a line of a finalized receipt is not handed to a draft');
 select is((select count(*)::int from public.counter_receipt_lines where receipt_id = current_setting('t.r1')::uuid), 1, 'and the finalized receipt still has its line');
-select is(pg_temp.server(format('update public.counter_tenders set site_id = gen_random_uuid() where receipt_id = %L', current_setting('t.r1')))
-          || ' ' || coalesce((select site_id::text from public.counter_tenders where receipt_id = current_setting('t.r1')::uuid), 'none'),
+-- each attempt is a statement of its own: the readback after it reads what the attempt left, and a table
+-- cannot be emptied by the statement that is reading it
+select set_config('t.try', pg_temp.server(format('update public.counter_tenders set site_id = gen_random_uuid() where receipt_id = %L', current_setting('t.r1'))), false);
+select is(current_setting('t.try') || ' ' || coalesce((select site_id::text from public.counter_tenders where receipt_id = current_setting('t.r1')::uuid), 'none'),
   'ERR DKL03 ' || current_setting('t.tender_site'), 'the site of a recorded tender does not change');
-select is(pg_temp.server('truncate table public.counter_receipts cascade') || ' ' || (select count(*)::text from public.counter_receipts where id = current_setting('t.r1')::uuid),
+select set_config('t.try', pg_temp.server('truncate table public.counter_receipts cascade'), false);
+select is(current_setting('t.try') || ' ' || (select count(*)::text from public.counter_receipts where id = current_setting('t.r1')::uuid),
   'ERR DKL03 1', 'the receipts are not emptied in one statement, and the receipt is still there');
 select is(pg_temp.server(format('update public.counter_receipt_lines set line_no = line_no where receipt_id = %L', pg_temp.f(current_setting('t.d3'), 'receipt_id'))),
   'done', 'the lines of a draft stay editable');

@@ -127,13 +127,17 @@ begin
 end
 $f$;
 select set_config('deskilo.ledger.site', coalesce((select site_id::text from public.ledger_entries where id = current_setting('deskilo.ledger.charge')::uuid), 'none'), false);
+-- each attempt is a statement of its own: the readback after it reads what the attempt left, and a table
+-- cannot be emptied by the statement that is reading it
+select set_config('deskilo.ledger.try', pg_temp.server(format('update public.ledger_entries set site_id = gen_random_uuid() where id = %L', current_setting('deskilo.ledger.charge'))), false);
 select is(
-  pg_temp.server(format('update public.ledger_entries set site_id = gen_random_uuid() where id = %L', current_setting('deskilo.ledger.charge')))
+  current_setting('deskilo.ledger.try')
   || ' ' || coalesce((select site_id::text from public.ledger_entries where id = current_setting('deskilo.ledger.charge')::uuid), 'none'),
   'ERR DKL03 ' || current_setting('deskilo.ledger.site'),
   'the site of a posted entry does not change');
+select set_config('deskilo.ledger.try', pg_temp.server('truncate table public.ledger_entries cascade'), false);
 select is(
-  pg_temp.server('truncate table public.ledger_entries cascade')
+  current_setting('deskilo.ledger.try')
   || ' ' || (select count(*)::text from public.ledger_entries where id = current_setting('deskilo.ledger.charge')::uuid),
   'ERR DKL03 1',
   'the ledger is not emptied in one statement');
@@ -141,8 +145,10 @@ select is(
   pg_temp.server(format('update public.ledger_entries set modified_datetime = now() where id = %L', current_setting('deskilo.ledger.charge'))),
   'done',
   'a touch of the technical columns still passes');
+select set_config('deskilo.ledger.rows', (select count(*)::text from public.stock_reversals), false);
+select set_config('deskilo.ledger.try', pg_temp.server('truncate table public.stock_reversals'), false);
 select is(
-  (select count(*)::text from public.stock_reversals) || ' ' || pg_temp.server('truncate table public.stock_reversals'),
+  current_setting('deskilo.ledger.rows') || ' ' || current_setting('deskilo.ledger.try'),
   '0 done',
   'a table of posted rows that holds none may be emptied (a restore into an empty installation)');
 
