@@ -19,12 +19,12 @@ import '../../../../core/ui/app_snack.dart';
 import '../../domain/counter_till.dart';
 import '../../domain/till_keypad.dart';
 import '../../domain/till_layout.dart';
+import '../../domain/till_print_job.dart';
 import '../../providers/till_layout_providers.dart';
 import '../../providers/till_printer_providers.dart';
 import '../../providers/till_providers.dart';
 import '../counter_receipt_view.dart';
 import '../till_keys.dart';
-import '../till_print_panel.dart';
 import '../till_session.dart';
 import '../till_text.dart';
 import 'till_layout_tools.dart';
@@ -71,10 +71,29 @@ class TillKeysOrLayout extends ConsumerWidget {
       items: sold,
       session: session,
       copies: ref.watch(tillCopyPortProvider),
-      onOpenDrawer: ref.watch(tillPrinterOnProvider) ? () => unawaited(openTillDrawer(context, ref)) : null,
+      onOpenDrawer: ref.watch(tillPrinterOnProvider) ? () => unawaited(_openDrawer(context, ref)) : null,
       onTap: onTap,
       onPayCash: onPayCash,
     );
+  }
+
+  /// #4368 / #4476 -- the Open drawer key: the drawer the till's printer drives opens, outside a sale. Said in words when
+  /// no drawer is set on this device's printer, or when it did not open.
+  Future<void> _openDrawer(BuildContext context, WidgetRef ref) async {
+    final l10n = context.l10n;
+    final settings = await ref.read(tillPrinterSettingsProvider.future);
+    if (!context.mounted) return;
+    if (!settings.configured || !settings.drawer) {
+      AppSnack.info(context, l10n.tillDrawerNotSet);
+      return;
+    }
+    try {
+      await ref.read(receiptSenderProvider(settings)).send(tillPrintJob(settings: settings, kickDrawer: true));
+      if (context.mounted) AppSnack.info(context, l10n.tillDrawerOpened);
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('money', 'the cash drawer did not open', error: e, stackTrace: st);
+      if (context.mounted) AppSnack.error(context, l10n.tillDrawerKickFailed);
+    }
   }
 }
 

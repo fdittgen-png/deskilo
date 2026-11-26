@@ -42426,7 +42426,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillPrintReceipt => 'Imprimer le ticket';
 
   @override
-  String get tillPrintTotal => 'TOTAL';
+  String get tillPrintTotal => 'TOTAL À PAYER';
 
   @override
   String get tillPrinted => 'Ticket imprimé.';
@@ -42476,7 +42476,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get tillPrinterPort => 'Port';
+  String get tillPrinterPort => 'Port réseau';
 
   @override
   String get tillPrinterPortInvalid => 'Le port est un nombre de 1 à 65535.';

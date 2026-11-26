@@ -10,6 +10,10 @@ import '../domain/till_printer_settings.dart';
 /// (`tillPrinterOnFromApp`), so the till reads it without reaching into the workspace. Off until the app says so.
 final tillPrinterOnProvider = Provider<bool>((ref) => false);
 
+/// #4368 -- the business the till prints for (its id for the copies, its name at the top of a receipt): wired by the app
+/// from the current workspace (`tillBusinessFromApp`), so the till never reads the workspace itself.
+final tillBusinessProvider = Provider<({String id, String name})>((ref) => (id: '', name: ''));
+
 /// #4368 -- where this device keeps its printer settings. A test or the Demo replaces it.
 final tillPrinterStoreProvider = Provider<TillPrinterStore>((ref) => const PrefsTillPrinterStore());
 

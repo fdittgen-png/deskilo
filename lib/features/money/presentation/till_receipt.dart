@@ -9,20 +9,13 @@ import '../../../l10n/app_localizations.dart';
 import '../domain/counter_till.dart';
 import '../domain/escpos_receipt.dart';
 
-/// What the receipt of a sale says. [givenMinor] is the cash the customer handed over, [changeMinor] what came back;
-/// [copy] is the copy's number the server counted (#4476), null for the receipt as issued.
-ReceiptPrint tillReceiptOf({
-  required AppLocalizations l10n,
-  required AppFormat fmt,
-  required String business,
-  required TillSold sold,
-  required TillDraft draft,
-  required List<TillLine> lines,
-  required DateTime at,
-  required int givenMinor,
-  required int changeMinor,
-  required int? copy,
-}) {
+/// A sale as a receipt prints it: the business's name, what the server sold and priced, the lines as rung up, when, and
+/// the cash given ([givenMinor]) and returned ([changeMinor]).
+typedef TillSalePrint = ({String business, TillSold sold, TillDraft draft, List<TillLine> lines, DateTime at, int givenMinor, int changeMinor});
+
+/// What the receipt of [sale] says; [copy] is the copy's number the server counted (#4476), null for the receipt as issued.
+ReceiptPrint tillReceiptOf({required AppLocalizations l10n, required AppFormat fmt, required TillSalePrint sale, required int? copy}) {
+  final (:business, :sold, :draft, :lines, :at, :givenMinor, :changeMinor) = sale;
   final money = fmt.moneyIn(sold.totals.currency);
   final separator = decimalSeparatorOf(fmt.locale);
   return ReceiptPrint(

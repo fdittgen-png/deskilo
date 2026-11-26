@@ -4,8 +4,13 @@
 // sent; a printer that cannot be reached or is out of paper is [ReceiptNotPrinted], never a failed sale.
 import 'dart:typed_data';
 
+import '../../../core/failure/app_failure.dart' show TypedRefusal;
+
 /// The printer did not take the receipt: the sale stands, the receipt can be printed again (a reprint) or shared.
-class ReceiptNotPrinted implements Exception {
+/// How long a receipt printer may take to accept a job before it is said to be unreachable.
+const receiptPrinterTimeout = Duration(seconds: 5);
+
+class ReceiptNotPrinted implements TypedRefusal {
   const ReceiptNotPrinted(this.reason);
 
   /// What went wrong, for the trace; the cashier is told the sentence of the screen, not this.

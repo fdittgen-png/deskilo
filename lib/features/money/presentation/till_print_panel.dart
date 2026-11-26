@@ -17,8 +17,6 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../../../core/ui/app_snack.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../domain/counter_till.dart';
 import '../domain/till_print_job.dart';
 import '../domain/till_printer_settings.dart';
@@ -74,7 +72,7 @@ class _TillPrintPanelState extends ConsumerState<TillPrintPanel> {
       await ref.read(receiptSenderProvider(settings)).send(tillPrintJob(settings: settings, kickDrawer: true));
       _drawerKicked = true;
     } on Object catch (e, st) {
-      TraceLogger.instance.warn('money', 'the cash drawer did not open: $e', stackTrace: st);
+      TraceLogger.instance.warn('money', 'the cash drawer did not open', error: e, stackTrace: st);
     }
   }
 
@@ -93,10 +91,10 @@ class _TillPrintPanelState extends ConsumerState<TillPrintPanel> {
       // a print after the first is a copy: counted by the server, never numbered again (a retry after a failure too)
       final copies = ref.read(tillCopyPortProvider);
       try {
-        final workspaceId = ref.read(currentWorkspaceProvider).value?.id;
-        copy = workspaceId == null ? null : await copies?.copy(workspaceId, requestId: newRequestId(), receiptId: widget.sold.receiptId);
+        final workspaceId = ref.read(tillBusinessProvider).id;
+        copy = workspaceId.isEmpty ? null : await copies?.copy(workspaceId, requestId: newRequestId(), receiptId: widget.sold.receiptId);
       } on Object catch (e, st) {
-        TraceLogger.instance.warn('money', 'a receipt copy was not counted: $e', stackTrace: st);
+        TraceLogger.instance.warn('money', 'a receipt copy was not counted', error: e, stackTrace: st);
         if (mounted) setState(() => _state = _Print.failed);
         return;
       }
@@ -105,13 +103,15 @@ class _TillPrintPanelState extends ConsumerState<TillPrintPanel> {
     final receipt = tillReceiptOf(
       l10n: l10n,
       fmt: format,
-      business: ref.read(currentWorkspaceProvider).value?.name ?? '',
-      sold: widget.sold,
-      draft: widget.draft,
-      lines: widget.lines,
-      at: ref.read(clockProvider).now(),
-      givenMinor: widget.sold.totals.grossMinor + widget.changeMinor,
-      changeMinor: widget.changeMinor,
+      sale: (
+        business: ref.read(tillBusinessProvider).name,
+        sold: widget.sold,
+        draft: widget.draft,
+        lines: widget.lines,
+        at: ref.read(clockProvider).now(),
+        givenMinor: widget.sold.totals.grossMinor + widget.changeMinor,
+        changeMinor: widget.changeMinor,
+      ),
       copy: copy,
     );
     try {
@@ -121,7 +121,7 @@ class _TillPrintPanelState extends ConsumerState<TillPrintPanel> {
       if (mounted) setState(() => _state = _Print.printed);
     } on Object catch (e, st) {
       // the printer is not the sale: the sale stands, the receipt can be printed again
-      TraceLogger.instance.warn('money', 'the receipt was not printed: $e', stackTrace: st);
+      TraceLogger.instance.warn('money', 'the receipt was not printed', error: e, stackTrace: st);
       _sent++;
       if (mounted) setState(() => _state = _Print.failed);
     }
@@ -131,7 +131,7 @@ class _TillPrintPanelState extends ConsumerState<TillPrintPanel> {
   Widget build(BuildContext context) {
     if (!ref.watch(tillPrinterOnProvider)) return const SizedBox.shrink();
     final l10n = context.l10n;
-    final settings = ref.watch(tillPrinterSettingsProvider).value ?? const TillPrinterSettings();
+    final settings = ref.watch(tillPrinterSettingsProvider).value ?? const TillPrinterSettings(); // empty-ok: no printer read yet is no printer set, and setting one up is offered
     return Padding(
       padding: const EdgeInsets.only(top: AppSpacing.sm),
       child: Column(
@@ -164,24 +164,5 @@ class _TillPrintPanelState extends ConsumerState<TillPrintPanel> {
         ],
       ),
     );
-  }
-}
-
-/// #4368 / #4476 -- the Open drawer key: the drawer the till's printer drives opens, outside a sale. Said in words when
-/// no drawer is set on this device's printer, or when it did not open.
-Future<void> openTillDrawer(BuildContext context, WidgetRef ref) async {
-  final l10n = context.l10n;
-  final settings = await ref.read(tillPrinterSettingsProvider.future);
-  if (!context.mounted) return;
-  if (!settings.configured || !settings.drawer) {
-    AppSnack.info(context, l10n.tillDrawerNotSet);
-    return;
-  }
-  try {
-    await ref.read(receiptSenderProvider(settings)).send(tillPrintJob(settings: settings, kickDrawer: true));
-    if (context.mounted) AppSnack.info(context, l10n.tillDrawerOpened);
-  } on Object catch (e, st) {
-    TraceLogger.instance.warn('money', 'the cash drawer did not open: $e', stackTrace: st);
-    if (context.mounted) AppSnack.error(context, l10n.tillDrawerKickFailed);
   }
 }

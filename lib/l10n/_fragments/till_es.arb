@@ -260,7 +260,7 @@
   "@tillReceiptTax": {
     "description": "#4368 the till's receipt printer"
   },
-  "tillPrintTotal": "TOTAL",
+  "tillPrintTotal": "TOTAL A PAGAR",
   "@tillPrintTotal": {
     "description": "#4368 the till's receipt printer"
   },

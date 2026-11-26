@@ -3,8 +3,6 @@
 // #4368 (CS6) -- how this till prints: the printer on the local network, the paper, the code page, whether a cash drawer
 // hangs on it and whether a sale prints by itself. A setting of the DEVICE the till runs on (the printer is wired to
 // it), so it lives on the device, not in the business's settings.
-import 'dart:convert';
-
 import 'escpos_receipt.dart';
 
 /// Whether a finished sale prints without being asked.
@@ -58,34 +56,4 @@ class TillPrinterSettings {
         drawer: drawer ?? this.drawer,
         mode: mode ?? this.mode,
       );
-
-  String toJson() => jsonEncode({
-    'host': host,
-    'port': port,
-    'paper_mm': paperMm,
-    'code_page': codePage.name,
-    'drawer': drawer,
-    'mode': mode.name,
-  });
-
-  /// The settings stored as [json]; anything unreadable is the defaults (a printer to be set up again, never a crash).
-  factory TillPrinterSettings.fromJson(String? json) {
-    if (json == null || json.isEmpty) return const TillPrinterSettings();
-    try {
-      final m = jsonDecode(json);
-      if (m is! Map<String, dynamic>) return const TillPrinterSettings();
-      final port = m['port'];
-      final paper = m['paper_mm'];
-      return TillPrinterSettings(
-        host: m['host'] is String ? (m['host'] as String).trim() : '',
-        port: port is int && port >= 1 && port <= 65535 ? port : defaultPort,
-        paperMm: paper == 58 ? 58 : 80,
-        codePage: EscposCodePage.values.where((c) => c.name == m['code_page']).firstOrNull ?? EscposCodePage.cp858,
-        drawer: m['drawer'] == true,
-        mode: TillPrintMode.values.where((x) => x.name == m['mode']).firstOrNull ?? TillPrintMode.ask,
-      );
-    } on FormatException {
-      return const TillPrinterSettings();
-    }
-  }
 }

@@ -12,19 +12,15 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/escpos_receipt.dart';
 import '../../domain/till_day.dart';
 import '../../domain/till_print_job.dart';
 import '../../providers/till_printer_providers.dart';
+import 'day_report_view.dart' show dayTenderName;
 
-String _tender(AppLocalizations l10n, String kind) => switch (kind) {
-  'cash' => l10n.tillDayTenderCash,
-  'card' => l10n.paymentMethodCard,
-  _ => l10n.tillDayTenderOther,
-};
 
 /// What the day report [report] prints, in [currency].
+@visibleForTesting
 ReceiptPrint dayReportPrint({required AppLocalizations l10n, required AppFormat fmt, required String business, required DayReport report, required String currency}) {
   final money = fmt.moneyIn(currency);
   String m(int minor) => money.formatMinor(minor);
@@ -48,7 +44,7 @@ ReceiptPrint dayReportPrint({required AppLocalizations l10n, required AppFormat 
     tax: m(report.salesByRate.fold(0, (a, r) => a + r.taxMinor)),
     totalLabel: l10n.tillPrintTotal,
     total: m(report.salesTotalMinor),
-    tenders: [for (final e in report.salesByTender.entries) ReceiptPrintTender(label: _tender(l10n, e.key), amount: m(e.value))],
+    tenders: [for (final e in report.salesByTender.entries) ReceiptPrintTender(label: dayTenderName(l10n, e.key), amount: m(e.value))],
   );
 }
 
@@ -70,14 +66,14 @@ class DayReportPrintButton extends ConsumerWidget {
       icon: const Icon(Icons.print_outlined),
       onPressed: () async {
         final job = tillPrintJob(
-          receipt: dayReportPrint(l10n: l10n, fmt: appFormatOf(context), business: ref.read(currentWorkspaceProvider).value?.name ?? '', report: report, currency: currency),
+          receipt: dayReportPrint(l10n: l10n, fmt: appFormatOf(context), business: ref.read(tillBusinessProvider).name, report: report, currency: currency),
           settings: settings,
         );
         try {
           await ref.read(receiptSenderProvider(settings)).send(job);
           if (context.mounted) AppSnack.info(context, l10n.tillPrinted);
         } on Object catch (e, st) {
-          TraceLogger.instance.warn('money', 'the day report was not printed: $e', stackTrace: st);
+          TraceLogger.instance.warn('money', 'the day report was not printed', error: e, stackTrace: st);
           if (context.mounted) AppSnack.error(context, l10n.tillDayReportNotPrinted);
         }
       },

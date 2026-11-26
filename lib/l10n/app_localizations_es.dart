@@ -42244,7 +42244,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillPrintReceipt => 'Imprimir el ticket';
 
   @override
-  String get tillPrintTotal => 'TOTAL';
+  String get tillPrintTotal => 'TOTAL A PAGAR';
 
   @override
   String get tillPrinted => 'Ticket impreso.';

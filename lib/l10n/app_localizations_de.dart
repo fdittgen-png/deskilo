@@ -42414,7 +42414,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get tillPrinterPort => 'Port';
+  String get tillPrinterPort => 'Netzwerkport';
 
   @override
   String get tillPrinterPortInvalid =>

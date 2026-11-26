@@ -24483,7 +24483,7 @@
   "@tillPrintReceipt": {
     "description": "#4368 the till's receipt printer"
   },
-  "tillPrintTotal": "TOTAL",
+  "tillPrintTotal": "TOTAL À PAYER",
   "@tillPrintTotal": {
     "description": "#4368 the till's receipt printer"
   },
@@ -24548,7 +24548,7 @@
       }
     }
   },
-  "tillPrinterPort": "Port",
+  "tillPrinterPort": "Port réseau",
   "@tillPrinterPort": {
     "description": "#4368 the till's receipt printer"
   },

@@ -47,7 +47,6 @@ class TillState {
     bool? busy,
     Object? Function()? problem,
     int? Function()? change,
-    bool? soldCash,
   }) => TillState(
     lines: lines ?? this.lines,
     draft: draft == null ? this.draft : draft(),
@@ -58,7 +57,7 @@ class TillState {
     unconfirmed: unconfirmed,
     card: card,
     cardUnknown: cardUnknown,
-    soldCash: soldCash ?? this.soldCash,
+    soldCash: soldCash,
   );
 
   /// The same state with the card asked of the terminal set (null: none asked).
@@ -68,6 +67,10 @@ class TillState {
   /// The same state with the terminal's answer marked as lost, or not.
   TillState withCardUnknown({required bool value}) =>
       TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: unconfirmed, card: card, cardUnknown: value, soldCash: soldCash);
+
+  /// #4368 -- the same state with the sale just made marked as taking cash, or not.
+  TillState withSoldCash({required bool value}) =>
+      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: unconfirmed, card: card, cardUnknown: cardUnknown, soldCash: value);
 
   /// The same state with the sale marked as waiting to be confirmed, or not.
   TillState withUnconfirmed({required bool value}) =>

@@ -15,8 +15,6 @@ import 'package:deskilo/features/money/presentation/till_print_panel.dart';
 import 'package:deskilo/features/money/presentation/till_session.dart';
 import 'package:deskilo/features/money/providers/till_printer_providers.dart';
 import 'package:deskilo/features/money/providers/till_providers.dart';
-import 'package:deskilo/features/workspace/domain/workspace.dart';
-import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -25,7 +23,6 @@ import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
 
 final _en = AppLocalizationsEn();
-const _workspace = Workspace(id: 'ws', name: 'Épicerie', countryCode: 'FR', currencyCode: 'EUR', timezone: 'Europe/Paris', inviteCode: 'x');
 const _settings = TillPrinterSettings(host: 'printer.local', drawer: true);
 final _kick = tillPrintJob(settings: _settings, kickDrawer: true);
 
@@ -50,7 +47,7 @@ Future<(DemoReceiptPrinter, TillSession)> _sold(WidgetTester tester, {required S
       tillPrinterOnProvider.overrideWithValue(on),
       tillPrinterStoreProvider.overrideWithValue(DemoTillPrinterStore(_settings)),
       receiptSenderProvider.overrideWith((ref, s) => printer),
-      currentWorkspaceProvider.overrideWith((ref) async => _workspace),
+      tillBusinessProvider.overrideWithValue((id: 'ws', name: 'Épicerie')),
     ],
   );
   unawaited(session.add(itemId: 'demo-item-milk', name: 'Oat milk', unit: 'l'));

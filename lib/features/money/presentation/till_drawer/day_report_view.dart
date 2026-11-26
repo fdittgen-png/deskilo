@@ -26,7 +26,8 @@ Future<void> showDayReport(BuildContext context, DayReport report, {required Str
   ),
 );
 
-String _tenderName(AppLocalizations l10n, String kind) => switch (kind) {
+/// A tender's name in the day report's words.
+String dayTenderName(AppLocalizations l10n, String kind) => switch (kind) {
   'cash' => l10n.tillDayTenderCash,
   'card' => l10n.paymentMethodCard,
   _ => l10n.tillDayTenderOther,
@@ -78,7 +79,7 @@ class _DayReportView extends StatelessWidget {
             if (report.salesByTender.isNotEmpty) ...[
               const FormGap.small(),
               Text(l10n.tillDayByTender, style: title),
-              for (final e in report.salesByTender.entries) Text(l10n.tillDayAmountLine(_tenderName(l10n, e.key), m(e.value))),
+              for (final e in report.salesByTender.entries) Text(l10n.tillDayAmountLine(dayTenderName(l10n, e.key), m(e.value))),
             ],
             if (report.salesByRate.isNotEmpty) ...[
               const FormGap.small(),

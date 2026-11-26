@@ -24548,7 +24548,7 @@
       }
     }
   },
-  "tillPrinterPort": "Port",
+  "tillPrinterPort": "Netzwerkport",
   "@tillPrinterPort": {
     "description": "#4368 the till's receipt printer"
   },
