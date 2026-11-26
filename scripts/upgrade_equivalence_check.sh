@@ -14,8 +14,9 @@
 #   fresh      the empty project, every migration.
 #   upgraded   the empty project at 0226 with the archive of
 #              supabase/restore/archive_seed.sql, carried to 0689 with the
-#              in-flight e-invoice work of archive_seed_0689.sql, then every
-#              later migration over those rows.
+#              in-flight e-invoice work of archive_seed_0689.sql, carried to
+#              0747 with the goods of archive_seed_0747.sql, then every later
+#              migration over those rows.
 #   the stack  the job's own replay (`supabase start`), the database
 #              assets/instance/contract.txt is read from.
 #
@@ -69,6 +70,8 @@ BASELINE="${BASELINE:-0226}"
 STAGE_AT="${STAGE_AT:-0689}"
 SEED=supabase/restore/archive_seed.sql
 STAGE_SEED=supabase/restore/archive_seed_0689.sql
+STOCK_AT="${STOCK_AT:-0747}"
+STOCK_SEED=supabase/restore/archive_seed_0747.sql
 KNOWN="$HERE/upgrade_equivalence_known.txt"
 OUT="${EQUIV_OUT:-}"
 if [ -z "$OUT" ]; then
@@ -143,7 +146,7 @@ for f in supabase/migrations/*.sql; do emit "$f"; done | run_stream "$FRESH" fre
 [ "$(marker "$FRESH")" = "$latest" ] || fail "fresh: the marker reads '$(marker "$FRESH")', not $latest"
 say "$count migrations, marker $latest ($((SECONDS - t))s)"
 
-echo "--- upgraded: an archive at $BASELINE, in-flight work at $STAGE_AT, then the rest over them"
+echo "--- upgraded: an archive at $BASELINE, in-flight work at $STAGE_AT, goods at $STOCK_AT, then the rest over them"
 t=$SECONDS
 {
   for f in supabase/migrations/*.sql; do
@@ -156,7 +159,12 @@ t=$SECONDS
   done
   emit "$STAGE_SEED"
   for f in supabase/migrations/*.sql; do
-    [ "$(version_of "$f")" -gt "$((10#$STAGE_AT))" ] && emit "$f"
+    v="$(version_of "$f")"
+    [ "$v" -gt "$((10#$STAGE_AT))" ] && [ "$v" -le "$((10#$STOCK_AT))" ] && emit "$f"
+  done
+  emit "$STOCK_SEED"
+  for f in supabase/migrations/*.sql; do
+    [ "$(version_of "$f")" -gt "$((10#$STOCK_AT))" ] && emit "$f"
   done
   true
 } | run_stream "$UPGRADED" upgraded
@@ -164,7 +172,8 @@ t=$SECONDS
 rows="$(psq "$UPGRADED" -At -c "select (select count(*) from public.invoices) || ' invoices, '
   || (select count(*) from public.ledger_entries) || ' postings, '
   || (select count(*) from public.payment_intents) || ' intents, '
-  || (select count(*) from public.invoice_transmissions) || ' transmissions'")"
+  || (select count(*) from public.invoice_transmissions) || ' transmissions, '
+  || (select count(*) from public.stock_movements) || ' stock movements'")"
 say "the same $count migrations, over $rows; marker $latest ($((SECONDS - t))s)"
 
 echo "--- what each installation is"
@@ -310,11 +319,10 @@ begin
 end
 $probe$;
 SQL
-patching=0
+patching="$(grep -l 'pg_get_functiondef' supabase/migrations/*.sql | wc -l | tr -d ' ')"
+grep -l 'zzq4492' supabase/migrations/*.sql >/dev/null 2>&1 && fail "a migration holds the probe's own quoting tag"
 for f in supabase/migrations/*.sql; do
   if grep -q 'pg_get_functiondef' "$f"; then
-    patching=$((patching + 1))
-    grep -q 'zzq4492' "$f" && fail "$f holds the probe's own quoting tag"
     n="$(basename "$f" .sql)"
     printf '\\connect\ninsert into zz_probe.files (name, body) values (%s, $zzq4492$' "'$n'"
     cat "$f"
@@ -327,7 +335,7 @@ psq "$PROBE" -At -F $'\t' -c "select migration, fn, verdict, regexp_replace(coal
                                 from zz_probe.results order by 1, 2" > "$OUT/anchor-trials.tsv" \
   || fail "could not read the trials"
 trials="$(grep -c '' "$OUT/anchor-trials.tsv")"
-say "$patching migrations read a live body; $trials bodies rewritten in place, each tried without its anchor ($((SECONDS - t))s)"
+say "$patching migrations read a live body; $(cut -f1 "$OUT/anchor-trials.tsv" | sort -u | grep -c '') of them rewrite $trials existing bodies in place, each tried without its anchor ($((SECONDS - t))s)"
 cut -f3 "$OUT/anchor-trials.tsv" | sort | uniq -c | sed 's/^/    /'
 # How a loud one speaks: by its own message, or only because EXECUTE was handed nothing.
 say "of the loud ones: $(awk -F'\t' '$3 == "LOUD" && $4 ~ /EXECUTE.*null|null.*EXECUTE/' "$OUT/anchor-trials.tsv" | grep -c '') stop on a null EXECUTE (no message of their own), $(awk -F'\t' '$3 == "LOUD" && $4 !~ /EXECUTE.*null|null.*EXECUTE/' "$OUT/anchor-trials.tsv" | grep -c '') name what is missing"
@@ -347,6 +355,16 @@ if [ -n "$gone" ]; then
 fi
 other="$(awk -F'\t' '$3 == "DRY_RUN_FAILED" || $3 == "UNSUPPORTED" || $3 == "CALLED" { print "    " $3 " " $1 " " $2 " " substr($4, 1, 160) }' "$OUT/anchor-trials.tsv")"
 [ -z "$other" ] || { echo "not answered by a trial:"; printf '%s\n' "$other"; }
+
+# The archive itself, goods included: the existing drill, in its third case,
+# on the empty project this run has at hand (it runs on every Quality run; here
+# so that a branch can see it before its pull request).
+echo "--- the populated upgrade, with goods"
+if STOCK_AT="$STOCK_AT" bash "$HERE/populated_upgrade_check.sh"; then
+  [ -d report ] && cp report/stock-*.txt "$OUT/" 2>/dev/null
+else
+  status=1
+fi
 
 echo "upgrade equivalence took $((SECONDS - started))s; the texts are in $OUT/"
 exit $status

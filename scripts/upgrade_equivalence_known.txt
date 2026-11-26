@@ -8,3 +8,4 @@
 # migration never changes, so a line leaves when the function is restated whole
 # by a later migration and the earlier file is retired from the bundle, or when
 # the reason for listing it no longer holds.
+SILENT 0735_no_default_currency workspace_status(uuid,text,text)   # the patch sits inside `if position(old in def) > 0`: where the fallback currency is not found as written it stays and nothing is said (the raise inside is unreachable). On a replay the anchor is there and the patch applies; an installation whose body differs keeps the fallback.
