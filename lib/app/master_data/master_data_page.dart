@@ -184,8 +184,9 @@ class _Card extends ConsumerWidget {
         ? null
         : masterDataSource(kind, workspaceId);
     final value = source == null ? null : ref.watch(source);
-    final failed =
-        value != null && !value.hasValue && value.hasError && !value.isLoading;
+    // the failure of a read with nothing to show, as the shared view words it
+    final failure = value == null ? null : ReadsAnswer.of([value]).failure;
+    final failed = failure != null;
     return KitCard(
       padding: EdgeInsets.zero,
       child: Column(
@@ -252,7 +253,7 @@ class _Card extends ConsumerWidget {
                 KitMetrics.cardPadding,
               ),
               child: ReadFailureBanner(
-                error: value.error!,
+                error: failure,
                 onRetry: () => ref.invalidate(source!),
                 retryKey: ValueKey('master-data-retry-${kind.name}'),
               ),
