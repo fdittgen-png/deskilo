@@ -24831,10 +24831,6 @@
   "@itemGroupAssignNone": {
     "description": "#4361 G12 item groups: itemGroupAssignNone"
   },
-  "itemGroupAssignOpen": "Group and inherited settings",
-  "@itemGroupAssignOpen": {
-    "description": "#4361 G12 item groups: itemGroupAssignOpen"
-  },
   "itemGroupAssignTitle": "Group of {item}",
   "@itemGroupAssignTitle": {
     "description": "#4361 G12 item groups: itemGroupAssignTitle",
@@ -47741,10 +47737,6 @@
   "@stockEditInventoryUnitChoice": {
     "description": "#4169 the stock editors: a label or message"
   },
-  "stockEditItem": "Stock settings",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Stock settings of {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -47984,9 +47976,77 @@
   "@stockItemAddTitle": {
     "description": "#4350 adding an item, and the first-run stock page"
   },
+  "stockItemAttentionLow": "Low stock",
+  "@stockItemAttentionLow": {
+    "description": "#4480 Stock items: the badge on an item's row and page for something the item needs"
+  },
+  "stockItemAttentionNoPlace": "No place",
+  "@stockItemAttentionNoPlace": {
+    "description": "#4480 Stock items: the badge on an item's row and page for something the item needs"
+  },
+  "stockItemAttentionNoPrice": "No price",
+  "@stockItemAttentionNoPrice": {
+    "description": "#4480 Stock items: the badge on an item's row and page for something the item needs"
+  },
   "stockItemEditDetails": "Edit name, price and VAT",
   "@stockItemEditDetails": {
     "description": "#4470 Stock items: tooltip of the button that opens the service editor for the item"
+  },
+  "stockItemEditGroup": "Change group",
+  "@stockItemEditGroup": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditHome": "Change home place",
+  "@stockItemEditHome": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditSettings": "Edit units, codes and tracking",
+  "@stockItemEditSettings": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditSuppliers": "Edit supplier items",
+  "@stockItemEditSuppliers": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditTags": "Edit tags",
+  "@stockItemEditTags": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditVariants": "Edit variants",
+  "@stockItemEditVariants": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemFactBarcode": "Barcode",
+  "@stockItemFactBarcode": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactCost": "Last known cost",
+  "@stockItemFactCost": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactGroup": "Group",
+  "@stockItemFactGroup": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactPrice": "Price",
+  "@stockItemFactPrice": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactUnit": "Unit",
+  "@stockItemFactUnit": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactVat": "VAT",
+  "@stockItemFactVat": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFilterAll": "All items",
+  "@stockItemFilterAll": {
+    "description": "#4480 Stock items: a filter chip above the list"
+  },
+  "stockItemFilterNoHome": "Without a home place",
+  "@stockItemFilterNoHome": {
+    "description": "#4480 Stock items: a filter chip above the list"
   },
   "stockItemNewBarcode": "Barcode (optional)",
   "@stockItemNewBarcode": {
@@ -48032,6 +48092,50 @@
   "stockItemNewUnit": "Counted in",
   "@stockItemNewUnit": {
     "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNoGroup": "In no group",
+  "@stockItemNoGroup": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemNoSuppliers": "No supplier article names this item yet.",
+  "@stockItemNoSuppliers": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemNoVariants": "This item has no variants.",
+  "@stockItemNoVariants": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemNothingOnHand": "None of it is in stock.",
+  "@stockItemNothingOnHand": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemPlacesTitle": "Where it is",
+  "@stockItemPlacesTitle": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemSectionGroupTags": "Group and tags",
+  "@stockItemSectionGroupTags": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionOverview": "Overview",
+  "@stockItemSectionOverview": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionStock": "Stock",
+  "@stockItemSectionStock": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionSuppliers": "Supplier items",
+  "@stockItemSectionSuppliers": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionVariants": "Variants",
+  "@stockItemSectionVariants": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSeeWhere": "See every place",
+  "@stockItemSeeWhere": {
+    "description": "#4480 the page of one stock item: a line or a message"
   },
   "stockItemsEmpty": "No items yet. An item is a service you keep in stock: choose Add an item.",
   "@stockItemsEmpty": {
@@ -48865,15 +48969,6 @@
   "@stockRegistryAllPlaces": {
     "description": "#4293 the registry of the stock: a label or a message"
   },
-  "stockRegistryCost": "cost {amount}",
-  "@stockRegistryCost": {
-    "description": "#4293 the registry of the stock: a label or a message",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "stockRegistryCostHidden": "cost not shown",
   "@stockRegistryCostHidden": {
     "description": "#4293 the registry of the stock: a label or a message"
@@ -48920,10 +49015,6 @@
   "@stockRegistryNoHome": {
     "description": "#4293 the registry of the stock: a label or a message"
   },
-  "stockRegistryNoHomeFilter": "Only items with no home place",
-  "@stockRegistryNoHomeFilter": {
-    "description": "#4293 the registry of the stock: a label or a message"
-  },
   "stockRegistryOnHand": "{quantity} on hand",
   "@stockRegistryOnHand": {
     "description": "#4293 the registry of the stock: a label or a message",
@@ -48936,15 +49027,6 @@
   "stockRegistryPlaceFilter": "Home place",
   "@stockRegistryPlaceFilter": {
     "description": "#4293 the registry of the stock: a label or a message"
-  },
-  "stockRegistryPrice": "price {amount}",
-  "@stockRegistryPrice": {
-    "description": "#4293 the registry of the stock: a label or a message",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
   },
   "stockRegistrySearch": "Find an item by name, barcode or address",
   "@stockRegistrySearch": {
@@ -50115,10 +50197,6 @@
   },
   "stockVariantsAdd": "Add a variant",
   "@stockVariantsAdd": {
-    "description": "#4169 the stock editors: a label or message"
-  },
-  "stockVariantsEdit": "Variants",
-  "@stockVariantsEdit": {
     "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsHint": "A variant is one value of each dimension, such as red and size M. Stock is kept per variant.",

@@ -3005,12 +3005,34 @@ Les **seuils de réapprovisionnement** (sous les deux listes) font qu’un artic
 
 Vous voulez une seule liste qui dise, pour chaque article et chaque variante, ce que c’est, ce que cela coûte et se vend, où c’est rangé et combien il y en a.
 
-Ouvrez **Stock → Articles**. Chaque ligne montre le **code-barres**, l’**unité**, le **prix** (le prix de vente du catalogue), le **dernier coût connu**, l’**emplacement de rangement** et ce qui est **en stock**. Le coût n’apparaît que si votre rôle peut voir les finances ou gérer les achats ; sinon la ligne indique *coût non affiché*. Un coût qu’aucune livraison n’a encore donné reste *coût inconnu*, jamais zéro.
+Ouvrez **Stock → Articles**. Chaque ligne montre le nom de l’article, puis son prix, ce qui est en stock et son emplacement de rangement, et un badge quand l’article attend quelque chose : *Stock bas*, *Sans prix* ou *Sans emplacement*. La ligne ne porte aucun bouton : touchez-la pour ouvrir l’article, où tout ce qui le concerne est montré et modifié ([La page d’un article](help:user.money.stock.item)).
 
-- **Emplacement de rangement** : touchez l’icône d’emplacement d’une ligne pour dire où l’article est rangé : son allée, son étagère ou son bac. Une variante sans emplacement propre prend celui de son article. C’est un conseil pour le rangement, l’inventaire et le prélèvement : le stock peut être ailleurs, et le changer ne déplace rien et ne réécrit aucun historique.
-- **Filtrez** par un emplacement pour voir ce qui y est rangé et dans les emplacements en dessous, ou activez *Seulement les articles sans emplacement de rangement* pour voir ce qui en attend encore un.
+- **Filtrez** par un emplacement pour voir ce qui y est rangé et dans les emplacements en dessous, ou choisissez la puce *Sans emplacement de rangement* pour voir ce qui en attend encore un.
 - **Recherchez** par nom, code-barres ou adresse. Saisir ou scanner un code-barres dans la recherche et valider ouvre cet article.
 - Les longues listes se chargent par pages : choisissez *Afficher plus*.
+- Le dernier coût connu n’apparaît sur la page de l’article que si votre rôle peut voir les finances ou gérer les achats ; sinon elle indique *coût non affiché*. Un coût qu’aucune livraison n’a encore donné reste *coût inconnu*, jamais zéro.
+
+### La page d’un article
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez tout ce qui concerne un article au même endroit, et modifier chaque partie là où vous la lisez.
+
+Touchez un article dans **Stock → Articles**. Sur un téléphone, il s’ouvre comme une page à part ; sur une tablette tenue à l’horizontale ou un ordinateur, il s’ouvre à côté de la liste, qui garde sa recherche et ses filtres. Chaque partie de la page a sa propre action, nommée d’après ce qu’elle modifie :
+
+- **Aperçu** : le prix, la TVA, l’unité, le code-barres et le dernier coût connu. **Modifier le nom, le prix et la TVA** ouvre l’éditeur du service.
+- **Stock** : ce qui est en stock et l’emplacement de rangement, de l’article ou de chaque variante, et **Où il se trouve** : les premiers emplacements qui le contiennent (**Voir tous les emplacements** les montre tous). **Changer l’emplacement de rangement** dit où l’article est rangé : son allée, son étagère ou son bac. C’est un conseil pour le rangement, l’inventaire et le prélèvement : le stock peut être ailleurs, et le changer ne déplace rien. **Modifier les unités, les codes et le suivi** ouvre les réglages du stock de l’article.
+- **Groupe et puces**, là où l’entreprise les utilise : le groupe de l’article. **Changer de groupe** le déplace et montre d’où vient chaque réglage ; **Modifier les puces** lie ou retire ses puces.
+- **Variantes** : les variantes en vente, avec leurs propres prix. **Modifier les variantes** en ajoute ou les change.
+- **Articles fournisseur** : les articles de fournisseurs qui désignent cet article. **Modifier les articles fournisseur** en associe un autre.
+
+**Bon à savoir**
+
+- **Modifier le nom, le prix et la TVA** demande le droit de gérer les services ; toute autre action, le droit de gérer le stock. Qui peut seulement voir le stock lit l’aperçu, le stock et les variantes, sans aucune action.
+- Les badges en haut de la page disent ce que l’article attend encore.
+- Après un enregistrement, la page montre aussitôt la nouvelle valeur, la liste aussi.
+
+**Voir aussi:** [Le registre des articles](help:user.money.stock.registry) · [Groupes d’articles](help:user.money.stock.groups)
 
 ### Groupes d’articles
 
@@ -3020,7 +3042,7 @@ Vous voulez dire une fois ce qu’une famille d’articles a en commun — combi
 
 Ouvrez **Stock → Groupes d’articles** (il faut la fonction *Groupes d’articles* sous la gestion du stock). Un groupe a un nom, se place au sommet ou dans un autre groupe (un seul niveau de sous-groupes) et porte les réglages que vous choisissez : **suivi**, **durée de conservation**, **mode de puce**, **unité de stock**, **compter tous les n jours**, **âge minimum** et **vendu au poids**. Un réglage laissé *Non défini* n’est pas décidé à ce niveau.
 
-- **Un article suit son groupe tant qu’il n’a pas sa propre valeur.** La valeur en vigueur est celle de l’article s’il en a une, sinon celle de son sous-groupe, sinon celle de son groupe. Ouvrez **Groupe et réglages hérités** d’un article (l’icône de dossier sur sa ligne dans **Stock → Articles**) pour voir d’où vient chaque réglage (*Du groupe Boissons depuis le 3 déc.* ou *Valeur propre*), le déplacer dans un autre groupe et rendre une valeur propre avec **Utiliser la valeur du groupe**. Dans les **réglages de stock** de l’article, *Valeur propre* s’affiche à côté d’un réglage pour lequel l’article garde sa propre valeur face à son groupe (suivi, durée de conservation, unité de stock).
+- **Un article suit son groupe tant qu’il n’a pas sa propre valeur.** La valeur en vigueur est celle de l’article s’il en a une, sinon celle de son sous-groupe, sinon celle de son groupe. Ouvrez un article dans **Stock → Articles** et choisissez **Changer de groupe** pour voir d’où vient chaque réglage (*Du groupe Boissons depuis le 3 déc.* ou *Valeur propre*), le déplacer dans un autre groupe et rendre une valeur propre avec **Utiliser la valeur du groupe**. Dans les **réglages de stock** de l’article, *Valeur propre* s’affiche à côté d’un réglage pour lequel l’article garde sa propre valeur face à son groupe (suivi, durée de conservation, unité de stock).
 - **Chaque changement est prévisualisé.** En enregistrant un groupe, vous voyez d’abord ce que le changement atteint : *s’applique à 1, 1 gardent leur propre valeur, 0 ne peuvent pas être atteints*. Rien n’est appliqué avant un deuxième enregistrement ; toute modification entre-temps demande un nouvel aperçu. Un article que le changement ne peut pas atteindre (par exemple une unité sur un article qui a déjà des mouvements) est listé, et le changement du groupe est enregistré pour les autres.
 - **Propositions et prix.** Un groupe peut proposer à un nouvel article une **unité d'achat par défaut** avec son facteur (un nombre ou une fraction comme 1/3), un **seuil et une quantité de réapprovisionnement** et une **zone de rangement** : ils sont copiés dans un nouvel article comme point de départ et n'atteignent aucun article existant. Le **taux de TVA**, la **nature de la prestation**, l'**arrondi du prix** et la **marge cible sur le coût** ne sont montrés et réglés que par qui peut gérer les services et voir les finances ; pour tous les autres, ils ne sont ni montrés ni modifiés par un enregistrement.
 - **Historique.** La feuille du groupe liste chaque changement avec le nombre d’articles atteints ; la ligne d’origine d’un article dit depuis quand.
@@ -3048,7 +3070,7 @@ Un scanner de codes-barres en mode clavier (il saisit le code puis appuie sur En
 
 Vous voulez associer une puce NFC à un article ou à un emplacement, et lire des puces en travaillant, avec le téléphone que vous avez déjà.
 
-Avec la fonction *Puces* activée et un téléphone qui lit le NFC, **Stock → Articles** et **Stock → Emplacements** affichent un bouton de puces sur chaque ligne, et la barre de scan d’une feuille de marchandises affiche **Lire une puce**. Le bouton est absent sur un appareil sans NFC (un ordinateur, la plupart des tablettes, un téléphone dont le NFC est coupé) : utilisez-y un scanner ou un lecteur portable.
+Avec la fonction *Puces* activée et un téléphone qui lit le NFC, **Modifier les puces** sur la page d’un article et le bouton de puces de chaque ligne de **Stock → Emplacements** lisent une puce, et la barre de scan d’une feuille de marchandises affiche **Lire une puce**. Le bouton est absent sur un appareil sans NFC (un ordinateur, la plupart des tablettes, un téléphone dont le NFC est coupé) : utilisez-y un scanner ou un lecteur portable.
 
 - **Associer une puce.** Ouvrez les puces d’un article ou d’un emplacement, touchez **Lire une puce** et approchez la puce du dos du téléphone. Une lecture associe une puce. Relire la même puce indique qu’elle était déjà associée ici et n’associe rien de nouveau ; une puce associée à autre chose est refusée et dit à quoi. Un propriétaire peut porter plusieurs puces. Le serveur accepte le code en majuscules ou minuscules, avec espaces, deux-points ou tirets.
 - **Retirer une puce** perdue, abîmée ou remplacée : choisissez le motif. Une puce retirée récemment ne peut pas être associée de nouveau tout de suite (le délai est un réglage du stock), et une puce sur une pièce encore en stock ne peut pas être retirée.
@@ -3134,7 +3156,7 @@ Les **Tickets de caisse** listent ce que la caisse a fait. **Corriger cette vent
 
 Vous décidez si une puce sur un article désigne un lot ou une pièce, et ce que compte une lecture en masse.
 
-Avec la fonction *Puces* activée, un article a un **mode de puce**, posé sur son groupe et gardé par l'article tant qu'il n'a pas de valeur propre. Ouvrez les réglages de groupe d'un article (**Stock → Articles**, l'icône de dossier sur sa ligne) et lisez **Étiquette sur cet article** : elle dit d'où vient la valeur (*De Boissons depuis le 3 déc.* ou *Valeur propre*), laisse donner à l'article une valeur propre, et **Reprendre la valeur du groupe** la rend.
+Avec la fonction *Puces* activée, un article a un **mode de puce**, posé sur son groupe et gardé par l'article tant qu'il n'a pas de valeur propre. Ouvrez les réglages de groupe d'un article (**Changer de groupe** sur sa page dans **Stock → Articles**) et lisez **Étiquette sur cet article** : elle dit d'où vient la valeur (*De Boissons depuis le 3 déc.* ou *Valeur propre*), laisse donner à l'article une valeur propre, et **Reprendre la valeur du groupe** la rend.
 
 - **Pas de puce.** L'article ne porte pas de puce.
 - **Une puce par lot.** Une puce désigne un lot ou un colis : une caisse, un seau, un carton. La lire compte un lot, jamais une pièce.

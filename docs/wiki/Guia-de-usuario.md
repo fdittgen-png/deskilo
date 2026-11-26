@@ -3145,12 +3145,35 @@ Los **puntos de reposición** (bajo las dos listas) hacen que un artículo esté
 
 Quiere una sola lista que diga, de cada artículo y variante, qué es, cuánto cuesta y se vende, dónde va y cuánto hay.
 
-Abra **Existencias → Artículos**. Cada línea muestra el **código de barras**, la **unidad**, el **precio** (el precio de venta del catálogo), el **último coste conocido**, la **ubicación habitual** y lo que hay **disponible**. El coste aparece solo si su rol puede ver las finanzas o gestionar las compras; si no, la línea dice *coste no mostrado*. Un coste que ninguna entrega ha dado aún sigue como *coste desconocido*, nunca cero.
+Abra **Existencias → Artículos**. Cada línea muestra el nombre del artículo, luego su precio, lo que hay disponible y su ubicación habitual, y una insignia cuando al artículo le falta algo: *Existencias bajas*, *Sin precio* o *Sin ubicación*. La línea no lleva botones: tóquela para abrir el artículo, donde se muestra y se cambia todo lo suyo ([La página de un artículo](#la-página-de-un-artículo)).
 
-- **Ubicación habitual**: toque el icono de ubicación de una línea para decir dónde va el artículo: su pasillo, estante o cajón. Una variante sin ubicación propia tiene la de su artículo. Es una indicación para colocar, contar y preparar: el stock puede estar en otro sitio, y cambiarla no mueve nada ni reescribe ningún historial.
-- **Filtre** por una ubicación para ver lo que tiene allí y en las ubicaciones de debajo, o active *Solo artículos sin ubicación habitual* para ver lo que aún la necesita.
+- **Filtre** por una ubicación para ver lo que tiene allí y en las ubicaciones de debajo, o elija el chip *Sin ubicación habitual* para ver lo que aún la necesita.
 - **Busque** por nombre, código de barras o dirección. Escribir o escanear un código de barras en la búsqueda y confirmar abre ese artículo.
 - Las listas largas se cargan por páginas: elija *Mostrar más*.
+- El último coste conocido aparece en la página del artículo solo si su rol puede ver las finanzas o gestionar las compras; si no, dice *coste no mostrado*. Un coste que ninguna entrega ha dado aún sigue como *coste desconocido*, nunca cero.
+
+<!-- anchor: user.money.stock.item -->
+### La página de un artículo
+
+**Público:** Administrador/a · Propietario
+
+Quiere todo lo de un artículo en un solo sitio, y cambiar cada parte donde la lee.
+
+Toque un artículo en **Existencias → Artículos**. En un teléfono se abre como una página propia; en una tableta en horizontal o un ordenador se abre junto a la lista, que conserva su búsqueda y sus filtros. Cada parte de la página tiene su propia acción, nombrada por lo que cambia:
+
+- **Resumen**: el precio, el IVA, la unidad, el código de barras y el último coste conocido. **Editar nombre, precio e IVA** abre el editor del servicio.
+- **Existencias**: lo que hay disponible y la ubicación habitual, del artículo o de cada variante, y **Dónde está**: las primeras ubicaciones que lo tienen (**Ver todas las ubicaciones** las muestra todas). **Cambiar la ubicación habitual** dice dónde va el artículo: su pasillo, estante o cajón. Es una indicación para colocar, contar y preparar: el stock puede estar en otro sitio, y cambiarla no mueve nada. **Editar unidades, códigos y seguimiento** abre los ajustes de existencias del artículo.
+- **Grupo y etiquetas**, donde el negocio los usa: el grupo del artículo. **Cambiar de grupo** lo mueve y muestra de dónde viene cada ajuste; **Editar etiquetas** vincula o retira sus etiquetas.
+- **Variantes**: las variantes a la venta, con sus propios precios. **Editar variantes** añade o cambia variantes.
+- **Artículos del proveedor**: los artículos de proveedores que designan este artículo. **Editar artículos del proveedor** asocia otro.
+
+**Conviene saber**
+
+- **Editar nombre, precio e IVA** necesita el derecho de gestionar los servicios; cualquier otra acción, el de gestionar las existencias. Quien solo puede ver las existencias lee el resumen, las existencias y las variantes, sin ninguna acción.
+- Las insignias de arriba dicen lo que aún le falta al artículo.
+- Tras guardar, la página muestra el nuevo valor enseguida, y la lista también.
+
+**Véase también:** [El registro de artículos](#el-registro-de-artículos) · [Grupos de artículos](#grupos-de-artículos)
 
 <!-- anchor: user.money.stock.groups -->
 ### Grupos de artículos
@@ -3161,7 +3184,7 @@ Quiere decir una vez lo que una familia de artículos tiene en común — cuánt
 
 Abra **Stock → Grupos de artículos** (requiere la función *Grupos de artículos* bajo la gestión del stock). Un grupo tiene un nombre, está arriba o dentro de otro grupo (un solo nivel de subgrupos) y lleva los ajustes que elija: **seguimiento**, **vida útil**, **modo de etiqueta**, **unidad de inventario**, **contar cada n días**, **edad mínima** y **se vende al peso**. Un ajuste que deja *Sin definir* no se decide en este nivel.
 
-- **Un artículo sigue a su grupo mientras no tenga un valor propio.** Rige el valor del propio artículo si lo tiene, si no el de su subgrupo, si no el de su grupo. Abra **Grupo y ajustes heredados** de un artículo (el icono de carpeta en su línea de **Stock → Artículos**) para ver de dónde viene cada ajuste (*Del grupo Bebidas desde el 3 dic.* o *Valor propio*), moverlo a otro grupo y devolver un valor propio con **Usar el valor del grupo**. En los **ajustes de stock** del artículo, *Valor propio* aparece junto a un ajuste en el que el artículo conserva su propio valor frente a su grupo (seguimiento, caducidad, unidad de inventario).
+- **Un artículo sigue a su grupo mientras no tenga un valor propio.** Rige el valor del propio artículo si lo tiene, si no el de su subgrupo, si no el de su grupo. Abra un artículo en **Stock → Artículos** y elija **Cambiar de grupo** para ver de dónde viene cada ajuste (*Del grupo Bebidas desde el 3 dic.* o *Valor propio*), moverlo a otro grupo y devolver un valor propio con **Usar el valor del grupo**. En los **ajustes de stock** del artículo, *Valor propio* aparece junto a un ajuste en el que el artículo conserva su propio valor frente a su grupo (seguimiento, caducidad, unidad de inventario).
 - **Cada cambio se previsualiza.** Al guardar un grupo se muestra primero lo que el cambio alcanza: *se aplica a 1, 1 conservan su propio valor, 0 no se pueden alcanzar*. No se aplica nada hasta guardar por segunda vez; cualquier edición intermedia pide una nueva vista previa. Un artículo que el cambio no puede alcanzar (por ejemplo una unidad en un artículo que ya tiene movimientos) se lista, y el cambio del grupo se guarda para los demás.
 - **Propuestas y precios.** Un grupo puede proponer a un artículo nuevo una **unidad de compra por defecto** con su factor (un número o una fracción como 1/3), un **punto y una cantidad de pedido** y una **zona de almacén**: se copian en un artículo nuevo como punto de partida y no alcanzan a ningún artículo existente. El **tipo de IVA**, la **clase de operación**, el **redondeo del precio** y el **margen objetivo sobre el coste** solo los muestra y fija quien puede gestionar servicios y ver las finanzas; para los demás ni se muestran ni los cambia un guardado.
 - **Historial.** La hoja del grupo lista cada cambio con cuántos artículos alcanzó; la línea de origen de un artículo dice desde cuándo.
@@ -3190,7 +3213,7 @@ Un escáner de códigos de barras en modo teclado (escribe el código y pulsa In
 
 Quiere asociar un chip NFC a un artículo o a una ubicación y leer chips mientras trabaja, con el teléfono que ya tiene.
 
-Con la función *Etiquetas* activada y un teléfono que lee NFC, **Stock → Artículos** y **Stock → Ubicaciones** muestran un botón de etiquetas en cada línea, y la barra de escaneo de una hoja de mercancías muestra **Leer una etiqueta**. El botón no aparece en un dispositivo sin NFC (un ordenador, la mayoría de las tabletas, un teléfono con el NFC desactivado): use allí un escáner o un lector portátil.
+Con la función *Etiquetas* activada y un teléfono que lee NFC, **Editar etiquetas** en la página de un artículo y el botón de etiquetas de cada línea de **Stock → Ubicaciones** leen una etiqueta, y la barra de escaneo de una hoja de mercancías muestra **Leer una etiqueta**. El botón no aparece en un dispositivo sin NFC (un ordenador, la mayoría de las tabletas, un teléfono con el NFC desactivado): use allí un escáner o un lector portátil.
 
 - **Asociar una etiqueta.** Abra las etiquetas de un artículo o de una ubicación, toque **Leer una etiqueta** y acerque el chip a la parte trasera del teléfono. Una lectura asocia una etiqueta. Leer el mismo chip otra vez dice que ya estaba asociado aquí y no asocia nada nuevo; un chip asociado a otra cosa se rechaza y dice a cuál. Un propietario puede llevar varias etiquetas. El servidor acepta el código en mayúsculas o minúsculas, con espacios, dos puntos o guiones.
 - **Retirar una etiqueta** perdida, dañada o sustituida: elija el motivo. Una etiqueta retirada hace poco no puede asociarse de nuevo enseguida (la espera es un ajuste del stock), y una etiqueta en una pieza que sigue en stock no puede retirarse.
@@ -3282,7 +3305,7 @@ Cobra con tarjeta en el mostrador, o una venta debe corregirse después, y quier
 
 Usted decide si una etiqueta de un artículo designa un lote o una pieza, y qué cuenta una lectura masiva.
 
-Con la función *Etiquetas* activada, un artículo tiene un **modo de etiqueta**, fijado en su grupo y conservado por el artículo mientras no tenga valor propio. Abra los ajustes de grupo de un artículo (**Stock → Artículos**, el icono de carpeta en su línea) y lea **Etiqueta de este artículo**: dice de dónde viene el valor (*De Bebidas desde el 3 dic.* o *Valor propio*), permite dar al artículo un valor propio, y **Usar el valor del grupo** se lo devuelve.
+Con la función *Etiquetas* activada, un artículo tiene un **modo de etiqueta**, fijado en su grupo y conservado por el artículo mientras no tenga valor propio. Abra los ajustes de grupo de un artículo (**Cambiar de grupo** en su página de **Stock → Artículos**) y lea **Etiqueta de este artículo**: dice de dónde viene el valor (*De Bebidas desde el 3 dic.* o *Valor propio*), permite dar al artículo un valor propio, y **Usar el valor del grupo** se lo devuelve.
 
 - **Sin etiquetas.** El artículo no lleva etiqueta.
 - **Una etiqueta por lote.** Una etiqueta designa un lote o un bulto: una caja, un cubo, un cartón. Leerla cuenta un lote, nunca una pieza.

@@ -11371,7 +11371,6 @@
     "description": "#3587 list view: one line per customer"
   },
   "itemGroupAssignNone": "Keine Gruppe",
-  "itemGroupAssignOpen": "Gruppe und geerbte Einstellungen",
   "itemGroupAssignTitle": "Gruppe von {item}",
   "itemGroupClose": "Schließen",
   "itemGroupConfirm": "Prüfen Sie, was das erreicht, und speichern Sie dann erneut, um es anzuwenden.",
@@ -21449,10 +21448,6 @@
   "@stockEditInventoryUnitChoice": {
     "description": "#4169 the stock editors: a label or message"
   },
-  "stockEditItem": "Lagereinstellungen",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Lagereinstellungen von {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -21627,7 +21622,24 @@
   "stockItemAddNone": "Jede Leistung wird bereits im Lager geführt, oder es gibt noch keine. Legen Sie zuerst eine Leistung an und kommen Sie dann zurück.",
   "stockItemAddOpenServices": "Leistungen öffnen",
   "stockItemAddTitle": "Artikel hinzufügen",
+  "stockItemAttentionLow": "Niedriger Bestand",
+  "stockItemAttentionNoPlace": "Kein Lagerort",
+  "stockItemAttentionNoPrice": "Kein Preis",
   "stockItemEditDetails": "Name, Preis und MwSt. bearbeiten",
+  "stockItemEditGroup": "Gruppe ändern",
+  "stockItemEditHome": "Festen Lagerort ändern",
+  "stockItemEditSettings": "Einheiten, Codes und Verfolgung bearbeiten",
+  "stockItemEditSuppliers": "Lieferantenartikel bearbeiten",
+  "stockItemEditTags": "Tags bearbeiten",
+  "stockItemEditVariants": "Varianten bearbeiten",
+  "stockItemFactBarcode": "Barcode",
+  "stockItemFactCost": "Zuletzt bekannte Kosten",
+  "stockItemFactGroup": "Gruppe",
+  "stockItemFactPrice": "Preis",
+  "stockItemFactUnit": "Einheit",
+  "stockItemFactVat": "MwSt.",
+  "stockItemFilterAll": "Alle Artikel",
+  "stockItemFilterNoHome": "Ohne festen Lagerort",
   "stockItemNewBarcode": "Barcode (optional)",
   "stockItemNewHome": "Heimatort (optional)",
   "stockItemNewName": "Name",
@@ -21638,6 +21650,17 @@
   "stockItemNewPriceInvalid": "Geben Sie einen Preis ein oder lassen Sie das Feld leer.",
   "stockItemNewTitle": "Neuer Artikel",
   "stockItemNewUnit": "Gezählt in",
+  "stockItemNoGroup": "In keiner Gruppe",
+  "stockItemNoSuppliers": "Noch kein Lieferantenartikel verweist auf diesen Artikel.",
+  "stockItemNoVariants": "Dieser Artikel hat keine Varianten.",
+  "stockItemNothingOnHand": "Nichts davon ist auf Lager.",
+  "stockItemPlacesTitle": "Wo er liegt",
+  "stockItemSectionGroupTags": "Gruppe und Tags",
+  "stockItemSectionOverview": "Übersicht",
+  "stockItemSectionStock": "Bestand",
+  "stockItemSectionSuppliers": "Lieferantenartikel",
+  "stockItemSectionVariants": "Varianten",
+  "stockItemSeeWhere": "Alle Orte ansehen",
   "stockItemsEmpty": "Noch keine Artikel. Ein Artikel ist eine Leistung, die Sie im Lager führen: Wählen Sie Artikel hinzufügen.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
@@ -22228,7 +22251,6 @@
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockRegistryAllPlaces": "Alle Lagerorte",
-  "stockRegistryCost": "Kosten {amount}",
   "stockRegistryCostHidden": "Kosten nicht angezeigt",
   "stockRegistryCostUnknown": "Kosten unbekannt",
   "stockRegistryHome": "Lagerort {address}",
@@ -22238,10 +22260,8 @@
   "stockRegistryHomeTitle": "Fester Lagerort von {item}",
   "stockRegistryMore": "Mehr anzeigen",
   "stockRegistryNoHome": "kein fester Lagerort",
-  "stockRegistryNoHomeFilter": "Nur Artikel ohne festen Lagerort",
   "stockRegistryOnHand": "{quantity} vorrätig",
   "stockRegistryPlaceFilter": "Lagerort",
-  "stockRegistryPrice": "Preis {amount}",
   "stockRegistrySearch": "Artikel nach Name, Barcode oder Adresse suchen",
   "stockReorderCreateDraft": "Bestellentwurf erstellen",
   "stockReorderDraftCreated": "Bestellentwurf {number} erstellt. Nichts wurde bestellt oder gesendet.",
@@ -22587,10 +22607,6 @@
   },
   "stockVariantsAdd": "Variante hinzufügen",
   "@stockVariantsAdd": {
-    "description": "#4169 the stock editors: a label or message"
-  },
-  "stockVariantsEdit": "Varianten",
-  "@stockVariantsEdit": {
     "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsHint": "Eine Variante ist je ein Wert jeder Dimension, etwa rot und Größe M. Der Bestand wird je Variante geführt.",

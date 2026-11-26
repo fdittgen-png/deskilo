@@ -3145,12 +3145,35 @@ I **punti di riordino** (sotto le due liste) rendono basso un articolo. Ognuno m
 
 Lei vuole un’unica lista che dica, per ogni articolo e variante, che cos’è, quanto costa e a quanto si vende, dove va e quanto ce n’è.
 
-Apra **Magazzino → Articoli**. Ogni riga mostra il **codice a barre**, l’**unità**, il **prezzo** (il prezzo di vendita del catalogo), l’**ultimo costo noto**, l’**ubicazione abituale** e ciò che è **disponibile**. Il costo compare solo se il suo ruolo può vedere le finanze o gestire gli acquisti; altrimenti la riga dice *costo non mostrato*. Un costo che nessuna consegna ha ancora dato resta *costo sconosciuto*, mai zero.
+Apra **Magazzino → Articoli**. Ogni riga mostra il nome dell’articolo, poi il suo prezzo, ciò che è disponibile e la sua ubicazione abituale, e un contrassegno quando all’articolo manca qualcosa: *Scorta bassa*, *Senza prezzo* o *Senza ubicazione*. La riga non porta pulsanti: la tocchi per aprire l’articolo, dove tutto ciò che lo riguarda è mostrato e modificato ([La pagina di un articolo](#la-pagina-di-un-articolo)).
 
-- **Ubicazione abituale**: tocchi l’icona di ubicazione di una riga per dire dove va l’articolo: la sua corsia, scaffale o cassetto. Una variante senza ubicazione propria ha quella del suo articolo. È un’indicazione per sistemare, contare e prelevare: la merce può stare altrove e cambiarla non sposta nulla né riscrive alcuna storia.
-- **Filtri** per un’ubicazione per vedere ciò che vi è sistemato e nelle ubicazioni sottostanti, oppure attivi *Solo articoli senza ubicazione abituale* per vedere ciò che ne ha ancora bisogno.
+- **Filtri** per un’ubicazione per vedere ciò che vi è sistemato e nelle ubicazioni sottostanti, oppure scelga il chip *Senza ubicazione abituale* per vedere ciò che ne ha ancora bisogno.
 - **Cerchi** per nome, codice a barre o indirizzo. Digitare o scansionare un codice a barre nella ricerca e confermare apre quell’articolo.
 - Le liste lunghe si caricano a pagine: scelga *Mostra altri*.
+- L’ultimo costo noto compare sulla pagina dell’articolo solo se il suo ruolo può vedere le finanze o gestire gli acquisti; altrimenti dice *costo non mostrato*. Un costo che nessuna consegna ha ancora dato resta *costo sconosciuto*, mai zero.
+
+<!-- anchor: user.money.stock.item -->
+### La pagina di un articolo
+
+**Destinatari:** Amministratore · Proprietario
+
+Lei vuole tutto ciò che riguarda un articolo in un solo posto, e modificare ogni parte dove la legge.
+
+Tocchi un articolo in **Magazzino → Articoli**. Su un telefono si apre come una pagina a sé; su un tablet tenuto in orizzontale o su un computer si apre accanto alla lista, che conserva la sua ricerca e i suoi filtri. Ogni parte della pagina ha la sua azione, che porta il nome di ciò che modifica:
+
+- **Panoramica**: il prezzo, l’IVA, l’unità, il codice a barre e l’ultimo costo noto. **Modifica nome, prezzo e IVA** apre l’editor del servizio.
+- **Magazzino**: ciò che è disponibile e l’ubicazione abituale, dell’articolo o di ogni variante, e **Dove si trova**: le prime ubicazioni che lo contengono (**Tutte le ubicazioni** le mostra tutte). **Modifica l’ubicazione abituale** dice dove va l’articolo: la sua corsia, scaffale o cassetto. È un’indicazione per sistemare, contare e prelevare: la merce può stare altrove e cambiarla non sposta nulla. **Modifica unità, codici e tracciamento** apre le impostazioni di magazzino dell’articolo.
+- **Gruppo e tag**, dove l’attività li usa: il gruppo dell’articolo. **Modifica il gruppo** lo sposta e mostra da dove viene ogni impostazione; **Modifica i tag** associa o ritira i suoi tag.
+- **Varianti**: le varianti in vendita, con i loro prezzi. **Modifica le varianti** ne aggiunge o le cambia.
+- **Articoli del fornitore**: gli articoli dei fornitori che indicano questo articolo. **Modifica gli articoli del fornitore** ne associa un altro.
+
+**Da sapere**
+
+- **Modifica nome, prezzo e IVA** richiede il diritto di gestire i servizi; ogni altra azione quello di gestire il magazzino. Chi può solo vedere il magazzino legge la panoramica, il magazzino e le varianti, senza alcuna azione.
+- I contrassegni in cima alla pagina dicono che cosa manca ancora all’articolo.
+- Dopo un salvataggio la pagina mostra subito il nuovo valore, e così la lista.
+
+**Vedi anche:** [Il registro degli articoli](#il-registro-degli-articoli) · [Gruppi di articoli](#gruppi-di-articoli)
 
 <!-- anchor: user.money.stock.groups -->
 ### Gruppi di articoli
@@ -3161,7 +3184,7 @@ Vuole dire una volta ciò che una famiglia di articoli ha in comune — quanto d
 
 Apra **Magazzino → Gruppi di articoli** (serve la funzione *Gruppi di articoli* sotto la gestione del magazzino). Un gruppo ha un nome, sta in alto o dentro un altro gruppo (un solo livello di sottogruppi) e porta le impostazioni che sceglie: **tracciamento**, **durata di conservazione**, **modalità tag**, **unità di magazzino**, **conta ogni n giorni**, **età minima** e **venduto a peso**. Un’impostazione lasciata *Non impostato* non è decisa a questo livello.
 
-- **Un articolo segue il suo gruppo finché non ha un valore proprio.** Vale il valore dell’articolo se ce l’ha, altrimenti quello del suo sottogruppo, altrimenti quello del suo gruppo. Apra **Gruppo e impostazioni ereditate** di un articolo (l’icona della cartella sulla sua riga in **Magazzino → Articoli**) per vedere da dove viene ogni impostazione (*Dal gruppo Bevande dal 3 dic.* o *Valore proprio*), spostarlo in un altro gruppo e restituire un valore proprio con **Usa il valore del gruppo**. Nelle **impostazioni di magazzino** dell’articolo, *Valore proprio* compare accanto a un’impostazione per cui l’articolo mantiene un valore proprio rispetto al suo gruppo (tracciamento, scadenza, unità di inventario).
+- **Un articolo segue il suo gruppo finché non ha un valore proprio.** Vale il valore dell’articolo se ce l’ha, altrimenti quello del suo sottogruppo, altrimenti quello del suo gruppo. Apra un articolo in **Magazzino → Articoli** e scelga **Modifica il gruppo** per vedere da dove viene ogni impostazione (*Dal gruppo Bevande dal 3 dic.* o *Valore proprio*), spostarlo in un altro gruppo e restituire un valore proprio con **Usa il valore del gruppo**. Nelle **impostazioni di magazzino** dell’articolo, *Valore proprio* compare accanto a un’impostazione per cui l’articolo mantiene un valore proprio rispetto al suo gruppo (tracciamento, scadenza, unità di inventario).
 - **Ogni modifica è mostrata in anteprima.** Salvando un gruppo vede prima cosa raggiunge la modifica: *si applica a 1, 1 mantengono il proprio valore, 0 non sono raggiungibili*. Nulla viene applicato finché non salva una seconda volta; ogni modifica intermedia chiede una nuova anteprima. Un articolo che la modifica non può raggiungere (ad esempio un’unità su un articolo che ha già movimenti) viene elencato, e la modifica del gruppo viene salvata per gli altri.
 - **Proposte e prezzi.** Un gruppo può proporre a un nuovo articolo un'**unità di acquisto predefinita** con il suo fattore (un numero o una frazione come 1/3), un **punto e una quantità di riordino** e una **zona di giacenza**: vengono copiati in un nuovo articolo come punto di partenza e non raggiungono nessun articolo esistente. L'**aliquota IVA**, il **tipo di operazione**, l'**arrotondamento del prezzo** e il **margine obiettivo sul costo** li mostra e li imposta solo chi può gestire i servizi e vedere le finanze; per tutti gli altri non sono né mostrati né modificati da un salvataggio.
 - **Cronologia.** Il foglio del gruppo elenca ogni modifica con quanti articoli ha raggiunto; la riga di origine di un articolo dice da quando.
@@ -3190,7 +3213,7 @@ Uno scanner di codici a barre in modalità tastiera (digita il codice e preme In
 
 Vuole associare un chip NFC a un articolo o a una posizione e leggere chip mentre lavora, con il telefono che ha già.
 
-Con la funzione *Tag* attiva e un telefono che legge l’NFC, **Magazzino → Articoli** e **Magazzino → Posizioni** mostrano un pulsante dei tag su ogni riga, e la barra di scansione di un foglio di merce mostra **Leggi un tag**. Il pulsante manca su un dispositivo senza NFC (un computer, la maggior parte dei tablet, un telefono con l’NFC spento): lì usi uno scanner o un lettore portatile.
+Con la funzione *Tag* attiva e un telefono che legge l’NFC, **Modifica i tag** sulla pagina di un articolo e il pulsante dei tag di ogni riga di **Magazzino → Posizioni** leggono un tag, e la barra di scansione di un foglio di merce mostra **Leggi un tag**. Il pulsante manca su un dispositivo senza NFC (un computer, la maggior parte dei tablet, un telefono con l’NFC spento): lì usi uno scanner o un lettore portatile.
 
 - **Associare un tag.** Apra i tag di un articolo o di una posizione, tocchi **Leggi un tag** e avvicini il chip al retro del telefono. Una lettura associa un tag. Rileggere lo stesso chip dice che era già associato qui e non associa nulla di nuovo; un chip associato a qualcos’altro viene rifiutato e dice a cosa. Un proprietario può avere più tag. Il server accetta il codice in maiuscolo o minuscolo, con spazi, due punti o trattini.
 - **Ritirare un tag** perso, danneggiato o sostituito: scelga il motivo. Un tag ritirato da poco non può essere associato di nuovo subito (l’attesa è un’impostazione del magazzino) e un tag su un pezzo ancora a magazzino non può essere ritirato.
@@ -3282,7 +3305,7 @@ Gli **Scontrini di cassa** elencano ciò che la cassa ha fatto. **Rettificare qu
 
 Lei decide se un tag su un articolo indica un lotto o un singolo pezzo, e che cosa conta una lettura massiva.
 
-Con la funzione *Tag* attiva, un articolo ha una **modalità del tag**, impostata sul suo gruppo e mantenuta dall'articolo finché non ha un valore proprio. Apra le impostazioni di gruppo di un articolo (**Magazzino → Articoli**, l'icona della cartella sulla sua riga) e legga **Etichetta su questo articolo**: dice da dove viene il valore (*Da Bevande dal 3 dic.* oppure *Valore proprio*), permette di dare all'articolo un valore proprio, e **Usa il valore del gruppo** lo restituisce.
+Con la funzione *Tag* attiva, un articolo ha una **modalità del tag**, impostata sul suo gruppo e mantenuta dall'articolo finché non ha un valore proprio. Apra le impostazioni di gruppo di un articolo (**Modifica il gruppo** sulla sua pagina in **Magazzino → Articoli**) e legga **Etichetta su questo articolo**: dice da dove viene il valore (*Da Bevande dal 3 dic.* oppure *Valore proprio*), permette di dare all'articolo un valore proprio, e **Usa il valore del gruppo** lo restituisce.
 
 - **Nessun tag.** L'articolo non porta tag.
 - **Un tag per lotto.** Un tag indica un lotto o una confezione: una cassa, un secchio, uno scatolone. Leggerlo conta un lotto, mai un pezzo.

@@ -1,0 +1,114 @@
+{
+  "stockItemSectionOverview": "Overview",
+  "@stockItemSectionOverview": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionStock": "Stock",
+  "@stockItemSectionStock": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionGroupTags": "Group and tags",
+  "@stockItemSectionGroupTags": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionVariants": "Variants",
+  "@stockItemSectionVariants": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionSuppliers": "Supplier items",
+  "@stockItemSectionSuppliers": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemFactPrice": "Price",
+  "@stockItemFactPrice": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactVat": "VAT",
+  "@stockItemFactVat": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactUnit": "Unit",
+  "@stockItemFactUnit": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactBarcode": "Barcode",
+  "@stockItemFactBarcode": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactCost": "Last known cost",
+  "@stockItemFactCost": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactGroup": "Group",
+  "@stockItemFactGroup": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemNoGroup": "In no group",
+  "@stockItemNoGroup": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemPlacesTitle": "Where it is",
+  "@stockItemPlacesTitle": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemNothingOnHand": "None of it is in stock.",
+  "@stockItemNothingOnHand": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemSeeWhere": "See every place",
+  "@stockItemSeeWhere": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemNoVariants": "This item has no variants.",
+  "@stockItemNoVariants": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemNoSuppliers": "No supplier article names this item yet.",
+  "@stockItemNoSuppliers": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemEditSettings": "Edit units, codes and tracking",
+  "@stockItemEditSettings": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditHome": "Change home place",
+  "@stockItemEditHome": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditGroup": "Change group",
+  "@stockItemEditGroup": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditTags": "Edit tags",
+  "@stockItemEditTags": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditVariants": "Edit variants",
+  "@stockItemEditVariants": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditSuppliers": "Edit supplier items",
+  "@stockItemEditSuppliers": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemAttentionLow": "Low stock",
+  "@stockItemAttentionLow": {
+    "description": "#4480 Stock items: the badge on an item's row and page for something the item needs"
+  },
+  "stockItemAttentionNoPrice": "No price",
+  "@stockItemAttentionNoPrice": {
+    "description": "#4480 Stock items: the badge on an item's row and page for something the item needs"
+  },
+  "stockItemAttentionNoPlace": "No place",
+  "@stockItemAttentionNoPlace": {
+    "description": "#4480 Stock items: the badge on an item's row and page for something the item needs"
+  },
+  "stockItemFilterAll": "All items",
+  "@stockItemFilterAll": {
+    "description": "#4480 Stock items: a filter chip above the list"
+  },
+  "stockItemFilterNoHome": "Without a home place",
+  "@stockItemFilterNoHome": {
+    "description": "#4480 Stock items: a filter chip above the list"
+  }
+}

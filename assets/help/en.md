@@ -3005,12 +3005,34 @@ Open **Stock → Reorder** (the feature *Reorder points* must be on). The page h
 
 You want one list that says, for every item and variant, what it is, what it costs and sells for, where it belongs and how much there is.
 
-Open **Stock → Items**. Each line shows the **barcode**, the **unit**, the **price** (the catalogue sale price), the **last known cost**, the **home place** and what is **on hand**. The cost appears only if your role may see finances or manage purchases; otherwise the line says *cost not shown*. A cost that no delivery has given yet stays *cost unknown*, never zero.
+Open **Stock → Items**. Each line shows the item's name, then its price, what is on hand and its home place, and a badge when the item needs something: *Low stock*, *No price* or *No place*. The line holds no buttons: tap it to open the item, where everything about it is shown and changed ([An item's page](help:user.money.stock.item)).
 
-- **Home place**: tap the place icon on a line to say where the item belongs: its aisle, shelf or bin. A variant without its own home place has its item's. It is advice for putting away, counting and picking: stock may sit elsewhere, and changing it moves nothing and rewrites no history.
-- **Filter** by a place to see what is homed in it and in the places below it, or switch on *Only items with no home place* to see what still needs one.
+- **Filter** by a place to see what is homed in it and in the places below it, or choose the chip *Without a home place* to see what still needs one.
 - **Search** by name, barcode or address. Typing or scanning a barcode into the search and confirming opens that item.
 - Long lists load by pages: choose *Show more*.
+- The last known cost appears on the item's page only if your role may see finances or manage purchases; otherwise it says *cost not shown*. A cost that no delivery has given yet stays *cost unknown*, never zero.
+
+### An item's page
+
+**Audience:** Administrator · Owner
+
+You want everything about one item in one place, and to change each part where you read it.
+
+Tap an item in **Stock → Items**. On a phone it opens as a page of its own; on a tablet held sideways or a computer it opens beside the list, which keeps its search and filters. Each part of the page has its own action, named for what it changes:
+
+- **Overview**: the price, the VAT, the unit, the barcode and the last known cost. **Edit name, price and VAT** opens the service's editor.
+- **Stock**: what is on hand and the home place, of the item or of each variant, and **Where it is**: the first places that hold it (**See every place** lists them all). **Change home place** says where the item belongs: its aisle, shelf or bin. It is advice for putting away, counting and picking: stock may sit elsewhere, and changing it moves nothing. **Edit units, codes and tracking** opens the item's stock settings.
+- **Group and tags**, where the business uses them: the group the item is in. **Change group** moves it and shows where each setting comes from; **Edit tags** binds or retires its tags.
+- **Variants**: the variants on sale, with their own prices. **Edit variants** adds or changes them.
+- **Supplier items**: the supplier articles that name this item. **Edit supplier items** maps another one.
+
+**Good to know**
+
+- **Edit name, price and VAT** needs the right to manage services; every other action needs the right to manage the stock. Whoever may only see the stock reads the overview, the stock and the variants, without any action.
+- The badges at the top of the page name what the item still needs.
+- After a save the page shows the new value at once, and so does the list.
+
+**See also:** [The item registry](help:user.money.stock.registry) · [Item groups](help:user.money.stock.groups)
 
 ### Item groups
 
@@ -3020,7 +3042,7 @@ You want to say once what a family of items has in common — how long it keeps,
 
 Open **Stock → Item groups** (it needs the *Item groups* feature under stock management). A group has a name, sits at the top or inside another group (one level of sub-groups, no more) and carries the settings you choose: **tracking**, **shelf life**, **tag mode**, **inventory unit**, **count every n days**, **minimum age** and **sold by weight**. A setting you leave *Not set* is not decided at this level.
 
-- **An item follows its group unless it keeps its own value.** The value in force is the item's own if it has one, else its sub-group's, else its group's. Open an item's **Group and inherited settings** (the folder icon on its line in **Stock → Items**) to see where each setting comes from (*From Drinks since 3 Dec* or *Own value*), to move it into another group, and to give an own value back with **Use the group's value**. The item's own **Stock settings** (tracking, shelf life, inventory unit) say *Own value* beside a setting where the item keeps a value of its own against its group.
+- **An item follows its group unless it keeps its own value.** The value in force is the item's own if it has one, else its sub-group's, else its group's. Open an item in **Stock → Items** and choose **Change group** to see where each setting comes from (*From Drinks since 3 Dec* or *Own value*), to move it into another group, and to give an own value back with **Use the group's value**. The item's own **Stock settings** (tracking, shelf life, inventory unit) say *Own value* beside a setting where the item keeps a value of its own against its group.
 - **Every change is previewed.** Saving a group first shows what the change reaches: *applies to 1, 1 keep their own value, 0 cannot be reached*. Nothing is applied until you save a second time; editing anything in between asks for a new preview. An item the change cannot reach (for example a unit on an item that already has movements) is listed, and the group's change still saves for the others.
 - **Proposals and prices.** A group can propose to a new item a **default purchase unit** with its factor (a number or a fraction such as 1/3), a **reorder point and quantity** and a **home zone**: they are copied into a new item as a starting point and reach no existing item. **VAT rate**, **supply class**, **price rounding** and **target margin on cost** are shown and set only by someone who may manage services and see the finances; for anyone else they are neither shown nor changed by a save.
 - **History.** The group's sheet lists every change with how many items it reached; an item's source line says since when.
@@ -3048,7 +3070,7 @@ A barcode scanner in keyboard mode (it types the code and presses Enter) works i
 
 You want to bind an NFC chip to an item or a place, and read chips as you work, with the phone you already have.
 
-With the *Tags* feature on and a phone that reads NFC, **Stock → Items** and **Stock → Places** show a tag button on each line, and the scan bar of a goods sheet shows **Read a tag**. The button is absent on a device without NFC (a desktop, most tablets, a phone with NFC switched off): use a scanner or a handheld reader there.
+With the *Tags* feature on and a phone that reads NFC, **Edit tags** on an item's page and the tag button on each line of **Stock → Places** read a tag, and the scan bar of a goods sheet shows **Read a tag**. The button is absent on a device without NFC (a desktop, most tablets, a phone with NFC switched off): use a scanner or a handheld reader there.
 
 - **Bind a tag.** Open the tags of an item or a place, tap **Read a tag** and hold the chip to the back of the phone. One read binds one tag. Reading the same chip again says it was already bound here and binds nothing new; a chip that is bound to something else is refused and says to what. An owner may carry several tags. The server takes the code in any case and with spaces, colons or dashes.
 - **Retire a tag** that is lost, damaged or replaced: choose the reason. A tag retired lately cannot be bound again at once (the waiting time is a stock setting), and a tag on a piece that is still in stock cannot be retired.
@@ -3134,7 +3156,7 @@ You take a card at the counter, or a sale needs to be corrected afterwards, and 
 
 You decide whether a tag on an item names one batch or one piece, and what a bulk read counts.
 
-With the *Tags* feature on, an item carries a **tag mode**, set on its group and kept by the item unless it has an own value. Open an item's group settings (**Stock → Items**, the folder icon on its line) and read **Tag on this item**: it says where the value comes from (*From Drinks since 3 Dec* or *Own value*), lets you give the item its own value, and **Use the group's value** gives it back.
+With the *Tags* feature on, an item carries a **tag mode**, set on its group and kept by the item unless it has an own value. Open an item's group settings (**Change group** on its page in **Stock → Items**) and read **Tag on this item**: it says where the value comes from (*From Drinks since 3 Dec* or *Own value*), lets you give the item its own value, and **Use the group's value** gives it back.
 
 - **No tags.** The item carries no tag.
 - **One tag per batch.** One tag names one lot or one package: a crate, a bucket, a carton. Reading it counts one batch, never one piece.

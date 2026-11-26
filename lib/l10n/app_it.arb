@@ -11371,7 +11371,6 @@
     "description": "#3587 list view: one line per customer"
   },
   "itemGroupAssignNone": "Nessun gruppo",
-  "itemGroupAssignOpen": "Gruppo e impostazioni ereditate",
   "itemGroupAssignTitle": "Gruppo di {item}",
   "itemGroupClose": "Chiudi",
   "itemGroupConfirm": "Controlli cosa raggiunge, poi salvi di nuovo per applicarla.",
@@ -21449,10 +21448,6 @@
   "@stockEditInventoryUnitChoice": {
     "description": "#4169 the stock editors: a label or message"
   },
-  "stockEditItem": "Impostazioni di magazzino",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Impostazioni di magazzino di {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -21627,7 +21622,24 @@
   "stockItemAddNone": "Tutti i servizi sono già tenuti in magazzino, oppure non ce n’è ancora nessuno. Aggiunga prima un servizio, poi torni.",
   "stockItemAddOpenServices": "Apri servizi",
   "stockItemAddTitle": "Aggiungi un articolo",
+  "stockItemAttentionLow": "Scorta bassa",
+  "stockItemAttentionNoPlace": "Senza ubicazione",
+  "stockItemAttentionNoPrice": "Senza prezzo",
   "stockItemEditDetails": "Modifica nome, prezzo e IVA",
+  "stockItemEditGroup": "Modifica il gruppo",
+  "stockItemEditHome": "Modifica l’ubicazione abituale",
+  "stockItemEditSettings": "Modifica unità, codici e tracciamento",
+  "stockItemEditSuppliers": "Modifica gli articoli del fornitore",
+  "stockItemEditTags": "Modifica i tag",
+  "stockItemEditVariants": "Modifica le varianti",
+  "stockItemFactBarcode": "Codice a barre",
+  "stockItemFactCost": "Ultimo costo noto",
+  "stockItemFactGroup": "Gruppo",
+  "stockItemFactPrice": "Prezzo",
+  "stockItemFactUnit": "Unità",
+  "stockItemFactVat": "IVA",
+  "stockItemFilterAll": "Tutti gli articoli",
+  "stockItemFilterNoHome": "Senza ubicazione abituale",
   "stockItemNewBarcode": "Codice a barre (facoltativo)",
   "stockItemNewHome": "Posizione abituale (facoltativa)",
   "stockItemNewName": "Nome",
@@ -21638,6 +21650,17 @@
   "stockItemNewPriceInvalid": "Inserisca un prezzo o lasci vuoto.",
   "stockItemNewTitle": "Nuovo articolo",
   "stockItemNewUnit": "Contato in",
+  "stockItemNoGroup": "In nessun gruppo",
+  "stockItemNoSuppliers": "Nessun articolo del fornitore indica ancora questo articolo.",
+  "stockItemNoVariants": "Questo articolo non ha varianti.",
+  "stockItemNothingOnHand": "Non ce n’è nulla in magazzino.",
+  "stockItemPlacesTitle": "Dove si trova",
+  "stockItemSectionGroupTags": "Gruppo e tag",
+  "stockItemSectionOverview": "Panoramica",
+  "stockItemSectionStock": "Magazzino",
+  "stockItemSectionSuppliers": "Articoli del fornitore",
+  "stockItemSectionVariants": "Varianti",
+  "stockItemSeeWhere": "Tutte le ubicazioni",
   "stockItemsEmpty": "Nessun articolo per ora. Un articolo è un servizio che tiene in magazzino: scelga Aggiungi un articolo.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
@@ -22228,7 +22251,6 @@
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockRegistryAllPlaces": "Tutte le ubicazioni",
-  "stockRegistryCost": "costo {amount}",
   "stockRegistryCostHidden": "costo non mostrato",
   "stockRegistryCostUnknown": "costo sconosciuto",
   "stockRegistryHome": "ubicazione {address}",
@@ -22238,10 +22260,8 @@
   "stockRegistryHomeTitle": "Ubicazione abituale di {item}",
   "stockRegistryMore": "Mostra altri",
   "stockRegistryNoHome": "nessuna ubicazione abituale",
-  "stockRegistryNoHomeFilter": "Solo articoli senza ubicazione abituale",
   "stockRegistryOnHand": "{quantity} disponibili",
   "stockRegistryPlaceFilter": "Ubicazione abituale",
-  "stockRegistryPrice": "prezzo {amount}",
   "stockRegistrySearch": "Cerchi un articolo per nome, codice a barre o indirizzo",
   "stockReorderCreateDraft": "Crea bozza d’ordine",
   "stockReorderDraftCreated": "Bozza d’ordine {number} creata. Nulla è stato ordinato o inviato.",
@@ -22587,10 +22607,6 @@
   },
   "stockVariantsAdd": "Aggiungere una variante",
   "@stockVariantsAdd": {
-    "description": "#4169 the stock editors: a label or message"
-  },
-  "stockVariantsEdit": "Varianti",
-  "@stockVariantsEdit": {
     "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsHint": "Una variante è un valore per ciascuna dimensione, ad esempio rosso e taglia M. La giacenza è tenuta per variante.",
