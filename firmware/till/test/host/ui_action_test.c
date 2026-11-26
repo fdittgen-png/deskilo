@@ -193,7 +193,7 @@ static void pairing(void) {
     s_lang = "pairing";
     strings_set_lang("de");
     const char *code = "deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=lcdwiki_e32r40t_v1&fw=1.0&fp=AB12-CD34";
-    ui_toggle_pairing(code, "AB12-CD34");
+    ui_toggle_pairing(code, "AB12-CD34", "3DNGP-UM7BF");
     pump(50);
     CHECK(ui_pairing_shown(), "the pairing code is shown");
     CHECK(find_prefix(lv_layer_top(), T(S_PAIR_TITLE)) != NULL, "with what to do, in the board's language");
@@ -203,7 +203,8 @@ static void pairing(void) {
         for (uint32_t j = 0; j < lv_obj_get_child_cnt(o); j++) qr |= lv_obj_check_type(lv_obj_get_child(o, j), &lv_qrcode_class);
     }
     CHECK(qr, "and a QR code");
-    ui_toggle_pairing(NULL, NULL);
+    CHECK(find_prefix(lv_layer_top(), "3DNGP-UM7BF") != NULL, "and its readable code beside it (#4466)");
+    ui_toggle_pairing(NULL, NULL, NULL);
     pump(50);
     CHECK(!ui_pairing_shown(), "shown again, it closes");
 }
@@ -221,7 +222,7 @@ static void portrait_pairing(void) {
     lv_disp_t *d = lv_disp_drv_register(&disp2);
     lv_disp_t *was = lv_disp_get_default();
     lv_disp_set_default(d);
-    ui_toggle_pairing("deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=ideaspark_st7789_v1&fw=1.0&fp=AB12-CD34", "AB12-CD34");
+    ui_toggle_pairing("deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=ideaspark_st7789_v1&fw=1.0&fp=AB12-CD34", "AB12-CD34", "3DNGP-UN9CG");
     pump(50);
     lv_obj_t *top = lv_disp_get_layer_top(d);
     bool inside = true, qr = false;
@@ -237,7 +238,7 @@ static void portrait_pairing(void) {
     }
     CHECK(qr, "the QR is drawn on the portrait screen");
     CHECK(inside, "and it and its words fit on the 170 x 320 glass");
-    ui_toggle_pairing(NULL, NULL);
+    ui_toggle_pairing(NULL, NULL, NULL);
     lv_disp_set_default(was);
 }
 

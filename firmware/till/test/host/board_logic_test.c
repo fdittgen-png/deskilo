@@ -6,6 +6,7 @@
 #include <string.h>
 #include "boot_button.h"
 #include "device.h"
+#include "readable_code.h"
 
 static int failed, passed;
 #define CHECK(cond, what) do { if (cond) passed++; else { failed++; printf("FAIL %s:%d %s\n", __FILE__, __LINE__, what); } } while (0)
@@ -44,6 +45,12 @@ static void payload(void) {
     char small[20];
     device_pairing_payload(&d, "ideaspark_st7789_v1", "1.0.3", small, sizeof small);
     CHECK(strlen(small) == sizeof small - 1, "a short buffer is cut, never overrun");
+    // #4466: the readable code of the same board, from its id, profile and fingerprint (the shared table's rule)
+    char readable[READABLE_CODE_LEN];
+    device_readable_code(&d, 1, readable);
+    CHECK(strcmp(readable, "3DNGP-UN9CG") == 0, "the ideaspark's readable code is 3DNGP-UN9CG");
+    device_readable_code(&d, 0, readable);
+    CHECK(strcmp(readable, "3DNGP-UM7BF") == 0, "and another profile another code");
 }
 
 int main(void) {

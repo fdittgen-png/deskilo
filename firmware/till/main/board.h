@@ -13,6 +13,7 @@
 // ideaspark ESP32 (ESP-WROOM-32) with a 1.9 in ST7789 170x320, portrait; no touch: BOOT (IO0) is its one button.
 // Pins as the board's published examples use them; checked on the board in E10.
 #define BOARD_PROFILE "ideaspark_st7789_v1"
+#define BOARD_PROFILE_CODE 1   // #4466: the profile in the readable pairing code
 #define BOARD_LCD_W 170
 #define BOARD_LCD_H 320
 #define BOARD_HAS_TOUCH 0
@@ -24,6 +25,7 @@
 #define PIN_LCD_BL   32
 #else
 #define BOARD_PROFILE "lcdwiki_e32r40t_v1"
+#define BOARD_PROFILE_CODE 0   // #4466: the profile in the readable pairing code
 #define BOARD_LCD_W 480   // landscape, after the controller's rotation
 #define BOARD_LCD_H 320
 #define BOARD_HAS_TOUCH 1

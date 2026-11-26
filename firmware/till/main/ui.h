@@ -24,5 +24,5 @@ void ui_refresh(const shared_t *state);
 void ui_calibrate(void);
 // #4474 -- the pairing code over everything: the QR of [payload] and the fingerprint [fp] to compare by eye. Shown again
 // while it is up, it closes (BOOT pressed again, or a tap on a touch board).
-void ui_toggle_pairing(const char *payload, const char *fp);
+void ui_toggle_pairing(const char *payload, const char *fp, const char *readable);
 bool ui_pairing_shown(void);

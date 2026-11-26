@@ -19,6 +19,7 @@
 #include "lvgl.h"
 #include "net.h"
 #include "ui.h"
+#include "readable_code.h"
 #include "device.h"
 #include "boot_button.h"
 #include "money_text.h"
@@ -297,10 +298,11 @@ static uint32_t s_seen;
 // Hands the screen a copy of the shared state whenever its version changed.
 // ---- the pairing code (#4474): BOOT held for 3 s shows it, on every board; pressed again, it closes ----
 static char s_pairing[192];
+static char s_readable[READABLE_CODE_LEN];   // #4466: the code typed instead of scanning
 static device_t s_device;
 static boot_button_t s_boot;
 static void boot_cb(lv_timer_t *t) {
-    if (boot_button_poll(&s_boot, board_boot_button(), ui_pairing_shown())) ui_toggle_pairing(s_pairing, s_device.fingerprint);
+    if (boot_button_poll(&s_boot, board_boot_button(), ui_pairing_shown())) ui_toggle_pairing(s_pairing, s_device.fingerprint, s_readable);
 }
 
 static void refresh_cb(lv_timer_t *t) {
@@ -327,6 +329,7 @@ void app_main(void) {
     bool calibrate = BOARD_HAS_TOUCH && board_boot_button();   // BOOT held at start on a touch board: calibrate first
     if (device_identity(&s_device) == ESP_OK) {
         device_pairing_payload(&s_device, BOARD_PROFILE, esp_app_get_description()->version, s_pairing, sizeof s_pairing);
+        device_readable_code(&s_device, BOARD_PROFILE_CODE, s_readable);
         trace("device %.8s, code %s", s_device.id, s_device.fingerprint);
     } else trace("the device identity cannot be read: the board shows no pairing code");
     lv_init();
@@ -353,7 +356,7 @@ void app_main(void) {
     // a board without touch has no till or roll screen: until its own roles (price tag #4472, seat #4473) it shows its code
     if (!cfg_complete() || !BOARD_HAS_TOUCH) {
         ui_build_not_set_up();
-        ui_toggle_pairing(s_pairing, s_device.fingerprint);   // a board not set up shows its code by itself
+        ui_toggle_pairing(s_pairing, s_device.fingerprint, s_readable);   // a board not set up shows its code by itself
         trace("not set up: no settings on this board");
     } else {
         if (!strcmp(g_cfg.role, "till")) ui_build_till(); else ui_build_roll();

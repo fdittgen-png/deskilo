@@ -13,5 +13,9 @@ typedef struct {
 
 // Reads the identity, making it on the first start; ESP_OK with [out] filled.
 esp_err_t device_identity(device_t *out);
+// #4466 -- the readable code of this board (XXXXX-XXXXX, readable_code.h): its short id, [profile] and the first 10
+// bits of its fingerprint; [out] holds READABLE_CODE_LEN.
+void device_readable_code(const device_t *d, int profile, char *out);
+
 // The text of the pairing code for this board (deskilo-device:v1?...), into [out].
 void device_pairing_payload(const device_t *d, const char *board_profile, const char *firmware, char *out, int cap);
