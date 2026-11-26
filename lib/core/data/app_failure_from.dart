@@ -9,6 +9,9 @@ library;
 import 'dart:async' show TimeoutException;
 import 'dart:io' show SocketException;
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonShapeException;
+
+import '../cache/read_failure.dart';
 import '../failure/app_failure.dart';
 import '../trace/trace_logger.dart';
 import '../validation/pending_validation.dart';
@@ -24,11 +27,17 @@ final _httpStatus = RegExp(r'^\d{3}$');
 /// - A [StateError] is a local refusal raised before anything was sent.
 /// - A lost socket, a timeout, an authentication fetch that did not answer:
 ///   [TransportFailure].
-/// - An answer whose shape could not be read: [Unreadable].
+/// - An answer whose shape could not be read: [Unreadable]. That includes the
+///   reader's own [JsonShapeException] and a cached read that did not parse
+///   ([CachedReadInvalid]): neither is a defect of the app, and neither is an
+///   empty answer.
 /// - Anything else: [Defect].
 AppFailure appFailureFrom(Object error) {
   if (error is AppFailure) return error;
   if (error is TypedRefusal) return Refusal(cause: error);
+  if (error is JsonShapeException || error is CachedReadInvalid) {
+    return Unreadable(error);
+  }
   final code = serverErrorCode(error);
   if (code != null && _httpStatus.hasMatch(code)) {
     return TransportFailure(error, status: int.parse(code));
@@ -61,10 +70,18 @@ Future<CommandOutcome<T>> runCommand<T>(
     return CommandHeld(e.eventId);
   } on Object catch (e, st) {
     final failure = appFailureFrom(e);
-    TraceLogger.instance.warn('command', '$what: $failure', error: e, stackTrace: st);
+    // A refusal or a lost connection is an answer: a warning. An unreadable
+    // answer or a defect is a fault: an error, which the reporter may send.
+    TraceLogger.instance.log(
+      isReportableFailure(failure) ? TraceLevel.error : TraceLevel.warn,
+      'command',
+      '$what: $failure',
+      error: e,
+      stackTrace: st,
+    );
     return switch (failure) {
-      final Refusal r => CommandRefused(r),
-      final other => CommandUnreached(other),
+      final Refusal r => CommandRefused(r, stack: st),
+      final other => CommandUnreached(other, stack: st),
     };
   }
 }
