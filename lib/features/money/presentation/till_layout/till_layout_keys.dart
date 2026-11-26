@@ -20,9 +20,11 @@ import '../../domain/counter_till.dart';
 import '../../domain/till_keypad.dart';
 import '../../domain/till_layout.dart';
 import '../../providers/till_layout_providers.dart';
+import '../../providers/till_printer_providers.dart';
 import '../../providers/till_providers.dart';
 import '../counter_receipt_view.dart';
 import '../till_keys.dart';
+import '../till_print_panel.dart';
 import '../till_session.dart';
 import '../till_text.dart';
 import 'till_layout_tools.dart';
@@ -69,6 +71,7 @@ class TillKeysOrLayout extends ConsumerWidget {
       items: sold,
       session: session,
       copies: ref.watch(tillCopyPortProvider),
+      onOpenDrawer: ref.watch(tillPrinterOnProvider) ? () => unawaited(openTillDrawer(context, ref)) : null,
       onTap: onTap,
       onPayCash: onPayCash,
     );
@@ -82,6 +85,7 @@ class _LaidOut extends StatefulWidget {
     required this.items,
     required this.session,
     required this.copies,
+    this.onOpenDrawer,
     required this.onTap,
     required this.onPayCash,
   });
@@ -92,6 +96,9 @@ class _LaidOut extends StatefulWidget {
 
   /// #4476 -- where the till prints copies of a receipt; null where it does not.
   final TillCopyPort? copies;
+
+  /// #4368 -- opens the drawer the till's printer drives; null where the business prints no receipts.
+  final VoidCallback? onOpenDrawer;
   final void Function(TillKey key, String? typed) onTap;
   final VoidCallback onPayCash;
 
@@ -139,7 +146,8 @@ class _LaidOutState extends State<_LaidOut> {
     TillFunction.priceOverride => () => unawaited(_pricing(discount: false)),
     TillFunction.lineDiscount => () => unawaited(_pricing(discount: true)),
     TillFunction.reprintLast => () => unawaited(_reprint()),
-    // a deposit return comes with #4476's next step; the drawer opens with the receipt printer and its pulse (#4368)
+    TillFunction.openDrawer => widget.onOpenDrawer,
+    // a deposit return comes with #4478
     _ => null,
   };
 

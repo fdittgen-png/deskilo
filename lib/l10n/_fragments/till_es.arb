@@ -284,5 +284,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "tillDrawerNotSet": "No hay cajón configurado en la impresora de esta caja.",
+  "tillDrawerOpened": "El cajón está abierto.",
+  "tillDrawerKickFailed": "El cajón no se abrió. Compruebe la impresora a la que está conectado."
 }

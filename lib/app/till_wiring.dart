@@ -18,6 +18,7 @@ import '../features/money/domain/till_drawer.dart';
 import '../features/money/providers/counter_book_providers.dart';
 import '../features/money/providers/till_drawer_providers.dart';
 import '../features/money/providers/till_layout_providers.dart';
+import '../features/money/providers/till_printer_providers.dart';
 import '../features/money/providers/till_providers.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/domain/workspace_permission.dart';
@@ -89,6 +90,10 @@ final Override counterSettingsEditorFromApp = counterSettingsEditorProvider.over
 
 /// #4185 -- the counter's book (its receipts, corrections, refunds, returns and card answers) on the same server.
 /// #4448 -- till layouts on, and who may lay them out: from the business's features and the person's rights.
+/// #4368 -- the receipt printer on: from the business's features.
+final Override tillPrinterOnFromApp = tillPrinterOnProvider.overrideWith(
+  (ref) => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.counterReceiptPrinter),
+);
 final Override tillLayoutsOnFromApp = tillLayoutsOnProvider.overrideWith(
   (ref) => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.counterTillLayout),
 );

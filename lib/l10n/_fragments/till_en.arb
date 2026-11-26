@@ -401,5 +401,17 @@
   "tillNotForCounter": "This item is not for sale at the counter.",
   "@tillNotForCounter": {
     "description": "#4366 the till"
+  },
+  "tillDrawerNotSet": "No cash drawer is set on this till's printer.",
+  "@tillDrawerNotSet": {
+    "description": "#4368 the Open drawer key"
+  },
+  "tillDrawerOpened": "The drawer is open.",
+  "@tillDrawerOpened": {
+    "description": "#4368 the Open drawer key"
+  },
+  "tillDrawerKickFailed": "The drawer did not open. Check the printer it hangs on.",
+  "@tillDrawerKickFailed": {
+    "description": "#4368 the Open drawer key"
   }
 }

@@ -66584,6 +66584,12 @@ abstract class AppLocalizations {
   /// **'The cash the drawer starts with, counted now.'**
   String get tillDrawerFloatHelp;
 
+  /// #4368 the Open drawer key
+  ///
+  /// In en, this message translates to:
+  /// **'The drawer did not open. Check the printer it hangs on.'**
+  String get tillDrawerKickFailed;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -66614,6 +66620,12 @@ abstract class AppLocalizations {
   /// **'No till has been set up yet. Someone who manages the sites adds it.'**
   String get tillDrawerNoTillsPerson;
 
+  /// #4368 the Open drawer key
+  ///
+  /// In en, this message translates to:
+  /// **'No cash drawer is set on this till\'s printer.'**
+  String get tillDrawerNotSet;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -66637,6 +66649,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open {till}'**
   String tillDrawerOpenTitle(String till);
+
+  /// #4368 the Open drawer key
+  ///
+  /// In en, this message translates to:
+  /// **'The drawer is open.'**
+  String get tillDrawerOpened;
 
   /// #4367 till sessions: the cash drawer
   ///

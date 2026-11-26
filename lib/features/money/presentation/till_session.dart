@@ -394,7 +394,7 @@ class TillSession {
         return;
       }
       lastSold = sold.receiptId;
-      _set(_now.copyWith(sold: () => sold, change: () => _givenMinor - total).withCard(null).withUnconfirmed(value: false));
+      _set(_now.copyWith(sold: () => sold, change: () => _givenMinor - total, soldCash: sent.any((t) => t.kind == 'cash')).withCard(null).withUnconfirmed(value: false));
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'till sale not confirmed', error: e, stackTrace: st);
       final refusal = knownRefusalOf(e);

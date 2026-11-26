@@ -41905,6 +41905,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les espèces avec lesquelles le tiroir démarre, comptées maintenant.';
 
   @override
+  String get tillDrawerKickFailed =>
+      'Le tiroir-caisse ne s\'est pas ouvert. Vérifiez l\'imprimante à laquelle il est relié.';
+
+  @override
   String get tillDrawerLoadFailed => 'Les caisses n\'ont pas pu être lues.';
 
   @override
@@ -41922,6 +41926,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucune caisse n\'est encore créée. Une personne qui gère les sites l\'ajoute.';
 
   @override
+  String get tillDrawerNotSet =>
+      'Aucun tiroir-caisse n\'est réglé sur l\'imprimante de cette caisse.';
+
+  @override
   String get tillDrawerOpenAction => 'Ouvrir la caisse';
 
   @override
@@ -41935,6 +41943,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String tillDrawerOpenTitle(String till) {
     return 'Ouvrir $till';
   }
+
+  @override
+  String get tillDrawerOpened => 'Le tiroir-caisse est ouvert.';
 
   @override
   String get tillDrawerRefusalAboveLimit =>

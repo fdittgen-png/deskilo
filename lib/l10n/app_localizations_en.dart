@@ -41385,6 +41385,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The cash the drawer starts with, counted now.';
 
   @override
+  String get tillDrawerKickFailed =>
+      'The drawer did not open. Check the printer it hangs on.';
+
+  @override
   String get tillDrawerLoadFailed => 'The tills could not be read.';
 
   @override
@@ -41402,6 +41406,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'No till has been set up yet. Someone who manages the sites adds it.';
 
   @override
+  String get tillDrawerNotSet =>
+      'No cash drawer is set on this till\'s printer.';
+
+  @override
   String get tillDrawerOpenAction => 'Open the till';
 
   @override
@@ -41415,6 +41423,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String tillDrawerOpenTitle(String till) {
     return 'Open $till';
   }
+
+  @override
+  String get tillDrawerOpened => 'The drawer is open.';
 
   @override
   String get tillDrawerRefusalAboveLimit =>

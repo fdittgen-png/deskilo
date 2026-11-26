@@ -284,5 +284,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "tillDrawerNotSet": "Aucun tiroir-caisse n'est réglé sur l'imprimante de cette caisse.",
+  "tillDrawerOpened": "Le tiroir-caisse est ouvert.",
+  "tillDrawerKickFailed": "Le tiroir-caisse ne s'est pas ouvert. Vérifiez l'imprimante à laquelle il est relié."
 }

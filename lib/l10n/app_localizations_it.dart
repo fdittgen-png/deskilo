@@ -41778,6 +41778,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'I contanti con cui inizia il cassetto, contati ora.';
 
   @override
+  String get tillDrawerKickFailed =>
+      'Il cassetto non si è aperto. Verifichi la stampante a cui è collegato.';
+
+  @override
   String get tillDrawerLoadFailed => 'Non è stato possibile leggere le casse.';
 
   @override
@@ -41795,6 +41799,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessuna cassa è ancora stata creata. La aggiunge chi gestisce le sedi.';
 
   @override
+  String get tillDrawerNotSet =>
+      'Nessun cassetto è impostato sulla stampante di questa cassa.';
+
+  @override
   String get tillDrawerOpenAction => 'Aprire la cassa';
 
   @override
@@ -41808,6 +41816,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String tillDrawerOpenTitle(String till) {
     return 'Aprire $till';
   }
+
+  @override
+  String get tillDrawerOpened => 'Il cassetto è aperto.';
 
   @override
   String get tillDrawerRefusalAboveLimit =>

@@ -54000,6 +54000,10 @@
   "@tillDrawerFloatHelp": {
     "description": "#4367 till sessions: the cash drawer"
   },
+  "tillDrawerKickFailed": "The drawer did not open. Check the printer it hangs on.",
+  "@tillDrawerKickFailed": {
+    "description": "#4368 the Open drawer key"
+  },
   "tillDrawerLoadFailed": "The tills could not be read.",
   "@tillDrawerLoadFailed": {
     "description": "#4367 till sessions: the cash drawer"
@@ -54019,6 +54023,10 @@
   "tillDrawerNoTillsPerson": "No till has been set up yet. Someone who manages the sites adds it.",
   "@tillDrawerNoTillsPerson": {
     "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerNotSet": "No cash drawer is set on this till's printer.",
+  "@tillDrawerNotSet": {
+    "description": "#4368 the Open drawer key"
   },
   "tillDrawerOpenAction": "Open the till",
   "@tillDrawerOpenAction": {
@@ -54040,6 +54048,10 @@
         "type": "String"
       }
     }
+  },
+  "tillDrawerOpened": "The drawer is open.",
+  "@tillDrawerOpened": {
+    "description": "#4368 the Open drawer key"
   },
   "tillDrawerRefusalAboveLimit": "A paid-out this large is recorded by someone who may record outgoing payments.",
   "@tillDrawerRefusalAboveLimit": {

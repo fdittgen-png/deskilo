@@ -41727,6 +41727,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El efectivo con el que empieza el cajón, contado ahora.';
 
   @override
+  String get tillDrawerKickFailed =>
+      'El cajón no se abrió. Compruebe la impresora a la que está conectado.';
+
+  @override
   String get tillDrawerLoadFailed => 'No se pudieron leer las cajas.';
 
   @override
@@ -41744,6 +41748,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Todavía no se ha creado ninguna caja. La añade quien gestiona las sedes.';
 
   @override
+  String get tillDrawerNotSet =>
+      'No hay cajón configurado en la impresora de esta caja.';
+
+  @override
   String get tillDrawerOpenAction => 'Abrir la caja';
 
   @override
@@ -41757,6 +41765,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String tillDrawerOpenTitle(String till) {
     return 'Abrir $till';
   }
+
+  @override
+  String get tillDrawerOpened => 'El cajón está abierto.';
 
   @override
   String get tillDrawerRefusalAboveLimit =>

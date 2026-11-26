@@ -6,6 +6,10 @@ import '../data/till_printer_store.dart';
 import '../domain/receipt_sender.dart';
 import '../domain/till_printer_settings.dart';
 
+/// #4368 -- whether the business prints the till's receipts (`counterReceiptPrinter`): wired by the app from its features
+/// (`tillPrinterOnFromApp`), so the till reads it without reaching into the workspace. Off until the app says so.
+final tillPrinterOnProvider = Provider<bool>((ref) => false);
+
 /// #4368 -- where this device keeps its printer settings. A test or the Demo replaces it.
 final tillPrinterStoreProvider = Provider<TillPrinterStore>((ref) => const PrefsTillPrinterStore());
 

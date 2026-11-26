@@ -41848,6 +41848,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das Bargeld, mit dem die Schublade beginnt, jetzt gezählt.';
 
   @override
+  String get tillDrawerKickFailed =>
+      'Die Kassenlade ging nicht auf. Prüfen Sie den Drucker, an dem sie hängt.';
+
+  @override
   String get tillDrawerLoadFailed => 'Die Kassen konnten nicht gelesen werden.';
 
   @override
@@ -41865,6 +41869,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Es ist noch keine Kasse angelegt. Wer die Standorte verwaltet, legt sie an.';
 
   @override
+  String get tillDrawerNotSet =>
+      'Am Drucker dieser Kasse ist keine Kassenlade eingestellt.';
+
+  @override
   String get tillDrawerOpenAction => 'Kasse öffnen';
 
   @override
@@ -41878,6 +41886,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String tillDrawerOpenTitle(String till) {
     return '$till öffnen';
   }
+
+  @override
+  String get tillDrawerOpened => 'Die Kassenlade ist offen.';
 
   @override
   String get tillDrawerRefusalAboveLimit =>
