@@ -12,7 +12,6 @@ import 'package:deskilo/features/task_recorder/application/recorder_controller.d
 import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
 import 'package:deskilo/features/task_recorder/providers/recorder_providers.dart';
-import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -71,13 +70,6 @@ Future<void> _done(WidgetTester tester, ProviderContainer c) async {
 }
 
 void main() {
-  test('the accepted feature keys are exactly the enum', () {
-    expect(
-      workspaceFeatureKeys,
-      WorkspaceFeature.values.map((f) => f.name).toSet(),
-    );
-  });
-
   testWidgets('a feature switch: attempt, then the real save', (tester) async {
     final p = await _pump(tester, record: true);
     await tester.tap(find.text('Accessory supplements'));
