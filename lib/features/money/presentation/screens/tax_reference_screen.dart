@@ -14,8 +14,8 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/country_field.dart';
+import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/page_bar.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../providers/tax_reference_providers.dart';
 import '../widgets/tax_reference_history_sheet.dart';
 import '../widgets/tax_reference_sheets.dart';
@@ -92,12 +92,9 @@ class _TaxReferenceScreenState extends ConsumerState<TaxReferenceScreen> {
     final l10n = context.l10n;
     final async = ref.watch(taxReferenceSetProvider);
     final today = ref.watch(clockProvider).now().toIso8601String().substring(0, 10);
-    return async.when(
-      loading: () => const LoadingView(),
-      error: (e, st) => ReadFailureBanner(
-        error: e,
-        onRetry: () => ref.invalidate(taxReferenceSetProvider),
-      ),
+    return AsyncReadBody(
+      value: async,
+      onRetry: () => ref.invalidate(taxReferenceSetProvider),
       data: (set) {
         final rows = set
             .on(today)
@@ -135,9 +132,10 @@ class _TaxReferenceScreenState extends ConsumerState<TaxReferenceScreen> {
               onChanged: (v) => setState(() => _country = v.trim().toUpperCase()),
             ),
             if (rows.isEmpty)
-              Padding(
-                padding: const EdgeInsets.only(top: AppSpacing.lg),
-                child: Text(l10n.taxRefEmpty),
+              EmptyState(
+                key: const ValueKey('tax-reference-empty'),
+                icon: Icons.rule_folder_outlined,
+                title: l10n.taxRefEmpty,
               ),
             for (final r in rows)
               ListTile(

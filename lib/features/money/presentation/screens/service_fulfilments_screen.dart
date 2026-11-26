@@ -15,8 +15,8 @@ import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/async_read_body.dart';
+import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/page_title.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../domain/service_fulfilment.dart';
 import '../../providers/billing_customer_providers.dart';
 import '../../providers/service_fulfilment_providers.dart';
@@ -89,25 +89,19 @@ class _Body extends ConsumerWidget {
           child: Text(l10n.engagementsIntro, style: Theme.of(context).textTheme.bodyMedium),
         ),
         Expanded(
-          child: all.when(
-            loading: () => const LoadingView(),
-            error: (error, _) => Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: ReadFailureBanner(
-                error: error,
-                refusal: error is FulfilmentRefusal
-                    ? engagementRefusalText(l10n, error)
-                    : null,
-                retryKey: const ValueKey('engagements-retry'),
-                onRetry: () => ref.invalidate(serviceFulfilmentsProvider(workspaceId)),
-              ),
-            ),
+          child: AsyncReadBody(
+            value: all,
+            isEmpty: (items) => items.isEmpty,
+            refusal: (error) => error is FulfilmentRefusal
+                ? engagementRefusalText(l10n, error)
+                : null,
+            retryKey: const ValueKey('engagements-retry'),
+            onRetry: () => ref.invalidate(serviceFulfilmentsProvider(workspaceId)),
             data: (items) => items.isEmpty
-                ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(AppSpacing.md),
-                      child: Text(l10n.engagementsEmpty, key: const ValueKey('engagements-empty'), textAlign: TextAlign.center),
-                    ),
+                ? EmptyState(
+                    key: const ValueKey('engagements-empty'),
+                    icon: Icons.assignment_turned_in_outlined,
+                    title: l10n.engagementsEmpty,
                   )
                 : ListView.separated(
                     itemCount: items.length,

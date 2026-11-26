@@ -19,7 +19,6 @@ import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../application/customer_quote_commands.dart';
 import '../../domain/customer_quote.dart';
 import '../../providers/billing_customer_providers.dart';
@@ -106,34 +105,26 @@ class _CustomerQuoteScreenState extends ConsumerState<CustomerQuoteScreen> {
           : Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
-                child: ref
-                    .watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)))
-                    .when(
-                      loading: () => const LoadingView(),
-                      error: (error, _) => Padding(
-                        padding: const EdgeInsets.all(AppSpacing.md),
-                        child: ReadFailureBanner(
-                          error: error,
-                          refusal: error is QuoteRefusal
-                              ? quoteRefusalText(l10n, error)
-                              : null,
-                          retryKey: const ValueKey('quote-retry'),
-                          onRetry: () => ref.invalidate(
-                            customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)),
-                          ),
-                        ),
-                      ),
-                      data: (quote) => _Content(
-                        quote: quote,
-                        workspaceId: id,
-                        canIssue: canIssue,
-                        busy: _busy,
-                        said: _said,
-                        onRun: (act, {leave = false}) => unawaited(_run(id, act, leave: leave)),
-                        onAnswer: (context, {required convert}) =>
-                            unawaited(_answer(context, id, quote, convert: convert)),
-                      ),
-                    ),
+                child: AsyncReadBody(
+                  value: ref.watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId))),
+                  refusal: (error) => error is QuoteRefusal
+                      ? quoteRefusalText(l10n, error)
+                      : null,
+                  retryKey: const ValueKey('quote-retry'),
+                  onRetry: () => ref.invalidate(
+                    customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)),
+                  ),
+                  data: (quote) => _Content(
+                    quote: quote,
+                    workspaceId: id,
+                    canIssue: canIssue,
+                    busy: _busy,
+                    said: _said,
+                    onRun: (act, {leave = false}) => unawaited(_run(id, act, leave: leave)),
+                    onAnswer: (context, {required convert}) =>
+                        unawaited(_answer(context, id, quote, convert: convert)),
+                  ),
+                ),
               ),
             ),
     );

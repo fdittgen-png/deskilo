@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/kit/page_bar.dart';
@@ -79,36 +78,27 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
           ? const SizedBox.shrink()
           : target == null && current.isLoading
           ? const LoadingView()
-          : (target == null
-                    ? AsyncValue<McpPolicy>.error(
-                        current.error ?? const McpTargetUnverified(''),
-                        current.stackTrace ?? StackTrace.empty,
-                      )
-                    : ref.watch(
-                        mcpPolicyProvider(target.workspace(workspaceId)),
-                      ))
-                .when(
-                  loading: () => const LoadingView(),
-                  error: (e, _) => Padding(
-                    padding: AppSpacing.gutterAll,
-                    child: ReadFailureBanner(
-                      error: e,
-                      onRetry: () {
-                        ref.invalidate(activeMcpTargetProvider);
-                        if (target != null) {
-                          ref.invalidate(
-                            mcpPolicyProvider(target.workspace(workspaceId)),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                  data: (policy) => McpPolicyFormView(
-                    policy: policy,
-                    switched: switched,
-                    onSave: () => _save(policy),
-                  ),
-                ),
+          : AsyncReadBody(
+              value: target == null
+                  ? AsyncValue<McpPolicy>.error(
+                      current.error ?? const McpTargetUnverified(''),
+                      current.stackTrace ?? StackTrace.empty,
+                    )
+                  : ref.watch(mcpPolicyProvider(target.workspace(workspaceId))),
+              onRetry: () {
+                ref.invalidate(activeMcpTargetProvider);
+                if (target != null) {
+                  ref.invalidate(
+                    mcpPolicyProvider(target.workspace(workspaceId)),
+                  );
+                }
+              },
+              data: (policy) => McpPolicyFormView(
+                policy: policy,
+                switched: switched,
+                onSave: () => _save(policy),
+              ),
+            ),
     );
   }
 }
