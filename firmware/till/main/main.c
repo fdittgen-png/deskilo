@@ -24,6 +24,7 @@
 #include "boot_button.h"
 #include "money_text.h"
 #include "pending.h"
+#include "perf.h"
 #include "trace.h"
 #include "strings.h"
 
@@ -143,9 +144,11 @@ static void net_task(void *arg) {
     set_status(T(S_ST_WIFI));
     if (net_connect(g_cfg.ssid, g_cfg.wifi_pass) != ESP_OK) { trace("Wi-Fi or time failed"); set_status("Wi-Fi or time failed: check Settings"); vTaskDelete(NULL); }
     trace("Wi-Fi up");
+    perf_start("wifi");
     set_status(T(S_ST_SIGNING_IN));
     if (!api_sign_in(why, sizeof why)) { trace("%s", why); set_status(why); vTaskDelete(NULL); }   // no session: nothing to report with
     trace("signed in");
+    perf_start("session");
     xSemaphoreTake(s_lock, portMAX_DELAY); S.online = true; xSemaphoreGive(s_lock);
     if (!strcmp(g_cfg.role, "till")) {
         int n = api_products(prods, MAX_PRODUCTS, why, sizeof why);
@@ -155,6 +158,7 @@ static void net_task(void *arg) {
         S.version++;
         xSemaphoreGive(s_lock);
         if (n < 0) fail("products", why); else trace("%d products", n);
+        perf_start("products");
         pending_t p;
         if (pending_load(&p)) {
             // a payment sent before the restart: settled first, under the binding it was made in, before anything is sold
@@ -169,9 +173,12 @@ static void net_task(void *arg) {
         }
     } else set_status(T(S_ST_WAITING));
     TickType_t last_refresh = xTaskGetTickCount();
+    bool working = false;   // a command was taken: coming back here for the next one, its answer is out
     for (;;) {
+        if (working) perf_answered();
         cmd_t c;
         bool got = xQueueReceive(s_cmd, &c, strcmp(g_cfg.role, "roll") == 0 ? pdMS_TO_TICKS(1500) : pdMS_TO_TICKS(1000)) == pdTRUE;
+        working = got;
         if (xTaskGetTickCount() - last_refresh > pdMS_TO_TICKS(40 * 60 * 1000)) { if (api_sign_in(why, sizeof why)) last_refresh = xTaskGetTickCount(); }
         static int idle;
         int phase_now;
@@ -277,18 +284,30 @@ static void net_task(void *arg) {
 
 // ---- the display and touch glue; the screens themselves are ui.c ----
 static void flush(lv_disp_drv_t *drv, const lv_area_t *a, lv_color_t *px) {
+    int64_t t0 = esp_timer_get_time();
     board_draw(a->x1, a->y1, a->x2 + 1, a->y2 + 1, px);
+    perf_flush(esp_timer_get_time() - t0);
     lv_disp_flush_ready(drv);
 }
+static void painted(lv_disp_drv_t *drv, uint32_t ms, uint32_t px) {
+    static bool first = true;
+    if (first) { first = false; perf_start("frame"); }   // the first screen is drawn and handed to the panel
+    perf_frame(ms, px);
+}
 static void read_touch(lv_indev_drv_t *drv, lv_indev_data_t *d) {
+    static bool down;
     int x, y;
-    if (board_touch(&x, &y)) { d->state = LV_INDEV_STATE_PR; d->point.x = x; d->point.y = y; }
-    else d->state = LV_INDEV_STATE_REL;
+    if (board_touch(&x, &y)) {
+        if (!down) perf_press();
+        down = true;
+        d->state = LV_INDEV_STATE_PR; d->point.x = x; d->point.y = y;
+    } else { down = false; d->state = LV_INDEV_STATE_REL; }
 }
 static void tick(void *arg) { lv_tick_inc(2); }
 
 
-static void ui_send(int kind, int index, int64_t value) { cmd_t c = {kind, index, value}; xQueueSend(s_cmd, &c, 0); }
+static void ui_send(int kind, int index, int64_t value) { cmd_t c = {kind, index, value}; perf_command(); xQueueSend(s_cmd, &c, 0); }
+static void perf_cb(lv_timer_t *t) { perf_report(); }
 static void ui_reset(void) { cfg_erase(); esp_restart(); }
 static void save_cal(const touch_cal_t *cal) {
     board_touch_set_cal(cal);
@@ -339,6 +358,7 @@ void app_main(void) {
     s_disp.hor_res = BOARD_LCD_W;
     s_disp.ver_res = BOARD_LCD_H;
     s_disp.flush_cb = flush;
+    s_disp.monitor_cb = painted;
     s_disp.draw_buf = &s_draw;
     lv_disp_drv_register(&s_disp);
     lv_indev_drv_init(&s_indev);
@@ -350,7 +370,8 @@ void app_main(void) {
     ESP_ERROR_CHECK(esp_timer_create(&t, &h));
     ESP_ERROR_CHECK(esp_timer_start_periodic(h, 2000));
     s_lock = xSemaphoreCreateMutex();
-    static const ui_port_t port = {.send = ui_send, .factory_reset = ui_reset, .raw_touch = board_touch_raw, .save_cal = save_cal};
+    static const ui_port_t port = {.send = ui_send, .factory_reset = ui_reset, .raw_touch = board_touch_raw, .save_cal = save_cal,
+                                   .perf_text = perf_text};
     ui_init(&port);
     s_cmd = xQueueCreate(8, sizeof(cmd_t));
     // a board without touch has no till or roll screen: until its own roles (price tag #4472, seat #4473) it shows its code
@@ -366,6 +387,7 @@ void app_main(void) {
     if (calibrate) ui_calibrate();
     boot_button_init(&s_boot);
     lv_timer_create(boot_cb, 100, NULL);
+    lv_timer_create(perf_cb, PERF_PERIOD_MS, NULL);
     board_backlight(true);
     ESP_LOGI(TAG, "up (%s): free heap %lu", g_cfg.role[0] ? g_cfg.role : "no settings", (unsigned long)esp_get_free_heap_size());
     for (;;) {

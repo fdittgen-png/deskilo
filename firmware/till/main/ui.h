@@ -12,6 +12,7 @@ typedef struct {
     void (*factory_reset)(void);                       // the settings' long press
     bool (*raw_touch)(int *rx, int *ry);               // the raw touch, for calibrating
     void (*save_cal)(const touch_cal_t *cal);          // a calibration taken: applied and kept
+    void (*perf_text)(char *out, int cap);             // #4450: where the time went since the start, for Settings; may be NULL
 } ui_port_t;
 
 void ui_init(const ui_port_t *port);

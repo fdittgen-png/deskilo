@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "net.h"
 #include "trace.h"
+#include "perf.h"
 #include "strings.h"
 #include "esp_app_desc.h"
 #include "esp_mac.h"
@@ -19,6 +20,7 @@
 #include "esp_netif.h"
 #include "esp_random.h"
 #include "esp_sntp.h"
+#include "esp_timer.h"
 #include "esp_wifi.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
@@ -91,6 +93,7 @@ static int http(esp_http_client_method_t m, const char *path, const char *body, 
         ESP_LOGE(TAG, "request address too long, not sent");
         return -1;
     }
+    int64_t t0 = esp_timer_get_time();
     esp_http_client_config_t c = {.url = url, .method = m, .crt_bundle_attach = esp_crt_bundle_attach, .timeout_ms = 15000, .buffer_size = 2048, .buffer_size_tx = 2048};
     esp_http_client_handle_t h = esp_http_client_init(&c);
     if (!h) return -1;
@@ -114,6 +117,7 @@ static int http(esp_http_client_method_t m, const char *path, const char *body, 
         }
     }
     esp_http_client_cleanup(h);
+    perf_http(m == HTTP_METHOD_POST ? "POST" : "GET", path, status, false, false, esp_timer_get_time() - t0);
     if (status < 0) { snprintf(s_last_code, sizeof s_last_code, "no answer"); trace("%.40s: no answer from Deskilo", path); }
     return status;
 }

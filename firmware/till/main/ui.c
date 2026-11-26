@@ -207,6 +207,16 @@ static void open_settings_cb(lv_event_t *e) {
     lv_obj_add_event_cb(b4, pairing_cb, LV_EVENT_CLICKED, NULL);
     lv_label_set_text(lv_label_create(b4), T(S_BTN_PAIRING));
     lv_label_set_text(lv_label_create(b2), T(S_BTN_CLEAR));
+    if (s_port.perf_text) {   // #4450: where the board's time went since the start, for whoever has no serial cable at hand
+        static char perf[320];
+        s_port.perf_text(perf, sizeof perf);
+        lv_obj_t *p = lv_label_create(s_settings);
+        lv_obj_set_style_text_font(p, &till_font_14, 0);
+        lv_obj_set_width(p, 428);
+        lv_label_set_long_mode(p, LV_LABEL_LONG_WRAP);
+        lv_label_set_text(p, perf);
+        lv_obj_align(p, LV_ALIGN_BOTTOM_LEFT, 0, -48);
+    }
 }
 
 static void update_cb(lv_event_t *e) { s_port.send(CMD_REFRESH, 0, 0); }
