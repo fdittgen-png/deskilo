@@ -91,8 +91,8 @@ class ExpenseVatChoice {
 ///
 /// A read of the rates that failed is thrown, never answered as empty: an
 /// empty answer says "no VAT here", and the form would then file an expense
-/// without the VAT its space deducts. The caller says the failure
-/// ([expenseVatPercentsOrSay]) or shows it with a way to try again.
+/// without the VAT its space deducts. A form reads them before it opens
+/// ([whenExpenseVatRead]) or shows the failure with a way to try again.
 Future<List<double>> expenseVatPercents(WidgetRef ref, String vatRegime) async {
   if (!ref
           .read(enabledFeaturesSyncProvider)
@@ -115,33 +115,40 @@ Future<List<double>> expenseVatPercents(WidgetRef ref, String vatRegime) async {
   }.toList()..sort((a, b) => b.compareTo(a));
 }
 
-/// [expenseVatPercents] for a form about to open: null once [context] has
-/// said why the rates could not be read. The form then does not open as if
-/// the space had no VAT; opening it again reads the rates again.
-Future<List<double>?> expenseVatPercentsOrSay(
+/// Runs [open], a form that asks an expense for its VAT, once the rates it
+/// will offer have been read. When they could not be read, says why on
+/// [context] and answers [unopened]: the form stays closed rather than open as
+/// if the space had no VAT, and opening it again reads the rates again.
+Future<T> whenExpenseVatRead<T>(
   BuildContext context,
   WidgetRef ref,
-  String vatRegime,
-) async {
+  Future<T> Function() open, {
+  required T unopened,
+}) async {
+  final workspace = ref.read(currentWorkspaceProvider).value;
   Object? unread;
-  final percents = await guardRead<List<double>?>(
-    domain: 'money',
-    message: 'expense VAT rates failed',
-    read: () => expenseVatPercents(ref, vatRegime),
-    fallback: (e) {
-      unread = e;
-      return null;
-    },
-  );
-  if (unread case final e? when context.mounted) {
+  if (workspace != null) {
+    await guardRead<List<double>?>(
+      domain: 'money',
+      message: 'expense VAT rates failed',
+      read: () => expenseVatPercents(ref, workspace.vatRegime),
+      fallback: (e) {
+        unread = e;
+        return null;
+      },
+    );
+  }
+  final failed = unread;
+  if (failed == null) return open();
+  if (context.mounted) {
     final l10n = context.l10n;
-    AppSnack.error(context, switch (classifyReadFailure(e)) {
+    AppSnack.error(context, switch (classifyReadFailure(failed)) {
       ReadFailure.transient => l10n.readStateOffline,
       ReadFailure.denied => l10n.readStateDenied,
       ReadFailure.other => l10n.readStateFailed,
     });
   }
-  return percents;
+  return unopened;
 }
 
 /// #2573 — the rates a receipt line may carry in the current space, and its

@@ -1243,7 +1243,7 @@
     {"id":"lib/features/workspace/presentation/widgets/member_note_sheet.dart#showMemberNoteSheet(BuildContext context,WidgetRef ref,{required MemberNote note,required String title,String? replyToMemberId,String replyToName,Future<void> Function()? onDelete})","cog":7,"cyc":5,"len":81,"params":7},
     {"id":"lib/features/workspace/presentation/widgets/note_record_choices.dart#noteRecordChoices(WidgetRef ref,BuildContext context,NoteRecordKind kind)","cog":42,"cyc":35,"len":175,"params":3},
     {"id":"lib/features/workspace/presentation/widgets/process_overview.dart#_ProcessOverviewState.build(BuildContext context)","cog":35,"cyc":15,"len":125,"params":1},
-    {"id":"lib/features/workspace/presentation/widgets/question_editor_sheet.dart#_QuestionEditorSheetState.build(BuildContext context)","cog":28,"cyc":23,"len":195,"params":1},
+    {"id":"lib/features/workspace/presentation/widgets/question_editor_sheet.dart#_QuestionEditorSheetState.build(BuildContext context)","cog":28,"cyc":23,"len":185,"params":1},
     {"id":"lib/features/workspace/presentation/widgets/ref_picker_filter.dart#applyRefFilter(List<T> all,RefFilter filter,{String? ignoreFacet})","cog":32,"cyc":23,"len":53,"params":3},
     {"id":"lib/features/workspace/presentation/widgets/ref_picker_sheet.dart#refCandidate({required String id,required String label,String? detail,required IconData icon,String extraKeywords,Map<String, RefFacetValue> facets,int? amountCents,DateTime? at})","cog":0,"cyc":2,"len":20,"params":8},
     {"id":"lib/features/workspace/presentation/widgets/ref_picker_sheet.dart#_RefPickerSheetState.build(BuildContext context)","cog":38,"cyc":23,"len":198,"params":1},

@@ -153,8 +153,8 @@ Future<void> showExpenseSchedulesSheet(
               icon: const Icon(Icons.event_repeat_outlined),
               label: Text(l10n.scheduleNew),
               onPressed: () async {
-                final created =
-                    await _showCreateExpenseScheduleSheet(context, ref, currency);
+                final created = await whenExpenseVatRead(context, ref, unopened: false,
+                    () => _showCreateExpenseScheduleSheet(context, ref, currency));
                 if (created && context.mounted) {
                   ref.invalidate(expenseSchedulesProvider(workspace.id));
                 }
@@ -236,8 +236,8 @@ Future<bool> _showCreateExpenseScheduleSheet(
   String? supplierId;
   final topic = l10n.helpTopicScheduledExpenses;
   // #2357 — the VAT every occurrence will carry.
-  final vatPercents = await expenseVatPercentsOrSay(context, ref, workspace.vatRegime);
-  if (vatPercents == null || !context.mounted) return false;
+  final vatPercents = await expenseVatPercents(ref, workspace.vatRegime);
+  if (!context.mounted) return false;
   final vat = ExpenseVatChoice.of(ref, workspace.countryCode, TextEditingController(text: '100'));
 
   final submitted = await showAppSheet<bool>(

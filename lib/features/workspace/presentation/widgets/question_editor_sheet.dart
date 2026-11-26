@@ -194,13 +194,15 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
           key: _isNew ? _key.text.trim() : null,
           type: _type,
           labels: labels,
+          validation: validation,
+          options: _draftOptions,
+        )
+        .asked(
           required: _required,
           personalData: _personal,
           visibility: _visibility,
           contexts: _contexts,
-          validation: validation,
           active: _active,
-          options: _draftOptions,
         );
   }
 
@@ -241,10 +243,34 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
     return options;
   }
 
-  void _move(int from, int to) => setState(() {
+  void _refresh() => setState(() {});
+
+  void _move(int from, int to) {
     _existing.insert(to, _existing.removeAt(from));
     _reordered = true;
-  });
+    _refresh();
+  }
+
+  /// The choices of a choice question: the existing ones, each edited as what
+  /// it is, then the lines that add new ones.
+  List<Widget> _choiceFields(AppLocalizations l10n) => [
+    for (final (i, choice) in _existing.indexed)
+      QuestionChoiceTile(
+        choice: choice,
+        workspaceLocale: widget.workspaceLocale,
+        enabled: !widget.saving,
+        onChanged: _refresh,
+        onMoveUp: i == 0 ? null : () => _move(i, i - 1),
+        onMoveDown: i == _existing.length - 1 ? null : () => _move(i, i + 1),
+      ),
+    TextField(
+      key: QuestionEditorSheet.choicesKey,
+      controller: _choices,
+      maxLines: 4,
+      decoration: InputDecoration(labelText: l10n.questionEditorChoices),
+      onChanged: (_) => _refresh(),
+    ),
+  ];
 
   bool get _isTextual =>
       _type == WorkspaceFieldType.text || _type == WorkspaceFieldType.longText;
@@ -329,29 +355,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                     onChanged: (_) => setState(() {}),
                   ),
                 ),
-              if (_type.isChoice)
-                for (final (i, choice) in _existing.indexed)
-                  QuestionChoiceTile(
-                    choice: choice,
-                    workspaceLocale: widget.workspaceLocale,
-                    enabled: !widget.saving,
-                    onChanged: () => setState(() {}),
-                    onMoveUp: i == 0 ? null : () => _move(i, i - 1),
-                    onMoveDown: i == _existing.length - 1
-                        ? null
-                        : () => _move(i, i + 1),
-                  ),
-              if (_type.isChoice)
-                TextField(
-                  key: QuestionEditorSheet.choicesKey,
-                  controller: _choices,
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    labelText:
-                        l10n.questionEditorChoices,
-                  ),
-                  onChanged: (_) => setState(() {}),
-                ),
+              if (_type.isChoice) ..._choiceFields(l10n),
               if (_isTextual || _isNumeric)
                 TextField(
                   key: const ValueKey('question-editor-sheet-editor-max-length'),

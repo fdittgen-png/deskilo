@@ -31,6 +31,7 @@ import '../widgets/equipment_sheet.dart';
 import '../widgets/expense_repartition_sheet.dart';
 import '../widgets/expense_schedule_sheet.dart';
 import '../widgets/expense_sheet.dart';
+import '../widgets/expense_vat_fields.dart';
 import '../widgets/management_tile.dart';
 import '../widgets/money_faces_view.dart';
 import '../widgets/premises_lease_sheet.dart';
@@ -258,7 +259,7 @@ class MoneyActionSet {
     return [
       OutlinedButton.icon(
         key: const ValueKey('money-submit-expense'),
-        onPressed: () => showExpenseSheet(context, ref, currency),
+        onPressed: () => whenExpenseVatRead(context, ref, unopened: null, () => showExpenseSheet(context, ref, currency)),
         icon: const Icon(Icons.receipt_long_outlined),
         label: fitted(l10n.moneySubmitExpense),
       ),
