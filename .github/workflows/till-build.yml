@@ -1,0 +1,85 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# #4450 -- the till firmware (firmware/till) compiled for both board profiles
+# on a hosted runner, its size printed, and its host tests run. Nobody has to
+# own an ESP-IDF installation to know that a branch still builds; what a board
+# does with the image is NOT proven here -- that is measured on the board
+# (the procedure is in firmware/till/main/perf.h).
+#
+# It runs on a pushed branch that touches the firmware, or on request
+# (`gh workflow run till-build.yml --ref <branch>`). It gates nothing.
+name: Tools · Till firmware build
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches-ignore: [master]
+    paths:
+      - 'firmware/till/**'
+      - '.github/workflows/till-build.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: till-build-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  IDF_TAG: v5.3.1
+  IDF_COMMIT: c8fc5f643b7a7b0d3b182d3df610844e3dc9bd74
+
+jobs:
+  build:
+    name: till · board firmware and host tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Install the pinned ESP-IDF toolchain
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch "$IDF_TAG" --recursive --shallow-submodules https://github.com/espressif/esp-idf.git "$RUNNER_TEMP/esp-idf"
+          test "$(git -C "$RUNNER_TEMP/esp-idf" rev-parse HEAD)" = "$IDF_COMMIT"
+          export IDF_TOOLS_PATH="$RUNNER_TEMP/idf-tools"
+          "$RUNNER_TEMP/esp-idf/install.sh" esp32
+      - name: Build the E32R40T image
+        run: |
+          set -euo pipefail
+          export IDF_TOOLS_PATH="$RUNNER_TEMP/idf-tools"
+          . "$RUNNER_TEMP/esp-idf/export.sh"
+          idf.py -C firmware/till build
+          idf.py -C firmware/till size | tee "$RUNNER_TEMP/size-e32r40t.txt"
+          {
+            echo '### E32R40T image'
+            echo '```'
+            ls -l firmware/till/build/deskilo_till.bin
+            cat "$RUNNER_TEMP/size-e32r40t.txt"
+            echo '```'
+            echo '### The settings the image was built with'
+            echo '```'
+            grep -E '^CONFIG_(ESP_DEFAULT_CPU_FREQ_MHZ|COMPILER_OPTIMIZATION_(SIZE|PERF|DEBUG)|FREERTOS_HZ|ESPTOOLPY_FLASH(MODE|FREQ)|LOG_DEFAULT_LEVEL|BOOTLOADER_LOG_LEVEL|LV_DISP_DEF_REFR_PERIOD|LV_INDEV_DEF_READ_PERIOD|LV_COLOR_16_SWAP|ESP_MAIN_TASK_AFFINITY|FREERTOS_UNICORE)=' firmware/till/sdkconfig || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Build the ideaspark image
+        run: |
+          set -euo pipefail
+          export IDF_TOOLS_PATH="$RUNNER_TEMP/idf-tools"
+          . "$RUNNER_TEMP/esp-idf/export.sh"
+          idf.py -C firmware/till -B firmware/till/build-ideaspark -D SDKCONFIG=sdkconfig.ideaspark \
+            -D SDKCONFIG_DEFAULTS="sdkconfig.defaults;sdkconfig.defaults.ideaspark" build
+          {
+            echo '### ideaspark image'
+            echo '```'
+            ls -l firmware/till/build-ideaspark/deskilo_till.bin
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Host tests of the rules
+        env:
+          IDF_PATH: ${{ runner.temp }}/esp-idf
+        run: bash firmware/till/test/host/run.sh
+      - name: Host tests of the screens
+        run: bash firmware/till/test/host/run_ui.sh
+      - name: The component lock is the committed one
+        run: git diff --exit-code -- firmware/till/dependencies.lock
