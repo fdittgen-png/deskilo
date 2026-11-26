@@ -21,3 +21,6 @@ CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192
 
 # #4474 -- the pairing code
 CONFIG_LV_USE_QRCODE=y
+
+# #4450 -- the board is on a USB supply: the full clock, for drawing, TLS and JSON alike (ESP-IDF starts an ESP32 at 160 MHz)
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240=y
