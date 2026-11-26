@@ -29588,6 +29588,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'È il primo pagamento della fattura: annulla prima i pagamenti successivi. Nulla è stato modificato.';
 
   @override
+  String get refusalBooksClosedPeriodDated =>
+      'Questa data è compresa in un periodo contabile chiuso: nulla è stato registrato. È possibile una data del periodo aperto; solo il proprietario può riaprire il periodo.';
+
+  @override
   String get refusalChangedMeanwhile =>
       'Nel frattempo è cambiato. Lo riapra per vedere a che punto è.';
 

@@ -29344,6 +29344,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This is the invoice\'s first payment: undo its later payments first. Nothing was changed.';
 
   @override
+  String get refusalBooksClosedPeriodDated =>
+      'This date lies inside a closed period of the books: nothing was recorded. A date in the open period is possible; only the owner can reopen the period.';
+
+  @override
   String get refusalChangedMeanwhile =>
       'This changed in the meantime. Reopen it to see where it stands.';
 

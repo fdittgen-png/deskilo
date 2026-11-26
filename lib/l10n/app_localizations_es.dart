@@ -29555,6 +29555,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Es el primer pago de la factura: deshaga primero los pagos posteriores. No se cambió nada.';
 
   @override
+  String get refusalBooksClosedPeriodDated =>
+      'Esta fecha está dentro de un periodo contable cerrado: no se registró nada. Es posible una fecha del periodo abierto; solo el propietario puede reabrir el periodo.';
+
+  @override
   String get refusalChangedMeanwhile =>
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
 
