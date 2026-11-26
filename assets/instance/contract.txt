@@ -2974,7 +2974,7 @@ constraint workspace_units.system_columns_order CHECK ((modified_datetime >= cre
 constraint workspace_units.system_company_present CHECK ((company_id IS NOT NULL))
 constraint workspace_units.workspace_units_check CHECK ((built_in OR (label IS NOT NULL)))
 constraint workspace_units.workspace_units_code_check CHECK ((code ~ '^[a-z][a-z0-9_]{0,19}$'::text))
-constraint workspace_units.workspace_units_dimension_check CHECK ((dimension = ANY (ARRAY['count'::text, 'mass'::text, 'volume'::text, 'length'::text, 'area'::text, 'time'::text])))
+constraint workspace_units.workspace_units_dimension_check CHECK ((dimension = ANY (ARRAY['count'::text, 'mass'::text, 'volume'::text, 'length'::text, 'area'::text, 'time'::text, 'package'::text])))
 constraint workspace_units.workspace_units_factor_den_check CHECK ((factor_den > 0))
 constraint workspace_units.workspace_units_factor_num_check CHECK ((factor_num > 0))
 constraint workspace_units.workspace_units_label_check CHECK (((label IS NULL) OR ((char_length(btrim(label)) >= 1) AND (char_length(btrim(label)) <= 40))))
@@ -4648,7 +4648,7 @@ routine public.stock_tags_v1(p_workspace_id uuid, p_owner jsonb) -> jsonb | func
 routine public.stock_take(p_workspace_id uuid, p_item_id uuid, p_location_id uuid, p_quantity numeric, p_variant_id uuid) -> TABLE(lot_id uuid, quantity numeric) | function | definer | stable | exec:service_role | body:ffff382dca6c
 routine public.stock_take_in_tree(p_workspace_id uuid, p_item_id uuid, p_root uuid, p_quantity numeric) -> TABLE(location_id uuid, lot_id uuid, quantity numeric) | function | definer | volatile | exec:service_role | body:8caba843359a
 routine public.stock_take_out(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:service_role | body:073e036ff9f3
-routine public.stock_to_inventory(p_item_id uuid, p_unit text, p_quantity numeric) -> numeric | function | definer | stable | exec:service_role | body:a57c72164054
+routine public.stock_to_inventory(p_item_id uuid, p_unit text, p_quantity numeric) -> numeric | function | definer | stable | exec:service_role | body:3e351dd5f954
 routine public.stock_trace_bills(p_workspace_id uuid, p_order_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:f3570ce0afd3
 routine public.stock_trace_chain_v1(p_workspace_id uuid, p_lot_id uuid, p_piece_id uuid, p_movement_id uuid, p_counter_line_id uuid, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:8b53d85da128
 routine public.stock_trace_find_v1(p_workspace_id uuid, p_code text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:224a3e757011
@@ -4663,7 +4663,7 @@ routine public.stock_transfer_load_v1(p_workspace_id uuid, p_request_id uuid, p_
 routine public.stock_transfer_receive_v1(p_workspace_id uuid, p_request_id uuid, p_transfer_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:da146b514dee
 routine public.stock_transfer_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:20cbe40c6baa
 routine public.stock_transit_place(p_workspace_id uuid) -> uuid | function | definer | volatile | exec:service_role | body:1d8476503f84
-routine public.stock_unit_factor(p_item_id uuid, p_unit text) -> TABLE(num bigint, den bigint) | function | definer | stable | exec:service_role | body:132692c598d9
+routine public.stock_unit_factor(p_item_id uuid, p_unit text) -> TABLE(num bigint, den bigint) | function | definer | stable | exec:service_role | body:8d32fad28b89
 routine public.stock_valuation_v1(p_workspace_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d4beccf42a39
 routine public.stock_value_at_v1(p_workspace_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ea761add5e0f
 routine public.stock_variant_label(p_variant_id uuid) -> text | function | definer | stable | exec:service_role | body:3c5414fbb3c4
