@@ -192,21 +192,34 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     final received = receipt.lines[a.lineNo];
     if (line == null || received == null) throw _refused('allocations[$i].line', StockRefusal.lineUnknown);
     final item = line.serviceId == null ? null : await _config.item(workspaceId, line.serviceId!);
-    final unit = line.unit.isEmpty ? item?.inventoryUnit ?? '' : line.unit;
+    final lineUnit = line.unit.isEmpty ? item?.inventoryUnit ?? '' : line.unit;
+    // #4479 -- an allocation may be counted in another unit of the item; what is left, and what was put away, count in the line's
+    final unit = (a.unit ?? '').isEmpty ? lineUnit : a.unit!;
+    final lineFactor = item == null ? null : _ledger.core.configFactor(item, lineUnit);
+    final unitFactor = item == null ? null : _ledger.core.configFactor(item, unit);
+    ExactQuantity inLine(ExactQuantity q, String from) {
+      final f = item == null ? null : _ledger.core.configFactor(item, from);
+      if (from == lineUnit || f == null || lineFactor == null) return q;
+      return q.scaled(f.num * lineFactor.den, f.den * lineFactor.num, round: true).value ?? q;
+    }
     final already = _rows
             .where((r) => r.row.receiptLineId == '${receipt.id}:${a.lineNo}')
-            .fold(ExactQuantity.zero, (s, r) => s + r.row.enteredQuantity) +
+            .fold(ExactQuantity.zero, (s, r) => s + inLine(r.row.enteredQuantity, r.row.enteredUnit)) +
         (running[a.lineNo] ?? ExactQuantity.zero);
+    final leftInLine = exactOfReceived(received) - already;
+    final left = unit == lineUnit || unitFactor == null || lineFactor == null
+        ? leftInLine
+        : leftInLine.scaled(lineFactor.num * unitFactor.den, lineFactor.den * unitFactor.num, round: true).value ?? leftInLine;
     final variants = item != null && (await _config.variants(workspaceId, item.itemId)).any((v) => v.active);
     final (entered: qty, :inventory) = _ledger.core.putAwayPart(
       i,
       item: item,
       unit: unit,
       part: a,
-      left: exactOfReceived(received) - already,
+      left: left,
       hasVariants: variants,
     );
-    running[a.lineNo] = (running[a.lineNo] ?? ExactQuantity.zero) + qty;
+    running[a.lineNo] = (running[a.lineNo] ?? ExactQuantity.zero) + inLine(qty, unit);
     final n = _next++;
     return ReceiptAllocation(
       id: 'demo-alloc-$n',

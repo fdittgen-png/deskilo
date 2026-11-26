@@ -9,6 +9,8 @@
 // repeated request id with the same ids.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import 'stock_config.dart';
+
 /// What a put-away says the goods cost; never implied.
 sealed class PutAwayCost {
   const PutAwayCost();
@@ -79,11 +81,15 @@ class PutAwayAllocation {
     this.expiresOn,
     this.cost = const PutAwayCost.unknown(),
     this.tags = const [],
+    this.unit,
   });
 
   /// The number of the order line the delivery brought.
   final int lineNo;
   final String quantity;
+
+  /// #4479 -- the unit [quantity] is counted in, when it is not the order line's (a carton ordered, pieces put away); null: the line's.
+  final String? unit;
   final String locationId;
   final String? variantId;
 
@@ -102,6 +108,7 @@ class PutAwayAllocation {
   Map<String, Object?> toJson() => {
     'line_no': lineNo,
     'quantity': quantity,
+    'unit': ?unit,
     'location_id': locationId,
     'variant_id': ?variantId,
     'group': ?group,
@@ -223,3 +230,11 @@ abstract interface class StockReceivingCommands {
     String requestId,
   );
 }
+
+/// #4479 -- the units a put-away of [item]'s order line may be counted in: the line's own unit, the item's inventory unit and the units of its
+/// own conversions (the server also accepts a unit with a general conversion; the pickers offer the ones the item itself names).
+List<String> putAwayUnits(StockItemConfig item, String lineUnit) => {
+  if (lineUnit.isNotEmpty) lineUnit,
+  item.inventoryUnit,
+  for (final u in item.units) u.unit,
+}.toList();
