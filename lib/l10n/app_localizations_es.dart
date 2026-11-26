@@ -21195,14 +21195,75 @@ class AppLocalizationsEs extends AppLocalizations {
   String get managedProfileTitle => 'Perfil gestionado';
 
   @override
+  String masterDataCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count registros',
+      one: '$count registro',
+      zero: 'Ningún registro',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get masterDataCustomersDesc => 'A quién factura';
+
+  @override
+  String get masterDataGroupCatalogue => 'Catálogo';
+
+  @override
+  String get masterDataGroupMeasures => 'Medidas e impuestos';
+
+  @override
+  String get masterDataGroupPartners => 'Socios comerciales';
+
+  @override
+  String get masterDataGroupPlaces => 'Ubicaciones y existencias';
+
+  @override
+  String get masterDataIntro =>
+      'Todas las listas con las que está configurada la empresa, en un solo lugar. Pulse una tarjeta para abrir su editor.';
+
+  @override
+  String get masterDataItemGroupsDesc =>
+      'Ajustes comunes a un grupo de artículos';
+
+  @override
+  String get masterDataItemsDesc => 'Lo que almacena y vende';
+
+  @override
+  String get masterDataNoMatch =>
+      'Ningún dato maestro coincide con la búsqueda.';
+
+  @override
   String get masterDataNoUnit => 'Sin unidad';
 
   @override
   String get masterDataNoVat => 'Sin IVA';
 
   @override
+  String get masterDataPlacesDesc => 'Dónde se guardan sus mercancías';
+
+  @override
   String get masterDataSearchHint =>
       'Escriba un nombre o un código, o elija de la lista';
+
+  @override
+  String get masterDataServicesDesc => 'Los servicios que vende';
+
+  @override
+  String get masterDataSitesDesc => 'Sus direcciones y las plantas de cada una';
+
+  @override
+  String get masterDataSuppliersDesc => 'A quién compra';
+
+  @override
+  String get masterDataTills => 'Cajas';
+
+  @override
+  String get masterDataTillsDesc =>
+      'Las cajas del mostrador y la disposición de sus teclas';
 
   @override
   String get masterDataUnknownCode =>
@@ -21210,6 +21271,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get masterDataUnlisted => 'Esto no está en la lista: elija uno';
+
+  @override
+  String get masterDataVatDesc => 'Los tipos que aplican sus documentos';
 
   @override
   String get mcpApiReference => 'Referencia de la API';

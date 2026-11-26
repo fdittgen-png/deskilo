@@ -1,0 +1,19 @@
+{
+  "masterDataIntro": "Toutes les listes avec lesquelles l’entreprise est configurée, en un seul endroit. Touchez une carte pour ouvrir son éditeur.",
+  "masterDataGroupMeasures": "Mesures et taxes",
+  "masterDataGroupCatalogue": "Catalogue de vente",
+  "masterDataGroupPlaces": "Emplacements et stock",
+  "masterDataGroupPartners": "Partenaires",
+  "masterDataTills": "Caisses",
+  "masterDataVatDesc": "Les taux que vos documents appliquent",
+  "masterDataItemsDesc": "Ce que vous stockez et vendez",
+  "masterDataItemGroupsDesc": "Réglages communs à un groupe d’articles",
+  "masterDataServicesDesc": "Les services que vous vendez",
+  "masterDataPlacesDesc": "Où vos marchandises sont rangées",
+  "masterDataTillsDesc": "Les caisses du comptoir et la disposition de leurs touches",
+  "masterDataSuppliersDesc": "Ceux à qui vous achetez",
+  "masterDataCustomersDesc": "Ceux que vous facturez",
+  "masterDataSitesDesc": "Vos adresses et les niveaux de chacune",
+  "masterDataCount": "{count, plural, =0{Aucun enregistrement} one{{count} enregistrement} other{{count} enregistrements}}",
+  "masterDataNoMatch": "Aucune donnée de base ne correspond à la recherche."
+}

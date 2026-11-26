@@ -3998,6 +3998,43 @@ Usted quiere que sus facturas y cartas se impriman en el papel que usa su país.
 
 **Véase también:** [País](help:user.workspace.settings.country)
 
+### Datos maestros
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Los datos maestros son las listas con las que está configurada su empresa y que leen sus selectores: las unidades, los tipos de IVA, los artículos, los proveedores y el resto. **Datos maestros** muestra cada tipo en un solo lugar, por grupos. Cada tarjeta nombra el tipo, dice en una línea qué es y cuántos registros contiene, y abre la pantalla que lo edita.
+
+**Pasos**
+
+1. En [Espacio](app:/workspace-settings), abra **Datos maestros**, o elija **Datos maestros** en **Configurar el espacio** del menú.
+2. Escriba en **Buscar** para dejar solo las tarjetas cuyo nombre coincide.
+3. Pulse una tarjeta y edite sus registros en la pantalla que abre.
+
+**Conviene saber**
+
+- Solo ve una tarjeta si puede abrir su pantalla: su función está activada y tiene su permiso.
+- Un número que no se puede leer lo dice, con **Reintentar**; nunca se muestra como 0.
+
+#### Medidas e impuestos
+
+**Unidades de medida** con sus conversiones, y **Tipos de IVA**. Las unidades están siempre aquí, esté activada o no la función **Unidades de medida**.
+
+#### Catálogo
+
+**Artículos**, **Grupos de artículos** y **Servicios**: lo que la empresa almacena y vende.
+
+#### Ubicaciones y existencias
+
+**Ubicaciones**, donde se guardan las mercancías, y **Cajas**: las cajas del mostrador, cada una con la disposición de sus teclas.
+
+#### Socios comerciales
+
+**Proveedores** y **Clientes facturados**.
+
+#### Organización
+
+**Sedes**: las direcciones de la empresa y las plantas de cada una.
+
 ### Unidades de medida
 
 **Público:** Propietario · Administrador/a con el permiso
@@ -4008,11 +4045,10 @@ Sus artículos, presupuestos y facturas se miden en unidades, y algunas se convi
 
 **Pasos**
 
-1. Active **Unidades de medida** en **Funciones** (está desactivada hasta que la pida).
-2. En [Unidades de medida](app:/settings/units), pulse **Nueva unidad**.
-3. Rellene **Código de la unidad** (ya no podrá cambiarse), **Su nombre para la unidad**, **Mide** y **Una unidad equivale a** en la unidad base de lo que mide: 1000 para un km contado en m, 0,001 para un mm.
-4. Si quiere, rellene **Código UN/ECE (para facturas electrónicas)**, que llevan las facturas electrónicas (KMT para un km).
-5. Pulse **Guardar**.
+1. En [Unidades de medida](app:/settings/units), a la que se llega desde **Datos maestros**, pulse **Nueva unidad**.
+2. Rellene **Código de la unidad** (ya no podrá cambiarse), **Su nombre para la unidad**, **Mide** y **Una unidad equivale a** en la unidad base de lo que mide: 1000 para un km contado en m, 0,001 para un mm.
+3. Si quiere, rellene **Código UN/ECE (para facturas electrónicas)**, que llevan las facturas electrónicas (KMT para un km).
+4. Pulse **Guardar**.
 
 **Conviene saber**
 
@@ -4020,6 +4056,7 @@ Sus artículos, presupuestos y facturas se miden en unidades, y algunas se convi
 - Una unidad en uso (un artículo contado con ella, un movimiento de stock, un presupuesto o una línea de factura) conserva para siempre su dimensión y su factor: una corrección es una unidad nueva. Una unidad que nadie usa puede archivarse (**Archivar**) y mostrarse de nuevo (**Mostrar de nuevo**).
 - Una conversión es exacta: 2,5 km son 2500 m. Dos clases de unidad nunca se convierten, y un resultado que seis decimales no pueden contener se rechaza, nunca se redondea.
 - Solo el propietario y los administradores autorizados a cambiar los ajustes del espacio mantienen las unidades.
+- Las unidades están siempre aquí. La función **Unidades de medida** en **Funciones** decide si los presupuestos y las facturas ofrecen sus propias unidades y si los selectores de un artículo ofrecen todas las unidades; mientras está desactivada, solo ofrecen las unidades habituales.
 
 **Véase también:** [Papel de los documentos](help:user.workspace.settings.paper)
 
