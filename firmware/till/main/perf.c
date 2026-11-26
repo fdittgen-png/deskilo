@@ -122,11 +122,8 @@ void perf_text(char *out, int cap) {
     char start[112] = "";
     for (int i = 0, o = 0; i < n && o < (int)sizeof start - 1; i++)
         o += snprintf(start + o, sizeof start - o, "%s%s %lu", i ? ", " : "", steps[i].step, (unsigned long)steps[i].ms);
-    snprintf(out, cap, "start ms: %s
-paint avg %lu max %lu ms; press>paint avg %lu max %lu ms
-"
-                       "tap>answer avg %lu max %lu ms
-http %lu (new %lu) avg %lu max %lu ms",
+    snprintf(out, cap, "start ms: %s\npaint avg %lu max %lu ms; press>paint avg %lu max %lu ms\n"
+                       "tap>answer avg %lu max %lu ms\nhttp %lu (new %lu) avg %lu max %lu ms",
              start, (unsigned long)avg(&a.paint), (unsigned long)a.paint.max, (unsigned long)avg(&a.press), (unsigned long)a.press.max,
              (unsigned long)avg(&a.tap), (unsigned long)a.tap.max, (unsigned long)a.http.n, (unsigned long)a.http_new,
              (unsigned long)avg(&a.http), (unsigned long)a.http.max);
