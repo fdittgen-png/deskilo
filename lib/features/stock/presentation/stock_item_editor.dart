@@ -52,8 +52,9 @@ Future<bool> showStockItemEditor(
   if (!context.mounted) return false;
   final unitCodes = await stockUnitCodes(context, workspaceId);
   if (!context.mounted) return false;
-  final currency = (await ProviderScope.containerOf(context).read(currentWorkspaceProvider.future))?.currencyCode ?? 'EUR';
-  if (!context.mounted) return false;
+  final workspace = await ProviderScope.containerOf(context).read(currentWorkspaceProvider.future);
+  if (workspace == null || !context.mounted) return false;
+  final currency = workspace.currencyCode;
   final money = (currency: currency, locale: appFormatOf(context).locale);
   final editor = _ItemDraft(config, workspaceId: workspaceId, unitCodes: unitCodes, lotsOn: options.lots, keepInStock: options.keep, own: own, money: money);
   return showAppFormSheet(

@@ -25,6 +25,7 @@ end
 $f$;
 revoke execute on function pg_temp.anchor_once(text, text, text, text) from public;
 
+-- audience: all row readers (the price of a unit is as readable as the unit itself)
 alter table public.item_units
   add column price_cents bigint check (price_cents is null or price_cents between 0 and 2000000000);
 
