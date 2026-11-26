@@ -900,5 +900,7 @@
  "counterLayoutCashierReorderHint": "Un cajero puede reordenar las teclas de una caja en su dispositivo. Se ajusta en la configuración de la aplicación.",
  "optCells": "{n} celdas",
  "counterMaxDiscount": "Descuento máximo en la caja",
- "counterMaxDiscountHint": "El descuento máximo que un cajero puede aplicar a una línea. Se ajusta en la configuración de la aplicación."
+ "counterMaxDiscountHint": "El descuento máximo que un cajero puede aplicar a una línea. Se ajusta en la configuración de la aplicación.",
+ "counterSellingPlace": "Lugar desde el que vende la caja",
+ "counterSellingPlaceHint": "El código de un lugar con existencias, por ejemplo MAIN. Una venta en caja toma la mercancía de este lugar y de todos los que dependen de él, primero la que caduca antes; de un lugar contiguo, como una trastienda, no se vende. Una caja puede indicar un lugar propio en la aplicación."
 }

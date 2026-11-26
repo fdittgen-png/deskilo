@@ -32554,6 +32554,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.';
 
   @override
+  String get settingHintCounterSellingPlace =>
+      'The code of a place of the business that holds stock, for example MAIN. A sale at the till takes goods from this place and from every place below it; a till can name a place of its own.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'The Photon-compatible service that places a published address on the discovery map: an https address on the public internet, without a user name, password, query or #. Leave it empty to use the address this app version was built with, else the public Photon service.';
 
@@ -33003,6 +33007,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelCounterPaidOutLimit =>
       'Largest paid-out without approval';
+
+  @override
+  String get settingLabelCounterSellingPlace => 'Place the till sells from';
 
   @override
   String get settingLabelDirectoryGeocoderUrl => 'Address lookup service';
@@ -41551,12 +41558,31 @@ class AppLocalizationsEn extends AppLocalizations {
       'This reason is not on the business\'s list. Choose one from the list.';
 
   @override
+  String get tillDrawerRefusalSellingPlace =>
+      'A till cannot sell from this place. Choose a place that holds stock and is in use.';
+
+  @override
   String get tillDrawerRefusalSessionGone =>
       'This session is not open any more.';
 
   @override
   String get tillDrawerRefusalTillUnknown =>
       'This is not an active till of this business.';
+
+  @override
+  String get tillDrawerSellingPlace => 'Selling place';
+
+  @override
+  String tillDrawerSellingPlaceBusiness(String code) {
+    return 'The business’s selling place ($code)';
+  }
+
+  @override
+  String get tillDrawerSellingPlaceNote =>
+      'A sale at this till takes goods from this place and from every place below it, the first to expire first. A place beside it, such as a back store, is not sold from.';
+
+  @override
+  String get tillDrawerSellingPlaceStored => 'A place no longer in use';
 
   @override
   String get tillDrawerStateClosed => 'Closed';

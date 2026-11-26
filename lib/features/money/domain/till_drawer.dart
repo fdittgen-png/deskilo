@@ -20,12 +20,15 @@ class DrawerSession {
 
 /// A till of the business and the session open on it, when one is.
 class DrawerTill {
-  const DrawerTill({required this.id, required this.name, required this.active, this.siteId, this.session});
+  const DrawerTill({required this.id, required this.name, required this.active, this.siteId, this.sellingPlaceId, this.session});
 
   final String id;
   final String name;
   final bool active;
   final String? siteId;
+
+  /// The place this till sells from, with every place below it; null when it sells from the business's selling place.
+  final String? sellingPlaceId;
 
   /// The open session the person may read; null when none is open (or it is another cashier's, which they do not read).
   final DrawerSession? session;
@@ -39,14 +42,64 @@ class DrawerTill {
       name: r.string('name'),
       active: r.boolOr('active', fallback: true),
       siteId: r.stringOrNull('site_id'),
+      sellingPlaceId: r.stringOrNull('selling_place_id'),
       session: session,
     );
   }
 
   factory DrawerTill.saved(Object? json) {
     final r = JsonReader.of(json, context: 'counter_till_save');
-    return DrawerTill(id: r.string('till_id'), name: r.string('name'), active: r.boolOr('active', fallback: true), siteId: r.stringOrNull('site_id'));
+    return DrawerTill(
+      id: r.string('till_id'),
+      name: r.string('name'),
+      active: r.boolOr('active', fallback: true),
+      siteId: r.stringOrNull('site_id'),
+      sellingPlaceId: r.stringOrNull('selling_place_id'),
+    );
   }
+}
+
+/// A place a till may sell from: its code, its name and the codes from the top of its store down to it.
+class TillSellingPlace {
+  const TillSellingPlace({required this.id, required this.code, this.name = '', this.path = const []});
+
+  factory TillSellingPlace.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'counter_selling_places');
+    return TillSellingPlace(
+      id: r.string('id'),
+      code: r.string('code'),
+      name: r.stringOr('name'),
+      path: [for (final c in r.list('path')) '$c'],
+    );
+  }
+
+  final String id;
+  final String code;
+  final String name;
+  final List<String> path;
+
+  /// Where the place is, as a person reads it: its codes from the top down, then its name when it has one.
+  String get label {
+    final address = path.isEmpty ? code : path.join(' / ');
+    return name.isEmpty ? address : '$address · $name';
+  }
+}
+
+/// The places a till may be given, and the one the business sells from when a till names none (`counter_selling_places_v1`).
+class TillSellingPlaces {
+  const TillSellingPlaces({required this.defaultCode, required this.places});
+
+  factory TillSellingPlaces.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'counter_selling_places');
+    return TillSellingPlaces(
+      defaultCode: r.string('default_code'),
+      places: [for (final p in r.list('places')) TillSellingPlace.fromJson(p)],
+    );
+  }
+
+  /// The code of the business's selling place (the setting `counter.selling_place`).
+  final String defaultCode;
+  final List<TillSellingPlace> places;
 }
 
 /// An open session row as the table gives it.
@@ -223,8 +276,12 @@ abstract interface class TillDrawerPort {
   /// The tills of the business, each with the open session the person may read.
   Future<List<DrawerTill>> tills(String workspaceId);
 
-  /// A new till (null [tillId]) or the edit of one.
-  Future<DrawerTill> saveTill(String workspaceId, {required String requestId, String? tillId, required String name, String? siteId, required bool active});
+  /// A new till (null [tillId]) or the edit of one. The till is saved whole: [sellingPlaceId] is the place it sells from,
+  /// null putting it on the business's selling place.
+  Future<DrawerTill> saveTill(String workspaceId, {required String requestId, String? tillId, required String name, String? siteId, required bool active, String? sellingPlaceId});
+
+  /// The places a till may be given. Read by whoever manages the tills.
+  Future<TillSellingPlaces> sellingPlaces(String workspaceId);
 
   Future<DrawerOpened> openSession(String workspaceId, {required String requestId, required String tillId, required int floatMinor, Denominations? denominations});
 

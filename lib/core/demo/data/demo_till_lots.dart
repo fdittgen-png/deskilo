@@ -19,7 +19,7 @@ class DemoTillLots implements TillLotsPort {
   final DateTime Function()? clock;
 
   @override
-  Future<List<TillLot>> lots(String workspaceId, String itemId) async {
+  Future<List<TillLot>> lots(String workspaceId, String itemId, {String? tillId}) async {
     final today = clock?.call();
     return switch (itemId) {
       'demo-item-milk' => [

@@ -1,0 +1,9 @@
+{
+  "tillDrawerSellingPlace": "Lieu de vente",
+  "tillDrawerSellingPlaceBusiness": "Le lieu de vente de l’entreprise ({code})",
+  "tillDrawerSellingPlaceStored": "Un lieu qui n’est plus utilisé",
+  "tillDrawerSellingPlaceNote": "Une vente à cette caisse prend les marchandises dans ce lieu et dans tous les lieux qui en dépendent, la date la plus proche d’abord. Un lieu voisin, comme une réserve, ne sert pas à la vente.",
+  "tillDrawerRefusalSellingPlace": "Une caisse ne peut pas vendre depuis ce lieu. Choisissez un lieu en service qui détient du stock.",
+  "settingLabelCounterSellingPlace": "Lieu d’où la caisse vend",
+  "settingHintCounterSellingPlace": "Le code d’un lieu de l’entreprise qui détient du stock, par exemple MAIN. Une vente en caisse prend les marchandises dans ce lieu et dans tous les lieux qui en dépendent ; une caisse peut nommer son propre lieu."
+}

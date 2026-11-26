@@ -32933,6 +32933,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le plus grand montant, en unités mineures de la devise de l\'entreprise (centimes), d\'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.';
 
   @override
+  String get settingHintCounterSellingPlace =>
+      'Le code d’un lieu de l’entreprise qui détient du stock, par exemple MAIN. Une vente en caisse prend les marchandises dans ce lieu et dans tous les lieux qui en dépendent ; une caisse peut nommer son propre lieu.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'Le service compatible Photon qui place une adresse publiée sur la carte de découverte : une adresse https sur l\'internet public, sans nom d\'utilisateur, mot de passe, requête ni #. Laissez vide pour utiliser l\'adresse avec laquelle cette version de l\'application a été construite, sinon le service public Photon.';
 
@@ -33391,6 +33395,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelCounterPaidOutLimit =>
       'Plus grand retrait sans autorisation';
+
+  @override
+  String get settingLabelCounterSellingPlace => 'Lieu d’où la caisse vend';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>
@@ -42074,12 +42081,31 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce motif n\'est pas dans la liste de l\'entreprise. Choisissez-en un dans la liste.';
 
   @override
+  String get tillDrawerRefusalSellingPlace =>
+      'Une caisse ne peut pas vendre depuis ce lieu. Choisissez un lieu en service qui détient du stock.';
+
+  @override
   String get tillDrawerRefusalSessionGone =>
       'Cette session n\'est plus ouverte.';
 
   @override
   String get tillDrawerRefusalTillUnknown =>
       'Ce n\'est pas une caisse active de cette entreprise.';
+
+  @override
+  String get tillDrawerSellingPlace => 'Lieu de vente';
+
+  @override
+  String tillDrawerSellingPlaceBusiness(String code) {
+    return 'Le lieu de vente de l’entreprise ($code)';
+  }
+
+  @override
+  String get tillDrawerSellingPlaceNote =>
+      'Une vente à cette caisse prend les marchandises dans ce lieu et dans tous les lieux qui en dépendent, la date la plus proche d’abord. Un lieu voisin, comme une réserve, ne sert pas à la vente.';
+
+  @override
+  String get tillDrawerSellingPlaceStored => 'Un lieu qui n’est plus utilisé';
 
   @override
   String get tillDrawerStateClosed => 'Fermée';

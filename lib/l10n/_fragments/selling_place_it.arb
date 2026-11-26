@@ -1,0 +1,9 @@
+{
+  "tillDrawerSellingPlace": "Luogo di vendita",
+  "tillDrawerSellingPlaceBusiness": "Il luogo di vendita dell’attività ({code})",
+  "tillDrawerSellingPlaceStored": "Un luogo non più in uso",
+  "tillDrawerSellingPlaceNote": "Una vendita a questa cassa prende la merce da questo luogo e da tutti i luoghi sottostanti, prima quella che scade prima. Da un luogo accanto, come un retrobottega, non si vende.",
+  "tillDrawerRefusalSellingPlace": "Una cassa non può vendere da questo luogo. Scegli un luogo in uso che detiene scorte.",
+  "settingLabelCounterSellingPlace": "Luogo da cui vende la cassa",
+  "settingHintCounterSellingPlace": "Il codice di un luogo dell’attività che detiene scorte, per esempio MAIN. Una vendita in cassa prende la merce da questo luogo e da tutti i luoghi sottostanti; una cassa può indicare un luogo proprio."
+}

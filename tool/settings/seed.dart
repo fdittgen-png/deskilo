@@ -1867,6 +1867,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
+    since: 'counter_selling_place',
+    row: (
+      key: 'counter.selling_place',
+      type: 'text',
+      defaultValue: 'MAIN',
+      min: null,
+      max: 40,
+      unit: 'place code',
+      group: 'business',
+      scopes: ['workspace'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'the till sells from the selling place (#4492)',
+      note: 'The code of the place a till sells from when the till names none of its own, for example MAIN (the main store) or the code of the shop floor. A sale takes goods from this place and from every place below it, the first to expire first; a place outside it, such as a back store, is not sold from. A code that is no place of the business refuses a sale of goods until it is corrected.',
+    ),
+  ),
+  (
     since: 'stock_cycle_counts',
     row: (
       key: 'stock.cycle_count_high_value_minor',

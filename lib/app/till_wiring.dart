@@ -47,6 +47,11 @@ final Override tillSessionsFromApp = tillSessionsEnabledProvider.overrideWith(
   (ref) => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.counterTillSessions),
 );
 
+/// A till is given its selling place where the business keeps goods.
+final Override tillSellingPlaceFromApp = tillSellingPlaceOfferedProvider.overrideWith(
+  (ref) => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockManagement),
+);
+
 /// #4367 -- how this business counts its drawer, read from its settings (the registry default stands where it set nothing).
 final Override drawerSettingsFromApp = drawerSettingsProvider.overrideWith((ref) async {
   final settings = await ref.watch(currentSettingsProvider.future);

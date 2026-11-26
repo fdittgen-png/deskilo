@@ -32832,6 +32832,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'L\'importo massimo, in unità minori della valuta dell\'attività (centesimi), di un prelievo dal cassetto senza qualcuno che possa registrare pagamenti in uscita. 0 significa nessun limite.';
 
   @override
+  String get settingHintCounterSellingPlace =>
+      'Il codice di un luogo dell’attività che detiene scorte, per esempio MAIN. Una vendita in cassa prende la merce da questo luogo e da tutti i luoghi sottostanti; una cassa può indicare un luogo proprio.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'Il servizio compatibile con Photon che colloca un indirizzo pubblicato sulla mappa di scoperta: un indirizzo https sull\'internet pubblica, senza nome utente, password, query né #. Lasci vuoto per usare l\'indirizzo con cui è stata costruita questa versione dell\'app, altrimenti il servizio pubblico Photon.';
 
@@ -33290,6 +33294,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelCounterPaidOutLimit =>
       'Prelievo massimo senza autorizzazione';
+
+  @override
+  String get settingLabelCounterSellingPlace => 'Luogo da cui vende la cassa';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>
@@ -41946,12 +41953,31 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo motivo non è nell\'elenco dell\'attività. Sceglierne uno dall\'elenco.';
 
   @override
+  String get tillDrawerRefusalSellingPlace =>
+      'Una cassa non può vendere da questo luogo. Scegli un luogo in uso che detiene scorte.';
+
+  @override
   String get tillDrawerRefusalSessionGone =>
       'Questa sessione non è più aperta.';
 
   @override
   String get tillDrawerRefusalTillUnknown =>
       'Non è una cassa attiva di questa attività.';
+
+  @override
+  String get tillDrawerSellingPlace => 'Luogo di vendita';
+
+  @override
+  String tillDrawerSellingPlaceBusiness(String code) {
+    return 'Il luogo di vendita dell’attività ($code)';
+  }
+
+  @override
+  String get tillDrawerSellingPlaceNote =>
+      'Una vendita a questa cassa prende la merce da questo luogo e da tutti i luoghi sottostanti, prima quella che scade prima. Da un luogo accanto, come un retrobottega, non si vende.';
+
+  @override
+  String get tillDrawerSellingPlaceStored => 'Un luogo non più in uso';
 
   @override
   String get tillDrawerStateClosed => 'Chiusa';

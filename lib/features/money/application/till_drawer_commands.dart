@@ -16,12 +16,15 @@ class TillDrawerCommands {
 
   TillDrawerPort get _port => _ref.read(tillDrawerPortProvider);
 
-  /// A new till (null [tillId]) or the edit of one.
-  Future<DrawerTill> saveTill({required String requestId, String? tillId, required String name, String? siteId, required bool active}) async {
-    final till = await _port.saveTill(workspaceId, requestId: requestId, tillId: tillId, name: name, siteId: siteId, active: active);
+  /// A new till (null [tillId]) or the edit of one, saved whole with the place it sells from.
+  Future<DrawerTill> saveTill({required String requestId, String? tillId, required String name, String? siteId, required bool active, String? sellingPlaceId}) async {
+    final till = await _port.saveTill(workspaceId, requestId: requestId, tillId: tillId, name: name, siteId: siteId, active: active, sellingPlaceId: sellingPlaceId);
     _ref.invalidate(tillDrawerProvider(workspaceId));
     return till;
   }
+
+  /// The places a till may be given, read when its sheet opens.
+  Future<TillSellingPlaces> sellingPlaces() => _port.sellingPlaces(workspaceId);
 
   Future<DrawerOpened> openSession({required String requestId, required String tillId, required int floatMinor, Denominations? denominations}) async {
     final opened = await _port.openSession(workspaceId, requestId: requestId, tillId: tillId, floatMinor: floatMinor, denominations: denominations);

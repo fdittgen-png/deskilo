@@ -82,6 +82,8 @@ abstract final class SettingDefaults {
   static const int counterOfflinePriceTolerancePercent = 0;
   /// `counter.paid_out_limit_minor`
   static const int counterPaidOutLimitMinor = 0;
+  /// `counter.selling_place`
+  static const String counterSellingPlace = 'MAIN';
   /// `directory.geocoder_url`
   static const String directoryGeocoderUrl = 'https://photon.komoot.io/api/';
   /// `directory.tile_url_template`

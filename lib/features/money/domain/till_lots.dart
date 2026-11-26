@@ -27,9 +27,10 @@ class TillLot {
   final bool expired;
 }
 
-/// #4366 -- the lots a till may sell an item from (`counter_item_lots_v1`): the first to expire first.
+/// #4366 -- the lots a till may sell an item from (`counter_item_lots_v1`): the first to expire first. [tillId] names
+/// the till, whose selling place (and every place below it) holds them; without one, the business's selling place.
 abstract interface class TillLotsPort {
-  Future<List<TillLot>> lots(String workspaceId, String itemId);
+  Future<List<TillLot>> lots(String workspaceId, String itemId, {String? tillId});
 }
 
 /// A till that reads its lots through a port of its own (the Demo's).

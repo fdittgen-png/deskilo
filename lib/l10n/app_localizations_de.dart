@@ -32879,6 +32879,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.';
 
   @override
+  String get settingHintCounterSellingPlace =>
+      'Der Code eines Orts des Unternehmens, der Bestand führt, zum Beispiel MAIN. Ein Verkauf an der Kasse nimmt die Ware von diesem Ort und von allen Orten darunter; eine Kasse kann einen eigenen Ort nennen.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.';
 
@@ -33329,6 +33333,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelCounterPaidOutLimit => 'Größte Entnahme ohne Freigabe';
+
+  @override
+  String get settingLabelCounterSellingPlace =>
+      'Ort, von dem die Kasse verkauft';
 
   @override
   String get settingLabelDirectoryGeocoderUrl => 'Adresssuchdienst';
@@ -42019,12 +42027,32 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Grund steht nicht auf der Liste des Betriebs. Wählen Sie einen aus der Liste.';
 
   @override
+  String get tillDrawerRefusalSellingPlace =>
+      'Von diesem Ort kann eine Kasse nicht verkaufen. Wählen Sie einen genutzten Ort, der Bestand führt.';
+
+  @override
   String get tillDrawerRefusalSessionGone =>
       'Diese Sitzung ist nicht mehr offen.';
 
   @override
   String get tillDrawerRefusalTillUnknown =>
       'Das ist keine aktive Kasse dieses Betriebs.';
+
+  @override
+  String get tillDrawerSellingPlace => 'Verkaufsort';
+
+  @override
+  String tillDrawerSellingPlaceBusiness(String code) {
+    return 'Der Verkaufsort des Betriebs ($code)';
+  }
+
+  @override
+  String get tillDrawerSellingPlaceNote =>
+      'Ein Verkauf an dieser Kasse nimmt die Ware von diesem Ort und von allen Orten darunter, das früheste Datum zuerst. Von einem Ort daneben, etwa einem Lager, wird nicht verkauft.';
+
+  @override
+  String get tillDrawerSellingPlaceStored =>
+      'Ein Ort, der nicht mehr genutzt wird';
 
   @override
   String get tillDrawerStateClosed => 'Geschlossen';

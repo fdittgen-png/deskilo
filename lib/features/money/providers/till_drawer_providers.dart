@@ -42,6 +42,10 @@ final drawerSettingsProvider = FutureProvider.autoDispose<DrawerSettings>(
 /// the business's features (`tillSessionsFromApp`): a business that does not run them sells as before, on no till.
 final tillSessionsEnabledProvider = Provider<bool>((ref) => false);
 
+/// Whether a till is given a selling place: the business keeps goods (`tillSellingPlaceFromApp`). Off, a till's sheet shows
+/// no place and saves the one the till has.
+final tillSellingPlaceOfferedProvider = Provider<bool>((ref) => false);
+
 /// #4367 -- the days closed so far, the latest first; the finances read them.
 final dayClosesProvider = FutureProvider.autoDispose.family<List<DayCloseRow>, String>(
   (ref, workspaceId) => ref.watch(tillDrawerPortProvider).dayCloses(workspaceId),

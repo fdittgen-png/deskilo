@@ -151,6 +151,7 @@ Future<void> main() async {
         tillPortFromApp, // #4366
         tillDrawerPortFromApp, // #4367
         tillSessionsFromApp, // #4367
+        tillSellingPlaceFromApp,
         drawerSettingsFromApp, // #4367
         tillOfflinePortFromApp, // #4373
         tillOfflineStoreFromApp, // #4373

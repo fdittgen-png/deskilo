@@ -117,14 +117,18 @@ on conflict do nothing;
 -- a pallet of yoghurt is four cartons of twelve; a carton of juice is six bottles
 insert into public.item_units (workspace_id, item_id, unit, factor_num, factor_den) values
   (pg_temp.u(101), pg_temp.u(301), 'carton', 12, 1), (pg_temp.u(101), pg_temp.u(301), 'pallet', 48, 1), (pg_temp.u(101), pg_temp.u(302), 'carton', 6, 1);
--- MAIN is the place the till sells from; the back store and a shelf are places of their own below it
+-- the main store holds the shop floor, with a shelf below it, and the back store beside the floor; the business names the
+-- floor as the place its till sells from
 insert into public.stock_locations (id, workspace_id, parent_id, kind, code) values
-  (pg_temp.u(901), pg_temp.u(101), pg_temp.loc('MAIN'), 'zone', 'BACK'),
-  (pg_temp.u(902), pg_temp.u(101), pg_temp.loc('MAIN'), 'shelf', 'SHELF');
+  (pg_temp.u(900), pg_temp.u(101), pg_temp.loc('MAIN'), 'zone', 'FLOOR'),
+  (pg_temp.u(901), pg_temp.u(101), pg_temp.loc('MAIN'), 'zone', 'BACK');
+insert into public.stock_locations (id, workspace_id, parent_id, kind, code) values
+  (pg_temp.u(902), pg_temp.u(101), pg_temp.u(900), 'shelf', 'SHELF');
+insert into public.setting_values (scope, workspace_id, key, value) values ('workspace', pg_temp.u(101), 'counter.selling_place', '"FLOOR"'::jsonb);
 -- last week's two yoghurts, a day past their date, are still on the sales floor
 select pg_temp.keep('t.old', pg_temp.cmd('stock_move_v1', 800, format('%L::jsonb, %L',
   format('[{"item_id": "%s", "quantity": "2", "from": "%s", "to": "%s", "expired_ack": true, "new_lot": {"code": "Y-0", "expires_on": "%s", "total_cost_minor": 100}}]',
-    pg_temp.u(301), pg_temp.place('supplier'), pg_temp.loc('MAIN'), pg_temp.day(-1)), 'receipt')));
+    pg_temp.u(301), pg_temp.place('supplier'), pg_temp.loc('FLOOR'), pg_temp.day(-1)), 'receipt')));
 
 -- ── 1. order: in the purchase unit, at its price ──────────────────────────────────────────────────────────────────────────────
 select pg_temp.keep('t.order', pg_temp.cmd('save_purchase_order_v1', 810, format('0, %L::jsonb', jsonb_build_object(
@@ -148,8 +152,8 @@ select pg_temp.keep('t.rcv', pg_temp.run_as(pg_temp.u(1), format('select public.
   '[{"line_no": 1, "quantity": 1}, {"line_no": 2, "quantity": 1}]', 'dock', pg_temp.u(820),
   format('[{"line_no": 1, "quantity": 1, "location_id": "%s", "lot": {"code": "Y-1", "expires_on": "%s"}, "cost": {"state": "order_price"}},
            {"line_no": 2, "quantity": 1, "location_id": "%s", "lot": {"code": "J-1", "expires_on": "%s"}, "cost": {"state": "order_price"}}]',
-    pg_temp.loc('BACK'), pg_temp.day(5), pg_temp.loc('MAIN'), pg_temp.day(200)))));
-select is(pg_temp.bal(301, 'BACK') || '/' || pg_temp.bal(302, 'MAIN'), '48/6', 'a pallet is 48 yoghurts in the back store and a carton six bottles on the sales floor');
+    pg_temp.loc('BACK'), pg_temp.day(5), pg_temp.loc('FLOOR'), pg_temp.day(200)))));
+select is(pg_temp.bal(301, 'BACK') || '/' || pg_temp.bal(302, 'FLOOR'), '48/6', 'a pallet is 48 yoghurts in the back store and a carton six bottles on the sales floor');
 select is((select lot_code || ' ' || expires_on::text || ' ' || total_cost_minor::text || ' ' || trim_scale(quantity_received)::text from public.stock_lots where id = pg_temp.lot('Y-1')),
   'Y-1 ' || pg_temp.day(5) || ' 2400 48', 'the lot keeps its code, its best-before date and what the pallet cost at the order''s price');
 select is((select o.state from public.purchase_orders o where o.id = current_setting('t.oid')::uuid) || ' '
@@ -185,9 +189,9 @@ select is((select count(*)::text from public.stock_handling_units where workspac
   '3 48', 'one box is opened: twelve yoghurts are loose in the back store, three boxes stay closed');
 
 -- ── 4. only part goes to the place that sells; the rest stays in the back store ──────────────────────────────────────────────────
-select pg_temp.keep('t.move', pg_temp.cmd('stock_transfer_v1', 840, pg_temp.line(301, '8', 'BACK', 'MAIN', 'Y-1')));
-select is(pg_temp.bal(301, 'BACK', 'Y-1') || '/' || pg_temp.bal(301, 'MAIN', 'Y-1'), '40/8', 'eight go to the sales floor, forty stay in the back store');
-select alike(pg_temp.cmd('stock_transfer_v1', 841, pg_temp.line(301, '5', 'BACK', 'MAIN', 'Y-1')), 'ERR DKG03%',
+select pg_temp.keep('t.move', pg_temp.cmd('stock_transfer_v1', 840, pg_temp.line(301, '8', 'BACK', 'FLOOR', 'Y-1')));
+select is(pg_temp.bal(301, 'BACK', 'Y-1') || '/' || pg_temp.bal(301, 'FLOOR', 'Y-1'), '40/8', 'eight go to the sales floor, forty stay in the back store');
+select alike(pg_temp.cmd('stock_transfer_v1', 841, pg_temp.line(301, '5', 'BACK', 'FLOOR', 'Y-1')), 'ERR DKG03%',
   'four are loose in the back store: a fifth is in a closed box and is not taken loose');
 
 -- ── 8. sell: the till draws the lot that expires first and is not expired; a discount and a changed price are kept as such ───────
@@ -207,27 +211,27 @@ select is(pg_temp.gross(pg_temp.sell(856, format('[{"item_id": "%s", "quantity":
 
 -- ── 9. waste: the expired lot is thrown away ─────────────────────────────────────────────────────────────────────────────────────
 select pg_temp.keep('t.loss1', pg_temp.cmd('stock_loss_v1', 860, format('%L::jsonb',
-  format('[{"item_id": "%s", "quantity": "2", "from": "%s", "lot_id": "%s", "expired_ack": true}]', pg_temp.u(301), pg_temp.loc('MAIN'), pg_temp.lot('Y-0')))));
-select is(pg_temp.bal(301, 'MAIN', 'Y-0') || ' ' || (select count(*)::text from public.stock_movements where workspace_id = pg_temp.u(101) and lot_id = pg_temp.lot('Y-0') and reason = 'loss'),
+  format('[{"item_id": "%s", "quantity": "2", "from": "%s", "lot_id": "%s", "expired_ack": true}]', pg_temp.u(301), pg_temp.loc('FLOOR'), pg_temp.lot('Y-0')))));
+select is(pg_temp.bal(301, 'FLOOR', 'Y-0') || ' ' || (select count(*)::text from public.stock_movements where workspace_id = pg_temp.u(101) and lot_id = pg_temp.lot('Y-0') and reason = 'loss'),
   '0 1', 'the two expired yoghurts leave as a loss');
 
--- ── 8 again: a shelf place below MAIN and the back store are not sold from ───────────────────────────────────────────────────────
-select pg_temp.keep('t.shelf', pg_temp.cmd('stock_transfer_v1', 870, pg_temp.line(301, '2', 'MAIN', 'SHELF', 'Y-1')));
-select is(pg_temp.bal(301, 'MAIN') || '/' || pg_temp.bal(301, 'SHELF') || '/' || pg_temp.bal(301, 'BACK'), '0/2/40', 'the last two go to a shelf place of their own');
-select alike(pg_temp.sell(872, format('[{"item_id": "%s", "quantity": "1"}]', pg_temp.u(301))), 'ERR DKG03%',
-  'with two on the shelf and forty in the back store the till refuses a yoghurt: a sale takes from MAIN and from nowhere else');
-select pg_temp.keep('t.s6', pg_temp.sell(874, format('[{"item_id": "%s", "quantity": "1", "from_location_id": "%s"}]', pg_temp.u(301), pg_temp.loc('SHELF'))));
-select is(pg_temp.gross(current_setting('t.s6')) || ' ' || pg_temp.bal(301, 'SHELF'), '150 1',
-  'a line that names its place is sold from it: the server takes the place, though no screen of the app sends one');
-select pg_temp.keep('t.refill', pg_temp.cmd('stock_transfer_v1', 876, pg_temp.line(301, '4', 'BACK', 'MAIN', 'Y-1')));
-select is(pg_temp.bal(301, 'BACK') || '/' || pg_temp.bal(301, 'MAIN'), '36/4', 'the sales floor is refilled from the back store: the four loose ones, the boxes stay');
+-- ── 8 again: the till sells from the floor and the shelf below it, never from the back store beside it ───────────────────────────
+select pg_temp.keep('t.shelf', pg_temp.cmd('stock_transfer_v1', 870, pg_temp.line(301, '2', 'FLOOR', 'SHELF', 'Y-1')));
+select is(pg_temp.bal(301, 'FLOOR') || '/' || pg_temp.bal(301, 'SHELF') || '/' || pg_temp.bal(301, 'BACK'), '0/2/40', 'the last two go to a shelf place of their own');
+select pg_temp.keep('t.s5', pg_temp.sell(872, format('[{"item_id": "%s", "quantity": "1"}]', pg_temp.u(301))));
+select is(pg_temp.gross(current_setting('t.s5')) || ' ' || pg_temp.bal(301, 'SHELF'), '150 1',
+  'with nothing left on the floor itself the till sells the yoghurt from the shelf below it');
+select alike(pg_temp.sell(874, format('[{"item_id": "%s", "quantity": "2"}]', pg_temp.u(301))), 'ERR DKG03%',
+  'two more are refused: one is left where the till sells, and the forty in the back store beside the floor are not sold from');
+select pg_temp.keep('t.refill', pg_temp.cmd('stock_transfer_v1', 876, pg_temp.line(301, '4', 'BACK', 'FLOOR', 'Y-1')));
+select is(pg_temp.bal(301, 'BACK') || '/' || pg_temp.bal(301, 'FLOOR'), '36/4', 'the sales floor is refilled from the back store: the four loose ones, the boxes stay');
 select is((select string_agg(distinct l.lot_code, ',' order by l.lot_code) from public.stock_movements m join public.stock_lots l on l.id = m.lot_id
             where m.workspace_id = pg_temp.u(101) and m.reason = 'sale'),
   'J-1,Y-1', 'no sale ever drew the expired lot');
 
 -- ── 9 again: a damaged piece; both losses under one reason, at the lot''s cost ───────────────────────────────────────────────────
 select pg_temp.keep('t.loss2', pg_temp.cmd('stock_loss_v1', 880, format('%L::jsonb',
-  format('[{"item_id": "%s", "quantity": "1", "from": "%s", "lot_id": "%s"}]', pg_temp.u(301), pg_temp.loc('MAIN'), pg_temp.lot('Y-1')))));
+  format('[{"item_id": "%s", "quantity": "1", "from": "%s", "lot_id": "%s"}]', pg_temp.u(301), pg_temp.loc('FLOOR'), pg_temp.lot('Y-1')))));
 select is((select string_agg(distinct m.reason, ',') || ' ' || count(*)::text from public.stock_movements m
             where m.workspace_id = pg_temp.u(101) and m.to_location_id = pg_temp.place('loss')),
   'loss 2', 'the expired and the damaged goods left under the one reason "loss": which of the two it was is not recorded');
@@ -238,7 +242,7 @@ select is((select round(sum(m.quantity * m.unit_cost))::text from public.stock_m
 select pg_temp.keep('t.where', pg_temp.run_as(pg_temp.u(1), format('select public.stock_where_is_v1(%L, %L, %L)::text', pg_temp.u(101), pg_temp.u(301), pg_temp.lot('Y-1'))));
 select is((select string_agg((x ->> 'location_code') || '=' || trim_scale((x ->> 'quantity')::numeric)::text, ' ' order by x ->> 'location_code')
     from jsonb_array_elements(coalesce(pg_temp.j(current_setting('t.where')) -> 'places', '[]'::jsonb)) x where not (x ->> 'virtual')::boolean),
-  'BACK=36 MAIN=3 SHELF=1', 'the lot is in the back store, on the sales floor and on the shelf');
+  'BACK=36 FLOOR=3 SHELF=1', 'the lot is in the back store, on the sales floor and on the shelf');
 select is(trim_scale((pg_temp.j(current_setting('t.where')) ->> 'on_hand')::numeric)::text || ' ' || pg_temp.at_kind(current_setting('t.where'), 'customer') || ' '
     || pg_temp.at_kind(current_setting('t.where'), 'loss'),
   '40 7 1', 'of the 48 received, 40 are on hand, 7 were sold and 1 was thrown away');
@@ -249,7 +253,7 @@ select is((select count(*)::int from public.stock_receipt_allocations a join pub
 -- ── 6. shelf life: what expires when, per place ──────────────────────────────────────────────────────────────────────────────────
 select is((select string_agg((r ->> 'location_code') || '=' || trim_scale((r ->> 'quantity')::numeric)::text || '@' || (r ->> 'days'), ' ' order by r ->> 'location_code')
     from jsonb_array_elements(coalesce(pg_temp.j(pg_temp.run_as(pg_temp.u(1), format('select public.stock_expiry_report_v1(%L)::text', pg_temp.u(101)))) -> 'rows', '[]'::jsonb)) r),
-  'BACK=36@5 MAIN=3@5 SHELF=1@5', 'the report lists the lot at each place with five days to go; the juice is beyond the 30 days and the expired lot is gone');
+  'BACK=36@5 FLOOR=3@5 SHELF=1@5', 'the report lists the lot at each place with five days to go; the juice is beyond the 30 days and the expired lot is gone');
 select is((select count(*)::int from jsonb_array_elements(coalesce(pg_temp.j(pg_temp.run_as(pg_temp.u(1),
     format('select public.stock_expiry_report_v1(%L, null, %L, 365)::text', pg_temp.u(101), 'expiring'))) -> 'rows', '[]'::jsonb)) r where r ->> 'lot_code' = 'J-1'), 1,
   'a horizon of a year reaches the juice');
@@ -295,7 +299,9 @@ select is((select count(*)::int from public.stock_movements m where m.workspace_
 -- ── what the product does not do today ───────────────────────────────────────────────────────────────────────────────────────────
 select skip('GAP step 10: no function and no screen ranks the products (sold first, most, margin, waste, markdowns); kpi_item_margins reads invoiced consumptions, never a till sale or a stock movement', 1);
 select skip('GAP step 9: a loss has no reason of its own (expired, damaged, stolen) and no note; stock_reasons knows only "loss"', 1);
-select skip('GAP step 8: the till of the app names no place: counter_receipt_finalize_v1 and counter_item_lots_v1 fall back to the place whose code is MAIN', 1);
+select is((select string_agg(l.code || ':' || trim_scale(m.quantity)::text, ' ') from public.stock_movements m join public.stock_locations l on l.id = m.from_location_id
+            where m.workspace_id = pg_temp.u(101) and m.reason = 'sale' and m.counter_receipt_id = (pg_temp.j(current_setting('t.s5')) ->> 'receipt_id')::uuid),
+  'SHELF:1', 'step 8: the till sells from the place the business names and from every place below it: that sale left the shelf');
 select skip('GAP step 7: stock_valuation_v1 totals by lot only: not by place, by item group or by age', 1);
 
 select * from finish();

@@ -32794,6 +32794,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.';
 
   @override
+  String get settingHintCounterSellingPlace =>
+      'El código de un lugar de la empresa que tiene existencias, por ejemplo MAIN. Una venta en caja toma la mercancía de este lugar y de todos los que dependen de él; una caja puede indicar un lugar propio.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'El servicio compatible con Photon que sitúa una dirección publicada en el mapa de descubrimiento: una dirección https en la internet pública, sin nombre de usuario, contraseña, consulta ni #. Déjelo vacío para usar la dirección con la que se construyó esta versión de la aplicación; si no, el servicio público Photon.';
 
@@ -33252,6 +33256,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelCounterPaidOutLimit => 'Mayor salida sin autorización';
+
+  @override
+  String get settingLabelCounterSellingPlace =>
+      'Lugar desde el que vende la caja';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>
@@ -41895,11 +41903,30 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este motivo no está en la lista del negocio. Elija uno de la lista.';
 
   @override
+  String get tillDrawerRefusalSellingPlace =>
+      'Una caja no puede vender desde este lugar. Elija un lugar en uso que tenga existencias.';
+
+  @override
   String get tillDrawerRefusalSessionGone => 'Esta sesión ya no está abierta.';
 
   @override
   String get tillDrawerRefusalTillUnknown =>
       'No es una caja activa de este negocio.';
+
+  @override
+  String get tillDrawerSellingPlace => 'Lugar de venta';
+
+  @override
+  String tillDrawerSellingPlaceBusiness(String code) {
+    return 'El lugar de venta del negocio ($code)';
+  }
+
+  @override
+  String get tillDrawerSellingPlaceNote =>
+      'Una venta en esta caja toma la mercancía de este lugar y de todos los lugares que dependen de él, primero la que caduca antes. De un lugar contiguo, como una trastienda, no se vende.';
+
+  @override
+  String get tillDrawerSellingPlaceStored => 'Un lugar que ya no se usa';
 
   @override
   String get tillDrawerStateClosed => 'Cerrada';

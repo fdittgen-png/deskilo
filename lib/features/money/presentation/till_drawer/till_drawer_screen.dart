@@ -55,7 +55,7 @@ class TillDrawerScreen extends ConsumerWidget {
       floatingActionButton: canManage && workspaceId != null
           ? FloatingActionButton.extended(
               key: const ValueKey('drawer-add-till'),
-              onPressed: () => showTillEditSheet(context, ref.read(tillDrawerCommandsProvider(workspaceId))),
+              onPressed: () => showTillEditSheet(context, ref.read(tillDrawerCommandsProvider(workspaceId)), offerSellingPlace: ref.read(tillSellingPlaceOfferedProvider)),
               icon: const Icon(Icons.add),
               label: Text(l10n.tillDrawerAddTill),
             )
@@ -186,7 +186,7 @@ class _TillCard extends ConsumerWidget {
                     key: ValueKey('drawer-edit-${till.id}'),
                     tooltip: l10n.tillDrawerEditTill,
                     icon: const Icon(Icons.edit_outlined),
-                    onPressed: () => showTillEditSheet(context, ref.read(tillDrawerCommandsProvider(workspaceId)), till: till),
+                    onPressed: () => showTillEditSheet(context, ref.read(tillDrawerCommandsProvider(workspaceId)), till: till, offerSellingPlace: ref.read(tillSellingPlaceOfferedProvider)),
                   ),
               ],
             ),

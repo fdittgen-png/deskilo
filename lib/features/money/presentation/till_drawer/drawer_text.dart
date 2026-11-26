@@ -51,6 +51,7 @@ String? drawerRefusalText(AppLocalizations l10n, Object error) {
     (DkCode.dkl12, 'till_unknown') => l10n.tillDrawerRefusalTillUnknown,
     (DkCode.dkl12, 'session_unknown' || 'closed') => l10n.tillDrawerRefusalSessionGone,
     (DkCode.dkl12, 'name_taken') => l10n.tillDrawerRefusalNameTaken,
+    (DkCode.dkl12, 'selling_place_unknown') => l10n.tillDrawerRefusalSellingPlace,
     (DkCode.dkl13, 'denominations') => l10n.tillDrawerRefusalDenominations,
     (DkCode.dkl13, 'reason_unknown') => l10n.tillDrawerRefusalReasonUnknown,
     (DkCode.dkl13, 'above_limit') => l10n.tillDrawerRefusalAboveLimit,
