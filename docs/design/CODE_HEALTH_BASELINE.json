@@ -1,7 +1,7 @@
 {
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
   "budgets": {
-    "partOfFiles": 10,
+    "partOfFiles": 7,
     "fileLength": {
       "lib/app/routes/money_routes.dart": 524,
 
@@ -71,7 +71,6 @@
 
       "lib/features/task_recorder/presentation/ui_capture.dart": 592,
 
-      "lib/features/workspace/domain/feature_manifest_part3.dart": 522,
 
       "lib/features/workspace/domain/template_capabilities.dart": 588,
 

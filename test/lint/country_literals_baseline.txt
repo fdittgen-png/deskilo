@@ -50,7 +50,7 @@ lib/features/money/presentation/standalone/standalone_line_form.dart :: 1 :: the
 lib/features/money/domain/report_letter_layouts.dart :: 1 :: a default country argument or sample value of the report designer, not a country decision
 lib/features/money/presentation/report_layout_defaults.dart :: 1 :: a default country argument or sample value of the report designer, not a country decision
 lib/features/money/presentation/report_sample_data.dart :: 1 :: a default country argument or sample value of the report designer, not a country decision
-lib/features/workspace/domain/feature_manifest_part3.dart :: 1 :: where a feature is available (availableIn): feature catalogue data
+lib/features/workspace/domain/feature_manifest_late.dart :: 1 :: where a feature is available (availableIn): feature catalogue data
 lib/features/workspace/domain/holiday_import.dart :: 32 :: public-holiday calendar data per country: calendar data, not a rule
 lib/features/workspace/presentation/member_vat_treatment.dart :: 3 :: the UNCL5305 category 'AE' (reverse charge) in the treatment labels, not a country
 packages/deskilo_accounting_interchange/lib/src/jpk_kr_pd_validation.dart :: 1 :: a standard's own country field in an accounting export file (JPK, SAF-T): format data of the interchange package
