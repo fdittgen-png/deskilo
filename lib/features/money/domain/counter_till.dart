@@ -116,7 +116,18 @@ class TillReadiness {
 
 /// A line of the basket as the till sends it: an item and an exact quantity; the server prices it.
 class TillLine {
-  const TillLine({required this.itemId, required this.name, required this.quantity, required this.unit, this.pieces = const [], this.ageConfirmed, this.depositFor});
+  const TillLine({
+    required this.itemId,
+    required this.name,
+    required this.quantity,
+    required this.unit,
+    this.pieces = const [],
+    this.ageConfirmed,
+    this.depositFor,
+    this.price,
+    this.priceReason,
+    this.discount,
+  });
 
   final String itemId;
   final String name;
@@ -136,6 +147,31 @@ class TillLine {
   /// The item whose deposit this line is: it follows that line's quantity and goes with it. Null for an ordinary line.
   final String? depositFor;
 
+  /// #4476 -- a price other than the item's (an exact decimal with a point), set by someone with the right to change a
+  /// price at the till, and why; null sells at the item's price. The server refuses it without the right or the reason.
+  final String? price;
+  final String? priceReason;
+
+  /// The longest reason a changed price keeps, as the server takes it.
+  static const priceReasonMaxLength = 200;
+
+  /// #4476 -- a discount in percent off the item's price (an exact decimal with a point), within the business's limit.
+  final String? discount;
+
+  /// The line at the item's price again, or at [price] for [reason], or with [discount] percent off: one of the three.
+  TillLine withPricing({String? price, String? reason, String? discount}) => TillLine(
+    itemId: itemId,
+    name: name,
+    quantity: quantity,
+    unit: unit,
+    pieces: pieces,
+    ageConfirmed: ageConfirmed,
+    depositFor: depositFor,
+    price: price,
+    priceReason: price == null ? null : reason,
+    discount: price == null ? discount : null,
+  );
+
   /// The line at quantity [q]. Named pieces stay only when [q] is exactly their number: any other quantity (a tap on the item's key, a
   /// typed number) leaves the line a plain quantity of the item, because the server refuses a quantity that is not the number of its
   /// named pieces (DKG25) and would say so only after the cash was taken.
@@ -147,16 +183,33 @@ class TillLine {
     pieces: tillQuantityOf(q) == '${pieces.length}' ? pieces : const [],
     ageConfirmed: ageConfirmed,
     depositFor: depositFor,
+    price: price,
+    priceReason: priceReason,
+    discount: discount,
   );
 
   /// The line with the piece tagged [tag] added: one more, named.
   TillLine withPiece(String tag) =>
-      TillLine(itemId: itemId, name: name, quantity: '${pieces.length + 1}', unit: unit, pieces: [...pieces, tag], ageConfirmed: ageConfirmed, depositFor: depositFor);
+      TillLine(
+        itemId: itemId,
+        name: name,
+        quantity: '${pieces.length + 1}',
+        unit: unit,
+        pieces: [...pieces, tag],
+        ageConfirmed: ageConfirmed,
+        depositFor: depositFor,
+        price: price,
+        priceReason: priceReason,
+        discount: discount,
+      );
 
   Map<String, Object?> toJson() => {
     'item_id': itemId,
     'quantity': quantity,
     if (pieces.isNotEmpty) 'units': [for (final t in pieces) {'tag': t}],
+    'unit_price': ?price,
+    'price_reason': ?priceReason,
+    'discount_percent': ?discount,
   };
 }
 
@@ -398,3 +451,12 @@ class TillKey {
   /// The item whose deposit is added with this one, or null.
   final String? depositItemId;
 }
+
+/// #4476 -- a copy of a finalized receipt, printed again: counted by the server and never numbered again. Its number
+/// among the copies (1, 2, ...) is what the copy shows.
+abstract interface class TillCopyPort {
+  Future<int> copy(String workspaceId, {required String requestId, required String receiptId});
+}
+
+/// The copy's number in the server's answer (`copy_no`).
+int tillCopyNumberOf(Object? json) => JsonReader.of(json, context: 'counter_receipt_copy').integer('copy_no');

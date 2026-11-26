@@ -898,5 +898,7 @@
  "counterLayoutMaxCellsHint": "Le nombre maximal de cases d'une disposition de caisse. Réglé dans les paramètres de l'application.",
  "counterLayoutCashierReorder": "Les caissiers réordonnent les touches",
  "counterLayoutCashierReorderHint": "Un caissier peut réordonner les touches d'une caisse sur son appareil. Réglé dans les paramètres de l'application.",
- "optCells": "{n} cases"
+ "optCells": "{n} cases",
+ "counterMaxDiscount": "Remise maximale à la caisse",
+ "counterMaxDiscountHint": "La remise maximale qu'un caissier peut accorder sur une ligne. Réglée dans les paramètres de l'application."
 }

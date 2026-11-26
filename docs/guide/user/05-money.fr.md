@@ -836,6 +836,10 @@ La disposition a une grille pour chaque largeur où la caisse est utilisée : **
 
 **Copier sur une autre caisse** enregistre la disposition comme brouillon d'une autre caisse, à publier là-bas. **Revenir aux touches générées** supprime, après confirmation, la disposition et le brouillon de cette caisse : la caisse utilise de nouveau les touches qu'elle crée à partir de vos articles. Dans la démo, le **Bakery counter** montre le modèle Boulangerie avec son pavé et sa calculatrice.
 
+**Changer un prix** modifie le prix de la dernière ligne : saisissez le nouveau prix (ou d'abord sur le pavé) et un **Motif**, que le ticket conserve à côté du prix de l'article. Il faut le droit **Modifier un prix à la caisse** (propriétaires et administrateurs par défaut) ; sans lui, la caisse le dit et la ligne reste au prix de l'article. **Remise sur une ligne** retire un pourcentage du prix de l'article de la dernière ligne, au plus **Remise maximale à la caisse** (0 par défaut, soit aucune remise à la caisse) ; une remise plus forte est refusée en nommant la limite. Une ligne prend une remise ou un prix modifié, pas les deux. Une vente que la caisse envoie après avoir vendu hors ligne garde son prix, dans la tolérance de prix hors ligne.
+
+**Réimprimer le dernier ticket** affiche de nouveau le ticket de la dernière vente, marqué **DUPLICATA 1**, **DUPLICATA 2**, etc. Un duplicata ne prend jamais un nouveau numéro de ticket, et chaque duplicata imprimé est compté.
+
 <!-- anchor: user.money.till-offline -->
 ### Quand la caisse est hors ligne
 

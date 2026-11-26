@@ -14763,6 +14763,7 @@
   "permAllowsManageStock": "Waren einlagern, umlagern und auslagern.",
   "permAllowsManageValidation": "Festlegen, welche Anfragen genehmigt werden müssen und von wem.",
   "permAllowsOperateKiosk": "Den Kiosk einrichten und Badges ausgeben.",
+  "permAllowsOverrideTillPrice": "Eine Kassenzeile zu einem anderen Preis als dem des Artikels verkaufen, mit einem Grund, den der Beleg festhält. Ohne dieses Recht wird eine Kassenzeile zum Preis des Artikels verkauft.",
   "permAllowsPaymentTermsEdit": "Eine Änderung der Zahlungsbedingungen eines Mitglieds beantragen; die Genehmigung entscheidet.",
   "permAllowsRecordOutgoingPayments": "Die an ein Mitglied für eine genehmigte Forderung gezahlte Summe erfassen und stornieren.",
   "permAllowsUseMessages": "Unterhaltungen, den Hinweis-Feed und Benachrichtigungen nutzen.",
@@ -14871,6 +14872,7 @@
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
   },
+  "permOverrideTillPrice": "Preis an der Kasse ändern",
   "permPaymentTermsEdit": "Änderung der Zahlungsbedingungen beantragen",
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
@@ -19368,6 +19370,7 @@
   "settingHintCounterFiscalObligation": "Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.",
   "settingHintCounterLayoutCashierReorder": "Ein Kassierer darf die Tasten einer Kasse auf seinem eigenen Gerät umordnen, ohne das veröffentlichte Layout zu ändern.",
   "settingHintCounterLayoutMaxCells": "Die meisten Zellen, die ein Kassenlayout über alle Seiten und Größen haben darf. Ein größeres Layout wird beim Speichern abgelehnt.",
+  "settingHintCounterMaxDiscount": "Der größte Rabatt in Prozent, den eine Kassiererin oder ein Kassierer auf eine Kassenzeile geben darf. 0 heißt: kein Rabatt an der Kasse.",
   "settingHintCounterOfflineMaxMinutes": "Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.",
   "@settingHintCounterOfflineMaxMinutes": {
     "description": "#4373 setting hint"
@@ -19630,6 +19633,7 @@
   "settingLabelCounterFiscalObligation": "Steuerliche Vorgaben für Kassenverkäufe",
   "settingLabelCounterLayoutCashierReorder": "Kassierer ordnen die Tasten",
   "settingLabelCounterLayoutMaxCells": "Größe des Kassenlayouts",
+  "settingLabelCounterMaxDiscount": "Größter Rabatt an der Kasse",
   "settingLabelCounterOfflineMaxMinutes": "Längste Offline-Zeit (Minuten)",
   "@settingLabelCounterOfflineMaxMinutes": {
     "description": "#4373 setting label"
@@ -24155,6 +24159,9 @@
       }
     }
   },
+  "tillDiscountBeyond": "Dieser Rabatt liegt über dem, was das Unternehmen an der Kasse erlaubt.",
+  "tillDiscountField": "Rabatt (%)",
+  "tillDiscountInvalid": "Ein Rabatt ist ein Prozentsatz vom Artikelpreis, auf einer Zeile ohne geänderten Preis.",
   "tillDrawerAddTill": "Kasse hinzufügen",
   "tillDrawerAmountInvalid": "Geben Sie einen Betrag ein.",
   "tillDrawerAmountZero": "Der Betrag muss größer als null sein.",
@@ -24318,6 +24325,7 @@
   },
   "tillNotReady": "In Ihrem Land noch nicht bereit: {operation}",
   "tillNotReadyHint": "Es wird nichts nummeriert und nichts kassiert, solange der Vorgang des Landes nicht unterstützt wird.",
+  "tillNothingToReprint": "Noch kein Verkauf zum erneuten Drucken.",
   "tillOfflineBanner": "Offline – nur Barzahlung. Die Verkäufe bleiben auf diesem Gerät und werden gesendet, sobald die Verbindung wieder da ist.",
   "@tillOfflineBanner": {
     "description": "#4373 the till sells offline: the banner"
@@ -24466,6 +24474,12 @@
       }
     }
   },
+  "tillPriceField": "Neuer Preis",
+  "tillPriceNotAllowed": "Sie dürfen an der Kasse keinen Preis ändern. Die Zeile wird zum Preis des Artikels verkauft.",
+  "tillPriceReason": "Grund",
+  "tillPriceReasonHint": "Wird auf dem Beleg festgehalten.",
+  "tillPriceReasonMissing": "Ein geänderter Preis braucht einen Grund.",
+  "tillPriceUnreadable": "Geben Sie eine Zahl ein, etwa 4,50.",
   "tillPricing": "Warenkorb wird berechnet …",
   "tillQuantityHint": "Eine genaue Menge, zum Beispiel 1 oder 0,350.",
   "tillQuantityRefused": "Geben Sie eine Menge über null mit höchstens sechs Dezimalstellen ein.",
@@ -24483,6 +24497,7 @@
   "tillReadinessUnavailable": "Nicht verfügbar",
   "tillReadinessUnconfirmed": "Noch nicht von einer Steuerberatung bestätigt.",
   "tillReadinessUnknownCountry": "Das Register nennt für {country} keinen Kassenvorgang: nichts ist unterstützt, und die Kasse verkauft nichts.",
+  "tillReceiptCopy": "KOPIE {copy} — kein neuer Beleg",
   "tillReceiptCorrects": "Berichtigt Beleg {number}",
   "tillReceiptDisagrees": "Die Beträge dieses Belegs stimmen nicht miteinander überein. Er wird gezeigt, wie er festgeschrieben wurde; sagen Sie es Ihrer Verwaltung.",
   "tillReceiptIssuedUnder": "Ausgestellt nach: {specification} ({version})",
@@ -24499,6 +24514,7 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillRingUpFirst": "Erfassen Sie zuerst einen Artikel.",
   "tillScanLabel": "Code scannen",
   "@tillScanLabel": {
     "description": "#4366 the till"

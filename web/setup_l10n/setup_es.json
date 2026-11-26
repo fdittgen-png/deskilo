@@ -898,5 +898,7 @@
  "counterLayoutMaxCellsHint": "El máximo de celdas de un diseño de caja. Se ajusta en la configuración de la aplicación.",
  "counterLayoutCashierReorder": "Los cajeros reordenan las teclas",
  "counterLayoutCashierReorderHint": "Un cajero puede reordenar las teclas de una caja en su dispositivo. Se ajusta en la configuración de la aplicación.",
- "optCells": "{n} celdas"
+ "optCells": "{n} celdas",
+ "counterMaxDiscount": "Descuento máximo en la caja",
+ "counterMaxDiscountHint": "El descuento máximo que un cajero puede aplicar a una línea. Se ajusta en la configuración de la aplicación."
 }

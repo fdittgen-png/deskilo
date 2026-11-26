@@ -33887,6 +33887,10 @@
   "@permAllowsOperateKiosk": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
   },
+  "permAllowsOverrideTillPrice": "Sell a till line at a price other than the item's, with a reason the receipt keeps. Without it, a till line is sold at the item's price.",
+  "@permAllowsOverrideTillPrice": {
+    "description": "#4476 the right to change a till line price, with a reason"
+  },
   "permAllowsPaymentTermsEdit": "Request a change of a member's payment conditions; validation decides.",
   "@permAllowsPaymentTermsEdit": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
@@ -34078,6 +34082,10 @@
   "permOperateKiosk": "Operate the kiosk and badges",
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
+  },
+  "permOverrideTillPrice": "Change a price at the till",
+  "@permOverrideTillPrice": {
+    "description": "#4476 the right to change a till line price, with a reason"
   },
   "permPaymentTermsEdit": "Request payment-condition changes",
   "@permPaymentTermsEdit": {
@@ -42570,6 +42578,10 @@
   "@settingHintCounterLayoutMaxCells": {
     "description": "#4448 a till layout setting"
   },
+  "settingHintCounterMaxDiscount": "The largest discount, in percent, a cashier may give on a till line. 0 means no discount at the till.",
+  "@settingHintCounterMaxDiscount": {
+    "description": "#4476 the setting counter.max_discount_percent"
+  },
   "settingHintCounterOfflineMaxMinutes": "How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.",
   "@settingHintCounterOfflineMaxMinutes": {
     "description": "#4373 setting hint"
@@ -43041,6 +43053,10 @@
   "settingLabelCounterLayoutMaxCells": "Till layout size",
   "@settingLabelCounterLayoutMaxCells": {
     "description": "#4448 a till layout setting"
+  },
+  "settingLabelCounterMaxDiscount": "Largest discount at the till",
+  "@settingLabelCounterMaxDiscount": {
+    "description": "#4476 the setting counter.max_discount_percent"
   },
   "settingLabelCounterOfflineMaxMinutes": "Longest offline period (minutes)",
   "@settingLabelCounterOfflineMaxMinutes": {
@@ -53696,6 +53712,18 @@
       }
     }
   },
+  "tillDiscountBeyond": "This discount is beyond what the business allows at the till.",
+  "@tillDiscountBeyond": {
+    "description": "#4476 a discount refused beyond the business's limit"
+  },
+  "tillDiscountField": "Discount (%)",
+  "@tillDiscountField": {
+    "description": "#4476 the till price keys"
+  },
+  "tillDiscountInvalid": "A discount is a percentage off the item's price, on a line without a changed price.",
+  "@tillDiscountInvalid": {
+    "description": "#4476 the till price keys"
+  },
   "tillDrawerAddTill": "Add a till",
   "@tillDrawerAddTill": {
     "description": "#4367 till sessions: the cash drawer"
@@ -54393,6 +54421,10 @@
   "@tillNotReadyHint": {
     "description": "#4366 the till"
   },
+  "tillNothingToReprint": "No sale to print again yet.",
+  "@tillNothingToReprint": {
+    "description": "#4476 Reprint with no sale yet"
+  },
   "tillOfflineBanner": "Offline — cash only. Sales are kept on this device and sent when the connection returns.",
   "@tillOfflineBanner": {
     "description": "#4373 the till sells offline: the banner"
@@ -54559,6 +54591,30 @@
       }
     }
   },
+  "tillPriceField": "New price",
+  "@tillPriceField": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceNotAllowed": "You may not change a price at the till. The line is sold at the item's price.",
+  "@tillPriceNotAllowed": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceReason": "Reason",
+  "@tillPriceReason": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceReasonHint": "Kept on the receipt.",
+  "@tillPriceReasonHint": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceReasonMissing": "A changed price needs its reason.",
+  "@tillPriceReasonMissing": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceUnreadable": "Type a number, such as 4.50.",
+  "@tillPriceUnreadable": {
+    "description": "#4476 the till price keys"
+  },
   "tillPricing": "Pricing the basket…",
   "@tillPricing": {
     "description": "#4366 the till"
@@ -54652,6 +54708,15 @@
     "description": "#4184 the counter readiness",
     "placeholders": {
       "country": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReceiptCopy": "COPY {copy} — not a new receipt",
+  "@tillReceiptCopy": {
+    "description": "#4476 a receipt printed again; copy is its number among the copies, a label (1, 2, ...)",
+    "placeholders": {
+      "copy": {
         "type": "String"
       }
     }
@@ -54760,6 +54825,10 @@
   "tillRetry": "Try again",
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
+  },
+  "tillRingUpFirst": "Ring up an item first.",
+  "@tillRingUpFirst": {
+    "description": "#4476 the till price keys"
   },
   "tillScanLabel": "Scan a code",
   "@tillScanLabel": {

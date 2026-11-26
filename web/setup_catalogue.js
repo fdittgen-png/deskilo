@@ -906,7 +906,8 @@ window.SETUP_REGISTRY={
   "approveStockAdjustments",
   "manageBillingCustomers",
   "countStock",
-  "configureTill"
+  "configureTill",
+  "overrideTillPrice"
  ],
  "defaultMatrix": {
   "co_owner": [
@@ -950,7 +951,8 @@ window.SETUP_REGISTRY={
    "approveStockAdjustments",
    "manageBillingCustomers",
    "countStock",
-   "configureTill"
+   "configureTill",
+   "overrideTillPrice"
   ],
   "admin": [
    "manageMembers",
@@ -970,6 +972,7 @@ window.SETUP_REGISTRY={
    "accessProd",
    "viewAnalytics",
    "configureTill",
+   "overrideTillPrice",
    "useMessages",
    "makeReservations",
    "viewCalendar",

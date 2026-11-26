@@ -20,10 +20,10 @@ import '../../codes/dk_code.dart';
 import '../../jurisdiction/installed_invoice_mentions.dart';
 import 'demo_stock_registry.dart';
 import 'demo_till_drawer.dart';
+import 'demo_till_parts.dart';
 
 /// The server's refusal: its SQLSTATE as the code, its words as the message.
-PostgrestException _refused(String code, String message, {String? reason}) =>
-    PostgrestException(message: message, code: code, details: reason == null ? null : '{"reason":"$reason"}');
+PostgrestException _refused(String code, String message, {String? reason, int? max}) => demoTillRefused(code, message, reason: reason, max: max);
 
 /// #4436 -- the Demo's traced item at the counter: the oat milk is tracked by lot, and a sale takes it from the lot on
 /// hand that expires first and is not expired yet (MILK-09 is past its date, so MILK-12; the expiry report's lots). The
@@ -128,8 +128,11 @@ class _Rec {
 /// #4436 -- one traced line a sale froze: its receipt, when, and the track IDs it took, as `counter_line_tracks` keeps them.
 typedef DemoSoldLine = ({String lineId, String receiptId, String number, DateTime at, List<TillTrack> tracks});
 
-class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
-  DemoTill({required this.country, required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2, this.drawer, this.clock});
+class DemoTill implements TillPort, TillOfflinePort, CounterBookPort, TillCopyPort {
+  DemoTill({required this.country, required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2, this.drawer, this.clock, this.pricing = const DemoTillPricing()});
+
+  /// #4476 -- the Demo business's discount limit and its cashier's right to change a price.
+  final DemoTillPricing pricing;
 
   final String country;
   final String currency;
@@ -232,11 +235,11 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
     for (final l in lines) {
       final unit = DemoStockRegistry.catalogue[l.itemId]?.$2 ?? _unstocked[l.itemId];
       if (unit == null) throw _refused(DkCode.dkl02, 'line_${priced.length + 1}_unit_price');
-      final amount = _times(unit, l.quantity);
+      final amount = _times(demoTillUnitPrice(l, unit, pricing, minorDigits: minorDigits), l.quantity);
       gross += amount;
       tax += _tax(amount);
       priced.add(TillPricedLine(label: l.name, grossMinor: amount, quantity: l.quantity));
-      frozen.add(_frozenLine(l, amount, _tax(amount)));
+      frozen.add(demoTillFrozenLine(l, amount, _tax(amount), vatPercent: vatPercent, currency: currency));
       booked.add(CounterBookLine(
         id: '$id-line-${booked.length + 1}',
         lineNo: booked.length + 1,
@@ -258,7 +261,7 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
     // money accepted for the offer as it was waits for an explicit reconciliation
     for (var i = 0; i < rec.tenders.length; i++) {
       final t = rec.tenders[i];
-      if (t.kind == 'card' && t.state == 'accepted' && t.reconciliation == null) rec.tenders[i] = _with(t, reconciliation: 'needed');
+      if (t.kind == 'card' && t.state == 'accepted' && t.reconciliation == null) rec.tenders[i] = demoTenderWith(t, reconciliation: 'needed');
     }
     _drafts[id] = draft;
     if (tillId != null) _tillOf[id] = tillId;
@@ -269,32 +272,9 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
   }
 
   /// A line as the server freezes it: the `commercial` v1 facts, amounts as decimal strings of minor units.
-  Map<String, Object?> _frozenLine(TillLine l, int gross, int tax) => {
-    'kind': 'goods',
-    'label': l.name,
-    'amount_cents': gross,
-    'vat_percent': vatPercent,
-    'commercial': {
-      'version': 1,
-      'quantity': l.quantity,
-      'unit': {'code': l.unit, 'label': l.unit},
-      'amounts': {'currency': currency, 'net_minor': '${gross - tax}', 'tax_minor': '$tax', 'gross_minor': '$gross', 'rule': 'half_up_per_line'},
-    },
-  };
-
   /// [unit] (minor units of one inventory unit) times [quantity] (an exact decimal text), half away from zero.
   int _times(int unit, String quantity) => (unit * counterQuantityUnits(quantity) / 1000000).round();
 
-  CounterBookTender _with(CounterBookTender t, {String? state, String? reconciliation, String? providerRef}) => CounterBookTender(
-    id: t.id,
-    part: t.part,
-    kind: t.kind,
-    amountMinor: t.amountMinor,
-    state: state ?? t.state,
-    reconciliation: reconciliation ?? t.reconciliation,
-    providerKey: t.providerKey,
-    providerRef: providerRef ?? t.providerRef,
-  );
 
   ({_Rec rec, int at}) _tender(String tenderId) {
     for (final r in _book.values) {
@@ -417,20 +397,22 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
         cashGivenMinor: sale.cashGivenMinor, changeMinor: sale.changeMinor, occurredAt: sale.occurredAt,
       ));
     }
-    return OfflineSyncAnswer(results: results, gaps: _gapsOf(rows));
+    return OfflineSyncAnswer(results: results, gaps: demoOfflineGaps(rows));
   }
 
   @override
   Future<OfflineList> list(String workspaceId, {required String sessionId}) async {
     _line();
     final rows = [...?_offlineRows[sessionId]]..sort((a, b) => a.seq.compareTo(b.seq));
-    return OfflineList(sales: rows, gaps: _gapsOf(rows));
+    return OfflineList(sales: rows, gaps: demoOfflineGaps(rows));
   }
 
-  List<int> _gapsOf(List<OfflineSaleRow> rows) {
-    final seen = {for (final r in rows) r.seq};
-    final top = seen.fold<int>(0, (a, b) => a > b ? a : b);
-    return [for (var n = 1; n <= top; n++) if (!seen.contains(n)) n];
+  final _copies = DemoTillCopies();
+
+  @override
+  Future<int> copy(String workspaceId, {required String requestId, required String receiptId}) async {
+    _line();
+    return _copies.copy(requestId, receiptId, finalized: _frozen.containsKey(receiptId));
   }
 
   @override
@@ -475,7 +457,7 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
     if (t.state != 'requested' && t.state != 'unknown') throw _refused(DkCode.dkl11, 'this authorization is already settled');
     if (t.state == 'unknown' && outcome == 'unknown') throw _refused(DkCode.dkl11, 'this authorization is already unknown');
     final moved = outcome == 'accepted' && (rec.state != 'draft' || rec.revision != _offered[tenderId]);
-    rec.tenders[at] = _with(t, state: outcome, reconciliation: moved ? 'needed' : null, providerRef: providerRef);
+    rec.tenders[at] = demoTenderWith(t, state: outcome, reconciliation: moved ? 'needed' : null, providerRef: providerRef);
     final answer = (state: outcome, reconciliation: moved ? 'needed' : null);
     _replayed[requestId] = answer;
     return answer;
@@ -598,7 +580,7 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
     if (_replayed.containsKey(requestId)) return;
     final (:rec, :at) = _tender(tenderId);
     if (!rec.tenders[at].needsReconciliation) throw _refused(DkCode.dkl11, 'this tender does not wait for a reconciliation');
-    rec.tenders[at] = _with(rec.tenders[at], reconciliation: 'done');
+    rec.tenders[at] = demoTenderWith(rec.tenders[at], reconciliation: 'done');
     _replayed[requestId] = true;
   }
 

@@ -58,5 +58,17 @@
   "tillLayoutChoosePage": "Welche Seite öffnet sie?",
   "tillLayoutReset": "Auf die erzeugten Tasten zurücksetzen",
   "tillLayoutResetConfirm": "Diese Kasse kehrt zu den Tasten zurück, die sie aus Ihren Artikeln erzeugt. Ihr Layout und ihr Entwurf werden entfernt.",
-  "tillLayoutResetDone": "Diese Kasse nutzt wieder ihre erzeugten Tasten."
+  "tillLayoutResetDone": "Diese Kasse nutzt wieder ihre erzeugten Tasten.",
+  "tillPriceField": "Neuer Preis",
+  "tillPriceReason": "Grund",
+  "tillPriceReasonHint": "Wird auf dem Beleg festgehalten.",
+  "tillDiscountField": "Rabatt (%)",
+  "tillPriceUnreadable": "Geben Sie eine Zahl ein, etwa 4,50.",
+  "tillPriceNotAllowed": "Sie dürfen an der Kasse keinen Preis ändern. Die Zeile wird zum Preis des Artikels verkauft.",
+  "tillPriceReasonMissing": "Ein geänderter Preis braucht einen Grund.",
+  "tillDiscountBeyond": "Dieser Rabatt liegt über dem, was das Unternehmen an der Kasse erlaubt.",
+  "tillDiscountInvalid": "Ein Rabatt ist ein Prozentsatz vom Artikelpreis, auf einer Zeile ohne geänderten Preis.",
+  "tillRingUpFirst": "Erfassen Sie zuerst einen Artikel.",
+  "tillReceiptCopy": "KOPIE {copy} — kein neuer Beleg",
+  "tillNothingToReprint": "Noch kein Verkauf zum erneuten Drucken."
 }

@@ -3247,6 +3247,10 @@ En la caja, las teclas funcionan como las colocó. El **teclado numérico** escr
 
 **Copiar a otra caja** guarda el diseño como borrador de otra caja, para publicarlo allí. **Volver a las teclas generadas** elimina, tras confirmar, el diseño y el borrador de esta caja: la caja vuelve a usar las teclas que crea a partir de sus artículos. En la demo, el **Bakery counter** muestra la plantilla Panadería con su teclado y su calculadora.
 
+**Cambiar un precio** cambia el precio de la última línea: escriba el nuevo precio (o antes en el teclado) y un **Motivo**, que el tique conserva junto al precio del artículo. Requiere el derecho **Cambiar un precio en la caja** (propietarios y administradores por defecto); sin él, la caja lo dice y la línea se queda al precio del artículo. **Descuento en una línea** quita un porcentaje del precio del artículo de la última línea, como máximo **Descuento máximo en la caja** (0 por defecto, es decir, ningún descuento en la caja); un descuento mayor se rechaza nombrando el límite. Una línea toma un descuento o un precio cambiado, no ambos. Una venta que la caja envía tras vender sin conexión conserva su precio, dentro de la tolerancia de precio sin conexión.
+
+**Reimprimir el último ticket** muestra de nuevo el tique de la última venta, marcado **COPIA 1**, **COPIA 2**, etc. Una copia nunca toma un nuevo número de tique, y cada copia impresa se cuenta.
+
 <!-- anchor: user.money.till-offline -->
 ### Cuando la caja está sin conexión
 

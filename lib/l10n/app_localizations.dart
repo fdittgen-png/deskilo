@@ -41000,6 +41000,12 @@ abstract class AppLocalizations {
   /// **'Set up the kiosk and hand out badges.'**
   String get permAllowsOperateKiosk;
 
+  /// #4476 the right to change a till line price, with a reason
+  ///
+  /// In en, this message translates to:
+  /// **'Sell a till line at a price other than the item\'s, with a reason the receipt keeps. Without it, a till line is sold at the item\'s price.'**
+  String get permAllowsOverrideTillPrice;
+
   /// #3628 roles at the desk: one line of what the permission allows
   ///
   /// In en, this message translates to:
@@ -41287,6 +41293,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Operate the kiosk and badges'**
   String get permOperateKiosk;
+
+  /// #4476 the right to change a till line price, with a reason
+  ///
+  /// In en, this message translates to:
+  /// **'Change a price at the till'**
+  String get permOverrideTillPrice;
 
   /// #881 member payment conditions: permPaymentTermsEdit
   ///
@@ -52164,6 +52176,12 @@ abstract class AppLocalizations {
   /// **'The most cells one till layout may hold, over all its pages and sizes. A larger layout is refused when it is saved.'**
   String get settingHintCounterLayoutMaxCells;
 
+  /// #4476 the setting counter.max_discount_percent
+  ///
+  /// In en, this message translates to:
+  /// **'The largest discount, in percent, a cashier may give on a till line. 0 means no discount at the till.'**
+  String get settingHintCounterMaxDiscount;
+
   /// #4373 setting hint
   ///
   /// In en, this message translates to:
@@ -52871,6 +52889,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Till layout size'**
   String get settingLabelCounterLayoutMaxCells;
+
+  /// #4476 the setting counter.max_discount_percent
+  ///
+  /// In en, this message translates to:
+  /// **'Largest discount at the till'**
+  String get settingLabelCounterMaxDiscount;
 
   /// #4373 setting label
   ///
@@ -66243,6 +66267,24 @@ abstract class AppLocalizations {
   /// **'The deposit of {name} is not for sale at the counter. Nothing was added.'**
   String tillDepositMissing(String name);
 
+  /// #4476 a discount refused beyond the business's limit
+  ///
+  /// In en, this message translates to:
+  /// **'This discount is beyond what the business allows at the till.'**
+  String get tillDiscountBeyond;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Discount (%)'**
+  String get tillDiscountField;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'A discount is a percentage off the item\'s price, on a line without a changed price.'**
+  String get tillDiscountInvalid;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -67136,6 +67178,12 @@ abstract class AppLocalizations {
   /// **'Nothing is numbered and nothing is taken until the country\'s operation is supported.'**
   String get tillNotReadyHint;
 
+  /// #4476 Reprint with no sale yet
+  ///
+  /// In en, this message translates to:
+  /// **'No sale to print again yet.'**
+  String get tillNothingToReprint;
+
   /// #4373 the till sells offline: the banner
   ///
   /// In en, this message translates to:
@@ -67328,6 +67376,42 @@ abstract class AppLocalizations {
   /// **'Piece {code} is already in the basket.'**
   String tillPieceTwice(String code);
 
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'New price'**
+  String get tillPriceField;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'You may not change a price at the till. The line is sold at the item\'s price.'**
+  String get tillPriceNotAllowed;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get tillPriceReason;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Kept on the receipt.'**
+  String get tillPriceReasonHint;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'A changed price needs its reason.'**
+  String get tillPriceReasonMissing;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Type a number, such as 4.50.'**
+  String get tillPriceUnreadable;
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -67434,6 +67518,12 @@ abstract class AppLocalizations {
   /// **'The registry names no counter operation for {country}: nothing is supported, and the till sells nothing.'**
   String tillReadinessUnknownCountry(String country);
 
+  /// #4476 a receipt printed again; copy is its number among the copies, a label (1, 2, ...)
+  ///
+  /// In en, this message translates to:
+  /// **'COPY {copy} — not a new receipt'**
+  String tillReceiptCopy(String copy);
+
   /// #4184 the counter receipt document; the number is a reference
   ///
   /// In en, this message translates to:
@@ -67516,6 +67606,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again'**
   String get tillRetry;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Ring up an item first.'**
+  String get tillRingUpFirst;
 
   /// #4366 the till
   ///

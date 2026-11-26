@@ -163,5 +163,9 @@
   "permAllowsConfigureTill": "Build, publish, copy and reset the layout of a till: its keys, pages and tools. Cashiers use the published layout without this right.",
   "@permAllowsConfigureTill": {
     "description": "#4448 the right to lay out the tills: what it allows"
+  },
+  "permAllowsOverrideTillPrice": "Sell a till line at a price other than the item's, with a reason the receipt keeps. Without it, a till line is sold at the item's price.",
+  "@permAllowsOverrideTillPrice": {
+    "description": "#4476 the right to change a till line price, with a reason"
   }
 }

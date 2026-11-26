@@ -14763,6 +14763,7 @@
   "permAllowsManageStock": "Caricare, spostare e scaricare merci.",
   "permAllowsManageValidation": "Stabilire quali richieste vanno approvate e da chi.",
   "permAllowsOperateKiosk": "Configurare il chiosco e assegnare i badge.",
+  "permAllowsOverrideTillPrice": "Vendere una riga di cassa a un prezzo diverso da quello dell'articolo, con un motivo che lo scontrino conserva. Senza questo diritto, una riga di cassa è venduta al prezzo dell'articolo.",
   "permAllowsPaymentTermsEdit": "Chiedere una modifica delle condizioni di pagamento di un membro; decide la convalida.",
   "permAllowsRecordOutgoingPayments": "Registrare e annullare il pagamento a un membro per una richiesta approvata.",
   "permAllowsUseMessages": "Usare conversazioni, il flusso degli avvisi e le notifiche.",
@@ -14871,6 +14872,7 @@
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
   },
+  "permOverrideTillPrice": "Modificare un prezzo alla cassa",
   "permPaymentTermsEdit": "Richiedere modifiche alle condizioni di pagamento",
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
@@ -19368,6 +19370,7 @@
   "settingHintCounterFiscalObligation": "Ciò che dichiara sulle regole fiscali di una vendita al banco: nessuna significa che al Suo esercizio non si applica alcun obbligo fiscale di registratore (una Sua dichiarazione, annotata su ogni scontrino); registratore richiesto significa che si applica. Lo scontrino è emesso solo dove l'operazione del Suo paese è supportata nel caso dichiarato.",
   "settingHintCounterLayoutCashierReorder": "Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo senza cambiare il layout pubblicato.",
   "settingHintCounterLayoutMaxCells": "Il numero massimo di celle di un layout di cassa, su tutte le pagine e dimensioni. Un layout più grande viene rifiutato al salvataggio.",
+  "settingHintCounterMaxDiscount": "Lo sconto massimo, in percentuale, che un cassiere può applicare a una riga di cassa. 0 significa nessuno sconto alla cassa.",
   "settingHintCounterOfflineMaxMinutes": "Per quanto tempo dopo la perdita della connessione una vendita in contanti fatta offline è ancora accettata all'invio. Le vendite successive sono rifiutate ed elencate per il titolare.",
   "@settingHintCounterOfflineMaxMinutes": {
     "description": "#4373 setting hint"
@@ -19630,6 +19633,7 @@
   "settingLabelCounterFiscalObligation": "Regole fiscali delle vendite al banco",
   "settingLabelCounterLayoutCashierReorder": "I cassieri riordinano i tasti",
   "settingLabelCounterLayoutMaxCells": "Dimensione del layout di cassa",
+  "settingLabelCounterMaxDiscount": "Sconto massimo alla cassa",
   "settingLabelCounterOfflineMaxMinutes": "Durata massima offline (minuti)",
   "@settingLabelCounterOfflineMaxMinutes": {
     "description": "#4373 setting label"
@@ -24155,6 +24159,9 @@
       }
     }
   },
+  "tillDiscountBeyond": "Questo sconto supera quanto l'azienda consente alla cassa.",
+  "tillDiscountField": "Sconto (%)",
+  "tillDiscountInvalid": "Uno sconto è una percentuale del prezzo dell'articolo, su una riga senza prezzo modificato.",
   "tillDrawerAddTill": "Aggiungere una cassa",
   "tillDrawerAmountInvalid": "Digitare un importo.",
   "tillDrawerAmountZero": "L'importo deve essere superiore a zero.",
@@ -24318,6 +24325,7 @@
   },
   "tillNotReady": "Non ancora pronto nel Suo paese: {operation}",
   "tillNotReadyHint": "Non viene numerato né incassato nulla finché l'operazione del paese non è supportata.",
+  "tillNothingToReprint": "Ancora nessuna vendita da ristampare.",
   "tillOfflineBanner": "Offline: solo contanti. Le vendite restano su questo dispositivo e vengono inviate quando la connessione torna.",
   "@tillOfflineBanner": {
     "description": "#4373 the till sells offline: the banner"
@@ -24466,6 +24474,12 @@
       }
     }
   },
+  "tillPriceField": "Nuovo prezzo",
+  "tillPriceNotAllowed": "Non può modificare un prezzo alla cassa. La riga è venduta al prezzo dell'articolo.",
+  "tillPriceReason": "Motivo",
+  "tillPriceReasonHint": "Conservato sullo scontrino.",
+  "tillPriceReasonMissing": "Un prezzo modificato ha bisogno di un motivo.",
+  "tillPriceUnreadable": "Digiti un numero, ad esempio 4,50.",
   "tillPricing": "Calcolo del carrello…",
   "tillQuantityHint": "Una quantità esatta, per esempio 1 oppure 0,350.",
   "tillQuantityRefused": "Inserisca una quantità superiore a zero con al massimo sei decimali.",
@@ -24483,6 +24497,7 @@
   "tillReadinessUnavailable": "Non disponibile",
   "tillReadinessUnconfirmed": "Non ancora confermata da un professionista fiscale.",
   "tillReadinessUnknownCountry": "Il registro non indica alcuna operazione di cassa per {country}: nulla è supportato e la cassa non vende nulla.",
+  "tillReceiptCopy": "COPIA {copy} — non è un nuovo scontrino",
   "tillReceiptCorrects": "Corregge lo scontrino {number}",
   "tillReceiptDisagrees": "Gli importi di questo scontrino non concordano tra loro. Viene mostrato così come è stato fissato; ne informi la Sua amministrazione.",
   "tillReceiptIssuedUnder": "Emesso secondo: {specification} ({version})",
@@ -24499,6 +24514,7 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillRingUpFirst": "Registri prima un articolo.",
   "tillScanLabel": "Scansiona un codice",
   "@tillScanLabel": {
     "description": "#4366 the till"

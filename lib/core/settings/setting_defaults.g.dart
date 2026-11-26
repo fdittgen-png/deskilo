@@ -72,6 +72,8 @@ abstract final class SettingDefaults {
   static const bool counterLayoutCashierReorder = false;
   /// `counter.layout_max_cells`
   static const int counterLayoutMaxCells = 200;
+  /// `counter.max_discount_percent`
+  static const int counterMaxDiscountPercent = 0;
   /// `counter.offline_max_minutes`
   static const int counterOfflineMaxMinutes = 240;
   /// `counter.offline_max_sales`

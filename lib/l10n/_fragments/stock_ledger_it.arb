@@ -55,5 +55,6 @@
     "description": "#4172 refusal"
   },
   "permCountStock": "Contare il magazzino alla cieca",
-  "permConfigureTill": "Organizzare le casse"
+  "permConfigureTill": "Organizzare le casse",
+  "permOverrideTillPrice": "Modificare un prezzo alla cassa"
 }
