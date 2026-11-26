@@ -35,11 +35,11 @@ final lineUnitsProvider = FutureProvider.family<List<WorkspaceUnit>, String>((re
 /// never waits on, or fails with, a read it can do without); [keep] is the unit the item already has.
 Future<List<WorkspaceUnit>> pickableUnitsOf(WidgetRef ref, String workspaceId, {String? keep}) async {
   final on = ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.unitsOfMeasure);
-  if (!on) return pickableUnits(builtInUnits, unitsOn: false, keep: keep);
+  // the business's units are read whether the feature is on or not: it hides the screen that makes units, not the units that exist
   return guardRead(
     domain: 'stock',
     message: 'the units could not be read for a picker',
-    read: () async => pickableUnits(await ref.read(workspaceUnitListProvider(workspaceId).future), unitsOn: true, keep: keep),
+    read: () async => pickableUnits(await ref.read(workspaceUnitListProvider(workspaceId).future), unitsOn: on, keep: keep),
     fallback: (_) => pickableUnits(builtInUnits, unitsOn: false, keep: keep),
   );
 }

@@ -51,7 +51,7 @@ final List<Override> featureSheetsFromApp = [
   // #4471 — the units a form picks from: the business's own, or the six of before (money never imports the stock).
   pickableUnitsProvider.overrideWith((ref, workspaceId) {
     final on = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.unitsOfMeasure);
-    final all = on ? (ref.watch(stock_units.workspaceUnitListProvider(workspaceId)).value ?? builtInUnits) : builtInUnits;
+    final all = ref.watch(stock_units.workspaceUnitListProvider(workspaceId)).value ?? builtInUnits;
     return [
       for (final u in pickableUnits(all, unitsOn: on)) LineUnit(code: u.code, label: u.label, unEceCode: u.unEceCode),
     ];
