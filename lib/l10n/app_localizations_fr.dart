@@ -43150,7 +43150,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une conversion dit combien d\'une unité font une autre. Elle vaut dans les deux sens, en une seule étape. La conversion propre à un article (un carton de 12) l\'emporte sur celles-ci, et un conditionnement n\'en a pas ici.';
 
   @override
-  String get unitConversionsTitle => 'Conversions';
+  String get unitConversionsTitle => 'Conversions d\'unités';
 
   @override
   String get unknownWireInvoiceKind =>

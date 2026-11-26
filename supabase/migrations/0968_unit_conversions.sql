@@ -14,7 +14,7 @@
 --     use (restating 0747/0952/0963 and 0951/0963). The dimension step is gone from all three.
 --   * `unit_conversion_save_v1` / `unit_conversion_delete_v1`: the commands of the Settings screen (the units of measure feature, the
 --     workspace-settings right, a request id answers once).
---   * the business's export carries the table (`export_workspace_records` restated, 0951).
+--   * the business's export carries the table (`export_workspace_records` restated, 0966).
 -- Refusals are the stock configuration's own (DKG11, field and reason in the detail): `unit_unknown`, `package_unit`,
 -- `conversion_same_unit`, `factor_invalid`, `conversion_unknown`; a conversion that is not defined is DKG02 with the units named.
 
@@ -300,7 +300,7 @@ revoke execute on function public.unit_conversion_delete_v1(uuid, uuid, text, te
 grant execute on function public.unit_conversion_delete_v1(uuid, uuid, text, text) to authenticated;
 
 -- ── 5. the business's export carries the table ──────────────────────────
--- restates 0951 (export_workspace_records): the list of the tables written whole gains `unit_conversions`
+-- restates 0966 (export_workspace_records): the list of the tables written whole gains `unit_conversions`, 'counter_receipt_copies' stays
 create or replace function public.export_workspace_records(p_workspace_id uuid)
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 declare
@@ -370,7 +370,9 @@ declare
     -- #4436 the track IDs frozen on the goods lines of an issued invoice
     'invoice_line_tracks',
     -- #4442 the units of measure of the business and their conversions
-    'workspace_units', 'unit_conversions'];
+    'workspace_units', 'unit_conversions',
+    -- #4476 the copies printed of a counter receipt
+    'counter_receipt_copies'];
   v_left_out text[] := public.system_column_names() || array['workspace_id', 'source_xml'];
   v_table text;
   v_columns text[];
