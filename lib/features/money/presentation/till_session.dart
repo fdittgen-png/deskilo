@@ -187,9 +187,7 @@ class TillSession {
     return true;
   }
 
-  /// #4476 -- line [index] at [price] (an exact decimal) for [reason], or [discount] percent off, or (both null) at the
-  /// item's price again; the server decides whether this cashier may. False when the line is not there or a value is not
-  /// an exact decimal.
+  /// #4476 -- line [index] at [price] for [reason], or [discount] % off, or (both null) at the item's price; false if not exact.
   Future<bool> setPricing(int index, {String? price, String? reason, String? discount}) async {
     final p = price == null ? null : tillMillionths(price);
     final d = discount == null ? null : tillMillionths(discount);
@@ -209,8 +207,7 @@ class TillSession {
     return true;
   }
 
-  /// #4366 -- line [index] sold from [lot], or (null) from the lot that expires first again. A line of named pieces takes
-  /// the lots of its pieces: nothing changes.
+  /// #4366 -- line [index] sold from [lot], or (null) the first to expire; a line of named pieces keeps their lots.
   Future<void> setLot(int index, TillLot? lot) => _serial(() {
     if (!_open || index < 0 || index >= _now.lines.length || _now.lines[index].pieces.isNotEmpty) return Future.value();
     final lines = [..._now.lines];
@@ -218,27 +215,14 @@ class TillSession {
     return _price(lines);
   });
 
-  /// #4478 -- [quantity] of the deposit item [itemId] brought back: a line of its own, taken off the sale. The server
-  /// decides whether it is a deposit and whether this cashier may; a return is never rung up offline.
+  /// #4478 -- [quantity] of the deposit item [itemId] brought back, taken off the sale; never offline (the server decides it).
   Future<void> addReturn({required String itemId, required String name, required String unit, String quantity = '1'}) => _serial(() {
     final q = tillQuantityOf(quantity);
     if (!_open) return Future.value();
-    if (q == null) {
-      _set(_now.copyWith(problem: () => const TillQuantityMissing()));
+    final lines = q == null ? null : tillLinesWithReturn(_now.lines, itemId: itemId, name: name, unit: unit, quantity: q);
+    if (lines == null || offline.value.active) {
+      _set(_now.copyWith(problem: () => q == null ? const TillQuantityMissing() : const TillReturnOffline()));
       return Future.value();
-    }
-    if (offline.value.active) {
-      _set(_now.copyWith(problem: () => const TillReturnOffline()));
-      return Future.value();
-    }
-    final lines = [..._now.lines];
-    final at = lines.indexWhere((l) => l.itemId == itemId && l.returned);
-    if (at < 0) {
-      lines.add(TillLine(itemId: itemId, name: name, quantity: q, unit: unit, returned: true));
-    } else {
-      final more = tillQuantitySum(lines[at].quantity, q);
-      if (more == null) return Future.value();
-      lines[at] = lines[at].withQuantity(more);
     }
     return _price(lines);
   });

@@ -11,6 +11,7 @@ import 'till_lots.dart';
 import 'till_quantity.dart';
 
 export 'till_lots.dart';
+export 'till_returns.dart';
 
 /// One operation of the counter in the business's country, under the case the owner declared, with the evidence the
 /// registry names for it (#4184): its specification, version and effective date, the adapter, the proof, and whether

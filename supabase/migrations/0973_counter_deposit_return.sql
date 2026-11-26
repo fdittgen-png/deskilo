@@ -70,7 +70,7 @@ begin
     end if;
     v_item := null;
     v_ret := v_in ->> 'returned' = 'true';
-    begin v_item_id := nullif(v_in ->> 'item_id', '')::uuid; exception when others then v_item_id := null; v_missing := v_missing || ('line_' || v_idx || '_item'); continue; end;
+    begin v_item_id := nullif(v_in ->> 'item_id', '')::uuid; exception when invalid_text_representation then v_item_id := null; v_missing := v_missing || ('line_' || v_idx || '_item'); continue; end;
     if v_item_id is not null then
       select * into v_item from public.services s where s.id = v_item_id and s.workspace_id = p_workspace_id and s.active;
       if v_item.id is null then
@@ -295,7 +295,7 @@ begin
 ',
     '  v_goods jsonb;
   v_back jsonb := ''[]''::jsonb;
-', 'finalize');
+', 'the finalize');
   v_def := pg_temp.anchor_once(v_def,
     '  if v_total <= 0 then
     raise exception ''receipt_essentials_missing'' using errcode = ''DKL02'', detail = ''total_not_positive'';
@@ -306,7 +306,7 @@ begin
   -- #4478: a returned deposit taxed where the sale is not can make the tax negative; never beyond the total either way
   if abs(v_tax) > v_total then
     raise exception ''receipt_essentials_missing'' using errcode = ''DKL02'', detail = ''tax_beyond_total'';
-  end if;', 'finalize');
+  end if;', 'the finalize');
   v_def := pg_temp.anchor_once(v_def,
     '    if r #>> ''{line,supply}'' = ''goods'' then
       if not public.feature_effective(p_workspace_id, ''stockManagement'') then',
@@ -325,7 +325,7 @@ begin
         ''item_id'', r ->> ''item_id'', ''quantity'', r #>> ''{line,commercial,quantity}'', ''unit'', r #>> ''{line,commercial,unit,code}'',
         ''from'', public.stock_place(p_workspace_id, ''customer''), ''to'', v_main, ''counter_line_id'', v_line_id)));
     elsif r #>> ''{line,supply}'' = ''goods'' then
-      if not public.feature_effective(p_workspace_id, ''stockManagement'') then', 'finalize');
+      if not public.feature_effective(p_workspace_id, ''stockManagement'') then', 'the finalize');
   v_def := pg_temp.anchor_once(v_def,
     '  if jsonb_array_length(v_goods) > 0 then
     perform set_config(''deskilo.counter_links'', ''on'', true);',
@@ -337,11 +337,11 @@ begin
     perform set_config(''deskilo.counter_links'', ''off'', true);
   end if;
   if jsonb_array_length(v_goods) > 0 then
-    perform set_config(''deskilo.counter_links'', ''on'', true);', 'finalize');
+    perform set_config(''deskilo.counter_links'', ''on'', true);', 'the finalize');
   v_def := pg_temp.anchor_once(v_def,
     'x.receipt_id = v_rec.id and x.frozen ->> ''supply'' = ''goods'' order by x.line_no loop',
     'x.receipt_id = v_rec.id and x.frozen ->> ''supply'' = ''goods''
-                       and x.frozen ->> ''kind'' is distinct from ''deposit_return'' order by x.line_no loop', 'finalize');
+                       and x.frozen ->> ''kind'' is distinct from ''deposit_return'' order by x.line_no loop', 'the finalize');
   execute v_def;
 end
 $patch$;
@@ -363,16 +363,16 @@ begin
         ''{line,amount_cents}'', to_jsonb(-(v_out #>> ''{line,amount_cents}'')::bigint));
     end if;
     v_line_gross := (v_out #>> ''{line,commercial,amounts,gross_minor}'')::bigint;
-    if v_qty = v_left then', 'correction');
+    if v_qty = v_left then', 'the correction');
   v_def := pg_temp.anchor_once(v_def,
     '    elsif v_prev_gross + v_line_gross > v_ol.gross_minor then',
-    '    elsif abs(v_prev_gross + v_line_gross) > abs(v_ol.gross_minor) then', 'correction');
+    '    elsif abs(v_prev_gross + v_line_gross) > abs(v_ol.gross_minor) then', 'the correction');
   v_def := pg_temp.anchor_once(v_def,
     '    v_rows := v_rows || jsonb_build_array(jsonb_build_object(''input'', v_in, ''line'', v_out -> ''line'', ''item_id'', v_ol.item_id,',
     '    if v_ol.frozen ->> ''kind'' = ''deposit_return'' then
       v_out := jsonb_set(v_out, ''{line}'', (v_out -> ''line'') || jsonb_build_object(''kind'', ''deposit_return'', ''returned'', true));
     end if;
-    v_rows := v_rows || jsonb_build_array(jsonb_build_object(''input'', v_in, ''line'', v_out -> ''line'', ''item_id'', v_ol.item_id,', 'correction');
+    v_rows := v_rows || jsonb_build_array(jsonb_build_object(''input'', v_in, ''line'', v_out -> ''line'', ''item_id'', v_ol.item_id,', 'the correction');
   execute v_def;
 end
 $patch$;
@@ -385,7 +385,7 @@ begin
   v_def := pg_temp.anchor_once(v_def,
     'or (v_line.frozen ->> ''supply'') <> ''goods'' or v_line.item_id is null then',
     'or (v_line.frozen ->> ''supply'') <> ''goods'' or v_line.item_id is null
-       or v_line.frozen ->> ''kind'' = ''deposit_return'' then', 'goods return');
+       or v_line.frozen ->> ''kind'' = ''deposit_return'' then', 'the goods return');
   execute v_def;
 end
 $patch$;
@@ -399,7 +399,7 @@ begin
     '    ''sales_total_minor'', (select coalesce(sum(r.total_minor), 0)::text from public.counter_receipts r where r.till_session_id = any (v_sessions) and r.state = ''finalized'' and r.kind = ''sale''),',
     '    ''sales_total_minor'', (select coalesce(sum(r.total_minor), 0)::text from public.counter_receipts r where r.till_session_id = any (v_sessions) and r.state = ''finalized'' and r.kind = ''sale''),
     ''deposits_returned_minor'', (select coalesce(-sum(l.gross_minor), 0)::text from public.counter_receipt_lines l join public.counter_receipts r on r.id = l.receipt_id
-        where r.till_session_id = any (v_sessions) and r.state = ''finalized'' and r.kind = ''sale'' and l.frozen ->> ''kind'' = ''deposit_return''),', 'day close');
+        where r.till_session_id = any (v_sessions) and r.state = ''finalized'' and r.kind = ''sale'' and l.frozen ->> ''kind'' = ''deposit_return''),', 'the day close');
   execute v_def;
 end
 $patch$;
