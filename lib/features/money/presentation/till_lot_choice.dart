@@ -3,6 +3,7 @@
 // #4366 / #4436 -- the seller chooses the lot a line is sold from: the lots on hand where the sale takes from, the first
 // to expire first, each with its code, its date and what is on hand; one past its date is shown and not offered. "The
 // first to expire" leaves the choice to the server again. An item with no lot says so.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity;
 import 'package:flutter/material.dart';
 
 import '../../../core/i18n/format_controller.dart';
@@ -56,7 +57,7 @@ Future<void> chooseTillLot(BuildContext context, TillLotsPort? port, TillSession
               title: Text(lot.code),
               subtitle: Text([
                 if (lot.expiresOn case final d? when lot.expired) l10n.tillLotExpired(format.date(d)) else if (lot.expiresOn case final d?) l10n.tillLotExpires(format.date(d)),
-                l10n.tillLotOnHand(lot.quantity, line.unit),
+                l10n.tillLotOnHand(switch (ExactQuantity.tryParse(lot.quantity).value) { final q? => format.quantity(q), null => lot.quantity }, line.unit),
               ].join(' · ')),
               onTap: lot.expired ? null : () => Navigator.of(sheet).pop((lot,)),
             ),

@@ -339,7 +339,7 @@
   },
   "tillLotOnHand": "{quantity} {unit} on hand",
   "@tillLotOnHand": {
-    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "description": "#4366 what is on hand of a lot; quantity arrives formatted in the reader's number format",
     "placeholders": {
       "quantity": {
         "type": "String"

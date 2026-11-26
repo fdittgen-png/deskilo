@@ -67208,7 +67208,7 @@ abstract class AppLocalizations {
   /// **'{item} has no lot to choose: it is sold as it is.'**
   String tillLotNone(String item);
 
-  /// #4366 the seller chooses the lot a till line is sold from
+  /// #4366 what is on hand of a lot; quantity arrives formatted in the reader's number format
   ///
   /// In en, this message translates to:
   /// **'{quantity} {unit} on hand'**

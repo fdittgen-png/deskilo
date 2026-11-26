@@ -8,6 +8,10 @@ import '../../../features/money/domain/counter_till.dart';
 /// first and is not expired (MILK-12; MILK-09 is past its date). The gift basket's pieces are of lot BASKET-1; a sale names each piece's tag.
 const demoTracedLots = <String, String>{'demo-item-milk': 'MILK-12', 'demo-item-basket': 'BASKET-1'};
 
+/// The milk's two lots in the expiry report: six days past its date, and four days to go.
+const _milk09DaysPast = 6;
+const _milk12DaysLeft = 4;
+
 /// The Demo's lots, dated from its [clock] (no date without one).
 class DemoTillLots implements TillLotsPort {
   const DemoTillLots({this.clock});
@@ -19,8 +23,8 @@ class DemoTillLots implements TillLotsPort {
     final today = clock?.call();
     return switch (itemId) {
       'demo-item-milk' => [
-        TillLot(id: 'demo-lot-milk-09', code: 'MILK-09', quantity: '2', expiresOn: today?.subtract(const Duration(days: 6)), expired: true),
-        TillLot(id: 'demo-lot-milk-12', code: 'MILK-12', quantity: '6', expiresOn: today?.add(const Duration(days: 4))),
+        TillLot(id: 'demo-lot-milk-09', code: 'MILK-09', quantity: '2', expiresOn: today?.subtract(const Duration(days: _milk09DaysPast)), expired: true),
+        TillLot(id: 'demo-lot-milk-12', code: 'MILK-12', quantity: '6', expiresOn: today?.add(const Duration(days: _milk12DaysLeft))),
       ],
       _ => const [],
     };
