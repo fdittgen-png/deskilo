@@ -110,6 +110,10 @@ insert into public.suppliers (id, workspace_id, supplier_number, name, status) v
 insert into public.services (id, workspace_id, name, price_cents, active, inventory_unit, tracking, stockable) values
   (pg_temp.u(301), pg_temp.u(101), 'Yoghurt', 150, true, 'piece', 'expiry', true),
   (pg_temp.u(302), pg_temp.u(101), 'Apple juice', 300, true, 'piece', 'expiry', true);
+-- the carton and the pallet are units of the business; how many pieces one holds is the item's own
+insert into public.workspace_units (workspace_id, code, label, dimension, factor_num, factor_den) values
+  (pg_temp.u(101), 'carton', 'Carton', 'package', 1, 1), (pg_temp.u(101), 'pallet', 'Pallet', 'package', 1, 1)
+on conflict do nothing;
 -- a pallet of yoghurt is four cartons of twelve; a carton of juice is six bottles
 insert into public.item_units (workspace_id, item_id, unit, factor_num, factor_den) values
   (pg_temp.u(101), pg_temp.u(301), 'carton', 12, 1), (pg_temp.u(101), pg_temp.u(301), 'pallet', 48, 1), (pg_temp.u(101), pg_temp.u(302), 'carton', 6, 1);
