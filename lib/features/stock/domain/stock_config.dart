@@ -19,6 +19,7 @@ class StockUnitDraft {
     required this.factorDen,
     this.defaultPurchase = false,
     this.defaultSale = false,
+    this.priceCents,
   });
 
   final String unit;
@@ -27,12 +28,16 @@ class StockUnitDraft {
   final bool defaultPurchase;
   final bool defaultSale;
 
+  /// #4479 -- the price of ONE of this unit in the minor units of the item's price; null: the item's price times the factor.
+  final int? priceCents;
+
   Map<String, Object?> toJson() => {
     'unit': unit,
     'factor_num': factorNum,
     'factor_den': factorDen,
     'default_purchase': defaultPurchase,
     'default_sale': defaultSale,
+    'price_cents': priceCents,
   };
 
   factory StockUnitDraft.fromJson(Object? json) {
@@ -43,6 +48,7 @@ class StockUnitDraft {
       factorDen: r.integer('factor_den'),
       defaultPurchase: r.boolOr('default_purchase', fallback: false),
       defaultSale: r.boolOr('default_sale', fallback: false),
+      priceCents: r.intOrNull('price_cents'),
     );
   }
 }

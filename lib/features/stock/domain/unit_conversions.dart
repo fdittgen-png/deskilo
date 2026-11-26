@@ -129,3 +129,24 @@ List<String> convertibleUnitCodes({
             unitFactor(from: u.code, to: inventoryUnit, inventoryUnit: inventoryUnit, itemUnits: itemUnits, general: general) != null))
       u.code,
 ];
+
+/// #4479 -- the price of ONE [unit] of an item whose price per inventory unit is [itemPriceCents] (VAT-inclusive, as the item's is): the
+/// item's price for its inventory unit (or no unit), the price a unit carries of its own, else the item's price times what one of the unit
+/// makes of the inventory unit, rounded half up once. Null when no conversion is defined (the server's DKG02: never read as one).
+/// The same rule as `item_unit_price` (0974).
+int? unitPriceCents({
+  required int itemPriceCents,
+  required String? unit,
+  required String inventoryUnit,
+  required List<StockUnitDraft> itemUnits,
+  required Iterable<UnitConversion> general,
+}) {
+  if (unit == null || unit.isEmpty || unit == inventoryUnit) return itemPriceCents;
+  for (final u in itemUnits) {
+    if (u.unit == unit && u.priceCents != null) return u.priceCents;
+  }
+  final f = unitFactor(from: unit, to: inventoryUnit, inventoryUnit: inventoryUnit, itemUnits: itemUnits, general: general);
+  if (f == null) return null;
+  // round half up on a non-negative price: (2 * p * num + den) ~/ (2 * den)
+  return (2 * itemPriceCents * f.num + f.den) ~/ (2 * f.den);
+}

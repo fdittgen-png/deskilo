@@ -21515,6 +21515,14 @@
   "@stockEditUnitName": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockEditUnitPrice": "Prix d'un",
+  "@stockEditUnitPrice": {
+    "description": "#4479 the price of one of an item's units"
+  },
+  "stockEditUnitPriceHelp": "Laissez vide : le prix de l'article multiplié par le facteur.",
+  "@stockEditUnitPriceHelp": {
+    "description": "#4479 what an empty unit price means"
+  },
   "stockEditUnitsHint": "Un conditionnement contient un nombre d’unités de stock ; un tiers de litre est 1 divisé par 3.",
   "@stockEditUnitsHint": {
     "description": "#4169 the stock editors: a label or message"

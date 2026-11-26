@@ -16,6 +16,7 @@ import 'package:deskilo/features/stock/presentation/item_group_assign_dialog.dar
 import 'package:deskilo/features/stock/presentation/item_groups_screen.dart';
 import 'package:deskilo/features/stock/presentation/stock_item_editor.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
+import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -63,6 +64,9 @@ Future<DemoItemGroups> _open(
     overrides: [
       ...standardTestOverrides(),
       itemGroupsProvider.overrideWithValue(groups),
+      currentWorkspaceProvider.overrideWith(
+        (ref) async => const Workspace(id: 'ws-1', name: 'Space', countryCode: 'FR', currencyCode: 'EUR', timezone: 'Europe/Paris', inviteCode: 'x'),
+      ),
       stockConfigCommandsProvider.overrideWithValue(config),
       myPermissionsProvider.overrideWithValue({WorkspacePermission.viewStock, WorkspacePermission.manageStock, if (finance) ...{WorkspacePermission.manageServices, WorkspacePermission.viewFinances}}),
       vatRatesProvider.overrideWith((ref) async => const [VatRate(id: 'vat-std', label: 'Standard 20 %', percent: 20, isDefault: true), VatRate(id: 'vat-red', label: 'Reduced 5.5 %', percent: 5.5), VatRate(id: 'demo-vat-20', label: 'Demo standard 20 %', percent: 20)]),

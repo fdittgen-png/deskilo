@@ -58865,6 +58865,18 @@ abstract class AppLocalizations {
   /// **'Package unit'**
   String get stockEditUnitName;
 
+  /// #4479 the price of one of an item's units
+  ///
+  /// In en, this message translates to:
+  /// **'Price of one'**
+  String get stockEditUnitPrice;
+
+  /// #4479 what an empty unit price means
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty to use the item\'s price times the factor.'**
+  String get stockEditUnitPriceHelp;
+
   /// #4169 the stock editors: a label or message
   ///
   /// In en, this message translates to:
