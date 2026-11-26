@@ -44,6 +44,9 @@ abstract final class HelpAnchor {
   static const moneyStockValue = 'user.money.stock.value';
   static const moneyStockRegistry = 'user.money.stock.registry';
   static const moneyStockItem = 'user.money.stock.item';
+
+  /// #4483 — acting on an item from the list: the phone's chips, the desk's toolbar.
+  static const moneyStockActions = 'user.money.stock.actions';
   static const moneyStockGroups = 'user.money.stock.groups';
   static const moneyStockReversals = 'user.money.stock.reversals';
   static const moneyStockCycleCounts = 'user.money.stock.cycle';

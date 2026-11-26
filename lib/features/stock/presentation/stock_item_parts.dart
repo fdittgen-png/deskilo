@@ -3,6 +3,7 @@
 // #4480 -- the sections of an item's page that read beyond the registry: where the item is, its group and tags,
 // its variants and its supplier articles. Each reads what it shows itself, says a failed read with Try again, and
 // opens the editor the business already has from its worded action; a save reads the section again.
+// #4483 -- the actions are the item's declared ones (stock_item_actions.dart), as on the list's chips and toolbar.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -14,41 +15,40 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/navigation/routes.dart';
 import '../../../core/ui/kit/kit_action_button.dart';
 import '../../../core/ui/kit/kit_metrics.dart';
-import '../domain/stock_tags.dart';
+import '../../money/domain/service_item.dart';
+import '../domain/stock_registry.dart';
 import '../providers/stock_item_providers.dart';
 import '../providers/stock_providers.dart';
-import 'item_group_assign_dialog.dart';
+import 'stock_item_actions.dart';
 import 'stock_item_sections.dart';
-import 'stock_mapping_editor.dart';
 import 'stock_read_failed.dart';
-import 'stock_tags_dialog.dart';
-import 'stock_variants_editor.dart';
-
-/// Reads the registry again, from its first page: the list and the item's page show what was saved.
-void reloadStockRegistry(WidgetRef ref) =>
-    ref.invalidate(stockRegistryWalkProvider);
 
 /// The item's group (where the business keeps groups) and its tags (where it keeps them).
 class StockItemGroupSection extends ConsumerWidget {
   const StockItemGroupSection({
     super.key,
     required this.workspaceId,
-    required this.itemId,
-    required this.name,
+    required this.row,
+    required this.services,
     required this.groupsOn,
     required this.tagsOn,
   });
 
   final String workspaceId;
-  final String itemId;
-  final String name;
+
+  /// The item's own row of the registry.
+  final StockRegistryRow row;
+
+  /// The business's services, for the item's name.
+  final List<ServiceItem> services;
   final bool groupsOn;
   final bool tagsOn;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final key = (workspaceId: workspaceId, itemId: itemId);
+    final acts = StockItemActions(context, ref, workspaceId: workspaceId, services: services);
+    final key = (workspaceId: workspaceId, itemId: row.itemId);
     final group = groupsOn ? ref.watch(stockItemGroupNameProvider(key)) : null;
     return StockItemSection(
       key: const ValueKey('stock-item-section-group'),
@@ -71,34 +71,19 @@ class StockItemGroupSection extends ConsumerWidget {
       actions: [
         if (groupsOn)
           KitActionButton(
-            key: ValueKey('stock-item-group-$itemId'),
+            key: stockItemActionKey(StockItemActionKind.group, row),
             label: l10n.stockItemEditGroup,
             tonal: true,
             showProgress: false,
-            onPressed: () async {
-              await showItemGroupAssign(
-                context,
-                workspaceId: workspaceId,
-                itemId: itemId,
-                itemName: name,
-              );
-              if (context.mounted) {
-                ref.invalidate(stockItemGroupNameProvider(key));
-              }
-            },
+            onPressed: () => acts.editGroup(row),
           ),
         if (tagsOn)
           KitActionButton(
-            key: ValueKey('stock-tags-$itemId'),
+            key: stockItemActionKey(StockItemActionKind.tags, row),
             label: l10n.stockItemEditTags,
             tonal: true,
             showProgress: false,
-            onPressed: () => showStockTagsDialog(
-              context,
-              workspaceId: workspaceId,
-              owner: TagOwner.item(itemId),
-              name: name,
-            ),
+            onPressed: () => acts.editTags(row),
           ),
       ],
     );
@@ -110,21 +95,25 @@ class StockItemVariantsSection extends ConsumerWidget {
   const StockItemVariantsSection({
     super.key,
     required this.workspaceId,
-    required this.itemId,
-    required this.name,
+    required this.row,
+    required this.services,
     required this.mayManage,
   });
 
   final String workspaceId;
-  final String itemId;
-  final String name;
+
+  /// The item's own row of the registry.
+  final StockRegistryRow row;
+
+  /// The business's services, for the item's name.
+  final List<ServiceItem> services;
   final bool mayManage;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final format = appFormatOf(context);
-    final key = (workspaceId: workspaceId, itemId: itemId);
+    final key = (workspaceId: workspaceId, itemId: row.itemId);
     final read = ref.watch(stockItemVariantsProvider(key));
     return StockItemSection(
       key: const ValueKey('stock-item-section-variants'),
@@ -158,22 +147,11 @@ class StockItemVariantsSection extends ConsumerWidget {
       actions: [
         if (mayManage)
           KitActionButton(
-            key: ValueKey('stock-edit-variants-$itemId'),
+            key: stockItemActionKey(StockItemActionKind.variants, row),
             label: l10n.stockItemEditVariants,
             tonal: true,
             showProgress: false,
-            onPressed: () async {
-              final saved = await showStockVariantsEditor(
-                context,
-                ref.read(stockConfigCommandsProvider),
-                workspaceId: workspaceId,
-                itemId: itemId,
-                itemName: name,
-              );
-              if (!saved || !context.mounted) return;
-              ref.invalidate(stockItemVariantsProvider(key));
-              reloadStockRegistry(ref);
-            },
+            onPressed: () => StockItemActions(context, ref, workspaceId: workspaceId, services: services).editVariants(row),
           ),
       ],
     );
@@ -185,18 +163,22 @@ class StockItemSuppliersSection extends ConsumerWidget {
   const StockItemSuppliersSection({
     super.key,
     required this.workspaceId,
-    required this.itemId,
-    required this.name,
+    required this.row,
+    required this.services,
   });
 
   final String workspaceId;
-  final String itemId;
-  final String name;
+
+  /// The item's own row of the registry.
+  final StockRegistryRow row;
+
+  /// The business's services, for the item's name.
+  final List<ServiceItem> services;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final key = (workspaceId: workspaceId, itemId: itemId);
+    final key = (workspaceId: workspaceId, itemId: row.itemId);
     final read = ref.watch(stockItemMappingsProvider(key));
     return StockItemSection(
       key: const ValueKey('stock-item-section-suppliers'),
@@ -230,20 +212,11 @@ class StockItemSuppliersSection extends ConsumerWidget {
       ],
       actions: [
         KitActionButton(
-          key: ValueKey('stock-edit-mappings-$itemId'),
+          key: stockItemActionKey(StockItemActionKind.suppliers, row),
           label: l10n.stockItemEditSuppliers,
           tonal: true,
           showProgress: false,
-          onPressed: () async {
-            await showStockMappings(
-              context,
-              ref.read(stockConfigCommandsProvider),
-              workspaceId: workspaceId,
-              itemId: itemId,
-              itemName: name,
-            );
-            if (context.mounted) ref.invalidate(stockItemMappingsProvider(key));
-          },
+          onPressed: () => StockItemActions(context, ref, workspaceId: workspaceId, services: services).editSuppliers(row),
         ),
       ],
     );

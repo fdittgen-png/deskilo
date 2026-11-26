@@ -734,12 +734,31 @@ Die **Meldebestände** (unter den beiden Listen) machen einen Artikel knapp. Jed
 
 Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es ist, was es kostet und einbringt, wohin es gehört und wie viel es gibt.
 
-Öffnen Sie **Lager → Artikel**. Jede Zeile zeigt den Namen des Artikels, darunter seinen Preis, den Bestand und seinen festen Lagerort, und ein Abzeichen, wenn dem Artikel etwas fehlt: *Niedriger Bestand*, *Kein Preis* oder *Kein Lagerort*. Die Zeile trägt keine Tasten: Tippen Sie sie an, um den Artikel zu öffnen, wo alles über ihn steht und geändert wird ([Die Seite eines Artikels](help:user.money.stock.item)).
+Öffnen Sie **Lager → Artikel**. Jeder Artikel zeigt seinen Namen, darunter seinen Preis, den Bestand und seinen festen Lagerort, und ein Abzeichen, wenn dem Artikel etwas fehlt: *Niedriger Bestand*, *Kein Preis* oder *Kein Lagerort*. Auf einem Telefon ist jeder Artikel eine Karte; auf einem quer gehaltenen Tablet oder einem Computer stehen die Artikel in einer Tabelle mit den Spalten **Name**, **Preis**, **Bestand**, **Fester Lagerort**, **Gruppe** und **Status**, sortiert per Klick auf **Name**, **Preis** oder **Bestand**. Öffnen Sie einen Artikel, um alles über ihn zu sehen und zu ändern ([Die Seite eines Artikels](help:user.money.stock.item)), oder handeln Sie direkt in der Liste ([Einen Artikel aus der Liste bearbeiten](help:user.money.stock.actions)).
 
 - **Filtern** Sie nach einem Lagerort, um zu sehen, was dort und darunter eingelagert ist, oder wählen Sie den Chip *Ohne festen Lagerort*, um zu sehen, was noch einen braucht.
 - **Suchen** Sie nach Name, Barcode oder Adresse. Einen Barcode in die Suche eingeben oder scannen und bestätigen öffnet diesen Artikel.
 - Lange Listen werden seitenweise geladen: Wählen Sie *Mehr anzeigen*.
 - Die zuletzt bekannten Kosten erscheinen auf der Seite des Artikels nur, wenn Ihre Rolle Finanzen sehen oder Einkäufe verwalten darf; sonst steht dort *Kosten nicht angezeigt*. Kosten, die noch keine Lieferung geliefert hat, bleiben *Kosten unbekannt*, nie null.
+
+<!-- anchor: user.money.stock.actions -->
+### Einen Artikel aus der Liste bearbeiten
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten eine Sache an einem Artikel ändern – seinen Preis, seinen Lagerort, seine Gruppe –, ohne seine Seite zu öffnen.
+
+- **Auf einem Telefon** endet jede Karte mit einer Reihe von Chips, jeder ein Symbol mit einem Wort: **Bearbeiten** (Name, Preis und MwSt.), **Lagerort**, **Gruppe**, **Tags**, **Einstellungen**, **Varianten** und **Lieferanten**. Wischen Sie die Reihe seitwärts, wenn sie nicht passt. Ein Chip öffnet denselben Editor wie die Seite des Artikels; tippen Sie die Karte selbst an, um die Seite zu öffnen.
+- **Auf einem quer gehaltenen Tablet oder einem Computer** wählen Sie eine Zeile mit einem Klick aus: Sie wird hervorgehoben und mit einem Häkchen markiert. Die Leiste über der Tabelle nennt dann den Artikel und bietet **Name, Preis und MwSt. bearbeiten**, **Lagerort**, **Gruppe**, **Tags**, **Lagereinstellungen**, **Varianten**, **Lieferantenartikel** und **Öffnen**. Die Pfeiltasten verschieben die Auswahl; die Eingabetaste oder ein Doppelklick öffnet den Artikel neben der Liste; **Auswahl aufheben** gibt ihn frei.
+- Ist nichts ausgewählt, sagt die Leiste *Wählen Sie einen Artikel aus, um ihn zu bearbeiten* und bietet **Artikel hinzufügen**. Suche, Lagerort und *Ohne festen Lagerort* stehen links in ihr.
+
+**Gut zu wissen**
+
+- Angeboten wird nur, was Ihre Rolle erlaubt: Auf einem Telefon fehlen die übrigen Chips, wer den Bestand nur sehen darf, hat also keine; auf einem Computer sind sie ausgegraut. **Name, Preis und MwSt. bearbeiten** verlangt das Recht, Leistungen zu verwalten, alles andere das Recht, das Lager zu verwalten.
+- Nach dem Speichern liest die Liste den Artikel neu: Die Zeile bleibt ausgewählt und zeigt die neuen Werte.
+- **Gruppe** und **Tags** erscheinen, wo der Betrieb Artikelgruppen und Tags nutzt.
+
+**Siehe auch:** [Das Artikelregister](help:user.money.stock.registry) · [Die Seite eines Artikels](help:user.money.stock.item)
 
 <!-- anchor: user.money.stock.item -->
 ### Die Seite eines Artikels
@@ -748,7 +767,7 @@ Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es i
 
 Sie möchten alles über einen Artikel an einem Ort sehen und jeden Teil dort ändern, wo Sie ihn lesen.
 
-Tippen Sie einen Artikel unter **Lager → Artikel** an. Auf einem Telefon öffnet er sich als eigene Seite; auf einem quer gehaltenen Tablet oder einem Computer öffnet er sich neben der Liste, die ihre Suche und Filter behält. Jeder Teil der Seite hat seine eigene Aktion, benannt nach dem, was sie ändert:
+Tippen Sie auf einem Telefon die Karte eines Artikels unter **Lager → Artikel** an: Er öffnet sich als eigene Seite. Auf einem quer gehaltenen Tablet oder einem Computer doppelklicken Sie seine Zeile, drücken auf ihr die Eingabetaste oder wählen **Öffnen**: Er öffnet sich neben der Liste, die ihre Suche, Filter und Auswahl behält. Jeder Teil der Seite hat seine eigene Aktion, benannt nach dem, was sie ändert:
 
 - **Übersicht**: Preis, MwSt., Einheit, Barcode und zuletzt bekannte Kosten. **Name, Preis und MwSt. bearbeiten** öffnet den Editor der Leistung.
 - **Bestand**: der Bestand und der feste Lagerort des Artikels oder jeder Variante, und **Wo er liegt**: die ersten Orte, an denen er liegt (**Alle Orte ansehen** zeigt alle). **Festen Lagerort ändern** sagt, wohin der Artikel gehört: Gang, Fach oder Behälter. Es ist ein Hinweis für Einlagerung, Zählung und Kommissionierung: Bestand kann anderswo liegen, und eine Änderung bewegt nichts. **Einheiten, Codes und Verfolgung bearbeiten** öffnet die Lagereinstellungen des Artikels.

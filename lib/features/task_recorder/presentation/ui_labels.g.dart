@@ -9976,6 +9976,7 @@ Map<String, _Getter> _part22() => {
   'stockEditUnitsTitle': (l) => l.stockEditUnitsTitle,
   'stockItemNewUnit': (l) => l.stockItemNewUnit,
   'stockItemNoSuppliers': (l) => l.stockItemNoSuppliers,
+  'stockItemsSelectHint': (l) => l.stockItemsSelectHint,
   'stockLotTitle': (l) => l.stockLotTitle,
   'stockMovementTitle': (l) => l.stockMovementTitle,
   'stockPlaceEditTitle': (l) => l.stockPlaceEditTitle,

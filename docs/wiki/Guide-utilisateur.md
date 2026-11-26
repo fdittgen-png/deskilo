@@ -3030,7 +3030,7 @@ Choisissez **Créer un code d'invitation**. Le code s'affiche une seule fois, av
 
 La liste montre chaque invitation comme invitée, en lecture, expirée ou terminée. **Mettre fin à l'accès** arrête la lecture à partir de là ; rien n'est effacé, les factures et leur historique restent tels quels. Le client n'est jamais un membre : aucune réservation, aucun annuaire, aucune communauté, aucun rôle ni forfait ne découle de l'accès. Si la liste ne peut pas être lue, réessayez plutôt que de la croire vide ; si une réponse n'arrive pas, choisissez à nouveau **Créer un code d'invitation** : la même demande donne la même invitation, jamais une seconde.
 
-**Voir aussi :** [Clients facturés](#clients-facturés)
+**Voir aussi:** [Clients facturés](#clients-facturés)
 
 <!-- anchor: user.money.invoices.standalone -->
 ### Une facture client sans mois
@@ -3054,7 +3054,7 @@ Vous avez rendu un service à un client désigné aujourd'hui (une consultation,
 - Votre brouillon reste tel quel quand vous redimensionnez la fenêtre ou qu'une vérification est refusée. Si la réponse à **Émettre la facture** n'arrive pas, la même confirmation n'émet jamais une seconde facture : cherchez-la à nouveau.
 - Modifier ensuite le catalogue ou le client ne change jamais une facture émise.
 
-**Voir aussi :** [Clients facturés](#clients-facturés) · [Payer des factures sans mois](#payer-des-factures-sans-mois)
+**Voir aussi:** [Clients facturés](#clients-facturés) · [Payer des factures sans mois](#payer-des-factures-sans-mois)
 
 <!-- anchor: user.money.quotes -->
 ### Devis
@@ -3145,12 +3145,31 @@ Les **seuils de réapprovisionnement** (sous les deux listes) font qu’un artic
 
 Vous voulez une seule liste qui dise, pour chaque article et chaque variante, ce que c’est, ce que cela coûte et se vend, où c’est rangé et combien il y en a.
 
-Ouvrez **Stock → Articles**. Chaque ligne montre le nom de l’article, puis son prix, ce qui est en stock et son emplacement de rangement, et un badge quand l’article attend quelque chose : *Stock bas*, *Sans prix* ou *Sans emplacement*. La ligne ne porte aucun bouton : touchez-la pour ouvrir l’article, où tout ce qui le concerne est montré et modifié ([La page d’un article](#la-page-dun-article)).
+Ouvrez **Stock → Articles**. Chaque article montre son nom, puis son prix, ce qui est en stock et son emplacement de rangement, et un badge quand l’article attend quelque chose : *Stock bas*, *Sans prix* ou *Sans emplacement*. Sur un téléphone, chaque article est une carte ; sur une tablette tenue à l’horizontale ou un ordinateur, les articles forment un tableau aux colonnes **Nom**, **Prix**, **En stock**, **Emplacement de rangement**, **Groupe** et **Statut**, trié d’un clic sur **Nom**, **Prix** ou **En stock**. Ouvrez un article pour tout voir et tout modifier ([La page d’un article](#la-page-dun-article)), ou agissez depuis la liste ([Agir sur un article depuis la liste](#agir-sur-un-article-depuis-la-liste)).
 
 - **Filtrez** par un emplacement pour voir ce qui y est rangé et dans les emplacements en dessous, ou choisissez la puce *Sans emplacement de rangement* pour voir ce qui en attend encore un.
 - **Recherchez** par nom, code-barres ou adresse. Saisir ou scanner un code-barres dans la recherche et valider ouvre cet article.
 - Les longues listes se chargent par pages : choisissez *Afficher plus*.
 - Le dernier coût connu n’apparaît sur la page de l’article que si votre rôle peut voir les finances ou gérer les achats ; sinon elle indique *coût non affiché*. Un coût qu’aucune livraison n’a encore donné reste *coût inconnu*, jamais zéro.
+
+<!-- anchor: user.money.stock.actions -->
+### Agir sur un article depuis la liste
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez changer une chose d’un article — son prix, son emplacement, son groupe — sans ouvrir sa page.
+
+- **Sur un téléphone**, chaque carte se termine par une rangée de puces, chacune une icône et un mot : **Modifier** (nom, prix et TVA), **Emplacement**, **Groupe**, **Puces**, **Réglages**, **Variantes** et **Fournisseurs**. Faites glisser la rangée de côté quand elle ne tient pas. Une puce ouvre le même éditeur que la page de l’article ; touchez la carte elle-même pour ouvrir la page.
+- **Sur une tablette tenue à l’horizontale ou un ordinateur**, cliquez une ligne pour la sélectionner : elle est mise en évidence et cochée. La barre au-dessus du tableau nomme alors l’article et propose **Modifier le nom, le prix et la TVA**, **Emplacement**, **Groupe**, **Puces**, **Réglages du stock**, **Variantes**, **Articles fournisseur** et **Ouvrir**. Les flèches déplacent la sélection ; Entrée ou un double clic ouvre l’article à côté de la liste ; **Effacer la sélection** le relâche.
+- Sans sélection, la barre dit *Sélectionnez un article pour agir dessus* et propose **Ajouter un article**. La recherche, l’emplacement et *Sans emplacement de rangement* sont à sa gauche.
+
+**Bon à savoir**
+
+- Seul ce que votre rôle permet est proposé : sur un téléphone les autres puces n’apparaissent pas, celui qui peut seulement voir le stock n’en a donc aucune ; sur un ordinateur elles sont grisées. **Modifier le nom, le prix et la TVA** demande le droit de gérer les prestations, le reste celui de gérer le stock.
+- Après un enregistrement, la liste relit l’article : la ligne reste sélectionnée et montre ses nouvelles valeurs.
+- **Groupe** et **Puces** apparaissent là où l’entreprise utilise les groupes d’articles et les puces.
+
+**Voir aussi:** [Le registre des articles](#le-registre-des-articles) · [La page d’un article](#la-page-dun-article)
 
 <!-- anchor: user.money.stock.item -->
 ### La page d’un article
@@ -3159,7 +3178,7 @@ Ouvrez **Stock → Articles**. Chaque ligne montre le nom de l’article, puis s
 
 Vous voulez tout ce qui concerne un article au même endroit, et modifier chaque partie là où vous la lisez.
 
-Touchez un article dans **Stock → Articles**. Sur un téléphone, il s’ouvre comme une page à part ; sur une tablette tenue à l’horizontale ou un ordinateur, il s’ouvre à côté de la liste, qui garde sa recherche et ses filtres. Chaque partie de la page a sa propre action, nommée d’après ce qu’elle modifie :
+Sur un téléphone, touchez la carte d’un article dans **Stock → Articles** : il s’ouvre comme une page à part. Sur une tablette tenue à l’horizontale ou un ordinateur, double-cliquez sa ligne, appuyez sur Entrée ou choisissez **Ouvrir** : il s’ouvre à côté de la liste, qui garde sa recherche, ses filtres et sa sélection. Chaque partie de la page a sa propre action, nommée d’après ce qu’elle modifie :
 
 - **Aperçu** : le prix, la TVA, l’unité, le code-barres et le dernier coût connu. **Modifier le nom, le prix et la TVA** ouvre l’éditeur du service.
 - **Stock** : ce qui est en stock et l’emplacement de rangement, de l’article ou de chaque variante, et **Où il se trouve** : les premiers emplacements qui le contiennent (**Voir tous les emplacements** les montre tous). **Changer l’emplacement de rangement** dit où l’article est rangé : son allée, son étagère ou son bac. C’est un conseil pour le rangement, l’inventaire et le prélèvement : le stock peut être ailleurs, et le changer ne déplace rien. **Modifier les unités, les codes et le suivi** ouvre les réglages du stock de l’article.
@@ -3492,7 +3511,7 @@ Une entreprise qui vous facture peut vous remettre un code, pour que vous lisiez
 - Accepter ne fait pas de vous un membre de l'entreprise. L'entreprise peut mettre fin à l'accès, et vous aussi ; rien n'est effacé à la fin.
 - Payer ces factures d'ici n'est pas encore proposé.
 
-**Voir aussi :** [Vos finances dans tous vos espaces](#vos-finances-dans-tous-vos-espaces)
+**Voir aussi:** [Vos finances dans tous vos espaces](#vos-finances-dans-tous-vos-espaces)
 
 <!-- anchor: user.money.finances.standalone -->
 ### Payer des factures sans mois
@@ -3515,7 +3534,7 @@ Une entreprise vous a émis des factures qui n'appartiennent à aucun mois. Elle
 - L'argent est comptabilisé le mois où il arrive. Ce qu'une facture ne prend pas reste votre crédit auprès de l'entreprise jusqu'à son affectation.
 - Une entreprise dont le service de paiement est trop ancien le dit avant tout envoi.
 
-**Voir aussi :** [Vos finances entre espaces](#vos-finances-dans-tous-vos-espaces)
+**Voir aussi:** [Vos finances entre espaces](#vos-finances-dans-tous-vos-espaces)
 
 <!-- anchor: user.money.businesses -->
 ### Vos activités en un coup d'œil

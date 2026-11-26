@@ -23,5 +23,6 @@
   "stockItemAttentionNoPrice": "Sin precio",
   "stockItemAttentionNoPlace": "Sin ubicación",
   "stockItemFilterAll": "Todos los artículos",
-  "stockItemFilterNoHome": "Sin ubicación habitual"
+  "stockItemFilterNoHome": "Sin ubicación habitual",
+  "stockItemsSelectHint": "Seleccione un artículo para actuar sobre él"
 }

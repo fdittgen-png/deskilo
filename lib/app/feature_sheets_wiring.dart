@@ -64,10 +64,19 @@ final List<Override> featureSheetsFromApp = [
     final units = await ref.watch(stock_units.workspaceUnitListProvider(key.workspaceId).future);
     final general = await ref.watch(stock_units.unitConversionListProvider(key.workspaceId).future);
     final codes = convertibleUnitCodes(inventoryUnit: config.inventoryUnit, itemUnits: config.units, units: units, general: general);
-    return [
+    final offered = [
       for (final u in units)
         if (codes.contains(u.code)) LineUnit(code: u.code, label: u.label, unEceCode: u.unEceCode),
     ];
+    final supplied = key.supplierId == null
+        ? null
+        : (await ref.watch(stockConfigCommandsProvider).mappings(key.workspaceId))
+              .where((m) => m.active && m.supplierId == key.supplierId && m.itemId == key.itemId && (m.purchaseUnit ?? '').isNotEmpty)
+              .map((m) => m.purchaseUnit!)
+              .firstOrNull;
+    final own = config.units.where((u) => u.defaultPurchase).map((u) => u.unit).firstOrNull;
+    final start = [supplied, own, config.inventoryUnit].firstWhere((c) => c != null && codes.contains(c), orElse: () => null);
+    return ItemOrderUnits(units: offered, defaultUnit: start);
   }),
   // #4294 — the names the low-stock notice of the inbox reads (events never import the stock).
   eventNameSourcesProvider.overrideWithValue(const [stockEventNames]),

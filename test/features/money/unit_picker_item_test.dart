@@ -20,7 +20,7 @@ Future<void> _open(WidgetTester tester, {String? itemId, List<LineUnit>? only}) 
     ),
     overrides: [
       pickableUnitsProvider.overrideWith((ref, ws) => _all),
-      itemOrderUnitsProvider.overrideWith((ref, key) async => only),
+      itemOrderUnitsProvider.overrideWith((ref, key) async => only == null ? null : ItemOrderUnits(units: only)),
     ],
   );
   await tester.pumpAndSettle();

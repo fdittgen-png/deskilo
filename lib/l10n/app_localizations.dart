@@ -59315,6 +59315,12 @@ abstract class AppLocalizations {
   /// **'The items the business keeps and sells: each one\'s settings, variants and supplier articles.'**
   String get stockItemsIntro;
 
+  /// #4483 the desk's toolbar above the items grid while no row is selected: how to act on an item
+  ///
+  /// In en, this message translates to:
+  /// **'Select an item to act on it'**
+  String get stockItemsSelectHint;
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:

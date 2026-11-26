@@ -31,12 +31,14 @@ class UnitPickerField extends ConsumerWidget {
     this.errorText,
     this.required = false,
     this.itemId,
+    this.supplierId,
   });
 
   final String workspaceId;
 
   /// #4479 -- the stocked item the row is for: only the units it converts from are offered.
   final String? itemId;
+  final String? supplierId;
 
   /// The unit code the row holds; '' while none is chosen.
   final String value;
@@ -53,7 +55,7 @@ class UnitPickerField extends ConsumerWidget {
     final l = context.l10n;
     final all = ref.watch(pickableUnitsProvider(workspaceId));
     final item = itemId;
-    final only = item == null ? null : ref.watch(itemOrderUnitsProvider((workspaceId: workspaceId, itemId: item))).value;
+    final only = item == null ? null : ref.watch(itemOrderUnitsProvider((workspaceId: workspaceId, itemId: item, supplierId: supplierId))).value?.units;
     final units = only == null ? all : [for (final u in all) if (only.any((o) => o.code == u.code)) u];
     final listed = unitIsListed(units, value);
     return AppDropdownField<String>(

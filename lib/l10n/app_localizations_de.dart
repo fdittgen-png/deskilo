@@ -37388,6 +37388,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Artikel, die das Unternehmen führt und verkauft: Einstellungen, Varianten und Lieferantenartikel je Artikel.';
 
   @override
+  String get stockItemsSelectHint =>
+      'Wählen Sie einen Artikel aus, um ihn zu bearbeiten';
+
+  @override
   String get stockItemsTitle => 'Artikel';
 
   @override

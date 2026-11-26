@@ -6,6 +6,7 @@
 // sent; a save sends the complete lists at the revision it read; a stale
 // revision and a refusal are said, in the sheet, and nothing is shown saved.
 // #4480 -- the item's editors are reached from its page, one worded action per section; the row opens the item.
+// #4483 -- at the desk the toolbar carries the same keys: the page's actions are looked for in the page.
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
@@ -84,10 +85,10 @@ void main() {
           registry: FakeItemRegistry(money: money),
         );
         await openStockItem(tester, 'i-Tea');
-        final edit = find.byKey(const ValueKey('stock-item-edit-i-Tea'));
+        final edit = itemAction('stock-item-edit-i-Tea');
         expect(edit, findsOneWidget);
         expect(tester.getSize(edit).shortestSide, greaterThanOrEqualTo(48));
-        expect(find.text(_en.stockItemEditDetails), findsOneWidget, reason: 'the edit says what it edits');
+        expect(find.descendant(of: edit, matching: find.text(_en.stockItemEditDetails)), findsOneWidget, reason: 'the edit says what it edits');
         await tapItemAction(tester, 'stock-item-edit-i-Tea');
         await tester.enterText(find.byKey(const ValueKey('services-price')), '15');
         await tester.ensureVisible(find.byKey(const ValueKey('services-save')));
@@ -103,20 +104,22 @@ void main() {
           ..services.add(const ServiceItem(id: 'i-Tea', workspaceId: 'ws-1', name: 'Tea', priceCents: 300, active: true));
         await _open(tester, FakeItemConfig(), size, held: _manage, money: money, registry: FakeItemRegistry(money: money));
         await openStockItem(tester, 'i-Tea');
-        expect(find.byKey(const ValueKey('stock-item-edit-i-Tea')), findsNothing);
-        expect(find.byKey(const ValueKey('stock-edit-item-i-Tea')), findsOneWidget, reason: 'the stock settings stay');
+        expect(itemAction('stock-item-edit-i-Tea'), findsNothing);
+        expect(itemAction('stock-edit-item-i-Tea'), findsOneWidget, reason: 'the stock settings stay');
       });
 
       testWidgets('a row shows price, what is on hand and the home address; the item shows barcode and cost', (tester) async {
         await _open(tester, FakeItemConfig(), size, held: _manage);
-        final wine = tester.widget<ListTile>(find.byKey(const ValueKey('stock-item-i-Wine')));
-        final text = (wine.subtitle! as Text).data!;
+        // #4483: a card's facts line on a phone, the grid's cells at the desk.
+        String said(String row) => tester
+            .widgetList<Text>(find.descendant(of: find.byKey(ValueKey('stock-item-$row')), matching: find.byType(Text)))
+            .map((t) => t.data ?? '')
+            .join(' · ');
+        final text = said('i-Wine');
         for (final part in ['€12.50', 'MAIN-SALES-A03-B02-S4', _en.stockQuantityWithUnit('12', 'l')]) {
           expect(text.contains(part), true, reason: part);
         }
-        expect(wine.trailing, isNot(isA<Wrap>()), reason: 'no action buttons crowd the row');
-        final tea = tester.widget<ListTile>(find.byKey(const ValueKey('stock-item-i-Tea')));
-        expect((tea.subtitle! as Text).data!.contains(_en.stockRegistryNoHome), true, reason: 'an item with no home place says so');
+        expect(said('i-Tea').contains(_en.stockRegistryNoHome), true, reason: 'an item with no home place says so');
         expect(find.byKey(const ValueKey('stock-item-badge-i-Tea')), findsOneWidget, reason: 'and carries the badge');
         expect(find.byKey(const ValueKey('stock-item-badge-i-Wine')), findsNothing);
         await openStockItem(tester, 'i-Wine');
@@ -129,7 +132,7 @@ void main() {
         await _open(tester, FakeItemConfig(), size, held: {WorkspacePermission.viewStock}, registry: FakeItemRegistry(costVisible: false));
         await openStockItem(tester, 'i-Wine');
         expect(find.descendant(of: find.byKey(const ValueKey('stock-item-section-overview')), matching: find.text(_en.stockRegistryCostHidden)), findsOneWidget);
-        expect(find.byKey(const ValueKey('stock-home-i-Wine')), findsNothing, reason: 'and may not set a home place');
+        expect(itemAction('stock-home-i-Wine'), findsNothing, reason: 'and may not set a home place');
       });
 
       testWidgets('"no home place" keeps what has none, and the filter is sent to the server', (tester) async {
@@ -214,7 +217,7 @@ void main() {
       testWidgets('a person who may only look sees no editor', (tester) async {
         await _open(tester, FakeItemConfig(), size, held: {WorkspacePermission.viewStock});
         await openStockItem(tester, 'i-Wine');
-        expect(find.byKey(const ValueKey('stock-edit-item-i-Wine')), findsNothing);
+        expect(itemAction('stock-edit-item-i-Wine'), findsNothing);
       });
 
       testWidgets('a mistake is shown under its field and nothing is sent; the fixed save sends the complete lists at the revision read', (tester) async {
