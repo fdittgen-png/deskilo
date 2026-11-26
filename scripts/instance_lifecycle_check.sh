@@ -215,6 +215,14 @@ for db in "$INSTALL" "$RESUME" "$FOREIGN"; do
 done
 echo "prepared in $((SECONDS - started))s"
 
+# #4492 — PREPARE_ONLY=1 (with KEEP_EMPTY=1) stops here: the empty project
+# alone, for a check that installs into copies of it without the Dart
+# toolchain (scripts/upgrade_equivalence_check.sh on the database preview).
+if [ "${PREPARE_ONLY:-}" = 1 ]; then
+  echo "prepare only: $EMPTY is ready"
+  exit 0
+fi
+
 echo "--- the lifecycle"
 dart run tool/instance_lifecycle_check.dart \
   --psql "docker exec $C psql -U postgres" \

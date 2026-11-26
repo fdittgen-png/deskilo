@@ -1,0 +1,10 @@
+# #4492 row 6 -- the patches scripts/upgrade_equivalence_check.sh found completing
+# WITHOUT their anchor and saying nothing, each with what it is. One per line:
+#
+#   <SILENT|PATCHED_STUB> <migration> <function signature>   # what it is
+#
+# A pair that is not here fails the check; a pair here that the check no longer
+# finds is reported, and its line goes. The list only shrinks: an applied
+# migration never changes, so a line leaves when the function is restated whole
+# by a later migration and the earlier file is retired from the bundle, or when
+# the reason for listing it no longer holds.
