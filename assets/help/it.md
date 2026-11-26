@@ -3005,12 +3005,30 @@ I **punti di riordino** (sotto le due liste) rendono basso un articolo. Ognuno m
 
 Lei vuole un’unica lista che dica, per ogni articolo e variante, che cos’è, quanto costa e a quanto si vende, dove va e quanto ce n’è.
 
-Apra **Magazzino → Articoli**. Ogni riga mostra il nome dell’articolo, poi il suo prezzo, ciò che è disponibile e la sua ubicazione abituale, e un contrassegno quando all’articolo manca qualcosa: *Scorta bassa*, *Senza prezzo* o *Senza ubicazione*. La riga non porta pulsanti: la tocchi per aprire l’articolo, dove tutto ciò che lo riguarda è mostrato e modificato ([La pagina di un articolo](help:user.money.stock.item)).
+Apra **Magazzino → Articoli**. Ogni articolo mostra il suo nome, poi il suo prezzo, ciò che è disponibile e la sua ubicazione abituale, e un contrassegno quando all’articolo manca qualcosa: *Scorta bassa*, *Senza prezzo* o *Senza ubicazione*. Su un telefono ogni articolo è una scheda; su un tablet tenuto in orizzontale o su un computer gli articoli formano una tabella con le colonne **Nome**, **Prezzo**, **Disponibile**, **Ubicazione abituale**, **Gruppo** e **Stato**, ordinata con un clic su **Nome**, **Prezzo** o **Disponibile**. Apra un articolo per vedere e modificare tutto ([La pagina di un articolo](help:user.money.stock.item)), oppure agisca dalla lista ([Agire su un articolo dalla lista](help:user.money.stock.actions)).
 
 - **Filtri** per un’ubicazione per vedere ciò che vi è sistemato e nelle ubicazioni sottostanti, oppure scelga il chip *Senza ubicazione abituale* per vedere ciò che ne ha ancora bisogno.
 - **Cerchi** per nome, codice a barre o indirizzo. Digitare o scansionare un codice a barre nella ricerca e confermare apre quell’articolo.
 - Le liste lunghe si caricano a pagine: scelga *Mostra altri*.
 - L’ultimo costo noto compare sulla pagina dell’articolo solo se il suo ruolo può vedere le finanze o gestire gli acquisti; altrimenti dice *costo non mostrato*. Un costo che nessuna consegna ha ancora dato resta *costo sconosciuto*, mai zero.
+
+### Agire su un articolo dalla lista
+
+**Destinatari:** Amministratore · Proprietario
+
+Lei vuole cambiare una cosa di un articolo — il prezzo, l’ubicazione, il gruppo — senza aprirne la pagina.
+
+- **Su un telefono**, ogni scheda termina con una fila di chip, ciascuno un’icona e una parola: **Modifica** (nome, prezzo e IVA), **Ubicazione**, **Gruppo**, **Tag**, **Impostazioni**, **Varianti** e **Fornitori**. Faccia scorrere la fila di lato quando non ci sta. Un chip apre lo stesso editor della pagina dell’articolo; tocchi la scheda stessa per aprire la pagina.
+- **Su un tablet tenuto in orizzontale o su un computer**, faccia clic su una riga per selezionarla: viene evidenziata e spuntata. La barra sopra la tabella nomina allora l’articolo e offre **Modifica nome, prezzo e IVA**, **Ubicazione**, **Gruppo**, **Tag**, **Impostazioni del magazzino**, **Varianti**, **Articoli del fornitore** e **Apri**. Le frecce spostano la selezione; Invio o un doppio clic apre l’articolo accanto alla lista; **Annulla la selezione** lo rilascia.
+- Senza selezione, la barra dice *Selezioni un articolo per agire su di esso* e offre **Aggiungi un articolo**. La ricerca, l’ubicazione e *Senza ubicazione abituale* stanno alla sua sinistra.
+
+**Da sapere**
+
+- Viene offerto solo ciò che il Suo ruolo consente: su un telefono gli altri chip non compaiono, quindi chi può solo vedere il magazzino non ne ha nessuno; su un computer sono in grigio. **Modifica nome, prezzo e IVA** richiede il diritto di gestire i servizi, il resto quello di gestire il magazzino.
+- Dopo un salvataggio la lista rilegge l’articolo: la riga resta selezionata e mostra i nuovi valori.
+- **Gruppo** e **Tag** compaiono dove l’attività usa i gruppi di articoli e i tag.
+
+**Vedi anche:** [Il registro degli articoli](help:user.money.stock.registry) · [La pagina di un articolo](help:user.money.stock.item)
 
 ### La pagina di un articolo
 
@@ -3018,7 +3036,7 @@ Apra **Magazzino → Articoli**. Ogni riga mostra il nome dell’articolo, poi i
 
 Lei vuole tutto ciò che riguarda un articolo in un solo posto, e modificare ogni parte dove la legge.
 
-Tocchi un articolo in **Magazzino → Articoli**. Su un telefono si apre come una pagina a sé; su un tablet tenuto in orizzontale o su un computer si apre accanto alla lista, che conserva la sua ricerca e i suoi filtri. Ogni parte della pagina ha la sua azione, che porta il nome di ciò che modifica:
+Su un telefono, tocchi la scheda di un articolo in **Magazzino → Articoli**: si apre come una pagina a sé. Su un tablet tenuto in orizzontale o su un computer, faccia doppio clic sulla sua riga, prema Invio su di essa o scelga **Apri**: si apre accanto alla lista, che conserva la sua ricerca, i suoi filtri e la sua selezione. Ogni parte della pagina ha la sua azione, che porta il nome di ciò che modifica:
 
 - **Panoramica**: il prezzo, l’IVA, l’unità, il codice a barre e l’ultimo costo noto. **Modifica nome, prezzo e IVA** apre l’editor del servizio.
 - **Magazzino**: ciò che è disponibile e l’ubicazione abituale, dell’articolo o di ogni variante, e **Dove si trova**: le prime ubicazioni che lo contengono (**Tutte le ubicazioni** le mostra tutte). **Modifica l’ubicazione abituale** dice dove va l’articolo: la sua corsia, scaffale o cassetto. È un’indicazione per sistemare, contare e prelevare: la merce può stare altrove e cambiarla non sposta nulla. **Modifica unità, codici e tracciamento** apre le impostazioni di magazzino dell’articolo.

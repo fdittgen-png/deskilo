@@ -98,5 +98,9 @@
   "stockItemFilterNoHome": "Without a home place",
   "@stockItemFilterNoHome": {
     "description": "#4480 Stock items: a filter chip above the list"
+  },
+  "stockItemsSelectHint": "Select an item to act on it",
+  "@stockItemsSelectHint": {
+    "description": "#4483 the desk's toolbar above the items grid while no row is selected: how to act on an item"
   }
 }

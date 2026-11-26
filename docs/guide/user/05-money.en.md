@@ -734,12 +734,31 @@ Open **Stock → Reorder** (the feature *Reorder points* must be on). The page h
 
 You want one list that says, for every item and variant, what it is, what it costs and sells for, where it belongs and how much there is.
 
-Open **Stock → Items**. Each line shows the item's name, then its price, what is on hand and its home place, and a badge when the item needs something: *Low stock*, *No price* or *No place*. The line holds no buttons: tap it to open the item, where everything about it is shown and changed ([An item's page](help:user.money.stock.item)).
+Open **Stock → Items**. Each item shows its name, then its price, what is on hand and its home place, and a badge when the item needs something: *Low stock*, *No price* or *No place*. On a phone each item is a card; on a tablet held sideways or a computer the items are a table with the columns **Name**, **Price**, **On hand**, **Home place**, **Group** and **Status**, sorted by a click on **Name**, **Price** or **On hand**. Open an item to see and change everything about it ([An item's page](help:user.money.stock.item)), or act on it from the list ([Acting on an item from the list](help:user.money.stock.actions)).
 
 - **Filter** by a place to see what is homed in it and in the places below it, or choose the chip *Without a home place* to see what still needs one.
 - **Search** by name, barcode or address. Typing or scanning a barcode into the search and confirming opens that item.
 - Long lists load by pages: choose *Show more*.
 - The last known cost appears on the item's page only if your role may see finances or manage purchases; otherwise it says *cost not shown*. A cost that no delivery has given yet stays *cost unknown*, never zero.
+
+<!-- anchor: user.money.stock.actions -->
+### Acting on an item from the list
+
+**Audience:** Administrator · Owner
+
+You want to change one thing about an item — its price, its place, its group — without opening its page.
+
+- **On a phone**, each card ends with a row of chips, each an icon and a word: **Edit** (name, price and VAT), **Place**, **Group**, **Tags**, **Settings**, **Variants** and **Suppliers**. Swipe the row sideways when it does not fit. A chip opens the same editor as the item's page; tap the card itself to open the page.
+- **On a tablet held sideways or a computer**, click a line to select it: it is highlighted and marked with a tick. The bar above the table then names the item and offers **Edit name, price and VAT**, **Place**, **Group**, **Tags**, **Stock settings**, **Variants**, **Supplier items** and **Open**. The arrow keys move the selection; Enter or a double click opens the item beside the list; **Clear the selection** lets go of it.
+- With nothing selected, the bar says *Select an item to act on it* and offers **Add an item**. The search, the place and *Without a home place* sit at its left.
+
+**Good to know**
+
+- Only what your role allows is offered: on a phone the other chips are not shown, so whoever may only see the stock has none; on a computer they are greyed out. **Edit name, price and VAT** needs the right to manage services, the rest the right to manage the stock.
+- After a save the list reads the item again: the line stays selected and shows its new values.
+- **Group** and **Tags** appear where the business uses item groups and tags.
+
+**See also:** [The item registry](help:user.money.stock.registry) · [An item's page](help:user.money.stock.item)
 
 <!-- anchor: user.money.stock.item -->
 ### An item's page
@@ -748,7 +767,7 @@ Open **Stock → Items**. Each line shows the item's name, then its price, what 
 
 You want everything about one item in one place, and to change each part where you read it.
 
-Tap an item in **Stock → Items**. On a phone it opens as a page of its own; on a tablet held sideways or a computer it opens beside the list, which keeps its search and filters. Each part of the page has its own action, named for what it changes:
+Tap an item's card in **Stock → Items** on a phone: it opens as a page of its own. On a tablet held sideways or a computer, double-click its line, press Enter on it or choose **Open**: it opens beside the list, which keeps its search, filters and selection. Each part of the page has its own action, named for what it changes:
 
 - **Overview**: the price, the VAT, the unit, the barcode and the last known cost. **Edit name, price and VAT** opens the service's editor.
 - **Stock**: what is on hand and the home place, of the item or of each variant, and **Where it is**: the first places that hold it (**See every place** lists them all). **Change home place** says where the item belongs: its aisle, shelf or bin. It is advice for putting away, counting and picking: stock may sit elsewhere, and changing it moves nothing. **Edit units, codes and tracking** opens the item's stock settings.
