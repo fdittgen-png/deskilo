@@ -391,6 +391,7 @@ class PurchaseOrderForm {
     UnitPickerField(
       key: ValueKey('purchase-order-unit-$i'),
       workspaceId: workspaceId,
+      itemId: itemIds[i],
       value: fields['unit-$i'].text,
       label: l10n.purchaseOrderUnit,
       errorText: shown['unit-$i'],

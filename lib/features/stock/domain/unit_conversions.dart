@@ -113,3 +113,19 @@ final List<UnitConversion> builtInConversions = linkedConversions(builtInUnits);
 /// A conversion's factor as the person reads it: a decimal (`1000`, `0.001`) when six decimals hold it, else the fraction (`1/3`).
 String conversionFactorText(UnitConversion c) =>
     factorText(WorkspaceUnit(code: c.fromUnit, dimension: UnitDimension.count, factorNum: c.factorNum, factorDen: c.factorDen));
+
+/// The codes of [units] an item counted in [inventoryUnit] can be ordered, received or sold in: its own unit, the units of its own
+/// conversions, and every unit with a general conversion to its unit (one step, either way). A packaging unit it does not list is not
+/// among them. The same answer as the server's `unit_is_convertible` (0971).
+List<String> convertibleUnitCodes({
+  required String inventoryUnit,
+  required List<StockUnitDraft> itemUnits,
+  required Iterable<WorkspaceUnit> units,
+  required Iterable<UnitConversion> general,
+}) => [
+  for (final u in units)
+    if (!u.archived &&
+        (u.code == inventoryUnit ||
+            unitFactor(from: u.code, to: inventoryUnit, inventoryUnit: inventoryUnit, itemUnits: itemUnits, general: general) != null))
+      u.code,
+];

@@ -71,14 +71,12 @@ extension StockLedgerRules on StockLedger {
     required bool hasVariants,
   }) {
     if (item == null || !item.stockable) throw StockConfigRefused('allocations[$i].line', StockRefusal.itemNotStocked);
-    final factor = unit == item.inventoryUnit
-        ? (1, 1)
-        : item.units.where((u) => u.unit == unit).map((u) => (u.factorNum, u.factorDen)).firstOrNull;
+    final factor = configFactor(item, unit);
     if (factor == null) throw StockConfigRefused('allocations[$i].line', StockRefusal.unitUnmapped);
     final qty = ExactQuantity.tryParse(part.quantity).value;
     if (qty == null || qty <= ExactQuantity.zero) throw StockConfigRefused('allocations[$i].quantity', StockRefusal.quantityInvalid);
     // in the inventory unit, as the server records it: round(q * num / den, 6) (0840:355)
-    final inventory = qty.scaled(factor.$1, factor.$2, round: true).value;
+    final inventory = qty.scaled(factor.num, factor.den, round: true).value;
     if (inventory == null || inventory <= ExactQuantity.zero) {
       throw StockConfigRefused('allocations[$i].quantity', StockRefusal.quantityInvalid);
     }
