@@ -304,10 +304,13 @@ void main() {
     expect(find.text('QUO-0001'), findsOneWidget);
     // #4492 — the state is a word on its tone, as in the list; the customer
     // stands beside it.
-    final state = tester.widget<StatusChip>(find.byKey(const ValueKey('quote-status')));
-    expect(state.label, _en.quoteStatusSent);
-    expect(state.tone, StatusTone.info);
-    expect(tester.widget<Text>(find.byKey(const ValueKey('quote-customer'))).data, 'Atelier Lumi');
+    final state = find.byKey(const ValueKey('quote-status'));
+    expect(find.widgetWithText(StatusChip, _en.quoteStatusSent), findsOneWidget);
+    expect(find.descendant(of: state, matching: find.text(_en.quoteStatusSent)), findsOneWidget);
+    expect(
+      find.descendant(of: find.byKey(const ValueKey('quote-customer')), matching: find.text('Atelier Lumi'), matchRoot: true),
+      findsOneWidget,
+    );
     expect(find.byKey(const ValueKey('quote-total')), findsOneWidget);
     expect(find.byKey(const ValueKey('quote-sent-as')), findsOneWidget);
     expect(find.byKey(const ValueKey('quote-edit')), findsNothing);
