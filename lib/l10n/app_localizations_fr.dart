@@ -37202,6 +37202,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockEditUnitName => 'Unité de conditionnement';
 
   @override
+  String get stockEditUnitPrice => 'Prix d\'un';
+
+  @override
+  String get stockEditUnitPriceHelp =>
+      'Laissez vide : le prix de l\'article multiplié par le facteur.';
+
+  @override
   String get stockEditUnitsHint =>
       'Un conditionnement contient un nombre d’unités de stock ; un tiers de litre est 1 divisé par 3.';
 

@@ -36741,6 +36741,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockEditUnitName => 'Package unit';
 
   @override
+  String get stockEditUnitPrice => 'Price of one';
+
+  @override
+  String get stockEditUnitPriceHelp =>
+      'Leave empty to use the item\'s price times the factor.';
+
+  @override
   String get stockEditUnitsHint =>
       'A package holds a number of inventory units; a third of a litre is 1 divided by 3.';
 

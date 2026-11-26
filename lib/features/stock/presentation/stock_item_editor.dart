@@ -8,13 +8,17 @@
 // the first movement are each said, and nothing is shown saved that was not.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/format/amount_input.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../workspace/providers/workspace_providers.dart';
 import '../application/stock_reads.dart';
 import '../domain/item_groups.dart';
 import '../domain/stock_config.dart';
@@ -48,7 +52,10 @@ Future<bool> showStockItemEditor(
   if (!context.mounted) return false;
   final unitCodes = await stockUnitCodes(context, workspaceId);
   if (!context.mounted) return false;
-  final editor = _ItemDraft(config, workspaceId: workspaceId, unitCodes: unitCodes, lotsOn: options.lots, keepInStock: options.keep, own: own);
+  final currency = (await ProviderScope.containerOf(context).read(currentWorkspaceProvider.future))?.currencyCode ?? 'EUR';
+  if (!context.mounted) return false;
+  final money = (currency: currency, locale: appFormatOf(context).locale);
+  final editor = _ItemDraft(config, workspaceId: workspaceId, unitCodes: unitCodes, lotsOn: options.lots, keepInStock: options.keep, own: own, money: money);
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -64,14 +71,19 @@ Future<bool> showStockItemEditor(
 }
 
 class _UnitRow {
-  _UnitRow(StockUnitDraft u)
+  _UnitRow(StockUnitDraft u, this.money)
     : unit = TextEditingController(text: u.unit),
+      price = TextEditingController(text: u.priceCents == null ? '' : amountInputText(u.priceCents!, currency: money.currency, locale: money.locale)),
       num = TextEditingController(text: '${u.factorNum}'),
       den = TextEditingController(text: '${u.factorDen}'),
       defaultPurchase = u.defaultPurchase,
       defaultSale = u.defaultSale;
 
+  final ({String currency, String locale}) money;
   final TextEditingController unit;
+
+  /// #4479 -- the price of one of this unit; empty: the item's price times the factor.
+  final TextEditingController price;
   final TextEditingController num;
   final TextEditingController den;
   bool defaultPurchase;
@@ -83,9 +95,16 @@ class _UnitRow {
     factorDen: int.tryParse(den.text.trim()) ?? 0,
     defaultPurchase: defaultPurchase,
     defaultSale: defaultSale,
+    priceCents: priceCents,
   );
 
+  /// The price typed, in minor units; null when none is typed or it is no amount ([priceProblem] tells which).
+  int? get priceCents => priceProblem ? null : readAmountInput(price.text, locale: money.locale, currency: money.currency, allowNegative: false).minor;
+
+  bool get priceProblem => price.text.trim().isNotEmpty && readAmountInput(price.text, locale: money.locale, currency: money.currency, allowNegative: false).minor == null;
+
   void dispose() {
+    price.dispose();
     unit.dispose();
     num.dispose();
     den.dispose();
@@ -114,16 +133,19 @@ Future<Set<String>> _ownValues(StockReads reads, String workspaceId, String item
 );
 
 class _ItemDraft {
-  _ItemDraft(this.config, {required this.workspaceId, required this.unitCodes, required this.lotsOn, bool keepInStock = false, this.own = const {}})
+  _ItemDraft(this.config, {required this.workspaceId, required this.unitCodes, required this.lotsOn, bool keepInStock = false, this.own = const {}, required this.money})
     : tracking = config.tracking,
       shelfLife = TextEditingController(text: config.shelfLifeDays?.toString() ?? ''),
       stockable = keepInStock || config.stockable,
       purchasable = config.purchasable,
       sellable = config.sellable,
-      units = [for (final u in config.units) _UnitRow(u)],
+      units = [for (final u in config.units) _UnitRow(u, money)],
       codes = [for (final c in config.codes) _CodeRow(c)];
 
   final StockItemConfig config;
+
+  /// The business's currency and the member's number format: what a unit's price is read in.
+  final ({String currency, String locale}) money;
 
   /// The business whose units an extra unit of the item is picked from (#4471).
   final String workspaceId;
@@ -185,6 +207,8 @@ class _ItemDraft {
     // #4471 -- an extra unit is one of the business's units, never a name typed
     for (final (i, u) in units.indexed)
       if (u.unit.text.trim().isNotEmpty && !unitCodes.contains(u.unit.text.trim())) stockUnitField(i, 'unit'): l10n.masterDataUnlisted,
+    for (final (i, u) in units.indexed)
+      if (u.priceProblem) stockUnitField(i, 'price_cents'): stockRefusalText(l10n, StockRefusal.priceInvalid),
   };
 
   Future<String?> save(AppLocalizations l10n, StockConfigCommands commands, String workspaceId) async {
@@ -252,7 +276,7 @@ class _ItemDraft {
             icon: const Icon(Icons.add),
             label: Text(l10n.stockEditAddUnit),
             onPressed: () {
-              units.add(_UnitRow(const StockUnitDraft(unit: '', factorNum: 1, factorDen: 1)));
+              units.add(_UnitRow(const StockUnitDraft(unit: '', factorNum: 1, factorDen: 1), money));
               refresh();
             },
           ),
@@ -367,6 +391,15 @@ class _ItemDraft {
             },
           ),
         ],
+      ),
+      AppAmountField(
+        key: ValueKey('stock-unit-$i-price'),
+        controller: u.price,
+        fieldKey: stockUnitField(i, 'price_cents'),
+        label: l10n.stockEditUnitPrice,
+        helper: l10n.stockEditUnitPriceHelp,
+        currency: money.currency,
+        allowNegative: false,
       ),
       CheckboxListTile(
         key: ValueKey('stock-unit-$i-default-purchase'),

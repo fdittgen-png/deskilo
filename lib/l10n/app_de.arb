@@ -21513,6 +21513,14 @@
   "@stockEditUnitName": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockEditUnitPrice": "Preis von einem",
+  "@stockEditUnitPrice": {
+    "description": "#4479 the price of one of an item's units"
+  },
+  "stockEditUnitPriceHelp": "Leer lassen: Preis des Artikels mal Faktor.",
+  "@stockEditUnitPriceHelp": {
+    "description": "#4479 what an empty unit price means"
+  },
   "stockEditUnitsHint": "Eine Verpackung enthält eine Anzahl Lagereinheiten; ein Drittel Liter ist 1 geteilt durch 3.",
   "@stockEditUnitsHint": {
     "description": "#4169 the stock editors: a label or message"
