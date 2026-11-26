@@ -36,6 +36,21 @@ void main() {
     );
   });
 
+  test('what is thrown again carries the stack of the first catch, not the one of this adapter', () {
+    final first = StackTrace.fromString('#0 decodeReceipt (receipt.dart:7)');
+    for (final outcome in <CommandOutcome<int>>[
+      CommandRefused(Refusal(cause: StateError('no')), stack: first),
+      CommandUnreached(const Unreadable('bad row'), stack: first),
+    ]) {
+      try {
+        valueOrThrow(outcome);
+        fail('an outcome that is not done throws');
+      } on Object catch (_, st) {
+        expect(st.toString(), contains('decodeReceipt'));
+      }
+    }
+  });
+
   test('a lost answer is the failure that lost it', () {
     const lost = SocketException('no route to host');
     expect(

@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../data/app_failure_from.dart';
+import '../failure/app_failure.dart';
 import '../l10n/context_l10n.dart';
 import '../ui/app_snack.dart';
 import '../validation/pending_validation.dart';
@@ -72,7 +74,7 @@ Future<bool> runGuarded(
     return false;
   } on Object catch (e, st) {
     if (watched != null) watcher?.ended(watched, error: e);
-    TraceLogger.instance.error(domain, message, error: e, stackTrace: st);
+    _traceCaught(domain, message, e, st, otherwise: TraceLevel.error);
     if (e is WorkspaceContextNotReady && context.mounted) {
       // #3403 -- the reference an action needs is not ready: say so, with or
       // without a caller-supplied text.
@@ -134,7 +136,7 @@ Future<String?> guardSave({
     return null;
   } on Object catch (e, st) {
     if (watched != null) watcher?.ended(watched, error: e);
-    TraceLogger.instance.warn(domain, message, error: e, stackTrace: st);
+    _traceCaught(domain, message, e, st, otherwise: TraceLevel.warn);
     return problem(e);
   }
 }
@@ -152,7 +154,40 @@ Future<T> guardRead<T>({
   try {
     return await read();
   } on Object catch (e, st) {
-    TraceLogger.instance.warn(domain, message, error: e, stackTrace: st);
+    _traceCaught(domain, message, e, st, otherwise: TraceLevel.warn);
     return fallback(e);
+  }
+}
+
+/// The server's own refusal codes (`DKL04`, `DK409`): a sentence for the
+/// person, never a fault of the app.
+final _ownRefusalCode = RegExp(r'^DK[A-Z0-9]{3}$');
+
+/// The trace of what a guarded action caught, at the level its kind deserves:
+/// an answer that could not be read or a defect of the app is an error, which
+/// the reporter may send; a refusal the server worded itself is an answer, a
+/// warning that stays on the device. Anything else (a lost connection, a
+/// database error, a local [StateError]) keeps the level the guard always gave
+/// it, [otherwise]: nothing proves it is one or the other.
+void _traceCaught(
+  String domain,
+  String message,
+  Object error,
+  StackTrace stack, {
+  required TraceLevel otherwise,
+}) {
+  final failure = appFailureFrom(error);
+  final level = switch (failure) {
+    _ when isReportableFailure(failure) => TraceLevel.error,
+    Refusal(:final code?) when _ownRefusalCode.hasMatch(code) =>
+      TraceLevel.warn,
+    _ => otherwise,
+  };
+  if (level == TraceLevel.error) {
+    // Through `error`, which holds a single dropped connection down to a
+    // warning and raises a run of them.
+    TraceLogger.instance.error(domain, message, error: error, stackTrace: stack);
+  } else {
+    TraceLogger.instance.warn(domain, message, error: error, stackTrace: stack);
   }
 }

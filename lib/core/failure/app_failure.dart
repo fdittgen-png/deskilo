@@ -79,8 +79,12 @@ final class CommandDone<T> extends CommandOutcome<T> {
 }
 
 final class CommandRefused<T> extends CommandOutcome<T> {
-  const CommandRefused(this.refusal);
+  const CommandRefused(this.refusal, {this.stack});
   final Refusal refusal;
+
+  /// Where the refusal was first caught, so a caller that throws it again
+  /// points at the failing place and not at the adapter.
+  final StackTrace? stack;
 }
 
 /// A validation policy holds the command: nothing is done yet, and whoever
@@ -91,11 +95,22 @@ final class CommandHeld<T> extends CommandOutcome<T> {
 }
 
 final class CommandUnreached<T> extends CommandOutcome<T> {
-  const CommandUnreached(this.failure);
+  const CommandUnreached(this.failure, {this.stack});
 
   /// A [TransportFailure], an [Unreadable] answer or a [Defect].
   final AppFailure failure;
+
+  /// Where the failure was first caught (see [CommandRefused.stack]).
+  final StackTrace? stack;
 }
+
+/// Whether [failure] is a fault somebody has to look at -- an answer that
+/// could not be read, or a defect of the app -- as opposed to an answer the
+/// person can act on (a refusal) or a connection that will come back. The
+/// trace records the first kind as an error, so it may be reported; the second
+/// as a warning, which never leaves the device.
+bool isReportableFailure(AppFailure failure) =>
+    failure is Unreadable || failure is Defect;
 
 /// A refusal a feature typed at its own boundary, with what its screens need
 /// to word it (a quote refused as stale, with the facts it misses). It

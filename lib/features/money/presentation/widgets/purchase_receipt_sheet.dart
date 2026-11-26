@@ -13,9 +13,12 @@ import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -69,6 +72,10 @@ class _PurchaseReceiptSheetState extends ConsumerState<_PurchaseReceiptSheet> {
     widget.workspaceId,
   );
   _VatContext? _vat;
+
+  /// Why the rates could not be read, while they could not: the sheet then
+  /// shows that and a way to try again, never a receipt form without VAT.
+  Object? _vatUnread;
   var _nextId = 1;
   final _lines = [_Line(0)];
   var _category = expenseCategories.first;
@@ -80,8 +87,21 @@ class _PurchaseReceiptSheetState extends ConsumerState<_PurchaseReceiptSheet> {
   }
 
   Future<void> _loadVat() async {
-    final vat = await receiptVatContext(ref);
-    if (mounted) setState(() => _vat = vat);
+    Object? unread;
+    final vat = await guardRead<_VatContext?>(
+      domain: 'money',
+      message: 'receipt VAT rates failed',
+      read: () => receiptVatContext(ref),
+      fallback: (e) {
+        unread = e;
+        return null;
+      },
+    );
+    if (!mounted) return;
+    setState(() {
+      _vat = vat;
+      _vatUnread = unread;
+    });
   }
 
   @override
@@ -162,6 +182,18 @@ class _PurchaseReceiptSheetState extends ConsumerState<_PurchaseReceiptSheet> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final vat = _vat;
+    if (_vatUnread case final unread? when vat == null) {
+      return Padding(
+        padding: const EdgeInsets.all(AppSpacing.xl),
+        child: ReadFailureBanner(
+          error: unread,
+          onRetry: () {
+            setState(() => _vatUnread = null);
+            unawaited(_loadVat());
+          },
+        ),
+      );
+    }
     if (vat == null) return const LoadingView();
     return AppFormSheet(
       title: l10n.purchaseReceiptAdd,

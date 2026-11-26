@@ -153,8 +153,8 @@ Future<void> showExpenseSchedulesSheet(
               icon: const Icon(Icons.event_repeat_outlined),
               label: Text(l10n.scheduleNew),
               onPressed: () async {
-                final created =
-                    await _showCreateExpenseScheduleSheet(context, ref, currency);
+                final created = await whenExpenseVatRead(context, ref, unopened: false,
+                    () => _showCreateExpenseScheduleSheet(context, ref, currency));
                 if (created && context.mounted) {
                   ref.invalidate(expenseSchedulesProvider(workspace.id));
                 }
