@@ -239,7 +239,6 @@ const _reviewed = {
 /// against `pg_get_functiondef` on the live project, move it to `_reviewed` with what you checked), never grow.
 const _foundWhenWidened = {
   'clear_einvoice_credentials@0796',
-  'counter_receipt_finalize_v1@0939',
   'invoice_legal_snapshot@0794',
   'mcp_execute_v1@0411',
   'mcp_execute_v1@0412',

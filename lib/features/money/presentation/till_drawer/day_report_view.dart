@@ -89,6 +89,7 @@ class _DayReportView extends StatelessWidget {
             const FormGap(),
             Text(l10n.tillDayPaidIn(m(report.paidInMinor))),
             Text(l10n.tillDayPaidOut(m(report.paidOutMinor))),
+            if (report.depositsReturnedMinor != 0) Text(l10n.tillDayDepositsReturned(m(report.depositsReturnedMinor)), key: const ValueKey('day-deposits-returned')),
             if (report.refunds.isNotEmpty) Text(l10n.tillDayRefunds(m(report.refunds.values.fold(0, (a, b) => a + b)))),
             if (report.correctionsMinor != 0) Text(l10n.tillDayCorrections(m(report.correctionsMinor))),
             if (report.unresolvedCardMinor > 0) Text(l10n.tillDrawerClosedCard(m(report.unresolvedCardMinor))),

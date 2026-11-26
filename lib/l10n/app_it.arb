@@ -21515,6 +21515,14 @@
   "@stockEditUnitName": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockEditUnitPrice": "Prezzo di uno",
+  "@stockEditUnitPrice": {
+    "description": "#4479 the price of one of an item's units"
+  },
+  "stockEditUnitPriceHelp": "Lasciare vuoto: il prezzo dell'articolo per il fattore.",
+  "@stockEditUnitPriceHelp": {
+    "description": "#4479 what an empty unit price means"
+  },
   "stockEditUnitsHint": "Una confezione contiene un numero di unità di magazzino; un terzo di litro è 1 diviso 3.",
   "@stockEditUnitsHint": {
     "description": "#4169 the stock editors: a label or message"
@@ -24147,6 +24155,7 @@
   "tillDayByRate": "Vendite per aliquota",
   "tillDayByTender": "Incassi per mezzo di pagamento",
   "tillDayCorrections": "Correzioni: {amount}",
+  "tillDayDepositsReturned": "Vuoti resi: {amount}",
   "tillDayDifferences": "Differenza totale dei cassetti: {amount}",
   "tillDayHelp": "Riunisce le sessioni chiuse delle casse in un rapporto numerato. Prima ogni cassa deve essere chiusa.",
   "tillDayItem": "{number} · {date}",
@@ -24674,6 +24683,13 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillReturnNoDeposit": "L'ultimo articolo non ha un vuoto da riprendere.",
+  "tillReturnNotAllowed": "Non può riprendere un vuoto alla cassa.",
+  "tillReturnNotDeposit": "Questo articolo non è il vuoto di alcun articolo venduto.",
+  "tillReturnOffline": "Il vuoto non viene ripreso mentre la cassa è offline.",
+  "tillReturnTracked": "Questo vuoto è tracciato per lotto o etichetta: non viene ripreso alla cassa.",
+  "tillReturnedLabel": "Vuoto reso: {item}",
+  "tillReturnedLine": "Vuoto reso",
   "tillRingUpFirst": "Registri prima un articolo.",
   "tillScanLabel": "Scansiona un codice",
   "@tillScanLabel": {

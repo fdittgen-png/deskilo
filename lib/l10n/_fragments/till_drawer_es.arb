@@ -111,5 +111,6 @@
   "settingHintCounterLayoutCashierReorder": "Un cajero puede reordenar las teclas de una caja en su propio dispositivo sin cambiar el diseño publicado.",
   "settingUnitCells": "celdas",
   "settingLabelCounterMaxDiscount": "Descuento máximo en la caja",
-  "settingHintCounterMaxDiscount": "El descuento máximo, en porcentaje, que un cajero puede aplicar a una línea de caja. 0 significa ningún descuento en la caja."
+  "settingHintCounterMaxDiscount": "El descuento máximo, en porcentaje, que un cajero puede aplicar a una línea de caja. 0 significa ningún descuento en la caja.",
+  "tillDayDepositsReturned": "Envases devueltos: {amount}"
 }

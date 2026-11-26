@@ -58865,6 +58865,18 @@ abstract class AppLocalizations {
   /// **'Package unit'**
   String get stockEditUnitName;
 
+  /// #4479 the price of one of an item's units
+  ///
+  /// In en, this message translates to:
+  /// **'Price of one'**
+  String get stockEditUnitPrice;
+
+  /// #4479 what an empty unit price means
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty to use the item\'s price times the factor.'**
+  String get stockEditUnitPriceHelp;
+
   /// #4169 the stock editors: a label or message
   ///
   /// In en, this message translates to:
@@ -66238,6 +66250,12 @@ abstract class AppLocalizations {
   /// **'Corrections: {amount}'**
   String tillDayCorrections(String amount);
 
+  /// #4478 the day report: deposits brought back; amount arrives formatted
+  ///
+  /// In en, this message translates to:
+  /// **'Deposits returned: {amount}'**
+  String tillDayDepositsReturned(String amount);
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -67996,6 +68014,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again'**
   String get tillRetry;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'The last item carries no deposit to take back.'**
+  String get tillReturnNoDeposit;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'You may not take a deposit back at the till.'**
+  String get tillReturnNotAllowed;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'This item is not a deposit any item is sold with.'**
+  String get tillReturnNotDeposit;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'A deposit is not taken back while the till is offline.'**
+  String get tillReturnOffline;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'This deposit is tracked by lot or tag: it is not taken back at the till.'**
+  String get tillReturnTracked;
+
+  /// #4478 a returned deposit on the receipt; item is its name
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit returned: {item}'**
+  String tillReturnedLabel(String item);
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit returned'**
+  String get tillReturnedLine;
 
   /// #4476 the till price keys
   ///

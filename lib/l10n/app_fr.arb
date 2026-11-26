@@ -21515,6 +21515,14 @@
   "@stockEditUnitName": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockEditUnitPrice": "Prix d'un",
+  "@stockEditUnitPrice": {
+    "description": "#4479 the price of one of an item's units"
+  },
+  "stockEditUnitPriceHelp": "Laissez vide : le prix de l'article multiplié par le facteur.",
+  "@stockEditUnitPriceHelp": {
+    "description": "#4479 what an empty unit price means"
+  },
   "stockEditUnitsHint": "Un conditionnement contient un nombre d’unités de stock ; un tiers de litre est 1 divisé par 3.",
   "@stockEditUnitsHint": {
     "description": "#4169 the stock editors: a label or message"
@@ -24147,6 +24155,7 @@
   "tillDayByRate": "Ventes par taux de taxe",
   "tillDayByTender": "Encaissements par moyen de paiement",
   "tillDayCorrections": "Corrections : {amount}",
+  "tillDayDepositsReturned": "Consignes reprises : {amount}",
   "tillDayDifferences": "Écart total des tiroirs : {amount}",
   "tillDayHelp": "Réunit les sessions fermées des caisses en un rapport numéroté. Chaque caisse doit d'abord être fermée.",
   "tillDayItem": "{number} · {date}",
@@ -24674,6 +24683,13 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillReturnNoDeposit": "Le dernier article n'a pas de consigne à reprendre.",
+  "tillReturnNotAllowed": "Vous ne pouvez pas reprendre une consigne à la caisse.",
+  "tillReturnNotDeposit": "Cet article n'est la consigne d'aucun article vendu.",
+  "tillReturnOffline": "Une consigne n'est pas reprise tant que la caisse est hors ligne.",
+  "tillReturnTracked": "Cette consigne est suivie par lot ou étiquette : elle n'est pas reprise à la caisse.",
+  "tillReturnedLabel": "Consigne reprise : {item}",
+  "tillReturnedLine": "Consigne reprise",
   "tillRingUpFirst": "Enregistrez d'abord un article.",
   "tillScanLabel": "Scanner un code",
   "@tillScanLabel": {

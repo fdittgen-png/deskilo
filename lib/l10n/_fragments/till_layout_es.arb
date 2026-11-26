@@ -77,5 +77,12 @@
   "tillLotExpires": "Consumir antes del {date}",
   "tillLotExpired": "Caducado ({date}): no se vende",
   "tillLotOnHand": "{quantity} {unit} en existencia",
-  "tillLotNone": "{item} no tiene lote que elegir: se vende tal cual."
+  "tillLotNone": "{item} no tiene lote que elegir: se vende tal cual.",
+  "tillReturnOffline": "No se devuelve un envase mientras la caja está sin conexión.",
+  "tillReturnNoDeposit": "El último artículo no lleva envase que devolver.",
+  "tillReturnedLine": "Envase devuelto",
+  "tillReturnNotAllowed": "No puede devolver un envase en la caja.",
+  "tillReturnTracked": "Este envase se sigue por lote o etiqueta: no se devuelve en la caja.",
+  "tillReturnNotDeposit": "Este artículo no es el envase de ningún artículo vendido.",
+  "tillReturnedLabel": "Envase devuelto: {item}"
 }

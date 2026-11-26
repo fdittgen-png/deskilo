@@ -111,5 +111,6 @@
   "settingHintCounterLayoutCashierReorder": "Ein Kassierer darf die Tasten einer Kasse auf seinem eigenen Gerät umordnen, ohne das veröffentlichte Layout zu ändern.",
   "settingUnitCells": "Zellen",
   "settingLabelCounterMaxDiscount": "Größter Rabatt an der Kasse",
-  "settingHintCounterMaxDiscount": "Der größte Rabatt in Prozent, den eine Kassiererin oder ein Kassierer auf eine Kassenzeile geben darf. 0 heißt: kein Rabatt an der Kasse."
+  "settingHintCounterMaxDiscount": "Der größte Rabatt in Prozent, den eine Kassiererin oder ein Kassierer auf eine Kassenzeile geben darf. 0 heißt: kein Rabatt an der Kasse.",
+  "tillDayDepositsReturned": "Zurückgenommenes Pfand: {amount}"
 }

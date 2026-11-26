@@ -78,7 +78,8 @@ class CounterBookLine {
       quantity: commercial.stringOr('quantity', '0'),
       unit: commercial.objectOrAbsent('unit').stringOr('code'),
       grossMinor: r.intOrNull('gross_minor') ?? 0,
-      goods: frozen.stringOr('supply') == 'goods',
+      // #4478: a returned deposit is goods that came back, not goods to take back again
+      goods: frozen.stringOr('supply') == 'goods' && !frozen.isTrue('returned'),
       correctsLineId: r.stringOrNull('corrects_line_id'),
     );
   }

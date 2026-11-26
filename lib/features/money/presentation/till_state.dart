@@ -87,6 +87,11 @@ class TillCardDeclined implements TypedRefusal {
   const TillCardDeclined();
 }
 
+/// #4478 -- a deposit is not taken back while the till sells offline: the server decides it, and only online.
+class TillReturnOffline implements TypedRefusal {
+  const TillReturnOffline();
+}
+
 /// A weighed or counted line was rung up without a quantity above zero: the till asks for the weight first.
 class TillQuantityMissing implements TypedRefusal {
   const TillQuantityMissing();

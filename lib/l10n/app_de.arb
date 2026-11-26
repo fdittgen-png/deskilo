@@ -21515,6 +21515,14 @@
   "@stockEditUnitName": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockEditUnitPrice": "Preis von einem",
+  "@stockEditUnitPrice": {
+    "description": "#4479 the price of one of an item's units"
+  },
+  "stockEditUnitPriceHelp": "Leer lassen: Preis des Artikels mal Faktor.",
+  "@stockEditUnitPriceHelp": {
+    "description": "#4479 what an empty unit price means"
+  },
   "stockEditUnitsHint": "Eine Verpackung enthält eine Anzahl Lagereinheiten; ein Drittel Liter ist 1 geteilt durch 3.",
   "@stockEditUnitsHint": {
     "description": "#4169 the stock editors: a label or message"
@@ -24147,6 +24155,7 @@
   "tillDayByRate": "Verkäufe nach Steuersatz",
   "tillDayByTender": "Einnahmen nach Zahlungsart",
   "tillDayCorrections": "Korrekturen: {amount}",
+  "tillDayDepositsReturned": "Zurückgenommenes Pfand: {amount}",
   "tillDayDifferences": "Gesamtdifferenz der Schubladen: {amount}",
   "tillDayHelp": "Fasst die geschlossenen Sitzungen der Kassen in einem nummerierten Bericht zusammen. Zuerst muss jede Kasse geschlossen sein.",
   "tillDayItem": "{number} · {date}",
@@ -24674,6 +24683,13 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillReturnNoDeposit": "Der letzte Artikel hat kein Pfand zum Zurücknehmen.",
+  "tillReturnNotAllowed": "Sie dürfen an der Kasse kein Pfand zurücknehmen.",
+  "tillReturnNotDeposit": "Dieser Artikel ist kein Pfand eines verkauften Artikels.",
+  "tillReturnOffline": "Pfand wird nicht zurückgenommen, solange die Kasse offline ist.",
+  "tillReturnTracked": "Dieses Pfand wird nach Charge oder Etikett verfolgt: Es wird nicht an der Kasse zurückgenommen.",
+  "tillReturnedLabel": "Pfand zurück: {item}",
+  "tillReturnedLine": "Pfand zurückgenommen",
   "tillRingUpFirst": "Erfassen Sie zuerst einen Artikel.",
   "tillScanLabel": "Code scannen",
   "@tillScanLabel": {
