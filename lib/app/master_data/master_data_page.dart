@@ -20,6 +20,7 @@ import '../../core/ui/adaptive/window_class.dart';
 import '../../core/ui/async_read_body.dart';
 import '../../core/ui/form_kit.dart';
 import '../../core/ui/kit/kit_card.dart';
+import '../../core/ui/kit/kit_metrics.dart';
 import '../../core/ui/kit/page_bar.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'master_data_counts.dart';
@@ -165,84 +166,99 @@ class _Group extends StatelessWidget {
   }
 }
 
-/// One kind: its name, what it is and its count; a tap opens its screen.
-class _Card extends StatelessWidget {
+/// One kind: its name, what it is and its count; a tap opens its screen. A
+/// count that could not be read is said below, with its own Try again, never
+/// inside the tap target.
+class _Card extends ConsumerWidget {
   const _Card({required this.kind, required this.workspaceId});
 
   final MasterDataKind kind;
   final String? workspaceId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final workspaceId = this.workspaceId;
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        key: ValueKey('master-data-card-${kind.name}'),
-        borderRadius: AppRadius.xlAll,
-        onTap: () => context.push(kind.route),
-        child: KitCard(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(kind.icon, color: theme.colorScheme.primary),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(kind.title(l10n), style: theme.textTheme.titleSmall),
-                    Text(
-                      kind.description(l10n),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
+    final source = workspaceId == null
+        ? null
+        : masterDataSource(kind, workspaceId);
+    final value = source == null ? null : ref.watch(source);
+    final failed =
+        value != null && !value.hasValue && value.hasError && !value.isLoading;
+    return KitCard(
+      padding: EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // one target for the whole card, its count included
+          MergeSemantics(
+            child: Material(
+              type: MaterialType.transparency,
+              child: InkWell(
+                key: ValueKey('master-data-card-${kind.name}'),
+                borderRadius: AppRadius.xlAll,
+                onTap: () => context.push(kind.route),
+                child: Padding(
+                  padding: const EdgeInsets.all(KitMetrics.cardPadding),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(kind.icon, color: theme.colorScheme.primary),
+                      const SizedBox(width: AppSpacing.md),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              kind.title(l10n),
+                              style: theme.textTheme.titleSmall,
+                            ),
+                            Text(
+                              kind.description(l10n),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.xs),
+                            if (value != null && value.hasValue)
+                              Text(
+                                l10n.masterDataCount(value.requireValue.length),
+                                key: ValueKey('master-data-count-${kind.name}'),
+                                style: theme.textTheme.labelMedium,
+                              )
+                            else if (!failed)
+                              const LinearProgressIndicator(
+                                key: ValueKey('master-data-reading'),
+                              ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: AppSpacing.xs),
-                    if (workspaceId != null)
-                      _Count(kind: kind, workspaceId: workspaceId),
-                  ],
+                      const Icon(Icons.chevron_right),
+                    ],
+                  ),
                 ),
               ),
-              const Icon(Icons.chevron_right),
-            ],
+            ),
           ),
-        ),
+          if (failed)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                KitMetrics.cardPadding,
+                0,
+                KitMetrics.cardPadding,
+                KitMetrics.cardPadding,
+              ),
+              child: ReadFailureBanner(
+                error: value.error!,
+                onRetry: () => ref.invalidate(source!),
+                retryKey: ValueKey('master-data-retry-${kind.name}'),
+              ),
+            ),
+        ],
       ),
     );
-  }
-}
-
-/// How many records [kind] holds; the read's failure with Try again when it
-/// could not be read (never a zero), a thin progress line while it is read.
-class _Count extends ConsumerWidget {
-  const _Count({required this.kind, required this.workspaceId});
-
-  final MasterDataKind kind;
-  final String workspaceId;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final source = masterDataSource(kind, workspaceId);
-    final value = ref.watch(source);
-    if (value.hasValue) {
-      return Text(
-        context.l10n.masterDataCount(value.requireValue.length),
-        key: ValueKey('master-data-count-${kind.name}'),
-        style: Theme.of(context).textTheme.labelMedium,
-      );
-    }
-    if (value.hasError && !value.isLoading) {
-      return ReadFailureBanner(
-        error: value.error!,
-        onRetry: () => ref.invalidate(source),
-        retryKey: ValueKey('master-data-retry-${kind.name}'),
-      );
-    }
-    return const LinearProgressIndicator(key: ValueKey('master-data-reading'));
   }
 }

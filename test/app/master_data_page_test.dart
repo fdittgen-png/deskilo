@@ -173,21 +173,25 @@ void main() {
       'at $w a count that cannot be read shows the read failure, never zero',
       (tester) async {
         await _open(tester, size, unitsFail: Exception('down'));
-        final card = _card(MasterDataKind.units);
+        // the units' failure, with its own Try again; no count, not a zero
+        expect(find.byKey(const ValueKey('read-failure')), findsOneWidget);
         expect(
-          find.descendant(
-            of: card,
-            matching: find.byKey(const ValueKey('read-failure')),
-          ),
+          find.byKey(const ValueKey('master-data-retry-units')),
           findsOneWidget,
         );
         expect(
+          find.byKey(const ValueKey('master-data-count-units')),
+          findsNothing,
+        );
+        expect(
           find.descendant(
-            of: card,
+            of: _card(MasterDataKind.units),
             matching: find.text(_en.masterDataCount(0)),
           ),
           findsNothing,
         );
+        // the card still opens its screen
+        expect(_card(MasterDataKind.units), findsOneWidget);
         // the other kinds still count
         expect(
           find.byKey(const ValueKey('master-data-count-vatRates')),
