@@ -47,7 +47,12 @@
 #   CALLED        the file raised because it CALLS the function it patches;
 #                 the trial says nothing about the anchor.
 #
-# SILENT and PATCHED_STUB are the findings. Those known today are listed in
+# A SILENT or PATCHED_STUB pair is settled when a LATER migration, met with the
+# same anchorless body, leaves the function with the body the replay has: that
+# file states the function whole, so an installation holds the replay's body
+# after it whatever it held before. Tried on the replayed database, rolled back.
+#
+# SILENT and PATCHED_STUB that nothing settles are the findings. Those known today are listed in
 # scripts/upgrade_equivalence_known.txt with what each is; a pair that is not
 # in that list fails the check, and a listed pair that no longer occurs is
 # reported so the list shrinks.
@@ -318,6 +323,18 @@ begin
   end loop;
 end
 $probe$;
+create function zz_probe.stub(p_oid oid) returns void language plpgsql as $probe$
+declare
+  v_def text := pg_get_functiondef(p_oid);
+  v_pos int := position(E'\nAS $' in v_def);
+begin
+  if v_pos = 0 then
+    raise exception 'zz-probe: % has no body to replace', p_oid::regprocedure;
+  end if;
+  execute regexp_replace(left(v_def, v_pos - 1), E'\\n LANGUAGE \\w+', E'\n LANGUAGE plpgsql')
+    || E'\nAS $zzstub$ begin raise exception ''zz-probe-stub''; end $zzstub$';
+end
+$probe$;
 SQL
 patching="$(grep -l 'pg_get_functiondef' supabase/migrations/*.sql | wc -l | tr -d ' ')"
 grep -l 'zzq4492' supabase/migrations/*.sql >/dev/null 2>&1 && fail "a migration holds the probe's own quoting tag"
@@ -340,7 +357,31 @@ cut -f3 "$OUT/anchor-trials.tsv" | sort | uniq -c | sed 's/^/    /'
 # How a loud one speaks: by its own message, or only because EXECUTE was handed nothing.
 say "of the loud ones: $(awk -F'\t' '$3 == "LOUD" && $4 ~ /EXECUTE.*null|null.*EXECUTE/' "$OUT/anchor-trials.tsv" | grep -c '') stop on a null EXECUTE (no message of their own), $(awk -F'\t' '$3 == "LOUD" && $4 !~ /EXECUTE.*null|null.*EXECUTE/' "$OUT/anchor-trials.tsv" | grep -c '') name what is missing"
 
-awk -F'\t' '$3 == "SILENT" || $3 == "PATCHED_STUB" { print $3 " " $1 " " $2 }' "$OUT/anchor-trials.tsv" | LC_ALL=C sort > "$OUT/anchor-findings.txt"
+# Settled by a later file that states the function whole: the anchorless body
+# again, on the replayed database, then that file; the body must be the replay's.
+: > "$OUT/anchor-settled.txt"
+while IFS=$'\t' read -r mig fn verdict _; do
+  case "$verdict" in SILENT|PATCHED_STUB) ;; *) continue ;; esac
+  name="${fn%%(*}"
+  for f in supabase/migrations/*.sql; do
+    [ "$(version_of "$f")" -gt "$(version_of "$mig")" ] || continue
+    grep -qiE "create or replace function public\.$name\b" "$f" || continue
+    settled="$( { printf "begin;\ncreate temp table zz_was on commit drop as select p.prosrc from pg_proc p where p.oid = '%s'::regprocedure;\nselect zz_probe.stub('%s'::regprocedure);\n" "$fn" "$fn"
+                  cat "$f"
+                  printf "\n;\nselect 'ZZSETTLED' where (select p.prosrc from pg_proc p where p.oid = '%s'::regprocedure) = (select prosrc from zz_was);\nrollback;\n" "$fn"
+                } | psq "$PROBE" -At -q -v ON_ERROR_STOP=1 2>/dev/null | grep -c '^ZZSETTLED$' )"
+    if [ "$settled" = 1 ]; then
+      printf '%s %s %s\t%s\n' "$verdict" "$mig" "$fn" "$(basename "$f" .sql)" >> "$OUT/anchor-settled.txt"
+      break
+    fi
+  done
+done < "$OUT/anchor-trials.tsv"
+if [ -s "$OUT/anchor-settled.txt" ]; then
+  say "settled by a later migration that states the function whole (met with the anchorless body, it leaves the replay's):"
+  awk -F'\t' '{ print "    " $1 "   <- " $2 }' "$OUT/anchor-settled.txt"
+fi
+awk -F'\t' '$3 == "SILENT" || $3 == "PATCHED_STUB" { print $3 " " $1 " " $2 }' "$OUT/anchor-trials.tsv" | LC_ALL=C sort \
+  | LC_ALL=C comm -23 - <(cut -f1 "$OUT/anchor-settled.txt" | LC_ALL=C sort) > "$OUT/anchor-findings.txt"
 grep -vE '^[[:space:]]*(#|$)' "$KNOWN" 2>/dev/null | sed -E 's/[[:space:]]+#.*$//' | LC_ALL=C sort > "$OUT/anchor-known.txt"
 new="$(LC_ALL=C comm -23 "$OUT/anchor-findings.txt" "$OUT/anchor-known.txt")"
 gone="$(LC_ALL=C comm -13 "$OUT/anchor-findings.txt" "$OUT/anchor-known.txt")"

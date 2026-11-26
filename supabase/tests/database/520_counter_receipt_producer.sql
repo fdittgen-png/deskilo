@@ -6,7 +6,7 @@
 -- refused; a frozen receipt survives a change of the rates; a correction is a new receipt citing the original, bounded
 -- by what each original line has left; amounts are exact in 0, 2 and 3 decimal currencies. Rolled back.
 begin;
-select plan(27);
+select plan(33);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -115,6 +115,34 @@ select is(pg_temp.draft(1, 101, 931, null, null, '{"currency": "ZZZ", "lines": [
 insert into public.setting_values (scope, workspace_id, key, value) values ('workspace', pg_temp.u(101), 'counter.customerless_sales', '"refused"'::jsonb);
 select set_config('t.d3', pg_temp.draft(1, 101, 932, null, null, '{"source_ref": "nocust", "lines": [' || pg_temp.line('Haircut', '1', '12.00') || ']}'), false);
 select is(left(pg_temp.fin(1, 101, 933, pg_temp.f(current_setting('t.d3'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 1200}]'), 9), 'ERR DKL05', 'where the business names a customer on every sale, one with none is refused (DKL05)');
+
+-- ── #4492: a finalized receipt holds against the server's own role as against a client ──
+create or replace function pg_temp.server(p_sql text) returns text language plpgsql as $f$
+begin
+  set local role service_role;
+  begin
+    execute p_sql;
+  exception when others then
+    reset role;
+    return 'ERR ' || sqlstate;
+  end;
+  reset role;
+  return 'done';
+end
+$f$;
+select set_config('t.tender_site', coalesce((select site_id::text from public.counter_tenders where receipt_id = current_setting('t.r1')::uuid), 'none'), false);
+select is(pg_temp.server(format('update public.counter_receipt_lines set receipt_id = %L where receipt_id = %L', pg_temp.f(current_setting('t.d3'), 'receipt_id'), current_setting('t.r1'))),
+  'ERR DKL03', 'a line of a finalized receipt is not handed to a draft');
+select is((select count(*)::int from public.counter_receipt_lines where receipt_id = current_setting('t.r1')::uuid), 1, 'and the finalized receipt still has its line');
+select is(pg_temp.server(format('update public.counter_tenders set site_id = gen_random_uuid() where receipt_id = %L', current_setting('t.r1')))
+          || ' ' || coalesce((select site_id::text from public.counter_tenders where receipt_id = current_setting('t.r1')::uuid), 'none'),
+  'ERR DKL03 ' || current_setting('t.tender_site'), 'the site of a recorded tender does not change');
+select is(pg_temp.server('truncate table public.counter_receipts cascade') || ' ' || (select count(*)::text from public.counter_receipts where id = current_setting('t.r1')::uuid),
+  'ERR DKL03 1', 'the receipts are not emptied in one statement, and the receipt is still there');
+select is(pg_temp.server(format('update public.counter_receipt_lines set line_no = line_no where receipt_id = %L', pg_temp.f(current_setting('t.d3'), 'receipt_id'))),
+  'done', 'the lines of a draft stay editable');
+select is(pg_temp.f(pg_temp.draft(1, 101, 934, pg_temp.f(current_setting('t.d3'), 'receipt_id')::uuid, 1, '{"source_ref": "nocust", "lines": [' || pg_temp.line('Haircut', '2', '12.00') || ']}'), 'revision'),
+  '2', 'and the draft is still replaced through its command');
 
 select * from finish();
 rollback;

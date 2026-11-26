@@ -8,7 +8,7 @@
 -- invoice issued before keeps none; a voided invoice and a credit note keep
 -- theirs. Rolled back.
 begin;
-select plan(37);
+select plan(39);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -220,6 +220,24 @@ select is((select count(*)::int from pg_policies where schemaname = 'storage' an
   'no policy updates or deletes a stored PDF');
 select throws_ok($$update public.invoice_originals set pdf_sha256 = repeat('1', 64)$$,
   '42501', 'an invoice''s original is never changed', 'nobody changes a recorded original');
+-- #4492: nor removes one, the server's own role included
+create or replace function pg_temp.server(p_sql text) returns text language plpgsql as $f$
+begin
+  set local role service_role;
+  begin
+    execute p_sql;
+  exception when others then
+    reset role;
+    return 'ERR ' || sqlstate;
+  end;
+  reset role;
+  return 'done';
+end
+$f$;
+select is(pg_temp.server(format('delete from public.invoice_originals where invoice_id = %L', pg_temp.inv('ORIG-0001'))),
+  'ERR DKL03', 'nobody deletes a recorded original');
+select is((select count(*)::int from public.invoice_originals where invoice_id = pg_temp.inv('ORIG-0001')), 1,
+  'and the original is still recorded');
 
 -- ── the folder is part of the rule ──
 select pg_temp.as_user('owner');
@@ -248,7 +266,10 @@ select is((select count(*)::int from storage.objects where bucket_id = 'invoice-
             and name = 'not-a-business/not-an-invoice.pdf'), 0,
   'a file of a malformed name answers no row, without an error');
 reset role;
+-- test data leaves as it came: the guards are lifted for it and armed again
+alter table public.invoice_originals disable trigger user;
 delete from public.invoice_originals where invoice_id = pg_temp.inv('ORIG-0002');
+alter table public.invoice_originals enable trigger user;
 
 -- ── a voided invoice and a credit note keep theirs ──
 select pg_temp.as_user('owner');

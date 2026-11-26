@@ -24,57 +24,8 @@ counter_till_sessions update:day_close_id   # the day close stamps a closed sess
 verifactu_records update:submission_status   # only its submission state moves (pgTAP 357)
 verifactu_records update:submission_detail   # as above
 
-# -- open (#4492 row 4): the guards compare a row without the system columns, and site_id is one of them
-counter_tenders update:site_id   # open: the site of a posted row is not held by its guard
-ledger_entries update:site_id   # open: as above
-verifactu_records update:site_id   # open: as above
-stock_movement_units update:site_id   # open: as above
-stock_movement_handling_units update:site_id   # open: as above
-
-# -- open (#4492 row 4): what a guard does not cover
-invoice_originals delete   # open: the guard is on UPDATE only
-counter_receipt_lines update:receipt_id   # open: the guard reads the state of the receipt the line is given to
-stock_movement_units delete   # open: the pieces of a movement have no guard of their own
-stock_movement_units update:movement_id   # open: as above
-stock_movement_units update:unit_id   # open: as above
-stock_movement_units update:workspace_id   # open: as above
-stock_movement_handling_units delete   # open: the handling units of a movement have no guard of their own
-stock_movement_handling_units update:movement_id   # open: as above
-stock_movement_handling_units update:unit_id   # open: as above
-stock_movement_handling_units update:workspace_id   # open: as above
-
-# -- open (#4492 row 4): TRUNCATE is refused to the client roles (0563, pgTAP 267) and to nobody else; no row guard sees it
-counter_cash_entries truncate   # open: no statement guard, and the server role keeps the privilege
-counter_cash_entries truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-counter_day_closes truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-counter_offline_sales truncate   # open: no statement guard, and the server role keeps the privilege
-counter_offline_sales truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-counter_receipt_copies truncate   # open: no statement guard, and the server role keeps the privilege
-counter_receipt_copies truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-counter_receipt_lines truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-counter_receipts truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-counter_refunds truncate   # open: no statement guard, and the server role keeps the privilege
-counter_refunds truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-counter_tenders truncate   # open: no statement guard, and the server role keeps the privilege
-counter_tenders truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-counter_till_sessions truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-invoice_line_tracks truncate   # open: no statement guard, and the server role keeps the privilege
-invoice_line_tracks truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-invoice_match_history truncate   # open: no statement guard, and the server role keeps the privilege
-invoice_match_history truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-invoice_originals truncate   # open: no statement guard, and the server role keeps the privilege
-invoice_originals truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-invoices truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-ledger_entries truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-stock_movement_handling_units truncate   # open: no statement guard, and the server role keeps the privilege
-stock_movement_handling_units truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-stock_movement_units truncate   # open: no statement guard, and the server role keeps the privilege
-stock_movement_units truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-stock_movements truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-stock_returns truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-stock_reversals truncate   # open: no statement guard, and the server role keeps the privilege
-stock_reversals truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-vat_return_entries truncate   # open: no statement guard, and the server role keeps the privilege
-vat_return_entries truncate_cascade   # open: no statement guard, and the server role keeps the privilege
-verifactu_records truncate   # open: no statement guard, and the server role keeps the privilege
-verifactu_records truncate_cascade   # open: no statement guard, and the server role keeps the privilege
+# -- closed since (#4492 row 4), and no longer getting through: the site of a
+# posted row (ledger entries, tenders, kept records, the pieces and handling
+# units of a movement); the deletion of a recorded original; a line of a
+# finalized receipt handed to another receipt; the pieces and handling units of
+# a movement edited or deleted; a posted table emptied in one statement.

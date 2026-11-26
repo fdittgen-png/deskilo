@@ -15,7 +15,7 @@
 -- `invoice_matches` or `invoice_match_payments` still points at it. The
 -- moment the match is gone, so is the licence to delete it.
 begin;
-select plan(6);
+select plan(10);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -110,6 +110,41 @@ select throws_ok(
          current_setting('deskilo.ledger.ws')),
   'DKE01', null,
   'reset_workspace refuses to empty a ledger its retention still keeps');
+
+-- #4492: the same holds against the server's own role, which no policy
+-- restrains: the site of a posted entry, and the table as a whole.
+create or replace function pg_temp.server(p_sql text) returns text language plpgsql as $f$
+begin
+  set local role service_role;
+  begin
+    execute p_sql;
+  exception when others then
+    reset role;
+    return 'ERR ' || sqlstate;
+  end;
+  reset role;
+  return 'done';
+end
+$f$;
+select set_config('deskilo.ledger.site', coalesce((select site_id::text from public.ledger_entries where id = current_setting('deskilo.ledger.charge')::uuid), 'none'), false);
+select is(
+  pg_temp.server(format('update public.ledger_entries set site_id = gen_random_uuid() where id = %L', current_setting('deskilo.ledger.charge')))
+  || ' ' || coalesce((select site_id::text from public.ledger_entries where id = current_setting('deskilo.ledger.charge')::uuid), 'none'),
+  'ERR DKL03 ' || current_setting('deskilo.ledger.site'),
+  'the site of a posted entry does not change');
+select is(
+  pg_temp.server('truncate table public.ledger_entries cascade')
+  || ' ' || (select count(*)::text from public.ledger_entries where id = current_setting('deskilo.ledger.charge')::uuid),
+  'ERR DKL03 1',
+  'the ledger is not emptied in one statement');
+select is(
+  pg_temp.server(format('update public.ledger_entries set modified_datetime = now() where id = %L', current_setting('deskilo.ledger.charge'))),
+  'done',
+  'a touch of the technical columns still passes');
+select is(
+  (select count(*)::text from public.stock_reversals) || ' ' || pg_temp.server('truncate table public.stock_reversals'),
+  '0 done',
+  'a table of posted rows that holds none may be emptied (a restore into an empty installation)');
 
 select * from finish();
 rollback;
