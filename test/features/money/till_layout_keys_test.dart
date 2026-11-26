@@ -5,13 +5,16 @@
 // or no published layout, the till keeps the generated keys of #4366 unchanged.
 import 'dart:async';
 
+import 'package:deskilo/core/demo/data/demo_receipt_printer.dart';
 import 'package:deskilo/core/demo/data/demo_till.dart';
 import 'package:deskilo/core/demo/data/demo_till_layouts.dart';
+import 'package:deskilo/core/demo/demo_receipt_printer_overrides.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/domain/till_layout.dart';
 import 'package:deskilo/features/money/presentation/till_layout/till_layout_keys.dart';
 import 'package:deskilo/features/money/presentation/till_session.dart';
 import 'package:deskilo/features/money/providers/till_layout_providers.dart';
+import 'package:deskilo/features/money/providers/till_printer_providers.dart';
 import 'package:deskilo/features/money/providers/till_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +40,7 @@ Future<DemoTillLayouts> _published() async {
     TillCell(kindWire: TillWidgetKind.functionKey.wire, col: 2, row: 0, params: const {tillCellFunctionParam: 'price_override'}),
     TillCell(kindWire: TillWidgetKind.functionKey.wire, col: 3, row: 0, params: const {tillCellFunctionParam: 'line_discount'}),
     TillCell(kindWire: TillWidgetKind.functionKey.wire, col: 2, row: 1, params: const {tillCellFunctionParam: 'reprint_last'}),
+    TillCell(kindWire: TillWidgetKind.functionKey.wire, col: 3, row: 1, params: const {tillCellFunctionParam: 'open_drawer'}),
     TillCell(kindWire: TillWidgetKind.keypad.wire, col: 0, row: 2, colSpan: 2, rowSpan: 3),
     TillCell(kindWire: TillWidgetKind.calculator.wire, col: 2, row: 2, colSpan: 2, rowSpan: 3),
   ]);
@@ -55,7 +59,10 @@ Future<void> _settle(WidgetTester tester) async {
   }
 }
 
-Future<List<String>> _open(WidgetTester tester, DemoTillLayouts store, {required bool on}) async {
+late DemoReceiptPrinter _printer;
+
+Future<List<String>> _open(WidgetTester tester, DemoTillLayouts store, {required bool on, bool printing = false}) async {
+  _printer = DemoReceiptPrinter();
   final calls = <String>[];
   final till = DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20);
   _session = TillSession(port: till, workspaceId: 'ws-1');
@@ -76,6 +83,9 @@ Future<List<String>> _open(WidgetTester tester, DemoTillLayouts store, {required
       tillLayoutPortProvider.overrideWithValue(store),
       tillLayoutsOnProvider.overrideWithValue(on),
       tillPortProvider.overrideWithValue(till),
+      tillPrinterOnProvider.overrideWithValue(printing),
+      tillPrinterStoreProvider.overrideWithValue(DemoTillPrinterStore()),
+      receiptSenderProvider.overrideWith((ref, s) => _printer),
     ],
   );
   await tester.pump();
@@ -189,6 +199,20 @@ void main() {
     await tester.tap(find.text(_en.tillLayoutFnReprint));
     await tester.pumpAndSettle();
     expect(find.text(_en.tillReceiptCopy('1')), findsOneWidget);
+  });
+
+  testWidgets('Open drawer opens the drawer the printer drives, only where the business prints its receipts', (tester) async {
+    await _open(tester, await tester.runAsync(_published) as DemoTillLayouts, on: true);
+    final key = find.widgetWithText(FilledButton, _en.tillLayoutFnDrawer);
+    await tester.ensureVisible(key);
+    expect(tester.widget<FilledButton>(key).onPressed, isNull, reason: 'no printing, no drawer');
+
+    await _open(tester, await tester.runAsync(_published) as DemoTillLayouts, on: true, printing: true);
+    await tester.ensureVisible(key);
+    await tester.tap(key);
+    await tester.pumpAndSettle();
+    expect(_printer.jobs, hasLength(1));
+    expect(find.text(_en.tillDrawerOpened), findsOneWidget);
   });
 
   testWidgets('with till layouts off, the till keeps its generated keys', (tester) async {
