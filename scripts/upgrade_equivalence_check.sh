@@ -17,7 +17,7 @@
 #              in-flight e-invoice work of archive_seed_0689.sql, carried to
 #              0747 with the goods of archive_seed_0747.sql, then every later
 #              migration over those rows.
-#   the stack  the job's own replay (`supabase start`), the database
+#   the stack  the job's own replay (the local-stack action), the database
 #              assets/instance/contract.txt is read from.
 #
 # scripts/upgrade_equivalence.sql prints each as one line per fact (columns,
