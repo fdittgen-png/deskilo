@@ -41478,6 +41478,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String tillDayDepositsReturned(String amount) {
+    return 'Envases devueltos: $amount';
+  }
+
+  @override
   String tillDayDifferences(String amount) {
     return 'Diferencia total de los cajones: $amount';
   }
@@ -42567,6 +42572,33 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tillRetry => 'Reintentar';
+
+  @override
+  String get tillReturnNoDeposit =>
+      'El último artículo no lleva envase que devolver.';
+
+  @override
+  String get tillReturnNotAllowed => 'No puede devolver un envase en la caja.';
+
+  @override
+  String get tillReturnNotDeposit =>
+      'Este artículo no es el envase de ningún artículo vendido.';
+
+  @override
+  String get tillReturnOffline =>
+      'No se devuelve un envase mientras la caja está sin conexión.';
+
+  @override
+  String get tillReturnTracked =>
+      'Este envase se sigue por lote o etiqueta: no se devuelve en la caja.';
+
+  @override
+  String tillReturnedLabel(String item) {
+    return 'Envase devuelto: $item';
+  }
+
+  @override
+  String get tillReturnedLine => 'Envase devuelto';
 
   @override
   String get tillRingUpFirst => 'Registre primero un artículo.';

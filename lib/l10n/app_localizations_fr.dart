@@ -41656,6 +41656,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String tillDayDepositsReturned(String amount) {
+    return 'Consignes reprises : $amount';
+  }
+
+  @override
   String tillDayDifferences(String amount) {
     return 'Écart total des tiroirs : $amount';
   }
@@ -42752,6 +42757,34 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tillRetry => 'Réessayer';
+
+  @override
+  String get tillReturnNoDeposit =>
+      'Le dernier article n\'a pas de consigne à reprendre.';
+
+  @override
+  String get tillReturnNotAllowed =>
+      'Vous ne pouvez pas reprendre une consigne à la caisse.';
+
+  @override
+  String get tillReturnNotDeposit =>
+      'Cet article n\'est la consigne d\'aucun article vendu.';
+
+  @override
+  String get tillReturnOffline =>
+      'Une consigne n\'est pas reprise tant que la caisse est hors ligne.';
+
+  @override
+  String get tillReturnTracked =>
+      'Cette consigne est suivie par lot ou étiquette : elle n\'est pas reprise à la caisse.';
+
+  @override
+  String tillReturnedLabel(String item) {
+    return 'Consigne reprise : $item';
+  }
+
+  @override
+  String get tillReturnedLine => 'Consigne reprise';
 
   @override
   String get tillRingUpFirst => 'Enregistrez d\'abord un article.';

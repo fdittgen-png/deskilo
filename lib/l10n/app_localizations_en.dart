@@ -41136,6 +41136,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String tillDayDepositsReturned(String amount) {
+    return 'Deposits returned: $amount';
+  }
+
+  @override
   String tillDayDifferences(String amount) {
     return 'Total difference of the drawers: $amount';
   }
@@ -42216,6 +42221,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tillRetry => 'Try again';
+
+  @override
+  String get tillReturnNoDeposit =>
+      'The last item carries no deposit to take back.';
+
+  @override
+  String get tillReturnNotAllowed =>
+      'You may not take a deposit back at the till.';
+
+  @override
+  String get tillReturnNotDeposit =>
+      'This item is not a deposit any item is sold with.';
+
+  @override
+  String get tillReturnOffline =>
+      'A deposit is not taken back while the till is offline.';
+
+  @override
+  String get tillReturnTracked =>
+      'This deposit is tracked by lot or tag: it is not taken back at the till.';
+
+  @override
+  String tillReturnedLabel(String item) {
+    return 'Deposit returned: $item';
+  }
+
+  @override
+  String get tillReturnedLine => 'Deposit returned';
 
   @override
   String get tillRingUpFirst => 'Ring up an item first.';

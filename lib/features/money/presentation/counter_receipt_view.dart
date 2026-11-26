@@ -38,7 +38,8 @@ List<String> _counterReceiptLines(AppLocalizations l10n, AppFormat format, Count
     l10n.tillReceiptNumber(doc.number),
     if (doc.issuedAt != null) format.dateTime(doc.issuedAt!),
     if (corrects != null) l10n.tillReceiptCorrects(corrects.number),
-    for (final l in doc.lines) l10n.tillReceiptLine(l.label, l.quantity, l.unit, money.formatMinor(l.grossMinor)),
+    for (final l in doc.lines)
+      l10n.tillReceiptLine(l.returned ? l10n.tillReturnedLabel(l.label) : l.label, l.quantity, l.unit, money.formatMinor(l.grossMinor)),
     for (final t in doc.taxBreakdown) l10n.tillReceiptTaxLine(_rate(format, t), money.formatMinor(t.taxMinor), money.formatMinor(t.netMinor)),
     l10n.tillReceiptTotal(money.formatMinor(doc.totals.grossMinor)),
     if (op.specification.isNotEmpty) l10n.tillReceiptIssuedUnder(op.specification, op.specificationVersion),

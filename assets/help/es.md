@@ -3160,6 +3160,8 @@ En la caja, las teclas funcionan como las colocó. El **teclado numérico** escr
 
 **Reimprimir el último ticket** muestra de nuevo el tique de la última venta, marcado **COPIA 1**, **COPIA 2**, etc. Una copia nunca toma un nuevo número de tique, y cada copia impresa se cuenta.
 
+**Devolución de envase** devuelve el envase del último artículo registrado (las botellas de un pack de agua, por ejemplo): escriba antes la cantidad en el teclado, o se toma uno. El envase se descuenta de la venta y aparece como **Envase devuelto** en el tique; vuelve al stock cuando se hace la venta. Requiere el derecho **Cambiar un precio en la caja**, no se hace sin conexión, un envase seguido por lote o etiqueta no se devuelve en la caja, y una venta cuyo total no sería superior a cero no se hace (pague entonces los envases desde el cajón).
+
 ### Cuando la caja está sin conexión
 
 **Público:** Administrador/a · Propietario

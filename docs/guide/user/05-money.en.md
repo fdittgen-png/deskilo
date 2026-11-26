@@ -897,6 +897,8 @@ At the till, the layout's keys work as you placed them. The **numeric keypad** t
 
 **Reprint the last receipt** shows the last sale's receipt again, marked **COPY 1**, **COPY 2** and so on. A copy never takes a new receipt number, and every copy printed is counted.
 
+**Deposit return** takes back the deposit of the last item rung up (the bottles of a crate of water, say): type how many on the keypad first, or one is taken. The deposit is taken off the sale and shows as **Deposit returned** on the receipt; it comes back into stock when the sale is made. It needs the right **Change a price at the till**, it is not done offline, a deposit tracked by lot or tag is not taken back at the till, and a sale whose total would not be above zero is not made (pay the deposits out from the drawer instead).
+
 <!-- anchor: user.money.till-offline -->
 ### When the till is offline
 

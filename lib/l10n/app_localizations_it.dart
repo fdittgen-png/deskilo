@@ -41529,6 +41529,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String tillDayDepositsReturned(String amount) {
+    return 'Vuoti resi: $amount';
+  }
+
+  @override
   String tillDayDifferences(String amount) {
     return 'Differenza totale dei cassetti: $amount';
   }
@@ -42623,6 +42628,33 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tillRetry => 'Riprova';
+
+  @override
+  String get tillReturnNoDeposit =>
+      'L\'ultimo articolo non ha un vuoto da riprendere.';
+
+  @override
+  String get tillReturnNotAllowed => 'Non può riprendere un vuoto alla cassa.';
+
+  @override
+  String get tillReturnNotDeposit =>
+      'Questo articolo non è il vuoto di alcun articolo venduto.';
+
+  @override
+  String get tillReturnOffline =>
+      'Il vuoto non viene ripreso mentre la cassa è offline.';
+
+  @override
+  String get tillReturnTracked =>
+      'Questo vuoto è tracciato per lotto o etichetta: non viene ripreso alla cassa.';
+
+  @override
+  String tillReturnedLabel(String item) {
+    return 'Vuoto reso: $item';
+  }
+
+  @override
+  String get tillReturnedLine => 'Vuoto reso';
 
   @override
   String get tillRingUpFirst => 'Registri prima un articolo.';
