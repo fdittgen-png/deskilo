@@ -254,6 +254,62 @@ static void calibration(void) {
     CHECK(saved_cal.ry0 == 3500 && saved_cal.ry1 == 600, "the top and bottom crosses give the Y range");
 }
 
+// #4450 -- what is already on the screen is not painted again: the same state marks nothing for painting, and a new status
+// line marks the status and no key.
+static void repaint(void) {
+    s_lang = "repaint";
+    strings_set_lang("en");
+    lv_obj_t *scr = lv_obj_create(NULL);
+    lv_scr_load(scr);
+    ui_build_till();
+    shared_t s = state(PH_SELL, 1250);
+    ui_refresh(&s); pump(200);
+    lv_disp_t *d = lv_disp_get_default();
+    CHECK(d->inv_p == 0, "the screen is painted and at rest");
+    ui_refresh(&s);
+    CHECK(d->inv_p == 0, "the same state again marks nothing for painting");
+    snprintf(s.status, sizeof s.status, "another line");
+    ui_refresh(&s);
+    lv_obj_t *key = find_prefix(lv_scr_act(), "Coffee");
+    bool on_key = key == NULL;
+    if (key) {
+        lv_area_t k;
+        lv_obj_get_coords(lv_obj_get_parent(key), &k);
+        for (uint16_t i = 0; i < d->inv_p; i++) on_key |= _lv_area_is_on(&d->inv_areas[i], &k);
+    }
+    CHECK(d->inv_p > 0 && !on_key, "a new status line marks the status and no key");
+    CHECK(find(lv_scr_act(), "another line") != NULL, "and the new line is shown");
+    pump(50);
+}
+
+// #4450 -- the roll: the same lines again leave the list alone, other lines are shown, no open receipt empties it.
+// The last test: from here on ui.c shows the roll.
+static void roll_screen(void) {
+    s_lang = "roll";
+    strings_set_lang("en");
+    lv_obj_t *scr = lv_obj_create(NULL);
+    lv_scr_load(scr);
+    ui_build_roll();
+    shared_t s = state(PH_SELL, 1250);
+    snprintf(s.roll.lines[0].label, sizeof s.roll.lines[0].label, "Coffee");
+    ui_refresh(&s); pump(200);
+    lv_disp_t *d = lv_disp_get_default();
+    CHECK(find_prefix(lv_scr_act(), "1 x Coffee") != NULL, "the roll shows its line");
+    CHECK(d->inv_p == 0, "the roll is painted and at rest");
+    ui_refresh(&s);
+    CHECK(d->inv_p == 0, "the same roll again marks nothing for painting");
+    snprintf(s.roll.lines[0].qty, sizeof s.roll.lines[0].qty, "2");
+    ui_refresh(&s); pump(50);
+    CHECK(find_prefix(lv_scr_act(), "2 x Coffee") != NULL && find_prefix(lv_scr_act(), "1 x Coffee") == NULL, "another quantity is shown instead");
+    s.has_roll = false;
+    ui_refresh(&s); pump(50);
+    CHECK(find_prefix(lv_scr_act(), "2 x Coffee") == NULL, "no open receipt empties the roll");
+    s = state(PH_SELL, 1250);
+    snprintf(s.roll.lines[0].label, sizeof s.roll.lines[0].label, "Coffee");
+    ui_refresh(&s); pump(50);
+    CHECK(find_prefix(lv_scr_act(), "1 x Coffee") != NULL, "and a receipt opened after it is shown again");
+}
+
 
 int main(void) {
     lv_init();
@@ -266,9 +322,11 @@ int main(void) {
     lv_indev_drv_register(&indev);
     const char *langs[] = {"en", "de", "fr", "es", "it"};
     for (int i = 0; i < 5; i++) one_language(langs[i]);
+    repaint();
     calibration();
     pairing();
     portrait_pairing();
+    roll_screen();
     printf("%d passed, %d failed\n", passed, failed);
     return failed ? 1 : 0;
 }
