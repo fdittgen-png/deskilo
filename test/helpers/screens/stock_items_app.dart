@@ -53,6 +53,9 @@ Future<void> openStockItem(WidgetTester tester, String rowKey) async {
         )
         .first,
   );
+  // a row scrolled to the edge may sit under the bottom bar: bring it fully into view before the tap
+  await tester.ensureVisible(row);
+  await tester.pump();
   await tester.tap(row);
   await settleStock(tester);
 }

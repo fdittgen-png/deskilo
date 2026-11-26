@@ -1032,6 +1032,7 @@ const Set<String> uiKeys = {
   'demo-item-apples',
   'demo-item-basket',
   'demo-item-beans',
+  'demo-item-bottle',
   'demo-item-milk',
   'demo-item-mugs',
   'demo-item-shirt',
