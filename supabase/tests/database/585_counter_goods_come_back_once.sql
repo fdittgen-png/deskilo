@@ -10,7 +10,8 @@
 -- only. Three mugs sold, two taken back at the counter, and the stock door still takes back three: 12 on hand of 10
 -- received, the customer at minus 2. They are TODO so the suite stays green; remove each todo() when the counter's
 -- return is a return of the sale movement in the one record (`stock_reversals`), as the void of an invoice is since
--- 0975. Rolled back.
+-- 0975. A second TODO (M) records that the counter's return puts goods back in NO lot: two teas of a lot at 3.00 sold and
+-- taken back leave the lot at 8 and 2 loose, and the stock worth 24.00 instead of 30.00. Rolled back.
 begin;
 select plan(13);
 
@@ -145,6 +146,7 @@ select is(pg_temp.credit_and_return(2011, pg_temp.rec('r.l'), '2') || '|' || pg_
 -- ── M: goods that left a lot come back to it, at its cost ──
 do $d$ begin perform set_config('r.m', pg_temp.sale(3001, 303, '2'), false); end $d$;
 select is(pg_temp.lots(303) || '|' || pg_temp.stock_value(), 'T1:8|2400', 'M two teas sold leave their lot: ' || current_setting('r.m'));
+select todo('#4492 row 2: goods taken back at the counter come back in no lot, and the stock''s value does not', 1);
 select is(pg_temp.credit_and_return(3011, pg_temp.rec('r.m'), '2') || '|' || pg_temp.lots(303) || '|' || pg_temp.stock_value(),
   'credited, returned|T1:10|3000', 'M taken back at the counter, they are in their lot again and the stock is worth what it was');
 

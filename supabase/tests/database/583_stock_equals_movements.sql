@@ -393,7 +393,7 @@ select is(pg_temp.run('U01', 'transfer', 'MUGS 1 SHELF>MAIN box', '') || ' ' || 
 select is(pg_temp.run('U03', 'transfer', 'SYRUP 1 MAIN>SHELF third', '') || ' ' || pg_temp.run('U04', 'transfer', 'SYRUP 1 SHELF>MAIN third', '')
           || ' ' || (pg_temp.snap() = current_setting('t.s0'))::text, 'ok ok true', 'U02 a third out and a third back is nothing');
 -- MEASURED, not wished (#4492 row 1): a third has no finite decimal and is rounded at each movement, so the thirds do
--- not add up to the litre they came from. The decision (refuse an inexact conversion, or keep the rounding) is open.
+-- not add up to the litre they came from. The decision (refuse a conversion that is not exact, or keep the rounding) is open.
 select is(pg_temp.run('U05', 'transfer', 'SYRUP 1 MAIN>SHELF third', '') || ' ' || pg_temp.run('U06', 'transfer', 'SYRUP 1 MAIN>SHELF third', '')
           || ' | ' || pg_temp.bal('SYRUP@MAIN=1.000001 SYRUP@SHELF=0.999999') || ' | ' || pg_temp.broken(),
   'ok ok | SYRUP@MAIN=1.000001 SYRUP@SHELF=0.999999 | ', 'U03 today: three thirds moved one by one are 0.999999 of a litre on the shelf');

@@ -19,6 +19,7 @@
 --     same sale cannot both read the same remainder.
 -- Nothing changes for an invoice no return was made on: the same movements, to the same places, under the same request.
 -- An app of the last release calls `void_invoice` as before and reads the same answer.
+-- restates 0942
 create or replace function public.invoice_goods_return(p_workspace_id uuid, p_actor uuid, p_invoice_id uuid)
 returns integer language plpgsql security definer set search_path = public as $fn$
 declare

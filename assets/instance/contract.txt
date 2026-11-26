@@ -3536,7 +3536,7 @@ routine public.invoice_dunning_state_core(p_invoice_id uuid, p_at timestamp with
 routine public.invoice_email_send_json(p_send uuid) -> jsonb | function | definer | stable | exec:service_role | body:bfb95b7f8f5f
 routine public.invoice_email_state_v1(p_workspace_id uuid, p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9e9729f10099
 routine public.invoice_essentials_missing(p_workspace_id uuid, p_member_id uuid, p_parties jsonb, p_vat_totals jsonb) -> text[] | function | definer | stable | exec:service_role | body:4bfb219079c9
-routine public.invoice_goods_return(p_workspace_id uuid, p_actor uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:d1a30872eda2
+routine public.invoice_goods_return(p_workspace_id uuid, p_actor uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:4061e613bc15
 routine public.invoice_goods_tracks_freeze(p_workspace_id uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:d2069f0a2607
 routine public.invoice_issue_draft(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_replaces uuid, p_correction_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:12b1d88976d2
 routine public.invoice_issue_readiness(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_replaces uuid, p_correction_reason text) -> text[] | function | definer | volatile | exec:authenticated,service_role | body:4acf86115aa7
