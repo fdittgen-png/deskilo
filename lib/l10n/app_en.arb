@@ -48133,6 +48133,10 @@
   "@stockItemsIntro": {
     "description": "the stock pages and group (#4299)"
   },
+  "stockItemsSelectHint": "Select an item to act on it",
+  "@stockItemsSelectHint": {
+    "description": "#4483 the desk's toolbar above the items grid while no row is selected: how to act on an item"
+  },
   "stockItemsTitle": "Items",
   "@stockItemsTitle": {
     "description": "the stock pages and group (#4299)"

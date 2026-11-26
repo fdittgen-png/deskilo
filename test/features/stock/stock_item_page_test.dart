@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4480 -- Stock › Items read on a phone and at the desk, light and dark: a row is the item's name (on at most two
-// lines, never a letter per line), one line of facts and a badge, with no action in it; the row opens the item at
-// its address (beside the list at 1024 and 1440, a page of its own at 390); each section's worded action opens the
-// editor the business already has, and a save shows the new value back on the item; the rights decide the actions.
+// #4480 -- an item of Stock › Items on a phone and at the desk, light and dark: the item opens at its address
+// (beside the grid at 1024 and 1440, a page of its own at 390); each section's worded action opens the editor the
+// business already has, and a save shows the new value back on the item; the rights decide the actions.
+// #4483 -- how the list itself reads per form factor is stock_items_form_factor_test.dart.
 import 'package:deskilo/app/theme.dart';
 import 'package:deskilo/core/demo/data/demo_stock_tags.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
@@ -19,7 +19,6 @@ import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -147,74 +146,6 @@ void main() {
     for (final dark in [false, true]) {
       group('at $width px, ${dark ? 'dark' : 'light'}', () {
         testWidgets(
-          'a row reads at a glance: its name on at most two lines and wide enough, its facts, a badge, no action',
-          (tester) async {
-            await _open(tester, width, dark: dark);
-            await tester.scrollUntilVisible(
-              find.byKey(const ValueKey('stock-item-i-Coffee')),
-              200,
-              scrollable: find
-                  .descendant(
-                    of: find.byKey(const ValueKey('stock-items-list')),
-                    matching: find.byType(Scrollable),
-                  )
-                  .first,
-            );
-            await tester.pumpAndSettle();
-            final row = find.byKey(const ValueKey('stock-item-i-Coffee'));
-            final title = find.descendant(
-              of: row,
-              matching: find.text(_longName),
-            );
-            expect(
-              tester.getSize(title).width,
-              greaterThanOrEqualTo(120),
-              reason: 'the name keeps its width, never a letter per line',
-            );
-            final paragraph = tester.renderObject<RenderParagraph>(title);
-            final lines = paragraph
-                .getBoxesForSelection(
-                  const TextSelection(
-                    baseOffset: 0,
-                    extentOffset: _longName.length,
-                  ),
-                )
-                .map((b) => b.top.round())
-                .toSet();
-            expect(
-              lines.length,
-              lessThanOrEqualTo(2),
-              reason: 'the name is on one or two lines',
-            );
-            expect(
-              find.descendant(of: row, matching: find.byType(IconButton)),
-              findsNothing,
-              reason: 'no action buttons crowd the row',
-            );
-            expect(
-              find.descendant(
-                of: row,
-                matching: find.text(_en.stockItemAttentionNoPlace),
-              ),
-              findsOneWidget,
-              reason: 'the badge says what it needs',
-            );
-            final facts =
-                (tester.widget<ListTile>(row).subtitle! as Text).data!;
-            expect(facts, contains('€24.90'));
-            expect(
-              facts,
-              contains(
-                _en.stockRegistryOnHand(
-                  _en.stockQuantityWithUnit('7', 'piece'),
-                ),
-              ),
-            );
-            expect(tester.takeException(), isNull);
-          },
-        );
-
-        testWidgets(
           'a row opens its item: ${width < 1000 ? 'a page of its own' : 'beside the list'}',
           (tester) async {
             await _open(tester, width, dark: dark);
@@ -238,26 +169,22 @@ void main() {
                 reason: section,
               );
             }
-            final listShown = find.byKey(const ValueKey('stock-items-list'));
             if (width < 1000) {
               expect(
-                listShown,
+                find.byKey(const ValueKey('stock-items-list')),
                 findsNothing,
                 reason: 'on a phone the item is a page over the list',
               );
             } else {
               expect(
-                listShown,
+                find.byKey(const ValueKey('stock-items-grid')),
                 findsOneWidget,
-                reason: 'at the desk the list stays beside the item',
+                reason: 'at the desk the grid stays beside the item',
               );
               expect(
-                tester
-                    .widget<ListTile>(
-                      find.byKey(const ValueKey('stock-item-i-Wine')),
-                    )
-                    .selected,
-                isTrue,
+                find.byKey(const ValueKey('stock-item-check-i-Wine')),
+                findsOneWidget,
+                reason: 'its row stays selected',
               );
               await tester.tap(find.byKey(const ValueKey('stock-item-close')));
               await settleStock(tester);
@@ -402,7 +329,7 @@ void main() {
             await _open(tester, width, dark: dark, held: _manage);
             await openStockItem(tester, 'i-Wine');
             expect(
-              find.byKey(const ValueKey('stock-item-edit-i-Wine')),
+              itemAction('stock-item-edit-i-Wine'),
               findsNothing,
             );
             for (final key in [
@@ -413,7 +340,7 @@ void main() {
               'stock-item-group-i-Wine',
               'stock-tags-i-Wine',
             ]) {
-              expect(find.byKey(ValueKey(key)), findsOneWidget, reason: key);
+              expect(itemAction(key), findsOneWidget, reason: key);
             }
           },
         );
@@ -435,7 +362,7 @@ void main() {
             findsNothing,
             reason: 'no section action',
           );
-          expect(find.byKey(const ValueKey('stock-home-i-Wine')), findsNothing);
+          expect(itemAction('stock-home-i-Wine'), findsNothing);
           expect(
             find.byKey(const ValueKey('stock-item-section-suppliers')),
             findsNothing,

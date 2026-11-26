@@ -21666,6 +21666,7 @@
   "@stockItemsIntro": {
     "description": "the stock pages and group (#4299)"
   },
+  "stockItemsSelectHint": "Sélectionnez un article pour agir dessus",
   "stockItemsTitle": "Articles",
   "@stockItemsTitle": {
     "description": "the stock pages and group (#4299)"

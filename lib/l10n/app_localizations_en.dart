@@ -36985,6 +36985,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'The items the business keeps and sells: each one\'s settings, variants and supplier articles.';
 
   @override
+  String get stockItemsSelectHint => 'Select an item to act on it';
+
+  @override
   String get stockItemsTitle => 'Items';
 
   @override

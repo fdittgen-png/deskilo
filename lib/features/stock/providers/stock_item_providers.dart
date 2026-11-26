@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/stock_reads.dart';
+import '../domain/item_groups.dart';
 import '../domain/stock_reorder.dart';
 import '../domain/stock_variants.dart';
 import 'stock_providers.dart';
@@ -29,14 +30,20 @@ final stockLowKeysProvider = Provider.autoDispose.family<Set<String>, String>((
   };
 });
 
+/// #4483 -- the business's item groups, read once for every item whose group is shown (the desk grid names one per
+/// row).
+final stockItemGroupListProvider = FutureProvider.autoDispose.family<List<ItemGroup>, String>(
+  (ref, workspaceId) => ref.watch(itemGroupsProvider).groups(workspaceId),
+);
+
 /// The name of the group the item is in; null when it is in none.
 final stockItemGroupNameProvider = FutureProvider.autoDispose
     .family<String?, ({String workspaceId, String itemId})>((ref, key) async {
       final groups = ref.watch(itemGroupsProvider);
+      final all = await ref.watch(stockItemGroupListProvider(key.workspaceId).future);
       final effective = await groups.effective(key.workspaceId, key.itemId);
       final id = effective.groupId;
       if (id == null) return null;
-      final all = await groups.groups(key.workspaceId);
       return all.where((g) => g.id == id).firstOrNull?.name;
     });
 

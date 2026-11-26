@@ -5,6 +5,9 @@
 // stock settings, the group, the tags, the variants and the supplier articles in theirs. The rights decide the
 // actions as the server does: `manageServices` for name, price and VAT, `manageStock` for the rest; a reader sees
 // the sections and no action. A save reads the item again, so the page shows what was saved.
+// #4483 -- the actions are the item's declared ones (stock_item_actions.dart), as on the list's chips and toolbar.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,7 +20,6 @@ import '../../../core/ui/kit/status_chip.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../money/domain/service_item.dart';
 import '../../money/presentation/vat_price_label.dart';
-import '../../money/presentation/widgets/service_sheet.dart';
 import '../../money/providers/money_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
@@ -27,8 +29,7 @@ import '../domain/stock_item_attention.dart';
 import '../domain/stock_registry.dart';
 import '../providers/stock_item_providers.dart';
 import '../providers/stock_providers.dart';
-import 'stock_home_sheet.dart';
-import 'stock_item_editor.dart';
+import 'stock_item_actions.dart';
 import 'stock_item_parts.dart';
 import 'stock_item_sections.dart';
 
@@ -63,11 +64,9 @@ class StockItemView extends ConsumerWidget {
   StockRegistryRow get _main =>
       rows.where((r) => r.variantId == null).firstOrNull ?? rows.first;
 
-  String get _name => service?.name ?? _main.itemName;
-
-  void _saved(BuildContext context, WidgetRef ref) {
-    if (context.mounted) reloadStockRegistry(ref);
-  }
+  /// The item's actions, as the list's chips and toolbar open them (#4483).
+  StockItemActions _actions(BuildContext context, WidgetRef ref) =>
+      StockItemActions(context, ref, workspaceId: workspaceId, services: services);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -112,22 +111,22 @@ class StockItemView extends ConsumerWidget {
           if (mayManage && (groupsOn || tagsOn))
             StockItemGroupSection(
               workspaceId: workspaceId,
-              itemId: itemId,
-              name: _name,
+              row: _main,
+              services: services,
               groupsOn: groupsOn,
               tagsOn: tagsOn,
             ),
           StockItemVariantsSection(
             workspaceId: workspaceId,
-            itemId: itemId,
-            name: _name,
+            row: _main,
+            services: services,
             mayManage: mayManage,
           ),
           if (mayManage)
             StockItemSuppliersSection(
               workspaceId: workspaceId,
-              itemId: itemId,
-              name: _name,
+              row: _main,
+              services: services,
             ),
         ],
       ),
@@ -180,20 +179,11 @@ class StockItemView extends ConsumerWidget {
       actions: [
         if (mayEditService && editable != null)
           KitActionButton(
-            key: ValueKey('stock-item-edit-$itemId'),
+            key: stockItemActionKey(StockItemActionKind.details, main),
             label: l10n.stockItemEditDetails,
             tonal: true,
             showProgress: false,
-            onPressed: () async {
-              await ServiceEditor.open(
-                context,
-                ref,
-                workspaceId: workspaceId,
-                service: editable,
-                categories: [for (final s in services) s.category],
-              );
-              if (context.mounted) _saved(context, ref);
-            },
+            onPressed: () => _actions(context, ref).editService(editable),
           ),
       ],
     );
@@ -203,13 +193,9 @@ class StockItemView extends ConsumerWidget {
     final l10n = context.l10n;
     final format = appFormatOf(context);
     final separator = ref.watch(stockAddressSeparatorProvider);
-    // The places only feed the home place's choice.
-    final places =
-        ref.watch(stockPlaceConfigsProvider(workspaceId)).value ??
-        const <StockPlaceConfig>[]; // empty-ok: a choice
-    final lotsOn = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.stockLots);
+    // The places only feed the home place's choice: read while the section shows.
+    ref.watch(stockPlaceConfigsProvider(workspaceId));
+    final acts = _actions(context, ref);
     String home(StockRegistryRow r) => switch (r.homeAddressPath) {
       final path? => l10n.stockRegistryHome(
         path.split(stockAddressJoint).join(separator),
@@ -233,20 +219,10 @@ class StockItemView extends ConsumerWidget {
             action: !mayManage
                 ? null
                 : TextButton.icon(
-                    key: ValueKey('stock-home-${r.key}'),
+                    key: stockItemActionKey(StockItemActionKind.home, r),
                     icon: const Icon(Icons.place_outlined),
                     label: Text(l10n.stockItemEditHome),
-                    onPressed: () async {
-                      final saved = await showStockHomeSheet(
-                        context,
-                        ref.read(stockRegistryProvider),
-                        workspaceId: workspaceId,
-                        row: r,
-                        places: places,
-                        separator: separator,
-                      );
-                      if (saved && context.mounted) _saved(context, ref);
-                    },
+                    onPressed: () => unawaited(acts.editHome(r)),
                   ),
           ),
         const FormGap.small(),
@@ -255,25 +231,11 @@ class StockItemView extends ConsumerWidget {
       actions: [
         if (mayManage)
           KitActionButton(
-            key: ValueKey('stock-edit-item-$itemId'),
+            key: stockItemActionKey(StockItemActionKind.settings, _main),
             label: l10n.stockItemEditSettings,
             tonal: true,
             showProgress: false,
-            onPressed: () async {
-              final saved = await showStockItemEditor(
-                context,
-                ref.read(stockConfigCommandsProvider),
-                workspaceId: workspaceId,
-                itemId: itemId,
-                itemName: _name,
-                options: (
-                  lots: lotsOn,
-                  keep: false,
-                  groups: itemGroupsIfOn(ref),
-                ),
-              );
-              if (saved && context.mounted) _saved(context, ref);
-            },
+            onPressed: () => acts.editSettings(_main),
           ),
       ],
     );
