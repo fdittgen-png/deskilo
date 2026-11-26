@@ -4378,7 +4378,7 @@ routine public.save_mcp_policy(p_workspace_id uuid, p_expected_revision integer,
 routine public.save_premises_lease_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_payload jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:61eb984039bb
 routine public.save_purchase_draft_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:68d6e1c38dc4
 routine public.save_purchase_order_mail_settings_v1(p_workspace_id uuid, p_sender_email text, p_sender_name text, p_api_key text, p_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:db57f3672cba
-routine public.save_purchase_order_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:32c34ef50517
+routine public.save_purchase_order_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:22b6c02c8bb2
 routine public.save_room_rental_v1(p_workspace_id uuid, p_office_id uuid, p_supplier_id uuid, p_available_from date, p_available_until date, p_cost_kind text, p_cost_cents bigint, p_period text, p_status text, p_document_id uuid, p_revision integer, p_audience_all boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:558593482042
 routine public.save_setup_journey(p_workspace_id uuid, p_answers jsonb, p_levels jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3ea7b7ed1f4c
 routine public.save_setup_step_draft(p_workspace_id uuid, p_step text, p_payload jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fdb127d50874
@@ -4637,7 +4637,7 @@ routine public.stock_pieces_move(p_workspace_id uuid, p_item_id uuid, p_variant 
 routine public.stock_place(p_workspace_id uuid, p_kind text) -> uuid | function | definer | stable | exec:service_role | body:d8a6625b10f4
 routine public.stock_place_is_virtual(p_location_id uuid) -> boolean | function | definer | stable | exec:service_role | body:51374325b462
 routine public.stock_place_tree(p_workspace_id uuid, p_root uuid) -> TABLE(id uuid, depth integer) | function | definer | stable | exec:service_role | body:5b3743876319
-routine public.stock_put_away_apply(p_workspace_id uuid, p_actor uuid, p_command uuid, p_receipt_id uuid, p_allocations jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:902a7617ac92
+routine public.stock_put_away_apply(p_workspace_id uuid, p_actor uuid, p_command uuid, p_receipt_id uuid, p_allocations jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:310366613b5f
 routine public.stock_read_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:91e0d63c0a45
 routine public.stock_read_distinct(p_codes text[], p_limit integer, OUT p_distinct text[], OUT p_more boolean) -> record | function | invoker | immutable | exec:service_role | body:6c27105a19df
 routine public.stock_read_invalid(p_codes text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:2aa088002d5d
@@ -4765,6 +4765,7 @@ routine public.unit_conversion_save_v1(p_workspace_id uuid, p_request_id uuid, p
 routine public.unit_conversions_link(p_workspace_id uuid, p_code text) -> void | function | definer | volatile | exec:service_role | body:74bf8ea34ab2
 routine public.unit_convert(p_workspace_id uuid, p_item_id uuid, p_from text, p_to text, p_quantity numeric) -> numeric | function | definer | stable | exec:service_role | body:c5ba4f15e3e1
 routine public.unit_factor(p_workspace_id uuid, p_item_id uuid, p_from text, p_to text) -> TABLE(num bigint, den bigint) | function | definer | stable | exec:service_role | body:fd1278cf0397
+routine public.unit_is_convertible(p_workspace uuid, p_item uuid, p_unit text) -> boolean | function | definer | stable | exec:service_role | body:f71d7869d8c0
 routine public.unit_is_pickable(p_workspace uuid, p_unit text, p_item uuid) -> boolean | function | definer | stable | exec:service_role | body:eab23831ab44
 routine public.unmatch_bank_line_in_v1(p_line_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:afb740029be2
 routine public.unreconcile_bank_line_out_v1(p_line_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:afe6df043a4c
