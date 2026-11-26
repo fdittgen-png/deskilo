@@ -12826,8 +12826,20 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataNoUnit": "Sin unidad",
+  "@masterDataNoUnit": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
+  },
+  "masterDataNoVat": "Sin IVA",
+  "@masterDataNoVat": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
+  },
   "masterDataSearchHint": "Escriba un nombre o un código, o elija de la lista",
   "masterDataUnknownCode": "No es una entrada válida. Elija una de la lista.",
+  "masterDataUnlisted": "Esto no está en la lista: elija uno",
+  "@masterDataUnlisted": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
+  },
   "mcpApiReference": "Referencia de la API",
   "mcpApiReferenceHint": "Qué puede llamar un asistente y cómo se autoriza",
   "mcpAssistantsTitle": "Asistentes",
@@ -13300,6 +13312,10 @@
   "measureDimensionMass": "Masa",
   "@measureDimensionMass": {
     "description": "#4442 dimension: mass"
+  },
+  "measureDimensionPackage": "Envase",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
   },
   "measureDimensionTime": "Tiempo",
   "@measureDimensionTime": {
@@ -24220,8 +24236,13 @@
   "tillKeysEmpty": "Todavía no hay nada que vender. Añada primero artículos en el stock.",
   "tillKeysTitle": "Artículos para cobrar",
   "tillLayoutAdd": "Añadir un elemento",
+  "tillLayoutCalcPush": "A la última línea",
   "tillLayoutChooseFunction": "¿Qué función?",
   "tillLayoutChooseItem": "¿Qué artículo?",
+  "tillLayoutChoosePage": "¿Qué página abre?",
+  "tillLayoutCopied": "Copiado como borrador de {till}. Publíquelo allí.",
+  "tillLayoutCopy": "Copiar a otra caja",
+  "tillLayoutCopyTo": "¿Copiar a qué caja?",
   "tillLayoutEdit": "Organizar esta caja",
   "tillLayoutFnCard": "Cobrar con tarjeta",
   "tillLayoutFnDeposit": "Devolución de envase",
@@ -24252,6 +24273,9 @@
   "tillLayoutPublished": "Publicado. La caja lo adopta en su próxima sesión.",
   "tillLayoutReload": "Volver a cargar",
   "tillLayoutRemoveCell": "Quitar este elemento",
+  "tillLayoutReset": "Volver a las teclas generadas",
+  "tillLayoutResetConfirm": "Esta caja vuelve a las teclas que crea a partir de sus artículos. Su diseño y su borrador se eliminan.",
+  "tillLayoutResetDone": "Esta caja vuelve a usar sus teclas generadas.",
   "tillLayoutSizeDesk": "Ancho de escritorio",
   "tillLayoutSizePhone": "Ancho de teléfono",
   "tillLayoutSizeTablet": "Ancho de tableta",

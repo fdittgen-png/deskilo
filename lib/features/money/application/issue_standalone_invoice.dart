@@ -17,6 +17,7 @@ import '../../../core/failure/app_failure.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/command_receipt.dart';
 import '../domain/invoice_queries.dart';
+import '../domain/previewed_document.dart';
 import '../domain/standalone_invoice.dart';
 
 /// What the person confirmed. Immutable, so a look concerns this attempt only.
@@ -41,6 +42,17 @@ class StandaloneIssuance {
 
   final StandaloneInvoiceCommands _commands;
   final InvoiceQueries _queries;
+
+  /// Saves [draft] and asks what issuing it would freeze: the saved draft and the server's own preview, or a refusal in the server's
+  /// words, or not reached. Nothing is issued.
+  Future<CommandOutcome<({StandaloneSaved basis, PreviewedDocument document})>> check({
+    required String workspaceId,
+    required StandaloneDraft draft,
+  }) => runCommand(() async {
+    final saved = await _commands.saveDraft(workspaceId: workspaceId, draft: draft);
+    final preview = await _commands.preview(workspaceId: workspaceId, draftId: saved.draftId, revision: saved.revision);
+    return (basis: saved, document: preview);
+  }, what: 'standalone invoice check failed');
 
   /// Sends [attempt] once: the invoice, a refusal in the server's words, or
   /// not reached (a decoding or transport error), which is never a reason to
@@ -96,7 +108,3 @@ List<String> standaloneRefusalKeys(Object error) {
       ? details.split(',')
       : const [];
 }
-
-/// Traces a failed standalone command (the screen's own words are its refusal).
-void traceStandaloneFailure(String what, Object error, StackTrace stack) =>
-    TraceLogger.instance.error('money', what, error: error, stackTrace: stack);

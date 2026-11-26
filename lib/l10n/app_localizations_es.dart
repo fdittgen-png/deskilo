@@ -21191,12 +21191,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get managedProfileTitle => 'Perfil gestionado';
 
   @override
+  String get masterDataNoUnit => 'Sin unidad';
+
+  @override
+  String get masterDataNoVat => 'Sin IVA';
+
+  @override
   String get masterDataSearchHint =>
       'Escriba un nombre o un código, o elija de la lista';
 
   @override
   String get masterDataUnknownCode =>
       'No es una entrada válida. Elija una de la lista.';
+
+  @override
+  String get masterDataUnlisted => 'Esto no está en la lista: elija uno';
 
   @override
   String get mcpApiReference => 'Referencia de la API';
@@ -22791,6 +22800,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get measureDimensionMass => 'Masa';
+
+  @override
+  String get measureDimensionPackage => 'Envase';
 
   @override
   String get measureDimensionTime => 'Tiempo';
@@ -41801,10 +41813,27 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillLayoutAdd => 'Añadir un elemento';
 
   @override
+  String get tillLayoutCalcPush => 'A la última línea';
+
+  @override
   String get tillLayoutChooseFunction => '¿Qué función?';
 
   @override
   String get tillLayoutChooseItem => '¿Qué artículo?';
+
+  @override
+  String get tillLayoutChoosePage => '¿Qué página abre?';
+
+  @override
+  String tillLayoutCopied(String till) {
+    return 'Copiado como borrador de $till. Publíquelo allí.';
+  }
+
+  @override
+  String get tillLayoutCopy => 'Copiar a otra caja';
+
+  @override
+  String get tillLayoutCopyTo => '¿Copiar a qué caja?';
 
   @override
   String get tillLayoutEdit => 'Organizar esta caja';
@@ -41900,6 +41929,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tillLayoutRemoveCell => 'Quitar este elemento';
+
+  @override
+  String get tillLayoutReset => 'Volver a las teclas generadas';
+
+  @override
+  String get tillLayoutResetConfirm =>
+      'Esta caja vuelve a las teclas que crea a partir de sus artículos. Su diseño y su borrador se eliminan.';
+
+  @override
+  String get tillLayoutResetDone =>
+      'Esta caja vuelve a usar sus teclas generadas.';
 
   @override
   String get tillLayoutSizeDesk => 'Ancho de escritorio';

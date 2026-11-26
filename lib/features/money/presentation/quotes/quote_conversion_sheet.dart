@@ -13,12 +13,14 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/failure/app_failure.dart';
 import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/calendar_days.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../application/issue_attempt.dart';
 import '../../domain/customer_quote.dart';
 import '../../domain/previewed_document.dart';
 import '../../providers/business_day_provider.dart';
@@ -46,68 +48,23 @@ abstract final class QuoteConversion {
       false;
 }
 
-/// Where the conversion stands. Immutable: every step is a new state.
+/// What the person has set on the sheet. Immutable: every step is a new state; the check, the issue and the answer that may not
+/// come are the [IssueAttempt]'s.
 @immutable
 class _Conversion {
-  const _Conversion({
-    required this.serviceDate,
-    required this.dueOn,
-    required this.accepted,
-    this.busy = false,
-    this.prep,
-    this.reviewed = false,
-    this.said,
-    this.requestId,
-    this.converted,
-  });
+  const _Conversion({required this.serviceDate, required this.dueOn, this.reviewed = false, this.converted});
 
   final DateTime serviceDate;
   final DateTime dueOn;
-  final bool busy;
-  final QuoteConversionPrep? prep;
-
-  /// The revision the customer accepted: the lines the invoice is made of.
-  final QuoteRevision accepted;
-
-  /// What [prep] comes to as a previewed document: the accepted lines, their tax and the total, or what refuses it.
-  PreviewedDocument? get document => prep?.documentOf(accepted);
   final bool reviewed;
-  final String? said;
-
-  /// Drawn once per checked invoice: a second tap is the same attempt.
-  final String? requestId;
   final QuoteConverted? converted;
 
   /// The same conversion for other dates: the checked invoice no longer stands.
-  _Conversion withDates({DateTime? serviceDate, DateTime? dueOn}) => _Conversion(
-    serviceDate: serviceDate ?? this.serviceDate,
-    dueOn: dueOn ?? this.dueOn,
-    accepted: accepted,
-  );
+  _Conversion withDates({DateTime? serviceDate, DateTime? dueOn}) =>
+      _Conversion(serviceDate: serviceDate ?? this.serviceDate, dueOn: dueOn ?? this.dueOn);
 
-  _Conversion copy({
-    bool? busy,
-    QuoteConversionPrep? Function()? prep,
-    bool? reviewed,
-    String? Function()? said,
-    String? Function()? requestId,
-    QuoteConverted? converted,
-  }) => _Conversion(
-    serviceDate: serviceDate,
-    dueOn: dueOn,
-    accepted: accepted,
-    busy: busy ?? this.busy,
-    prep: prep == null ? this.prep : prep(),
-    reviewed: reviewed ?? this.reviewed,
-    said: said == null ? this.said : said(),
-    requestId: requestId == null ? this.requestId : requestId(),
-    converted: converted ?? this.converted,
-  );
-
-  bool get canIssue {
-    final p = prep;
-    return p != null && p.issuable && (document?.missing.isEmpty ?? false) && (!p.contextChanged || reviewed) && !busy;
-  }
+  _Conversion copy({bool? reviewed, QuoteConverted? converted}) =>
+      _Conversion(serviceDate: serviceDate, dueOn: dueOn, reviewed: reviewed ?? this.reviewed, converted: converted ?? this.converted);
 }
 
 class _QuoteConversionSheet extends ConsumerStatefulWidget {
@@ -123,17 +80,19 @@ class _QuoteConversionSheet extends ConsumerStatefulWidget {
 class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
   late final ValueNotifier<_Conversion> _state;
 
+  /// The one issue attempt: the checked invoice, what is missing, the request, an answer that did not come.
+  late final _attempt = IssueAttempt<QuoteConversionPrep, QuoteConverted>(
+    // recorder-key-exempt: a repaint callback of a state holder, not a control
+    onChanged: () {
+      if (mounted) setState(() {});
+    },
+  );
+
   @override
   void initState() {
     super.initState();
     final today = ref.read(businessDayProvider);
-    _state = ValueNotifier(
-      _Conversion(
-        serviceDate: today,
-        dueOn: addCalendarDays(today, ref.read(invoiceDueDaysProvider)),
-        accepted: _accepted,
-      ),
-    );
+    _state = ValueNotifier(_Conversion(serviceDate: today, dueOn: addCalendarDays(today, ref.read(invoiceDueDaysProvider))));
     // The business's calendar and the payment term can arrive after the sheet opens: a date the person has not set follows
     // them, one the person set is never overwritten.
     ref
@@ -168,58 +127,80 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
   }
 
   /// A change of date makes the checked invoice stale: it is checked again.
-  void _edit(_Conversion next) => _set(next);
+  void _edit(_Conversion next) {
+    _set(next);
+    _attempt.edited();
+  }
 
+  /// The invoice this conversion would make, as the attempt keeps it: the real issuer's own preview, set against what was accepted.
   Future<void> _check() async {
-    _set(_state.value.copy(busy: true, said: () => null));
     final s = _state.value;
-    final outcome = await ref.read(customerQuoteCommandProvider).prepareConversion(
-      widget.workspaceId,
-      widget.quote.id,
-      serviceDate: s.serviceDate,
-      dueOn: s.dueOn,
-    );
-    if (!mounted) return;
-    final l10n = context.l10n;
-    _set(switch (outcome) {
-      CommandDone(:final value) => s.copy(
-        busy: false,
-        prep: () => value,
-        reviewed: false,
-        requestId: newRequestId,
-      ),
-      CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)) => s.copy(busy: false, said: () => quoteRefusalText(l10n, refusal)),
-      _ => s.copy(busy: false, said: () => l10n.quoteUnreached),
+    final commands = ref.read(customerQuoteCommandProvider);
+    await _attempt.check(() async {
+      final outcome = await commands.prepareConversion(widget.workspaceId, widget.quote.id, serviceDate: s.serviceDate, dueOn: s.dueOn);
+      return switch (outcome) {
+        CommandDone(:final value) => CommandDone((basis: value, document: value.documentOf(_accepted))),
+        CommandRefused(:final refusal) => CommandRefused(refusal),
+        CommandUnreached(:final failure) => CommandUnreached(failure),
+        CommandHeld(:final eventId) => CommandHeld(eventId),
+      };
     });
+    _set(_state.value.copy(reviewed: false));
+  }
+
+  /// Whether the invoice may be issued now: checked, nothing missing, and the review done when it differs from what was accepted.
+  bool _canIssue(_Conversion s) {
+    final prep = _attempt.basis;
+    final document = _attempt.document;
+    return prep != null &&
+        prep.issuable &&
+        (document?.missing.isEmpty ?? false) &&
+        (!prep.contextChanged || s.reviewed) &&
+        !_attempt.busy &&
+        !_attempt.isUnknown;
   }
 
   Future<void> _issue() async {
-    final s = _state.value;
-    final prep = s.prep;
-    final requestId = s.requestId;
-    if (prep == null || requestId == null || !s.canIssue) return;
-    _set(s.copy(busy: true, said: () => null));
-    final outcome = await ref.read(customerQuoteCommandProvider).convert(
-      widget.workspaceId,
-      widget.quote.id,
-      draftRevision: prep.draftRevision,
-      requestId: requestId,
-      reviewedDigest: prep.contextChanged ? prep.reviewDigest : null,
+    final prep = _attempt.basis;
+    if (prep == null || !_canIssue(_state.value)) return;
+    final commands = ref.read(customerQuoteCommandProvider);
+    final outcome = await _attempt.issue(
+      send: (requestId) => commands.convert(
+        widget.workspaceId,
+        widget.quote.id,
+        draftRevision: prep.draftRevision,
+        requestId: requestId,
+        reviewedDigest: prep.contextChanged ? prep.reviewDigest : null,
+      ),
+      look: (requestId, unknown) => commands.lookConverted(widget.workspaceId, widget.quote.id, unknown),
     );
-    if (!mounted) return;
-    final l10n = context.l10n;
+    _arrive(outcome);
+  }
+
+  Future<void> _look() async => _arrive(await _attempt.lookAgain());
+
+  /// Where a settled answer leads: the invoice, or a word that a validation policy holds it.
+  void _arrive(CommandOutcome<QuoteConverted>? outcome) {
+    if (!mounted || outcome == null) return;
     ref
       ..invalidate(customerQuotesProvider(widget.workspaceId))
       ..invalidate(customerQuoteProvider((workspaceId: widget.workspaceId, quoteId: widget.quote.id)));
-    _set(switch (outcome) {
-      CommandDone(:final value) => s.copy(busy: false, converted: value),
-      // the invoice moved under the review: it is checked again, never issued unseen
-      CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)) when refusal.kind == QuoteRefusalKind.needsReview =>
-        s.copy(busy: false, prep: () => null, reviewed: false, said: () => quoteRefusalText(l10n, refusal)),
-      CommandRefused(refusal: Refusal(cause: final QuoteRefusal refusal)) => s.copy(busy: false, said: () => quoteRefusalText(l10n, refusal)),
-      _ => s.copy(busy: false, said: () => l10n.quoteUnreached),
-    });
+    switch (outcome) {
+      case CommandDone(:final value):
+        _set(_state.value.copy(converted: value));
+      case CommandHeld():
+        AppSnack.info(context, context.l10n.validationSentForApproval);
+      // the invoice moved under the review: it is checked again, never issued unseen (the attempt dropped the checked one)
+      case CommandRefused() || CommandUnreached():
+        _set(_state.value.copy(reviewed: false));
+    }
   }
+
+  /// What the quote says about a check or an issue that did not go through, in its own words.
+  String? _said(AppLocalizations l10n) => switch (_attempt.refusal?.cause) {
+    final QuoteRefusal refusal => quoteRefusalText(l10n, refusal),
+    _ => _attempt.checkUnreached ? l10n.quoteUnreached : null,
+  };
 
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<_Conversion>(
@@ -233,6 +214,8 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
 
   List<Widget> _steps(BuildContext context, _Conversion s) {
     final l10n = context.l10n;
+    final said = _said(l10n);
+    final prep = _attempt.basis;
     return [
       Text(l10n.quoteConvert, style: Theme.of(context).textTheme.titleMedium),
       const FormGap(),
@@ -242,7 +225,7 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
         key: const ValueKey('quote-convert-service-date'),
         label: l10n.standaloneInvoiceServiceDate,
         value: s.serviceDate,
-        enabled: !s.busy,
+        enabled: !_attempt.busy,
         onChanged: (d) {
           _serviceTouched = true;
           _edit(s.withDates(serviceDate: d.date));
@@ -253,7 +236,7 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
         key: const ValueKey('quote-convert-due-date'),
         label: l10n.standaloneInvoiceDueDate,
         value: s.dueOn,
-        enabled: !s.busy,
+        enabled: !_attempt.busy,
         onChanged: (d) {
           _dueTouched = true;
           _edit(s.withDates(dueOn: d.date));
@@ -262,20 +245,30 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
       const FormGap(),
       OutlinedButton(
         key: const ValueKey('quote-convert-check'),
-        onPressed: s.busy ? null : _check,
+        onPressed: _attempt.busy || _attempt.isUnknown ? null : _check,
         child: Text(l10n.quoteConvertCheck),
       ),
-      if (s.said != null) ...[
+      if (said != null) ...[
         const FormGap(),
-        Text(s.said!, key: const ValueKey('quote-convert-said')),
+        Text(said, key: const ValueKey('quote-convert-said')),
       ],
-      if (s.prep != null) ..._preview(context, s, s.prep!),
+      if (_attempt.isUnknown) ...[
+        const FormGap(),
+        Text(l10n.quoteUnreached, key: const ValueKey('quote-convert-unknown')),
+        TextButton(
+          key: const ValueKey('quote-convert-look'),
+          onPressed: _attempt.busy ? null : _look,
+          child: Text(l10n.standaloneInvoiceLookAgain),
+        ),
+      ],
+      if (prep != null) ..._preview(context, s, prep),
     ];
   }
 
   List<Widget> _preview(BuildContext context, _Conversion s, QuoteConversionPrep prep) {
     final l10n = context.l10n;
     final money = personalFormatOf(context).moneyNamed(prep.currency);
+    final document = _attempt.document;
     return [
       const FormGap(),
       Text(
@@ -287,14 +280,14 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
           l10n.quoteConvertWouldBe(money.formatMinor(would)),
           key: const ValueKey('quote-convert-would-be'),
         ),
-      if (s.document case final document? when document.missing.isNotEmpty) ...[
+      if (document != null && document.missing.isNotEmpty) ...[
         const FormGap(),
         Text(
           l10n.quoteConvertMissing(standaloneMissingList(l10n, document.missing)),
           key: const ValueKey('quote-convert-missing'),
         ),
       ],
-      if (s.document case final document? when document.ready && !prep.contextChanged) ...[
+      if (document != null && document.ready && !prep.contextChanged) ...[
         const FormGap(),
         PreviewedDocumentCard(key: const ValueKey('quote-convert-document'), preview: document),
       ],
@@ -306,13 +299,13 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
           contentPadding: EdgeInsets.zero,
           value: s.reviewed,
           title: Text(l10n.quoteConvertReviewed),
-          onChanged: s.busy ? null : (v) => _set(s.copy(reviewed: v ?? false)),
+          onChanged: _attempt.busy ? null : (v) => _set(s.copy(reviewed: v ?? false)),
         ),
       ],
       const FormGap(),
       FilledButton(
         key: const ValueKey('quote-convert-issue'),
-        onPressed: s.canIssue ? _issue : null,
+        onPressed: _canIssue(s) ? _issue : null,
         child: Text(l10n.quoteConvertIssue),
       ),
     ];

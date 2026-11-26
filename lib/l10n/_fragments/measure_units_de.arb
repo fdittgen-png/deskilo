@@ -103,6 +103,10 @@
   "@measureDimensionTime": {
     "description": "#4442 dimension: time"
   },
+  "measureDimensionPackage": "Gebinde",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
+  },
   "measureReasonInUse": "Diese Einheit wird verwendet, ihre Größe und ihr Faktor können sich nicht mehr ändern. Legen Sie stattdessen eine neue Einheit an.",
   "@measureReasonInUse": {
     "description": "#4442 refusal: a unit in use keeps its factor"

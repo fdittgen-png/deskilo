@@ -34,4 +34,7 @@ abstract interface class TillLayoutPort {
 
   /// Publishes the draft of [tillId] at the version the editor read; answers the published layout's version.
   Future<int> publish(String workspaceId, {required String requestId, required String tillId, required int expectedVersion});
+
+  /// Removes the draft and the published layout of [tillId]: the till goes back to the keys it generates.
+  Future<void> reset(String workspaceId, {required String requestId, required String tillId});
 }

@@ -12826,8 +12826,20 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataNoUnit": "Nessuna unità",
+  "@masterDataNoUnit": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
+  },
+  "masterDataNoVat": "Senza IVA",
+  "@masterDataNoVat": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
+  },
   "masterDataSearchHint": "Digiti un nome o un codice, oppure scelga dall'elenco",
   "masterDataUnknownCode": "Non è una voce valida. Ne scelga una dall'elenco.",
+  "masterDataUnlisted": "Non è nell'elenco: sceglierne uno",
+  "@masterDataUnlisted": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
+  },
   "mcpApiReference": "Riferimento API",
   "mcpApiReferenceHint": "Cosa può chiamare un assistente e come viene autorizzato",
   "mcpAssistantsTitle": "Assistenti",
@@ -13300,6 +13312,10 @@
   "measureDimensionMass": "Massa",
   "@measureDimensionMass": {
     "description": "#4442 dimension: mass"
+  },
+  "measureDimensionPackage": "Confezione",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
   },
   "measureDimensionTime": "Tempo",
   "@measureDimensionTime": {
@@ -24220,8 +24236,13 @@
   "tillKeysEmpty": "Non c'è ancora nulla da vendere. Aggiunga prima degli articoli nel magazzino.",
   "tillKeysTitle": "Articoli da battere",
   "tillLayoutAdd": "Aggiungere un elemento",
+  "tillLayoutCalcPush": "Sull'ultima riga",
   "tillLayoutChooseFunction": "Quale funzione?",
   "tillLayoutChooseItem": "Quale articolo?",
+  "tillLayoutChoosePage": "Quale pagina apre?",
+  "tillLayoutCopied": "Copiato come bozza di {till}. Lo pubblichi lì.",
+  "tillLayoutCopy": "Copiare su un'altra cassa",
+  "tillLayoutCopyTo": "Copiare su quale cassa?",
   "tillLayoutEdit": "Organizzare questa cassa",
   "tillLayoutFnCard": "Incassare con carta",
   "tillLayoutFnDeposit": "Reso cauzione",
@@ -24252,6 +24273,9 @@
   "tillLayoutPublished": "Pubblicato. La cassa lo adotta alla sessione successiva.",
   "tillLayoutReload": "Ricaricare",
   "tillLayoutRemoveCell": "Rimuovere questo elemento",
+  "tillLayoutReset": "Tornare ai tasti generati",
+  "tillLayoutResetConfirm": "Questa cassa torna ai tasti che crea dai Suoi articoli. Il suo layout e la sua bozza vengono rimossi.",
+  "tillLayoutResetDone": "Questa cassa usa di nuovo i tasti generati.",
   "tillLayoutSizeDesk": "Larghezza desktop",
   "tillLayoutSizePhone": "Larghezza telefono",
   "tillLayoutSizeTablet": "Larghezza tablet",

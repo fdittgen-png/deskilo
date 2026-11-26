@@ -33436,6 +33436,18 @@ abstract class AppLocalizations {
   /// **'Managed profile'**
   String get managedProfileTitle;
 
+  /// #4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit
+  ///
+  /// In en, this message translates to:
+  /// **'No unit'**
+  String get masterDataNoUnit;
+
+  /// #4471 a unit or a VAT rate is picked from the master data: masterDataNoVat
+  ///
+  /// In en, this message translates to:
+  /// **'No VAT'**
+  String get masterDataNoVat;
+
   /// #3563 Helper under a field that names master data (a country, a currency): what can be typed.
   ///
   /// In en, this message translates to:
@@ -33447,6 +33459,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This is not a valid entry. Pick one from the list.'**
   String get masterDataUnknownCode;
+
+  /// #4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted
+  ///
+  /// In en, this message translates to:
+  /// **'This is not in the list: pick one'**
+  String get masterDataUnlisted;
 
   /// #1801 mcp_settings
   ///
@@ -36081,6 +36099,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mass'**
   String get measureDimensionMass;
+
+  /// #4479 dimension: a packaging unit, which converts only through an item's own factor
+  ///
+  /// In en, this message translates to:
+  /// **'Package'**
+  String get measureDimensionPackage;
 
   /// #4442 dimension: time
   ///
@@ -66710,6 +66734,12 @@ abstract class AppLocalizations {
   /// **'Add a widget'**
   String get tillLayoutAdd;
 
+  /// #4448 the calculator's result becomes the last basket line's quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Onto the last line'**
+  String get tillLayoutCalcPush;
+
   /// #4448 the till layout editor
   ///
   /// In en, this message translates to:
@@ -66721,6 +66751,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Which item?'**
   String get tillLayoutChooseItem;
+
+  /// #4448 a category key opens another page of the till layout
+  ///
+  /// In en, this message translates to:
+  /// **'Which page does it open?'**
+  String get tillLayoutChoosePage;
+
+  /// #4448 copying a till layout; till is the other till's name
+  ///
+  /// In en, this message translates to:
+  /// **'Copied as {till}\'s draft. Publish it there.'**
+  String tillLayoutCopied(String till);
+
+  /// #4448 copying a till layout to another till
+  ///
+  /// In en, this message translates to:
+  /// **'Copy to another till'**
+  String get tillLayoutCopy;
+
+  /// #4448 copying a till layout to another till
+  ///
+  /// In en, this message translates to:
+  /// **'Copy to which till?'**
+  String get tillLayoutCopyTo;
 
   /// #4448 the till layout editor
   ///
@@ -66901,6 +66955,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove this widget'**
   String get tillLayoutRemoveCell;
+
+  /// #4448 resetting a till to the keys it generates
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to the generated keys'**
+  String get tillLayoutReset;
+
+  /// #4448 resetting a till to the keys it generates
+  ///
+  /// In en, this message translates to:
+  /// **'This till goes back to the keys it makes from your items. Its layout and its draft are removed.'**
+  String get tillLayoutResetConfirm;
+
+  /// #4448 resetting a till to the keys it generates
+  ///
+  /// In en, this message translates to:
+  /// **'This till uses its generated keys again.'**
+  String get tillLayoutResetDone;
 
   /// #4448 the till layout editor
   ///

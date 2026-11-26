@@ -7,6 +7,7 @@
 import 'package:flutter/foundation.dart' show visibleForTesting;
 
 import '../../../features/money/domain/till_layout.dart';
+import '../../../features/money/domain/till_layout_edits.dart';
 import '../../../features/money/domain/till_layout_port.dart';
 import '../../../features/money/domain/till_layout_templates.dart';
 import '../../settings/setting_defaults.g.dart';
@@ -38,8 +39,9 @@ class DemoTillLayouts implements TillLayoutPort {
       TillTemplatePage.food => 'Food',
       TillTemplatePage.desk => 'Desk',
     };
-    final retail = TillLayoutTemplate.retail.build('Front counter', pageName: name);
-    final bakery = withCalculator(TillLayoutTemplate.bakery.build('Bakery counter', pageName: name));
+    // a template names no item: the Demo's counters carry the Demo's goods as keys, so they sell from the first tap
+    final retail = _withItems(TillLayoutTemplate.retail.build('Front counter', pageName: name));
+    final bakery = _withItems(withCalculator(TillLayoutTemplate.bakery.build('Bakery counter', pageName: name)));
     _published[_frontTill] = TillLayout(name: retail.name, pages: retail.pages, version: 1, status: TillLayoutStatus.published);
     _published[demoBakeryTill] = TillLayout(name: bakery.name, pages: bakery.pages, version: 1, status: TillLayoutStatus.published);
   }
@@ -64,6 +66,14 @@ class DemoTillLayouts implements TillLayoutPort {
   }
 
   @override
+  Future<void> reset(String workspaceId, {required String requestId, required String tillId}) async {
+    if (_answered.containsKey(requestId)) return;
+    _drafts.remove(tillId);
+    _published.remove(tillId);
+    _answered[requestId] = 0;
+  }
+
+  @override
   Future<int> publish(String workspaceId, {required String requestId, required String tillId, required int expectedVersion}) async {
     final again = _answered[requestId];
     if (again != null) return again;
@@ -75,6 +85,23 @@ class DemoTillLayouts implements TillLayoutPort {
     _published[tillId] = TillLayout(name: draft.name, pages: draft.pages, version: version, status: TillLayoutStatus.published);
     return _answered[requestId] = version;
   }
+}
+
+/// The Demo's goods, as keys: what the counters sell.
+const _demoItems = [('demo-item-beans', 'Coffee beans'), ('demo-item-milk', 'Oat milk'), ('demo-item-mugs', 'Mugs'), ('demo-item-syrup', 'Syrup')];
+
+/// [layout] with a key for each of the Demo's goods on every grid of its first page, at the first free places.
+TillLayout _withItems(TillLayout layout) {
+  final page = layout.pages.first;
+  final grids = <TillLayoutSize, TillGrid>{};
+  for (final e in page.grids.entries) {
+    var g = e.value;
+    for (final (id, label) in _demoItems) {
+      g = addCell(g, TillWidgetKind.itemKey, params: tillItemKeyParams(id, label)) ?? g;
+    }
+    grids[e.key] = g;
+  }
+  return TillLayout(name: layout.name, version: layout.version, status: layout.status, pages: [TillPage(name: page.name, grids: grids), ...layout.pages.skip(1)]);
 }
 
 @visibleForTesting

@@ -27804,6 +27804,14 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataNoUnit": "No unit",
+  "@masterDataNoUnit": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
+  },
+  "masterDataNoVat": "No VAT",
+  "@masterDataNoVat": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
+  },
   "masterDataSearchHint": "Type a name or a code, or pick from the list",
   "@masterDataSearchHint": {
     "description": "#3563 Helper under a field that names master data (a country, a currency): what can be typed."
@@ -27811,6 +27819,10 @@
   "masterDataUnknownCode": "This is not a valid entry. Pick one from the list.",
   "@masterDataUnknownCode": {
     "description": "#3563 Error under a master-data field (country, currency) whose value is outside the catalogue; shown for a stored value too."
+  },
+  "masterDataUnlisted": "This is not in the list: pick one",
+  "@masterDataUnlisted": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
   },
   "mcpApiReference": "API reference",
   "@mcpApiReference": {
@@ -29869,6 +29881,10 @@
   "measureDimensionMass": "Mass",
   "@measureDimensionMass": {
     "description": "#4442 dimension: mass"
+  },
+  "measureDimensionPackage": "Package",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
   },
   "measureDimensionTime": "Time",
   "@measureDimensionTime": {
@@ -54094,6 +54110,10 @@
   "@tillLayoutAdd": {
     "description": "#4448 the till layout editor"
   },
+  "tillLayoutCalcPush": "Onto the last line",
+  "@tillLayoutCalcPush": {
+    "description": "#4448 the calculator's result becomes the last basket line's quantity"
+  },
   "tillLayoutChooseFunction": "Which function?",
   "@tillLayoutChooseFunction": {
     "description": "#4448 the till layout editor"
@@ -54101,6 +54121,27 @@
   "tillLayoutChooseItem": "Which item?",
   "@tillLayoutChooseItem": {
     "description": "#4448 the till layout editor"
+  },
+  "tillLayoutChoosePage": "Which page does it open?",
+  "@tillLayoutChoosePage": {
+    "description": "#4448 a category key opens another page of the till layout"
+  },
+  "tillLayoutCopied": "Copied as {till}'s draft. Publish it there.",
+  "@tillLayoutCopied": {
+    "description": "#4448 copying a till layout; till is the other till's name",
+    "placeholders": {
+      "till": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLayoutCopy": "Copy to another till",
+  "@tillLayoutCopy": {
+    "description": "#4448 copying a till layout to another till"
+  },
+  "tillLayoutCopyTo": "Copy to which till?",
+  "@tillLayoutCopyTo": {
+    "description": "#4448 copying a till layout to another till"
   },
   "tillLayoutEdit": "Lay out this till",
   "@tillLayoutEdit": {
@@ -54226,6 +54267,18 @@
   "tillLayoutRemoveCell": "Remove this widget",
   "@tillLayoutRemoveCell": {
     "description": "#4448 the till layout editor"
+  },
+  "tillLayoutReset": "Reset to the generated keys",
+  "@tillLayoutReset": {
+    "description": "#4448 resetting a till to the keys it generates"
+  },
+  "tillLayoutResetConfirm": "This till goes back to the keys it makes from your items. Its layout and its draft are removed.",
+  "@tillLayoutResetConfirm": {
+    "description": "#4448 resetting a till to the keys it generates"
+  },
+  "tillLayoutResetDone": "This till uses its generated keys again.",
+  "@tillLayoutResetDone": {
+    "description": "#4448 resetting a till to the keys it generates"
   },
   "tillLayoutSizeDesk": "Desk width",
   "@tillLayoutSizeDesk": {

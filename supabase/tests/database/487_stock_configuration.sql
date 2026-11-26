@@ -7,7 +7,7 @@
 -- tree with no cycle and are deactivated, never deleted, and only a stock
 -- manager of the business writes. Rolled back.
 begin;
-select plan(37);
+select plan(38);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -81,6 +81,12 @@ insert into public.services (id, workspace_id, name, price_cents, active, stock,
   (pg_temp.u(302), pg_temp.u(101), 'Wine', 500, true, null, 'l', 'none', true),
   (pg_temp.u(303), pg_temp.u(102), 'Tea', 200, true, null, 'piece', 'none', true),
   (pg_temp.u(304), pg_temp.u(103), 'Rice', 200, true, null, 'kg', 'none', true);
+-- #4471: an item's own unit is one of the business's units, so the fixtures say which
+insert into public.workspace_units (workspace_id, code, label, dimension, factor_num, factor_den) values
+  (pg_temp.u(101), 'carton', 'Carton', 'count', 1, 1),
+  (pg_temp.u(101), 'glass', 'Glass', 'count', 1, 1),
+  (pg_temp.u(101), 'box', 'Box', 'count', 1, 1),
+  (pg_temp.u(101), 'tray', 'Tray', 'count', 1, 1);
 update public.workspaces set feature_flags = '{"stockManagement": true, "stockTakeOut": true}' where id = pg_temp.u(101);
 update public.workspaces set feature_flags = '{"stockManagement": true}' where id = pg_temp.u(102);
 
@@ -94,8 +100,10 @@ select is(pg_temp.save_item(1, 301, 2, 503, '{"units": [{"unit": "box", "factor_
   'ERR DKG11 {"field": "units[0].factor_den", "reason": "factor_invalid"}', 'a zero denominator is refused under its field');
 select is(pg_temp.save_item(1, 301, 2, 504, '{"units": [{"unit": "box", "factor_num": -6, "factor_den": 1}]}'),
   'ERR DKG11 {"field": "units[0].factor_num", "reason": "factor_invalid"}', 'a negative factor is refused');
-select is(pg_temp.save_item(1, 301, 2, 505, '{"units": [{"unit": "kg", "factor_num": 1, "factor_den": 1}]}'),
-  'ERR DKG11 {"field": "units[0].unit", "reason": "registry_unit"}', 'a unit of the registry is the registry''s, not a package of this item');
+select is(pg_temp.save_item(1, 301, 2, 505, '{"units": [{"unit": "bogus", "factor_num": 1, "factor_den": 1}]}'),
+  'ERR DKG11 {"field": "units[0].unit", "reason": "unit_unknown"}', '#4471: a package unit is one of the business''s units: a name that is none is refused');
+select is(pg_temp.save_item(1, 301, 2, 514, '{"units": [{"unit": "piece", "factor_num": 1, "factor_den": 1}]}'),
+  'ERR DKG11 {"field": "units[0].unit", "reason": "registry_unit"}', 'and the item''s own inventory unit is not a package of itself');
 select is(pg_temp.save_item(1, 302, 2, 506, '{"inventory_unit": "kg"}'),
   'ERR DKG11 {"field": "inventory_unit", "reason": "dimension_mismatch"}', 'an inventory unit of another dimension under package units is refused');
 select is(pg_temp.save_item(1, 302, 2, 507, '{"inventory_unit": "nonsense"}'),

@@ -12826,8 +12826,20 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataNoUnit": "Keine Einheit",
+  "@masterDataNoUnit": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
+  },
+  "masterDataNoVat": "Keine MwSt.",
+  "@masterDataNoVat": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
+  },
   "masterDataSearchHint": "Namen oder Code eingeben oder aus der Liste wählen",
   "masterDataUnknownCode": "Das ist kein gültiger Eintrag. Wählen Sie einen aus der Liste.",
+  "masterDataUnlisted": "Das steht nicht in der Liste: bitte eines wählen",
+  "@masterDataUnlisted": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
+  },
   "mcpApiReference": "API-Referenz",
   "mcpApiReferenceHint": "Was ein Assistent aufrufen kann und wie es autorisiert wird",
   "mcpAssistantsTitle": "Assistenten",
@@ -13300,6 +13312,10 @@
   "measureDimensionMass": "Masse",
   "@measureDimensionMass": {
     "description": "#4442 dimension: mass"
+  },
+  "measureDimensionPackage": "Gebinde",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
   },
   "measureDimensionTime": "Zeit",
   "@measureDimensionTime": {
@@ -24220,8 +24236,13 @@
   "tillKeysEmpty": "Es gibt noch nichts zu verkaufen. Legen Sie zuerst Artikel im Lager an.",
   "tillKeysTitle": "Artikel zum Kassieren",
   "tillLayoutAdd": "Element hinzufügen",
+  "tillLayoutCalcPush": "Auf die letzte Zeile",
   "tillLayoutChooseFunction": "Welche Funktion?",
   "tillLayoutChooseItem": "Welcher Artikel?",
+  "tillLayoutChoosePage": "Welche Seite öffnet sie?",
+  "tillLayoutCopied": "Als Entwurf von {till} kopiert. Dort veröffentlichen.",
+  "tillLayoutCopy": "Auf eine andere Kasse kopieren",
+  "tillLayoutCopyTo": "Auf welche Kasse kopieren?",
   "tillLayoutEdit": "Diese Kasse gestalten",
   "tillLayoutFnCard": "Karte annehmen",
   "tillLayoutFnDeposit": "Pfandrückgabe",
@@ -24252,6 +24273,9 @@
   "tillLayoutPublished": "Veröffentlicht. Die Kasse übernimmt es mit der nächsten Sitzung.",
   "tillLayoutReload": "Neu laden",
   "tillLayoutRemoveCell": "Dieses Element entfernen",
+  "tillLayoutReset": "Auf die erzeugten Tasten zurücksetzen",
+  "tillLayoutResetConfirm": "Diese Kasse kehrt zu den Tasten zurück, die sie aus Ihren Artikeln erzeugt. Ihr Layout und ihr Entwurf werden entfernt.",
+  "tillLayoutResetDone": "Diese Kasse nutzt wieder ihre erzeugten Tasten.",
   "tillLayoutSizeDesk": "Desktopbreite",
   "tillLayoutSizePhone": "Telefonbreite",
   "tillLayoutSizeTablet": "Tabletbreite",

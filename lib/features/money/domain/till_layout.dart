@@ -101,6 +101,10 @@ enum TillLayoutStatus {
 /// own words, the same in till_layout_problems.
 const _itemParam = 'item_id';
 const _labelParam = 'label';
+const _pageParam = 'page';
+
+/// The parameters of a category key opening page [page] (from 0), shown as [label].
+Map<String, Object?> tillCategoryKeyParams(int page, String label) => {_pageParam: page, _labelParam: label};
 
 /// The parameters of an item key selling [itemId], shown as [label] until the till reads the item's own name.
 Map<String, Object?> tillItemKeyParams(String itemId, String label) => {_itemParam: itemId, _labelParam: label};
@@ -123,6 +127,9 @@ class TillCell {
 
   /// The item, service or variant an item key sells; null for any other kind.
   String? get itemId => kind == TillWidgetKind.itemKey ? params[_itemParam] as String? : null;
+
+  /// The page a category key opens (from 0); null for any other kind or a key that names none.
+  int? get targetPage => kind == TillWidgetKind.categoryKey && params[_pageParam] is int ? params[_pageParam] as int : null;
 
   /// The label written on a key when it was placed, or empty.
   String get label => '${params[_labelParam] ?? ''}';

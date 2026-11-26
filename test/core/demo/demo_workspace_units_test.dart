@@ -29,11 +29,19 @@ void main() {
 
   test('a business has the 13 built-ins, in the server\'s order and with its factors', () async {
     final all = await units.units(_ws);
-    expect(all.map((u) => u.code), ['piece', 'g', 'kg', 'ml', 'cl', 'l', 'mm', 'cm', 'm', 'km', 'm2', 'min', 'h']);
-    expect(all.every((u) => u.builtIn && u.label == null), isTrue);
-    final km = all.firstWhere((u) => u.code == 'km');
+    final builtIns = all.where((u) => u.builtIn).toList();
+    expect(builtIns.map((u) => u.code), ['piece', 'g', 'kg', 'ml', 'cl', 'l', 'mm', 'cm', 'm', 'km', 'm2', 'min', 'h']);
+    expect(builtIns.every((u) => u.label == null), isTrue);
+    // #4479 -- after them, the packaging units the Demo's items and orders name (they convert only through an item's factor)
+    expect(all.where((u) => !u.builtIn).map((u) => (u.code, u.dimension)), [
+      ('box', UnitDimension.package),
+      ('carton', UnitDimension.package),
+      ('roll', UnitDimension.package),
+      ('third', UnitDimension.package),
+    ]);
+    final km = builtIns.firstWhere((u) => u.code == 'km');
     expect([km.dimension, km.factorNum, km.factorDen, km.unEceCode], [UnitDimension.length, 1000, 1, 'KMT']);
-    final mm = all.firstWhere((u) => u.code == 'mm');
+    final mm = builtIns.firstWhere((u) => u.code == 'mm');
     expect([mm.factorNum, mm.factorDen], [1, 1000]);
   });
 
@@ -88,12 +96,12 @@ void main() {
   });
 
   test('one code keeps one meaning: a code an item already uses for its packaging cannot be a unit', () async {
-    units.packages = (workspaceId, code) => code == 'box';
+    units.packages = (workspaceId, code) => code == 'pallet';
     await expectLater(
-      units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'box', label: 'Box', dimension: UnitDimension.count, factorNum: 6)),
+      units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'pallet', label: 'Pallet', dimension: UnitDimension.count, factorNum: 6)),
       throwsA(_refused('code', StockRefusal.codeDuplicate)),
     );
-    expect((await units.units(_ws)).map((u) => u.code), isNot(contains('box')));
+    expect((await units.units(_ws)).map((u) => u.code), isNot(contains('pallet')));
     expect((await units.save(_ws, requestId: next(), draft: const MeasureUnitDraft(code: 'crate', label: 'Crate', dimension: UnitDimension.count, factorNum: 6))).code, 'crate');
   });
 
@@ -111,6 +119,6 @@ void main() {
     addTearDown(container.dispose);
     final list = await container.read(workspaceUnitListProvider(demoLondonSpaceId).future);
     expect(list.map((u) => u.code).take(3), ['piece', 'g', 'kg']);
-    expect(list, hasLength(13));
+    expect(list.where((u) => u.builtIn), hasLength(13));
   });
 }

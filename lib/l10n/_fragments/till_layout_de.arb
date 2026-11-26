@@ -50,5 +50,13 @@
   "tillLayoutStale": "Jemand hat dieses Layout geändert; laden Sie es neu.",
   "tillLayoutInvalid": "Dieses Layout kann nicht gespeichert werden: {reason}",
   "tillLayoutReload": "Neu laden",
-  "tillLayoutGone": "Nicht mehr im Verkauf"
+  "tillLayoutGone": "Nicht mehr im Verkauf",
+  "tillLayoutCalcPush": "Auf die letzte Zeile",
+  "tillLayoutCopy": "Auf eine andere Kasse kopieren",
+  "tillLayoutCopied": "Als Entwurf von {till} kopiert. Dort veröffentlichen.",
+  "tillLayoutCopyTo": "Auf welche Kasse kopieren?",
+  "tillLayoutChoosePage": "Welche Seite öffnet sie?",
+  "tillLayoutReset": "Auf die erzeugten Tasten zurücksetzen",
+  "tillLayoutResetConfirm": "Diese Kasse kehrt zu den Tasten zurück, die sie aus Ihren Artikeln erzeugt. Ihr Layout und ihr Entwurf werden entfernt.",
+  "tillLayoutResetDone": "Diese Kasse nutzt wieder ihre erzeugten Tasten."
 }

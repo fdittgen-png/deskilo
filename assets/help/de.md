@@ -3098,6 +3098,10 @@ Das Layout hat ein Raster für jede Breite, in der die Kasse benutzt wird: **Tel
 
 **Speichern** behält einen Entwurf; **An die Kasse veröffentlichen** macht ihn zum Layout der Kasse. Eine bereits geöffnete Kasse behält ihr Layout bis zur nächsten Sitzung: Die Kasse ändert sich nie während eines laufenden Verkaufs. Hat jemand anderes das Layout geändert, seit Sie es geöffnet haben, wird das Speichern mit **Jemand hat dieses Layout geändert; laden Sie es neu.** abgelehnt. Ein Layout, das der Server nicht annehmen kann, wird mit seinem ersten Problem abgelehnt. Eine Kasse ohne veröffentlichtes Layout behält die Tasten, die sie aus Ihren Artikeln erzeugt.
 
+An der Kasse wirken die Tasten so, wie Sie sie platziert haben. Der **Ziffernblock** tippt eine Menge im Dezimalzeichen Ihrer Sprache (1,5); die nächste Artikeltaste verkauft diese Menge, und ein gewogener Artikel nimmt sie als Gewicht, statt danach zu fragen. **Menge ×** setzt die getippte Menge stattdessen auf die letzte Zeile. Der **Rechner** rechnet genau, und **Auf die letzte Zeile** macht sein Ergebnis zur Menge der letzten Zeile; einen Preis setzt er nie. Eine **Kategorietaste** öffnet die Seite, die sie nennt.
+
+**Auf eine andere Kasse kopieren** speichert das Layout als Entwurf einer anderen Kasse, um es dort zu veröffentlichen. **Auf die erzeugten Tasten zurücksetzen** entfernt nach Ihrer Bestätigung Layout und Entwurf dieser Kasse: Die Kasse nutzt wieder die Tasten, die sie aus Ihren Artikeln erzeugt. In der Demo zeigt die **Bakery counter** die Bäckerei-Vorlage mit Ziffernblock und Rechner.
+
 ### Wenn die Kasse offline ist
 
 **Zielgruppe:** Administrator:in · Inhaber

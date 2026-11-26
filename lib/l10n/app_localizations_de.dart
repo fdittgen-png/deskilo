@@ -21242,12 +21242,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get managedProfileTitle => 'Verwaltetes Profil';
 
   @override
+  String get masterDataNoUnit => 'Keine Einheit';
+
+  @override
+  String get masterDataNoVat => 'Keine MwSt.';
+
+  @override
   String get masterDataSearchHint =>
       'Namen oder Code eingeben oder aus der Liste wählen';
 
   @override
   String get masterDataUnknownCode =>
       'Das ist kein gültiger Eintrag. Wählen Sie einen aus der Liste.';
+
+  @override
+  String get masterDataUnlisted =>
+      'Das steht nicht in der Liste: bitte eines wählen';
 
   @override
   String get mcpApiReference => 'API-Referenz';
@@ -22850,6 +22860,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get measureDimensionMass => 'Masse';
+
+  @override
+  String get measureDimensionPackage => 'Gebinde';
 
   @override
   String get measureDimensionTime => 'Zeit';
@@ -41924,10 +41937,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillLayoutAdd => 'Element hinzufügen';
 
   @override
+  String get tillLayoutCalcPush => 'Auf die letzte Zeile';
+
+  @override
   String get tillLayoutChooseFunction => 'Welche Funktion?';
 
   @override
   String get tillLayoutChooseItem => 'Welcher Artikel?';
+
+  @override
+  String get tillLayoutChoosePage => 'Welche Seite öffnet sie?';
+
+  @override
+  String tillLayoutCopied(String till) {
+    return 'Als Entwurf von $till kopiert. Dort veröffentlichen.';
+  }
+
+  @override
+  String get tillLayoutCopy => 'Auf eine andere Kasse kopieren';
+
+  @override
+  String get tillLayoutCopyTo => 'Auf welche Kasse kopieren?';
 
   @override
   String get tillLayoutEdit => 'Diese Kasse gestalten';
@@ -42022,6 +42052,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tillLayoutRemoveCell => 'Dieses Element entfernen';
+
+  @override
+  String get tillLayoutReset => 'Auf die erzeugten Tasten zurücksetzen';
+
+  @override
+  String get tillLayoutResetConfirm =>
+      'Diese Kasse kehrt zu den Tasten zurück, die sie aus Ihren Artikeln erzeugt. Ihr Layout und ihr Entwurf werden entfernt.';
+
+  @override
+  String get tillLayoutResetDone =>
+      'Diese Kasse nutzt wieder ihre erzeugten Tasten.';
 
   @override
   String get tillLayoutSizeDesk => 'Desktopbreite';

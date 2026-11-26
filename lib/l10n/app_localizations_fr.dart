@@ -21281,12 +21281,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get managedProfileTitle => 'Profil géré';
 
   @override
+  String get masterDataNoUnit => 'Aucune unité';
+
+  @override
+  String get masterDataNoVat => 'Sans TVA';
+
+  @override
   String get masterDataSearchHint =>
       'Saisissez un nom ou un code, ou choisissez dans la liste';
 
   @override
   String get masterDataUnknownCode =>
       'Ce n\'est pas une entrée valide. Choisissez-en une dans la liste.';
+
+  @override
+  String get masterDataUnlisted =>
+      'Ce n\'est pas dans la liste : choisissez-en un';
 
   @override
   String get mcpApiReference => 'Référence de l’API';
@@ -22897,6 +22907,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get measureDimensionMass => 'Masse';
+
+  @override
+  String get measureDimensionPackage => 'Conditionnement';
 
   @override
   String get measureDimensionTime => 'Durée';
@@ -41980,10 +41993,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillLayoutAdd => 'Ajouter un élément';
 
   @override
+  String get tillLayoutCalcPush => 'Sur la dernière ligne';
+
+  @override
   String get tillLayoutChooseFunction => 'Quelle fonction ?';
 
   @override
   String get tillLayoutChooseItem => 'Quel article ?';
+
+  @override
+  String get tillLayoutChoosePage => 'Quelle page ouvre-t-elle ?';
+
+  @override
+  String tillLayoutCopied(String till) {
+    return 'Copiée comme brouillon de $till. Publiez-la là-bas.';
+  }
+
+  @override
+  String get tillLayoutCopy => 'Copier sur une autre caisse';
+
+  @override
+  String get tillLayoutCopyTo => 'Copier sur quelle caisse ?';
 
   @override
   String get tillLayoutEdit => 'Disposer cette caisse';
@@ -42079,6 +42109,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tillLayoutRemoveCell => 'Retirer cet élément';
+
+  @override
+  String get tillLayoutReset => 'Revenir aux touches générées';
+
+  @override
+  String get tillLayoutResetConfirm =>
+      'Cette caisse revient aux touches qu\'elle crée à partir de vos articles. Sa disposition et son brouillon sont supprimés.';
+
+  @override
+  String get tillLayoutResetDone =>
+      'Cette caisse utilise de nouveau ses touches générées.';
 
   @override
   String get tillLayoutSizeDesk => 'Largeur bureau';

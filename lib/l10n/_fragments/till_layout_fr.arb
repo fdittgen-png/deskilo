@@ -50,5 +50,13 @@
   "tillLayoutStale": "Quelqu'un a modifié cette disposition ; rechargez-la.",
   "tillLayoutInvalid": "Cette disposition ne peut pas être enregistrée : {reason}",
   "tillLayoutReload": "Recharger",
-  "tillLayoutGone": "Plus en vente"
+  "tillLayoutGone": "Plus en vente",
+  "tillLayoutCalcPush": "Sur la dernière ligne",
+  "tillLayoutCopy": "Copier sur une autre caisse",
+  "tillLayoutCopied": "Copiée comme brouillon de {till}. Publiez-la là-bas.",
+  "tillLayoutCopyTo": "Copier sur quelle caisse ?",
+  "tillLayoutChoosePage": "Quelle page ouvre-t-elle ?",
+  "tillLayoutReset": "Revenir aux touches générées",
+  "tillLayoutResetConfirm": "Cette caisse revient aux touches qu'elle crée à partir de vos articles. Sa disposition et son brouillon sont supprimés.",
+  "tillLayoutResetDone": "Cette caisse utilise de nouveau ses touches générées."
 }

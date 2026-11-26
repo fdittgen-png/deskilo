@@ -5,8 +5,10 @@
 // would not fit is disabled; the draft is saved and published; a save over a version another editor moved is refused in
 // words.
 import 'package:deskilo/core/demo/data/demo_till_layouts.dart';
+import 'package:deskilo/features/money/domain/till_drawer.dart';
 import 'package:deskilo/features/money/domain/till_layout.dart';
 import 'package:deskilo/features/money/presentation/till_layout/till_layout_screen.dart';
+import 'package:deskilo/features/money/providers/till_drawer_providers.dart';
 import 'package:deskilo/features/money/providers/till_layout_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
@@ -89,4 +91,57 @@ void main() {
       });
     });
   }
+
+  testWidgets("a layout is copied as another till's draft, which keeps its own version", (tester) async {
+    final store = DemoTillLayouts();
+    await pumpApp(
+      tester,
+      const TillLayoutScreen(workspaceId: 'ws-1', tillId: _till, tillName: 'Front counter'),
+      overrides: [
+        ...standardTestOverrides(),
+        tillLayoutPortProvider.overrideWithValue(store),
+        tillDrawerProvider('ws-1').overrideWith((ref) async => const [
+          DrawerTill(id: _till, name: 'Front counter', active: true),
+          DrawerTill(id: 'till-2', name: 'Bakery counter', active: true),
+        ]),
+      ],
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    await _tap(tester, const ValueKey('till-layout-template-bakery'));
+    await _tap(tester, const ValueKey('till-layout-copy'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('till-layout-copy-$_till')), findsNothing, reason: 'not onto itself');
+    await tester.tap(find.byKey(const ValueKey('till-layout-copy-till-2')));
+    await tester.pumpAndSettle();
+    final copied = await store.draft('ws-1', 'till-2');
+    expect(copied?.name, 'Bakery counter');
+    expect(copied?.pages.first.grids[TillLayoutSize.desk]?.cells.any((c) => c.kind == TillWidgetKind.keypad), isTrue);
+    expect(find.text(_en.tillLayoutCopied('Bakery counter')), findsOneWidget);
+  });
+
+  testWidgets('a reset, once confirmed, takes the till back to its generated keys', (tester) async {
+    final store = DemoTillLayouts();
+    await pumpApp(
+      tester,
+      const TillLayoutScreen(workspaceId: 'ws-1', tillId: _till, tillName: 'Front counter'),
+      overrides: [...standardTestOverrides(), tillLayoutPortProvider.overrideWithValue(store)],
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    await _tap(tester, const ValueKey('till-layout-template-bakery'));
+    await _tap(tester, const ValueKey('till-layout-reset'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('till-layout-reset-cancel')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('till-layout-template-bakery')), findsNothing, reason: 'cancelled: the layout stays');
+    await _tap(tester, const ValueKey('till-layout-reset'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('till-layout-reset-confirm')));
+    await tester.pumpAndSettle();
+    expect(await store.draft('ws-1', _till), isNull);
+    expect(await store.published('ws-1', _till), isNull);
+    expect(find.text(_en.tillLayoutResetDone), findsOneWidget);
+    expect(find.byKey(const ValueKey('till-layout-template-bakery')), findsOneWidget, reason: 'back to choosing a start');
+  });
 }

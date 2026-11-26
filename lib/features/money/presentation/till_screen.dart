@@ -364,10 +364,10 @@ class _TillState extends ConsumerState<_Till> {
 
   /// A tap on a key: a weighed item asks the weight first, an age-restricted one the customer's age, an item with a
   /// deposit adds it; what cannot be rung up is said, and nothing is added.
-  Future<void> _ring(TillKey key) async {
+  Future<void> _ring(TillKey key, {String? typed}) async {
     final l10n = context.l10n;
-    var quantity = '1';
-    if (key.weighed) {
+    var quantity = typed ?? '1';   // #4448 a quantity typed on the layout's keypad stands for the weight too
+    if (key.weighed && typed == null) {
       final typed = await showTillQuantityDialog(context, current: TillLine(itemId: key.id, name: key.name, quantity: '', unit: key.unit), weigh: true);
       if (typed == null) return;
       final exact = tillQuantityOf(typed);
@@ -450,7 +450,7 @@ class _TillState extends ConsumerState<_Till> {
           children: [
             if (widget.scan != null) TillScanField(onScan: _scanned),
             Expanded(
-              child: TillKeysOrLayout(key: const ValueKey('till-keys-area'), workspaceId: widget.workspaceId, tillId: widget.till?.id, items: widget.keys, onTap: (i) => unawaited(_ring(i)), onPayCash: () => unawaited(_pay(_session.state.value)), onNext: _session.next),
+              child: TillKeysOrLayout(key: const ValueKey('till-keys-area'), workspaceId: widget.workspaceId, tillId: widget.till?.id, items: widget.keys, session: _session, onTap: (i, typed) => unawaited(_ring(i, typed: typed)), onPayCash: () => unawaited(_pay(_session.state.value))),
             ),
           ],
         );
