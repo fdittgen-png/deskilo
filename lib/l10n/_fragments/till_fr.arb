@@ -287,5 +287,6 @@
   },
   "tillDrawerNotSet": "Aucun tiroir-caisse n'est réglé sur l'imprimante de cette caisse.",
   "tillDrawerOpened": "Le tiroir-caisse est ouvert.",
-  "tillDrawerKickFailed": "Le tiroir-caisse ne s'est pas ouvert. Vérifiez l'imprimante à laquelle il est relié."
+  "tillDrawerKickFailed": "Le tiroir-caisse ne s'est pas ouvert. Vérifiez l'imprimante à laquelle il est relié.",
+  "tillDayReportNotPrinted": "Le rapport du jour n'a pas été imprimé. Vérifiez l'imprimante et réessayez."
 }

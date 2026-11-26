@@ -1742,6 +1742,7 @@ Map<String, _Getter> _part3() => {
   'taxRefTitle': (l) => l.taxRefTitle,
   'taxRefValidFrom': (l) => l.taxRefValidFrom,
   'templateDetails': (l) => l.templateDetails,
+  'tillDayReportNotPrinted': (l) => l.tillDayReportNotPrinted,
   'tillDrawerClosedTitle': (l) => l.tillDrawerClosedTitle,
   'tillDrawerCountedHelpBlind': (l) => l.tillDrawerCountedHelpBlind,
   'tillLayoutAdd': (l) => l.tillLayoutAdd,

@@ -413,5 +413,9 @@
   "tillDrawerKickFailed": "The drawer did not open. Check the printer it hangs on.",
   "@tillDrawerKickFailed": {
     "description": "#4368 the Open drawer key"
+  },
+  "tillDayReportNotPrinted": "The day report was not printed. Check the printer and try again.",
+  "@tillDayReportNotPrinted": {
+    "description": "#4368 the day report could not be printed"
   }
 }

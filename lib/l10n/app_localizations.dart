@@ -66172,6 +66172,12 @@ abstract class AppLocalizations {
   /// **'Business day: {date}'**
   String tillDayReportDate(String date);
 
+  /// #4368 the day report could not be printed
+  ///
+  /// In en, this message translates to:
+  /// **'The day report was not printed. Check the printer and try again.'**
+  String get tillDayReportNotPrinted;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:

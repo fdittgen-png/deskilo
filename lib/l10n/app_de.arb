@@ -24121,6 +24121,7 @@
   "tillDayRefusalNothing": "An diesem Tag wurde keine Sitzung geschlossen: Es gibt nichts abzuschließen.",
   "tillDayRefusalTillOpen": "Die Kasse {name} ist noch offen. Zählen und schließen Sie sie zuerst.",
   "tillDayReportDate": "Geschäftstag: {date}",
+  "tillDayReportNotPrinted": "Der Tagesbericht wurde nicht gedruckt. Prüfen Sie den Drucker und versuchen Sie es erneut.",
   "tillDayReportTitle": "Tagesbericht {number}",
   "tillDaySalesTotal": "Verkäufe: {amount}",
   "tillDaySessionLine": "{till}: erwartet {expected}, gezählt {counted}, Differenz {difference}",

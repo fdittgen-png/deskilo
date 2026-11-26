@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/till_day.dart';
+import 'day_report_print.dart';
 
 /// Shows [report] full screen; closed with the back button or the close icon.
 Future<void> showDayReport(BuildContext context, DayReport report, {required String currency}) => showDialog<void>(
@@ -17,6 +18,7 @@ Future<void> showDayReport(BuildContext context, DayReport report, {required Str
     child: Scaffold(
       appBar: AppBar(
         title: Text(c.l10n.tillDayReportTitle(report.number)),
+        actions: [DayReportPrintButton(report: report, currency: currency)], // #4368
         leading: IconButton(key: const ValueKey('day-report-close'), tooltip: MaterialLocalizations.of(c).closeButtonTooltip, icon: const Icon(Icons.close), onPressed: () => Navigator.of(c).pop()),
       ),
       body: _DayReportView(report: report, currency: currency),

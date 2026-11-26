@@ -287,5 +287,6 @@
   },
   "tillDrawerNotSet": "Am Drucker dieser Kasse ist keine Kassenlade eingestellt.",
   "tillDrawerOpened": "Die Kassenlade ist offen.",
-  "tillDrawerKickFailed": "Die Kassenlade ging nicht auf. Prüfen Sie den Drucker, an dem sie hängt."
+  "tillDrawerKickFailed": "Die Kassenlade ging nicht auf. Prüfen Sie den Drucker, an dem sie hängt.",
+  "tillDayReportNotPrinted": "Der Tagesbericht wurde nicht gedruckt. Prüfen Sie den Drucker und versuchen Sie es erneut."
 }

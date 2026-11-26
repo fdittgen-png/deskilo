@@ -53613,6 +53613,10 @@
       }
     }
   },
+  "tillDayReportNotPrinted": "The day report was not printed. Check the printer and try again.",
+  "@tillDayReportNotPrinted": {
+    "description": "#4368 the day report could not be printed"
+  },
   "tillDayReportTitle": "Day report {number}",
   "@tillDayReportTitle": {
     "description": "#4367 till sessions: the cash drawer",

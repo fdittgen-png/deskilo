@@ -527,4 +527,4 @@ returns jsonb language sql immutable set search_path = public as $fn$
 $fn$;
 revoke execute on function public.setup_level_catalogue() from public, anon, authenticated;
 
-select public.set_deskilo_schema_version(968);
+select public.set_deskilo_schema_version(969);

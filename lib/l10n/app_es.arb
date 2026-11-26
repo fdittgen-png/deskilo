@@ -24121,6 +24121,7 @@
   "tillDayRefusalNothing": "No se cerró ninguna sesión este día: no hay nada que cerrar.",
   "tillDayRefusalTillOpen": "La caja {name} sigue abierta. Cuéntela y ciérrela primero.",
   "tillDayReportDate": "Día de actividad: {date}",
+  "tillDayReportNotPrinted": "El informe del día no se imprimió. Compruebe la impresora e inténtelo de nuevo.",
   "tillDayReportTitle": "Informe del día {number}",
   "tillDaySalesTotal": "Ventas: {amount}",
   "tillDaySessionLine": "{till}: esperado {expected}, contado {counted}, diferencia {difference}",

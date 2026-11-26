@@ -41466,6 +41466,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get tillDayReportNotPrinted =>
+      'El informe del día no se imprimió. Compruebe la impresora e inténtelo de nuevo.';
+
+  @override
   String tillDayReportTitle(String number) {
     return 'Informe del día $number';
   }

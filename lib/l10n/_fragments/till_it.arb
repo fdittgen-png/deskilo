@@ -287,5 +287,6 @@
   },
   "tillDrawerNotSet": "Nessun cassetto è impostato sulla stampante di questa cassa.",
   "tillDrawerOpened": "Il cassetto è aperto.",
-  "tillDrawerKickFailed": "Il cassetto non si è aperto. Verifichi la stampante a cui è collegato."
+  "tillDrawerKickFailed": "Il cassetto non si è aperto. Verifichi la stampante a cui è collegato.",
+  "tillDayReportNotPrinted": "Il rapporto del giorno non è stato stampato. Verifichi la stampante e riprovi."
 }
