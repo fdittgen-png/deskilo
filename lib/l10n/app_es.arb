@@ -5372,9 +5372,9 @@
   "@documentsEmpty": {
     "description": "Workspace document library (#500)"
   },
-  "documentsInvalid": "Un documento necesita un título y un enlace https://.",
-  "@documentsInvalid": {
-    "description": "Workspace document library (#500)"
+  "documentsLinkNotHttps": "El enlace debe empezar por https://.",
+  "@documentsLinkNotHttps": {
+    "description": "Document library, the add form: said under the link field when the link is not an https:// one"
   },
   "documentsProviderLabel": "Almacenado en",
   "@documentsProviderLabel": {
@@ -5399,6 +5399,10 @@
   "documentsTitleLabel": "Título",
   "@documentsTitleLabel": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsTitleMissing": "Dé un título al documento.",
+  "@documentsTitleMissing": {
+    "description": "Document library, the add form: said under the title field when it is empty"
   },
   "documentsUrlHelper": "Pegue el enlace de compartir de su drive — los permisos se gestionan allí.",
   "@documentsUrlHelper": {

@@ -9110,8 +9110,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'No document yet. Link your statutes, guides and statements from any drive.';
 
   @override
-  String get documentsInvalid =>
-      'A document needs a title and an https:// link.';
+  String get documentsLinkNotHttps => 'The link must start with https://.';
 
   @override
   String get documentsProviderLabel => 'Stored on';
@@ -9130,6 +9129,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get documentsTitleLabel => 'Title';
+
+  @override
+  String get documentsTitleMissing => 'Give the document a title.';
 
   @override
   String get documentsUrlHelper =>

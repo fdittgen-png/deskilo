@@ -8,9 +8,9 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
-import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/dropdown_field.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_document.dart';
@@ -55,182 +55,145 @@ class DocumentsScreen extends ConsumerWidget {
         _ => l10n.documentsCategoryOther,
       };
 
+  /// A choice of the add form with the help that explains it beside it.
+  static Widget _choice(Widget field, String topic, String anchor) => Row(
+    children: [
+      Expanded(child: field),
+      HelpDot(topic, anchor: anchor),
+    ],
+  );
+
+  /// The add form: a link filed in the library. Each problem is said under
+  /// its field and nothing typed is lost; the sheet closes once it is saved.
   Future<void> _addDialog(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
-    final title = TextEditingController();
-    final url = TextEditingController();
+    final fields = FormControllers();
+    final topic = l10n.helpTopicDocumentLibrary;
+    final failed = l10n.workspaceGenericError;
     var category = 'other';
     var provider = 'link';
     var minRole = 'member';
-    final saved = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => StatefulBuilder(
-        builder: (dialogContext, setState) => AlertDialog(
-          title: Text(l10n.documentsAdd),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  key: const ValueKey('document-title'),
-                  controller: title,
-                  maxLength: 120,
-                  decoration: InputDecoration(
-                    labelText: l10n.documentsTitleLabel,
-                    counterText: '',
-                    suffixIcon: HelpDot(l10n.helpTopicDocumentLibrary,
-                      anchor: HelpAnchor.featureDocuments,
-                    ),
+    final saved = await showAppFormSheet(
+      context,
+      AppFormSheet(
+        title: l10n.documentsAdd,
+        submitLabel: l10n.commonSave,
+        submitKey: const ValueKey('document-save'),
+        onDispose: fields.dispose,
+        validate: () {
+          final problems = documentLinkProblems(
+            title: fields['title'].text,
+            url: fields['url'].text,
+          );
+          return {
+            if (problems.contains(DocumentLinkProblem.titleMissing))
+              'title': l10n.documentsTitleMissing,
+            if (problems.contains(DocumentLinkProblem.linkNotHttps))
+              'url': l10n.documentsLinkNotHttps,
+          };
+        },
+        onSubmit: () async {
+          final ok = await runGuarded(
+            context,
+            domain: 'workspace',
+            message: 'document add failed',
+            errorText: failed,
+            action: () => ref
+                .read(workspaceRepositoryProvider)
+                .addDocument(
+                  WorkspaceDocument(
+                    id: '',
+                    workspaceId: workspace.id,
+                    title: fields['title'].text,
+                    category: category,
+                    provider: provider,
+                    url: fields['url'].text,
+                    minRole: minRole,
                   ),
                 ),
-                TextField(
-                  key: const ValueKey('document-url'),
-                  controller: url,
-                  keyboardType: TextInputType.url,
-                  decoration: InputDecoration(
-                    labelText: l10n.documentsUrlLabel,
-                    suffixIcon: HelpDot(l10n.helpTopicDocumentLibrary,
-                      anchor: HelpAnchor.documentsUrl,
-                    ),
-                    helperMaxLines: 3,
-                    helperText: l10n.documentsUrlHelper,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Row(children: [
-                  Expanded(
-                    child: DropdownButtonFormField<String>(
-                      key: const ValueKey('document-provider'),
-                      initialValue: provider,
-                      items: [
-                        for (final p in WorkspaceDocument.providers)
-                          DropdownMenuItem(
-                            value: p,
-                            child: Row(children: [
-                              Icon(providerIcon(p), size: 18),
-                              const SizedBox(width: AppSpacing.sm),
-                              Text(providerName(p)),
-                            ]),
-                          ),
-                      ],
-                      onChanged: (v) =>
-                          setState(() => provider = v ?? provider),
-                      decoration: InputDecoration(
-                        labelText:
-                            l10n.documentsProviderLabel,
-                      ),
-                    ),
-                  ),
-                  HelpDot(l10n.helpTopicDocumentLibrary,
-                    anchor: HelpAnchor.documentsProvider,
-                  ),
-                ]),
-                Row(children: [
-                  Expanded(
-                    child: DropdownButtonFormField<String>(
-                      key: const ValueKey('document-category'),
-                      initialValue: category,
-                      items: [
-                        for (final c in WorkspaceDocument.categories)
-                          DropdownMenuItem(
-                            value: c,
-                            child: Text(categoryName(l10n, c)),
-                          ),
-                      ],
-                      onChanged: (v) =>
-                          setState(() => category = v ?? category),
-                      decoration: InputDecoration(
-                        labelText:
-                            l10n.moneyExpenseCategoryLabel,
-                      ),
-                    ),
-                  ),
-                  HelpDot(l10n.helpTopicDocumentLibrary,
-                    anchor: HelpAnchor.documentsCategory,
-                  ),
-                ]),
-                Row(children: [
-                  Expanded(
-                    child: DropdownButtonFormField<String>(
-                      key: const ValueKey('document-role'),
-                      initialValue: minRole,
-                      items: [
-                        DropdownMenuItem(
-                          value: 'member',
-                          child: Text(
-                              l10n.documentsRoleMember),
-                        ),
-                        DropdownMenuItem(
-                          value: 'admin',
-                          child: Text(l10n.documentsRoleAdmin),
-                        ),
-                        DropdownMenuItem(
-                          value: 'owner',
-                          child: Text(
-                              l10n.documentsRoleOwner),
-                        ),
-                      ],
-                      onChanged: (v) =>
-                          setState(() => minRole = v ?? minRole),
-                      decoration: InputDecoration(
-                        labelText:
-                            l10n.documentsRoleLabel,
-                      ),
-                    ),
-                  ),
-                  HelpDot(l10n.helpTopicDocumentLibrary,
-                    anchor: HelpAnchor.documentsRole,
-                  ),
-                ]),
-              ],
-            ),
+          );
+          return ok ? null : failed;
+        },
+        builder: (context, refresh) => [
+          AppTextField(
+            key: const ValueKey('document-title'),
+            controller: fields['title'],
+            fieldKey: 'title',
+            label: l10n.documentsTitleLabel,
+            maxLength: 120,
+            help: HelpDot(topic, anchor: HelpAnchor.featureDocuments),
           ),
-          actions: [
-            TextButton(
-              key: const ValueKey('documents-cancel'),
-              onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: Text(l10n.commonCancel),
+          const FormGap(),
+          AppTextField(
+            key: const ValueKey('document-url'),
+            controller: fields['url'],
+            fieldKey: 'url',
+            label: l10n.documentsUrlLabel,
+            helper: l10n.documentsUrlHelper,
+            keyboardType: TextInputType.url,
+            autofillHints: const [AutofillHints.url],
+            help: HelpDot(topic, anchor: HelpAnchor.documentsUrl),
+          ),
+          const FormGap(),
+          _choice(
+            AppDropdownField<String>(
+              key: const ValueKey('document-provider'),
+              label: l10n.documentsProviderLabel,
+              value: provider,
+              items: [
+                for (final p in WorkspaceDocument.providers)
+                  (p, providerName(p)),
+              ],
+              onChanged: (v) {
+                provider = v ?? provider;
+                refresh();
+              },
             ),
-            FilledButton(
-              key: const ValueKey('document-save'),
-              onPressed: () => Navigator.of(dialogContext).pop(true),
-              child: Text(l10n.commonSave),
+            topic,
+            HelpAnchor.documentsProvider,
+          ),
+          const FormGap(),
+          _choice(
+            AppDropdownField<String>(
+              key: const ValueKey('document-category'),
+              label: l10n.moneyExpenseCategoryLabel,
+              value: category,
+              items: [
+                for (final c in WorkspaceDocument.categories)
+                  (c, categoryName(l10n, c)),
+              ],
+              onChanged: (v) {
+                category = v ?? category;
+                refresh();
+              },
             ),
-          ],
-        ),
+            topic,
+            HelpAnchor.documentsCategory,
+          ),
+          const FormGap(),
+          _choice(
+            AppDropdownField<String>(
+              key: const ValueKey('document-role'),
+              label: l10n.documentsRoleLabel,
+              value: minRole,
+              items: [
+                for (final r in WorkspaceDocument.roles)
+                  (r, audienceName(l10n, r)),
+              ],
+              onChanged: (v) {
+                minRole = v ?? minRole;
+                refresh();
+              },
+            ),
+            topic,
+            HelpAnchor.documentsRole,
+          ),
+        ],
       ),
     );
-    if (saved != true || !context.mounted) return;
-    if (title.text.trim().isEmpty ||
-        !url.text.trim().startsWith('https://')) {
-      AppSnack.error(
-        context,
-        l10n.documentsInvalid,
-      );
-      return;
-    }
-    if (!await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'document add failed',
-      errorText: l10n.workspaceGenericError,
-      action: () => ref.read(workspaceRepositoryProvider).addDocument(
-            WorkspaceDocument(
-              id: '',
-              workspaceId: workspace.id,
-              title: title.text,
-              category: category,
-              provider: provider,
-              url: url.text,
-              minRole: minRole,
-            ),
-          ),
-    )) {
-      return;
-    }
-    ref.invalidate(workspaceDocumentsProvider);
+    if (saved) ref.invalidate(workspaceDocumentsProvider);
   }
 
   Future<void> _delete(
@@ -287,15 +250,15 @@ class DocumentsScreen extends ConsumerWidget {
       builder: (dialogContext) => StatefulBuilder(
         builder: (dialogContext, setState) => AlertDialog(
           title: Text(l10n.documentsEditAudience),
-          content: DropdownButtonFormField<String>(
+          content: AppDropdownField<String>(
             key: const ValueKey('document-audience-edit'),
-            initialValue: minRole,
+            label: l10n.documentsRoleLabel,
+            value: minRole,
             items: [
               for (final r in WorkspaceDocument.roles)
-                DropdownMenuItem(value: r, child: Text(audienceName(l10n, r))),
+                (r, audienceName(l10n, r)),
             ],
             onChanged: (v) => setState(() => minRole = v ?? minRole),
-            decoration: InputDecoration(labelText: l10n.documentsRoleLabel),
           ),
           actions: [
             TextButton(

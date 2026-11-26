@@ -14451,11 +14451,11 @@ abstract class AppLocalizations {
   /// **'No document yet. Link your statutes, guides and statements from any drive.'**
   String get documentsEmpty;
 
-  /// Workspace document library (#500)
+  /// Document library, the add form: said under the link field when the link is not an https:// one
   ///
   /// In en, this message translates to:
-  /// **'A document needs a title and an https:// link.'**
-  String get documentsInvalid;
+  /// **'The link must start with https://.'**
+  String get documentsLinkNotHttps;
 
   /// Workspace document library (#500)
   ///
@@ -14492,6 +14492,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Title'**
   String get documentsTitleLabel;
+
+  /// Document library, the add form: said under the title field when it is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Give the document a title.'**
+  String get documentsTitleMissing;
 
   /// Workspace document library (#500)
   ///

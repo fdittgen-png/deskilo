@@ -1,6 +1,19 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+/// What stops a new entry of the document library from being filed.
+enum DocumentLinkProblem { titleMissing, linkNotHttps }
+
+/// The problems of a new entry titled [title] that links to [url]: it needs a
+/// title, and its link is an https one. The form says each under its field.
+Set<DocumentLinkProblem> documentLinkProblems({
+  required String title,
+  required String url,
+}) => {
+  if (title.trim().isEmpty) DocumentLinkProblem.titleMissing,
+  if (!url.trim().startsWith('https://')) DocumentLinkProblem.linkNotHttps,
+};
+
 /// One entry of the workspace document library (#500, 0099): a LINK to
 /// a document living in whatever system the workspace already uses.
 /// The provider only decides the icon and the wording — authentication

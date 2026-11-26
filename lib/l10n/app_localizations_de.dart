@@ -9182,8 +9182,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Noch kein Dokument. Verlinken Sie Satzung, Anleitungen und Berichte aus jedem Drive.';
 
   @override
-  String get documentsInvalid =>
-      'Ein Dokument braucht einen Titel und einen https://-Link.';
+  String get documentsLinkNotHttps => 'Der Link muss mit https:// beginnen.';
 
   @override
   String get documentsProviderLabel => 'Gespeichert auf';
@@ -9202,6 +9201,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get documentsTitleLabel => 'Titel';
+
+  @override
+  String get documentsTitleMissing => 'Geben Sie dem Dokument einen Titel.';
 
   @override
   String get documentsUrlHelper =>
