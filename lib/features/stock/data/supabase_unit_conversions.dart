@@ -5,7 +5,7 @@ import '../domain/unit_conversions.dart';
 import 'stock_rpc.dart';
 
 /// #4479 -- the business's general conversions behind the port: the rows under the business's own row security and the two commands
-/// that maintain them (0967). A refusal arrives as the stock configuration's typed failure; an answer of the wrong shape throws,
+/// that maintain them (0968). A refusal arrives as the stock configuration's typed failure; an answer of the wrong shape throws,
 /// it is never shown as "no conversions".
 class SupabaseUnitConversions implements UnitConversions {
   SupabaseUnitConversions(this._client);

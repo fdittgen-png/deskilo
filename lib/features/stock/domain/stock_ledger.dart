@@ -261,7 +261,7 @@ class StockLedger {
   }
 
   /// [entered] in [unit] as [item]'s inventory unit: its own unit as it is, any other by the one defined conversion
-  /// (`unitFactor`: the item's own, else the business's general one, one step), none defined refused (0967 unit_convert),
+  /// (`unitFactor`: the item's own, else the business's general one, one step), none defined refused (0968 unit_convert),
   /// kept to six decimals as the movement stores it (numeric(18, 6), 0840:355).
   ExactQuantity toInventory(StockItem item, ExactQuantity entered, String? unit, int i) {
     if (unit == null || unit == item.unit) return entered;

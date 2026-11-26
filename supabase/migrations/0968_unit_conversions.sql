@@ -24,7 +24,7 @@ language plpgsql
 as $f$
 begin
   if (length(p_def) - length(replace(p_def, p_old, ''))) / length(p_old) <> 1 then
-    raise exception '0967: % is not found exactly once', p_what using errcode = 'P0001';
+    raise exception '0968: % is not found exactly once', p_what using errcode = 'P0001';
   end if;
   return replace(p_def, p_old, p_new);
 end
@@ -405,4 +405,4 @@ revoke execute on function public.export_workspace_records(uuid) from public, an
 grant execute on function public.export_workspace_records(uuid) to authenticated;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(967);
+select public.set_deskilo_schema_version(968);

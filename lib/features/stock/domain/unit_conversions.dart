@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4479 -- a conversion is DEFINED, never implied. The business's GENERAL conversions (1 kg = 1000 g, `unit_conversions`, 0967) are
+// #4479 -- a conversion is DEFINED, never implied. The business's GENERAL conversions (1 kg = 1000 g, `unit_conversions`, 0968) are
 // master data a person edits in Settings; an item's own conversion (a carton of 12) is its factor to its inventory unit. THE rule,
 // written once for the server (`unit_factor`) and once here, and held equal by one table of cases (test/parity/unit_convert_cases.dart):
 // one step, never chained; the item's own conversion first, then the general one; either way round at the inverse factor; the same
@@ -55,7 +55,7 @@ abstract interface class UnitConversions {
 
 /// The one step from [from] to [to] as a fraction (1 [from] = num / den [to]), or null when none is defined. [inventoryUnit] is the
 /// item's own unit and [itemUnits] its own conversions (its unit and its factor to the inventory unit); [general] are the
-/// business's. The same rule as `unit_factor` (0967).
+/// business's. The same rule as `unit_factor` (0968).
 ({int num, int den})? unitFactor({
   required String? from,
   required String to,
@@ -89,7 +89,7 @@ abstract interface class UnitConversions {
 int _gcd(int a, int b) => b == 0 ? a : _gcd(b, a % b);
 
 /// The conversions between the units of one dimension that a business starts with, and gives each unit it makes (`unit_conversions_link`
-/// of 0967): the larger unit converts to the smaller, equal ones by code, a packaging unit to none.
+/// of 0968): the larger unit converts to the smaller, equal ones by code, a packaging unit to none.
 List<UnitConversion> linkedConversions(Iterable<WorkspaceUnit> units) {
   final all = units.where((u) => u.dimension != UnitDimension.package).toList();
   final out = <UnitConversion>[];

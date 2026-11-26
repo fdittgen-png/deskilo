@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4479: ONE table of unit conversions, run here against the server's `unit_convert` (0967) and in test/parity/unit_convert_test.dart
+-- #4479: ONE table of unit conversions, run here against the server's `unit_convert` (0968) and in test/parity/unit_convert_test.dart
 -- against the domain's rule (lib/features/stock/domain/unit_conversions.dart). The rows below are the table's rows to the letter
 -- (test/parity/unit_convert_cases.dart; the parity test finds each one here). The world: a business with the thirteen built-in
 -- units, a drum (a length: 50 m) and two packaging units, a sack and a carton. Beans are counted in grams and come in sacks of 60000 g;

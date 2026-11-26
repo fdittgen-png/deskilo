@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4479 -- the Demo keeps the general unit conversions of each business in memory, with the server's own rules (0967): a business starts
+// #4479 -- the Demo keeps the general unit conversions of each business in memory, with the server's own rules (0968): a business starts
 // with what its built-in units convert between; a unit made later gets its conversions to the units of its dimension (editable rows);
 // a conversion is written between two different units of the business, none of them a packaging unit, with a factor above zero; the
 // one written for a pair replaces the one that was, whichever way round; a retried request id answers once. Nothing leaves the process.
@@ -24,7 +24,7 @@ class DemoUnitConversions implements UnitConversions {
   /// The conversions of [workspaceId] now (the ledger reads them as they stand).
   List<UnitConversion> rows(String workspaceId) => _rows.putIfAbsent(workspaceId, () => [...builtInConversions]);
 
-  /// A unit was made or its factor changed: its conversions are written again (0967 `workspace_units_relink`).
+  /// A unit was made or its factor changed: its conversions are written again (0968 `workspace_units_relink`).
   void unitSaved(String workspaceId, WorkspaceUnit unit, List<WorkspaceUnit> all) {
     final list = rows(workspaceId)..removeWhere((c) => c.fromUnit == unit.code || c.toUnit == unit.code);
     for (final c in linkedConversions(all)) {

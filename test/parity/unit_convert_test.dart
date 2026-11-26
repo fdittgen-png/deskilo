@@ -2,7 +2,7 @@
 //
 // #4479 -- a conversion is defined, never implied, and the server and the app say the same: the table of cases
 // (unit_convert_cases.dart) holds against the domain's rule row by row, and every row stands in the database file that runs it against
-// `unit_convert` (supabase/tests/database/573_unit_convert.sql). The built-in conversions the Demo and a new business start from are
+// `unit_convert` (supabase/tests/database/576_unit_convert.sql). The built-in conversions the Demo and a new business start from are
 // the ones the server's `unit_conversions_link` writes.
 import 'dart:io';
 
@@ -12,7 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'unit_convert_cases.dart';
 
-const _pgTap = 'supabase/tests/database/573_unit_convert.sql';
+const _pgTap = 'supabase/tests/database/576_unit_convert.sql';
 
 void main() {
   test('the table holds against the domain rule, row by row', () {

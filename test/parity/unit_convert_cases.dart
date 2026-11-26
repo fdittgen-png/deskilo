@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4479 -- ONE table of unit conversions, run against the domain's rule (`unitFactor`, lib/features/stock/domain/unit_conversions.dart) in
-// test/parity/unit_convert_test.dart and against the server's `unit_convert` as pgTAP (supabase/tests/database/573_unit_convert.sql,
+// test/parity/unit_convert_test.dart and against the server's `unit_convert` as pgTAP (supabase/tests/database/576_unit_convert.sql,
 // whose rows are this table's rows to the letter: the parity test prints each row as SQL and finds it there). A conversion is
 // DEFINED, never implied: one step, never chained; an item's own conversion first, then the business's general one; either way
 // round at the inverse factor; no definition is no conversion.
