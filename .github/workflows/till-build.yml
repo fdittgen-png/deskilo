@@ -61,7 +61,7 @@ jobs:
             echo '```'
             grep -E '^CONFIG_(ESP_DEFAULT_CPU_FREQ_MHZ|COMPILER_OPTIMIZATION_(SIZE|PERF|DEBUG)|FREERTOS_HZ|ESPTOOLPY_FLASH(MODE|FREQ)|LOG_DEFAULT_LEVEL|BOOTLOADER_LOG_LEVEL|LV_DISP_DEF_REFR_PERIOD|LV_INDEV_DEF_READ_PERIOD|LV_COLOR_16_SWAP|ESP_MAIN_TASK_AFFINITY|FREERTOS_UNICORE)=' firmware/till/sdkconfig || true
             echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
+          } | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Build the ideaspark image
         run: |
           set -euo pipefail

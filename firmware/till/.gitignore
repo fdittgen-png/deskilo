@@ -6,3 +6,5 @@ build-*/
 sdkconfig.*
 !sdkconfig.defaults
 !sdkconfig.defaults.*
+# the host tests' stand-in for the generated settings header is a source file
+!test/host/stubs/sdkconfig.h
