@@ -8,3 +8,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../domain/line_unit.dart';
 
 final pickableUnitsProvider = Provider.family<List<LineUnit>, String>((ref, workspaceId) => const <LineUnit>[]);
+
+/// One item of one business.
+typedef ItemUnitsKey = ({String workspaceId, String itemId});
+
+/// #4479 -- the units an order line of a STOCKED item may be in: the ones that convert to the item's inventory unit (its own, its own
+/// conversions, the business's general ones). Null when the item is not restricted (not stocked, or nothing wired): the business's
+/// units then. The composition root wires it (the money feature never imports the stock).
+final itemOrderUnitsProvider = FutureProvider.autoDispose.family<List<LineUnit>?, ItemUnitsKey>((ref, key) async => null);
