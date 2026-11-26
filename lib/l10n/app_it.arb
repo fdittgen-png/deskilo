@@ -24546,6 +24546,12 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillReturnNoDeposit": "L'ultimo articolo non ha un vuoto da riprendere.",
+  "tillReturnNotAllowed": "Non può riprendere un vuoto alla cassa.",
+  "tillReturnNotDeposit": "Questo articolo non è il vuoto di alcun articolo venduto.",
+  "tillReturnOffline": "Il vuoto non viene ripreso mentre la cassa è offline.",
+  "tillReturnTracked": "Questo vuoto è tracciato per lotto o etichetta: non viene ripreso alla cassa.",
+  "tillReturnedLine": "Vuoto reso",
   "tillRingUpFirst": "Registri prima un articolo.",
   "tillScanLabel": "Scansiona un codice",
   "@tillScanLabel": {

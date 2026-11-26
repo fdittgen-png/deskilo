@@ -24546,6 +24546,12 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillReturnNoDeposit": "Der letzte Artikel hat kein Pfand zum Zurücknehmen.",
+  "tillReturnNotAllowed": "Sie dürfen an der Kasse kein Pfand zurücknehmen.",
+  "tillReturnNotDeposit": "Dieser Artikel ist kein Pfand eines verkauften Artikels.",
+  "tillReturnOffline": "Pfand wird nicht zurückgenommen, solange die Kasse offline ist.",
+  "tillReturnTracked": "Dieses Pfand wird nach Charge oder Etikett verfolgt: Es wird nicht an der Kasse zurückgenommen.",
+  "tillReturnedLine": "Pfand zurückgenommen",
   "tillRingUpFirst": "Erfassen Sie zuerst einen Artikel.",
   "tillScanLabel": "Code scannen",
   "@tillScanLabel": {

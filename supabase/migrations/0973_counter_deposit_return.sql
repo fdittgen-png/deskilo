@@ -11,7 +11,8 @@
 --                            are rung up first) and its tax is the finalize's to bound (a deposit taxed where the sale is not
 --                            makes it negative). Looser: no row can fail them.
 --   counter_lines_of         restated whole from its live definition (0894): a line `returned: true` must be a deposit
---                            item of an item or group, untracked, with no price, reason or discount of its own; kind is the
+--                            item of an item or group, untracked, with no price, reason or discount of its own, its input
+--                            rebuilt from the item (only the item, quantity and line id are the body's); kind is the
 --                            server's (a client's `kind` is refused); the amounts are negated after the compute; the cap is
 --                            on each line's absolute amount and on what is sold.
 --   counter_line_prices      restated from 0965: a returned deposit needs the right to change a price, never offline.
@@ -95,6 +96,10 @@ begin
           v_missing := v_missing || ('line_' || v_idx || '_returned_tracked');
           continue;
         end if;
+        -- only the item, its quantity and the line's own id come from the body: the deposit's price, unit, base quantity,
+        -- rate and supply are the item's, filled below as for any line, so nothing sent can enlarge what is handed back
+        v_in := jsonb_strip_nulls(jsonb_build_object('item_id', v_in -> 'item_id', 'quantity', v_in -> 'quantity', 'returned', true,
+                                                     'line_id', v_in -> 'line_id'));
       elsif v_in ->> 'kind' = 'deposit_return' then
         v_missing := v_missing || ('line_' || v_idx || '_kind');
         continue;

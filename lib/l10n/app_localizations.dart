@@ -67781,6 +67781,42 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get tillRetry;
 
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'The last item carries no deposit to take back.'**
+  String get tillReturnNoDeposit;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'You may not take a deposit back at the till.'**
+  String get tillReturnNotAllowed;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'This item is not a deposit any item is sold with.'**
+  String get tillReturnNotDeposit;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'A deposit is not taken back while the till is offline.'**
+  String get tillReturnOffline;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'This deposit is tracked by lot or tag: it is not taken back at the till.'**
+  String get tillReturnTracked;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit returned'**
+  String get tillReturnedLine;
+
   /// #4476 the till price keys
   ///
   /// In en, this message translates to:

@@ -77,5 +77,11 @@
   "tillLotExpires": "Da consumare entro il {date}",
   "tillLotExpired": "Scaduto ({date}): non si vende",
   "tillLotOnHand": "{quantity} {unit} disponibili",
-  "tillLotNone": "{item} non ha un lotto da scegliere: si vende così com'è."
+  "tillLotNone": "{item} non ha un lotto da scegliere: si vende così com'è.",
+  "tillReturnOffline": "Il vuoto non viene ripreso mentre la cassa è offline.",
+  "tillReturnNoDeposit": "L'ultimo articolo non ha un vuoto da riprendere.",
+  "tillReturnedLine": "Vuoto reso",
+  "tillReturnNotAllowed": "Non può riprendere un vuoto alla cassa.",
+  "tillReturnTracked": "Questo vuoto è tracciato per lotto o etichetta: non viene ripreso alla cassa.",
+  "tillReturnNotDeposit": "Questo articolo non è il vuoto di alcun articolo venduto."
 }

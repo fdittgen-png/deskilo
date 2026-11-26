@@ -77,5 +77,11 @@
   "tillLotExpires": "Verwendbar bis {date}",
   "tillLotExpired": "Abgelaufen ({date}): wird nicht verkauft",
   "tillLotOnHand": "{quantity} {unit} vorrätig",
-  "tillLotNone": "{item} hat keine Charge zur Auswahl: Es wird so verkauft."
+  "tillLotNone": "{item} hat keine Charge zur Auswahl: Es wird so verkauft.",
+  "tillReturnOffline": "Pfand wird nicht zurückgenommen, solange die Kasse offline ist.",
+  "tillReturnNoDeposit": "Der letzte Artikel hat kein Pfand zum Zurücknehmen.",
+  "tillReturnedLine": "Pfand zurückgenommen",
+  "tillReturnNotAllowed": "Sie dürfen an der Kasse kein Pfand zurücknehmen.",
+  "tillReturnTracked": "Dieses Pfand wird nach Charge oder Etikett verfolgt: Es wird nicht an der Kasse zurückgenommen.",
+  "tillReturnNotDeposit": "Dieser Artikel ist kein Pfand eines verkauften Artikels."
 }

@@ -6,7 +6,7 @@
 -- tracked deposit, a cashier without the right and a body that says it came offline are refused; the cap is on what is
 -- sold; a correction takes a returned line back negated, within its absolute amount. Rolled back.
 begin;
-select plan(18);
+select plan(20);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -125,6 +125,12 @@ select is(pg_temp.draft(1, 915, '[' || pg_temp.line(303, '1') || ', ' || pg_temp
           'ERR DKL02 {"reason": "deposit_return_offline"}', 'nor offline');
 select is(pg_temp.draft(1, 916, '[' || pg_temp.line(304, '3') || ', ' || pg_temp.line(304, '3') || ', ' || pg_temp.line(301, '40000000', ', "returned": true') || ']') like 'ERR DKL02%total_amount%', true,
           'the cap is on what is sold, not on what is left once the deposits are taken off');
+
+-- only the item and the quantity of a returned line are the body's: a base quantity or a rate sent changes nothing
+select is(pg_temp.t(pg_temp.draft(1, 917, '[' || pg_temp.line(303, '1') || ', ' || pg_temp.line(301, '2', ', "returned": true, "base_quantity": "0.001"') || ']')), '150',
+          'a base quantity sent does not multiply what is handed back');
+select is(pg_temp.j(pg_temp.draft(1, 918, '[' || pg_temp.line(303, '1') || ', ' || pg_temp.line(301, '2', format(', "returned": true, "vat_rate_id": "%s"', pg_temp.u(802))) || ']')) #>> '{lines,1,vat_percent}',
+          '20.000000', 'nor does a rate sent: the deposit item''s own rate applies');
 
 -- a correction takes a returned line back negated, within its absolute amount
 select set_config('t.lines', (select string_agg(x.id::text, ',' order by x.line_no) from public.counter_receipt_lines x where x.receipt_id = (pg_temp.j(current_setting('t.f')) ->> 'receipt_id')::uuid), false);

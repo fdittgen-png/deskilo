@@ -24546,6 +24546,12 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillReturnNoDeposit": "El último artículo no lleva envase que devolver.",
+  "tillReturnNotAllowed": "No puede devolver un envase en la caja.",
+  "tillReturnNotDeposit": "Este artículo no es el envase de ningún artículo vendido.",
+  "tillReturnOffline": "No se devuelve un envase mientras la caja está sin conexión.",
+  "tillReturnTracked": "Este envase se sigue por lote o etiqueta: no se devuelve en la caja.",
+  "tillReturnedLine": "Envase devuelto",
   "tillRingUpFirst": "Registre primero un artículo.",
   "tillScanLabel": "Escanear un código",
   "@tillScanLabel": {

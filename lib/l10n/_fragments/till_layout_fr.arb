@@ -77,5 +77,11 @@
   "tillLotExpires": "À consommer avant le {date}",
   "tillLotExpired": "Date dépassée ({date}) : non vendu",
   "tillLotOnHand": "{quantity} {unit} en stock",
-  "tillLotNone": "{item} n'a pas de lot à choisir : il est vendu tel quel."
+  "tillLotNone": "{item} n'a pas de lot à choisir : il est vendu tel quel.",
+  "tillReturnOffline": "Une consigne n'est pas reprise tant que la caisse est hors ligne.",
+  "tillReturnNoDeposit": "Le dernier article n'a pas de consigne à reprendre.",
+  "tillReturnedLine": "Consigne reprise",
+  "tillReturnNotAllowed": "Vous ne pouvez pas reprendre une consigne à la caisse.",
+  "tillReturnTracked": "Cette consigne est suivie par lot ou étiquette : elle n'est pas reprise à la caisse.",
+  "tillReturnNotDeposit": "Cet article n'est la consigne d'aucun article vendu."
 }

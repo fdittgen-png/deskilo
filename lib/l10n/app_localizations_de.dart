@@ -42576,6 +42576,29 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillRetry => 'Erneut versuchen';
 
   @override
+  String get tillReturnNoDeposit =>
+      'Der letzte Artikel hat kein Pfand zum Zurücknehmen.';
+
+  @override
+  String get tillReturnNotAllowed =>
+      'Sie dürfen an der Kasse kein Pfand zurücknehmen.';
+
+  @override
+  String get tillReturnNotDeposit =>
+      'Dieser Artikel ist kein Pfand eines verkauften Artikels.';
+
+  @override
+  String get tillReturnOffline =>
+      'Pfand wird nicht zurückgenommen, solange die Kasse offline ist.';
+
+  @override
+  String get tillReturnTracked =>
+      'Dieses Pfand wird nach Charge oder Etikett verfolgt: Es wird nicht an der Kasse zurückgenommen.';
+
+  @override
+  String get tillReturnedLine => 'Pfand zurückgenommen';
+
+  @override
   String get tillRingUpFirst => 'Erfassen Sie zuerst einen Artikel.';
 
   @override
