@@ -37140,6 +37140,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockEditUnitName => 'Verpackungseinheit';
 
   @override
+  String get stockEditUnitPrice => 'Preis von einem';
+
+  @override
+  String get stockEditUnitPriceHelp =>
+      'Leer lassen: Preis des Artikels mal Faktor.';
+
+  @override
   String get stockEditUnitsHint =>
       'Eine Verpackung enthält eine Anzahl Lagereinheiten; ein Drittel Liter ist 1 geteilt durch 3.';
 

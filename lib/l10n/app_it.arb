@@ -21515,6 +21515,14 @@
   "@stockEditUnitName": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockEditUnitPrice": "Prezzo di uno",
+  "@stockEditUnitPrice": {
+    "description": "#4479 the price of one of an item's units"
+  },
+  "stockEditUnitPriceHelp": "Lasciare vuoto: il prezzo dell'articolo per il fattore.",
+  "@stockEditUnitPriceHelp": {
+    "description": "#4479 what an empty unit price means"
+  },
   "stockEditUnitsHint": "Una confezione contiene un numero di unità di magazzino; un terzo di litro è 1 diviso 3.",
   "@stockEditUnitsHint": {
     "description": "#4169 the stock editors: a label or message"

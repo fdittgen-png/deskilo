@@ -37052,6 +37052,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockEditUnitName => 'Unidad de envase';
 
   @override
+  String get stockEditUnitPrice => 'Precio de uno';
+
+  @override
+  String get stockEditUnitPriceHelp =>
+      'Déjelo vacío: el precio del artículo por el factor.';
+
+  @override
   String get stockEditUnitsHint =>
       'Un envase contiene un número de unidades de inventario; un tercio de litro es 1 dividido entre 3.';
 

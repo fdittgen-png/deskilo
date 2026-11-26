@@ -37087,6 +37087,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockEditUnitName => 'Unità di confezione';
 
   @override
+  String get stockEditUnitPrice => 'Prezzo di uno';
+
+  @override
+  String get stockEditUnitPriceHelp =>
+      'Lasciare vuoto: il prezzo dell\'articolo per il fattore.';
+
+  @override
   String get stockEditUnitsHint =>
       'Una confezione contiene un numero di unità di magazzino; un terzo di litro è 1 diviso 3.';
 

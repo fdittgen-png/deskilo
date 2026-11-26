@@ -28,7 +28,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
           .from(ServerTable.services)
           .select(
             'id, stock_revision, stockable, purchasable, sellable, inventory_unit, tracking, shelf_life_days, '
-            'item_units!item_units_workspace_id_item_id_fkey(unit, factor_num, factor_den, default_purchase, default_sale), '
+            'item_units!item_units_workspace_id_item_id_fkey(unit, factor_num, factor_den, default_purchase, default_sale, price_cents), '
             'item_codes!item_codes_workspace_id_item_id_fkey(code, kind, unit)',
           )
           .eq('workspace_id', workspaceId)
