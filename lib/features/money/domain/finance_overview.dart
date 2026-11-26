@@ -341,6 +341,15 @@ class FinanceOverview {
   FinanceOverview withUnavailable(String source) =>
       _with(unavailableSources: [...unavailableSources, source]);
 
+  /// #4492 — the names of the workspaces my documents come from, by the
+  /// workspace's own id: the id a source answers with and a document is
+  /// counted by. [workspaces] is keyed by the network id instead, which
+  /// differs for a document read from another installation.
+  Map<String, String> get workspaceNames => {
+    for (final i in invoices) i.workspaceId: i.workspaceName,
+    for (final i in billed) i.workspaceId: i.workspaceName,
+  };
+
   /// The workspaces my documents come from, as (id, name), by name.
   List<(String, String)> get workspaces => _byName({
     for (final i in invoices) i.networkId: i.workspaceName,
