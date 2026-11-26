@@ -14,6 +14,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/kit/records_table.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -81,13 +82,11 @@ class ServicesScreen extends ConsumerWidget {
         title: PageTitle(l10n.servicesTitle),
         actions: [
           // #3614 — worded in the bar: a new service opens beside the table.
-          OutlinedButton.icon(
+          pageBarAction(
             key: const ValueKey('services-new'),
+            label: l10n.servicesNew,
             onPressed: () => _editSheet(context, ref),
-            icon: const Icon(Icons.add),
-            label: Text(l10n.servicesNew),
           ),
-          const SizedBox(width: AppSpacing.sm),
         ],
       ),
       body: switch (servicesAsync) {

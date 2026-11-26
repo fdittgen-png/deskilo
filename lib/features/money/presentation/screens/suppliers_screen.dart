@@ -15,6 +15,7 @@ import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../domain/purchase.dart';
 import '../../providers/supplier_providers.dart';
@@ -63,11 +64,10 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
           appBar: AppBar(
             title: PageTitle(l10n.bookRoleSuppliers),
             actions: [
-              OutlinedButton.icon(
+              pageBarAction(
                 key: const ValueKey('supplier-add'),
+                label: l10n.suppliersAdd,
                 onPressed: () => view.edit(context, ref, null),
-                icon: const Icon(Icons.add),
-                label: Text(l10n.suppliersAdd),
               ),
               // What waits for review stays on the list it was built for.
               if (ref
