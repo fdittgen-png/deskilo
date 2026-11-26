@@ -413,7 +413,7 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('usage_records'),
   ExportSource.everyColumn('invoice_matches'),
   ExportSource.everyColumn('invoice_reminders'),
-  ExportSource.everyColumn('invoice_dunning_holds'), ExportSource.everyColumn('invoice_line_tracks'), ExportSource.everyColumn('workspace_units'), // #4436, #4442
+  ExportSource.everyColumn('invoice_dunning_holds'), ExportSource.everyColumn('invoice_line_tracks'), ExportSource.everyColumn('workspace_units'), ExportSource.everyColumn('unit_conversions'), // #4436, #4442
   ExportSource.everyColumn('tax_exemption_certificates'),
   ExportSource.everyColumn('suppliers'),
   // #4164 — the billing identity of each customer the business invoices.
