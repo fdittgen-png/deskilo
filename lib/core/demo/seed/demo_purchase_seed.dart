@@ -225,9 +225,7 @@ PurchaseDetail _document(
     currency: currency,
     grossCents: lines.fold(0, (s, l) => s + l.grossCents),
     receivedOn: meta.received,
-    // #4492 — the list resolves the supplier's name by this id: without it
-    // every bill of a known supplier read "No supplier".
-    supplierId: meta.supplier?.id,
+    supplierId: meta.supplier?.id, // #4492: the list names the supplier by this id
   ),
   revision: 1,
   lines: lines,

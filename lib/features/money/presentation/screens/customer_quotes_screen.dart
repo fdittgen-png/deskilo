@@ -16,6 +16,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -73,7 +74,14 @@ class _Body extends ConsumerWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(AppSpacing.md),
-          child: Text(l10n.quotesIntro, style: Theme.of(context).textTheme.bodyMedium),
+          // A sentence keeps a line a person reads, also above a wide table.
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
+              child: Text(l10n.quotesIntro, style: Theme.of(context).textTheme.bodyMedium),
+            ),
+          ),
         ),
         Expanded(
           child: switch (quotes) {
@@ -81,16 +89,13 @@ class _Body extends ConsumerWidget {
             // plain failure does not carry.
             AsyncError(:final error) => Padding(
               padding: const EdgeInsets.all(AppSpacing.md),
-              child: Align(
-                alignment: AlignmentDirectional.topStart,
-                child: ReadFailureBanner(
-                  error: error,
-                  refusal: error is QuoteRefusal
-                      ? quoteRefusalText(l10n, error)
-                      : null,
-                  retryKey: const ValueKey('quotes-retry'),
-                  onRetry: () => ref.invalidate(customerQuotesProvider(workspaceId)),
-                ),
+              child: ReadFailureBanner(
+                error: error,
+                refusal: error is QuoteRefusal
+                    ? quoteRefusalText(l10n, error)
+                    : null,
+                retryKey: const ValueKey('quotes-retry'),
+                onRetry: () => ref.invalidate(customerQuotesProvider(workspaceId)),
               ),
             ),
             _ => _QuotesTable(
