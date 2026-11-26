@@ -29,6 +29,12 @@ import 'lint_sources.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #4479/0968 restates stock_to_inventory, stock_unit_factor and workspace_unit_convert from the bodies the earlier patches
+  // left (0747/0836/0951 with 0952's item units and 0963's package dimension): the dimension step is replaced by
+  // unit_factor/unit_convert, every other line is theirs. Proved on dev rolled back: 27 cases, parity table 15 cases.
+  'stock_to_inventory@0968',
+  'stock_unit_factor@0968',
+  'workspace_unit_convert@0968',
   // #4448/0958 restates has_permission_raw from the LIVE dev definition (pg_get_functiondef at schema 956, the body every
   // later patch left: the custom roles branch, the co-owner, admin and member branches and the adminInvoicing grant) and
   // adds only 'configureTill' to the admin defaults; pgTAP 571 green on dev with 0958 and 0959, rolled back.

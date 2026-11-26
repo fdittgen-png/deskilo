@@ -37570,6 +37570,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Dos variantes tienen la misma combinación.';
 
   @override
+  String get stockReasonConversionSameUnit =>
+      'Una conversión necesita dos unidades distintas.';
+
+  @override
+  String get stockReasonConversionUnknown =>
+      'Esta conversión no está definida.';
+
+  @override
   String get stockReasonCostInvalid =>
       'Este coste no es válido: un total en unidades menores y un tipo solo para otra moneda.';
 
@@ -37748,6 +37756,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get stockReasonOverAllocated =>
       'No se puede colocar más de lo que llegó.';
+
+  @override
+  String get stockReasonPackageUnit =>
+      'Un envase no tiene conversión general: su factor se fija en el artículo.';
 
   @override
   String get stockReasonParentInactive =>
@@ -42822,6 +42834,45 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get unblockAction => 'Desbloquear';
+
+  @override
+  String get unitConversionDelete => 'Eliminar';
+
+  @override
+  String get unitConversionEdit => 'Cambiar una conversión';
+
+  @override
+  String get unitConversionFactor => 'Cuántas';
+
+  @override
+  String unitConversionFactorHelp(String from, String to) {
+    return 'Cuántas $to hacen una $from';
+  }
+
+  @override
+  String get unitConversionFrom => 'De';
+
+  @override
+  String unitConversionLine(String from, String factor, String to) {
+    return '1 $from = $factor $to';
+  }
+
+  @override
+  String get unitConversionNew => 'Añadir una conversión';
+
+  @override
+  String get unitConversionTo => 'A';
+
+  @override
+  String get unitConversionsEmpty =>
+      'Todavía no hay ninguna conversión definida.';
+
+  @override
+  String get unitConversionsIntro =>
+      'Una conversión dice cuántas de una unidad hacen otra. Vale en los dos sentidos, en un solo paso. La conversión propia de un artículo (una caja de 12) prevalece sobre estas, y un envase no tiene aquí.';
+
+  @override
+  String get unitConversionsTitle => 'Conversiones';
 
   @override
   String get unknownWireInvoiceKind =>

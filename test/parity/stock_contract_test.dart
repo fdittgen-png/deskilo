@@ -76,7 +76,7 @@ Set<String> unprovenReasons() {
   final demo = StringBuffer();
   for (final f in Directory('lib/core/demo/data').listSync().whereType<File>()) {
     final name = f.uri.pathSegments.last;
-    if (name.startsWith('demo_stock_') || name == 'demo_item_groups.dart' || name == 'demo_workspace_units.dart') {
+    if (name.startsWith('demo_stock_') || name == 'demo_item_groups.dart' || name == 'demo_workspace_units.dart' || name == 'demo_unit_conversions.dart') {
       demo.write(f.readAsStringSync());
     }
   }

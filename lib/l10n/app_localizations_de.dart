@@ -37657,6 +37657,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zwei Varianten haben dieselbe Kombination.';
 
   @override
+  String get stockReasonConversionSameUnit =>
+      'Eine Umrechnung braucht zwei verschiedene Einheiten.';
+
+  @override
+  String get stockReasonConversionUnknown =>
+      'Diese Umrechnung ist nicht festgelegt.';
+
+  @override
   String get stockReasonCostInvalid =>
       'Diese Kosten sind ungültig: eine Summe in Nebeneinheiten und ein Kurs nur für eine andere Währung.';
 
@@ -37836,6 +37844,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockReasonOverAllocated =>
       'Es kann nicht mehr eingelagert werden, als geliefert wurde.';
+
+  @override
+  String get stockReasonPackageUnit =>
+      'Eine Verpackungseinheit hat keine allgemeine Umrechnung: ihr Faktor steht am Artikel.';
 
   @override
   String get stockReasonParentInactive =>
@@ -42946,6 +42958,44 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get unblockAction => 'Blockierung aufheben';
+
+  @override
+  String get unitConversionDelete => 'Löschen';
+
+  @override
+  String get unitConversionEdit => 'Umrechnung ändern';
+
+  @override
+  String get unitConversionFactor => 'Wie viele';
+
+  @override
+  String unitConversionFactorHelp(String from, String to) {
+    return 'Wie viele $to ergeben ein $from';
+  }
+
+  @override
+  String get unitConversionFrom => 'Von';
+
+  @override
+  String unitConversionLine(String from, String factor, String to) {
+    return '1 $from = $factor $to';
+  }
+
+  @override
+  String get unitConversionNew => 'Umrechnung hinzufügen';
+
+  @override
+  String get unitConversionTo => 'Nach';
+
+  @override
+  String get unitConversionsEmpty => 'Noch keine Umrechnung festgelegt.';
+
+  @override
+  String get unitConversionsIntro =>
+      'Eine Umrechnung sagt, wie viele einer Einheit eine andere ergeben. Sie gilt in beide Richtungen, in einem Schritt. Die eigene Umrechnung eines Artikels (ein Karton zu 12) geht diesen vor, und eine Verpackungseinheit hat hier keine.';
+
+  @override
+  String get unitConversionsTitle => 'Umrechnungen';
 
   @override
   String get unknownWireInvoiceKind =>

@@ -19,7 +19,8 @@ import '../providers/workspace_units_providers.dart';
 /// six of before while it is off.
 List<WorkspaceUnit> _unitsOffered(WidgetRef ref, String workspaceId) {
   final on = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.unitsOfMeasure);
-  final all = on ? (ref.watch(workspaceUnitListProvider(workspaceId)).value ?? builtInUnits) : builtInUnits;
+  // the business's units are read whether the feature is on or not: it hides the screen that makes units, not the units that exist
+  final all = ref.watch(workspaceUnitListProvider(workspaceId)).value ?? builtInUnits;
   return pickableUnits(all, unitsOn: on);
 }
 
@@ -31,14 +32,12 @@ bool _isListed(List<WorkspaceUnit> units, String code) => code.isEmpty || units.
 Future<Set<String>> stockUnitCodes(BuildContext context, String workspaceId) async {
   final container = ProviderScope.containerOf(context);
   final on = container.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.unitsOfMeasure);
-  final all = on
-      ? await guardRead<List<WorkspaceUnit>>(
-          domain: 'stock',
-          message: 'the units could not be read for a sheet',
-          read: () => container.read(workspaceUnitListProvider(workspaceId).future),
-          fallback: (_) => builtInUnits,
-        )
-      : builtInUnits;
+  final all = await guardRead<List<WorkspaceUnit>>(
+    domain: 'stock',
+    message: 'the units could not be read for a sheet',
+    read: () => container.read(workspaceUnitListProvider(workspaceId).future),
+    fallback: (_) => builtInUnits,
+  );
   return {for (final u in pickableUnits(all, unitsOn: on)) u.code};
 }
 

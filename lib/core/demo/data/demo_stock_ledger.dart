@@ -16,11 +16,13 @@ import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_ledger.dart';
 import 'package:deskilo/features/stock/domain/stock_operations.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
+import 'package:deskilo/features/stock/domain/unit_conversions.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show LineTrack, LineTrackKind;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'demo_stock_candidates.dart';
 import 'demo_stock_config_commands.dart';
+import 'demo_unit_conversions.dart';
 import 'money/demo_standalone_invoice_commands.dart' show DemoInvoiceGoods;
 
 // #4366 -- the beans are weighed at the counter and sit under their own key colour; the till categories are the shop's shelves.
@@ -78,12 +80,13 @@ typedef DemoStockPost = StockPost;
 /// The in-memory goods ledger of the reference business: the domain's [StockLedger], seeded with the story and
 /// reading the places and units of the Demo's configuration.
 class DemoStockLedger implements DemoInvoiceGoods {
-  DemoStockLedger(this.workspaceId, this._config, [DateTime Function()? now, this.candidates]) {
+  DemoStockLedger(this.workspaceId, this._config, [DateTime Function()? now, this.candidates, UnitConversions? conversions]) {
     core = StockLedger(
       workspaceId,
       items: () => itemList,
       places: () => _config.placeMap,
       units: _config.unitsOf,
+      conversions: conversions is DemoUnitConversions ? () => conversions.rows(workspaceId) : null,
       clock: now ?? (() => _anchor),
       prefix: 'demo',
     );
