@@ -57,7 +57,7 @@ class StockItemGroupSection extends ConsumerWidget {
         if (group != null)
           switch (group) {
             AsyncValue(hasValue: true, :final value) => StockItemFact(
-              label: l10n.stockItemFactGroup,
+              label: l10n.documentsColGroup,
               value: value ?? l10n.stockItemNoGroup,
             ),
             AsyncValue(:final error?) => StockReadFailed(

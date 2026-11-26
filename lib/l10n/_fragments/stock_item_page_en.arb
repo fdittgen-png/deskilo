@@ -19,16 +19,8 @@
   "@stockItemSectionSuppliers": {
     "description": "#4480 the page of one stock item: the title of one of its sections"
   },
-  "stockItemFactPrice": "Price",
-  "@stockItemFactPrice": {
-    "description": "#4480 the page of one stock item: the label above one of its facts"
-  },
   "stockItemFactVat": "VAT",
   "@stockItemFactVat": {
-    "description": "#4480 the page of one stock item: the label above one of its facts"
-  },
-  "stockItemFactUnit": "Unit",
-  "@stockItemFactUnit": {
     "description": "#4480 the page of one stock item: the label above one of its facts"
   },
   "stockItemFactBarcode": "Barcode",
@@ -37,10 +29,6 @@
   },
   "stockItemFactCost": "Last known cost",
   "@stockItemFactCost": {
-    "description": "#4480 the page of one stock item: the label above one of its facts"
-  },
-  "stockItemFactGroup": "Group",
-  "@stockItemFactGroup": {
     "description": "#4480 the page of one stock item: the label above one of its facts"
   },
   "stockItemNoGroup": "In no group",

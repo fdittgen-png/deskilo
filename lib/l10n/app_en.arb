@@ -48024,18 +48024,6 @@
   "@stockItemFactCost": {
     "description": "#4480 the page of one stock item: the label above one of its facts"
   },
-  "stockItemFactGroup": "Group",
-  "@stockItemFactGroup": {
-    "description": "#4480 the page of one stock item: the label above one of its facts"
-  },
-  "stockItemFactPrice": "Price",
-  "@stockItemFactPrice": {
-    "description": "#4480 the page of one stock item: the label above one of its facts"
-  },
-  "stockItemFactUnit": "Unit",
-  "@stockItemFactUnit": {
-    "description": "#4480 the page of one stock item: the label above one of its facts"
-  },
   "stockItemFactVat": "VAT",
   "@stockItemFactVat": {
     "description": "#4480 the page of one stock item: the label above one of its facts"

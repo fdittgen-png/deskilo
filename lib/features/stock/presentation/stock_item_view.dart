@@ -162,7 +162,7 @@ class StockItemView extends ConsumerWidget {
         StockItemFacts(
           facts: [
             StockItemFact(
-              label: l10n.stockItemFactPrice,
+              label: l10n.servicesPrice,
               value: price == null
                   ? l10n.stockItemAttentionNoPrice
                   : format.money(price),
@@ -170,7 +170,7 @@ class StockItemView extends ConsumerWidget {
             if (vat != null)
               StockItemFact(label: l10n.stockItemFactVat, value: vat),
             if (main.unit.isNotEmpty)
-              StockItemFact(label: l10n.stockItemFactUnit, value: main.unit),
+              StockItemFact(label: l10n.standaloneInvoiceLineUnit, value: main.unit),
             if (main.barcode case final code?)
               StockItemFact(label: l10n.stockItemFactBarcode, value: code),
             StockItemFact(label: l10n.stockItemFactCost, value: cost),
