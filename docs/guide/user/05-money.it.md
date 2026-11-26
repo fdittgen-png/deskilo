@@ -865,6 +865,8 @@ Alla cassa, i tasti agiscono come li ha posizionati. Il **tastierino numerico** 
 
 **Ristampare l'ultimo scontrino** mostra di nuovo lo scontrino dell'ultima vendita, contrassegnato **COPIA 1**, **COPIA 2** e così via. Una copia non prende mai un nuovo numero di scontrino, e ogni copia stampata viene contata.
 
+**Reso cauzione** riprende il vuoto dell'ultimo articolo registrato (le bottiglie di una cassa d'acqua, ad esempio): digiti prima il numero sul tastierino, altrimenti se ne riprende uno. Il vuoto è tolto dalla vendita e compare come **Vuoto reso** sullo scontrino; torna in magazzino quando la vendita è fatta. Serve il diritto **Modificare un prezzo alla cassa**, non si fa offline, un vuoto tracciato per lotto o etichetta non viene ripreso alla cassa, e una vendita il cui totale non sarebbe sopra lo zero non viene fatta (paghi allora i vuoti dal cassetto).
+
 <!-- anchor: user.money.till-offline -->
 ### Quando la cassa è offline
 

@@ -41590,6 +41590,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String tillDayDepositsReturned(String amount) {
+    return 'Zurückgenommenes Pfand: $amount';
+  }
+
+  @override
   String tillDayDifferences(String amount) {
     return 'Gesamtdifferenz der Schubladen: $amount';
   }
@@ -42594,6 +42599,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get tillReturnTracked =>
       'Dieses Pfand wird nach Charge oder Etikett verfolgt: Es wird nicht an der Kasse zurückgenommen.';
+
+  @override
+  String tillReturnedLabel(String item) {
+    return 'Pfand zurück: $item';
+  }
 
   @override
   String get tillReturnedLine => 'Pfand zurückgenommen';

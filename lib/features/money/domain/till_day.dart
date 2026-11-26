@@ -92,6 +92,7 @@ class DayReport {
     required this.refunds,
     required this.paidInMinor,
     required this.paidOutMinor,
+    this.depositsReturnedMinor = 0,
   });
 
   final String dayCloseId;
@@ -117,6 +118,9 @@ class DayReport {
   final int paidInMinor;
   final int paidOutMinor;
 
+  /// #4478 -- the deposits brought back that day, taken off its sales: a drawer that differs by them is explained.
+  final int depositsReturnedMinor;
+
   int get unresolvedCardMinor => sessions.fold(0, (a, s) => a + s.unresolvedCardMinor);
 
   /// [json] is either `counter_day_close_v1`'s answer (the report under `report`) or `counter_day_report_v1`'s.
@@ -140,6 +144,8 @@ class DayReport {
       refunds: _byKind(r, 'refunds'),
       paidInMinor: _minor(r, 'paid_in_minor'),
       paidOutMinor: _minor(r, 'paid_out_minor'),
+      // a report frozen before #4478 has no such figure: none were returned
+      depositsReturnedMinor: r.raw('deposits_returned_minor') == null ? 0 : _minor(r, 'deposits_returned_minor'),
     );
   }
 }

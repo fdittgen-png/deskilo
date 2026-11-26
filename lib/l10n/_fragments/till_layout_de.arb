@@ -83,5 +83,6 @@
   "tillReturnedLine": "Pfand zurückgenommen",
   "tillReturnNotAllowed": "Sie dürfen an der Kasse kein Pfand zurücknehmen.",
   "tillReturnTracked": "Dieses Pfand wird nach Charge oder Etikett verfolgt: Es wird nicht an der Kasse zurückgenommen.",
-  "tillReturnNotDeposit": "Dieser Artikel ist kein Pfand eines verkauften Artikels."
+  "tillReturnNotDeposit": "Dieser Artikel ist kein Pfand eines verkauften Artikels.",
+  "tillReturnedLabel": "Pfand zurück: {item}"
 }

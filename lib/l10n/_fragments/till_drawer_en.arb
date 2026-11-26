@@ -647,5 +647,14 @@
   "settingHintCounterMaxDiscount": "The largest discount, in percent, a cashier may give on a till line. 0 means no discount at the till.",
   "@settingHintCounterMaxDiscount": {
     "description": "#4476 the setting counter.max_discount_percent"
+  },
+  "tillDayDepositsReturned": "Deposits returned: {amount}",
+  "@tillDayDepositsReturned": {
+    "description": "#4478 the day report: deposits brought back; amount arrives formatted",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

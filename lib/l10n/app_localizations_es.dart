@@ -41467,6 +41467,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String tillDayDepositsReturned(String amount) {
+    return 'Envases devueltos: $amount';
+  }
+
+  @override
   String tillDayDifferences(String amount) {
     return 'Diferencia total de los cajones: $amount';
   }
@@ -42468,6 +42473,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get tillReturnTracked =>
       'Este envase se sigue por lote o etiqueta: no se devuelve en la caja.';
+
+  @override
+  String tillReturnedLabel(String item) {
+    return 'Envase devuelto: $item';
+  }
 
   @override
   String get tillReturnedLine => 'Envase devuelto';

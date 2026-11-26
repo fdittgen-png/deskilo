@@ -83,5 +83,6 @@
   "tillReturnedLine": "Envase devuelto",
   "tillReturnNotAllowed": "No puede devolver un envase en la caja.",
   "tillReturnTracked": "Este envase se sigue por lote o etiqueta: no se devuelve en la caja.",
-  "tillReturnNotDeposit": "Este artículo no es el envase de ningún artículo vendido."
+  "tillReturnNotDeposit": "Este artículo no es el envase de ningún artículo vendido.",
+  "tillReturnedLabel": "Envase devuelto: {item}"
 }

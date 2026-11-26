@@ -83,5 +83,6 @@
   "tillReturnedLine": "Consigne reprise",
   "tillReturnNotAllowed": "Vous ne pouvez pas reprendre une consigne à la caisse.",
   "tillReturnTracked": "Cette consigne est suivie par lot ou étiquette : elle n'est pas reprise à la caisse.",
-  "tillReturnNotDeposit": "Cet article n'est la consigne d'aucun article vendu."
+  "tillReturnNotDeposit": "Cet article n'est la consigne d'aucun article vendu.",
+  "tillReturnedLabel": "Consigne reprise : {item}"
 }

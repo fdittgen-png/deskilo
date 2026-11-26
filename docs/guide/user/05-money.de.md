@@ -865,6 +865,8 @@ An der Kasse wirken die Tasten so, wie Sie sie platziert haben. Der **Ziffernblo
 
 **Letzten Beleg nachdrucken** zeigt den Beleg des letzten Verkaufs erneut, gekennzeichnet als **KOPIE 1**, **KOPIE 2** usw. Eine Kopie erhält nie eine neue Belegnummer, und jede gedruckte Kopie wird gezählt.
 
+**Pfandrückgabe** nimmt das Pfand des zuletzt erfassten Artikels zurück (etwa die Flaschen eines Wasserkastens): Geben Sie vorher die Anzahl auf dem Ziffernblock ein, sonst wird eines genommen. Das Pfand wird vom Verkauf abgezogen und steht als **Pfand zurückgenommen** auf dem Beleg; es kommt mit dem Verkauf zurück in den Bestand. Dafür braucht es das Recht **Preis an der Kasse ändern**, offline geht es nicht, ein nach Charge oder Etikett verfolgtes Pfand wird nicht an der Kasse zurückgenommen, und ein Verkauf, dessen Summe nicht über null läge, wird nicht abgeschlossen (zahlen Sie das Pfand dann aus der Kassenlade aus).
+
 <!-- anchor: user.money.till-offline -->
 ### Wenn die Kasse offline ist
 

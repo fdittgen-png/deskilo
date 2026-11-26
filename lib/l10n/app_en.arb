@@ -53575,6 +53575,15 @@
       }
     }
   },
+  "tillDayDepositsReturned": "Deposits returned: {amount}",
+  "@tillDayDepositsReturned": {
+    "description": "#4478 the day report: deposits brought back; amount arrives formatted",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "tillDayDifferences": "Total difference of the drawers: {amount}",
   "@tillDayDifferences": {
     "description": "#4367 till sessions: the cash drawer",
@@ -54979,6 +54988,15 @@
   "tillReturnTracked": "This deposit is tracked by lot or tag: it is not taken back at the till.",
   "@tillReturnTracked": {
     "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnedLabel": "Deposit returned: {item}",
+  "@tillReturnedLabel": {
+    "description": "#4478 a returned deposit on the receipt; item is its name",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
   },
   "tillReturnedLine": "Deposit returned",
   "@tillReturnedLine": {

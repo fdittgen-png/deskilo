@@ -139,9 +139,25 @@ class _LaidOutState extends State<_LaidOut> {
     TillFunction.priceOverride => () => unawaited(_pricing(discount: false)),
     TillFunction.lineDiscount => () => unawaited(_pricing(discount: true)),
     TillFunction.reprintLast => () => unawaited(_reprint()),
-    // a deposit return comes with #4476's next step; the drawer opens with the receipt printer and its pulse (#4368)
+    TillFunction.depositReturn => _depositReturn,
+    // the drawer opens with the receipt printer and its pulse (#4368)
     _ => null,
   };
+
+  /// #4478 -- the deposit of the last item rung up, brought back: the keypad's number of them, or one.
+  void _depositReturn() {
+    final lines = widget.session.state.value.lines;
+    final last = lines.lastWhere((l) => !l.returned && l.depositFor == null, orElse: () => const TillLine(itemId: '', name: '', quantity: '', unit: ''));
+    final depositId = widget.items.where((k) => k.id == last.itemId).firstOrNull?.depositItemId;
+    final deposit = depositId == null ? null : widget.items.where((k) => k.id == depositId).firstOrNull;
+    if (deposit == null) {
+      AppSnack.info(context, context.l10n.tillReturnNoDeposit);
+      return;
+    }
+    final typed = _typed.value;
+    _typed.value = const TillKeypadEntry();
+    unawaited(widget.session.addReturn(itemId: deposit.id, name: deposit.name, unit: deposit.unit, quantity: typed.isEmpty ? '1' : typed.text));
+  }
 
   /// #4476 -- the last sale's receipt again, counted by the server as its next copy and shown marked as that copy.
   Future<void> _reprint() async {

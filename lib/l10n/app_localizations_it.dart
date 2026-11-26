@@ -41518,6 +41518,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String tillDayDepositsReturned(String amount) {
+    return 'Vuoti resi: $amount';
+  }
+
+  @override
   String tillDayDifferences(String amount) {
     return 'Differenza totale dei cassetti: $amount';
   }
@@ -42524,6 +42529,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get tillReturnTracked =>
       'Questo vuoto è tracciato per lotto o etichetta: non viene ripreso alla cassa.';
+
+  @override
+  String tillReturnedLabel(String item) {
+    return 'Vuoto reso: $item';
+  }
 
   @override
   String get tillReturnedLine => 'Vuoto reso';

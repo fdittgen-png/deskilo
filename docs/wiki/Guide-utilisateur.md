@@ -3276,6 +3276,8 @@ La disposition a une grille pour chaque largeur où la caisse est utilisée : **
 
 **Réimprimer le dernier ticket** affiche de nouveau le ticket de la dernière vente, marqué **DUPLICATA 1**, **DUPLICATA 2**, etc. Un duplicata ne prend jamais un nouveau numéro de ticket, et chaque duplicata imprimé est compté.
 
+**Retour de consigne** reprend la consigne du dernier article enregistré (les bouteilles d'un pack d'eau, par exemple) : saisissez d'abord le nombre sur le pavé, sinon une seule est reprise. La consigne est déduite de la vente et figure comme **Consigne reprise** sur le ticket ; elle revient en stock quand la vente est faite. Il faut le droit **Modifier un prix à la caisse**, ce n'est pas possible hors ligne, une consigne suivie par lot ou étiquette n'est pas reprise à la caisse, et une vente dont le total ne serait pas supérieur à zéro n'est pas faite (remboursez alors les consignes depuis le tiroir).
+
 <!-- anchor: user.money.till-offline -->
 ### Quand la caisse est hors ligne
 

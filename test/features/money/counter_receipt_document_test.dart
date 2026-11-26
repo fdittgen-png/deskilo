@@ -145,4 +145,11 @@ void main() {
       });
     }
   });
+
+  test('a returned deposit is read as such and printed with its words (#4478)', () {
+    final back = _line('Bottle', '2', -42, -8)..['returned'] = true..['kind'] = 'deposit_return';
+    final doc = CounterReceiptDocument.decode(_frozen('EUR', [_line('Milk', '1', 175, 35), back]));
+    expect([for (final l in doc.lines) l.returned], [false, true]);
+    expect(counterReceiptText(_en, _format('EUR'), doc), contains(_en.tillReturnedLabel('Bottle')));
+  });
 }

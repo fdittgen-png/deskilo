@@ -66220,6 +66220,12 @@ abstract class AppLocalizations {
   /// **'Corrections: {amount}'**
   String tillDayCorrections(String amount);
 
+  /// #4478 the day report: deposits brought back; amount arrives formatted
+  ///
+  /// In en, this message translates to:
+  /// **'Deposits returned: {amount}'**
+  String tillDayDepositsReturned(String amount);
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -67810,6 +67816,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This deposit is tracked by lot or tag: it is not taken back at the till.'**
   String get tillReturnTracked;
+
+  /// #4478 a returned deposit on the receipt; item is its name
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit returned: {item}'**
+  String tillReturnedLabel(String item);
 
   /// #4478 a deposit returned at the till
   ///

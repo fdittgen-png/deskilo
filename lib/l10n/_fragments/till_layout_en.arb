@@ -381,5 +381,14 @@
   "tillReturnNotDeposit": "This item is not a deposit any item is sold with.",
   "@tillReturnNotDeposit": {
     "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnedLabel": "Deposit returned: {item}",
+  "@tillReturnedLabel": {
+    "description": "#4478 a returned deposit on the receipt; item is its name",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
   }
 }

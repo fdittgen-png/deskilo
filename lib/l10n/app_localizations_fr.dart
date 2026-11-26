@@ -41646,6 +41646,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String tillDayDepositsReturned(String amount) {
+    return 'Consignes reprises : $amount';
+  }
+
+  @override
   String tillDayDifferences(String amount) {
     return 'Écart total des tiroirs : $amount';
   }
@@ -42654,6 +42659,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get tillReturnTracked =>
       'Cette consigne est suivie par lot ou étiquette : elle n\'est pas reprise à la caisse.';
+
+  @override
+  String tillReturnedLabel(String item) {
+    return 'Consigne reprise : $item';
+  }
 
   @override
   String get tillReturnedLine => 'Consigne reprise';

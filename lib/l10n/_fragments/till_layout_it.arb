@@ -83,5 +83,6 @@
   "tillReturnedLine": "Vuoto reso",
   "tillReturnNotAllowed": "Non può riprendere un vuoto alla cassa.",
   "tillReturnTracked": "Questo vuoto è tracciato per lotto o etichetta: non viene ripreso alla cassa.",
-  "tillReturnNotDeposit": "Questo articolo non è il vuoto di alcun articolo venduto."
+  "tillReturnNotDeposit": "Questo articolo non è il vuoto di alcun articolo venduto.",
+  "tillReturnedLabel": "Vuoto reso: {item}"
 }
