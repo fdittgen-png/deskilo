@@ -543,6 +543,8 @@ const fakeContext = () => {
       if (!r1.ok) fail('webmcp: representative answers refused: ' + JSON.stringify(r1.error));
       const r2 = await c.call('seed_vat_rates');
       if (!r2.ok) fail('webmcp: seed_vat_rates refused');
+      // #4497 — the rates the agent seeded carry their own keys, what a service names
+      else if (!(r2.data.rates || []).length || (r2.data.rates || []).some((r) => !/^vat-\d+$/.test(r.key || ''))) fail('webmcp: seeded rates without their keys: ' + JSON.stringify(r2.data.rates));
       const exported = await c.call('export_configuration', { format: 'xml' });
       return { exported, rates, page };
     };
@@ -763,6 +765,8 @@ const fakeContext = () => {
   // frozen parseLegacySetup and migrate(), to the state the page's own
   // parseBack reached before (pinned as JSON from that page). A key the
   // pin lacks is a later default and may be added.
+  // #4497: a service's VAT percentage reads as the key of the first rate with it
+  // (the pins say vatKey: 'vat-1', the Standard 20 % rate).
   const within = (got, want, at) => {
     if (want && typeof want === 'object') {
       if (!got || typeof got !== 'object' || Array.isArray(want) !== Array.isArray(got)) return [at];
@@ -840,6 +844,65 @@ const fakeContext = () => {
   globalThis.__parseBack(file);
   if (!exportsTerm(page.exportXml())) fail('term: the statement did not survive the answers file');
   console.log('term: a typed starting value stays stated through a reload and the answers file; an untouched one is left out');
+}
+// #4497 — a service keeps the VAT rate it was given, by the rate's own key: two 0 % rates (one zero-rated, one
+// exempt for a reason of the list) and a service on each export each service on its own rate with its own
+// treatment, and come back so from the answers file; a service whose rate was removed, a 0 % rate without its
+// treatment, and an exempt rate without its reason block the export, naming the service or the rate.
+{
+  const reads = () => { globalThis.DOMParser = class { parseFromString(t) { return miniXml(t); } }; };
+  const answers = () => {
+    const base = EXPORT_MODES.answered(globalThis.__FEATURES);
+    return { ...base, language: 'fr',
+      vatRates: [{ key: 'vat-1', label: 'Standard', percent: '20', group: 'standard', validFrom: '' },
+        { key: 'vat-2', label: 'Zero-rated', percent: '0', group: 'standard', validFrom: '', category: 'Z', reason: '' },
+        { key: 'vat-3', label: 'Exempt', percent: '0', group: 'standard', validFrom: '', category: 'E', reason: 'VATEX-EU-132' }],
+      services: [{ name: 'Export desk', price: '10', vatKey: 'vat-2', supply: 'property' },
+        { name: 'Training', price: '20', vatKey: 'vat-3', supply: 'property' }] };
+  };
+  // what the configuration (the app's import) says: each service's rate, each rate's category and reason
+  const configured = (xml) => {
+    const cfg = String(xml || '').split('<setup>')[0];
+    const services = cfg.slice(cfg.indexOf('<field name="services" type="array">'));
+    const svc = {};
+    for (const m of services.matchAll(/<field name="name" type="string" value="([^"]*)"\/>[\s\S]*?<field name="vat_rate" type="(?:string" value="([^"]*)"|null)/g)) if (!(m[1] in svc)) svc[m[1]] = m[2] ?? null;
+    const rates = {};
+    for (const m of cfg.matchAll(/<field name="category" type="string" value="(\w)"\/>\s*<field name="exemption_reason" type="string" value="([^"]*)"\/>[\s\S]*?<field name="label" type="string" value="([^"]*)"/g)) rates[m[3]] = [m[1], m[2]];
+    return { svc, rates };
+  };
+  const blockers = () => globalThis.window.__setup.findings().filter((x) => x.lvl === 'err').map((x) => x.t);
+  let page = load('en', answers());
+  const first = page.exportXml();
+  let got = configured(first);
+  if (got.svc['Export desk'] !== 'Zero-rated' || got.svc['Training'] !== 'Exempt') fail('vat identity: a service is exported on another rate: ' + JSON.stringify(got.svc));
+  if (got.rates['Zero-rated']?.[0] !== 'Z' || got.rates['Zero-rated']?.[1] !== '') fail('vat identity: the zero-rated rate: ' + JSON.stringify(got.rates['Zero-rated']));
+  if (got.rates['Exempt']?.[0] !== 'E' || got.rates['Exempt']?.[1] !== globalThis.window.__setup.L10N_TEXT('fr', 'vatex132Text')) fail('vat identity: the exempt rate and its reason in the business\'s language: ' + JSON.stringify(got.rates['Exempt']));
+  if (got.rates['Standard']?.[0] !== 'S') fail('vat identity: a positive rate is not standard');
+  globalThis.window.__setup.reset();
+  reads();
+  globalThis.__parseBack(first);
+  got = configured(page.exportXml());
+  if (got.svc['Export desk'] !== 'Zero-rated' || got.svc['Training'] !== 'Exempt') fail('vat identity: the answers file loses a service\'s rate: ' + JSON.stringify(got.svc));
+  // a rate removed: the export is refused, naming the service
+  const removed = answers();
+  removed.vatRates = removed.vatRates.filter((r) => r.key !== 'vat-3');
+  load('en', removed);
+  const named = blockers().filter((t) => t.includes('Training'));
+  if (!named.length) fail('vat identity: a service whose rate was removed does not block the export by its name: ' + blockers().join(' | '));
+  if (blockers().some((t) => t.includes('Export desk'))) fail('vat identity: a service on its rate is blocked');
+  // a 0 % rate without its treatment, an exempt one without its reason
+  const open = answers();
+  open.vatRates[1].category = ''; open.vatRates[2].reason = '';
+  load('en', open);
+  if (!blockers().some((t) => t.includes('Zero-rated'))) fail('vat identity: a 0 % rate without its treatment does not block, by its name');
+  if (!blockers().some((t) => t.includes('Exempt'))) fail('vat identity: an exempt rate without its reason does not block, by its name');
+  // a reason of another category is not kept, and a positive rate takes none
+  const odd = answers();
+  odd.vatRates[2].reason = 'VATEX-EU-O'; odd.vatRates[0].category = 'E'; odd.vatRates[0].reason = 'VATEX-EU-132';
+  load('en', odd);
+  const S = globalThis.window.__setup.S;
+  if (S.vatRates[2].reason !== '' || S.vatRates[0].category !== 'S' || S.vatRates[0].reason !== '') fail('vat identity: a reason outside its category\'s list was kept: ' + JSON.stringify(S.vatRates));
+  console.log('vat identity: each service keeps its own rate through the export and the answers file; a missing rate, treatment or reason blocks by name');
 }
 // #3075 — a fresh page with only the name typed produces no blocker: a
 // default is not an answer, and blocks nothing until the owner changes it.

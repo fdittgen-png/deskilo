@@ -227,7 +227,7 @@ const STEPS=[
   !registered()?input(T('legalExemption'),'exemption',T('legalExemptionHint'),'text','','vat'):null];
   if(registered()){if(on('vatManagement')){const history=on('vatRateHistory')?[T('colValidFrom')]:[];k.push(lbl(T('legalVatRates'),'vat','vatRates'),h('p',{class:'hint'},T('legalVatRatesHint')),help('vat'),
     ...(VAT_NOTES[S.country]?[h('p',{class:'hint'},T(VAT_NOTES[S.country]))]:[]),
-    tableRows(on('vatGroups')?[T('colLabel'),T('colRate'),T('colGroup'),...history]:[T('colLabel'),T('colRate'),...history],'vatRates',(r,rp)=>[cell(`${rp}.label`),cell(`${rp}.percent`,'number'),...(on('vatGroups')?[pick(`${rp}.group`,opts(VAT_GROUPS),r.group||'standard')]:[]),...(on('vatRateHistory')?[cell(`${rp}.validFrom`,'date')]:[])],()=>({label:'',percent:'',group:'standard',validFrom:''}),'+ '+T('legalAddRate')),
+    tableRows([T('colLabel'),T('colRate'),T('colVatTreatment'),T('colVatReason'),...(on('vatGroups')?[T('colGroup')]:[]),...history],'vatRates',(r,rp)=>[cell(`${rp}.label`),cell(`${rp}.percent`,'number'),...vatTreatmentCells(r,rp),...(on('vatGroups')?[pick(`${rp}.group`,opts(VAT_GROUPS),r.group||'standard')]:[]),...(on('vatRateHistory')?[cell(`${rp}.validFrom`,'date')]:[])],()=>({label:'',percent:'',group:'standard',validFrom:'',category:'',reason:''}),'+ '+T('legalAddRate')),
     VAT_RATES[S.country]?(()=>{const b=h('button',{class:'chip',type:'button'},T('legalSuggestRates',{country:countryName(country()[0]),rates:VAT_RATES[S.country].map(r=>r[1]).join(', ')}));b.onclick=()=>{seedVatRates();render()};return b})():null)}
    else k.push(needs('vatManagement'),h('p',{class:'hint'},T('legalNoVatManagementHint')));
    k.push(selectEl(T('legalVatExigibility'),'vatExigibility',opts(VATEXIGIBILITY),T('legalVatExigibilityHint'),null,'vat'));
@@ -256,7 +256,7 @@ const STEPS=[
  check(){const f=[];if(!S.regNumber.trim())f.push(F.warn(T('legalWarnNoRegNumber'),'legal'));
   if(S.vatRegime!=='not_subject'&&!S.vatId.trim())f.push(F.err(T(registered()?'legalErrVatIdRegistered':'legalErrVatIdExempt'),'legal'));
   if(!registered()&&!S.exemption.trim())f.push(F.warn(T('legalWarnNoExemption'),'legal'));
-  if(registered()&&on('vatManagement')&&!S.vatRates.some(r=>String(r.label).trim()&&r.percent!==''))f.push(F.err(T('legalErrNoRates'),'legal'));
+  if(registered()&&on('vatManagement')&&!S.vatRates.some(r=>String(r.label).trim()&&r.percent!==''))f.push(F.err(T('legalErrNoRates'),'legal'));f.push(...vatRateFindings()); // #4497
   // #2331 — a registered seller with no rate the app can resolve: the
   // server refuses every invoice (vat_rate_unresolved).
   if(registered()&&!on('vatManagement'))f.push(F.err(T('legalErrRegisteredNoVatManagement',{feature:quoted(featureTitle('vatManagement'))}),'features'));
@@ -271,7 +271,7 @@ const STEPS=[
 
 {id:'services',get title(){return T('servicesTitle')},get why(){return T('servicesWhy')},applies(){return on('services')||on('accessorySupplements')},
  build(st=this){const{lbl,input,selectEl,helpIcon}=ui(st);const k=[help('services')];const vatCol=registered()&&on('vatManagement');const supplyCol=vatCol&&on('supplyClassification');
-  if(on('services'))k.push(lbl(T('servicesServices'),'services','services'),tableRows([T('colName'),T('colPrice',{currency:S.currency}),...(vatCol?[T('servicesVatCol')]:[]),...(supplyCol?[h('span',{},T('servicesSupplyCol'),helpIcon('supplyClass'))]:[])],'services',(s,sp)=>[cell(`${sp}.name`),cell(`${sp}.price`,'number'),...(vatCol?[cell(`${sp}.vat`,'number')]:[]),...(supplyCol?[pick(`${sp}.supply`,[['property',T('servicesSupplyProperty')],['general',T('servicesSupplyGeneral')]],s.supply==='general'?'general':'property')]:[])],()=>({name:'',price:'',vat:'',supply:'property'}),'+ '+T('servicesAdd')));else k.push(needs('services'));
+  if(on('services'))k.push(lbl(T('servicesServices'),'services','services'),tableRows([T('colName'),T('colPrice',{currency:S.currency}),...(vatCol?[T('servicesVatCol')]:[]),...(supplyCol?[h('span',{},T('servicesSupplyCol'),helpIcon('supplyClass'))]:[])],'services',(s,sp)=>[cell(`${sp}.name`),cell(`${sp}.price`,'number'),...(vatCol?[pick(`${sp}.vatKey`,vatRateOptions(),s.vatKey||'')]:[]),...(supplyCol?[pick(`${sp}.supply`,[['property',T('servicesSupplyProperty')],['general',T('servicesSupplyGeneral')]],s.supply==='general'?'general':'property')]:[])],()=>({name:'',price:'',vatKey:'',supply:'property'}),'+ '+T('servicesAdd')));else k.push(needs('services'));
   if(on('accessorySupplements'))k.push(lbl(T('servicesAccessories'),'services','accessories'),h('p',{class:'hint'},T('servicesAccessoriesHint')),tableRows([T('colName'),T('servicesSupplement',{currency:S.currency})],'accessories',(a,ap)=>[cell(`${ap}.name`),cell(`${ap}.supp`,'number')],()=>({name:'',supp:'0'}),'+ '+T('servicesAddAccessory')));else k.push(needs('accessorySupplements'));
   // #3824 — the goods ledger's one rule a business decides before its first move.
   if(on('stockManagement'))k.push(checkbox(T('stockAllowNegative'),T('stockAllowNegativeHint'),S.stock.allowNegative,v=>set('stock.allowNegative',v)));
@@ -294,7 +294,7 @@ const STEPS=[
   if(on('stockExpiryReport'))k.push(selectEl(T('stockExpiryHorizon'),'stock.expiryHorizon',opts(STOCK_EXPIRY_HORIZON),T('stockExpiryHorizonHint'),null,'services'));
   if(!vatCol&&on('services'))k.push(dep(registered()?T('servicesVatHiddenFeature',{feature:quoted(featureTitle('vatManagement'))}):T('servicesVatHiddenNotSubject'),registered()?'features':'legal'));
   return k},
- check(){const f=[];if(on('services')){const n=S.services.filter(s=>s.name.trim()).length;if(!n)f.push(F.warn(T('servicesErrNone'),'services'));else f.push(F.ok(T('servicesOk',{n})));S.services.filter(s=>s.name.trim()&&!(num(s.price)>=0)).forEach(s=>f.push(F.err(T('servicesErrNoPrice',{name:quoted(s.name)}),'services')))}
+ check(){const f=serviceVatFindings();if(on('services')){const n=S.services.filter(s=>s.name.trim()).length;if(!n)f.push(F.warn(T('servicesErrNone'),'services'));else f.push(F.ok(T('servicesOk',{n})));S.services.filter(s=>s.name.trim()&&!(num(s.price)>=0)).forEach(s=>f.push(F.err(T('servicesErrNoPrice',{name:quoted(s.name)}),'services')))}
   if(on('accessorySupplements')){const n=S.accessories.filter(a=>a.name.trim()).length;if(!n)f.push(F.err(T('accessoriesErrNone'),'services'));else f.push(F.ok(T('accessoriesOk',{n})))}return f}},
 
 {id:'pay',get title(){return T('payTitle')},get why(){return T('payWhy')},applies(){return on('moneyTab')},
