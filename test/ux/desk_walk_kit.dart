@@ -25,6 +25,7 @@ import 'package:deskilo/core/ui/kit/customer_row.dart';
 import 'package:deskilo/core/ui/kit/records_table_parts.dart';
 import 'package:deskilo/core/ui/kit/table_line.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
+import 'package:deskilo/features/money/application/receivables_answers.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
@@ -475,6 +476,8 @@ const List<Type> walkRowTypes = [
               RecordsHeader<Invoice>,
               RecordRow<Receivable>,
               RecordsHeader<Receivable>,
+              RecordRow<CustomerLine>,
+              RecordsHeader<CustomerLine>,
               RecordRow<ServiceItem>,
               RecordsHeader<ServiceItem>,
               RecordRow<GuestPassRecord>,
@@ -514,6 +517,7 @@ const List<Type> walkTableTypes = [
               CustomerHeader,
               RecordsHeader<Invoice>,
               RecordsHeader<Receivable>,
+              RecordsHeader<CustomerLine>,
               RecordsHeader<ServiceItem>,
               RecordsHeader<GuestPassRecord>,
               RecordsHeader<Supplier>,
