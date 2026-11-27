@@ -6293,6 +6293,8 @@ const List<String> uiKeyPatterns = [
   'standalone-line-{}-description',
   'standalone-line-{}-goods',
   'standalone-line-{}-goods-unit',
+  'standalone-line-{}-goods-unit-field',
+  'standalone-line-{}-goods-unit-pick',
   'standalone-line-{}-gross',
   'standalone-line-{}-pieces',
   'standalone-line-{}-price',

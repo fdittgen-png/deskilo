@@ -15,6 +15,7 @@ import '../features/money/domain/line_unit.dart';
 import '../features/money/presentation/purchase_order_stock_seam.dart';
 import '../features/money/presentation/screens/tax_reference_screen.dart';
 import '../features/money/providers/line_units_provider.dart';
+import '../features/money/providers/money_providers.dart' show servicesProvider;
 import '../features/money/providers/pickable_units_provider.dart';
 import '../features/stock/domain/unit_conversions.dart';
 import '../features/stock/domain/workspace_units.dart';
@@ -76,7 +77,23 @@ final List<Override> featureSheetsFromApp = [
               .firstOrNull;
     final own = config.units.where((u) => u.defaultPurchase).map((u) => u.unit).firstOrNull;
     final start = [supplied, own, config.inventoryUnit].firstWhere((c) => c != null && codes.contains(c), orElse: () => null);
-    return ItemOrderUnits(units: offered, defaultUnit: start);
+    final sold = config.units.where((u) => u.defaultSale).map((u) => u.unit).firstOrNull;
+    final sale = [sold, config.inventoryUnit].firstWhere((c) => c != null && codes.contains(c), orElse: () => null);
+    return ItemOrderUnits(units: offered, defaultUnit: start, saleUnit: sale);
+  }),
+  // #4479 — the price of one unit of an item sold on a quote or an invoice: its own, else the item's price times its factor.
+  itemUnitPriceProvider.overrideWith((ref, key) async {
+    final config = await ref.watch(stockConfigCommandsProvider).item(key.workspaceId, key.itemId);
+    final item = (await ref.watch(servicesProvider.future)).where((s) => s.id == key.itemId).firstOrNull;
+    if (config == null || item == null) return null;
+    final general = await ref.watch(stock_units.unitConversionListProvider(key.workspaceId).future);
+    return unitPriceCents(
+      itemPriceCents: item.priceCents,
+      unit: key.unit,
+      inventoryUnit: config.inventoryUnit,
+      itemUnits: config.units,
+      general: general,
+    );
   }),
   // #4294 — the names the low-stock notice of the inbox reads (events never import the stock).
   eventNameSourcesProvider.overrideWithValue(const [stockEventNames]),
