@@ -24,4 +24,4 @@ update public.business_kinds
    set feature_profile = feature_profile || '{"stockExpiryReport": true, "stockHandlingUnits": true, "counterReceipts": true}'::jsonb
  where code = 'shop';
 
-select public.set_deskilo_schema_version(979);
+select public.set_deskilo_schema_version(982);

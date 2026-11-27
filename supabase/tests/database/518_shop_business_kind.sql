@@ -3,7 +3,7 @@
 -- purchases and switches the places off; it proposes no provider, public page or scheduling; no other kind's
 -- profile moves; its profile has a version and the digest of its content. The type of shop and the weighed
 -- goods are registry settings with their defaults.
--- #4492 (0979): the shop also proposes the report of what expires, the handling units and the till; its profile is at
+-- #4492 (0982): the shop also proposes the report of what expires, the handling units and the till; its profile is at
 -- its second version; where the till is offered and what a country lets it do are not the profile's. Rolled back.
 begin;
 select plan(14);

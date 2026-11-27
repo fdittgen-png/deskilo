@@ -166,7 +166,7 @@ void main() {
 
   test('the switches of the shop are those of its kind: stock and orders, the till, the expiry report and the handling units', () {
     expect(_flow.toSet().difference(resolveEnabledFeatures(demoShopSpace().featureFlags)), isEmpty,
-        reason: 'the shop kind proposes what a shop needs (0979)');
+        reason: 'the shop kind proposes what a shop needs (0982)');
   });
 
   // ── what the Demo does not hold ──────────────────────────────────────────────────────────────────────────────────────

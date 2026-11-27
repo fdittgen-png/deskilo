@@ -219,4 +219,4 @@ revoke execute on function public.stock_movements_page_v1(uuid, uuid, uuid, int,
 grant execute on function public.stock_movements_page_v1(uuid, uuid, uuid, int, jsonb, uuid) to authenticated;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(978);
+select public.set_deskilo_schema_version(981);

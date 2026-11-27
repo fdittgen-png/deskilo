@@ -20,7 +20,7 @@ const demoNoPlacesProfile = {
 };
 
 /// #4365 — the shop's profile: the stock, the catalogue and the purchases, no places, no provider, no public page;
-/// and, as the server's row since 0979, what expires, the handling units and the till.
+/// and, as the server's row since 0982, what expires, the handling units and the till.
 const demoShopProfile = {
   'placeBooking': false,
   'moneyTab': true,
