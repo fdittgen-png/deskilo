@@ -8,7 +8,7 @@
 -- without a cause and a cause on a movement that is not a loss; an app of the last release still writes a loss off,
 -- without a cause, and goods used by the business carry none. Rolled back.
 begin;
-select plan(17);
+select plan(18);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -87,15 +87,22 @@ begin
 end
 $setup$;
 
+-- (a command and what it left are read in two statements: a statement does not see what it is itself writing)
 -- ── a loss keeps why ─────────────────────────────────────────────────────────────────────────────────────────────────────
-select is(left(pg_temp.lose(1, 9101, pg_temp.line(301, '1'), 'damaged', '  fell off the shelf  '), 1) || ' ' || pg_temp.said(9101) || ' ' || pg_temp.bal(301),
+select set_config('t.l1', pg_temp.lose(1, 9101, pg_temp.line(301, '1'), 'damaged', '  fell off the shelf  '), false);
+select is(left(current_setting('t.l1'), 1) || ' ' || pg_temp.said(9101) || ' ' || pg_temp.bal(301),
   '{ damaged|fell off the shelf 9', 'an apple written off as damaged keeps its cause and its note, trimmed, and leaves the store');
-select is(left(pg_temp.lose(1, 9102, pg_temp.line(302, '2', (select id from public.stock_lots where workspace_id = pg_temp.u(101) and lot_code = 'M-1')), 'expired'), 1)
+select set_config('t.l2', pg_temp.lose(1, 9102, pg_temp.line(302, '2', (select id from public.stock_lots where workspace_id = pg_temp.u(101) and lot_code = 'M-1')), 'expired'), false);
+select is(left(current_setting('t.l2'), 1)
     || ' ' || pg_temp.said(9102) || ' ' || (select round(sum(m.quantity * m.unit_cost))::text from public.stock_movements m where m.request_id = pg_temp.u(9102)),
   '{ expired|no note 200', 'two bottles written off as past their date: no note is asked, and the loss is frozen at the lot''s cost as before');
 select is((select string_agg(coalesce(r ->> 'loss_cause', '-') || ':' || coalesce(r ->> 'loss_note', '-'), ' ' order by r ->> 'reason', r ->> 'loss_cause')
              from jsonb_array_elements((pg_temp.run_as(pg_temp.u(1), format('select public.stock_movements_page_v1(%L)::text', pg_temp.u(101))))::jsonb -> 'rows') r),
   'damaged:fell off the shelf expired:- -:- -:-', 'the ledger reads each movement with the cause and the note of its loss; a receipt has none');
+select is((select bool_or(r ? 'loss_cause' or r ? 'loss_note')::text
+             from jsonb_array_elements((pg_temp.run_as(pg_temp.u(1), format('select public.stock_movements_page_v1(%L)::text', pg_temp.u(101))))::jsonb -> 'rows') r
+            where r ->> 'reason' = 'receipt'),
+  'false', 'a movement that is not a loss is read as it always was: the two keys are not in its row');
 
 -- ── a loss that does not say why, or says something the list does not know, is refused and nothing moves ────────────────────
 select is(pg_temp.lose(1, 9111, pg_temp.line(301, '1'), null), 'ERR DKG11 {"field": "cause", "reason": "required"}', 'a loss without a cause is refused');
@@ -107,7 +114,8 @@ select is(pg_temp.lose(1, 9115, pg_temp.line(301, '1'), 'other', repeat('x', 501
 select is(left(pg_temp.lose(2, 9116, pg_temp.line(301, '1'), 'damaged'), 9), 'ERR DKN01', 'a person who may not move stock writes nothing off');
 select is(pg_temp.bal(301) || ' ' || pg_temp.losses(), '9 2', 'none of the refused losses moved anything: nine apples, two losses');
 -- recovery: the refused loss, filed again with its cause
-select is(left(pg_temp.lose(1, 9111, pg_temp.line(301, '1'), 'other', repeat('x', 500)), 1) || ' ' || char_length((select loss_note from public.stock_movements where request_id = pg_temp.u(9111)))::text
+select set_config('t.l3', pg_temp.lose(1, 9111, pg_temp.line(301, '1'), 'other', repeat('x', 500)), false);
+select is(left(current_setting('t.l3'), 1) || ' ' || char_length((select loss_note from public.stock_movements where request_id = pg_temp.u(9111)))::text
     || ' ' || pg_temp.bal(301), '{ 500 8', 'filed again with a cause, and a note of exactly 500 characters, the loss is taken');
 
 -- ── once is once, and a movement keeps what it said ──────────────────────────────────────────────────────────────────────────
@@ -120,8 +128,9 @@ select is(pg_temp.sqlstate_of(format('update public.stock_movements set loss_cau
 
 -- ── the table keeps the rule whatever door is used ───────────────────────────────────────────────────────────────────────────
 -- the positive control first: the server's writer takes a loss with a cause of the list, so what refuses the next two is the cause
-select is(pg_temp.sqlstate_of(format('select public.stock_record(%L, %L, null, %L, %L, 1, %L, 1, now(), %L, %L, %L, 1, 1, %L::jsonb)',
-      pg_temp.u(101), pg_temp.u(301), pg_temp.loc('MAIN'), pg_temp.place('loss'), 'piece', 'loss', pg_temp.u(201), pg_temp.u(9203), '{"loss_cause": "damaged", "loss_note": "written by the writer"}'))
+select set_config('t.w', pg_temp.sqlstate_of(format('select public.stock_record(%L, %L, null, %L, %L, 1, %L, 1, now(), %L, %L, %L, 1, 1, %L::jsonb)',
+      pg_temp.u(101), pg_temp.u(301), pg_temp.loc('MAIN'), pg_temp.place('loss'), 'piece', 'loss', pg_temp.u(201), pg_temp.u(9203), '{"loss_cause": "damaged", "loss_note": "written by the writer"}')), false);
+select is(current_setting('t.w')
     || ' ' || pg_temp.said(9203)
     || ' ' || pg_temp.sqlstate_of(format('select public.stock_record(%L, %L, null, %L, %L, 1, %L, 1, now(), %L, %L, %L, 1, 1, %L::jsonb)',
       pg_temp.u(101), pg_temp.u(301), pg_temp.loc('MAIN'), pg_temp.place('loss'), 'piece', 'loss', pg_temp.u(201), pg_temp.u(9201), '{"loss_cause": "stolen"}'))
@@ -132,9 +141,11 @@ select is(pg_temp.sqlstate_of(format('select public.stock_record(%L, %L, null, %
   'the table refuses a cause that is not on the list and a note without a cause, even from the server''s own writer, which it lets write a cause of the list');
 
 -- ── an app of the last release, and goods the business uses ──────────────────────────────────────────────────────────────────
-select is(left(pg_temp.run_as(pg_temp.u(1), format('select public.stock_loss_v1(%L, %L, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(9301), pg_temp.line(301, '1'))), 1)
+select set_config('t.v1', pg_temp.run_as(pg_temp.u(1), format('select public.stock_loss_v1(%L, %L, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(9301), pg_temp.line(301, '1'))), false);
+select is(left(current_setting('t.v1'), 1)
     || ' ' || pg_temp.said(9301) || ' ' || pg_temp.bal(301), '{ no cause|no note 6', 'the loss command of the last release still writes a loss off: it has no cause, and none is guessed');
-select is(left(pg_temp.run_as(pg_temp.u(1), format('select public.stock_consume_v1(%L, %L, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(9302), pg_temp.line(301, '2'))), 1)
+select set_config('t.used', pg_temp.run_as(pg_temp.u(1), format('select public.stock_consume_v1(%L, %L, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(9302), pg_temp.line(301, '2'))), false);
+select is(left(current_setting('t.used'), 1)
     || ' ' || pg_temp.said(9302) || ' ' || (select string_agg(distinct reason, ',') from public.stock_movements where request_id = pg_temp.u(9302)) || ' '
     || has_function_privilege('anon', 'public.stock_loss_v2(uuid, uuid, jsonb, text, text, timestamptz)', 'execute')::text || ' '
     || has_function_privilege('authenticated', 'public.stock_take_out(uuid, uuid, jsonb, text, timestamptz, jsonb)', 'execute')::text,

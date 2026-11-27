@@ -13,7 +13,8 @@
 --     business uses itself are not a loss: they leave as the kind `consumption` (stock_consume_v1), as before.
 --   * `stock_loss_v2` is the loss command with its cause: a missing cause, one that is not on the list or a note
 --     longer than 500 characters is refused (DKG11, the field and the reason) and nothing moves.
---   * `stock_movements_page_v1` answers the cause and the note with each movement.
+--   * `stock_movements_page_v1` answers the cause and the note with each movement that has them; every other row is
+--     the row it was.
 --
 -- An app of the last release goes on working: it calls stock_loss_v1, which writes a loss off as before, without a
 -- cause. A loss recorded before this file, or by such an app, has no cause; nothing is guessed for it.
@@ -196,8 +197,9 @@ begin
            'unit_cost', case when v_cost then unit_cost::text end, 'actor_member_id', actor_member_id,
            'receipt_line_id', case when v_cost then receipt_line_id end,
            'purchase_line_id', case when v_cost then purchase_line_id end,
-           'event_id', event_id, 'invoice_id', invoice_id,
-           'loss_cause', loss_cause, 'loss_note', loss_note)
+           'event_id', event_id, 'invoice_id', invoice_id)
+           -- the cause and the note of a loss, on the movements that have them: a row without them is the row it was
+           || jsonb_strip_nulls(jsonb_build_object('loss_cause', loss_cause, 'loss_note', loss_note))
            order by occurred_at desc, id desc), '[]'::jsonb)
     into v_n, v_rows from page;
   if v_n > p_limit then
