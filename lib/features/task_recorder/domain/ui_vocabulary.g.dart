@@ -1269,6 +1269,7 @@ const Set<String> uiKeys = {
   'developer-filter-errors',
   'developer-filter-warnings',
   'development-banner',
+  'device-board-cancel',
   'device-board-confirm',
   'device-pairing-camera',
   'device-pairing-check',

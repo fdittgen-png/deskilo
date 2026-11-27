@@ -7,12 +7,12 @@ import 'dart:convert';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../codes/dk_code.dart';
-import '../data/app_failure_from.dart';
-import '../failure/app_failure.dart';
-import '../trace/trace_logger.dart';
-import 'device_board.dart';
-import 'device_code.dart';
+import '../../codes/dk_code.dart';
+import '../../data/app_failure_from.dart';
+import '../../failure/app_failure.dart';
+import '../../trace/trace_logger.dart';
+import '../device_board.dart';
+import '../device_code.dart';
 
 class SupabaseTillBoards implements TillBoardPort {
   const SupabaseTillBoards(this._client);

@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../core/backend/auth_secret_store.dart';
 import '../core/devices/connected_boards_provider.dart';
-import '../core/devices/supabase_device_boards.dart';
+import '../core/devices/data/supabase_device_boards.dart';
 import '../core/settings/settings.dart' show SettingScope;
 import '../features/money/data/secure_offline_store.dart';
 import '../features/money/data/supabase_counter_book.dart';
