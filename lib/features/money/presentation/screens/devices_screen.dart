@@ -2,8 +2,9 @@
 // #4466 — Settings › Devices: a till board is connected by its QR code (the camera, where there is one) or by the
 // readable code beside it (typed). The code is read and checked here, a typo refused in words, and the board found is
 // shown (its id, model and fingerprint, to compare with its screen). Connecting it to the business is the enrollment's
-// step, which comes later: nothing is sent.
+// step, which comes later: nothing is sent. The boards already connected are listed first (the Demo has one).
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
@@ -12,22 +13,24 @@ import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/scan/scan_no_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/device_code.dart';
+import '../../providers/till_board_providers.dart';
 
-class DevicesScreen extends StatefulWidget {
+class DevicesScreen extends ConsumerStatefulWidget {
   const DevicesScreen({super.key, this.cameraAvailable});
 
   /// Whether the camera scanner is offered; the platform decides when null (tests set it).
   final bool? cameraAvailable;
 
   @override
-  State<DevicesScreen> createState() => _DevicesScreenState();
+  ConsumerState<DevicesScreen> createState() => _DevicesScreenState();
 }
 
-class _DevicesScreenState extends State<DevicesScreen> {
+class _DevicesScreenState extends ConsumerState<DevicesScreen> {
   final _form = _PairingForm();
 
   @override
@@ -40,6 +43,7 @@ class _DevicesScreenState extends State<DevicesScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final camera = widget.cameraAvailable ?? qrScanSupported;
+    final boards = ref.watch(connectedTillBoardsProvider).value ?? const <DeviceCode>[]; // empty-ok: no read until #4454 stores boards
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.devicePairingTitle),
@@ -49,13 +53,22 @@ class _DevicesScreenState extends State<DevicesScreen> {
         padding: AppSpacing.gutterAll,
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 560),
+            constraints: const BoxConstraints(maxWidth: kFormColumnWidth),
             child: ListenableBuilder(
               listenable: _form,
               builder: (context, _) => Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(l10n.devicePairingNone, key: const ValueKey('device-pairing-none')),
+                  if (boards.isEmpty) Text(l10n.devicePairingNone, key: const ValueKey('device-pairing-none')),
+                  for (final b in boards)
+                    Card(
+                      key: ValueKey('device-connected-${b.shortId}'),
+                      child: ListTile(
+                        leading: const Icon(Icons.developer_board_outlined),
+                        title: Text(l10n.devicePairingBoard(b.shortId, b.profile.model)),
+                        subtitle: Text(l10n.devicePairingFingerprint(b.fingerprintShown)),
+                      ),
+                    ),
                   const FormGap.large(),
                   FormSection(
                     title: l10n.devicePairingConnect,

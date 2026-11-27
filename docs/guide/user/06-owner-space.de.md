@@ -673,7 +673,7 @@ Ihre Artikel, Angebote und Rechnungen werden in Einheiten gemessen, und manche E
 
 **Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
 
-Ein Kassenterminal ist der kleine Bildschirm an der Theke, der Zahlungen annimmt (#4466). Sie verbinden es unter **Geräte** mit Ihrem Unternehmen: Die App liest den QR-Code des Terminals oder den 10-stelligen Code daneben und zeigt, welches Terminal es ist.
+Ein Kassenterminal ist der kleine Bildschirm an der Theke, der Zahlungen annimmt. Sie verbinden es unter **Geräte** mit Ihrem Unternehmen: Die App liest den QR-Code des Terminals oder den 10-stelligen Code daneben und zeigt, welches Terminal es ist.
 
 **Schritte**
 

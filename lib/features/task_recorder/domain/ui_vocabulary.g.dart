@@ -5378,6 +5378,7 @@ const List<String> uiKeyPatterns = [
   'desk-{}',
   'deskilo-report-layout-{}',
   'deskilo-task{}',
+  'device-connected-{}',
   'directory-card-{}/{}',
   'directory-filter-chip-{}',
   'directory-kind-{}',

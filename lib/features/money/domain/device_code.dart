@@ -80,12 +80,13 @@ DeviceCodeRead readDeviceCode(String text) {
 }
 
 DeviceCodeRead _readQr(String t) {
-  final q = Uri.tryParse(t)?.queryParameters ?? const <String, String>{};
-  final id = q['id'] ?? '', fp = q['fp'] ?? '';
+  final query = Uri.tryParse(t)?.queryParameters ?? const <String, String>{};
+  String? q(String name) => query[name];
+  final id = q('id') ?? '', fp = q('fp') ?? '';
   if (!RegExp(r'^[0-9a-fA-F]{8}-').hasMatch(id) || !RegExp(r'^[0-9A-F]{4}-[0-9A-F]{4}$').hasMatch(fp)) {
     return const DeviceCodeRefused(DeviceCodeRefusal.length);
   }
-  final profile = BoardProfile.values.where((p) => p.key == q['board']).firstOrNull;
+  final profile = BoardProfile.values.where((p) => p.key == q('board')).firstOrNull;
   if (profile == null) return const DeviceCodeRefused(DeviceCodeRefusal.profile);
   final proof = (int.parse(fp.substring(0, 2), radix: 16) << 2) | (int.parse(fp.substring(2, 4), radix: 16) >> 6);
   return DeviceCodeOk(DeviceCode(
@@ -94,7 +95,7 @@ DeviceCodeRead _readQr(String t) {
     proof: proof,
     id: id.toLowerCase(),
     fingerprint: fp,
-    firmware: q['fw'],
+    firmware: q('fw'),
   ));
 }
 
