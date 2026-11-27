@@ -19574,7 +19574,7 @@
   },
   "settingHintStockGroupDefaultCountDays": "Ogni quanti giorni un articolo che né un gruppo né un'impostazione propria riguarda è proposto per un conteggio ciclico. 0 significa non programmato.",
   "settingHintStockGroupDefaultTagMode": "Se un articolo che né un gruppo né un'impostazione propria riguarda porta un'etichetta RFID: nessuna, una etichetta che indica un lotto o una etichetta per unità (che richiede la tracciabilità per pezzo).",
-  "settingHintStockInvoiceSalePlace": "Il codice di un luogo dell’attività che detiene scorte, per esempio MAIN. I beni venduti in fattura escono da lì all’emissione della fattura.",
+  "settingHintStockInvoiceSalePlace": "Scegliete il luogo da cui partono le merci vendute su una fattura, come sede › luogo. Un codice impostato prima vale ancora finché un solo luogo lo porta.",
   "@settingHintStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
   },
@@ -19893,6 +19893,44 @@
   "settingOriginWorkspace": "Impostato per questo spazio",
   "@settingOriginWorkspace": {
     "description": "#2484 settings: Origin."
+  },
+  "settingPlaceAmbiguous": "Il codice {code} è portato da più luoghi: sceglietene uno. Le fatture con merci sono rifiutate finché non lo fate.",
+  "@settingPlaceAmbiguous": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceFromCode": "{path} (trovato dal codice {code}: sceglietelo per fissarlo)",
+  "@settingPlaceFromCode": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceGone": "Il luogo scelto non è più utilizzabile: sceglietene un altro. Le fatture con merci sono rifiutate finché non lo fate.",
+  "@settingPlaceGone": {
+    "description": "#4495 the place of a setting"
+  },
+  "settingPlaceMissing": "Nessun luogo utilizzabile porta il codice {code}: sceglietene uno. Le fatture con merci sono rifiutate finché non lo fate.",
+  "@settingPlaceMissing": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlacePick": "Luogo",
+  "@settingPlacePick": {
+    "description": "#4495 the place of a setting"
   },
   "settingProblemAboveMax": "Sopra il massimo",
   "@settingProblemAboveMax": {
@@ -20944,6 +20982,10 @@
   "standaloneFactSalePlace": "il luogo da cui si vende: indicare un luogo con scorte nelle impostazioni dell’attività",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
+  },
+  "standaloneFactSalePlaceAmbiguous": "il luogo da cui partono le merci vendute è ambiguo: sceglietene uno nelle impostazioni di magazzino",
+  "@standaloneFactSalePlaceAmbiguous": {
+    "description": "#4495 the place of a setting"
   },
   "standaloneFactSalesTax": "questa attività aggiunge sales tax, non ancora supportata qui",
   "@standaloneFactSalesTax": {

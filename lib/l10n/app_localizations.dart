@@ -52755,7 +52755,7 @@ abstract class AppLocalizations {
   /// #4433 goods sold on an invoice: settingHintStockInvoiceSalePlace
   ///
   /// In en, this message translates to:
-  /// **'The code of a place of the business that holds stock, for example MAIN. Goods sold on an invoice leave from there when the invoice is issued.'**
+  /// **'Pick the place goods sold on an invoice leave from, as site › place. A code set before still works while only one place carries it.'**
   String get settingHintStockInvoiceSalePlace;
 
   /// #4361 setting label/hint
@@ -53567,6 +53567,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Set for this workspace'**
   String get settingOriginWorkspace;
+
+  /// #4495 the place of a setting
+  ///
+  /// In en, this message translates to:
+  /// **'The code {code} is carried by several places: pick one. Invoices with goods are refused until you do.'**
+  String settingPlaceAmbiguous(String code);
+
+  /// #4495 the place of a setting
+  ///
+  /// In en, this message translates to:
+  /// **'{path} (found by the code {code}: pick it to settle it)'**
+  String settingPlaceFromCode(String path, String code);
+
+  /// #4495 the place of a setting
+  ///
+  /// In en, this message translates to:
+  /// **'The picked place is no longer usable: pick another. Invoices with goods are refused until you do.'**
+  String get settingPlaceGone;
+
+  /// #4495 the place of a setting
+  ///
+  /// In en, this message translates to:
+  /// **'No usable place carries the code {code}: pick one. Invoices with goods are refused until you do.'**
+  String settingPlaceMissing(String code);
+
+  /// #4495 the place of a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get settingPlacePick;
 
   /// #2484 settings: Validation.
   ///
@@ -57556,6 +57586,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'the place goods are sold from: set a place that holds stock in the business settings'**
   String get standaloneFactSalePlace;
+
+  /// #4495 the place of a setting
+  ///
+  /// In en, this message translates to:
+  /// **'the place goods are sold from is ambiguous: pick one place in the stock settings'**
+  String get standaloneFactSalePlaceAmbiguous;
 
   /// #4165 standalone invoice composer: standaloneFactSalesTax
   ///

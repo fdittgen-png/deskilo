@@ -57,6 +57,7 @@ String _draftText(AppLocalizations l, String key) => switch (key) {
     'currency' => l.standaloneFactCurrency,
     'unknown_subject' => l.standaloneFactUnknownSubject,
     'stock_sale_place' => l.standaloneFactSalePlace,
+    'stock_sale_place_ambiguous' => l.standaloneFactSalePlaceAmbiguous,
     'goods_off' => l.standaloneFieldGoodsOff,
     _ => _stateText(l, key),
   };

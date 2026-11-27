@@ -16,13 +16,16 @@ import '../features/money/presentation/purchase_order_stock_seam.dart';
 import '../features/money/presentation/screens/tax_reference_screen.dart';
 import '../features/money/providers/line_units_provider.dart';
 import '../features/money/providers/pickable_units_provider.dart';
+import '../features/stock/domain/stock_config.dart' show stockAddressJoint;
 import '../features/stock/domain/unit_conversions.dart';
 import '../features/stock/domain/workspace_units.dart';
 import '../features/stock/presentation/purchase_order_stock_seam_impl.dart';
 import '../features/stock/presentation/stock_event_names.dart';
 import '../features/stock/providers/stock_providers.dart';
 import '../features/stock/providers/workspace_units_providers.dart' as stock_units;
+import '../features/workspace/domain/setting_place.dart';
 import '../features/workspace/domain/workspace_feature.dart';
+import '../features/workspace/providers/setting_places_provider.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import 'stock_expiry_print.dart';
 import 'stock_service_creator.dart';
@@ -77,6 +80,14 @@ final List<Override> featureSheetsFromApp = [
     final own = config.units.where((u) => u.defaultPurchase).map((u) => u.unit).firstOrNull;
     final start = [supplied, own, config.inventoryUnit].firstWhere((c) => c != null && codes.contains(c), orElse: () => null);
     return ItemOrderUnits(units: offered, defaultUnit: start);
+  }),
+  // #4495 — the places a setting may name, each with its full path as site › place (the workspace feature never imports the stock).
+  settingPlacesProvider.overrideWith((ref, workspaceId) async {
+    final places = await ref.watch(stockConfigCommandsProvider).places(workspaceId);
+    return [
+      for (final p in places)
+        if (p.active && p.isAddressable) SettingPlace(id: p.id, code: p.code, path: p.addressPath.split(stockAddressJoint).join(' › ')),
+    ];
   }),
   // #4294 — the names the low-stock notice of the inbox reads (events never import the stock).
   eventNameSourcesProvider.overrideWithValue(const [stockEventNames]),

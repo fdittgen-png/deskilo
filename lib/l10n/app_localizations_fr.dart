@@ -33286,7 +33286,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingHintStockInvoiceSalePlace =>
-      'Le code d’un lieu de l’entreprise qui détient du stock, par exemple MAIN. Les biens vendus sur facture en partent à l’émission de la facture.';
+      'Choisissez l\'emplacement d\'où partent les marchandises vendues sur une facture, sous la forme site › emplacement. Un code fixé avant reste valable tant qu\'un seul emplacement le porte.';
 
   @override
   String get settingHintStockPriceRounding =>
@@ -33796,6 +33796,28 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingOriginWorkspace => 'Défini pour cet espace';
+
+  @override
+  String settingPlaceAmbiguous(String code) {
+    return 'Le code $code est porté par plusieurs emplacements : choisissez-en un. Les factures avec des marchandises sont refusées tant que vous ne le faites pas.';
+  }
+
+  @override
+  String settingPlaceFromCode(String path, String code) {
+    return '$path (trouvé par le code $code : choisissez-le pour le fixer)';
+  }
+
+  @override
+  String get settingPlaceGone =>
+      'L\'emplacement choisi n\'est plus utilisable : choisissez-en un autre. Les factures avec des marchandises sont refusées tant que vous ne le faites pas.';
+
+  @override
+  String settingPlaceMissing(String code) {
+    return 'Aucun emplacement utilisable ne porte le code $code : choisissez-en un. Les factures avec des marchandises sont refusées tant que vous ne le faites pas.';
+  }
+
+  @override
+  String get settingPlacePick => 'Emplacement';
 
   @override
   String get settingProblemAboveMax => 'Au-dessus du maximum';
@@ -36372,6 +36394,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get standaloneFactSalePlace =>
       'le lieu d’où partent les ventes : indiquez un lieu qui détient du stock dans les réglages de l’entreprise';
+
+  @override
+  String get standaloneFactSalePlaceAmbiguous =>
+      'l\'emplacement d\'où partent les marchandises vendues est ambigu : choisissez-en un dans les réglages du stock';
 
   @override
   String get standaloneFactSalesTax =>

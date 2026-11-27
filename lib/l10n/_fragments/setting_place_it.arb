@@ -1,0 +1,36 @@
+{
+  "settingPlacePick": "Luogo",
+  "@settingPlacePick": {
+    "description": "#4495 the place of a setting"
+  },
+  "settingPlaceFromCode": "{path} (trovato dal codice {code}: sceglietelo per fissarlo)",
+  "@settingPlaceFromCode": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "path": {"type": "String"},
+      "code": {"type": "String"}
+    }
+  },
+  "settingPlaceAmbiguous": "Il codice {code} è portato da più luoghi: sceglietene uno. Le fatture con merci sono rifiutate finché non lo fate.",
+  "@settingPlaceAmbiguous": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {"type": "String"}
+    }
+  },
+  "settingPlaceMissing": "Nessun luogo utilizzabile porta il codice {code}: sceglietene uno. Le fatture con merci sono rifiutate finché non lo fate.",
+  "@settingPlaceMissing": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {"type": "String"}
+    }
+  },
+  "settingPlaceGone": "Il luogo scelto non è più utilizzabile: sceglietene un altro. Le fatture con merci sono rifiutate finché non lo fate.",
+  "@settingPlaceGone": {
+    "description": "#4495 the place of a setting"
+  },
+  "standaloneFactSalePlaceAmbiguous": "il luogo da cui partono le merci vendute è ambiguo: sceglietene uno nelle impostazioni di magazzino",
+  "@standaloneFactSalePlaceAmbiguous": {
+    "description": "#4495 the place of a setting"
+  }
+}

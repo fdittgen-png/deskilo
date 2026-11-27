@@ -42967,7 +42967,7 @@
   "@settingHintStockGroupDefaultTagMode": {
     "description": "#4361 setting label/hint"
   },
-  "settingHintStockInvoiceSalePlace": "The code of a place of the business that holds stock, for example MAIN. Goods sold on an invoice leave from there when the invoice is issued.",
+  "settingHintStockInvoiceSalePlace": "Pick the place goods sold on an invoice leave from, as site › place. A code set before still works while only one place carries it.",
   "@settingHintStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
   },
@@ -43526,6 +43526,44 @@
   "settingOriginWorkspace": "Set for this workspace",
   "@settingOriginWorkspace": {
     "description": "#2484 settings: Origin."
+  },
+  "settingPlaceAmbiguous": "The code {code} is carried by several places: pick one. Invoices with goods are refused until you do.",
+  "@settingPlaceAmbiguous": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceFromCode": "{path} (found by the code {code}: pick it to settle it)",
+  "@settingPlaceFromCode": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceGone": "The picked place is no longer usable: pick another. Invoices with goods are refused until you do.",
+  "@settingPlaceGone": {
+    "description": "#4495 the place of a setting"
+  },
+  "settingPlaceMissing": "No usable place carries the code {code}: pick one. Invoices with goods are refused until you do.",
+  "@settingPlaceMissing": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlacePick": "Place",
+  "@settingPlacePick": {
+    "description": "#4495 the place of a setting"
   },
   "settingProblemAboveMax": "Above the maximum",
   "@settingProblemAboveMax": {
@@ -46734,6 +46772,10 @@
   "standaloneFactSalePlace": "the place goods are sold from: set a place that holds stock in the business settings",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
+  },
+  "standaloneFactSalePlaceAmbiguous": "the place goods are sold from is ambiguous: pick one place in the stock settings",
+  "@standaloneFactSalePlaceAmbiguous": {
+    "description": "#4495 the place of a setting"
   },
   "standaloneFactSalesTax": "this business adds sales tax, which is not supported here yet",
   "@standaloneFactSalesTax": {

@@ -33231,7 +33231,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingHintStockInvoiceSalePlace =>
-      'Der Code eines Orts des Unternehmens, der Bestand führt, zum Beispiel MAIN. Auf Rechnung verkaufte Waren gehen beim Ausstellen der Rechnung von dort ab.';
+      'Wählen Sie den Ort, von dem auf einer Rechnung verkaufte Waren abgehen, als Standort › Ort. Ein früher gesetzter Code gilt weiter, solange nur ein Ort ihn trägt.';
 
   @override
   String get settingHintStockPriceRounding =>
@@ -33727,6 +33727,28 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingOriginWorkspace => 'Für diesen Arbeitsbereich festgelegt';
+
+  @override
+  String settingPlaceAmbiguous(String code) {
+    return 'Der Code $code gehört zu mehreren Orten: Wählen Sie einen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.';
+  }
+
+  @override
+  String settingPlaceFromCode(String path, String code) {
+    return '$path (über den Code $code gefunden: wählen Sie ihn aus, um es festzulegen)';
+  }
+
+  @override
+  String get settingPlaceGone =>
+      'Der gewählte Ort ist nicht mehr nutzbar: Wählen Sie einen anderen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.';
+
+  @override
+  String settingPlaceMissing(String code) {
+    return 'Kein nutzbarer Ort trägt den Code $code: Wählen Sie einen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.';
+  }
+
+  @override
+  String get settingPlacePick => 'Ort';
 
   @override
   String get settingProblemAboveMax => 'Über dem Maximum';
@@ -36296,6 +36318,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get standaloneFactSalePlace =>
       'der Ort, von dem verkauft wird: einen Ort mit Bestand in den Unternehmenseinstellungen festlegen';
+
+  @override
+  String get standaloneFactSalePlaceAmbiguous =>
+      'der Ort, von dem Waren verkauft werden, ist nicht eindeutig: Wählen Sie in den Lagereinstellungen einen Ort';
 
   @override
   String get standaloneFactSalesTax =>

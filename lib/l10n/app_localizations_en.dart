@@ -32905,7 +32905,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingHintStockInvoiceSalePlace =>
-      'The code of a place of the business that holds stock, for example MAIN. Goods sold on an invoice leave from there when the invoice is issued.';
+      'Pick the place goods sold on an invoice leave from, as site › place. A code set before still works while only one place carries it.';
 
   @override
   String get settingHintStockPriceRounding =>
@@ -33383,6 +33383,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingOriginWorkspace => 'Set for this workspace';
+
+  @override
+  String settingPlaceAmbiguous(String code) {
+    return 'The code $code is carried by several places: pick one. Invoices with goods are refused until you do.';
+  }
+
+  @override
+  String settingPlaceFromCode(String path, String code) {
+    return '$path (found by the code $code: pick it to settle it)';
+  }
+
+  @override
+  String get settingPlaceGone =>
+      'The picked place is no longer usable: pick another. Invoices with goods are refused until you do.';
+
+  @override
+  String settingPlaceMissing(String code) {
+    return 'No usable place carries the code $code: pick one. Invoices with goods are refused until you do.';
+  }
+
+  @override
+  String get settingPlacePick => 'Place';
 
   @override
   String get settingProblemAboveMax => 'Above the maximum';
@@ -35919,6 +35941,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get standaloneFactSalePlace =>
       'the place goods are sold from: set a place that holds stock in the business settings';
+
+  @override
+  String get standaloneFactSalePlaceAmbiguous =>
+      'the place goods are sold from is ambiguous: pick one place in the stock settings';
 
   @override
   String get standaloneFactSalesTax =>

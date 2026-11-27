@@ -1,0 +1,36 @@
+{
+  "settingPlacePick": "Place",
+  "@settingPlacePick": {
+    "description": "#4495 the place of a setting"
+  },
+  "settingPlaceFromCode": "{path} (found by the code {code}: pick it to settle it)",
+  "@settingPlaceFromCode": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "path": {"type": "String"},
+      "code": {"type": "String"}
+    }
+  },
+  "settingPlaceAmbiguous": "The code {code} is carried by several places: pick one. Invoices with goods are refused until you do.",
+  "@settingPlaceAmbiguous": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {"type": "String"}
+    }
+  },
+  "settingPlaceMissing": "No usable place carries the code {code}: pick one. Invoices with goods are refused until you do.",
+  "@settingPlaceMissing": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {"type": "String"}
+    }
+  },
+  "settingPlaceGone": "The picked place is no longer usable: pick another. Invoices with goods are refused until you do.",
+  "@settingPlaceGone": {
+    "description": "#4495 the place of a setting"
+  },
+  "standaloneFactSalePlaceAmbiguous": "the place goods are sold from is ambiguous: pick one place in the stock settings",
+  "@standaloneFactSalePlaceAmbiguous": {
+    "description": "#4495 the place of a setting"
+  }
+}

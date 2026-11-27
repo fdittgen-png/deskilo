@@ -33147,7 +33147,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingHintStockInvoiceSalePlace =>
-      'El código de un lugar de la empresa que tiene existencias, por ejemplo MAIN. Los bienes vendidos en factura salen de allí al emitir la factura.';
+      'Elija el lugar del que salen las mercancías vendidas en una factura, como sitio › lugar. Un código fijado antes sigue valiendo mientras solo un lugar lo lleve.';
 
   @override
   String get settingHintStockPriceRounding =>
@@ -33661,6 +33661,28 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingOriginWorkspace => 'Definido para este espacio';
+
+  @override
+  String settingPlaceAmbiguous(String code) {
+    return 'El código $code lo llevan varios lugares: elija uno. Las facturas con mercancías se rechazan hasta que lo haga.';
+  }
+
+  @override
+  String settingPlaceFromCode(String path, String code) {
+    return '$path (encontrado por el código $code: elíjalo para fijarlo)';
+  }
+
+  @override
+  String get settingPlaceGone =>
+      'El lugar elegido ya no se puede usar: elija otro. Las facturas con mercancías se rechazan hasta que lo haga.';
+
+  @override
+  String settingPlaceMissing(String code) {
+    return 'Ningún lugar utilizable lleva el código $code: elija uno. Las facturas con mercancías se rechazan hasta que lo haga.';
+  }
+
+  @override
+  String get settingPlacePick => 'Lugar';
 
   @override
   String get settingProblemAboveMax => 'Por encima del máximo';
@@ -36218,6 +36240,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get standaloneFactSalePlace =>
       'el lugar del que se vende: indique un lugar con existencias en los ajustes de la empresa';
+
+  @override
+  String get standaloneFactSalePlaceAmbiguous =>
+      'el lugar desde el que se venden las mercancías es ambiguo: elija uno en los ajustes de existencias';
 
   @override
   String get standaloneFactSalesTax =>

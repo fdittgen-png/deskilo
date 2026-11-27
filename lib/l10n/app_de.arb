@@ -19574,7 +19574,7 @@
   },
   "settingHintStockGroupDefaultCountDays": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. 0 heißt nicht geplant.",
   "settingHintStockGroupDefaultTagMode": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht).",
-  "settingHintStockInvoiceSalePlace": "Der Code eines Orts des Unternehmens, der Bestand führt, zum Beispiel MAIN. Auf Rechnung verkaufte Waren gehen beim Ausstellen der Rechnung von dort ab.",
+  "settingHintStockInvoiceSalePlace": "Wählen Sie den Ort, von dem auf einer Rechnung verkaufte Waren abgehen, als Standort › Ort. Ein früher gesetzter Code gilt weiter, solange nur ein Ort ihn trägt.",
   "@settingHintStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
   },
@@ -19893,6 +19893,44 @@
   "settingOriginWorkspace": "Für diesen Arbeitsbereich festgelegt",
   "@settingOriginWorkspace": {
     "description": "#2484 settings: Origin."
+  },
+  "settingPlaceAmbiguous": "Der Code {code} gehört zu mehreren Orten: Wählen Sie einen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.",
+  "@settingPlaceAmbiguous": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceFromCode": "{path} (über den Code {code} gefunden: wählen Sie ihn aus, um es festzulegen)",
+  "@settingPlaceFromCode": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceGone": "Der gewählte Ort ist nicht mehr nutzbar: Wählen Sie einen anderen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.",
+  "@settingPlaceGone": {
+    "description": "#4495 the place of a setting"
+  },
+  "settingPlaceMissing": "Kein nutzbarer Ort trägt den Code {code}: Wählen Sie einen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.",
+  "@settingPlaceMissing": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlacePick": "Ort",
+  "@settingPlacePick": {
+    "description": "#4495 the place of a setting"
   },
   "settingProblemAboveMax": "Über dem Maximum",
   "@settingProblemAboveMax": {
@@ -20944,6 +20982,10 @@
   "standaloneFactSalePlace": "der Ort, von dem verkauft wird: einen Ort mit Bestand in den Unternehmenseinstellungen festlegen",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
+  },
+  "standaloneFactSalePlaceAmbiguous": "der Ort, von dem Waren verkauft werden, ist nicht eindeutig: Wählen Sie in den Lagereinstellungen einen Ort",
+  "@standaloneFactSalePlaceAmbiguous": {
+    "description": "#4495 the place of a setting"
   },
   "standaloneFactSalesTax": "dieser Betrieb erhebt Sales Tax, was hier noch nicht unterstützt wird",
   "@standaloneFactSalesTax": {

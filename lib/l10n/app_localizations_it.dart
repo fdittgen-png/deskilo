@@ -33185,7 +33185,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingHintStockInvoiceSalePlace =>
-      'Il codice di un luogo dell’attività che detiene scorte, per esempio MAIN. I beni venduti in fattura escono da lì all’emissione della fattura.';
+      'Scegliete il luogo da cui partono le merci vendute su una fattura, come sede › luogo. Un codice impostato prima vale ancora finché un solo luogo lo porta.';
 
   @override
   String get settingHintStockPriceRounding =>
@@ -33700,6 +33700,28 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingOriginWorkspace => 'Impostato per questo spazio';
+
+  @override
+  String settingPlaceAmbiguous(String code) {
+    return 'Il codice $code è portato da più luoghi: sceglietene uno. Le fatture con merci sono rifiutate finché non lo fate.';
+  }
+
+  @override
+  String settingPlaceFromCode(String path, String code) {
+    return '$path (trovato dal codice $code: sceglietelo per fissarlo)';
+  }
+
+  @override
+  String get settingPlaceGone =>
+      'Il luogo scelto non è più utilizzabile: sceglietene un altro. Le fatture con merci sono rifiutate finché non lo fate.';
+
+  @override
+  String settingPlaceMissing(String code) {
+    return 'Nessun luogo utilizzabile porta il codice $code: sceglietene uno. Le fatture con merci sono rifiutate finché non lo fate.';
+  }
+
+  @override
+  String get settingPlacePick => 'Luogo';
 
   @override
   String get settingProblemAboveMax => 'Sopra il massimo';
@@ -36254,6 +36276,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get standaloneFactSalePlace =>
       'il luogo da cui si vende: indicare un luogo con scorte nelle impostazioni dell’attività';
+
+  @override
+  String get standaloneFactSalePlaceAmbiguous =>
+      'il luogo da cui partono le merci vendute è ambiguo: sceglietene uno nelle impostazioni di magazzino';
 
   @override
   String get standaloneFactSalesTax =>

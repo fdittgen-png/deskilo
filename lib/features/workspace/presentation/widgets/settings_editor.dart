@@ -19,8 +19,11 @@ import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../domain/setting_place.dart';
+import '../../providers/setting_places_provider.dart';
 import '../../providers/settings_providers.dart';
 import '../settings_labels.dart';
+import 'setting_place_sheet.dart';
 
 /// The settings of [scope] (and [group], when given). [workspaceId] is null
 /// for the platform's own values; [canEdit] is whether the signed-in person
@@ -134,6 +137,8 @@ class _SettingTile extends ConsumerWidget {
     final d = definition;
     final unit = settingUnitLabel(l10n, d.unit);
     final value = set.effective[d.key] ?? d.defaultValue;
+    // #4495 -- a setting that names a place says which place, in words
+    final places = d.key == settingKeyInvoiceSalePlace && workspaceId != null ? ref.watch(settingPlacesProvider(workspaceId!)).value : null;
     final lines = [
       ?settingHint(l10n, d.key),
       ?settingRangeLabel(l10n, d),
@@ -171,7 +176,7 @@ class _SettingTile extends ConsumerWidget {
           Row(
             children: [
               Expanded(
-                child: Text(l10n.settingCurrentValue('$value', unit)),
+                child: Text(places == null ? l10n.settingCurrentValue('$value', unit) : placeSettingText(l10n, '$value', places)),
               ),
               IconButton(
                 key: ValueKey('setting-history-${d.key}'),
@@ -224,6 +229,13 @@ class _SettingTile extends ConsumerWidget {
     final commands = ref.read(settingsCommandsProvider);
     final fields = FormControllers({'value': '$current', 'note': ''});
     final d = definition;
+    if (d.key == settingKeyInvoiceSalePlace && workspaceId != null) {
+      final places = await ref.read(settingPlacesProvider(workspaceId!).future);
+      if (!context.mounted) return;
+      final picked = await showSettingPlaceSheet(context, commands, definition: d, workspaceId: workspaceId!, places: places, current: '$current');
+      if (picked) ref..invalidate(settingsSetProvider(workspaceId))..invalidate(currentSettingsProvider);
+      return;
+    }
     final saved = await showAppFormSheet(
       context,
       AppFormSheet(

@@ -19574,7 +19574,7 @@
   },
   "settingHintStockGroupDefaultCountDays": "Cada cuántos días se propone para un recuento cíclico un artículo que ni un grupo ni un ajuste propio contempla. 0 significa sin programar.",
   "settingHintStockGroupDefaultTagMode": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza).",
-  "settingHintStockInvoiceSalePlace": "El código de un lugar de la empresa que tiene existencias, por ejemplo MAIN. Los bienes vendidos en factura salen de allí al emitir la factura.",
+  "settingHintStockInvoiceSalePlace": "Elija el lugar del que salen las mercancías vendidas en una factura, como sitio › lugar. Un código fijado antes sigue valiendo mientras solo un lugar lo lleve.",
   "@settingHintStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
   },
@@ -19893,6 +19893,44 @@
   "settingOriginWorkspace": "Definido para este espacio",
   "@settingOriginWorkspace": {
     "description": "#2484 settings: Origin."
+  },
+  "settingPlaceAmbiguous": "El código {code} lo llevan varios lugares: elija uno. Las facturas con mercancías se rechazan hasta que lo haga.",
+  "@settingPlaceAmbiguous": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceFromCode": "{path} (encontrado por el código {code}: elíjalo para fijarlo)",
+  "@settingPlaceFromCode": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceGone": "El lugar elegido ya no se puede usar: elija otro. Las facturas con mercancías se rechazan hasta que lo haga.",
+  "@settingPlaceGone": {
+    "description": "#4495 the place of a setting"
+  },
+  "settingPlaceMissing": "Ningún lugar utilizable lleva el código {code}: elija uno. Las facturas con mercancías se rechazan hasta que lo haga.",
+  "@settingPlaceMissing": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlacePick": "Lugar",
+  "@settingPlacePick": {
+    "description": "#4495 the place of a setting"
   },
   "settingProblemAboveMax": "Por encima del máximo",
   "@settingProblemAboveMax": {
@@ -20944,6 +20982,10 @@
   "standaloneFactSalePlace": "el lugar del que se vende: indique un lugar con existencias en los ajustes de la empresa",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
+  },
+  "standaloneFactSalePlaceAmbiguous": "el lugar desde el que se venden las mercancías es ambiguo: elija uno en los ajustes de existencias",
+  "@standaloneFactSalePlaceAmbiguous": {
+    "description": "#4495 the place of a setting"
   },
   "standaloneFactSalesTax": "esta empresa añade impuesto de ventas, que aquí aún no se admite",
   "@standaloneFactSalesTax": {
