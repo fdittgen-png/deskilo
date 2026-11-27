@@ -13,6 +13,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/kit/records_table.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -137,14 +138,14 @@ class _InvoiceRegisterScreenState
           // #1310 S0 — an accounting export (and the archive bundle
           // behind it) is a bulk export: exportData governs it, beside
           // the issuing right that decides whose invoices are visible.
+          // #4492 — the page's one main action, filled and worded.
           if (canExport)
-            IconButton(
+            pageBarAction(
               key: const ValueKey('invoice-accounting-export'),
               // Named for the ACTION, not for one of the seven formats
               // behind it (#669). It said "(SAF-T)" until an owner
               // hunting for the accounting export walked past it.
-              tooltip: l10n.invoiceAccountingExport,
-              icon: const Icon(Icons.plagiarism_outlined),
+              label: l10n.invoiceAccountingExport,
               // #3061 — one export at a time: the button is off from the
               // tap until the run ends, however it ends.
               // #3680 — nothing to export before the invoices answered.

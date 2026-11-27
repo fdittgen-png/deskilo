@@ -282,7 +282,7 @@ void main() {
       }
       await openOrder(tester, '2026-0001');
       expect(
-        find.byKey(const ValueKey('purchase-order-mail-settings')),
+        find.byKey(const ValueKey('purchase-orders-more')),
         findsOneWidget,
       );
       expect(
@@ -361,7 +361,7 @@ void main() {
       }
       await openOrder(tester, '2026-0001');
       expect(
-        find.byKey(const ValueKey('purchase-order-mail-settings')),
+        find.byKey(const ValueKey('purchase-orders-more')),
         findsOneWidget,
       );
       expect(

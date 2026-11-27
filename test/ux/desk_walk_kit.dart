@@ -23,8 +23,8 @@ import 'package:deskilo/core/ui/adaptive/long_task_page.dart';
 import 'package:deskilo/core/ui/adaptive/window_class.dart';
 import 'package:deskilo/core/ui/kit/customer_row.dart';
 import 'package:deskilo/core/ui/kit/records_table_parts.dart';
-import 'package:deskilo/core/ui/kit/table_line.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
+import 'package:deskilo/features/money/application/receivables_answers.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
@@ -469,12 +469,13 @@ const Map<String, String> deskFindings = {
 /// The widgets that draw a table row on the pages above, and the widgets a
 /// records page's table is (their widest decides the share).
 const List<Type> walkRowTypes = [
-              KitTableLine,
               CustomerRow,
               RecordRow<Invoice>,
               RecordsHeader<Invoice>,
               RecordRow<Receivable>,
               RecordsHeader<Receivable>,
+              RecordRow<CustomerLine>,
+              RecordsHeader<CustomerLine>,
               RecordRow<ServiceItem>,
               RecordsHeader<ServiceItem>,
               RecordRow<GuestPassRecord>,
@@ -510,10 +511,9 @@ const List<Type> walkRowTypes = [
             ];
 
 const List<Type> walkTableTypes = [
-              KitTableHeader,
-              CustomerHeader,
               RecordsHeader<Invoice>,
               RecordsHeader<Receivable>,
+              RecordsHeader<CustomerLine>,
               RecordsHeader<ServiceItem>,
               RecordsHeader<GuestPassRecord>,
               RecordsHeader<Supplier>,

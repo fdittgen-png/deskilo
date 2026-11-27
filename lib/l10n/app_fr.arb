@@ -11122,10 +11122,6 @@
   "@invoicingMoreTemplate": {
     "description": "#3587 More menu"
   },
-  "invoicingNew": "Nouvelle",
-  "@invoicingNew": {
-    "description": "#3587 top bar: start a new invoice"
-  },
   "invoicingNothingHere": "Rien ici.",
   "@invoicingNothingHere": {
     "description": "#3587 empty filter"
@@ -16685,6 +16681,7 @@
   "quoteNoCustomers": "Ajoutez d'abord un client facturé : un devis lui est destiné.",
   "quoteNotAllowedAction": "Vous ne pouvez pas faire cela avec les devis de cette activité.",
   "quoteOrderLine": "Numéro de commande : {value}",
+  "quotePageTitle": "Devis {number}",
   "quoteRecordAnswer": "Enregistrer la réponse",
   "quoteReferenceLine": "Référence du client : {value}",
   "quoteRevisionLine": "Révision {revision} · {status}",

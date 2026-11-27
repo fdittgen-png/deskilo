@@ -11122,10 +11122,6 @@
   "@invoicingMoreTemplate": {
     "description": "#3587 More menu"
   },
-  "invoicingNew": "Neu",
-  "@invoicingNew": {
-    "description": "#3587 top bar: start a new invoice"
-  },
   "invoicingNothingHere": "Hier ist nichts.",
   "@invoicingNothingHere": {
     "description": "#3587 empty filter"
@@ -16685,6 +16681,7 @@
   "quoteNoCustomers": "Legen Sie zuerst einen Rechnungskunden an: ein Angebot gilt einem solchen.",
   "quoteNotAllowedAction": "Sie dürfen das mit Angeboten in diesem Unternehmen nicht tun.",
   "quoteOrderLine": "Bestellnummer: {value}",
+  "quotePageTitle": "Angebot {number}",
   "quoteRecordAnswer": "Antwort festhalten",
   "quoteReferenceLine": "Referenz des Kunden: {value}",
   "quoteRevisionLine": "Revision {revision} · {status}",

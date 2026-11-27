@@ -11,9 +11,8 @@ import 'shell_drawer_entries.dart';
 
 /// The Sales group's entries beside the invoices.
 extension SalesEntries on DrawerEntries {
-  /// The guest passes and the invoice register.
+  /// The guest passes and the till.
   List<DrawerEntry> salesPages() {
-    final sales = features.contains(WorkspaceFeature.invoicing);
     // #4168 — one rule for the menu and for the overview of a business.
     final own = businessEntriesFor(features, permissions);
     return <DrawerEntry>[
@@ -30,16 +29,9 @@ extension SalesEntries on DrawerEntries {
           () => go('/money/guest-passes'),
           route: '/money/guest-passes',
         ),
-      if (sales &&
-          (may(WorkspacePermission.viewFinances) ||
-              may(WorkspacePermission.issueInvoices)))
-        DrawerEntry(
-          'drawer-invoice-register',
-          Icons.table_rows_outlined,
-          l10n.invoiceRegisterTitle,
-          () => go('/invoice-register'),
-          route: '/invoice-register',
-        ),
+      // #4492 (M5) — the invoice register has one place, under Accounting
+      // & VAT (its entry "Accounting export", the route's place): its crumbs
+      // and the sidebar name the same place.
       // #4366 — the till: a sale at the counter on a receipt of its own.
       if (features.contains(WorkspaceFeature.counterReceipts) && may(WorkspacePermission.issueInvoices))
         DrawerEntry(

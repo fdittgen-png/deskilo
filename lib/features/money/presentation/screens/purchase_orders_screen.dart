@@ -18,6 +18,7 @@ import '../../../../core/navigation/routes.dart';
 import '../../../../core/shortcuts/app_shortcuts.dart';
 import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/ui/kit/page_bar.dart';
+import '../../../../core/ui/kit/page_more_menu.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../domain/purchase.dart';
 import '../widgets/purchase_order_sheet.dart';
@@ -40,19 +41,24 @@ class PurchaseOrdersScreen extends ConsumerWidget {
       // #3307 — how the space e-mails its orders, for its billing
       // manager. #3673: the business's one sender is set in its own
       // settings; this opens them.
-      if (workspace != null &&
-          MoneyViewData.purchasePermissionNames(ref).contains('manageBilling'))
-        IconButton(
-          key: const ValueKey('purchase-order-mail-settings'),
-          tooltip: l10n.businessMailSenderWhere,
-          icon: const Icon(Icons.forward_to_inbox_outlined),
-          onPressed: () => context.push(Routes.workspaceSettings),
-        ),
+      // #4492 — behind the worded More, beside the one main action.
       if (mayAdd)
         pageBarAction(
           key: const ValueKey('purchase-order-new'),
           label: l10n.purchaseOrderNew,
           onPressed: add,
+        ),
+      if (workspace != null &&
+          MoneyViewData.purchasePermissionNames(ref).contains('manageBilling'))
+        PageMoreMenu(
+          key: const ValueKey('purchase-orders-more'),
+          entries: [
+            PageMoreEntry(
+              key: const ValueKey('purchase-order-mail-settings'),
+              label: l10n.businessMailSenderWhere,
+              onSelected: () => context.push(Routes.workspaceSettings),
+            ),
+          ],
         ),
     ];
     return ShortcutScope(

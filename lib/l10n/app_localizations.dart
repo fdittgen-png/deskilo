@@ -29839,12 +29839,6 @@ abstract class AppLocalizations {
   /// **'Invoice PDF template'**
   String get invoicingMoreTemplate;
 
-  /// #3587 top bar: start a new invoice
-  ///
-  /// In en, this message translates to:
-  /// **'New'**
-  String get invoicingNew;
-
   /// #3587 empty filter
   ///
   /// In en, this message translates to:
@@ -46409,6 +46403,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Order number: {value}'**
   String quoteOrderLine(String value);
+
+  /// the name of one quote's page in its bar: the word and the quote's number, a reference such as QUO-0001 (#4492)
+  ///
+  /// In en, this message translates to:
+  /// **'Quote {number}'**
+  String quotePageTitle(String number);
 
   /// customer quotes: the answer and the conversion (#4166)
   ///

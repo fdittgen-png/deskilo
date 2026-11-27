@@ -32,6 +32,8 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/kit/list_detail_scaffold.dart';
+import '../../../../core/ui/kit/page_bar.dart';
+import '../../../../core/ui/kit/page_more_menu.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/scoped_messenger.dart';
@@ -128,22 +130,23 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
             icon: Icon(_searchOpen ? Icons.search_off : Icons.search),
             onPressed: () => setState(() => _searchOpen = !_searchOpen),
           ),
-          // On a phone the action is its icon, named by its tooltip: the
-          // labelled button and the search and menu beside it do not fit at
-          // 320 dp and twice the text (#4037).
-          if (WindowClass.of(context) == WindowClass.compact)
+          // #4492 — the page's one main action, filled and worded, as on
+          // every records page; only where the words cannot fit beside the
+          // search and More (a phone at large text, #4037: 320 dp at twice
+          // the text) is it its icon, named by its tooltip.
+          if (WindowClass.of(context) == WindowClass.compact &&
+              MediaQuery.textScalerOf(context).scale(1) > 1.3)
             IconButton(
               key: const ValueKey('invoicing-new'),
-              tooltip: l.invoicingNew,
+              tooltip: l.invoicingEmptyNew,
               onPressed: () => showInvoiceIssueSheet(context, ref),
               icon: const Icon(Icons.add),
             )
           else
-            OutlinedButton.icon(
+            pageBarAction(
               key: const ValueKey('invoicing-new'),
+              label: l.invoicingEmptyNew,
               onPressed: () => showInvoiceIssueSheet(context, ref),
-              icon: const Icon(Icons.add),
-              label: Text(l.invoicingNew),
             ),
           _moreMenu(context),
         ],
@@ -244,21 +247,9 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
             ),
           ),
       ],
-      // Worded, so the title bar never shows an unnamed icon.
-      child: ConstrainedBox(
-        // The worded button is a whole target, not just its words.
-        constraints: const BoxConstraints(minHeight: 48),
-        child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(MaterialLocalizations.of(context).moreButtonTooltip),
-            const Icon(Icons.arrow_drop_down),
-          ],
-        ),
-      ),
-      ),
+      // Worded, so the title bar never shows an unnamed icon; on a phone
+      // the ⋮ named by the tooltip (#4492: the main action keeps its words).
+      child: pageMoreFace(context),
     );
   }
 

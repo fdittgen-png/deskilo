@@ -35,7 +35,7 @@ import 'purchase_order_sheet.dart';
 
 /// The words of an order's [state]; a state this app does not know is
 /// shown as the server's [wire] text (#3730).
-String purchaseOrderStateLabel(
+String _stateLabel(
   AppLocalizations l10n,
   PurchaseOrderState state, {
   String wire = '',
@@ -72,7 +72,7 @@ StatusChip purchaseOrderStateChip(
   Key? key,
 }) => StatusChip(
   key: key,
-  label: purchaseOrderStateLabel(l10n, order.state, wire: order.stateWire),
+  label: _stateLabel(l10n, order.state, wire: order.stateWire),
   tone: _stateTone(order.state),
 );
 

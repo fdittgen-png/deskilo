@@ -505,8 +505,10 @@ void main() {
       (tester) async {
     await pumpMembers(tester);
 
-    expect(find.byIcon(Icons.person_add_outlined), findsOneWidget);
-    await tester.tap(find.byIcon(Icons.person_add_outlined));
+    // #4492 — the page's one main action, filled and worded
+    final invite = find.widgetWithText(FilledButton, 'Invite a member');
+    expect(invite, findsOneWidget);
+    await tester.tap(invite);
     await tester.pumpAndSettle();
 
     expect(find.text('Workspace ID & QR'), findsOneWidget);

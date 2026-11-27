@@ -11122,10 +11122,6 @@
   "@invoicingMoreTemplate": {
     "description": "#3587 More menu"
   },
-  "invoicingNew": "Nuova",
-  "@invoicingNew": {
-    "description": "#3587 top bar: start a new invoice"
-  },
   "invoicingNothingHere": "Niente qui.",
   "@invoicingNothingHere": {
     "description": "#3587 empty filter"
@@ -16685,6 +16681,7 @@
   "quoteNoCustomers": "Aggiungere prima un cliente fatturato: un preventivo è rivolto a uno.",
   "quoteNotAllowedAction": "Non è consentito farlo con i preventivi di questa attività.",
   "quoteOrderLine": "Numero d'ordine: {value}",
+  "quotePageTitle": "Preventivo {number}",
   "quoteRecordAnswer": "Registrare la risposta",
   "quoteReferenceLine": "Riferimento del cliente: {value}",
   "quoteRevisionLine": "Revisione {revision} · {status}",

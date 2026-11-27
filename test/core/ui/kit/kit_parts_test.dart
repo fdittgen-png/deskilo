@@ -5,7 +5,6 @@
 // chip report their choice, a select line toggles as a whole, and the first
 // "To do" entry is the filled one.
 import 'package:deskilo/core/theme/personal_theme.dart';
-import 'package:deskilo/core/ui/kit/customer_row.dart';
 import 'package:deskilo/core/ui/kit/filter_chips.dart';
 import 'package:deskilo/core/ui/kit/kit_card.dart';
 import 'package:deskilo/core/ui/kit/result_page.dart';
@@ -22,8 +21,6 @@ import '../../../ux/experience_guards.dart';
 
 Future<void> _pump(WidgetTester tester, Widget child) =>
     pumpApp(tester, Scaffold(body: child));
-
-void _noop() {}
 
 void main() {
   test('a status takes its pair from the theme tokens; "info" is never the '
@@ -86,40 +83,6 @@ void main() {
     expect(find.byIcon(Icons.check_circle), findsOneWidget);
     await _pump(tester, result(something: false));
     expect(find.byIcon(Icons.check_circle), findsNothing);
-  });
-
-  testWidgets('on a wide window a customer line is a table row whose columns '
-      'sit under the header', (tester) async {
-    await _pump(
-      tester,
-      const Column(
-        children: [
-          CustomerHeader(
-            customer: 'Customer',
-            invoices: 'Invoices',
-            oldest: 'Oldest',
-            owes: 'Owes',
-          ),
-          CustomerRow(
-            name: 'SASU KaloA',
-            caption: Text('2 invoices'),
-            invoices: '2',
-            oldest: Text('50 days late'),
-            owes: ['CHF 200.00'],
-            onTap: _noop,
-            wide: true,
-          ),
-        ],
-      ),
-    );
-    expect(
-      tester.getTopLeft(find.text('2')).dx,
-      tester.getTopLeft(find.text('INVOICES')).dx,
-    );
-    expect(
-      tester.getTopRight(find.text('CHF 200.00')).dx,
-      closeTo(tester.getTopRight(find.text('OWES')).dx, 0.5),
-    );
   });
 
   testWidgets('a split bar draws only the parts that hold something', (

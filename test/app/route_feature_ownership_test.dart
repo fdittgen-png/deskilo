@@ -181,6 +181,14 @@ void main() {
       testWidgets('Members offers the billing shortcut only with moneyTab; '
           'moneyTab=$money', (tester) async {
         await pumpMembers(tester, featureFlags: {'moneyTab': money});
+        // #4492 — the shortcut is a line of the page's worded More
+        final more = find.byKey(const ValueKey('members-more'));
+        if (more.evaluate().isNotEmpty) {
+          await tester.tap(more);
+          for (var i = 0; i < 5; i++) {
+            await tester.pump(const Duration(milliseconds: 200));
+          }
+        }
         expect(
           find.byKey(const ValueKey('members-billing-title')),
           money ? findsOneWidget : findsNothing,

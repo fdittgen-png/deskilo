@@ -14,7 +14,7 @@ import '../../domain/customer_quote.dart';
 import '../invoicing/invoicing_words.dart' show statusToneOf;
 
 /// The status a person reads: a sent quote past its validity says expired.
-String quoteStatusLabel(AppLocalizations l10n, CustomerQuote q) {
+String _statusLabel(AppLocalizations l10n, CustomerQuote q) {
   if (q.expired && q.status == QuoteStatus.sent) return l10n.quoteStatusExpired;
   return switch (q.status) {
     QuoteStatus.draft => l10n.invoicingStatusDraft,
@@ -47,7 +47,7 @@ StatusTone _statusTone(CustomerQuote q) => statusToneOf(
 /// The state of [q] as the list and the quote's own page say it: its words
 /// on its tone.
 StatusChip quoteStatusChip(AppLocalizations l10n, CustomerQuote q, {Key? key}) =>
-    StatusChip(key: key, label: quoteStatusLabel(l10n, q), tone: _statusTone(q));
+    StatusChip(key: key, label: _statusLabel(l10n, q), tone: _statusTone(q));
 
 /// What to say for a refusal of the server; nothing was written.
 String quoteRefusalText(AppLocalizations l10n, QuoteRefusal refusal) =>

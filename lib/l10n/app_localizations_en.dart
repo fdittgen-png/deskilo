@@ -18728,9 +18728,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicingMoreTemplate => 'Invoice PDF template';
 
   @override
-  String get invoicingNew => 'New';
-
-  @override
   String get invoicingNothingHere => 'Nothing here.';
 
   @override
@@ -28903,6 +28900,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String quoteOrderLine(String value) {
     return 'Order number: $value';
+  }
+
+  @override
+  String quotePageTitle(String number) {
+    return 'Quote $number';
   }
 
   @override

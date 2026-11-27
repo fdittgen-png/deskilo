@@ -7,7 +7,9 @@
 // invoice beside the table; its menu opens the customer or shares the
 // invoice's reminder. Several reminders are shared from a selection, one
 // after the other, through the reminder queue and its states (the decision
-// on #3614): never a "send selected" call.
+// on #3614): never a "send selected" call. #4492 (M1) — the customers view
+// is the same records table (invoicing_customers_table.dart), under the same
+// switch.
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/app_format.dart';
@@ -15,14 +17,13 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/records_table.dart';
-import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../core/ui/view_toggle.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
+import 'invoicing_customers_table.dart';
 import 'invoicing_home.dart';
 import 'invoicing_home_parts.dart';
 import 'invoicing_list.dart';
-import 'invoicing_words.dart';
 
 /// What the desk table does with a row or a selection.
 typedef _DeskActions = ({
@@ -134,7 +135,7 @@ class _DeskTable extends StatelessWidget {
           label: l.invoicingColStatus,
           flex: 4,
           sortKey: (r) => invoiceStatusOf(r, today).kind.index,
-          cell: (_, r) => _status(context, format, r),
+          cell: (_, r) => invoiceStateCell(l, format, r, today),
         ),
         RecordColumn(
           id: 'due',
@@ -186,22 +187,6 @@ class _DeskTable extends StatelessWidget {
         subtitle: Text(r.number),
         trailing: Text(format.moneyIn(r.currency).formatMinor(r.openMinor)),
       ),
-    );
-  }
-
-  /// #3773 — a state in a table cell is never cut: its parts wrap.
-  Widget _status(BuildContext context, AppFormat format, Receivable r) {
-    final l = context.l10n;
-    final status = invoiceStatusOf(r, today);
-    final tone = statusToneOf(status.kind);
-    return Wrap(
-      key: ValueKey('invoicing-state-${r.invoiceId}'),
-      spacing: AppSpacing.xs,
-      runSpacing: AppSpacing.xs,
-      children: [
-        for (final part in statusPartsOf(l, format, r, status, today))
-          StatusChip(label: part, tone: tone, whole: true),
-      ],
     );
   }
 }
@@ -266,12 +251,12 @@ class InvoicingDeskHome extends StatelessWidget {
     this.todo,
     this.onClearTodo,
     this.onShown,
-    this.customers,
+    this.byCustomer = false,
   });
 
-  /// The list by customer, as on a phone (#3587); null: the invoices, as
-  /// the records table.
-  final Widget? customers;
+  /// Whether the table lists the customers (#3587) rather than the
+  /// invoices; both are the records table (#4492).
+  final bool byCustomer;
 
   /// Switches between the customers and the invoices.
   final ValueChanged<InvoicingView> onView;
@@ -308,8 +293,7 @@ class InvoicingDeskHome extends StatelessWidget {
             tilePadding: EdgeInsets.zero,
             children: notes,
           ),
-        // The list by customer shows the "To do" entry itself.
-        if (todo case (:final title, kind: _) when customers == null)
+        if (todo case (:final title, kind: _))
           Align(
             alignment: AlignmentDirectional.centerStart,
             child: InputChip(
@@ -320,15 +304,13 @@ class InvoicingDeskHome extends StatelessWidget {
             ),
           ),
       ],
-      table: switch (customers) {
-        final list? => CustomScrollView(slivers: [list]),
-        null => _invoices(context, kind),
-      },
+      table: _table(context, kind),
     );
   }
 
-  /// The invoices as the records table, under the switch back to customers.
-  Widget _invoices(BuildContext context, TodoKind? kind) {
+  /// The invoices or the customers as the records table, under the switch
+  /// between them.
+  Widget _table(BuildContext context, TodoKind? kind) {
     final l = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -344,7 +326,9 @@ class InvoicingDeskHome extends StatelessWidget {
             alignment: AlignmentDirectional.centerEnd,
             child: ViewToggle<InvoicingView>(
               key: const ValueKey('invoicing-view'),
-              selected: InvoicingView.invoices,
+              selected: byCustomer
+                  ? InvoicingView.customers
+                  : InvoicingView.invoices,
               onChanged: onView,
               options: [
                 ViewToggleOption(
@@ -362,34 +346,50 @@ class InvoicingDeskHome extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: _DeskTable(
-            key: ValueKey('invoicing-desk-${kind?.name}'),
-            receivables: [
-              for (final r in data.receivables)
-                if (kind == null ||
-                    todoKindOf(
-                          r,
-                          data.mode,
-                          holdsUnassigned: data.holdsUnassigned,
-                        ) ==
-                        kind)
-                  r,
-            ],
-            today: data.today,
-            mode: data.mode,
-            filter: filter,
-            remindersKnown: data.creditsKnown,
-            holdsUnassigned: data.holdsUnassigned,
-            onShown: onShown,
-            actions: (
-              openInvoice: actions.onOpenInvoice,
-              openCustomer: actions.onOpenCustomer,
-              remind: actions.onRemind ?? (_) {},
-              shareReminders: actions.onShareReminders ?? (_) {},
-            ),
-          ),
+          child: byCustomer
+              ? _customers(kind)
+              : _DeskTable(
+                  key: ValueKey('invoicing-desk-${kind?.name}'),
+                  receivables: _selected(kind).toList(),
+                  today: data.today,
+                  mode: data.mode,
+                  filter: filter,
+                  remindersKnown: data.creditsKnown,
+                  holdsUnassigned: data.holdsUnassigned,
+                  onShown: onShown,
+                  actions: (
+                    openInvoice: actions.onOpenInvoice,
+                    openCustomer: actions.onOpenCustomer,
+                    remind: actions.onRemind ?? (_) {},
+                    shareReminders: actions.onShareReminders ?? (_) {},
+                  ),
+                ),
         ),
       ],
     );
   }
+
+  /// The invoices the "To do" entry [kind] counts; all of them when null.
+  Iterable<Receivable> _selected(TodoKind? kind) => data.receivables.where(
+    (r) =>
+        kind == null ||
+        todoKindOf(r, data.mode, holdsUnassigned: data.holdsUnassigned) == kind,
+  );
+
+  /// The customers who owe — or, from a "To do" entry, those it counts —
+  /// one row each, opened on the chip chosen above (none from a "To do").
+  Widget _customers(TodoKind? kind) => InvoicingCustomersTable(
+    key: ValueKey('invoicing-customers-desk-${kind?.name}'),
+    lines: customerLinesByCurrency(
+      _selected(kind).where((r) => kind != null || r.isOutstanding),
+      today: data.today,
+      mode: data.mode,
+      holdsUnassigned: data.holdsUnassigned,
+    ),
+    today: data.today,
+    chip: kind == null ? filter : null,
+    remindersKnown: data.creditsKnown,
+    onOpenCustomer: actions.onOpenCustomer,
+    onCustomerAction: actions.onCustomerAction,
+  );
 }

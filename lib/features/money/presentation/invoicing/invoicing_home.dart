@@ -194,8 +194,7 @@ class _InvoicingHomeState extends State<InvoicingHome> {
       valueListenable: _filter,
       builder: (context, filter, _) => LayoutBuilder(
         builder: (context, box) {
-          final wide =
-              widget.wide ?? isWideNavigationWidth(box.maxWidth);
+          final wide = widget.wide ?? isWideNavigationWidth(box.maxWidth);
           final statusesFailed = data.failed.any(
             InvoicingSource.statuses.contains,
           );
@@ -211,10 +210,9 @@ class _InvoicingHomeState extends State<InvoicingHome> {
               todo: _todoEntry(l),
               onClearTodo: _clearTodo,
               onShown: widget.onDeskOrder,
-              customers: _view == InvoicingView.customers &&
-                      filter != InvoicingFilter.paid
-                  ? _list(filter, wide: true)
-                  : null,
+              byCustomer:
+                  _view == InvoicingView.customers &&
+                  filter != InvoicingFilter.paid,
               onView: (v) => setState(() => _view = v),
             );
           }
@@ -258,7 +256,7 @@ class _InvoicingHomeState extends State<InvoicingHome> {
                   ],
                 ),
               ),
-              _list(filter, wide: wide),
+              _list(filter),
             ],
           );
         },
@@ -267,30 +265,28 @@ class _InvoicingHomeState extends State<InvoicingHome> {
   }
 
   /// The list under its pinned filters, named by [InvoicingHome.listKey].
-  Widget _list(InvoicingFilter filter, {required bool wide}) =>
-      KeyedSubtree(
-        key: widget.listKey,
-        child: InvoicingList(
-          key: const ValueKey('invoicing-list'),
-          receivables: widget.data.receivables,
-          today: widget.data.today,
-          mode: widget.data.mode,
-          holdsUnassigned: widget.data.holdsUnassigned,
-          remindersKnown: widget.data.creditsKnown,
-          filter: filter,
-          view: _view,
-          query: _query,
-          searchOpen: widget.searchOpen,
-          wide: wide,
-          onFilter: _choose,
-          onView: (v) => setState(() => _view = v),
-          onOpenInvoice: widget.actions.onOpenInvoice,
-          onOpenCustomer: widget.actions.onOpenCustomer,
-          onCustomerAction: widget.actions.onCustomerAction,
-          todo: _todoEntry(context.l10n),
-          onClearTodo: () => setState(() => _todo = null),
-        ),
-      );
+  Widget _list(InvoicingFilter filter) => KeyedSubtree(
+    key: widget.listKey,
+    child: InvoicingList(
+      key: const ValueKey('invoicing-list'),
+      receivables: widget.data.receivables,
+      today: widget.data.today,
+      mode: widget.data.mode,
+      holdsUnassigned: widget.data.holdsUnassigned,
+      remindersKnown: widget.data.creditsKnown,
+      filter: filter,
+      view: _view,
+      query: _query,
+      searchOpen: widget.searchOpen,
+      onFilter: _choose,
+      onView: (v) => setState(() => _view = v),
+      onOpenInvoice: widget.actions.onOpenInvoice,
+      onOpenCustomer: widget.actions.onOpenCustomer,
+      onCustomerAction: widget.actions.onCustomerAction,
+      todo: _todoEntry(context.l10n),
+      onClearTodo: () => setState(() => _todo = null),
+    ),
+  );
 
   Widget _owedCard(BuildContext context, InvoicingFilter filter) {
     final l = context.l10n;
@@ -464,15 +460,16 @@ class _InvoicingHomeState extends State<InvoicingHome> {
   /// The title of the "To do" entry [kind], as its row says it now.
   String _todoTitle(AppLocalizations l, TodoKind kind) {
     final data = widget.data;
-    final todo = todoOf(
-      data.receivables,
-      mode: data.mode,
-      holdsUnassigned: data.holdsUnassigned,
-      originalsToKeep: data.originalsToKeep,
-    ).firstWhere(
-      (t) => t.kind == kind,
-      orElse: () => (kind: kind, tally: Tally.empty),
-    );
+    final todo =
+        todoOf(
+          data.receivables,
+          mode: data.mode,
+          holdsUnassigned: data.holdsUnassigned,
+          originalsToKeep: data.originalsToKeep,
+        ).firstWhere(
+          (t) => t.kind == kind,
+          orElse: () => (kind: kind, tally: Tally.empty),
+        );
     return todoWordsOf(l, todo, data.toInvoiceMonth).title;
   }
 
@@ -483,7 +480,10 @@ class _InvoicingHomeState extends State<InvoicingHome> {
     padding: AppSpacing.mdAll,
     children: [
       for (final s in failed) ...[
-        InvoicingFailedSource(source: s, onRetry: () => widget.actions.onRetry(s)),
+        InvoicingFailedSource(
+          source: s,
+          onRetry: () => widget.actions.onRetry(s),
+        ),
         const SizedBox(height: AppSpacing.sm),
       ],
     ],

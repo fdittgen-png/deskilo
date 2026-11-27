@@ -18859,9 +18859,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoicingMoreTemplate => 'Plantilla PDF de factura';
 
   @override
-  String get invoicingNew => 'Nueva';
-
-  @override
   String get invoicingNothingHere => 'Nada aquí.';
 
   @override
@@ -29106,6 +29103,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String quoteOrderLine(String value) {
     return 'Número de pedido: $value';
+  }
+
+  @override
+  String quotePageTitle(String number) {
+    return 'Presupuesto $number';
   }
 
   @override

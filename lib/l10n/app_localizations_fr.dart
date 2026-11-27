@@ -18941,9 +18941,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicingMoreTemplate => 'Modèle PDF des factures';
 
   @override
-  String get invoicingNew => 'Nouvelle';
-
-  @override
   String get invoicingNothingHere => 'Rien ici.';
 
   @override
@@ -29232,6 +29229,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String quoteOrderLine(String value) {
     return 'Numéro de commande : $value';
+  }
+
+  @override
+  String quotePageTitle(String number) {
+    return 'Devis $number';
   }
 
   @override

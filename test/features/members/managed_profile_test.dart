@@ -75,6 +75,11 @@ void main() {
       (tester) async {
     final workspace = await _pumpMembers(tester);
 
+    // #4492 — behind the page's worded More
+    await tester.tap(find.byKey(const ValueKey('members-more')));
+    for (var i = 0; i < 5; i++) {
+      await tester.pump(const Duration(milliseconds: 200));
+    }
     await tester.tap(find.byKey(const ValueKey('members-add-managed')));
     await tester.pumpAndSettle();
     expect(find.textContaining('has no account yet'), findsOneWidget,

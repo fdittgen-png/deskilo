@@ -5,6 +5,10 @@
 // frozen (its amounts are the real issuer's); a draft shows none, they are
 // worked out when it is sent. Every action is the server's decision: a refusal
 // or a lost answer is said, and the quote is read again.
+// #4492 -- the page has the invoice page's anatomy: its name in the bar, the
+// state said once in the summary card, the sections as cards, the action of
+// the moment in the bottom bar (Send, Record the answer, Invoice this quote)
+// and the corrections (amend, cancel, discard) behind the worded More.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -17,16 +21,17 @@ import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/async_read_body.dart';
-import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/kit/bottom_action_bar.dart';
+import '../../../../core/ui/kit/page_more_menu.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../application/customer_quote_commands.dart';
 import '../../domain/customer_quote.dart';
 import '../../providers/billing_customer_providers.dart';
 import '../../providers/customer_quote_providers.dart';
-import '../engagements/follow_line_button.dart';
 import '../quote_print.dart';
 import '../quotes/quote_conversion_sheet.dart';
 import '../quotes/quote_decision_sheet.dart';
+import '../quotes/quote_page_parts.dart';
 import '../quotes/quote_text.dart';
 import 'money_view_data.dart';
 
@@ -86,27 +91,144 @@ class _CustomerQuoteScreenState extends ConsumerState<CustomerQuoteScreen> {
       ..invalidate(customerQuoteProvider((workspaceId: workspaceId, quoteId: widget.quoteId)));
   }
 
+  /// The corrections of the quote, behind More: a first draft is discarded,
+  /// a sent quote is amended (another revision) or cancelled.
+  List<PageMoreEntry> _corrections(String workspaceId, CustomerQuote quote) {
+    final l10n = context.l10n;
+    final draft = quote.draft;
+    return [
+      PageMoreEntry.heading(
+        key: const ValueKey('quote-more-corrections'),
+        label: l10n.invoicePageMoreCorrections,
+      ),
+      if (draft != null && quote.status == QuoteStatus.draft)
+        PageMoreEntry(
+          key: const ValueKey('quote-discard'),
+          label: l10n.quoteDiscardDraft,
+          onSelected: () => unawaited(
+            _run(workspaceId, (c) => c.discardDraft(workspaceId, quote.id), leave: true),
+          ),
+        ),
+      if (draft == null && quote.status == QuoteStatus.sent) ...[
+        PageMoreEntry(
+          key: const ValueKey('quote-amend'),
+          label: l10n.quoteAmend,
+          onSelected: () => unawaited(_run(workspaceId, (c) => c.amend(workspaceId, quote.id))),
+        ),
+        PageMoreEntry(
+          key: const ValueKey('quote-cancel'),
+          label: l10n.quoteCancelAction,
+          onSelected: () => unawaited(_run(workspaceId, (c) => c.cancel(workspaceId, quote.id))),
+        ),
+      ],
+    ];
+  }
+
+  /// What the issuer does now, the main action last: a draft is edited and
+  /// sent, a sent quote gets its answer, an accepted one is invoiced, an
+  /// invoiced one opens its invoice.
+  List<Widget> _actions(String workspaceId, CustomerQuote quote) {
+    final l10n = context.l10n;
+    final draft = quote.draft;
+    Widget filled(String key, String label, VoidCallback onPressed) => FilledButton(
+      key: ValueKey(key),
+      onPressed: _busy ? null : onPressed,
+      child: Text(label, textAlign: TextAlign.center),
+    );
+    return [
+      if (draft != null) ...[
+        OutlinedButton(
+          key: const ValueKey('quote-edit'),
+          onPressed: _busy ? null : () => context.go(Routes.moneyQuoteEdit(quote.id)),
+          child: Text(l10n.quoteEditDraft, textAlign: TextAlign.center),
+        ),
+        filled(
+          'quote-send',
+          l10n.quoteSend,
+          () => unawaited(
+            _run(
+              workspaceId,
+              (c) => c.send(
+                workspaceId,
+                quote.id,
+                revision: draft.revision,
+                version: draft.draftVersion,
+              ),
+            ),
+          ),
+        ),
+      ],
+      if (draft == null && quote.status == QuoteStatus.sent)
+        filled(
+          'quote-record-answer',
+          l10n.quoteRecordAnswer,
+          () => unawaited(_answer(context, workspaceId, quote, convert: false)),
+        ),
+      if (quote.status == QuoteStatus.accepted && quote.invoiceId == null)
+        filled(
+          'quote-convert',
+          l10n.quoteConvert,
+          () => unawaited(_answer(context, workspaceId, quote, convert: true)),
+        ),
+      if (quote.invoiceId case final invoiceId?)
+        FilledButton(
+          key: const ValueKey('quote-open-invoice'),
+          onPressed: () => context.go(Routes.invoice(invoiceId)),
+          child: Text(l10n.quoteConvertOpenInvoice, textAlign: TextAlign.center),
+        ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final workspace = MoneyViewData.gates(ref).workspace;
     final canIssue = MoneyViewData.purchasePermissionNames(ref).contains('issueInvoices');
     final id = workspace?.id;
+    final read = id == null
+        ? null
+        : ref.watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)));
+    // The bar and the actions say what was read: while the read has failed
+    // they stay away, so nothing is offered on an answer of before.
+    // #4414 kept: a guard on the actions, the failure is drawn by AsyncReadBody
+    final quote = read == null || read.hasError ? null : read.value;
+    final acts =
+        id != null && quote != null && canIssue && (quote.openForActions || quote.invoiceId != null);
+    final actions = acts ? _actions(id, quote) : const <Widget>[];
     return Scaffold(
       appBar: AppBar(
-        title: PageTitle(l10n.quotesTitle),
+        title: switch (quote?.reference) {
+          final reference? => PageTitle(
+            l10n.quotePageTitle(reference),
+            key: const ValueKey('quote-title'),
+            whenCut: reference,
+          ),
+          // A quote nothing was sent of has no number yet.
+          null => PageTitle(l10n.reportDocQuote, key: const ValueKey('quote-title')),
+        },
         leading: BackButton(
           key: const ValueKey('quote-back'),
           onPressed: () => context.go(Routes.moneyQuotes),
         ),
+        actions: [
+          if (acts)
+            PageMoreMenu(
+              key: const ValueKey('quote-more'),
+              enabled: !_busy,
+              entries: _corrections(id, quote),
+            ),
+        ],
       ),
-      body: id == null
+      bottomNavigationBar: actions.isEmpty
+          ? null
+          : BottomActionBar(maxWidth: kReadingColumnWidth, actions: actions),
+      body: id == null || read == null
           ? const SizedBox.shrink()
           : Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
                 child: AsyncReadBody(
-                  value: ref.watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId))),
+                  value: read,
                   refusal: (error) => error is QuoteRefusal
                       ? quoteRefusalText(l10n, error)
                       : null,
@@ -118,11 +240,7 @@ class _CustomerQuoteScreenState extends ConsumerState<CustomerQuoteScreen> {
                     quote: quote,
                     workspaceId: id,
                     canIssue: canIssue,
-                    busy: _busy,
                     said: _said,
-                    onRun: (act, {leave = false}) => unawaited(_run(id, act, leave: leave)),
-                    onAnswer: (context, {required convert}) =>
-                        unawaited(_answer(context, id, quote, convert: convert)),
                   ),
                 ),
               ),
@@ -131,33 +249,26 @@ class _CustomerQuoteScreenState extends ConsumerState<CustomerQuoteScreen> {
   }
 }
 
+/// The quote's sections, each a card: the summary, the lines, the revisions
+/// and the document.
 class _Content extends ConsumerWidget {
   const _Content({
     required this.quote,
     required this.workspaceId,
     required this.canIssue,
-    required this.busy,
     required this.said,
-    required this.onRun,
-    required this.onAnswer,
   });
 
   final CustomerQuote quote;
   final String workspaceId;
   final bool canIssue;
-  final bool busy;
-  final String? said;
-  final void Function(
-    Future<CommandOutcome<Object?>> Function(CustomerQuoteCommands) act, {
-    bool leave,
-  }) onRun;
 
-  /// Opens the answer sheet, or the conversion sheet when [convert].
-  final void Function(BuildContext context, {required bool convert}) onAnswer;
+  /// What the last action answered when it was not done.
+  final String? said;
 
   /// Whether an accepted line offers its engagement: the feature is on, the
   /// person may issue, and the accepted revision is the one shown.
-  bool canFollow(WidgetRef ref) =>
+  bool _canFollow(WidgetRef ref) =>
       canIssue &&
       (quote.status == QuoteStatus.accepted || quote.status == QuoteStatus.converted) &&
       quote.decision?.revision == quote.shown?.revision &&
@@ -170,221 +281,36 @@ class _Content extends ConsumerWidget {
     );
     final shown = quote.shown;
     return ListView(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: AppSpacing.mdAll,
       children: [
-        ..._header(context, names),
-        if (shown != null) ..._offer(context, shown, canFollow: canFollow(ref)),
-        ..._share(context, ref),
-        ..._decision(context),
-        if (quote.revisions.length > 1) ..._history(context),
-        if (canIssue && (quote.openForActions || quote.invoiceId != null))
-          ..._actions(context),
+        if (said case final words?)
+          Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.md),
+            child: Text(
+              words,
+              key: const ValueKey('quote-said'),
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            ),
+          ),
+        QuoteSummaryCard(quote: quote, customer: names[quote.subjectId]),
+        if (shown != null) ...[
+          const SizedBox(height: AppSpacing.md),
+          QuoteLinesCard(
+            quote: quote,
+            shown: shown,
+            workspaceId: workspaceId,
+            canFollow: _canFollow(ref),
+          ),
+        ],
+        if (quote.revisions.length > 1) ...[
+          const SizedBox(height: AppSpacing.md),
+          QuoteRevisionsCard(quote: quote),
+        ],
+        if (quoteDocumentRevision(quote) != null) ...[
+          const SizedBox(height: AppSpacing.md),
+          QuoteDocumentCard(quote: quote, workspaceId: workspaceId),
+        ],
       ],
     );
-  }
-
-  List<Widget> _header(BuildContext context, Map<String, String> names) {
-    final l10n = context.l10n;
-    final theme = Theme.of(context);
-    return [
-      Text(
-        quote.reference ?? l10n.invoicingStatusDraft,
-        key: const ValueKey('quote-title'),
-        style: theme.textTheme.titleLarge,
-      ),
-      const FormGap.small(),
-      // The state is a word on its tone, as in the list; the customer beside it.
-      Wrap(
-        spacing: AppSpacing.sm,
-        runSpacing: AppSpacing.xs,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          quoteStatusChip(l10n, quote, key: const ValueKey('quote-status')),
-          if (names[quote.subjectId] case final name?)
-            Text(name, key: const ValueKey('quote-customer')),
-        ],
-      ),
-      if (said != null) ...[
-        const FormGap(),
-        Text(
-          said!,
-          key: const ValueKey('quote-said'),
-          style: TextStyle(color: theme.colorScheme.error),
-        ),
-      ],
-      const FormGap(),
-    ];
-  }
-
-  /// The revision on offer: dates, terms, lines, and the amounts a sent one froze.
-  List<Widget> _offer(BuildContext context, QuoteRevision shown, {required bool canFollow}) {
-    final l10n = context.l10n;
-    final theme = Theme.of(context);
-    final totals = shown.totals;
-    return [
-      Text(l10n.quoteValidUntil(quoteDate(context, shown.validUntil))),
-      if (shown.buyerReference.isNotEmpty)
-        Text(l10n.quoteReferenceLine(shown.buyerReference)),
-      if (shown.purchaseOrder.isNotEmpty)
-        Text(l10n.quoteOrderLine(shown.purchaseOrder)),
-      const FormGap(),
-      Text(l10n.standaloneInvoiceLines, style: theme.textTheme.titleMedium),
-      for (final (i, line) in shown.lines.indexed)
-        ListTile(
-          key: ValueKey('quote-line-$i'),
-          dense: true,
-          contentPadding: EdgeInsets.zero,
-          title: Text(line.description),
-          subtitle: Text('${line.quantity} ${line.unitLabel} × ${line.unitPrice}'),
-          // #4178 — an accepted line is followed as an engagement of its own
-          trailing: canFollow && line.lineId != null
-              ? FollowLineButton(workspaceId: workspaceId, quoteId: quote.id, lineId: line.lineId!)
-              : null,
-        ),
-      if (totals != null)
-        ListTile(
-          key: const ValueKey('quote-total'),
-          contentPadding: EdgeInsets.zero,
-          title: Text(l10n.quoteTotal, style: theme.textTheme.titleMedium),
-          trailing: Text(quoteAmount(context, totals), style: theme.textTheme.titleMedium),
-        )
-      else
-        Text(l10n.quoteAmountsOnSend, key: const ValueKey('quote-amounts-on-send')),
-      if (shown.notes.isNotEmpty) ...[const FormGap(), Text(shown.notes)],
-      if (quote.current != null && quote.reference != null) ...[
-        const FormGap(),
-        Text(l10n.quoteSentAs(quote.reference!), key: const ValueKey('quote-sent-as')),
-      ],
-    ];
-  }
-
-  /// What the issuer recorded, never a customer's signature.
-  /// The offer as a document: what the customer holds, to look at, save or
-  /// share. A quote nothing was sent of has none.
-  List<Widget> _share(BuildContext context, WidgetRef ref) {
-    if (quoteDocumentRevision(quote) == null) return const [];
-    return [
-      const FormGap(),
-      Align(
-        alignment: AlignmentDirectional.centerStart,
-        child: OutlinedButton.icon(
-          key: const ValueKey('quote-print'),
-          icon: const Icon(Icons.ios_share),
-          label: Text(context.l10n.invoicePageMoreShare),
-          onPressed: () =>
-              QuotePrint(context, ref).show(workspaceId: workspaceId, quote: quote),
-        ),
-      ),
-    ];
-  }
-
-  List<Widget> _decision(BuildContext context) {
-    final decision = quote.decision;
-    if (decision == null) return const [];
-    return [
-      const FormGap(),
-      Text(
-        context.l10n.quoteDecisionByIssuer(
-          quoteSourceLabel(context.l10n, decision.source),
-          quoteDate(context, decision.decidedOn),
-        ),
-        key: const ValueKey('quote-decision'),
-      ),
-    ];
-  }
-
-  List<Widget> _history(BuildContext context) {
-    final l10n = context.l10n;
-    return [
-      const FormGap(),
-      Text(l10n.quoteRevisionsTitle, style: Theme.of(context).textTheme.titleMedium),
-      for (final r in quote.revisions)
-        Text(
-          l10n.quoteRevisionLine(
-            '${r.revision}',
-            r.sent ? l10n.quoteStatusSent : l10n.invoicingStatusDraft,
-          ),
-          key: ValueKey('quote-revision-${r.revision}'),
-        ),
-    ];
-  }
-
-  /// What the issuer may do now: a draft is edited, sent or discarded; a sent
-  /// quote is amended (another revision) or cancelled.
-  List<Widget> _actions(BuildContext context) {
-    final l10n = context.l10n;
-    final draft = quote.draft;
-    return [
-      const FormGap(),
-      Wrap(
-        spacing: AppSpacing.sm,
-        runSpacing: AppSpacing.sm,
-        children: [
-          if (draft != null) ..._draftActions(context, draft),
-          if (quote.status == QuoteStatus.accepted && quote.invoiceId == null)
-            FilledButton(
-              key: const ValueKey('quote-convert'),
-              onPressed: busy ? null : () => onAnswer(context, convert: true),
-              child: Text(l10n.quoteConvert),
-            ),
-          if (quote.invoiceId != null)
-            FilledButton(
-              key: const ValueKey('quote-open-invoice'),
-              onPressed: () => context.go(Routes.invoice(quote.invoiceId!)),
-              child: Text(l10n.quoteConvertOpenInvoice),
-            ),
-          if (draft == null && quote.status == QuoteStatus.sent) ...[
-            FilledButton(
-              key: const ValueKey('quote-record-answer'),
-              onPressed: busy ? null : () => onAnswer(context, convert: false),
-              child: Text(l10n.quoteRecordAnswer),
-            ),
-            FilledButton(
-              key: const ValueKey('quote-amend'),
-              onPressed: busy ? null : () => onRun((c) => c.amend(workspaceId, quote.id)),
-              child: Text(l10n.quoteAmend),
-            ),
-            OutlinedButton(
-              key: const ValueKey('quote-cancel'),
-              onPressed: busy ? null : () => onRun((c) => c.cancel(workspaceId, quote.id)),
-              child: Text(l10n.quoteCancelAction),
-            ),
-          ],
-        ],
-      ),
-    ];
-  }
-
-  List<Widget> _draftActions(BuildContext context, QuoteRevision draft) {
-    final l10n = context.l10n;
-    return [
-      OutlinedButton(
-        key: const ValueKey('quote-edit'),
-        onPressed: busy ? null : () => context.go(Routes.moneyQuoteEdit(quote.id)),
-        child: Text(l10n.quoteEditDraft),
-      ),
-      FilledButton(
-        key: const ValueKey('quote-send'),
-        onPressed: busy
-            ? null
-            : () => onRun(
-                (c) => c.send(
-                  workspaceId,
-                  quote.id,
-                  revision: draft.revision,
-                  version: draft.draftVersion,
-                ),
-              ),
-        child: Text(l10n.quoteSend),
-      ),
-      if (quote.status == QuoteStatus.draft)
-        OutlinedButton(
-          key: const ValueKey('quote-discard'),
-          onPressed: busy
-              ? null
-              : () => onRun((c) => c.discardDraft(workspaceId, quote.id), leave: true),
-          child: Text(l10n.quoteDiscardDraft),
-        ),
-    ];
   }
 }

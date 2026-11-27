@@ -17,6 +17,8 @@ import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/form_sheet.dart';
+import '../../../../core/ui/kit/page_bar.dart';
+import '../../../../core/ui/kit/page_more_menu.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../directory/presentation/member_employment_tile.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
@@ -39,12 +41,17 @@ import '../widgets/open_conversation.dart';
 /// Owner-only member management: role overview, subscription percentage
 /// assignment (#128, ADR 0008), pause/reactivate (spec §7.2).
 class MembersScreen extends ConsumerWidget {
-  const MembersScreen({super.key, this.desk, this.deskActions = const []});
+  const MembersScreen({super.key, this.desk, this.deskMore});
 
   /// #3618 — what a large window shows instead of the list (the members'
   /// records table), with [deskActions] before the list's own actions.
   final Widget? desk;
-  final List<Widget> deskActions;
+  /// #4492 — the desk's own lines of the page's worded More, after the
+  /// list's, read from the space's [features].
+  final List<PageMoreEntry> Function(
+    BuildContext context,
+    Set<WorkspaceFeature> features,
+  )? deskMore;
 
   Future<void> _memberSheet(
     BuildContext context,
@@ -152,10 +159,7 @@ class MembersScreen extends ConsumerWidget {
       return Scaffold(
         appBar: AppBar(
           title: PageTitle(l10n.membersTitle),
-          actions: [
-            ...deskActions,
-            ..._appBarActions(context, ref, me, features, desk: true),
-          ],
+          actions: _appBarActions(context, ref, me, features, desk: true),
         ),
         body: body,
       );
@@ -216,60 +220,54 @@ class MembersScreen extends ConsumerWidget {
 
   /// The app bar's entry points; owner-only ones gate on [me]'s
   /// permission, not literal ownership: active co-owners (0058) get the
-  /// full owner surface.
+  /// full owner surface. #4492 — inviting is the page's one main action,
+  /// filled and worded; the rest is behind the worded More.
   List<Widget> _appBarActions(BuildContext context, WidgetRef ref,
       Member? me, Set<WorkspaceFeature> features, {bool desk = false}) {
     final l10n = context.l10n;
     final isOwner = me?.actsAsOwner ?? false;
+    final admin = me?.canAdminister ?? false;
     return [
-          // Admin broadcast (#456): one note to ALL admins incl. the
-          // owner — the server re-checks the sender's rights.
-          if ((me?.canAdminister ?? false) &&
-              features.contains(WorkspaceFeature.memberNotifications))
-            IconButton(
-              key: const ValueKey('members-notify-admins'),
-              icon: const Icon(Icons.campaign_outlined),
-              tooltip: l10n.memberNotifyAllAdmins,
-              onPressed: () => showMemberNoteDialog(
-                context,
-                ref,
-                toMemberId: null,
-                recipientName:
-                    l10n.memberAllAdmins,
-              ),
-            ),
-          // #887 — a member who has no account yet: the admin runs the
-          // profile until the person claims it.
-          if ((me?.canAdminister ?? false) &&
-              features.contains(WorkspaceFeature.managedProfiles))
-            IconButton(
-              key: const ValueKey('members-add-managed'),
-              icon: const Icon(Icons.person_add_alt_1_outlined),
-              tooltip: l10n.managedProfileAdd,
-              onPressed: () => context.push(Routes.membersManaged),
-            ),
-          // Invite entry point (#195): the members list is where owners
-          // notice someone is missing. Links to the owner-only workspace
-          // ID & QR and billing surfaces — hidden from plain admins.
-          if (isOwner)
-            IconButton(
-              key: const ValueKey('members-invite'),
-              icon: const Icon(Icons.person_add_outlined),
-              tooltip: l10n.membersInvite,
-              // #3618 — at the desk, the invitation as a short task.
-              onPressed: () => switch (ref.read(currentWorkspaceProvider).value) {
-                final ws? when desk => showInviteSheet(context,
-                    workspace: ws, role: InviteRole.user, asTask: true),
-                _ => context.push(Routes.workspaceCode),
-              },
-            ),
-          if (isOwner && features.contains(WorkspaceFeature.moneyTab))
-          IconButton(
-            key: const ValueKey('members-billing-title'),
-            icon: const Icon(Icons.tune),
-            tooltip: l10n.billingTitle,
-            onPressed: () => context.push(Routes.billing),
+      // Invite entry point (#195): the members list is where owners notice
+      // someone is missing. Links to the owner-only workspace ID & QR and
+      // billing surfaces — hidden from plain admins.
+      if (isOwner)
+        pageBarAction(
+          key: const ValueKey('members-invite'),
+          label: l10n.membersInvite,
+          // #3618 — at the desk, the invitation as a short task.
+          onPressed: () => switch (ref.read(currentWorkspaceProvider).value) {
+            final ws? when desk => showInviteSheet(context,
+                workspace: ws, role: InviteRole.user, asTask: true),
+            _ => context.push(Routes.workspaceCode),
+          },
+        ),
+      PageMoreMenu(key: const ValueKey('members-more'), entries: [
+        // Admin broadcast (#456): one note to ALL admins incl. the owner —
+        // the server re-checks the sender's rights.
+        if (admin && features.contains(WorkspaceFeature.memberNotifications))
+          PageMoreEntry(
+            key: const ValueKey('members-notify-admins'),
+            label: l10n.memberNotifyAllAdmins,
+            onSelected: () => showMemberNoteDialog(context, ref,
+                toMemberId: null, recipientName: l10n.memberAllAdmins),
           ),
+        // #887 — a member who has no account yet: the admin runs the
+        // profile until the person claims it.
+        if (admin && features.contains(WorkspaceFeature.managedProfiles))
+          PageMoreEntry(
+            key: const ValueKey('members-add-managed'),
+            label: l10n.managedProfileAdd,
+            onSelected: () => context.push(Routes.membersManaged),
+          ),
+        if (isOwner && features.contains(WorkspaceFeature.moneyTab))
+          PageMoreEntry(
+            key: const ValueKey('members-billing-title'),
+            label: l10n.billingTitle,
+            onSelected: () => context.push(Routes.billing),
+          ),
+        if (desk) ...?deskMore?.call(context, features),
+      ]),
     ];
   }
 

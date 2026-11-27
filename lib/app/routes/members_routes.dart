@@ -4,18 +4,17 @@
 // A route is one GoRoute and its RouteAccess here; router.dart only composes
 // the lists.
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/list_detail_route.dart';
+import '../../core/ui/kit/page_more_menu.dart';
 import '../../features/members/presentation/screens/managed_profile_screen.dart';
 import '../../features/members/presentation/screens/member_page.dart';
 import '../../features/members/presentation/screens/privacy_admin_screen.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/presentation/screens/members_screen.dart';
-import '../../features/workspace/providers/workspace_providers.dart';
 import '../desk_members/member_record.dart';
 import '../desk_members/members_desk.dart';
 import '../desk_members/plans_desk.dart';
@@ -103,19 +102,13 @@ List<RouteBase> membersRoutes(RouteEnv env) {
       redirect: env.guard(_membersAccess),
       builder: (context, state) => MembersScreen(
         desk: const MembersDesk(),
-        deskActions: [
-          Consumer(
-            builder: (context, ref, _) =>
-                ref
-                    .watch(enabledFeaturesSyncProvider)
-                    .contains(WorkspaceFeature.moneyTab)
-                ? TextButton(
-                    key: const ValueKey('members-plans'),
-                    onPressed: () => context.go(plansPath),
-                    child: Text(context.l10n.membersPlansTitle),
-                  )
-                : const SizedBox.shrink(),
-          ),
+        deskMore: (context, features) => [
+          if (features.contains(WorkspaceFeature.moneyTab))
+            PageMoreEntry(
+              key: const ValueKey('members-plans'),
+              label: context.l10n.membersPlansTitle,
+              onSelected: () => context.go(plansPath),
+            ),
         ],
       ),
       // #3618 — a member's address: beside the table on a large window,

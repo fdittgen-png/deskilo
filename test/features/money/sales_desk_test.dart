@@ -22,14 +22,15 @@ DateTime _day(DateTime d) => DateTime(d.year, d.month, d.day);
 
 Receivable _r(
   String id, {
+  String? customer,
   String currency = 'EUR',
   int open = 10000,
   int? level = 1,
   ReceivableStage stage = ReceivableStage.open,
 }) => Receivable(
   invoiceId: id,
-  customerId: 'c-$id',
-  customerName: 'Customer $id',
+  customerId: 'c-${customer ?? id}',
+  customerName: 'Customer ${customer ?? id}',
   number: 'INV-$id',
   currency: currency,
   totalMinor: 10000,
@@ -42,7 +43,12 @@ Receivable _r(
 
 Finder _k(String key) => find.byKey(ValueKey(key));
 
-Future<void> _desk(WidgetTester tester, List<Receivable> receivables) async {
+Future<void> _desk(
+  WidgetTester tester,
+  List<Receivable> receivables, {
+  bool byInvoice = true,
+  ValueChanged<String>? onOpenCustomer,
+}) async {
   await pumpApp(
     tester,
     Scaffold(
@@ -57,7 +63,7 @@ Future<void> _desk(WidgetTester tester, List<Receivable> receivables) async {
         ),
         actions: InvoicingHomeActions(
           onOpenInvoice: (_) {},
-          onOpenCustomer: (_) {},
+          onOpenCustomer: onOpenCustomer ?? (_) {},
           onCustomerAction: (_, _) {},
           onTodo: (_) {},
           onRetry: (_) {},
@@ -68,6 +74,7 @@ Future<void> _desk(WidgetTester tester, List<Receivable> receivables) async {
     size: const Size(1440, 1200),
   );
   await tester.pumpAndSettle();
+  if (!byInvoice) return;
   // By invoice: the records table.
   await tester.tap(
     find.descendant(of: _k('invoicing-view'), matching: find.text('Invoices')),
@@ -76,6 +83,54 @@ Future<void> _desk(WidgetTester tester, List<Receivable> receivables) async {
 }
 
 void main() {
+  group('the customers at the desk (#4492 M1)', () {
+    testWidgets('are the same records table: chips with counts, a row per '
+        'customer and currency, the total per currency, the row opens the '
+        'customer', (tester) async {
+      final opened = <String>[];
+      await _desk(
+        tester,
+        [
+          _r('a', open: 4000),
+          _r('b', customer: 'a', open: 1000),
+          _r('c', open: 6000),
+          _r('e', customer: 'a', currency: 'CHF', open: 2500),
+          _r('d', open: 0, level: null, stage: ReceivableStage.paid),
+        ],
+        byInvoice: false,
+        onOpenCustomer: opened.add,
+      );
+      // one row for a in euros (two invoices), one for a in francs, one for
+      // c; who has paid everything is not a line
+      expect(_k('records-row-c-a-EUR'), findsOneWidget);
+      expect(_k('records-row-c-a-CHF'), findsOneWidget);
+      expect(_k('records-row-c-c-EUR'), findsOneWidget);
+      expect(_k('records-row-c-d-EUR'), findsNothing);
+      expect(find.text('Open 3'), findsOneWidget);
+      expect(find.text('Paid 1'), findsNothing);
+      expect(
+        find.descendant(
+          of: _k('records-total-EUR'),
+          matching: find.textContaining('110.00'),
+          matchRoot: true,
+        ),
+        findsOneWidget,
+        reason: 'what the customers shown owe: 40 + 10 + 60',
+      );
+      expect(
+        find.descendant(
+          of: _k('records-total-CHF'),
+          matching: find.textContaining('25.00'),
+          matchRoot: true,
+        ),
+        findsOneWidget,
+      );
+      await tester.tap(_k('invoicing-customer-c-c'));
+      await tester.pumpAndSettle();
+      expect(opened, ['c-c']);
+    });
+  });
+
   group('the desk table', () {
     testWidgets('the footer adds the open rows, one total per currency, '
         'never across', (tester) async {

@@ -219,20 +219,21 @@ class _QuotesTable extends StatelessWidget {
         ),
       ],
       cardBuilder: (context, q) {
-        // A draft has no number yet: its customer names the card, and the
-        // state is said once.
+        // A draft has no number yet: its customer names the card. The state
+        // is said once, in its chip under the amount, as the row says it.
         final head = [?q.reference, if (customer(q).isNotEmpty) customer(q)];
-        final status = quoteStatusLabel(l10n, q);
         return ListTile(
           key: ValueKey('quote-row-${q.id}'),
-          title: Text(head.isEmpty ? status : head.join(' · ')),
-          subtitle: Text(
-            [
-              if (head.isNotEmpty) status,
-              if (until(q).isNotEmpty) l10n.quoteValidUntil(until(q)),
-            ].join(' · '),
+          title: Text(head.isEmpty ? l10n.reportDocQuote : head.join(' · ')),
+          subtitle: until(q).isEmpty ? null : Text(l10n.quoteValidUntil(until(q))),
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              if (amount(q).isNotEmpty) Text(amount(q)),
+              quoteStatusChip(l10n, q),
+            ],
           ),
-          trailing: amount(q).isEmpty ? null : Text(amount(q)),
         );
       },
     );

@@ -246,7 +246,7 @@ void main() {
     await tester.tap(datev);
     await tester.pump(const Duration(seconds: 1));
     expect(source.probe.calls, 1);
-    expect(tester.widget<IconButton>(export).onPressed, isNull);
+    expect(tester.widget<FilledButton>(export).onPressed, isNull);
 
     await tester.tap(export, warnIfMissed: false);
     await tester.pump(const Duration(milliseconds: 400));
@@ -258,7 +258,7 @@ void main() {
     expect(find.text(_en.commonSaveFailed), findsOneWidget);
     expect(find.textContaining('disk full'), findsNothing);
     expect(find.byKey(const ValueKey('invoice-register-period')), findsOneWidget);
-    expect(tester.widget<IconButton>(export).onPressed, isNotNull);
+    expect(tester.widget<FilledButton>(export).onPressed, isNotNull);
   });
 
   testWidgets('#3680 — a failed read of the matches draws no row and no '

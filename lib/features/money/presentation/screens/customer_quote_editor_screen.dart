@@ -7,6 +7,9 @@
 // works the amounts out when the quote is sent, so the editor shows none. A
 // draft is saved before it is sent; a stale save, an incomplete quote and a
 // lost answer are each said, never swallowed.
+// #4492 -- Save draft and Send stand in the bottom bar, as the actions of the
+// quote's own page do, with what the last one answered above them: both stay
+// in view however long the lines grow.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -15,8 +18,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/failure/app_failure.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
-import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/kit/bottom_action_bar.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../domain/billing_customer.dart';
 import '../../domain/customer_quote.dart';
@@ -202,12 +206,19 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final id = MoneyViewData.gates(ref).workspace?.id;
+    final read = id == null || _isNew || _form.loaded
+        ? null
+        : ref.watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)));
+    // The working draft is taken before the page under it is built, so the
+    // bar's actions and the fields say the same quote from the first frame.
+    // #4414 kept: a guard on the draft taken, the failure is drawn below
+    if (read != null && read.hasValue && !read.hasError) _form.load(read.requireValue);
     Widget body;
     if (id == null) {
       body = const SizedBox.shrink();
-    } else if (!_isNew && !_form.loaded) {
+    } else if (read != null && !_form.loaded) {
       body = AsyncReadBody(
-        value: ref.watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId))),
+        value: read,
         refusal: (e) => e is QuoteRefusal ? quoteRefusalText(l10n, e) : null,
         onRetry: () => ref.invalidate(
           customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)),
@@ -228,7 +239,45 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: id == null
+          ? null
+          : ListenableBuilder(
+              listenable: _form,
+              builder: (context, _) => _actions(context, id),
+            ),
       body: body,
+    );
+  }
+
+  /// Save draft and Send, the main one last, under what the last action
+  /// answered. Neither is offered before the quote has a customer.
+  Widget _actions(BuildContext context, String workspaceId) {
+    final l10n = context.l10n;
+    final off = _form.busy || _form.doc.subject == null;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (_form.said case final said?)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.sm, AppSpacing.md, AppSpacing.sm),
+            child: Text(said, key: const ValueKey('quote-said')),
+          ),
+        BottomActionBar(
+          actions: [
+            OutlinedButton(
+              key: const ValueKey('quote-save-draft'),
+              onPressed: off ? null : () => unawaited(_saveDraft(workspaceId)),
+              child: Text(l10n.quoteSaveDraft, textAlign: TextAlign.center),
+            ),
+            FilledButton(
+              key: const ValueKey('quote-send-now'),
+              onPressed: off ? null : () => unawaited(_send(workspaceId)),
+              child: Text(l10n.quoteSend, textAlign: TextAlign.center),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -274,31 +323,6 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
           onChanged: _form.changed,
         ),
         Text(l10n.quoteAmountsOnSend, key: const ValueKey('quote-amounts-on-send')),
-        if (_form.said != null) ...[
-          const FormGap(),
-          Text(_form.said!, key: const ValueKey('quote-said')),
-        ],
-        const FormGap(),
-        Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          children: [
-            OutlinedButton(
-              key: const ValueKey('quote-save-draft'),
-              onPressed: locked || _form.doc.subject == null
-                  ? null
-                  : () => unawaited(_saveDraft(workspaceId)),
-              child: Text(l10n.quoteSaveDraft),
-            ),
-            FilledButton(
-              key: const ValueKey('quote-send-now'),
-              onPressed: locked || _form.doc.subject == null
-                  ? null
-                  : () => unawaited(_send(workspaceId)),
-              child: Text(l10n.quoteSend),
-            ),
-          ],
-        ),
       ],
     );
   }

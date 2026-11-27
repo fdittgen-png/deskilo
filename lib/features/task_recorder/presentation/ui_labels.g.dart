@@ -5111,7 +5111,6 @@ Map<String, _Getter> _part11() => {
   'invoiceRegisterStatus': (l) => l.invoiceRegisterStatus,
   'invoiceShare': (l) => l.invoiceShare,
   'invoiceWriteoffExplain': (l) => l.invoiceWriteoffExplain,
-  'invoicingNew': (l) => l.invoicingNew,
   'itemGroupConfirm': (l) => l.itemGroupConfirm,
   'itemGroupOwn': (l) => l.itemGroupOwn,
   'journeyHowIntro': (l) => l.journeyHowIntro,
