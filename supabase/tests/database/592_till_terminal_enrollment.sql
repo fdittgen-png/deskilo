@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4454 (0984): a till board is connected to a business. Only an owner, in their own session and with the till boards
+-- #4454 (0984): a till board is connected to a business, the code bound to the board's id and secret hash its QR named. Only an owner, in their own session and with the till boards
 -- switched on, makes a code, for an active till and the board its QR named; a cashier, an assistant and a stranger
 -- are refused; the list of boards is for whoever may open the business's settings. The board presenting its code waits for approval; the same presentation answers the same, another
 -- request or a second board is refused, a wrong board or proof spends an attempt until the code is used up, and an
@@ -7,7 +7,7 @@
 -- the same board revokes the earlier one; a revoked board is told so. No client role reads a code, a secret or a hash,
 -- and the board's functions are the service role's alone. Rolled back.
 begin;
-select plan(32);
+select plan(33);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -44,7 +44,7 @@ create or replace function pg_temp.code_for(p_user int, p_device int, p_secret i
 returns text language sql as $f$
   select pg_temp.run_as(pg_temp.u(p_user), format(
     'select public.till_terminal_code_create_v1(%L, %L, %L, %L, %L)::text',
-    pg_temp.u(p_ws), pg_temp.u(p_till), pg_temp.u(p_device), 'lcdwiki_e32r40t_v1', pg_temp.fp(p_secret)))
+    pg_temp.u(p_ws), pg_temp.u(p_till), pg_temp.u(p_device), 'lcdwiki_e32r40t_v1', pg_temp.hash(p_secret)))
 $f$;
 create or replace function pg_temp.claim(p_code text, p_device int, p_secret int, p_req int) returns jsonb language sql as $f$
   select public.till_terminal_claim_v1(p_code, pg_temp.u(p_device), pg_temp.hash(p_secret), '1.0.3', 'v1', pg_temp.u(p_req))
@@ -72,11 +72,11 @@ insert into public.counter_tills (id, workspace_id, name, active) values
 select is(pg_temp.code_for(2, 501, 1), 'ERR 42501', 'a cashier makes no code');
 select is(pg_temp.code_for(3, 501, 1), 'ERR 42501', 'nor an owner of another business');
 select is(pg_temp.run_as(pg_temp.u(1), format('select public.till_terminal_code_create_v1(%L, %L, %L, %L, %L)::text',
-  pg_temp.u(101), pg_temp.u(401), pg_temp.u(501), 'lcdwiki_e32r40t_v1', pg_temp.fp(1)), true), 'ERR 42501', 'nor the owner''s assistant');
+  pg_temp.u(101), pg_temp.u(401), pg_temp.u(501), 'lcdwiki_e32r40t_v1', pg_temp.hash(1)), true), 'ERR 42501', 'nor the owner''s assistant');
 select is(pg_temp.code_for(3, 503, 3, 102, 403), 'ERR 42501', 'nor an owner whose till boards are off');
 select is(pg_temp.code_for(1, 501, 1, 101, 402), 'ERR 22023', 'a till that is not active takes no board');
 select is(pg_temp.run_as(pg_temp.u(1), format('select public.till_terminal_code_create_v1(%L, %L, %L, %L, %L)::text',
-  pg_temp.u(101), pg_temp.u(401), pg_temp.u(501), 'some_other_board', pg_temp.fp(1))), 'ERR 22023', 'nor a board of an unknown profile');
+  pg_temp.u(101), pg_temp.u(401), pg_temp.u(501), 'some_other_board', pg_temp.hash(1))), 'ERR 22023', 'nor a board of an unknown profile');
 
 select set_config('t.c1', pg_temp.code_for(1, 501, 1), false);
 select ok(current_setting('t.c1')::jsonb ->> 'code' ~ '^[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}$',
@@ -92,8 +92,11 @@ select is(pg_temp.claim(current_setting('t.c1')::jsonb ->> 'code', 509, 1, 601) 
   'another board with the code is refused');
 select is(pg_temp.claim(current_setting('t.c1')::jsonb ->> 'code', 501, 9, 601) ->> 'reason', 'pair_proof_invalid',
   'and so is the right board with another secret');
+select is(public.till_terminal_claim_v1(current_setting('t.c1')::jsonb ->> 'code', pg_temp.u(501),
+  substr(pg_temp.hash(1), 1, 8) || repeat('0', 56), '1.0.3', 'v1', pg_temp.u(601)) ->> 'reason', 'pair_proof_invalid',
+  'and a hash that only shares the fingerprint: the code is bound to the whole hash the QR named');
 select is((select attempts_left from public.till_terminal_codes where id = (current_setting('t.c1')::jsonb ->> 'code_id')::uuid),
-  3, 'each spends an attempt');
+  2, 'each spends an attempt');
 select is(public.till_terminal_claim_v1(current_setting('t.c1')::jsonb ->> 'code', pg_temp.u(501), pg_temp.hash(1), '1.0.3', 'v2', pg_temp.u(601)) ->> 'reason',
   'protocol_unsupported', 'a protocol the server does not speak is refused');
 select set_config('t.k1', pg_temp.claim(lower(replace(current_setting('t.c1')::jsonb ->> 'code', '-', ' ')), 501, 1, 601)::text, false);

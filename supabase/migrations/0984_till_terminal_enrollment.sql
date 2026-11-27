@@ -8,7 +8,8 @@
 -- the app shows. Revoking a board ends it. Nothing here sells: what an approved board may do for a cashier comes with
 -- the operator authorization (slice 2).
 --
---   till_terminal_codes   a code given for one board (the id and fingerprint the QR named) and one till: kept as
+--   till_terminal_codes   a code given for one board and one till: bound to the board's id and to the sha256 of its
+--                         secret, both read from its QR code, so a board that only saw the QR cannot use it; kept as
 --                         the sha256 of its 12 characters, single use, valid counter.terminal_pair_minutes, spent
 --                         after counter.terminal_pair_attempts presentations with the wrong board or proof.
 --   till_terminals        a board of a business: pending_approval, paired or revoked. The sha256 of its secret is
@@ -36,6 +37,7 @@ create table public.till_terminal_codes (
   code_hash text not null unique check (code_hash ~ '^[0-9a-f]{64}$'),
   device_id uuid not null,
   board_profile text not null check (board_profile in ('lcdwiki_e32r40t_v1', 'ideaspark_st7789_v1')),
+  secret_hash text not null check (secret_hash ~ '^[0-9a-f]{64}$'),
   fingerprint text not null check (fingerprint ~ '^[0-9A-F]{4}-[0-9A-F]{4}$'),
   created_by uuid references public.members (id) on delete set null,
   expires_at timestamptz not null,
@@ -142,10 +144,10 @@ $fn$;
 revoke execute on function public.till_terminal_member(uuid) from public, anon, authenticated;
 
 -- ── the owner's side ────────────────────────────────────────────────────────────────────────────────────────────
--- A code for the board the QR named (its id, profile and fingerprint), for one active till of the business. The code
--- is answered once; an earlier code for the same board, not yet used, is cancelled.
+-- A code for the board the QR named (its id, profile and the sha256 of its secret), for one active till of the
+-- business. The code is answered once; an earlier code for the same board, not yet used, is cancelled.
 create or replace function public.till_terminal_code_create_v1(
-  p_workspace_id uuid, p_till_id uuid, p_device_id uuid, p_board_profile text, p_fingerprint text)
+  p_workspace_id uuid, p_till_id uuid, p_device_id uuid, p_board_profile text, p_secret_hash text)
 returns jsonb language plpgsql volatile security definer set search_path = '' as $fn$
 declare
   v_code text;
@@ -162,7 +164,7 @@ begin
   end if;
   if p_device_id is null or p_board_profile is null
      or p_board_profile not in ('lcdwiki_e32r40t_v1', 'ideaspark_st7789_v1')
-     or coalesce(p_fingerprint, '') !~ '^[0-9A-F]{4}-[0-9A-F]{4}$' then
+     or coalesce(p_secret_hash, '') !~ '^[0-9a-f]{64}$' then
     raise exception 'protocol_unsupported: not a till board''s QR code' using errcode = '22023';
   end if;
   v_minutes := least(15, greatest(1, coalesce((public.setting_value(p_workspace_id, 'counter.terminal_pair_minutes') #>> '{}')::int, 5)));
@@ -173,9 +175,11 @@ begin
      and c.claimed_at is null and c.cancelled_at is null and c.expires_at > now();
   v_code := public.till_terminal_new_code();
   insert into public.till_terminal_codes
-    (workspace_id, till_id, code_hash, device_id, board_profile, fingerprint, created_by, expires_at, attempts_left)
+    (workspace_id, till_id, code_hash, device_id, board_profile, secret_hash, fingerprint, created_by, expires_at,
+     attempts_left)
   values (p_workspace_id, p_till_id, encode(extensions.digest(v_code, 'sha256'), 'hex'), p_device_id,
-          p_board_profile, p_fingerprint, public.till_terminal_member(p_workspace_id),
+          p_board_profile, p_secret_hash, public.till_terminal_fingerprint(p_secret_hash),
+          public.till_terminal_member(p_workspace_id),
           now() + make_interval(mins => v_minutes), v_attempts)
   returning * into v_row;
   return jsonb_build_object(
@@ -323,7 +327,7 @@ begin
   if v_row.attempts_left = 0 then
     return jsonb_build_object('ok', false, 'reason', 'pair_used');
   end if;
-  if v_row.device_id <> p_device_id or public.till_terminal_fingerprint(p_secret_hash) <> v_row.fingerprint then
+  if v_row.device_id <> p_device_id or p_secret_hash <> v_row.secret_hash then
     update public.till_terminal_codes set attempts_left = attempts_left - 1 where id = v_row.id;
     return jsonb_build_object('ok', false, 'reason', 'pair_proof_invalid');
   end if;
@@ -337,7 +341,7 @@ begin
   insert into public.till_terminals
     (workspace_id, till_id, device_id, board_profile, fingerprint, firmware, protocol, secret_hash, code_id)
   values (v_row.workspace_id, v_row.till_id, p_device_id, v_row.board_profile, v_row.fingerprint, p_firmware,
-          p_protocol, p_secret_hash, v_row.id)
+          p_protocol, v_row.secret_hash, v_row.id)
   returning * into v_terminal;
   update public.till_terminal_codes
      set claimed_at = now(), claim_request_id = p_claim_request_id, claim_secret_hash = p_secret_hash,

@@ -2722,6 +2722,7 @@ constraint till_terminal_codes.till_terminal_codes_code_hash_key UNIQUE (code_ha
 constraint till_terminal_codes.till_terminal_codes_created_by_fkey FOREIGN KEY (created_by) REFERENCES members(id) ON DELETE SET NULL
 constraint till_terminal_codes.till_terminal_codes_fingerprint_check CHECK ((fingerprint ~ '^[0-9A-F]{4}-[0-9A-F]{4}$'::text))
 constraint till_terminal_codes.till_terminal_codes_pkey PRIMARY KEY (id)
+constraint till_terminal_codes.till_terminal_codes_secret_hash_check CHECK ((secret_hash ~ '^[0-9a-f]{64}$'::text))
 constraint till_terminal_codes.till_terminal_codes_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint till_terminal_codes.till_terminal_codes_workspace_id_till_id_fkey FOREIGN KEY (workspace_id, till_id) REFERENCES counter_tills(workspace_id, id) ON DELETE CASCADE
 constraint till_terminals.system_columns_order CHECK ((modified_datetime >= created_datetime))
@@ -4788,9 +4789,9 @@ routine public.till_layout_publish_v1(p_workspace_id uuid, p_request_id uuid, p_
 routine public.till_layout_reset_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f320b4400f09
 routine public.till_layout_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_expected_version integer, p_layout jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5ae3fc7e2d12
 routine public.till_terminal_approve_v1(p_terminal_id uuid, p_fingerprint text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:23084500348b
-routine public.till_terminal_claim_v1(p_code text, p_device_id uuid, p_secret_hash text, p_firmware text, p_protocol text, p_claim_request_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:a2d166dc7077
+routine public.till_terminal_claim_v1(p_code text, p_device_id uuid, p_secret_hash text, p_firmware text, p_protocol text, p_claim_request_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:cdffb8adc42d
 routine public.till_terminal_code_cancel_v1(p_code_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:d0505c2ce708
-routine public.till_terminal_code_create_v1(p_workspace_id uuid, p_till_id uuid, p_device_id uuid, p_board_profile text, p_fingerprint text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6f25c80b875a
+routine public.till_terminal_code_create_v1(p_workspace_id uuid, p_till_id uuid, p_device_id uuid, p_board_profile text, p_secret_hash text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e29442e4997f
 routine public.till_terminal_code_normal(p_code text) -> text | function | invoker | immutable | exec:service_role | body:3313a21d56bb
 routine public.till_terminal_fingerprint(p_secret_hash text) -> text | function | invoker | immutable | exec:service_role | body:96803719c623
 routine public.till_terminal_member(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:82329b41ccf0

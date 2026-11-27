@@ -5,7 +5,7 @@
 // or a source past its budget is refused before the database; a database that fails or answers nothing readable is
 // "uncertain", never a refusal the board would believe. The database's own rules are pgTAP 592's.
 import { assertEquals } from "jsr:@std/assert@1";
-import { budget, handle, MAX_BODY_BYTES } from "./handler.ts";
+import { budget, handle, MAX_BODY_BYTES, MAX_SOURCES, sourceOf } from "./handler.ts";
 
 const DEVICE = "11111111-1111-4111-8111-111111111111";
 const HASH = "ab".repeat(32);
@@ -129,4 +129,29 @@ Deno.test("a delegated token is refused before anything", async () => {
     d.deps,
   );
   assertEquals([res.status, d.calls.length], [403, 0]);
+});
+
+Deno.test("the budget counts the hop the proxy appended, not one the caller wrote first", () => {
+  const req = new Request("http://x", { method: "POST", headers: { "x-forwarded-for": "6.6.6.6, 203.0.113.9" } });
+  assertEquals(sourceOf(req), "203.0.113.9");
+});
+
+Deno.test("a flood of new sources does not wipe the budget of the ones counted", () => {
+  let t = 0;
+  const allow = budget(1, () => t);
+  assertEquals([allow("a"), allow("a")], [true, false]);
+  for (let i = 0; i < MAX_SOURCES; i++) allow(`s${i}`);
+  assertEquals(allow("a"), false, "the source past its budget stays past it");
+  assertEquals(allow("new"), false, "and a new source is refused while every slot holds a live minute");
+  t = 60_000;
+  assertEquals(allow("new"), true, "an ended minute frees its slot");
+});
+
+Deno.test("a body that declares more than the ceiling is not read", async () => {
+  const d = db();
+  const res = await handle(
+    new Request("http://x", { method: "POST", body: "{}", headers: { "content-length": String(MAX_BODY_BYTES + 1) } }),
+    d.deps,
+  );
+  assertEquals([res.status, d.calls.length], [413, 0]);
 });

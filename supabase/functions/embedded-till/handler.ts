@@ -15,6 +15,7 @@
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { describeError, logLine } from "../_shared/log.ts";
 import { ok } from "../_shared/respond.ts";
+import { callerOf } from "../badge-signin/badge_guard.ts";
 
 export type Rpc = (
   fn: string,
@@ -51,35 +52,53 @@ function refused(reason: string, status = 200): Response {
   return answer({ ok: false, reason }, status);
 }
 
-/** A small budget of attempts per source and minute, kept in this instance's memory. */
+/** The most sources one instance keeps a budget for; past it, a new source is refused until older minutes end. */
+export const MAX_SOURCES = 10_000;
+
+/** A small budget of attempts per source and minute, kept in this instance's memory. Only expired minutes are
+ * forgotten: a flood of new sources cannot wipe the budget of the ones already counted. */
 export function budget(perMinute: number, now: () => number = Date.now): (source: string) => boolean {
   const seen = new Map<string, { start: number; n: number }>();
   return (source) => {
     const t = now();
     const s = seen.get(source);
-    if (!s || t - s.start >= 60_000) {
-      if (seen.size > 10_000) seen.clear();
-      seen.set(source, { start: t, n: 1 });
-      return true;
+    if (s && t - s.start < 60_000) {
+      s.n += 1;
+      return s.n <= perMinute;
     }
-    s.n += 1;
-    return s.n <= perMinute;
+    if (!s && seen.size >= MAX_SOURCES) {
+      for (const [k, v] of seen) if (t - v.start >= 60_000) seen.delete(k);
+      if (seen.size >= MAX_SOURCES) return false;
+    }
+    seen.set(source, { start: t, n: 1 });
+    return true;
   };
 }
 
-/** The source a budget counts: the caller's address as the gateway gives it. */
-export function sourceOf(req: Request): string {
-  const forwarded = req.headers.get("x-forwarded-for") ?? "";
-  return forwarded.split(",")[0].trim() || "unknown";
-}
+/** The source a budget counts: the hop the platform's proxy appended (badge-signin's rule), never a value the
+ * caller wrote first in the header. */
+export const sourceOf = (req: Request): string => callerOf(req) || "unknown";
 
+/** The body read no further than its ceiling: a declared length over it, or more bytes than it, stop the read. */
 async function bodyOf(req: Request): Promise<Record<string, unknown> | "too_large" | null> {
   const declared = Number(req.headers.get("content-length") ?? "0");
-  if (declared > MAX_BODY_BYTES) return "too_large";
-  const bytes = new Uint8Array(await req.arrayBuffer());
-  if (bytes.length > MAX_BODY_BYTES) return "too_large";
+  if (!Number.isFinite(declared) || declared > MAX_BODY_BYTES) return "too_large";
+  if (!req.body) return null;
+  const reader = req.body.getReader();
+  const bytes = new Uint8Array(MAX_BODY_BYTES);
+  let n = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    if (n + value.length > MAX_BODY_BYTES) {
+      await reader.cancel();
+      return "too_large";
+    }
+    bytes.set(value, n);
+    n += value.length;
+  }
   try {
-    const value = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes));
+    const value = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes.subarray(0, n)));
     return value && typeof value === "object" && !Array.isArray(value) ? value : null;
   } catch (_) {
     return null;
