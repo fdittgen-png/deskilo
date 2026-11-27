@@ -181,13 +181,7 @@ class DemoStockLedger implements DemoInvoiceGoods {
   @override
   ExactQuantity? inInventoryUnit(String itemId, String unit, ExactQuantity quantity) {
     final item = itemOf(itemId);
-    if (item == null) return null;
-    try {
-      return core.toInventory(item, quantity, unit, 0);
-    } on StockConfigRefused {
-      // trace-exempt: a unit with no defined conversion is the answer (null: the line is refused as the server refuses it), not a failure
-      return null;
-    }
+    return item == null ? null : core.tryToInventory(item, quantity, unit);
   }
 
   /// #4433 -- the goods an issued invoice sells leave the main store for the customer, one sale per line, linked to the

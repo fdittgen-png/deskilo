@@ -276,6 +276,13 @@ class StockLedger {
     return converted;
   }
 
+  /// #4479 -- [toInventory] as an answer: null when no conversion is defined (or the result has no six-decimal value), never a refusal.
+  ExactQuantity? tryToInventory(StockItem item, ExactQuantity entered, String? unit) {
+    if (unit == null || unit == item.unit) return entered;
+    final factor = unitFactor(from: unit, to: item.unit, inventoryUnit: item.unit, itemUnits: _units(item.id), general: _conversions());
+    return factor == null ? null : entered.scaled(factor.num, factor.den, round: true).value;
+  }
+
   /// A command has 1 to 200 lines (0847 stock_command_args:662).
   static void _count(List<Object> lines) {
     if (lines.isEmpty || lines.length > 200) throw const StockConfigRefused('request', StockRefusal.malformed);
