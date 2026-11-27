@@ -23,6 +23,10 @@ const Map<String, bool> functionVerifyJwt = {
   // supabase/functions/accounting-connect/index_test.ts.
   'accounting-connect': false,
   'badge-signin': true,
+  // #4454 — a till board calls with the installation's public key; its own code
+  // and secret are its authority, checked by the database functions only the
+  // service role may call. Tested in supabase/functions/embedded-till/handler_test.ts.
+  'embedded-till': true,
   // #1616 — the MCP endpoint verifies every bearer itself (auth.getUser,
   // delegated tokens only) before any handler, and serves anonymous
   // protected-resource metadata; the gateway's legacy check would refuse

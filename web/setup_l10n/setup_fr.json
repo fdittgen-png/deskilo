@@ -900,5 +900,11 @@
  "counterLayoutCashierReorderHint": "Un caissier peut réordonner les touches d'une caisse sur son appareil. Réglé dans les paramètres de l'application.",
  "optCells": "{n} cases",
  "counterMaxDiscount": "Remise maximale à la caisse",
- "counterMaxDiscountHint": "La remise maximale qu'un caissier peut accorder sur une ligne. Réglée dans les paramètres de l'application."
+ "counterMaxDiscountHint": "La remise maximale qu'un caissier peut accorder sur une ligne. Réglée dans les paramètres de l'application.",
+ "counterTerminalPairMinutes": "Code de connexion d'un appareil : validité",
+ "counterTerminalPairMinutesHint": "Durée de validité du code qui relie un appareil de caisse. Réglée dans les paramètres de l'application.",
+ "counterTerminalPairAttempts": "Code de connexion d'un appareil : essais",
+ "counterTerminalPairAttemptsHint": "Combien de présentations erronées épuisent un code. Réglé dans les paramètres de l'application.",
+ "optAttempts": "{n} essais",
+ "optAttemptsDefault": "{n} essais (par défaut)"
 }

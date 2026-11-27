@@ -8728,6 +8728,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get developmentWatermark => 'ENTWICKLUNG';
 
   @override
+  String get devicePairingApprove => 'Freigeben';
+
+  @override
+  String devicePairingApproveBody(String fingerprint) {
+    return 'Geben Sie das Gerät nur frei, wenn sein Bildschirm den Fingerabdruck $fingerprint zeigt.';
+  }
+
+  @override
   String devicePairingBoard(String id, String model) {
     return 'Terminal $id · $model';
   }
@@ -8736,7 +8744,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get devicePairingCheck => 'Code prüfen';
 
   @override
+  String devicePairingCode(String code) {
+    return 'Verbindungscode: $code';
+  }
+
+  @override
+  String devicePairingCodeHint(String time) {
+    return 'Gültig bis $time, einmal, nur für dieses Gerät.';
+  }
+
+  @override
   String get devicePairingConnect => 'Gerät verbinden';
+
+  @override
+  String get devicePairingFailed =>
+      'Der Server hat nicht geantwortet: Versuchen Sie es erneut.';
 
   @override
   String devicePairingFingerprint(String fingerprint) {
@@ -8747,12 +8769,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get devicePairingFound => 'Terminal gefunden';
 
   @override
-  String get devicePairingLater =>
-      'Das Verbinden des Terminals mit diesem Unternehmen kommt mit einem späteren Update: nichts wurde an es gesendet.';
+  String get devicePairingGetCode => 'Verbindungscode erhalten';
+
+  @override
+  String get devicePairingNeedsFirmware =>
+      'Dieses Gerät braucht die neue Firmware, bevor es verbunden werden kann.';
+
+  @override
+  String get devicePairingNoTill =>
+      'Legen Sie zuerst eine Kasse an: Ein Gerät dient einer Kasse.';
 
   @override
   String get devicePairingNone =>
       'Mit diesem Unternehmen ist noch kein Kassenterminal verbunden.';
+
+  @override
+  String get devicePairingNotOwner =>
+      'Nur der Inhaber des Unternehmens verbindet, gibt frei oder entfernt ein Gerät.';
+
+  @override
+  String get devicePairingNotWaiting =>
+      'Dieses Gerät wartet nicht mehr auf eine Freigabe.';
 
   @override
   String get devicePairingRefusedAlphabet =>
@@ -8771,12 +8808,41 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieses Terminal ist ein Modell, das diese App noch nicht kennt. Aktualisieren Sie die App und verbinden Sie es dann.';
 
   @override
+  String get devicePairingRevoke => 'Entfernen';
+
+  @override
+  String get devicePairingRevokeBody =>
+      'Dieses Gerät ist dann nicht mehr mit dem Unternehmen verbunden. Um es wieder zu nutzen, verbinden Sie es mit einem neuen Code.';
+
+  @override
   String get devicePairingScanHint =>
       'Halten Sie den QR-Code des Terminals vor die Kamera. Um ihn anzuzeigen, halten Sie die BOOT-Taste des Terminals 3 Sekunden gedrückt.';
 
   @override
+  String get devicePairingScanToConnect =>
+      'Um dieses Gerät zu verbinden, scannen Sie seinen QR-Code.';
+
+  @override
+  String get devicePairingStatusPaired => 'Verbunden';
+
+  @override
+  String get devicePairingStatusPending => 'Wartet auf Ihre Freigabe';
+
+  @override
   String get devicePairingSubtitle =>
       'Kassenterminals: eines per QR-Code oder Code verbinden';
+
+  @override
+  String devicePairingTill(String till) {
+    return 'Kasse: $till';
+  }
+
+  @override
+  String get devicePairingTillInactive =>
+      'Diese Kasse ist nicht aktiv: Wählen Sie eine andere.';
+
+  @override
+  String get devicePairingTillPick => 'Kasse';
 
   @override
   String get devicePairingTitle => 'Geräte';
@@ -8787,6 +8853,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get devicePairingTypeHelper =>
       'Die 10 Zeichen neben dem QR-Code des Terminals, zum Beispiel 3DNGP-UN9CG.';
+
+  @override
+  String get devicePairingWithdraw => 'Code zurückziehen';
+
+  @override
+  String get devicePairingWrongFingerprint =>
+      'Der Fingerabdruck passt nicht zu diesem Gerät.';
 
   @override
   String get directoryApproximate => 'Ungefähre Lage der Adresse';
@@ -33026,6 +33099,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.';
 
   @override
+  String get settingHintCounterTerminalPairAttempts =>
+      'Wie oft ein Code mit einem falschen Gerät oder Nachweis vorgelegt werden darf, bevor er verbraucht ist.';
+
+  @override
+  String get settingHintCounterTerminalPairMinutes =>
+      'Wie lange der Code gilt, der ein Kassengerät verbindet. Eine Änderung gilt für den nächsten Code, nicht für einen bereits vergebenen.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.';
 
@@ -33476,6 +33557,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelCounterPaidOutLimit => 'Größte Entnahme ohne Freigabe';
+
+  @override
+  String get settingLabelCounterTerminalPairAttempts =>
+      'Verbindungscode eines Geräts: Versuche';
+
+  @override
+  String get settingLabelCounterTerminalPairMinutes =>
+      'Verbindungscode eines Geräts: Minuten';
 
   @override
   String get settingLabelDirectoryGeocoderUrl => 'Adresssuchdienst';

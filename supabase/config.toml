@@ -108,6 +108,9 @@ verify_jwt = true
 [functions.badge-signin]
 verify_jwt = true
 
+[functions.embedded-till]
+verify_jwt = true
+
 [functions.create-payment-order]
 verify_jwt = true
 

@@ -78,28 +78,47 @@ class StockScanBar extends ConsumerWidget {
                     if (mayManage && !last.fromTag) TextButton(key: const ValueKey('stock-scan-open-items'), onPressed: onOpenItems, child: Text(l10n.stockScanUnknownAdd)),
                   ],
                 ),
-              if (last != null && last.outcome == ScanOutcome.askPlace) ...[
-                Text(l10n.stockScanWhichPlace(last.code ?? ''), key: const ValueKey('stock-scan-which-place')),
-                Wrap(
-                  spacing: AppSpacing.sm,
-                  children: [
-                    for (final p in last.choices)
-                      ActionChip(key: ValueKey('stock-scan-place-${p.id}'), label: Text(p.path.isEmpty ? p.name : p.path), onPressed: () => feed.choosePlace(p)),
-                  ],
-                ),
-              ],
-              if (last != null && last.outcome == ScanOutcome.alreadyRead)
-                Text(l10n.stockScanAlreadyRead(last.code ?? ''), key: const ValueKey('stock-scan-already-read')),
-              if (last != null && last.outcome == ScanOutcome.refused)
-                Text(
-                  last.place == null ? l10n.stockScanRefusedCode(last.code ?? '') : l10n.stockScanRefusedPlace(last.place!.name),
-                  key: const ValueKey('stock-scan-refused'),
-                ),
+              if (last != null) _OutcomeNote(last: last, feed: feed),
               const SizedBox(height: AppSpacing.sm),
             ],
           ),
         );
       },
     );
+  }
+}
+
+/// What the last scan says when it was not a line or an unknown code: asked which of several places, read twice, or refused.
+class _OutcomeNote extends StatelessWidget {
+  const _OutcomeNote({required this.last, required this.feed});
+
+  final ScanResult last;
+  final StockScanFeed feed;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return switch (last.outcome) {
+      // #4495 -- a code several places carry: the person says which, never the first
+      ScanOutcome.askPlace => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l10n.stockScanWhichPlace(last.code ?? ''), key: const ValueKey('stock-scan-which-place')),
+          Wrap(
+            spacing: AppSpacing.sm,
+            children: [
+              for (final p in last.choices)
+                ActionChip(key: ValueKey('stock-scan-place-${p.id}'), label: Text(p.path.isEmpty ? p.name : p.path), onPressed: () => feed.choosePlace(p)),
+            ],
+          ),
+        ],
+      ),
+      ScanOutcome.alreadyRead => Text(l10n.stockScanAlreadyRead(last.code ?? ''), key: const ValueKey('stock-scan-already-read')),
+      ScanOutcome.refused => Text(
+        last.place == null ? l10n.stockScanRefusedCode(last.code ?? '') : l10n.stockScanRefusedPlace(last.place!.name),
+        key: const ValueKey('stock-scan-refused'),
+      ),
+      _ => const SizedBox.shrink(),
+    };
   }
 }

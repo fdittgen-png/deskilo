@@ -900,5 +900,11 @@
  "counterLayoutCashierReorderHint": "Ein Kassierer darf die Tasten einer Kasse auf seinem Gerät umordnen. In den Einstellungen der App festgelegt.",
  "optCells": "{n} Zellen",
  "counterMaxDiscount": "Größter Rabatt an der Kasse",
- "counterMaxDiscountHint": "Der größte Rabatt, den eine Kasse auf eine Zeile geben darf. In den Einstellungen der App festgelegt."
+ "counterMaxDiscountHint": "Der größte Rabatt, den eine Kasse auf eine Zeile geben darf. In den Einstellungen der App festgelegt.",
+ "counterTerminalPairMinutes": "Verbindungscode eines Geräts: Gültigkeit",
+ "counterTerminalPairMinutesHint": "Wie lange der Code gilt, der ein Kassengerät verbindet. In den Einstellungen der App festgelegt.",
+ "counterTerminalPairAttempts": "Verbindungscode eines Geräts: Versuche",
+ "counterTerminalPairAttemptsHint": "Wie viele falsche Vorlagen einen Code verbrauchen. In den Einstellungen der App festgelegt.",
+ "optAttempts": "{n} Versuche",
+ "optAttemptsDefault": "{n} Versuche (Standard)"
 }
