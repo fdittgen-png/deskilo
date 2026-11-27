@@ -20295,6 +20295,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get leaseEveryYear => 'Every year';
 
   @override
+  String get leaseFieldArea => 'Area (m²)';
+
+  @override
   String get leaseFieldDeposit => 'Deposit';
 
   @override
@@ -20305,6 +20308,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get leaseFieldLessor => 'Lessor (a supplier)';
+
+  @override
+  String get leaseFieldLevels => 'Covered levels';
 
   @override
   String get leaseFieldNoticeMonths => 'Notice in months';
@@ -20460,6 +20466,19 @@ class AppLocalizationsEn extends AppLocalizations {
       one: '1 occurrence was already presented for a date after the end.',
     );
     return '$_temp0';
+  }
+
+  @override
+  String get leaseRefDocument => 'A contract document is attached';
+
+  @override
+  String leaseRefResponsible(String name) {
+    return 'Responsible: $name';
+  }
+
+  @override
+  String leaseRefSite(String name) {
+    return 'Site: $name';
   }
 
   @override

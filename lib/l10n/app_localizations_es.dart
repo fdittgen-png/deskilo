@@ -20436,6 +20436,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get leaseEveryYear => 'Cada año';
 
   @override
+  String get leaseFieldArea => 'Superficie (m²)';
+
+  @override
   String get leaseFieldDeposit => 'Fianza';
 
   @override
@@ -20446,6 +20449,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get leaseFieldLessor => 'Arrendador (un proveedor)';
+
+  @override
+  String get leaseFieldLevels => 'Niveles cubiertos';
 
   @override
   String get leaseFieldNoticeMonths => 'Preaviso en meses';
@@ -20602,6 +20608,19 @@ class AppLocalizationsEs extends AppLocalizations {
       one: 'Ya se presentó 1 vencimiento con fecha posterior al final.',
     );
     return '$_temp0';
+  }
+
+  @override
+  String get leaseRefDocument => 'Hay un documento de contrato adjunto';
+
+  @override
+  String leaseRefResponsible(String name) {
+    return 'Responsable: $name';
+  }
+
+  @override
+  String leaseRefSite(String name) {
+    return 'Sede: $name';
   }
 
   @override

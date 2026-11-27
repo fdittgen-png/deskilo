@@ -26806,6 +26806,10 @@
   "@leaseEveryYear": {
     "description": "#2569 premises lease"
   },
+  "leaseFieldArea": "Area (m²)",
+  "@leaseFieldArea": {
+    "description": "#4498 what a lease holds and a save keeps"
+  },
   "leaseFieldDeposit": "Deposit",
   "@leaseFieldDeposit": {
     "description": "#2569 premises lease"
@@ -26821,6 +26825,10 @@
   "leaseFieldLessor": "Lessor (a supplier)",
   "@leaseFieldLessor": {
     "description": "#2569 premises lease"
+  },
+  "leaseFieldLevels": "Covered levels",
+  "@leaseFieldLevels": {
+    "description": "#4498 what a lease holds and a save keeps"
   },
   "leaseFieldNoticeMonths": "Notice in months",
   "@leaseFieldNoticeMonths": {
@@ -27030,6 +27038,28 @@
     "placeholders": {
       "count": {
         "type": "int"
+      }
+    }
+  },
+  "leaseRefDocument": "A contract document is attached",
+  "@leaseRefDocument": {
+    "description": "#4498 what a lease holds and a save keeps"
+  },
+  "leaseRefResponsible": "Responsible: {name}",
+  "@leaseRefResponsible": {
+    "description": "#4498 what a lease holds and a save keeps",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseRefSite": "Site: {name}",
+  "@leaseRefSite": {
+    "description": "#4498 what a lease holds and a save keeps",
+    "placeholders": {
+      "name": {
+        "type": "String"
       }
     }
   },

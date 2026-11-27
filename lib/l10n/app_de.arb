@@ -12143,6 +12143,10 @@
   "@leaseEveryYear": {
     "description": "#2569 premises lease"
   },
+  "leaseFieldArea": "Fläche (m²)",
+  "@leaseFieldArea": {
+    "description": "#4498 what a lease holds and a save keeps"
+  },
   "leaseFieldDeposit": "Kaution",
   "@leaseFieldDeposit": {
     "description": "#2569 premises lease"
@@ -12158,6 +12162,10 @@
   "leaseFieldLessor": "Vermieter (ein Lieferant)",
   "@leaseFieldLessor": {
     "description": "#2569 premises lease"
+  },
+  "leaseFieldLevels": "Betroffene Etagen",
+  "@leaseFieldLevels": {
+    "description": "#4498 what a lease holds and a save keeps"
   },
   "leaseFieldNoticeMonths": "Kündigungsfrist in Monaten",
   "@leaseFieldNoticeMonths": {
@@ -12367,6 +12375,28 @@
     "placeholders": {
       "count": {
         "type": "int"
+      }
+    }
+  },
+  "leaseRefDocument": "Ein Vertragsdokument ist angehängt",
+  "@leaseRefDocument": {
+    "description": "#4498 what a lease holds and a save keeps"
+  },
+  "leaseRefResponsible": "Verantwortlich: {name}",
+  "@leaseRefResponsible": {
+    "description": "#4498 what a lease holds and a save keeps",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseRefSite": "Standort: {name}",
+  "@leaseRefSite": {
+    "description": "#4498 what a lease holds and a save keeps",
+    "placeholders": {
+      "name": {
+        "type": "String"
       }
     }
   },

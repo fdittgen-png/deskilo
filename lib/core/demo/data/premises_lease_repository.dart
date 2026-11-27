@@ -46,6 +46,9 @@ class FakePremisesLeaseRepository implements PremisesLeaseRepository {
     premises: l.premises,
     coveredLevels: l.coveredLevels,
     areaM2: l.areaM2,
+    siteId: l.siteId,
+    responsibleMemberId: l.responsibleMemberId,
+    contractDocumentId: l.contractDocumentId,
     startsOn: l.startsOn,
     fixedUntil: l.fixedUntil,
     noticeMonths: l.noticeMonths,
@@ -89,6 +92,9 @@ class FakePremisesLeaseRepository implements PremisesLeaseRepository {
         premises: draft.premises,
         coveredLevels: draft.coveredLevels,
         areaM2: draft.areaM2,
+        siteId: draft.siteId,
+        responsibleMemberId: draft.responsibleMemberId,
+        contractDocumentId: draft.contractDocumentId,
         startsOn: draft.startsOn,
         fixedUntil: draft.fixedUntil,
         noticeMonths: draft.noticeMonths,
@@ -102,7 +108,32 @@ class FakePremisesLeaseRepository implements PremisesLeaseRepository {
     }
     final l = _current(id, draft.revision);
     if (l.terminated) throw StateError('a terminated lease is not edited');
-    return _put(_copy(l), draft.requestId);
+    // an amend changes what the draft carries and keeps the rest, as the server does
+    final amended = _copy(l);
+    return _put(
+      PremisesLease(
+        id: amended.id,
+        revision: amended.revision,
+        supplierId: l.status == LeaseStatus.draft ? draft.supplierId : amended.supplierId,
+        supplierName: amended.supplierName,
+        premises: draft.premises,
+        coveredLevels: draft.coveredLevels,
+        areaM2: draft.areaM2,
+        siteId: draft.siteId ?? amended.siteId,
+        responsibleMemberId: draft.responsibleMemberId ?? amended.responsibleMemberId,
+        contractDocumentId: draft.contractDocumentId ?? amended.contractDocumentId,
+        startsOn: l.status == LeaseStatus.draft ? draft.startsOn : amended.startsOn,
+        fixedUntil: draft.fixedUntil,
+        noticeMonths: draft.noticeMonths,
+        noticeDeadline: amended.noticeDeadline,
+        indexationNote: draft.indexationNote,
+        depositCents: draft.depositCents,
+        status: amended.status,
+        terms: amended.terms,
+        settlements: amended.settlements,
+      ),
+      draft.requestId,
+    );
   }
 
   @override

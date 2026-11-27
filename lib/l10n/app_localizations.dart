@@ -32225,6 +32225,12 @@ abstract class AppLocalizations {
   /// **'Every year'**
   String get leaseEveryYear;
 
+  /// #4498 what a lease holds and a save keeps
+  ///
+  /// In en, this message translates to:
+  /// **'Area (m²)'**
+  String get leaseFieldArea;
+
   /// #2569 premises lease
   ///
   /// In en, this message translates to:
@@ -32248,6 +32254,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Lessor (a supplier)'**
   String get leaseFieldLessor;
+
+  /// #4498 what a lease holds and a save keeps
+  ///
+  /// In en, this message translates to:
+  /// **'Covered levels'**
+  String get leaseFieldLevels;
 
   /// #2569 premises lease
   ///
@@ -32500,6 +32512,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, one{1 occurrence was already presented for a date after the end.} other{{count} occurrences were already presented for a date after the end.}}'**
   String leaseOccurrencesAfter(int count);
+
+  /// #4498 what a lease holds and a save keeps
+  ///
+  /// In en, this message translates to:
+  /// **'A contract document is attached'**
+  String get leaseRefDocument;
+
+  /// #4498 what a lease holds and a save keeps
+  ///
+  /// In en, this message translates to:
+  /// **'Responsible: {name}'**
+  String leaseRefResponsible(String name);
+
+  /// #4498 what a lease holds and a save keeps
+  ///
+  /// In en, this message translates to:
+  /// **'Site: {name}'**
+  String leaseRefSite(String name);
 
   /// #2569 premises lease
   ///

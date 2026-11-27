@@ -20521,6 +20521,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get leaseEveryYear => 'Chaque année';
 
   @override
+  String get leaseFieldArea => 'Surface (m²)';
+
+  @override
   String get leaseFieldDeposit => 'Dépôt de garantie';
 
   @override
@@ -20531,6 +20534,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get leaseFieldLessor => 'Bailleur (un fournisseur)';
+
+  @override
+  String get leaseFieldLevels => 'Niveaux couverts';
 
   @override
   String get leaseFieldNoticeMonths => 'Préavis en mois';
@@ -20688,6 +20694,19 @@ class AppLocalizationsFr extends AppLocalizations {
           '$count échéance a déjà été présentées pour une date postérieure à la fin.',
     );
     return '$_temp0';
+  }
+
+  @override
+  String get leaseRefDocument => 'Un document de contrat est joint';
+
+  @override
+  String leaseRefResponsible(String name) {
+    return 'Responsable : $name';
+  }
+
+  @override
+  String leaseRefSite(String name) {
+    return 'Site : $name';
   }
 
   @override

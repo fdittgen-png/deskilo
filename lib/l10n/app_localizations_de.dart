@@ -20483,6 +20483,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get leaseEveryYear => 'Jährlich';
 
   @override
+  String get leaseFieldArea => 'Fläche (m²)';
+
+  @override
   String get leaseFieldDeposit => 'Kaution';
 
   @override
@@ -20493,6 +20496,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get leaseFieldLessor => 'Vermieter (ein Lieferant)';
+
+  @override
+  String get leaseFieldLevels => 'Betroffene Etagen';
 
   @override
   String get leaseFieldNoticeMonths => 'Kündigungsfrist in Monaten';
@@ -20649,6 +20655,19 @@ class AppLocalizationsDe extends AppLocalizations {
       one: '1 Fälligkeit wurde bereits für ein Datum nach dem Ende vorgelegt.',
     );
     return '$_temp0';
+  }
+
+  @override
+  String get leaseRefDocument => 'Ein Vertragsdokument ist angehängt';
+
+  @override
+  String leaseRefResponsible(String name) {
+    return 'Verantwortlich: $name';
+  }
+
+  @override
+  String leaseRefSite(String name) {
+    return 'Standort: $name';
   }
 
   @override
