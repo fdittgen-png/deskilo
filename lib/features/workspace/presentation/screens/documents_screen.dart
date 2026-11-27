@@ -55,13 +55,103 @@ class DocumentsScreen extends ConsumerWidget {
         _ => l10n.documentsCategoryOther,
       };
 
-  /// A choice of the add form with the help that explains it beside it.
-  static Widget _choice(Widget field, String topic, String anchor) => Row(
+  /// One choice of the add form, with the help that explains it beside it.
+  static Widget _choice({
+    required String keyName,
+    required String label,
+    required String value,
+    required List<(String, String)> items,
+    required ValueChanged<String> onPicked,
+    required Widget help,
+  }) => Row(
     children: [
-      Expanded(child: field),
-      HelpDot(topic, anchor: anchor),
+      Expanded(
+        child: AppDropdownField<String>(
+          key: ValueKey(keyName),
+          label: label,
+          value: value,
+          items: items,
+          onChanged: (v) {
+            if (v != null) onPicked(v);
+          },
+        ),
+      ),
+      help,
     ],
   );
+
+  /// The fields of the add form over [draft]; [refresh] redraws a choice.
+  static List<Widget> _addFields(
+    AppLocalizations l10n,
+    _AddDraft draft,
+    VoidCallback refresh,
+  ) {
+    final topic = l10n.helpTopicDocumentLibrary;
+    return [
+      AppTextField(
+        key: const ValueKey('document-title'),
+        controller: draft.title,
+        fieldKey: _AddDraft.titleField,
+        label: l10n.documentsTitleLabel,
+        maxLength: 120,
+        help: HelpDot(topic, anchor: HelpAnchor.featureDocuments),
+      ),
+      const FormGap(),
+      AppTextField(
+        key: const ValueKey('document-url'),
+        controller: draft.url,
+        fieldKey: _AddDraft.urlField,
+        label: l10n.documentsUrlLabel,
+        helper: l10n.documentsUrlHelper,
+        keyboardType: TextInputType.url,
+        autofillHints: const [AutofillHints.url],
+        help: HelpDot(topic, anchor: HelpAnchor.documentsUrl),
+      ),
+      const FormGap(),
+      _choice(
+        keyName: 'document-provider',
+        label: l10n.documentsProviderLabel,
+        value: draft.provider,
+        items: [
+          for (final p in WorkspaceDocument.providers) (p, providerName(p)),
+        ],
+        onPicked: (v) {
+          draft.provider = v;
+          refresh();
+        },
+        help: HelpDot(topic, anchor: HelpAnchor.documentsProvider),
+      ),
+      const FormGap(),
+      _choice(
+        keyName: 'document-category',
+        label: l10n.moneyExpenseCategoryLabel,
+        value: draft.category,
+        items: [
+          for (final c in WorkspaceDocument.categories)
+            (c, categoryName(l10n, c)),
+        ],
+        onPicked: (v) {
+          draft.category = v;
+          refresh();
+        },
+        help: HelpDot(topic, anchor: HelpAnchor.documentsCategory),
+      ),
+      const FormGap(),
+      _choice(
+        keyName: 'document-role',
+        label: l10n.documentsRoleLabel,
+        value: draft.minRole,
+        items: [
+          for (final r in WorkspaceDocument.roles) (r, audienceName(l10n, r)),
+        ],
+        onPicked: (v) {
+          draft.minRole = v;
+          refresh();
+        },
+        help: HelpDot(topic, anchor: HelpAnchor.documentsRole),
+      ),
+    ];
+  }
 
   /// The add form: a link filed in the library. Each problem is said under
   /// its field and nothing typed is lost; the sheet closes once it is saved.
@@ -69,31 +159,16 @@ class DocumentsScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
-    final fields = FormControllers();
-    final topic = l10n.helpTopicDocumentLibrary;
+    final draft = _AddDraft();
     final failed = l10n.workspaceGenericError;
-    var category = 'other';
-    var provider = 'link';
-    var minRole = 'member';
     final saved = await showAppFormSheet(
       context,
       AppFormSheet(
         title: l10n.documentsAdd,
         submitLabel: l10n.commonSave,
         submitKey: const ValueKey('document-save'),
-        onDispose: fields.dispose,
-        validate: () {
-          final problems = documentLinkProblems(
-            title: fields['title'].text,
-            url: fields['url'].text,
-          );
-          return {
-            if (problems.contains(DocumentLinkProblem.titleMissing))
-              'title': l10n.documentsTitleMissing,
-            if (problems.contains(DocumentLinkProblem.linkNotHttps))
-              'url': l10n.documentsLinkNotHttps,
-          };
-        },
+        onDispose: draft.dispose,
+        validate: () => draft.problems(l10n),
         onSubmit: () async {
           final ok = await runGuarded(
             context,
@@ -102,95 +177,11 @@ class DocumentsScreen extends ConsumerWidget {
             errorText: failed,
             action: () => ref
                 .read(workspaceRepositoryProvider)
-                .addDocument(
-                  WorkspaceDocument(
-                    id: '',
-                    workspaceId: workspace.id,
-                    title: fields['title'].text,
-                    category: category,
-                    provider: provider,
-                    url: fields['url'].text,
-                    minRole: minRole,
-                  ),
-                ),
+                .addDocument(draft.entry(workspace.id)),
           );
           return ok ? null : failed;
         },
-        builder: (context, refresh) => [
-          AppTextField(
-            key: const ValueKey('document-title'),
-            controller: fields['title'],
-            fieldKey: 'title',
-            label: l10n.documentsTitleLabel,
-            maxLength: 120,
-            help: HelpDot(topic, anchor: HelpAnchor.featureDocuments),
-          ),
-          const FormGap(),
-          AppTextField(
-            key: const ValueKey('document-url'),
-            controller: fields['url'],
-            fieldKey: 'url',
-            label: l10n.documentsUrlLabel,
-            helper: l10n.documentsUrlHelper,
-            keyboardType: TextInputType.url,
-            autofillHints: const [AutofillHints.url],
-            help: HelpDot(topic, anchor: HelpAnchor.documentsUrl),
-          ),
-          const FormGap(),
-          _choice(
-            AppDropdownField<String>(
-              key: const ValueKey('document-provider'),
-              label: l10n.documentsProviderLabel,
-              value: provider,
-              items: [
-                for (final p in WorkspaceDocument.providers)
-                  (p, providerName(p)),
-              ],
-              onChanged: (v) {
-                provider = v ?? provider;
-                refresh();
-              },
-            ),
-            topic,
-            HelpAnchor.documentsProvider,
-          ),
-          const FormGap(),
-          _choice(
-            AppDropdownField<String>(
-              key: const ValueKey('document-category'),
-              label: l10n.moneyExpenseCategoryLabel,
-              value: category,
-              items: [
-                for (final c in WorkspaceDocument.categories)
-                  (c, categoryName(l10n, c)),
-              ],
-              onChanged: (v) {
-                category = v ?? category;
-                refresh();
-              },
-            ),
-            topic,
-            HelpAnchor.documentsCategory,
-          ),
-          const FormGap(),
-          _choice(
-            AppDropdownField<String>(
-              key: const ValueKey('document-role'),
-              label: l10n.documentsRoleLabel,
-              value: minRole,
-              items: [
-                for (final r in WorkspaceDocument.roles)
-                  (r, audienceName(l10n, r)),
-              ],
-              onChanged: (v) {
-                minRole = v ?? minRole;
-                refresh();
-              },
-            ),
-            topic,
-            HelpAnchor.documentsRole,
-          ),
-        ],
+        builder: (context, refresh) => _addFields(l10n, draft, refresh),
       ),
     );
     if (saved) ref.invalidate(workspaceDocumentsProvider);
@@ -322,4 +313,46 @@ class DocumentsScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// What the add form holds while it is open: the two typed values and the
+/// three choices, the entry they make and what is still wrong with it.
+class _AddDraft {
+  /// The keys the two fields' problems are said under.
+  static const String titleField = 'title';
+  static const String urlField = 'url';
+
+  final TextEditingController title = TextEditingController();
+  final TextEditingController url = TextEditingController();
+  String category = 'other';
+  String provider = 'link';
+  String minRole = 'member';
+
+  void dispose() {
+    title.dispose();
+    url.dispose();
+  }
+
+  /// Each problem under the key of its field; empty when the entry may be
+  /// filed.
+  FieldErrors problems(AppLocalizations l10n) {
+    final found = documentLinkProblems(title: title.text, url: url.text);
+    return {
+      if (found.contains(DocumentLinkProblem.titleMissing))
+        titleField: l10n.documentsTitleMissing,
+      if (found.contains(DocumentLinkProblem.linkNotHttps))
+        urlField: l10n.documentsLinkNotHttps,
+    };
+  }
+
+  /// The entry as it is filed in [workspaceId]'s library.
+  WorkspaceDocument entry(String workspaceId) => WorkspaceDocument(
+    id: '',
+    workspaceId: workspaceId,
+    title: title.text,
+    category: category,
+    provider: provider,
+    url: url.text,
+    minRole: minRole,
+  );
 }

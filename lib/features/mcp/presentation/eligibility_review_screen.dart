@@ -219,13 +219,16 @@ class _EligibilityReviewScreenState
       ),
     );
   }
-  Widget _message(String text) => Padding(
+  // In a list, so the banner keeps its own height in a body that fills the page.
+  Widget _message(String text) => ListView(
     padding: AppSpacing.gutterAll,
-    child: InlineBanner(
-      key: const ValueKey('mcp-review-message'),
-      icon: Icons.info_outline,
-      text: text,
-    ),
+    children: [
+      InlineBanner(
+        key: const ValueKey('mcp-review-message'),
+        icon: Icons.info_outline,
+        text: text,
+      ),
+    ],
   );
 
   Widget _outcomeBanner(AppLocalizations l10n, String outcome) {
