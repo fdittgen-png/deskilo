@@ -36,6 +36,11 @@ class DemoStockConfigCommands implements StockConfigCommands {
       itemId: 'demo-item-milk', revision: 1, stockable: true, purchasable: true, sellable: true,
       inventoryUnit: 'l', tracking: 'none', shelfLifeDays: null, units: [], codes: [],
     ),
+    // #4487 -- the bottle deposit of the syrup: kept in stock, untracked, so a bottle brought back is counted again
+    'demo-item-bottle': const StockItemConfig(
+      itemId: 'demo-item-bottle', revision: 1, stockable: true, purchasable: true, sellable: true,
+      inventoryUnit: 'piece', tracking: 'none', shelfLifeDays: null, units: [], codes: [],
+    ),
     'demo-item-mugs': const StockItemConfig(
       itemId: 'demo-item-mugs', revision: 1, stockable: true, purchasable: true, sellable: true,
       inventoryUnit: 'piece', tracking: 'none', shelfLifeDays: null,

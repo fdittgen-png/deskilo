@@ -6,6 +6,7 @@
 // list and its print, nothing else.
 import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
+import 'package:deskilo/core/ui/kit/status_chip.dart';
 import 'package:deskilo/features/money/domain/line_unit.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
@@ -18,6 +19,7 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show VatRate;
 import 'package:flutter/material.dart';
@@ -199,8 +201,9 @@ void main() {
     final (_, app) = await _app({WorkspacePermission.viewFinances});
     await tester.pumpWidget(app);
     await _settle(tester);
+    await openOrder(tester, '2026-0001');
     expect(
-      find.byKey(const ValueKey('purchase-order-2026-0001')),
+      find.byKey(const ValueKey('purchase-order-panel-2026-0001')),
       findsOneWidget,
     );
     expect(
@@ -276,9 +279,28 @@ void main() {
     final id = orders.orders.single.id;
     final panel = find.byKey(const ValueKey('purchase-order-panel-2026-0001'));
 
+    // #4492 — the state is a word on its tone, in the table and on the record
+    // (beside an open order the table keeps only its staying columns).
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('records-rows')),
+        matching: find.widgetWithText(
+          StatusChip,
+          AppLocalizationsEn().purchasesStateDraft,
+        ),
+      ),
+      findsOneWidget,
+    );
+
     await openOrder(tester, '2026-0001');
     expect(orderAddress(tester), '/money/purchase-orders/order/$id');
     expect(panel, findsOneWidget);
+    expect(
+      tester.widget(
+        find.byKey(const ValueKey('purchase-order-state-2026-0001')),
+      ),
+      isA<StatusChip>(),
+    );
     expect(find.byKey(const ValueKey('records-rows')), findsOneWidget);
     expect(
       find.byKey(const ValueKey('records-total-EUR')),

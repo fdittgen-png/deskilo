@@ -5372,9 +5372,9 @@
   "@documentsEmpty": {
     "description": "Workspace document library (#500)"
   },
-  "documentsInvalid": "Un document requiert un titre et un lien https://.",
-  "@documentsInvalid": {
-    "description": "Workspace document library (#500)"
+  "documentsLinkNotHttps": "Le lien doit commencer par https://.",
+  "@documentsLinkNotHttps": {
+    "description": "Document library, the add form: said under the link field when the link is not an https:// one"
   },
   "documentsProviderLabel": "Stocké sur",
   "@documentsProviderLabel": {
@@ -5399,6 +5399,10 @@
   "documentsTitleLabel": "Titre",
   "@documentsTitleLabel": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsTitleMissing": "Donnez un titre au document.",
+  "@documentsTitleMissing": {
+    "description": "Document library, the add form: said under the title field when it is empty"
   },
   "documentsUrlHelper": "Collez le lien de partage de votre drive — les droits d'accès restent gérés là-bas.",
   "@documentsUrlHelper": {
@@ -12827,6 +12831,16 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataCount": "{count, plural, =0{Aucun enregistrement} one{{count} enregistrement} other{{count} enregistrements}}",
+  "masterDataCustomersDesc": "Ceux que vous facturez",
+  "masterDataGroupCatalogue": "Catalogue de vente",
+  "masterDataGroupMeasures": "Mesures et taxes",
+  "masterDataGroupPartners": "Partenaires",
+  "masterDataGroupPlaces": "Emplacements et stock",
+  "masterDataIntro": "Toutes les listes avec lesquelles l’entreprise est configurée, en un seul endroit. Touchez une carte pour ouvrir son éditeur.",
+  "masterDataItemGroupsDesc": "Réglages communs à un groupe d’articles",
+  "masterDataItemsDesc": "Ce que vous stockez et vendez",
+  "masterDataNoMatch": "Aucune donnée de base ne correspond à la recherche.",
   "masterDataNoUnit": "Aucune unité",
   "@masterDataNoUnit": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
@@ -12835,12 +12849,19 @@
   "@masterDataNoVat": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
   },
+  "masterDataPlacesDesc": "Où vos marchandises sont rangées",
   "masterDataSearchHint": "Saisissez un nom ou un code, ou choisissez dans la liste",
+  "masterDataServicesDesc": "Les services que vous vendez",
+  "masterDataSitesDesc": "Vos adresses et les niveaux de chacune",
+  "masterDataSuppliersDesc": "Ceux à qui vous achetez",
+  "masterDataTills": "Caisses",
+  "masterDataTillsDesc": "Les caisses du comptoir et la disposition de leurs touches",
   "masterDataUnknownCode": "Ce n'est pas une entrée valide. Choisissez-en une dans la liste.",
   "masterDataUnlisted": "Ce n'est pas dans la liste : choisissez-en un",
   "@masterDataUnlisted": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
   },
+  "masterDataVatDesc": "Les taux que vos documents appliquent",
   "mcpApiReference": "Référence de l’API",
   "mcpApiReferenceHint": "Ce qu’un assistant peut appeler, et comment c’est autorisé",
   "mcpAssistantsTitle": "Assistants",
@@ -16856,6 +16877,10 @@
   "refusalBankMatchUndoLaterFirst": "C'est le premier paiement de la facture : annulez d'abord les paiements suivants. Rien n'a été modifié.",
   "@refusalBankMatchUndoLaterFirst": {
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
+  },
+  "refusalBooksClosedPeriodDated": "Cette date se situe dans une période comptable clôturée : rien n'a été enregistré. Une date de la période ouverte est possible ; seul le propriétaire peut rouvrir la période.",
+  "@refusalBooksClosedPeriodDated": {
+    "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
   },
   "refusalChangedMeanwhile": "Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.",
   "refusalCounterCashEntry": "Cette écriture d'espèces n'est pas acceptée : le motif n'est pas dans la liste, le montant dépasse votre limite, ou les nombres ne correspondent pas.",

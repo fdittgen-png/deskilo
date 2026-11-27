@@ -3173,6 +3173,7 @@ routine public.book_actor(p_workspace_id uuid, p_owner boolean) -> uuid | functi
 routine public.book_chart(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b41fc3441b69
 routine public.book_local_day(p_workspace_id uuid, p_at timestamp with time zone) -> date | function | definer | stable | exec:service_role | body:331853c631d1
 routine public.book_period_closed(p_workspace_id uuid, p_day date) -> boolean | function | definer | stable | exec:service_role | body:48ddadaf666d
+routine public.book_period_dated_guard() -> trigger | function | definer | volatile | exec:service_role | body:45e46a4ddcfc
 routine public.book_period_json(p book_periods) -> jsonb | function | definer | stable | exec:service_role | body:6e70242182da
 routine public.book_period_match_guard() -> trigger | function | definer | volatile | exec:service_role | body:d96b788952db
 routine public.book_period_vat_close() -> trigger | function | definer | volatile | exec:service_role | body:95211731251d
@@ -3262,9 +3263,9 @@ routine public.counter_day_close_v1(p_workspace_id uuid, p_request_id uuid, p_si
 routine public.counter_day_report_v1(p_workspace_id uuid, p_day_close_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e7ad269ace0
 routine public.counter_denominations_total(p_denominations jsonb) -> bigint | function | invoker | immutable | exec:service_role | body:fe05c177ae65
 routine public.counter_finance_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:95d8874f4ca3
-routine public.counter_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:a9c6b6fdca6f
+routine public.counter_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:e4459a02061f
 routine public.counter_goods_parts(p_workspace_id uuid, p_item_id uuid, p_variant_id uuid, p_from uuid, p_quantity text, p_unit text, p_input jsonb, p_taken jsonb) -> jsonb | function | definer | stable | exec:service_role | body:2cf395fe5aa1
-routine public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fdc5b32c6744
+routine public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:97446c3ccbce
 routine public.counter_item_lots_v1(p_workspace_id uuid, p_item_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e794467544c8
 routine public.counter_line_compute(p_workspace_id uuid, p_line jsonb, p_index integer, p_currency text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:36efd33a36e8
 routine public.counter_line_prices(p_workspace_id uuid, p_kind text, p_lines jsonb) -> jsonb | function | definer | stable | exec:service_role | body:672c0c73ce0d
@@ -3536,7 +3537,7 @@ routine public.invoice_dunning_state_core(p_invoice_id uuid, p_at timestamp with
 routine public.invoice_email_send_json(p_send uuid) -> jsonb | function | definer | stable | exec:service_role | body:bfb95b7f8f5f
 routine public.invoice_email_state_v1(p_workspace_id uuid, p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9e9729f10099
 routine public.invoice_essentials_missing(p_workspace_id uuid, p_member_id uuid, p_parties jsonb, p_vat_totals jsonb) -> text[] | function | definer | stable | exec:service_role | body:4bfb219079c9
-routine public.invoice_goods_return(p_workspace_id uuid, p_actor uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:d1a30872eda2
+routine public.invoice_goods_return(p_workspace_id uuid, p_actor uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:4061e613bc15
 routine public.invoice_goods_tracks_freeze(p_workspace_id uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:d2069f0a2607
 routine public.invoice_issue_draft(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_replaces uuid, p_correction_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:12b1d88976d2
 routine public.invoice_issue_readiness(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_replaces uuid, p_correction_reason text) -> text[] | function | definer | volatile | exec:authenticated,service_role | body:4acf86115aa7
@@ -3574,6 +3575,7 @@ routine public.invoice_original_orphan_age() -> interval | function | invoker | 
 routine public.invoice_original_sweep_cap() -> integer | function | invoker | immutable | exec:service_role | body:e6528d16b93d
 routine public.invoice_original_xml_max_bytes() -> integer | function | invoker | immutable | exec:authenticated,service_role | body:770442338eed
 routine public.invoice_originals_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:8caacaa7487f
+routine public.invoice_originals_kept() -> trigger | function | invoker | volatile | exec:service_role | body:97752a916975
 routine public.invoice_originals_sweep_claim_v1(p_lease_seconds integer) -> TABLE(lease_token uuid, mode text, candidates jsonb) | function | definer | volatile | exec:service_role | body:48808ac823be
 routine public.invoice_payment_received(p_invoice uuid) -> boolean | function | definer | stable | exec:service_role | body:e43d61fc501a
 routine public.invoice_provenance_stamp() -> trigger | function | definer | volatile | exec:service_role | body:684ce055c003
@@ -4078,6 +4080,8 @@ routine public.place_visible_to(p_member uuid, p_office uuid, p_level uuid) -> b
 routine public.plan_media_orphans(p_workspace_id uuid, p_limit integer) -> SETOF text | function | definer | stable | exec:authenticated,service_role | body:9d9ed014d04e
 routine public.post_context_notice(p_context_kind text, p_context_id uuid, p_notice jsonb, p_body text) -> uuid | function | definer | volatile | exec:service_role | body:d77a52768f00
 routine public.postal_region_rules() -> jsonb | function | invoker | immutable | exec:service_role | body:95e4509a2045
+routine public.posted_rows_no_truncate() -> trigger | function | definer | volatile | exec:service_role | body:ed79bce05c14
+routine public.posted_site_kept() -> trigger | function | invoker | volatile | exec:service_role | body:b365ac0a566c
 routine public.posting_account(p_issuer_site_id uuid, p_role text, p_qualifier text, p_day date) -> TABLE(code text, problem text) | function | definer | stable | exec:service_role | body:5adcca634cb9
 routine public.posting_at_rate(p_entry jsonb, p_currency text, p_rate numeric, p_rate_date date, p_source text) -> jsonb | function | invoker | immutable | exec:service_role | body:fb515e5ba01c
 routine public.posting_bank_entry(p_workspace_id uuid, p_invoice_id uuid, p_entry jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fb7360981238
@@ -4618,6 +4622,7 @@ routine public.stock_lot_expired(p_lot_id uuid, p_today date) -> boolean | funct
 routine public.stock_low_rows(p_workspace_id uuid, p_site_id uuid) -> TABLE(point_id uuid, item_id uuid, item_name text, unit text, variant_id uuid, site_id uuid, site_code text, on_hand numeric, reorder_point numeric, proposed numeric, since timestamp with time zone) | function | definer | stable | exec:service_role | body:2bc321a04c67
 routine public.stock_low_v1(p_workspace_id uuid, p_site_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3d2533bcbc41
 routine public.stock_move_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_occurred_at timestamp with time zone, p_links jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:42ba9613b417
+routine public.stock_movement_details_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:0ad5d01d4e7e
 routine public.stock_movement_trace_v1(p_workspace_id uuid, p_movement_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3d441a273701
 routine public.stock_movements_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:1b7b1f624968
 routine public.stock_movements_apply() -> trigger | function | definer | volatile | exec:service_role | body:f4ceeeff72de
@@ -4945,23 +4950,33 @@ trigger conversation_participants.customer_subject_refused CREATE TRIGGER custom
 trigger conversation_participants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversation_participants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger conversations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_cash_entries.counter_cash_entries_frozen CREATE TRIGGER counter_cash_entries_frozen BEFORE DELETE OR UPDATE ON public.counter_cash_entries FOR EACH ROW EXECUTE FUNCTION counter_till_frozen_guard()
+trigger counter_cash_entries.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_cash_entries FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_cash_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_cash_entries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_country_operations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_country_operations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_day_closes.counter_day_closes_frozen CREATE TRIGGER counter_day_closes_frozen BEFORE DELETE OR UPDATE ON public.counter_day_closes FOR EACH ROW EXECUTE FUNCTION counter_till_frozen_guard()
+trigger counter_day_closes.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_day_closes FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_day_closes.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_day_closes FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_offline_sales.counter_offline_sales_frozen CREATE TRIGGER counter_offline_sales_frozen BEFORE DELETE OR UPDATE ON public.counter_offline_sales FOR EACH ROW EXECUTE FUNCTION counter_offline_frozen_guard()
+trigger counter_offline_sales.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_offline_sales FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_offline_sales.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_offline_sales FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_receipt_copies.counter_receipt_copies_frozen CREATE TRIGGER counter_receipt_copies_frozen BEFORE DELETE OR UPDATE ON public.counter_receipt_copies FOR EACH ROW EXECUTE FUNCTION counter_receipt_copies_frozen()
+trigger counter_receipt_copies.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_receipt_copies FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_receipt_copies.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_receipt_copies FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_receipt_lines.counter_receipt_lines_frozen CREATE TRIGGER counter_receipt_lines_frozen BEFORE DELETE OR UPDATE ON public.counter_receipt_lines FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()
+trigger counter_receipt_lines.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_receipt_lines FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_receipt_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_receipt_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_receipts.counter_receipts_frozen CREATE TRIGGER counter_receipts_frozen BEFORE DELETE OR UPDATE ON public.counter_receipts FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()
+trigger counter_receipts.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_receipts FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_receipts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_receipts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_refunds.counter_refunds_frozen CREATE TRIGGER counter_refunds_frozen BEFORE DELETE OR UPDATE ON public.counter_refunds FOR EACH ROW EXECUTE FUNCTION counter_refunds_frozen()
+trigger counter_refunds.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_refunds FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_refunds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_refunds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_tenders.counter_tenders_frozen CREATE TRIGGER counter_tenders_frozen BEFORE DELETE OR UPDATE ON public.counter_tenders FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()
+trigger counter_tenders.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_tenders FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
+trigger counter_tenders.posted_site_kept CREATE TRIGGER posted_site_kept BEFORE UPDATE ON public.counter_tenders FOR EACH ROW WHEN ((old.site_id IS DISTINCT FROM new.site_id)) EXECUTE FUNCTION posted_site_kept()
 trigger counter_tenders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_tenders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_till_sessions.counter_till_sessions_frozen CREATE TRIGGER counter_till_sessions_frozen BEFORE DELETE OR UPDATE ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION counter_till_frozen_guard()
+trigger counter_till_sessions.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_till_sessions FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_till_sessions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_tills.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_tills FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger credit_products.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.credit_products FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -4995,6 +5010,7 @@ trigger event_decisions.event_decisions_fill_workspace CREATE TRIGGER event_deci
 trigger event_decisions.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.event_decisions REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger event_decisions.record_workspace_application_decision CREATE TRIGGER record_workspace_application_decision AFTER INSERT ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION record_workspace_application_decision()
 trigger event_decisions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger events.book_period_dated_guard CREATE TRIGGER book_period_dated_guard BEFORE INSERT ON public.events FOR EACH ROW WHEN ((new.type = 'payment'::text)) EXECUTE FUNCTION book_period_dated_guard()
 trigger events.capture_workspace_application CREATE TRIGGER capture_workspace_application AFTER INSERT ON public.events FOR EACH ROW EXECUTE FUNCTION capture_workspace_application()
 trigger events.events_apply_expense_occurrence CREATE TRIGGER events_apply_expense_occurrence AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION apply_expense_occurrence_decision()
 trigger events.events_apply_expense_repartition CREATE TRIGGER events_apply_expense_repartition AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION apply_expense_repartition_decision()
@@ -5061,8 +5077,10 @@ trigger invoice_dunning_holds.zz_system_columns_stamp CREATE TRIGGER zz_system_c
 trigger invoice_email_sends.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_email_sends FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_issue_notices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_issue_notices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_line_tracks.invoice_line_tracks_frozen CREATE TRIGGER invoice_line_tracks_frozen BEFORE DELETE OR UPDATE ON public.invoice_line_tracks FOR EACH ROW EXECUTE FUNCTION invoice_line_tracks_frozen_guard()
+trigger invoice_line_tracks.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.invoice_line_tracks FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger invoice_line_tracks.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_line_tracks FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_match_history.invoice_match_history_append_only CREATE TRIGGER invoice_match_history_append_only BEFORE DELETE OR UPDATE ON public.invoice_match_history FOR EACH ROW EXECUTE FUNCTION invoice_match_history_append_only()
+trigger invoice_match_history.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.invoice_match_history FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger invoice_match_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_match_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_match_payments.invoice_match_payments_allocation_sum CREATE TRIGGER invoice_match_payments_allocation_sum BEFORE INSERT OR UPDATE OF amount_cents, payment_ledger_id ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION guard_payment_allocation_sum()
 trigger invoice_match_payments.invoice_match_payments_history CREATE TRIGGER invoice_match_payments_history AFTER INSERT OR DELETE OR UPDATE ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION invoice_match_history_rows()
@@ -5073,7 +5091,9 @@ trigger invoice_matches.invoice_matches_history CREATE TRIGGER invoice_matches_h
 trigger invoice_matches.invoice_matches_refuse_moved CREATE TRIGGER invoice_matches_refuse_moved BEFORE INSERT OR UPDATE OF payment_ledger_id, credit_ledger_id ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION refuse_match_of_moved_credit()
 trigger invoice_matches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_maturities.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_maturities FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger invoice_originals.invoice_originals_no_delete CREATE TRIGGER invoice_originals_no_delete BEFORE DELETE ON public.invoice_originals FOR EACH ROW EXECUTE FUNCTION invoice_originals_kept()
 trigger invoice_originals.invoice_originals_no_update CREATE TRIGGER invoice_originals_no_update BEFORE UPDATE ON public.invoice_originals FOR EACH ROW EXECUTE FUNCTION invoice_originals_immutable()
+trigger invoice_originals.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.invoice_originals FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger invoice_originals.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_originals FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_reminders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_reminders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_transmission_artifacts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_transmission_artifacts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -5094,6 +5114,7 @@ trigger invoices.invoice_provenance_stamp CREATE TRIGGER invoice_provenance_stam
 trigger invoices.invoice_qrr_freeze CREATE TRIGGER invoice_qrr_freeze BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_qrr_freeze()
 trigger invoices.invoices_no_mutation CREATE TRIGGER invoices_no_mutation BEFORE DELETE OR UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoices_immutable()
 trigger invoices.invoices_reimbursement_guard CREATE TRIGGER invoices_reimbursement_guard BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoices_reimbursement_guard()
+trigger invoices.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.invoices FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger invoices.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.invoices REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger invoices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger item_codes.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.item_codes FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -5113,10 +5134,13 @@ trigger lease_settlements.zz_system_columns_stamp CREATE TRIGGER zz_system_colum
 trigger lease_terms.lease_terms_guard CREATE TRIGGER lease_terms_guard BEFORE DELETE OR UPDATE ON public.lease_terms FOR EACH ROW EXECUTE FUNCTION lease_terms_guard()
 trigger lease_terms.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.lease_terms FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger ledger_credit_moves.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.ledger_credit_moves FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger ledger_entries.book_period_dated_guard CREATE TRIGGER book_period_dated_guard BEFORE INSERT ON public.ledger_entries FOR EACH ROW WHEN (((new.kind = 'credit'::text) AND (new.category = 'payment'::text) AND (new.event_id IS NOT NULL) AND (new.occurred_on IS NOT NULL))) EXECUTE FUNCTION book_period_dated_guard()
 trigger ledger_entries.ledger_apply_declared_claim CREATE TRIGGER ledger_apply_declared_claim AFTER INSERT ON public.ledger_entries FOR EACH ROW WHEN ((new.event_id IS NOT NULL)) EXECUTE FUNCTION apply_declared_payment_claim()
 trigger ledger_entries.ledger_entries_no_rewrite CREATE TRIGGER ledger_entries_no_rewrite BEFORE DELETE OR UPDATE ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION ledger_entries_append_only()
 trigger ledger_entries.ledger_entries_supply_class CREATE TRIGGER ledger_entries_supply_class BEFORE INSERT ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION ledger_entry_supply_class()
 trigger ledger_entries.ledger_payment_allocation_mode CREATE TRIGGER ledger_payment_allocation_mode BEFORE INSERT ON public.ledger_entries FOR EACH ROW WHEN ((new.event_id IS NOT NULL)) EXECUTE FUNCTION ledger_payment_allocation_mode()
+trigger ledger_entries.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.ledger_entries FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
+trigger ledger_entries.posted_site_kept CREATE TRIGGER posted_site_kept BEFORE UPDATE ON public.ledger_entries FOR EACH ROW WHEN ((old.site_id IS DISTINCT FROM new.site_id)) EXECUTE FUNCTION posted_site_kept()
 trigger ledger_entries.purchase_obligation_credit_link CREATE TRIGGER purchase_obligation_credit_link AFTER INSERT ON public.ledger_entries FOR EACH ROW WHEN (((new.kind = 'credit'::text) AND (new.category = 'expense'::text) AND (new.event_id IS NOT NULL))) EXECUTE FUNCTION purchase_obligation_credit_link()
 trigger ledger_entries.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.ledger_entries REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger ledger_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -5202,6 +5226,7 @@ trigger offices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp B
 trigger opening_hours_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.opening_hours_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger organisation_houses.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.organisation_houses FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger organisations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.organisations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger outgoing_payments.book_period_dated_guard CREATE TRIGGER book_period_dated_guard BEFORE INSERT ON public.outgoing_payments FOR EACH ROW EXECUTE FUNCTION book_period_dated_guard()
 trigger outgoing_payments.outgoing_payments_guard CREATE TRIGGER outgoing_payments_guard BEFORE DELETE OR UPDATE ON public.outgoing_payments FOR EACH ROW EXECUTE FUNCTION outgoing_payments_guard()
 trigger outgoing_payments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.outgoing_payments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger packages.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.packages REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
@@ -5372,8 +5397,14 @@ trigger stock_locations.stock_locations_address_follow CREATE TRIGGER stock_loca
 trigger stock_locations.stock_locations_keep_history CREATE TRIGGER stock_locations_keep_history BEFORE DELETE ON public.stock_locations FOR EACH ROW EXECUTE FUNCTION stock_locations_keep_history()
 trigger stock_locations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_locations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_lots.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_lots FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_movement_handling_units.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.stock_movement_handling_units FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
+trigger stock_movement_handling_units.stock_movement_handling_units_append_only CREATE TRIGGER stock_movement_handling_units_append_only BEFORE DELETE OR UPDATE ON public.stock_movement_handling_units FOR EACH ROW EXECUTE FUNCTION stock_movement_details_append_only()
 trigger stock_movement_handling_units.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_movement_handling_units FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_movement_units.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.stock_movement_units FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
+trigger stock_movement_units.stock_movement_units_append_only CREATE TRIGGER stock_movement_units_append_only BEFORE DELETE OR UPDATE ON public.stock_movement_units FOR EACH ROW EXECUTE FUNCTION stock_movement_details_append_only()
 trigger stock_movement_units.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_movement_units FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_movements.book_period_dated_guard CREATE TRIGGER book_period_dated_guard BEFORE INSERT ON public.stock_movements FOR EACH ROW EXECUTE FUNCTION book_period_dated_guard()
+trigger stock_movements.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.stock_movements FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger stock_movements.stock_movements_append_only CREATE TRIGGER stock_movements_append_only BEFORE DELETE OR UPDATE ON public.stock_movements FOR EACH ROW EXECUTE FUNCTION stock_movements_append_only()
 trigger stock_movements.stock_movements_apply CREATE TRIGGER stock_movements_apply AFTER INSERT ON public.stock_movements FOR EACH ROW EXECUTE FUNCTION stock_movements_apply()
 trigger stock_movements.stock_movements_reorder CREATE TRIGGER stock_movements_reorder AFTER INSERT ON public.stock_movements FOR EACH ROW EXECUTE FUNCTION stock_movements_reorder()
@@ -5385,8 +5416,10 @@ trigger stock_receipt_allocations.zz_system_columns_stamp CREATE TRIGGER zz_syst
 trigger stock_reorder_points.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_reorder_points FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_repack_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_repack_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_repacks.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_repacks FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_returns.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.stock_returns FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger stock_returns.stock_returns_append_only CREATE TRIGGER stock_returns_append_only BEFORE DELETE OR UPDATE ON public.stock_returns FOR EACH ROW EXECUTE FUNCTION stock_returns_append_only()
 trigger stock_returns.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_returns FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_reversals.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.stock_reversals FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger stock_reversals.stock_reversals_append_only CREATE TRIGGER stock_reversals_append_only BEFORE DELETE OR UPDATE ON public.stock_reversals FOR EACH ROW EXECUTE FUNCTION stock_returns_append_only()
 trigger stock_reversals.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_reversals FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_tagged_units.stock_hu_pieces CREATE CONSTRAINT TRIGGER stock_hu_pieces AFTER UPDATE OF state, location_id ON public.stock_tagged_units DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION stock_hu_pieces_check()
@@ -5411,9 +5444,12 @@ trigger vat_declarations.book_period_vat_close CREATE TRIGGER book_period_vat_cl
 trigger vat_declarations.vat_declarations_guard CREATE TRIGGER vat_declarations_guard BEFORE INSERT OR UPDATE ON public.vat_declarations FOR EACH ROW EXECUTE FUNCTION vat_declarations_guard()
 trigger vat_declarations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.vat_declarations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger vat_rates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.vat_rates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger vat_return_entries.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.vat_return_entries FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger vat_return_entries.vat_return_entries_guard CREATE TRIGGER vat_return_entries_guard BEFORE INSERT OR DELETE OR UPDATE ON public.vat_return_entries FOR EACH ROW EXECUTE FUNCTION vat_return_entries_guard()
 trigger vat_return_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.vat_return_entries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger verifactu_records.national_channel_from_verifactu CREATE TRIGGER national_channel_from_verifactu AFTER UPDATE OF submission_status ON public.verifactu_records FOR EACH ROW WHEN (((new.submission_status = 'accepted'::text) AND (old.submission_status <> 'accepted'::text))) EXECUTE FUNCTION national_channel_from_verifactu()
+trigger verifactu_records.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.verifactu_records FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
+trigger verifactu_records.posted_site_kept CREATE TRIGGER posted_site_kept BEFORE UPDATE ON public.verifactu_records FOR EACH ROW WHEN ((old.site_id IS DISTINCT FROM new.site_id)) EXECUTE FUNCTION posted_site_kept()
 trigger verifactu_records.verifactu_records_append_only CREATE TRIGGER verifactu_records_append_only BEFORE DELETE OR UPDATE ON public.verifactu_records FOR EACH ROW EXECUTE FUNCTION verifactu_records_append_only()
 trigger verifactu_records.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.verifactu_records FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_application_messages.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_application_messages FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

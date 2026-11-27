@@ -47,7 +47,12 @@
 #   CALLED        the file raised because it CALLS the function it patches;
 #                 the trial says nothing about the anchor.
 #
-# SILENT and PATCHED_STUB are the findings. Those known today are listed in
+# A SILENT or PATCHED_STUB pair is settled when a LATER migration does the
+# file's work by itself: met with the body as it stood BEFORE the file (the
+# file did nothing), it leaves the body the file was meant to leave. Tried on
+# the replayed database, rolled back; a later file that raises settles nothing.
+#
+# SILENT and PATCHED_STUB that nothing settles are the findings. Those known today are listed in
 # scripts/upgrade_equivalence_known.txt with what each is; a pair that is not
 # in that list fails the check, and a listed pair that no longer occurs is
 # reported so the list shrinks.
@@ -255,10 +260,13 @@ psq "$PROBE" -q -v ON_ERROR_STOP=1 > "$OUT/probe-setup.log" 2>&1 <<'SQL' || { ca
 create schema zz_probe;
 create table zz_probe.files (name text primary key, body text not null);
 create table zz_probe.results (migration text not null, fn text not null, verdict text not null, detail text);
+-- of a finding: the body before the file, and the body the file leaves on the replay
+create table zz_probe.bodies (migration text not null, fn text not null, pre text not null, post text not null);
 create function zz_probe.trial(p_name text) returns void language plpgsql as $probe$
 declare
   v_body text;
   v_changed oid[];
+  v_post jsonb;
   v_oid oid;
   v_sig text;
   v_def text;
@@ -277,7 +285,7 @@ begin
   -- the dry run: which existing bodies this file rewrites in place
   begin
     execute v_body;
-    select array_agg(p.oid order by p.oid) into v_changed
+    select array_agg(p.oid order by p.oid), jsonb_object_agg(p.oid::text, p.prosrc) into v_changed, v_post
       from zz_before b join pg_proc p on p.oid = b.oid
      where p.prosrc is distinct from b.src;
     raise exception 'zz-rollback' using errcode = 'ZZ000';
@@ -315,7 +323,25 @@ begin
         v_detail := sqlstate || ' ' || sqlerrm;
     end;
     insert into zz_probe.results values (p_name, v_sig, v_verdict, v_detail);
+    if v_verdict in ('SILENT', 'PATCHED_STUB') then
+      insert into zz_probe.bodies
+      select p_name, v_sig, b.src, v_post ->> v_oid::text from zz_before b where b.oid = v_oid;
+    end if;
   end loop;
+end
+$probe$;
+-- The function of a finding with the body it had before the file ran.
+create function zz_probe.restore(p_migration text, p_fn text) returns void language plpgsql as $probe$
+declare
+  v_def text := pg_get_functiondef(p_fn::regprocedure);
+  v_pos int := position(E'\nAS $' in v_def);
+  v_pre text;
+begin
+  select b.pre into strict v_pre from zz_probe.bodies b where b.migration = p_migration and b.fn = p_fn;
+  if v_pos = 0 or position('$zzpre$' in v_pre) > 0 then
+    raise exception 'zz-probe: % cannot be given its earlier body', p_fn;
+  end if;
+  execute left(v_def, v_pos - 1) || E'\nAS $zzpre$' || v_pre || '$zzpre$';
 end
 $probe$;
 SQL
@@ -340,7 +366,32 @@ cut -f3 "$OUT/anchor-trials.tsv" | sort | uniq -c | sed 's/^/    /'
 # How a loud one speaks: by its own message, or only because EXECUTE was handed nothing.
 say "of the loud ones: $(awk -F'\t' '$3 == "LOUD" && $4 ~ /EXECUTE.*null|null.*EXECUTE/' "$OUT/anchor-trials.tsv" | grep -c '') stop on a null EXECUTE (no message of their own), $(awk -F'\t' '$3 == "LOUD" && $4 !~ /EXECUTE.*null|null.*EXECUTE/' "$OUT/anchor-trials.tsv" | grep -c '') name what is missing"
 
-awk -F'\t' '$3 == "SILENT" || $3 == "PATCHED_STUB" { print $3 " " $1 " " $2 }' "$OUT/anchor-trials.tsv" | LC_ALL=C sort > "$OUT/anchor-findings.txt"
+# Settled by a later file that does the work by itself: on the replayed database
+# the function gets the body it had before the silent file, then the later file
+# runs; the body must be the one the silent file leaves on a replay.
+: > "$OUT/anchor-settled.txt"
+while IFS=$'\t' read -r mig fn verdict _; do
+  case "$verdict" in SILENT|PATCHED_STUB) ;; *) continue ;; esac
+  name="${fn%%(*}"
+  for f in supabase/migrations/*.sql; do
+    [ "$(version_of "$f")" -gt "$(version_of "$mig")" ] || continue
+    grep -qE "\b$name\(" "$f" || continue
+    settled="$( { printf "begin;\nselect zz_probe.restore('%s', '%s');\n" "$mig" "$fn"
+                  cat "$f"
+                  printf "\n;\nselect 'ZZSETTLED' where (select p.prosrc from pg_proc p where p.oid = '%s'::regprocedure) = (select b.post from zz_probe.bodies b where b.migration = '%s' and b.fn = '%s');\nrollback;\n" "$fn" "$mig" "$fn"
+                } | psq "$PROBE" -At -q -v ON_ERROR_STOP=1 2>/dev/null | grep -c '^ZZSETTLED$' )"
+    if [ "$settled" = 1 ]; then
+      printf '%s %s %s\t%s\n' "$verdict" "$mig" "$fn" "$(basename "$f" .sql)" >> "$OUT/anchor-settled.txt"
+      break
+    fi
+  done
+done < "$OUT/anchor-trials.tsv"
+if [ -s "$OUT/anchor-settled.txt" ]; then
+  say "settled by a later migration (met with the body the silent file left untouched, it does that file's work):"
+  awk -F'\t' '{ print "    " $1 "   <- " $2 }' "$OUT/anchor-settled.txt"
+fi
+awk -F'\t' '$3 == "SILENT" || $3 == "PATCHED_STUB" { print $3 " " $1 " " $2 }' "$OUT/anchor-trials.tsv" | LC_ALL=C sort \
+  | LC_ALL=C comm -23 - <(cut -f1 "$OUT/anchor-settled.txt" | LC_ALL=C sort) > "$OUT/anchor-findings.txt"
 grep -vE '^[[:space:]]*(#|$)' "$KNOWN" 2>/dev/null | sed -E 's/[[:space:]]+#.*$//' | LC_ALL=C sort > "$OUT/anchor-known.txt"
 new="$(LC_ALL=C comm -23 "$OUT/anchor-findings.txt" "$OUT/anchor-known.txt")"
 gone="$(LC_ALL=C comm -13 "$OUT/anchor-findings.txt" "$OUT/anchor-known.txt")"

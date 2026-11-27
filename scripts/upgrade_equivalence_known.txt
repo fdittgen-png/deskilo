@@ -5,7 +5,12 @@
 #
 # A pair that is not here fails the check; a pair here that the check no longer
 # finds is reported, and its line goes. The list only shrinks: an applied
-# migration never changes, so a line leaves when the function is restated whole
-# by a later migration and the earlier file is retired from the bundle, or when
-# the reason for listing it no longer holds.
-SILENT 0735_no_default_currency workspace_status(uuid,text,text)   # the patch sits inside `if position(old in def) > 0`: where the fallback currency is not found as written it stays and nothing is said (the raise inside is unreachable). On a replay the anchor is there and the patch applies; an installation whose body differs keeps the fallback.
+# migration never changes, so a line leaves when a later migration does the
+# file's work by itself -- the check gives the function the body it had before
+# the silent file and wants, after the later one, the body the silent file
+# leaves on a replay -- or when the reason for listing it no longer holds.
+#
+# Left that way: 0735_no_default_currency workspace_status(uuid,text,text). Its
+# patch sat inside `if position(old in def) > 0`, so where the fallback currency
+# was written otherwise it stayed and nothing was said; a later migration takes
+# the fallback out whatever its spacing and raises if any is left.

@@ -9,12 +9,14 @@ import 'package:flutter/material.dart';
 
 import '../../core/l10n/context_l10n.dart';
 import '../../core/l10n/lexicon.dart';
+import '../../core/navigation/routes.dart';
 import '../../core/shortcuts/shortcut_scope.dart';
 import '../../features/task_recorder/presentation/route_classification.dart'
     show businessTaskWizardRoute;
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../l10n/app_localizations.dart';
+import '../master_data/master_data_kinds.dart';
 import '../route_classes.dart' show placeOf;
 import 'shell_destinations.dart';
 
@@ -318,6 +320,10 @@ class DrawerEntries {
           () => go('/members'),
           route: '/members',
         ),
+      // #4485 — every kind of master data, for whoever may open one of them.
+      if (masterDataKindsFor(features.contains, permissions).isNotEmpty)
+        DrawerEntry('drawer-master-data', Icons.dataset_outlined, l10n.deploymentKindMasterData,
+            () => go(Routes.settingsMasterData), route: Routes.settingsMasterData),
       if (mayOnPlaces(WorkspacePermission.workspaceSettings))
         DrawerEntry(
           'drawer-availability',

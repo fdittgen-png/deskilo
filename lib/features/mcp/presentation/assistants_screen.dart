@@ -9,7 +9,6 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/kit/page_bar.dart';
-import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/domain/database_capabilities.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -114,12 +113,9 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
           // actions they explain.
           const McpAccessStatusCard(),
           const SizedBox(height: AppSpacing.md),
-          caps.when(
-            loading: () => const LoadingView(),
-            error: (e, _) => ReadFailureBanner(
-              error: e,
-              onRetry: () => ref.invalidate(myDatabaseCapabilitiesProvider),
-            ),
+          AsyncReadBody.part(
+            value: caps,
+            onRetry: () => ref.invalidate(myDatabaseCapabilitiesProvider),
             data: (c) => _eligibility(l10n, c),
           ),
           const SizedBox(height: AppSpacing.lg),
@@ -128,12 +124,10 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: AppSpacing.sm),
-          connections.when(
-            loading: () => const LoadingView(),
-            error: (e, _) => ReadFailureBanner(
-              error: e,
-              onRetry: () => ref.invalidate(myMcpConnectionsProvider),
-            ),
+          AsyncReadBody.part(
+            value: connections,
+            isEmpty: (list) => list.isEmpty,
+            onRetry: () => ref.invalidate(myMcpConnectionsProvider),
             data: (list) => list.isEmpty
                 ? Text(
                     key: const ValueKey('mcp-connections-none'),

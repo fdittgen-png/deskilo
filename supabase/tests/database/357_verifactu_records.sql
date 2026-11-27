@@ -11,7 +11,7 @@
 -- but for their submission state, and only an issuer of the space may keep
 -- them, for a Spanish seller.
 begin;
-select plan(21);
+select plan(22);
 
 select is(
   public.verifactu_huella_alta('89890001K', '12345678/G33', '01-01-2024', 'F1', '12.35', '123.45',
@@ -175,6 +175,12 @@ select throws_ok(
   format($$delete from public.verifactu_records where id = %L$$, (select id from r1)),
   'verifactu records are kept',
   'a kept record is never deleted');
+
+-- #4492: nor does its site move, whoever writes
+select throws_ok(
+  format($$update public.verifactu_records set site_id = gen_random_uuid() where id = %L$$, (select id from r1)),
+  'DKL03', null,
+  'the site of a kept record does not change');
 
 select throws_ok(
   format($$select public.record_verifactu_v1(%L)$$, current_setting('deskilo.test.fr')),

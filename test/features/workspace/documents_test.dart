@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/features/workspace/domain/workspace_document.dart';
+import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -126,6 +127,47 @@ void main() {
     expect(saved.title, 'AG Protokoll');
     expect(saved.url, 'https://drive.example/x');
     expect(saved.minRole, 'admin');
+  });
+
+  test('#4492 a new entry needs a title and an https link', () {
+    expect(
+      documentLinkProblems(title: ' ', url: 'http://drive.example/x'),
+      {DocumentLinkProblem.titleMissing, DocumentLinkProblem.linkNotHttps},
+    );
+    expect(
+      documentLinkProblems(title: 'Rules', url: ' https://drive.example/x'),
+      isEmpty,
+    );
+  });
+
+  testWidgets('#4492 the add form says each problem under its field, keeps '
+      'what was typed and files nothing; corrected, it saves', (tester) async {
+    final (repo, _) = await pumpDocuments(tester);
+    final en = AppLocalizationsEn();
+
+    await tester.tap(find.byKey(const ValueKey('documents-add')));
+    await _settle(tester);
+    expect(find.byType(AlertDialog), findsNothing, reason: 'a form sheet');
+    await tester.enterText(
+        find.byKey(const ValueKey('document-url')), 'http://drive.example/x');
+    await tester.tap(find.byKey(const ValueKey('document-save')));
+    await _settle(tester);
+
+    expect(find.text(en.documentsTitleMissing), findsOneWidget);
+    expect(find.text(en.documentsLinkNotHttps), findsOneWidget);
+    expect(repo.documents, isEmpty);
+    expect(find.text('http://drive.example/x'), findsOneWidget,
+        reason: 'the form stays open with what was typed');
+
+    await tester.enterText(
+        find.byKey(const ValueKey('document-title')), 'House rules');
+    await tester.enterText(find.byKey(const ValueKey('document-url')),
+        'https://drive.example/x');
+    await tester.tap(find.byKey(const ValueKey('document-save')));
+    await _settle(tester);
+    expect(repo.documents.single.title, 'House rules');
+    expect(find.byKey(const ValueKey('document-save')), findsNothing);
+    expect(tester.takeException(), isNull);
   });
 
   Finder rowMenu(String id) => find.descendant(

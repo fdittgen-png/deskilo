@@ -1,0 +1,19 @@
+{
+  "masterDataIntro": "Tutti gli elenchi con cui è configurata l’attività, in un unico posto. Tocchi una scheda per aprirne l’editor.",
+  "masterDataGroupMeasures": "Misure e imposte",
+  "masterDataGroupCatalogue": "Catalogo",
+  "masterDataGroupPlaces": "Ubicazioni e magazzino",
+  "masterDataGroupPartners": "Partner commerciali",
+  "masterDataTills": "Casse",
+  "masterDataVatDesc": "Le aliquote applicate dai documenti",
+  "masterDataItemsDesc": "Ciò che si tiene a magazzino e si vende",
+  "masterDataItemGroupsDesc": "Impostazioni comuni a un gruppo di articoli",
+  "masterDataServicesDesc": "I servizi in vendita",
+  "masterDataPlacesDesc": "Dove si conservano le merci",
+  "masterDataTillsDesc": "Le casse al banco e la disposizione dei loro tasti",
+  "masterDataSuppliersDesc": "Da chi si acquista",
+  "masterDataCustomersDesc": "A chi si fattura",
+  "masterDataSitesDesc": "Gli indirizzi e i piani di ciascuno",
+  "masterDataCount": "{count, plural, =0{Nessuna voce} one{{count} voce} other{{count} voci}}",
+  "masterDataNoMatch": "Nessun dato anagrafico corrisponde alla ricerca."
+}

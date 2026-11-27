@@ -5372,9 +5372,9 @@
   "@documentsEmpty": {
     "description": "Workspace document library (#500)"
   },
-  "documentsInvalid": "Un documento necesita un título y un enlace https://.",
-  "@documentsInvalid": {
-    "description": "Workspace document library (#500)"
+  "documentsLinkNotHttps": "El enlace debe empezar por https://.",
+  "@documentsLinkNotHttps": {
+    "description": "Document library, the add form: said under the link field when the link is not an https:// one"
   },
   "documentsProviderLabel": "Almacenado en",
   "@documentsProviderLabel": {
@@ -5399,6 +5399,10 @@
   "documentsTitleLabel": "Título",
   "@documentsTitleLabel": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsTitleMissing": "Dé un título al documento.",
+  "@documentsTitleMissing": {
+    "description": "Document library, the add form: said under the title field when it is empty"
   },
   "documentsUrlHelper": "Pegue el enlace de compartir de su drive — los permisos se gestionan allí.",
   "@documentsUrlHelper": {
@@ -12827,6 +12831,16 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataCount": "{count, plural, =0{Ningún registro} one{{count} registro} other{{count} registros}}",
+  "masterDataCustomersDesc": "A quién factura",
+  "masterDataGroupCatalogue": "Catálogo",
+  "masterDataGroupMeasures": "Medidas e impuestos",
+  "masterDataGroupPartners": "Socios comerciales",
+  "masterDataGroupPlaces": "Ubicaciones y existencias",
+  "masterDataIntro": "Todas las listas con las que está configurada la empresa, en un solo lugar. Pulse una tarjeta para abrir su editor.",
+  "masterDataItemGroupsDesc": "Ajustes comunes a un grupo de artículos",
+  "masterDataItemsDesc": "Lo que almacena y vende",
+  "masterDataNoMatch": "Ningún dato maestro coincide con la búsqueda.",
   "masterDataNoUnit": "Sin unidad",
   "@masterDataNoUnit": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
@@ -12835,12 +12849,19 @@
   "@masterDataNoVat": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
   },
+  "masterDataPlacesDesc": "Dónde se guardan sus mercancías",
   "masterDataSearchHint": "Escriba un nombre o un código, o elija de la lista",
+  "masterDataServicesDesc": "Los servicios que vende",
+  "masterDataSitesDesc": "Sus direcciones y las plantas de cada una",
+  "masterDataSuppliersDesc": "A quién compra",
+  "masterDataTills": "Cajas",
+  "masterDataTillsDesc": "Las cajas del mostrador y la disposición de sus teclas",
   "masterDataUnknownCode": "No es una entrada válida. Elija una de la lista.",
   "masterDataUnlisted": "Esto no está en la lista: elija uno",
   "@masterDataUnlisted": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
   },
+  "masterDataVatDesc": "Los tipos que aplican sus documentos",
   "mcpApiReference": "Referencia de la API",
   "mcpApiReferenceHint": "Qué puede llamar un asistente y cómo se autoriza",
   "mcpAssistantsTitle": "Asistentes",
@@ -16856,6 +16877,10 @@
   "refusalBankMatchUndoLaterFirst": "Es el primer pago de la factura: deshaga primero los pagos posteriores. No se cambió nada.",
   "@refusalBankMatchUndoLaterFirst": {
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
+  },
+  "refusalBooksClosedPeriodDated": "Esta fecha está dentro de un periodo contable cerrado: no se registró nada. Es posible una fecha del periodo abierto; solo el propietario puede reabrir el periodo.",
+  "@refusalBooksClosedPeriodDated": {
+    "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
   },
   "refusalChangedMeanwhile": "Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.",
   "refusalCounterCashEntry": "Este apunte de efectivo no se acepta: el motivo no está en la lista, el importe supera su límite, o las cuentas no suman.",

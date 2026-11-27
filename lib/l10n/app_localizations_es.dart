@@ -9160,8 +9160,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Aún no hay documentos. Enlace sus estatutos, guías y estados desde cualquier drive.';
 
   @override
-  String get documentsInvalid =>
-      'Un documento necesita un título y un enlace https://.';
+  String get documentsLinkNotHttps => 'El enlace debe empezar por https://.';
 
   @override
   String get documentsProviderLabel => 'Almacenado en';
@@ -9180,6 +9179,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get documentsTitleLabel => 'Título';
+
+  @override
+  String get documentsTitleMissing => 'Dé un título al documento.';
 
   @override
   String get documentsUrlHelper =>
@@ -21195,14 +21197,75 @@ class AppLocalizationsEs extends AppLocalizations {
   String get managedProfileTitle => 'Perfil gestionado';
 
   @override
+  String masterDataCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count registros',
+      one: '$count registro',
+      zero: 'Ningún registro',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get masterDataCustomersDesc => 'A quién factura';
+
+  @override
+  String get masterDataGroupCatalogue => 'Catálogo';
+
+  @override
+  String get masterDataGroupMeasures => 'Medidas e impuestos';
+
+  @override
+  String get masterDataGroupPartners => 'Socios comerciales';
+
+  @override
+  String get masterDataGroupPlaces => 'Ubicaciones y existencias';
+
+  @override
+  String get masterDataIntro =>
+      'Todas las listas con las que está configurada la empresa, en un solo lugar. Pulse una tarjeta para abrir su editor.';
+
+  @override
+  String get masterDataItemGroupsDesc =>
+      'Ajustes comunes a un grupo de artículos';
+
+  @override
+  String get masterDataItemsDesc => 'Lo que almacena y vende';
+
+  @override
+  String get masterDataNoMatch =>
+      'Ningún dato maestro coincide con la búsqueda.';
+
+  @override
   String get masterDataNoUnit => 'Sin unidad';
 
   @override
   String get masterDataNoVat => 'Sin IVA';
 
   @override
+  String get masterDataPlacesDesc => 'Dónde se guardan sus mercancías';
+
+  @override
   String get masterDataSearchHint =>
       'Escriba un nombre o un código, o elija de la lista';
+
+  @override
+  String get masterDataServicesDesc => 'Los servicios que vende';
+
+  @override
+  String get masterDataSitesDesc => 'Sus direcciones y las plantas de cada una';
+
+  @override
+  String get masterDataSuppliersDesc => 'A quién compra';
+
+  @override
+  String get masterDataTills => 'Cajas';
+
+  @override
+  String get masterDataTillsDesc =>
+      'Las cajas del mostrador y la disposición de sus teclas';
 
   @override
   String get masterDataUnknownCode =>
@@ -21210,6 +21273,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get masterDataUnlisted => 'Esto no está en la lista: elija uno';
+
+  @override
+  String get masterDataVatDesc => 'Los tipos que aplican sus documentos';
 
   @override
   String get mcpApiReference => 'Referencia de la API';
@@ -29553,6 +29619,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalBankMatchUndoLaterFirst =>
       'Es el primer pago de la factura: deshaga primero los pagos posteriores. No se cambió nada.';
+
+  @override
+  String get refusalBooksClosedPeriodDated =>
+      'Esta fecha está dentro de un periodo contable cerrado: no se registró nada. Es posible una fecha del periodo abierto; solo el propietario puede reabrir el periodo.';
 
   @override
   String get refusalChangedMeanwhile =>

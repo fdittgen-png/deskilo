@@ -49,7 +49,7 @@ Card: `counter_tender_request_v1(ws, request id, receipt id, 'card', amount_mino
 
 Answer (finalize): `{receipt_id, number, currency, totals, tenders: <count accepted>, replayed}`. The number is drawn once, from the `receipt` journal, only after every check passed. Goods lines move their goods in the same transaction (reason `sale`, linked to the receipt); a line that cannot leave refuses the whole sale, number included (the stock refusals DKG03 and friends).
 
-Corrections and money back, each its own command: `counter_receipt_correct_v1(ws, request id, original receipt id, {reason, lines: [{corrects_line_id, quantity}]})` makes a NEW finalized receipt (`kind: "correction"`) citing the original, answer `{receipt_id, number, corrects, currency, totals, replayed}`; `counter_refund_v1(ws, request id, correction id, [{kind: "cash"|"other", amount_minor}])` answers `{correction_id, refunded_minor, left_minor, replayed}`; `counter_goods_return_v1(ws, request id, correction id, [{corrects_line_id (a line of the correction), quantity, to_location_id?}])` takes goods back, answer `{correction_id, movements, replayed}`. A correction refunds nothing and moves no goods; a refund and a return are never made by it.
+Corrections and money back, each its own command: `counter_receipt_correct_v1(ws, request id, original receipt id, {reason, lines: [{corrects_line_id, quantity}]})` makes a NEW finalized receipt (`kind: "correction"`) citing the original, answer `{receipt_id, number, corrects, currency, totals, replayed}`; `counter_refund_v1(ws, request id, correction id, [{kind: "cash"|"other", amount_minor}])` answers `{correction_id, refunded_minor, left_minor, replayed}`; `counter_goods_return_v1(ws, request id, correction id, [{corrects_line_id (a line of the correction), quantity, to_location_id?}])` takes goods back, answer `{correction_id, movements, replayed}`. It is a customer return of the sale's own movements (#4492): the goods go back into the lot they left, at its cost, no more than the line credits and no more than is still at the customer, whoever brought the rest back (the stock door's `stock_return_v1` reads the same record, `stock_reversals`). A correction refunds nothing and moves no goods; a refund and a return are never made by it.
 
 ## 3. Refusals (SQLSTATE and detail)
 
@@ -62,7 +62,7 @@ Corrections and money back, each its own command: `counter_receipt_correct_v1(ws
 | DKL05 | the business names a customer on every sale (`counter.customerless_sales` = refused) and none was named | none |
 | DKL06 | tenders | plain text: `tenders_missing`, `tender_kind`, `tender_amount`, `tender_sum`, `tender_open`, `tender_state`, `refund_part` |
 | DKL07 | goods cannot be sold or taken back | plain text: `goods_off`, `from_place`, `to_place` |
-| DKL08 | a correction, refund or return beyond what is left | JSON `{line?, reason: "line_unknown" \| "quantity" \| "beyond_original" \| "amount_beyond" \| "empty" \| "refund_beyond" \| "return_beyond", left?}` |
+| DKL08 | a correction, refund or return beyond what is left | JSON `{line?, reason: "line_unknown" \| "quantity" \| "beyond_original" \| "amount_beyond" \| "empty" \| "refund_beyond" \| "return_beyond" \| "already_back", left?}` |
 | DKL09 | the versioned reader met a version it does not know | none |
 | DKL10 | the draft's revision moved | none |
 | DKL11 | a card authorization is unknown, already settled, or does not wait for a reconciliation | none |

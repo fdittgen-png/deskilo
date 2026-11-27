@@ -17,7 +17,6 @@ import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/scoped_messenger.dart';
 import '../../domain/bank/bank_records.dart';
 import '../../providers/bank_statement_providers.dart';
@@ -119,13 +118,11 @@ class BankStatementsView extends ConsumerWidget {
         const FormGap(),
         // #3913 — the statements this version could not read, counted.
         UnreadableRowsNotice.area(bankStatementsArea(workspaceId)),
-        statements.when(
-          loading: () => const LoadingView(),
-          error: (e, _) => ReadFailureBanner(
-            key: const ValueKey('bank-statements-failed'),
-            error: e,
-            onRetry: () => ref.invalidate(bankStatementsProvider(workspaceId)),
-          ),
+        AsyncReadBody.part(
+          key: const ValueKey('bank-statements-read'),
+          value: statements,
+          isEmpty: (all) => all.isEmpty,
+          onRetry: () => ref.invalidate(bankStatementsProvider(workspaceId)),
           data: (all) => all.isEmpty
               ? Text(l10n.bankStatementsEmpty, key: const ValueKey('bank-statements-empty'))
               : Column(

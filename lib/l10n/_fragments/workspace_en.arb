@@ -504,9 +504,13 @@
   "@documentsDelete": {
     "description": "Workspace document library (#500)"
   },
-  "documentsInvalid": "A document needs a title and an https:// link.",
-  "@documentsInvalid": {
-    "description": "Workspace document library (#500)"
+  "documentsTitleMissing": "Give the document a title.",
+  "@documentsTitleMissing": {
+    "description": "Document library, the add form: said under the title field when it is empty"
+  },
+  "documentsLinkNotHttps": "The link must start with https://.",
+  "@documentsLinkNotHttps": {
+    "description": "Document library, the add form: said under the link field when the link is not an https:// one"
   },
   "featureRoleManagement": "Role management",
   "@featureRoleManagement": {

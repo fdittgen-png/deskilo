@@ -144,7 +144,7 @@ List<NavGroup> navGroupsOf(
       labels.uxNavWorkspace,
       Icons.business_outlined,
       administration,
-      {'drawer-setup-guide', 'drawer-availability'},
+      {'drawer-setup-guide', 'drawer-master-data', 'drawer-availability'},
     ),
   ];
 }

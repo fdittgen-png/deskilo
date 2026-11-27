@@ -14451,11 +14451,11 @@ abstract class AppLocalizations {
   /// **'No document yet. Link your statutes, guides and statements from any drive.'**
   String get documentsEmpty;
 
-  /// Workspace document library (#500)
+  /// Document library, the add form: said under the link field when the link is not an https:// one
   ///
   /// In en, this message translates to:
-  /// **'A document needs a title and an https:// link.'**
-  String get documentsInvalid;
+  /// **'The link must start with https://.'**
+  String get documentsLinkNotHttps;
 
   /// Workspace document library (#500)
   ///
@@ -14492,6 +14492,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Title'**
   String get documentsTitleLabel;
+
+  /// Document library, the add form: said under the title field when it is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Give the document a title.'**
+  String get documentsTitleMissing;
 
   /// Workspace document library (#500)
   ///
@@ -33442,6 +33448,66 @@ abstract class AppLocalizations {
   /// **'Managed profile'**
   String get managedProfileTitle;
 
+  /// #4485 how many records a kind of master data holds, on its card
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No records} one{{count} record} other{{count} records}}'**
+  String masterDataCount(int count);
+
+  /// #4485 one line under the Billing customers card
+  ///
+  /// In en, this message translates to:
+  /// **'Who you invoice'**
+  String get masterDataCustomersDesc;
+
+  /// #4485 group of the Master data page: items, item groups, services
+  ///
+  /// In en, this message translates to:
+  /// **'Catalogue'**
+  String get masterDataGroupCatalogue;
+
+  /// #4485 group of the Master data page: units and VAT rates
+  ///
+  /// In en, this message translates to:
+  /// **'Measures and taxes'**
+  String get masterDataGroupMeasures;
+
+  /// #4485 group of the Master data page: suppliers and customers
+  ///
+  /// In en, this message translates to:
+  /// **'Partners'**
+  String get masterDataGroupPartners;
+
+  /// #4485 group of the Master data page: stock places and tills
+  ///
+  /// In en, this message translates to:
+  /// **'Places and stock'**
+  String get masterDataGroupPlaces;
+
+  /// #4485 the Master data page's intro and its row in the workspace settings
+  ///
+  /// In en, this message translates to:
+  /// **'Every list the business is set up with, in one place. Tap a card to open its editor.'**
+  String get masterDataIntro;
+
+  /// #4485 one line under the Item groups card
+  ///
+  /// In en, this message translates to:
+  /// **'Settings shared by a group of items'**
+  String get masterDataItemGroupsDesc;
+
+  /// #4485 one line under the Items card
+  ///
+  /// In en, this message translates to:
+  /// **'What you stock and sell'**
+  String get masterDataItemsDesc;
+
+  /// #4485 the Master data page's search finds no card
+  ///
+  /// In en, this message translates to:
+  /// **'No master data matches the search.'**
+  String get masterDataNoMatch;
+
   /// #4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit
   ///
   /// In en, this message translates to:
@@ -33454,11 +33520,47 @@ abstract class AppLocalizations {
   /// **'No VAT'**
   String get masterDataNoVat;
 
+  /// #4485 one line under the stock Places card
+  ///
+  /// In en, this message translates to:
+  /// **'Where your goods are kept'**
+  String get masterDataPlacesDesc;
+
   /// #3563 Helper under a field that names master data (a country, a currency): what can be typed.
   ///
   /// In en, this message translates to:
   /// **'Type a name or a code, or pick from the list'**
   String get masterDataSearchHint;
+
+  /// #4485 one line under the Services card
+  ///
+  /// In en, this message translates to:
+  /// **'The services you sell'**
+  String get masterDataServicesDesc;
+
+  /// #4485 one line under the Sites card
+  ///
+  /// In en, this message translates to:
+  /// **'Your addresses and the levels at each'**
+  String get masterDataSitesDesc;
+
+  /// #4485 one line under the Suppliers card
+  ///
+  /// In en, this message translates to:
+  /// **'Who you buy from'**
+  String get masterDataSuppliersDesc;
+
+  /// #4485 card of the Master data page: the tills
+  ///
+  /// In en, this message translates to:
+  /// **'Tills'**
+  String get masterDataTills;
+
+  /// #4485 one line under the Tills card
+  ///
+  /// In en, this message translates to:
+  /// **'The tills at the counter and their key layouts'**
+  String get masterDataTillsDesc;
 
   /// #3563 Error under a master-data field (country, currency) whose value is outside the catalogue; shown for a stored value too.
   ///
@@ -33471,6 +33573,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This is not in the list: pick one'**
   String get masterDataUnlisted;
+
+  /// #4485 one line under the VAT rates card
+  ///
+  /// In en, this message translates to:
+  /// **'The rates your documents charge'**
+  String get masterDataVatDesc;
 
   /// #1801 mcp_settings
   ///
@@ -47081,6 +47189,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This is the invoice\'s first payment: undo its later payments first. Nothing was changed.'**
   String get refusalBankMatchUndoLaterFirst;
+
+  /// #4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books.
+  ///
+  /// In en, this message translates to:
+  /// **'This date lies inside a closed period of the books: nothing was recorded. A date in the open period is possible; only the owner can reopen the period.'**
+  String get refusalBooksClosedPeriodDated;
 
   /// #1305 Shown when an invoice changed state before the action reached the server
   ///
