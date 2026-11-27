@@ -107,28 +107,28 @@ void main() {
   group('the Demo keeps the server\'s rules', () {
     test('a till is saved with its place, and without one it sells from the business\'s', () async {
       final drawer = DemoTillDrawer();
-      await drawer.saveTill('ws-1', requestId: 'r1', tillId: 'demo-till-front', name: 'Front counter', active: true, sellingPlaceId: 'demo-place-sales');
+      await drawer.saveTill('ws-1', requestId: 'r1', till: const DrawerTillEdit(tillId: 'demo-till-front', name: 'Front counter', active: true, sellingPlaceId: 'demo-place-sales'));
       expect((await _till(drawer, 'demo-till-front')).sellingPlaceId, 'demo-place-sales');
-      await drawer.saveTill('ws-1', requestId: 'r2', tillId: 'demo-till-front', name: 'Front counter', active: true);
+      await drawer.saveTill('ws-1', requestId: 'r2', till: const DrawerTillEdit(tillId: 'demo-till-front', name: 'Front counter', active: true));
       expect((await _till(drawer, 'demo-till-front')).sellingPlaceId, isNull);
     });
 
     test('a place the business does not sell from is refused and the till stays as it was', () async {
       final drawer = DemoTillDrawer(tills: [_front]);
       await expectLater(
-        drawer.saveTill('ws-1', requestId: 'r1', tillId: 'till-front', name: 'Front', active: true, sellingPlaceId: 'no-such-place'),
+        drawer.saveTill('ws-1', requestId: 'r1', till: const DrawerTillEdit(tillId: 'till-front', name: 'Front', active: true, sellingPlaceId: 'no-such-place')),
         throwsA(isA<PostgrestException>().having((e) => '${e.details}', 'reason', contains('selling_place_unknown'))),
       );
       expect((await _till(drawer, 'till-front')).sellingPlaceId, 'demo-place-shelf');
       // recovery: the same till saved with a place that is offered
-      await drawer.saveTill('ws-1', requestId: 'r2', tillId: 'till-front', name: 'Front', active: true, sellingPlaceId: 'demo-place-main');
+      await drawer.saveTill('ws-1', requestId: 'r2', till: const DrawerTillEdit(tillId: 'till-front', name: 'Front', active: true, sellingPlaceId: 'demo-place-main'));
       expect((await _till(drawer, 'till-front')).sellingPlaceId, 'demo-place-main');
     });
 
     test('the place a till already has is kept although the list no longer offers it', () async {
       const gone = DrawerTill(id: 'till-old', name: 'Old', active: true, sellingPlaceId: 'place-gone');
       final drawer = DemoTillDrawer(tills: [gone]);
-      await drawer.saveTill('ws-1', requestId: 'r1', tillId: 'till-old', name: 'Old till', active: true, sellingPlaceId: 'place-gone');
+      await drawer.saveTill('ws-1', requestId: 'r1', till: const DrawerTillEdit(tillId: 'till-old', name: 'Old till', active: true, sellingPlaceId: 'place-gone'));
       final saved = await _till(drawer, 'till-old');
       expect([saved.name, saved.sellingPlaceId], ['Old till', 'place-gone']);
     });

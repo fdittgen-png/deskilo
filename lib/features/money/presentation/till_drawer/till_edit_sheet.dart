@@ -59,11 +59,7 @@ Future<bool> showTillEditSheet(BuildContext context, TillDrawerCommands commands
         try {
           await commands.saveTill(
             requestId: intent.idFor('${fields.text('name')}|$active|${sellingPlaceId ?? ''}'),
-            tillId: till?.id,
-            name: fields.text('name'),
-            siteId: till?.siteId,
-            active: active,
-            sellingPlaceId: sellingPlaceId,
+            till: DrawerTillEdit(tillId: till?.id, name: fields.text('name'), siteId: till?.siteId, active: active, sellingPlaceId: sellingPlaceId),
           );
           return null;
         } on Object catch (e, st) {

@@ -113,6 +113,8 @@ void main() {
 
   test('every cause has its words; one this app does not know is shown as it came', () {
     expect({for (final c in StockLossCause.values) stockLossCauseText(_en, c.wire)}.length, StockLossCause.values.length);
+    expect([StockLossCause.ofWire('missing'), StockLossCause.ofWire('recalled'), StockLossCause.ofWire(null)], [StockLossCause.missing, null, null]);
+    expect(stockLossCauseLabel(_en, StockLossCause.spoiled), _en.stockLossCauseSpoiled);
     expect(stockLossCauseText(_en, 'expired'), _en.stockLossCauseExpired);
     expect(stockLossCauseText(_en, 'recalled'), 'recalled');
     expect(stockLossProblemText(_en, StockLossProblem.causeMissing), ('cause', _en.stockLossCauseRequired));

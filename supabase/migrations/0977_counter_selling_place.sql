@@ -102,7 +102,7 @@ begin
     raise exception 'not allowed to manage the tills' using errcode = 'DKN01';
   end if;
   if p_request_id is null or char_length(btrim(coalesce(p_name, ''))) not between 1 and 60 then
-    raise exception 'a till has a name' using errcode = '22023';
+    perform public.refuse('DKL12', jsonb_build_object('reason', 'name'), 'a till has a name');
   end if;
   if p_site_id is not null and not exists (select 1 from public.sites s where s.id = p_site_id and s.workspace_id = p_workspace_id) then
     raise exception 'not a site of this business' using errcode = 'DKL12', detail = jsonb_build_object('reason', 'site_unknown')::text;

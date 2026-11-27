@@ -85,7 +85,8 @@ revoke execute on function public.stock_record(uuid, uuid, uuid, uuid, uuid, num
 
 -- ── goods taken out, with the facts of the act ───────────────────────────────────────────────────────────────────────────
 -- the live definition (digest 073e036ff9f3), with one parameter more: the facts the movements keep (a loss's cause and
--- note). Without them it does what it did.
+-- note). Without them it does what it did. The five minutes a command may be ahead of the clock are the same five,
+-- written without a literal interval.
 drop function if exists public.stock_take_out(uuid, uuid, jsonb, text, timestamptz);
 -- restates 0847
 create or replace function public.stock_take_out(
@@ -104,7 +105,7 @@ begin
     raise exception 'taking goods out is off in this business' using errcode = 'DKG01';
   end if;
   perform public.stock_command_args(p_request_id, p_lines);
-  if v_at > now() + interval '5 minutes' then raise exception 'a command is not in the future' using errcode = 'DKG07'; end if;
+  if v_at > now() + make_interval(mins => 5) then raise exception 'a command is not in the future' using errcode = 'DKG07'; end if;
   -- the facts are part of what was asked; without any the digest is the one it always was, so a request sent
   -- before this file answers the same after it
   v_digest := md5(p_reason || '|' || coalesce(p_occurred_at::text, '') || '|' || p_lines::text
@@ -146,7 +147,9 @@ revoke execute on function public.stock_loss_v2(uuid, uuid, jsonb, text, text, t
 grant execute on function public.stock_loss_v2(uuid, uuid, jsonb, text, text, timestamptz) to authenticated;
 
 -- ── the ledger reads them ────────────────────────────────────────────────────────────────────────────────────────────────
--- the live definition (digest 97db76dce2dc), each movement with the cause and the note of its loss
+-- the live definition (digest 97db76dce2dc), each movement with the cause and the note of its loss. Its cursor check
+-- handles the malformed value by name (a date or an id that is none) where it handled every exception: the refusal is
+-- the same DKG09.
 -- restates 0837
 create or replace function public.stock_movements_page_v1(
   p_workspace_id uuid, p_item_id uuid default null, p_location_id uuid default null, p_limit int default 50,
@@ -164,7 +167,8 @@ begin
       v_at := (p_after->>'occurred_at')::timestamptz;
       v_id := (p_after->>'id')::uuid;
       if v_at is null or v_id is null then raise exception 'invalid cursor' using errcode = 'DKG09'; end if;
-    exception when others then
+    -- a cursor whose date or id is no date or id: the one thing these two casts can raise
+    exception when data_exception then
       raise exception 'invalid cursor' using errcode = 'DKG09';
     end;
   end if;

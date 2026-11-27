@@ -79,7 +79,10 @@ class _MoveDraft {
   _MoveDraft(this.items, List<StockPlaceConfig> places, {required this.takeOut, required this.locale, required this.separator})
     : places = stockRealPlaces(places),
       all = places,
-      fields = FormControllers({'quantity': '', 'note': ''});
+      fields = FormControllers({'quantity': '', _noteField: ''});
+
+  /// The form's key of the note of a loss.
+  static const String _noteField = 'note';
 
   final List<StockItem> items;
   final List<StockPlaceConfig> places;
@@ -149,7 +152,7 @@ class _MoveDraft {
     if (!takeOut && (to == null || to == from)) 'to': l10n.stockRequiredDestination,
     if (quantity == null || quantity! <= ExactQuantity.zero) 'quantity': stockRefusalText(l10n, StockRefusal.quantityInvalid),
     if (_isLoss)
-      if (checkStockLoss(cause, fields.text('note')) case final problem?) stockLossProblemText(l10n, problem).$1: stockLossProblemText(l10n, problem).$2,
+      if (checkStockLoss(cause, fields.text(_noteField)) case final problem?) stockLossProblemText(l10n, problem).$1: stockLossProblemText(l10n, problem).$2,
   };
 
   Future<String?> submit(AppLocalizations l10n, StockOperations operations, String workspaceId) async {
@@ -166,7 +169,7 @@ class _MoveDraft {
         message: 'goods were not moved',
         action: () async {
           if (takeOut) {
-            await operations.takeOut(workspaceId, reason, [line], requestId, loss: _isLoss ? StockLoss(cause: cause!, note: fields.text('note')) : null);
+            await operations.takeOut(workspaceId, reason, [line], requestId, loss: _isLoss ? StockLoss(cause: cause!, note: fields.text(_noteField)) : null);
           } else if (betweenSites) {
             await operations.load(workspaceId, to!, [line], requestId);
           } else {
@@ -260,17 +263,17 @@ class _MoveDraft {
           keyName: 'cause',
           label: l10n.stockLossCauseLabel,
           value: cause?.wire,
-          options: [for (final c in StockLossCause.values) (c.wire, stockLossCauseText(l10n, c.wire))],
+          options: [for (final c in StockLossCause.values) (c.wire, stockLossCauseLabel(l10n, c))],
           onPicked: (v) {
-            cause = StockLossCause.values.where((c) => c.wire == v).firstOrNull;
+            cause = StockLossCause.ofWire(v);
             refresh();
           },
         ),
         const FormGap(),
         AppTextField(
           key: const ValueKey('stock-loss-note'),
-          controller: fields['note'],
-          fieldKey: 'note',
+          controller: fields[_noteField],
+          fieldKey: _noteField,
           label: l10n.stockLossNoteLabel,
           maxLength: kStockLossNoteMaxLength,
         ),

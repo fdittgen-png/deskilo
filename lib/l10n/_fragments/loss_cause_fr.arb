@@ -7,7 +7,7 @@
   "stockLossCauseMissing": "Manquante",
   "stockLossCauseOther": "Autre",
   "stockLossCauseNone": "Non enregistrée",
-  "stockLossNoteLabel": "Note (facultative)",
-  "stockLossNoteRow": "Note",
-  "stockLossNoteTooLong": "La note est trop longue."
+  "stockLossNoteLabel": "Remarque (facultative)",
+  "stockLossNoteRow": "Remarque",
+  "stockLossNoteTooLong": "La remarque est trop longue."
 }

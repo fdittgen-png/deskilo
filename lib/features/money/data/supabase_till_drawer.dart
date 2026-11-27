@@ -39,15 +39,15 @@ class SupabaseTillDrawer implements TillDrawerPort {
   }
 
   @override
-  Future<DrawerTill> saveTill(String workspaceId, {required String requestId, String? tillId, required String name, String? siteId, required bool active, String? sellingPlaceId}) async =>
+  Future<DrawerTill> saveTill(String workspaceId, {required String requestId, required DrawerTillEdit till}) async =>
       DrawerTill.saved(await _call('counter_till_save_v2', {
         'p_workspace_id': workspaceId,
         'p_request_id': requestId,
-        'p_till_id': tillId,
-        'p_name': name,
-        'p_site_id': siteId,
-        'p_active': active,
-        'p_selling_place_id': sellingPlaceId,
+        'p_till_id': till.tillId,
+        'p_name': till.name,
+        'p_site_id': till.siteId,
+        'p_active': till.active,
+        'p_selling_place_id': till.sellingPlaceId,
       }));
 
   @override

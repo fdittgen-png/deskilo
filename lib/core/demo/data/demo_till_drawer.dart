@@ -146,10 +146,11 @@ class DemoTillDrawer implements TillDrawerPort {
   Future<TillSellingPlaces> sellingPlaces(String workspaceId) async => places();
 
   @override
-  Future<DrawerTill> saveTill(String workspaceId, {required String requestId, String? tillId, required String name, String? siteId, required bool active, String? sellingPlaceId}) async {
+  Future<DrawerTill> saveTill(String workspaceId, {required String requestId, required DrawerTillEdit till}) async {
     if (_answered[requestId] != null) return _replayed(requestId);
-    final clean = name.trim();
-    if (clean.isEmpty || clean.length > kTillNameMaxLength) throw _refused(PgCode.invalidParameterValue, 'a till has a name');
+    final DrawerTillEdit(:tillId, :siteId, :active, :sellingPlaceId) = till;
+    final clean = till.name.trim();
+    if (clean.isEmpty || clean.length > kTillNameMaxLength) throw _refused(DkCode.dkl12, 'a till has a name', reason: 'name');
     final taken = _tills.any((t) => t.id != tillId && t.name.toLowerCase() == clean.toLowerCase());
     if (taken) throw _refused(DkCode.dkl12, 'a till of this business already has this name', reason: 'name_taken');
     // a place the till already has is saved as it was read; a new one is a place a till may be given

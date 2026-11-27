@@ -37502,13 +37502,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockLossCauseSpoiled => 'Avariée';
 
   @override
-  String get stockLossNoteLabel => 'Note (facultative)';
+  String get stockLossNoteLabel => 'Remarque (facultative)';
 
   @override
-  String get stockLossNoteRow => 'Note';
+  String get stockLossNoteRow => 'Remarque';
 
   @override
-  String get stockLossNoteTooLong => 'La note est trop longue.';
+  String get stockLossNoteTooLong => 'La remarque est trop longue.';
 
   @override
   String stockLotLabel(String code) {

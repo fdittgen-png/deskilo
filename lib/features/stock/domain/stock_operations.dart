@@ -67,9 +67,17 @@ enum StockLossCause {
   const StockLossCause(this.wire);
 
   final String wire;
+
+  /// The cause the server calls [wire], or null for one this app does not know: it is then shown as it came.
+  static StockLossCause? ofWire(String? wire) {
+    for (final cause in values) {
+      if (cause.wire == wire) return cause;
+    }
+    return null;
+  }
 }
 
-/// The longest note a loss carries.
+/// The longest note a loss carries (the check of `stock_movements.loss_note`).
 const int kStockLossNoteMaxLength = 500;
 
 /// What a loss says beside its lines: why the goods were lost, and a note when the person wrote one.

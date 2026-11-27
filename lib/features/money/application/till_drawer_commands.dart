@@ -16,11 +16,11 @@ class TillDrawerCommands {
 
   TillDrawerPort get _port => _ref.read(tillDrawerPortProvider);
 
-  /// A new till (null [tillId]) or the edit of one, saved whole with the place it sells from.
-  Future<DrawerTill> saveTill({required String requestId, String? tillId, required String name, String? siteId, required bool active, String? sellingPlaceId}) async {
-    final till = await _port.saveTill(workspaceId, requestId: requestId, tillId: tillId, name: name, siteId: siteId, active: active, sellingPlaceId: sellingPlaceId);
+  /// A new till or the edit of one, saved whole with the place it sells from.
+  Future<DrawerTill> saveTill({required String requestId, required DrawerTillEdit till}) async {
+    final saved = await _port.saveTill(workspaceId, requestId: requestId, till: till);
     _ref.invalidate(tillDrawerProvider(workspaceId));
-    return till;
+    return saved;
   }
 
   /// The places a till may be given, read when its sheet opens.

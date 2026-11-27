@@ -59,6 +59,18 @@ class DrawerTill {
   }
 }
 
+/// A till as it is saved: whole. What a sheet does not show (the site, a place the list no longer offers) is in it as
+/// it was read; a null [tillId] is a new till, a null [sellingPlaceId] the business's selling place.
+class DrawerTillEdit {
+  const DrawerTillEdit({this.tillId, required this.name, this.siteId, required this.active, this.sellingPlaceId});
+
+  final String? tillId;
+  final String name;
+  final String? siteId;
+  final bool active;
+  final String? sellingPlaceId;
+}
+
 /// A place a till may sell from: its code, its name and the codes from the top of its store down to it.
 class TillSellingPlace {
   const TillSellingPlace({required this.id, required this.code, this.name = '', this.path = const []});
@@ -276,9 +288,8 @@ abstract interface class TillDrawerPort {
   /// The tills of the business, each with the open session the person may read.
   Future<List<DrawerTill>> tills(String workspaceId);
 
-  /// A new till (null [tillId]) or the edit of one. The till is saved whole: [sellingPlaceId] is the place it sells from,
-  /// null putting it on the business's selling place.
-  Future<DrawerTill> saveTill(String workspaceId, {required String requestId, String? tillId, required String name, String? siteId, required bool active, String? sellingPlaceId});
+  /// A new till or the edit of one, saved whole with the place it sells from.
+  Future<DrawerTill> saveTill(String workspaceId, {required String requestId, required DrawerTillEdit till});
 
   /// The places a till may be given. Read by whoever manages the tills.
   Future<TillSellingPlaces> sellingPlaces(String workspaceId);
