@@ -6,6 +6,7 @@ import '../../../core/i18n/rate_format.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/item_groups.dart';
 import '../domain/purchase_factor.dart';
+import 'item_group_units.dart';
 
 /// The names of the till's parameters of an item group, as the server keeps them.
 const groupParamCategory = 'till_category';
@@ -27,8 +28,6 @@ String itemGroupParamLabel(AppLocalizations l10n, String param) => switch (param
   groupParamDepositItem => l10n.itemGroupDepositItem,
   groupParamDepositMinor => l10n.itemGroupDepositAmount,
   groupParamLabelTemplate => l10n.itemGroupLabelTemplate,
-  'default_purchase_unit' => l10n.itemGroupPurchaseUnit,
-  'default_purchase_factor_num' || 'default_purchase_factor_den' => l10n.itemGroupPurchaseFactor,
   'reorder_point_default' => l10n.itemGroupReorderPoint,
   'reorder_quantity_default' => l10n.itemGroupReorderQty,
   'home_zone_id' => l10n.itemGroupHomeZone,
@@ -36,7 +35,7 @@ String itemGroupParamLabel(AppLocalizations l10n, String param) => switch (param
   'supply_class' => l10n.itemGroupSupply,
   'price_rounding' => l10n.itemGroupRounding,
   'target_margin_bps' => l10n.itemGroupMargin,
-  _ => param,
+  _ => groupUnitParamLabel(l10n, param) ?? param,
 };
 
 /// A value of [param] as a person reads it; null is "not set".
@@ -69,12 +68,13 @@ String itemGroupSummary(AppLocalizations l10n, ItemGroup g) => [
     if (g.params[p] != null) l10n.labelWithValue(itemGroupParamLabel(l10n, p), itemGroupValueText(l10n, p, g.params[p])),
   for (final p in itemGroupProposals)
     // the factor is one number: its numerator speaks for the pair
-    if (g.params[p] != null && p != 'default_purchase_factor_den') l10n.labelWithValue(itemGroupParamLabel(l10n, p), _proposalText(l10n, g, p)),
+    if (g.params[p] != null && p != groupParamPurchaseFactorDen && p != groupParamSaleFactorDen) l10n.labelWithValue(itemGroupParamLabel(l10n, p), _proposalText(l10n, g, p)),
 ].join(' · ');
 
 /// A proposal of [g] as a person reads it: the factor as one number or a fraction, the home zone as set.
 String _proposalText(AppLocalizations l10n, ItemGroup g, String p) => switch (p) {
-  'default_purchase_factor_num' => purchaseFactorText((g.params[p]! as num).toInt(), ((g.params['default_purchase_factor_den'] ?? 1) as num).toInt()),
+  groupParamPurchaseFactorNum => purchaseFactorText((g.params[p]! as num).toInt(), ((g.params[groupParamPurchaseFactorDen] ?? 1) as num).toInt()),
+  groupParamSaleFactorNum => purchaseFactorText((g.params[p]! as num).toInt(), ((g.params[groupParamSaleFactorDen] ?? 1) as num).toInt()),
   'home_zone_id' || 'target_margin_bps' || 'price_rounding' => itemGroupValueText(l10n, p, g.params[p]),
   _ => '${g.params[p]}',
 };

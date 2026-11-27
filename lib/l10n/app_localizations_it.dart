@@ -19263,6 +19263,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get itemGroupRoundingNone => 'Nessun arrotondamento';
 
   @override
+  String get itemGroupSaleFactor =>
+      'Quanto fa una unità dell\'unità di magazzino (vendita)';
+
+  @override
+  String get itemGroupSalePrice => 'Prezzo di una alla vendita';
+
+  @override
+  String get itemGroupSaleUnit => 'Venduto in (unità)';
+
+  @override
   String get itemGroupSet => 'Impostato';
 
   @override

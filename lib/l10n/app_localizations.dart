@@ -30383,6 +30383,24 @@ abstract class AppLocalizations {
   /// **'No rounding'**
   String get itemGroupRoundingNone;
 
+  /// #4479 what one sale unit makes of the inventory unit
+  ///
+  /// In en, this message translates to:
+  /// **'What one of it makes of the inventory unit (sale)'**
+  String get itemGroupSaleFactor;
+
+  /// #4479 the price of one sale unit
+  ///
+  /// In en, this message translates to:
+  /// **'Price of one when sold'**
+  String get itemGroupSalePrice;
+
+  /// #4479 a group's proposed sale unit
+  ///
+  /// In en, this message translates to:
+  /// **'Sold in (unit)'**
+  String get itemGroupSaleUnit;
+
   /// #4361 G12 finance parameters of an item group
   ///
   /// In en, this message translates to:
