@@ -428,4 +428,13 @@ void main() {
             'through a seam; a fall is written by the command:\n'
             '${volume.join('\n')}');
   });
+
+  // #4404 -- the Demo imports feature code (it mirrors the features by design, so the layering above leaves it out and nothing counted
+  // it): the import lines per feature are held at their baseline and only fall while the move of #2495 waits.
+  test('the Demo files import no more of a feature than their baseline (#4404)', () {
+    final failures = budgetFailures(Budgets.load(), measureBudgetActuals(), only: 'demoFeatureImports');
+    expect(failures, isEmpty,
+        reason: 'a Demo file added an import of feature code above its feature\'s baseline, or one fell and the baseline was not '
+            'lowered (dart run tool/code_health.dart --baseline):\n${failures.join('\n')}');
+  });
 }
