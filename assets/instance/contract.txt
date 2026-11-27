@@ -3264,7 +3264,7 @@ routine public.counter_denominations_total(p_denominations jsonb) -> bigint | fu
 routine public.counter_finance_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:95d8874f4ca3
 routine public.counter_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:a9c6b6fdca6f
 routine public.counter_goods_parts(p_workspace_id uuid, p_item_id uuid, p_variant_id uuid, p_from uuid, p_quantity text, p_unit text, p_input jsonb, p_taken jsonb) -> jsonb | function | definer | stable | exec:service_role | body:2cf395fe5aa1
-routine public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fdc5b32c6744
+routine public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:97446c3ccbce
 routine public.counter_item_lots_v1(p_workspace_id uuid, p_item_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e794467544c8
 routine public.counter_line_compute(p_workspace_id uuid, p_line jsonb, p_index integer, p_currency text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:36efd33a36e8
 routine public.counter_line_prices(p_workspace_id uuid, p_kind text, p_lines jsonb) -> jsonb | function | definer | stable | exec:service_role | body:672c0c73ce0d
@@ -3536,7 +3536,7 @@ routine public.invoice_dunning_state_core(p_invoice_id uuid, p_at timestamp with
 routine public.invoice_email_send_json(p_send uuid) -> jsonb | function | definer | stable | exec:service_role | body:bfb95b7f8f5f
 routine public.invoice_email_state_v1(p_workspace_id uuid, p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9e9729f10099
 routine public.invoice_essentials_missing(p_workspace_id uuid, p_member_id uuid, p_parties jsonb, p_vat_totals jsonb) -> text[] | function | definer | stable | exec:service_role | body:4bfb219079c9
-routine public.invoice_goods_return(p_workspace_id uuid, p_actor uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:d1a30872eda2
+routine public.invoice_goods_return(p_workspace_id uuid, p_actor uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:4061e613bc15
 routine public.invoice_goods_tracks_freeze(p_workspace_id uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:d2069f0a2607
 routine public.invoice_issue_draft(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_replaces uuid, p_correction_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:12b1d88976d2
 routine public.invoice_issue_readiness(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_replaces uuid, p_correction_reason text) -> text[] | function | definer | volatile | exec:authenticated,service_role | body:4acf86115aa7
