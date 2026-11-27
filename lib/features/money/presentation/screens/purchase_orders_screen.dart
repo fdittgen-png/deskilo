@@ -5,9 +5,10 @@
 // (managePurchases) drafts, edits, prints, marks sent, records what
 // arrived and cancels; a
 // finance reader reads and prints. The server decides every write.
-// #3842 — at the desk the orders are a records table and an order is a
-// record at its own address (purchase_orders_desk.dart); a phone keeps one
-// card per order.
+// #3842 — the orders are a records table and an order is a record at its
+// own address (purchase_orders_desk.dart).
+// #4492 — on a phone too: the table's cards, the same failed, loading and
+// empty answers, and the same worded main action in the bar.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -16,13 +17,9 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/routes.dart';
 import '../../../../core/shortcuts/app_shortcuts.dart';
 import '../../../../core/shortcuts/shortcut_scope.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/adaptive/window_class.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/page_title.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../domain/purchase.dart';
-import '../../providers/purchase_order_providers.dart';
-import '../widgets/purchase_order_record.dart';
 import '../widgets/purchase_order_sheet.dart';
 import 'money_view_data.dart';
 import 'purchase_orders_desk.dart';
@@ -36,7 +33,6 @@ class PurchaseOrdersScreen extends ConsumerWidget {
     final workspace = MoneyViewData.gates(ref).workspace;
     final canWrite = MoneyViewData.purchasePermissionNames(ref)
         .contains(purchaseManagePermission);
-    final desk = WindowClass.of(context).atLeast(WindowClass.expanded);
     void add() =>
         PurchaseOrderSheet(context, ref).open(workspaceId: workspace!.id);
     final mayAdd = workspace != null && canWrite;
@@ -52,82 +48,24 @@ class PurchaseOrdersScreen extends ConsumerWidget {
           icon: const Icon(Icons.forward_to_inbox_outlined),
           onPressed: () => context.push(Routes.workspaceSettings),
         ),
-      if (desk && mayAdd)
-        TextButton.icon(
+      if (mayAdd)
+        pageBarAction(
           key: const ValueKey('purchase-order-new'),
+          label: l10n.purchaseOrderNew,
           onPressed: add,
-          icon: const Icon(Icons.add),
-          label: Text(l10n.purchaseOrderNew),
         ),
     ];
-    if (desk && workspace != null) {
-      return ShortcutScope(
-        handlers: {if (mayAdd) AppShortcutId.newRecord: add},
-        child: Scaffold(
-          appBar: AppBar(
-            title: PageTitle(l10n.purchaseOrdersTitle),
-            actions: actions,
-          ),
-          body: PurchaseOrdersDesk(workspaceId: workspace.id),
+    return ShortcutScope(
+      handlers: {if (mayAdd) AppShortcutId.newRecord: add},
+      child: Scaffold(
+        appBar: AppBar(
+          title: PageTitle(l10n.purchaseOrdersTitle),
+          actions: actions,
         ),
-      );
-    }
-    final orders = workspace == null
-        ? null
-        : ref.watch(purchaseOrdersProvider(workspace.id));
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.purchaseOrdersTitle),
-        actions: actions,
+        body: workspace == null
+            ? const SizedBox.shrink()
+            : PurchaseOrdersDesk(workspaceId: workspace.id),
       ),
-      floatingActionButton: !mayAdd
-          ? null
-          : FloatingActionButton.extended(
-              key: const ValueKey('purchase-order-new'),
-              onPressed: add,
-              icon: const Icon(Icons.add),
-              label: Text(l10n.purchaseOrderNew),
-            ),
-      body: switch (orders) {
-        null => const SizedBox.shrink(),
-        AsyncValue(:final value?) when value.isEmpty => Padding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Text(
-            l10n.purchaseOrdersEmpty,
-            key: const ValueKey('purchase-orders-empty'),
-          ),
-        ),
-        AsyncValue(:final value?) => ListView(
-          padding: const EdgeInsets.only(bottom: kFabSafeBottom),
-          children: [
-            for (final o in value)
-              Card(
-                key: ValueKey('purchase-order-${o.reference}'),
-                margin: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.md,
-                  vertical: AppSpacing.sm,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  child: PurchaseOrderDetails(
-                    order: o,
-                    workspaceId: workspace!.id,
-                    canWrite: canWrite,
-                    letterhead: (
-                      name: workspace.name,
-                      address: workspace.address,
-                    ),
-                  ),
-                ),
-              ),
-          ],
-        ),
-        AsyncValue(:final error?) => Padding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Text(l10n.purchaseOrderRefused, semanticsLabel: '$error'),
-        ),
-        _ => const LoadingView(),
-      },
     );
   }
 }

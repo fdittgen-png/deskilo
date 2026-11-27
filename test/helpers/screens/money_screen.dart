@@ -20,6 +20,9 @@ Future<FakeMoneyRepository> pumpMoney(
   FakeEventRepository? events,
   FakeWorkspaceRepository? workspace,
   List<Override> extraOverrides = const [],
+
+  /// The scope's retry policy for a failed read; null keeps Riverpod's own.
+  Duration? Function(int retryCount, Object error)? retry,
 }) async {
   // Portrait viewport (#284 idiom): the 800×600 default is LANDSCAPE and
   // would engage the money split; feature tests exercise the column.
@@ -36,6 +39,7 @@ Future<FakeMoneyRepository> pumpMoney(
   );
   await tester.pumpWidget(
     ProviderScope(
+      retry: retry,
       overrides: standardTestOverrides(
         money: money,
         events: events,

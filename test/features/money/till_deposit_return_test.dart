@@ -3,7 +3,8 @@
 // #4478 -- a deposit brought back at the till: the line says it is returned and keeps it through a new quantity; on the
 // Demo till (the server's rules) it is taken off the sale, kept apart from a sale of the same item, refused in words when
 // it is no deposit, when it carries a price or when the cashier may not change a price; the book offers no returned
-// deposit for a goods return; a day report reads its returned deposits, and none when it was frozen before them.
+// deposit for a goods return; a day report reads its returned deposits, and none when it was frozen before them. In the
+// Demo (#4487) the syrup carries its bottle deposit, and two bottles brought back are taken off the sale.
 import 'package:deskilo/core/demo/data/demo_till.dart';
 import 'package:deskilo/core/demo/data/demo_till_parts.dart';
 import 'package:deskilo/features/money/domain/counter_book.dart';
@@ -89,5 +90,15 @@ void main() {
     };
     expect(DayReport.fromJson(report('75')).depositsReturnedMinor, 75);
     expect(DayReport.fromJson(report()).depositsReturnedMinor, 0);
+  });
+
+  test('in the Demo, the syrup carries its bottle deposit and two bottles come back (#4487)', () async {
+    var n = 0;
+    final s = TillSession(port: DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20), workspaceId: 'ws', requestIds: () => 'req-${++n}');
+    await s.add(itemId: 'demo-item-syrup', name: 'Syrup', unit: 'l', deposit: (itemId: 'demo-item-bottle', name: 'Bottle deposit', unit: 'piece'));
+    expect(_total(s), 780 + 25, reason: 'the syrup and its bottle');
+    await s.addReturn(itemId: 'demo-item-bottle', name: 'Bottle deposit', unit: 'piece', quantity: '2');
+    expect(_total(s), 780 + 25 - 50);
+    expect(s.state.value.lines.last.returned, isTrue);
   });
 }

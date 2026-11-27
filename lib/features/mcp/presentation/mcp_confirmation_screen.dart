@@ -11,7 +11,6 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/kit/page_bar.dart';
-import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/dictionary_labels.dart';
 import '../../workspace/domain/workspace_feature.dart';
@@ -77,19 +76,10 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
       appBar: pageBar(context,
         title: l10n.mcpConfirmTitle,
       ),
-      body: confirmation.when(
-        loading: () => const LoadingView(),
-        error: (e, _) => ListView(
-          padding: AppSpacing.gutterAll,
-          children: [
-            ReadFailureBanner(
-              error: e,
-              onRetry: () => ref.invalidate(
-                actionConfirmationProvider(widget.confirmationId),
-              ),
-            ),
-          ],
-        ),
+      body: AsyncReadBody(
+        value: confirmation,
+        onRetry: () =>
+            ref.invalidate(actionConfirmationProvider(widget.confirmationId)),
         data: (c) => ListView(
           padding: AppSpacing.gutterAll,
           children: [

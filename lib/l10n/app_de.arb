@@ -5388,9 +5388,9 @@
   "@documentsEmpty": {
     "description": "Workspace document library (#500)"
   },
-  "documentsInvalid": "Ein Dokument braucht einen Titel und einen https://-Link.",
-  "@documentsInvalid": {
-    "description": "Workspace document library (#500)"
+  "documentsLinkNotHttps": "Der Link muss mit https:// beginnen.",
+  "@documentsLinkNotHttps": {
+    "description": "Document library, the add form: said under the link field when the link is not an https:// one"
   },
   "documentsProviderLabel": "Gespeichert auf",
   "@documentsProviderLabel": {
@@ -5415,6 +5415,10 @@
   "documentsTitleLabel": "Titel",
   "@documentsTitleLabel": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsTitleMissing": "Geben Sie dem Dokument einen Titel.",
+  "@documentsTitleMissing": {
+    "description": "Document library, the add form: said under the title field when it is empty"
   },
   "documentsUrlHelper": "Fügen Sie den Freigabelink Ihres Drives ein — die Zugriffsrechte bleiben dort verwaltet.",
   "@documentsUrlHelper": {
@@ -12845,6 +12849,16 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataCount": "{count, plural, =0{Keine Einträge} one{{count} Eintrag} other{{count} Einträge}}",
+  "masterDataCustomersDesc": "Wem Sie Rechnungen stellen",
+  "masterDataGroupCatalogue": "Verkaufskatalog",
+  "masterDataGroupMeasures": "Maße und Steuern",
+  "masterDataGroupPartners": "Geschäftspartner",
+  "masterDataGroupPlaces": "Lagerorte und Bestand",
+  "masterDataIntro": "Alle Listen, mit denen das Unternehmen eingerichtet ist, an einem Ort. Tippen Sie auf eine Karte, um ihren Editor zu öffnen.",
+  "masterDataItemGroupsDesc": "Gemeinsame Einstellungen einer Artikelgruppe",
+  "masterDataItemsDesc": "Was Sie lagern und verkaufen",
+  "masterDataNoMatch": "Keine Stammdaten passen zur Suche.",
   "masterDataNoUnit": "Keine Einheit",
   "@masterDataNoUnit": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
@@ -12853,12 +12867,19 @@
   "@masterDataNoVat": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
   },
+  "masterDataPlacesDesc": "Wo Ihre Waren lagern",
   "masterDataSearchHint": "Namen oder Code eingeben oder aus der Liste wählen",
+  "masterDataServicesDesc": "Die Leistungen, die Sie verkaufen",
+  "masterDataSitesDesc": "Ihre Adressen und die Ebenen an jeder",
+  "masterDataSuppliersDesc": "Bei wem Sie einkaufen",
+  "masterDataTills": "Kassen",
+  "masterDataTillsDesc": "Die Kassen am Tresen und ihre Tastenbelegung",
   "masterDataUnknownCode": "Das ist kein gültiger Eintrag. Wählen Sie einen aus der Liste.",
   "masterDataUnlisted": "Das steht nicht in der Liste: bitte eines wählen",
   "@masterDataUnlisted": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
   },
+  "masterDataVatDesc": "Die Sätze, die Ihre Belege berechnen",
   "mcpApiReference": "API-Referenz",
   "mcpApiReferenceHint": "Was ein Assistent aufrufen kann und wie es autorisiert wird",
   "mcpAssistantsTitle": "Assistenten",
@@ -16874,6 +16895,10 @@
   "refusalBankMatchUndoLaterFirst": "Dies ist die erste Zahlung der Rechnung: Machen Sie zuerst die späteren Zahlungen rückgängig. Nichts wurde geändert.",
   "@refusalBankMatchUndoLaterFirst": {
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
+  },
+  "refusalBooksClosedPeriodDated": "Dieses Datum liegt in einem abgeschlossenen Buchungszeitraum: Es wurde nichts erfasst. Ein Datum im offenen Zeitraum ist möglich; nur der Inhaber kann den Zeitraum wieder öffnen.",
+  "@refusalBooksClosedPeriodDated": {
+    "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
   },
   "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.",
   "refusalCounterCashEntry": "Diese Bargeldbuchung wird nicht angenommen: Der Grund steht nicht auf der Liste, der Betrag liegt über Ihrer Grenze, oder die Zahlen ergeben nicht den Betrag.",

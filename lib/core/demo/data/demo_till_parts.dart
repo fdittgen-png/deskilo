@@ -26,9 +26,9 @@ const _million = 1000 * 1000;
 /// The Demo business's `counter.max_discount_percent`, and whether its cashier holds the right to change a price at the
 /// till (the Demo's owner does).
 class DemoTillPricing {
-  const DemoTillPricing({this.maxDiscountPercent = demoMaxDiscountPercent, this.mayChangePrice = true, this.deposits = const {}});
+  const DemoTillPricing({this.maxDiscountPercent = demoMaxDiscountPercent, this.mayChangePrice = true, this.deposits = const {'demo-item-bottle'}});
 
-  /// #4478 -- the items some item is sold with as its deposit (none in the Demo's catalogue yet).
+  /// #4478 -- the items some item is sold with as its deposit: the syrup's glass bottle (#4487).
   final Set<String> deposits;
 
   static const demoMaxDiscountPercent = 10;

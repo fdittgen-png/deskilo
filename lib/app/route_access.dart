@@ -119,6 +119,13 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/settings/questions': {_P.workspaceSettings},
   '/settings/units': {_P.workspaceSettings}, // #4442
   '/settings/devices': {_P.workspaceSettings}, // #4466
+  // #4485 — the Master data page: who may open one of its kinds' screens (the
+  // page shows each card to whom that screen opens; master_data_test holds
+  // this set to the union of theirs).
+  '/settings/master-data': {
+    _P.workspaceSettings, _P.manageBilling, _P.viewStock, _P.manageStock, _P.manageServices, _P.issueInvoices,
+    _P.viewFinances, _P.managePurchases, _P.manageBillingCustomers, _P.manageSites,
+  },
   '/settings/public-page': {_P.workspaceSettings},
   '/legal-identity': {_P.workspaceSettings},
   '/settings/sites': {_P.manageSites},

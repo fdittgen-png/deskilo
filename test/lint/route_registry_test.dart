@@ -36,6 +36,8 @@ const Map<String, String> _structural = {
   '/business-privacy': 'Privacy & data from the sidebar, in the shell (#4057)',
   '/features': 'the switch that turns everything back on (#1327)',
   '/workspace-settings': 'the identity every money and date rule reads',
+  '/settings/units': 'the units every picker reads, whatever the units feature says (#4485)',
+  '/settings/master-data': 'opens only the existing screens, each behind its own flag; the units are always among them (#4485)',
   '/reports': 'its documents section is part of workspace settings (#2301)',
   '/members': 'admission and roles cannot be managed without it',
   '/members/:id': 'one member of /members, beside its table (#3618)',

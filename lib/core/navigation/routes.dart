@@ -53,6 +53,7 @@ abstract final class Routes {
   static const money = '/money';
   static const moneyAccounting = '/money/accounting';
   static const moneyCash = '/money/cash';
+  static const moneyCustomers = '/money/customers';
   static const moneyPurchases = '/money/purchases';
   static const moneyQuotes = '/money/quotes';
   static const moneyQuoteNew = '/money/quotes/new/edit';
@@ -79,6 +80,8 @@ abstract final class Routes {
   static const settingsAssistantSetup = '/settings/assistant-setup';
   static const settingsAssistants = '/settings/assistants';
   static const settingsColours = '/settings/colours';
+  static const settingsDevices = '/settings/devices';
+  static const settingsMasterData = '/settings/master-data';
   static const settingsNumberSequences = '/settings/number-sequences';
   static const settingsPaymentTerms = '/settings/payment-terms';
   static const settingsPersonalInfo = '/settings/personal-info';
@@ -86,15 +89,19 @@ abstract final class Routes {
   static const settingsQuestions = '/settings/questions';
   static const settingsRolesOfThisSpace = '/settings/roles-of-this-space';
   static const settingsSites = '/settings/sites';
+  static const settingsUnits = '/settings/units';
   static const settingsWhatYouCanDo = '/settings/what-you-can-do';
   static const setup = '/setup';
   static const setupLaunch = '/setup/launch';
   static const setupLevels = '/setup/levels';
   static const stockItems = '/stock/items';
   static const stockItemsAdd = '/stock/items?add=1';
+  static const stockGroups = '/stock/groups';
+  static const stockPlaces = '/stock/places';
   static const stockPlacesAdd = '/stock/places?add=1';
   static const stockSettings = '/stock/settings';
   static const tillReceipts = '/till/receipts';
+  static const tillDrawer = '/till/drawer';
 
   /// #4448 -- the layout editor of one till (`?name=` its name); [tillLayoutOf] fills in the till.
   static const tillLayout = '/till/layout/:tillId';

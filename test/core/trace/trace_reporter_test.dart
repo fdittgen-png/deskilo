@@ -5,6 +5,7 @@
 // somebody is signed in, outside the Demo and with the Privacy switch on; a
 // report that cannot go is dropped and never sent again, and a warning (this
 // reporter's own included) is never sent.
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
@@ -25,12 +26,17 @@ import 'package:flutter_test/flutter_test.dart';
 class _Sink implements TraceReportSink {
   final sent = <TraceReport>[];
   Error? fail;
+  TraceReportAnswer answer = TraceReportAnswer.stored;
+
+  /// Set to hold every submit until it is completed.
+  Completer<void>? gate;
 
   @override
   Future<TraceReportAnswer> submit(TraceReport report) async {
     if (fail case final f?) throw f;
+    await gate?.future;
     sent.add(report);
-    return TraceReportAnswer.stored;
+    return answer;
   }
 }
 
@@ -133,7 +139,7 @@ void main() {
       sink: sink,
       perHour: () => perHour,
       now: () => now,
-      warn: (m, e, _) => warned.add(m),
+      warn: (m, [_, _]) => warned.add(m),
     );
 
     setUp(() {
@@ -152,7 +158,7 @@ void main() {
     test('sends errors within the hourly budget, never a warning', () async {
       final r = reporter();
       for (var i = 0; i < 3; i++) {
-        trace.error('money', 'failed $i', error: StateError('x'));
+        trace.error('money$i', 'failed', error: StateError('x'));
         await settle(r);
       }
       trace.warn('money', 'slow', error: StateError('y'));
@@ -196,6 +202,86 @@ void main() {
         await r.dispose();
       },
     );
+
+    test('the same fault is reported once an hour, and the repeats are counted', () async {
+      perHour = 10;
+      final r = reporter();
+      final stack = StackTrace.fromString('#0 issue (invoice.dart:12)');
+      for (var i = 0; i < 4; i++) {
+        trace.error('money', 'failed $i', error: StateError('x'), stackTrace: stack);
+        await settle(r);
+      }
+      trace.error('money', 'another', error: ArgumentError('y'), stackTrace: stack);
+      await settle(r);
+      expect(sink.sent.map((s) => s.failureType), ['money/StateError', 'money/ArgumentError']);
+      expect(warned.where((w) => w == 'error reports dropped: 1 repeated'), hasLength(3));
+      now = now.add(const Duration(hours: 1));
+      trace.error('money', 'again', error: StateError('x'), stackTrace: stack);
+      await settle(r);
+      expect(sink.sent, hasLength(3), reason: 'an hour later the fault is reported again');
+      await r.dispose();
+    });
+
+    test('errors that arrive while one report is on its way wait in a short line', () async {
+      perHour = 100;
+      sink.gate = Completer();
+      final r = reporter();
+      for (var i = 0; i < 12; i++) {
+        trace.error('area$i', 'failed', error: StateError('x'));
+      }
+      await Future<void>.delayed(Duration.zero);
+      expect(sink.sent, isEmpty);
+      sink.gate!.complete();
+      await settle(r);
+      // One on its way, eight waiting, three dropped: said once, when the line is empty.
+      expect(sink.sent, hasLength(9));
+      expect(warned, ['error reports dropped: 3 queueFull']);
+      await r.dispose();
+    });
+
+    test('an answer other than stored is counted as not stored, and said', () async {
+      sink.answer = TraceReportAnswer.rateLimited;
+      final r = reporter();
+      trace.error('money', 'failed', error: StateError('x'));
+      await settle(r);
+      expect(warned, ['an error report was not stored: rateLimited']);
+      await r.dispose();
+    });
+
+    test('the reporter never sends its own lines, whatever their level', () async {
+      sink.fail = StateError('offline');
+      final r = TraceReporter(
+        entries: trace.added,
+        report: (e) async => _report(e),
+        sink: sink,
+        perHour: () => 100,
+        now: () => now,
+        // A wiring that files the reporter's own notes as ERRORS must not loop.
+        warn: (m, [e, st]) {
+          warned.add(m);
+          trace.log(TraceLevel.error, traceReportArea, m, error: e, stackTrace: st);
+        },
+      );
+      trace.error('money', 'failed', error: StateError('x'));
+      await settle(r);
+      await settle(r);
+      expect(warned, ['an error report was not sent']);
+      await r.dispose();
+    });
+
+    test('what waited when the reporter stops is never sent', () async {
+      perHour = 100;
+      sink.gate = Completer();
+      final r = reporter();
+      trace
+        ..error('a', 'failed', error: StateError('x'))
+        ..error('b', 'failed', error: StateError('x'));
+      await Future<void>.delayed(Duration.zero);
+      await r.dispose();
+      sink.gate!.complete();
+      await settle(r);
+      expect(sink.sent.map((s) => s.failureType), ['a/StateError']);
+    });
   });
 
   group('the wiring', () {

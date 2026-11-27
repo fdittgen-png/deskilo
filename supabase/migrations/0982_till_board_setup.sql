@@ -3,7 +3,7 @@
 -- apps: additive
 --
 -- #4466 -- till boards, named where a business starts: the builtin association template (off) and the setup levels
--- (0975 registered the flag).
+-- (0981 registered the flag).
 
 -- ── the builtin association template writes the feature flags: it names counterEmbeddedTerminal (dart run tool/build_builtin_templates.dart) ──
 -- restates 0970
@@ -519,4 +519,4 @@ returns jsonb language sql immutable set search_path = public as $fn$
 $fn$;
 revoke execute on function public.setup_level_catalogue() from public, anon, authenticated;
 
-select public.set_deskilo_schema_version(976);
+select public.set_deskilo_schema_version(982);

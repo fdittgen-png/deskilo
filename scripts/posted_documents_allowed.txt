@@ -1,0 +1,31 @@
+# #4492 row 4 -- what the server's own role (the Edge functions, an import) can
+# still do to a POSTED row, as scripts/posted_documents_check.sh found it by
+# trying, each with why it is allowed. One per line:
+#
+#   <table> <attempt>   # why
+#
+# where an attempt is `update:<column>`, `delete`, `truncate` or
+# `truncate_cascade`. An attempt that gets through and is not here fails the
+# check; a line here that no longer gets through is reported, and goes.
+#
+# Found by run 45903938615 (144 pgTAP files swept, 21 tables reached). The owner and
+# the delegated owner got nothing through: 481 attempts each, every one refused.
+
+# -- by design: the transitions a posted document has
+invoices update:voided_at   # the void: the guard lets voided_at go from empty to set with nothing else moving; the closed-period guard still applies
+invoices update:settled_by_invoice_id   # the settlement link, set and taken back; nothing else may move with it
+invoices update:site_id   # the issuing site, once, by a server role, while it is empty (#3968)
+counter_tenders update:state   # a tender is resolved and reconciled after the sale: the guard exempts exactly these five columns
+counter_tenders update:provider_ref   # as above
+counter_tenders update:reconciliation   # as above
+counter_tenders update:resolved_at   # as above
+counter_tenders update:resolved_by_member_id   # as above
+counter_till_sessions update:day_close_id   # the day close stamps a closed session once
+verifactu_records update:submission_status   # only its submission state moves (pgTAP 357)
+verifactu_records update:submission_detail   # as above
+
+# -- closed since (#4492 row 4), and no longer getting through: the site of a
+# posted row (ledger entries, tenders, kept records, the pieces and handling
+# units of a movement); the deletion of a recorded original; a line of a
+# finalized receipt handed to another receipt; the pieces and handling units of
+# a movement edited or deleted; a posted table emptied in one statement.

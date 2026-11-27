@@ -13,6 +13,7 @@ import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/scan/scan_no_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/device_code.dart';
 
@@ -41,7 +42,8 @@ class _DevicesScreenState extends State<DevicesScreen> {
     final camera = widget.cameraAvailable ?? qrScanSupported;
     return Scaffold(
       appBar: AppBar(
-        title: HelpDotTitle(l10n.devicePairingTitle, l10n.devicePairingTitle, anchor: HelpAnchor.settingsDevices),
+        title: PageTitle(l10n.devicePairingTitle),
+        actions: [HelpDot(l10n.devicePairingTitle, anchor: HelpAnchor.settingsDevices)],
       ),
       body: SingleChildScrollView(
         padding: AppSpacing.gutterAll,

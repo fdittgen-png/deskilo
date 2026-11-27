@@ -40,6 +40,29 @@ FinanceOverview _overview(Map<String, dynamic> row, {bool? cut}) =>
     });
 
 void main() {
+  test('#4492 a workspace is named by the id its documents are counted by, '
+      'also when they were read from another installation', () {
+    final overview = FinanceOverview(
+      invoices: [
+        FinanceInvoice(
+          id: 'i1',
+          workspaceId: 'ws-9',
+          workspaceName: 'Atelier',
+          number: 'INV-1',
+          issuedAt: DateTime(2026, 5),
+          totalCents: 100,
+          paidCents: 0,
+          currency: 'EUR',
+          state: FinanceState.open,
+        ),
+      ],
+    ).onInstallation('inst-b');
+    // The network id is not the workspace's own: a name looked up there by
+    // the workspace id misses, and the coverage line printed "ws-9".
+    expect(overview.workspaces.single.$1, isNot('ws-9'));
+    expect(overview.workspaceNames, {'ws-9': 'Atelier'});
+  });
+
   test('(a) a first partial of 40 awaiting approval: 40 being validated, '
       'the 60 nobody paid still to pay', () {
     final o = _overview(

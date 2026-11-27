@@ -302,7 +302,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/till/day', RouteClass.workspace, namesRole: true, place: 'drawer-till-drawer', measure: PageMeasure.work), // #4367
   RouteRule('/till/layout/:tillId', RouteClass.workspace, namesRole: true, place: 'drawer-till-drawer', measure: PageMeasure.work), // #4448
   RouteRule('/till/receipts', RouteClass.workspace, namesRole: true, place: 'drawer-till', measure: PageMeasure.reading), // #4185
-  RouteRule('/money/quotes', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
+  RouteRule('/money/quotes', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.work), // #4166, #4492: a records table
   RouteRule('/money/quotes/:id', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
   RouteRule('/money/quotes/:id/edit', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
   RouteRule('/money/engagements', RouteClass.workspace, namesRole: true, place: 'drawer-engagements', measure: PageMeasure.reading), // #4178
@@ -327,6 +327,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/questions', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form),
   RouteRule('/settings/units', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form), // #4442
   RouteRule('/settings/devices', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form), // #4466
+  RouteRule('/settings/master-data', RouteClass.workspace, namesRole: true, place: 'drawer-master-data', measure: PageMeasure.work), // #4485
   RouteRule('/attention', RouteClass.workspace, place: 'drawer-events', measure: PageMeasure.work),
   RouteRule('/reservations/period', RouteClass.workspace, place: 'drawer-bi', measure: PageMeasure.work),
   RouteRule(

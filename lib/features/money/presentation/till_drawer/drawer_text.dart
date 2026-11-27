@@ -63,8 +63,12 @@ String? drawerRefusalText(AppLocalizations l10n, Object error) {
   };
 }
 
+/// The words of a refusal of a till read or write (the till's own for the reason, else the server's refusal family), or null
+/// when [problem] is no refusal: a read then says its failure by its kind (`ReadFailureBanner`).
+String? drawerRefusalWords(AppLocalizations l10n, Object problem) => drawerRefusalText(l10n, problem) ?? knownRefusalText(l10n, problem);
+
 /// What [problem] says: the till's own words for the reason, the server's refusal family, or a plain failure.
-String drawerProblemText(AppLocalizations l10n, Object problem) => drawerRefusalText(l10n, problem) ?? knownRefusalText(l10n, problem) ?? l10n.tillDrawerFailed;
+String drawerProblemText(AppLocalizations l10n, Object problem) => drawerRefusalWords(l10n, problem) ?? l10n.tillDrawerFailed;
 
 /// What a problem with a typed value says under its field.
 String _drawerFieldText(AppLocalizations l10n, DrawerProblem problem) => switch (problem) {

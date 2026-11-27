@@ -2,11 +2,10 @@
 //
 // #3842 — one purchase order: its reference, state, supplier and total, and
 // what may be done with it (print, edit and mark sent while a draft, cancel
-// while open, the send states of #3774 and the goods receipt). On a phone it
-// is a card of the list; at the desk it is the record at its address,
-// `/money/purchase-orders/order/<id>`, beside the orders table on a large
-// window and a page of its own otherwise. The content is the card's, moved:
-// the server still decides every write.
+// while open, the send states of #3774 and the goods receipt). It is the
+// record at its address, `/money/purchase-orders/order/<id>`: beside the
+// orders table on a large window and a page of its own otherwise, a phone
+// included (#4492). The server still decides every write.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,13 +15,18 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/async_read_body.dart';
+import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/purchase_order_commands.dart';
+import '../../application/receivables.dart' show InvoiceStatusKind;
 import '../../domain/purchase.dart';
 import '../../domain/purchase_order.dart';
 import '../../providers/purchase_order_providers.dart';
+import '../invoicing/invoicing_words.dart' show statusToneOf;
 import '../purchase_order_print.dart';
 import '../screens/money_view_data.dart';
 import 'purchase_order_receipt_actions.dart';
@@ -43,6 +47,34 @@ String purchaseOrderStateLabel(
   PurchaseOrderState.received => l10n.purchaseOrderStateReceived,
   PurchaseOrderState.cancelled => l10n.purchaseOrderStateCancelled,
 };
+
+/// The tone of an order's [state]: the invoice's tone for the same meaning
+/// (`statusToneOf`), so one meaning has one colour on every money page — a
+/// draft and a cancelled order say nothing to act on, an order sent or
+/// partly arrived waits for its supplier, an order received is done. A
+/// state this app does not know claims no meaning.
+StatusTone _stateTone(PurchaseOrderState state) => switch (state) {
+  PurchaseOrderState.unknown => StatusTone.neutral,
+  PurchaseOrderState.draft => statusToneOf(InvoiceStatusKind.draft),
+  PurchaseOrderState.sent ||
+  PurchaseOrderState.partlyReceived => statusToneOf(
+    InvoiceStatusKind.awaitingCustomer,
+  ),
+  PurchaseOrderState.received => statusToneOf(InvoiceStatusKind.paid),
+  PurchaseOrderState.cancelled => statusToneOf(InvoiceStatusKind.cancelled),
+};
+
+/// The state of [order] as the table, the card and the record say it: its
+/// words on its tone.
+StatusChip purchaseOrderStateChip(
+  AppLocalizations l10n,
+  PurchaseOrder order, {
+  Key? key,
+}) => StatusChip(
+  key: key,
+  label: purchaseOrderStateLabel(l10n, order.state, wire: order.stateWire),
+  tone: _stateTone(order.state),
+);
 
 /// The space's name and address, printed at the top of an order.
 typedef OrderLetterhead = ({String name, String address});
@@ -92,16 +124,20 @@ class PurchaseOrderRecord extends ConsumerWidget {
             ),
           ],
         ),
-        (_, _, AsyncValue(:final error?)) => Padding(
-          padding: AppSpacing.lgAll,
-          child: Text(l10n.purchaseOrderRefused, semanticsLabel: '$error'),
-        ),
-        (_, _, AsyncData()) => Padding(
-          padding: AppSpacing.lgAll,
-          child: Text(
-            l10n.purchaseOrdersEmpty,
-            key: const ValueKey('purchase-order-gone'),
+        // A read that failed says so and offers the same read again: it is
+        // never drawn as "no orders".
+        (final w?, _, AsyncError(:final error)) => Padding(
+          padding: AppSpacing.mdAll,
+          child: ReadFailureBanner(
+            error: error,
+            retryKey: const ValueKey('purchase-order-retry'),
+            onRetry: () => ref.invalidate(purchaseOrdersProvider(w.id)),
           ),
+        ),
+        (_, _, AsyncData()) => EmptyState(
+          key: const ValueKey('purchase-order-gone'),
+          icon: Icons.local_shipping_outlined,
+          title: l10n.purchaseOrdersEmpty,
         ),
         _ => const LoadingView(),
       },
@@ -207,16 +243,10 @@ class PurchaseOrderDetails extends ConsumerWidget {
             // A state's words may be long (a state this app does not
             // know is said with its text, #3730): the chip gives way.
             Flexible(
-              child: Chip(
+              child: purchaseOrderStateChip(
+                l10n,
+                order,
                 key: ValueKey('purchase-order-state-${order.reference}'),
-                label: Text(
-                  purchaseOrderStateLabel(
-                    l10n,
-                    order.state,
-                    wire: order.stateWire,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
               ),
             ),
           ],

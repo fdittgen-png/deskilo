@@ -11,6 +11,7 @@ import 'dart:async';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/submit_expense.dart';
+import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
@@ -167,6 +168,66 @@ void main() {
     );
     await openExpenseSheet(tester);
     expect(find.byKey(const ValueKey('expense-vat-rate')), findsNothing);
+  });
+
+  testWidgets('rates that could not be read are said: the expense form does not open as if the space had no VAT', (
+    tester,
+  ) async {
+    var reads = 0;
+    var down = true;
+    final money = _withRates();
+    await pumpMoney(
+      tester,
+      money: money,
+      workspace: _registered(),
+      // As the app does for a fault that would fail the same way again.
+      retry: (_, _) => null,
+      extraOverrides: [
+        vatRatesProvider.overrideWith((ref) async {
+          reads++;
+          if (down) throw const FormatException('a rate row of another shape');
+          return money.vatRates;
+        }),
+      ],
+    );
+    await openExpenseSheet(tester);
+    // Not a form without VAT fields: no form, and the reason.
+    expect(find.text('This could not be loaded. Try again.'), findsOneWidget);
+    expect(find.byKey(const ValueKey('expense-vat-rate')), findsNothing);
+    expect(find.byKey(const ValueKey('expense-amount')), findsNothing);
+
+    // Asking again reads the rates again, and the form states its VAT.
+    down = false;
+    final before = reads;
+    await openExpenseSheet(tester);
+    expect(reads, greaterThan(before));
+    expect(find.byKey(const ValueKey('expense-vat-rate')), findsOneWidget);
+  });
+
+  testWidgets('a screen left while the rates are read opens nothing and throws nothing', (tester) async {
+    final rates = Completer<List<VatRate>>();
+    final money = _withRates();
+    await pumpMoney(
+      tester,
+      money: money,
+      workspace: _registered(),
+      retry: (_, _) => null,
+      extraOverrides: [vatRatesProvider.overrideWith((ref) => rates.future)],
+    );
+    await tester.scrollUntilVisible(
+      find.text('Submit an expense'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.text('Submit an expense'));
+    await tester.pump();
+    // The person leaves; the answer arrives afterwards.
+    await tester.pumpWidget(const SizedBox());
+    rates.complete(money.vatRates);
+    await tester.pump();
+    await tester.pump();
+    expect(tester.takeException(), isNull);
+    expect(find.byKey(const ValueKey('expense-amount')), findsNothing);
   });
 
   test('a share outside 0..100 is refused before anything is sent', () {

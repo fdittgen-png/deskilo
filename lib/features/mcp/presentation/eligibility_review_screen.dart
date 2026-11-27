@@ -11,7 +11,6 @@ import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/kit/page_bar.dart';
-import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../application/eligibility_review.dart';
@@ -148,45 +147,28 @@ class _EligibilityReviewScreenState
       appBar: pageBar(context,
         title: l10n.mcpReviewTitle,
       ),
-      body: caps.when(
-        loading: () => const LoadingView(),
-        error: (e, _) => ListView(
-          padding: AppSpacing.gutterAll,
-          children: [
-            ReadFailureBanner(
-              error: e,
-              onRetry: () => ref.invalidate(myDatabaseCapabilitiesProvider),
-            ),
-          ],
-        ),
+      body: AsyncReadBody(
+        value: caps,
+        onRetry: () => ref.invalidate(myDatabaseCapabilitiesProvider),
         data: (c) => !c.databaseAdministrator
             ? _message(
                 l10n.mcpReviewNotAdmin,
               )
-            : ref
-                  .watch(eligibilityRequestsProvider)
-                  .when(
-                    loading: () => const LoadingView(),
-                    error: (e, _) => ListView(
-                      padding: AppSpacing.gutterAll,
+            : ListView(
+                padding: AppSpacing.gutterAll,
+                children: [
+                  if (form.outcome case final o?) _outcomeBanner(l10n, o),
+                  Text(
+                    l10n.mcpReviewExplain,
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  AsyncReadBody.part(
+                    value: ref.watch(eligibilityRequestsProvider),
+                    isEmpty: (requests) => requests.isEmpty,
+                    onRetry: () => ref.invalidate(eligibilityRequestsProvider),
+                    data: (requests) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        ReadFailureBanner(
-                          error: e,
-                          onRetry: () =>
-                              ref.invalidate(eligibilityRequestsProvider),
-                        ),
-                        const SizedBox(height: AppSpacing.md),
-                        maximum,
-                      ],
-                    ),
-                    data: (requests) => ListView(
-                      padding: AppSpacing.gutterAll,
-                      children: [
-                        if (form.outcome case final o?) _outcomeBanner(l10n, o),
-                        Text(
-                          l10n.mcpReviewExplain,
-                        ),
-                        const SizedBox(height: AppSpacing.md),
                         if (requests.isEmpty)
                           Text(
                             key: const ValueKey('mcp-review-empty'),
@@ -227,20 +209,26 @@ class _EligibilityReviewScreenState
                               ),
                             ),
                           ),
-                        maximum,
                       ],
                     ),
                   ),
+                  const SizedBox(height: AppSpacing.md),
+                  maximum,
+                ],
+              ),
       ),
     );
   }
-  Widget _message(String text) => Padding(
+  // In a list, so the banner keeps its own height in a body that fills the page.
+  Widget _message(String text) => ListView(
     padding: AppSpacing.gutterAll,
-    child: InlineBanner(
-      key: const ValueKey('mcp-review-message'),
-      icon: Icons.info_outline,
-      text: text,
-    ),
+    children: [
+      InlineBanner(
+        key: const ValueKey('mcp-review-message'),
+        icon: Icons.info_outline,
+        text: text,
+      ),
+    ],
   );
 
   Widget _outcomeBanner(AppLocalizations l10n, String outcome) {

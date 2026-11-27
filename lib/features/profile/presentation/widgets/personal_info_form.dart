@@ -102,12 +102,14 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
     _email = TextEditingController(text: i.email);
     _vat = TextEditingController(text: i.vatId);
     _legal = TextEditingController(text: i.legalId);
-    final stored = i.countryCode.isNotEmpty
+    // A country the person already has is kept whatever the catalogue
+    // offers; the workspace's is only proposed, and only when it is offered.
+    final proposed = widget.workspaceCountry.toUpperCase();
+    _country = i.countryCode.isNotEmpty
         ? i.countryCode
-        : widget.workspaceCountry.toUpperCase();
-    _country = CountryCatalog.countries.any((c) => c.code == stored)
-        ? stored
-        : null;
+        : (CountryCatalog.countries.any((c) => c.code == proposed)
+              ? proposed
+              : null);
     for (final c in _controllers) {
       c.addListener(_refreshPreview);
     }
@@ -264,10 +266,12 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           border: const OutlineInputBorder(),
         ),
         items: [
-          for (final c in CountryCatalog.countries)
+          for (final code in CountryCatalog.addressCodes(
+            stored: widget.initial.countryCode,
+          ))
             DropdownMenuItem(
-              value: c.code,
-              child: Text(localizedCountryName(l10n, c.code)),
+              value: code,
+              child: Text(localizedCountryName(l10n, code)),
             ),
         ],
         onChanged: widget.saving ? null : _setCountry,

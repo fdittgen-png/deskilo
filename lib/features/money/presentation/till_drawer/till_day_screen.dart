@@ -15,6 +15,7 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -133,11 +134,12 @@ class _Closes extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final format = appFormatOf(context);
-    return ref
-        .watch(dayClosesProvider(workspaceId))
-        .when(
-          loading: () => const LoadingView(),
-          error: (e, _) => Text(drawerProblemText(l10n, e)),
+    return AsyncReadBody.part(
+          value: ref.watch(dayClosesProvider(workspaceId)),
+          isEmpty: (rows) => rows.isEmpty,
+          refusal: (e) => drawerRefusalWords(l10n, e),
+          retryKey: const ValueKey('day-closes-retry'),
+          onRetry: () => ref.invalidate(dayClosesProvider(workspaceId)),
           data: (rows) => rows.isEmpty
               ? Text(l10n.tillDayNone, key: const ValueKey('day-none'))
               : Column(

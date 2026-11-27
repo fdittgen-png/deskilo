@@ -100,6 +100,16 @@ List<TappableNode> tappableNodes(WidgetTester tester) {
           ? null
           : toParent(node.parentSemanticsClipRect!);
       final box = toGlobal(node.rect);
+      // #4485 — a scrolling viewport paints less than its semantics keep (the
+      // cache extent): a control the list cut at its painted edge has the
+      // size of what shows, and only the paint clip says it was cut.
+      final paint = node.parentPaintClipRect == null
+          ? null
+          : toGlobal(node.parentPaintClipRect!);
+      final kept = node.parentSemanticsClipRect == null
+          ? null
+          : toGlobal(node.parentSemanticsClipRect!);
+      final scrolledOut = paint != null && kept != null;
       out.add((
         size: node.rect.size,
         label: data.label.trim().isNotEmpty ? data.label : data.tooltip,
@@ -108,11 +118,22 @@ List<TappableNode> tappableNodes(WidgetTester tester) {
             data.value.trim().isNotEmpty ||
             data.tooltip.trim().isNotEmpty,
         cutX:
-            clip != null &&
-            (box.left <= clip.left + 0.5 || box.right >= clip.right - 0.5),
+            (clip != null &&
+                (box.left <= clip.left + 0.5 ||
+                    box.right >= clip.right - 0.5)) ||
+            (scrolledOut &&
+                ((box.left <= paint.left + 0.5 &&
+                        kept.left < paint.left - 0.5) ||
+                    (box.right >= paint.right - 0.5 &&
+                        kept.right > paint.right + 0.5))),
         cutY:
-            clip != null &&
-            (box.top <= clip.top + 0.5 || box.bottom >= clip.bottom - 0.5),
+            (clip != null &&
+                (box.top <= clip.top + 0.5 ||
+                    box.bottom >= clip.bottom - 0.5)) ||
+            (scrolledOut &&
+                ((box.top <= paint.top + 0.5 && kept.top < paint.top - 0.5) ||
+                    (box.bottom >= paint.bottom - 0.5 &&
+                        kept.bottom > paint.bottom + 0.5))),
       ));
     }
     node.visitChildren((child) {

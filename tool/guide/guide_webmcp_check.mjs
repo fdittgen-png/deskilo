@@ -67,8 +67,12 @@ for (const lang of LANGS) {
     checked++;
   }
 
-  // A question: the title of a section finds that section's id.
-  const probe = (await g.call('get_section', { id: all[Math.floor(all.length / 2)].id })).data;
+  // A question: the title of a section finds that section's id. The section probed is the first from the middle whose
+  // title has 8 letters or more: the search counts words inside words, and a title as short as "Lien" is inside
+  // "client", so which short title sits in the middle would decide the check, not the search (#4466).
+  const middle = Math.floor(all.length / 2);
+  const pick = all.slice(middle).concat(all.slice(0, middle)).find((e) => e.title.length >= 8) ?? all[middle];
+  const probe = (await g.call('get_section', { id: pick.id })).data;
   const hit = await g.call('search_guide', { query: probe.title, role: 'everything', book: probe.family, limit: 3 });
   if (!hit.ok || !hit.data.results.some((r) => r.id === probe.id)) fail(`[${lang}] searching "${probe.title}" does not return ${probe.id}`);
   const bad = await g.call('search_guide', { query: '  ' });

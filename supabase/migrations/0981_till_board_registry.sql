@@ -8,7 +8,7 @@
 --
 --   counterEmbeddedTerminal   a new flag under counterTillSessions (E04A, #4455), off by default; the template field
 --                             registry regenerated with it. The builtin template and the setup levels name it in the
---                             next migration (0976), for size.
+--                             next migration (0982), for size.
 -- BEGIN FEATURE REGISTRY ROWS (dart run tool/build_feature_registry_sql.dart)
 insert into public.feature_registry_entries (feature_key, parent, default_on, core, countries) values
 ('counterEmbeddedTerminal', 'counterTillSessions', false, false, null)
@@ -483,4 +483,6 @@ as $registry$
   ]$json$::jsonb
 $registry$;
 
-select public.set_deskilo_schema_version(975);
+revoke execute on function public.template_field_registry() from public, anon;
+
+select public.set_deskilo_schema_version(981);
