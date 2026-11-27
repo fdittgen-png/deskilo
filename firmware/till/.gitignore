@@ -6,3 +6,4 @@ build-*/
 sdkconfig.*
 !sdkconfig.defaults
 !sdkconfig.defaults.*
+!test/host/stubs/sdkconfig.h
