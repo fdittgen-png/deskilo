@@ -6,13 +6,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/devices/connected_boards_provider.dart';
+import '../../../../core/devices/device_board.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/till_board.dart';
-import '../../providers/till_board_providers.dart';
 
 /// The words for a refusal of a board command, or for a server that did not answer.
 String tillBoardFailureText(AppLocalizations l10n, Object error) => switch (error) {

@@ -5,9 +5,9 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/trace/trace_logger.dart';
-import '../domain/device_code.dart';
-import '../domain/till_board.dart';
+import '../trace/trace_logger.dart';
+import 'device_board.dart';
+import 'device_code.dart';
 
 class SupabaseTillBoards implements TillBoardPort {
   const SupabaseTillBoards(this._client);

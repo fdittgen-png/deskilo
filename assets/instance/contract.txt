@@ -1086,6 +1086,10 @@ constraint item_groups.item_groups_count_every_days_check CHECK (((count_every_d
 constraint item_groups.item_groups_default_purchase_factor_den_check CHECK ((default_purchase_factor_den > 0))
 constraint item_groups.item_groups_default_purchase_factor_num_check CHECK ((default_purchase_factor_num > 0))
 constraint item_groups.item_groups_default_purchase_unit_check CHECK (((char_length(btrim(default_purchase_unit)) >= 1) AND (char_length(btrim(default_purchase_unit)) <= 30)))
+constraint item_groups.item_groups_default_sale_factor_den_check CHECK ((default_sale_factor_den > 0))
+constraint item_groups.item_groups_default_sale_factor_num_check CHECK ((default_sale_factor_num > 0))
+constraint item_groups.item_groups_default_sale_price_cents_check CHECK (((default_sale_price_cents >= 0) AND (default_sale_price_cents <= 2000000000)))
+constraint item_groups.item_groups_default_sale_unit_check CHECK (((char_length(btrim(default_sale_unit)) >= 1) AND (char_length(btrim(default_sale_unit)) <= 30)))
 constraint item_groups.item_groups_deposit_minor_check CHECK ((deposit_minor >= 0))
 constraint item_groups.item_groups_inventory_unit_fkey FOREIGN KEY (workspace_id, inventory_unit) REFERENCES workspace_units(workspace_id, code)
 constraint item_groups.item_groups_label_template_check CHECK (((char_length(btrim(label_template)) >= 1) AND (char_length(btrim(label_template)) <= 60)))
@@ -1097,6 +1101,7 @@ constraint item_groups.item_groups_quick_key_colour_check CHECK ((quick_key_colo
 constraint item_groups.item_groups_reorder_point_default_check CHECK ((reorder_point_default >= (0)::numeric))
 constraint item_groups.item_groups_reorder_quantity_default_check CHECK ((reorder_quantity_default > (0)::numeric))
 constraint item_groups.item_groups_revision_check CHECK ((revision >= 1))
+constraint item_groups.item_groups_sale_factor_pair CHECK (((default_sale_factor_num IS NULL) = (default_sale_factor_den IS NULL)))
 constraint item_groups.item_groups_shelf_life_days_check CHECK (((shelf_life_days >= 1) AND (shelf_life_days <= 36500)))
 constraint item_groups.item_groups_supply_class_check CHECK ((supply_class = ANY (ARRAY['property'::text, 'general'::text])))
 constraint item_groups.item_groups_tag_mode_check CHECK ((tag_mode = ANY (ARRAY['none'::text, 'per_batch'::text, 'per_unit'::text])))
@@ -3641,16 +3646,16 @@ routine public.item_group_actor(p_workspace_id uuid) -> uuid | function | define
 routine public.item_group_assign_core(p_workspace_id uuid, p_me uuid, p_request_id uuid, p_item_id uuid, p_expected integer, p_group_id uuid, p_dry boolean) -> jsonb | function | definer | volatile | exec:service_role | body:49189b5b2b06
 routine public.item_group_assign_v1(p_workspace_id uuid, p_request_id uuid, p_item_id uuid, p_expected_revision integer, p_group_id uuid, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:47ed274ddf48
 routine public.item_group_business_default(p_workspace_id uuid, p_param text) -> jsonb | function | definer | stable | exec:service_role | body:e29d304b68f6
-routine public.item_group_check_value(p_workspace_id uuid, p_param text, p_value jsonb) -> void | function | definer | stable | exec:service_role | body:832b3c0b7c21
+routine public.item_group_check_value(p_workspace_id uuid, p_param text, p_value jsonb) -> void | function | definer | stable | exec:service_role | body:7d80c540b206
 routine public.item_group_delete_v1(p_workspace_id uuid, p_request_id uuid, p_group_id uuid, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:94fd91e75513
 routine public.item_group_finance_guard(p_workspace_id uuid, p_params text[]) -> void | function | definer | stable | exec:service_role | body:12cba0630cf1
 routine public.item_group_history_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:2b985ba95c55
 routine public.item_group_history_v1(p_workspace_id uuid, p_group_id uuid, p_item_id uuid, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:df9e7a4b0cd5
 routine public.item_group_lock(p_ids uuid[], p_exclusive boolean) -> void | function | definer | volatile | exec:service_role | body:7773d10092c7
 routine public.item_group_param_finance(p_param text) -> boolean | function | invoker | immutable | exec:service_role | body:5149d9a75821
-routine public.item_group_param_kind(p_param text) -> text | function | invoker | immutable | exec:service_role | body:3956673584aa
-routine public.item_group_params() -> text[] | function | invoker | immutable | exec:service_role | body:f2839941d19a
-routine public.item_group_save_core(p_workspace_id uuid, p_me uuid, p_request_id uuid, p_group_id uuid, p_expected integer, p_body jsonb, p_params jsonb, p_dry boolean) -> jsonb | function | definer | volatile | exec:service_role | body:398f426b0289
+routine public.item_group_param_kind(p_param text) -> text | function | invoker | immutable | exec:service_role | body:9fe69677ca51
+routine public.item_group_params() -> text[] | function | invoker | immutable | exec:service_role | body:c324f52d1e64
+routine public.item_group_save_core(p_workspace_id uuid, p_me uuid, p_request_id uuid, p_group_id uuid, p_expected integer, p_body jsonb, p_params jsonb, p_dry boolean) -> jsonb | function | definer | volatile | exec:service_role | body:417ae580e991
 routine public.item_group_save_v1(p_workspace_id uuid, p_request_id uuid, p_group_id uuid, p_expected_revision integer, p_body jsonb, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:72cbd8667efa
 routine public.item_groups_depth() -> trigger | function | invoker | volatile | exec:service_role | body:d4c86b15b62f
 routine public.item_groups_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0e98a226efa1

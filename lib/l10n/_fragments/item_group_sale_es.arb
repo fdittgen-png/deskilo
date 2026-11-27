@@ -1,0 +1,14 @@
+{
+  "itemGroupSaleUnit": "Se vende en (unidad)",
+  "@itemGroupSaleUnit": {
+    "description": "#4479 a group's proposed sale unit"
+  },
+  "itemGroupSaleFactor": "Lo que una unidad hace de la unidad de inventario (venta)",
+  "@itemGroupSaleFactor": {
+    "description": "#4479 what one sale unit makes of the inventory unit"
+  },
+  "itemGroupSalePrice": "Precio de una al vender",
+  "@itemGroupSalePrice": {
+    "description": "#4479 the price of one sale unit"
+  }
+}

@@ -5,7 +5,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:deskilo/features/money/domain/device_code.dart';
+import 'package:deskilo/core/devices/device_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/demo_till_board_journey.dart';

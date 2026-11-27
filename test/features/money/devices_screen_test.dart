@@ -10,13 +10,13 @@
 // - a refusal of the server is said in words.
 import 'package:deskilo/core/demo/data/demo_till_board.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
+import 'package:deskilo/core/devices/connected_boards_provider.dart';
+import 'package:deskilo/core/devices/device_board.dart';
+import 'package:deskilo/core/devices/device_code.dart';
 import 'package:deskilo/core/scan/front_camera.dart';
 import 'package:deskilo/core/scan/qr_scan_widget.dart';
-import 'package:deskilo/features/money/domain/device_code.dart';
-import 'package:deskilo/features/money/domain/till_board.dart';
 import 'package:deskilo/features/money/domain/till_drawer.dart';
 import 'package:deskilo/features/money/presentation/screens/devices_screen.dart';
-import 'package:deskilo/features/money/providers/till_board_providers.dart';
 import 'package:deskilo/features/money/providers/till_drawer_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';

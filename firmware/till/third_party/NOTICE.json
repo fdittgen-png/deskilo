@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "scope": "#4474 -- the notices of what the till firmware image links or embeds, for the versions it is built with (firmware/till/dependencies.lock: ESP-IDF 5.3.1, LVGL 8.3.11). Mbed TLS is used under its Apache-2.0 option. The compiler runtime is under the GCC Runtime Library Exception; the compiler itself is not shipped.",
+  "components": [
+    {
+      "component": "esp-idf",
+      "version": "5.3.1",
+      "source_url": "https://github.com/espressif/esp-idf/tree/v5.3.1",
+      "license": "Apache-2.0",
+      "notice_file": "esp-idf-LICENSE",
+      "notice_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "component": "freertos",
+      "version": "bundled by ESP-IDF 5.3.1",
+      "source_url": "https://github.com/espressif/esp-idf/tree/v5.3.1/components/freertos/FreeRTOS-Kernel",
+      "license": "MIT",
+      "notice_file": "freertos-LICENSE.md",
+      "notice_sha256": "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1"
+    },
+    {
+      "component": "lwip",
+      "version": "bundled by ESP-IDF 5.3.1",
+      "source_url": "https://github.com/espressif/esp-idf/tree/v5.3.1/components/lwip/lwip",
+      "license": "BSD-3-Clause",
+      "notice_file": "lwip-COPYING",
+      "notice_sha256": "8fb15ebdb19eb669e1d37fcd8e57a44c477fcc0e93a9ab0d181760965f94d5ed"
+    },
+    {
+      "component": "mbedtls",
+      "version": "bundled by ESP-IDF 5.3.1",
+      "source_url": "https://github.com/espressif/esp-idf/tree/v5.3.1/components/mbedtls/mbedtls",
+      "license": "Apache-2.0 OR GPL-2.0-or-later",
+      "notice_file": "mbedtls-LICENSE",
+      "notice_sha256": "9b405ef4c89342f5eae1dd828882f931747f71001cfba7d114801039b52ad09b"
+    },
+    {
+      "component": "http-parser",
+      "version": "bundled by ESP-IDF 5.3.1",
+      "source_url": "https://github.com/espressif/esp-idf/tree/v5.3.1/components/http_parser",
+      "license": "MIT",
+      "notice_file": "http-parser-LICENSE.txt",
+      "notice_sha256": "3aced2d086d3f59cafb6589770c30c1e45a5bdf50c1d4375060b81a615db604c"
+    },
+    {
+      "component": "cjson",
+      "version": "bundled by ESP-IDF 5.3.1",
+      "source_url": "https://github.com/espressif/esp-idf/tree/v5.3.1/components/json/cJSON",
+      "license": "MIT",
+      "notice_file": "cjson-LICENSE",
+      "notice_sha256": "a36dda207c36db5818729c54e7ad4e8b0c6fba847491ba64f372c1a2037b6d5c"
+    },
+    {
+      "component": "esp-wifi",
+      "version": "bundled by ESP-IDF 5.3.1 (binary libraries)",
+      "source_url": "https://github.com/espressif/esp-idf/tree/v5.3.1/components/esp_wifi/lib",
+      "license": "Apache-2.0",
+      "notice_file": "esp-wifi-LICENSE",
+      "notice_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "component": "esp-phy",
+      "version": "bundled by ESP-IDF 5.3.1 (binary libraries)",
+      "source_url": "https://github.com/espressif/esp-idf/tree/v5.3.1/components/esp_phy/lib",
+      "license": "Apache-2.0",
+      "notice_file": "esp-phy-LICENSE",
+      "notice_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "component": "esp-coex",
+      "version": "bundled by ESP-IDF 5.3.1 (binary libraries)",
+      "source_url": "https://github.com/espressif/esp-idf/tree/v5.3.1/components/esp_coex/lib",
+      "license": "Apache-2.0",
+      "notice_file": "esp-coex-LICENSE",
+      "notice_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "component": "wpa_supplicant",
+      "version": "bundled by ESP-IDF 5.3.1",
+      "source_url": "https://github.com/espressif/esp-idf/tree/v5.3.1/components/wpa_supplicant",
+      "license": "BSD-3-Clause",
+      "notice_file": "wpa-supplicant-README",
+      "notice_sha256": "17ccbcf4b17a910795292fb4a95f4742d2ecda37d06fcf20d60ffbd70cfbc609"
+    },
+    {
+      "component": "newlib",
+      "version": "bundled by ESP-IDF 5.3.1 toolchain esp-13.2.0_20240530",
+      "source_url": "https://github.com/espressif/esp-idf/tree/v5.3.1/components/newlib",
+      "license": "BSD-like (see file)",
+      "notice_file": "newlib-COPYING.NEWLIB",
+      "notice_sha256": "0681089a556e93791da82718d68011ba452de245f7f59c3846936304756ac0c0"
+    },
+    {
+      "component": "gcc runtime (libgcc)",
+      "version": "esp-13.2.0_20240530",
+      "source_url": "https://github.com/espressif/crosstool-NG/releases/tag/esp-13.2.0_20240530",
+      "license": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "notice_file": "gcc-runtime-COPYING3",
+      "notice_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    {
+      "component": "gcc runtime library exception",
+      "version": "esp-13.2.0_20240530",
+      "source_url": "https://github.com/espressif/crosstool-NG/releases/tag/esp-13.2.0_20240530",
+      "license": "GCC-exception-3.1",
+      "notice_file": "gcc-runtime-exception-COPYING-RUNTIME",
+      "notice_sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+    },
+    {
+      "component": "lvgl",
+      "version": "8.3.11",
+      "source_url": "https://github.com/lvgl/lvgl/tree/v8.3.11",
+      "license": "MIT",
+      "notice_file": "lvgl-LICENCE.txt",
+      "notice_sha256": "6a916130a36e83a79bb0dca6c6a7bfe60a67af7d118605e2b7b23bd5ad5c4eb0"
+    },
+    {
+      "component": "Font Awesome Free (LVGL's built-in symbols)",
+      "version": "as bundled by LVGL 8.3.11",
+      "source_url": "https://fontawesome.com/license/free",
+      "license": "OFL-1.1 (fonts) / CC-BY-4.0 (icons)",
+      "notice_file": "fontawesome-LICENSE.txt",
+      "notice_sha256": "de784a808496d49f5f80dd9d1d6e9a51cff712cfbc339e7c25155631ae3cdb5d"
+    },
+    {
+      "component": "Montserrat (LVGL's built-in fonts and main/till_font_*.c)",
+      "version": "Montserrat Medium",
+      "source_url": "https://github.com/JulietaUla/Montserrat",
+      "license": "OFL-1.1",
+      "notice_file": "../fonts/OFL.txt",
+      "notice_sha256": "8b7141c03fa4f8d44e6345d5d4931709290f0f67875e452e95ac1fd3a027802e"
+    }
+  ]
+}

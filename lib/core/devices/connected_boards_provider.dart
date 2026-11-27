@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../domain/till_board.dart';
+import 'device_board.dart';
 
 /// #4454 -- where the till boards live. The app wires the server's (`tillBoardPortFromApp`); the Demo its own.
 final tillBoardPortProvider = Provider<TillBoardPort>((ref) => throw UnimplementedError('the till board port is wired by the app'));

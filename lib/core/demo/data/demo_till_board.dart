@@ -5,8 +5,8 @@
 // withdrawn like the server's; no board presents it, so it connects nothing.
 import 'package:meta/meta.dart' show visibleForTesting;
 
-import '../../../features/money/domain/device_code.dart';
-import '../../../features/money/domain/till_board.dart';
+import '../../devices/device_board.dart';
+import '../../devices/device_code.dart';
 
 /// The QR code the Demo's till board shows (the tests scan it).
 @visibleForTesting

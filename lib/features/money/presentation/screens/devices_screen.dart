@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
+import '../../../../core/devices/connected_boards_provider.dart';
+import '../../../../core/devices/device_board.dart';
+import '../../../../core/devices/device_code.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -22,10 +25,7 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/device_code.dart';
-import '../../domain/till_board.dart';
 import '../../domain/till_drawer.dart';
-import '../../providers/till_board_providers.dart';
 import '../../providers/till_drawer_providers.dart';
 import 'till_board_list.dart';
 
