@@ -18,18 +18,20 @@ import '../../providers/pickable_units_provider.dart';
 import 'line_unit_text.dart';
 import 'standalone_line_form.dart';
 
+/// What a goods line needs to word its unit and its price: the business, the member's number format and how a unit is named.
+typedef GoodsLineWords = ({String workspaceId, String locale, String Function(LineUnit unit) labelOf});
+
 /// Makes the line of [form] sell [itemId] in [unit] (null: the item's sale unit): the unit becomes the one chosen, and the price the unit's
 /// while the price is empty or still the one set before. [locale] is the member's number format.
 Future<void> startGoodsLine(
   ProviderContainer container,
-  String workspaceId,
   StandaloneLineForm form,
-  String itemId, {
+  String itemId,
+  GoodsLineWords words, {
   String? unit,
-  required String locale,
-  required String Function(LineUnit unit) labelOf,
   required VoidCallback done,
 }) async {
+  final (:workspaceId, :locale, :labelOf) = words;
   final units = await container.read(itemOrderUnitsProvider((workspaceId: workspaceId, itemId: itemId, supplierId: null)).future);
   if (form.itemId != itemId) return;
   final chosen = unit ?? units?.saleUnit;
@@ -87,7 +89,7 @@ class GoodsUnitField extends ConsumerWidget {
           ? (v) {
               if (v == null) return;
               final container = ProviderScope.containerOf(context);
-              unawaited(startGoodsLine(container, workspaceId, form, item, unit: v, locale: locale, labelOf: (u) => lineUnitName(l, code: u.code, label: u.label), done: onChanged));
+              unawaited(startGoodsLine(container, form, item, (workspaceId: workspaceId, locale: locale, labelOf: (u) => lineUnitName(l, code: u.code, label: u.label)), unit: v, done: onChanged));
             }
           : null,
     );

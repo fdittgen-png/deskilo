@@ -188,7 +188,7 @@ class StandaloneLineEditor extends StatelessWidget {
   Widget _unitField(BuildContext context) {
     final l = context.l10n;
     return switch (form.goodsUnit) {
-      _? => GoodsUnitField(index: index, workspaceId: workspaceId, form: form, enabled: enabled, onChanged: onChanged, locale: appFormatOf(context).locale),
+      _? => GoodsUnitField(key: ValueKey('standalone-line-$index-goods-unit-field'), index: index, workspaceId: workspaceId, form: form, enabled: enabled, onChanged: onChanged, locale: appFormatOf(context).locale),
       null => DropdownButtonFormField<String>(
         key: ValueKey('standalone-line-$index-unit'),
         initialValue: form.unit,
@@ -245,7 +245,7 @@ class StandaloneLineEditor extends StatelessWidget {
                     ? (v) {
                         form.sell(goods.where((g) => g.id == v).firstOrNull);
                         onChanged();
-                        if (v != null) unawaited(startGoodsLine(ProviderScope.containerOf(context), workspaceId, form, v, locale: appFormatOf(context).locale, labelOf: (u) => lineUnitName(l, code: u.code, label: u.label), done: onChanged));
+                        if (v != null) unawaited(startGoodsLine(ProviderScope.containerOf(context), form, v, (workspaceId: workspaceId, locale: appFormatOf(context).locale, labelOf: (u) => lineUnitName(l, code: u.code, label: u.label)), done: onChanged));
                       }
                     : null,
               ),

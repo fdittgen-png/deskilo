@@ -185,6 +185,7 @@ class DemoStockLedger implements DemoInvoiceGoods {
     try {
       return core.toInventory(item, quantity, unit, 0);
     } on StockConfigRefused {
+      // trace-exempt: a unit with no defined conversion is the answer (null: the line is refused as the server refuses it), not a failure
       return null;
     }
   }
