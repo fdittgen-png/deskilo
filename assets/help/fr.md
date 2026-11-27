@@ -9002,6 +9002,7 @@ Vous voulez savoir ce que la TVA va vous demander avant de l'activer.
 - Le serveur calcule chaque déclaration à partir de vos factures, de vos encaissements et de l'exigibilité. Déposez-la vous-même auprès de l'administration fiscale, puis marquez-la déposée avec la référence de l'accusé de réception : l'application ne transmet rien.
 - Choisissez la périodicité sous **Périodicité de la déclaration de TVA** dans l'identité légale. Une période déposée est verrouillée : ce qui y change ensuite est déclaré en régularisation dans la déclaration suivante.
 - Le journal des déclarations a sa propre série de numéros.
+- Dans le questionnaire de mise en place, un taux de 0 % indique s'il est **Taux zéro**, **Exonéré** ou **Hors du champ de la TVA** ; un taux exonéré ou hors champ choisit son **Motif d'exonération** dans une liste ; chaque service choisit l'un des taux, et deux taux ne portent jamais le même nom. L'export attend que chaque service ait son taux.
 
 **Voir aussi:** [Régime de TVA](help:user.money.vat.regime) · [Quand la TVA devient exigible](help:user.money.vat.due)
 

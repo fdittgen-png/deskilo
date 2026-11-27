@@ -9002,6 +9002,7 @@ Quiere saber qué le pedirá el IVA antes de activarlo.
 - El servidor calcula cada declaración a partir de sus facturas, cobros y devengos. Preséntela usted mismo ante la administración tributaria y márquela como presentada con la referencia del justificante: la aplicación no transmite nada.
 - Elija con qué frecuencia declara en **Periodo de declaración del IVA**, en la identidad legal. Un periodo presentado queda bloqueado: lo que cambie en él después se declara como corrección en la declaración siguiente.
 - El diario de declaraciones tiene su propia serie de numeración.
+- En el cuestionario de configuración, un tipo del 0 % indica si es **Tipo cero**, **Exento** o **No sujeto al IVA**; un tipo exento o no sujeto elige su **Motivo de exención** de una lista; cada servicio elige uno de los tipos, y dos tipos nunca llevan el mismo nombre. La exportación espera a que cada servicio tenga su tipo.
 
 **Véase también:** [Régimen de IVA](help:user.money.vat.regime) · [Cuándo se devenga el IVA](help:user.money.vat.due)
 

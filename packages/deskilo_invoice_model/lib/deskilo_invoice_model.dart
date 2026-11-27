@@ -41,3 +41,4 @@ export 'src/vat_regime.dart';
 export 'src/vat_tax_point.dart';
 export 'src/vat_tax_point_policy.dart';
 export 'src/vat_treatment.dart';
+export 'src/vatex_codes.dart';

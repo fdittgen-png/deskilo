@@ -47,6 +47,8 @@ void main() {
     // #2924 — the WebMCP tools and the drawn screen read the same,
     // normalized answers, repaired on load before any step is drawn.
     expect(out, contains('normalize: the tools and the screen read the same'));
+    // #4497 — a service keeps its own VAT rate; a missing rate, treatment or reason blocks by name.
+    expect(out, contains('vat identity: each service keeps its own rate'));
     // #2925 — the answers round-trip as one typed tree, and every file a
     // page before it wrote loads as it did.
     expect(out, contains('answers: round-trip; 5 legacy files load as before'));

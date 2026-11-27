@@ -289,6 +289,7 @@ Sie möchten wissen, was die Umsatzsteuer von Ihnen verlangt, bevor Sie sie eins
 - Der Server berechnet jede Voranmeldung aus Ihren Rechnungen, Zahlungseingängen und Steuerzeitpunkten. Geben Sie sie selbst beim Finanzamt ab und markieren Sie sie dann mit der Referenz der Eingangsbestätigung als abgegeben: Die App übermittelt nichts.
 - Wählen Sie unter **Voranmeldungszeitraum** in der rechtlichen Identität, wie oft Sie melden. Ein abgegebener Zeitraum ist gesperrt: Was sich darin später ändert, wird in der nächsten Meldung als Berichtigung erklärt.
 - Das Journal der Voranmeldungen hat einen eigenen Nummernkreis.
+- Im Einrichtungsfragebogen sagt ein Satz von 0 %, ob er **Nullsatz**, **Steuerbefreit** oder **Nicht steuerbar** ist; ein befreiter oder nicht steuerbarer Satz wählt seinen **Befreiungsgrund** aus einer Liste; jede Leistung wählt einen der Sätze, und zwei Sätze tragen nie denselben Namen. Der Export wartet, bis jede Leistung ihren Satz hat.
 
 **Siehe auch:** [Steuerregime](help:user.money.vat.regime) · [Wann die Umsatzsteuer fällig wird](help:user.money.vat.due)
 
