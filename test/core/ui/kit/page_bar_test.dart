@@ -65,4 +65,28 @@ void main() {
     expect(find.text('Colours'), findsOneWidget);
     expect(name, 'Colours');
   });
+
+  testWidgets('#4492 the main action of a bar is a filled, worded button '
+      'under its own key', (tester) async {
+    var pressed = 0;
+    await _pump(
+      tester,
+      place: 'Colours',
+      actions: [
+        pageBarAction(
+          key: const ValueKey('colours-new'),
+          label: 'New colour',
+          onPressed: () => pressed++,
+        ),
+      ],
+    );
+    final button = find.byKey(const ValueKey('colours-new'));
+    expect(tester.widget(button), isA<FilledButton>());
+    expect(
+      find.descendant(of: button, matching: find.text('New colour')),
+      findsOneWidget,
+    );
+    await tester.tap(button);
+    expect(pressed, 1);
+  });
 }

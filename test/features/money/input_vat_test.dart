@@ -204,6 +204,32 @@ void main() {
     expect(find.byKey(const ValueKey('expense-vat-rate')), findsOneWidget);
   });
 
+  testWidgets('a screen left while the rates are read opens nothing and throws nothing', (tester) async {
+    final rates = Completer<List<VatRate>>();
+    final money = _withRates();
+    await pumpMoney(
+      tester,
+      money: money,
+      workspace: _registered(),
+      retry: (_, _) => null,
+      extraOverrides: [vatRatesProvider.overrideWith((ref) => rates.future)],
+    );
+    await tester.scrollUntilVisible(
+      find.text('Submit an expense'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.text('Submit an expense'));
+    await tester.pump();
+    // The person leaves; the answer arrives afterwards.
+    await tester.pumpWidget(const SizedBox());
+    rates.complete(money.vatRates);
+    await tester.pump();
+    await tester.pump();
+    expect(tester.takeException(), isNull);
+    expect(find.byKey(const ValueKey('expense-amount')), findsNothing);
+  });
+
   test('a share outside 0..100 is refused before anything is sent', () {
     const draft = ExpenseDraft(locale: 'en_US', 
       amount: '12',
