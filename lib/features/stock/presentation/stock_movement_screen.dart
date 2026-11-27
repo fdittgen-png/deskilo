@@ -20,6 +20,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/stock_operations.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_reversals.dart';
 import '../providers/stock_providers.dart';
