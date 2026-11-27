@@ -8707,6 +8707,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get developmentWatermark => 'DESARROLLO';
 
   @override
+  String get devicePairingApprove => 'Aprobar';
+
+  @override
+  String devicePairingApproveBody(String fingerprint) {
+    return 'Apruebe este dispositivo solo si su pantalla muestra la huella $fingerprint.';
+  }
+
+  @override
   String devicePairingBoard(String id, String model) {
     return 'Terminal $id · $model';
   }
@@ -8715,7 +8723,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get devicePairingCheck => 'Comprobar el código';
 
   @override
+  String devicePairingCode(String code) {
+    return 'Código de conexión: $code';
+  }
+
+  @override
+  String devicePairingCodeHint(String time) {
+    return 'Válido hasta las $time, una sola vez, solo para este dispositivo.';
+  }
+
+  @override
   String get devicePairingConnect => 'Conectar un dispositivo';
+
+  @override
+  String get devicePairingFailed =>
+      'El servidor no respondió: vuelva a intentarlo.';
 
   @override
   String devicePairingFingerprint(String fingerprint) {
@@ -8726,12 +8748,27 @@ class AppLocalizationsEs extends AppLocalizations {
   String get devicePairingFound => 'Terminal encontrado';
 
   @override
-  String get devicePairingLater =>
-      'Conectar el terminal a esta empresa llegará con una próxima actualización: no se le ha enviado nada.';
+  String get devicePairingGetCode => 'Obtener un código de conexión';
+
+  @override
+  String get devicePairingNeedsFirmware =>
+      'Este dispositivo necesita el nuevo firmware antes de poder conectarse.';
+
+  @override
+  String get devicePairingNoTill =>
+      'Añada primero una caja: un dispositivo sirve a una caja.';
 
   @override
   String get devicePairingNone =>
       'Todavía no hay ningún terminal de caja conectado a esta empresa.';
+
+  @override
+  String get devicePairingNotOwner =>
+      'Solo el propietario de la empresa conecta, aprueba o quita un dispositivo.';
+
+  @override
+  String get devicePairingNotWaiting =>
+      'Este dispositivo ya no está pendiente de aprobación.';
 
   @override
   String get devicePairingRefusedAlphabet =>
@@ -8750,12 +8787,41 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este terminal es de un modelo que esta aplicación aún no conoce. Actualice la aplicación y luego conéctelo.';
 
   @override
+  String get devicePairingRevoke => 'Quitar';
+
+  @override
+  String get devicePairingRevokeBody =>
+      'Este dispositivo dejará de estar conectado a la empresa. Para volver a usarlo, conéctelo con un código nuevo.';
+
+  @override
   String get devicePairingScanHint =>
       'Acerque el código QR del terminal a la cámara. Para mostrarlo, mantenga pulsado el botón BOOT del terminal 3 segundos.';
 
   @override
+  String get devicePairingScanToConnect =>
+      'Para conectar este dispositivo, escanee su código QR.';
+
+  @override
+  String get devicePairingStatusPaired => 'Conectado';
+
+  @override
+  String get devicePairingStatusPending => 'Pendiente de su aprobación';
+
+  @override
   String get devicePairingSubtitle =>
       'Terminales de caja: conectar uno por su código QR o su código';
+
+  @override
+  String devicePairingTill(String till) {
+    return 'Caja: $till';
+  }
+
+  @override
+  String get devicePairingTillInactive =>
+      'Esta caja no está activa: elija otra.';
+
+  @override
+  String get devicePairingTillPick => 'Caja';
 
   @override
   String get devicePairingTitle => 'Dispositivos';
@@ -8766,6 +8832,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get devicePairingTypeHelper =>
       'Los 10 caracteres junto al código QR del terminal, por ejemplo 3DNGP-UN9CG.';
+
+  @override
+  String get devicePairingWithdraw => 'Retirar el código';
+
+  @override
+  String get devicePairingWrongFingerprint =>
+      'La huella no corresponde a este dispositivo.';
 
   @override
   String get directoryApproximate => 'Ubicación aproximada de la dirección';
@@ -32932,6 +33005,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.';
 
   @override
+  String get settingHintCounterTerminalPairAttempts =>
+      'Cuántas veces puede presentarse un código con un dispositivo o una prueba incorrectos antes de agotarse.';
+
+  @override
+  String get settingHintCounterTerminalPairMinutes =>
+      'Cuánto tiempo es válido el código que conecta un dispositivo de caja. Un cambio se aplica al próximo código, no a uno ya dado.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'El servicio compatible con Photon que sitúa una dirección publicada en el mapa de descubrimiento: una dirección https en la internet pública, sin nombre de usuario, contraseña, consulta ni #. Déjelo vacío para usar la dirección con la que se construyó esta versión de la aplicación; si no, el servicio público Photon.';
 
@@ -33390,6 +33471,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelCounterPaidOutLimit => 'Mayor salida sin autorización';
+
+  @override
+  String get settingLabelCounterTerminalPairAttempts =>
+      'Código de conexión de un dispositivo: intentos';
+
+  @override
+  String get settingLabelCounterTerminalPairMinutes =>
+      'Código de conexión de un dispositivo: minutos';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>

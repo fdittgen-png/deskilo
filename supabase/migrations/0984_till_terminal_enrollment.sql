@@ -129,19 +129,23 @@ returns text language sql immutable set search_path = '' as $fn$
 $fn$;
 revoke execute on function public.till_terminal_fingerprint(text) from public, anon, authenticated;
 
--- An owner of the business, in their own session (never an assistant's), with the till boards switched on.
-create or replace function public.may_manage_till_terminals(p_workspace_id uuid)
-returns boolean language sql stable security definer set search_path = '' as $fn$
-  select auth.uid() is not null and not public.mcp_is_delegated() and public.is_owner_of(p_workspace_id)
-     and public.feature_effective(p_workspace_id, 'counterEmbeddedTerminal');
+-- The owner of the business, in their own session (never an assistant's), with the till boards switched on: the
+-- shared actor check (command_actor, 0948) for the business's settings right and the feature, then the owner. Answers
+-- the member who acts; refuses DKN01.
+create or replace function public.till_terminal_owner(p_workspace_id uuid)
+returns uuid language plpgsql stable security definer set search_path = '' as $fn$
+declare
+  v_me uuid;
+begin
+  v_me := public.command_actor(p_workspace_id, 'workspaceSettings', 'counterEmbeddedTerminal',
+    'only the owner connects, approves or removes a till board', 'till boards are off in this business');
+  if not public.is_owner_of(p_workspace_id) then
+    raise exception 'only the owner connects, approves or removes a till board' using errcode = 'DKN01';
+  end if;
+  return v_me;
+end;
 $fn$;
-revoke execute on function public.may_manage_till_terminals(uuid) from public, anon, authenticated;
-
-create or replace function public.till_terminal_member(p_workspace_id uuid)
-returns uuid language sql stable security definer set search_path = '' as $fn$
-  select m.id from public.members m where m.workspace_id = p_workspace_id and m.user_id = auth.uid() limit 1;
-$fn$;
-revoke execute on function public.till_terminal_member(uuid) from public, anon, authenticated;
+revoke execute on function public.till_terminal_owner(uuid) from public, anon, authenticated;
 
 -- ── the owner's side ────────────────────────────────────────────────────────────────────────────────────────────
 -- A code for the board the QR named (its id, profile and the sha256 of its secret), for one active till of the
@@ -154,18 +158,16 @@ declare
   v_minutes int;
   v_attempts int;
   v_row public.till_terminal_codes;
+  v_me uuid := public.till_terminal_owner(p_workspace_id);
 begin
-  if not public.may_manage_till_terminals(p_workspace_id) then
-    raise exception 'not allowed' using errcode = '42501';
-  end if;
   if not exists (select 1 from public.counter_tills t
                   where t.workspace_id = p_workspace_id and t.id = p_till_id and t.active) then
-    raise exception 'scope_mismatch: not an active till of this business' using errcode = '22023';
+    raise exception 'not an active till of this business' using errcode = 'DKL02', detail = '{"reason": "till"}';
   end if;
   if p_device_id is null or p_board_profile is null
      or p_board_profile not in ('lcdwiki_e32r40t_v1', 'ideaspark_st7789_v1')
      or coalesce(p_secret_hash, '') !~ '^[0-9a-f]{64}$' then
-    raise exception 'protocol_unsupported: not a till board''s QR code' using errcode = '22023';
+    raise exception 'not a till board''s QR code' using errcode = 'DKL02', detail = '{"reason": "board"}';
   end if;
   v_minutes := least(15, greatest(1, coalesce((public.setting_value(p_workspace_id, 'counter.terminal_pair_minutes') #>> '{}')::int, 5)));
   v_attempts := least(10, greatest(1, coalesce((public.setting_value(p_workspace_id, 'counter.terminal_pair_attempts') #>> '{}')::int, 5)));
@@ -179,7 +181,7 @@ begin
      attempts_left)
   values (p_workspace_id, p_till_id, encode(extensions.digest(v_code, 'sha256'), 'hex'), p_device_id,
           p_board_profile, p_secret_hash, public.till_terminal_fingerprint(p_secret_hash),
-          public.till_terminal_member(p_workspace_id),
+          v_me,
           now() + make_interval(mins => v_minutes), v_attempts)
   returning * into v_row;
   return jsonb_build_object(
@@ -196,11 +198,13 @@ create or replace function public.till_terminal_code_cancel_v1(p_code_id uuid)
 returns boolean language plpgsql volatile security definer set search_path = '' as $fn$
 declare
   v_row public.till_terminal_codes;
+  v_me uuid;
 begin
   select * into v_row from public.till_terminal_codes where id = p_code_id for update;
-  if v_row.id is null or not public.may_manage_till_terminals(v_row.workspace_id) then
-    raise exception 'unknown code' using errcode = '42501';
+  if v_row.id is null then
+    raise exception 'only the owner connects, approves or removes a till board' using errcode = 'DKN01';
   end if;
+  v_me := public.till_terminal_owner(v_row.workspace_id);
   if v_row.claimed_at is not null or v_row.cancelled_at is not null or v_row.expires_at <= now() then
     return false;
   end if;
@@ -220,16 +224,16 @@ declare
   v_member uuid;
 begin
   select * into v_row from public.till_terminals where id = p_terminal_id for update;
-  if v_row.id is null or not public.may_manage_till_terminals(v_row.workspace_id) then
-    raise exception 'unknown board' using errcode = '42501';
+  if v_row.id is null then
+    raise exception 'only the owner connects, approves or removes a till board' using errcode = 'DKN01';
   end if;
+  v_member := public.till_terminal_owner(v_row.workspace_id);
   if v_row.status <> 'pending_approval' then
-    raise exception 'pair_used: this board is not waiting for approval' using errcode = '22023';
+    raise exception 'this board is not waiting for approval' using errcode = 'DKL02', detail = '{"reason": "used"}';
   end if;
   if upper(btrim(coalesce(p_fingerprint, ''))) <> v_row.fingerprint then
-    raise exception 'pair_proof_invalid: the fingerprint is not this board''s' using errcode = '22023';
+    raise exception 'the fingerprint is not this board''s' using errcode = 'DKL02', detail = '{"reason": "fingerprint"}';
   end if;
-  v_member := public.till_terminal_member(v_row.workspace_id);
   update public.till_terminals
      set status = 'revoked', revoked_at = now(), revoked_by = v_member
    where workspace_id = v_row.workspace_id and device_id = v_row.device_id and status = 'paired';
@@ -248,16 +252,18 @@ create or replace function public.till_terminal_revoke_v1(p_terminal_id uuid)
 returns boolean language plpgsql volatile security definer set search_path = '' as $fn$
 declare
   v_row public.till_terminals;
+  v_me uuid;
 begin
   select * into v_row from public.till_terminals where id = p_terminal_id for update;
-  if v_row.id is null or not public.may_manage_till_terminals(v_row.workspace_id) then
-    raise exception 'unknown board' using errcode = '42501';
+  if v_row.id is null then
+    raise exception 'only the owner connects, approves or removes a till board' using errcode = 'DKN01';
   end if;
+  v_me := public.till_terminal_owner(v_row.workspace_id);
   if v_row.status = 'revoked' then
     return false;
   end if;
   update public.till_terminals
-     set status = 'revoked', revoked_at = now(), revoked_by = public.till_terminal_member(v_row.workspace_id)
+     set status = 'revoked', revoked_at = now(), revoked_by = v_me
    where id = p_terminal_id;
   return true;
 end;
@@ -270,10 +276,8 @@ grant execute on function public.till_terminal_revoke_v1(uuid) to authenticated;
 create or replace function public.till_terminals_v1(p_workspace_id uuid)
 returns jsonb language plpgsql stable security definer set search_path = '' as $fn$
 begin
-  if auth.uid() is null or public.mcp_is_delegated() or not public.has_permission(p_workspace_id, 'workspaceSettings')
-     or not public.feature_effective(p_workspace_id, 'counterEmbeddedTerminal') then
-    raise exception 'not allowed' using errcode = '42501';
-  end if;
+  perform public.command_actor(p_workspace_id, 'workspaceSettings', 'counterEmbeddedTerminal',
+    'not allowed to see the till boards', 'till boards are off in this business');
   return coalesce((
     select jsonb_agg(jsonb_build_object(
              'id', d.id, 'till_id', d.till_id, 'till_name', t.name, 'device_id', d.device_id,

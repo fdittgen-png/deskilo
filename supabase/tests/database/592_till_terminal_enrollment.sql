@@ -69,14 +69,14 @@ insert into public.counter_tills (id, workspace_id, name, active) values
   (pg_temp.u(403), pg_temp.u(102), 'Counter', true);
 
 -- who makes a code
-select is(pg_temp.code_for(2, 501, 1), 'ERR 42501', 'a cashier makes no code');
-select is(pg_temp.code_for(3, 501, 1), 'ERR 42501', 'nor an owner of another business');
+select is(pg_temp.code_for(2, 501, 1), 'ERR DKN01', 'a cashier makes no code');
+select is(pg_temp.code_for(3, 501, 1), 'ERR DKN01', 'nor an owner of another business');
 select is(pg_temp.run_as(pg_temp.u(1), format('select public.till_terminal_code_create_v1(%L, %L, %L, %L, %L)::text',
-  pg_temp.u(101), pg_temp.u(401), pg_temp.u(501), 'lcdwiki_e32r40t_v1', pg_temp.hash(1)), true), 'ERR 42501', 'nor the owner''s assistant');
-select is(pg_temp.code_for(3, 503, 3, 102, 403), 'ERR 42501', 'nor an owner whose till boards are off');
-select is(pg_temp.code_for(1, 501, 1, 101, 402), 'ERR 22023', 'a till that is not active takes no board');
+  pg_temp.u(101), pg_temp.u(401), pg_temp.u(501), 'lcdwiki_e32r40t_v1', pg_temp.hash(1)), true), 'ERR DKN01', 'nor the owner''s assistant');
+select is(pg_temp.code_for(3, 503, 3, 102, 403), 'ERR DKN01', 'nor an owner whose till boards are off');
+select is(pg_temp.code_for(1, 501, 1, 101, 402), 'ERR DKL02', 'a till that is not active takes no board');
 select is(pg_temp.run_as(pg_temp.u(1), format('select public.till_terminal_code_create_v1(%L, %L, %L, %L, %L)::text',
-  pg_temp.u(101), pg_temp.u(401), pg_temp.u(501), 'some_other_board', pg_temp.hash(1))), 'ERR 22023', 'nor a board of an unknown profile');
+  pg_temp.u(101), pg_temp.u(401), pg_temp.u(501), 'some_other_board', pg_temp.hash(1))), 'ERR DKL02', 'nor a board of an unknown profile');
 
 select set_config('t.c1', pg_temp.code_for(1, 501, 1), false);
 select ok(current_setting('t.c1')::jsonb ->> 'code' ~ '^[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}$',
@@ -109,15 +109,15 @@ select is(public.till_terminal_status_v1(pg_temp.u(501), pg_temp.secret(2)) ->> 
 
 -- the owner approves with the fingerprint
 select is(pg_temp.run_as(pg_temp.u(2), format('select public.till_terminal_approve_v1(%L, %L)::text', current_setting('t.k1')::jsonb ->> 'terminal_id', pg_temp.fp(1))),
-  'ERR 42501', 'a cashier approves no board');
+  'ERR DKN01', 'a cashier approves no board');
 select is(pg_temp.run_as(pg_temp.u(1), format('select public.till_terminal_approve_v1(%L, %L)::text', current_setting('t.k1')::jsonb ->> 'terminal_id', pg_temp.fp(2))),
-  'ERR 22023', 'another fingerprint approves nothing');
+  'ERR DKL02', 'another fingerprint approves nothing');
 select is(pg_temp.run_as(pg_temp.u(1), format('select public.till_terminal_approve_v1(%L, %L)::jsonb ->> %L', current_setting('t.k1')::jsonb ->> 'terminal_id', lower(pg_temp.fp(1)), 'status')),
   'paired', 'the board''s own fingerprint approves it');
 select is(public.till_terminal_status_v1(pg_temp.u(501), pg_temp.secret(1)) ->> 'till_id', pg_temp.u(401)::text, 'and the board learns its till from the server');
 select ok(pg_temp.run_as(pg_temp.u(1), format('select public.till_terminals_v1(%L)::text', pg_temp.u(101))) !~ pg_temp.hash(1),
   'the owner''s list carries no hash');
-select is(pg_temp.run_as(pg_temp.u(2), format('select public.till_terminals_v1(%L)::text', pg_temp.u(101))), 'ERR 42501',
+select is(pg_temp.run_as(pg_temp.u(2), format('select public.till_terminals_v1(%L)::text', pg_temp.u(101))), 'ERR DKN01',
   'a cashier, who may not open the settings, reads no list');
 
 -- a code withdrawn, expired or used up connects nothing; a new approval of the same board revokes the earlier one

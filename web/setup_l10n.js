@@ -905,7 +905,13 @@ window.SETUP_L10N={
    "counterLayoutCashierReorderHint": "A cashier may reorder a till's keys on their own device. Set in the app's settings.",
    "optCells": "{n} cells",
    "counterMaxDiscount": "Largest discount at the till",
-   "counterMaxDiscountHint": "The largest discount a cashier may give on a till line. Set in the app's settings."
+   "counterMaxDiscountHint": "The largest discount a cashier may give on a till line. Set in the app's settings.",
+   "counterTerminalPairMinutes": "Board connection code: validity",
+   "counterTerminalPairMinutesHint": "How long the code that connects a till board stays valid. Set in the app's settings.",
+   "counterTerminalPairAttempts": "Board connection code: attempts",
+   "counterTerminalPairAttemptsHint": "How many wrong presentations use a code up. Set in the app's settings.",
+   "optAttempts": "{n} attempts",
+   "optAttemptsDefault": "{n} attempts (default)"
   },
   "feature": {
    "calendarTab": [
@@ -2963,7 +2969,13 @@ window.SETUP_L10N={
    "counterLayoutCashierReorderHint": "Un caissier peut réordonner les touches d'une caisse sur son appareil. Réglé dans les paramètres de l'application.",
    "optCells": "{n} cases",
    "counterMaxDiscount": "Remise maximale à la caisse",
-   "counterMaxDiscountHint": "La remise maximale qu'un caissier peut accorder sur une ligne. Réglée dans les paramètres de l'application."
+   "counterMaxDiscountHint": "La remise maximale qu'un caissier peut accorder sur une ligne. Réglée dans les paramètres de l'application.",
+   "counterTerminalPairMinutes": "Code de connexion d'un appareil : validité",
+   "counterTerminalPairMinutesHint": "Durée de validité du code qui relie un appareil de caisse. Réglée dans les paramètres de l'application.",
+   "counterTerminalPairAttempts": "Code de connexion d'un appareil : essais",
+   "counterTerminalPairAttemptsHint": "Combien de présentations erronées épuisent un code. Réglé dans les paramètres de l'application.",
+   "optAttempts": "{n} essais",
+   "optAttemptsDefault": "{n} essais (par défaut)"
   },
   "feature": {
    "calendarTab": [
@@ -5021,7 +5033,13 @@ window.SETUP_L10N={
    "counterLayoutCashierReorderHint": "Ein Kassierer darf die Tasten einer Kasse auf seinem Gerät umordnen. In den Einstellungen der App festgelegt.",
    "optCells": "{n} Zellen",
    "counterMaxDiscount": "Größter Rabatt an der Kasse",
-   "counterMaxDiscountHint": "Der größte Rabatt, den eine Kasse auf eine Zeile geben darf. In den Einstellungen der App festgelegt."
+   "counterMaxDiscountHint": "Der größte Rabatt, den eine Kasse auf eine Zeile geben darf. In den Einstellungen der App festgelegt.",
+   "counterTerminalPairMinutes": "Verbindungscode eines Geräts: Gültigkeit",
+   "counterTerminalPairMinutesHint": "Wie lange der Code gilt, der ein Kassengerät verbindet. In den Einstellungen der App festgelegt.",
+   "counterTerminalPairAttempts": "Verbindungscode eines Geräts: Versuche",
+   "counterTerminalPairAttemptsHint": "Wie viele falsche Vorlagen einen Code verbrauchen. In den Einstellungen der App festgelegt.",
+   "optAttempts": "{n} Versuche",
+   "optAttemptsDefault": "{n} Versuche (Standard)"
   },
   "feature": {
    "calendarTab": [
@@ -7079,7 +7097,13 @@ window.SETUP_L10N={
    "counterLayoutCashierReorderHint": "Un cajero puede reordenar las teclas de una caja en su dispositivo. Se ajusta en la configuración de la aplicación.",
    "optCells": "{n} celdas",
    "counterMaxDiscount": "Descuento máximo en la caja",
-   "counterMaxDiscountHint": "El descuento máximo que un cajero puede aplicar a una línea. Se ajusta en la configuración de la aplicación."
+   "counterMaxDiscountHint": "El descuento máximo que un cajero puede aplicar a una línea. Se ajusta en la configuración de la aplicación.",
+   "counterTerminalPairMinutes": "Código de conexión de un dispositivo: validez",
+   "counterTerminalPairMinutesHint": "Cuánto tiempo es válido el código que conecta un dispositivo de caja. Se ajusta en la configuración de la aplicación.",
+   "counterTerminalPairAttempts": "Código de conexión de un dispositivo: intentos",
+   "counterTerminalPairAttemptsHint": "Cuántas presentaciones erróneas agotan un código. Se ajusta en la configuración de la aplicación.",
+   "optAttempts": "{n} intentos",
+   "optAttemptsDefault": "{n} intentos (predeterminado)"
   },
   "feature": {
    "calendarTab": [
@@ -9137,7 +9161,13 @@ window.SETUP_L10N={
    "counterLayoutCashierReorderHint": "Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo. Impostato nelle impostazioni dell'app.",
    "optCells": "{n} celle",
    "counterMaxDiscount": "Sconto massimo alla cassa",
-   "counterMaxDiscountHint": "Lo sconto massimo che un cassiere può applicare a una riga. Impostato nelle impostazioni dell'app."
+   "counterMaxDiscountHint": "Lo sconto massimo che un cassiere può applicare a una riga. Impostato nelle impostazioni dell'app.",
+   "counterTerminalPairMinutes": "Codice di collegamento di un dispositivo: validità",
+   "counterTerminalPairMinutesHint": "Per quanto tempo vale il codice che collega un dispositivo di cassa. Impostato nelle impostazioni dell'app.",
+   "counterTerminalPairAttempts": "Codice di collegamento di un dispositivo: tentativi",
+   "counterTerminalPairAttemptsHint": "Quante presentazioni errate esauriscono un codice. Impostato nelle impostazioni dell'app.",
+   "optAttempts": "{n} tentativi",
+   "optAttemptsDefault": "{n} tentativi (predefinito)"
   },
   "feature": {
    "calendarTab": [

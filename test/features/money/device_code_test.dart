@@ -10,6 +10,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/demo_till_board_journey.dart';
 
+const _hash = 'ab12cd3400000000000000000000000000000000000000000000000000000000';
+const _qr = 'deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=ideaspark_st7789_v1&fw=1.0.3&fp=AB12-CD34&h=$_hash';
+
 void main() {
   final table = jsonDecode(File('test/fixtures/device_pairing_codes.json').readAsStringSync()) as Map<String, dynamic>;
 
@@ -52,12 +55,14 @@ void main() {
   });
 
   test("a board's QR reads whole, and agrees with its readable code", () {
-    final read = readDeviceCode('deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=ideaspark_st7789_v1&fw=1.0.3&fp=AB12-CD34');
+    final read = readDeviceCode(_qr);
     final code = (read as DeviceCodeOk).code;
     expect(code.id, '11111111-1111-4111-8111-111111111111');
     expect(code.profile, BoardProfile.ideaspark);
     expect(code.fingerprintShown, 'AB12-CD34');
     expect(code.firmware, '1.0.3');
+    expect(code.secretHash, _hash);
+    expect(code.connectable, isTrue);
     // the board's own host test pins this code for this identity (board_logic_test.c)
     final typed = (readDeviceCode('3DNGP-UN9CG') as DeviceCodeOk).code;
     expect(typed.shortId, code.shortId);
@@ -71,5 +76,16 @@ void main() {
     const other = 'deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=other_v9&fp=AB12-CD34';
     expect((readDeviceCode(other) as DeviceCodeRefused).reason, DeviceCodeRefusal.profile);
     expect((readDeviceCode(readableDeviceCode(0x1234, 3, 0)) as DeviceCodeRefused).reason, DeviceCodeRefusal.profile);
+  });
+
+  test("the secret's hash in a QR must give the fingerprint the QR shows; without one the board is read but not connectable", () {
+    final other = _qr.replaceFirst('h=ab12cd34', 'h=ab12cd35');
+    expect((readDeviceCode(other) as DeviceCodeRefused).reason, DeviceCodeRefusal.check);
+    expect((readDeviceCode(_qr.replaceFirst(_hash, _hash.toUpperCase())) as DeviceCodeRefused).reason, DeviceCodeRefusal.check);
+    expect((readDeviceCode(_qr.replaceFirst(_hash, _hash.substring(1))) as DeviceCodeRefused).reason, DeviceCodeRefusal.check);
+    final older = (readDeviceCode(_qr.replaceFirst('&h=$_hash', '')) as DeviceCodeOk).code;
+    expect(older.secretHash, isNull);
+    expect(older.connectable, isFalse, reason: "an older firmware's QR names no hash: such a board needs the new firmware");
+    expect((readDeviceCode('3DNGP-UN9CG') as DeviceCodeOk).code.connectable, isFalse, reason: 'a typed code names no id');
   });
 }

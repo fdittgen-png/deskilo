@@ -900,5 +900,11 @@
  "counterLayoutCashierReorderHint": "Un cajero puede reordenar las teclas de una caja en su dispositivo. Se ajusta en la configuración de la aplicación.",
  "optCells": "{n} celdas",
  "counterMaxDiscount": "Descuento máximo en la caja",
- "counterMaxDiscountHint": "El descuento máximo que un cajero puede aplicar a una línea. Se ajusta en la configuración de la aplicación."
+ "counterMaxDiscountHint": "El descuento máximo que un cajero puede aplicar a una línea. Se ajusta en la configuración de la aplicación.",
+ "counterTerminalPairMinutes": "Código de conexión de un dispositivo: validez",
+ "counterTerminalPairMinutesHint": "Cuánto tiempo es válido el código que conecta un dispositivo de caja. Se ajusta en la configuración de la aplicación.",
+ "counterTerminalPairAttempts": "Código de conexión de un dispositivo: intentos",
+ "counterTerminalPairAttemptsHint": "Cuántas presentaciones erróneas agotan un código. Se ajusta en la configuración de la aplicación.",
+ "optAttempts": "{n} intentos",
+ "optAttemptsDefault": "{n} intentos (predeterminado)"
 }

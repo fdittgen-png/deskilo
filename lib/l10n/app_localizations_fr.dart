@@ -8747,6 +8747,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get developmentWatermark => 'DÉVELOPPEMENT';
 
   @override
+  String get devicePairingApprove => 'Approuver';
+
+  @override
+  String devicePairingApproveBody(String fingerprint) {
+    return 'N\'approuvez cet appareil que si son écran affiche l\'empreinte $fingerprint.';
+  }
+
+  @override
   String devicePairingBoard(String id, String model) {
     return 'Terminal $id · $model';
   }
@@ -8755,7 +8763,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get devicePairingCheck => 'Vérifier le code';
 
   @override
+  String devicePairingCode(String code) {
+    return 'Code de connexion : $code';
+  }
+
+  @override
+  String devicePairingCodeHint(String time) {
+    return 'Valable jusqu\'à $time, une seule fois, pour cet appareil uniquement.';
+  }
+
+  @override
   String get devicePairingConnect => 'Relier un appareil';
+
+  @override
+  String get devicePairingFailed => 'Le serveur n\'a pas répondu : réessayez.';
 
   @override
   String devicePairingFingerprint(String fingerprint) {
@@ -8766,12 +8787,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get devicePairingFound => 'Terminal trouvé';
 
   @override
-  String get devicePairingLater =>
-      'Relier le terminal à cette entreprise viendra avec une prochaine mise à jour : rien ne lui a été envoyé.';
+  String get devicePairingGetCode => 'Obtenir un code de connexion';
+
+  @override
+  String get devicePairingNeedsFirmware =>
+      'Cet appareil a besoin du nouveau micrologiciel avant de pouvoir être relié.';
+
+  @override
+  String get devicePairingNoTill =>
+      'Ajoutez d\'abord une caisse : un appareil sert une caisse.';
 
   @override
   String get devicePairingNone =>
       'Aucun terminal de caisse n\'est encore relié à cette entreprise.';
+
+  @override
+  String get devicePairingNotOwner =>
+      'Seul le propriétaire de l\'entreprise relie, approuve ou retire un appareil.';
+
+  @override
+  String get devicePairingNotWaiting =>
+      'Cet appareil n\'attend plus d\'approbation.';
 
   @override
   String get devicePairingRefusedAlphabet =>
@@ -8790,12 +8826,41 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce terminal est d\'un modèle que cette application ne connaît pas encore. Mettez l\'application à jour, puis reliez-le.';
 
   @override
+  String get devicePairingRevoke => 'Retirer';
+
+  @override
+  String get devicePairingRevokeBody =>
+      'Cet appareil ne sera plus relié à l\'entreprise. Pour l\'utiliser à nouveau, reliez-le avec un nouveau code.';
+
+  @override
   String get devicePairingScanHint =>
       'Présentez le code QR du terminal à la caméra. Pour l\'afficher, maintenez le bouton BOOT du terminal 3 secondes.';
 
   @override
+  String get devicePairingScanToConnect =>
+      'Pour relier cet appareil, scannez son code QR.';
+
+  @override
+  String get devicePairingStatusPaired => 'Connecté';
+
+  @override
+  String get devicePairingStatusPending => 'En attente de votre approbation';
+
+  @override
   String get devicePairingSubtitle =>
       'Terminaux de caisse : en relier un par son code QR ou son code';
+
+  @override
+  String devicePairingTill(String till) {
+    return 'Caisse : $till';
+  }
+
+  @override
+  String get devicePairingTillInactive =>
+      'Cette caisse n\'est pas active : choisissez-en une autre.';
+
+  @override
+  String get devicePairingTillPick => 'Caisse';
 
   @override
   String get devicePairingTitle => 'Appareils';
@@ -8806,6 +8871,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get devicePairingTypeHelper =>
       'Les 10 caractères à côté du code QR du terminal, par exemple 3DNGP-UN9CG.';
+
+  @override
+  String get devicePairingWithdraw => 'Retirer le code';
+
+  @override
+  String get devicePairingWrongFingerprint =>
+      'L\'empreinte ne correspond pas à cet appareil.';
 
   @override
   String get directoryApproximate => 'Position approximative de l’adresse';
@@ -33071,6 +33143,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le plus grand montant, en unités mineures de la devise de l\'entreprise (centimes), d\'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.';
 
   @override
+  String get settingHintCounterTerminalPairAttempts =>
+      'Combien de fois un code peut être présenté avec un mauvais appareil ou une mauvaise preuve avant d\'être épuisé.';
+
+  @override
+  String get settingHintCounterTerminalPairMinutes =>
+      'Durée de validité du code qui relie un appareil de caisse. Un changement vaut pour le prochain code, pas pour un code déjà donné.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'Le service compatible Photon qui place une adresse publiée sur la carte de découverte : une adresse https sur l\'internet public, sans nom d\'utilisateur, mot de passe, requête ni #. Laissez vide pour utiliser l\'adresse avec laquelle cette version de l\'application a été construite, sinon le service public Photon.';
 
@@ -33529,6 +33609,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelCounterPaidOutLimit =>
       'Plus grand retrait sans autorisation';
+
+  @override
+  String get settingLabelCounterTerminalPairAttempts =>
+      'Code de connexion d\'un appareil : essais';
+
+  @override
+  String get settingLabelCounterTerminalPairMinutes =>
+      'Code de connexion d\'un appareil : minutes';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>
