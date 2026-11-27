@@ -5,6 +5,10 @@
       "class": "user_facing",
       "authority": "a billing manager's native session, checked by open_accounting_connection_v1 / accounting_connection_manageable_v1; the target's redirect by the state kept in Vault"
     },
+    "embedded-till": {
+      "class": "user_facing",
+      "authority": "a till board's own proof: the one-time code its business's owner was given, then its secret; both checked by till_terminal_claim_v1 / till_terminal_status_v1, which only the service role in this function may call"
+    },
     "badge-signin": {
       "class": "user_facing",
       "authority": "badge proof, then a minted native session"

@@ -31,11 +31,20 @@ enum DeviceCodeRefusal {
   profile,
 }
 
-/// What a board's code says. The QR carries the whole id and fingerprint; the readable code the id's first 8 hex
-/// digits and the fingerprint's first 10 bits (its [proof]), which the board's enrollment checks.
+/// What a board's code says. The QR carries the whole id and fingerprint and (#4454) the SHA-256 of the board's secret,
+/// which the code that connects the board is bound to; the readable code the id's first 8 hex digits and the
+/// fingerprint's first 10 bits (its [proof]).
 @immutable
 class DeviceCode {
-  const DeviceCode({required this.shortId, required this.profile, required this.proof, this.id, this.fingerprint, this.firmware});
+  const DeviceCode({
+    required this.shortId,
+    required this.profile,
+    required this.proof,
+    this.id,
+    this.fingerprint,
+    this.firmware,
+    this.secretHash,
+  });
 
   /// The first 8 hex digits of the board's id, upper case.
   final String shortId;
@@ -44,6 +53,13 @@ class DeviceCode {
 
   /// From the QR only.
   final String? id, fingerprint, firmware;
+
+  /// From the QR of a board whose firmware names it (#4454): the SHA-256 of its secret, lower-case hex. Null for an
+  /// older firmware's QR and for a typed code: such a board cannot be connected until it shows a newer QR.
+  final String? secretHash;
+
+  /// Whether this code names everything a connection code is made for.
+  bool get connectable => id != null && secretHash != null;
 
   /// The fingerprint to compare with the board's screen: whole from the QR; from a typed code its first two digits.
   String get fingerprintShown => fingerprint ?? (proof >> 2).toRadixString(16).toUpperCase().padLeft(2, '0');
@@ -89,6 +105,13 @@ DeviceCodeRead _readQr(String t) {
   final profile = BoardProfile.values.where((p) => p.key == q('board')).firstOrNull;
   if (profile == null) return const DeviceCodeRefused(DeviceCodeRefusal.profile);
   final proof = (int.parse(fp.substring(0, 2), radix: 16) << 2) | (int.parse(fp.substring(2, 4), radix: 16) >> 6);
+  // the secret's hash, when the QR names it, must give the fingerprint the QR shows
+  final hash = q('h');
+  if (hash != null &&
+      (!RegExp(r'^[0-9a-f]{64}$').hasMatch(hash) ||
+          '${hash.substring(0, 4)}-${hash.substring(4, 8)}'.toUpperCase() != fp)) {
+    return const DeviceCodeRefused(DeviceCodeRefusal.check);
+  }
   return DeviceCodeOk(DeviceCode(
     shortId: id.substring(0, 8).toUpperCase(),
     profile: profile,
@@ -96,6 +119,7 @@ DeviceCodeRead _readQr(String t) {
     id: id.toLowerCase(),
     fingerprint: fp,
     firmware: q('fw'),
+    secretHash: hash,
   ));
 }
 

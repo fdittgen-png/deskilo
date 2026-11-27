@@ -8665,6 +8665,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get developmentWatermark => 'DEVELOPMENT';
 
   @override
+  String get devicePairingApprove => 'Approve';
+
+  @override
+  String devicePairingApproveBody(String fingerprint) {
+    return 'Approve this board only if its screen shows the fingerprint $fingerprint.';
+  }
+
+  @override
   String devicePairingBoard(String id, String model) {
     return 'Board $id · $model';
   }
@@ -8673,7 +8681,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get devicePairingCheck => 'Check the code';
 
   @override
+  String devicePairingCode(String code) {
+    return 'Connection code: $code';
+  }
+
+  @override
+  String devicePairingCodeHint(String time) {
+    return 'Valid until $time, once, for this board only.';
+  }
+
+  @override
   String get devicePairingConnect => 'Connect a device';
+
+  @override
+  String get devicePairingFailed => 'The server did not answer: try again.';
 
   @override
   String devicePairingFingerprint(String fingerprint) {
@@ -8684,12 +8705,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get devicePairingFound => 'Board found';
 
   @override
-  String get devicePairingLater =>
-      'Connecting the board to this business comes with a later update: nothing has been sent to it.';
+  String get devicePairingGetCode => 'Get a connection code';
+
+  @override
+  String get devicePairingNeedsFirmware =>
+      'This board needs the new firmware before it can be connected.';
+
+  @override
+  String get devicePairingNoTill =>
+      'Add a till first: a board serves one till.';
 
   @override
   String get devicePairingNone =>
       'No till board is connected to this business yet.';
+
+  @override
+  String get devicePairingNotOwner =>
+      'Only the business\'s owner connects, approves or removes a board.';
+
+  @override
+  String get devicePairingNotWaiting =>
+      'This board is no longer waiting for approval.';
 
   @override
   String get devicePairingRefusedAlphabet =>
@@ -8708,12 +8744,41 @@ class AppLocalizationsEn extends AppLocalizations {
       'This board is of a kind this app does not know yet. Update the app, then connect it.';
 
   @override
+  String get devicePairingRevoke => 'Remove';
+
+  @override
+  String get devicePairingRevokeBody =>
+      'This board will no longer be connected to the business. To use it again, connect it with a new code.';
+
+  @override
   String get devicePairingScanHint =>
       'Hold the board\'s QR code in front of the camera. To show it, hold the board\'s BOOT button for 3 seconds.';
 
   @override
+  String get devicePairingScanToConnect =>
+      'To connect this board, scan its QR code.';
+
+  @override
+  String get devicePairingStatusPaired => 'Connected';
+
+  @override
+  String get devicePairingStatusPending => 'Waiting for your approval';
+
+  @override
   String get devicePairingSubtitle =>
       'Till boards: connect one by its QR code or its code';
+
+  @override
+  String devicePairingTill(String till) {
+    return 'Till: $till';
+  }
+
+  @override
+  String get devicePairingTillInactive =>
+      'This till is not active: choose another.';
+
+  @override
+  String get devicePairingTillPick => 'Till';
 
   @override
   String get devicePairingTitle => 'Devices';
@@ -8724,6 +8789,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get devicePairingTypeHelper =>
       'The 10 characters beside the board\'s QR code, for example 3DNGP-UN9CG.';
+
+  @override
+  String get devicePairingWithdraw => 'Withdraw the code';
+
+  @override
+  String get devicePairingWrongFingerprint =>
+      'The fingerprint does not match this board.';
 
   @override
   String get directoryApproximate => 'Approximate address location';
@@ -32700,6 +32772,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.';
 
   @override
+  String get settingHintCounterTerminalPairAttempts =>
+      'How many times a code may be presented with the wrong board or proof before it is used up.';
+
+  @override
+  String get settingHintCounterTerminalPairMinutes =>
+      'How long the code that connects a till board stays valid. A change applies to the next code, not to one already given.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'The Photon-compatible service that places a published address on the discovery map: an https address on the public internet, without a user name, password, query or #. Leave it empty to use the address this app version was built with, else the public Photon service.';
 
@@ -33149,6 +33229,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelCounterPaidOutLimit =>
       'Largest paid-out without approval';
+
+  @override
+  String get settingLabelCounterTerminalPairAttempts =>
+      'Board connection code: attempts';
+
+  @override
+  String get settingLabelCounterTerminalPairMinutes =>
+      'Board connection code: minutes';
 
   @override
   String get settingLabelDirectoryGeocoderUrl => 'Address lookup service';

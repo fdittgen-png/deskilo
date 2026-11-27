@@ -900,5 +900,11 @@
  "counterLayoutCashierReorderHint": "Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo. Impostato nelle impostazioni dell'app.",
  "optCells": "{n} celle",
  "counterMaxDiscount": "Sconto massimo alla cassa",
- "counterMaxDiscountHint": "Lo sconto massimo che un cassiere può applicare a una riga. Impostato nelle impostazioni dell'app."
+ "counterMaxDiscountHint": "Lo sconto massimo che un cassiere può applicare a una riga. Impostato nelle impostazioni dell'app.",
+ "counterTerminalPairMinutes": "Codice di collegamento di un dispositivo: validità",
+ "counterTerminalPairMinutesHint": "Per quanto tempo vale il codice che collega un dispositivo di cassa. Impostato nelle impostazioni dell'app.",
+ "counterTerminalPairAttempts": "Codice di collegamento di un dispositivo: tentativi",
+ "counterTerminalPairAttemptsHint": "Quante presentazioni errate esauriscono un codice. Impostato nelle impostazioni dell'app.",
+ "optAttempts": "{n} tentativi",
+ "optAttemptsDefault": "{n} tentativi (predefinito)"
 }

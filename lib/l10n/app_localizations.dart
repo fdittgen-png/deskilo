@@ -13797,6 +13797,18 @@ abstract class AppLocalizations {
   /// **'DEVELOPMENT'**
   String get developmentWatermark;
 
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get devicePairingApprove;
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'Approve this board only if its screen shows the fingerprint {fingerprint}.'**
+  String devicePairingApproveBody(String fingerprint);
+
   /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
   ///
   /// In en, this message translates to:
@@ -13809,11 +13821,29 @@ abstract class AppLocalizations {
   /// **'Check the code'**
   String get devicePairingCheck;
 
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'Connection code: {code}'**
+  String devicePairingCode(String code);
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until {time}, once, for this board only.'**
+  String devicePairingCodeHint(String time);
+
   /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
   ///
   /// In en, this message translates to:
   /// **'Connect a device'**
   String get devicePairingConnect;
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'The server did not answer: try again.'**
+  String get devicePairingFailed;
 
   /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
   ///
@@ -13827,17 +13857,41 @@ abstract class AppLocalizations {
   /// **'Board found'**
   String get devicePairingFound;
 
-  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
   ///
   /// In en, this message translates to:
-  /// **'Connecting the board to this business comes with a later update: nothing has been sent to it.'**
-  String get devicePairingLater;
+  /// **'Get a connection code'**
+  String get devicePairingGetCode;
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'This board needs the new firmware before it can be connected.'**
+  String get devicePairingNeedsFirmware;
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'Add a till first: a board serves one till.'**
+  String get devicePairingNoTill;
 
   /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
   ///
   /// In en, this message translates to:
   /// **'No till board is connected to this business yet.'**
   String get devicePairingNone;
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'Only the business\'s owner connects, approves or removes a board.'**
+  String get devicePairingNotOwner;
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'This board is no longer waiting for approval.'**
+  String get devicePairingNotWaiting;
 
   /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
   ///
@@ -13863,17 +13917,65 @@ abstract class AppLocalizations {
   /// **'This board is of a kind this app does not know yet. Update the app, then connect it.'**
   String get devicePairingRefusedProfile;
 
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get devicePairingRevoke;
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'This board will no longer be connected to the business. To use it again, connect it with a new code.'**
+  String get devicePairingRevokeBody;
+
   /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
   ///
   /// In en, this message translates to:
   /// **'Hold the board\'s QR code in front of the camera. To show it, hold the board\'s BOOT button for 3 seconds.'**
   String get devicePairingScanHint;
 
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'To connect this board, scan its QR code.'**
+  String get devicePairingScanToConnect;
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get devicePairingStatusPaired;
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for your approval'**
+  String get devicePairingStatusPending;
+
   /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
   ///
   /// In en, this message translates to:
   /// **'Till boards: connect one by its QR code or its code'**
   String get devicePairingSubtitle;
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'Till: {till}'**
+  String devicePairingTill(String till);
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'This till is not active: choose another.'**
+  String get devicePairingTillInactive;
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'Till'**
+  String get devicePairingTillPick;
 
   /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
   ///
@@ -13892,6 +13994,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The 10 characters beside the board\'s QR code, for example 3DNGP-UN9CG.'**
   String get devicePairingTypeHelper;
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw the code'**
+  String get devicePairingWithdraw;
+
+  /// #4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one
+  ///
+  /// In en, this message translates to:
+  /// **'The fingerprint does not match this board.'**
+  String get devicePairingWrongFingerprint;
 
   /// Shown as a text in directory map (directory).
   ///
@@ -52452,6 +52566,18 @@ abstract class AppLocalizations {
   /// **'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.'**
   String get settingHintCounterPaidOutLimit;
 
+  /// #4454 the setting counter.terminal_pair_attempts in the business settings
+  ///
+  /// In en, this message translates to:
+  /// **'How many times a code may be presented with the wrong board or proof before it is used up.'**
+  String get settingHintCounterTerminalPairAttempts;
+
+  /// #4454 the setting counter.terminal_pair_minutes in the business settings
+  ///
+  /// In en, this message translates to:
+  /// **'How long the code that connects a till board stays valid. A change applies to the next code, not to one already given.'**
+  String get settingHintCounterTerminalPairMinutes;
+
   /// #2488 Setting hint.
   ///
   /// In en, this message translates to:
@@ -53165,6 +53291,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Largest paid-out without approval'**
   String get settingLabelCounterPaidOutLimit;
+
+  /// #4454 the setting counter.terminal_pair_attempts in the business settings
+  ///
+  /// In en, this message translates to:
+  /// **'Board connection code: attempts'**
+  String get settingLabelCounterTerminalPairAttempts;
+
+  /// #4454 the setting counter.terminal_pair_minutes in the business settings
+  ///
+  /// In en, this message translates to:
+  /// **'Board connection code: minutes'**
+  String get settingLabelCounterTerminalPairMinutes;
 
   /// #2488 Setting label.
   ///
