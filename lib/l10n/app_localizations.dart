@@ -60473,6 +60473,12 @@ abstract class AppLocalizations {
   /// **'The use must be picking or reserve.'**
   String get stockReasonPickRoleUnknown;
 
+  /// #4495 the place picked for a setting cannot be used
+  ///
+  /// In en, this message translates to:
+  /// **'That place cannot be used: pick a place that is in use and holds stock.'**
+  String get stockReasonPlaceUnusable;
+
   /// #4294 reorder points: a label or a message
   ///
   /// In en, this message translates to:

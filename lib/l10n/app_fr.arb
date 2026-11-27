@@ -22232,6 +22232,10 @@
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
   "stockReasonPickRoleUnknown": "L'usage doit être prélèvement ou réserve.",
+  "stockReasonPlaceUnusable": "Cet emplacement ne peut pas être utilisé : choisissez un emplacement en service qui contient du stock.",
+  "@stockReasonPlaceUnusable": {
+    "description": "#4495 the place picked for a setting cannot be used"
+  },
   "stockReasonPointFixed": "L’article, la variante et le site d’un seuil ne se changent pas : créez-en un autre.",
   "stockReasonPointTwice": "Cet article a déjà un seuil sur ce site.",
   "stockReasonPriceInvalid": "Un prix est nul ou positif.",

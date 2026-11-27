@@ -38187,6 +38187,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'usage doit être prélèvement ou réserve.';
 
   @override
+  String get stockReasonPlaceUnusable =>
+      'Cet emplacement ne peut pas être utilisé : choisissez un emplacement en service qui contient du stock.';
+
+  @override
   String get stockReasonPointFixed =>
       'L’article, la variante et le site d’un seuil ne se changent pas : créez-en un autre.';
 

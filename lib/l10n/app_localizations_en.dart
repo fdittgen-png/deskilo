@@ -37707,6 +37707,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The use must be picking or reserve.';
 
   @override
+  String get stockReasonPlaceUnusable =>
+      'That place cannot be used: pick a place that is in use and holds stock.';
+
+  @override
   String get stockReasonPointFixed =>
       'The item, variant and site of a reorder point cannot be changed: make another.';
 

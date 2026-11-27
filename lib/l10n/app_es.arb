@@ -22232,6 +22232,10 @@
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
   "stockReasonPickRoleUnknown": "El uso debe ser picking o reserva.",
+  "stockReasonPlaceUnusable": "Ese lugar no se puede usar: elija un lugar en uso que lleve existencias.",
+  "@stockReasonPlaceUnusable": {
+    "description": "#4495 the place picked for a setting cannot be used"
+  },
   "stockReasonPointFixed": "El artículo, la variante y la sede de un punto de reposición no se cambian: cree otro.",
   "stockReasonPointTwice": "Este artículo ya tiene un punto de reposición en esta sede.",
   "stockReasonPriceInvalid": "Un precio es cero o más.",

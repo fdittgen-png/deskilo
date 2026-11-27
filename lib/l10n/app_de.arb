@@ -22232,6 +22232,10 @@
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
   "stockReasonPickRoleUnknown": "Die Verwendung muss Kommissionierung oder Reserve sein.",
+  "stockReasonPlaceUnusable": "Dieser Ort kann nicht verwendet werden: Wählen Sie einen Ort, der in Gebrauch ist und Bestand führt.",
+  "@stockReasonPlaceUnusable": {
+    "description": "#4495 the place picked for a setting cannot be used"
+  },
   "stockReasonPointFixed": "Artikel, Variante und Standort eines Meldebestands lassen sich nicht ändern: Legen Sie einen neuen an.",
   "stockReasonPointTwice": "Dieser Artikel hat an diesem Standort bereits einen Meldebestand.",
   "stockReasonPriceInvalid": "Ein Preis ist null oder größer.",

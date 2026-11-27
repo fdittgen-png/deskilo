@@ -49043,6 +49043,10 @@
   "@stockReasonPickRoleUnknown": {
     "description": "#4293 the places of the stock: a label, a message or a setting"
   },
+  "stockReasonPlaceUnusable": "That place cannot be used: pick a place that is in use and holds stock.",
+  "@stockReasonPlaceUnusable": {
+    "description": "#4495 the place picked for a setting cannot be used"
+  },
   "stockReasonPointFixed": "The item, variant and site of a reorder point cannot be changed: make another.",
   "@stockReasonPointFixed": {
     "description": "#4294 reorder points: a label or a message"

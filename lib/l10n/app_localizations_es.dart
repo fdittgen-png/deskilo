@@ -38027,6 +38027,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockReasonPickRoleUnknown => 'El uso debe ser picking o reserva.';
 
   @override
+  String get stockReasonPlaceUnusable =>
+      'Ese lugar no se puede usar: elija un lugar en uso que lleve existencias.';
+
+  @override
   String get stockReasonPointFixed =>
       'El artículo, la variante y la sede de un punto de reposición no se cambian: cree otro.';
 

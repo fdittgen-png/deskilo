@@ -15791,6 +15791,7 @@ const Set<String> uiLabelKeys = {
   'stockReasonPackageUnit',
   'stockReasonParentInactive',
   'stockReasonPickRoleUnknown',
+  'stockReasonPlaceUnusable',
   'stockReasonPointFixed',
   'stockReasonPointTwice',
   'stockReasonPriceInvalid',

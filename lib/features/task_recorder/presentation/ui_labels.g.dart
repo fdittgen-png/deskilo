@@ -3465,6 +3465,7 @@ Map<String, _Getter> _part7() => {
   'stockReasonGtinCheck': (l) => l.stockReasonGtinCheck,
   'stockReasonKindUnknown': (l) => l.stockReasonKindUnknown,
   'stockReasonNameMalformed': (l) => l.stockReasonNameMalformed,
+  'stockReasonPlaceUnusable': (l) => l.stockReasonPlaceUnusable,
   'stockReasonTrackingUnsupported': (l) => l.stockReasonTrackingUnsupported,
   'stockReasonUnitUnmapped': (l) => l.stockReasonUnitUnmapped,
   'stockReorderPointsTitle': (l) => l.stockReorderPointsTitle,

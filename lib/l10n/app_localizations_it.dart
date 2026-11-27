@@ -38064,6 +38064,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'L\'uso deve essere prelievo o riserva.';
 
   @override
+  String get stockReasonPlaceUnusable =>
+      'Questo luogo non può essere usato: sceglietene uno in uso che tiene scorte.';
+
+  @override
   String get stockReasonPointFixed =>
       'Articolo, variante e sede di un punto di riordino non si cambiano: ne crei un altro.';
 

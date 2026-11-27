@@ -38116,6 +38116,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Verwendung muss Kommissionierung oder Reserve sein.';
 
   @override
+  String get stockReasonPlaceUnusable =>
+      'Dieser Ort kann nicht verwendet werden: Wählen Sie einen Ort, der in Gebrauch ist und Bestand führt.';
+
+  @override
   String get stockReasonPointFixed =>
       'Artikel, Variante und Standort eines Meldebestands lassen sich nicht ändern: Legen Sie einen neuen an.';
 
