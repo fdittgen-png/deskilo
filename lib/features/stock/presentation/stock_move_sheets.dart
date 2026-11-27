@@ -24,6 +24,7 @@ import '../domain/stock_scan_session.dart';
 import '../domain/stock_sites.dart';
 import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
+import 'stock_loss_text.dart';
 import 'stock_place_text.dart';
 import 'stock_quantity_field.dart';
 import 'stock_scan_bar.dart';
@@ -78,7 +79,7 @@ class _MoveDraft {
   _MoveDraft(this.items, List<StockPlaceConfig> places, {required this.takeOut, required this.locale, required this.separator})
     : places = stockRealPlaces(places),
       all = places,
-      fields = FormControllers({'quantity': ''});
+      fields = FormControllers({'quantity': '', 'note': ''});
 
   final List<StockItem> items;
   final List<StockPlaceConfig> places;
@@ -94,6 +95,11 @@ class _MoveDraft {
   String? from;
   String? to;
   StockTakeOutReason reason = StockTakeOutReason.consumption;
+
+  /// Why the goods were lost: asked of a loss, and of nothing else.
+  StockLossCause? cause;
+
+  bool get _isLoss => takeOut && reason == StockTakeOutReason.loss;
 
   /// The scanner of this sheet (#4359), when the business uses one.
   StockScanFeed? scanner;
@@ -142,6 +148,8 @@ class _MoveDraft {
     if (from == null) 'from': l10n.stockRequiredPlace,
     if (!takeOut && (to == null || to == from)) 'to': l10n.stockRequiredDestination,
     if (quantity == null || quantity! <= ExactQuantity.zero) 'quantity': stockRefusalText(l10n, StockRefusal.quantityInvalid),
+    if (_isLoss)
+      if (checkStockLoss(cause, fields.text('note')) case final problem?) stockLossProblemText(l10n, problem).$1: stockLossProblemText(l10n, problem).$2,
   };
 
   Future<String?> submit(AppLocalizations l10n, StockOperations operations, String workspaceId) async {
@@ -158,7 +166,7 @@ class _MoveDraft {
         message: 'goods were not moved',
         action: () async {
           if (takeOut) {
-            await operations.takeOut(workspaceId, reason, [line], requestId);
+            await operations.takeOut(workspaceId, reason, [line], requestId, loss: _isLoss ? StockLoss(cause: cause!, note: fields.text('note')) : null);
           } else if (betweenSites) {
             await operations.load(workspaceId, to!, [line], requestId);
           } else {
@@ -245,6 +253,28 @@ class _MoveDraft {
         label: l10n.stockMoveQuantity(unit),
         focusNode: _quantityFocus,
       ),
+      // a loss says why: the cause is asked, the note is the person's to add
+      if (_isLoss) ...[
+        const FormGap(),
+        StockPickField(
+          keyName: 'cause',
+          label: l10n.stockLossCauseLabel,
+          value: cause?.wire,
+          options: [for (final c in StockLossCause.values) (c.wire, stockLossCauseText(l10n, c.wire))],
+          onPicked: (v) {
+            cause = StockLossCause.values.where((c) => c.wire == v).firstOrNull;
+            refresh();
+          },
+        ),
+        const FormGap(),
+        AppTextField(
+          key: const ValueKey('stock-loss-note'),
+          controller: fields['note'],
+          fieldKey: 'note',
+          label: l10n.stockLossNoteLabel,
+          maxLength: kStockLossNoteMaxLength,
+        ),
+      ],
     ];
   }
 

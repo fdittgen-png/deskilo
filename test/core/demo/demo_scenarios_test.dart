@@ -1418,11 +1418,11 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       final main = (await config.places(demoFirstSpaceId)).firstWhere((p) => p.code == 'MAIN').id;
       await operations.takeOut(demoFirstSpaceId, StockTakeOutReason.loss, [
         StockLineDraft(itemId: 'demo-item-mugs', quantity: '1', fromLocationId: main),
-      ], 'req-loss');
+      ], 'req-loss', loss: const StockLoss(cause: StockLossCause.damaged));
       try {
         await operations.takeOut(demoFirstSpaceId, StockTakeOutReason.loss, [
           StockLineDraft(itemId: 'demo-item-mugs', quantity: '500', fromLocationId: main),
-        ], 'req-too-many');
+        ], 'req-too-many', loss: const StockLoss(cause: StockLossCause.damaged));
         return false;
       } on StockNotEnough {
         return ledger.balance('demo-item-mugs', main).text == '35' && ledger.movements.first.reason == 'loss';

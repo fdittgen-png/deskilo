@@ -59351,6 +59351,72 @@ abstract class AppLocalizations {
   /// **'Items'**
   String get stockItemsTitle;
 
+  /// #4492 a loss says why: the goods were broken or damaged
+  ///
+  /// In en, this message translates to:
+  /// **'Damaged'**
+  String get stockLossCauseDamaged;
+
+  /// #4492 a loss says why: the goods passed their best-before or use-by date
+  ///
+  /// In en, this message translates to:
+  /// **'Past its date'**
+  String get stockLossCauseExpired;
+
+  /// #4492 a loss says why: the label of the choice on the take-out sheet and of the row on a movement
+  ///
+  /// In en, this message translates to:
+  /// **'Cause of the loss'**
+  String get stockLossCauseLabel;
+
+  /// #4492 a loss says why: the goods are no longer there (stolen, lost, never found)
+  ///
+  /// In en, this message translates to:
+  /// **'Missing'**
+  String get stockLossCauseMissing;
+
+  /// #4492 a loss says why: the cause row of a loss that was recorded without a cause (before causes existed, or by an older app)
+  ///
+  /// In en, this message translates to:
+  /// **'Not recorded'**
+  String get stockLossCauseNone;
+
+  /// #4492 a loss says why: a cause that is none of the others; the note says which
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get stockLossCauseOther;
+
+  /// #4492 a loss says why: shown under the choice when a loss is filed without its cause
+  ///
+  /// In en, this message translates to:
+  /// **'Say why the goods were lost.'**
+  String get stockLossCauseRequired;
+
+  /// #4492 a loss says why: the goods went bad before their date
+  ///
+  /// In en, this message translates to:
+  /// **'Spoiled'**
+  String get stockLossCauseSpoiled;
+
+  /// #4492 a loss says why: the label of the note field on the take-out sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get stockLossNoteLabel;
+
+  /// #4492 a loss says why: the label of the note row on a movement
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get stockLossNoteRow;
+
+  /// #4492 a loss says why: shown under the note field
+  ///
+  /// In en, this message translates to:
+  /// **'The note is too long.'**
+  String get stockLossNoteTooLong;
+
   /// #4161 a lot, by its code
   ///
   /// In en, this message translates to:

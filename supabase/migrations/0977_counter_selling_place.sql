@@ -778,4 +778,4 @@ revoke execute on function public.counter_item_lots_v1(uuid, uuid, uuid) from pu
 grant execute on function public.counter_item_lots_v1(uuid, uuid, uuid) to authenticated;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(975);
+select public.set_deskilo_schema_version(977);

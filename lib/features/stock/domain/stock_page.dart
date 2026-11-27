@@ -102,6 +102,8 @@ class StockMovementRow {
     required this.causes,
     this.variantId,
     this.variantLabel,
+    this.lossCause,
+    this.lossNote,
   });
 
   final String workspaceId;
@@ -135,6 +137,13 @@ class StockMovementRow {
   /// `invoice`): only the causes it has.
   final Map<String, String> causes;
 
+  /// Why the goods of a loss were lost, by the server's key (`expired`, `damaged`, ...): kept as it came, so a key this
+  /// app does not know is still shown. Null on every other movement, and on a loss recorded without one.
+  final String? lossCause;
+
+  /// What the person wrote beside the cause of a loss.
+  final String? lossNote;
+
   factory StockMovementRow.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'stock_movements_page_v1');
     return StockMovementRow(
@@ -157,6 +166,8 @@ class StockMovementRow {
       unitCost: r.stringOrNull('unit_cost'),
       variantId: r.stringOrNull('variant_id'),
       variantLabel: r.stringOrNull('variant_label'),
+      lossCause: r.stringOrNull('loss_cause'),
+      lossNote: r.stringOrNull('loss_note'),
       causes: {
         for (final (key, column) in const [
           ('receipt_line', 'receipt_line_id'),

@@ -25,6 +25,7 @@ import '../domain/stock_reversals.dart';
 import '../providers/stock_providers.dart';
 import 'stock_chain_section.dart';
 import 'stock_day.dart';
+import 'stock_loss_text.dart';
 import 'stock_page_shell.dart';
 import 'stock_place_text.dart';
 import 'stock_read_failed.dart';
@@ -117,6 +118,9 @@ class _Detail extends ConsumerWidget {
         ),
         row('when', l10n.stockWhenLabel, day),
         row('reason', l10n.creditMoveReasonLabel, stockMoveReasonText(l10n, m.reason)),
+        // a loss says why; one recorded without its cause says that it has none
+        if (m.reason == 'loss') row('loss-cause', l10n.stockLossCauseLabel, m.lossCause == null ? l10n.stockLossCauseNone : stockLossCauseText(l10n, m.lossCause!)),
+        if (m.lossNote case final note?) row('loss-note', l10n.stockLossNoteRow, note),
         row('cost', l10n.stockCostLabel, cost),
         _Reversals(movement: m),
         // #4173 — where it came from: the receipt, the order, the bills and their payments, as recorded.

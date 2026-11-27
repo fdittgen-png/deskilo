@@ -1,0 +1,13 @@
+{
+  "stockLossCauseLabel": "Cause de la perte",
+  "stockLossCauseRequired": "Indiquez pourquoi la marchandise est perdue.",
+  "stockLossCauseExpired": "Date dépassée",
+  "stockLossCauseDamaged": "Abîmée",
+  "stockLossCauseSpoiled": "Avariée",
+  "stockLossCauseMissing": "Manquante",
+  "stockLossCauseOther": "Autre",
+  "stockLossCauseNone": "Non enregistrée",
+  "stockLossNoteLabel": "Note (facultative)",
+  "stockLossNoteRow": "Note",
+  "stockLossNoteTooLong": "La note est trop longue."
+}

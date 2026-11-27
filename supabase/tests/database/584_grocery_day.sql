@@ -209,9 +209,9 @@ select is((select (l.frozen #>> '{input,list_price}') || ' / ' || (l.frozen #>> 
   '1.5 / short date', 'the changed price keeps the item''s price and its reason beside it');
 select is(pg_temp.gross(pg_temp.sell(856, format('[{"item_id": "%s", "quantity": "2"}]', pg_temp.u(302)))), '600', 'two bottles of juice: 6.00');
 
--- ── 9. waste: the expired lot is thrown away ─────────────────────────────────────────────────────────────────────────────────────
-select pg_temp.keep('t.loss1', pg_temp.cmd('stock_loss_v1', 860, format('%L::jsonb',
-  format('[{"item_id": "%s", "quantity": "2", "from": "%s", "lot_id": "%s", "expired_ack": true}]', pg_temp.u(301), pg_temp.loc('FLOOR'), pg_temp.lot('Y-0')))));
+-- ── 9. waste: the expired lot is thrown away, and the loss says why ──────────────────────────────────────────────────────────────
+select pg_temp.keep('t.loss1', pg_temp.cmd('stock_loss_v2', 860, format('%L::jsonb, %L',
+  format('[{"item_id": "%s", "quantity": "2", "from": "%s", "lot_id": "%s", "expired_ack": true}]', pg_temp.u(301), pg_temp.loc('FLOOR'), pg_temp.lot('Y-0')), 'expired')));
 select is(pg_temp.bal(301, 'FLOOR', 'Y-0') || ' ' || (select count(*)::text from public.stock_movements where workspace_id = pg_temp.u(101) and lot_id = pg_temp.lot('Y-0') and reason = 'loss'),
   '0 1', 'the two expired yoghurts leave as a loss');
 
@@ -229,12 +229,12 @@ select is((select string_agg(distinct l.lot_code, ',' order by l.lot_code) from 
             where m.workspace_id = pg_temp.u(101) and m.reason = 'sale'),
   'J-1,Y-1', 'no sale ever drew the expired lot');
 
--- ── 9 again: a damaged piece; both losses under one reason, at the lot''s cost ───────────────────────────────────────────────────
-select pg_temp.keep('t.loss2', pg_temp.cmd('stock_loss_v1', 880, format('%L::jsonb',
-  format('[{"item_id": "%s", "quantity": "1", "from": "%s", "lot_id": "%s"}]', pg_temp.u(301), pg_temp.loc('FLOOR'), pg_temp.lot('Y-1')))));
-select is((select string_agg(distinct m.reason, ',') || ' ' || count(*)::text from public.stock_movements m
-            where m.workspace_id = pg_temp.u(101) and m.to_location_id = pg_temp.place('loss')),
-  'loss 2', 'the expired and the damaged goods left under the one reason "loss": which of the two it was is not recorded');
+-- ── 9 again: a damaged piece; each loss with its cause, at the lot''s cost ───────────────────────────────────────────────────────
+select pg_temp.keep('t.loss2', pg_temp.cmd('stock_loss_v2', 880, format('%L::jsonb, %L, %L',
+  format('[{"item_id": "%s", "quantity": "1", "from": "%s", "lot_id": "%s"}]', pg_temp.u(301), pg_temp.loc('FLOOR'), pg_temp.lot('Y-1')), 'damaged', 'dropped while filling the shelf')));
+select is((select string_agg(distinct m.reason, ',') || ' ' || count(*)::text || ' ' || string_agg(m.loss_cause || coalesce(' (' || m.loss_note || ')', ''), ', ' order by m.loss_cause)
+             from public.stock_movements m where m.workspace_id = pg_temp.u(101) and m.to_location_id = pg_temp.place('loss')),
+  'loss 2 damaged (dropped while filling the shelf), expired', 'both left as a loss and each says why: the damaged piece with its note, the expired lot');
 select is((select round(sum(m.quantity * m.unit_cost))::text from public.stock_movements m where m.workspace_id = pg_temp.u(101) and m.reason = 'loss'),
   '150', 'each loss is frozen at its lot''s cost: three yoghurts at 0.50');
 
@@ -298,7 +298,9 @@ select is((select count(*)::int from public.stock_movements m where m.workspace_
 
 -- ── what the product does not do today ───────────────────────────────────────────────────────────────────────────────────────────
 select skip('GAP step 10: no function and no screen ranks the products (sold first, most, margin, waste, markdowns); kpi_item_margins reads invoiced consumptions, never a till sale or a stock movement', 1);
-select skip('GAP step 9: a loss has no reason of its own (expired, damaged, stolen) and no note; stock_reasons knows only "loss"', 1);
+select is(pg_temp.cmd('stock_loss_v2', 890, format('%L::jsonb, null',
+    format('[{"item_id": "%s", "quantity": "1", "from": "%s", "lot_id": "%s"}]', pg_temp.u(301), pg_temp.loc('FLOOR'), pg_temp.lot('Y-1')))) || ' ' || pg_temp.bal(301, 'FLOOR'),
+  'ERR DKG11 {"field": "cause", "reason": "required"} 3', 'step 9: a loss says why: one without a cause is refused and the three yoghurts stay on the floor');
 select is((select string_agg(l.code || ':' || trim_scale(m.quantity)::text, ' ') from public.stock_movements m join public.stock_locations l on l.id = m.from_location_id
             where m.workspace_id = pg_temp.u(101) and m.reason = 'sale' and m.counter_receipt_id = (pg_temp.j(current_setting('t.s5')) ->> 'receipt_id')::uuid),
   'SHELF:1', 'step 8: the till sells from the place the business names and from every place below it: that sale left the shelf');

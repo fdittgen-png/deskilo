@@ -21683,6 +21683,17 @@
   "@stockItemsTitle": {
     "description": "the stock pages and group (#4299)"
   },
+  "stockLossCauseDamaged": "Dañada",
+  "stockLossCauseExpired": "Caducada",
+  "stockLossCauseLabel": "Causa de la pérdida",
+  "stockLossCauseMissing": "Falta",
+  "stockLossCauseNone": "No registrada",
+  "stockLossCauseOther": "Otra",
+  "stockLossCauseRequired": "Indique por qué se perdió la mercancía.",
+  "stockLossCauseSpoiled": "Estropeada",
+  "stockLossNoteLabel": "Nota (opcional)",
+  "stockLossNoteRow": "Nota",
+  "stockLossNoteTooLong": "La nota es demasiado larga.",
   "stockLotLabel": "Lote {code}",
   "stockLotTitle": "Lote",
   "stockMappingAdd": "Añadir un artículo del proveedor",

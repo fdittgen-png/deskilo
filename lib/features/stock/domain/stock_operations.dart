@@ -55,6 +55,44 @@ enum StockTakeOutReason {
   loss,
 }
 
+/// Why goods were written off, by the server's key (`stock_movements.loss_cause`). Goods the business uses itself are
+/// not a loss: they leave as [StockTakeOutReason.consumption].
+enum StockLossCause {
+  expired('expired'),
+  damaged('damaged'),
+  spoiled('spoiled'),
+  missing('missing'),
+  other('other');
+
+  const StockLossCause(this.wire);
+
+  final String wire;
+}
+
+/// The longest note a loss carries.
+const int kStockLossNoteMaxLength = 500;
+
+/// What a loss says beside its lines: why the goods were lost, and a note when the person wrote one.
+class StockLoss {
+  const StockLoss({required this.cause, this.note = ''});
+
+  final StockLossCause cause;
+  final String note;
+
+  /// The note as it is sent: trimmed, and none when it is empty.
+  String? get noteOrNull => note.trim().isEmpty ? null : note.trim();
+}
+
+/// What is wrong with a loss as it was filled in.
+enum StockLossProblem { causeMissing, noteTooLong }
+
+/// The first problem of a loss with [cause] and [note], or none: a loss says why, and its note has a length.
+StockLossProblem? checkStockLoss(StockLossCause? cause, String note) => cause == null
+    ? StockLossProblem.causeMissing
+    : note.trim().length > kStockLossNoteMaxLength
+    ? StockLossProblem.noteTooLong
+    : null;
+
 /// What one command answered; a retried request id answers the same.
 typedef StockCommandResult = ({
   String requestId,
@@ -182,13 +220,15 @@ abstract interface class StockOperations {
     String requestId,
   );
 
-  /// Takes goods out for [reason]; the feature stockTakeOut must be on.
+  /// Takes goods out for [reason]; the feature stockTakeOut must be on. A loss says why ([loss]): one without its
+  /// cause is refused, and nothing moves.
   Future<StockCommandResult> takeOut(
     String workspaceId,
     StockTakeOutReason reason,
     List<StockLineDraft> lines,
-    String requestId,
-  );
+    String requestId, {
+    StockLoss? loss,
+  });
 
   /// The lots [quantity] of an item would be taken from at one place.
   Future<StockProposal> proposal(

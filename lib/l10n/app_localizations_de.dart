@@ -37410,6 +37410,40 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockItemsTitle => 'Artikel';
 
   @override
+  String get stockLossCauseDamaged => 'Beschädigt';
+
+  @override
+  String get stockLossCauseExpired => 'Abgelaufen';
+
+  @override
+  String get stockLossCauseLabel => 'Grund des Verlusts';
+
+  @override
+  String get stockLossCauseMissing => 'Fehlt';
+
+  @override
+  String get stockLossCauseNone => 'Nicht erfasst';
+
+  @override
+  String get stockLossCauseOther => 'Sonstiges';
+
+  @override
+  String get stockLossCauseRequired =>
+      'Geben Sie an, warum die Ware verloren ist.';
+
+  @override
+  String get stockLossCauseSpoiled => 'Verdorben';
+
+  @override
+  String get stockLossNoteLabel => 'Notiz (optional)';
+
+  @override
+  String get stockLossNoteRow => 'Notiz';
+
+  @override
+  String get stockLossNoteTooLong => 'Die Notiz ist zu lang.';
+
+  @override
   String stockLotLabel(String code) {
     return 'Charge $code';
   }

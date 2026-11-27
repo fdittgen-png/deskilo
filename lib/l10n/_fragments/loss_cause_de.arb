@@ -1,0 +1,13 @@
+{
+  "stockLossCauseLabel": "Grund des Verlusts",
+  "stockLossCauseRequired": "Geben Sie an, warum die Ware verloren ist.",
+  "stockLossCauseExpired": "Abgelaufen",
+  "stockLossCauseDamaged": "Beschädigt",
+  "stockLossCauseSpoiled": "Verdorben",
+  "stockLossCauseMissing": "Fehlt",
+  "stockLossCauseOther": "Sonstiges",
+  "stockLossCauseNone": "Nicht erfasst",
+  "stockLossNoteLabel": "Notiz (optional)",
+  "stockLossNoteRow": "Notiz",
+  "stockLossNoteTooLong": "Die Notiz ist zu lang."
+}

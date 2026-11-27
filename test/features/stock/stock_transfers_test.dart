@@ -197,10 +197,52 @@ void main() {
         await _choose(tester, 'stock-move-item', 'Coffee beans');
         await _choose(tester, 'stock-move-from', 'MAIN · Main store');
         await tester.enterText(find.byKey(const ValueKey('stock-move-quantity')), '0.5');
+        await _choose(tester, 'stock-move-cause', _en.stockLossCauseSpoiled);
+        await tester.enterText(find.byKey(const ValueKey('stock-loss-note')), '  the bag was left open  ');
         await tester.tap(find.byKey(const ValueKey('stock-move-submit')));
         await _settle(tester);
         expect(w.ledger.balance('demo-item-beans', 'demo-place-main').text, '12');
-        expect(w.ledger.movements.first.reason, 'loss');
+        final lost = w.ledger.movements.first;
+        expect([lost.reason, lost.lossCause, lost.lossNote], ['loss', 'spoiled', 'the bag was left open'], reason: 'the loss says why, and its note is kept trimmed');
+      });
+
+      testWidgets('a loss that does not say why is refused under its field and moves nothing; with its cause it is taken', (tester) async {
+        final w = _World();
+        await _open(tester, w, size, takeOut: true);
+        await tester.tap(find.byKey(const ValueKey('stock-takeout-open')));
+        await _settle(tester);
+        expect(find.byKey(const ValueKey('stock-move-cause')), findsNothing, reason: 'goods the business uses are asked no cause');
+        await tester.tap(find.text(_en.stockTakeOutLoss));
+        await _settle(tester);
+        await _choose(tester, 'stock-move-item', 'Coffee beans');
+        await _choose(tester, 'stock-move-from', 'MAIN · Main store');
+        await tester.enterText(find.byKey(const ValueKey('stock-move-quantity')), '0.5');
+        await tester.ensureVisible(find.byKey(const ValueKey('stock-move-submit')));
+        await tester.tap(find.byKey(const ValueKey('stock-move-submit')));
+        await _settle(tester);
+        expect(find.text(_en.stockLossCauseRequired), findsOneWidget);
+        expect(w.ledger.balance('demo-item-beans', 'demo-place-main').text, '12.5', reason: 'nothing was taken');
+        // recovery: the same sheet, the cause chosen
+        await _choose(tester, 'stock-move-cause', _en.stockLossCauseMissing);
+        await tester.ensureVisible(find.byKey(const ValueKey('stock-move-submit')));
+        await tester.tap(find.byKey(const ValueKey('stock-move-submit')));
+        await _settle(tester);
+        expect(w.ledger.balance('demo-item-beans', 'demo-place-main').text, '12');
+        expect([w.ledger.movements.first.lossCause, w.ledger.movements.first.lossNote], ['missing', null]);
+      });
+
+      testWidgets('goods used by the business are taken out without a cause', (tester) async {
+        final w = _World();
+        await _open(tester, w, size, takeOut: true);
+        await tester.tap(find.byKey(const ValueKey('stock-takeout-open')));
+        await _settle(tester);
+        await _choose(tester, 'stock-move-item', 'Coffee beans');
+        await _choose(tester, 'stock-move-from', 'MAIN · Main store');
+        await tester.enterText(find.byKey(const ValueKey('stock-move-quantity')), '0.5');
+        await tester.ensureVisible(find.byKey(const ValueKey('stock-move-submit')));
+        await tester.tap(find.byKey(const ValueKey('stock-move-submit')));
+        await _settle(tester);
+        expect([w.ledger.movements.first.reason, w.ledger.movements.first.lossCause], ['consumption', null]);
       });
 
       testWidgets('in French, half a kilo typed as 0,5 is taken out exactly', (tester) async {
@@ -213,6 +255,8 @@ void main() {
         await _choose(tester, 'stock-move-item', 'Coffee beans');
         await _choose(tester, 'stock-move-from', 'MAIN · Main store');
         await tester.enterText(find.byKey(const ValueKey('stock-move-quantity')), '0,5');
+        await _choose(tester, 'stock-move-cause', _en.stockLossCauseDamaged);
+        await tester.ensureVisible(find.byKey(const ValueKey('stock-move-submit')));
         await tester.tap(find.byKey(const ValueKey('stock-move-submit')));
         await _settle(tester);
         expect(w.ledger.balance('demo-item-beans', 'demo-place-main').text, '12');
