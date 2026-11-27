@@ -115,6 +115,7 @@ import '../../helpers/demo_plan_booking_journeys.dart';
 import '../../helpers/demo_receipt_printer_journey.dart';
 import '../../helpers/demo_settings_shell_journeys.dart';
 import '../../helpers/demo_standalone_journey.dart';
+import '../../helpers/demo_till_board_journey.dart';
 import '../../helpers/demo_till_drawer_journey.dart';
 import '../../helpers/demo_till_layout_journey.dart';
 import '../../helpers/demo_till_offline_journey.dart';
@@ -1879,6 +1880,13 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'a cash sale prints its receipt and opens the drawer; a second print is the copy the server counted, COPY 1, never a '
     'new receipt; a printer that cannot be reached is refused and the sale stays made',
     (_) => receiptPrinterJourney(),
+  ),
+  // #4466 — the Demo's till board read by its typed code, a typo refused, its QR the same board.
+  WorkspaceFeature.counterEmbeddedTerminal: _action(
+    _owner,
+    "the owner types the Demo till board's code and the ideaspark board is shown with its fingerprint; the same code with "
+    'two symbols swapped is refused by its check, and the QR names the same board',
+    (_) => tillBoardJourney(),
   ),
 };
 

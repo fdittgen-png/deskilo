@@ -8665,6 +8665,67 @@ class AppLocalizationsEn extends AppLocalizations {
   String get developmentWatermark => 'DEVELOPMENT';
 
   @override
+  String devicePairingBoard(String id, String model) {
+    return 'Board $id · $model';
+  }
+
+  @override
+  String get devicePairingCheck => 'Check the code';
+
+  @override
+  String get devicePairingConnect => 'Connect a device';
+
+  @override
+  String devicePairingFingerprint(String fingerprint) {
+    return 'Fingerprint $fingerprint: compare it with the board\'s screen.';
+  }
+
+  @override
+  String get devicePairingFound => 'Board found';
+
+  @override
+  String get devicePairingLater =>
+      'Connecting the board to this business comes with a later update: nothing has been sent to it.';
+
+  @override
+  String get devicePairingNone =>
+      'No till board is connected to this business yet.';
+
+  @override
+  String get devicePairingRefusedAlphabet =>
+      'A board\'s code never holds 0, O, 1, I or L, nor other signs: check the character on the board.';
+
+  @override
+  String get devicePairingRefusedCheck =>
+      'No board shows this code: a character is wrong, or two are swapped. Compare it with the board.';
+
+  @override
+  String get devicePairingRefusedLength =>
+      'A board\'s code has 10 characters, as XXXXX-XXXXX.';
+
+  @override
+  String get devicePairingRefusedProfile =>
+      'This board is of a kind this app does not know yet. Update the app, then connect it.';
+
+  @override
+  String get devicePairingScanHint =>
+      'Hold the board\'s QR code in front of the camera. To show it, hold the board\'s BOOT button for 3 seconds.';
+
+  @override
+  String get devicePairingSubtitle =>
+      'Till boards: connect one by its QR code or its code';
+
+  @override
+  String get devicePairingTitle => 'Devices';
+
+  @override
+  String get devicePairingType => 'Type the code';
+
+  @override
+  String get devicePairingTypeHelper =>
+      'The 10 characters beside the board\'s QR code, for example 3DNGP-UN9CG.';
+
+  @override
   String get directoryApproximate => 'Approximate address location';
 
   @override
@@ -11939,6 +12000,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.';
+
+  @override
+  String get featureCounterEmbeddedTerminalDesc =>
+      'Connect a till board, the small screen at the counter that takes payments, to this business: Settings › Devices reads its QR code or its typed code and shows which board it is. Off: no devices page.';
+
+  @override
+  String get featureCounterEmbeddedTerminalTitle => 'Till boards';
 
   @override
   String get featureCounterOfflineCashDesc =>
@@ -35940,11 +36008,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get standaloneFactSalePlace =>
-      'the place goods are sold from: set a place that holds stock in the business settings';
-
-  @override
-  String get standaloneFactSalePlaceAmbiguous =>
-      'the place goods are sold from is ambiguous: pick one place in the stock settings';
+      'the place goods are sold from is not set, is ambiguous or is no longer usable: pick one place that holds stock in the stock settings';
 
   @override
   String get standaloneFactSalesTax =>

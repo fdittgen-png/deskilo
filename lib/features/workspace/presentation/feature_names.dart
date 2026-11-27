@@ -188,4 +188,5 @@ String featureName(AppLocalizations l10n, WorkspaceFeature feature) => switch (f
       WorkspaceFeature.unitsOfMeasure => l10n.featureUnitsOfMeasureTitle,
       WorkspaceFeature.counterTillLayout => l10n.featureCounterTillLayoutTitle,
       WorkspaceFeature.counterReceiptPrinter => l10n.featureCounterReceiptPrinterTitle,
+      WorkspaceFeature.counterEmbeddedTerminal => l10n.featureCounterEmbeddedTerminalTitle,
 };

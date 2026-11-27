@@ -7,7 +7,8 @@
 -- `stock.invoice_sale_place` meant, and the posting (0942) took the one created first.
 --   * the setting now holds the place's ID (a text of 36 characters, picked in the app as site › place). A value that is a code (every
 --     installation until now) still reads as the code of one place when exactly one eligible place carries it; several or none are named,
---     never guessed: the posting refuses with `stock_sale_place_ambiguous` or `stock_sale_place` until a place is picked.
+--     never guessed: the posting refuses (`stock_sale_place`) until a place is picked,
+--     and the setting says which problem it is (`invoice_sale_place`: ambiguous, none or gone).
 --   * `invoice_sale_place_eligible(workspace, place)`: a place of the business that is in use, holds stock (not a virtual kind) and is not
 --     the transit place. `invoice_sale_place(workspace)` is THE answer (the place and, when there is none, the problem) and the posting
 --     reads it; the value is checked again at every posting, so a place archived since the pick is refused with its reason.
@@ -83,7 +84,7 @@ begin
   end if;
   if v ~* '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$' then
     if not public.invoice_sale_place_eligible(p_workspace_id, v::uuid) then
-      raise exception 'the value of stock.invoice_sale_place is refused: place_unusable' using errcode = '22023';
+      perform public.stock_config_refuse('stock.invoice_sale_place', 'place_unusable');
     end if;
     return to_jsonb(lower(v));
   end if;
@@ -91,8 +92,7 @@ begin
     from public.stock_locations sl
    where sl.workspace_id = p_workspace_id and sl.code = v and public.invoice_sale_place_eligible(p_workspace_id, sl.id);
   if cardinality(v_ids) <> 1 then
-    raise exception 'the value of stock.invoice_sale_place is refused: %', case when cardinality(v_ids) = 0 then 'place_unknown' else 'place_ambiguous' end
-      using errcode = '22023';
+    perform public.stock_config_refuse('stock.invoice_sale_place', case when cardinality(v_ids) = 0 then 'place_unknown' else 'place_ambiguous' end);
   end if;
   return to_jsonb(v_ids[1]::text);
 end;
@@ -116,7 +116,6 @@ begin
    order by sl.created_datetime limit 1;$o$,
       $n$  select p.place_id, p.problem into v_from, v_code from public.invoice_sale_place(p_workspace_id) p;$n$,
       'the place lookup');
-    v_def := pg_temp.anchor_once(v_def, $o$detail = 'stock_sale_place';$o$, $n$detail = coalesce(v_code, 'stock_sale_place');$n$, 'the refusal');
     execute v_def;
   end if;
 

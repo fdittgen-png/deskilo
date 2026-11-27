@@ -730,6 +730,10 @@ window.SETUP_REGISTRY={
   [
    "counterReceiptPrinter",
    false
+  ],
+  [
+   "counterEmbeddedTerminal",
+   false
   ]
  ],
  "requires": {
@@ -860,7 +864,8 @@ window.SETUP_REGISTRY={
   "stockHandlingUnits": "stockManagement",
   "counterOfflineCash": "counterTillSessions",
   "counterTillLayout": "counterTillSessions",
-  "counterReceiptPrinter": "counterTillSessions"
+  "counterReceiptPrinter": "counterTillSessions",
+  "counterEmbeddedTerminal": "counterTillSessions"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1587,7 +1592,8 @@ window.SETUP_PROCESSES=[
      "counterTillSessions",
      "counterOfflineCash",
      "counterTillLayout",
-     "counterReceiptPrinter"
+     "counterReceiptPrinter",
+     "counterEmbeddedTerminal"
     ]
    }
   ]
@@ -2131,7 +2137,8 @@ window.SETUP_LEVELS={
       "counterOfflineCash",
       "unitsOfMeasure",
       "counterTillLayout",
-      "counterReceiptPrinter"
+      "counterReceiptPrinter",
+      "counterEmbeddedTerminal"
      ],
      "needs": {
       "money": "invoices"

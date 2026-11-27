@@ -228,6 +228,7 @@ class DocumentComposer extends ConsumerWidget {
             goods: goods,
             pieces: namesPieces,
             units: units,
+            workspaceId: workspaceId,
             enabled: !locked,
             onChanged: onChanged,
             onRemove: draft.lines.length > 1

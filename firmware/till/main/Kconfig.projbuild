@@ -1,0 +1,13 @@
+menu "DesKilo board"
+    choice DESKILO_BOARD
+        prompt "Board profile"
+        default DESKILO_BOARD_E32R40T
+        help
+            #4474 -- the board this firmware is built for. The roles, the network and the pairing code are shared; a profile
+            names its display, its input and its pins.
+        config DESKILO_BOARD_E32R40T
+            bool "LCDWiki E32R40T: 4 in ST7796S 480x320, XPT2046 touch"
+        config DESKILO_BOARD_IDEASPARK
+            bool "ideaspark ESP32: 1.9 in ST7789 170x320, no touch, BOOT button"
+    endchoice
+endmenu

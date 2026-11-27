@@ -7,30 +7,34 @@
   "@settingPlaceFromCode": {
     "description": "#4495 the place of a setting",
     "placeholders": {
-      "path": {"type": "String"},
-      "code": {"type": "String"}
+      "path": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
     }
   },
   "settingPlaceAmbiguous": "Le code {code} est porté par plusieurs emplacements : choisissez-en un. Les factures avec des marchandises sont refusées tant que vous ne le faites pas.",
   "@settingPlaceAmbiguous": {
     "description": "#4495 the place of a setting",
     "placeholders": {
-      "code": {"type": "String"}
+      "code": {
+        "type": "String"
+      }
     }
   },
   "settingPlaceMissing": "Aucun emplacement utilisable ne porte le code {code} : choisissez-en un. Les factures avec des marchandises sont refusées tant que vous ne le faites pas.",
   "@settingPlaceMissing": {
     "description": "#4495 the place of a setting",
     "placeholders": {
-      "code": {"type": "String"}
+      "code": {
+        "type": "String"
+      }
     }
   },
   "settingPlaceGone": "L'emplacement choisi n'est plus utilisable : choisissez-en un autre. Les factures avec des marchandises sont refusées tant que vous ne le faites pas.",
   "@settingPlaceGone": {
-    "description": "#4495 the place of a setting"
-  },
-  "standaloneFactSalePlaceAmbiguous": "l'emplacement d'où partent les marchandises vendues est ambigu : choisissez-en un dans les réglages du stock",
-  "@standaloneFactSalePlaceAmbiguous": {
     "description": "#4495 the place of a setting"
   }
 }

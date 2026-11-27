@@ -5227,6 +5227,22 @@
   "@developmentWatermark": {
     "description": "#917 workspace environment: developmentWatermark"
   },
+  "devicePairingBoard": "Terminal {id} · {model}",
+  "devicePairingCheck": "Code prüfen",
+  "devicePairingConnect": "Gerät verbinden",
+  "devicePairingFingerprint": "Fingerabdruck {fingerprint}: vergleichen Sie ihn mit dem Bildschirm des Terminals.",
+  "devicePairingFound": "Terminal gefunden",
+  "devicePairingLater": "Das Verbinden des Terminals mit diesem Unternehmen kommt mit einem späteren Update: nichts wurde an es gesendet.",
+  "devicePairingNone": "Mit diesem Unternehmen ist noch kein Kassenterminal verbunden.",
+  "devicePairingRefusedAlphabet": "Der Code eines Terminals enthält nie 0, O, 1, I oder L und keine anderen Zeichen: prüfen Sie das Zeichen auf dem Terminal.",
+  "devicePairingRefusedCheck": "Kein Terminal zeigt diesen Code: ein Zeichen ist falsch, oder zwei sind vertauscht. Vergleichen Sie ihn mit dem Terminal.",
+  "devicePairingRefusedLength": "Der Code eines Terminals hat 10 Zeichen, etwa XXXXX-XXXXX.",
+  "devicePairingRefusedProfile": "Dieses Terminal ist ein Modell, das diese App noch nicht kennt. Aktualisieren Sie die App und verbinden Sie es dann.",
+  "devicePairingScanHint": "Halten Sie den QR-Code des Terminals vor die Kamera. Um ihn anzuzeigen, halten Sie die BOOT-Taste des Terminals 3 Sekunden gedrückt.",
+  "devicePairingSubtitle": "Kassenterminals: eines per QR-Code oder Code verbinden",
+  "devicePairingTitle": "Geräte",
+  "devicePairingType": "Code eintippen",
+  "devicePairingTypeHelper": "Die 10 Zeichen neben dem QR-Code des Terminals, zum Beispiel 3DNGP-UN9CG.",
   "directoryApproximate": "Ungefähre Lage der Adresse",
   "directoryCheckedIn": "Eingecheckt",
   "directoryCheckedInSeat": "Eingecheckt · {seat}",
@@ -7285,6 +7301,8 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterEmbeddedTerminalDesc": "Ein Kassenterminal, den kleinen Bildschirm an der Theke, der Zahlungen annimmt, mit diesem Unternehmen verbinden: Einstellungen › Geräte liest seinen QR-Code oder seinen eingetippten Code und zeigt, welches Terminal es ist. Aus: keine Geräteseite.",
+  "featureCounterEmbeddedTerminalTitle": "Kassenterminals",
   "featureCounterOfflineCashDesc": "Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung.",
   "@featureCounterOfflineCashDesc": {
     "description": "#4373 feature description"
@@ -20979,13 +20997,9 @@
   "@standaloneFactLines": {
     "description": "#4165 standalone invoice composer: standaloneFactLines"
   },
-  "standaloneFactSalePlace": "der Ort, von dem verkauft wird: einen Ort mit Bestand in den Unternehmenseinstellungen festlegen",
+  "standaloneFactSalePlace": "der Ort, von dem Waren verkauft werden, ist nicht festgelegt, nicht eindeutig oder nicht mehr nutzbar: Wählen Sie in den Lagereinstellungen einen Ort mit Bestand",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
-  },
-  "standaloneFactSalePlaceAmbiguous": "der Ort, von dem Waren verkauft werden, ist nicht eindeutig: Wählen Sie in den Lagereinstellungen einen Ort",
-  "@standaloneFactSalePlaceAmbiguous": {
-    "description": "#4495 the place of a setting"
   },
   "standaloneFactSalesTax": "dieser Betrieb erhebt Sales Tax, was hier noch nicht unterstützt wird",
   "@standaloneFactSalesTax": {

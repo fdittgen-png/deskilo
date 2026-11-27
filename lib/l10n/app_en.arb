@@ -11500,6 +11500,89 @@
   "@developmentWatermark": {
     "description": "#917 workspace environment: developmentWatermark"
   },
+  "devicePairingBoard": "Board {id} · {model}",
+  "@devicePairingBoard": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code",
+    "placeholders": {
+      "id": {
+        "type": "String",
+        "example": "x",
+        "description": "the first 8 hex digits of the board id"
+      },
+      "model": {
+        "type": "String",
+        "example": "x",
+        "description": "the board model as printed on it"
+      }
+    }
+  },
+  "devicePairingCheck": "Check the code",
+  "@devicePairingCheck": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingConnect": "Connect a device",
+  "@devicePairingConnect": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingFingerprint": "Fingerprint {fingerprint}: compare it with the board's screen.",
+  "@devicePairingFingerprint": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code",
+    "placeholders": {
+      "fingerprint": {
+        "type": "String",
+        "example": "x",
+        "description": "the fingerprint shown on the board, e.g. AB12-CD34"
+      }
+    }
+  },
+  "devicePairingFound": "Board found",
+  "@devicePairingFound": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingLater": "Connecting the board to this business comes with a later update: nothing has been sent to it.",
+  "@devicePairingLater": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingNone": "No till board is connected to this business yet.",
+  "@devicePairingNone": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingRefusedAlphabet": "A board's code never holds 0, O, 1, I or L, nor other signs: check the character on the board.",
+  "@devicePairingRefusedAlphabet": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingRefusedCheck": "No board shows this code: a character is wrong, or two are swapped. Compare it with the board.",
+  "@devicePairingRefusedCheck": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingRefusedLength": "A board's code has 10 characters, as XXXXX-XXXXX.",
+  "@devicePairingRefusedLength": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingRefusedProfile": "This board is of a kind this app does not know yet. Update the app, then connect it.",
+  "@devicePairingRefusedProfile": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingScanHint": "Hold the board's QR code in front of the camera. To show it, hold the board's BOOT button for 3 seconds.",
+  "@devicePairingScanHint": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingSubtitle": "Till boards: connect one by its QR code or its code",
+  "@devicePairingSubtitle": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingTitle": "Devices",
+  "@devicePairingTitle": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingType": "Type the code",
+  "@devicePairingType": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingTypeHelper": "The 10 characters beside the board's QR code, for example 3DNGP-UN9CG.",
+  "@devicePairingTypeHelper": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
   "directoryApproximate": "Approximate address location",
   "@directoryApproximate": {
     "description": "Shown as a text in directory map (directory)."
@@ -15925,6 +16008,14 @@
   "featureConfigurationTransferDesc": "The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.",
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "featureCounterEmbeddedTerminalDesc": "Connect a till board, the small screen at the counter that takes payments, to this business: Settings › Devices reads its QR code or its typed code and shows which board it is. Off: no devices page.",
+  "@featureCounterEmbeddedTerminalDesc": {
+    "description": "#4466 the till boards feature"
+  },
+  "featureCounterEmbeddedTerminalTitle": "Till boards",
+  "@featureCounterEmbeddedTerminalTitle": {
+    "description": "#4466 the till boards feature"
   },
   "featureCounterOfflineCashDesc": "When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.",
   "@featureCounterOfflineCashDesc": {
@@ -46769,13 +46860,9 @@
   "@standaloneFactLines": {
     "description": "#4165 standalone invoice composer: standaloneFactLines"
   },
-  "standaloneFactSalePlace": "the place goods are sold from: set a place that holds stock in the business settings",
+  "standaloneFactSalePlace": "the place goods are sold from is not set, is ambiguous or is no longer usable: pick one place that holds stock in the stock settings",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
-  },
-  "standaloneFactSalePlaceAmbiguous": "the place goods are sold from is ambiguous: pick one place in the stock settings",
-  "@standaloneFactSalePlaceAmbiguous": {
-    "description": "#4495 the place of a setting"
   },
   "standaloneFactSalesTax": "this business adds sales tax, which is not supported here yet",
   "@standaloneFactSalesTax": {

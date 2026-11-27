@@ -68,7 +68,7 @@
   "@standaloneFieldStock": {
     "description": "#4433 goods sold on an invoice: standaloneFieldStock"
   },
-  "standaloneFactSalePlace": "le lieu d’où partent les ventes : indiquez un lieu qui détient du stock dans les réglages de l’entreprise",
+  "standaloneFactSalePlace": "l'emplacement d'où partent les marchandises vendues n'est pas fixé, est ambigu ou n'est plus utilisable : choisissez dans les réglages du stock un emplacement qui contient du stock",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
   }

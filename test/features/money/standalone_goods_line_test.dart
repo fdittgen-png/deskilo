@@ -5,22 +5,29 @@
 // the tags of the pieces, and choosing "no goods" gives the line back to the free text. The line editor stays whole on
 // a phone and on a desktop window.
 import 'package:deskilo/features/money/domain/invoice_goods.dart';
+import 'package:deskilo/features/money/domain/line_unit.dart';
 import 'package:deskilo/features/money/presentation/standalone/standalone_line_form.dart';
+import 'package:deskilo/features/money/providers/credit_providers.dart';
+import 'package:deskilo/features/money/providers/pickable_units_provider.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 
 const _coffee = InvoiceGoodsItem(id: 'item-coffee', name: 'Coffee beans', unit: 'kg');
 const _phone = InvoiceGoodsItem(id: 'item-phone', name: 'Phone', unit: 'piece', byPiece: true);
 
 /// Pumps a line editor over [form] offering [_coffee] and [_phone], and hands back the context to save with.
-Future<BuildContext> _pump(WidgetTester tester, StandaloneLineForm form, {required Size size}) async {
+Future<BuildContext> _pump(WidgetTester tester, StandaloneLineForm form, {required Size size, List<Override> overrides = const []}) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   late BuildContext context;
   await tester.pumpWidget(
-    MaterialApp(
+    ProviderScope(
+      overrides: overrides,
+      child: MaterialApp(
       locale: const Locale('en'),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -35,6 +42,7 @@ Future<BuildContext> _pump(WidgetTester tester, StandaloneLineForm form, {requir
                 rates: const [],
                 goods: const [_coffee, _phone],
                 pieces: true,
+                workspaceId: 'ws',
                 onChanged: () => setState(() {}),
                 onRemove: null,
               );
@@ -42,6 +50,7 @@ Future<BuildContext> _pump(WidgetTester tester, StandaloneLineForm form, {requir
           ),
         ),
       ),
+    ),
     ),
   );
   return context;
@@ -112,4 +121,42 @@ void main() {
       });
     });
   }
+
+  testWidgets('a goods line sells any unit its item converts from, starts in the sale unit at that unit\'s price, and keeps a price the member typed', (tester) async {
+    final form = StandaloneLineForm();
+    addTearDown(form.dispose);
+    final context = await _pump(
+      tester,
+      form,
+      size: const Size(390, 900),
+      overrides: [
+        itemOrderUnitsProvider.overrideWith(
+          (ref, key) async => const ItemOrderUnits(units: [LineUnit(code: 'piece'), LineUnit(code: 'carton', label: 'Carton')], saleUnit: 'carton'),
+        ),
+        itemUnitPriceProvider.overrideWith((ref, key) async => key.unit == 'carton' ? 1100 : 100),
+        invoicingBusinessProvider.overrideWithValue((id: 'ws', currency: 'EUR', country: 'FR', dayOf: (d) => d)),
+      ],
+    );
+    await _choose(tester, 'Phone');
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+    expect(form.goodsUnit?.code, 'carton', reason: 'the item\'s sale unit');
+    expect(form.price.text, '11.00', reason: 'the carton\'s own price, not twelve pieces');
+
+    await tester.tap(find.byKey(const ValueKey('standalone-line-0-goods-unit-pick')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('piece').last);
+    await tester.pumpAndSettle();
+    expect(form.goodsUnit?.code, 'piece');
+    expect(form.price.text, '1.00', reason: 'the price filled in follows the unit');
+    expect((form.toLine(context).toWire()['unit'] as Map)['code'], 'piece');
+
+    form.price.text = '0.90';
+    await tester.tap(find.byKey(const ValueKey('standalone-line-0-goods-unit-pick')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Carton').last);
+    await tester.pumpAndSettle();
+    expect(form.goodsUnit?.code, 'carton');
+    expect(form.price.text, '0.90', reason: 'a price the member typed is never replaced');
+  });
 }

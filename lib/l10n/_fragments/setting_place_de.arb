@@ -7,30 +7,34 @@
   "@settingPlaceFromCode": {
     "description": "#4495 the place of a setting",
     "placeholders": {
-      "path": {"type": "String"},
-      "code": {"type": "String"}
+      "path": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
     }
   },
   "settingPlaceAmbiguous": "Der Code {code} gehört zu mehreren Orten: Wählen Sie einen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.",
   "@settingPlaceAmbiguous": {
     "description": "#4495 the place of a setting",
     "placeholders": {
-      "code": {"type": "String"}
+      "code": {
+        "type": "String"
+      }
     }
   },
   "settingPlaceMissing": "Kein nutzbarer Ort trägt den Code {code}: Wählen Sie einen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.",
   "@settingPlaceMissing": {
     "description": "#4495 the place of a setting",
     "placeholders": {
-      "code": {"type": "String"}
+      "code": {
+        "type": "String"
+      }
     }
   },
   "settingPlaceGone": "Der gewählte Ort ist nicht mehr nutzbar: Wählen Sie einen anderen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.",
   "@settingPlaceGone": {
-    "description": "#4495 the place of a setting"
-  },
-  "standaloneFactSalePlaceAmbiguous": "der Ort, von dem Waren verkauft werden, ist nicht eindeutig: Wählen Sie in den Lagereinstellungen einen Ort",
-  "@standaloneFactSalePlaceAmbiguous": {
     "description": "#4495 the place of a setting"
   }
 }

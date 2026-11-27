@@ -8747,6 +8747,67 @@ class AppLocalizationsFr extends AppLocalizations {
   String get developmentWatermark => 'DÉVELOPPEMENT';
 
   @override
+  String devicePairingBoard(String id, String model) {
+    return 'Terminal $id · $model';
+  }
+
+  @override
+  String get devicePairingCheck => 'Vérifier le code';
+
+  @override
+  String get devicePairingConnect => 'Relier un appareil';
+
+  @override
+  String devicePairingFingerprint(String fingerprint) {
+    return 'Empreinte $fingerprint : comparez-la avec l\'écran du terminal.';
+  }
+
+  @override
+  String get devicePairingFound => 'Terminal trouvé';
+
+  @override
+  String get devicePairingLater =>
+      'Relier le terminal à cette entreprise viendra avec une prochaine mise à jour : rien ne lui a été envoyé.';
+
+  @override
+  String get devicePairingNone =>
+      'Aucun terminal de caisse n\'est encore relié à cette entreprise.';
+
+  @override
+  String get devicePairingRefusedAlphabet =>
+      'Le code d\'un terminal ne contient jamais 0, O, 1, I ou L, ni d\'autres signes : vérifiez le caractère sur le terminal.';
+
+  @override
+  String get devicePairingRefusedCheck =>
+      'Aucun terminal n\'affiche ce code : un caractère est faux, ou deux sont inversés. Comparez-le avec le terminal.';
+
+  @override
+  String get devicePairingRefusedLength =>
+      'Le code d\'un terminal compte 10 caractères, comme XXXXX-XXXXX.';
+
+  @override
+  String get devicePairingRefusedProfile =>
+      'Ce terminal est d\'un modèle que cette application ne connaît pas encore. Mettez l\'application à jour, puis reliez-le.';
+
+  @override
+  String get devicePairingScanHint =>
+      'Présentez le code QR du terminal à la caméra. Pour l\'afficher, maintenez le bouton BOOT du terminal 3 secondes.';
+
+  @override
+  String get devicePairingSubtitle =>
+      'Terminaux de caisse : en relier un par son code QR ou son code';
+
+  @override
+  String get devicePairingTitle => 'Appareils';
+
+  @override
+  String get devicePairingType => 'Saisir le code';
+
+  @override
+  String get devicePairingTypeHelper =>
+      'Les 10 caractères à côté du code QR du terminal, par exemple 3DNGP-UN9CG.';
+
+  @override
   String get directoryApproximate => 'Position approximative de l’adresse';
 
   @override
@@ -12074,6 +12135,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'Le fichier de l\'espace (XML) emporte toute la configuration — tarifs, identité légale, règles de réservation et de validation, rôles, maquettes de documents, sites, jours de fermeture — et l\'import l\'applique, même sur un espace qui a déjà des réservations. Désactivé : le fichier n\'emporte que les réglages et le plan.';
+
+  @override
+  String get featureCounterEmbeddedTerminalDesc =>
+      'Relier un terminal de caisse, le petit écran du comptoir qui encaisse, à cette entreprise : Paramètres › Appareils lit son code QR ou son code saisi et indique de quel terminal il s\'agit. Désactivé : pas de page des appareils.';
+
+  @override
+  String get featureCounterEmbeddedTerminalTitle => 'Terminaux de caisse';
 
   @override
   String get featureCounterOfflineCashDesc =>
@@ -36393,11 +36461,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get standaloneFactSalePlace =>
-      'le lieu d’où partent les ventes : indiquez un lieu qui détient du stock dans les réglages de l’entreprise';
-
-  @override
-  String get standaloneFactSalePlaceAmbiguous =>
-      'l\'emplacement d\'où partent les marchandises vendues est ambigu : choisissez-en un dans les réglages du stock';
+      'l\'emplacement d\'où partent les marchandises vendues n\'est pas fixé, est ambigu ou n\'est plus utilisable : choisissez dans les réglages du stock un emplacement qui contient du stock';
 
   @override
   String get standaloneFactSalesTax =>

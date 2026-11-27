@@ -13797,6 +13797,102 @@ abstract class AppLocalizations {
   /// **'DEVELOPMENT'**
   String get developmentWatermark;
 
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'Board {id} · {model}'**
+  String devicePairingBoard(String id, String model);
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'Check the code'**
+  String get devicePairingCheck;
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a device'**
+  String get devicePairingConnect;
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'Fingerprint {fingerprint}: compare it with the board\'s screen.'**
+  String devicePairingFingerprint(String fingerprint);
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'Board found'**
+  String get devicePairingFound;
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting the board to this business comes with a later update: nothing has been sent to it.'**
+  String get devicePairingLater;
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'No till board is connected to this business yet.'**
+  String get devicePairingNone;
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'A board\'s code never holds 0, O, 1, I or L, nor other signs: check the character on the board.'**
+  String get devicePairingRefusedAlphabet;
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'No board shows this code: a character is wrong, or two are swapped. Compare it with the board.'**
+  String get devicePairingRefusedCheck;
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'A board\'s code has 10 characters, as XXXXX-XXXXX.'**
+  String get devicePairingRefusedLength;
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'This board is of a kind this app does not know yet. Update the app, then connect it.'**
+  String get devicePairingRefusedProfile;
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'Hold the board\'s QR code in front of the camera. To show it, hold the board\'s BOOT button for 3 seconds.'**
+  String get devicePairingScanHint;
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'Till boards: connect one by its QR code or its code'**
+  String get devicePairingSubtitle;
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'Devices'**
+  String get devicePairingTitle;
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'Type the code'**
+  String get devicePairingType;
+
+  /// #4466 Settings › Devices: connecting a till board by its QR code or its typed code
+  ///
+  /// In en, this message translates to:
+  /// **'The 10 characters beside the board\'s QR code, for example 3DNGP-UN9CG.'**
+  String get devicePairingTypeHelper;
+
   /// Shown as a text in directory map (directory).
   ///
   /// In en, this message translates to:
@@ -19347,6 +19443,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.'**
   String get featureConfigurationTransferDesc;
+
+  /// #4466 the till boards feature
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a till board, the small screen at the counter that takes payments, to this business: Settings › Devices reads its QR code or its typed code and shows which board it is. Off: no devices page.'**
+  String get featureCounterEmbeddedTerminalDesc;
+
+  /// #4466 the till boards feature
+  ///
+  /// In en, this message translates to:
+  /// **'Till boards'**
+  String get featureCounterEmbeddedTerminalTitle;
 
   /// #4373 feature description
   ///
@@ -57584,14 +57692,8 @@ abstract class AppLocalizations {
   /// #4433 goods sold on an invoice: standaloneFactSalePlace
   ///
   /// In en, this message translates to:
-  /// **'the place goods are sold from: set a place that holds stock in the business settings'**
+  /// **'the place goods are sold from is not set, is ambiguous or is no longer usable: pick one place that holds stock in the stock settings'**
   String get standaloneFactSalePlace;
-
-  /// #4495 the place of a setting
-  ///
-  /// In en, this message translates to:
-  /// **'the place goods are sold from is ambiguous: pick one place in the stock settings'**
-  String get standaloneFactSalePlaceAmbiguous;
 
   /// #4165 standalone invoice composer: standaloneFactSalesTax
   ///
