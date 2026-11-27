@@ -103,7 +103,6 @@ const helpAnchorIndex = <String>{
   HelpAnchor.masterDataPlaces,
   HelpAnchor.masterDataPartners,
   HelpAnchor.masterDataOrganisation,
-  HelpAnchor.settingsDevices,
   HelpAnchor.organisation,
   HelpAnchor.workspaceAddress,
   HelpAnchor.workspaceWhatsappGroup,

@@ -1572,12 +1572,6 @@
       "capabilities": []
     },
     {
-      "key": "counterEmbeddedTerminal",
-      "maturity": "beta",
-      "lifecycle": "active",
-      "capabilities": []
-    },
-    {
       "key": "counterOfflineCash",
       "maturity": "beta",
       "lifecycle": "active",

@@ -993,13 +993,5 @@
   "featureCounterReceiptPrinterDesc": "Print the till's receipt on a receipt printer on your local network (80 or 58 mm), and open the cash drawer it drives after a cash sale. Each till sets its own printer. Off, the receipt is shown and shared, nothing prints.",
   "@featureCounterReceiptPrinterDesc": {
     "description": "#4368 the receipt printer feature"
-  },
-  "featureCounterEmbeddedTerminalTitle": "Till boards",
-  "@featureCounterEmbeddedTerminalTitle": {
-    "description": "#4466 the till boards feature"
-  },
-  "featureCounterEmbeddedTerminalDesc": "Connect a till board, the small screen at the counter that takes payments, to this business: Settings › Devices reads its QR code or its typed code and shows which board it is. Off: no devices page.",
-  "@featureCounterEmbeddedTerminalDesc": {
-    "description": "#4466 the till boards feature"
   }
 }

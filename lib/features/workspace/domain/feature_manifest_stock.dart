@@ -198,13 +198,4 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.counterTillSessions,
     defaultOn: false,
   ),
-  // #4455/#4466 — a till board (an embedded terminal) connected to the business: Settings › Devices, where a board is
-  // connected by its QR or its readable code. Off: no devices page.
-  WorkspaceFeature.counterEmbeddedTerminal: FeatureManifestEntry(
-    feature: WorkspaceFeature.counterEmbeddedTerminal,
-    surface: FeatureSurface.money,
-    tier: FeatureTier.platform,
-    requires: WorkspaceFeature.counterTillSessions,
-    defaultOn: false,
-  ),
 };

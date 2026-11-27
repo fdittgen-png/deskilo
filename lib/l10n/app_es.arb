@@ -5227,22 +5227,6 @@
   "@developmentWatermark": {
     "description": "#917 workspace environment: developmentWatermark"
   },
-  "devicePairingBoard": "Terminal {id} · {model}",
-  "devicePairingCheck": "Comprobar el código",
-  "devicePairingConnect": "Conectar un dispositivo",
-  "devicePairingFingerprint": "Huella {fingerprint}: compárela con la pantalla del terminal.",
-  "devicePairingFound": "Terminal encontrado",
-  "devicePairingLater": "Conectar el terminal a esta empresa llegará con una próxima actualización: no se le ha enviado nada.",
-  "devicePairingNone": "Todavía no hay ningún terminal de caja conectado a esta empresa.",
-  "devicePairingRefusedAlphabet": "El código de un terminal nunca contiene 0, O, 1, I ni L, ni otros signos: compruebe el carácter en el terminal.",
-  "devicePairingRefusedCheck": "Ningún terminal muestra este código: un carácter es incorrecto o dos están intercambiados. Compárelo con el terminal.",
-  "devicePairingRefusedLength": "El código de un terminal tiene 10 caracteres, como XXXXX-XXXXX.",
-  "devicePairingRefusedProfile": "Este terminal es de un modelo que esta aplicación aún no conoce. Actualice la aplicación y luego conéctelo.",
-  "devicePairingScanHint": "Acerque el código QR del terminal a la cámara. Para mostrarlo, mantenga pulsado el botón BOOT del terminal 3 segundos.",
-  "devicePairingSubtitle": "Terminales de caja: conectar uno por su código QR o su código",
-  "devicePairingTitle": "Dispositivos",
-  "devicePairingType": "Escribir el código",
-  "devicePairingTypeHelper": "Los 10 caracteres junto al código QR del terminal, por ejemplo 3DNGP-UN9CG.",
   "directoryApproximate": "Ubicación aproximada de la dirección",
   "directoryCheckedIn": "Presente",
   "directoryCheckedInSeat": "Presente · {seat}",
@@ -7301,8 +7285,6 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
-  "featureCounterEmbeddedTerminalDesc": "Conectar un terminal de caja, la pequeña pantalla del mostrador que cobra, a esta empresa: Ajustes › Dispositivos lee su código QR o su código escrito y muestra qué terminal es. Desactivado: sin página de dispositivos.",
-  "featureCounterEmbeddedTerminalTitle": "Terminales de caja",
   "featureCounterOfflineCashDesc": "Si se pierde la conexión, la caja sigue vendiendo en efectivo, guarda cada venta en el dispositivo y envía las ventas en orden cuando vuelve la conexión. Los demás medios de pago esperan la conexión.",
   "@featureCounterOfflineCashDesc": {
     "description": "#4373 feature description"

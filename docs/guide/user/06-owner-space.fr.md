@@ -668,26 +668,6 @@ Vos articles, devis et factures sont mesurés dans des unités, et certaines se 
 
 **Voir aussi:** [Papier des documents](help:user.workspace.settings.paper)
 
-<!-- anchor: user.workspace.settings.devices -->
-### Appareils
-
-**Public:** Propriétaire · Administrateur·rice avec l'autorisation
-
-Un terminal de caisse est le petit écran du comptoir qui encaisse (#4466). Vous le reliez à votre entreprise depuis **Appareils** : l'application lit le code QR du terminal, ou le code de 10 caractères à côté, et indique de quel terminal il s'agit.
-
-**Étapes**
-
-1. Activez **Terminaux de caisse** sous **Fonctionnalités** (il demande **Sessions de caisse et clôture de journée** et reste désactivé tant que vous ne le demandez pas).
-2. Sur le terminal, maintenez le bouton **BOOT** 3 secondes : il affiche son code QR et son code, par exemple 3DNGP-UN9CG. Un terminal pas encore configuré les affiche de lui-même.
-3. Dans [Appareils](app:/settings/devices), présentez le code QR à la caméra, ou tapez le code sous **Saisir le code** et touchez **Vérifier le code**.
-4. Comparez le terminal et son **Empreinte** avec l'écran du terminal.
-
-**Bon à savoir**
-
-- Un code ne contient jamais 0, O, 1, I ou L. Un caractère faux, ou deux inversés, est refusé aussitôt, en toutes lettres sous le champ ; majuscules, espaces et tirets n'importent pas.
-- Sans caméra (navigateur, ordinateur), saisir le code fait de même.
-- Relier le terminal à l'entreprise viendra avec une prochaine mise à jour : aujourd'hui l'application lit et vérifie le terminal, et ne lui envoie rien.
-
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organisation
 

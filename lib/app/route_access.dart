@@ -125,7 +125,6 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
     _P.workspaceSettings, _P.manageBilling, _P.viewStock, _P.manageStock, _P.manageServices, _P.issueInvoices,
     _P.viewFinances, _P.managePurchases, _P.manageBillingCustomers, _P.manageSites,
   },
-  '/settings/devices': {_P.workspaceSettings}, // #4466
   '/settings/public-page': {_P.workspaceSettings},
   '/legal-identity': {_P.workspaceSettings},
   '/settings/sites': {_P.manageSites},

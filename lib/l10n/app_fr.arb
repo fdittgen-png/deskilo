@@ -5227,22 +5227,6 @@
   "@developmentWatermark": {
     "description": "#917 workspace environment: developmentWatermark"
   },
-  "devicePairingBoard": "Terminal {id} · {model}",
-  "devicePairingCheck": "Vérifier le code",
-  "devicePairingConnect": "Relier un appareil",
-  "devicePairingFingerprint": "Empreinte {fingerprint} : comparez-la avec l'écran du terminal.",
-  "devicePairingFound": "Terminal trouvé",
-  "devicePairingLater": "Relier le terminal à cette entreprise viendra avec une prochaine mise à jour : rien ne lui a été envoyé.",
-  "devicePairingNone": "Aucun terminal de caisse n'est encore relié à cette entreprise.",
-  "devicePairingRefusedAlphabet": "Le code d'un terminal ne contient jamais 0, O, 1, I ou L, ni d'autres signes : vérifiez le caractère sur le terminal.",
-  "devicePairingRefusedCheck": "Aucun terminal n'affiche ce code : un caractère est faux, ou deux sont inversés. Comparez-le avec le terminal.",
-  "devicePairingRefusedLength": "Le code d'un terminal compte 10 caractères, comme XXXXX-XXXXX.",
-  "devicePairingRefusedProfile": "Ce terminal est d'un modèle que cette application ne connaît pas encore. Mettez l'application à jour, puis reliez-le.",
-  "devicePairingScanHint": "Présentez le code QR du terminal à la caméra. Pour l'afficher, maintenez le bouton BOOT du terminal 3 secondes.",
-  "devicePairingSubtitle": "Terminaux de caisse : en relier un par son code QR ou son code",
-  "devicePairingTitle": "Appareils",
-  "devicePairingType": "Saisir le code",
-  "devicePairingTypeHelper": "Les 10 caractères à côté du code QR du terminal, par exemple 3DNGP-UN9CG.",
   "directoryApproximate": "Position approximative de l’adresse",
   "directoryCheckedIn": "Sur place",
   "directoryCheckedInSeat": "Sur place · {seat}",
@@ -7301,8 +7285,6 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
-  "featureCounterEmbeddedTerminalDesc": "Relier un terminal de caisse, le petit écran du comptoir qui encaisse, à cette entreprise : Paramètres › Appareils lit son code QR ou son code saisi et indique de quel terminal il s'agit. Désactivé : pas de page des appareils.",
-  "featureCounterEmbeddedTerminalTitle": "Terminaux de caisse",
   "featureCounterOfflineCashDesc": "Quand la connexion est perdue, la caisse continue de vendre en espèces, enregistre chaque vente sur l'appareil et envoie les ventes dans l'ordre au retour de la connexion. Les autres moyens de paiement attendent la connexion.",
   "@featureCounterOfflineCashDesc": {
     "description": "#4373 feature description"

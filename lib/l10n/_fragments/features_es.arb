@@ -385,7 +385,5 @@
   "featureCounterTillLayoutTitle": "Diseños de caja",
   "featureCounterTillLayoutDesc": "Organice cada caja según su oficio: qué teclas van dónde, sus páginas y herramientas junto a la cesta como un teclado numérico, una calculadora o un campo de escaneo. Parta de una plantilla, publíquela y una caja la adopta en su siguiente sesión. Desactivado, cada caja conserva sus teclas generadas.",
   "featureCounterReceiptPrinterTitle": "Impresora de tiques",
-  "featureCounterReceiptPrinterDesc": "Imprimir el tique de caja en una impresora de tiques de la red local (80 o 58 mm) y abrir el cajón que controla tras una venta en efectivo. Cada caja configura su propia impresora. Desactivado, el tique se muestra y se comparte, no se imprime nada.",
-  "featureCounterEmbeddedTerminalTitle": "Terminales de caja",
-  "featureCounterEmbeddedTerminalDesc": "Conectar un terminal de caja, la pequeña pantalla del mostrador que cobra, a esta empresa: Ajustes › Dispositivos lee su código QR o su código escrito y muestra qué terminal es. Desactivado: sin página de dispositivos."
+  "featureCounterReceiptPrinterDesc": "Imprimir el tique de caja en una impresora de tiques de la red local (80 o 58 mm) y abrir el cajón que controla tras una venta en efectivo. Cada caja configura su propia impresora. Desactivado, el tique se muestra y se comparte, no se imprime nada."
 }

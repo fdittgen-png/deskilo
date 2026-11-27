@@ -385,7 +385,5 @@
   "featureCounterTillLayoutTitle": "Dispositions de caisse",
   "featureCounterTillLayoutDesc": "Disposez chaque caisse selon votre métier : quelles touches où, ses pages et des outils à côté du panier comme un pavé numérique, une calculatrice ou un champ de scan. Partez d'un modèle, publiez-le, et une caisse le prend à sa prochaine session. Désactivé, chaque caisse garde ses touches générées.",
   "featureCounterReceiptPrinterTitle": "Imprimante de tickets",
-  "featureCounterReceiptPrinterDesc": "Imprimer le ticket de caisse sur une imprimante de tickets du réseau local (80 ou 58 mm) et ouvrir le tiroir-caisse qu'elle commande après une vente en espèces. Chaque caisse règle sa propre imprimante. Désactivé, le ticket est affiché et partagé, rien n'est imprimé.",
-  "featureCounterEmbeddedTerminalTitle": "Terminaux de caisse",
-  "featureCounterEmbeddedTerminalDesc": "Relier un terminal de caisse, le petit écran du comptoir qui encaisse, à cette entreprise : Paramètres › Appareils lit son code QR ou son code saisi et indique de quel terminal il s'agit. Désactivé : pas de page des appareils."
+  "featureCounterReceiptPrinterDesc": "Imprimer le ticket de caisse sur une imprimante de tickets du réseau local (80 ou 58 mm) et ouvrir le tiroir-caisse qu'elle commande après une vente en espèces. Chaque caisse règle sa propre imprimante. Désactivé, le ticket est affiché et partagé, rien n'est imprimé."
 }

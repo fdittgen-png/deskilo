@@ -668,26 +668,6 @@ Your items, quotes and invoices are measured in units, and some units convert in
 
 **See also:** [Paper of the documents](help:user.workspace.settings.paper)
 
-<!-- anchor: user.workspace.settings.devices -->
-### Devices
-
-**Audience:** Owner · Administrator with the permission
-
-A till board is the small screen at the counter that takes payments (#4466). You connect it to your business from **Devices**: the app reads the board's QR code, or the code of 10 characters beside it, and shows which board it is.
-
-**Steps**
-
-1. Turn on **Till boards** under **Features** (it needs **Till sessions and day close** and is off until you ask for it).
-2. On the board, hold the **BOOT** button for 3 seconds: it shows its QR code and its code, such as 3DNGP-UN9CG. A board not yet set up shows them by itself.
-3. In [Devices](app:/settings/devices), hold the QR code in front of the camera, or type the code under **Type the code** and tap **Check the code**.
-4. Compare the board and its **Fingerprint** with the board's screen.
-
-**Good to know**
-
-- A code never holds 0, O, 1, I or L. One wrong character, or two swapped, is refused at once, in words under the field; capitals, spaces and dashes do not matter.
-- Where there is no camera (a browser, a desktop), typing the code does the same.
-- Connecting the board to the business comes with a later update: today the app reads and checks the board, and sends it nothing.
-
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organisation
 

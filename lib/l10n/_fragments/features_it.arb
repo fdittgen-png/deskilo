@@ -385,7 +385,5 @@
   "featureCounterTillLayoutTitle": "Layout di cassa",
   "featureCounterTillLayoutDesc": "Organizzi ogni cassa per il Suo mestiere: quali tasti dove, le sue pagine e gli strumenti accanto al carrello come un tastierino numerico, una calcolatrice o un campo di scansione. Parta da un modello, lo pubblichi e una cassa lo adotta alla sessione successiva. Disattivato, ogni cassa mantiene i tasti generati.",
   "featureCounterReceiptPrinterTitle": "Stampante di scontrini",
-  "featureCounterReceiptPrinterDesc": "Stampare lo scontrino su una stampante di scontrini della rete locale (80 o 58 mm) e aprire il cassetto che comanda dopo una vendita in contanti. Ogni cassa imposta la propria stampante. Disattivato, lo scontrino è mostrato e condiviso, non si stampa nulla.",
-  "featureCounterEmbeddedTerminalTitle": "Terminali di cassa",
-  "featureCounterEmbeddedTerminalDesc": "Collegare un terminale di cassa, il piccolo schermo al banco che incassa, a questa attività: Impostazioni › Dispositivi legge il suo codice QR o il codice digitato e mostra di quale terminale si tratta. Disattivato: nessuna pagina dei dispositivi."
+  "featureCounterReceiptPrinterDesc": "Stampare lo scontrino su una stampante di scontrini della rete locale (80 o 58 mm) e aprire il cassetto che comanda dopo una vendita in contanti. Ogni cassa imposta la propria stampante. Disattivato, lo scontrino è mostrato e condiviso, non si stampa nulla."
 }
