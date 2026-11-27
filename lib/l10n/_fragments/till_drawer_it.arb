@@ -111,5 +111,6 @@
   "settingHintCounterLayoutCashierReorder": "Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo senza cambiare il layout pubblicato.",
   "settingUnitCells": "celle",
   "settingLabelCounterMaxDiscount": "Sconto massimo alla cassa",
-  "settingHintCounterMaxDiscount": "Lo sconto massimo, in percentuale, che un cassiere può applicare a una riga di cassa. 0 significa nessuno sconto alla cassa."
+  "settingHintCounterMaxDiscount": "Lo sconto massimo, in percentuale, che un cassiere può applicare a una riga di cassa. 0 significa nessuno sconto alla cassa.",
+  "tillDayDepositsReturned": "Vuoti resi: {amount}"
 }

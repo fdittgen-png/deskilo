@@ -5372,9 +5372,9 @@
   "@documentsEmpty": {
     "description": "Workspace document library (#500)"
   },
-  "documentsInvalid": "Un documento richiede un titolo e un link https://.",
-  "@documentsInvalid": {
-    "description": "Workspace document library (#500)"
+  "documentsLinkNotHttps": "Il link deve iniziare con https://.",
+  "@documentsLinkNotHttps": {
+    "description": "Document library, the add form: said under the link field when the link is not an https:// one"
   },
   "documentsProviderLabel": "Archiviato su",
   "@documentsProviderLabel": {
@@ -5399,6 +5399,10 @@
   "documentsTitleLabel": "Titolo",
   "@documentsTitleLabel": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsTitleMissing": "Dia un titolo al documento.",
+  "@documentsTitleMissing": {
+    "description": "Document library, the add form: said under the title field when it is empty"
   },
   "documentsUrlHelper": "Incolli il link di condivisione del suo drive — i permessi restano gestiti lì.",
   "@documentsUrlHelper": {
@@ -12839,6 +12843,16 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataCount": "{count, plural, =0{Nessuna voce} one{{count} voce} other{{count} voci}}",
+  "masterDataCustomersDesc": "A chi si fattura",
+  "masterDataGroupCatalogue": "Catalogo",
+  "masterDataGroupMeasures": "Misure e imposte",
+  "masterDataGroupPartners": "Partner commerciali",
+  "masterDataGroupPlaces": "Ubicazioni e magazzino",
+  "masterDataIntro": "Tutti gli elenchi con cui è configurata l’attività, in un unico posto. Tocchi una scheda per aprirne l’editor.",
+  "masterDataItemGroupsDesc": "Impostazioni comuni a un gruppo di articoli",
+  "masterDataItemsDesc": "Ciò che si tiene a magazzino e si vende",
+  "masterDataNoMatch": "Nessun dato anagrafico corrisponde alla ricerca.",
   "masterDataNoUnit": "Nessuna unità",
   "@masterDataNoUnit": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
@@ -12847,12 +12861,19 @@
   "@masterDataNoVat": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
   },
+  "masterDataPlacesDesc": "Dove si conservano le merci",
   "masterDataSearchHint": "Digiti un nome o un codice, oppure scelga dall'elenco",
+  "masterDataServicesDesc": "I servizi in vendita",
+  "masterDataSitesDesc": "Gli indirizzi e i piani di ciascuno",
+  "masterDataSuppliersDesc": "Da chi si acquista",
+  "masterDataTills": "Casse",
+  "masterDataTillsDesc": "Le casse al banco e la disposizione dei loro tasti",
   "masterDataUnknownCode": "Non è una voce valida. Ne scelga una dall'elenco.",
   "masterDataUnlisted": "Non è nell'elenco: sceglierne uno",
   "@masterDataUnlisted": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
   },
+  "masterDataVatDesc": "Le aliquote applicate dai documenti",
   "mcpApiReference": "Riferimento API",
   "mcpApiReferenceHint": "Cosa può chiamare un assistente e come viene autorizzato",
   "mcpAssistantsTitle": "Assistenti",
@@ -16868,6 +16889,10 @@
   "refusalBankMatchUndoLaterFirst": "È il primo pagamento della fattura: annulla prima i pagamenti successivi. Nulla è stato modificato.",
   "@refusalBankMatchUndoLaterFirst": {
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
+  },
+  "refusalBooksClosedPeriodDated": "Questa data è compresa in un periodo contabile chiuso: nulla è stato registrato. È possibile una data del periodo aperto; solo il proprietario può riaprire il periodo.",
+  "@refusalBooksClosedPeriodDated": {
+    "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
   },
   "refusalChangedMeanwhile": "Nel frattempo è cambiato. Lo riapra per vedere a che punto è.",
   "refusalCounterCashEntry": "Questa registrazione di contante non è accettata: il motivo non è nell'elenco, l'importo supera il Suo limite, oppure i conteggi non tornano.",
@@ -24167,6 +24192,7 @@
   "tillDayByRate": "Vendite per aliquota",
   "tillDayByTender": "Incassi per mezzo di pagamento",
   "tillDayCorrections": "Correzioni: {amount}",
+  "tillDayDepositsReturned": "Vuoti resi: {amount}",
   "tillDayDifferences": "Differenza totale dei cassetti: {amount}",
   "tillDayHelp": "Riunisce le sessioni chiuse delle casse in un rapporto numerato. Prima ogni cassa deve essere chiusa.",
   "tillDayItem": "{number} · {date}",
@@ -24694,6 +24720,13 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillReturnNoDeposit": "L'ultimo articolo non ha un vuoto da riprendere.",
+  "tillReturnNotAllowed": "Non può riprendere un vuoto alla cassa.",
+  "tillReturnNotDeposit": "Questo articolo non è il vuoto di alcun articolo venduto.",
+  "tillReturnOffline": "Il vuoto non viene ripreso mentre la cassa è offline.",
+  "tillReturnTracked": "Questo vuoto è tracciato per lotto o etichetta: non viene ripreso alla cassa.",
+  "tillReturnedLabel": "Vuoto reso: {item}",
+  "tillReturnedLine": "Vuoto reso",
   "tillRingUpFirst": "Registri prima un articolo.",
   "tillScanLabel": "Scansiona un codice",
   "@tillScanLabel": {

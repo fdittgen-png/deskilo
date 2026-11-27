@@ -9110,8 +9110,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'No document yet. Link your statutes, guides and statements from any drive.';
 
   @override
-  String get documentsInvalid =>
-      'A document needs a title and an https:// link.';
+  String get documentsLinkNotHttps => 'The link must start with https://.';
 
   @override
   String get documentsProviderLabel => 'Stored on';
@@ -9130,6 +9129,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get documentsTitleLabel => 'Title';
+
+  @override
+  String get documentsTitleMissing => 'Give the document a title.';
 
   @override
   String get documentsUrlHelper =>
@@ -21060,14 +21062,73 @@ class AppLocalizationsEn extends AppLocalizations {
   String get managedProfileTitle => 'Managed profile';
 
   @override
+  String masterDataCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count records',
+      one: '$count record',
+      zero: 'No records',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get masterDataCustomersDesc => 'Who you invoice';
+
+  @override
+  String get masterDataGroupCatalogue => 'Catalogue';
+
+  @override
+  String get masterDataGroupMeasures => 'Measures and taxes';
+
+  @override
+  String get masterDataGroupPartners => 'Partners';
+
+  @override
+  String get masterDataGroupPlaces => 'Places and stock';
+
+  @override
+  String get masterDataIntro =>
+      'Every list the business is set up with, in one place. Tap a card to open its editor.';
+
+  @override
+  String get masterDataItemGroupsDesc => 'Settings shared by a group of items';
+
+  @override
+  String get masterDataItemsDesc => 'What you stock and sell';
+
+  @override
+  String get masterDataNoMatch => 'No master data matches the search.';
+
+  @override
   String get masterDataNoUnit => 'No unit';
 
   @override
   String get masterDataNoVat => 'No VAT';
 
   @override
+  String get masterDataPlacesDesc => 'Where your goods are kept';
+
+  @override
   String get masterDataSearchHint =>
       'Type a name or a code, or pick from the list';
+
+  @override
+  String get masterDataServicesDesc => 'The services you sell';
+
+  @override
+  String get masterDataSitesDesc => 'Your addresses and the levels at each';
+
+  @override
+  String get masterDataSuppliersDesc => 'Who you buy from';
+
+  @override
+  String get masterDataTills => 'Tills';
+
+  @override
+  String get masterDataTillsDesc =>
+      'The tills at the counter and their key layouts';
 
   @override
   String get masterDataUnknownCode =>
@@ -21075,6 +21136,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get masterDataUnlisted => 'This is not in the list: pick one';
+
+  @override
+  String get masterDataVatDesc => 'The rates your documents charge';
 
   @override
   String get mcpApiReference => 'API reference';
@@ -29352,6 +29416,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalBankMatchUndoLaterFirst =>
       'This is the invoice\'s first payment: undo its later payments first. Nothing was changed.';
+
+  @override
+  String get refusalBooksClosedPeriodDated =>
+      'This date lies inside a closed period of the books: nothing was recorded. A date in the open period is possible; only the owner can reopen the period.';
 
   @override
   String get refusalChangedMeanwhile =>
@@ -41153,6 +41221,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String tillDayDepositsReturned(String amount) {
+    return 'Deposits returned: $amount';
+  }
+
+  @override
   String tillDayDifferences(String amount) {
     return 'Total difference of the drawers: $amount';
   }
@@ -42233,6 +42306,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tillRetry => 'Try again';
+
+  @override
+  String get tillReturnNoDeposit =>
+      'The last item carries no deposit to take back.';
+
+  @override
+  String get tillReturnNotAllowed =>
+      'You may not take a deposit back at the till.';
+
+  @override
+  String get tillReturnNotDeposit =>
+      'This item is not a deposit any item is sold with.';
+
+  @override
+  String get tillReturnOffline =>
+      'A deposit is not taken back while the till is offline.';
+
+  @override
+  String get tillReturnTracked =>
+      'This deposit is tracked by lot or tag: it is not taken back at the till.';
+
+  @override
+  String tillReturnedLabel(String item) {
+    return 'Deposit returned: $item';
+  }
+
+  @override
+  String get tillReturnedLine => 'Deposit returned';
 
   @override
   String get tillRingUpFirst => 'Ring up an item first.';

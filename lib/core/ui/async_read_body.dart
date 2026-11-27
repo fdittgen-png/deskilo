@@ -69,15 +69,35 @@ class ReadFailureBanner extends StatelessWidget {
 /// - a value: [data], with a thin progress line while it is refreshed and a
 ///   [ReadFailureBanner] above it when the refresh failed (the old content
 ///   stays);
-/// - an error with nothing to show: [ReadFailureBanner] alone, replaced by
+/// - an error with nothing to show ([isEmpty] counts an empty answer of
+///   before as nothing): [ReadFailureBanner] alone, replaced by
 ///   [LoadingView] while Try again is in flight.
+///
+/// [AsyncReadBody.new] fills the room it is given (a page's body);
+/// [AsyncReadBody.part] is one part of a page that scrolls and takes only
+/// the height of what it shows.
 class AsyncReadBody<T> extends StatelessWidget {
   const AsyncReadBody({
     super.key,
     required this.value,
     required this.onRetry,
     required this.data,
-  });
+    this.refusal,
+    this.retryKey,
+    this.isEmpty,
+  }) : _fills = true;
+
+  /// The same answer for a read that is one part of a scrolling page: no
+  /// height of its own, [data] under the progress line and the failure.
+  const AsyncReadBody.part({
+    super.key,
+    required this.value,
+    required this.onRetry,
+    required this.data,
+    this.refusal,
+    this.retryKey,
+    this.isEmpty,
+  }) : _fills = false;
 
   final AsyncValue<T> value;
 
@@ -86,27 +106,59 @@ class AsyncReadBody<T> extends StatelessWidget {
 
   final Widget Function(T value) data;
 
+  /// A typed refusal's own words for the error of the read, or null for a
+  /// failure worded by its kind ([ReadFailureBanner.refusal]).
+  final String? Function(Object error)? refusal;
+
+  /// The Try again button's key, for a page that names its own retry.
+  final Key? retryKey;
+
+  /// Whether an answer says "nothing there". When given, a refresh that
+  /// failed over such an answer shows the failure alone: "nothing yet" is
+  /// not repeated under a read that failed.
+  final bool Function(T value)? isEmpty;
+
+  final bool _fills;
+
+  Widget _failure() {
+    final error = value.error!;
+    final words = refusal?.call(error);
+    return switch (retryKey) {
+      final key? => ReadFailureBanner(
+        error: error,
+        onRetry: onRetry,
+        refusal: words,
+        retryKey: key,
+      ),
+      null => ReadFailureBanner(error: error, onRetry: onRetry, refusal: words),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (value.hasValue) {
+    final staleEmpty =
+        value.hasValue &&
+        value.hasError &&
+        (isEmpty?.call(value.requireValue) ?? false);
+    if (value.hasValue && !staleEmpty) {
+      final content = data(value.requireValue);
       return Column(
+        mainAxisSize: _fills ? MainAxisSize.max : MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (value.isLoading)
             const LinearProgressIndicator(key: ValueKey('read-refreshing')),
-          if (value.hasError)
-            ReadFailureBanner(error: value.error!, onRetry: onRetry),
-          Expanded(child: data(value.requireValue)),
+          if (value.hasError) _failure(),
+          if (_fills) Expanded(child: content) else content,
         ],
       );
     }
     // Try again in flight: the failure gives way to the progress, not the
     // other way round, so the person sees the request was taken.
     if (value.hasError && !value.isLoading) {
-      return ListView(
-        padding: AppSpacing.mdAll,
-        children: [ReadFailureBanner(error: value.error!, onRetry: onRetry)],
-      );
+      return _fills
+          ? ListView(padding: AppSpacing.mdAll, children: [_failure()])
+          : _failure();
     }
     return const LoadingView();
   }

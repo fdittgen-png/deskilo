@@ -11,5 +11,9 @@ String? tillPriceRefusalText(AppLocalizations l10n, Object error) => switch (til
   (reason: TillPriceRefusal.reasonMissing, max: _) => l10n.tillPriceReasonMissing,
   (reason: TillPriceRefusal.discountBeyond, max: _) => l10n.tillDiscountBeyond,
   (reason: TillPriceRefusal.discountInvalid, max: _) => l10n.tillDiscountInvalid,
+  (reason: TillPriceRefusal.returnNotAllowed, max: _) => l10n.tillReturnNotAllowed,
+  (reason: TillPriceRefusal.returnOffline, max: _) => l10n.tillReturnOffline,
+  (reason: TillPriceRefusal.returnTracked, max: _) => l10n.tillReturnTracked,
+  (reason: TillPriceRefusal.returnNotDeposit, max: _) => l10n.tillReturnNotDeposit,
   null => null,
 };

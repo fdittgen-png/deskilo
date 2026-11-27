@@ -11,6 +11,7 @@ import 'till_lots.dart';
 import 'till_quantity.dart';
 
 export 'till_lots.dart';
+export 'till_returns.dart';
 
 /// One operation of the counter in the business's country, under the case the owner declared, with the evidence the
 /// registry names for it (#4184): its specification, version and effective date, the adapter, the proof, and whether
@@ -131,6 +132,7 @@ class TillLine {
     this.priceReason,
     this.discount,
     this.lot,
+    this.returned = false,
   });
 
   final String itemId;
@@ -175,10 +177,14 @@ class TillLine {
     priceReason: price == null ? null : reason,
     discount: price == null ? discount : null,
     lot: lot,
+    returned: returned,
   );
 
   /// #4366 -- the lot the seller chose to sell from; null leaves the server to take the one that expires first.
   final TillLot? lot;
+
+  /// #4478 -- a deposit brought back: the deposit item at this quantity, taken off the sale (the server negates it).
+  final bool returned;
 
   /// The line sold from [chosen], or (null) from the lot that expires first again.
   TillLine withLot(TillLot? chosen) => TillLine(
@@ -193,6 +199,7 @@ class TillLine {
     priceReason: priceReason,
     discount: discount,
     lot: chosen,
+    returned: returned,
   );
 
   /// The line at quantity [q]. Named pieces stay only when [q] is exactly their number: any other quantity (a tap on the item's key, a
@@ -210,6 +217,7 @@ class TillLine {
     priceReason: priceReason,
     discount: discount,
     lot: lot,
+    returned: returned,
   );
 
   /// The line with the piece tagged [tag] added: one more, named (a piece names its own lot).
@@ -225,6 +233,7 @@ class TillLine {
         price: price,
         priceReason: priceReason,
         discount: discount,
+        returned: returned,
       );
 
   Map<String, Object?> toJson() => {
@@ -235,6 +244,7 @@ class TillLine {
     'price_reason': ?priceReason,
     'discount_percent': ?discount,
     if (pieces.isEmpty && lot != null) 'lot_id': lot!.id,
+    if (returned) 'returned': true,
   };
 }
 

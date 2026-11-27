@@ -26,6 +26,7 @@ class DemoStockRegistry implements StockRegistry {
     'demo-item-milk': ('3256540000032', 210, '120'),
     'demo-item-mugs': ('4006381333931', 890, null),
     'demo-item-syrup': ('5000112548167', 780, '410'),
+    'demo-item-bottle': ('2000000000251', 25, '10'),
   };
 
   /// Item id -> the place it belongs at: the eye-level shelf of the sales floor, the back room,

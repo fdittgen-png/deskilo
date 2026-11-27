@@ -39,6 +39,13 @@ final _shapes = [
   // #4017 — a count read from a provider and shown as 0 when the read
   // failed: "nothing to decide" when the server did not answer.
   LiteralKind('read value ?? 0', RegExp(r'\)\.value\s*\?\?\s*0\b')),
+  // #4489 — a guarded read whose fallback is an empty collection is the same
+  // lie one layer down: "the units could not be read" becomes "there are no
+  // units". The fallback says the failure, or the line gives its reason.
+  LiteralKind(
+    'guarded read fallback empty',
+    RegExp(r'\bfallback:\s*\(\w*\)\s*=>\s*(const\s*)?(<[^>]*>\s*)?[\[{]'),
+  ),
 ];
 
 /// The ceiling per area, as measured on 11 Nov 2026 (it only falls).
@@ -54,7 +61,9 @@ const _ceilings = <String, int>{
   'lib/features/help': 1,
   'lib/features/kiosk': 5,
   'lib/features/mcp': 3,
-  'lib/features/money': 0,
+  // #4489 counts a guarded read that falls back to an empty collection: the
+  // till layout's services and tills.
+  'lib/features/money': 2,
   // #3742 widened the shapes (a default object in place of an unread
   // value); #3749 removed the five places they found in Me.
   // #4017 counts `?? 0` on a read too: the unread notes' count is the 15th.
@@ -64,7 +73,9 @@ const _ceilings = <String, int>{
   'lib/features/profile': 7,
   'lib/features/reservations': 28,
   'lib/features/search': 0,
-  'lib/features/stock': 0,
+  // #4489: the places and items of the groups screen, an item's tags, the
+  // reorder sheet's suppliers and the units of a line.
+  'lib/features/stock': 5,
   'lib/features/task_recorder': 4,
   'lib/features/visits': 1,
   'lib/features/workspace': 53,
@@ -125,6 +136,9 @@ void main() {
       'final r = ref.watch(p).value ?? const DunningRules();',
       'final r = ref.watch(p).asData?.value ?? x;',
       'int count(WidgetRef ref) => ref.watch(p).value ?? 0;',
+      'fallback: (_) => const <WorkspaceUnit>[],',
+      'fallback: (e) => [],',
+      'fallback: (_) => const {},',
     ];
     for (final line in planted) {
       expect(_shapes.any((k) => k.pattern.hasMatch(line)), isTrue, reason: line);
@@ -133,6 +147,11 @@ void main() {
       _shapes.any((k) => k.pattern.hasMatch('final a = v.value ?? 0;')),
       isFalse,
       reason: 'a scalar default is a different question',
+    );
+    expect(
+      _shapes.any((k) => k.pattern.hasMatch('fallback: (e) => failureOf(e),')),
+      isFalse,
+      reason: 'a fallback that says the failure is the right one',
     );
     expect(
       _shapes.any((k) => k.pattern.hasMatch('final a = v.value ?? fallback;')),

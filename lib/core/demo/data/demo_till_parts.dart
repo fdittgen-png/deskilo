@@ -26,7 +26,10 @@ const _million = 1000 * 1000;
 /// The Demo business's `counter.max_discount_percent`, and whether its cashier holds the right to change a price at the
 /// till (the Demo's owner does).
 class DemoTillPricing {
-  const DemoTillPricing({this.maxDiscountPercent = demoMaxDiscountPercent, this.mayChangePrice = true});
+  const DemoTillPricing({this.maxDiscountPercent = demoMaxDiscountPercent, this.mayChangePrice = true, this.deposits = const {'demo-item-bottle'}});
+
+  /// #4478 -- the items some item is sold with as its deposit: the syrup's glass bottle (#4487).
+  final Set<String> deposits;
 
   static const demoMaxDiscountPercent = 10;
   final int maxDiscountPercent;
@@ -35,6 +38,21 @@ class DemoTillPricing {
 
 /// The unit price of [l] in minor units: the item's [listed] one, another with the right and a reason, or a discount
 /// within the [pricing]'s limit; refused as the server refuses it.
+/// #4478 -- what a line amounts to in minor units: [unitPrice] times its quantity, negated for a deposit brought back,
+/// refused as the server refuses a return ([index] names the line).
+int demoTillLineAmount(TillLine l, int unitPrice, int amount, DemoTillPricing pricing, {required int index}) {
+  if (!l.returned) return amount;
+  // as the server says it: the missing line in the refusal's detail
+  if (!pricing.deposits.contains(l.itemId)) {
+    throw PostgrestException(message: 'receipt_essentials_missing', code: DkCode.dkl02, details: 'line_${index}_returned');
+  }
+  if (l.price != null || l.discount != null) {
+    throw PostgrestException(message: 'receipt_essentials_missing', code: DkCode.dkl02, details: 'line_${index}_returned_price');
+  }
+  if (!pricing.mayChangePrice) throw demoTillRefused(DkCode.dkn01, 'not allowed to return a deposit', reason: 'deposit_return');
+  return -amount;
+}
+
 int demoTillUnitPrice(TillLine l, int listed, DemoTillPricing pricing, {required int minorDigits}) {
   final maxDiscountPercent = pricing.maxDiscountPercent;
   final discount = l.discount;

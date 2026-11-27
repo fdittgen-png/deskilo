@@ -234,7 +234,7 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort, TillCopyPo
     for (final l in lines) {
       final unit = DemoStockRegistry.catalogue[l.itemId]?.$2 ?? _unstocked[l.itemId];
       if (unit == null) throw _refused(DkCode.dkl02, 'line_${priced.length + 1}_unit_price');
-      final amount = _times(demoTillUnitPrice(l, unit, pricing, minorDigits: minorDigits), l.quantity);
+      final amount = demoTillLineAmount(l, unit, _times(l.returned ? unit : demoTillUnitPrice(l, unit, pricing, minorDigits: minorDigits), l.quantity), pricing, index: priced.length + 1);
       gross += amount;
       tax += _tax(amount);
       priced.add(TillPricedLine(label: l.name, grossMinor: amount, quantity: l.quantity));

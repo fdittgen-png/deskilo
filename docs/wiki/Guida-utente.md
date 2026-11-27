@@ -3308,6 +3308,8 @@ Alla cassa, i tasti agiscono come li ha posizionati. Il **tastierino numerico** 
 
 **Ristampare l'ultimo scontrino** mostra di nuovo lo scontrino dell'ultima vendita, contrassegnato **COPIA 1**, **COPIA 2** e così via. Una copia non prende mai un nuovo numero di scontrino, e ogni copia stampata viene contata.
 
+**Reso cauzione** riprende il vuoto dell'ultimo articolo registrato (le bottiglie di una cassa d'acqua, ad esempio): digiti prima il numero sul tastierino, altrimenti se ne riprende uno. Il vuoto è tolto dalla vendita e compare come **Vuoto reso** sullo scontrino; torna in magazzino quando la vendita è fatta. Serve il diritto **Modificare un prezzo alla cassa**, non si fa offline, un vuoto tracciato per lotto o etichetta non viene ripreso alla cassa, e una vendita il cui totale non sarebbe sopra lo zero non viene fatta (paghi allora i vuoti dal cassetto).
+
 <!-- anchor: user.money.till-offline -->
 ### Quando la cassa è offline
 
@@ -4192,6 +4194,49 @@ Vuole che le sue fatture e lettere siano stampate sulla carta che usa il suo pae
 
 **Vedi anche:** [Paese](#paese)
 
+<!-- anchor: user.workspace.settings.master-data -->
+### Dati anagrafici
+
+**Destinatari:** Proprietario · Amministratore con il permesso
+
+I dati anagrafici sono gli elenchi con cui è configurata l’attività e che i suoi selettori leggono: le unità, le aliquote IVA, gli articoli, i fornitori e il resto. **Dati anagrafici** mostra ogni tipo in un unico posto, per gruppi. Ogni scheda nomina il tipo, dice in una riga che cos’è e quanti record contiene, e apre la schermata che lo modifica.
+
+**Passaggi**
+
+1. In [Spazio di lavoro](https://fdittgen-png.github.io/deskilo/#/workspace-settings), apra **Dati anagrafici**, oppure scelga **Dati anagrafici** sotto **Configurare lo spazio** nel menu.
+2. Scriva in **Cerca** per tenere solo le schede il cui nome corrisponde.
+3. Tocchi una scheda e modifichi i suoi record nella schermata che apre.
+
+**Da sapere**
+
+- Vede una scheda solo se può aprirne la schermata: la sua funzionalità è attiva e Lei ne ha il permesso.
+- Un numero che non si può leggere lo dice, con **Riprova**; non è mai mostrato come 0.
+
+<!-- anchor: user.workspace.master-data.measures -->
+#### Misure e imposte
+
+**Unità di misura** con le loro conversioni, e **Aliquote IVA**. Le unità sono sempre qui, che la funzionalità **Unità di misura** sia attiva o no.
+
+<!-- anchor: user.workspace.master-data.catalogue -->
+#### Catalogo
+
+**Articoli**, **Gruppi di articoli** e **Servizi**: ciò che l’attività tiene a magazzino e vende.
+
+<!-- anchor: user.workspace.master-data.places -->
+#### Ubicazioni e magazzino
+
+**Ubicazioni**, dove si conservano le merci, e **Casse**: le casse al banco, ciascuna con la disposizione dei suoi tasti.
+
+<!-- anchor: user.workspace.master-data.partners -->
+#### Partner commerciali
+
+**Fornitori** e **Clienti fatturati**.
+
+<!-- anchor: user.workspace.master-data.organisation -->
+#### Organizzazione
+
+**Sedi**: gli indirizzi dell’attività e i piani di ciascuno.
+
 <!-- anchor: user.workspace.settings.units -->
 ### Unità di misura
 
@@ -4203,11 +4248,10 @@ I suoi articoli, preventivi e fatture sono misurati in unità, e alcune unità s
 
 **Passaggi**
 
-1. Attivi **Unità di misura** in **Funzionalità** (è disattivata finché non la richiede).
-2. In [Unità di misura](https://fdittgen-png.github.io/deskilo/#/settings/units), tocchi **Nuova unità**.
-3. Compili **Codice dell’unità** (non potrà più cambiare), **Il suo nome per l’unità**, **Misura** e **Un’unità equivale a** nell’unità di base di ciò che misura: 1000 per un km contato in m, 0,001 per un mm.
-4. Se vuole, compili **Codice UN/ECE (per le fatture elettroniche)**, che le fatture elettroniche riportano (KMT per un km).
-5. Tocchi **Salva**.
+1. In [Unità di misura](https://fdittgen-png.github.io/deskilo/#/settings/units), raggiunta da **Dati anagrafici**, tocchi **Nuova unità**.
+2. Compili **Codice dell’unità** (non potrà più cambiare), **Il suo nome per l’unità**, **Misura** e **Un’unità equivale a** nell’unità di base di ciò che misura: 1000 per un km contato in m, 0,001 per un mm.
+3. Se vuole, compili **Codice UN/ECE (per le fatture elettroniche)**, che le fatture elettroniche riportano (KMT per un km).
+4. Tocchi **Salva**.
 
 **Da sapere**
 
@@ -4215,6 +4259,7 @@ I suoi articoli, preventivi e fatture sono misurati in unità, e alcune unità s
 - Un’unità in uso (un articolo contato con essa, un movimento di magazzino, un preventivo o una riga di fattura) mantiene per sempre grandezza e fattore: una correzione è una nuova unità. Un’unità che nessuno usa può essere archiviata (**Archivia**) e mostrata di nuovo (**Mostra di nuovo**).
 - Una conversione è esatta: 2,5 km sono 2500 m. Due tipi di unità non si convertono mai, e un risultato che sei decimali non possono contenere viene rifiutato, mai arrotondato.
 - Solo il proprietario e gli amministratori autorizzati a modificare le impostazioni dello spazio gestiscono le unità.
+- Le unità sono sempre qui. La funzionalità **Unità di misura** in **Funzionalità** decide se i preventivi e le fatture offrono le unità proprie dell’attività e se i selettori di un articolo offrono ogni unità; finché è disattivata, offrono solo le unità consuete.
 
 **Vedi anche:** [Carta dei documenti](#carta-dei-documenti)
 

@@ -40,9 +40,13 @@ class CounterReceiptLine {
     required this.netMinor,
     required this.taxMinor,
     required this.grossMinor,
+    this.returned = false,
   });
 
   final String label;
+
+  /// #4478 -- a deposit brought back: its amounts are below zero and it is taken off the sale.
+  final bool returned;
 
   /// The exact quantity, as the server wrote it (`0.35`).
   final String quantity;
@@ -68,6 +72,7 @@ class CounterReceiptLine {
       netMinor: _minor(amounts, 'net_minor'),
       taxMinor: _minor(amounts, 'tax_minor'),
       grossMinor: _minor(amounts, 'gross_minor'),
+      returned: r.isTrue('returned'),
     );
   }
 }

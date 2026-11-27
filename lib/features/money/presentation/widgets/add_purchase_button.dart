@@ -20,6 +20,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/app_sheet.dart';
 import 'expense_sheet.dart';
+import 'expense_vat_fields.dart';
 import 'purchase_dialogs.dart';
 
 /// Who paid what is being entered.
@@ -53,7 +54,7 @@ class AddPurchaseButton extends ConsumerWidget {
     if (payer == null || !context.mounted) return;
     switch (payer) {
       case PurchasePayer.me:
-        await showExpenseSheet(context, ref, currency);
+        await whenExpenseVatRead(context, ref, unopened: null, () => showExpenseSheet(context, ref, currency));
       case PurchasePayer.unpaid || PurchasePayer.space:
         if (workspace == null) return;
         await showPurchaseBillDialog(context, workspace);

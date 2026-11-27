@@ -3,7 +3,7 @@
 -- movement, a move of two links those two, a move back links the one moved; a piece's history is its rows in order;
 -- a refused movement links nothing; the rows are read by a stock viewer of the business only. Rolled back.
 begin;
-select plan(9);
+select plan(12);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -94,6 +94,26 @@ select is(pg_temp.run_as(pg_temp.u(1), format('select count(*)::text from public
   'the business''s manager reads the links');
 select is(pg_temp.run_as(pg_temp.u(2), format('select count(*)::text from public.stock_movement_units where workspace_id = %L', pg_temp.u(101))), '0',
   'another business reads none of them');
+
+-- #4492: what a movement carried is history: the server's own role does not rewrite it either
+create or replace function pg_temp.server(p_sql text) returns text language plpgsql as $f$
+begin
+  set local role service_role;
+  begin
+    execute p_sql;
+  exception when others then
+    reset role;
+    return 'ERR ' || sqlstate;
+  end;
+  reset role;
+  return 'done';
+end
+$f$;
+select is(pg_temp.server(format('delete from public.stock_movement_units where workspace_id = %L', pg_temp.u(101))), 'ERR DKG08',
+  'the pieces of a movement are not deleted');
+select is(pg_temp.server(format('update public.stock_movement_units l set movement_id = (select min(m.id::text)::uuid from public.stock_movements m where m.workspace_id = l.workspace_id and m.id <> l.movement_id) where l.workspace_id = %L', pg_temp.u(101))),
+  'ERR DKG08', 'nor handed to another movement');
+select is((select count(*)::int from public.stock_movement_units where workspace_id = pg_temp.u(101)), 6, 'and every link is still there');
 
 select * from finish();
 rollback;

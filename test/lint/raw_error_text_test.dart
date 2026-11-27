@@ -65,7 +65,7 @@ int ownErrorBranches(String source) {
 /// read their own way, per feature, measured on 24 Nov 2026 after stock's
 /// sweep. Only falls: a branch moved onto the shared view lowers its feature.
 const _ownErrorBranchCeiling = <String, int>{
-  'money': 6, // till* only, b5's lane
+  'money': 4, // the till itself (readiness, open tills) and a session's expected cash
   'stock': 10,
 };
 

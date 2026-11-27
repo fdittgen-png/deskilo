@@ -357,5 +357,38 @@
         "type": "String"
       }
     }
+  },
+  "tillReturnOffline": "A deposit is not taken back while the till is offline.",
+  "@tillReturnOffline": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnNoDeposit": "The last item carries no deposit to take back.",
+  "@tillReturnNoDeposit": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnedLine": "Deposit returned",
+  "@tillReturnedLine": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnNotAllowed": "You may not take a deposit back at the till.",
+  "@tillReturnNotAllowed": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnTracked": "This deposit is tracked by lot or tag: it is not taken back at the till.",
+  "@tillReturnTracked": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnNotDeposit": "This item is not a deposit any item is sold with.",
+  "@tillReturnNotDeposit": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnedLabel": "Deposit returned: {item}",
+  "@tillReturnedLabel": {
+    "description": "#4478 a returned deposit on the receipt; item is its name",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
   }
 }

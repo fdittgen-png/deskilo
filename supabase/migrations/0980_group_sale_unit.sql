@@ -18,7 +18,7 @@ language plpgsql
 as $f$
 begin
   if (length(p_def) - length(replace(p_def, p_old, ''))) / length(p_old) <> 1 then
-    raise exception '0975: % is not found exactly once', p_what using errcode = 'P0001';
+    raise exception '0980: % is not found exactly once', p_what using errcode = 'P0001';
   end if;
   return replace(p_def, p_old, p_new);
 end
@@ -76,4 +76,4 @@ begin
 end
 $migration$;
 
-select public.set_deskilo_schema_version(975);
+select public.set_deskilo_schema_version(980);

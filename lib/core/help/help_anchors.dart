@@ -351,6 +351,14 @@ abstract final class HelpAnchor {
   static const workspacePaper = 'user.workspace.settings.paper';
   static const settingsUnits = 'user.workspace.settings.units';
 
+  /// #4485 — the Master data page and its groups.
+  static const masterData = 'user.workspace.settings.master-data';
+  static const masterDataMeasures = 'user.workspace.master-data.measures';
+  static const masterDataCatalogue = 'user.workspace.master-data.catalogue';
+  static const masterDataPlaces = 'user.workspace.master-data.places';
+  static const masterDataPartners = 'user.workspace.master-data.partners';
+  static const masterDataOrganisation = 'user.workspace.master-data.organisation';
+
   /// The free-text address a paper document prints.
   static const workspaceAddress = 'user.workspace.settings.address';
 

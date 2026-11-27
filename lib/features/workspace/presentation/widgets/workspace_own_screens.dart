@@ -14,6 +14,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 
@@ -73,17 +74,27 @@ class WorkspaceOwnScreens extends ConsumerWidget {
             path: '/settings/questions',
             helpTopic: helpTopic,
           ),
+        // #4485 — every kind of master data, each opening its own screen.
+        _Row(
+          rowKey: 'workspaceSettingsMasterData',
+          icon: Icons.dataset_outlined,
+          title: l10n.deploymentKindMasterData,
+          anchor: HelpAnchor.masterData,
+          subtitle: l10n.masterDataIntro,
+          path: Routes.settingsMasterData,
+          helpTopic: helpTopic,
+        ),
         // #4442 — the units this business measures in and how they convert.
-        if (features.contains(WorkspaceFeature.unitsOfMeasure))
-          _Row(
-            rowKey: 'workspaceSettingsUnits',
-            icon: Icons.straighten,
-            title: l10n.featureUnitsOfMeasureTitle,
-            anchor: HelpAnchor.settingsUnits,
-            subtitle: l10n.measureUnitsSubtitle,
-            path: '/settings/units',
-            helpTopic: helpTopic,
-          ),
+        // #4485 — always offered: the pickers read the units either way.
+        _Row(
+          rowKey: 'workspaceSettingsUnits',
+          icon: Icons.straighten,
+          title: l10n.featureUnitsOfMeasureTitle,
+          anchor: HelpAnchor.settingsUnits,
+          subtitle: l10n.measureUnitsSubtitle,
+          path: Routes.settingsUnits,
+          helpTopic: helpTopic,
+        ),
       ],
     );
   }

@@ -1,0 +1,16 @@
+# #4492 row 6 -- the patches scripts/upgrade_equivalence_check.sh found completing
+# WITHOUT their anchor and saying nothing, each with what it is. One per line:
+#
+#   <SILENT|PATCHED_STUB> <migration> <function signature>   # what it is
+#
+# A pair that is not here fails the check; a pair here that the check no longer
+# finds is reported, and its line goes. The list only shrinks: an applied
+# migration never changes, so a line leaves when a later migration does the
+# file's work by itself -- the check gives the function the body it had before
+# the silent file and wants, after the later one, the body the silent file
+# leaves on a replay -- or when the reason for listing it no longer holds.
+#
+# Left that way: 0735_no_default_currency workspace_status(uuid,text,text). Its
+# patch sat inside `if position(old in def) > 0`, so where the fallback currency
+# was written otherwise it stayed and nothing was said; a later migration takes
+# the fallback out whatever its spacing and raises if any is left.

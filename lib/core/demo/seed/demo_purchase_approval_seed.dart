@@ -23,6 +23,7 @@ void seedDemoPurchaseApproval(
         currency: 'EUR',
         grossCents: 5880,
         receivedOn: today,
+        supplierId: supplier.id, // #4492: the list names the supplier by its id
       ),
       revision: 1,
       lines: const [
@@ -49,6 +50,7 @@ void seedDemoPurchaseApproval(
     currency: 'CHF',
     grossCents: 12500,
     receivedOn: today,
+    supplierId: supplier.id, // #4492
   );
   purchases
     ..add(PurchaseDetail(

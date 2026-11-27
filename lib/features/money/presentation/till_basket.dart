@@ -152,6 +152,7 @@ class _Line extends StatelessWidget {
         '${line.quantity} ${line.unit}'.trim(),
         if (line.ageConfirmed != null) l10n.tillAgeConfirmedLine('${line.ageConfirmed}'),
         if (line.depositFor != null) l10n.tillDepositLine,
+        if (line.returned) l10n.tillReturnedLine,
         if (line.lot case final lot?) l10n.tillLotLine(lot.code),
       ].join(' · '),
     );

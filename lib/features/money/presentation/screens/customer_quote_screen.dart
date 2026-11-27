@@ -19,7 +19,6 @@ import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../application/customer_quote_commands.dart';
 import '../../domain/customer_quote.dart';
 import '../../providers/billing_customer_providers.dart';
@@ -106,34 +105,26 @@ class _CustomerQuoteScreenState extends ConsumerState<CustomerQuoteScreen> {
           : Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
-                child: ref
-                    .watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)))
-                    .when(
-                      loading: () => const LoadingView(),
-                      error: (error, _) => Padding(
-                        padding: const EdgeInsets.all(AppSpacing.md),
-                        child: ReadFailureBanner(
-                          error: error,
-                          refusal: error is QuoteRefusal
-                              ? quoteRefusalText(l10n, error)
-                              : null,
-                          retryKey: const ValueKey('quote-retry'),
-                          onRetry: () => ref.invalidate(
-                            customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)),
-                          ),
-                        ),
-                      ),
-                      data: (quote) => _Content(
-                        quote: quote,
-                        workspaceId: id,
-                        canIssue: canIssue,
-                        busy: _busy,
-                        said: _said,
-                        onRun: (act, {leave = false}) => unawaited(_run(id, act, leave: leave)),
-                        onAnswer: (context, {required convert}) =>
-                            unawaited(_answer(context, id, quote, convert: convert)),
-                      ),
-                    ),
+                child: AsyncReadBody(
+                  value: ref.watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId))),
+                  refusal: (error) => error is QuoteRefusal
+                      ? quoteRefusalText(l10n, error)
+                      : null,
+                  retryKey: const ValueKey('quote-retry'),
+                  onRetry: () => ref.invalidate(
+                    customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)),
+                  ),
+                  data: (quote) => _Content(
+                    quote: quote,
+                    workspaceId: id,
+                    canIssue: canIssue,
+                    busy: _busy,
+                    said: _said,
+                    onRun: (act, {leave = false}) => unawaited(_run(id, act, leave: leave)),
+                    onAnswer: (context, {required convert}) =>
+                        unawaited(_answer(context, id, quote, convert: convert)),
+                  ),
+                ),
               ),
             ),
     );
@@ -201,9 +192,17 @@ class _Content extends ConsumerWidget {
         key: const ValueKey('quote-title'),
         style: theme.textTheme.titleLarge,
       ),
-      Text(
-        [quoteStatusLabel(l10n, quote), ?names[quote.subjectId]].join(' · '),
-        key: const ValueKey('quote-status'),
+      const FormGap.small(),
+      // The state is a word on its tone, as in the list; the customer beside it.
+      Wrap(
+        spacing: AppSpacing.sm,
+        runSpacing: AppSpacing.xs,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          quoteStatusChip(l10n, quote, key: const ValueKey('quote-status')),
+          if (names[quote.subjectId] case final name?)
+            Text(name, key: const ValueKey('quote-customer')),
+        ],
       ),
       if (said != null) ...[
         const FormGap(),

@@ -19,7 +19,6 @@ import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../domain/service_fulfilment.dart';
 import '../../providers/billing_customer_providers.dart';
 import '../../providers/service_fulfilment_providers.dart';
@@ -95,33 +94,28 @@ class _State extends ConsumerState<ServiceFulfilmentScreen> {
       ),
       body: workspace == null
           ? const SizedBox.shrink()
-          : ref
-                .watch(serviceFulfilmentProvider((workspaceId: workspace.id, fulfilmentId: widget.fulfilmentId)))
-                .when(
-                  loading: () => const LoadingView(),
-                  error: (error, _) => ReadFailureBanner(
-                    key: const ValueKey('engagement-failed'),
-                    error: error,
-                    refusal: error is FulfilmentRefusal
-                        ? engagementRefusalText(l10n, error)
-                        : null,
-                    onRetry: () => ref.invalidate(serviceFulfilmentProvider(
-                        (workspaceId: workspace.id, fulfilmentId: widget.fulfilmentId))),
-                  ),
-                  data: (e) => Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
-                      child: _Content(
-                        workspaceId: workspace.id,
-                        item: e,
-                        canAct: canIssue,
-                        busy: _busy,
-                        said: _said,
-                        onStep: (to) => to == FulfilmentState.cancelled ? _cancel(workspace.id, e) : _step(workspace.id, e, to),
-                      ),
-                    ),
+          : AsyncReadBody(
+              value: ref.watch(serviceFulfilmentProvider((workspaceId: workspace.id, fulfilmentId: widget.fulfilmentId))),
+              refusal: (error) => error is FulfilmentRefusal
+                  ? engagementRefusalText(l10n, error)
+                  : null,
+              retryKey: const ValueKey('engagement-retry'),
+              onRetry: () => ref.invalidate(serviceFulfilmentProvider(
+                  (workspaceId: workspace.id, fulfilmentId: widget.fulfilmentId))),
+              data: (e) => Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
+                  child: _Content(
+                    workspaceId: workspace.id,
+                    item: e,
+                    canAct: canIssue,
+                    busy: _busy,
+                    said: _said,
+                    onStep: (to) => to == FulfilmentState.cancelled ? _cancel(workspace.id, e) : _step(workspace.id, e, to),
                   ),
                 ),
+              ),
+            ),
     );
   }
 }

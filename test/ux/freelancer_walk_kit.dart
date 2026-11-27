@@ -69,7 +69,11 @@ Future<void> walkKessler(WidgetTester tester, Size size) async {
   }
 
   await open('quotes', '/money/quotes');
-  expect(_text('QUO-0001 · Domaine des Aires'), isTrue);
+  // #4492 — one card on a phone, two columns of the records table on a desk
+  expect(
+    _text('QUO-0001 · Domaine des Aires') || (_text('QUO-0001') && _text('Domaine des Aires')),
+    isTrue,
+  );
   expect(_text('€642.00'), isTrue, reason: 'the accepted revision 2, VAT included');
   await open('customers', '/money/customers');
   for (final name in ['Domaine des Aires', 'Chiara', 'Lindner Beratung']) {

@@ -3,7 +3,7 @@
 -- its whole content in one request through the one stock path (lots and pieces kept, the ledger and the unit agreeing), refused when it
 -- changed under the caller, unpacked loose, nested one level; whoever manages the stock acts, never an assistant. Rolled back.
 begin;
-select plan(28);
+select plan(30);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -156,6 +156,26 @@ select is(left(pg_temp.mv(3, 941, format('[{"item_id": "%s", "quantity": "1", "f
 select is(pg_temp.bal(306, 'MAIN'), 6.000000, 'and the refused take-out left the balance as it was');
 select pg_temp.unpack(3, 942, 'S9', 1);
 select is(left(pg_temp.mv(3, 943, format('[{"item_id": "%s", "quantity": "1", "from": "%s", "to": "%s"}]', pg_temp.u(306), pg_temp.loc('MAIN'), pg_temp.loc('FLOOR')), 'transfer'), 3) <> 'ERR', true, 'after the unpack the same take-out passes');
+
+-- #4492: the handling units a movement carried are history, for the server's own role too
+create or replace function pg_temp.server(p_sql text) returns text language plpgsql as $f$
+begin
+  set local role service_role;
+  begin
+    execute p_sql;
+  exception when others then
+    reset role;
+    return 'ERR ' || sqlstate;
+  end;
+  reset role;
+  return 'done';
+end
+$f$;
+select set_config('t.hu_links', (select count(*)::text from public.stock_movement_handling_units where unit_id = pg_temp.uid('P1')), false);
+select is(pg_temp.server(format('delete from public.stock_movement_handling_units where unit_id = %L', pg_temp.uid('P1'))), 'ERR DKG08',
+  'the handling units of a movement are not deleted');
+select is((select count(*)::text from public.stock_movement_handling_units where unit_id = pg_temp.uid('P1')), current_setting('t.hu_links'),
+  'and every link is still there');
 
 select * from finish();
 rollback;

@@ -14,6 +14,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -75,23 +76,11 @@ class _Tills extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    return ref
-        .watch(tillDrawerProvider(workspaceId))
-        .when(
-          loading: () => const LoadingView(),
-          error: (e, _) => Center(
-            child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.lg),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(drawerProblemText(l10n, e), textAlign: TextAlign.center),
-                  const FormGap(),
-                  FilledButton(key: const ValueKey('drawer-retry'), onPressed: () => ref.invalidate(tillDrawerProvider(workspaceId)), child: Text(l10n.tillRetry)),
-                ],
-              ),
-            ),
-          ),
+    return AsyncReadBody(
+          value: ref.watch(tillDrawerProvider(workspaceId)),
+          refusal: (e) => drawerRefusalWords(l10n, e),
+          retryKey: const ValueKey('drawer-retry'),
+          onRetry: () => ref.invalidate(tillDrawerProvider(workspaceId)),
           // the terminal console first: a terminal rings up a sale with or without a till set up here
           data: (tills) => Align(
             alignment: Alignment.topCenter,
