@@ -233,7 +233,15 @@ class TillOfflineQueue {
     );
     lane.nextSeq++;
     lane.pending.add(sale);
-    await _save();
+    try {
+      await _save();
+    } on Object {
+      // #4492 -- not stored is not made: the till says so and the basket is rung up again, so this sale must not wait in memory
+      // and be sent beside the second one; its number was never given
+      lane.pending.remove(sale);
+      if (lane.nextSeq == sale.seq + 1) lane.nextSeq = sale.seq;
+      rethrow;
+    }
     return sale;
   }
 
@@ -280,16 +288,21 @@ class TillOfflineQueue {
   }
 
   Future<void> _syncLane(_Lane lane, TillOfflinePort port, String workspaceId, int minorDigits, List<OfflineSaleResult> results, Set<int> gaps) async {
-    while (lane.pending.isNotEmpty) {
-      final batch = lane.pending.take(_batch).toList();
-      final answer = await port.sync(workspaceId, sessionId: lane.sessionId, offlineSince: lane.since!, sales: batch, minorDigits: minorDigits);
-      final answered = {for (final r in answer.results) r.requestId};
-      if (answered.isEmpty) break;
-      lane.pending.removeWhere((s) => answered.contains(s.requestId));
-      results.addAll(answer.results);
-      gaps
-        ..clear()
-        ..addAll(answer.gaps);
+    // the numbers the session misses are the ones its LAST answer names (a later batch fills what an earlier one missed); they are
+    // added to the other sessions', never put in their place (#4492)
+    var missing = const <int>[];
+    try {
+      while (lane.pending.isNotEmpty) {
+        final batch = lane.pending.take(_batch).toList();
+        final answer = await port.sync(workspaceId, sessionId: lane.sessionId, offlineSince: lane.since!, sales: batch, minorDigits: minorDigits);
+        final answered = {for (final r in answer.results) r.requestId};
+        if (answered.isEmpty) break;
+        lane.pending.removeWhere((s) => answered.contains(s.requestId));
+        results.addAll(answer.results);
+        missing = answer.gaps;
+      }
+    } finally {
+      gaps.addAll(missing);
     }
   }
 }
