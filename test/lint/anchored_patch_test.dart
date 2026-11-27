@@ -236,6 +236,16 @@ const _reviewed = {
   // reproduced the refusal ("function ... is not unique") before the
   // drop was added.
   'create_workspace@0202',
+  // #4492 restates counter_receipt_finalize_v1 from the body the replay builds (0947 as patched by 0973's four anchors:
+  // the tax within the total, the returned deposit's branch, its movements under a request id of its own, no tracks
+  // frozen for it). The body was taken from the effective schema of the database job at schema 974 and matched the
+  // committed contract's digest (ef62bdcefa83) before one thing changed: the place a goods line leaves from, and the
+  // plan over the places below it. pgTAP 580, 581 (deposits), 561, 575 and 584 green on the replay with it.
+  'counter_receipt_finalize_v1@0980',
+  // #4492 restates stock_record from the body the replay builds (0837 as patched by 0840, 0896 and 0941: the body
+  // carries the unit factors, the counter links and the invoice line), matched against the contract's digest
+  // (1eebb71866fb), and adds only the two facts of a loss to the insert. Every stock pgTAP file green on the replay.
+  'stock_record@0981',
 };
 
 /// #4397 -- what the guard found when it learned to see a patch written as `pg_get_functiondef('public.<name>(…)'`

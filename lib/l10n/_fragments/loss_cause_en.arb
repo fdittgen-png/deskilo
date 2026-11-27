@@ -1,0 +1,46 @@
+{
+  "stockLossCauseLabel": "Cause of the loss",
+  "@stockLossCauseLabel": {
+    "description": "#4492 a loss says why: the label of the choice on the take-out sheet and of the row on a movement"
+  },
+  "stockLossCauseRequired": "Say why the goods were lost.",
+  "@stockLossCauseRequired": {
+    "description": "#4492 a loss says why: shown under the choice when a loss is filed without its cause"
+  },
+  "stockLossCauseExpired": "Past its date",
+  "@stockLossCauseExpired": {
+    "description": "#4492 a loss says why: the goods passed their best-before or use-by date"
+  },
+  "stockLossCauseDamaged": "Damaged",
+  "@stockLossCauseDamaged": {
+    "description": "#4492 a loss says why: the goods were broken or damaged"
+  },
+  "stockLossCauseSpoiled": "Spoiled",
+  "@stockLossCauseSpoiled": {
+    "description": "#4492 a loss says why: the goods went bad before their date"
+  },
+  "stockLossCauseMissing": "Missing",
+  "@stockLossCauseMissing": {
+    "description": "#4492 a loss says why: the goods are no longer there (stolen, lost, never found)"
+  },
+  "stockLossCauseOther": "Other",
+  "@stockLossCauseOther": {
+    "description": "#4492 a loss says why: a cause that is none of the others; the note says which"
+  },
+  "stockLossCauseNone": "Not recorded",
+  "@stockLossCauseNone": {
+    "description": "#4492 a loss says why: the cause row of a loss that was recorded without a cause (before causes existed, or by an older app)"
+  },
+  "stockLossNoteLabel": "Note (optional)",
+  "@stockLossNoteLabel": {
+    "description": "#4492 a loss says why: the label of the note field on the take-out sheet"
+  },
+  "stockLossNoteRow": "Note",
+  "@stockLossNoteRow": {
+    "description": "#4492 a loss says why: the label of the note row on a movement"
+  },
+  "stockLossNoteTooLong": "The note is too long.",
+  "@stockLossNoteTooLong": {
+    "description": "#4492 a loss says why: shown under the note field"
+  }
+}

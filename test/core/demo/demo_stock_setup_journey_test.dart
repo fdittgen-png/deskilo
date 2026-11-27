@@ -107,6 +107,7 @@ void main() {
       await _choose(tester, 'stock-move-item', 'Coffee beans');
       await _choose(tester, 'stock-move-from', 'MAIN · Main store');
       await tester.enterText(find.byKey(const ValueKey('stock-move-quantity')), '0.5');
+      await _choose(tester, 'stock-move-cause', _en.stockLossCauseDamaged);
       await _tap(tester, find.byKey(const ValueKey('stock-move-submit')));
       final reasons = (await container.read(stockQueriesProvider).movementsPage(demoFirstSpaceId)).rows.map((m) => m.reason).toList();
       expect(reasons.first, 'loss', reason: 'the take-out is the newest movement');

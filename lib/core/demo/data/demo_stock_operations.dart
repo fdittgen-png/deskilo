@@ -57,10 +57,20 @@ class DemoStockOperations implements StockOperations {
       });
 
   @override
-  Future<StockCommandResult> takeOut(String workspaceId, StockTakeOutReason reason, List<StockLineDraft> lines, String requestId) async =>
+  Future<StockCommandResult> takeOut(String workspaceId, StockTakeOutReason reason, List<StockLineDraft> lines, String requestId, {StockLoss? loss}) async =>
       _core.once(requestId, () {
         _check(workspaceId);
-        final moved = _core.takeOut(reason, lines);
+        // the loss command's own rule (stock_loss_v2): a loss says why, and its note has a length
+        if (reason == StockTakeOutReason.loss) {
+          switch (checkStockLoss(loss?.cause, loss?.note ?? '')) {
+            case StockLossProblem.causeMissing:
+              throw const StockConfigRefused('cause', StockRefusal.required);
+            case StockLossProblem.noteTooLong:
+              throw const StockConfigRefused('note', StockRefusal.tooLong);
+            case null:
+          }
+        }
+        final moved = _core.takeOut(reason, lines, loss: loss);
         return (requestId: requestId, movements: moved.length, transferId: null, status: null);
       });
 

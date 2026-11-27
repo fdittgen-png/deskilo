@@ -905,7 +905,9 @@ window.SETUP_L10N={
    "counterLayoutCashierReorderHint": "A cashier may reorder a till's keys on their own device. Set in the app's settings.",
    "optCells": "{n} cells",
    "counterMaxDiscount": "Largest discount at the till",
-   "counterMaxDiscountHint": "The largest discount a cashier may give on a till line. Set in the app's settings."
+   "counterMaxDiscountHint": "The largest discount a cashier may give on a till line. Set in the app's settings.",
+   "counterSellingPlace": "Place the till sells from",
+   "counterSellingPlaceHint": "The code of a place that holds stock, for example MAIN. A sale at the till takes goods from this place and from every place below it, the first to expire first; a place beside it, such as a back store, is not sold from. A till can name a place of its own in the app."
   },
   "feature": {
    "calendarTab": [
@@ -2959,7 +2961,9 @@ window.SETUP_L10N={
    "counterLayoutCashierReorderHint": "Un caissier peut réordonner les touches d'une caisse sur son appareil. Réglé dans les paramètres de l'application.",
    "optCells": "{n} cases",
    "counterMaxDiscount": "Remise maximale à la caisse",
-   "counterMaxDiscountHint": "La remise maximale qu'un caissier peut accorder sur une ligne. Réglée dans les paramètres de l'application."
+   "counterMaxDiscountHint": "La remise maximale qu'un caissier peut accorder sur une ligne. Réglée dans les paramètres de l'application.",
+   "counterSellingPlace": "Lieu d’où la caisse vend",
+   "counterSellingPlaceHint": "Le code d’un lieu qui détient du stock, par exemple MAIN. Une vente en caisse prend les marchandises dans ce lieu et dans tous les lieux qui en dépendent, la date la plus proche d’abord ; un lieu voisin, comme une réserve, ne sert pas à la vente. Une caisse peut nommer son propre lieu dans l’application."
   },
   "feature": {
    "calendarTab": [
@@ -5013,7 +5017,9 @@ window.SETUP_L10N={
    "counterLayoutCashierReorderHint": "Ein Kassierer darf die Tasten einer Kasse auf seinem Gerät umordnen. In den Einstellungen der App festgelegt.",
    "optCells": "{n} Zellen",
    "counterMaxDiscount": "Größter Rabatt an der Kasse",
-   "counterMaxDiscountHint": "Der größte Rabatt, den eine Kasse auf eine Zeile geben darf. In den Einstellungen der App festgelegt."
+   "counterMaxDiscountHint": "Der größte Rabatt, den eine Kasse auf eine Zeile geben darf. In den Einstellungen der App festgelegt.",
+   "counterSellingPlace": "Ort, von dem die Kasse verkauft",
+   "counterSellingPlaceHint": "Der Code eines Orts mit Bestand, zum Beispiel MAIN. Ein Verkauf an der Kasse nimmt die Ware von diesem Ort und von allen Orten darunter, das früheste Datum zuerst; von einem Ort daneben, etwa einem Lager, wird nicht verkauft. Eine Kasse kann in der App einen eigenen Ort nennen."
   },
   "feature": {
    "calendarTab": [
@@ -7067,7 +7073,9 @@ window.SETUP_L10N={
    "counterLayoutCashierReorderHint": "Un cajero puede reordenar las teclas de una caja en su dispositivo. Se ajusta en la configuración de la aplicación.",
    "optCells": "{n} celdas",
    "counterMaxDiscount": "Descuento máximo en la caja",
-   "counterMaxDiscountHint": "El descuento máximo que un cajero puede aplicar a una línea. Se ajusta en la configuración de la aplicación."
+   "counterMaxDiscountHint": "El descuento máximo que un cajero puede aplicar a una línea. Se ajusta en la configuración de la aplicación.",
+   "counterSellingPlace": "Lugar desde el que vende la caja",
+   "counterSellingPlaceHint": "El código de un lugar con existencias, por ejemplo MAIN. Una venta en caja toma la mercancía de este lugar y de todos los que dependen de él, primero la que caduca antes; de un lugar contiguo, como una trastienda, no se vende. Una caja puede indicar un lugar propio en la aplicación."
   },
   "feature": {
    "calendarTab": [
@@ -9121,7 +9129,9 @@ window.SETUP_L10N={
    "counterLayoutCashierReorderHint": "Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo. Impostato nelle impostazioni dell'app.",
    "optCells": "{n} celle",
    "counterMaxDiscount": "Sconto massimo alla cassa",
-   "counterMaxDiscountHint": "Lo sconto massimo che un cassiere può applicare a una riga. Impostato nelle impostazioni dell'app."
+   "counterMaxDiscountHint": "Lo sconto massimo che un cassiere può applicare a una riga. Impostato nelle impostazioni dell'app.",
+   "counterSellingPlace": "Luogo da cui vende la cassa",
+   "counterSellingPlaceHint": "Il codice di un luogo con scorte, per esempio MAIN. Una vendita in cassa prende la merce da questo luogo e da tutti i luoghi sottostanti, prima quella che scade prima; da un luogo accanto, come un retrobottega, non si vende. Una cassa può indicare un luogo proprio nell’app."
   },
   "feature": {
    "calendarTab": [

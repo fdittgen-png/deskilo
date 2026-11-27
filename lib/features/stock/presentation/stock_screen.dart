@@ -25,6 +25,7 @@ import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_day.dart';
 import 'stock_first_run.dart';
+import 'stock_loss_text.dart';
 import 'stock_page_shell.dart';
 import 'stock_place_text.dart';
 import 'stock_read_failed.dart';
@@ -231,7 +232,9 @@ class _MovementsList extends ConsumerWidget {
         title: Text(m.itemLabel),
         subtitle: Text(
           '${addresses[m.fromLocationId] ?? m.fromLocationCode} → ${addresses[m.toLocationId] ?? m.toLocationCode} · '
-          '${day.format(stockDayOf(ref, m.occurredAt))}',
+          '${day.format(stockDayOf(ref, m.occurredAt))}'
+          // a loss says why it was one
+          '${m.lossCause == null ? '' : ' · ${stockLossCauseText(l10n, m.lossCause!)}'}',
         ),
         trailing: Text(
           l10n.stockQuantityWithUnit(appFormatOf(context).quantity(m.quantity), m.unit),

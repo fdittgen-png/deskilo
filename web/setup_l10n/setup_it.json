@@ -900,5 +900,7 @@
  "counterLayoutCashierReorderHint": "Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo. Impostato nelle impostazioni dell'app.",
  "optCells": "{n} celle",
  "counterMaxDiscount": "Sconto massimo alla cassa",
- "counterMaxDiscountHint": "Lo sconto massimo che un cassiere può applicare a una riga. Impostato nelle impostazioni dell'app."
+ "counterMaxDiscountHint": "Lo sconto massimo che un cassiere può applicare a una riga. Impostato nelle impostazioni dell'app.",
+ "counterSellingPlace": "Luogo da cui vende la cassa",
+ "counterSellingPlaceHint": "Il codice di un luogo con scorte, per esempio MAIN. Una vendita in cassa prende la merce da questo luogo e da tutti i luoghi sottostanti, prima quella che scade prima; da un luogo accanto, come un retrobottega, non si vende. Una cassa può indicare un luogo proprio nell’app."
 }

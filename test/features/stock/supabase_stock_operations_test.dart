@@ -103,8 +103,15 @@ void main() {
     final h = _with((r) => _json(200, {'request_id': 'r', 'movements': [<String, Object?>{}]}));
     const line = StockLineDraft(itemId: 'i-1', quantity: '1', fromLocationId: 'p-1');
     await h.operations.takeOut(_ws, StockTakeOutReason.consumption, const [line], 'req-4');
-    await h.operations.takeOut(_ws, StockTakeOutReason.loss, const [line], 'req-5');
-    expect(h.sent.map((r) => r.url.path.split('/').last), ['stock_consume_v1', 'stock_loss_v1']);
+    await h.operations.takeOut(_ws, StockTakeOutReason.loss, const [line], 'req-5', loss: const StockLoss(cause: StockLossCause.expired, note: '  two days over  '));
+    await h.operations.takeOut(_ws, StockTakeOutReason.loss, const [line], 'req-6');
+    expect(h.sent.map((r) => r.url.path.split('/').last), ['stock_consume_v1', 'stock_loss_v2', 'stock_loss_v2']);
+    final used = jsonDecode(h.sent[0].body) as Map<String, Object?>;
+    expect(used.containsKey('p_cause') || used.containsKey('p_note'), isFalse, reason: 'goods used carry no cause');
+    final lost = jsonDecode(h.sent[1].body) as Map<String, Object?>;
+    expect([lost['p_cause'], lost['p_note']], ['expired', 'two days over'], reason: 'a loss is sent with its cause and its note, trimmed');
+    final unsaid = jsonDecode(h.sent[2].body) as Map<String, Object?>;
+    expect([unsaid.containsKey('p_cause'), unsaid['p_cause'], unsaid['p_note']], [true, null, null], reason: 'a loss without a cause is sent as such: the server refuses it, nothing is made up');
   });
 
   test('less on hand than asked is the typed failure, whole; a field and a reason is a refusal', () async {

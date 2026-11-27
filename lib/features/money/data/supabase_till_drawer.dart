@@ -27,7 +27,7 @@ class SupabaseTillDrawer implements TillDrawerPort {
 
   @override
   Future<List<DrawerTill>> tills(String workspaceId) async {
-    final tills = await _client.from('counter_tills').select('id, name, active, site_id').eq('workspace_id', workspaceId).order('name', ascending: true);
+    final tills = await _client.from('counter_tills').select('id, name, active, site_id, selling_place_id').eq('workspace_id', workspaceId).order('name', ascending: true);
     final sessions = await fetchAllPages(
       table: counterTillSessionsTable,
       build: () => _client.from(counterTillSessionsTable).select('id, till_id, float_minor, opened_by_member_id').eq('workspace_id', workspaceId).eq('state', 'open').order('id', ascending: true),
@@ -39,15 +39,20 @@ class SupabaseTillDrawer implements TillDrawerPort {
   }
 
   @override
-  Future<DrawerTill> saveTill(String workspaceId, {required String requestId, String? tillId, required String name, String? siteId, required bool active}) async =>
-      DrawerTill.saved(await _call('counter_till_save_v1', {
+  Future<DrawerTill> saveTill(String workspaceId, {required String requestId, required DrawerTillEdit till}) async =>
+      DrawerTill.saved(await _call('counter_till_save_v2', {
         'p_workspace_id': workspaceId,
         'p_request_id': requestId,
-        'p_till_id': tillId,
-        'p_name': name,
-        'p_site_id': siteId,
-        'p_active': active,
+        'p_till_id': till.tillId,
+        'p_name': till.name,
+        'p_site_id': till.siteId,
+        'p_active': till.active,
+        'p_selling_place_id': till.sellingPlaceId,
       }));
+
+  @override
+  Future<TillSellingPlaces> sellingPlaces(String workspaceId) async =>
+      TillSellingPlaces.fromJson(await _call('counter_selling_places_v1', {'p_workspace_id': workspaceId}));
 
   @override
   Future<DrawerOpened> openSession(String workspaceId, {required String requestId, required String tillId, required int floatMinor, Denominations? denominations}) async =>

@@ -35,6 +35,8 @@ class StockPost {
     this.at,
     this.id,
     this.causes = const {},
+    this.lossCause,
+    this.lossNote,
   });
 
   final StockItem item;
@@ -56,6 +58,10 @@ class StockPost {
 
   /// What caused it, by kind (`invoice`, ...), as the ledger links it.
   final Map<String, String> causes;
+
+  /// Why the goods of a loss were lost, by the server's key, and the note beside it.
+  final String? lossCause;
+  final String? lossNote;
 }
 
 /// Which command a line belongs to: the in-transit place and the places a reason allows depend on it (0847
@@ -217,6 +223,8 @@ class StockLedger {
       unitCost: null,
       causes: p.causes,
       variantId: p.variantId,
+      lossCause: p.lossCause,
+      lossNote: p.lossNote,
     );
     _movements.insert(0, row);
     return row;
@@ -327,8 +335,9 @@ class StockLedger {
     }
   }
 
-  List<StockMovementRow> _move(List<_Ask> asked, String reason) => [
-    for (final a in asked) post(StockPost(item: a.item, quantity: a.quantity, from: a.from, to: a.to, reason: reason)),
+  List<StockMovementRow> _move(List<_Ask> asked, String reason, {StockLoss? loss}) => [
+    for (final a in asked)
+      post(StockPost(item: a.item, quantity: a.quantity, from: a.from, to: a.to, reason: reason, lossCause: loss?.cause.wire, lossNote: loss?.noteOrNull)),
   ];
 
   /// One step between two places of one site (0847 stock_transfer_v1, mode transfer_one).
@@ -449,13 +458,14 @@ class StockLedger {
     return (transfer: now, movements: plan.length);
   }
 
-  /// Goods taken out for use or as a loss, to the loss place (0847 stock_take_out:694-717, mode take_out).
-  List<StockMovementRow> takeOut(StockTakeOutReason reason, List<StockLineDraft> lines) {
+  /// Goods taken out for use or as a loss, to the loss place (0847 stock_take_out:694-717, mode take_out). The
+  /// movements of a loss keep why the goods were lost ([loss]); goods used keep nothing of it.
+  List<StockMovementRow> takeOut(StockTakeOutReason reason, List<StockLineDraft> lines, {StockLoss? loss}) {
     _count(lines);
-    final loss = placeOfKind('loss');
-    final asked = [for (var i = 0; i < lines.length; i++) _ask(i, lines[i], loss, _Mode.takeOut)];
+    final lossPlace = placeOfKind('loss');
+    final asked = [for (var i = 0; i < lines.length; i++) _ask(i, lines[i], lossPlace, _Mode.takeOut)];
     _enough(asked);
-    return _move(asked, reason.name);
+    return _move(asked, reason.name, loss: reason == StockTakeOutReason.loss ? loss : null);
   }
 
 }

@@ -23,7 +23,7 @@ Future<void> chooseTillLot(BuildContext context, TillLotsPort? port, TillSession
   final line = lines[index];
   final List<TillLot> lots;
   try {
-    lots = await port.lots(session.workspaceId, line.itemId);
+    lots = await port.lots(session.workspaceId, line.itemId, tillId: session.tillId);
   } on Object catch (e, st) {
     TraceLogger.instance.error('money', 'the lots of a till line could not be read', error: e, stackTrace: st);
     if (context.mounted) AppSnack.error(context, tillProblemText(l10n, e));

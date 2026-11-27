@@ -900,5 +900,7 @@
  "counterLayoutCashierReorderHint": "A cashier may reorder a till's keys on their own device. Set in the app's settings.",
  "optCells": "{n} cells",
  "counterMaxDiscount": "Largest discount at the till",
- "counterMaxDiscountHint": "The largest discount a cashier may give on a till line. Set in the app's settings."
+ "counterMaxDiscountHint": "The largest discount a cashier may give on a till line. Set in the app's settings.",
+ "counterSellingPlace": "Place the till sells from",
+ "counterSellingPlaceHint": "The code of a place that holds stock, for example MAIN. A sale at the till takes goods from this place and from every place below it, the first to expire first; a place beside it, such as a back store, is not sold from. A till can name a place of its own in the app."
 }

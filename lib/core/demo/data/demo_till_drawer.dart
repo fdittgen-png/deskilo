@@ -77,6 +77,13 @@ class DemoTillDrawer implements TillDrawerPort {
   /// The signed-in member.
   String Function() me = () => 'demo-member';
 
+  /// The places a till may be given: those of the Demo's main store that hold stock (demo_stock_config_commands.dart).
+  TillSellingPlaces Function() places = () => const TillSellingPlaces(defaultCode: 'MAIN', places: [
+    TillSellingPlace(id: 'demo-place-main', code: 'MAIN', name: 'Main store', path: ['MAIN']),
+    TillSellingPlace(id: 'demo-place-sales', code: 'SALES', name: 'Sales floor', path: ['MAIN', 'SALES']),
+    TillSellingPlace(id: 'demo-place-shelf', code: 'SHELF-A', name: 'Shelf A', path: ['MAIN', 'SHELF-A']),
+  ]);
+
   final List<DrawerTill> _tills;
   final Map<String, _Session> _sessions = {};
   final Map<String, Object> _answered = {};
@@ -125,6 +132,7 @@ class DemoTillDrawer implements TillDrawerPort {
       name: t.name,
       active: t.active,
       siteId: t.siteId,
+      sellingPlaceId: t.sellingPlaceId,
       session: s == null ? null : DrawerSession(id: s.id, tillId: s.tillId, floatMinor: s.floatMinor, openedByMemberId: s.openedBy),
     );
   }
@@ -135,21 +143,30 @@ class DemoTillDrawer implements TillDrawerPort {
   T _replayed<T extends Object>(String requestId) => _answered[requestId]! as T;
 
   @override
-  Future<DrawerTill> saveTill(String workspaceId, {required String requestId, String? tillId, required String name, String? siteId, required bool active}) async {
+  Future<TillSellingPlaces> sellingPlaces(String workspaceId) async => places();
+
+  @override
+  Future<DrawerTill> saveTill(String workspaceId, {required String requestId, required DrawerTillEdit till}) async {
     if (_answered[requestId] != null) return _replayed(requestId);
-    final clean = name.trim();
-    if (clean.isEmpty || clean.length > kTillNameMaxLength) throw _refused(PgCode.invalidParameterValue, 'a till has a name');
+    final DrawerTillEdit(:tillId, :siteId, :active, :sellingPlaceId) = till;
+    final clean = till.name.trim();
+    if (clean.isEmpty || clean.length > kTillNameMaxLength) throw _refused(DkCode.dkl12, 'a till has a name', reason: 'name');
     final taken = _tills.any((t) => t.id != tillId && t.name.toLowerCase() == clean.toLowerCase());
     if (taken) throw _refused(DkCode.dkl12, 'a till of this business already has this name', reason: 'name_taken');
+    // a place the till already has is saved as it was read; a new one is a place a till may be given
+    final kept = _tills.any((t) => t.id == tillId && t.sellingPlaceId == sellingPlaceId);
+    if (sellingPlaceId != null && !kept && !places().places.any((p) => p.id == sellingPlaceId)) {
+      throw _refused(DkCode.dkl12, 'not a place this business can sell from', reason: 'selling_place_unknown');
+    }
     if (tillId == null) {
-      final made = DrawerTill(id: _id('till'), name: clean, active: active, siteId: siteId);
+      final made = DrawerTill(id: _id('till'), name: clean, active: active, siteId: siteId, sellingPlaceId: sellingPlaceId);
       _tills.add(made);
       return _answered[requestId] = made;
     }
     final at = _tills.indexWhere((t) => t.id == tillId);
     if (at < 0) throw _refused(DkCode.dkl12, 'not a till of this business', reason: 'till_unknown');
     if (!active && _openOn(tillId) != null) throw _refused(DkCode.dkl12, 'a till with an open session is closed first', reason: 'already_open');
-    final saved = DrawerTill(id: tillId, name: clean, active: active, siteId: siteId);
+    final saved = DrawerTill(id: tillId, name: clean, active: active, siteId: siteId, sellingPlaceId: sellingPlaceId);
     _tills[at] = saved;
     return _answered[requestId] = saved;
   }

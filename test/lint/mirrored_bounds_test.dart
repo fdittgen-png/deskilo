@@ -68,6 +68,9 @@ const _mirrors = <Mirror>[
       r"jsonb_array_length\(p_payload -> 'lines'\) not between 1 and (\d+)"),
   Mirror('PurchaseOrderLimits.maxQuantity (0681)', _order, 'maxQuantity',
       r'quantity numeric not null check \(quantity > 0 and quantity <= (\d+)\)', migration: '0681'),
+  // the note of a loss: the app refuses a longer one under its field, the table refuses it whatever door is used
+  Mirror('kStockLossNoteMaxLength (stock_movements.loss_note)', 'lib/features/stock/domain/stock_operations.dart',
+      'kStockLossNoteMaxLength', r'char_length\(loss_note\) between 1 and (\d+)'),
   // the scale of a stored quantity: the stock ledger's numeric(18, 6)
   Mirror('exactQuantityScale (0847)', 'packages/deskilo_money_kernel/lib/src/exact_quantity.dart',
       'exactQuantityScale', r'loaded numeric\(18, (\d+)\)', migration: '0847'),

@@ -65,8 +65,9 @@ class SupabaseCounterTill implements TillPort, TillCopyPort, TillLotsPort {
   );
 
   @override
-  Future<List<TillLot>> lots(String workspaceId, String itemId) async =>
-      tillLotsOf(await _call('counter_item_lots_v1', {'p_workspace_id': workspaceId, 'p_item_id': itemId}));
+  Future<List<TillLot>> lots(String workspaceId, String itemId, {String? tillId}) async => tillLotsOf(
+    await _call('counter_item_lots_v1', {'p_workspace_id': workspaceId, 'p_item_id': itemId, 'p_till_id': ?tillId}),
+  );
 
   @override
   Future<CounterReceiptDocument> receipt(String workspaceId, String receiptId) async {

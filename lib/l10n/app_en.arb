@@ -42683,6 +42683,10 @@
   "@settingHintCounterPaidOutLimit": {
     "description": "#4367 setting label/hint or refusal"
   },
+  "settingHintCounterSellingPlace": "The code of a place of the business that holds stock, for example MAIN. A sale at the till takes goods from this place and from every place below it; a till can name a place of its own.",
+  "@settingHintCounterSellingPlace": {
+    "description": "#4492 the place a till sells from: the setting counter.selling_place"
+  },
   "settingHintDirectoryGeocoderUrl": "The Photon-compatible service that places a published address on the discovery map: an https address on the public internet, without a user name, password, query or #. Leave it empty to use the address this app version was built with, else the public Photon service.",
   "@settingHintDirectoryGeocoderUrl": {
     "description": "#2488 Setting hint."
@@ -43158,6 +43162,10 @@
   "settingLabelCounterPaidOutLimit": "Largest paid-out without approval",
   "@settingLabelCounterPaidOutLimit": {
     "description": "#4367 setting label/hint or refusal"
+  },
+  "settingLabelCounterSellingPlace": "Place the till sells from",
+  "@settingLabelCounterSellingPlace": {
+    "description": "#4492 the place a till sells from: the setting counter.selling_place"
   },
   "settingLabelDirectoryGeocoderUrl": "Address lookup service",
   "@settingLabelDirectoryGeocoderUrl": {
@@ -48237,6 +48245,50 @@
   "stockItemsTitle": "Items",
   "@stockItemsTitle": {
     "description": "the stock pages and group (#4299)"
+  },
+  "stockLossCauseDamaged": "Damaged",
+  "@stockLossCauseDamaged": {
+    "description": "#4492 a loss says why: the goods were broken or damaged"
+  },
+  "stockLossCauseExpired": "Past its date",
+  "@stockLossCauseExpired": {
+    "description": "#4492 a loss says why: the goods passed their best-before or use-by date"
+  },
+  "stockLossCauseLabel": "Cause of the loss",
+  "@stockLossCauseLabel": {
+    "description": "#4492 a loss says why: the label of the choice on the take-out sheet and of the row on a movement"
+  },
+  "stockLossCauseMissing": "Missing",
+  "@stockLossCauseMissing": {
+    "description": "#4492 a loss says why: the goods are no longer there (stolen, lost, never found)"
+  },
+  "stockLossCauseNone": "Not recorded",
+  "@stockLossCauseNone": {
+    "description": "#4492 a loss says why: the cause row of a loss that was recorded without a cause (before causes existed, or by an older app)"
+  },
+  "stockLossCauseOther": "Other",
+  "@stockLossCauseOther": {
+    "description": "#4492 a loss says why: a cause that is none of the others; the note says which"
+  },
+  "stockLossCauseRequired": "Say why the goods were lost.",
+  "@stockLossCauseRequired": {
+    "description": "#4492 a loss says why: shown under the choice when a loss is filed without its cause"
+  },
+  "stockLossCauseSpoiled": "Spoiled",
+  "@stockLossCauseSpoiled": {
+    "description": "#4492 a loss says why: the goods went bad before their date"
+  },
+  "stockLossNoteLabel": "Note (optional)",
+  "@stockLossNoteLabel": {
+    "description": "#4492 a loss says why: the label of the note field on the take-out sheet"
+  },
+  "stockLossNoteRow": "Note",
+  "@stockLossNoteRow": {
+    "description": "#4492 a loss says why: the label of the note row on a movement"
+  },
+  "stockLossNoteTooLong": "The note is too long.",
+  "@stockLossNoteTooLong": {
+    "description": "#4492 a loss says why: shown under the note field"
   },
   "stockLotLabel": "Lot {code}",
   "@stockLotLabel": {
@@ -54281,6 +54333,10 @@
   "@tillDrawerRefusalReasonUnknown": {
     "description": "#4367 till sessions: the cash drawer"
   },
+  "tillDrawerRefusalSellingPlace": "A till cannot sell from this place. Choose a place that holds stock and is in use.",
+  "@tillDrawerRefusalSellingPlace": {
+    "description": "#4492 the place a till sells from: the server refused the place chosen for a till"
+  },
   "tillDrawerRefusalSessionGone": "This session is not open any more.",
   "@tillDrawerRefusalSessionGone": {
     "description": "#4367 till sessions: the cash drawer"
@@ -54288,6 +54344,27 @@
   "tillDrawerRefusalTillUnknown": "This is not an active till of this business.",
   "@tillDrawerRefusalTillUnknown": {
     "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerSellingPlace": "Selling place",
+  "@tillDrawerSellingPlace": {
+    "description": "#4492 the place a till sells from: the label of the choice on a till's sheet"
+  },
+  "tillDrawerSellingPlaceBusiness": "The business’s selling place ({code})",
+  "@tillDrawerSellingPlaceBusiness": {
+    "description": "#4492 the place a till sells from: the choice that gives a till no place of its own; code is the code of the place the business sells from, for example MAIN",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerSellingPlaceNote": "A sale at this till takes goods from this place and from every place below it, the first to expire first. A place beside it, such as a back store, is not sold from.",
+  "@tillDrawerSellingPlaceNote": {
+    "description": "#4492 the place a till sells from: the sentence under the choice"
+  },
+  "tillDrawerSellingPlaceStored": "A place no longer in use",
+  "@tillDrawerSellingPlaceStored": {
+    "description": "#4492 the place a till sells from: the place a till still has although the list no longer offers it"
   },
   "tillDrawerStateClosed": "Closed",
   "@tillDrawerStateClosed": {

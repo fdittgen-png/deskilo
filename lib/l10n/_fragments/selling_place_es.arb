@@ -1,0 +1,9 @@
+{
+  "tillDrawerSellingPlace": "Lugar de venta",
+  "tillDrawerSellingPlaceBusiness": "El lugar de venta del negocio ({code})",
+  "tillDrawerSellingPlaceStored": "Un lugar que ya no se usa",
+  "tillDrawerSellingPlaceNote": "Una venta en esta caja toma la mercancía de este lugar y de todos los lugares que dependen de él, primero la que caduca antes. De un lugar contiguo, como una trastienda, no se vende.",
+  "tillDrawerRefusalSellingPlace": "Una caja no puede vender desde este lugar. Elija un lugar en uso que tenga existencias.",
+  "settingLabelCounterSellingPlace": "Lugar desde el que vende la caja",
+  "settingHintCounterSellingPlace": "El código de un lugar de la empresa que tiene existencias, por ejemplo MAIN. Una venta en caja toma la mercancía de este lugar y de todos los que dependen de él; una caja puede indicar un lugar propio."
+}

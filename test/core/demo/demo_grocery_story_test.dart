@@ -115,7 +115,7 @@ void main() {
     expect(await held(_mugs, shelf), onShelf + _q('2'));
 
     // 9. waste: a mug is written off from the shelf
-    await c.read(stockOperationsProvider).takeOut(ws, StockTakeOutReason.loss, [StockLineDraft(itemId: _mugs, quantity: '1', fromLocationId: shelf)], 'grocery-story-loss');
+    await c.read(stockOperationsProvider).takeOut(ws, StockTakeOutReason.loss, [StockLineDraft(itemId: _mugs, quantity: '1', fromLocationId: shelf)], 'grocery-story-loss', loss: const StockLoss(cause: StockLossCause.damaged));
     expect((await queries.movementsPage(ws, limit: 5)).rows.first.reason, 'loss');
 
     // 5. where is it: every place of the mugs, what was sold and what was written off, and the places add up
@@ -164,16 +164,15 @@ void main() {
     expect((await c.read(counterBookPortProvider).book(ws)).receipts, isEmpty, reason: 'while this holds, step 8 is not in the shop');
   });
 
-  test('the switches of the shop are those of its kind: stock and orders, without the till, the expiry report and the handling units', () {
-    expect(_flow.toSet().difference(resolveEnabledFeatures(demoShopSpace().featureFlags)),
-        {WorkspaceFeature.stockHandlingUnits, WorkspaceFeature.stockExpiryReport, WorkspaceFeature.counterReceipts},
-        reason: 'the shop kind proposes none of the three (0890): the next skipped line asks for them');
+  test('the switches of the shop are those of its kind: stock and orders, the till, the expiry report and the handling units', () {
+    expect(_flow.toSet().difference(resolveEnabledFeatures(demoShopSpace().featureFlags)), isEmpty,
+        reason: 'the shop kind proposes what a shop needs (0982)');
   });
 
   // ── what the Demo does not hold ──────────────────────────────────────────────────────────────────────────────────────
-  test('GAP shop: the grocery has the till, the expiry report and the handling units switched on', () {
+  test('the grocery has the till, the expiry report and the handling units switched on', () {
     expect(resolveEnabledFeatures(demoShopSpace().featureFlags), containsAll(_flow));
-  }, skip: 'the shop kind (0890, demoShopProfile) proposes stock and orders only: an owner decision, the till has a fiscal side');
+  });
 
   test('GAP step 1-2: a product with a best-before date is on an open order, so its lot and date are captured at the put-away', () {},
       skip: 'the ordered Demo items (mugs, beans) are tracked by nothing: the put-away sheet shows no lot and no date field');

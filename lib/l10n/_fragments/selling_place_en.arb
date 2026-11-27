@@ -1,0 +1,35 @@
+{
+  "tillDrawerSellingPlace": "Selling place",
+  "@tillDrawerSellingPlace": {
+    "description": "#4492 the place a till sells from: the label of the choice on a till's sheet"
+  },
+  "tillDrawerSellingPlaceBusiness": "The business’s selling place ({code})",
+  "@tillDrawerSellingPlaceBusiness": {
+    "description": "#4492 the place a till sells from: the choice that gives a till no place of its own; code is the code of the place the business sells from, for example MAIN",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerSellingPlaceStored": "A place no longer in use",
+  "@tillDrawerSellingPlaceStored": {
+    "description": "#4492 the place a till sells from: the place a till still has although the list no longer offers it"
+  },
+  "tillDrawerSellingPlaceNote": "A sale at this till takes goods from this place and from every place below it, the first to expire first. A place beside it, such as a back store, is not sold from.",
+  "@tillDrawerSellingPlaceNote": {
+    "description": "#4492 the place a till sells from: the sentence under the choice"
+  },
+  "tillDrawerRefusalSellingPlace": "A till cannot sell from this place. Choose a place that holds stock and is in use.",
+  "@tillDrawerRefusalSellingPlace": {
+    "description": "#4492 the place a till sells from: the server refused the place chosen for a till"
+  },
+  "settingLabelCounterSellingPlace": "Place the till sells from",
+  "@settingLabelCounterSellingPlace": {
+    "description": "#4492 the place a till sells from: the setting counter.selling_place"
+  },
+  "settingHintCounterSellingPlace": "The code of a place of the business that holds stock, for example MAIN. A sale at the till takes goods from this place and from every place below it; a till can name a place of its own.",
+  "@settingHintCounterSellingPlace": {
+    "description": "#4492 the place a till sells from: the setting counter.selling_place"
+  }
+}

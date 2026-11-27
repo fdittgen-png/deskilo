@@ -1,0 +1,9 @@
+{
+  "tillDrawerSellingPlace": "Verkaufsort",
+  "tillDrawerSellingPlaceBusiness": "Der Verkaufsort des Betriebs ({code})",
+  "tillDrawerSellingPlaceStored": "Ein Ort, der nicht mehr genutzt wird",
+  "tillDrawerSellingPlaceNote": "Ein Verkauf an dieser Kasse nimmt die Ware von diesem Ort und von allen Orten darunter, das früheste Datum zuerst. Von einem Ort daneben, etwa einem Lager, wird nicht verkauft.",
+  "tillDrawerRefusalSellingPlace": "Von diesem Ort kann eine Kasse nicht verkaufen. Wählen Sie einen genutzten Ort, der Bestand führt.",
+  "settingLabelCounterSellingPlace": "Ort, von dem die Kasse verkauft",
+  "settingHintCounterSellingPlace": "Der Code eines Orts des Unternehmens, der Bestand führt, zum Beispiel MAIN. Ein Verkauf an der Kasse nimmt die Ware von diesem Ort und von allen Orten darunter; eine Kasse kann einen eigenen Ort nennen."
+}

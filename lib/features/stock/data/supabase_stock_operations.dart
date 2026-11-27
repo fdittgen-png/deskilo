@@ -7,7 +7,7 @@ import 'stock_rpc.dart';
 
 /// #4170 (B) -- the stock commands behind the port: `stock_transfer_v1`,
 /// `stock_transfer_load_v1`, `stock_transfer_receive_v1`, `stock_consume_v1`,
-/// `stock_loss_v1` and `stock_fefo_proposal_v1`, and the transfers still on
+/// `stock_loss_v2` and `stock_fefo_proposal_v1`, and the transfers still on
 /// their way. A refusal of the server becomes the typed failure the screen
 /// shows under its field; an answer that is not the shape promised throws
 /// rather than showing an empty result.
@@ -109,13 +109,16 @@ class SupabaseStockOperations implements StockOperations {
     String workspaceId,
     StockTakeOutReason reason,
     List<StockLineDraft> lines,
-    String requestId,
-  ) => _command(
-    reason == StockTakeOutReason.loss ? 'stock_loss_v1' : 'stock_consume_v1',
+    String requestId, {
+    StockLoss? loss,
+  }) => _command(
+    reason == StockTakeOutReason.loss ? 'stock_loss_v2' : 'stock_consume_v1',
     {
       'p_workspace_id': workspaceId,
       'p_request_id': requestId,
       'p_lines': [for (final l in lines) l.toJson()],
+      // a loss is sent with its cause; the server refuses one without
+      if (reason == StockTakeOutReason.loss) ...{'p_cause': loss?.cause.wire, 'p_note': loss?.noteOrNull},
     },
   );
 

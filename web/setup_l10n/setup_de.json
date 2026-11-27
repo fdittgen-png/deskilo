@@ -900,5 +900,7 @@
  "counterLayoutCashierReorderHint": "Ein Kassierer darf die Tasten einer Kasse auf seinem Gerät umordnen. In den Einstellungen der App festgelegt.",
  "optCells": "{n} Zellen",
  "counterMaxDiscount": "Größter Rabatt an der Kasse",
- "counterMaxDiscountHint": "Der größte Rabatt, den eine Kasse auf eine Zeile geben darf. In den Einstellungen der App festgelegt."
+ "counterMaxDiscountHint": "Der größte Rabatt, den eine Kasse auf eine Zeile geben darf. In den Einstellungen der App festgelegt.",
+ "counterSellingPlace": "Ort, von dem die Kasse verkauft",
+ "counterSellingPlaceHint": "Der Code eines Orts mit Bestand, zum Beispiel MAIN. Ein Verkauf an der Kasse nimmt die Ware von diesem Ort und von allen Orten darunter, das früheste Datum zuerst; von einem Ort daneben, etwa einem Lager, wird nicht verkauft. Eine Kasse kann in der App einen eigenen Ort nennen."
 }

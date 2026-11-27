@@ -52326,6 +52326,12 @@ abstract class AppLocalizations {
   /// **'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.'**
   String get settingHintCounterPaidOutLimit;
 
+  /// #4492 the place a till sells from: the setting counter.selling_place
+  ///
+  /// In en, this message translates to:
+  /// **'The code of a place of the business that holds stock, for example MAIN. A sale at the till takes goods from this place and from every place below it; a till can name a place of its own.'**
+  String get settingHintCounterSellingPlace;
+
   /// #2488 Setting hint.
   ///
   /// In en, this message translates to:
@@ -53039,6 +53045,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Largest paid-out without approval'**
   String get settingLabelCounterPaidOutLimit;
+
+  /// #4492 the place a till sells from: the setting counter.selling_place
+  ///
+  /// In en, this message translates to:
+  /// **'Place the till sells from'**
+  String get settingLabelCounterSellingPlace;
 
   /// #2488 Setting label.
   ///
@@ -59452,6 +59464,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Items'**
   String get stockItemsTitle;
+
+  /// #4492 a loss says why: the goods were broken or damaged
+  ///
+  /// In en, this message translates to:
+  /// **'Damaged'**
+  String get stockLossCauseDamaged;
+
+  /// #4492 a loss says why: the goods passed their best-before or use-by date
+  ///
+  /// In en, this message translates to:
+  /// **'Past its date'**
+  String get stockLossCauseExpired;
+
+  /// #4492 a loss says why: the label of the choice on the take-out sheet and of the row on a movement
+  ///
+  /// In en, this message translates to:
+  /// **'Cause of the loss'**
+  String get stockLossCauseLabel;
+
+  /// #4492 a loss says why: the goods are no longer there (stolen, lost, never found)
+  ///
+  /// In en, this message translates to:
+  /// **'Missing'**
+  String get stockLossCauseMissing;
+
+  /// #4492 a loss says why: the cause row of a loss that was recorded without a cause (before causes existed, or by an older app)
+  ///
+  /// In en, this message translates to:
+  /// **'Not recorded'**
+  String get stockLossCauseNone;
+
+  /// #4492 a loss says why: a cause that is none of the others; the note says which
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get stockLossCauseOther;
+
+  /// #4492 a loss says why: shown under the choice when a loss is filed without its cause
+  ///
+  /// In en, this message translates to:
+  /// **'Say why the goods were lost.'**
+  String get stockLossCauseRequired;
+
+  /// #4492 a loss says why: the goods went bad before their date
+  ///
+  /// In en, this message translates to:
+  /// **'Spoiled'**
+  String get stockLossCauseSpoiled;
+
+  /// #4492 a loss says why: the label of the note field on the take-out sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get stockLossNoteLabel;
+
+  /// #4492 a loss says why: the label of the note row on a movement
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get stockLossNoteRow;
+
+  /// #4492 a loss says why: shown under the note field
+  ///
+  /// In en, this message translates to:
+  /// **'The note is too long.'**
+  String get stockLossNoteTooLong;
 
   /// #4161 a lot, by its code
   ///
@@ -66998,6 +67076,12 @@ abstract class AppLocalizations {
   /// **'This reason is not on the business\'s list. Choose one from the list.'**
   String get tillDrawerRefusalReasonUnknown;
 
+  /// #4492 the place a till sells from: the server refused the place chosen for a till
+  ///
+  /// In en, this message translates to:
+  /// **'A till cannot sell from this place. Choose a place that holds stock and is in use.'**
+  String get tillDrawerRefusalSellingPlace;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -67009,6 +67093,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This is not an active till of this business.'**
   String get tillDrawerRefusalTillUnknown;
+
+  /// #4492 the place a till sells from: the label of the choice on a till's sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Selling place'**
+  String get tillDrawerSellingPlace;
+
+  /// #4492 the place a till sells from: the choice that gives a till no place of its own; code is the code of the place the business sells from, for example MAIN
+  ///
+  /// In en, this message translates to:
+  /// **'The business’s selling place ({code})'**
+  String tillDrawerSellingPlaceBusiness(String code);
+
+  /// #4492 the place a till sells from: the sentence under the choice
+  ///
+  /// In en, this message translates to:
+  /// **'A sale at this till takes goods from this place and from every place below it, the first to expire first. A place beside it, such as a back store, is not sold from.'**
+  String get tillDrawerSellingPlaceNote;
+
+  /// #4492 the place a till sells from: the place a till still has although the list no longer offers it
+  ///
+  /// In en, this message translates to:
+  /// **'A place no longer in use'**
+  String get tillDrawerSellingPlaceStored;
 
   /// #4367 till sessions: the cash drawer
   ///

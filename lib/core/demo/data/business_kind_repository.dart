@@ -19,7 +19,8 @@ const demoNoPlacesProfile = {
   'publicListings': true,
 };
 
-/// #4365 — the shop's profile: the stock, the catalogue and the purchases, no places, no provider, no public page.
+/// #4365 — the shop's profile: the stock, the catalogue and the purchases, no places, no provider, no public page;
+/// and, as the server's row since 0982, what expires, the handling units and the till.
 const demoShopProfile = {
   'placeBooking': false,
   'moneyTab': true,
@@ -34,6 +35,9 @@ const demoShopProfile = {
   'stockReorder': true,
   'stockItemGroups': true,
   'stockScanning': true,
+  'stockExpiryReport': true,
+  'stockHandlingUnits': true,
+  'counterReceipts': true,
 };
 
 /// #4168 — the freelancer's profile: the money side of a one-person service

@@ -900,5 +900,7 @@
  "counterLayoutCashierReorderHint": "Un caissier peut réordonner les touches d'une caisse sur son appareil. Réglé dans les paramètres de l'application.",
  "optCells": "{n} cases",
  "counterMaxDiscount": "Remise maximale à la caisse",
- "counterMaxDiscountHint": "La remise maximale qu'un caissier peut accorder sur une ligne. Réglée dans les paramètres de l'application."
+ "counterMaxDiscountHint": "La remise maximale qu'un caissier peut accorder sur une ligne. Réglée dans les paramètres de l'application.",
+ "counterSellingPlace": "Lieu d’où la caisse vend",
+ "counterSellingPlaceHint": "Le code d’un lieu qui détient du stock, par exemple MAIN. Une vente en caisse prend les marchandises dans ce lieu et dans tous les lieux qui en dépendent, la date la plus proche d’abord ; un lieu voisin, comme une réserve, ne sert pas à la vente. Une caisse peut nommer son propre lieu dans l’application."
 }
