@@ -24,10 +24,10 @@ begin
     execute regexp_replace(v_def, v_old, 'v_currency', 'g');
   end if;
   if pg_get_functiondef(c_fn) ~* 'coalesce\s*\(\s*v_currency\M' then
-    raise exception '0982: workspace_status still answers a currency of its own where the business has none: its body is not the one the migrations build (0167, 0351, 0735, 0745) and is restated before the upgrade goes on'
+    raise exception '0979: workspace_status still answers a currency of its own where the business has none: its body is not the one the migrations build (0167, 0351, 0735, 0745) and is restated before the upgrade goes on'
       using errcode = 'P0001';
   end if;
 end
 $migration$;
 
-select public.set_deskilo_schema_version(982);
+select public.set_deskilo_schema_version(979);

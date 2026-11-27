@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4492 (0981): a closed period of the books refuses what is dated inside it, at every door that takes a date.
+-- #4492 (0978): a closed period of the books refuses what is dated inside it, at every door that takes a date.
 -- A goods movement (the move, the transfer, the take-out) and a payment (its declaration, its approval after the
 -- period closed, a payment to a supplier or a member) dated inside a closed period are refused with DKB08 and
 -- leave nothing behind; the same dated in the open period, or with no date, is taken; reopening the period with

@@ -186,4 +186,4 @@ create trigger posted_rows_no_truncate before truncate on public.verifactu_recor
 create trigger posted_rows_no_truncate before truncate on public.vat_return_entries
   for each statement execute function public.posted_rows_no_truncate();
 
-select public.set_deskilo_schema_version(980);
+select public.set_deskilo_schema_version(977);

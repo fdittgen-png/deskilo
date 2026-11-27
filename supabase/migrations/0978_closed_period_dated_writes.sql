@@ -65,4 +65,4 @@ create trigger book_period_dated_guard before insert on public.ledger_entries
 create trigger book_period_dated_guard before insert on public.outgoing_payments
   for each row execute function public.book_period_dated_guard();
 
-select public.set_deskilo_schema_version(981);
+select public.set_deskilo_schema_version(978);
