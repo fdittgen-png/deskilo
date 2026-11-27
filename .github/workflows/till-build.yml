@@ -22,7 +22,7 @@ on:
 
 concurrency:
   group: till-build-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   IDF_TAG: v5.3.1

@@ -187,6 +187,7 @@ class StandaloneLineEditor extends StatelessWidget {
   Widget _unitField(BuildContext context) {
     final l = context.l10n;
     return switch (form.goodsUnit) {
+      // recorder-key-exempt: a data callback; the field's own unit dropdown carries the key (standalone-line-{}-goods-unit-pick)
       _? => GoodsUnitField(index: index, workspaceId: workspaceId, form: form, enabled: enabled, onChanged: onChanged, locale: appFormatOf(context).locale),
       null => DropdownButtonFormField<String>(
         key: ValueKey('standalone-line-$index-unit'),

@@ -18,9 +18,9 @@ import '../../tool/dead_code/scan.dart';
 /// `path::name` → why it stays public, naming the issue that resolves it.
 const Map<String, String> _allowed = {
   'lib/features/money/domain/embedded_till_canonical.dart::CanonicalFormRefused':
-      '#4452 — the embedded-till contract v1: its fixtures' tests read it until the app's till-board adapter (#4466) wires it in',
+      '#4452 — the embedded-till contract v1: the tests of its fixtures read it until the till-board adapter of the app (#4466) wires it in',
   'lib/features/money/domain/embedded_till_contract.dart::TerminalContractRefused':
-      '#4452 — the embedded-till contract v1: its fixtures' tests read it until the app's till-board adapter (#4466) wires it in',
+      '#4452 — the embedded-till contract v1: the tests of its fixtures read it until the till-board adapter of the app (#4466) wires it in',
 };
 
 void main() {
