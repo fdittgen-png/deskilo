@@ -8,7 +8,10 @@
 #include "readable_code.h"
 
 void device_pairing_payload(const device_t *d, const char *board_profile, const char *firmware, char *out, int cap) {
-    snprintf(out, cap, "deskilo-device:v1?id=%s&board=%s&fw=%s&fp=%s", d->id, board_profile, firmware, d->fingerprint);
+    // #4454: h is the SHA-256 of the board's secret; the code its owner is given is bound to it, so a board that only
+    // copied the QR (id and fingerprint) cannot use that code
+    snprintf(out, cap, "deskilo-device:v1?id=%s&board=%s&fw=%s&fp=%s&h=%s", d->id, board_profile, firmware, d->fingerprint,
+             d->secret_hash);
 }
 
 void device_readable_code(const device_t *d, int profile, char *out) {

@@ -192,7 +192,7 @@ static void one_language(const char *lang) {
 static void pairing(void) {
     s_lang = "pairing";
     strings_set_lang("de");
-    const char *code = "deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=lcdwiki_e32r40t_v1&fw=1.0&fp=AB12-CD34";
+    const char *code = "deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=lcdwiki_e32r40t_v1&fw=a7e83a3-dirty&fp=AB12-CD34&h=ab12cd3400000000000000000000000000000000000000000000000000000000";
     ui_toggle_pairing(code, "AB12-CD34", "3DNGP-UM7BF");
     pump(50);
     CHECK(ui_pairing_shown(), "the pairing code is shown");
@@ -222,7 +222,7 @@ static void portrait_pairing(void) {
     lv_disp_t *d = lv_disp_drv_register(&disp2);
     lv_disp_t *was = lv_disp_get_default();
     lv_disp_set_default(d);
-    ui_toggle_pairing("deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=ideaspark_st7789_v1&fw=1.0&fp=AB12-CD34", "AB12-CD34", "3DNGP-UN9CG");
+    ui_toggle_pairing("deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=ideaspark_st7789_v1&fw=a7e83a3-dirty&fp=AB12-CD34&h=ab12cd3400000000000000000000000000000000000000000000000000000000", "AB12-CD34", "3DNGP-UN9CG");
     pump(50);
     lv_obj_t *top = lv_disp_get_layer_top(d);
     bool inside = true, qr = false;
