@@ -225,6 +225,7 @@ PurchaseDetail _document(
     currency: currency,
     grossCents: lines.fold(0, (s, l) => s + l.grossCents),
     receivedOn: meta.received,
+    supplierId: meta.supplier?.id, // #4492: the list names the supplier by this id
   ),
   revision: 1,
   lines: lines,

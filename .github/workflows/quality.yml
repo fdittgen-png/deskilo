@@ -1528,6 +1528,11 @@ jobs:
           # #3338 row 8 -- the same archive carried to 0689, with in-flight
           # e-invoice work seeded there, then 0690..tip over it.
           STAGE_AT=0689 bash scripts/populated_upgrade_check.sh
+          # #4492 row 6 -- the same archive carried to 0747, the first goods
+          # ledger, with goods moved there (cartons, glasses of a fifth, two
+          # lots), then 0748..tip over them: the variants, the places and the
+          # unit migrations.
+          STOCK_AT=0747 bash scripts/populated_upgrade_check.sh
 
       # #2561 C2 — the physical topology, in this job and not beside it:
       # the job's replayed stack is W-A; P and W-B are two more stacks of

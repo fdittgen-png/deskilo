@@ -154,7 +154,10 @@ class FinancesCoverage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final names = {for (final (id, name) in overview.workspaces) id: name};
+    // #4492 — by the workspace's own id, the one the sources answer with
+    // and the documents are counted by; keyed by the network id the line
+    // printed a raw id for a document read from another installation.
+    final names = overview.workspaceNames;
     final counts = <String, int>{};
     for (final i in overview.invoices) {
       counts[i.workspaceId] = (counts[i.workspaceId] ?? 0) + 1;

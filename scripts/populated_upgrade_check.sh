@@ -46,6 +46,22 @@
 # those rows, the destructive control is applied across them, and their state
 # is also asserted against literals, so a change of the seeded pending state is
 # a red job, not a quiet before/after agreement.
+#
+# Third case (#4492 row 6): STOCK_AT=0747 carries the archive to the first
+# schema with a goods ledger and seeds the goods of `archive_seed_0747.sql`
+# there, through the move command of that schema: a shelf count that opens the
+# ledger, cartons of 12 received, a transfer, a sale, litres sold by the glass
+# of a fifth, two lots at two costs. Then 0748..latest run over those rows --
+# the variants that rebuild the balances' key (0837), the places (0855), the
+# units per business, the item units from the master data, the packages and
+# the conversions (0951 to 0974). The comparison: every movement, balance, lot,
+# item unit and shelf count is the same before and after (quantities compared
+# as numbers); the quantities on hand are the literals the seed implies; every
+# balance still equals the sum of its movements; `destructive_control_stock.sql`
+# (a second conversion of the carton receipt) is named by the diff and breaks
+# that sum; and on the upgraded schema a carton received is still 12 pieces and
+# a glass taken out still a fifth of a litre. May be combined with STAGE_AT
+# (the goods are seeded after it).
 set -uo pipefail
 
 BASELINE="${BASELINE:-0226}"
@@ -54,6 +70,11 @@ DB="deskilo_archive"
 SEED=supabase/restore/archive_seed.sql
 STAGE_AT="${STAGE_AT:-}"
 STAGE_SEED="${STAGE_SEED:-supabase/restore/archive_seed_0689.sql}"
+STOCK_AT="${STOCK_AT:-}"
+STOCK_SEED="${STOCK_SEED:-supabase/restore/archive_seed_0747.sql}"
+STOCK_CONTROL=supabase/restore/destructive_control_stock.sql
+I_WATER=00000000-0000-4000-8000-0000000a0501
+I_WINE=00000000-0000-4000-8000-0000000a0502
 TX_PREP=00000000-0000-4000-8000-0000000a0401
 TX_ACC=00000000-0000-4000-8000-0000000a0402
 CONTROL=supabase/restore/destructive_control.sql
@@ -115,6 +136,73 @@ if [ -n "$STAGE_AT" ]; then
   upgrade_from="$((10#$STAGE_AT))"
   say "$staged migrations carried the archive to $((10#$STAGE_AT)); in-flight e-invoice work seeded: 1 prepared, 1 accepted with receipt"
 fi
+
+# Third case: carry the archive to STOCK_AT and move goods there, so the
+# upgrade below runs the later stock migrations over them.
+stocked=0
+if [ -n "$STOCK_AT" ]; then
+  [ "$((10#$STOCK_AT))" -gt "$upgrade_from" ] || fail "STOCK_AT=$STOCK_AT is not after $upgrade_from"
+  for f in supabase/migrations/*.sql; do
+    v="$(version_of "$f")"
+    if [ "$v" -gt "$upgrade_from" ] && [ "$v" -le "$((10#$STOCK_AT))" ]; then apply "$f"; stocked=$((stocked + 1)); fi
+  done
+  [ "$(marker)" = "$((10#$STOCK_AT))" ] || fail "after carrying to the goods ledger the marker reads '$(marker)', not $((10#$STOCK_AT))"
+  apply "$STOCK_SEED"
+  upgrade_from="$((10#$STOCK_AT))"
+  say "$stocked migrations carried the archive to $((10#$STOCK_AT)); goods moved there: 3 items, 2 item units, 2 lots, 9 commands"
+fi
+
+# What the goods are made of, by columns that exist at STOCK_AT; quantities
+# as numbers, so a wider scale later is not a difference.
+STOCK_SNAPSHOT_SQL="
+select 'stock_movement ' || concat_ws(' | ', m.request_id::text, m.line_no::text, m.part::text, m.item_id::text,
+         coalesce(l.lot_code, ''), f.code, t.code, trim_scale(m.quantity)::text, trim_scale(m.entered_quantity)::text,
+         m.entered_unit, m.occurred_at::text, m.reason, coalesce(trim_scale(m.unit_cost)::text, ''))
+  from public.stock_movements m
+  join public.stock_locations f on f.id = m.from_location_id
+  join public.stock_locations t on t.id = m.to_location_id
+  left join public.stock_lots l on l.id = m.lot_id
+ where m.workspace_id = '$WS'
+union all
+select 'stock_balance ' || concat_ws(' | ', b.item_id::text, coalesce(l.lot_code, ''), p.code, trim_scale(b.quantity)::text)
+  from public.stock_balances b
+  join public.stock_locations p on p.id = b.location_id
+  left join public.stock_lots l on l.id = b.lot_id
+ where b.workspace_id = '$WS'
+union all
+select 'stock_lot ' || concat_ws(' | ', l.item_id::text, l.lot_code, l.total_cost_minor::text,
+         trim_scale(l.quantity_received)::text, coalesce(l.expires_on::text, ''))
+  from public.stock_lots l where l.workspace_id = '$WS'
+union all
+select 'item_unit ' || concat_ws(' | ', u.item_id::text, u.unit, u.factor_num::text, u.factor_den::text,
+         u.default_purchase::text, u.default_sale::text)
+  from public.item_units u where u.workspace_id = '$WS'
+union all
+select 'item ' || concat_ws(' | ', s.id::text, s.name, coalesce(s.stock::text, ''), s.inventory_unit, s.tracking,
+         s.stockable::text)
+  from public.services s where s.workspace_id = '$WS'
+order by 1"
+stock_snapshot() { psq -At -c "$STOCK_SNAPSHOT_SQL"; }
+# What is on hand at the real places, as the balances say it.
+on_hand() {
+  psq -At -c "select coalesce(string_agg(s.name || coalesce('/' || l.lot_code, '') || '@' || p.code || '=' || trim_scale(b.quantity)::text,
+                                         ' ' order by s.name, l.lot_code, p.code), '')
+    from public.stock_balances b
+    join public.services s on s.id = b.item_id
+    join public.stock_locations p on p.id = b.location_id
+    left join public.stock_lots l on l.id = b.lot_id
+   where b.workspace_id = '$WS' and p.code in ('MAIN', 'SHELF-A') and b.quantity <> 0"
+}
+# The balances that are not the sum of their movements.
+drifted() {
+  psq -At -c "select count(*) from public.stock_balances b
+   where b.workspace_id = '$WS'
+     and b.quantity <> coalesce((select sum(case when m.to_location_id = b.location_id then m.quantity else -m.quantity end)
+                                   from public.stock_movements m
+                                  where m.item_id = b.item_id and m.lot_id is not distinct from b.lot_id
+                                    and b.location_id in (m.from_location_id, m.to_location_id)), 0)"
+}
+STOCK_ON_HAND="Juice/A@MAIN=5 Juice/B@MAIN=10 Water@MAIN=19 Water@SHELF-A=7 Wine@MAIN=1.9"
 
 # Everything the archive is made of, keyed by fixed ids; nothing a later
 # migration may legitimately add (new columns) and nothing that moves on
@@ -186,6 +274,14 @@ v="$(verify)"
 [ "$v" = "ARC-1=verified ARC-2=unverifiable ARC-3=verified" ] \
   || fail "before the upgrade the signatures read [$v]: the seed is not what it claims"
 say "before: ARC-1 verified, ARC-2 unverifiable, ARC-3 verified"
+if [ -n "$STOCK_AT" ]; then
+  stock_snapshot > report/stock-before.txt || fail "could not read the goods before the upgrade"
+  [ "$(grep -c '^stock_movement ' report/stock-before.txt)" = 10 ] \
+    || fail "the goods hold $(grep -c '^stock_movement ' report/stock-before.txt) movements, not the opening and 9 commands"
+  [ "$(on_hand)" = "$STOCK_ON_HAND" ] || fail "before the upgrade the goods on hand read [$(on_hand)]: the seed is not what it claims"
+  [ "$(drifted)" = 0 ] || fail "before the upgrade $(drifted) balances are not the sum of their movements"
+  say "before: $(grep -c '' report/stock-before.txt) facts about the goods; on hand $STOCK_ON_HAND; every balance the sum of its movements"
+fi
 
 echo "--- the upgrade"
 for f in supabase/migrations/*.sql; do
@@ -211,6 +307,16 @@ if ! diff -u report/archive-before.txt report/archive-after.txt > report/archive
   fail "the upgrade changed the archive — the diff above names what moved"
 fi
 say "signed fields, hashes, postings and payment relations: byte-equal before and after"
+if [ -n "$STOCK_AT" ]; then
+  stock_snapshot > report/stock-after.txt || fail "could not read the goods after the upgrade"
+  if ! diff -u report/stock-before.txt report/stock-after.txt > report/stock-diff.txt; then
+    cat report/stock-diff.txt
+    fail "the upgrade changed the goods -- the diff above names what moved"
+  fi
+  [ "$(on_hand)" = "$STOCK_ON_HAND" ] || fail "after the upgrade the goods on hand read [$(on_hand)]"
+  [ "$(drifted)" = 0 ] || fail "after the upgrade $(drifted) balances are not the sum of their movements"
+  say "movements, balances, lots, item units and shelf counts: equal before and after; on hand unchanged; every balance still the sum of its movements"
+fi
 
 v="$(verify)"
 [ "$v" = "ARC-1=verified ARC-2=unverifiable ARC-3=verified" ] \
@@ -267,6 +373,46 @@ if [ -n "$STAGE_AT" ]; then
   say "the control dropped the prepared attempt and blanked the receipt -- exactly what the comparison refuses"
 fi
 
+if [ -n "$STOCK_AT" ]; then
+  # A unit migration that converts the carton receipt a second time. Applied
+  # through the same path; the comparison has to name it, and the sum breaks.
+  apply "$STOCK_CONTROL"
+  stock_snapshot > report/stock-control.txt
+  if diff -u report/stock-before.txt report/stock-control.txt > report/stock-control-diff.txt; then
+    fail "the stock control converted a movement twice and the comparison did not notice"
+  fi
+  moved="$(grep -c '^[-+]stock_movement 00000000-0000-4000-8000-0000000a0601 ' report/stock-control-diff.txt)"
+  [ "$moved" = 2 ] && [ "$(grep -c '^[-+][a-z]' report/stock-control-diff.txt)" = 2 ] \
+    || fail "the stock control's diff touches $(grep -c '^[-+][a-z]' report/stock-control-diff.txt) lines, not exactly the carton receipt twice"
+  [ "$(drifted)" != 0 ] || fail "after the stock control every balance still equals its movements: the sum proves nothing"
+  say "the control converted the carton receipt twice -- the diff names it and $(drifted) balances no longer add up"
+  # Put back, so the commands below start from the goods as upgraded.
+  psq -q -c "alter table public.stock_movements disable trigger user;
+    update public.stock_movements set quantity = quantity / 12
+     where workspace_id = '$WS' and request_id = '00000000-0000-4000-8000-0000000a0601';
+    alter table public.stock_movements enable trigger user" || fail "could not take the stock control back"
+  [ "$(drifted)" = 0 ] || fail "the stock control was not taken back cleanly"
+
+  echo "--- the units, on the upgraded schema"
+  # As the owner, through today's command, on the items and units of 0747: a
+  # carton received is 12 pieces, a glass taken out a fifth of a litre.
+  psq -q -c "update public.workspaces set feature_flags = feature_flags || '{\"stockTakeOut\": true}'::jsonb where id = '$WS'" \
+    || fail "could not switch the take-out on"
+  loc() { psq -At -c "select id from public.stock_locations where workspace_id = '$WS' and code = '$1'"; }
+  move() { # <request> <lines json> <reason>
+    psq -At -c "$AS_OWNER
+      select public.stock_move_v1('$WS', '$1', '$2'::jsonb, '$3')" 2>&1
+  }
+  got="$(move 00000000-0000-4000-8000-0000000a0611 "[{\"item_id\": \"$I_WATER\", \"quantity\": 1, \"from\": \"$(loc SUPPLIER)\", \"to\": \"$(loc MAIN)\", \"unit\": \"carton\"}]" receipt)"
+  case "$got" in *ERROR*|"") fail "a carton of the 0747 item is not received on the upgraded schema: $(printf '%s' "$got" | grep -m1 ERROR)" ;; esac
+  got="$(move 00000000-0000-4000-8000-0000000a0612 "[{\"item_id\": \"$I_WINE\", \"quantity\": 3, \"from\": \"$(loc MAIN)\", \"to\": \"$(loc LOSS)\", \"unit\": \"glass\"}]" consumption)"
+  case "$got" in *ERROR*|"") fail "three glasses of the 0747 item are not taken out on the upgraded schema: $(printf '%s' "$got" | grep -m1 ERROR)" ;; esac
+  want="Juice/A@MAIN=5 Juice/B@MAIN=10 Water@MAIN=31 Water@SHELF-A=7 Wine@MAIN=1.3"
+  [ "$(on_hand)" = "$want" ] || fail "after a carton in and three glasses out the goods on hand read [$(on_hand)], not [$want]"
+  [ "$(drifted)" = 0 ] || fail "after the new movements $(drifted) balances are not the sum of their movements"
+  say "a carton received is 12 more pieces (19 to 31), three glasses out are 0.6 litre less (1.9 to 1.3); the balances add up"
+fi
+
 echo "--- the transitions, on the upgraded schema"
 psq -q -c "update public.invoices set voided_at = now(), voided_by_name = 'Owner'
   where id = '00000000-0000-4000-8000-0000000a0103'" || fail "voiding ARC-3 was refused"
@@ -289,4 +435,4 @@ v="$(verify)"
 case "$v" in *"ARC-1=altered"*) ;; *) fail "a synthetic alteration of ARC-1 was not detected: [$v]" ;; esac
 say "a synthetic alteration behind the guard reads altered"
 
-echo "populated upgrade${STAGE_AT:+ (staged at $STAGE_AT)}: $before + $staged + $after migrations, the archive unchanged, the control caught ($((SECONDS - started))s)"
+echo "populated upgrade${STAGE_AT:+ (staged at $STAGE_AT)}${STOCK_AT:+ (goods at $STOCK_AT)}: $before + $staged + $stocked + $after migrations, the archive unchanged, the control caught ($((SECONDS - started))s)"
