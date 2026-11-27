@@ -326,6 +326,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/what-you-can-do', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.reading),
   RouteRule('/settings/questions', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form),
   RouteRule('/settings/units', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form), // #4442
+  RouteRule('/settings/master-data', RouteClass.workspace, namesRole: true, place: 'drawer-master-data', measure: PageMeasure.work), // #4485
   RouteRule('/attention', RouteClass.workspace, place: 'drawer-events', measure: PageMeasure.work),
   RouteRule('/reservations/period', RouteClass.workspace, place: 'drawer-bi', measure: PageMeasure.work),
   RouteRule(

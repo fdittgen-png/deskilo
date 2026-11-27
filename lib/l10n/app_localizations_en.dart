@@ -21052,14 +21052,73 @@ class AppLocalizationsEn extends AppLocalizations {
   String get managedProfileTitle => 'Managed profile';
 
   @override
+  String masterDataCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count records',
+      one: '$count record',
+      zero: 'No records',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get masterDataCustomersDesc => 'Who you invoice';
+
+  @override
+  String get masterDataGroupCatalogue => 'Catalogue';
+
+  @override
+  String get masterDataGroupMeasures => 'Measures and taxes';
+
+  @override
+  String get masterDataGroupPartners => 'Partners';
+
+  @override
+  String get masterDataGroupPlaces => 'Places and stock';
+
+  @override
+  String get masterDataIntro =>
+      'Every list the business is set up with, in one place. Tap a card to open its editor.';
+
+  @override
+  String get masterDataItemGroupsDesc => 'Settings shared by a group of items';
+
+  @override
+  String get masterDataItemsDesc => 'What you stock and sell';
+
+  @override
+  String get masterDataNoMatch => 'No master data matches the search.';
+
+  @override
   String get masterDataNoUnit => 'No unit';
 
   @override
   String get masterDataNoVat => 'No VAT';
 
   @override
+  String get masterDataPlacesDesc => 'Where your goods are kept';
+
+  @override
   String get masterDataSearchHint =>
       'Type a name or a code, or pick from the list';
+
+  @override
+  String get masterDataServicesDesc => 'The services you sell';
+
+  @override
+  String get masterDataSitesDesc => 'Your addresses and the levels at each';
+
+  @override
+  String get masterDataSuppliersDesc => 'Who you buy from';
+
+  @override
+  String get masterDataTills => 'Tills';
+
+  @override
+  String get masterDataTillsDesc =>
+      'The tills at the counter and their key layouts';
 
   @override
   String get masterDataUnknownCode =>
@@ -21067,6 +21126,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get masterDataUnlisted => 'This is not in the list: pick one';
+
+  @override
+  String get masterDataVatDesc => 'The rates your documents charge';
 
   @override
   String get mcpApiReference => 'API reference';

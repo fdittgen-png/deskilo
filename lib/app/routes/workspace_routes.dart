@@ -6,6 +6,7 @@
 import 'package:flutter/foundation.dart' show ValueKey;
 import 'package:go_router/go_router.dart';
 
+import '../../core/navigation/routes.dart';
 import '../../core/ui/wizard_navigation.dart';
 import '../../features/auth/providers/auth_providers.dart';
 import '../../features/plan/presentation/widgets/setup_places_step.dart';
@@ -44,6 +45,8 @@ import '../../features/workspace/presentation/widgets/conversation_thread.dart';
 import '../../features/workspace/presentation/widgets/onboarding_host_gate.dart';
 import '../../features/workspace/presentation/widgets/setup_desk.dart';
 import '../../features/workspace/presentation/widgets/workspace_reports.dart';
+import '../master_data/master_data_kinds.dart';
+import '../master_data/master_data_page.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 import 'setup_grow_pages.dart';
@@ -205,16 +208,29 @@ List<RouteBase> _settingsRoutes(RouteEnv env) {
       builder: (context, state) => const QuestionsScreen(),
     ),
     // #4442 — the units of measure of this business and their conversions.
+    // #4485 — always reachable: the pickers read the units whether or not
+    // the units feature is on, which governs their advanced uses only.
     GoRoute(
-      path: '/settings/units',
+      path: Routes.settingsUnits,
       redirect: env.guard(
         const RouteAccess(
-          features: [WorkspaceFeature.unitsOfMeasure],
           permission: WorkspacePermission.workspaceSettings,
           to: '/settings',
         ),
       ),
       builder: (context, state) => const UnitsOfMeasureScreen(),
+    ),
+    // #4485 — every kind of master data, each opening its own screen: for
+    // whoever may open at least one of them.
+    GoRoute(
+      path: Routes.settingsMasterData,
+      redirect: env.guard(
+        RouteAccess(
+          when: (c) => masterDataKindsFor(c.featureEnabled, c.permissions).isNotEmpty,
+          to: '/settings',
+        ),
+      ),
+      builder: (context, state) => const MasterDataPage(),
     ),
     GoRoute(
       path: '/reports',

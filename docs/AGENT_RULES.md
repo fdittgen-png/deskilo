@@ -648,6 +648,22 @@ head business's decision and is flagged (`organisation`, #4004). The server
 refuses each command when the head has the feature off. Do not add a flag to
 the personal view of houses the person already belongs to.
 
+## Master data lives on the Master data page (#4485)
+
+Owner, 26 Nov: all master data is configured there. Every kind of master
+data (anything a picker reads, or a configured list of a business) has a
+card on Settings › Master data (`/settings/master-data`), and its editor is
+reached from there. A new kind gets its `MasterDataKind` in
+`lib/app/master_data/master_data_kinds.dart` (group, existing screen, the
+features its route asks; the permission is its route's in `route_access.dart`)
+and its line in `test/lint/master_data_registry_test.dart` in the SAME PR
+that introduces it, and `/settings/master-data` in `route_access.dart` asks
+the union of the kinds' permissions. The page itself has no feature flag: it
+only opens existing screens, each behind its own feature and permission, and
+a card is shown exactly to whom its screen opens. The list a picker reads is
+always reachable — never hide its editor behind the flag of an advanced use
+(the units, #4485).
+
 ## Validation domains grow in FOUR places (#767/#769)
 
 A new server-side validation domain (`events_type_check` +

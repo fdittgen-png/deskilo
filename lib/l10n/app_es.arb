@@ -12831,6 +12831,16 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataCount": "{count, plural, =0{Ningún registro} one{{count} registro} other{{count} registros}}",
+  "masterDataCustomersDesc": "A quién factura",
+  "masterDataGroupCatalogue": "Catálogo",
+  "masterDataGroupMeasures": "Medidas e impuestos",
+  "masterDataGroupPartners": "Socios comerciales",
+  "masterDataGroupPlaces": "Ubicaciones y existencias",
+  "masterDataIntro": "Todas las listas con las que está configurada la empresa, en un solo lugar. Pulse una tarjeta para abrir su editor.",
+  "masterDataItemGroupsDesc": "Ajustes comunes a un grupo de artículos",
+  "masterDataItemsDesc": "Lo que almacena y vende",
+  "masterDataNoMatch": "Ningún dato maestro coincide con la búsqueda.",
   "masterDataNoUnit": "Sin unidad",
   "@masterDataNoUnit": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
@@ -12839,12 +12849,19 @@
   "@masterDataNoVat": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
   },
+  "masterDataPlacesDesc": "Dónde se guardan sus mercancías",
   "masterDataSearchHint": "Escriba un nombre o un código, o elija de la lista",
+  "masterDataServicesDesc": "Los servicios que vende",
+  "masterDataSitesDesc": "Sus direcciones y las plantas de cada una",
+  "masterDataSuppliersDesc": "A quién compra",
+  "masterDataTills": "Cajas",
+  "masterDataTillsDesc": "Las cajas del mostrador y la disposición de sus teclas",
   "masterDataUnknownCode": "No es una entrada válida. Elija una de la lista.",
   "masterDataUnlisted": "Esto no está en la lista: elija uno",
   "@masterDataUnlisted": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
   },
+  "masterDataVatDesc": "Los tipos que aplican sus documentos",
   "mcpApiReference": "Referencia de la API",
   "mcpApiReferenceHint": "Qué puede llamar un asistente y cómo se autoriza",
   "mcpAssistantsTitle": "Asistentes",

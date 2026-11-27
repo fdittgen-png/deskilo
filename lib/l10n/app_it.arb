@@ -12831,6 +12831,16 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataCount": "{count, plural, =0{Nessuna voce} one{{count} voce} other{{count} voci}}",
+  "masterDataCustomersDesc": "A chi si fattura",
+  "masterDataGroupCatalogue": "Catalogo",
+  "masterDataGroupMeasures": "Misure e imposte",
+  "masterDataGroupPartners": "Partner commerciali",
+  "masterDataGroupPlaces": "Ubicazioni e magazzino",
+  "masterDataIntro": "Tutti gli elenchi con cui è configurata l’attività, in un unico posto. Tocchi una scheda per aprirne l’editor.",
+  "masterDataItemGroupsDesc": "Impostazioni comuni a un gruppo di articoli",
+  "masterDataItemsDesc": "Ciò che si tiene a magazzino e si vende",
+  "masterDataNoMatch": "Nessun dato anagrafico corrisponde alla ricerca.",
   "masterDataNoUnit": "Nessuna unità",
   "@masterDataNoUnit": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
@@ -12839,12 +12849,19 @@
   "@masterDataNoVat": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
   },
+  "masterDataPlacesDesc": "Dove si conservano le merci",
   "masterDataSearchHint": "Digiti un nome o un codice, oppure scelga dall'elenco",
+  "masterDataServicesDesc": "I servizi in vendita",
+  "masterDataSitesDesc": "Gli indirizzi e i piani di ciascuno",
+  "masterDataSuppliersDesc": "Da chi si acquista",
+  "masterDataTills": "Casse",
+  "masterDataTillsDesc": "Le casse al banco e la disposizione dei loro tasti",
   "masterDataUnknownCode": "Non è una voce valida. Ne scelga una dall'elenco.",
   "masterDataUnlisted": "Non è nell'elenco: sceglierne uno",
   "@masterDataUnlisted": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
   },
+  "masterDataVatDesc": "Le aliquote applicate dai documenti",
   "mcpApiReference": "Riferimento API",
   "mcpApiReferenceHint": "Cosa può chiamare un assistente e come viene autorizzato",
   "mcpAssistantsTitle": "Assistenti",

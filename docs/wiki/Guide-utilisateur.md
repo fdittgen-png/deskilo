@@ -4194,6 +4194,49 @@ Vous voulez que vos factures et vos lettres s'impriment sur le papier qu'utilise
 
 **Voir aussi:** [Pays](#pays)
 
+<!-- anchor: user.workspace.settings.master-data -->
+### Données de base
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+Les données de base sont les listes avec lesquelles votre entreprise est configurée et que ses sélecteurs lisent : les unités, les taux de TVA, les articles, les fournisseurs et le reste. **Données de base** montre chaque sorte en un seul endroit, par groupe. Chaque carte nomme la sorte, dit en une ligne ce qu’elle est et combien d’enregistrements elle contient, et ouvre l’écran qui la modifie.
+
+**Étapes**
+
+1. Dans [Espace](https://fdittgen-png.github.io/deskilo/#/workspace-settings), ouvrez **Données de base**, ou choisissez **Données de base** sous **Configurer l’espace** dans le menu.
+2. Tapez dans **Rechercher** pour ne garder que les cartes dont le nom correspond.
+3. Touchez une carte et modifiez ses enregistrements dans l’écran qu’elle ouvre.
+
+**Bon à savoir**
+
+- Vous ne voyez une carte que si vous pouvez ouvrir son écran : sa fonctionnalité est activée et vous détenez son autorisation.
+- Un nombre qui ne peut pas être lu le dit, avec **Réessayer** ; il n’est jamais affiché comme 0.
+
+<!-- anchor: user.workspace.master-data.measures -->
+#### Mesures et taxes
+
+**Unités de mesure** avec leurs conversions, et **Taux de TVA**. Les unités sont toujours là, que la fonctionnalité **Unités de mesure** soit activée ou non.
+
+<!-- anchor: user.workspace.master-data.catalogue -->
+#### Catalogue de vente
+
+**Articles**, **Groupes d’articles** et **Services** : ce que l’entreprise stocke et vend.
+
+<!-- anchor: user.workspace.master-data.places -->
+#### Emplacements et stock
+
+**Emplacements**, où les marchandises sont rangées, et **Caisses** : les caisses du comptoir, chacune avec la disposition de ses touches.
+
+<!-- anchor: user.workspace.master-data.partners -->
+#### Partenaires
+
+**Fournisseurs** et **Clients facturés**.
+
+<!-- anchor: user.workspace.master-data.organisation -->
+#### Organisation
+
+**Sites** : les adresses de l’entreprise et les niveaux de chacune.
+
 <!-- anchor: user.workspace.settings.units -->
 ### Unités de mesure
 
@@ -4205,11 +4248,10 @@ Vos articles, devis et factures sont mesurés dans des unités, et certaines se 
 
 **Étapes**
 
-1. Activez **Unités de mesure** sous **Fonctionnalités** (elle est désactivée tant que vous ne la demandez pas).
-2. Dans [Unités de mesure](https://fdittgen-png.github.io/deskilo/#/settings/units), touchez **Nouvelle unité**.
-3. Renseignez **Code de l’unité** (il ne pourra plus changer), **Votre nom pour l’unité**, **Elle mesure** et **Une unité vaut** dans l’unité de base de ce qu’elle mesure : 1000 pour un km compté en m, 0,001 pour un mm.
-4. Si vous le souhaitez, renseignez **Code UN/ECE (pour les factures électroniques)**, que portent les factures électroniques (KMT pour un km).
-5. Touchez **Enregistrer**.
+1. Dans [Unités de mesure](https://fdittgen-png.github.io/deskilo/#/settings/units), atteint depuis **Données de base**, touchez **Nouvelle unité**.
+2. Renseignez **Code de l’unité** (il ne pourra plus changer), **Votre nom pour l’unité**, **Elle mesure** et **Une unité vaut** dans l’unité de base de ce qu’elle mesure : 1000 pour un km compté en m, 0,001 pour un mm.
+3. Si vous le souhaitez, renseignez **Code UN/ECE (pour les factures électroniques)**, que portent les factures électroniques (KMT pour un km).
+4. Touchez **Enregistrer**.
 
 **Bon à savoir**
 
@@ -4217,6 +4259,7 @@ Vos articles, devis et factures sont mesurés dans des unités, et certaines se 
 - Une unité utilisée (un article compté avec elle, un mouvement de stock, un devis ou une ligne de facture) garde pour toujours sa dimension et son facteur : une correction est une nouvelle unité. Une unité que personne n’utilise peut être archivée (**Archiver**) puis affichée de nouveau (**Afficher de nouveau**).
 - Une conversion est exacte : 2,5 km font 2500 m. Deux sortes d’unités ne se convertissent jamais, et un résultat que six décimales ne peuvent pas contenir est refusé, jamais arrondi.
 - Seuls le propriétaire et les administrateurs autorisés à modifier les réglages de l’espace tiennent les unités.
+- Les unités sont toujours là. La fonctionnalité **Unités de mesure** sous **Fonctionnalités** décide si les devis et les factures proposent vos propres unités et si les sélecteurs d’un article proposent toutes les unités ; tant qu’elle est désactivée, ils ne proposent que les unités habituelles.
 
 **Voir aussi:** [Papier des documents](#papier-des-documents)
 

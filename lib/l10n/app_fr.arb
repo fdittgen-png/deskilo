@@ -12831,6 +12831,16 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataCount": "{count, plural, =0{Aucun enregistrement} one{{count} enregistrement} other{{count} enregistrements}}",
+  "masterDataCustomersDesc": "Ceux que vous facturez",
+  "masterDataGroupCatalogue": "Catalogue de vente",
+  "masterDataGroupMeasures": "Mesures et taxes",
+  "masterDataGroupPartners": "Partenaires",
+  "masterDataGroupPlaces": "Emplacements et stock",
+  "masterDataIntro": "Toutes les listes avec lesquelles l’entreprise est configurée, en un seul endroit. Touchez une carte pour ouvrir son éditeur.",
+  "masterDataItemGroupsDesc": "Réglages communs à un groupe d’articles",
+  "masterDataItemsDesc": "Ce que vous stockez et vendez",
+  "masterDataNoMatch": "Aucune donnée de base ne correspond à la recherche.",
   "masterDataNoUnit": "Aucune unité",
   "@masterDataNoUnit": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
@@ -12839,12 +12849,19 @@
   "@masterDataNoVat": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
   },
+  "masterDataPlacesDesc": "Où vos marchandises sont rangées",
   "masterDataSearchHint": "Saisissez un nom ou un code, ou choisissez dans la liste",
+  "masterDataServicesDesc": "Les services que vous vendez",
+  "masterDataSitesDesc": "Vos adresses et les niveaux de chacune",
+  "masterDataSuppliersDesc": "Ceux à qui vous achetez",
+  "masterDataTills": "Caisses",
+  "masterDataTillsDesc": "Les caisses du comptoir et la disposition de leurs touches",
   "masterDataUnknownCode": "Ce n'est pas une entrée valide. Choisissez-en une dans la liste.",
   "masterDataUnlisted": "Ce n'est pas dans la liste : choisissez-en un",
   "@masterDataUnlisted": {
     "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
   },
+  "masterDataVatDesc": "Les taux que vos documents appliquent",
   "mcpApiReference": "Référence de l’API",
   "mcpApiReferenceHint": "Ce qu’un assistant peut appeler, et comment c’est autorisé",
   "mcpAssistantsTitle": "Assistants",
