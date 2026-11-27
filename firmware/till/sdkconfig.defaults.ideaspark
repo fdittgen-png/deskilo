@@ -1,0 +1,4 @@
+# #4474 -- the ideaspark ESP32 with its 1.9 in ST7789 (build: idf.py -B build-ideaspark -D SDKCONFIG=sdkconfig.ideaspark
+# -D SDKCONFIG_DEFAULTS="sdkconfig.defaults;sdkconfig.defaults.ideaspark" build)
+CONFIG_DESKILO_BOARD_IDEASPARK=y
+CONFIG_LV_COLOR_16_SWAP=y
