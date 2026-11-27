@@ -4268,7 +4268,7 @@ Sus artículos, presupuestos y facturas se miden en unidades, y algunas se convi
 
 **Público:** Propietario · Administrador/a con el permiso
 
-Un terminal de caja es la pequeña pantalla del mostrador que cobra (#4466). Lo conecta a su empresa desde **Dispositivos**: la aplicación lee el código QR del terminal, o el código de 10 caracteres junto a él, y muestra qué terminal es.
+Un terminal de caja es la pequeña pantalla del mostrador que cobra. Lo conecta a su empresa desde **Dispositivos**: la aplicación lee el código QR del terminal, o el código de 10 caracteres junto a él, y muestra qué terminal es.
 
 **Pasos**
 

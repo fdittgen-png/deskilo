@@ -2,19 +2,22 @@
 // #4466 — Settings › Devices on a phone and on a desk: a board's readable code typed is read and the board shown (its
 // id, model and fingerprint, and that connecting it comes later); a typo is refused in words under the field and the
 // refusal goes when the code is changed; where there is no camera the page says so and typing still works; a board's
-// QR scanned shows the board with its whole fingerprint.
+// QR scanned shows the board with its whole fingerprint; a board already connected is listed in place of "none".
+import 'package:deskilo/core/demo/data/demo_till_board.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/scan/front_camera.dart';
 import 'package:deskilo/core/scan/qr_scan_widget.dart';
 import 'package:deskilo/features/money/presentation/screens/devices_screen.dart';
+import 'package:deskilo/features/money/providers/till_board_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/pump_app.dart';
 
 final _l10n = AppLocalizationsEn();
-const _qr = 'deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=ideaspark_st7789_v1&fw=1.0.3&fp=AB12-CD34';
+const _qr = demoTillBoardQr;
 
 Future<void> _type(WidgetTester tester, String code) async {
   final field = find.descendant(of: find.byKey(const ValueKey('device-pairing-code')), matching: find.byType(EditableText));
@@ -57,6 +60,19 @@ void main() {
         expect(find.text(_l10n.devicePairingRefusedAlphabet), findsOneWidget);
         await _type(tester, '3DNGP');
         expect(find.text(_l10n.devicePairingRefusedLength), findsOneWidget);
+      });
+
+      testWidgets('a board already connected is listed, and "none" is not said', (tester) async {
+        await pumpApp(
+          tester,
+          const DevicesScreen(cameraAvailable: false),
+          size: size,
+          overrides: [connectedTillBoardsProvider.overrideWithValue(AsyncData([demoTillBoard()]))],
+        );
+        await tester.pump();
+        expect(find.byKey(const ValueKey('device-connected-11111111')), findsOneWidget);
+        expect(find.text(_l10n.devicePairingBoard('11111111', 'ideaspark ST7789')), findsOneWidget);
+        expect(find.byKey(const ValueKey('device-pairing-none')), findsNothing);
       });
 
       testWidgets("a board's QR scanned shows the board with its whole fingerprint", (tester) async {

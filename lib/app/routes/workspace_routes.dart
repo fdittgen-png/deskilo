@@ -221,17 +221,12 @@ List<RouteBase> _settingsRoutes(RouteEnv env) {
       ),
       builder: (context, state) => const UnitsOfMeasureScreen(),
     ),
-    // #4466 — the till boards: one connected by its QR code or its typed code.
     GoRoute(
       path: Routes.settingsDevices,
       redirect: env.guard(
-        const RouteAccess(
-          features: [WorkspaceFeature.counterEmbeddedTerminal],
-          permission: WorkspacePermission.workspaceSettings,
-          to: '/settings',
-        ),
+        const RouteAccess(features: [WorkspaceFeature.counterEmbeddedTerminal], permission: WorkspacePermission.workspaceSettings, to: '/settings'),
       ),
-      builder: (context, state) => const DevicesScreen(),
+      builder: (context, state) => const DevicesScreen(), // #4466 the till boards
     ),
     // #4485 — every kind of master data, each opening its own screen: for
     // whoever may open at least one of them.

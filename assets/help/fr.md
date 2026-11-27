@@ -4064,7 +4064,7 @@ Vos articles, devis et factures sont mesurés dans des unités, et certaines se 
 
 **Public:** Propriétaire · Administrateur·rice avec l'autorisation
 
-Un terminal de caisse est le petit écran du comptoir qui encaisse (#4466). Vous le reliez à votre entreprise depuis **Appareils** : l'application lit le code QR du terminal, ou le code de 10 caractères à côté, et indique de quel terminal il s'agit.
+Un terminal de caisse est le petit écran du comptoir qui encaisse. Vous le reliez à votre entreprise depuis **Appareils** : l'application lit le code QR du terminal, ou le code de 10 caractères à côté, et indique de quel terminal il s'agit.
 
 **Étapes**
 

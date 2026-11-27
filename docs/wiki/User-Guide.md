@@ -4268,7 +4268,7 @@ Your items, quotes and invoices are measured in units, and some units convert in
 
 **Audience:** Owner · Administrator with the permission
 
-A till board is the small screen at the counter that takes payments (#4466). You connect it to your business from **Devices**: the app reads the board's QR code, or the code of 10 characters beside it, and shows which board it is.
+A till board is the small screen at the counter that takes payments. You connect it to your business from **Devices**: the app reads the board's QR code, or the code of 10 characters beside it, and shows which board it is.
 
 **Steps**
 
