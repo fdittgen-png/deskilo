@@ -9207,8 +9207,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun document. Liez vos statuts, guides et états depuis n\'importe quel drive.';
 
   @override
-  String get documentsInvalid =>
-      'Un document requiert un titre et un lien https://.';
+  String get documentsLinkNotHttps => 'Le lien doit commencer par https://.';
 
   @override
   String get documentsProviderLabel => 'Stocké sur';
@@ -9227,6 +9226,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get documentsTitleLabel => 'Titre';
+
+  @override
+  String get documentsTitleMissing => 'Donnez un titre au document.';
 
   @override
   String get documentsUrlHelper =>

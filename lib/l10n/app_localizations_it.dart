@@ -9166,8 +9166,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessun documento. Colleghi statuto, guide e bilanci da qualsiasi drive.';
 
   @override
-  String get documentsInvalid =>
-      'Un documento richiede un titolo e un link https://.';
+  String get documentsLinkNotHttps => 'Il link deve iniziare con https://.';
 
   @override
   String get documentsProviderLabel => 'Archiviato su';
@@ -9186,6 +9185,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get documentsTitleLabel => 'Titolo';
+
+  @override
+  String get documentsTitleMissing => 'Dia un titolo al documento.';
 
   @override
   String get documentsUrlHelper =>

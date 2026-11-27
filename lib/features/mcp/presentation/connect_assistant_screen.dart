@@ -15,7 +15,6 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/kit/page_bar.dart';
-import '../../../core/ui/loading_view.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../providers/assistant_setup_providers.dart';
 import '../providers/mcp_providers.dart';
@@ -81,12 +80,9 @@ class _ConnectAssistantScreenState
           ),
           const AssistantDisclosureNote(),
           _section(l10n.mcpConnectBeforeTitle),
-          scope.when(
-            loading: () => const LoadingView(),
-            error: (e, _) => ReadFailureBanner(
-              error: e,
-              onRetry: () => ref.invalidate(currentMcpContextProvider),
-            ),
+          AsyncReadBody.part(
+            value: scope,
+            onRetry: () => ref.invalidate(currentMcpContextProvider),
             data: (captured) => captured == null
                 ? Text(
                     key: const ValueKey('mcp-connect-no-workspace'),

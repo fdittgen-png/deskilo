@@ -16,9 +16,9 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/async_read_body.dart';
+import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../domain/billing_customer.dart';
 import '../../providers/billing_customer_providers.dart';
 import '../widgets/billing_access_dialog.dart';
@@ -134,20 +134,15 @@ class _BillingCustomersScreenState
           ),
         ),
         Expanded(
-          child: customers.when(
-            loading: () => const LoadingView(),
-            error: (error, _) => Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: ReadFailureBanner(
-                error: error,
-                refusal: error is BillingCustomerRefusal
-                    ? l10n.billingCustomerNotAllowed
-                    : null,
-                retryKey: const ValueKey('billing-customers-retry'),
-                onRetry: () =>
-                    ref.invalidate(billingCustomersProvider(workspaceId)),
-              ),
-            ),
+          child: AsyncReadBody(
+            value: customers,
+            isEmpty: (all) => all.isEmpty,
+            refusal: (error) => error is BillingCustomerRefusal
+                ? l10n.billingCustomerNotAllowed
+                : null,
+            retryKey: const ValueKey('billing-customers-retry'),
+            onRetry: () =>
+                ref.invalidate(billingCustomersProvider(workspaceId)),
             data: (all) {
               final query = foldForSearch(_search.text.trim());
               final shown = [
@@ -155,14 +150,10 @@ class _BillingCustomersScreenState
                   if (_matches(p, query)) p,
               ];
               if (all.isEmpty) {
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    child: Text(
-                      l10n.billingCustomersEmpty,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+                return EmptyState(
+                  key: const ValueKey('billing-customers-empty'),
+                  icon: Icons.storefront_outlined,
+                  title: l10n.billingCustomersEmpty,
                 );
               }
               return ListView.separated(

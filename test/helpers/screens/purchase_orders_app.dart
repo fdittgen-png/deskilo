@@ -16,7 +16,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 /// The app's order addresses over [overrides], opening at the list.
-Widget purchaseOrdersApp(List<Override> overrides) => ProviderScope(
+/// [retryReads] false leaves a failed read failed: the failure is then the
+/// state under test.
+Widget purchaseOrdersApp(
+  List<Override> overrides, {
+  bool retryReads = true,
+}) => ProviderScope(
+  retry: retryReads ? null : (_, _) => null,
   overrides: overrides,
   child: MaterialApp.router(
     localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -52,15 +58,17 @@ Widget purchaseOrdersApp(List<Override> overrides) => ProviderScope(
   ),
 );
 
-/// Opens the order [reference] from the desk's table: its record then
-/// holds the order's actions. A phone's list shows them on each card.
+/// Opens the order [reference] from the list — its row in the table, its
+/// card on a phone: the order's record then holds the order's actions.
 Future<void> openOrder(WidgetTester tester, String reference) async {
   final cell = find.descendant(
     of: find.byKey(const ValueKey('records-rows')),
     matching: find.text(reference),
   );
-  if (cell.evaluate().isEmpty) return;
-  await tester.tap(cell.first);
+  final card = find.byKey(ValueKey('purchase-order-$reference'));
+  final row = cell.evaluate().isEmpty ? card : cell;
+  if (row.evaluate().isEmpty) return;
+  await tester.tap(row.first);
   for (var i = 0; i < 4; i++) {
     await tester.pump(const Duration(milliseconds: 300));
   }

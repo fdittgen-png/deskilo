@@ -11,7 +11,6 @@ import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/kit/page_bar.dart';
-import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -145,14 +144,9 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
       appBar: pageBar(context,
         title: l10n.assistantSetupTitle,
       ),
-      body: scope.when(
-        loading: () => const LoadingView(),
-        error: (e, _) => _padded(
-          ReadFailureBanner(
-            error: e,
-            onRetry: () => ref.invalidate(currentMcpContextProvider),
-          ),
-        ),
+      body: AsyncReadBody(
+        value: scope,
+        onRetry: () => ref.invalidate(currentMcpContextProvider),
         data: (captured) => captured == null
             ? _padded(
                 Text(
@@ -160,19 +154,11 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
                   l10n.assistantSetupNoWorkspace,
                 ),
               )
-            : ref
-                  .watch(assistantSetupProvider(captured))
-                  .when(
-                    loading: () => const LoadingView(),
-                    error: (e, _) => _padded(
-                      ReadFailureBanner(
-                        error: e,
-                        onRetry: () =>
-                            ref.invalidate(assistantSetupProvider(captured)),
-                      ),
-                    ),
-                    data: (setup) => _checklist(l10n, captured, setup),
-                  ),
+            : AsyncReadBody(
+                value: ref.watch(assistantSetupProvider(captured)),
+                onRetry: () => ref.invalidate(assistantSetupProvider(captured)),
+                data: (setup) => _checklist(l10n, captured, setup),
+              ),
       ),
     );
   }

@@ -2,7 +2,8 @@
 //
 // #3842 — the purchase orders at the desk: a records table (#3606) of
 // number, supplier, state, expected date and total, the chip Open, the
-// footer adding the total per currency, never across. A row opens its order
+// footer adding the total per currency, never across; on a phone a card per
+// order with the same words (#4492). A row opens its order
 // at its address, `/money/purchase-orders/order/<id>`, beside the table on a
 // large window and as a page of its own below it (#3607). The segment before
 // the id keeps the order's form (`/new`, a pushed long task) from being
@@ -16,6 +17,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/list_detail_route.dart';
 import '../../../../core/storage/pane_width_store.dart';
+import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/list_detail_scaffold.dart';
 import '../../../../core/ui/kit/records_table.dart';
 import '../../domain/purchase_order.dart';
@@ -28,7 +30,8 @@ const String _ordersPath = '/money/purchase-orders';
 /// Where an order opens: `/money/purchase-orders/order/<id>`.
 const String _orderPath = '/money/purchase-orders/order';
 
-/// The orders table, with the open order beside it.
+/// The orders table (cards on a phone), with the open order beside it on a
+/// large window.
 class PurchaseOrdersDesk extends ConsumerWidget {
   const PurchaseOrdersDesk({required this.workspaceId, super.key});
 
@@ -107,11 +110,10 @@ class _OrdersTable extends StatelessWidget {
       keyOf: (o) => o.id,
       searchText: (o) => '${o.reference} ${o.supplierName}',
       onOpen: (o) => onOpen(o.id),
-      empty: Center(
-        child: Text(
-          l.purchaseOrdersEmpty,
-          key: const ValueKey('purchase-orders-empty'),
-        ),
+      empty: EmptyState(
+        key: const ValueKey('purchase-orders-empty'),
+        icon: Icons.local_shipping_outlined,
+        title: l.purchaseOrdersEmpty,
       ),
       initialQuery: const RecordsQuery(sortColumn: 'number', ascending: false),
       chips: [
@@ -145,9 +147,9 @@ class _OrdersTable extends StatelessWidget {
           staysBeside: false,
           flex: 3,
           sortKey: (o) => o.state.index,
-          cell: (_, o) => Text(
-            purchaseOrderStateLabel(l, o.state, wire: o.stateWire),
-            overflow: TextOverflow.ellipsis,
+          cell: (_, o) => Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: purchaseOrderStateChip(l, o),
           ),
         ),
         RecordColumn(
@@ -168,9 +170,18 @@ class _OrdersTable extends StatelessWidget {
           cell: (_, o) => Text(total(o)),
         ),
       ],
+      // The card says what the row says: number, supplier, state, the day
+      // it is expected and the total.
       cardBuilder: (context, o) => ListTile(
+        key: ValueKey('purchase-order-${o.reference}'),
         title: Text(o.reference),
-        subtitle: Text(o.supplierName),
+        subtitle: Text(
+          [
+            o.supplierName,
+            purchaseOrderStateLabel(l, o.state, wire: o.stateWire),
+            if (o.expectedOn case final day?) dates.format(day),
+          ].join(' · '),
+        ),
         trailing: Text(total(o)),
       ),
     );
