@@ -142,3 +142,17 @@ rawMaxWidth lib/features/stock/presentation/stock_bulk_read_sheet.dart // #4421 
 rawMaxWidth lib/features/stock/presentation/stock_first_run.dart // #4421 owned by the stock lane while its v2.2 work is open
 rawMaxWidth lib/features/stock/presentation/stock_screen.dart // #4421 owned by the stock lane while its v2.2 work is open
 rawMaxWidth lib/features/stock/presentation/stock_where_is_screen.dart // #4421 owned by the stock lane while its v2.2 work is open
+demoFeatureImports auth // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
+demoFeatureImports calendar // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
+demoFeatureImports directory // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
+demoFeatureImports events // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
+demoFeatureImports kiosk // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
+demoFeatureImports mcp // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
+demoFeatureImports me // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
+demoFeatureImports money // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
+demoFeatureImports plan // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
+demoFeatureImports profile // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
+demoFeatureImports reservations // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
+demoFeatureImports stock // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
+demoFeatureImports visits // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
+demoFeatureImports workspace // #4404 the Demo mirrors the features by design until its move (#2495); the count of its imports only falls
