@@ -136,15 +136,15 @@ Deno.test("the budget counts the hop the proxy appended, not one the caller wrot
   assertEquals(sourceOf(req), "203.0.113.9");
 });
 
-Deno.test("a flood of new sources does not wipe the budget of the ones counted", () => {
+Deno.test("a flood of new sources never shuts out a new board", () => {
   let t = 0;
   const allow = budget(1, () => t);
   assertEquals([allow("a"), allow("a")], [true, false]);
   for (let i = 0; i < MAX_SOURCES; i++) allow(`s${i}`);
-  assertEquals(allow("a"), false, "the source past its budget stays past it");
-  assertEquals(allow("new"), false, "and a new source is refused while every slot holds a live minute");
+  assertEquals(allow("board"), true, "a new source is let in while every slot holds a live minute: the oldest goes");
+  assertEquals(allow("board"), false, "and its own budget still counts");
   t = 60_000;
-  assertEquals(allow("new"), true, "an ended minute frees its slot");
+  assertEquals(allow("board"), true, "a new minute is a new budget");
 });
 
 Deno.test("a body that declares more than the ceiling is not read", async () => {

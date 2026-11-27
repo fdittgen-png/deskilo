@@ -52,11 +52,12 @@ function refused(reason: string, status = 200): Response {
   return answer({ ok: false, reason }, status);
 }
 
-/** The most sources one instance keeps a budget for; past it, a new source is refused until older minutes end. */
+/** The most sources one instance keeps a budget for; past it, the oldest is forgotten. */
 export const MAX_SOURCES = 10_000;
 
-/** A small budget of attempts per source and minute, kept in this instance's memory. Only expired minutes are
- * forgotten: a flood of new sources cannot wipe the budget of the ones already counted. */
+/** A small budget of attempts per source and minute, kept in this instance's memory: a cost bound, not the lock on a
+ * code (the database bounds a code's attempts and life, and 60 random bits are not guessed). Ended minutes are
+ * forgotten first; when every slot is live the oldest goes, so a flood of new sources never shuts out a real board. */
 export function budget(perMinute: number, now: () => number = Date.now): (source: string) => boolean {
   const seen = new Map<string, { start: number; n: number }>();
   return (source) => {
@@ -66,9 +67,10 @@ export function budget(perMinute: number, now: () => number = Date.now): (source
       s.n += 1;
       return s.n <= perMinute;
     }
-    if (!s && seen.size >= MAX_SOURCES) {
+    if (s) seen.delete(source);
+    if (seen.size >= MAX_SOURCES) {
       for (const [k, v] of seen) if (t - v.start >= 60_000) seen.delete(k);
-      if (seen.size >= MAX_SOURCES) return false;
+      if (seen.size >= MAX_SOURCES) seen.delete(seen.keys().next().value!);
     }
     seen.set(source, { start: t, n: 1 });
     return true;
