@@ -1375,10 +1375,15 @@ jobs:
           bash scripts/stock_transfer_race.sh "$DB_URL"
           # #4433 — two invoices taking the last piece at once: one sells it, the other waits and is refused.
           bash scripts/invoice_goods_race.sh "$DB_URL"
+<<<<<<< HEAD
           # #4492 — a return and a void of the same sale at once: they wait for each other, nothing comes back twice.
           bash scripts/invoice_void_return_race.sh "$DB_URL"
           # #4492 — the counter and the stock door take the goods of one sale back at once: they wait, nothing comes back twice.
           bash scripts/counter_return_race.sh "$DB_URL"
+=======
+          # #4492 — a void, a refund and a settlement asked by two sessions under two request ids: one of each.
+          bash scripts/invoice_twice_race.sh "$DB_URL"
+>>>>>>> ea0412081 (test(money): the database job races a void, a refund and a settlement asked by two sessions (#4492))
 
       # #1329 — the feature-flag write compares its read-set and merges
       # under ONE row lock. Two real sessions prove there is no window

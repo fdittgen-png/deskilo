@@ -10,7 +10,8 @@
 #   (G1) a carnet sold twice (`sell_credit`)            (G2) a package bought twice (`buy_package`)
 #   (G3) an expense filed twice (`submit_expense`)      (G4) an expense distributed twice (`distribute_expense`)
 #   (G5) the billing rules saved from what was read before another save (`set_billing_rules`)
-# One connection is enough: nothing here needs two sessions to go wrong. Fresh ids per run; the business is removed.
+# One connection is enough: nothing here needs two sessions to go wrong. Fresh ids per run; removing the business is
+# tried and only warns (what a command booked may keep it), the database is disposable.
 set -uo pipefail
 url=${1:?usage: twice_is_once_probe.sh DATABASE_URL}
 uid() { uuidgen | tr 'A-Z' 'a-z'; }
