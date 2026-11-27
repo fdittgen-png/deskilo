@@ -4,8 +4,11 @@
 // and chooses. Quantities and prices stay text; the server reads them exactly.
 // #4433 -- a line may sell an item kept in stock: it is then counted in the
 // item's own unit and, for an item tracked piece by piece, names its pieces.
+import 'dart:async';
+
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
@@ -14,6 +17,7 @@ import '../../../../core/ui/form_kit.dart';
 import '../../domain/invoice_goods.dart';
 import '../../domain/line_unit.dart';
 import '../../domain/standalone_invoice.dart';
+import 'goods_unit_field.dart';
 import 'line_unit_text.dart';
 
 /// The units the composer offers, by the UN/ECE code the structured invoice
@@ -86,6 +90,9 @@ class StandaloneLineForm {
   final TextEditingController quantityField;
   final TextEditingController price;
 
+  /// #4479 -- the price this form filled in for the unit of the goods it sells: while the field still holds it, a new unit replaces it.
+  String? autoPrice;
+
   /// The tags of the pieces sold, for an item tracked piece by piece.
   final TextEditingController tags;
 
@@ -154,6 +161,7 @@ class StandaloneLineEditor extends StatelessWidget {
     this.goods = const [],
     this.pieces = false,
     this.units = const [],
+    this.workspaceId = '',
   });
 
   final int index;
@@ -172,15 +180,14 @@ class StandaloneLineEditor extends StatelessWidget {
   /// #4442 -- the business's own units a free line may also be sold in; none while the feature is off.
   final List<LineUnit> units;
 
+  /// The business the line is sold by (the units and prices of an item are its stock's).
+  final String workspaceId;
+
   /// What the line is counted in: the item's own unit on a goods line, else the units to pick from.
   Widget _unitField(BuildContext context) {
     final l = context.l10n;
     return switch (form.goodsUnit) {
-      final g? => InputDecorator(
-        key: ValueKey('standalone-line-$index-goods-unit'),
-        decoration: InputDecoration(labelText: l.standaloneInvoiceLineUnit, enabled: false),
-        child: Text(g.label),
-      ),
+      _? => GoodsUnitField(index: index, workspaceId: workspaceId, form: form, enabled: enabled, onChanged: onChanged, locale: appFormatOf(context).locale),
       null => DropdownButtonFormField<String>(
         key: ValueKey('standalone-line-$index-unit'),
         initialValue: form.unit,
@@ -237,6 +244,7 @@ class StandaloneLineEditor extends StatelessWidget {
                     ? (v) {
                         form.sell(goods.where((g) => g.id == v).firstOrNull);
                         onChanged();
+                        if (v != null) unawaited(startGoodsLine(ProviderScope.containerOf(context), workspaceId, form, v, locale: appFormatOf(context).locale, done: onChanged));
                       }
                     : null,
               ),
