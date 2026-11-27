@@ -342,13 +342,10 @@ class DocumentsScreen extends ConsumerWidget {
         title: l10n.featureDocuments,
         actions: [
           if (canCurate)
-            Padding(
-              padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
-              child: FilledButton(
-                key: const ValueKey('documents-add'),
-                onPressed: () => _addDialog(context, ref),
-                child: Text(l10n.documentsAdd),
-              ),
+            pageBarAction(
+              key: const ValueKey('documents-add'),
+              label: l10n.documentsAdd,
+              onPressed: () => _addDialog(context, ref),
             ),
         ],
       ),
