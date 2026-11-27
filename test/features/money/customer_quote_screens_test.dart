@@ -12,6 +12,8 @@ import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/core/time/calendar_days.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/ui/date_field.dart';
+import 'package:deskilo/core/ui/kit/bottom_action_bar.dart';
+import 'package:deskilo/core/ui/kit/kit_card.dart';
 import 'package:deskilo/core/ui/kit/status_chip.dart';
 import 'package:deskilo/features/money/domain/billing_customer.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
@@ -145,6 +147,18 @@ Future<void> _settle(WidgetTester tester) async {
   }
 }
 
+/// Presses [key] among the corrections behind the page's worded More.
+Future<void> _more(WidgetTester tester, String key) async {
+  await tester.tap(find.byKey(const ValueKey('quote-more')));
+  await _settle(tester);
+  await tester.tap(find.byKey(ValueKey(key)));
+  await _settle(tester);
+}
+
+/// [key] among the buttons of the page's bottom bar.
+Finder _inBar(String key) =>
+    find.descendant(of: find.byType(BottomActionBar), matching: find.byKey(ValueKey(key)));
+
 /// The business's day in these tests is a day no device clock shows: what a screen offers as a date must be it.
 final _businessDay = DateTime(2031, 5, 17);
 final _dayOverrides = [
@@ -258,6 +272,15 @@ void main() {
     expect(find.descendant(of: sent, matching: find.textContaining('QUO-0001')), findsOneWidget);
     expect(find.descendant(of: sent, matching: find.textContaining('144')), findsOneWidget);
     expect(find.descendant(of: draft, matching: find.text('Atelier Lumi')), findsOneWidget);
+    // the state is its chip on the card, as on the row, and is said once
+    expect(
+      find.descendant(of: sent, matching: find.widgetWithText(StatusChip, _en.quoteStatusSent)),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(of: draft, matching: find.widgetWithText(StatusChip, _en.invoicingStatusDraft)),
+      findsOneWidget,
+    );
     expect(
       find.descendant(of: draft, matching: find.textContaining(_en.invoicingStatusDraft)),
       findsOneWidget,
@@ -300,10 +323,20 @@ void main() {
   testWidgets('a sent quote shows what was frozen, never changes in place, and '
       'offers Amend and Cancel', (tester) async {
     final setup = await _open(tester, const CustomerQuoteScreen(quoteId: 'quote-1'));
-    expect(find.byKey(const ValueKey('quote-title')), findsOneWidget);
-    expect(find.text('QUO-0001'), findsOneWidget);
-    // #4492 — the state is a word on its tone, as in the list; the customer
-    // stands beside it.
+    // #4492 — the page's name is in its bar, the quote's number in it
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('quote-title')),
+        matching: find.text(_en.quotePageTitle('QUO-0001')),
+      ),
+      findsOneWidget,
+    );
+    // the state is a word on its tone, as in the list, in the summary card
+    // with the customer and the amount
+    final summary = find.byKey(const ValueKey('quote-summary'));
+    expect(find.descendant(of: summary, matching: find.byType(KitCard), matchRoot: true), findsOneWidget);
+    expect(find.descendant(of: summary, matching: find.byKey(const ValueKey('quote-customer'))), findsOneWidget);
+    expect(find.descendant(of: summary, matching: find.byKey(const ValueKey('quote-total'))), findsOneWidget);
     final state = find.byKey(const ValueKey('quote-status'));
     expect(find.widgetWithText(StatusChip, _en.quoteStatusSent), findsOneWidget);
     expect(find.descendant(of: state, matching: find.text(_en.quoteStatusSent)), findsOneWidget);
@@ -314,26 +347,28 @@ void main() {
     expect(find.byKey(const ValueKey('quote-total')), findsOneWidget);
     expect(find.byKey(const ValueKey('quote-sent-as')), findsOneWidget);
     expect(find.byKey(const ValueKey('quote-edit')), findsNothing);
-    await tester.tap(find.byKey(const ValueKey('quote-amend')));
-    await _settle(tester);
+    // the action of the moment is in the bottom bar; the corrections are
+    // behind More, not beside it
+    expect(_inBar('quote-record-answer'), findsOneWidget);
+    expect(find.byKey(const ValueKey('quote-amend')), findsNothing);
+    await _more(tester, 'quote-amend');
     // the amendment is another revision, a draft with no amounts of its own
     expect(setup.quotes.calls, contains('amend'));
     expect(find.byKey(const ValueKey('quote-amounts-on-send')), findsOneWidget);
     expect(find.byKey(const ValueKey('quote-revision-2')), findsOneWidget);
-    expect(find.byKey(const ValueKey('quote-send')), findsOneWidget);
+    expect(_inBar('quote-send'), findsOneWidget);
+    expect(_inBar('quote-edit'), findsOneWidget);
   });
 
   testWidgets('a sent quote is cancelled by the issuer; a refusal is said and '
       'nothing changes', (tester) async {
     final setup = await _open(tester, const CustomerQuoteScreen(quoteId: 'quote-1'));
     setup.quotes.mayIssue = () => false;
-    await tester.tap(find.byKey(const ValueKey('quote-cancel')));
-    await _settle(tester);
+    await _more(tester, 'quote-cancel');
     expect(find.text(_en.quoteNotAllowedAction), findsOneWidget);
     expect(find.textContaining(_en.quoteStatusSent), findsWidgets);
     setup.quotes.mayIssue = () => true;
-    await tester.tap(find.byKey(const ValueKey('quote-cancel')));
-    await _settle(tester);
+    await _more(tester, 'quote-cancel');
     expect(find.textContaining(_en.quoteStatusCancelled), findsWidgets);
   });
 
@@ -342,11 +377,62 @@ void main() {
     final setup = await _open(tester, const CustomerQuoteScreen(quoteId: 'quote-2'));
     expect(find.byKey(const ValueKey('quote-amounts-on-send')), findsOneWidget);
     expect(find.byKey(const ValueKey('quote-total')), findsNothing);
-    await tester.tap(find.byKey(const ValueKey('quote-send')));
+    // #4492 — a draft has no number: the bar names the page, and "Draft" is
+    // said once, in its chip
+    expect(
+      find.descendant(of: find.byKey(const ValueKey('quote-title')), matching: find.text(_en.reportDocQuote)),
+      findsOneWidget,
+    );
+    expect(find.text(_en.invoicingStatusDraft), findsOneWidget);
+    expect(find.widgetWithText(StatusChip, _en.invoicingStatusDraft), findsOneWidget);
+    await tester.tap(_inBar('quote-send'));
     await _settle(tester);
-    expect(find.text('QUO-0002'), findsOneWidget);
+    expect(find.text(_en.quotePageTitle('QUO-0002')), findsOneWidget);
     expect(find.byKey(const ValueKey('quote-total')), findsOneWidget);
     expect(setup.quotes.calls, contains('send'));
+  });
+
+  testWidgets('#4492 a first draft is discarded from More, and the page leaves '
+      'for the list', (tester) async {
+    final setup = await _open(tester, const CustomerQuoteScreen(quoteId: 'quote-2'));
+    expect(find.byKey(const ValueKey('quote-discard')), findsNothing);
+    await _more(tester, 'quote-discard');
+    expect(setup.quotes.calls, contains('discardDraft'));
+    expect(find.text('list-page'), findsOneWidget);
+  });
+
+  testWidgets('#4492 a person without the right to issue reads the quote and '
+      'is offered no action and no More', (tester) async {
+    await _open(
+      tester,
+      const CustomerQuoteScreen(quoteId: 'quote-1'),
+      permissions: const {WorkspacePermission.viewFinances},
+    );
+    expect(find.byKey(const ValueKey('quote-summary')), findsOneWidget);
+    expect(find.byType(BottomActionBar), findsNothing);
+    expect(find.byKey(const ValueKey('quote-more')), findsNothing);
+  });
+
+  testWidgets('#4492 a quote that could not be read again offers nothing on '
+      'the answer of before', (tester) async {
+    final setup = await _open(tester, const CustomerQuoteScreen(quoteId: 'quote-1'));
+    expect(_inBar('quote-record-answer'), findsOneWidget);
+    setup.quotes.failNext = Exception('offline');
+    ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
+        .invalidate(customerQuoteProvider((workspaceId: setup.workspaceId, quoteId: 'quote-1')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('read-failure')), findsOneWidget);
+    expect(find.byType(BottomActionBar), findsNothing);
+    expect(find.byKey(const ValueKey('quote-more')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('quote-retry')));
+    await _settle(tester);
+    expect(_inBar('quote-record-answer'), findsOneWidget);
+  });
+
+  testWidgets('#4492 the editor keeps Save draft and Send in its bottom bar', (tester) async {
+    await _open(tester, const CustomerQuoteEditorScreen(quoteId: 'quote-2'));
+    expect(_inBar('quote-save-draft'), findsOneWidget);
+    expect(_inBar('quote-send-now'), findsOneWidget);
   });
 
   testWidgets('the editor saves a draft, then says a stale save and keeps '

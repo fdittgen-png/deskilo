@@ -4,6 +4,7 @@
   "quotesIntro": "Angebote an Ihre Rechnungskunden. Ein gesendetes Angebot ändert sich nie; eine Änderung ist eine weitere Revision. Es wird nichts berechnet, bis Sie ein angenommenes Angebot umwandeln.",
   "quotesEmpty": "Noch keine Angebote. Erstellen Sie das erste für einen Rechnungskunden.",
   "quotesNew": "Neues Angebot",
+  "quotePageTitle": "Angebot {number}",
   "quotesNotAllowed": "Sie dürfen die Angebote dieses Unternehmens nicht lesen.",
   "quoteStatusSent": "Gesendet",
   "quoteStatusAccepted": "Angenommen",

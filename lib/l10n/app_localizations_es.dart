@@ -28967,6 +28967,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String quotePageTitle(String number) {
+    return 'Presupuesto $number';
+  }
+
+  @override
   String get quoteRecordAnswer => 'Registrar la respuesta';
 
   @override

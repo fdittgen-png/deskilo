@@ -16,6 +16,15 @@
   "@quotesNew": {
     "description": "customer quotes: the quotes list, editor and detail (#4166)"
   },
+  "quotePageTitle": "Quote {number}",
+  "@quotePageTitle": {
+    "description": "the name of one quote's page in its bar: the word and the quote's number (#4492)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "quotesNotAllowed": "You may not read the quotes of this business.",
   "@quotesNotAllowed": {
     "description": "customer quotes: the quotes list, editor and detail (#4166)"

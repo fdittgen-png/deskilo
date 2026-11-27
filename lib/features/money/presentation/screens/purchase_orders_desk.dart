@@ -30,6 +30,11 @@ const String _ordersPath = '/money/purchase-orders';
 /// Where an order opens: `/money/purchase-orders/order/<id>`.
 const String _orderPath = '/money/purchase-orders/order';
 
+/// The most a card gives its total and state, so the reference and the
+/// supplier keep the rest of a phone's width.
+// content-fit: a total and a state word beside the card's title
+const double _cardStateWidth = 160;
+
 /// The orders table (cards on a phone), with the open order beside it on a
 /// large window.
 class PurchaseOrdersDesk extends ConsumerWidget {
@@ -170,19 +175,27 @@ class _OrdersTable extends StatelessWidget {
           cell: (_, o) => Text(total(o)),
         ),
       ],
-      // The card says what the row says: number, supplier, state, the day
-      // it is expected and the total.
+      // The card says what the row says: number, supplier, the day it is
+      // expected, the total and, under it, the state in its chip.
       cardBuilder: (context, o) => ListTile(
         key: ValueKey('purchase-order-${o.reference}'),
         title: Text(o.reference),
         subtitle: Text(
           [
             o.supplierName,
-            purchaseOrderStateLabel(l, o.state, wire: o.stateWire),
             if (o.expectedOn case final day?) dates.format(day),
           ].join(' · '),
         ),
-        trailing: Text(total(o)),
+        // A state this app does not know is said with the server's text,
+        // which may be long: the chip keeps to its share and is cut there.
+        trailing: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: _cardStateWidth),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [Text(total(o)), purchaseOrderStateChip(l, o)],
+          ),
+        ),
       ),
     );
   }

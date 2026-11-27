@@ -29046,6 +29046,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String quotePageTitle(String number) {
+    return 'Angebot $number';
+  }
+
+  @override
   String get quoteRecordAnswer => 'Antwort festhalten';
 
   @override

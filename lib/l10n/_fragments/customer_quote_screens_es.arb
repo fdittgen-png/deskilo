@@ -4,6 +4,7 @@
   "quotesIntro": "Ofertas a sus clientes facturados. Un presupuesto enviado nunca cambia; una modificación es otra revisión. No se factura nada hasta que convierta uno aceptado.",
   "quotesEmpty": "Aún no hay presupuestos. Haga el primero para un cliente facturado.",
   "quotesNew": "Nuevo presupuesto",
+  "quotePageTitle": "Presupuesto {number}",
   "quotesNotAllowed": "No puede leer los presupuestos de este negocio.",
   "quoteStatusSent": "Enviado",
   "quoteStatusAccepted": "Aceptado",

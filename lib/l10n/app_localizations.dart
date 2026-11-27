@@ -46182,6 +46182,12 @@ abstract class AppLocalizations {
   /// **'Order number: {value}'**
   String quoteOrderLine(String value);
 
+  /// the name of one quote's page in its bar: the word and the quote's number (#4492)
+  ///
+  /// In en, this message translates to:
+  /// **'Quote {number}'**
+  String quotePageTitle(String number);
+
   /// customer quotes: the answer and the conversion (#4166)
   ///
   /// In en, this message translates to:

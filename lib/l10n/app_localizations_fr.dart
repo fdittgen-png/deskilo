@@ -29093,6 +29093,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String quotePageTitle(String number) {
+    return 'Devis $number';
+  }
+
+  @override
   String get quoteRecordAnswer => 'Enregistrer la réponse';
 
   @override

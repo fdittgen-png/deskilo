@@ -16638,6 +16638,7 @@
   "quoteNoCustomers": "Añada primero un cliente facturado: un presupuesto se hace para uno.",
   "quoteNotAllowedAction": "No puede hacer esto con los presupuestos de este negocio.",
   "quoteOrderLine": "Número de pedido: {value}",
+  "quotePageTitle": "Presupuesto {number}",
   "quoteRecordAnswer": "Registrar la respuesta",
   "quoteReferenceLine": "Referencia del cliente: {value}",
   "quoteRevisionLine": "Revisión {revision} · {status}",

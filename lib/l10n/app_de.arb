@@ -16638,6 +16638,7 @@
   "quoteNoCustomers": "Legen Sie zuerst einen Rechnungskunden an: ein Angebot gilt einem solchen.",
   "quoteNotAllowedAction": "Sie dürfen das mit Angeboten in diesem Unternehmen nicht tun.",
   "quoteOrderLine": "Bestellnummer: {value}",
+  "quotePageTitle": "Angebot {number}",
   "quoteRecordAnswer": "Antwort festhalten",
   "quoteReferenceLine": "Referenz des Kunden: {value}",
   "quoteRevisionLine": "Revision {revision} · {status}",

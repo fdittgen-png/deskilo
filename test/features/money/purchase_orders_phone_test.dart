@@ -9,6 +9,7 @@ import 'dart:io';
 import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/core/ui/empty_state.dart';
+import 'package:deskilo/core/ui/kit/status_chip.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/presentation/screens/purchase_orders_screen.dart';
 import 'package:deskilo/features/money/providers/purchase_order_providers.dart';
@@ -102,6 +103,22 @@ void main() {
       find.descendant(of: card, matching: find.textContaining('Alpha')),
       findsOneWidget,
       reason: 'the card names the supplier',
+    );
+    expect(
+      find.descendant(
+        of: card,
+        matching: find.widgetWithText(StatusChip, _en.purchasesStateDraft),
+      ),
+      findsOneWidget,
+      reason: 'the state is its chip on the card, as on the row',
+    );
+    expect(
+      find.descendant(
+        of: card,
+        matching: find.textContaining(_en.purchasesStateDraft),
+      ),
+      findsOneWidget,
+      reason: 'and is said once: no state word in the line under the number',
     );
     expect(
       find.byKey(const ValueKey('purchase-order-print-2026-0001')),
