@@ -141,16 +141,3 @@ int _check(List<int> digits) {
   }
   return sum % _base;
 }
-
-/// The readable code of [shortId] (32 bits), [profile] (0-3) and [proof] (10 bits): what the board shows.
-@visibleForTesting
-String readableDeviceCode(int shortId, int profile, int proof) {
-  var v = shortId * _proofSpace * 4 + (profile % 4) * _proofSpace + proof % _proofSpace;
-  final digits = List.filled(_data, 0);
-  for (var i = _data - 1; i >= 0; i--) {
-    digits[i] = v % _base;
-    v ~/= _base;
-  }
-  final s = [for (final d in digits) _alphabet[d], _alphabet[_check(digits)]].join();
-  return '${s.substring(0, 5)}-${s.substring(5)}';
-}

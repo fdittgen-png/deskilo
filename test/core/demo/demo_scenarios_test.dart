@@ -121,6 +121,7 @@ import '../../helpers/demo_till_layout_journey.dart';
 import '../../helpers/demo_till_offline_journey.dart';
 import '../../helpers/demo_vies_export_journeys.dart';
 import '../../helpers/demo_whatsapp_journeys.dart';
+import '../../helpers/device_code_encoder.dart';
 import '../../helpers/unit_conversion.dart';
 
 /// One house of the reference organisation, as a check reads it: the parts

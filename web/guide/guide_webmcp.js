@@ -102,6 +102,8 @@
     if (BOOKS.indexOf(book) < 0) return M.fail('validation_error', T.book, BOOKS);
     var limit = input.limit === undefined ? LIMIT_DEFAULT : Math.floor(Number(input.limit));
     if (!(limit >= 1 && limit <= LIMIT_MAX)) return M.fail('validation_error', T.limit, undefined, { min: 1, max: LIMIT_MAX });
+    // a section's whole title, as typed, ranks that section first
+    var whole = fold(typeof input.query === 'string' ? input.query : '').trim();
     var hits = [];
     all.forEach(function (e, n) {
       if (e.family !== book || !visible(e, lv.level)) return;
@@ -110,7 +112,7 @@
         var s = count(f.t, w) * 6 + count(f.i, w) * 4 + count(f.s, w) * 3 + count(f.x, w);
         if (s) { matched++; score += s; }
       });
-      if (matched) hits.push({ e: e, score: score + matched * 8 });
+      if (matched) hits.push({ e: e, score: score + matched * 8 + (f.t === whole ? 1000 : 0) });
     });
     hits.sort(function (a, b) { return b.score - a.score; });
     return M.ok({ language: lang, level: lv.level, results: hits.slice(0, limit).map(function (h) { return brief(h.e); }) });

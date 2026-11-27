@@ -8,6 +8,8 @@ import 'dart:io';
 import 'package:deskilo/features/money/domain/device_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/device_code_encoder.dart';
+
 void main() {
   final table = jsonDecode(File('test/fixtures/device_pairing_codes.json').readAsStringSync()) as Map<String, dynamic>;
 
