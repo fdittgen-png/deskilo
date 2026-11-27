@@ -38538,6 +38538,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String stockScanWhichPlace(String code) {
+    return 'Varios lugares llevan el código $code: ¿cuál?';
+  }
+
+  @override
   String get stockSettingsElsewhere =>
       'Los ajustes de existencias se mantienen en la página Ajustes de existencias.';
 

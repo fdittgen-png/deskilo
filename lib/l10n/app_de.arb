@@ -22471,6 +22471,15 @@
   "stockScanUnknown": "Unbekannter Code {code} — einem Artikel zuordnen?",
   "stockScanUnknownAdd": "Artikel öffnen",
   "stockScanUnknownTag": "Unbekannter Tag {code}",
+  "stockScanWhichPlace": "Mehrere Orte tragen den Code {code}: welcher ist es?",
+  "@stockScanWhichPlace": {
+    "description": "#4495 a scanned code several places carry",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "stockSettingsElsewhere": "Die Lagereinstellungen werden auf der Seite Lagereinstellungen geführt.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

@@ -38633,6 +38633,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String stockScanWhichPlace(String code) {
+    return 'Mehrere Orte tragen den Code $code: welcher ist es?';
+  }
+
+  @override
   String get stockSettingsElsewhere =>
       'Die Lagereinstellungen werden auf der Seite Lagereinstellungen geführt.';
 

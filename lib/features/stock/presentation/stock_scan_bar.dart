@@ -78,6 +78,16 @@ class StockScanBar extends ConsumerWidget {
                     if (mayManage && !last.fromTag) TextButton(key: const ValueKey('stock-scan-open-items'), onPressed: onOpenItems, child: Text(l10n.stockScanUnknownAdd)),
                   ],
                 ),
+              if (last != null && last.outcome == ScanOutcome.askPlace) ...[
+                Text(l10n.stockScanWhichPlace(last.code ?? ''), key: const ValueKey('stock-scan-which-place')),
+                Wrap(
+                  spacing: AppSpacing.sm,
+                  children: [
+                    for (final p in last.choices)
+                      ActionChip(key: ValueKey('stock-scan-place-${p.id}'), label: Text(p.path.isEmpty ? p.name : p.path), onPressed: () => feed.choosePlace(p)),
+                  ],
+                ),
+              ],
               if (last != null && last.outcome == ScanOutcome.alreadyRead)
                 Text(l10n.stockScanAlreadyRead(last.code ?? ''), key: const ValueKey('stock-scan-already-read')),
               if (last != null && last.outcome == ScanOutcome.refused)

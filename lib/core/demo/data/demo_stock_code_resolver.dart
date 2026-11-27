@@ -31,6 +31,19 @@ class DemoStockCodeResolver implements StockCodeResolver {
 
   /// A place by its tag, barcode or code.
   Future<StockCodeResolution?> _place(List<StockPlaceConfig> places, String typed, TagOwner? held) async {
+    // #4495 -- a code several places carry names them all, as the server answers: the app asks which
+    final byCode = [for (final p in places) if (p.active && p.isAddressable && p.code == typed && held?.locationId != p.id && p.barcode != typed) p];
+    if (byCode.length > 1 && places.every((p) => p.barcode != typed)) {
+      return StockCodeResolution(
+        kind: ScannedKind.place,
+        code: typed,
+        matchedBy: 'place_code',
+        placeChoices: [
+          for (final p in byCode)
+            ScannedPlace(id: p.id, code: p.code, name: p.name, kind: p.kind, path: p.addressPath.split(stockAddressJoint).join(' › ')),
+        ],
+      );
+    }
     for (final p in places) {
       if (!p.active) continue;
       final byTag = held?.locationId == p.id;

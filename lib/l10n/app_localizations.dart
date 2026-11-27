@@ -61301,6 +61301,12 @@ abstract class AppLocalizations {
   /// **'Unknown tag {code}'**
   String stockScanUnknownTag(String code);
 
+  /// #4495 a scanned code several places carry
+  ///
+  /// In en, this message translates to:
+  /// **'Several places carry the code {code}: which one?'**
+  String stockScanWhichPlace(String code);
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:

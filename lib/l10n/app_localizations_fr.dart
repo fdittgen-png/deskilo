@@ -38698,6 +38698,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String stockScanWhichPlace(String code) {
+    return 'Plusieurs emplacements portent le code $code : lequel ?';
+  }
+
+  @override
   String get stockSettingsElsewhere =>
       'Les réglages du stock se tiennent sur la page Réglages du stock.';
 

@@ -22471,6 +22471,15 @@
   "stockScanUnknown": "Código {code} desconocido: ¿añadirlo a un artículo?",
   "stockScanUnknownAdd": "Abrir los artículos",
   "stockScanUnknownTag": "Etiqueta {code} desconocida",
+  "stockScanWhichPlace": "Varios lugares llevan el código {code}: ¿cuál?",
+  "@stockScanWhichPlace": {
+    "description": "#4495 a scanned code several places carry",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "stockSettingsElsewhere": "Los ajustes de existencias se mantienen en la página Ajustes de existencias.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"
