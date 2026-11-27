@@ -80,6 +80,7 @@ abstract final class Routes {
   static const settingsAssistantSetup = '/settings/assistant-setup';
   static const settingsAssistants = '/settings/assistants';
   static const settingsColours = '/settings/colours';
+  static const settingsDevices = '/settings/devices';
   static const settingsMasterData = '/settings/master-data';
   static const settingsNumberSequences = '/settings/number-sequences';
   static const settingsPaymentTerms = '/settings/payment-terms';

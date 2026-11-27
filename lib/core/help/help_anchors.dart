@@ -351,6 +351,8 @@ abstract final class HelpAnchor {
   static const workspacePaper = 'user.workspace.settings.paper';
   static const settingsUnits = 'user.workspace.settings.units';
 
+  /// #4466 — Settings › Devices: a till board connected by its QR code or its typed code.
+  static const settingsDevices = 'user.workspace.settings.devices';
   /// #4485 — the Master data page and its groups.
   static const masterData = 'user.workspace.settings.master-data';
   static const masterDataMeasures = 'user.workspace.master-data.measures';

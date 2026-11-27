@@ -97,6 +97,7 @@ const helpAnchorIndex = <String>{
   HelpAnchor.workspaceLanguage,
   HelpAnchor.workspacePaper,
   HelpAnchor.settingsUnits,
+  HelpAnchor.settingsDevices,
   HelpAnchor.masterData,
   HelpAnchor.masterDataMeasures,
   HelpAnchor.masterDataCatalogue,

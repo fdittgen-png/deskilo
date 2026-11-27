@@ -1,0 +1,19 @@
+{
+  "@@locale": "de",
+  "devicePairingTitle": "Geräte",
+  "devicePairingSubtitle": "Kassenterminals: eines per QR-Code oder Code verbinden",
+  "devicePairingNone": "Mit diesem Unternehmen ist noch kein Kassenterminal verbunden.",
+  "devicePairingConnect": "Gerät verbinden",
+  "devicePairingScanHint": "Halten Sie den QR-Code des Terminals vor die Kamera. Um ihn anzuzeigen, halten Sie die BOOT-Taste des Terminals 3 Sekunden gedrückt.",
+  "devicePairingType": "Code eintippen",
+  "devicePairingTypeHelper": "Die 10 Zeichen neben dem QR-Code des Terminals, zum Beispiel 3DNGP-UN9CG.",
+  "devicePairingCheck": "Code prüfen",
+  "devicePairingRefusedLength": "Der Code eines Terminals hat 10 Zeichen, etwa XXXXX-XXXXX.",
+  "devicePairingRefusedAlphabet": "Der Code eines Terminals enthält nie 0, O, 1, I oder L und keine anderen Zeichen: prüfen Sie das Zeichen auf dem Terminal.",
+  "devicePairingRefusedCheck": "Kein Terminal zeigt diesen Code: ein Zeichen ist falsch, oder zwei sind vertauscht. Vergleichen Sie ihn mit dem Terminal.",
+  "devicePairingRefusedProfile": "Dieses Terminal ist ein Modell, das diese App noch nicht kennt. Aktualisieren Sie die App und verbinden Sie es dann.",
+  "devicePairingFound": "Terminal gefunden",
+  "devicePairingBoard": "Terminal {id} · {model}",
+  "devicePairingFingerprint": "Fingerabdruck {fingerprint}: vergleichen Sie ihn mit dem Bildschirm des Terminals.",
+  "devicePairingLater": "Das Verbinden des Terminals mit diesem Unternehmen kommt mit einem späteren Update: nichts wurde an es gesendet."
+}

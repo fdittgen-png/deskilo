@@ -118,6 +118,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/settings/colours': {_P.workspaceSettings},
   '/settings/questions': {_P.workspaceSettings},
   '/settings/units': {_P.workspaceSettings}, // #4442
+  '/settings/devices': {_P.workspaceSettings}, // #4466
   // #4485 — the Master data page: who may open one of its kinds' screens (the
   // page shows each card to whom that screen opens; master_data_test holds
   // this set to the union of theirs).

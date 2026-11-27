@@ -630,7 +630,7 @@ Stammdaten sind die Listen, mit denen Ihr Unternehmen eingerichtet ist und die s
 <!-- anchor: user.workspace.master-data.places -->
 #### Lagerorte und Bestand
 
-**Lagerorte**, wo die Waren lagern, und **Kassen**: die Kassen am Tresen, jede mit ihrer Tastenbelegung.
+**Lagerorte**, wo die Waren lagern, und **Kassen**: die Kassen am Tresen, jede mit ihrer Tastenbelegung, und **Geräte**: die Kassenterminals, jedes per QR-Code oder Code verbunden (siehe [Geräte](help:user.workspace.settings.devices)).
 
 <!-- anchor: user.workspace.master-data.partners -->
 #### Geschäftspartner
@@ -667,6 +667,26 @@ Ihre Artikel, Angebote und Rechnungen werden in Einheiten gemessen, und manche E
 - Die Einheiten sind immer da. Die Funktion **Maßeinheiten** unter **Funktionen** entscheidet, ob Angebote und Rechnungen Ihre eigenen Einheiten anbieten und ob die Auswahlfelder eines Artikels jede Einheit anbieten; solange sie aus ist, bieten sie nur die üblichen Einheiten an.
 
 **Siehe auch:** [Papier der Dokumente](help:user.workspace.settings.paper)
+
+<!-- anchor: user.workspace.settings.devices -->
+### Geräte
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Ein Kassenterminal ist der kleine Bildschirm an der Theke, der Zahlungen annimmt. Sie verbinden es unter **Geräte** mit Ihrem Unternehmen: Die App liest den QR-Code des Terminals oder den 10-stelligen Code daneben und zeigt, welches Terminal es ist.
+
+**Schritte**
+
+1. Schalten Sie **Kassenterminals** unter **Funktionen** ein (es braucht **Kassensitzungen und Tagesabschluss** und ist aus, bis Sie es anfordern).
+2. Halten Sie am Terminal die **BOOT**-Taste 3 Sekunden gedrückt: Es zeigt seinen QR-Code und seinen Code, etwa 3DNGP-UN9CG. Ein noch nicht eingerichtetes Terminal zeigt sie von selbst.
+3. Halten Sie in [Geräte](app:/settings/devices) den QR-Code vor die Kamera, oder tippen Sie den Code unter **Code eintippen** ein und tippen Sie auf **Code prüfen**.
+4. Vergleichen Sie das Terminal und seinen **Fingerabdruck** mit dem Bildschirm des Terminals.
+
+**Gut zu wissen**
+
+- Ein Code enthält nie 0, O, 1, I oder L. Ein falsches Zeichen oder zwei vertauschte werden sofort abgelehnt, in Worten unter dem Feld; Groß- und Kleinschreibung, Leerzeichen und Bindestriche spielen keine Rolle.
+- Ohne Kamera (Browser, Desktop) leistet das Eintippen des Codes dasselbe.
+- Das Verbinden des Terminals mit dem Unternehmen kommt mit einem späteren Update: Heute liest und prüft die App das Terminal und sendet ihm nichts.
 
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organisation
