@@ -4,7 +4,7 @@
 // firmware's host test pins, id 11111111-…, fingerprint AB12-CD34): the board is found with its model and the first
 // digits of its fingerprint; the same code with two symbols swapped is refused by its check, and its QR gives the same
 // board. Shared by the scenario checklist. [readableDeviceCode] is the board's encoder, for the tests that need a code.
-import 'package:deskilo/features/money/domain/device_code.dart';
+import 'package:deskilo/core/devices/device_code.dart';
 
 const _alphabet = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';
 

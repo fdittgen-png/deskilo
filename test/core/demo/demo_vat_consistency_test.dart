@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// The Demo's French business declares VAT on the receipts basis: the return it shows as filed and the one it shows as
+// prepared were made before the Demo's today, and preparing and filing them again gives the same lines, with no
+// correction.
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';

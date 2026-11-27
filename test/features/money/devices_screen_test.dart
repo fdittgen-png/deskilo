@@ -5,10 +5,10 @@
 // QR scanned shows the board with its whole fingerprint; a board already connected is listed in place of "none".
 import 'package:deskilo/core/demo/data/demo_till_board.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
+import 'package:deskilo/core/devices/connected_boards_provider.dart';
 import 'package:deskilo/core/scan/front_camera.dart';
 import 'package:deskilo/core/scan/qr_scan_widget.dart';
 import 'package:deskilo/features/money/presentation/screens/devices_screen.dart';
-import 'package:deskilo/features/money/providers/till_board_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

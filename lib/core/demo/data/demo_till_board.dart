@@ -4,7 +4,7 @@
 // the firmware's host test pins).
 import 'package:meta/meta.dart' show visibleForTesting;
 
-import '../../../features/money/domain/device_code.dart';
+import '../../devices/device_code.dart';
 
 /// The QR code the Demo's till board shows (the tests scan it).
 @visibleForTesting

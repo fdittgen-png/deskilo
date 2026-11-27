@@ -7,10 +7,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show ProviderBase;
 
+import '../../core/devices/connected_boards_provider.dart';
 import '../../features/money/providers/billing_customer_providers.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/money/providers/supplier_providers.dart';
-import '../../features/money/providers/till_board_providers.dart';
 import '../../features/money/providers/till_drawer_providers.dart';
 import '../../features/stock/providers/stock_providers.dart';
 import '../../features/stock/providers/workspace_units_providers.dart';

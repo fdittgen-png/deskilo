@@ -5,8 +5,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart' show AsyncData;
 import 'package:flutter_riverpod/misc.dart' show Override;
 
-import '../../features/money/providers/till_board_providers.dart';
 import '../../features/money/providers/till_layout_providers.dart';
+import '../devices/connected_boards_provider.dart';
 import 'data/demo_till_board.dart';
 import 'data/demo_till_layouts.dart';
 
