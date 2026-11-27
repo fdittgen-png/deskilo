@@ -178,6 +178,17 @@ class DemoStockLedger implements DemoInvoiceGoods {
   @override
   bool sells(String itemId) => itemOf(itemId) != null;
 
+  @override
+  ExactQuantity? inInventoryUnit(String itemId, String unit, ExactQuantity quantity) {
+    final item = itemOf(itemId);
+    if (item == null) return null;
+    try {
+      return core.toInventory(item, quantity, unit, 0);
+    } on StockConfigRefused {
+      return null;
+    }
+  }
+
   /// #4433 -- the goods an issued invoice sells leave the main store for the customer, one sale per line, linked to the
   /// invoice. A line the main store cannot serve refuses them all and moves nothing, as the server does.
   @override

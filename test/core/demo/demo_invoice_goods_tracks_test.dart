@@ -113,4 +113,35 @@ void main() {
     expect(invoice.lineTracks, isEmpty);
     expect((held - ledger.balance(mugs.id, 'demo-place-main')).text, '1');
   });
+
+  StandaloneDraft mugsIn(String unit, String quantity) => StandaloneDraft(
+    subjectMemberId: customer,
+    serviceDate: fixture.seededAt,
+    dueOn: fixture.seededAt.add(const Duration(days: 30)),
+    lines: [
+      StandaloneLine(
+        description: 'Mugs',
+        quantity: quantity,
+        unitCode: unit,
+        unitLabel: unit,
+        unitPrice: '11',
+        supply: 'goods',
+        itemId: 'demo-item-mugs',
+      ),
+    ],
+  );
+
+  test('#4479 two cartons of mugs (12 each) leave 24 pieces: the stock moves in the inventory unit', () async {
+    final held = ledger.balance('demo-item-mugs', 'demo-place-main');
+    await issued(mugsIn('carton', '2'), 'req-carton');
+    expect((held - ledger.balance('demo-item-mugs', 'demo-place-main')).text, '24');
+  });
+
+  test('#4479 a unit the item has no conversion from is refused naming the unit, and moves nothing', () async {
+    final held = ledger.balance('demo-item-mugs', 'demo-place-main');
+    final saved = await commands.saveDraft(workspaceId: workspaceId, draft: mugsIn('kg', '1'));
+    final preview = await commands.preview(workspaceId: workspaceId, draftId: saved.draftId, revision: saved.revision);
+    expect(preview.missing, ['line_1_unit']);
+    expect(ledger.balance('demo-item-mugs', 'demo-place-main'), held);
+  });
 }

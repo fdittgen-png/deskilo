@@ -38,17 +38,6 @@ abstract interface class InvoiceGoodsCatalogue {
   Future<List<InvoiceGoodsItem>> items(String workspaceId);
 }
 
-/// The UN/ECE recommendation 20 code of an inventory unit, for the structured invoice; empty when it has none here.
-String goodsUnitUnEce(String unit) => switch (unit) {
-  'piece' => 'C62',
-  'kg' => 'KGM',
-  'g' => 'GRM',
-  'l' => 'LTR',
-  'ml' => 'MLT',
-  'm' => 'MTR',
-  _ => '',
-};
-
 /// The piece tags a person typed (separated by commas, spaces or new lines), each once, in order.
 List<String> pieceTagsOf(String text) {
   final seen = <String>{};
