@@ -9,8 +9,10 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart' show sha256;
 
+import '../../../core/failure/app_failure.dart' show TypedRefusal;
+
 /// A payload the canonical form cannot carry: a null, a float, a key that is not text.
-class CanonicalFormRefused implements Exception {
+class CanonicalFormRefused implements TypedRefusal {
   const CanonicalFormRefused(this.where);
 
   /// Where in the document, as a path like `pages[0].keys[2].label`.

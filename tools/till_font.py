@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """#4456 -- the till's accented glyphs as LVGL 8 fonts, written without lv_font_conv.
 
 LVGL's built-in Montserrat fonts carry ASCII and the symbols only, so a German, French, Spanish or Italian text would lose

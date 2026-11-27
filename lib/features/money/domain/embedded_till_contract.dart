@@ -6,6 +6,8 @@
 // terminal lacks, an unknown kind or state is refused BEFORE a payment, and only an explicitly optional additive field is
 // ignored. See docs/design/embedded-till-contract.md; the fixtures in contracts/embedded_till/v1 are what every language runs.
 
+import '../../../core/failure/app_failure.dart' show TypedRefusal;
+
 /// The protocol major this code speaks; a document of another major is refused.
 const int terminalProtocolMajor = 1;
 
@@ -61,7 +63,7 @@ const Set<TerminalCapability> connectedCheckoutCapabilities = {
 enum TerminalOutcome { refused, uncertain, capacity, unsupported }
 
 /// A document the terminal contract refuses, with the class of the answer and a stable code the fixtures name.
-class TerminalContractRefused implements Exception {
+class TerminalContractRefused implements TypedRefusal {
   const TerminalContractRefused(this.outcome, this.code);
 
   final TerminalOutcome outcome;

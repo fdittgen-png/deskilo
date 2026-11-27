@@ -18,6 +18,21 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  // The embedded-till contract v1 (#4452): the firmware and the fixtures speak it; the app adapter comes with #4466.
+  'lib/features/money/domain/embedded_till_contract.dart::connectedCheckoutCapabilities':
+      '#4452 — the embedded-till contract v1: its fixtures' tests read it until the app's till-board adapter (#4466) wires it in',
+  'lib/features/money/domain/embedded_till_contract.dart::terminalAmountOf':
+      '#4452 — the embedded-till contract v1: its fixtures' tests read it until the app's till-board adapter (#4466) wires it in',
+  'lib/features/money/domain/embedded_till_contract.dart::terminalExponentOk':
+      '#4452 — the embedded-till contract v1: its fixtures' tests read it until the app's till-board adapter (#4466) wires it in',
+  'lib/features/money/domain/embedded_till_contract.dart::terminalQuantityOf':
+      '#4452 — the embedded-till contract v1: its fixtures' tests read it until the app's till-board adapter (#4466) wires it in',
+  'lib/features/money/domain/embedded_till_contract.dart::terminalAmountSum':
+      '#4452 — the embedded-till contract v1: its fixtures' tests read it until the app's till-board adapter (#4466) wires it in',
+  'lib/features/money/domain/embedded_till_contract.dart::checkProtocol':
+      '#4452 — the embedded-till contract v1: its fixtures' tests read it until the app's till-board adapter (#4466) wires it in',
+  'lib/features/money/domain/embedded_till_profile.dart::projectDefaultProfile':
+      '#4452 — the embedded-till contract v1: its fixtures' tests read it until the app's till-board adapter (#4466) wires it in',
   // The registry as JSON and the keys a rows block writes: the generator's own checks read them (feature_registry_sql,
   // feature_countries, feature_registry tests) while the registry moves to rows; #4396 removes them with its last table.
   'lib/features/workspace/domain/feature_registry_sql.dart::featureRegistryJson':

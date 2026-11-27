@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """#4456 -- the till's screen texts in five languages, as one C table.
 
 firmware/till/l10n/till_<lang>.json hold the same keys (English first); this checks that every language has every key and the
