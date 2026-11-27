@@ -9,10 +9,11 @@
 #define PART "attempts"
 #define NS "device"
 
-static void fingerprint_of(const uint8_t secret[32], char out[10]) {
+static void fingerprint_of(const uint8_t secret[32], device_t *out) {
     uint8_t h[32];
     mbedtls_sha256(secret, 32, h, 0);
-    snprintf(out, 10, "%02X%02X-%02X%02X", h[0], h[1], h[2], h[3]);
+    snprintf(out->fingerprint, sizeof out->fingerprint, "%02X%02X-%02X%02X", h[0], h[1], h[2], h[3]);
+    for (int i = 0; i < 32; i++) snprintf(out->secret_hash + 2 * i, 3, "%02x", h[i]);
 }
 
 esp_err_t device_identity(device_t *out) {
@@ -35,7 +36,7 @@ esp_err_t device_identity(device_t *out) {
         if (e == ESP_OK) e = nvs_commit(h);
     }
     nvs_close(h);
-    if (e == ESP_OK) fingerprint_of(secret, out->fingerprint);
+    if (e == ESP_OK) fingerprint_of(secret, out);
     memset(secret, 0, sizeof secret);
     return e;
 }

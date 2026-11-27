@@ -36,11 +36,13 @@ static void boot_button(void) {
 }
 
 static void payload(void) {
-    device_t d = {.id = "11111111-1111-4111-8111-111111111111", .fingerprint = "AB12-CD34"};
-    char out[192];
+    device_t d = {.id = "11111111-1111-4111-8111-111111111111", .fingerprint = "AB12-CD34",
+                  .secret_hash = "ab12cd3400000000000000000000000000000000000000000000000000000000"};
+    char out[288];
     device_pairing_payload(&d, "ideaspark_st7789_v1", "1.0.3", out, sizeof out);
-    CHECK(!strcmp(out, "deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=ideaspark_st7789_v1&fw=1.0.3&fp=AB12-CD34"),
-          "the code names the device, the board profile, the firmware and the fingerprint");
+    CHECK(!strcmp(out, "deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=ideaspark_st7789_v1&fw=1.0.3&fp=AB12-CD34"
+                       "&h=ab12cd3400000000000000000000000000000000000000000000000000000000"),
+          "the code names the device, the board profile, the firmware, the fingerprint and the secret's hash");
     CHECK(strstr(out, "secret") == NULL, "and never a secret");
     char small[20];
     device_pairing_payload(&d, "ideaspark_st7789_v1", "1.0.3", small, sizeof small);

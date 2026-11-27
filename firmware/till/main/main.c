@@ -298,7 +298,7 @@ static void save_cal(const touch_cal_t *cal) {
 static uint32_t s_seen;
 // Hands the screen a copy of the shared state whenever its version changed.
 // ---- the pairing code (#4474): BOOT held for 3 s shows it, on every board; pressed again, it closes ----
-static char s_pairing[192];
+static char s_pairing[288];   // the payload with its 64-character hash and a firmware version of up to 40
 static char s_readable[READABLE_CODE_LEN];   // #4466: the code typed instead of scanning
 static device_t s_device;
 static boot_button_t s_boot;
