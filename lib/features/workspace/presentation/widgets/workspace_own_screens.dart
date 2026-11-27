@@ -95,6 +95,17 @@ class WorkspaceOwnScreens extends ConsumerWidget {
           path: Routes.settingsUnits,
           helpTopic: helpTopic,
         ),
+        // #4466 — the till boards connected to this business.
+        if (features.contains(WorkspaceFeature.counterEmbeddedTerminal))
+          _Row(
+            rowKey: 'workspaceSettingsDevices',
+            icon: Icons.point_of_sale,
+            title: l10n.devicePairingTitle,
+            anchor: HelpAnchor.settingsDevices,
+            subtitle: l10n.devicePairingSubtitle,
+            path: '/settings/devices',
+            helpTopic: helpTopic,
+          ),
       ],
     );
   }

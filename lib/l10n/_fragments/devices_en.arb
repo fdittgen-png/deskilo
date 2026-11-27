@@ -1,0 +1,86 @@
+{
+  "@@locale": "en",
+  "devicePairingTitle": "Devices",
+  "@devicePairingTitle": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingSubtitle": "Till boards: connect one by its QR code or its code",
+  "@devicePairingSubtitle": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingNone": "No till board is connected to this business yet.",
+  "@devicePairingNone": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingConnect": "Connect a device",
+  "@devicePairingConnect": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingScanHint": "Hold the board's QR code in front of the camera. To show it, hold the board's BOOT button for 3 seconds.",
+  "@devicePairingScanHint": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingType": "Type the code",
+  "@devicePairingType": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingTypeHelper": "The 10 characters beside the board's QR code, for example 3DNGP-UN9CG.",
+  "@devicePairingTypeHelper": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingCheck": "Check the code",
+  "@devicePairingCheck": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingRefusedLength": "A board's code has 10 characters, as XXXXX-XXXXX.",
+  "@devicePairingRefusedLength": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingRefusedAlphabet": "A board's code never holds 0, O, 1, I or L, nor other signs: check the character on the board.",
+  "@devicePairingRefusedAlphabet": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingRefusedCheck": "No board shows this code: a character is wrong, or two are swapped. Compare it with the board.",
+  "@devicePairingRefusedCheck": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingRefusedProfile": "This board is of a kind this app does not know yet. Update the app, then connect it.",
+  "@devicePairingRefusedProfile": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingFound": "Board found",
+  "@devicePairingFound": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingBoard": "Board {id} · {model}",
+  "@devicePairingBoard": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code",
+    "placeholders": {
+      "id": {
+        "type": "String",
+        "example": "x",
+        "description": "the first 8 hex digits of the board id"
+      },
+      "model": {
+        "type": "String",
+        "example": "x",
+        "description": "the board model as printed on it"
+      }
+    }
+  },
+  "devicePairingFingerprint": "Fingerprint {fingerprint}: compare it with the board's screen.",
+  "@devicePairingFingerprint": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code",
+    "placeholders": {
+      "fingerprint": {
+        "type": "String",
+        "example": "x",
+        "description": "the fingerprint shown on the board, e.g. AB12-CD34"
+      }
+    }
+  },
+  "devicePairingLater": "Connecting the board to this business comes with a later update: nothing has been sent to it.",
+  "@devicePairingLater": {
+    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  }
+}

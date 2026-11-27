@@ -1637,6 +1637,10 @@ window.SETUP_L10N={
    "counterReceiptPrinter": [
     "Receipt printer",
     "Print the till's receipt on a receipt printer on your local network (80 or 58 mm), and open the cash drawer it drives after a cash sale. Each till sets its own printer. Off, the receipt is shown and shared, nothing prints."
+   ],
+   "counterEmbeddedTerminal": [
+    "Till boards",
+    "Connect a till board, the small screen at the counter that takes payments, to this business: Settings › Devices reads its QR code or its typed code and shows which board it is. Off: no devices page."
    ]
   },
   "process": {
@@ -3693,6 +3697,10 @@ window.SETUP_L10N={
    "counterReceiptPrinter": [
     "Imprimante de tickets",
     "Imprimer le ticket de caisse sur une imprimante de tickets du réseau local (80 ou 58 mm) et ouvrir le tiroir-caisse qu'elle commande après une vente en espèces. Chaque caisse règle sa propre imprimante. Désactivé, le ticket est affiché et partagé, rien n'est imprimé."
+   ],
+   "counterEmbeddedTerminal": [
+    "Terminaux de caisse",
+    "Relier un terminal de caisse, le petit écran du comptoir qui encaisse, à cette entreprise : Paramètres › Appareils lit son code QR ou son code saisi et indique de quel terminal il s'agit. Désactivé : pas de page des appareils."
    ]
   },
   "process": {
@@ -5749,6 +5757,10 @@ window.SETUP_L10N={
    "counterReceiptPrinter": [
     "Bondrucker",
     "Den Kassenbon auf einem Bondrucker im lokalen Netz drucken (80 oder 58 mm) und nach einem Barverkauf die angeschlossene Kassenlade öffnen. Jede Kasse stellt ihren eigenen Drucker ein. Aus: Der Beleg wird gezeigt und geteilt, nichts wird gedruckt."
+   ],
+   "counterEmbeddedTerminal": [
+    "Kassenterminals",
+    "Ein Kassenterminal, den kleinen Bildschirm an der Theke, der Zahlungen annimmt, mit diesem Unternehmen verbinden: Einstellungen › Geräte liest seinen QR-Code oder seinen eingetippten Code und zeigt, welches Terminal es ist. Aus: keine Geräteseite."
    ]
   },
   "process": {
@@ -7805,6 +7817,10 @@ window.SETUP_L10N={
    "counterReceiptPrinter": [
     "Impresora de tiques",
     "Imprimir el tique de caja en una impresora de tiques de la red local (80 o 58 mm) y abrir el cajón que controla tras una venta en efectivo. Cada caja configura su propia impresora. Desactivado, el tique se muestra y se comparte, no se imprime nada."
+   ],
+   "counterEmbeddedTerminal": [
+    "Terminales de caja",
+    "Conectar un terminal de caja, la pequeña pantalla del mostrador que cobra, a esta empresa: Ajustes › Dispositivos lee su código QR o su código escrito y muestra qué terminal es. Desactivado: sin página de dispositivos."
    ]
   },
   "process": {
@@ -9861,6 +9877,10 @@ window.SETUP_L10N={
    "counterReceiptPrinter": [
     "Stampante di scontrini",
     "Stampare lo scontrino su una stampante di scontrini della rete locale (80 o 58 mm) e aprire il cassetto che comanda dopo una vendita in contanti. Ogni cassa imposta la propria stampante. Disattivato, lo scontrino è mostrato e condiviso, non si stampa nulla."
+   ],
+   "counterEmbeddedTerminal": [
+    "Terminali di cassa",
+    "Collegare un terminale di cassa, il piccolo schermo al banco che incassa, a questa attività: Impostazioni › Dispositivi legge il suo codice QR o il codice digitato e mostra di quale terminale si tratta. Disattivato: nessuna pagina dei dispositivi."
    ]
   },
   "process": {

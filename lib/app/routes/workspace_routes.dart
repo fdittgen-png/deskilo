@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/navigation/routes.dart';
 import '../../core/ui/wizard_navigation.dart';
 import '../../features/auth/providers/auth_providers.dart';
+import '../../features/money/presentation/screens/devices_screen.dart';
 import '../../features/plan/presentation/widgets/setup_places_step.dart';
 import '../../features/stock/presentation/units_of_measure_screen.dart';
 import '../../features/workspace/domain/bi_modules.dart';
@@ -231,6 +232,18 @@ List<RouteBase> _settingsRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const MasterDataPage(),
+    ),
+    // #4466 — the till boards: one connected by its QR code or its typed code.
+    GoRoute(
+      path: '/settings/devices',
+      redirect: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.counterEmbeddedTerminal],
+          permission: WorkspacePermission.workspaceSettings,
+          to: '/settings',
+        ),
+      ),
+      builder: (context, state) => const DevicesScreen(),
     ),
     GoRoute(
       path: '/reports',
