@@ -13,10 +13,12 @@ import '../features/money/data/supabase_counter_book.dart';
 import '../features/money/data/supabase_counter_offline.dart';
 import '../features/money/data/supabase_counter_till.dart';
 import '../features/money/data/supabase_till_drawer.dart';
+import '../features/money/data/supabase_till_boards.dart';
 import '../features/money/data/supabase_till_layouts.dart';
 import '../features/money/domain/till_drawer.dart';
 import '../features/money/providers/counter_book_providers.dart';
 import '../features/money/providers/till_drawer_providers.dart';
+import '../features/money/providers/till_board_providers.dart';
 import '../features/money/providers/till_layout_providers.dart';
 import '../features/money/providers/till_printer_providers.dart';
 import '../features/money/providers/till_providers.dart';
@@ -108,6 +110,9 @@ final Override mayLayOutTillsFromApp = mayLayOutTillsProvider.overrideWith(
       ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.counterTillLayout) &&
       ref.watch(myPermissionsProvider).contains(WorkspacePermission.configureTill),
 );
+
+/// #4454 -- the till boards on the same server.
+final Override tillBoardPortFromApp = tillBoardPortProvider.overrideWith((ref) => SupabaseTillBoards(ref.watch(selectedWorkspaceClientProvider)));
 
 /// #4448 -- the till layouts on the same server.
 final Override tillLayoutPortFromApp = tillLayoutPortProvider.overrideWith((ref) => SupabaseTillLayouts(ref.watch(selectedWorkspaceClientProvider)));
