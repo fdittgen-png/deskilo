@@ -181,3 +181,4 @@ counterOfflineCash | everywhere | y y y y y y y y y y
 unitsOfMeasure | everywhere | y y y y y y y y y y
 counterTillLayout | everywhere | y y y y y y y y y y
 counterReceiptPrinter | everywhere | y y y y y y y y y y
+counterEmbeddedTerminal | everywhere | y y y y y y y y y y
