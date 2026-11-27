@@ -46,7 +46,7 @@ Future<void> _reveal(WidgetTester tester, String key) async {
   final group = switch (key) {
     'drawer-members' || 'drawer-roles' || 'drawer-nfc-config' => 'People & access',
     // #3071 — what is sold and what is collected share one group.
-    'drawer-invoices' || 'drawer-invoice-register' || 'drawer-services' ||
+    'drawer-invoices' || 'drawer-services' ||
     'drawer-guest-passes' || 'drawer-accessories' ||
     'drawer-billing' || 'drawer-payment-methods' || 'drawer-payment-config' => 'Sales & collections',
     'drawer-cash' => 'Cash & accounting',
