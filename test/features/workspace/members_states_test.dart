@@ -149,8 +149,15 @@ void main() {
       ..hold = Completer<void>()
       ..failure = Exception('server said no');
 
+    // #4492 — behind the page's worded More
+    await tester.tap(find.byKey(const ValueKey('members-more')));
+    for (var i = 0; i < 5; i++) {
+      await tester.pump(const Duration(milliseconds: 200));
+    }
     await tester.tap(find.byKey(const ValueKey('members-notify-admins')));
-    await tester.pump(const Duration(milliseconds: 400));
+    for (var i = 0; i < 5; i++) {
+      await tester.pump(const Duration(milliseconds: 200));
+    }
     await tester.enterText(
       find.byKey(const ValueKey('member-note-body')),
       'Printer is out of toner.',

@@ -11104,10 +11104,6 @@
   "@invoicingMoreTemplate": {
     "description": "#3587 More menu"
   },
-  "invoicingNew": "Nueva",
-  "@invoicingNew": {
-    "description": "#3587 top bar: start a new invoice"
-  },
   "invoicingNothingHere": "Nada aquí.",
   "@invoicingNothingHere": {
     "description": "#3587 empty filter"

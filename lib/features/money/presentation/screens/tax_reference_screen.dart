@@ -70,15 +70,19 @@ class _TaxReferenceScreenState extends ConsumerState<TaxReferenceScreen> {
     final l10n = context.l10n;
     final owner = widget.canEdit;
     return Scaffold(
-      appBar: pageBar(context, title: l10n.taxRefTitle),
-      floatingActionButton: owner
-          ? FloatingActionButton.extended(
+      // #4492 — the page's one main action, filled and worded in its bar.
+      appBar: pageBar(
+        context,
+        title: l10n.taxRefTitle,
+        actions: [
+          if (owner)
+            pageBarAction(
               key: const ValueKey('tax-reference-add'),
-              icon: const Icon(Icons.add),
-              label: Text(l10n.taxRefAdd),
+              label: l10n.taxRefAdd,
               onPressed: () => _openForm(_domain),
-            )
-          : null,
+            ),
+        ],
+      ),
       body: !owner
           ? Center(child: Padding(
               padding: const EdgeInsets.all(AppSpacing.xl),

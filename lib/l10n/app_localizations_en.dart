@@ -18660,9 +18660,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicingMoreTemplate => 'Invoice PDF template';
 
   @override
-  String get invoicingNew => 'New';
-
-  @override
   String get invoicingNothingHere => 'Nothing here.';
 
   @override

@@ -29731,12 +29731,6 @@ abstract class AppLocalizations {
   /// **'Invoice PDF template'**
   String get invoicingMoreTemplate;
 
-  /// #3587 top bar: start a new invoice
-  ///
-  /// In en, this message translates to:
-  /// **'New'**
-  String get invoicingNew;
-
   /// #3587 empty filter
   ///
   /// In en, this message translates to:

@@ -97,6 +97,11 @@ void main() {
       '(#456)', (tester) async {
     final workspace = await pumpMembersWithAna(tester);
 
+    // #4492 — behind the page's worded More
+    await tester.tap(find.byKey(const ValueKey('members-more')));
+    for (var i = 0; i < 5; i++) {
+      await tester.pump(const Duration(milliseconds: 200));
+    }
     await tester
         .tap(find.byKey(const ValueKey('members-notify-admins')));
     await tester.pumpAndSettle();

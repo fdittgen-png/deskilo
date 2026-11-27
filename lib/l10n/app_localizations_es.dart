@@ -18791,9 +18791,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoicingMoreTemplate => 'Plantilla PDF de factura';
 
   @override
-  String get invoicingNew => 'Nueva';
-
-  @override
   String get invoicingNothingHere => 'Nada aquí.';
 
   @override

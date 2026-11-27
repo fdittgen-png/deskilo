@@ -18808,9 +18808,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoicingMoreTemplate => 'Modello PDF della fattura';
 
   @override
-  String get invoicingNew => 'Nuova';
-
-  @override
   String get invoicingNothingHere => 'Niente qui.';
 
   @override
