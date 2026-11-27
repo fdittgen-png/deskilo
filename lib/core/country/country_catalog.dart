@@ -97,4 +97,17 @@ abstract final class CountryCatalog {
 
   static bool isKnown(String code) =>
       countries.any((c) => c.code == code.toUpperCase());
+
+  /// The codes a postal address may choose: this catalogue, and [stored]
+  /// ahead of it when the catalogue does not offer it. The catalogue lists
+  /// where a workspace may be based; a person or a supplier lives where they
+  /// live, so a country already stored stays selectable and is saved as it
+  /// was read unless the person picks another.
+  static List<String> addressCodes({String? stored}) => [
+    if (stored != null &&
+        stored.isNotEmpty &&
+        !countries.any((c) => c.code == stored))
+      stored,
+    for (final c in countries) c.code,
+  ];
 }

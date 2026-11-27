@@ -7,7 +7,11 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
 import 'counter_receipt_document.dart';
+import 'till_lots.dart';
 import 'till_quantity.dart';
+
+export 'till_lots.dart';
+export 'till_returns.dart';
 
 /// One operation of the counter in the business's country, under the case the owner declared, with the evidence the
 /// registry names for it (#4184): its specification, version and effective date, the adapter, the proof, and whether
@@ -116,7 +120,20 @@ class TillReadiness {
 
 /// A line of the basket as the till sends it: an item and an exact quantity; the server prices it.
 class TillLine {
-  const TillLine({required this.itemId, required this.name, required this.quantity, required this.unit, this.pieces = const [], this.ageConfirmed, this.depositFor});
+  const TillLine({
+    required this.itemId,
+    required this.name,
+    required this.quantity,
+    required this.unit,
+    this.pieces = const [],
+    this.ageConfirmed,
+    this.depositFor,
+    this.price,
+    this.priceReason,
+    this.discount,
+    this.lot,
+    this.returned = false,
+  });
 
   final String itemId;
   final String name;
@@ -136,6 +153,55 @@ class TillLine {
   /// The item whose deposit this line is: it follows that line's quantity and goes with it. Null for an ordinary line.
   final String? depositFor;
 
+  /// #4476 -- a price other than the item's (an exact decimal with a point), set by someone with the right to change a
+  /// price at the till, and why; null sells at the item's price. The server refuses it without the right or the reason.
+  final String? price;
+  final String? priceReason;
+
+  /// The longest reason a changed price keeps, as the server takes it.
+  static const priceReasonMaxLength = 200;
+
+  /// #4476 -- a discount in percent off the item's price (an exact decimal with a point), within the business's limit.
+  final String? discount;
+
+  /// The line at the item's price again, or at [price] for [reason], or with [discount] percent off: one of the three.
+  TillLine withPricing({String? price, String? reason, String? discount}) => TillLine(
+    itemId: itemId,
+    name: name,
+    quantity: quantity,
+    unit: unit,
+    pieces: pieces,
+    ageConfirmed: ageConfirmed,
+    depositFor: depositFor,
+    price: price,
+    priceReason: price == null ? null : reason,
+    discount: price == null ? discount : null,
+    lot: lot,
+    returned: returned,
+  );
+
+  /// #4366 -- the lot the seller chose to sell from; null leaves the server to take the one that expires first.
+  final TillLot? lot;
+
+  /// #4478 -- a deposit brought back: the deposit item at this quantity, taken off the sale (the server negates it).
+  final bool returned;
+
+  /// The line sold from [chosen], or (null) from the lot that expires first again.
+  TillLine withLot(TillLot? chosen) => TillLine(
+    itemId: itemId,
+    name: name,
+    quantity: quantity,
+    unit: unit,
+    pieces: pieces,
+    ageConfirmed: ageConfirmed,
+    depositFor: depositFor,
+    price: price,
+    priceReason: priceReason,
+    discount: discount,
+    lot: chosen,
+    returned: returned,
+  );
+
   /// The line at quantity [q]. Named pieces stay only when [q] is exactly their number: any other quantity (a tap on the item's key, a
   /// typed number) leaves the line a plain quantity of the item, because the server refuses a quantity that is not the number of its
   /// named pieces (DKG25) and would say so only after the cash was taken.
@@ -147,16 +213,38 @@ class TillLine {
     pieces: tillQuantityOf(q) == '${pieces.length}' ? pieces : const [],
     ageConfirmed: ageConfirmed,
     depositFor: depositFor,
+    price: price,
+    priceReason: priceReason,
+    discount: discount,
+    lot: lot,
+    returned: returned,
   );
 
-  /// The line with the piece tagged [tag] added: one more, named.
+  /// The line with the piece tagged [tag] added: one more, named (a piece names its own lot).
   TillLine withPiece(String tag) =>
-      TillLine(itemId: itemId, name: name, quantity: '${pieces.length + 1}', unit: unit, pieces: [...pieces, tag], ageConfirmed: ageConfirmed, depositFor: depositFor);
+      TillLine(
+        itemId: itemId,
+        name: name,
+        quantity: '${pieces.length + 1}',
+        unit: unit,
+        pieces: [...pieces, tag],
+        ageConfirmed: ageConfirmed,
+        depositFor: depositFor,
+        price: price,
+        priceReason: priceReason,
+        discount: discount,
+        returned: returned,
+      );
 
   Map<String, Object?> toJson() => {
     'item_id': itemId,
     'quantity': quantity,
     if (pieces.isNotEmpty) 'units': [for (final t in pieces) {'tag': t}],
+    'unit_price': ?price,
+    'price_reason': ?priceReason,
+    'discount_percent': ?discount,
+    if (pieces.isEmpty && lot != null) 'lot_id': lot!.id,
+    if (returned) 'returned': true,
   };
 }
 
@@ -398,3 +486,12 @@ class TillKey {
   /// The item whose deposit is added with this one, or null.
   final String? depositItemId;
 }
+
+/// #4476 -- a copy of a finalized receipt, printed again: counted by the server and never numbered again. Its number
+/// among the copies (1, 2, ...) is what the copy shows.
+abstract interface class TillCopyPort {
+  Future<int> copy(String workspaceId, {required String requestId, required String receiptId});
+}
+
+/// The copy's number in the server's answer (`copy_no`).
+int tillCopyNumberOf(Object? json) => JsonReader.of(json, context: 'counter_receipt_copy').integer('copy_no');

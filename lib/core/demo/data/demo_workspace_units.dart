@@ -23,10 +23,25 @@ class DemoWorkspaceUnits implements WorkspaceUnits {
   /// Whether an item of the business has [code] as a packaging unit (a box of 6): one code keeps one meaning.
   bool Function(String workspaceId, String code) packages = (_, _) => false;
 
+  /// A unit was saved (made, or its factor changed): the Demo's conversions follow it (#4479).
+  void Function(String workspaceId, WorkspaceUnit unit, List<WorkspaceUnit> all)? onSaved;
+
   final Map<String, List<WorkspaceUnit>> _units = {};
   final Map<String, ({String digest, WorkspaceUnit answer})> _requests = {};
 
-  List<WorkspaceUnit> _of(String workspaceId) => _units.putIfAbsent(workspaceId, () => [...builtInUnits]);
+  /// The packaging units the Demo's items and orders name (a box of 6, a carton of 12, a third of a litre, a roll): units of the business
+  /// of the `package` dimension, which convert only through an item's own factor (#4479).
+  static const _demoPackages = [
+    WorkspaceUnit(code: 'box', label: 'Box', dimension: UnitDimension.package, factorNum: 1, factorDen: 1),
+    WorkspaceUnit(code: 'carton', label: 'Carton', dimension: UnitDimension.package, factorNum: 1, factorDen: 1),
+    WorkspaceUnit(code: 'third', label: 'Third', dimension: UnitDimension.package, factorNum: 1, factorDen: 1),
+    WorkspaceUnit(code: 'roll', label: 'Roll', dimension: UnitDimension.package, factorNum: 1, factorDen: 1),
+  ];
+
+  /// The units of [workspaceId] as they stand now (the Demo's conversions join two of them).
+  List<WorkspaceUnit> heldBy(String workspaceId) => [..._of(workspaceId)];
+
+  List<WorkspaceUnit> _of(String workspaceId) => _units.putIfAbsent(workspaceId, () => [...builtInUnits, ..._demoPackages]);
 
   @override
   Future<List<WorkspaceUnit>> units(String workspaceId) async {
@@ -55,6 +70,7 @@ class DemoWorkspaceUnits implements WorkspaceUnits {
       list[at] = unit;
     }
     _requests[requestId] = (digest: digest, answer: unit);
+    onSaved?.call(workspaceId, unit, [...list]);
     return unit;
   }
 

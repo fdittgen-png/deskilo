@@ -3005,12 +3005,52 @@ Los **puntos de reposición** (bajo las dos listas) hacen que un artículo esté
 
 Quiere una sola lista que diga, de cada artículo y variante, qué es, cuánto cuesta y se vende, dónde va y cuánto hay.
 
-Abra **Existencias → Artículos**. Cada línea muestra el **código de barras**, la **unidad**, el **precio** (el precio de venta del catálogo), el **último coste conocido**, la **ubicación habitual** y lo que hay **disponible**. El coste aparece solo si su rol puede ver las finanzas o gestionar las compras; si no, la línea dice *coste no mostrado*. Un coste que ninguna entrega ha dado aún sigue como *coste desconocido*, nunca cero.
+Abra **Existencias → Artículos**. Cada artículo muestra su nombre, luego su precio, lo que hay disponible y su ubicación habitual, y una insignia cuando al artículo le falta algo: *Existencias bajas*, *Sin precio* o *Sin ubicación*. En un teléfono cada artículo es una tarjeta; en una tableta en horizontal o un ordenador los artículos forman una tabla con las columnas **Nombre**, **Precio**, **En existencias**, **Ubicación habitual**, **Grupo** y **Estado**, ordenada con un clic en **Nombre**, **Precio** o **En existencias**. Abra un artículo para verlo y cambiarlo todo ([La página de un artículo](help:user.money.stock.item)), o actúe desde la lista ([Actuar sobre un artículo desde la lista](help:user.money.stock.actions)).
 
-- **Ubicación habitual**: toque el icono de ubicación de una línea para decir dónde va el artículo: su pasillo, estante o cajón. Una variante sin ubicación propia tiene la de su artículo. Es una indicación para colocar, contar y preparar: el stock puede estar en otro sitio, y cambiarla no mueve nada ni reescribe ningún historial.
-- **Filtre** por una ubicación para ver lo que tiene allí y en las ubicaciones de debajo, o active *Solo artículos sin ubicación habitual* para ver lo que aún la necesita.
+- **Filtre** por una ubicación para ver lo que tiene allí y en las ubicaciones de debajo, o elija el chip *Sin ubicación habitual* para ver lo que aún la necesita.
 - **Busque** por nombre, código de barras o dirección. Escribir o escanear un código de barras en la búsqueda y confirmar abre ese artículo.
 - Las listas largas se cargan por páginas: elija *Mostrar más*.
+- El último coste conocido aparece en la página del artículo solo si su rol puede ver las finanzas o gestionar las compras; si no, dice *coste no mostrado*. Un coste que ninguna entrega ha dado aún sigue como *coste desconocido*, nunca cero.
+
+### Actuar sobre un artículo desde la lista
+
+**Público:** Administrador/a · Propietario
+
+Quiere cambiar una cosa de un artículo —su precio, su ubicación, su grupo— sin abrir su página.
+
+- **En un teléfono**, cada tarjeta termina con una fila de chips, cada uno un icono y una palabra: **Editar** (nombre, precio e IVA), **Ubicación**, **Grupo**, **Etiquetas**, **Ajustes**, **Variantes** y **Proveedores**. Deslice la fila de lado cuando no cabe. Un chip abre el mismo editor que la página del artículo; toque la tarjeta para abrir la página.
+- **En una tableta en horizontal o un ordenador**, haga clic en una línea para seleccionarla: queda resaltada y marcada. La barra sobre la tabla nombra entonces el artículo y ofrece **Editar nombre, precio e IVA**, **Ubicación**, **Grupo**, **Etiquetas**, **Ajustes de existencias**, **Variantes**, **Artículos del proveedor** y **Abrir**. Las flechas mueven la selección; Intro o un doble clic abre el artículo junto a la lista; **Borrar la selección** lo suelta.
+- Sin nada seleccionado, la barra dice *Seleccione un artículo para actuar sobre él* y ofrece **Añadir un artículo**. La búsqueda, la ubicación y *Sin ubicación habitual* están a su izquierda.
+
+**Conviene saber**
+
+- Solo se ofrece lo que su rol permite: en un teléfono los demás chips no aparecen, así que quien solo puede ver las existencias no tiene ninguno; en un ordenador aparecen atenuados. **Editar nombre, precio e IVA** requiere el derecho de gestionar servicios; lo demás, el de gestionar las existencias.
+- Tras guardar, la lista vuelve a leer el artículo: la línea sigue seleccionada y muestra sus nuevos valores.
+- **Grupo** y **Etiquetas** aparecen donde el negocio usa grupos de artículos y etiquetas.
+
+**Véase también:** [El registro de artículos](help:user.money.stock.registry) · [La página de un artículo](help:user.money.stock.item)
+
+### La página de un artículo
+
+**Público:** Administrador/a · Propietario
+
+Quiere todo lo de un artículo en un solo sitio, y cambiar cada parte donde la lee.
+
+En un teléfono, toque la tarjeta de un artículo en **Existencias → Artículos**: se abre como una página propia. En una tableta en horizontal o un ordenador, haga doble clic en su línea, pulse Intro sobre ella o elija **Abrir**: se abre junto a la lista, que conserva su búsqueda, sus filtros y su selección. Cada parte de la página tiene su propia acción, nombrada por lo que cambia:
+
+- **Resumen**: el precio, el IVA, la unidad, el código de barras y el último coste conocido. **Editar nombre, precio e IVA** abre el editor del servicio.
+- **Existencias**: lo que hay disponible y la ubicación habitual, del artículo o de cada variante, y **Dónde está**: las primeras ubicaciones que lo tienen (**Ver todas las ubicaciones** las muestra todas). **Cambiar la ubicación habitual** dice dónde va el artículo: su pasillo, estante o cajón. Es una indicación para colocar, contar y preparar: el stock puede estar en otro sitio, y cambiarla no mueve nada. **Editar unidades, códigos y seguimiento** abre los ajustes de existencias del artículo.
+- **Grupo y etiquetas**, donde el negocio los usa: el grupo del artículo. **Cambiar de grupo** lo mueve y muestra de dónde viene cada ajuste; **Editar etiquetas** vincula o retira sus etiquetas.
+- **Variantes**: las variantes a la venta, con sus propios precios. **Editar variantes** añade o cambia variantes.
+- **Artículos del proveedor**: los artículos de proveedores que designan este artículo. **Editar artículos del proveedor** asocia otro.
+
+**Conviene saber**
+
+- **Editar nombre, precio e IVA** necesita el derecho de gestionar los servicios; cualquier otra acción, el de gestionar las existencias. Quien solo puede ver las existencias lee el resumen, las existencias y las variantes, sin ninguna acción.
+- Las insignias de arriba dicen lo que aún le falta al artículo.
+- Tras guardar, la página muestra el nuevo valor enseguida, y la lista también.
+
+**Véase también:** [El registro de artículos](help:user.money.stock.registry) · [Grupos de artículos](help:user.money.stock.groups)
 
 ### Grupos de artículos
 
@@ -3020,7 +3060,7 @@ Quiere decir una vez lo que una familia de artículos tiene en común — cuánt
 
 Abra **Stock → Grupos de artículos** (requiere la función *Grupos de artículos* bajo la gestión del stock). Un grupo tiene un nombre, está arriba o dentro de otro grupo (un solo nivel de subgrupos) y lleva los ajustes que elija: **seguimiento**, **vida útil**, **modo de etiqueta**, **unidad de inventario**, **contar cada n días**, **edad mínima** y **se vende al peso**. Un ajuste que deja *Sin definir* no se decide en este nivel.
 
-- **Un artículo sigue a su grupo mientras no tenga un valor propio.** Rige el valor del propio artículo si lo tiene, si no el de su subgrupo, si no el de su grupo. Abra **Grupo y ajustes heredados** de un artículo (el icono de carpeta en su línea de **Stock → Artículos**) para ver de dónde viene cada ajuste (*Del grupo Bebidas desde el 3 dic.* o *Valor propio*), moverlo a otro grupo y devolver un valor propio con **Usar el valor del grupo**. En los **ajustes de stock** del artículo, *Valor propio* aparece junto a un ajuste en el que el artículo conserva su propio valor frente a su grupo (seguimiento, caducidad, unidad de inventario).
+- **Un artículo sigue a su grupo mientras no tenga un valor propio.** Rige el valor del propio artículo si lo tiene, si no el de su subgrupo, si no el de su grupo. Abra un artículo en **Stock → Artículos** y elija **Cambiar de grupo** para ver de dónde viene cada ajuste (*Del grupo Bebidas desde el 3 dic.* o *Valor propio*), moverlo a otro grupo y devolver un valor propio con **Usar el valor del grupo**. En los **ajustes de stock** del artículo, *Valor propio* aparece junto a un ajuste en el que el artículo conserva su propio valor frente a su grupo (seguimiento, caducidad, unidad de inventario).
 - **Cada cambio se previsualiza.** Al guardar un grupo se muestra primero lo que el cambio alcanza: *se aplica a 1, 1 conservan su propio valor, 0 no se pueden alcanzar*. No se aplica nada hasta guardar por segunda vez; cualquier edición intermedia pide una nueva vista previa. Un artículo que el cambio no puede alcanzar (por ejemplo una unidad en un artículo que ya tiene movimientos) se lista, y el cambio del grupo se guarda para los demás.
 - **Propuestas y precios.** Un grupo puede proponer a un artículo nuevo una **unidad de compra por defecto** con su factor (un número o una fracción como 1/3), un **punto y una cantidad de pedido** y una **zona de almacén**: se copian en un artículo nuevo como punto de partida y no alcanzan a ningún artículo existente. El **tipo de IVA**, la **clase de operación**, el **redondeo del precio** y el **margen objetivo sobre el coste** solo los muestra y fija quien puede gestionar servicios y ver las finanzas; para los demás ni se muestran ni los cambia un guardado.
 - **Historial.** La hoja del grupo lista cada cambio con cuántos artículos alcanzó; la línea de origen de un artículo dice desde cuándo.
@@ -3048,7 +3088,7 @@ Un escáner de códigos de barras en modo teclado (escribe el código y pulsa In
 
 Quiere asociar un chip NFC a un artículo o a una ubicación y leer chips mientras trabaja, con el teléfono que ya tiene.
 
-Con la función *Etiquetas* activada y un teléfono que lee NFC, **Stock → Artículos** y **Stock → Ubicaciones** muestran un botón de etiquetas en cada línea, y la barra de escaneo de una hoja de mercancías muestra **Leer una etiqueta**. El botón no aparece en un dispositivo sin NFC (un ordenador, la mayoría de las tabletas, un teléfono con el NFC desactivado): use allí un escáner o un lector portátil.
+Con la función *Etiquetas* activada y un teléfono que lee NFC, **Editar etiquetas** en la página de un artículo y el botón de etiquetas de cada línea de **Stock → Ubicaciones** leen una etiqueta, y la barra de escaneo de una hoja de mercancías muestra **Leer una etiqueta**. El botón no aparece en un dispositivo sin NFC (un ordenador, la mayoría de las tabletas, un teléfono con el NFC desactivado): use allí un escáner o un lector portátil.
 
 - **Asociar una etiqueta.** Abra las etiquetas de un artículo o de una ubicación, toque **Leer una etiqueta** y acerque el chip a la parte trasera del teléfono. Una lectura asocia una etiqueta. Leer el mismo chip otra vez dice que ya estaba asociado aquí y no asocia nada nuevo; un chip asociado a otra cosa se rechaza y dice a cuál. Un propietario puede llevar varias etiquetas. El servidor acepta el código en mayúsculas o minúsculas, con espacios, dos puntos o guiones.
 - **Retirar una etiqueta** perdida, dañada o sustituida: elija el motivo. Una etiqueta retirada hace poco no puede asociarse de nuevo enseguida (la espera es un ajuste del stock), y una etiqueta en una pieza que sigue en stock no puede retirarse.
@@ -3070,6 +3110,20 @@ Donde su país aún no permite la caja, esta nombra la operación que falta y no
 
 Un artículo trazado indica de dónde se tomó. Cuando vende un artículo seguido por lote sin elegir un lote, la venta lo toma de los lotes en existencia, primero el que caduca antes y nunca uno caducado; bajo la línea vendida, la caja muestra el código de cada lote tal como se recibió, con la cantidad tomada, por ejemplo **Lote SUP-A × 2 · Lote SUP-B × 1**, y cada pieza por su etiqueta. Si la empresa usa un lector, escanee la etiqueta de una pieza para añadirla: la venta toma exactamente las piezas escaneadas, y la misma pieza dos veces se rechaza. Estos identificadores de trazabilidad quedan fijados con el ticket: cambiar más tarde un lote o una etiqueta nunca altera un ticket ya emitido. En las existencias, la trazabilidad de un lote o de una pieza indica el ticket que lo vendió.
 
+Para elegir el lote usted mismo, pulse **Elegir el lote** en la línea: los lotes en existencia aparecen con su fecha y lo que queda, el primero en caducar primero. Un lote caducado se muestra y no se puede elegir. **El primero en caducar (elegido por el stock)** devuelve la elección al stock. Un artículo que no se sigue por lote dice que no tiene lote que elegir.
+
+### Imprimir el tique y abrir el cajón
+
+**Público:** Administrador/a · Propietario
+
+Vende en un mostrador con una impresora de tiques en su red (80 o 58 mm, ESC/POS), quizá con un cajón conectado a ella.
+
+Active **Impresora de tiques** (requiere las sesiones de caja). El dispositivo de cada caja configura su propia impresora: tras una venta pulse **Configurar la impresora de tickets**, o abra **Impresora de tickets**, e introduzca la dirección de la impresora en su red (Dirección de la impresora) y su puerto (9100 salvo que la impresora indique otro), el ancho del papel, la página de códigos, si tiene un cajón conectado y si una venta se imprime sola, tras preguntar o solo cuando se pide. **Impresión de prueba** imprime una página de prueba.
+
+Tras una venta en efectivo se abre el cajón. **Imprimir el ticket** imprime el tique; **Imprimir una copia** lo imprime de nuevo marcado **COPIA 1**, **COPIA 2**, etc.: una copia se cuenta y nunca toma un nuevo número de tique. La tecla **Abrir el cajón** de un diseño de caja abre el cajón fuera de una venta. Cuando la impresora no responde, la caja dice **Tique no impreso — la venta está completa. Imprima de nuevo, o muestre el tique para compartirlo.**: la venta está completa en todo caso, y el tique puede mostrarse y compartirse. En un navegador no se imprime nada: imprimir necesita la aplicación.
+
+Probado hasta ahora: los bytes frente a archivos de referencia y un receptor local. Aún no se ha probado ningún modelo de impresora.
+
 ### Abrir la caja, contar y cerrar
 
 **Público:** Administrador/a · Propietario
@@ -3085,6 +3139,28 @@ Pulse **Abrir la caja**, escriba el **Fondo del cajón** (o, si su negocio cuent
 **Contar y cerrar** pide el **Efectivo contado en el cajón** y lo que se **Lleva al banco**. Cuando el negocio cuenta a ciegas, el efectivo esperado no se muestra antes del recuento; quien puede ver las finanzas lo ve, y la diferencia mientras escribe. Un recuento que difiere del efectivo esperado solo se cierra con su motivo, que la caja pide. Tras el cierre, la caja dice lo esperado, lo contado y la diferencia. Los pagos con tarjeta sin respuesta se listan aparte y nunca cuentan como efectivo.
 
 **Cierre del día.** Quien puede ver las finanzas abre **Cierre del día** desde el cajón de caja y pulsa **Cerrar el día** cuando cada caja está cerrada (una caja aún abierta se nombra y rechaza el cierre). Las sesiones cerradas del día forman un informe numerado: cada sesión con lo esperado, lo contado, la diferencia y su motivo, los cobros por medio de pago y por tipo de impuesto, el efectivo entrado y salido, los reembolsos y el rango de números de tickets. **Días cerrados** lista los informes ya hechos; un día cerrado no se cambia nunca. Es el registro propio del negocio; el contenido legal que un país exige al cierre del día llega con su propio módulo.
+
+### Organizar su caja
+
+**Público:** Administrador/a · Propietario
+
+Vende en un mostrador y quiere que la caja se adapte a su forma de vender: teclas grandes para el pan pesado, páginas por categoría para un bar, primero un campo de escaneo para una ferretería.
+
+Active **Diseños de caja** (requiere las sesiones de caja). En **Cajón de caja**, alguien que puede organizar las cajas (por defecto propietarios y administradores) pulsa el botón de diseño de una caja. Una caja sin diseño parte de una plantilla: **Comercio**, **Panadería y productos pesados**, **Cafetería y bar**, **Recepción de estudio** o **Ferretería y catálogo**.
+
+El diseño tiene una cuadrícula para cada ancho en que se usa la caja: **Ancho de teléfono**, **Ancho de tableta** y **Ancho de escritorio**. **Añadir un elemento** coloca una tecla de artículo, una tecla de función (como **Cobrar en efectivo** o **Siguiente cliente**), un teclado numérico, una calculadora, la cesta, el total y el cambio u otra herramienta en el primer sitio libre donde cabe. Toque un elemento para seleccionarlo; los botones bajo la cuadrícula lo mueven y lo hacen más ancho, más estrecho, más alto o más bajo paso a paso. No se ofrece un paso que saldría de la cuadrícula, se superpondría a otro elemento o dejaría una herramienta demasiado pequeña.
+
+**Guardar** conserva un borrador; **Publicar en la caja** lo convierte en el diseño que usa la caja. Una caja ya abierta conserva su diseño hasta su próxima sesión: la caja nunca cambia durante una venta. Si otra persona cambió el diseño desde que lo abrió, se rechaza el guardado con **Alguien ha cambiado este diseño; vuelva a cargarlo.** Un diseño que el servidor no puede aceptar se rechaza con su primer problema. Una caja sin diseño publicado conserva las teclas que genera a partir de sus artículos.
+
+En la caja, las teclas funcionan como las colocó. El **teclado numérico** escribe una cantidad con el separador decimal de su idioma (1,5); la siguiente tecla de artículo vende esa cantidad, y un artículo pesado la toma como su peso en lugar de preguntarlo. **Cantidad ×** pone la cantidad escrita en la última línea. La **calculadora** cuenta con exactitud, y **A la última línea** hace de su resultado la cantidad de la última línea; nunca fija un precio. Una **tecla de categoría** abre la página que nombra.
+
+**Copiar a otra caja** guarda el diseño como borrador de otra caja, para publicarlo allí. **Volver a las teclas generadas** elimina, tras confirmar, el diseño y el borrador de esta caja: la caja vuelve a usar las teclas que crea a partir de sus artículos. En la demo, el **Bakery counter** muestra la plantilla Panadería con su teclado y su calculadora.
+
+**Cambiar un precio** cambia el precio de la última línea: escriba el nuevo precio (o antes en el teclado) y un **Motivo**, que el tique conserva junto al precio del artículo. Requiere el derecho **Cambiar un precio en la caja** (propietarios y administradores por defecto); sin él, la caja lo dice y la línea se queda al precio del artículo. **Descuento en una línea** quita un porcentaje del precio del artículo de la última línea, como máximo **Descuento máximo en la caja** (0 por defecto, es decir, ningún descuento en la caja); un descuento mayor se rechaza nombrando el límite. Una línea toma un descuento o un precio cambiado, no ambos. Una venta que la caja envía tras vender sin conexión conserva su precio, dentro de la tolerancia de precio sin conexión.
+
+**Reimprimir el último ticket** muestra de nuevo el tique de la última venta, marcado **COPIA 1**, **COPIA 2**, etc. Una copia nunca toma un nuevo número de tique, y cada copia impresa se cuenta.
+
+**Devolución de envase** devuelve el envase del último artículo registrado (las botellas de un pack de agua, por ejemplo): escriba antes la cantidad en el teclado, o se toma uno. El envase se descuenta de la venta y aparece como **Envase devuelto** en el tique; vuelve al stock cuando se hace la venta. Requiere el derecho **Cambiar un precio en la caja**, no se hace sin conexión, un envase seguido por lote o etiqueta no se devuelve en la caja, y una venta cuyo total no sería superior a cero no se hace (pague entonces los envases desde el cajón).
 
 ### Cuando la caja está sin conexión
 
@@ -3114,7 +3190,7 @@ Cobra con tarjeta en el mostrador, o una venta debe corregirse después, y quier
 
 Usted decide si una etiqueta de un artículo designa un lote o una pieza, y qué cuenta una lectura masiva.
 
-Con la función *Etiquetas* activada, un artículo tiene un **modo de etiqueta**, fijado en su grupo y conservado por el artículo mientras no tenga valor propio. Abra los ajustes de grupo de un artículo (**Stock → Artículos**, el icono de carpeta en su línea) y lea **Etiqueta de este artículo**: dice de dónde viene el valor (*De Bebidas desde el 3 dic.* o *Valor propio*), permite dar al artículo un valor propio, y **Usar el valor del grupo** se lo devuelve.
+Con la función *Etiquetas* activada, un artículo tiene un **modo de etiqueta**, fijado en su grupo y conservado por el artículo mientras no tenga valor propio. Abra los ajustes de grupo de un artículo (**Cambiar de grupo** en su página de **Stock → Artículos**) y lea **Etiqueta de este artículo**: dice de dónde viene el valor (*De Bebidas desde el 3 dic.* o *Valor propio*), permite dar al artículo un valor propio, y **Usar el valor del grupo** se lo devuelve.
 
 - **Sin etiquetas.** El artículo no lleva etiqueta.
 - **Una etiqueta por lote.** Una etiqueta designa un lote o un bulto: una caja, un cubo, un cartón. Leerla cuenta un lote, nunca una pieza.
@@ -3922,6 +3998,43 @@ Usted quiere que sus facturas y cartas se impriman en el papel que usa su país.
 
 **Véase también:** [País](help:user.workspace.settings.country)
 
+### Datos maestros
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Los datos maestros son las listas con las que está configurada su empresa y que leen sus selectores: las unidades, los tipos de IVA, los artículos, los proveedores y el resto. **Datos maestros** muestra cada tipo en un solo lugar, por grupos. Cada tarjeta nombra el tipo, dice en una línea qué es y cuántos registros contiene, y abre la pantalla que lo edita.
+
+**Pasos**
+
+1. En [Espacio](app:/workspace-settings), abra **Datos maestros**, o elija **Datos maestros** en **Configurar el espacio** del menú.
+2. Escriba en **Buscar** para dejar solo las tarjetas cuyo nombre coincide.
+3. Pulse una tarjeta y edite sus registros en la pantalla que abre.
+
+**Conviene saber**
+
+- Solo ve una tarjeta si puede abrir su pantalla: su función está activada y tiene su permiso.
+- Un número que no se puede leer lo dice, con **Reintentar**; nunca se muestra como 0.
+
+#### Medidas e impuestos
+
+**Unidades de medida** con sus conversiones, y **Tipos de IVA**. Las unidades están siempre aquí, esté activada o no la función **Unidades de medida**.
+
+#### Catálogo
+
+**Artículos**, **Grupos de artículos** y **Servicios**: lo que la empresa almacena y vende.
+
+#### Ubicaciones y existencias
+
+**Ubicaciones**, donde se guardan las mercancías, y **Cajas**: las cajas del mostrador, cada una con la disposición de sus teclas.
+
+#### Socios comerciales
+
+**Proveedores** y **Clientes facturados**.
+
+#### Organización
+
+**Sedes**: las direcciones de la empresa y las plantas de cada una.
+
 ### Unidades de medida
 
 **Público:** Propietario · Administrador/a con el permiso
@@ -3932,11 +4045,10 @@ Sus artículos, presupuestos y facturas se miden en unidades, y algunas se convi
 
 **Pasos**
 
-1. Active **Unidades de medida** en **Funciones** (está desactivada hasta que la pida).
-2. En [Unidades de medida](app:/settings/units), pulse **Nueva unidad**.
-3. Rellene **Código de la unidad** (ya no podrá cambiarse), **Su nombre para la unidad**, **Mide** y **Una unidad equivale a** en la unidad base de lo que mide: 1000 para un km contado en m, 0,001 para un mm.
-4. Si quiere, rellene **Código UN/ECE (para facturas electrónicas)**, que llevan las facturas electrónicas (KMT para un km).
-5. Pulse **Guardar**.
+1. En [Unidades de medida](app:/settings/units), a la que se llega desde **Datos maestros**, pulse **Nueva unidad**.
+2. Rellene **Código de la unidad** (ya no podrá cambiarse), **Su nombre para la unidad**, **Mide** y **Una unidad equivale a** en la unidad base de lo que mide: 1000 para un km contado en m, 0,001 para un mm.
+3. Si quiere, rellene **Código UN/ECE (para facturas electrónicas)**, que llevan las facturas electrónicas (KMT para un km).
+4. Pulse **Guardar**.
 
 **Conviene saber**
 
@@ -3944,6 +4056,7 @@ Sus artículos, presupuestos y facturas se miden en unidades, y algunas se convi
 - Una unidad en uso (un artículo contado con ella, un movimiento de stock, un presupuesto o una línea de factura) conserva para siempre su dimensión y su factor: una corrección es una unidad nueva. Una unidad que nadie usa puede archivarse (**Archivar**) y mostrarse de nuevo (**Mostrar de nuevo**).
 - Una conversión es exacta: 2,5 km son 2500 m. Dos clases de unidad nunca se convierten, y un resultado que seis decimales no pueden contener se rechaza, nunca se redondea.
 - Solo el propietario y los administradores autorizados a cambiar los ajustes del espacio mantienen las unidades.
+- Las unidades están siempre aquí. La función **Unidades de medida** en **Funciones** decide si los presupuestos y las facturas ofrecen sus propias unidades y si los selectores de un artículo ofrecen todas las unidades; mientras está desactivada, solo ofrecen las unidades habituales.
 
 **Véase también:** [Papel de los documentos](help:user.workspace.settings.paper)
 

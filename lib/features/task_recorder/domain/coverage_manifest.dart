@@ -38,11 +38,7 @@ class RouteCoverage {
     final got = path.split('/');
     if (want.length != got.length) return false;
     for (var i = 0; i < want.length; i++) {
-      if (want[i].startsWith(':')) {
-        if (got[i].isEmpty) return false;
-      } else if (want[i] != got[i]) {
-        return false;
-      }
+      if (want[i].startsWith(':') ? got[i].isEmpty : want[i] != got[i]) return false;
     }
     return true;
   }
@@ -392,13 +388,18 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/stock/cycle-counts/:taskId', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/expiry', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/units', CoverageStatus.planned, owner: '#1884'),
-  // #4442 -- Settings > Units of measure.
+  // #4442, #4485 -- Settings > Units of measure, and Master data.
   RouteCoverage('/settings/units', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/settings/master-data', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/items', CoverageStatus.planned, owner: '#1884'),
+  // #4480 -- one item at its own address, beside the list on a wide window.
+  RouteCoverage('/stock/items/:itemId', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/places', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/settings', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/till', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/till/drawer', CoverageStatus.planned, owner: '#1884'),
+  // #4448 -- the till layout editor, opened from the drawer.
+  RouteCoverage('/till/layout/:tillId', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/till/day', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/till/receipts', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes', CoverageStatus.planned, owner: '#1884'),

@@ -106,6 +106,19 @@ class WorkspaceFieldOption {
   /// than blank and therefore not.
   String labelIn(String locale, {String fallbackLocale = 'en'}) =>
       labels[locale] ?? labels[fallbackLocale] ?? key;
+
+  /// This choice with only what is given changed. The key is never given:
+  /// the answers point at it.
+  WorkspaceFieldOption copyWith({
+    Map<String, String>? labels,
+    int? sortOrder,
+    bool? active,
+  }) => WorkspaceFieldOption(
+    key: key,
+    labels: labels ?? this.labels,
+    sortOrder: sortOrder ?? this.sortOrder,
+    active: active ?? this.active,
+  );
 }
 
 /// One question.
@@ -147,6 +160,74 @@ class WorkspaceField {
 
   /// Only for a choice question, in `sortOrder` then key order.
   final List<WorkspaceFieldOption> options;
+
+  /// This question with what it asks changed, and only what is given. An
+  /// editor builds what it saves from the question it read with this and
+  /// [asked], so what it does not show (the group, the help texts, the place
+  /// in the list, a rule it has no control for) is saved as it was read,
+  /// never as a default.
+  WorkspaceField copyWith({
+    String? key,
+    WorkspaceFieldType? type,
+    Map<String, String>? labels,
+    Map<String, Object?>? validation,
+    List<WorkspaceFieldOption>? options,
+  }) => _copy(
+    key: key,
+    type: type,
+    labels: labels,
+    validation: validation,
+    options: options,
+  );
+
+  /// This question with how it is asked changed: whether it must be
+  /// answered, who sees the answer, where it is asked, whether it is asked
+  /// at all. Everything else stays as it is.
+  WorkspaceField asked({
+    required bool required,
+    required bool personalData,
+    required WorkspaceFieldVisibility visibility,
+    required Set<WorkspaceFieldContext> contexts,
+    required bool active,
+  }) => WorkspaceField(
+    id: id,
+    key: key,
+    type: type,
+    labels: labels,
+    helpTexts: helpTexts,
+    required: required,
+    personalData: personalData,
+    visibility: visibility,
+    contexts: contexts,
+    groupKey: groupKey,
+    sortOrder: sortOrder,
+    validation: validation,
+    active: active,
+    options: options,
+  );
+
+  WorkspaceField _copy({
+    String? key,
+    WorkspaceFieldType? type,
+    Map<String, String>? labels,
+    Map<String, Object?>? validation,
+    List<WorkspaceFieldOption>? options,
+  }) => WorkspaceField(
+    id: id,
+    key: key ?? this.key,
+    type: type ?? this.type,
+    labels: labels ?? this.labels,
+    helpTexts: helpTexts,
+    required: required,
+    personalData: personalData,
+    visibility: visibility,
+    contexts: contexts,
+    groupKey: groupKey,
+    sortOrder: sortOrder,
+    validation: validation ?? this.validation,
+    active: active,
+    options: options ?? this.options,
+  );
 
   String labelIn(String locale, {String fallbackLocale = 'en'}) =>
       labels[locale] ?? labels[fallbackLocale] ?? key;

@@ -11,10 +11,6 @@
   "@stockRegistryAllPlaces": {
     "description": "#4293 the registry of the stock: a label or a message"
   },
-  "stockRegistryNoHomeFilter": "Only items with no home place",
-  "@stockRegistryNoHomeFilter": {
-    "description": "#4293 the registry of the stock: a label or a message"
-  },
   "stockRegistryMore": "Show more",
   "@stockRegistryMore": {
     "description": "#4293 the registry of the stock: a label or a message"
@@ -26,24 +22,6 @@
   "stockRegistryCostUnknown": "cost unknown",
   "@stockRegistryCostUnknown": {
     "description": "#4293 the registry of the stock: a label or a message"
-  },
-  "stockRegistryCost": "cost {amount}",
-  "@stockRegistryCost": {
-    "description": "#4293 the registry of the stock: a label or a message",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "stockRegistryPrice": "price {amount}",
-  "@stockRegistryPrice": {
-    "description": "#4293 the registry of the stock: a label or a message",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
   },
   "stockRegistryHome": "home {address}",
   "@stockRegistryHome": {
@@ -91,5 +69,9 @@
   "stockReasonHomeInvalid": "Choose a place of this business that is in use and is not a supplier, customer, loss or transit place.",
   "@stockReasonHomeInvalid": {
     "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockItemEditDetails": "Edit name, price and VAT",
+  "@stockItemEditDetails": {
+    "description": "#4470 Stock items: tooltip of the button that opens the service editor for the item"
   }
 }

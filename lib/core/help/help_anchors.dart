@@ -43,6 +43,10 @@ abstract final class HelpAnchor {
   static const moneyStockReorder = 'user.money.stock.reorder';
   static const moneyStockValue = 'user.money.stock.value';
   static const moneyStockRegistry = 'user.money.stock.registry';
+  static const moneyStockItem = 'user.money.stock.item';
+
+  /// #4483 — acting on an item from the list: the phone's chips, the desk's toolbar.
+  static const moneyStockActions = 'user.money.stock.actions';
   static const moneyStockGroups = 'user.money.stock.groups';
   static const moneyStockReversals = 'user.money.stock.reversals';
   static const moneyStockCycleCounts = 'user.money.stock.cycle';
@@ -55,7 +59,9 @@ abstract final class HelpAnchor {
   static const moneyStockBulkRead = 'user.money.stock.bulkread';
   static const moneyTill = 'user.money.till';
   static const moneyTillDrawer = 'user.money.till-drawer';
+  static const moneyTillLayout = 'user.money.till-layout';
   static const moneyTillOffline = 'user.money.till-offline';
+  static const moneyTillPrinter = 'user.money.till-printer';
   static const moneyTillReceipts = 'user.money.till.receipts';
 
   /// #3527 — the Sales, Purchases and Cash pages.
@@ -344,6 +350,14 @@ abstract final class HelpAnchor {
   /// The paper the space's documents are printed on (#3852).
   static const workspacePaper = 'user.workspace.settings.paper';
   static const settingsUnits = 'user.workspace.settings.units';
+
+  /// #4485 — the Master data page and its groups.
+  static const masterData = 'user.workspace.settings.master-data';
+  static const masterDataMeasures = 'user.workspace.master-data.measures';
+  static const masterDataCatalogue = 'user.workspace.master-data.catalogue';
+  static const masterDataPlaces = 'user.workspace.master-data.places';
+  static const masterDataPartners = 'user.workspace.master-data.partners';
+  static const masterDataOrganisation = 'user.workspace.master-data.organisation';
 
   /// The free-text address a paper document prints.
   static const workspaceAddress = 'user.workspace.settings.address';

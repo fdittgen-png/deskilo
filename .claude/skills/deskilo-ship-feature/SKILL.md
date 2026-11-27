@@ -43,7 +43,7 @@ Lessons by topic, with their incidents: [reference.md](reference.md).
 Edit ALL of these in the same commit:
 1. `lib/features/workspace/domain/workspace_feature.dart` — enum value
    (append at the end) + `featureManifest` entry (`requires:`, default) — the
-   entries live in `feature_manifest_partN.dart` beside it (#2386): append to the last part.
+   entries live in plain libraries beside it, in display order: `feature_manifest_early/mid/late.dart` (#2386, #4408): append to the late one (a stock flag to `feature_manifest_stock.dart`).
 2. `feature_names.dart` — label; `features_screen.dart` — description.
 3. ARB fragments: keys `featureXxx`, `featureXxxDesc` + the feature's strings (§2 Strings).
 4. `dart run tool/build_setup_l10n.dart` and commit `web/setup_l10n.js` AND
@@ -74,6 +74,12 @@ joins that set deliberately. What still pins: a **default-off** flag joins
 (`features_screen_test`, whose viewport grows with the list); a flag in a process
 moves `process_overview_test`'s fixture; a default-ON child of a default-OFF
 parent breaks `template_contract_test` (reference.md "Flags").
+
+A new kind of master data (a list a picker reads, or a configured list of a
+business) gets its card on the Master data page in the same PR: a
+`MasterDataKind` in `lib/app/master_data/master_data_kinds.dart` and a line in
+`test/lint/master_data_registry_test.dart` (AGENT_RULES "Master data lives on
+the Master data page", #4485).
 
 Other registries: validation domains grow in FOUR places (AGENT_RULES); a new
 `WorkspacePermission` needs the SQL catalog (`deskilo-supabase-migration`);

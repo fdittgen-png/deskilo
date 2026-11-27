@@ -3145,12 +3145,54 @@ Die **Meldebestände** (unter den beiden Listen) machen einen Artikel knapp. Jed
 
 Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es ist, was es kostet und einbringt, wohin es gehört und wie viel es gibt.
 
-Öffnen Sie **Lager → Artikel**. Jede Zeile zeigt **Barcode**, **Einheit**, **Preis** (den Verkaufspreis aus dem Katalog), **zuletzt bekannte Kosten**, **festen Lagerort** und den **Bestand**. Die Kosten erscheinen nur, wenn Ihre Rolle Finanzen sehen oder Einkäufe verwalten darf; sonst steht in der Zeile *Kosten nicht angezeigt*. Kosten, die noch keine Lieferung geliefert hat, bleiben *Kosten unbekannt*, nie null.
+Öffnen Sie **Lager → Artikel**. Jeder Artikel zeigt seinen Namen, darunter seinen Preis, den Bestand und seinen festen Lagerort, und ein Abzeichen, wenn dem Artikel etwas fehlt: *Niedriger Bestand*, *Kein Preis* oder *Kein Lagerort*. Auf einem Telefon ist jeder Artikel eine Karte; auf einem quer gehaltenen Tablet oder einem Computer stehen die Artikel in einer Tabelle mit den Spalten **Name**, **Preis**, **Bestand**, **Fester Lagerort**, **Gruppe** und **Status**, sortiert per Klick auf **Name**, **Preis** oder **Bestand**. Öffnen Sie einen Artikel, um alles über ihn zu sehen und zu ändern ([Die Seite eines Artikels](#die-seite-eines-artikels)), oder handeln Sie direkt in der Liste ([Einen Artikel aus der Liste bearbeiten](#einen-artikel-aus-der-liste-bearbeiten)).
 
-- **Fester Lagerort**: Tippen Sie auf das Orts-Symbol einer Zeile, um zu sagen, wohin der Artikel gehört: Gang, Fach oder Behälter. Eine Variante ohne eigenen festen Lagerort hat den ihres Artikels. Es ist ein Hinweis für Einlagerung, Zählung und Kommissionierung: Bestand kann anderswo liegen, und eine Änderung bewegt nichts und schreibt keine Historie um.
-- **Filtern** Sie nach einem Lagerort, um zu sehen, was dort und darunter eingelagert ist, oder schalten Sie *Nur Artikel ohne festen Lagerort* ein, um zu sehen, was noch einen braucht.
+- **Filtern** Sie nach einem Lagerort, um zu sehen, was dort und darunter eingelagert ist, oder wählen Sie den Chip *Ohne festen Lagerort*, um zu sehen, was noch einen braucht.
 - **Suchen** Sie nach Name, Barcode oder Adresse. Einen Barcode in die Suche eingeben oder scannen und bestätigen öffnet diesen Artikel.
 - Lange Listen werden seitenweise geladen: Wählen Sie *Mehr anzeigen*.
+- Die zuletzt bekannten Kosten erscheinen auf der Seite des Artikels nur, wenn Ihre Rolle Finanzen sehen oder Einkäufe verwalten darf; sonst steht dort *Kosten nicht angezeigt*. Kosten, die noch keine Lieferung geliefert hat, bleiben *Kosten unbekannt*, nie null.
+
+<!-- anchor: user.money.stock.actions -->
+### Einen Artikel aus der Liste bearbeiten
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten eine Sache an einem Artikel ändern – seinen Preis, seinen Lagerort, seine Gruppe –, ohne seine Seite zu öffnen.
+
+- **Auf einem Telefon** endet jede Karte mit einer Reihe von Chips, jeder ein Symbol mit einem Wort: **Bearbeiten** (Name, Preis und MwSt.), **Lagerort**, **Gruppe**, **Tags**, **Einstellungen**, **Varianten** und **Lieferanten**. Wischen Sie die Reihe seitwärts, wenn sie nicht passt. Ein Chip öffnet denselben Editor wie die Seite des Artikels; tippen Sie die Karte selbst an, um die Seite zu öffnen.
+- **Auf einem quer gehaltenen Tablet oder einem Computer** wählen Sie eine Zeile mit einem Klick aus: Sie wird hervorgehoben und mit einem Häkchen markiert. Die Leiste über der Tabelle nennt dann den Artikel und bietet **Name, Preis und MwSt. bearbeiten**, **Lagerort**, **Gruppe**, **Tags**, **Lagereinstellungen**, **Varianten**, **Lieferantenartikel** und **Öffnen**. Die Pfeiltasten verschieben die Auswahl; die Eingabetaste oder ein Doppelklick öffnet den Artikel neben der Liste; **Auswahl aufheben** gibt ihn frei.
+- Ist nichts ausgewählt, sagt die Leiste *Wählen Sie einen Artikel aus, um ihn zu bearbeiten* und bietet **Artikel hinzufügen**. Suche, Lagerort und *Ohne festen Lagerort* stehen links in ihr.
+
+**Gut zu wissen**
+
+- Angeboten wird nur, was Ihre Rolle erlaubt: Auf einem Telefon fehlen die übrigen Chips, wer den Bestand nur sehen darf, hat also keine; auf einem Computer sind sie ausgegraut. **Name, Preis und MwSt. bearbeiten** verlangt das Recht, Leistungen zu verwalten, alles andere das Recht, das Lager zu verwalten.
+- Nach dem Speichern liest die Liste den Artikel neu: Die Zeile bleibt ausgewählt und zeigt die neuen Werte.
+- **Gruppe** und **Tags** erscheinen, wo der Betrieb Artikelgruppen und Tags nutzt.
+
+**Siehe auch:** [Das Artikelregister](#das-artikelregister) · [Die Seite eines Artikels](#die-seite-eines-artikels)
+
+<!-- anchor: user.money.stock.item -->
+### Die Seite eines Artikels
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten alles über einen Artikel an einem Ort sehen und jeden Teil dort ändern, wo Sie ihn lesen.
+
+Tippen Sie auf einem Telefon die Karte eines Artikels unter **Lager → Artikel** an: Er öffnet sich als eigene Seite. Auf einem quer gehaltenen Tablet oder einem Computer doppelklicken Sie seine Zeile, drücken auf ihr die Eingabetaste oder wählen **Öffnen**: Er öffnet sich neben der Liste, die ihre Suche, Filter und Auswahl behält. Jeder Teil der Seite hat seine eigene Aktion, benannt nach dem, was sie ändert:
+
+- **Übersicht**: Preis, MwSt., Einheit, Barcode und zuletzt bekannte Kosten. **Name, Preis und MwSt. bearbeiten** öffnet den Editor der Leistung.
+- **Bestand**: der Bestand und der feste Lagerort des Artikels oder jeder Variante, und **Wo er liegt**: die ersten Orte, an denen er liegt (**Alle Orte ansehen** zeigt alle). **Festen Lagerort ändern** sagt, wohin der Artikel gehört: Gang, Fach oder Behälter. Es ist ein Hinweis für Einlagerung, Zählung und Kommissionierung: Bestand kann anderswo liegen, und eine Änderung bewegt nichts. **Einheiten, Codes und Verfolgung bearbeiten** öffnet die Lagereinstellungen des Artikels.
+- **Gruppe und Tags**, wo das Unternehmen sie nutzt: die Gruppe des Artikels. **Gruppe ändern** verschiebt ihn und zeigt, woher jede Einstellung kommt; **Tags bearbeiten** bindet seine Tags oder nimmt sie außer Dienst.
+- **Varianten**: die Varianten im Verkauf mit ihren eigenen Preisen. **Varianten bearbeiten** fügt welche hinzu oder ändert sie.
+- **Lieferantenartikel**: die Artikel von Lieferanten, die auf diesen Artikel verweisen. **Lieferantenartikel bearbeiten** ordnet einen weiteren zu.
+
+**Gut zu wissen**
+
+- **Name, Preis und MwSt. bearbeiten** braucht das Recht, Leistungen zu verwalten; jede andere Aktion das Recht, das Lager zu verwalten. Wer das Lager nur sehen darf, liest Übersicht, Bestand und Varianten ohne Aktion.
+- Die Abzeichen oben auf der Seite nennen, was dem Artikel noch fehlt.
+- Nach dem Speichern zeigt die Seite den neuen Wert sofort, die Liste ebenso.
+
+**Siehe auch:** [Das Artikelregister](#das-artikelregister) · [Artikelgruppen](#artikelgruppen)
 
 <!-- anchor: user.money.stock.groups -->
 ### Artikelgruppen
@@ -3161,7 +3203,7 @@ Sie möchten einmal festlegen, was eine Familie von Artikeln gemeinsam hat – w
 
 Öffnen Sie **Lager → Artikelgruppen** (dafür ist die Funktion *Artikelgruppen* unter der Lagerverwaltung nötig). Eine Gruppe hat einen Namen, steht oben oder in einer anderen Gruppe (eine Ebene Untergruppen, nicht mehr) und trägt die Einstellungen, die Sie wählen: **Nachverfolgung**, **Haltbarkeit**, **Tag-Modus**, **Lagereinheit**, **Zählen alle n Tage**, **Mindestalter** und **Nach Gewicht verkauft**. Eine Einstellung, die Sie auf *Nicht festgelegt* lassen, wird auf dieser Ebene nicht entschieden.
 
-- **Ein Artikel folgt seiner Gruppe, solange er keinen eigenen Wert hat.** Es gilt der eigene Wert des Artikels, sonst der seiner Untergruppe, sonst der seiner Gruppe. Öffnen Sie **Gruppe und geerbte Einstellungen** eines Artikels (das Ordner-Symbol in seiner Zeile unter **Lager → Artikel**), um zu sehen, woher jede Einstellung kommt (*Von Getränke seit 3. Dez.* oder *Eigener Wert*), ihn in eine andere Gruppe zu verschieben und einen eigenen Wert mit **Wert der Gruppe verwenden** zurückzugeben. In den **Lagereinstellungen** des Artikels steht *Eigener Wert* neben einer Einstellung, bei der der Artikel gegenüber seiner Gruppe einen eigenen Wert behält (Nachverfolgung, Haltbarkeit, Bestandseinheit).
+- **Ein Artikel folgt seiner Gruppe, solange er keinen eigenen Wert hat.** Es gilt der eigene Wert des Artikels, sonst der seiner Untergruppe, sonst der seiner Gruppe. Öffnen Sie einen Artikel unter **Lager → Artikel** und wählen Sie **Gruppe ändern**, um zu sehen, woher jede Einstellung kommt (*Von Getränke seit 3. Dez.* oder *Eigener Wert*), ihn in eine andere Gruppe zu verschieben und einen eigenen Wert mit **Wert der Gruppe verwenden** zurückzugeben. In den **Lagereinstellungen** des Artikels steht *Eigener Wert* neben einer Einstellung, bei der der Artikel gegenüber seiner Gruppe einen eigenen Wert behält (Nachverfolgung, Haltbarkeit, Bestandseinheit).
 - **Jede Änderung wird vorab gezeigt.** Beim Speichern einer Gruppe sehen Sie zuerst, was die Änderung erreicht: *gilt für 1, 1 behalten ihren eigenen Wert, 0 sind nicht erreichbar*. Erst das zweite Speichern wendet sie an; jede Änderung dazwischen verlangt eine neue Vorschau. Ein Artikel, den die Änderung nicht erreichen kann (etwa eine Einheit bei einem Artikel mit Bewegungen), wird aufgeführt, und die Änderung der Gruppe wird für die anderen trotzdem gespeichert.
 - **Vorschläge und Preise.** Eine Gruppe kann einem neuen Artikel eine **Standard-Einkaufseinheit** mit ihrem Faktor (eine Zahl oder ein Bruch wie 1/3), einen **Meldebestand und eine Nachbestellmenge** und eine **Lagerzone** vorschlagen: Sie werden als Ausgangswert in einen neuen Artikel kopiert und erreichen keinen bestehenden. **Steuersatz**, **Leistungsart**, **Preisrundung** und **Zielmarge auf die Kosten** zeigt und setzt nur, wer Leistungen verwalten und die Finanzen sehen darf; für alle anderen werden sie weder angezeigt noch durch ein Speichern geändert.
 - **Verlauf.** Das Blatt der Gruppe listet jede Änderung mit der Zahl der erreichten Artikel; die Herkunftszeile eines Artikels nennt, seit wann.
@@ -3190,7 +3232,7 @@ Ein Barcode-Scanner im Tastaturmodus (er tippt den Code und drückt die Eingabet
 
 Sie möchten einen NFC-Chip einem Artikel oder Lagerplatz zuordnen und Chips bei der Arbeit lesen – mit dem Telefon, das Sie ohnehin haben.
 
-Ist die Funktion *Tags* eingeschaltet und liest Ihr Telefon NFC, zeigen **Lager → Artikel** und **Lager → Lagerplätze** an jeder Zeile eine Tag-Taste, und die Scan-Leiste eines Warenblatts zeigt **Tag lesen**. Auf einem Gerät ohne NFC (ein Desktop, die meisten Tablets, ein Telefon mit ausgeschaltetem NFC) fehlt die Taste: Nutzen Sie dort einen Scanner oder ein Handlesegerät.
+Ist die Funktion *Tags* eingeschaltet und liest Ihr Telefon NFC, lesen **Tags bearbeiten** auf der Seite eines Artikels und die Tag-Taste an jeder Zeile von **Lager → Lagerplätze** einen Tag, und die Scan-Leiste eines Warenblatts zeigt **Tag lesen**. Auf einem Gerät ohne NFC (ein Desktop, die meisten Tablets, ein Telefon mit ausgeschaltetem NFC) fehlt die Taste: Nutzen Sie dort einen Scanner oder ein Handlesegerät.
 
 - **Tag zuordnen.** Öffnen Sie die Tags eines Artikels oder Lagerplatzes, tippen Sie auf **Tag lesen** und halten Sie den Chip an die Rückseite des Telefons. Ein Lesevorgang ordnet einen Tag zu. Liest man denselben Chip nochmals, heißt es, er sei hier schon zugeordnet, und nichts Neues entsteht; ein Chip, der etwas anderem zugeordnet ist, wird abgelehnt und nennt, welchem. Ein Eigentümer kann mehrere Tags tragen. Der Server nimmt den Code in jeder Schreibweise und mit Leerzeichen, Doppelpunkten oder Bindestrichen.
 - **Tag außer Betrieb nehmen**, der verloren, beschädigt oder ersetzt ist: Wählen Sie den Grund. Ein kürzlich außer Betrieb genommener Tag kann nicht sofort wieder zugeordnet werden (die Wartezeit ist eine Lagereinstellung), und ein Tag an einem Stück, das noch auf Lager ist, kann nicht außer Betrieb genommen werden.
@@ -3213,6 +3255,21 @@ Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang 
 
 Ein rückverfolgter Artikel nennt, woraus er entnommen wurde. Verkaufen Sie einen chargengeführten Artikel, ohne eine Charge zu wählen, entnimmt der Verkauf ihn den vorrätigen Chargen, die zuerst ablaufende zuerst und nie eine abgelaufene; unter der verkauften Zeile zeigt die Kasse den Code jeder Charge wie beim Wareneingang mit der entnommenen Menge, zum Beispiel **Charge SUP-A × 2 · Charge SUP-B × 1**, und jedes Stück mit seinem Tag. Nutzt das Unternehmen einen Scanner, scannen Sie den Tag eines Stücks, um dieses Stück zu buchen: Der Verkauf nimmt genau die gescannten Stücke, und dasselbe Stück zweimal wird abgelehnt. Diese Rückverfolgungs-IDs werden mit dem Beleg festgeschrieben: Eine spätere Änderung einer Charge oder eines Tags ändert einen bereits ausgestellten Beleg nie. Im Lager nennt die Rückverfolgung einer Charge oder eines Stücks den Beleg, mit dem es verkauft wurde.
 
+Um die Charge selbst zu wählen, tippen Sie auf der Zeile auf **Charge wählen**: Die vorrätigen Chargen stehen mit ihrem Datum und dem Rest da, die zuerst ablaufende zuerst. Eine abgelaufene Charge wird gezeigt und kann nicht gewählt werden. **Die zuerst ablaufende (vom Bestand gewählt)** überlässt die Wahl wieder dem Bestand. Ein Artikel ohne Chargenverfolgung sagt, dass es keine Charge zu wählen gibt.
+
+<!-- anchor: user.money.till-printer -->
+### Den Beleg drucken und die Kassenlade öffnen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie verkaufen an einer Theke mit einem Bondrucker in Ihrem Netz (80 oder 58 mm, ESC/POS), vielleicht mit einer daran angeschlossenen Kassenlade.
+
+Schalten Sie **Bondrucker** ein (es braucht Kassensitzungen). Jedes Gerät einer Kasse stellt seinen eigenen Drucker ein: Tippen Sie nach einem Verkauf auf **Bondrucker einrichten** oder öffnen Sie **Bondrucker** und geben Sie die Adresse des Druckers in Ihrem Netz (Adresse des Druckers) und seinen Port ein (9100, sofern der Drucker nichts anderes sagt), die Papierbreite, den Zeichensatz, ob eine Kassenlade daran hängt und ob ein Verkauf von selbst, nach Rückfrage oder nur auf Wunsch druckt. **Testdruck** druckt eine Testseite.
+
+Nach einem Barverkauf öffnet sich die Kassenlade. **Beleg drucken** druckt den Beleg; **Kopie drucken** druckt ihn erneut als **KOPIE 1**, **KOPIE 2** usw.: Eine Kopie wird gezählt und erhält nie eine neue Belegnummer. Die Taste **Schublade öffnen** eines Kassenlayouts öffnet die Lade außerhalb eines Verkaufs. Ist der Drucker nicht erreichbar, sagt die Kasse **Beleg nicht gedruckt — der Verkauf ist abgeschlossen. Erneut drucken oder den Beleg zeigen und teilen.**: Der Verkauf ist in jedem Fall abgeschlossen, und der Beleg kann gezeigt und geteilt werden. Im Browser wird nichts gedruckt: Drucken braucht die App.
+
+Bisher getestet: die Bytes gegen Referenzdateien und ein lokaler Empfänger. Noch kein Druckermodell wurde ausprobiert.
+
 <!-- anchor: user.money.till-drawer -->
 ### Kasse öffnen, zählen und schließen
 
@@ -3229,6 +3286,29 @@ Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade**
 **Zählen und schließen** fragt nach dem **Im Fach gezählten Bargeld** und dem, was **Zur Bank gebracht** wird. Zählt der Betrieb blind, wird das erwartete Bargeld vor dem Zählen nicht angezeigt; wer die Finanzen sehen darf, sieht es und beim Eintippen die Differenz. Eine Zählung, die vom erwarteten Bargeld abweicht, wird nur mit ihrem Grund geschlossen, den die Kasse erfragt. Nach dem Schließen nennt die Kasse das Erwartete, das Gezählte und die Differenz. Unbeantwortete Kartenzahlungen stehen getrennt und zählen nie als Bargeld.
 
 **Tagesabschluss.** Wer die Finanzen sehen darf, öffnet **Tagesabschluss** in der Kassenschublade und tippt auf **Tag abschließen**, sobald jede Kasse geschlossen ist (eine noch offene Kasse wird genannt und verweigert den Abschluss). Die geschlossenen Sitzungen des Tages werden zu einem nummerierten Bericht: jede Sitzung mit Erwartetem, Gezähltem, Differenz und Grund, die Einnahmen nach Zahlungsart und Steuersatz, das ein- und entnommene Bargeld, die Erstattungen und der Bereich der Belegnummern. **Abgeschlossene Tage** listet die bereits erstellten Berichte; ein abgeschlossener Tag wird nie geändert. Das ist die eigene Aufzeichnung des Betriebs; den rechtlichen Inhalt, den ein Land vom Tagesabschluss verlangt, liefert ein eigenes Modul.
+
+<!-- anchor: user.money.till-layout -->
+### Ihre Kasse gestalten
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie verkaufen an einer Theke und möchten, dass die Kasse zu Ihrem Verkauf passt: große Tasten für gewogenes Brot, Kategorieseiten für eine Bar, zuerst ein Scanfeld für einen Baumarkt.
+
+Schalten Sie **Kassenlayouts** ein (setzt Kassensitzungen voraus). In **Kassenschublade** drückt jemand, der die Kassen gestalten darf (standardmäßig Inhaber und Administratoren), die Layout-Schaltfläche einer Kasse. Eine Kasse ohne Layout beginnt mit einer Vorlage: **Einzelhandel**, **Bäckerei und Wiegeware**, **Café und Bar**, **Studiotheke** oder **Baumarkt und Katalog**.
+
+Das Layout hat ein Raster für jede Breite, in der die Kasse benutzt wird: **Telefonbreite**, **Tabletbreite** und **Desktopbreite**. **Element hinzufügen** setzt eine Artikeltaste, eine Funktionstaste (etwa **Bar kassieren** oder **Nächster Kunde**), einen Ziffernblock, einen Rechner, den Warenkorb, Summe und Rückgeld oder ein anderes Werkzeug an den ersten freien Platz, an den es passt. Tippen Sie ein Element an, um es auszuwählen; die Schaltflächen unter dem Raster verschieben es und machen es Schritt für Schritt breiter, schmaler, höher oder niedriger. Ein Schritt, der das Raster verlassen, auf einem anderen Element liegen oder ein Werkzeug zu klein machen würde, wird nicht angeboten.
+
+**Speichern** behält einen Entwurf; **An die Kasse veröffentlichen** macht ihn zum Layout der Kasse. Eine bereits geöffnete Kasse behält ihr Layout bis zur nächsten Sitzung: Die Kasse ändert sich nie während eines laufenden Verkaufs. Hat jemand anderes das Layout geändert, seit Sie es geöffnet haben, wird das Speichern mit **Jemand hat dieses Layout geändert; laden Sie es neu.** abgelehnt. Ein Layout, das der Server nicht annehmen kann, wird mit seinem ersten Problem abgelehnt. Eine Kasse ohne veröffentlichtes Layout behält die Tasten, die sie aus Ihren Artikeln erzeugt.
+
+An der Kasse wirken die Tasten so, wie Sie sie platziert haben. Der **Ziffernblock** tippt eine Menge im Dezimalzeichen Ihrer Sprache (1,5); die nächste Artikeltaste verkauft diese Menge, und ein gewogener Artikel nimmt sie als Gewicht, statt danach zu fragen. **Menge ×** setzt die getippte Menge stattdessen auf die letzte Zeile. Der **Rechner** rechnet genau, und **Auf die letzte Zeile** macht sein Ergebnis zur Menge der letzten Zeile; einen Preis setzt er nie. Eine **Kategorietaste** öffnet die Seite, die sie nennt.
+
+**Auf eine andere Kasse kopieren** speichert das Layout als Entwurf einer anderen Kasse, um es dort zu veröffentlichen. **Auf die erzeugten Tasten zurücksetzen** entfernt nach Ihrer Bestätigung Layout und Entwurf dieser Kasse: Die Kasse nutzt wieder die Tasten, die sie aus Ihren Artikeln erzeugt. In der Demo zeigt die **Bakery counter** die Bäckerei-Vorlage mit Ziffernblock und Rechner.
+
+**Preis ändern** ändert den Preis der letzten Zeile: Geben Sie den neuen Preis (oder vorher auf dem Ziffernblock) und einen **Grund** ein, den der Beleg neben dem Preis des Artikels festhält. Dafür braucht es das Recht **Preis an der Kasse ändern** (standardmäßig Inhaber und Administratoren); ohne es sagt die Kasse das, und die Zeile bleibt beim Preis des Artikels. **Rabatt auf eine Zeile** zieht einen Prozentsatz vom Artikelpreis der letzten Zeile ab, höchstens **Größter Rabatt an der Kasse** (standardmäßig 0, also kein Rabatt an der Kasse); ein größerer Rabatt wird mit der Grenze abgelehnt. Eine Zeile nimmt einen Rabatt oder einen geänderten Preis, nicht beides. Ein Verkauf, den die Kasse nach dem Offline-Verkauf sendet, behält seinen Preis innerhalb der Offline-Preistoleranz.
+
+**Letzten Beleg nachdrucken** zeigt den Beleg des letzten Verkaufs erneut, gekennzeichnet als **KOPIE 1**, **KOPIE 2** usw. Eine Kopie erhält nie eine neue Belegnummer, und jede gedruckte Kopie wird gezählt.
+
+**Pfandrückgabe** nimmt das Pfand des zuletzt erfassten Artikels zurück (etwa die Flaschen eines Wasserkastens): Geben Sie vorher die Anzahl auf dem Ziffernblock ein, sonst wird eines genommen. Das Pfand wird vom Verkauf abgezogen und steht als **Pfand zurückgenommen** auf dem Beleg; es kommt mit dem Verkauf zurück in den Bestand. Dafür braucht es das Recht **Preis an der Kasse ändern**, offline geht es nicht, ein nach Charge oder Etikett verfolgtes Pfand wird nicht an der Kasse zurückgenommen, und ein Verkauf, dessen Summe nicht über null läge, wird nicht abgeschlossen (zahlen Sie das Pfand dann aus der Kassenlade aus).
 
 <!-- anchor: user.money.till-offline -->
 ### Wenn die Kasse offline ist
@@ -3261,7 +3341,7 @@ Sie kassieren am Tresen mit Karte oder müssen einen Verkauf nachträglich korri
 
 Sie entscheiden, ob ein Tag an einem Artikel eine Charge oder ein einzelnes Stück bezeichnet und was ein Massenlesen zählt.
 
-Mit der Funktion *Tags* hat ein Artikel einen **Tag-Modus**, der an seiner Gruppe steht und beim Artikel bleibt, solange er keinen eigenen Wert hat. Öffnen Sie die Gruppeneinstellungen eines Artikels (**Lager → Artikel**, das Ordnersymbol in seiner Zeile) und lesen Sie **Etikett an diesem Artikel**: Es sagt, woher der Wert kommt (*Von Drinks seit 3. Dez.* oder *Eigener Wert*), lässt dem Artikel einen eigenen Wert geben, und **Wert der Gruppe verwenden** gibt ihn zurück.
+Mit der Funktion *Tags* hat ein Artikel einen **Tag-Modus**, der an seiner Gruppe steht und beim Artikel bleibt, solange er keinen eigenen Wert hat. Öffnen Sie die Gruppeneinstellungen eines Artikels (**Gruppe ändern** auf seiner Seite unter **Lager → Artikel**) und lesen Sie **Etikett an diesem Artikel**: Es sagt, woher der Wert kommt (*Von Drinks seit 3. Dez.* oder *Eigener Wert*), lässt dem Artikel einen eigenen Wert geben, und **Wert der Gruppe verwenden** gibt ihn zurück.
 
 - **Keine Tags.** Der Artikel trägt kein Tag.
 - **Ein Tag pro Charge.** Ein Tag bezeichnet eine Charge oder eine Verpackung: eine Kiste, einen Eimer, einen Karton. Beim Lesen zählt eine Charge, nie ein Stück.
@@ -4114,6 +4194,49 @@ Sie möchten, dass Ihre Rechnungen und Briefe auf dem Papier gedruckt werden, da
 
 **Siehe auch:** [Land](#land)
 
+<!-- anchor: user.workspace.settings.master-data -->
+### Stammdaten
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Stammdaten sind die Listen, mit denen Ihr Unternehmen eingerichtet ist und die seine Auswahlfelder lesen: die Einheiten, die Steuersätze, die Artikel, die Lieferanten und der Rest. **Stammdaten** zeigt jede Art an einem Ort, nach Gruppen. Jede Karte nennt die Art, sagt in einer Zeile, was sie ist und wie viele Einträge sie enthält, und öffnet den Bildschirm, der sie bearbeitet.
+
+**Schritte**
+
+1. Öffnen Sie in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) die **Stammdaten**, oder wählen Sie im Menü unter **Workspace einrichten** die **Stammdaten**.
+2. Tippen Sie in **Suchen**, um nur die Karten zu behalten, deren Name passt.
+3. Tippen Sie auf eine Karte und bearbeiten Sie ihre Einträge auf dem Bildschirm, den sie öffnet.
+
+**Gut zu wissen**
+
+- Sie sehen eine Karte nur, wenn Sie ihren Bildschirm öffnen dürfen: Ihre Funktion ist eingeschaltet und Sie haben ihre Berechtigung.
+- Eine Anzahl, die nicht gelesen werden kann, sagt es, mit **Erneut versuchen**; sie wird nie als 0 angezeigt.
+
+<!-- anchor: user.workspace.master-data.measures -->
+#### Maße und Steuern
+
+**Maßeinheiten** mit ihren Umrechnungen und **Steuersätze**. Die Einheiten sind immer da, ob die Funktion **Maßeinheiten** eingeschaltet ist oder nicht.
+
+<!-- anchor: user.workspace.master-data.catalogue -->
+#### Verkaufskatalog
+
+**Artikel**, **Artikelgruppen** und **Leistungen**: was das Unternehmen lagert und verkauft.
+
+<!-- anchor: user.workspace.master-data.places -->
+#### Lagerorte und Bestand
+
+**Lagerorte**, wo die Waren lagern, und **Kassen**: die Kassen am Tresen, jede mit ihrer Tastenbelegung.
+
+<!-- anchor: user.workspace.master-data.partners -->
+#### Geschäftspartner
+
+**Lieferanten** und **Rechnungskunden**.
+
+<!-- anchor: user.workspace.master-data.organisation -->
+#### Organisation
+
+**Standorte**: die Adressen des Unternehmens und die Ebenen an jeder.
+
 <!-- anchor: user.workspace.settings.units -->
 ### Maßeinheiten
 
@@ -4125,11 +4248,10 @@ Ihre Artikel, Angebote und Rechnungen werden in Einheiten gemessen, und manche E
 
 **Schritte**
 
-1. Schalten Sie **Maßeinheiten** unter **Funktionen** ein (sie ist aus, bis Sie sie verlangen).
-2. Tippen Sie in [Maßeinheiten](https://fdittgen-png.github.io/deskilo/#/settings/units) auf **Neue Einheit**.
-3. Füllen Sie **Einheitencode** (er lässt sich später nicht mehr ändern), **Ihre Bezeichnung der Einheit**, **Sie misst** und **Eine Einheit entspricht** in der Basiseinheit der Messgröße aus: 1000 für ein km in m, 0,001 für ein mm.
-4. Optional tragen Sie **UN/ECE-Code (für E-Rechnungen)** ein, den E-Rechnungen mitführen (KMT für ein km).
-5. Tippen Sie auf **Speichern**.
+1. Tippen Sie in [Maßeinheiten](https://fdittgen-png.github.io/deskilo/#/settings/units), erreichbar über **Stammdaten**, auf **Neue Einheit**.
+2. Füllen Sie **Einheitencode** (er lässt sich später nicht mehr ändern), **Ihre Bezeichnung der Einheit**, **Sie misst** und **Eine Einheit entspricht** in der Basiseinheit der Messgröße aus: 1000 für ein km in m, 0,001 für ein mm.
+3. Optional tragen Sie **UN/ECE-Code (für E-Rechnungen)** ein, den E-Rechnungen mitführen (KMT für ein km).
+4. Tippen Sie auf **Speichern**.
 
 **Gut zu wissen**
 
@@ -4137,6 +4259,7 @@ Ihre Artikel, Angebote und Rechnungen werden in Einheiten gemessen, und manche E
 - Eine Einheit in Verwendung (ein darin gezählter Artikel, eine Lagerbewegung, ein Angebot oder eine Rechnungszeile) behält Größe und Faktor für immer: Eine Korrektur ist eine neue Einheit. Eine Einheit, die niemand verwendet, lässt sich archivieren (**Archivieren**) und wieder anzeigen (**Wieder anzeigen**).
 - Eine Umrechnung ist exakt: 2,5 km sind 2500 m. Zwei Arten von Einheiten rechnen sich nie um, und ein Ergebnis, das sechs Nachkommastellen nicht fassen, wird abgelehnt, nie gerundet.
 - Nur Inhaber und Administratoren mit der Berechtigung, die Einstellungen des Workspace zu ändern, pflegen die Einheiten.
+- Die Einheiten sind immer da. Die Funktion **Maßeinheiten** unter **Funktionen** entscheidet, ob Angebote und Rechnungen Ihre eigenen Einheiten anbieten und ob die Auswahlfelder eines Artikels jede Einheit anbieten; solange sie aus ist, bieten sie nur die üblichen Einheiten an.
 
 **Siehe auch:** [Papier der Dokumente](#papier-der-dokumente)
 

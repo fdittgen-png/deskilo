@@ -9166,8 +9166,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessun documento. Colleghi statuto, guide e bilanci da qualsiasi drive.';
 
   @override
-  String get documentsInvalid =>
-      'Un documento richiede un titolo e un link https://.';
+  String get documentsLinkNotHttps => 'Il link deve iniziare con https://.';
 
   @override
   String get documentsProviderLabel => 'Archiviato su';
@@ -9186,6 +9185,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get documentsTitleLabel => 'Titolo';
+
+  @override
+  String get documentsTitleMissing => 'Dia un titolo al documento.';
 
   @override
   String get documentsUrlHelper =>
@@ -12035,11 +12037,25 @@ class AppLocalizationsIt extends AppLocalizations {
       'Vendere offline, solo in contanti';
 
   @override
+  String get featureCounterReceiptPrinterDesc =>
+      'Stampare lo scontrino su una stampante di scontrini della rete locale (80 o 58 mm) e aprire il cassetto che comanda dopo una vendita in contanti. Ogni cassa imposta la propria stampante. Disattivato, lo scontrino è mostrato e condiviso, non si stampa nulla.';
+
+  @override
+  String get featureCounterReceiptPrinterTitle => 'Stampante di scontrini';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'Una vendita al banco dà uno scontrino immutabile, numerato una sola volta, con il pagamento ricevuto. È offerto solo dove l\'operazione del paese è supportata e dice chiaramente quando non lo è.';
 
   @override
   String get featureCounterReceiptsTitle => 'Scontrini di cassa';
+
+  @override
+  String get featureCounterTillLayoutDesc =>
+      'Organizzi ogni cassa per il Suo mestiere: quali tasti dove, le sue pagine e gli strumenti accanto al carrello come un tastierino numerico, una calcolatrice o un campo di scansione. Parta da un modello, lo pubblichi e una cassa lo adotta alla sessione successiva. Disattivato, ogni cassa mantiene i tasti generati.';
+
+  @override
+  String get featureCounterTillLayoutTitle => 'Layout di cassa';
 
   @override
   String get featureCounterTillSessionsDesc =>
@@ -19045,9 +19061,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get itemGroupAssignNone => 'Nessun gruppo';
 
   @override
-  String get itemGroupAssignOpen => 'Gruppo e impostazioni ereditate';
-
-  @override
   String itemGroupAssignTitle(String item) {
     return 'Gruppo di $item';
   }
@@ -19248,6 +19261,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get itemGroupRoundingNone => 'Nessun arrotondamento';
+
+  @override
+  String get itemGroupSaleFactor =>
+      'Quanto fa una unità dell\'unità di magazzino (vendita)';
+
+  @override
+  String get itemGroupSalePrice => 'Prezzo di una alla vendita';
+
+  @override
+  String get itemGroupSaleUnit => 'Venduto in (unità)';
 
   @override
   String get itemGroupSet => 'Impostato';
@@ -21205,12 +21228,85 @@ class AppLocalizationsIt extends AppLocalizations {
   String get managedProfileTitle => 'Profilo gestito';
 
   @override
+  String masterDataCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count voci',
+      one: '$count voce',
+      zero: 'Nessuna voce',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get masterDataCustomersDesc => 'A chi si fattura';
+
+  @override
+  String get masterDataGroupCatalogue => 'Catalogo';
+
+  @override
+  String get masterDataGroupMeasures => 'Misure e imposte';
+
+  @override
+  String get masterDataGroupPartners => 'Partner commerciali';
+
+  @override
+  String get masterDataGroupPlaces => 'Ubicazioni e magazzino';
+
+  @override
+  String get masterDataIntro =>
+      'Tutti gli elenchi con cui è configurata l’attività, in un unico posto. Tocchi una scheda per aprirne l’editor.';
+
+  @override
+  String get masterDataItemGroupsDesc =>
+      'Impostazioni comuni a un gruppo di articoli';
+
+  @override
+  String get masterDataItemsDesc => 'Ciò che si tiene a magazzino e si vende';
+
+  @override
+  String get masterDataNoMatch =>
+      'Nessun dato anagrafico corrisponde alla ricerca.';
+
+  @override
+  String get masterDataNoUnit => 'Nessuna unità';
+
+  @override
+  String get masterDataNoVat => 'Senza IVA';
+
+  @override
+  String get masterDataPlacesDesc => 'Dove si conservano le merci';
+
+  @override
   String get masterDataSearchHint =>
       'Digiti un nome o un codice, oppure scelga dall\'elenco';
 
   @override
+  String get masterDataServicesDesc => 'I servizi in vendita';
+
+  @override
+  String get masterDataSitesDesc => 'Gli indirizzi e i piani di ciascuno';
+
+  @override
+  String get masterDataSuppliersDesc => 'Da chi si acquista';
+
+  @override
+  String get masterDataTills => 'Casse';
+
+  @override
+  String get masterDataTillsDesc =>
+      'Le casse al banco e la disposizione dei loro tasti';
+
+  @override
   String get masterDataUnknownCode =>
       'Non è una voce valida. Ne scelga una dall\'elenco.';
+
+  @override
+  String get masterDataUnlisted => 'Non è nell\'elenco: sceglierne uno';
+
+  @override
+  String get masterDataVatDesc => 'Le aliquote applicate dai documenti';
 
   @override
   String get mcpApiReference => 'Riferimento API';
@@ -22815,6 +22911,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get measureDimensionMass => 'Massa';
+
+  @override
+  String get measureDimensionPackage => 'Confezione';
 
   @override
   String get measureDimensionTime => 'Tempo';
@@ -25759,6 +25858,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Approvare la rettifica proposta da un inventario.';
 
   @override
+  String get permAllowsConfigureTill =>
+      'Creare, pubblicare, copiare e ripristinare il layout di una cassa: tasti, pagine e strumenti. I cassieri usano il layout pubblicato senza questo diritto.';
+
+  @override
   String get permAllowsCountStock =>
       'Contare le righe di un compito di inventario ciclico senza vedere ciò che il registro contiene: i compiti e il conteggio di ogni riga, nient’altro.';
 
@@ -25854,6 +25957,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Configurare il chiosco e assegnare i badge.';
 
   @override
+  String get permAllowsOverrideTillPrice =>
+      'Vendere una riga di cassa a un prezzo diverso da quello dell\'articolo, con un motivo che lo scontrino conserva. Senza questo diritto, una riga di cassa è venduta al prezzo dell\'articolo.';
+
+  @override
   String get permAllowsPaymentTermsEdit =>
       'Chiedere una modifica delle condizioni di pagamento di un membro; decide la convalida.';
 
@@ -25909,6 +26016,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get permApproveStockAdjustments =>
       'Approvare le rettifiche di magazzino';
+
+  @override
+  String get permConfigureTill => 'Organizzare le casse';
 
   @override
   String get permCountStock => 'Contare il magazzino alla cieca';
@@ -26006,6 +26116,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get permOperateKiosk => 'Operare il chiosco e i badge';
+
+  @override
+  String get permOverrideTillPrice => 'Modificare un prezzo alla cassa';
 
   @override
   String get permPaymentTermsEdit =>
@@ -29551,6 +29664,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'È il primo pagamento della fattura: annulla prima i pagamenti successivi. Nulla è stato modificato.';
 
   @override
+  String get refusalBooksClosedPeriodDated =>
+      'Questa data è compresa in un periodo contabile chiuso: nulla è stato registrato. È possibile una data del periodo aperto; solo il proprietario può riaprire il periodo.';
+
+  @override
   String get refusalChangedMeanwhile =>
       'Nel frattempo è cambiato. Lo riapra per vedere a che punto è.';
 
@@ -32767,6 +32884,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ciò che dichiara sulle regole fiscali di una vendita al banco: nessuna significa che al Suo esercizio non si applica alcun obbligo fiscale di registratore (una Sua dichiarazione, annotata su ogni scontrino); registratore richiesto significa che si applica. Lo scontrino è emesso solo dove l\'operazione del Suo paese è supportata nel caso dichiarato.';
 
   @override
+  String get settingHintCounterLayoutCashierReorder =>
+      'Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo senza cambiare il layout pubblicato.';
+
+  @override
+  String get settingHintCounterLayoutMaxCells =>
+      'Il numero massimo di celle di un layout di cassa, su tutte le pagine e dimensioni. Un layout più grande viene rifiutato al salvataggio.';
+
+  @override
+  String get settingHintCounterMaxDiscount =>
+      'Lo sconto massimo, in percentuale, che un cassiere può applicare a una riga di cassa. 0 significa nessuno sconto alla cassa.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Per quanto tempo dopo la perdita della connessione una vendita in contanti fatta offline è ancora accettata all\'invio. Le vendite successive sono rifiutate ed elencate per il titolare.';
 
@@ -33216,6 +33345,17 @@ class AppLocalizationsIt extends AppLocalizations {
       'Regole fiscali delle vendite al banco';
 
   @override
+  String get settingLabelCounterLayoutCashierReorder =>
+      'I cassieri riordinano i tasti';
+
+  @override
+  String get settingLabelCounterLayoutMaxCells =>
+      'Dimensione del layout di cassa';
+
+  @override
+  String get settingLabelCounterMaxDiscount => 'Sconto massimo alla cassa';
+
+  @override
   String get settingLabelCounterOfflineMaxMinutes =>
       'Durata massima offline (minuti)';
 
@@ -33599,6 +33739,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingUnitCards => 'schede';
+
+  @override
+  String get settingUnitCells => 'celle';
 
   @override
   String get settingUnitCharacters => 'caratteri';
@@ -36130,6 +36273,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get standaloneFactTotal => 'un totale superiore a zero';
 
   @override
+  String get standaloneFactTotalMismatch =>
+      'le righe non corrispondono al totale accettato';
+
+  @override
   String get standaloneFactUnknownSubject => 'il cliente';
 
   @override
@@ -36971,9 +37118,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockEditInventoryUnitChoice => 'Unità di magazzino';
 
   @override
-  String get stockEditItem => 'Impostazioni di magazzino';
-
-  @override
   String stockEditItemTitle(String item) {
     return 'Impostazioni di magazzino di $item';
   }
@@ -37021,6 +37165,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockEditUnitName => 'Unità di confezione';
+
+  @override
+  String get stockEditUnitPrice => 'Prezzo di uno';
+
+  @override
+  String get stockEditUnitPriceHelp =>
+      'Lasciare vuoto: il prezzo dell\'articolo per il fattore.';
 
   @override
   String get stockEditUnitsHint =>
@@ -37150,6 +37301,51 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockItemAddTitle => 'Aggiungi un articolo';
 
   @override
+  String get stockItemAttentionLow => 'Scorta bassa';
+
+  @override
+  String get stockItemAttentionNoPlace => 'Senza ubicazione';
+
+  @override
+  String get stockItemAttentionNoPrice => 'Senza prezzo';
+
+  @override
+  String get stockItemEditDetails => 'Modifica nome, prezzo e IVA';
+
+  @override
+  String get stockItemEditGroup => 'Modifica il gruppo';
+
+  @override
+  String get stockItemEditHome => 'Modifica l’ubicazione abituale';
+
+  @override
+  String get stockItemEditSettings => 'Modifica unità, codici e tracciamento';
+
+  @override
+  String get stockItemEditSuppliers => 'Modifica gli articoli del fornitore';
+
+  @override
+  String get stockItemEditTags => 'Modifica i tag';
+
+  @override
+  String get stockItemEditVariants => 'Modifica le varianti';
+
+  @override
+  String get stockItemFactBarcode => 'Codice a barre';
+
+  @override
+  String get stockItemFactCost => 'Ultimo costo noto';
+
+  @override
+  String get stockItemFactVat => 'IVA';
+
+  @override
+  String get stockItemFilterAll => 'Tutti gli articoli';
+
+  @override
+  String get stockItemFilterNoHome => 'Senza ubicazione abituale';
+
+  @override
   String get stockItemNewBarcode => 'Codice a barre (facoltativo)';
 
   @override
@@ -37182,12 +37378,50 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockItemNewUnit => 'Contato in';
 
   @override
+  String get stockItemNoGroup => 'In nessun gruppo';
+
+  @override
+  String get stockItemNoSuppliers =>
+      'Nessun articolo del fornitore indica ancora questo articolo.';
+
+  @override
+  String get stockItemNoVariants => 'Questo articolo non ha varianti.';
+
+  @override
+  String get stockItemNothingOnHand => 'Non ce n’è nulla in magazzino.';
+
+  @override
+  String get stockItemPlacesTitle => 'Dove si trova';
+
+  @override
+  String get stockItemSectionGroupTags => 'Gruppo e tag';
+
+  @override
+  String get stockItemSectionOverview => 'Panoramica';
+
+  @override
+  String get stockItemSectionStock => 'Magazzino';
+
+  @override
+  String get stockItemSectionSuppliers => 'Articoli del fornitore';
+
+  @override
+  String get stockItemSectionVariants => 'Varianti';
+
+  @override
+  String get stockItemSeeWhere => 'Tutte le ubicazioni';
+
+  @override
   String get stockItemsEmpty =>
       'Nessun articolo per ora. Un articolo è un servizio che tiene in magazzino: scelga Aggiungi un articolo.';
 
   @override
   String get stockItemsIntro =>
       'Gli articoli che l\'azienda tiene e vende: le impostazioni, le varianti e gli articoli del fornitore di ciascuno.';
+
+  @override
+  String get stockItemsSelectHint =>
+      'Selezioni un articolo per agire su di esso';
 
   @override
   String get stockItemsTitle => 'Articoli';
@@ -37539,6 +37773,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Due varianti hanno la stessa combinazione.';
 
   @override
+  String get stockReasonConversionSameUnit =>
+      'Una conversione richiede due unità diverse.';
+
+  @override
+  String get stockReasonConversionUnknown =>
+      'Questa conversione non è definita.';
+
+  @override
   String get stockReasonCostInvalid =>
       'Questo costo non è valido: un totale in unità minori e un tasso solo per un’altra valuta.';
 
@@ -37720,6 +37962,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non si può collocare più di quanto è arrivato.';
 
   @override
+  String get stockReasonPackageUnit =>
+      'Una confezione non ha una conversione generale: il fattore si imposta sull\'articolo.';
+
+  @override
   String get stockReasonParentInactive =>
       'L’ubicazione che la contiene non è più in uso.';
 
@@ -37876,11 +38122,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockRegistryAllPlaces => 'Tutte le ubicazioni';
 
   @override
-  String stockRegistryCost(String amount) {
-    return 'costo $amount';
-  }
-
-  @override
   String get stockRegistryCostHidden => 'costo non mostrato';
 
   @override
@@ -37913,21 +38154,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockRegistryNoHome => 'nessuna ubicazione abituale';
 
   @override
-  String get stockRegistryNoHomeFilter =>
-      'Solo articoli senza ubicazione abituale';
-
-  @override
   String stockRegistryOnHand(String quantity) {
     return '$quantity disponibili';
   }
 
   @override
   String get stockRegistryPlaceFilter => 'Ubicazione abituale';
-
-  @override
-  String stockRegistryPrice(String amount) {
-    return 'prezzo $amount';
-  }
 
   @override
   String get stockRegistrySearch =>
@@ -38720,9 +38952,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockVariantsAdd => 'Aggiungere una variante';
-
-  @override
-  String get stockVariantsEdit => 'Varianti';
 
   @override
   String get stockVariantsHint =>
@@ -41387,6 +41616,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String tillDayDepositsReturned(String amount) {
+    return 'Vuoti resi: $amount';
+  }
+
+  @override
   String tillDayDifferences(String amount) {
     return 'Differenza totale dei cassetti: $amount';
   }
@@ -41456,6 +41690,10 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get tillDayReportNotPrinted =>
+      'Il rapporto del giorno non è stato stampato. Verifichi la stampante e riprovi.';
+
+  @override
   String tillDayReportTitle(String number) {
     return 'Rapporto della giornata $number';
   }
@@ -41510,6 +41748,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String tillDepositMissing(String name) {
     return 'La cauzione di $name non è in vendita al banco. Non è stato aggiunto nulla.';
   }
+
+  @override
+  String get tillDiscountBeyond =>
+      'Questo sconto supera quanto l\'azienda consente alla cassa.';
+
+  @override
+  String get tillDiscountField => 'Sconto (%)';
+
+  @override
+  String get tillDiscountInvalid =>
+      'Uno sconto è una percentuale del prezzo dell\'articolo, su una riga senza prezzo modificato.';
 
   @override
   String get tillDrawerAddTill => 'Aggiungere una cassa';
@@ -41706,6 +41955,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'I contanti con cui inizia il cassetto, contati ora.';
 
   @override
+  String get tillDrawerKickFailed =>
+      'Il cassetto non si è aperto. Verifichi la stampante a cui è collegato.';
+
+  @override
   String get tillDrawerLoadFailed => 'Non è stato possibile leggere le casse.';
 
   @override
@@ -41723,6 +41976,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessuna cassa è ancora stata creata. La aggiunge chi gestisce le sedi.';
 
   @override
+  String get tillDrawerNotSet =>
+      'Nessun cassetto è impostato sulla stampante di questa cassa.';
+
+  @override
   String get tillDrawerOpenAction => 'Aprire la cassa';
 
   @override
@@ -41736,6 +41993,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String tillDrawerOpenTitle(String till) {
     return 'Aprire $till';
   }
+
+  @override
+  String get tillDrawerOpened => 'Il cassetto è aperto.';
 
   @override
   String get tillDrawerRefusalAboveLimit =>
@@ -41810,6 +42070,200 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillKeysTitle => 'Articoli da battere';
 
   @override
+  String get tillLayoutAdd => 'Aggiungere un elemento';
+
+  @override
+  String get tillLayoutCalcPush => 'Sull\'ultima riga';
+
+  @override
+  String get tillLayoutChooseFunction => 'Quale funzione?';
+
+  @override
+  String get tillLayoutChooseItem => 'Quale articolo?';
+
+  @override
+  String get tillLayoutChoosePage => 'Quale pagina apre?';
+
+  @override
+  String tillLayoutCopied(String till) {
+    return 'Copiato come bozza di $till. Lo pubblichi lì.';
+  }
+
+  @override
+  String get tillLayoutCopy => 'Copiare su un\'altra cassa';
+
+  @override
+  String get tillLayoutCopyTo => 'Copiare su quale cassa?';
+
+  @override
+  String get tillLayoutEdit => 'Organizzare questa cassa';
+
+  @override
+  String get tillLayoutFnCard => 'Incassare con carta';
+
+  @override
+  String get tillLayoutFnDeposit => 'Reso cauzione';
+
+  @override
+  String get tillLayoutFnDiscount => 'Sconto su una riga';
+
+  @override
+  String get tillLayoutFnDrawer => 'Aprire il cassetto';
+
+  @override
+  String get tillLayoutFnPrice => 'Cambiare un prezzo';
+
+  @override
+  String get tillLayoutFnQuantity => 'Quantità ×';
+
+  @override
+  String get tillLayoutFnReprint => 'Ristampare l\'ultimo scontrino';
+
+  @override
+  String get tillLayoutFnVoid => 'Annullare una riga';
+
+  @override
+  String get tillLayoutGone => 'Non più in vendita';
+
+  @override
+  String tillLayoutInvalid(String reason) {
+    return 'Questo layout non può essere salvato: $reason';
+  }
+
+  @override
+  String get tillLayoutKindCalculator => 'Calcolatrice';
+
+  @override
+  String get tillLayoutKindCashNotes => 'Banconote suggerite';
+
+  @override
+  String get tillLayoutKindCategory => 'Tasto categoria';
+
+  @override
+  String get tillLayoutKindCustomer => 'Cliente e nota';
+
+  @override
+  String get tillLayoutKindFunction => 'Tasto funzione';
+
+  @override
+  String get tillLayoutKindItem => 'Tasto articolo';
+
+  @override
+  String get tillLayoutKindKeypad => 'Tastierino numerico';
+
+  @override
+  String get tillLayoutKindPasses => 'Abbonamenti dello studio';
+
+  @override
+  String get tillLayoutKindTotal => 'Totale e resto';
+
+  @override
+  String get tillLayoutKindUnknown => 'Un elemento che questa app non conosce';
+
+  @override
+  String get tillLayoutNoRoom =>
+      'Non c\'è posto libero per questo elemento su questa griglia.';
+
+  @override
+  String get tillLayoutPageDesk => 'Banco';
+
+  @override
+  String get tillLayoutPageDrinks => 'Bevande';
+
+  @override
+  String get tillLayoutPageFood => 'Cibo';
+
+  @override
+  String get tillLayoutPageSale => 'Vendita';
+
+  @override
+  String get tillLayoutPublish => 'Pubblicare sulla cassa';
+
+  @override
+  String get tillLayoutPublished =>
+      'Pubblicato. La cassa lo adotta alla sessione successiva.';
+
+  @override
+  String get tillLayoutReload => 'Ricaricare';
+
+  @override
+  String get tillLayoutRemoveCell => 'Rimuovere questo elemento';
+
+  @override
+  String get tillLayoutReset => 'Tornare ai tasti generati';
+
+  @override
+  String get tillLayoutResetConfirm =>
+      'Questa cassa torna ai tasti che crea dai Suoi articoli. Il suo layout e la sua bozza vengono rimossi.';
+
+  @override
+  String get tillLayoutResetDone =>
+      'Questa cassa usa di nuovo i tasti generati.';
+
+  @override
+  String get tillLayoutSizeDesk => 'Larghezza desktop';
+
+  @override
+  String get tillLayoutSizePhone => 'Larghezza telefono';
+
+  @override
+  String get tillLayoutSizeTablet => 'Larghezza tablet';
+
+  @override
+  String get tillLayoutStale =>
+      'Qualcuno ha modificato questo layout; lo ricarichi.';
+
+  @override
+  String get tillLayoutStartFrom => 'Partire da un modello';
+
+  @override
+  String get tillLayoutStepDown => 'Sposta in basso';
+
+  @override
+  String get tillLayoutStepLeft => 'Sposta a sinistra';
+
+  @override
+  String get tillLayoutStepNarrower => 'Una colonna più stretta';
+
+  @override
+  String get tillLayoutStepRight => 'Sposta a destra';
+
+  @override
+  String get tillLayoutStepShorter => 'Una riga più bassa';
+
+  @override
+  String get tillLayoutStepTaller => 'Una riga più alta';
+
+  @override
+  String get tillLayoutStepUp => 'Sposta in alto';
+
+  @override
+  String get tillLayoutStepWider => 'Una colonna più larga';
+
+  @override
+  String get tillLayoutTemplateBakery =>
+      'Panetteria e merce pesata: un tastierino accanto a tasti grandi';
+
+  @override
+  String get tillLayoutTemplateCafe =>
+      'Caffè e bar: pagine per categoria, senza campo di scansione';
+
+  @override
+  String get tillLayoutTemplateHardware =>
+      'Ferramenta e catalogo: prima campo di scansione e tastierino';
+
+  @override
+  String get tillLayoutTemplateRetail =>
+      'Negozio: campo di scansione, carrello e tasti di pagamento';
+
+  @override
+  String get tillLayoutTemplateStudio =>
+      'Reception dello studio: abbonamenti e sessioni';
+
+  @override
+  String get tillLayoutTitle => 'Layout della cassa';
+
+  @override
   String get tillLeaveBody =>
       'La vendita è stata inviata e la risposta non è arrivata. Uscendo resta in attesa: riapra la cassa e la confermi. Non la registri di nuovo.';
 
@@ -41823,10 +42277,46 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillLeaveTitle => 'La vendita non è confermata';
 
   @override
+  String get tillLotChoose => 'Scegliere il lotto';
+
+  @override
+  String tillLotExpired(String date) {
+    return 'Scaduto ($date): non si vende';
+  }
+
+  @override
+  String tillLotExpires(String date) {
+    return 'Da consumare entro il $date';
+  }
+
+  @override
+  String get tillLotFirstToExpire =>
+      'Il primo a scadere (scelto dal magazzino)';
+
+  @override
+  String tillLotLine(String code) {
+    return 'Lotto $code';
+  }
+
+  @override
+  String tillLotNone(String item) {
+    return '$item non ha un lotto da scegliere: si vende così com\'è.';
+  }
+
+  @override
+  String tillLotOnHand(String quantity, String unit) {
+    return '$quantity $unit disponibili';
+  }
+
+  @override
   String get tillNextCustomer => 'Cliente successivo';
 
   @override
   String get tillNotForCounter => 'Questo articolo non è in vendita al banco.';
+
+  @override
+  String get tillNotPrinted =>
+      'Scontrino non stampato — la vendita è completa. Stampi di nuovo, o mostri lo scontrino per condividerlo.';
 
   @override
   String tillNotReady(String operation) {
@@ -41836,6 +42326,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get tillNotReadyHint =>
       'Non viene numerato né incassato nulla finché l\'operazione del paese non è supportata.';
+
+  @override
+  String get tillNothingToReprint => 'Ancora nessuna vendita da ristampare.';
 
   @override
   String get tillOfflineBanner =>
@@ -41981,7 +42474,103 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get tillPriceField => 'Nuovo prezzo';
+
+  @override
+  String get tillPriceNotAllowed =>
+      'Non può modificare un prezzo alla cassa. La riga è venduta al prezzo dell\'articolo.';
+
+  @override
+  String get tillPriceReason => 'Motivo';
+
+  @override
+  String get tillPriceReasonHint => 'Conservato sullo scontrino.';
+
+  @override
+  String get tillPriceReasonMissing =>
+      'Un prezzo modificato ha bisogno di un motivo.';
+
+  @override
+  String get tillPriceUnreadable => 'Digiti un numero, ad esempio 4,50.';
+
+  @override
   String get tillPricing => 'Calcolo del carrello…';
+
+  @override
+  String get tillPrintCopy => 'Stampa una copia';
+
+  @override
+  String get tillPrintReceipt => 'Stampa lo scontrino';
+
+  @override
+  String get tillPrintTotal => 'TOTALE';
+
+  @override
+  String get tillPrinted => 'Scontrino stampato.';
+
+  @override
+  String get tillPrinterCodePage => 'Tabella dei caratteri';
+
+  @override
+  String get tillPrinterCodePage437 => 'PC437 (senza il simbolo dell\'euro)';
+
+  @override
+  String get tillPrinterCodePage858 => 'PC858 (con il simbolo dell\'euro)';
+
+  @override
+  String get tillPrinterDrawer => 'Un cassetto è collegato alla stampante';
+
+  @override
+  String get tillPrinterHost => 'Indirizzo della stampante';
+
+  @override
+  String get tillPrinterHostHint =>
+      'Un nome o un indirizzo di questa rete, ad esempio 192.168.1.50';
+
+  @override
+  String get tillPrinterHostRequired =>
+      'Inserisca l\'indirizzo della stampante.';
+
+  @override
+  String get tillPrinterMode => 'Stampa dopo una vendita';
+
+  @override
+  String get tillPrinterModeAlways => 'Sempre';
+
+  @override
+  String get tillPrinterModeAsk => 'Proporlo';
+
+  @override
+  String get tillPrinterModeNever => 'Solo su richiesta';
+
+  @override
+  String get tillPrinterPaper => 'Larghezza della carta';
+
+  @override
+  String tillPrinterPaperWidth(String mm) {
+    return '$mm mm';
+  }
+
+  @override
+  String get tillPrinterPort => 'Porta';
+
+  @override
+  String get tillPrinterPortInvalid => 'La porta è un numero da 1 a 65535.';
+
+  @override
+  String get tillPrinterSet => 'Configura la stampante di scontrini';
+
+  @override
+  String get tillPrinterTest => 'Stampa di prova';
+
+  @override
+  String get tillPrinterTestSent => 'Pagina di prova inviata.';
+
+  @override
+  String get tillPrinterTitle => 'Stampante di scontrini';
+
+  @override
+  String get tillPrinting => 'Stampa in corso…';
 
   @override
   String get tillQuantityHint =>
@@ -42050,6 +42639,17 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get tillReceiptCash => 'Contanti';
+
+  @override
+  String get tillReceiptChange => 'Resto';
+
+  @override
+  String tillReceiptCopy(String copy) {
+    return 'COPIA $copy — non è un nuovo scontrino';
+  }
+
+  @override
   String tillReceiptCorrects(String number) {
     return 'Corregge lo scontrino $number';
   }
@@ -42089,9 +42689,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillReceiptShow => 'Mostrare lo scontrino';
 
   @override
+  String get tillReceiptTax => 'di cui imposta';
+
+  @override
   String tillReceiptTaxLine(String percent, String tax, String net) {
     return 'IVA $percent: $tax su $net';
   }
+
+  @override
+  String get tillReceiptThanks => 'Grazie';
 
   @override
   String tillReceiptTotal(String amount) {
@@ -42109,6 +42715,36 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tillRetry => 'Riprova';
+
+  @override
+  String get tillReturnNoDeposit =>
+      'L\'ultimo articolo non ha un vuoto da riprendere.';
+
+  @override
+  String get tillReturnNotAllowed => 'Non può riprendere un vuoto alla cassa.';
+
+  @override
+  String get tillReturnNotDeposit =>
+      'Questo articolo non è il vuoto di alcun articolo venduto.';
+
+  @override
+  String get tillReturnOffline =>
+      'Il vuoto non viene ripreso mentre la cassa è offline.';
+
+  @override
+  String get tillReturnTracked =>
+      'Questo vuoto è tracciato per lotto o etichetta: non viene ripreso alla cassa.';
+
+  @override
+  String tillReturnedLabel(String item) {
+    return 'Vuoto reso: $item';
+  }
+
+  @override
+  String get tillReturnedLine => 'Vuoto reso';
+
+  @override
+  String get tillRingUpFirst => 'Registri prima un articolo.';
 
   @override
   String get tillScanLabel => 'Scansiona un codice';
@@ -42577,6 +43213,44 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get unblockAction => 'Sblocca';
+
+  @override
+  String get unitConversionDelete => 'Elimina';
+
+  @override
+  String get unitConversionEdit => 'Modifica una conversione';
+
+  @override
+  String get unitConversionFactor => 'Quante';
+
+  @override
+  String unitConversionFactorHelp(String from, String to) {
+    return 'Quante $to fanno una $from';
+  }
+
+  @override
+  String get unitConversionFrom => 'Da';
+
+  @override
+  String unitConversionLine(String from, String factor, String to) {
+    return '1 $from = $factor $to';
+  }
+
+  @override
+  String get unitConversionNew => 'Aggiungi una conversione';
+
+  @override
+  String get unitConversionTo => 'A';
+
+  @override
+  String get unitConversionsEmpty => 'Nessuna conversione è ancora definita.';
+
+  @override
+  String get unitConversionsIntro =>
+      'Una conversione dice quante unità di una fanno un\'altra. Vale nei due sensi, in un solo passaggio. La conversione propria di un articolo (un cartone da 12) prevale su queste, e una confezione qui non ne ha.';
+
+  @override
+  String get unitConversionsTitle => 'Conversioni';
 
   @override
   String get unknownWireInvoiceKind =>

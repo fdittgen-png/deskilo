@@ -1,0 +1,10 @@
+{
+  "stockEditUnitPrice": "Price of one",
+  "@stockEditUnitPrice": {
+    "description": "#4479 the price of one of an item's units"
+  },
+  "stockEditUnitPriceHelp": "Leave empty to use the item's price times the factor.",
+  "@stockEditUnitPriceHelp": {
+    "description": "#4479 what an empty unit price means"
+  }
+}

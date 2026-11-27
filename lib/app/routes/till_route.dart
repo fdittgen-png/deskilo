@@ -6,10 +6,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/navigation/routes.dart';
+import '../../core/ui/loading_view.dart';
 import '../../features/money/domain/counter_till.dart';
 import '../../features/money/domain/service_item.dart';
 import '../../features/money/presentation/till_drawer/till_day_screen.dart';
 import '../../features/money/presentation/till_drawer/till_drawer_screen.dart';
+import '../../features/money/presentation/till_layout/till_layout_screen.dart';
 import '../../features/money/presentation/till_screen.dart';
 import '../../features/money/providers/money_providers.dart' show servicesProvider;
 import '../../features/stock/domain/stock_code_resolver.dart';
@@ -73,6 +76,25 @@ class _TillDrawerRoute extends ConsumerWidget {
   }
 }
 
+/// The till id and the till's name in the layout editor's address ([Routes.tillLayoutOf]).
+const _tillParam = 'tillId';
+const _nameQuery = 'name';
+
+/// #4448 — the layout editor: the open business and the till named in the address.
+class _TillLayoutRoute extends ConsumerWidget {
+  const _TillLayoutRoute({required this.tillId, required this.tillName});
+
+  final String tillId;
+  final String tillName;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final workspace = ref.watch(currentWorkspaceProvider).value;
+    if (workspace == null) return const LoadingView();
+    return TillLayoutScreen(workspaceId: workspace.id, tillId: tillId, tillName: tillName);
+  }
+}
+
 /// #4367 — the day close: the open business and its currency; the route is open to whoever may see the finances.
 class _TillDayRoute extends ConsumerWidget {
   const _TillDayRoute();
@@ -117,6 +139,14 @@ List<RouteBase> tillRoutes(RouteEnv env) => [
         const RouteAccess(features: [WorkspaceFeature.counterTillSessions], to: '/till'),
       ),
       builder: (context, state) => const _TillDrawerRoute(),
+    ),
+    // #4448 — the layout editor of one till: who may lay out the tills, where till layouts are on.
+    GoRoute(
+      path: Routes.tillLayout,
+      redirect: env.guard(
+        const RouteAccess(features: [WorkspaceFeature.counterTillLayout], permission: WorkspacePermission.configureTill, to: '/till/drawer'),
+      ),
+      builder: (context, state) => _TillLayoutRoute(tillId: state.pathParameters[_tillParam] ?? '', tillName: state.uri.queryParameters[_nameQuery] ?? ''),
     ),
     // #4367 — the day close: the finances close the business day and read its report.
     GoRoute(

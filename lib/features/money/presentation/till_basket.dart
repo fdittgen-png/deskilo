@@ -16,8 +16,11 @@ import '../domain/till_offline.dart';
 import 'till_card_panel.dart';
 import 'till_offline_mode.dart';
 import 'till_offline_panel.dart';
+import 'till_print_panel.dart';
 import 'till_session.dart';
 import 'till_text.dart';
+
+export 'till_lot_choice.dart' show chooseTillLot;
 
 class TillBasket extends StatelessWidget {
   const TillBasket({
@@ -35,6 +38,7 @@ class TillBasket extends StatelessWidget {
     this.onReceipt,
     this.onCard,
     this.onCardAnswer,
+    this.onLot,
   });
 
   final TillState state;
@@ -57,6 +61,9 @@ class TillBasket extends StatelessWidget {
 
   /// #4185 -- records the terminal's answer to the card asked: `accepted`, `refused` or `unknown`.
   final void Function(String outcome)? onCardAnswer;
+
+  /// #4366 -- chooses the lot line [index] is sold from; null where the till reads no lots.
+  final void Function(int index)? onLot;
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +95,7 @@ class TillBasket extends StatelessWidget {
                     money: money,
                     onQuantity: sold == null && !state.unconfirmed ? () => onQuantity(i) : null,
                     onRemove: sold == null && !state.unconfirmed ? () => onRemove(i) : null,
+                    onLot: sold == null && !state.unconfirmed && onLot != null && state.lines[i].pieces.isEmpty ? () => onLot!(i) : null,
                   ),
             ],
           ),
@@ -111,6 +119,9 @@ class TillBasket extends StatelessWidget {
                     onNext: state.busy ? null : onNext,
                     // a sale recorded offline has no frozen document until the server has received it
                     onReceipt: onReceipt == null || offline.sale != null ? null : () => onReceipt!(sold.receiptId),
+                    print: offline.sale != null || state.draft == null
+                        ? null
+                        : TillPrintPanel(sold: sold, draft: state.draft!, lines: state.lines, changeMinor: state.change ?? 0, cash: state.soldCash),
                   )
                 : state.unconfirmed
                 ? _Unconfirmed(state: state, onConfirm: onConfirm)
@@ -120,7 +131,7 @@ class TillBasket extends StatelessWidget {
 }
 
 class _Line extends StatelessWidget {
-  const _Line({required this.line, required this.priced, required this.money, required this.onQuantity, required this.onRemove, this.tracks = const []});
+  const _Line({required this.line, required this.priced, required this.money, required this.onQuantity, required this.onRemove, this.onLot, this.tracks = const []});
 
   final TillLine line;
   final TillPricedLine? priced;
@@ -131,6 +142,9 @@ class _Line extends StatelessWidget {
   final VoidCallback? onQuantity;
   final VoidCallback? onRemove;
 
+  /// #4366 -- chooses the lot the line is sold from; null where the line cannot change (sold, or named pieces).
+  final VoidCallback? onLot;
+
   /// The quantity and unit, what the line was confirmed for (age) and what it is (a deposit), and the track IDs once sold.
   Widget _subtitle(AppLocalizations l10n) {
     final text = Text(
@@ -138,6 +152,8 @@ class _Line extends StatelessWidget {
         '${line.quantity} ${line.unit}'.trim(),
         if (line.ageConfirmed != null) l10n.tillAgeConfirmedLine('${line.ageConfirmed}'),
         if (line.depositFor != null) l10n.tillDepositLine,
+        if (line.returned) l10n.tillReturnedLine,
+        if (line.lot case final lot?) l10n.tillLotLine(lot.code),
       ].join(' · '),
     );
     if (tracks.isEmpty) return text;
@@ -159,6 +175,8 @@ class _Line extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (priced != null) Text(money.formatMinor(priced!.grossMinor)),
+          if (onLot != null)
+            IconButton(key: ValueKey('till-lot-${line.itemId}'), tooltip: l10n.tillLotChoose, icon: const Icon(Icons.inventory_2_outlined), onPressed: onLot),
           IconButton(
             key: ValueKey('till-remove-${line.itemId}'),
             tooltip: l10n.tillRemoveLine(line.name),
@@ -260,7 +278,7 @@ class _Footer extends StatelessWidget {
 }
 
 class _Sold extends StatelessWidget {
-  const _Sold({required this.sold, required this.change, required this.money, required this.offlineSale, required this.onNext, this.onReceipt});
+  const _Sold({required this.sold, required this.change, required this.money, required this.offlineSale, required this.onNext, this.onReceipt, this.print});
 
   final TillSold sold;
 
@@ -270,6 +288,9 @@ class _Sold extends StatelessWidget {
   final MoneyFormat money;
   final VoidCallback? onNext;
   final VoidCallback? onReceipt;
+
+  /// #4368 -- the receipt on the till's printer, and the drawer; null for a sale recorded offline (no number yet).
+  final Widget? print;
 
   @override
   Widget build(BuildContext context) {
@@ -296,6 +317,7 @@ class _Sold extends StatelessWidget {
             onPressed: onReceipt,
             label: Text(l10n.tillReceiptShow),
           ),
+        ?print,
         const FormGap(),
         FilledButton(
           key: const ValueKey('till-next'),

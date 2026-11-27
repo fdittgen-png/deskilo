@@ -1,192 +1,43 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #1884 A — the workspace feature keys the recorder accepts as a feature
-// switch's target. Kept here, apart from the registry, because it is a
-// list the workspace registry grows; the feature-switch journey test pins
-// it equal to WorkspaceFeature.values.
+// #1884 A — the workspace feature keys the recorder accepts as a feature switch's target. #4408 — read from the
+// registry itself, so a new flag is a target the moment it exists (it was a hand copy pinned equal to the enum). The
+// recorder's action registry is a compile-time constant, so the set is one too: it reads the enum when it is asked.
+import 'dart:collection';
 
-/// #1884 A — the workspace feature keys a feature switch may name. Public
-/// product identifiers (workspace_feature.dart), pinned equal to the
-/// enum by the coverage test.
-const Set<String> workspaceFeatureKeys = {
-  'calendarTab',
-  'eventsTab',
-  'moneyTab',
-  'services',
-  'accessorySupplements',
-  'onlinePayments',
-  'pdfExport',
-  'seriesBooking',
-  'bookForOthers',
-  'pushNotifications',
-  'adminSeatBlocking',
-  'levelBooking',
-  'adminLevelAssign',
-  'kioskMode',
-  'nfcBadges',
-  'membersDirectory',
-  'whatsappIntegration',
-  'spaceQrCodes',
-  'coOwner',
-  'invoicing',
-  'adminInvoicing',
-  'autoCheckInOut',
-  'dataExport',
-  'workingHours',
-  'invoicePdfTemplate',
-  'invoiceAddressWindow',
-  'memberNotifications',
-  'documents',
-  'dunning',
-  'memberReports',
-  'deletionRequests',
-  'roleManagement',
-  'vatManagement',
-  'vatDeclarations',
-  'einvoiceCustomerDelivery',
-  'planObjectDelete',
-  'planDecor',
-  'mtdSubmission',
-  'guestPasses',
-  'placeBooking',
-  'reminderEmail',
-  'invoiceEmail',
-  'standaloneInvoicing',
-  'kioskEnrolment',
-  'quickSearch',
-  'stockManagement',
-  'stockLots',
-  'stockReceiving',
-  'stockTakeOut',
-  'organisation',
-  'billingCustomers',
-  'customerQuotes',
-  'serviceFulfilment',
-  'stockReorder',
-  'stockReturns',
-  'stockCounts',
-  'stockCycleCounts',
-  'stockItemGroups',
-  'stockTags',
-  'stockScanning',
-  'counterReceipts',
-  'counterTillSessions',
-  'stockTagReads',
-  'stockExpiryReport',
-  'stockHandlingUnits',
-  'counterOfflineCash',
-  'unitsOfMeasure',
-  'notificationGrouping',
-  'bookingPolicies',
-  'nfcSeatTags',
-  'qrBadges',
-  'kioskMemberPhotos',
-  'formHelpHints',
-  'uiAnimations',
-  'planMemberPhotos',
-  'badgeSignIn',
-  'regionalFormats',
-  'calendarHub',
-  'dataAccessLog',
-  'memberDataExport',
-  'financeFaces',
-  'paymentReminders',
-  'supplyExpenses',
-  'validationScopes',
-  'validationChain',
-  'richMessageRefs',
-  'calendarValidations',
-  'usageRecords',
-  'reportDesignExchange',
-  'reportLayouts',
-  'personalInfo',
-  'managedProfiles',
-  'managedProfileAccess',
-  'numberSequences',
-  'workspaceStatus',
-  'expenseRepartitionWizard',
-  'multiSite',
-  'vatGroups',
-  'vatRateHistory',
-  'vatCounterparty',
-  'environmentPairs',
-  'deployments',
-  'seatDayTimeline',
-  'memberPaymentTerms',
-  'reportTexts',
-  'usageReport',
-  'vatReport',
-  'letterStandard',
-  'priceNegotiations',
-  'scheduledExpenses',
-  'uniqueMonograms',
-  'messageGestures',
-  'subscriptionInvoices',
-  'usageInvoices',
-  'invoiceSettlement',
-  'invoiceJourney',
-  'bookingGate',
-  'calendarViews',
-  'messagesHub',
-  'reportDesigner',
-  'memberPage',
-  'invoicingWizard',
-  'expenseRepartition',
-  'settlementFold',
-  'configurationTransfer',
-  'navigationStyle',
-  'demoMode',
-  'instanceWizard',
-  'memberOrigin',
-  'memberEnvironments',
-  'guestParticipation',
-  'workspaceLibrary',
-  'singleRoomLevelNames',
-  'publicHolidays',
-  'workspaceVocabulary',
-  'carnets',
-  'workspaceBranding',
-  'customRoles',
-  'customFields',
-  'decisionSurface',
-  'recordingPrivacy',
-  'memberAccountMenu',
-  'mcpAccess',
-  'calendarFileExport',
-  'memberGettingStarted',
-  'placeFeedback',
-  'publicListings',
-  'spaceInquiries',
-  'messageForwarding',
-  'captureProtection',
-  'holidayImport',
-  'capacityKpi',
-  'accountingBook',
-  'roleAssignment',
-  'taskRecorder',
-  'messageMentions',
-  'supplyClassification',
-  'viesVerification',
-  'recapitulativeStatement',
-  'inputVat',
-  'configurableSettings',
-  'salesTax',
-  'meetingRooms',
-  'parking',
-  'webMcp',
-  'purchases',
-  'premisesLease',
-  'assetRegister',
-  'externalRooms',
-  'accountingPeriods',
-  'biReportDesigner',
-  'purchaseAnalytics',
-  'workspaceOverview',
-  'setupGuide',
-  'dataReport',
-  'personalShell',
-  'foreignCurrencyPurchases',
-  'purchaseOrders',
-  'accountingConnectors',
-  'bankImport',
-};
+import '../../workspace/domain/workspace_feature.dart';
+
+/// #1884 A — the workspace feature keys a feature switch may name: the public product identifiers of
+/// [WorkspaceFeature], as `workspaces.feature_flags` stores them.
+const Set<String> workspaceFeatureKeys = _FeatureKeys();
+
+/// The feature whose key is [key], or null when no feature has it.
+WorkspaceFeature? workspaceFeatureOfKey(String key) => WorkspaceFeature.values.where((f) => f.dbKey == key).firstOrNull;
+
+/// Every [WorkspaceFeature]'s key, unmodifiable.
+class _FeatureKeys extends SetBase<String> {
+  const _FeatureKeys();
+
+  Set<String> get _keys => {for (final f in WorkspaceFeature.values) f.dbKey};
+
+  @override
+  bool contains(Object? element) => element is String && WorkspaceFeature.values.any((f) => f.dbKey == element);
+
+  @override
+  Iterator<String> get iterator => _keys.iterator;
+
+  @override
+  int get length => WorkspaceFeature.values.length;
+
+  @override
+  String? lookup(Object? element) => contains(element) ? element as String : null;
+
+  @override
+  Set<String> toSet() => _keys;
+
+  @override
+  bool add(String value) => throw UnsupportedError('the feature keys are the registry: they are not added to');
+
+  @override
+  bool remove(Object? value) => throw UnsupportedError('the feature keys are the registry: they are not removed from');
+}

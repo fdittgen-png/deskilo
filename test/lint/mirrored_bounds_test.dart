@@ -37,6 +37,11 @@ const _service = 'lib/features/money/domain/service_item.dart';
 const _drawer = 'lib/features/money/domain/till_drawer_rules.dart';
 
 const _mirrors = <Mirror>[
+  // #4448 -- the till layout's bounds, the same in the app's validation and the server's (0959).
+  Mirror('tillLayoutMaxGridSide (till_layout_max_grid_side())', 'lib/features/money/domain/till_layout.dart', 'tillLayoutMaxGridSide',
+      r'function public\.till_layout_max_grid_side\(\)[^$]*\$fn\$\s*select\s+(\d+)\s*\$fn\$', migration: '0959'),
+  Mirror('tillLayoutMaxBytes (till_layout_max_bytes())', 'lib/features/money/domain/till_layout.dart', 'tillLayoutMaxBytes',
+      r'function public\.till_layout_max_bytes\(\)[^$]*\$fn\$\s*select\s+(\d+)\s*\$fn\$', migration: '0959'),
   Mirror('MemberNoteRules.maxLength (0089)', 'lib/features/workspace/domain/member_note.dart', 'maxLength',
       r'length\(btrim\(body\)\) between 1 and (\d+)', migration: '0089'),
   Mirror('StatusTextRules.maxLength (0029)', 'lib/features/profile/domain/profile.dart', 'maxLength',

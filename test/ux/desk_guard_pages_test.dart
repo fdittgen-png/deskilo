@@ -18,7 +18,7 @@ import 'walked_routes.dart';
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 103;
+const _guardedWorkspaceRoutes = 105;
 
 void main() {
   test('the guarded workspace routes only rise', () {

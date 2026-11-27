@@ -163,5 +163,130 @@
   "tillNotForCounter": "Este artículo no está a la venta en el mostrador.",
   "@tillNotForCounter": {
     "description": "#4366 the till"
-  }
+  },
+  "tillPrintReceipt": "Imprimir el ticket",
+  "@tillPrintReceipt": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintCopy": "Imprimir una copia",
+  "@tillPrintCopy": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinting": "Imprimiendo…",
+  "@tillPrinting": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinted": "Ticket impreso.",
+  "@tillPrinted": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillNotPrinted": "Tique no impreso — la venta está completa. Imprima de nuevo, o muestre el tique para compartirlo.",
+  "@tillNotPrinted": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterSet": "Configurar la impresora de tickets",
+  "@tillPrinterSet": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTitle": "Impresora de tickets",
+  "@tillPrinterTitle": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHost": "Dirección de la impresora",
+  "@tillPrinterHost": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostHint": "Un nombre o una dirección de esta red, por ejemplo 192.168.1.50",
+  "@tillPrinterHostHint": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPort": "Puerto",
+  "@tillPrinterPort": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaper": "Ancho del papel",
+  "@tillPrinterPaper": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage": "Página de códigos",
+  "@tillPrinterCodePage": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage437": "PC437 (sin el signo del euro)",
+  "@tillPrinterCodePage437": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage858": "PC858 (con el signo del euro)",
+  "@tillPrinterCodePage858": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterDrawer": "Hay un cajón de efectivo conectado a la impresora",
+  "@tillPrinterDrawer": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterMode": "Imprimir tras una venta",
+  "@tillPrinterMode": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeNever": "Solo si se pide",
+  "@tillPrinterModeNever": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAsk": "Ofrecerlo",
+  "@tillPrinterModeAsk": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAlways": "Siempre",
+  "@tillPrinterModeAlways": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTest": "Impresión de prueba",
+  "@tillPrinterTest": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTestSent": "Página de prueba enviada.",
+  "@tillPrinterTestSent": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostRequired": "Escriba la dirección de la impresora.",
+  "@tillPrinterHostRequired": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPortInvalid": "El puerto es un número de 1 a 65535.",
+  "@tillPrinterPortInvalid": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptTax": "de los cuales impuesto",
+  "@tillReceiptTax": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintTotal": "TOTAL A PAGAR",
+  "@tillPrintTotal": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptCash": "Efectivo",
+  "@tillReceiptCash": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptChange": "Cambio",
+  "@tillReceiptChange": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptThanks": "Gracias",
+  "@tillReceiptThanks": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaperWidth": "{mm} mm",
+  "@tillPrinterPaperWidth": {
+    "description": "#4368 the till's receipt printer: a paper width in millimetres, the number arrives formatted",
+    "placeholders": {
+      "mm": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerNotSet": "No hay cajón configurado en la impresora de esta caja.",
+  "tillDrawerOpened": "El cajón está abierto.",
+  "tillDrawerKickFailed": "El cajón no se abrió. Compruebe la impresora a la que está conectado.",
+  "tillDayReportNotPrinted": "El informe del día no se imprimió. Compruebe la impresora e inténtelo de nuevo."
 }

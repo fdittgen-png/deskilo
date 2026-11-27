@@ -3005,12 +3005,52 @@ I **punti di riordino** (sotto le due liste) rendono basso un articolo. Ognuno m
 
 Lei vuole un’unica lista che dica, per ogni articolo e variante, che cos’è, quanto costa e a quanto si vende, dove va e quanto ce n’è.
 
-Apra **Magazzino → Articoli**. Ogni riga mostra il **codice a barre**, l’**unità**, il **prezzo** (il prezzo di vendita del catalogo), l’**ultimo costo noto**, l’**ubicazione abituale** e ciò che è **disponibile**. Il costo compare solo se il suo ruolo può vedere le finanze o gestire gli acquisti; altrimenti la riga dice *costo non mostrato*. Un costo che nessuna consegna ha ancora dato resta *costo sconosciuto*, mai zero.
+Apra **Magazzino → Articoli**. Ogni articolo mostra il suo nome, poi il suo prezzo, ciò che è disponibile e la sua ubicazione abituale, e un contrassegno quando all’articolo manca qualcosa: *Scorta bassa*, *Senza prezzo* o *Senza ubicazione*. Su un telefono ogni articolo è una scheda; su un tablet tenuto in orizzontale o su un computer gli articoli formano una tabella con le colonne **Nome**, **Prezzo**, **Disponibile**, **Ubicazione abituale**, **Gruppo** e **Stato**, ordinata con un clic su **Nome**, **Prezzo** o **Disponibile**. Apra un articolo per vedere e modificare tutto ([La pagina di un articolo](help:user.money.stock.item)), oppure agisca dalla lista ([Agire su un articolo dalla lista](help:user.money.stock.actions)).
 
-- **Ubicazione abituale**: tocchi l’icona di ubicazione di una riga per dire dove va l’articolo: la sua corsia, scaffale o cassetto. Una variante senza ubicazione propria ha quella del suo articolo. È un’indicazione per sistemare, contare e prelevare: la merce può stare altrove e cambiarla non sposta nulla né riscrive alcuna storia.
-- **Filtri** per un’ubicazione per vedere ciò che vi è sistemato e nelle ubicazioni sottostanti, oppure attivi *Solo articoli senza ubicazione abituale* per vedere ciò che ne ha ancora bisogno.
+- **Filtri** per un’ubicazione per vedere ciò che vi è sistemato e nelle ubicazioni sottostanti, oppure scelga il chip *Senza ubicazione abituale* per vedere ciò che ne ha ancora bisogno.
 - **Cerchi** per nome, codice a barre o indirizzo. Digitare o scansionare un codice a barre nella ricerca e confermare apre quell’articolo.
 - Le liste lunghe si caricano a pagine: scelga *Mostra altri*.
+- L’ultimo costo noto compare sulla pagina dell’articolo solo se il suo ruolo può vedere le finanze o gestire gli acquisti; altrimenti dice *costo non mostrato*. Un costo che nessuna consegna ha ancora dato resta *costo sconosciuto*, mai zero.
+
+### Agire su un articolo dalla lista
+
+**Destinatari:** Amministratore · Proprietario
+
+Lei vuole cambiare una cosa di un articolo — il prezzo, l’ubicazione, il gruppo — senza aprirne la pagina.
+
+- **Su un telefono**, ogni scheda termina con una fila di chip, ciascuno un’icona e una parola: **Modifica** (nome, prezzo e IVA), **Ubicazione**, **Gruppo**, **Tag**, **Impostazioni**, **Varianti** e **Fornitori**. Faccia scorrere la fila di lato quando non ci sta. Un chip apre lo stesso editor della pagina dell’articolo; tocchi la scheda stessa per aprire la pagina.
+- **Su un tablet tenuto in orizzontale o su un computer**, faccia clic su una riga per selezionarla: viene evidenziata e spuntata. La barra sopra la tabella nomina allora l’articolo e offre **Modifica nome, prezzo e IVA**, **Ubicazione**, **Gruppo**, **Tag**, **Impostazioni del magazzino**, **Varianti**, **Articoli del fornitore** e **Apri**. Le frecce spostano la selezione; Invio o un doppio clic apre l’articolo accanto alla lista; **Annulla la selezione** lo rilascia.
+- Senza selezione, la barra dice *Selezioni un articolo per agire su di esso* e offre **Aggiungi un articolo**. La ricerca, l’ubicazione e *Senza ubicazione abituale* stanno alla sua sinistra.
+
+**Da sapere**
+
+- Viene offerto solo ciò che il Suo ruolo consente: su un telefono gli altri chip non compaiono, quindi chi può solo vedere il magazzino non ne ha nessuno; su un computer sono in grigio. **Modifica nome, prezzo e IVA** richiede il diritto di gestire i servizi, il resto quello di gestire il magazzino.
+- Dopo un salvataggio la lista rilegge l’articolo: la riga resta selezionata e mostra i nuovi valori.
+- **Gruppo** e **Tag** compaiono dove l’attività usa i gruppi di articoli e i tag.
+
+**Vedi anche:** [Il registro degli articoli](help:user.money.stock.registry) · [La pagina di un articolo](help:user.money.stock.item)
+
+### La pagina di un articolo
+
+**Destinatari:** Amministratore · Proprietario
+
+Lei vuole tutto ciò che riguarda un articolo in un solo posto, e modificare ogni parte dove la legge.
+
+Su un telefono, tocchi la scheda di un articolo in **Magazzino → Articoli**: si apre come una pagina a sé. Su un tablet tenuto in orizzontale o su un computer, faccia doppio clic sulla sua riga, prema Invio su di essa o scelga **Apri**: si apre accanto alla lista, che conserva la sua ricerca, i suoi filtri e la sua selezione. Ogni parte della pagina ha la sua azione, che porta il nome di ciò che modifica:
+
+- **Panoramica**: il prezzo, l’IVA, l’unità, il codice a barre e l’ultimo costo noto. **Modifica nome, prezzo e IVA** apre l’editor del servizio.
+- **Magazzino**: ciò che è disponibile e l’ubicazione abituale, dell’articolo o di ogni variante, e **Dove si trova**: le prime ubicazioni che lo contengono (**Tutte le ubicazioni** le mostra tutte). **Modifica l’ubicazione abituale** dice dove va l’articolo: la sua corsia, scaffale o cassetto. È un’indicazione per sistemare, contare e prelevare: la merce può stare altrove e cambiarla non sposta nulla. **Modifica unità, codici e tracciamento** apre le impostazioni di magazzino dell’articolo.
+- **Gruppo e tag**, dove l’attività li usa: il gruppo dell’articolo. **Modifica il gruppo** lo sposta e mostra da dove viene ogni impostazione; **Modifica i tag** associa o ritira i suoi tag.
+- **Varianti**: le varianti in vendita, con i loro prezzi. **Modifica le varianti** ne aggiunge o le cambia.
+- **Articoli del fornitore**: gli articoli dei fornitori che indicano questo articolo. **Modifica gli articoli del fornitore** ne associa un altro.
+
+**Da sapere**
+
+- **Modifica nome, prezzo e IVA** richiede il diritto di gestire i servizi; ogni altra azione quello di gestire il magazzino. Chi può solo vedere il magazzino legge la panoramica, il magazzino e le varianti, senza alcuna azione.
+- I contrassegni in cima alla pagina dicono che cosa manca ancora all’articolo.
+- Dopo un salvataggio la pagina mostra subito il nuovo valore, e così la lista.
+
+**Vedi anche:** [Il registro degli articoli](help:user.money.stock.registry) · [Gruppi di articoli](help:user.money.stock.groups)
 
 ### Gruppi di articoli
 
@@ -3020,7 +3060,7 @@ Vuole dire una volta ciò che una famiglia di articoli ha in comune — quanto d
 
 Apra **Magazzino → Gruppi di articoli** (serve la funzione *Gruppi di articoli* sotto la gestione del magazzino). Un gruppo ha un nome, sta in alto o dentro un altro gruppo (un solo livello di sottogruppi) e porta le impostazioni che sceglie: **tracciamento**, **durata di conservazione**, **modalità tag**, **unità di magazzino**, **conta ogni n giorni**, **età minima** e **venduto a peso**. Un’impostazione lasciata *Non impostato* non è decisa a questo livello.
 
-- **Un articolo segue il suo gruppo finché non ha un valore proprio.** Vale il valore dell’articolo se ce l’ha, altrimenti quello del suo sottogruppo, altrimenti quello del suo gruppo. Apra **Gruppo e impostazioni ereditate** di un articolo (l’icona della cartella sulla sua riga in **Magazzino → Articoli**) per vedere da dove viene ogni impostazione (*Dal gruppo Bevande dal 3 dic.* o *Valore proprio*), spostarlo in un altro gruppo e restituire un valore proprio con **Usa il valore del gruppo**. Nelle **impostazioni di magazzino** dell’articolo, *Valore proprio* compare accanto a un’impostazione per cui l’articolo mantiene un valore proprio rispetto al suo gruppo (tracciamento, scadenza, unità di inventario).
+- **Un articolo segue il suo gruppo finché non ha un valore proprio.** Vale il valore dell’articolo se ce l’ha, altrimenti quello del suo sottogruppo, altrimenti quello del suo gruppo. Apra un articolo in **Magazzino → Articoli** e scelga **Modifica il gruppo** per vedere da dove viene ogni impostazione (*Dal gruppo Bevande dal 3 dic.* o *Valore proprio*), spostarlo in un altro gruppo e restituire un valore proprio con **Usa il valore del gruppo**. Nelle **impostazioni di magazzino** dell’articolo, *Valore proprio* compare accanto a un’impostazione per cui l’articolo mantiene un valore proprio rispetto al suo gruppo (tracciamento, scadenza, unità di inventario).
 - **Ogni modifica è mostrata in anteprima.** Salvando un gruppo vede prima cosa raggiunge la modifica: *si applica a 1, 1 mantengono il proprio valore, 0 non sono raggiungibili*. Nulla viene applicato finché non salva una seconda volta; ogni modifica intermedia chiede una nuova anteprima. Un articolo che la modifica non può raggiungere (ad esempio un’unità su un articolo che ha già movimenti) viene elencato, e la modifica del gruppo viene salvata per gli altri.
 - **Proposte e prezzi.** Un gruppo può proporre a un nuovo articolo un'**unità di acquisto predefinita** con il suo fattore (un numero o una frazione come 1/3), un **punto e una quantità di riordino** e una **zona di giacenza**: vengono copiati in un nuovo articolo come punto di partenza e non raggiungono nessun articolo esistente. L'**aliquota IVA**, il **tipo di operazione**, l'**arrotondamento del prezzo** e il **margine obiettivo sul costo** li mostra e li imposta solo chi può gestire i servizi e vedere le finanze; per tutti gli altri non sono né mostrati né modificati da un salvataggio.
 - **Cronologia.** Il foglio del gruppo elenca ogni modifica con quanti articoli ha raggiunto; la riga di origine di un articolo dice da quando.
@@ -3048,7 +3088,7 @@ Uno scanner di codici a barre in modalità tastiera (digita il codice e preme In
 
 Vuole associare un chip NFC a un articolo o a una posizione e leggere chip mentre lavora, con il telefono che ha già.
 
-Con la funzione *Tag* attiva e un telefono che legge l’NFC, **Magazzino → Articoli** e **Magazzino → Posizioni** mostrano un pulsante dei tag su ogni riga, e la barra di scansione di un foglio di merce mostra **Leggi un tag**. Il pulsante manca su un dispositivo senza NFC (un computer, la maggior parte dei tablet, un telefono con l’NFC spento): lì usi uno scanner o un lettore portatile.
+Con la funzione *Tag* attiva e un telefono che legge l’NFC, **Modifica i tag** sulla pagina di un articolo e il pulsante dei tag di ogni riga di **Magazzino → Posizioni** leggono un tag, e la barra di scansione di un foglio di merce mostra **Leggi un tag**. Il pulsante manca su un dispositivo senza NFC (un computer, la maggior parte dei tablet, un telefono con l’NFC spento): lì usi uno scanner o un lettore portatile.
 
 - **Associare un tag.** Apra i tag di un articolo o di una posizione, tocchi **Leggi un tag** e avvicini il chip al retro del telefono. Una lettura associa un tag. Rileggere lo stesso chip dice che era già associato qui e non associa nulla di nuovo; un chip associato a qualcos’altro viene rifiutato e dice a cosa. Un proprietario può avere più tag. Il server accetta il codice in maiuscolo o minuscolo, con spazi, due punti o trattini.
 - **Ritirare un tag** perso, danneggiato o sostituito: scelga il motivo. Un tag ritirato da poco non può essere associato di nuovo subito (l’attesa è un’impostazione del magazzino) e un tag su un pezzo ancora a magazzino non può essere ritirato.
@@ -3070,6 +3110,20 @@ Dove il suo paese non consente ancora la cassa, questa indica l'operazione manca
 
 Un articolo tracciato indica da dove è stato preso. Quando vende un articolo gestito a lotti senza scegliere un lotto, la vendita lo preleva dai lotti in giacenza, prima quello che scade per primo e mai uno scaduto; sotto la riga venduta la cassa mostra il codice di ogni lotto come è stato ricevuto, con la quantità prelevata, per esempio **Lotto SUP-A × 2 · Lotto SUP-B × 1**, e ogni pezzo con la sua etichetta. Se l'azienda usa un lettore, scansioni l'etichetta di un pezzo per aggiungerlo: la vendita preleva esattamente i pezzi scansionati, e lo stesso pezzo due volte viene rifiutato. Questi identificativi di tracciabilità sono fissati con lo scontrino: modificare in seguito un lotto o un'etichetta non altera mai uno scontrino già emesso. Nel magazzino, la tracciabilità di un lotto o di un pezzo indica lo scontrino che lo ha venduto.
 
+Per scegliere il lotto da sé, prema **Scegliere il lotto** sulla riga: i lotti disponibili sono elencati con la data e quanto resta, il primo a scadere per primo. Un lotto scaduto è mostrato e non può essere scelto. **Il primo a scadere (scelto dal magazzino)** restituisce la scelta al magazzino. Un articolo non tracciato per lotto dice che non ha un lotto da scegliere.
+
+### Stampare lo scontrino e aprire il cassetto
+
+**Destinatari:** Amministratore · Proprietario
+
+Vende al banco con una stampante di scontrini nella Sua rete (80 o 58 mm, ESC/POS), forse con un cassetto collegato.
+
+Attivi **Stampante di scontrini** (servono le sessioni di cassa). Il dispositivo di ogni cassa imposta la propria stampante: dopo una vendita prema **Configura la stampante di scontrini**, oppure apra **Stampante di scontrini**, e inserisca l'indirizzo della stampante nella Sua rete (Indirizzo della stampante) e la porta (9100 salvo indicazione diversa della stampante), la larghezza della carta, la tabella di codici, se vi è collegato un cassetto e se una vendita si stampa da sé, dopo una domanda o solo su richiesta. **Stampa di prova** stampa una pagina di prova.
+
+Dopo una vendita in contanti il cassetto si apre. **Stampa lo scontrino** stampa lo scontrino; **Stampa una copia** lo stampa di nuovo contrassegnato **COPIA 1**, **COPIA 2** e così via: una copia è contata e non prende mai un nuovo numero di scontrino. Il tasto **Aprire il cassetto** di un layout di cassa apre il cassetto fuori da una vendita. Quando la stampante non risponde, la cassa dice **Scontrino non stampato — la vendita è completa. Stampi di nuovo, o mostri lo scontrino per condividerlo.**: la vendita è comunque completa, e lo scontrino può essere mostrato e condiviso. In un browser non si stampa nulla: stampare richiede l'app.
+
+Provato finora: i byte rispetto ai file di riferimento e un ricevitore locale. Nessun modello di stampante è stato ancora provato.
+
 ### Aprire la cassa, contare e chiudere
 
 **Destinatari:** Amministratore · Proprietario
@@ -3085,6 +3139,28 @@ Premere **Aprire la cassa**, digitare il **Fondo cassa nel cassetto** (o, se l'a
 **Contare e chiudere** chiede i **Contanti contati nel cassetto** e quanto viene **Portato in banca**. Quando l'attività conta alla cieca, i contanti attesi non vengono mostrati prima del conteggio; chi può vedere le finanze li vede, insieme alla differenza mentre digita. Un conteggio che differisce dai contanti attesi si chiude solo con il suo motivo, che la cassa richiede. Dopo la chiusura la cassa indica quanto era atteso, quanto è stato contato e la differenza. I pagamenti con carta senza risposta sono elencati a parte e mai contati come contanti.
 
 **Chiusura della giornata.** Chi può vedere le finanze apre **Chiusura della giornata** dal cassetto di cassa e preme **Chiudere la giornata** quando ogni cassa è chiusa (una cassa ancora aperta viene indicata e rifiuta la chiusura). Le sessioni chiuse della giornata diventano un rapporto numerato: ogni sessione con atteso, contato, differenza e motivo, gli incassi per mezzo di pagamento e per aliquota, i contanti versati e prelevati, i rimborsi e l'intervallo dei numeri degli scontrini. **Giornate chiuse** elenca i rapporti già fatti; una giornata chiusa non cambia mai. È la registrazione propria dell'attività; il contenuto legale che un paese richiede alla chiusura della giornata arriva con un proprio modulo.
+
+### Organizzare la Sua cassa
+
+**Destinatari:** Amministratore · Proprietario
+
+Vende al banco e vuole che la cassa si adatti al Suo modo di vendere: tasti grandi per il pane pesato, pagine per categoria per un bar, prima un campo di scansione per una ferramenta.
+
+Attivi **Layout di cassa** (richiede le sessioni di cassa). In **Cassetto di cassa**, chi può organizzare le casse (per impostazione i titolari e gli amministratori) preme il pulsante di layout di una cassa. Una cassa senza layout parte da un modello: **Negozio**, **Panetteria e merce pesata**, **Caffè e bar**, **Reception dello studio** o **Ferramenta e catalogo**.
+
+Il layout ha una griglia per ogni larghezza in cui la cassa è usata: **Larghezza telefono**, **Larghezza tablet** e **Larghezza desktop**. **Aggiungere un elemento** colloca un tasto articolo, un tasto funzione (come **Incassare in contanti** o **Cliente successivo**), un tastierino numerico, una calcolatrice, il carrello, il totale e il resto o un altro strumento nel primo posto libero in cui entra. Tocchi un elemento per selezionarlo; i pulsanti sotto la griglia lo spostano e lo rendono più largo, più stretto, più alto o più basso un passo alla volta. Un passo che uscirebbe dalla griglia, si sovrapporrebbe a un altro elemento o renderebbe uno strumento troppo piccolo non viene offerto.
+
+**Salvare** conserva una bozza; **Pubblicare sulla cassa** la rende il layout usato dalla cassa. Una cassa già aperta conserva il suo layout fino alla sessione successiva: la cassa non cambia mai durante una vendita. Se qualcun altro ha modificato il layout da quando lo ha aperto, il salvataggio viene rifiutato con **Qualcuno ha modificato questo layout; lo ricarichi.** Un layout che il server non può accettare viene rifiutato con il suo primo problema. Una cassa senza layout pubblicato mantiene i tasti che genera dai Suoi articoli.
+
+Alla cassa, i tasti agiscono come li ha posizionati. Il **tastierino numerico** digita una quantità con il separatore decimale della Sua lingua (1,5); il tasto articolo successivo vende quella quantità, e un articolo pesato la prende come peso invece di chiederlo. **Quantità ×** mette invece la quantità digitata sull'ultima riga. La **calcolatrice** calcola in modo esatto, e **Sull'ultima riga** rende il suo risultato la quantità dell'ultima riga; non fissa mai un prezzo. Un **tasto categoria** apre la pagina che indica.
+
+**Copiare su un'altra cassa** salva il layout come bozza di un'altra cassa, da pubblicare lì. **Tornare ai tasti generati** rimuove, dopo conferma, il layout e la bozza di questa cassa: la cassa usa di nuovo i tasti che crea dai Suoi articoli. Nella demo, il **Bakery counter** mostra il modello Panetteria con tastierino e calcolatrice.
+
+**Cambiare un prezzo** modifica il prezzo dell'ultima riga: digiti il nuovo prezzo (o prima sul tastierino) e un **Motivo**, che lo scontrino conserva accanto al prezzo dell'articolo. Serve il diritto **Modificare un prezzo alla cassa** (titolari e amministratori per impostazione predefinita); senza, la cassa lo dice e la riga resta al prezzo dell'articolo. **Sconto su una riga** toglie una percentuale dal prezzo dell'articolo dell'ultima riga, al massimo **Sconto massimo alla cassa** (0 per impostazione predefinita, cioè nessuno sconto alla cassa); uno sconto maggiore è rifiutato indicando il limite. Una riga prende uno sconto o un prezzo modificato, non entrambi. Una vendita che la cassa invia dopo aver venduto offline mantiene il suo prezzo, entro la tolleranza di prezzo offline.
+
+**Ristampare l'ultimo scontrino** mostra di nuovo lo scontrino dell'ultima vendita, contrassegnato **COPIA 1**, **COPIA 2** e così via. Una copia non prende mai un nuovo numero di scontrino, e ogni copia stampata viene contata.
+
+**Reso cauzione** riprende il vuoto dell'ultimo articolo registrato (le bottiglie di una cassa d'acqua, ad esempio): digiti prima il numero sul tastierino, altrimenti se ne riprende uno. Il vuoto è tolto dalla vendita e compare come **Vuoto reso** sullo scontrino; torna in magazzino quando la vendita è fatta. Serve il diritto **Modificare un prezzo alla cassa**, non si fa offline, un vuoto tracciato per lotto o etichetta non viene ripreso alla cassa, e una vendita il cui totale non sarebbe sopra lo zero non viene fatta (paghi allora i vuoti dal cassetto).
 
 ### Quando la cassa è offline
 
@@ -3114,7 +3190,7 @@ Gli **Scontrini di cassa** elencano ciò che la cassa ha fatto. **Rettificare qu
 
 Lei decide se un tag su un articolo indica un lotto o un singolo pezzo, e che cosa conta una lettura massiva.
 
-Con la funzione *Tag* attiva, un articolo ha una **modalità del tag**, impostata sul suo gruppo e mantenuta dall'articolo finché non ha un valore proprio. Apra le impostazioni di gruppo di un articolo (**Magazzino → Articoli**, l'icona della cartella sulla sua riga) e legga **Etichetta su questo articolo**: dice da dove viene il valore (*Da Bevande dal 3 dic.* oppure *Valore proprio*), permette di dare all'articolo un valore proprio, e **Usa il valore del gruppo** lo restituisce.
+Con la funzione *Tag* attiva, un articolo ha una **modalità del tag**, impostata sul suo gruppo e mantenuta dall'articolo finché non ha un valore proprio. Apra le impostazioni di gruppo di un articolo (**Modifica il gruppo** sulla sua pagina in **Magazzino → Articoli**) e legga **Etichetta su questo articolo**: dice da dove viene il valore (*Da Bevande dal 3 dic.* oppure *Valore proprio*), permette di dare all'articolo un valore proprio, e **Usa il valore del gruppo** lo restituisce.
 
 - **Nessun tag.** L'articolo non porta tag.
 - **Un tag per lotto.** Un tag indica un lotto o una confezione: una cassa, un secchio, uno scatolone. Leggerlo conta un lotto, mai un pezzo.
@@ -3922,6 +3998,43 @@ Vuole che le sue fatture e lettere siano stampate sulla carta che usa il suo pae
 
 **Vedi anche:** [Paese](help:user.workspace.settings.country)
 
+### Dati anagrafici
+
+**Destinatari:** Proprietario · Amministratore con il permesso
+
+I dati anagrafici sono gli elenchi con cui è configurata l’attività e che i suoi selettori leggono: le unità, le aliquote IVA, gli articoli, i fornitori e il resto. **Dati anagrafici** mostra ogni tipo in un unico posto, per gruppi. Ogni scheda nomina il tipo, dice in una riga che cos’è e quanti record contiene, e apre la schermata che lo modifica.
+
+**Passaggi**
+
+1. In [Spazio di lavoro](app:/workspace-settings), apra **Dati anagrafici**, oppure scelga **Dati anagrafici** sotto **Configurare lo spazio** nel menu.
+2. Scriva in **Cerca** per tenere solo le schede il cui nome corrisponde.
+3. Tocchi una scheda e modifichi i suoi record nella schermata che apre.
+
+**Da sapere**
+
+- Vede una scheda solo se può aprirne la schermata: la sua funzionalità è attiva e Lei ne ha il permesso.
+- Un numero che non si può leggere lo dice, con **Riprova**; non è mai mostrato come 0.
+
+#### Misure e imposte
+
+**Unità di misura** con le loro conversioni, e **Aliquote IVA**. Le unità sono sempre qui, che la funzionalità **Unità di misura** sia attiva o no.
+
+#### Catalogo
+
+**Articoli**, **Gruppi di articoli** e **Servizi**: ciò che l’attività tiene a magazzino e vende.
+
+#### Ubicazioni e magazzino
+
+**Ubicazioni**, dove si conservano le merci, e **Casse**: le casse al banco, ciascuna con la disposizione dei suoi tasti.
+
+#### Partner commerciali
+
+**Fornitori** e **Clienti fatturati**.
+
+#### Organizzazione
+
+**Sedi**: gli indirizzi dell’attività e i piani di ciascuno.
+
 ### Unità di misura
 
 **Destinatari:** Proprietario · Amministratore con il permesso
@@ -3932,11 +4045,10 @@ I suoi articoli, preventivi e fatture sono misurati in unità, e alcune unità s
 
 **Passaggi**
 
-1. Attivi **Unità di misura** in **Funzionalità** (è disattivata finché non la richiede).
-2. In [Unità di misura](app:/settings/units), tocchi **Nuova unità**.
-3. Compili **Codice dell’unità** (non potrà più cambiare), **Il suo nome per l’unità**, **Misura** e **Un’unità equivale a** nell’unità di base di ciò che misura: 1000 per un km contato in m, 0,001 per un mm.
-4. Se vuole, compili **Codice UN/ECE (per le fatture elettroniche)**, che le fatture elettroniche riportano (KMT per un km).
-5. Tocchi **Salva**.
+1. In [Unità di misura](app:/settings/units), raggiunta da **Dati anagrafici**, tocchi **Nuova unità**.
+2. Compili **Codice dell’unità** (non potrà più cambiare), **Il suo nome per l’unità**, **Misura** e **Un’unità equivale a** nell’unità di base di ciò che misura: 1000 per un km contato in m, 0,001 per un mm.
+3. Se vuole, compili **Codice UN/ECE (per le fatture elettroniche)**, che le fatture elettroniche riportano (KMT per un km).
+4. Tocchi **Salva**.
 
 **Da sapere**
 
@@ -3944,6 +4056,7 @@ I suoi articoli, preventivi e fatture sono misurati in unità, e alcune unità s
 - Un’unità in uso (un articolo contato con essa, un movimento di magazzino, un preventivo o una riga di fattura) mantiene per sempre grandezza e fattore: una correzione è una nuova unità. Un’unità che nessuno usa può essere archiviata (**Archivia**) e mostrata di nuovo (**Mostra di nuovo**).
 - Una conversione è esatta: 2,5 km sono 2500 m. Due tipi di unità non si convertono mai, e un risultato che sei decimali non possono contenere viene rifiutato, mai arrotondato.
 - Solo il proprietario e gli amministratori autorizzati a modificare le impostazioni dello spazio gestiscono le unità.
+- Le unità sono sempre qui. La funzionalità **Unità di misura** in **Funzionalità** decide se i preventivi e le fatture offrono le unità proprie dell’attività e se i selettori di un articolo offrono ogni unità; finché è disattivata, offrono solo le unità consuete.
 
 **Vedi anche:** [Carta dei documenti](help:user.workspace.settings.paper)
 

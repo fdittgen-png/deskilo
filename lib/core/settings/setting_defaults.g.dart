@@ -68,6 +68,12 @@ abstract final class SettingDefaults {
   static const String counterDocumentChannel = 'share';
   /// `counter.fiscal_obligation`
   static const String counterFiscalObligation = 'register_required';
+  /// `counter.layout_cashier_reorder`
+  static const bool counterLayoutCashierReorder = false;
+  /// `counter.layout_max_cells`
+  static const int counterLayoutMaxCells = 200;
+  /// `counter.max_discount_percent`
+  static const int counterMaxDiscountPercent = 0;
   /// `counter.offline_max_minutes`
   static const int counterOfflineMaxMinutes = 240;
   /// `counter.offline_max_sales`

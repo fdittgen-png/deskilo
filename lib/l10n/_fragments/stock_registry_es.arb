@@ -2,12 +2,9 @@
   "stockRegistrySearch": "Buscar un artículo por nombre, código de barras o dirección",
   "stockRegistryPlaceFilter": "Ubicación habitual",
   "stockRegistryAllPlaces": "Todas las ubicaciones",
-  "stockRegistryNoHomeFilter": "Solo artículos sin ubicación habitual",
   "stockRegistryMore": "Mostrar más",
   "stockRegistryCostHidden": "coste no mostrado",
   "stockRegistryCostUnknown": "coste desconocido",
-  "stockRegistryCost": "coste {amount}",
-  "stockRegistryPrice": "precio {amount}",
   "stockRegistryHome": "ubicación {address}",
   "stockRegistryNoHome": "sin ubicación habitual",
   "stockRegistryOnHand": "{quantity} disponibles",
@@ -15,5 +12,6 @@
   "stockRegistryHomeTitle": "Ubicación habitual de {item}",
   "stockRegistryHomeHelp": "Dónde va este artículo, para que la recepción, el recuento y la preparación sepan adónde ir. Es una indicación: el stock puede estar en otro sitio y cambiarla no mueve nada.",
   "stockRegistryHomeNone": "Sin ubicación habitual",
-  "stockReasonHomeInvalid": "Elija una ubicación de esta empresa en uso que no sea de proveedor, cliente, pérdida ni tránsito."
+  "stockReasonHomeInvalid": "Elija una ubicación de esta empresa en uso que no sea de proveedor, cliente, pérdida ni tránsito.",
+  "stockItemEditDetails": "Editar nombre, precio e IVA"
 }

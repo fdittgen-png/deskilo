@@ -619,5 +619,42 @@
         "type": "String"
       }
     }
+  },
+  "settingLabelCounterLayoutMaxCells": "Till layout size",
+  "settingHintCounterLayoutMaxCells": "The most cells one till layout may hold, over all its pages and sizes. A larger layout is refused when it is saved.",
+  "settingLabelCounterLayoutCashierReorder": "Cashiers reorder the keys",
+  "settingHintCounterLayoutCashierReorder": "A cashier may reorder a till's keys on their own device without changing the published layout.",
+  "@settingLabelCounterLayoutMaxCells": {
+    "description": "#4448 a till layout setting"
+  },
+  "@settingHintCounterLayoutMaxCells": {
+    "description": "#4448 a till layout setting"
+  },
+  "@settingLabelCounterLayoutCashierReorder": {
+    "description": "#4448 a till layout setting"
+  },
+  "@settingHintCounterLayoutCashierReorder": {
+    "description": "#4448 a till layout setting"
+  },
+  "settingUnitCells": "cells",
+  "@settingUnitCells": {
+    "description": "#4448 the unit of counter.layout_max_cells: grid cells of a till layout"
+  },
+  "settingLabelCounterMaxDiscount": "Largest discount at the till",
+  "@settingLabelCounterMaxDiscount": {
+    "description": "#4476 the setting counter.max_discount_percent"
+  },
+  "settingHintCounterMaxDiscount": "The largest discount, in percent, a cashier may give on a till line. 0 means no discount at the till.",
+  "@settingHintCounterMaxDiscount": {
+    "description": "#4476 the setting counter.max_discount_percent"
+  },
+  "tillDayDepositsReturned": "Deposits returned: {amount}",
+  "@tillDayDepositsReturned": {
+    "description": "#4478 the day report: deposits brought back; amount arrives formatted",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

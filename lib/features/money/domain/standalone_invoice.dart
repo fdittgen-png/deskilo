@@ -5,8 +5,9 @@
 // what the server answers (a saved revision, a preview, an issued invoice).
 // Nothing here computes an amount or a rate: the server does, and the
 // preview is its own answer.
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
+import 'previewed_document.dart';
 
 /// One itemised line as entered. Quantities and prices stay decimal TEXT:
 /// the server reads them exactly and refuses what it cannot keep.
@@ -207,51 +208,6 @@ class StandaloneSaved {
   final List<StandaloneLine> lines;
 }
 
-/// What the server says issuing the confirmed revision would do: the facts it
-/// cannot accept (named), or the document it would freeze. Never partial.
-class StandalonePreview {
-  const StandalonePreview({
-    required this.missing,
-    this.lines = const [],
-    this.totalCents = 0,
-    this.currency = '',
-    this.vatTotals = const [],
-  });
-
-  factory StandalonePreview.fromJson(Object? json) {
-    final r = JsonReader.of(json, context: 'preview_standalone_invoice_v1');
-    final missing = r.strings('missing');
-    final p = r.objectOrNull('preview');
-    if (p == null || missing.isNotEmpty) return StandalonePreview(missing: missing);
-    return StandalonePreview(
-      missing: const [],
-      lines: p.objects('lines', (row) => invoiceLineFromSnapshot(row.json)),
-      totalCents: p.integer('total_cents'),
-      currency: p.stringOr('currency'),
-      vatTotals: p.objects(
-        'vat_totals',
-        (v) => InvoiceVatTotal(
-          percent: v.number('percent'),
-          category: v.stringOr('category'),
-          grossCents: v.integer('gross_cents'),
-          netCents: v.integer('net_cents'),
-          vatCents: v.integer('vat_cents'),
-        ),
-      ),
-    );
-  }
-
-  /// The facts the server cannot accept, as it named them (`line_1_quantity`,
-  /// `due_on`, `draft_stale`...). Empty when the draft can be issued.
-  final List<String> missing;
-  final List<InvoiceLine> lines;
-  final int totalCents;
-  final String currency;
-  final List<InvoiceVatTotal> vatTotals;
-
-  bool get ready => missing.isEmpty && lines.isNotEmpty;
-}
-
 /// The invoice an issue made.
 class StandaloneIssued {
   const StandaloneIssued({
@@ -288,7 +244,7 @@ abstract interface class StandaloneInvoiceCommands {
     required StandaloneDraft draft,
   });
 
-  Future<StandalonePreview> preview({
+  Future<PreviewedDocument> preview({
     required String workspaceId,
     required String draftId,
     required int revision,

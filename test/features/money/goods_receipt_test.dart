@@ -327,6 +327,7 @@ void main() {
         _app(repo, suppliers, {WorkspacePermission.viewFinances}),
       );
       await settle(tester);
+      await openOrder(tester, '2026-0001');
       expect(find.text('Rolls: 0 of 12 received'), findsOneWidget);
       expect(
         find.byKey(const ValueKey('purchase-order-receive-2026-0001')),

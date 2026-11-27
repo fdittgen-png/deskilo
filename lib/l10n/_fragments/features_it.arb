@@ -381,5 +381,9 @@
   "featureUnitsOfMeasureDesc": "Il titolare e gli amministratori gestiscono le unità di misura dell’attività e le loro conversioni (1 km = 1000 m, 1 kg = 1000 g). Articoli, preventivi e fatture sono misurati con esse. Le unità di base ci sono sempre; attivando questa opzione compare la schermata per gestirle.",
   "@featureUnitsOfMeasureDesc": {
     "description": "#4442 feature description"
-  }
+  },
+  "featureCounterTillLayoutTitle": "Layout di cassa",
+  "featureCounterTillLayoutDesc": "Organizzi ogni cassa per il Suo mestiere: quali tasti dove, le sue pagine e gli strumenti accanto al carrello come un tastierino numerico, una calcolatrice o un campo di scansione. Parta da un modello, lo pubblichi e una cassa lo adotta alla sessione successiva. Disattivato, ogni cassa mantiene i tasti generati.",
+  "featureCounterReceiptPrinterTitle": "Stampante di scontrini",
+  "featureCounterReceiptPrinterDesc": "Stampare lo scontrino su una stampante di scontrini della rete locale (80 o 58 mm) e aprire il cassetto che comanda dopo una vendita in contanti. Ogni cassa imposta la propria stampante. Disattivato, lo scontrino è mostrato e condiviso, non si stampa nulla."
 }

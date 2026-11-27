@@ -1,0 +1,394 @@
+{
+  "tillLayoutTitle": "Till layout",
+  "@tillLayoutTitle": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutEdit": "Lay out this till",
+  "@tillLayoutEdit": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStartFrom": "Start from a template",
+  "@tillLayoutStartFrom": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateRetail": "Retail: scan field, basket and pay keys",
+  "@tillLayoutTemplateRetail": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateBakery": "Bakery and weighed goods: a keypad beside large keys",
+  "@tillLayoutTemplateBakery": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateCafe": "Café and bar: category pages, no scan field",
+  "@tillLayoutTemplateCafe": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateStudio": "Studio desk: passes and sessions",
+  "@tillLayoutTemplateStudio": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateHardware": "Hardware and catalogue: scan field and keypad first",
+  "@tillLayoutTemplateHardware": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageSale": "Sale",
+  "@tillLayoutPageSale": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageDrinks": "Drinks",
+  "@tillLayoutPageDrinks": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageFood": "Food",
+  "@tillLayoutPageFood": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageDesk": "Desk",
+  "@tillLayoutPageDesk": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutSizePhone": "Phone width",
+  "@tillLayoutSizePhone": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutSizeTablet": "Tablet width",
+  "@tillLayoutSizeTablet": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutSizeDesk": "Desk width",
+  "@tillLayoutSizeDesk": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindItem": "Item key",
+  "@tillLayoutKindItem": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCategory": "Category key",
+  "@tillLayoutKindCategory": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindFunction": "Function key",
+  "@tillLayoutKindFunction": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindKeypad": "Numeric keypad",
+  "@tillLayoutKindKeypad": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCalculator": "Calculator",
+  "@tillLayoutKindCalculator": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindTotal": "Total and change",
+  "@tillLayoutKindTotal": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCustomer": "Customer and note",
+  "@tillLayoutKindCustomer": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindPasses": "Studio passes",
+  "@tillLayoutKindPasses": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCashNotes": "Suggested cash notes",
+  "@tillLayoutKindCashNotes": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindUnknown": "A widget this app does not know",
+  "@tillLayoutKindUnknown": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnCard": "Take a card",
+  "@tillLayoutFnCard": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnVoid": "Void a line",
+  "@tillLayoutFnVoid": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnDiscount": "Discount on a line",
+  "@tillLayoutFnDiscount": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnQuantity": "Quantity ×",
+  "@tillLayoutFnQuantity": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnPrice": "Change a price",
+  "@tillLayoutFnPrice": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnDeposit": "Deposit return",
+  "@tillLayoutFnDeposit": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnDrawer": "Open the drawer",
+  "@tillLayoutFnDrawer": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnReprint": "Reprint the last receipt",
+  "@tillLayoutFnReprint": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepLeft": "Move left",
+  "@tillLayoutStepLeft": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepRight": "Move right",
+  "@tillLayoutStepRight": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepUp": "Move up",
+  "@tillLayoutStepUp": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepDown": "Move down",
+  "@tillLayoutStepDown": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepWider": "One column wider",
+  "@tillLayoutStepWider": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepNarrower": "One column narrower",
+  "@tillLayoutStepNarrower": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepTaller": "One row taller",
+  "@tillLayoutStepTaller": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepShorter": "One row shorter",
+  "@tillLayoutStepShorter": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutRemoveCell": "Remove this widget",
+  "@tillLayoutRemoveCell": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutAdd": "Add a widget",
+  "@tillLayoutAdd": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutChooseFunction": "Which function?",
+  "@tillLayoutChooseFunction": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutChooseItem": "Which item?",
+  "@tillLayoutChooseItem": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutNoRoom": "There is no free place for this widget on this grid.",
+  "@tillLayoutNoRoom": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPublish": "Publish to the till",
+  "@tillLayoutPublish": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPublished": "Published. The till takes it at its next session.",
+  "@tillLayoutPublished": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStale": "Someone changed this layout; reload it.",
+  "@tillLayoutStale": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutInvalid": "This layout cannot be saved: {reason}",
+  "@tillLayoutInvalid": {
+    "description": "#4448 the till layout editor; the reason is a reference: the server's problem code, as it named it",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLayoutReload": "Reload",
+  "@tillLayoutReload": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutGone": "No longer for sale",
+  "@tillLayoutGone": {
+    "description": "#4448 a key of a published till layout whose item is no longer sold: shown disabled"
+  },
+  "tillLayoutCalcPush": "Onto the last line",
+  "@tillLayoutCalcPush": {
+    "description": "#4448 the calculator's result becomes the last basket line's quantity"
+  },
+  "tillLayoutCopy": "Copy to another till",
+  "@tillLayoutCopy": {
+    "description": "#4448 copying a till layout to another till"
+  },
+  "tillLayoutCopied": "Copied as {till}'s draft. Publish it there.",
+  "@tillLayoutCopied": {
+    "description": "#4448 copying a till layout; till is the other till's name",
+    "placeholders": {
+      "till": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLayoutCopyTo": "Copy to which till?",
+  "@tillLayoutCopyTo": {
+    "description": "#4448 copying a till layout to another till"
+  },
+  "tillLayoutChoosePage": "Which page does it open?",
+  "@tillLayoutChoosePage": {
+    "description": "#4448 a category key opens another page of the till layout"
+  },
+  "tillLayoutReset": "Reset to the generated keys",
+  "@tillLayoutReset": {
+    "description": "#4448 resetting a till to the keys it generates"
+  },
+  "tillLayoutResetConfirm": "This till goes back to the keys it makes from your items. Its layout and its draft are removed.",
+  "@tillLayoutResetConfirm": {
+    "description": "#4448 resetting a till to the keys it generates"
+  },
+  "tillLayoutResetDone": "This till uses its generated keys again.",
+  "@tillLayoutResetDone": {
+    "description": "#4448 resetting a till to the keys it generates"
+  },
+  "tillPriceField": "New price",
+  "@tillPriceField": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceReason": "Reason",
+  "@tillPriceReason": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceReasonHint": "Kept on the receipt.",
+  "@tillPriceReasonHint": {
+    "description": "#4476 the till price keys"
+  },
+  "tillDiscountField": "Discount (%)",
+  "@tillDiscountField": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceUnreadable": "Type a number, such as 4.50.",
+  "@tillPriceUnreadable": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceNotAllowed": "You may not change a price at the till. The line is sold at the item's price.",
+  "@tillPriceNotAllowed": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceReasonMissing": "A changed price needs its reason.",
+  "@tillPriceReasonMissing": {
+    "description": "#4476 the till price keys"
+  },
+  "tillDiscountBeyond": "This discount is beyond what the business allows at the till.",
+  "@tillDiscountBeyond": {
+    "description": "#4476 a discount refused beyond the business's limit"
+  },
+  "tillDiscountInvalid": "A discount is a percentage off the item's price, on a line without a changed price.",
+  "@tillDiscountInvalid": {
+    "description": "#4476 the till price keys"
+  },
+  "tillRingUpFirst": "Ring up an item first.",
+  "@tillRingUpFirst": {
+    "description": "#4476 the till price keys"
+  },
+  "tillReceiptCopy": "COPY {copy} — not a new receipt",
+  "@tillReceiptCopy": {
+    "description": "#4476 a receipt printed again; copy is its number among the copies, a label (1, 2, ...)",
+    "placeholders": {
+      "copy": {
+        "type": "String"
+      }
+    }
+  },
+  "tillNothingToReprint": "No sale to print again yet.",
+  "@tillNothingToReprint": {
+    "description": "#4476 Reprint with no sale yet"
+  },
+  "tillLotChoose": "Choose the lot",
+  "@tillLotChoose": {
+    "description": "#4366 the seller chooses the lot a till line is sold from"
+  },
+  "tillLotLine": "Lot {code}",
+  "@tillLotLine": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotFirstToExpire": "The first to expire (chosen by the stock)",
+  "@tillLotFirstToExpire": {
+    "description": "#4366 the seller chooses the lot a till line is sold from"
+  },
+  "tillLotExpires": "Use by {date}",
+  "@tillLotExpires": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotExpired": "Past its date ({date}): not sold",
+  "@tillLotExpired": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotOnHand": "{quantity} {unit} on hand",
+  "@tillLotOnHand": {
+    "description": "#4366 what is on hand of a lot; quantity arrives formatted in the reader's number format",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotNone": "{item} has no lot to choose: it is sold as it is.",
+  "@tillLotNone": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReturnOffline": "A deposit is not taken back while the till is offline.",
+  "@tillReturnOffline": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnNoDeposit": "The last item carries no deposit to take back.",
+  "@tillReturnNoDeposit": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnedLine": "Deposit returned",
+  "@tillReturnedLine": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnNotAllowed": "You may not take a deposit back at the till.",
+  "@tillReturnNotAllowed": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnTracked": "This deposit is tracked by lot or tag: it is not taken back at the till.",
+  "@tillReturnTracked": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnNotDeposit": "This item is not a deposit any item is sold with.",
+  "@tillReturnNotDeposit": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnedLabel": "Deposit returned: {item}",
+  "@tillReturnedLabel": {
+    "description": "#4478 a returned deposit on the receipt; item is its name",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  }
+}

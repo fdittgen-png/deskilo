@@ -54,5 +54,7 @@
   "@refusalStockCountSelf": {
     "description": "#4172 refusal"
   },
-  "permCountStock": "Contar el stock a ciegas"
+  "permCountStock": "Contar el stock a ciegas",
+  "permConfigureTill": "Organizar las cajas",
+  "permOverrideTillPrice": "Cambiar un precio en la caja"
 }

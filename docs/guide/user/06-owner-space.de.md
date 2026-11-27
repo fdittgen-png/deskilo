@@ -599,6 +599,49 @@ Sie möchten, dass Ihre Rechnungen und Briefe auf dem Papier gedruckt werden, da
 
 **Siehe auch:** [Land](help:user.workspace.settings.country)
 
+<!-- anchor: user.workspace.settings.master-data -->
+### Stammdaten
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Stammdaten sind die Listen, mit denen Ihr Unternehmen eingerichtet ist und die seine Auswahlfelder lesen: die Einheiten, die Steuersätze, die Artikel, die Lieferanten und der Rest. **Stammdaten** zeigt jede Art an einem Ort, nach Gruppen. Jede Karte nennt die Art, sagt in einer Zeile, was sie ist und wie viele Einträge sie enthält, und öffnet den Bildschirm, der sie bearbeitet.
+
+**Schritte**
+
+1. Öffnen Sie in [Workspace](app:/workspace-settings) die **Stammdaten**, oder wählen Sie im Menü unter **Workspace einrichten** die **Stammdaten**.
+2. Tippen Sie in **Suchen**, um nur die Karten zu behalten, deren Name passt.
+3. Tippen Sie auf eine Karte und bearbeiten Sie ihre Einträge auf dem Bildschirm, den sie öffnet.
+
+**Gut zu wissen**
+
+- Sie sehen eine Karte nur, wenn Sie ihren Bildschirm öffnen dürfen: Ihre Funktion ist eingeschaltet und Sie haben ihre Berechtigung.
+- Eine Anzahl, die nicht gelesen werden kann, sagt es, mit **Erneut versuchen**; sie wird nie als 0 angezeigt.
+
+<!-- anchor: user.workspace.master-data.measures -->
+#### Maße und Steuern
+
+**Maßeinheiten** mit ihren Umrechnungen und **Steuersätze**. Die Einheiten sind immer da, ob die Funktion **Maßeinheiten** eingeschaltet ist oder nicht.
+
+<!-- anchor: user.workspace.master-data.catalogue -->
+#### Verkaufskatalog
+
+**Artikel**, **Artikelgruppen** und **Leistungen**: was das Unternehmen lagert und verkauft.
+
+<!-- anchor: user.workspace.master-data.places -->
+#### Lagerorte und Bestand
+
+**Lagerorte**, wo die Waren lagern, und **Kassen**: die Kassen am Tresen, jede mit ihrer Tastenbelegung.
+
+<!-- anchor: user.workspace.master-data.partners -->
+#### Geschäftspartner
+
+**Lieferanten** und **Rechnungskunden**.
+
+<!-- anchor: user.workspace.master-data.organisation -->
+#### Organisation
+
+**Standorte**: die Adressen des Unternehmens und die Ebenen an jeder.
+
 <!-- anchor: user.workspace.settings.units -->
 ### Maßeinheiten
 
@@ -610,11 +653,10 @@ Ihre Artikel, Angebote und Rechnungen werden in Einheiten gemessen, und manche E
 
 **Schritte**
 
-1. Schalten Sie **Maßeinheiten** unter **Funktionen** ein (sie ist aus, bis Sie sie verlangen).
-2. Tippen Sie in [Maßeinheiten](app:/settings/units) auf **Neue Einheit**.
-3. Füllen Sie **Einheitencode** (er lässt sich später nicht mehr ändern), **Ihre Bezeichnung der Einheit**, **Sie misst** und **Eine Einheit entspricht** in der Basiseinheit der Messgröße aus: 1000 für ein km in m, 0,001 für ein mm.
-4. Optional tragen Sie **UN/ECE-Code (für E-Rechnungen)** ein, den E-Rechnungen mitführen (KMT für ein km).
-5. Tippen Sie auf **Speichern**.
+1. Tippen Sie in [Maßeinheiten](app:/settings/units), erreichbar über **Stammdaten**, auf **Neue Einheit**.
+2. Füllen Sie **Einheitencode** (er lässt sich später nicht mehr ändern), **Ihre Bezeichnung der Einheit**, **Sie misst** und **Eine Einheit entspricht** in der Basiseinheit der Messgröße aus: 1000 für ein km in m, 0,001 für ein mm.
+3. Optional tragen Sie **UN/ECE-Code (für E-Rechnungen)** ein, den E-Rechnungen mitführen (KMT für ein km).
+4. Tippen Sie auf **Speichern**.
 
 **Gut zu wissen**
 
@@ -622,6 +664,7 @@ Ihre Artikel, Angebote und Rechnungen werden in Einheiten gemessen, und manche E
 - Eine Einheit in Verwendung (ein darin gezählter Artikel, eine Lagerbewegung, ein Angebot oder eine Rechnungszeile) behält Größe und Faktor für immer: Eine Korrektur ist eine neue Einheit. Eine Einheit, die niemand verwendet, lässt sich archivieren (**Archivieren**) und wieder anzeigen (**Wieder anzeigen**).
 - Eine Umrechnung ist exakt: 2,5 km sind 2500 m. Zwei Arten von Einheiten rechnen sich nie um, und ein Ergebnis, das sechs Nachkommastellen nicht fassen, wird abgelehnt, nie gerundet.
 - Nur Inhaber und Administratoren mit der Berechtigung, die Einstellungen des Workspace zu ändern, pflegen die Einheiten.
+- Die Einheiten sind immer da. Die Funktion **Maßeinheiten** unter **Funktionen** entscheidet, ob Angebote und Rechnungen Ihre eigenen Einheiten anbieten und ob die Auswahlfelder eines Artikels jede Einheit anbieten; solange sie aus ist, bieten sie nur die üblichen Einheiten an.
 
 **Siehe auch:** [Papier der Dokumente](help:user.workspace.settings.paper)
 

@@ -16,6 +16,7 @@ import 'stock_config.dart';
 import 'stock_operations.dart';
 import 'stock_page.dart';
 import 'stock_sites.dart';
+import 'unit_conversions.dart';
 
 /// One movement to book: [quantity] (inventory unit) of [item] from [from] to [to], with what the person entered
 /// beside it.
@@ -74,8 +75,10 @@ class StockLedger {
     required this._places,
     required DateTime Function() clock,
     List<StockUnitDraft> Function(String itemId)? units,
+    Iterable<UnitConversion> Function()? conversions,
     this.prefix = 'stock',
   }) : _units = units ?? ((_) => const []),
+       _conversions = conversions ?? (() => builtInConversions),
        _now = clock;
 
   /// The business that keeps the stock.
@@ -87,6 +90,13 @@ class StockLedger {
   final Iterable<StockItem> Function() _items;
   final Map<String, StockPlaceConfig> Function() _places;
   final List<StockUnitDraft> Function(String itemId) _units;
+
+  /// The business's general conversions (1 kg = 1000 g): what an entered unit may convert through when the item has no conversion of its own.
+  final Iterable<UnitConversion> Function() _conversions;
+
+  /// #4479 -- the factor of [unit] to the inventory unit of [item] (its own conversion, else the business's general one, one step); null: none.
+  ({int num, int den})? configFactor(StockItemConfig item, String unit) =>
+      unitFactor(from: unit, to: item.inventoryUnit, inventoryUnit: item.inventoryUnit, itemUnits: item.units, general: _conversions());
   final DateTime Function() _now;
 
   /// What a retried request id answered.
@@ -254,14 +264,14 @@ class StockLedger {
     return q;
   }
 
-  /// [entered] in [unit] as [item]'s inventory unit: its own unit as it is, a packaging unit by its exact factor,
-  /// any other refused (0747 stock_to_inventory:317-330, read per business since 0952), kept to six decimals as the
-  /// movement stores it (numeric(18, 6), 0840:355).
+  /// [entered] in [unit] as [item]'s inventory unit: its own unit as it is, any other by the one defined conversion
+  /// (`unitFactor`: the item's own, else the business's general one, one step), none defined refused (0968 unit_convert),
+  /// kept to six decimals as the movement stores it (numeric(18, 6), 0840:355).
   ExactQuantity toInventory(StockItem item, ExactQuantity entered, String? unit, int i) {
     if (unit == null || unit == item.unit) return entered;
-    final factor = _units(item.id).where((u) => u.unit == unit).firstOrNull;
+    final factor = unitFactor(from: unit, to: item.unit, inventoryUnit: item.unit, itemUnits: _units(item.id), general: _conversions());
     if (factor == null) throw StockConfigRefused('lines[$i].unit', StockRefusal.unitUnmapped);
-    final converted = entered.scaled(factor.factorNum, factor.factorDen, round: true).value;
+    final converted = entered.scaled(factor.num, factor.den, round: true).value;
     if (converted == null) throw StockConfigRefused('lines[$i].quantity', StockRefusal.quantityInvalid);
     return converted;
   }

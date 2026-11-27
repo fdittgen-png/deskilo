@@ -193,6 +193,10 @@
   "@standaloneFactTotal": {
     "description": "#4165 standalone invoice composer: standaloneFactTotal"
   },
+  "standaloneFactTotalMismatch": "les lignes ne correspondent pas au total accepté",
+  "@standaloneFactTotalMismatch": {
+    "description": "#4405 previewed document: standaloneFactTotalMismatch"
+  },
   "standaloneFactCurrency": "la devise de l’entreprise",
   "@standaloneFactCurrency": {
     "description": "#4165 standalone invoice composer: standaloneFactCurrency"

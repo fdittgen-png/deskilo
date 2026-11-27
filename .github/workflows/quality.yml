@@ -1375,6 +1375,10 @@ jobs:
           bash scripts/stock_transfer_race.sh "$DB_URL"
           # #4433 — two invoices taking the last piece at once: one sells it, the other waits and is refused.
           bash scripts/invoice_goods_race.sh "$DB_URL"
+          # #4492 — a return and a void of the same sale at once: they wait for each other, nothing comes back twice.
+          bash scripts/invoice_void_return_race.sh "$DB_URL"
+          # #4492 — the counter and the stock door take the goods of one sale back at once: they wait, nothing comes back twice.
+          bash scripts/counter_return_race.sh "$DB_URL"
 
       # #1329 — the feature-flag write compares its read-set and merges
       # under ONE row lock. Two real sessions prove there is no window
@@ -1524,6 +1528,11 @@ jobs:
           # #3338 row 8 -- the same archive carried to 0689, with in-flight
           # e-invoice work seeded there, then 0690..tip over it.
           STAGE_AT=0689 bash scripts/populated_upgrade_check.sh
+          # #4492 row 6 -- the same archive carried to 0747, the first goods
+          # ledger, with goods moved there (cartons, glasses of a fifth, two
+          # lots), then 0748..tip over them: the variants, the places and the
+          # unit migrations.
+          STOCK_AT=0747 bash scripts/populated_upgrade_check.sh
 
       # #2561 C2 — the physical topology, in this job and not beside it:
       # the job's replayed stack is W-A; P and W-B are two more stacks of

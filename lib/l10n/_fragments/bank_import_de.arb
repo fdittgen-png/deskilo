@@ -119,6 +119,10 @@
   "@refusalBankMatchUndoLaterFirst": {
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
+  "refusalBooksClosedPeriodDated": "Dieses Datum liegt in einem abgeschlossenen Buchungszeitraum: Es wurde nichts erfasst. Ein Datum im offenen Zeitraum ist möglich; nur der Inhaber kann den Zeitraum wieder öffnen.",
+  "@refusalBooksClosedPeriodDated": {
+    "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
+  },
   "bankUnmatchReasonRequired": "Geben Sie an, warum die Zuordnung rückgängig gemacht wird.",
   "@bankUnmatchReasonRequired": {
     "description": "#2380 money-in unmatch: the reason is required."

@@ -1578,7 +1578,19 @@
       "capabilities": []
     },
     {
+      "key": "counterReceiptPrinter",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "counterReceipts",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "counterTillLayout",
       "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []

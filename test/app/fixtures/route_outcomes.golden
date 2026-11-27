@@ -127,6 +127,7 @@ signed-out on  /settings -> /auth
 signed-out on  /settings/assistant-setup -> /auth
 signed-out on  /settings/assistants -> /auth
 signed-out on  /settings/colours -> /auth
+signed-out on  /settings/master-data -> /auth
 signed-out on  /settings/number-sequences -> /auth
 signed-out on  /settings/payment-terms -> /auth
 signed-out on  /settings/personal-info -> /auth
@@ -149,6 +150,7 @@ signed-out on  /stock/cycle-counts/:taskId -> /auth
 signed-out on  /stock/expiry -> /auth
 signed-out on  /stock/groups -> /auth
 signed-out on  /stock/items -> /auth
+signed-out on  /stock/items/:itemId -> /auth
 signed-out on  /stock/movements -> /auth
 signed-out on  /stock/movements/:id -> /auth
 signed-out on  /stock/places -> /auth
@@ -170,6 +172,7 @@ signed-out on  /templates/detail -> /auth
 signed-out on  /till -> /auth
 signed-out on  /till/day -> /auth
 signed-out on  /till/drawer -> /auth
+signed-out on  /till/layout/:tillId -> /auth
 signed-out on  /till/receipts -> /auth
 signed-out on  /validation -> /auth
 signed-out on  /vat -> /auth
@@ -307,6 +310,7 @@ signed-out off /settings -> /auth
 signed-out off /settings/assistant-setup -> /auth
 signed-out off /settings/assistants -> /auth
 signed-out off /settings/colours -> /auth
+signed-out off /settings/master-data -> /auth
 signed-out off /settings/number-sequences -> /auth
 signed-out off /settings/payment-terms -> /auth
 signed-out off /settings/personal-info -> /auth
@@ -329,6 +333,7 @@ signed-out off /stock/cycle-counts/:taskId -> /auth
 signed-out off /stock/expiry -> /auth
 signed-out off /stock/groups -> /auth
 signed-out off /stock/items -> /auth
+signed-out off /stock/items/:itemId -> /auth
 signed-out off /stock/movements -> /auth
 signed-out off /stock/movements/:id -> /auth
 signed-out off /stock/places -> /auth
@@ -350,6 +355,7 @@ signed-out off /templates/detail -> /auth
 signed-out off /till -> /auth
 signed-out off /till/day -> /auth
 signed-out off /till/drawer -> /auth
+signed-out off /till/layout/:tillId -> /auth
 signed-out off /till/receipts -> /auth
 signed-out off /validation -> /auth
 signed-out off /vat -> /auth
@@ -487,6 +493,7 @@ no-space on  /settings -> (open)
 no-space on  /settings/assistant-setup -> /me
 no-space on  /settings/assistants -> /me
 no-space on  /settings/colours -> /me
+no-space on  /settings/master-data -> /me
 no-space on  /settings/number-sequences -> /me
 no-space on  /settings/payment-terms -> /me
 no-space on  /settings/personal-info -> /me
@@ -509,6 +516,7 @@ no-space on  /stock/cycle-counts/:taskId -> /me
 no-space on  /stock/expiry -> /me
 no-space on  /stock/groups -> /me
 no-space on  /stock/items -> /me
+no-space on  /stock/items/:itemId -> /me
 no-space on  /stock/movements -> /me
 no-space on  /stock/movements/:id -> /me
 no-space on  /stock/places -> /me
@@ -530,6 +538,7 @@ no-space on  /templates/detail -> /onboarding
 no-space on  /till -> /me
 no-space on  /till/day -> /me
 no-space on  /till/drawer -> /me
+no-space on  /till/layout/:tillId -> /me
 no-space on  /till/receipts -> /me
 no-space on  /validation -> /me
 no-space on  /vat -> /me
@@ -667,6 +676,7 @@ no-space off /settings -> (open)
 no-space off /settings/assistant-setup -> /me
 no-space off /settings/assistants -> /me
 no-space off /settings/colours -> /me
+no-space off /settings/master-data -> /me
 no-space off /settings/number-sequences -> /me
 no-space off /settings/payment-terms -> /me
 no-space off /settings/personal-info -> /me
@@ -689,6 +699,7 @@ no-space off /stock/cycle-counts/:taskId -> /me
 no-space off /stock/expiry -> /me
 no-space off /stock/groups -> /me
 no-space off /stock/items -> /me
+no-space off /stock/items/:itemId -> /me
 no-space off /stock/movements -> /me
 no-space off /stock/movements/:id -> /me
 no-space off /stock/places -> /me
@@ -710,6 +721,7 @@ no-space off /templates/detail -> /onboarding
 no-space off /till -> /me
 no-space off /till/day -> /me
 no-space off /till/drawer -> /me
+no-space off /till/layout/:tillId -> /me
 no-space off /till/receipts -> /me
 no-space off /validation -> /me
 no-space off /vat -> /me
@@ -847,6 +859,7 @@ member on  /settings -> (open)
 member on  /settings/assistant-setup -> /calendar
 member on  /settings/assistants -> /calendar
 member on  /settings/colours -> /calendar
+member on  /settings/master-data -> /calendar
 member on  /settings/number-sequences -> /calendar
 member on  /settings/payment-terms -> (open)
 member on  /settings/personal-info -> (open)
@@ -869,6 +882,7 @@ member on  /stock/cycle-counts/:taskId -> /calendar
 member on  /stock/expiry -> /calendar
 member on  /stock/groups -> /calendar
 member on  /stock/items -> /calendar
+member on  /stock/items/:itemId -> /calendar
 member on  /stock/movements -> /calendar
 member on  /stock/movements/:id -> /calendar
 member on  /stock/places -> /calendar
@@ -890,6 +904,7 @@ member on  /templates/detail -> /onboarding
 member on  /till -> /calendar
 member on  /till/day -> /calendar
 member on  /till/drawer -> /calendar
+member on  /till/layout/:tillId -> /calendar
 member on  /till/receipts -> /calendar
 member on  /validation -> /calendar
 member on  /vat -> /calendar
@@ -1027,6 +1042,7 @@ member off /settings -> (open)
 member off /settings/assistant-setup -> /messages
 member off /settings/assistants -> /messages
 member off /settings/colours -> /messages
+member off /settings/master-data -> /messages
 member off /settings/number-sequences -> /messages
 member off /settings/payment-terms -> /settings
 member off /settings/personal-info -> /settings
@@ -1049,6 +1065,7 @@ member off /stock/cycle-counts/:taskId -> /messages
 member off /stock/expiry -> /messages
 member off /stock/groups -> /messages
 member off /stock/items -> /messages
+member off /stock/items/:itemId -> /messages
 member off /stock/movements -> /messages
 member off /stock/movements/:id -> /messages
 member off /stock/places -> /messages
@@ -1070,6 +1087,7 @@ member off /templates/detail -> /onboarding
 member off /till -> /messages
 member off /till/day -> /messages
 member off /till/drawer -> /messages
+member off /till/layout/:tillId -> /messages
 member off /till/receipts -> /messages
 member off /validation -> /messages
 member off /vat -> /messages
@@ -1207,6 +1225,7 @@ admin on  /settings -> (open)
 admin on  /settings/assistant-setup -> /calendar
 admin on  /settings/assistants -> /calendar
 admin on  /settings/colours -> /calendar
+admin on  /settings/master-data -> (open)
 admin on  /settings/number-sequences -> /calendar
 admin on  /settings/payment-terms -> (open)
 admin on  /settings/personal-info -> (open)
@@ -1229,6 +1248,7 @@ admin on  /stock/cycle-counts/:taskId -> /calendar
 admin on  /stock/expiry -> /calendar
 admin on  /stock/groups -> /calendar
 admin on  /stock/items -> /calendar
+admin on  /stock/items/:itemId -> /calendar
 admin on  /stock/movements -> /calendar
 admin on  /stock/movements/:id -> /calendar
 admin on  /stock/places -> /calendar
@@ -1250,6 +1270,7 @@ admin on  /templates/detail -> /onboarding
 admin on  /till -> /calendar
 admin on  /till/day -> /calendar
 admin on  /till/drawer -> /calendar
+admin on  /till/layout/:tillId -> /calendar
 admin on  /till/receipts -> /money
 admin on  /validation -> /calendar
 admin on  /vat -> /calendar
@@ -1388,6 +1409,7 @@ admin off /settings -> (open)
 admin off /settings/assistant-setup -> /messages
 admin off /settings/assistants -> /messages
 admin off /settings/colours -> /messages
+admin off /settings/master-data -> /settings
 admin off /settings/number-sequences -> /messages
 admin off /settings/payment-terms -> /settings
 admin off /settings/personal-info -> /settings
@@ -1410,6 +1432,7 @@ admin off /stock/cycle-counts/:taskId -> /messages
 admin off /stock/expiry -> /messages
 admin off /stock/groups -> /messages
 admin off /stock/items -> /messages
+admin off /stock/items/:itemId -> /messages
 admin off /stock/movements -> /messages
 admin off /stock/movements/:id -> /messages
 admin off /stock/places -> /messages
@@ -1431,6 +1454,7 @@ admin off /templates/detail -> /onboarding
 admin off /till -> /messages
 admin off /till/day -> /messages
 admin off /till/drawer -> /messages
+admin off /till/layout/:tillId -> /messages
 admin off /till/receipts -> /messages
 admin off /validation -> /messages
 admin off /vat -> /messages
@@ -1568,6 +1592,7 @@ owner on  /settings -> (open)
 owner on  /settings/assistant-setup -> (open)
 owner on  /settings/assistants -> (open)
 owner on  /settings/colours -> /settings
+owner on  /settings/master-data -> (open)
 owner on  /settings/number-sequences -> /settings
 owner on  /settings/payment-terms -> (open)
 owner on  /settings/personal-info -> (open)
@@ -1575,7 +1600,7 @@ owner on  /settings/public-page -> (open)
 owner on  /settings/questions -> /settings
 owner on  /settings/roles-of-this-space -> /settings
 owner on  /settings/sites -> /settings
-owner on  /settings/units -> /settings
+owner on  /settings/units -> (open)
 owner on  /settings/what-you-can-do -> (open)
 owner on  /settings/wording -> /settings
 owner on  /setup -> (open)
@@ -1590,6 +1615,7 @@ owner on  /stock/cycle-counts/:taskId -> /reserve
 owner on  /stock/expiry -> /reserve
 owner on  /stock/groups -> /reserve
 owner on  /stock/items -> /reserve
+owner on  /stock/items/:itemId -> /reserve
 owner on  /stock/movements -> /reserve
 owner on  /stock/movements/:id -> /reserve
 owner on  /stock/places -> /reserve
@@ -1611,6 +1637,7 @@ owner on  /templates/detail -> /onboarding
 owner on  /till -> /money
 owner on  /till/day -> /money
 owner on  /till/drawer -> /money
+owner on  /till/layout/:tillId -> /money
 owner on  /till/receipts -> /money
 owner on  /validation -> (open)
 owner on  /vat -> (open)
@@ -1749,6 +1776,7 @@ owner off /settings -> (open)
 owner off /settings/assistant-setup -> (open)
 owner off /settings/assistants -> (open)
 owner off /settings/colours -> /settings
+owner off /settings/master-data -> (open)
 owner off /settings/number-sequences -> /settings
 owner off /settings/payment-terms -> /settings
 owner off /settings/personal-info -> /settings
@@ -1756,7 +1784,7 @@ owner off /settings/public-page -> (open)
 owner off /settings/questions -> /settings
 owner off /settings/roles-of-this-space -> /settings
 owner off /settings/sites -> /settings
-owner off /settings/units -> /settings
+owner off /settings/units -> (open)
 owner off /settings/what-you-can-do -> /settings
 owner off /settings/wording -> /settings
 owner off /setup -> /workspace-settings
@@ -1771,6 +1799,7 @@ owner off /stock/cycle-counts/:taskId -> /messages
 owner off /stock/expiry -> /messages
 owner off /stock/groups -> /messages
 owner off /stock/items -> /messages
+owner off /stock/items/:itemId -> /messages
 owner off /stock/movements -> /messages
 owner off /stock/movements/:id -> /messages
 owner off /stock/places -> /messages
@@ -1792,6 +1821,7 @@ owner off /templates/detail -> /onboarding
 owner off /till -> /messages
 owner off /till/day -> /messages
 owner off /till/drawer -> /messages
+owner off /till/layout/:tillId -> /messages
 owner off /till/receipts -> /messages
 owner off /validation -> (open)
 owner off /vat -> /messages

@@ -406,6 +406,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               ),
               // #3294 — the item the line bought, with the purchase figures on.
               PurchaseItemFields(
+                workspaceId: widget.workspaceId,
                 // recorder-key-exempt: a data callback; the fields are keyed.
                 onChanged: (entry) => _item = entry,
               ),

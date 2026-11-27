@@ -149,6 +149,7 @@ de spaceScanField
 de stockCyclePlanName
 de stockDimensionName
 de stockEditCodeGtin
+de stockItemFactBarcode
 de stockItemNewBarcode
 de stockItemNewName
 de stockPlaceBarcode
@@ -459,6 +460,7 @@ fr standaloneInvoiceLineDescription
 fr standaloneInvoicePreviewTotal
 fr stockCycleTabPlans
 fr stockDimensionsTitle
+fr stockItemSectionStock
 fr stockPlaceKindSite
 fr stockPlaceKindZone
 fr stockReorderPointSite

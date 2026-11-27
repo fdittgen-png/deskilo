@@ -32,6 +32,8 @@ const List<DeskWalkPage> deskWalkPages = [
   // #3948 — a settings form's text wraps inside the form's measure.
   ('/vat', PageKind.document, 'money', 'vat'),
   ('/settings/sites', PageKind.document, 'settings', 'sites'),
+  // #4485 — every kind of master data as cards, in the Demo with its counts.
+  ('/settings/master-data', PageKind.dashboard, 'settings', 'master-data'),
   // #3948 — the invoicing wizard: its words wrap inside the reading measure.
   ('/invoicing/wizard', PageKind.task, 'money', 'invoicing-wizard'),
   // #3949 — a record page opened at its address, with its record.
@@ -134,6 +136,8 @@ const List<DeskWalkPage> deskWalkPages = [
   // #4299 — the pages of the Stock group.
   ('/stock/movements', PageKind.document, 'stock', 'stock-movements'),
   ('/stock/items', PageKind.document, 'stock', 'stock-items'),
+  // #4480 — an item open beside the items list, its sections and their actions.
+  ('/stock/items/demo-item-shirt', PageKind.document, 'stock', 'stock-item-open'),
   ('/stock/places', PageKind.document, 'stock', 'stock-places'),
   ('/stock/settings', PageKind.document, 'stock', 'stock-settings'),
   (

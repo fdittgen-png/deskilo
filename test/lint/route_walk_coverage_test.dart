@@ -41,6 +41,7 @@ const Map<String, String> _noLayoutOfItsOwn = {
   '/till/day': '#4367 a list of closed days and a full-screen report; widget tests render it at phone and desk',
   '/till/receipts': '#4185 the receipts the till made with their sheets; widget tests render them at phone and desk',
   '/till/drawer': '#4367 the tills with their sessions and four sheets; widget tests render them at phone and desk',
+  '/till/layout/:tillId': '#4448 a grid, its toolbar and sheets; widget tests render it at three widths',
   '/stock/transfers': '#4170 a list of cards and three sheets; its widget tests render it at phone and desk widths',
   '/me/spaces/manage': 'forwards to /profiles, which the desk walk renders',
   '/invoicing/standalone/new': '#4165 composer behind its feature; its widget tests walk it at phone and desk',

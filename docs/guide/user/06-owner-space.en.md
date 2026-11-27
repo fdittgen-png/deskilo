@@ -599,6 +599,49 @@ You want your invoices and letters printed on the paper your country uses.
 
 **See also:** [Country](help:user.workspace.settings.country)
 
+<!-- anchor: user.workspace.settings.master-data -->
+### Master data
+
+**Audience:** Owner · Administrator with the permission
+
+Master data is the lists your business is set up with and that its pickers read: the units, the VAT rates, the items, the suppliers and the rest. **Master data** shows every kind in one place, grouped. Each card names the kind, says in one line what it is and how many records it holds, and opens the screen that edits it.
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), open **Master data**, or choose **Master data** under **Workspace setup** in the menu.
+2. Type in **Search** to keep only the cards whose name matches.
+3. Tap a card and edit its records on the screen it opens.
+
+**Good to know**
+
+- You see a card only when you may open its screen: its feature is on and you hold its permission.
+- A count that cannot be read says so, with **Try again**; it is never shown as 0.
+
+<!-- anchor: user.workspace.master-data.measures -->
+#### Measures and taxes
+
+**Units of measure** with their conversions, and **VAT rates**. The units are always here, whether or not the **Units of measure** feature is on.
+
+<!-- anchor: user.workspace.master-data.catalogue -->
+#### Catalogue
+
+**Items**, **Item groups** and **Services**: what the business stocks and sells.
+
+<!-- anchor: user.workspace.master-data.places -->
+#### Places and stock
+
+**Places**, where the goods are kept, and **Tills**: the tills at the counter, each with its key layout.
+
+<!-- anchor: user.workspace.master-data.partners -->
+#### Partners
+
+**Suppliers** and **Billing customers**.
+
+<!-- anchor: user.workspace.master-data.organisation -->
+#### Organisation
+
+**Sites**: the business's addresses and the levels at each.
+
 <!-- anchor: user.workspace.settings.units -->
 ### Units of measure
 
@@ -610,11 +653,10 @@ Your items, quotes and invoices are measured in units, and some units convert in
 
 **Steps**
 
-1. Turn on **Units of measure** under **Features** (it is off until you ask for it).
-2. In [Units of measure](app:/settings/units), tap **New unit**.
-3. Fill in **Unit code** (it cannot change later), **Your name for the unit**, **It measures** and **One unit equals** in the base unit of what it measures: 1000 for a km counted in m, 0.001 for a mm.
-4. Optionally fill in **UN/ECE code (for e-invoices)**, which e-invoices carry (KMT for a km).
-5. Tap **Save**.
+1. In [Units of measure](app:/settings/units), reached from **Master data**, tap **New unit**.
+2. Fill in **Unit code** (it cannot change later), **Your name for the unit**, **It measures** and **One unit equals** in the base unit of what it measures: 1000 for a km counted in m, 0.001 for a mm.
+3. Optionally fill in **UN/ECE code (for e-invoices)**, which e-invoices carry (KMT for a km).
+4. Tap **Save**.
 
 **Good to know**
 
@@ -622,6 +664,7 @@ Your items, quotes and invoices are measured in units, and some units convert in
 - A unit that is in use (an item counted in it, a stock movement, a quote or an invoice line) keeps its dimension and its factor for good: a correction is a new unit. A unit nobody uses can be archived (**Archive**) and shown again (**Show again**).
 - A conversion is exact: 2.5 km is 2500 m. Two kinds of unit never convert, and an answer that six decimals cannot hold is refused, never rounded.
 - Only the owner and the administrators allowed to change the workspace settings maintain the units.
+- The units are always here. The **Units of measure** feature under **Features** decides whether quotes and invoices offer your own units and whether the pickers of an item offer every unit; while it is off they offer the usual units only.
 
 **See also:** [Paper of the documents](help:user.workspace.settings.paper)
 

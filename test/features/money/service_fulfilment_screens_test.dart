@@ -286,12 +286,25 @@ void main() {
           find.byKey(const ValueKey('engagement-direct-quantity')),
           '2',
         );
+        // #4471 -- the unit is picked from the business's units, never typed
+        expect(
+          find.descendant(
+            of: find.byKey(const ValueKey('engagement-direct-unit')),
+            matching: find.byType(TextField),
+          ),
+          findsNothing,
+        );
+        await tester.tap(find.byKey(const ValueKey('engagement-direct-unit')));
+        await _settle(tester);
+        await tester.tap(find.text('kg').last);
+        await _settle(tester);
         await _tap(tester, 'engagement-direct-save');
 
         final all = await s.repo.fulfilments(s.workspaceId);
         expect(all.single.scope.description, 'Workshop');
         expect(all.single.scope.quantity, '2');
-        expect(find.text('2 · Workshop'), findsOneWidget);
+        expect(all.single.scope.unit, 'kg');
+        expect(find.text('2 kg · Workshop'), findsOneWidget);
       });
 
       testWidgets(

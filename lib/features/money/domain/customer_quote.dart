@@ -62,6 +62,7 @@ class QuoteRevision {
     required this.contentDigest,
     required this.superseded,
     this.amounts = const [],
+    this.frozen = const [],
   });
 
   factory QuoteRevision.fromJson(JsonReader r) {
@@ -88,6 +89,7 @@ class QuoteRevision {
         : r.objects('lines', StandaloneLine.fromJson),
     // What each frozen line comes to, in the order of [lines]; none for a draft.
     amounts: [for (final l in frozen) QuoteLineAmounts.of(l)],
+    frozen: frozen,
     totals: r.objectOrNull('totals') == null
         ? null
         : QuoteTotals.fromJson(r.objectOrNull('totals')!),
@@ -112,6 +114,9 @@ class QuoteRevision {
 
   /// What each line of a sent revision comes to (same order as [lines]).
   final List<QuoteLineAmounts> amounts;
+
+  /// The lines as the server froze them (a sent revision; none for a draft).
+  final List<InvoiceLine> frozen;
 
   /// Null for a draft: its amounts exist only once the revision is sent.
   final QuoteTotals? totals;
@@ -403,6 +408,8 @@ class QuoteConversionPrep {
   final String reviewDigest;
 
   bool get issuable => missing.isEmpty;
+  /// What an issue would come to now differs from what was accepted.
+  bool get totalMoved => wouldBeTotalCents != null && wouldBeTotalCents != acceptedTotalCents;
 }
 
 /// The one initial invoice a quote became.

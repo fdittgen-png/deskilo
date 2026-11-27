@@ -23,17 +23,15 @@ import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/item_groups.dart';
-import '../domain/purchase_factor.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_page.dart' show StockItem;
 import '../domain/stock_service_creator.dart';
 import '../domain/workspace_units.dart';
 import 'item_group_text.dart';
+import 'item_group_units.dart';
 import 'measure_unit_text.dart';
 import 'stock_config_text.dart';
 import 'stock_quantity_field.dart';
-
-/// The units a group may set for its items (the registry's units of count, mass and volume).
 
 /// What a sheet offers beside the group itself: the places a home zone is chosen from, the VAT rates, and whether the
 /// person may see and set what an item costs or sells for (manageServices and viewFinances).
@@ -94,10 +92,7 @@ class _GroupDraft {
         'keyColour': '${group?.params[groupParamColour] ?? ''}',
         'depositMinor': '${group?.params[groupParamDepositMinor] ?? ''}',
         'labelTemplate': '${group?.params[groupParamLabelTemplate] ?? ''}',
-        'purchaseUnit': '${group?.params['default_purchase_unit'] ?? ''}',
-        'factor': group?.params['default_purchase_factor_num'] == null
-            ? ''
-            : purchaseFactorText((group!.params['default_purchase_factor_num']! as num).toInt(), ((group.params['default_purchase_factor_den'] ?? 1) as num).toInt()),
+        ...GroupUnitProposals.initial(group, format),
         'reorderPoint': _shownQuantity(format, group?.params['reorder_point_default']),
         'reorderQty': _shownQuantity(format, group?.params['reorder_quantity_default']),
         'margin': group?.params['target_margin_bps'] == null ? '' : percentOfMarginBps((group!.params['target_margin_bps']! as num).toInt()),
@@ -150,7 +145,8 @@ class _GroupDraft {
   /// Whether [text] (a dot-decimal text) is zero: `0`, `0.0`, `0.000000`.
   bool _isZero(String text) => !RegExp(r'[1-9]').hasMatch(text);
 
-  PurchaseFactor? get _factor => fields.text('factor').isEmpty ? null : parsePurchaseFactor(fields.text('factor'));
+  /// #4479 -- the unit proposals: bought in, sold in.
+  late final _units = GroupUnitProposals(fields, format, workspaceId, choices.units);
 
   ItemGroupDraft body() => ItemGroupDraft(
     name: fields.text('name'),
@@ -168,9 +164,7 @@ class _GroupDraft {
       groupParamDepositItem: depositItem,
       groupParamDepositMinor: _int('depositMinor'),
       groupParamLabelTemplate: _text('labelTemplate'),
-      'default_purchase_unit': fields.text('purchaseUnit').isEmpty ? null : fields.text('purchaseUnit'),
-      'default_purchase_factor_num': _factor?.num,
-      'default_purchase_factor_den': _factor?.den,
+      ..._units.parameters(),
       'reorder_point_default': _decimal('reorderPoint'),
       'reorder_quantity_default': _decimal('reorderQty'),
       'home_zone_id': zone,
@@ -197,10 +191,7 @@ class _GroupDraft {
     for (final (key, field) in [('shelf', 'shelf'), ('count', 'count'), ('age', 'age')])
       if (fields.text(key).isNotEmpty && (_int(key) ?? 0) < 1) field: l10n.stockReasonOutOfRange,
     ..._tillErrors(l10n),
-    // a purchase unit and its factor go together, and the factor is one number or a fraction above zero
-    if (fields.text('factor').isNotEmpty && _factor == null) 'factor': l10n.stockReasonOutOfRange,
-    if (fields.text('purchaseUnit').isNotEmpty && fields.text('factor').isEmpty) 'factor': l10n.stockReasonOutOfRange,
-    if (fields.text('purchaseUnit').isEmpty && fields.text('factor').isNotEmpty) 'purchaseUnit': l10n.stockReasonNameMalformed,
+    ..._units.errors(l10n),
     if (fields.text('reorderPoint').isNotEmpty && _decimal('reorderPoint') == null) 'reorderPoint': l10n.stockReasonOutOfRange,
     if (fields.text('reorderQty').isNotEmpty && (_decimal('reorderQty') == null || _isZero(_decimal('reorderQty')!))) 'reorderQty': l10n.stockReasonOutOfRange,
     if (financeAllowed && fields.text('margin').isNotEmpty && marginBpsOfPercent(decimalTextFromInput(fields.text('margin'), locale: locale, grouping: false) ?? '') == null) 'margin': l10n.stockReasonOutOfRange,
@@ -363,10 +354,7 @@ class _GroupDraft {
       const FormGap(),
       Text(l10n.itemGroupProposalHint, key: const ValueKey('item-group-proposals'), style: Theme.of(context).textTheme.bodySmall),
       const FormGap.small(),
-      AppTextField(key: const ValueKey('item-group-purchase-unit'), controller: fields['purchaseUnit'], fieldKey: 'purchaseUnit', label: l10n.itemGroupPurchaseUnit, onChanged: (_) => _preview = null),
-      const FormGap(),
-      AppTextField(key: const ValueKey('item-group-factor'), controller: fields['factor'], fieldKey: 'factor', label: l10n.itemGroupPurchaseFactor, onChanged: (_) => _preview = null),
-      const FormGap(),
+      ..._units.widgets(l10n, edit, () => _preview = null),
       StockQuantityField(
         key: const ValueKey('item-group-reorder-point'),
         controller: fields['reorderPoint'],

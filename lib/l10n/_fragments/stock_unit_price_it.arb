@@ -1,0 +1,10 @@
+{
+  "stockEditUnitPrice": "Prezzo di uno",
+  "@stockEditUnitPrice": {
+    "description": "#4479 the price of one of an item's units"
+  },
+  "stockEditUnitPriceHelp": "Lasciare vuoto: il prezzo dell'articolo per il fattore.",
+  "@stockEditUnitPriceHelp": {
+    "description": "#4479 what an empty unit price means"
+  }
+}

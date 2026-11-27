@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'workspace_feature.dart';
+import 'workspace_feature.dart';
 
-// #2386 — the feature registry's data, part 2 of 3 in display
-// order. A new flag's entry goes at the end of the last part.
-const Map<WorkspaceFeature, FeatureManifestEntry> _manifest2 = {
+// #2386, #4408 — the feature registry in display order, second of three (early, mid, late): a new flag ends the late one.
+const Map<WorkspaceFeature, FeatureManifestEntry> midFeatureManifest = {
   // #825 — the member page over the directory's profile sheet.
   WorkspaceFeature.memberPage: FeatureManifestEntry(
     feature: WorkspaceFeature.memberPage,

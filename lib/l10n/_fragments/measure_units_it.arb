@@ -103,6 +103,10 @@
   "@measureDimensionTime": {
     "description": "#4442 dimension: time"
   },
+  "measureDimensionPackage": "Confezione",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
+  },
   "measureReasonInUse": "Questa unità è in uso, quindi la sua grandezza e il suo fattore non possono più cambiare. Crei invece una nuova unità.",
   "@measureReasonInUse": {
     "description": "#4442 refusal: a unit in use keeps its factor"

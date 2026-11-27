@@ -27,6 +27,11 @@
 //   nesting     if/else bodies, loops, switch, catch, ?:, collection
 //               elements and every closure
 //
+// #4408 -- a table is not logic: a function whose whole body is one switch expression whose cases are constants (an
+// enum's values, alone or joined by `||`), with no guard, each answering an expression with no branch of its own, is
+// measured as one line with no branch. The compiler checks such a switch is exhaustive, so a new enum value without its
+// row fails `dart analyze`; splitting it to stay under the length limit would only bring back the wildcard.
+//
 // A function is identified by file + enclosing type + name + parameter
 // signature, so a rename or a move is a NEW function (test/lint/code_health_test.dart).
 // A file the parser reports an error for is a failure, never a smaller
@@ -164,6 +169,23 @@ class FileHealth {
           'params': overParameters,
         },
       };
+}
+
+/// #4408 -- whether [body] is a table: `=> switch (x) { A.a => v, A.b || A.c => w, ... }`, constants only, no guard, no
+/// branch inside an answer.
+bool _isTable(FunctionBody body) {
+  if (body is! ExpressionFunctionBody) return false;
+  final e = body.expression;
+  if (e is! SwitchExpression || e.cases.isEmpty) return false;
+  bool constant(DartPattern p) =>
+      p is ConstantPattern || (p is LogicalOrPattern && constant(p.leftOperand) && constant(p.rightOperand));
+  for (final c in e.cases) {
+    if (c.guardedPattern.whenClause != null || !constant(c.guardedPattern.pattern)) return false;
+    final m = _Metrics();
+    c.expression.accept(m);
+    if (m.cyc != 1) return false;
+  }
+  return true;
 }
 
 class _Metrics extends RecursiveAstVisitor<void> {
@@ -382,16 +404,17 @@ FileHealth measureSource(String path, String source) {
     if (body is EmptyFunctionBody) return;
     final m = _Metrics();
     body.accept(m);
+    final table = _isTable(body);
     var id = '$path#${type == null ? '' : '$type.'}$name(${_signature(params)})';
     final seen = taken.update(id, (n) => n + 1, ifAbsent: () => 1);
     if (seen > 1) id = '$id~$seen';
     functions.add(FunctionHealth(
       id: id,
       line: lineOf(node.offset),
-      length: lineOf(node.end) - lineOf(node.offset) + 1,
-      cyclomatic: m.cyc,
-      cognitive: m.cog,
-      nesting: m.maxNest,
+      length: table ? 1 : lineOf(node.end) - lineOf(node.offset) + 1,
+      cyclomatic: table ? 1 : m.cyc,
+      cognitive: table ? 0 : m.cog,
+      nesting: table ? 0 : m.maxNest,
       parameters: params?.parameters.length ?? 0,
     ));
   }));

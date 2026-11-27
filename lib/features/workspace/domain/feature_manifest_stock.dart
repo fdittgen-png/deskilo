@@ -4,7 +4,7 @@ import 'workspace_feature.dart';
 export 'feature_manifest_organisation.dart';
 
 /// #3824 — the stock flags of epic #3823, in display order, after the
-/// registry's three parts (`feature_manifest_part1-3.dart`): the goods
+/// registry's three files (`feature_manifest_early/mid/late.dart`): the goods
 /// ledger and, leaf by leaf, every stock flag under it.
 const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
   // #3824 — the goods ledger: where goods are, in which unit, from which
@@ -176,6 +176,26 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     feature: WorkspaceFeature.unitsOfMeasure,
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
+  // #4448 — the till layout editor: the owner or an admin arranges each till's keys, pages and tools (keypad, calculator,
+  // scan field) from a trade template, as a draft, then publishes it. Asked for, under till sessions (the issue's
+  // `counterTill` parent does not exist; till sessions is the till's own flag, as E04 ruled for the embedded terminal).
+  // Off: every till keeps the generated layout of #4366.
+  WorkspaceFeature.counterTillLayout: FeatureManifestEntry(
+    feature: WorkspaceFeature.counterTillLayout,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.counterTillSessions,
+    defaultOn: false,
+  ),
+  // #4368 — the till's receipt on a receipt printer on the local network, and the cash drawer it opens. Under till sessions
+  // (the issue's `counterTill` parent does not exist). Off: the receipt is shown and shared, nothing prints.
+  WorkspaceFeature.counterReceiptPrinter: FeatureManifestEntry(
+    feature: WorkspaceFeature.counterReceiptPrinter,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.counterTillSessions,
     defaultOn: false,
   ),
 };

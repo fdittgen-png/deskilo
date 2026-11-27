@@ -18,7 +18,6 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../domain/billing_customer.dart';
 import '../../domain/customer_quote.dart';
 import '../../domain/standalone_invoice.dart';
@@ -81,9 +80,9 @@ class _QuoteForm extends ChangeNotifier {
       subjectId: subject,
       issuedOn: doc.startDate,
       validUntil: doc.endDate,
-      buyerReference: doc.reference.text.trim(),
-      purchaseOrder: doc.order.text.trim(),
-      notes: doc.notes.text.trim(),
+      buyerReference: doc.referenceText,
+      purchaseOrder: doc.orderText,
+      notes: doc.notesText,
       lines: doc.toLines(context),
     );
   }
@@ -207,20 +206,15 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
     if (id == null) {
       body = const SizedBox.shrink();
     } else if (!_isNew && !_form.loaded) {
-      body = ref
-          .watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)))
-          .when(
-            loading: () => const LoadingView(),
-            error: (e, _) => ReadFailureBanner(
-              error: e,
-              refusal: e is QuoteRefusal ? quoteRefusalText(l10n, e) : null,
-              onRetry: () => ref.invalidate(
-                customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)),
-              ),
-            ),
-            // the working draft is read once; edits are the form's from here on
-            data: (quote) => _body(context, id, quote),
-          );
+      body = AsyncReadBody(
+        value: ref.watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId))),
+        refusal: (e) => e is QuoteRefusal ? quoteRefusalText(l10n, e) : null,
+        onRetry: () => ref.invalidate(
+          customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)),
+        ),
+        // the working draft is read once; edits are the form's from here on
+        data: (quote) => _body(context, id, quote),
+      );
     } else {
       body = _body(context, id, null);
     }
@@ -274,8 +268,8 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
             noCustomers: l10n.quoteNoCustomers,
           ),
           customers: [for (final c in customers) (id: c.subjectId, name: c.displayName)],
-          startShown: doc.startDate ?? today,
-          endShown: doc.endDate ?? validity.defaultEnd(doc.startDate ?? today),
+          startShown: doc.startOn(today),
+          endShown: doc.endOn(today, validity.defaultEnd),
           locked: locked,
           onChanged: _form.changed,
         ),

@@ -11,14 +11,17 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../application/till_drawer_commands.dart';
 import '../../domain/till_drawer.dart';
 import '../../providers/till_drawer_providers.dart';
+import '../../providers/till_layout_providers.dart';
 import 'cash_entry_sheet.dart';
 import 'close_sheet.dart';
 import 'drawer_text.dart';
@@ -73,23 +76,11 @@ class _Tills extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    return ref
-        .watch(tillDrawerProvider(workspaceId))
-        .when(
-          loading: () => const LoadingView(),
-          error: (e, _) => Center(
-            child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.lg),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(drawerProblemText(l10n, e), textAlign: TextAlign.center),
-                  const FormGap(),
-                  FilledButton(key: const ValueKey('drawer-retry'), onPressed: () => ref.invalidate(tillDrawerProvider(workspaceId)), child: Text(l10n.tillRetry)),
-                ],
-              ),
-            ),
-          ),
+    return AsyncReadBody(
+          value: ref.watch(tillDrawerProvider(workspaceId)),
+          refusal: (e) => drawerRefusalWords(l10n, e),
+          retryKey: const ValueKey('drawer-retry'),
+          onRetry: () => ref.invalidate(tillDrawerProvider(workspaceId)),
           // the terminal console first: a terminal rings up a sale with or without a till set up here
           data: (tills) => Align(
             alignment: Alignment.topCenter,
@@ -172,6 +163,13 @@ class _TillCard extends ConsumerWidget {
             Row(
               children: [
                 Expanded(child: Text(till.name, style: Theme.of(context).textTheme.titleMedium)),
+                if (ref.watch(mayLayOutTillsProvider))
+                  IconButton(
+                    key: ValueKey('drawer-layout-${till.id}'),
+                    tooltip: l10n.tillLayoutEdit,
+                    icon: const Icon(Icons.dashboard_customize_outlined),
+                    onPressed: () => context.push(Routes.tillLayoutOf(till.id, till.name)),
+                  ),
                 if (canManage)
                   IconButton(
                     key: ValueKey('drawer-edit-${till.id}'),

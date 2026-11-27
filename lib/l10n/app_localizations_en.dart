@@ -9110,8 +9110,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'No document yet. Link your statutes, guides and statements from any drive.';
 
   @override
-  String get documentsInvalid =>
-      'A document needs a title and an https:// link.';
+  String get documentsLinkNotHttps => 'The link must start with https://.';
 
   @override
   String get documentsProviderLabel => 'Stored on';
@@ -9130,6 +9129,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get documentsTitleLabel => 'Title';
+
+  @override
+  String get documentsTitleMissing => 'Give the document a title.';
 
   @override
   String get documentsUrlHelper =>
@@ -11946,11 +11948,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureCounterOfflineCashTitle => 'Selling offline, cash only';
 
   @override
+  String get featureCounterReceiptPrinterDesc =>
+      'Print the till\'s receipt on a receipt printer on your local network (80 or 58 mm), and open the cash drawer it drives after a cash sale. Each till sets its own printer. Off, the receipt is shown and shared, nothing prints.';
+
+  @override
+  String get featureCounterReceiptPrinterTitle => 'Receipt printer';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country\'s operation is supported, and says plainly where it is not.';
 
   @override
   String get featureCounterReceiptsTitle => 'Counter receipts';
+
+  @override
+  String get featureCounterTillLayoutDesc =>
+      'Lay out each till for your trade: which keys sit where, its pages, and tools beside the basket such as a numeric keypad, a calculator or a scan field. Start from a template, publish it, and a till takes it at its next session. Off, every till keeps its generated keys.';
+
+  @override
+  String get featureCounterTillLayoutTitle => 'Till layouts';
 
   @override
   String get featureCounterTillSessionsDesc =>
@@ -18895,9 +18911,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemGroupAssignNone => 'No group';
 
   @override
-  String get itemGroupAssignOpen => 'Group and inherited settings';
-
-  @override
   String itemGroupAssignTitle(String item) {
     return 'Group of $item';
   }
@@ -19096,6 +19109,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get itemGroupRoundingNone => 'No rounding';
+
+  @override
+  String get itemGroupSaleFactor =>
+      'What one of it makes of the inventory unit (sale)';
+
+  @override
+  String get itemGroupSalePrice => 'Price of one when sold';
+
+  @override
+  String get itemGroupSaleUnit => 'Sold in (unit)';
 
   @override
   String get itemGroupSet => 'Set';
@@ -21039,12 +21062,83 @@ class AppLocalizationsEn extends AppLocalizations {
   String get managedProfileTitle => 'Managed profile';
 
   @override
+  String masterDataCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count records',
+      one: '$count record',
+      zero: 'No records',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get masterDataCustomersDesc => 'Who you invoice';
+
+  @override
+  String get masterDataGroupCatalogue => 'Catalogue';
+
+  @override
+  String get masterDataGroupMeasures => 'Measures and taxes';
+
+  @override
+  String get masterDataGroupPartners => 'Partners';
+
+  @override
+  String get masterDataGroupPlaces => 'Places and stock';
+
+  @override
+  String get masterDataIntro =>
+      'Every list the business is set up with, in one place. Tap a card to open its editor.';
+
+  @override
+  String get masterDataItemGroupsDesc => 'Settings shared by a group of items';
+
+  @override
+  String get masterDataItemsDesc => 'What you stock and sell';
+
+  @override
+  String get masterDataNoMatch => 'No master data matches the search.';
+
+  @override
+  String get masterDataNoUnit => 'No unit';
+
+  @override
+  String get masterDataNoVat => 'No VAT';
+
+  @override
+  String get masterDataPlacesDesc => 'Where your goods are kept';
+
+  @override
   String get masterDataSearchHint =>
       'Type a name or a code, or pick from the list';
 
   @override
+  String get masterDataServicesDesc => 'The services you sell';
+
+  @override
+  String get masterDataSitesDesc => 'Your addresses and the levels at each';
+
+  @override
+  String get masterDataSuppliersDesc => 'Who you buy from';
+
+  @override
+  String get masterDataTills => 'Tills';
+
+  @override
+  String get masterDataTillsDesc =>
+      'The tills at the counter and their key layouts';
+
+  @override
   String get masterDataUnknownCode =>
       'This is not a valid entry. Pick one from the list.';
+
+  @override
+  String get masterDataUnlisted => 'This is not in the list: pick one';
+
+  @override
+  String get masterDataVatDesc => 'The rates your documents charge';
 
   @override
   String get mcpApiReference => 'API reference';
@@ -22624,6 +22718,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get measureDimensionMass => 'Mass';
+
+  @override
+  String get measureDimensionPackage => 'Package';
 
   @override
   String get measureDimensionTime => 'Time';
@@ -25546,6 +25643,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Approve the adjustment a stock count proposes.';
 
   @override
+  String get permAllowsConfigureTill =>
+      'Build, publish, copy and reset the layout of a till: its keys, pages and tools. Cashiers use the published layout without this right.';
+
+  @override
   String get permAllowsCountStock =>
       'Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.';
 
@@ -25640,6 +25741,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permAllowsOperateKiosk => 'Set up the kiosk and hand out badges.';
 
   @override
+  String get permAllowsOverrideTillPrice =>
+      'Sell a till line at a price other than the item\'s, with a reason the receipt keeps. Without it, a till line is sold at the item\'s price.';
+
+  @override
   String get permAllowsPaymentTermsEdit =>
       'Request a change of a member\'s payment conditions; validation decides.';
 
@@ -25694,6 +25799,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get permApproveStockAdjustments => 'Approve stock adjustments';
+
+  @override
+  String get permConfigureTill => 'Lay out the tills';
 
   @override
   String get permCountStock => 'Count stock, blind';
@@ -25790,6 +25898,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get permOperateKiosk => 'Operate the kiosk and badges';
+
+  @override
+  String get permOverrideTillPrice => 'Change a price at the till';
 
   @override
   String get permPaymentTermsEdit => 'Request payment-condition changes';
@@ -29307,6 +29418,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This is the invoice\'s first payment: undo its later payments first. Nothing was changed.';
 
   @override
+  String get refusalBooksClosedPeriodDated =>
+      'This date lies inside a closed period of the books: nothing was recorded. A date in the open period is possible; only the owner can reopen the period.';
+
+  @override
   String get refusalChangedMeanwhile =>
       'This changed in the meantime. Reopen it to see where it stands.';
 
@@ -32489,6 +32604,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.';
 
   @override
+  String get settingHintCounterLayoutCashierReorder =>
+      'A cashier may reorder a till\'s keys on their own device without changing the published layout.';
+
+  @override
+  String get settingHintCounterLayoutMaxCells =>
+      'The most cells one till layout may hold, over all its pages and sizes. A larger layout is refused when it is saved.';
+
+  @override
+  String get settingHintCounterMaxDiscount =>
+      'The largest discount, in percent, a cashier may give on a till line. 0 means no discount at the till.';
+
+  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.';
 
@@ -32930,6 +33057,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Fiscal rules for counter sales';
 
   @override
+  String get settingLabelCounterLayoutCashierReorder =>
+      'Cashiers reorder the keys';
+
+  @override
+  String get settingLabelCounterLayoutMaxCells => 'Till layout size';
+
+  @override
+  String get settingLabelCounterMaxDiscount => 'Largest discount at the till';
+
+  @override
   String get settingLabelCounterOfflineMaxMinutes =>
       'Longest offline period (minutes)';
 
@@ -33285,6 +33422,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingUnitCards => 'cards';
+
+  @override
+  String get settingUnitCells => 'cells';
 
   @override
   String get settingUnitCharacters => 'characters';
@@ -35798,6 +35938,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get standaloneFactTotal => 'a total above zero';
 
   @override
+  String get standaloneFactTotalMismatch =>
+      'the lines do not add up to the accepted total';
+
+  @override
   String get standaloneFactUnknownSubject => 'the customer';
 
   @override
@@ -36633,9 +36777,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockEditInventoryUnitChoice => 'Inventory unit';
 
   @override
-  String get stockEditItem => 'Stock settings';
-
-  @override
   String stockEditItemTitle(String item) {
     return 'Stock settings of $item';
   }
@@ -36683,6 +36824,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockEditUnitName => 'Package unit';
+
+  @override
+  String get stockEditUnitPrice => 'Price of one';
+
+  @override
+  String get stockEditUnitPriceHelp =>
+      'Leave empty to use the item\'s price times the factor.';
 
   @override
   String get stockEditUnitsHint =>
@@ -36811,6 +36959,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockItemAddTitle => 'Add an item';
 
   @override
+  String get stockItemAttentionLow => 'Low stock';
+
+  @override
+  String get stockItemAttentionNoPlace => 'No place';
+
+  @override
+  String get stockItemAttentionNoPrice => 'No price';
+
+  @override
+  String get stockItemEditDetails => 'Edit name, price and VAT';
+
+  @override
+  String get stockItemEditGroup => 'Change group';
+
+  @override
+  String get stockItemEditHome => 'Change home place';
+
+  @override
+  String get stockItemEditSettings => 'Edit units, codes and tracking';
+
+  @override
+  String get stockItemEditSuppliers => 'Edit supplier items';
+
+  @override
+  String get stockItemEditTags => 'Edit tags';
+
+  @override
+  String get stockItemEditVariants => 'Edit variants';
+
+  @override
+  String get stockItemFactBarcode => 'Barcode';
+
+  @override
+  String get stockItemFactCost => 'Last known cost';
+
+  @override
+  String get stockItemFactVat => 'VAT';
+
+  @override
+  String get stockItemFilterAll => 'All items';
+
+  @override
+  String get stockItemFilterNoHome => 'Without a home place';
+
+  @override
   String get stockItemNewBarcode => 'Barcode (optional)';
 
   @override
@@ -36843,12 +37036,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockItemNewUnit => 'Counted in';
 
   @override
+  String get stockItemNoGroup => 'In no group';
+
+  @override
+  String get stockItemNoSuppliers => 'No supplier article names this item yet.';
+
+  @override
+  String get stockItemNoVariants => 'This item has no variants.';
+
+  @override
+  String get stockItemNothingOnHand => 'None of it is in stock.';
+
+  @override
+  String get stockItemPlacesTitle => 'Where it is';
+
+  @override
+  String get stockItemSectionGroupTags => 'Group and tags';
+
+  @override
+  String get stockItemSectionOverview => 'Overview';
+
+  @override
+  String get stockItemSectionStock => 'Stock';
+
+  @override
+  String get stockItemSectionSuppliers => 'Supplier items';
+
+  @override
+  String get stockItemSectionVariants => 'Variants';
+
+  @override
+  String get stockItemSeeWhere => 'See every place';
+
+  @override
   String get stockItemsEmpty =>
       'No items yet. An item is a service you keep in stock: choose Add an item.';
 
   @override
   String get stockItemsIntro =>
       'The items the business keeps and sells: each one\'s settings, variants and supplier articles.';
+
+  @override
+  String get stockItemsSelectHint => 'Select an item to act on it';
 
   @override
   String get stockItemsTitle => 'Items';
@@ -37196,6 +37425,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Two variants have the same combination.';
 
   @override
+  String get stockReasonConversionSameUnit =>
+      'A conversion needs two different units.';
+
+  @override
+  String get stockReasonConversionUnknown => 'This conversion is not defined.';
+
+  @override
   String get stockReasonCostInvalid =>
       'This cost is not valid: a total in minor units, and a rate only for another currency.';
 
@@ -37369,6 +37605,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'More than arrived cannot be put away.';
 
   @override
+  String get stockReasonPackageUnit =>
+      'A packaging unit has no general conversion: its factor is set on the item.';
+
+  @override
   String get stockReasonParentInactive =>
       'The place it is inside is no longer in use.';
 
@@ -37526,11 +37766,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockRegistryAllPlaces => 'All places';
 
   @override
-  String stockRegistryCost(String amount) {
-    return 'cost $amount';
-  }
-
-  @override
   String get stockRegistryCostHidden => 'cost not shown';
 
   @override
@@ -37563,20 +37798,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockRegistryNoHome => 'no home place';
 
   @override
-  String get stockRegistryNoHomeFilter => 'Only items with no home place';
-
-  @override
   String stockRegistryOnHand(String quantity) {
     return '$quantity on hand';
   }
 
   @override
   String get stockRegistryPlaceFilter => 'Home place';
-
-  @override
-  String stockRegistryPrice(String amount) {
-    return 'price $amount';
-  }
 
   @override
   String get stockRegistrySearch => 'Find an item by name, barcode or address';
@@ -38361,9 +38588,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockVariantsAdd => 'Add a variant';
-
-  @override
-  String get stockVariantsEdit => 'Variants';
 
   @override
   String get stockVariantsHint =>
@@ -40997,6 +41221,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String tillDayDepositsReturned(String amount) {
+    return 'Deposits returned: $amount';
+  }
+
+  @override
   String tillDayDifferences(String amount) {
     return 'Total difference of the drawers: $amount';
   }
@@ -41066,6 +41295,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tillDayReportNotPrinted =>
+      'The day report was not printed. Check the printer and try again.';
+
+  @override
   String tillDayReportTitle(String number) {
     return 'Day report $number';
   }
@@ -41120,6 +41353,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String tillDepositMissing(String name) {
     return 'The deposit of $name is not for sale at the counter. Nothing was added.';
   }
+
+  @override
+  String get tillDiscountBeyond =>
+      'This discount is beyond what the business allows at the till.';
+
+  @override
+  String get tillDiscountField => 'Discount (%)';
+
+  @override
+  String get tillDiscountInvalid =>
+      'A discount is a percentage off the item\'s price, on a line without a changed price.';
 
   @override
   String get tillDrawerAddTill => 'Add a till';
@@ -41314,6 +41558,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The cash the drawer starts with, counted now.';
 
   @override
+  String get tillDrawerKickFailed =>
+      'The drawer did not open. Check the printer it hangs on.';
+
+  @override
   String get tillDrawerLoadFailed => 'The tills could not be read.';
 
   @override
@@ -41331,6 +41579,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'No till has been set up yet. Someone who manages the sites adds it.';
 
   @override
+  String get tillDrawerNotSet =>
+      'No cash drawer is set on this till\'s printer.';
+
+  @override
   String get tillDrawerOpenAction => 'Open the till';
 
   @override
@@ -41344,6 +41596,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String tillDrawerOpenTitle(String till) {
     return 'Open $till';
   }
+
+  @override
+  String get tillDrawerOpened => 'The drawer is open.';
 
   @override
   String get tillDrawerRefusalAboveLimit =>
@@ -41418,6 +41673,197 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillKeysTitle => 'Items to ring up';
 
   @override
+  String get tillLayoutAdd => 'Add a widget';
+
+  @override
+  String get tillLayoutCalcPush => 'Onto the last line';
+
+  @override
+  String get tillLayoutChooseFunction => 'Which function?';
+
+  @override
+  String get tillLayoutChooseItem => 'Which item?';
+
+  @override
+  String get tillLayoutChoosePage => 'Which page does it open?';
+
+  @override
+  String tillLayoutCopied(String till) {
+    return 'Copied as $till\'s draft. Publish it there.';
+  }
+
+  @override
+  String get tillLayoutCopy => 'Copy to another till';
+
+  @override
+  String get tillLayoutCopyTo => 'Copy to which till?';
+
+  @override
+  String get tillLayoutEdit => 'Lay out this till';
+
+  @override
+  String get tillLayoutFnCard => 'Take a card';
+
+  @override
+  String get tillLayoutFnDeposit => 'Deposit return';
+
+  @override
+  String get tillLayoutFnDiscount => 'Discount on a line';
+
+  @override
+  String get tillLayoutFnDrawer => 'Open the drawer';
+
+  @override
+  String get tillLayoutFnPrice => 'Change a price';
+
+  @override
+  String get tillLayoutFnQuantity => 'Quantity ×';
+
+  @override
+  String get tillLayoutFnReprint => 'Reprint the last receipt';
+
+  @override
+  String get tillLayoutFnVoid => 'Void a line';
+
+  @override
+  String get tillLayoutGone => 'No longer for sale';
+
+  @override
+  String tillLayoutInvalid(String reason) {
+    return 'This layout cannot be saved: $reason';
+  }
+
+  @override
+  String get tillLayoutKindCalculator => 'Calculator';
+
+  @override
+  String get tillLayoutKindCashNotes => 'Suggested cash notes';
+
+  @override
+  String get tillLayoutKindCategory => 'Category key';
+
+  @override
+  String get tillLayoutKindCustomer => 'Customer and note';
+
+  @override
+  String get tillLayoutKindFunction => 'Function key';
+
+  @override
+  String get tillLayoutKindItem => 'Item key';
+
+  @override
+  String get tillLayoutKindKeypad => 'Numeric keypad';
+
+  @override
+  String get tillLayoutKindPasses => 'Studio passes';
+
+  @override
+  String get tillLayoutKindTotal => 'Total and change';
+
+  @override
+  String get tillLayoutKindUnknown => 'A widget this app does not know';
+
+  @override
+  String get tillLayoutNoRoom =>
+      'There is no free place for this widget on this grid.';
+
+  @override
+  String get tillLayoutPageDesk => 'Desk';
+
+  @override
+  String get tillLayoutPageDrinks => 'Drinks';
+
+  @override
+  String get tillLayoutPageFood => 'Food';
+
+  @override
+  String get tillLayoutPageSale => 'Sale';
+
+  @override
+  String get tillLayoutPublish => 'Publish to the till';
+
+  @override
+  String get tillLayoutPublished =>
+      'Published. The till takes it at its next session.';
+
+  @override
+  String get tillLayoutReload => 'Reload';
+
+  @override
+  String get tillLayoutRemoveCell => 'Remove this widget';
+
+  @override
+  String get tillLayoutReset => 'Reset to the generated keys';
+
+  @override
+  String get tillLayoutResetConfirm =>
+      'This till goes back to the keys it makes from your items. Its layout and its draft are removed.';
+
+  @override
+  String get tillLayoutResetDone => 'This till uses its generated keys again.';
+
+  @override
+  String get tillLayoutSizeDesk => 'Desk width';
+
+  @override
+  String get tillLayoutSizePhone => 'Phone width';
+
+  @override
+  String get tillLayoutSizeTablet => 'Tablet width';
+
+  @override
+  String get tillLayoutStale => 'Someone changed this layout; reload it.';
+
+  @override
+  String get tillLayoutStartFrom => 'Start from a template';
+
+  @override
+  String get tillLayoutStepDown => 'Move down';
+
+  @override
+  String get tillLayoutStepLeft => 'Move left';
+
+  @override
+  String get tillLayoutStepNarrower => 'One column narrower';
+
+  @override
+  String get tillLayoutStepRight => 'Move right';
+
+  @override
+  String get tillLayoutStepShorter => 'One row shorter';
+
+  @override
+  String get tillLayoutStepTaller => 'One row taller';
+
+  @override
+  String get tillLayoutStepUp => 'Move up';
+
+  @override
+  String get tillLayoutStepWider => 'One column wider';
+
+  @override
+  String get tillLayoutTemplateBakery =>
+      'Bakery and weighed goods: a keypad beside large keys';
+
+  @override
+  String get tillLayoutTemplateCafe =>
+      'Café and bar: category pages, no scan field';
+
+  @override
+  String get tillLayoutTemplateHardware =>
+      'Hardware and catalogue: scan field and keypad first';
+
+  @override
+  String get tillLayoutTemplateRetail =>
+      'Retail: scan field, basket and pay keys';
+
+  @override
+  String get tillLayoutTemplateStudio => 'Studio desk: passes and sessions';
+
+  @override
+  String get tillLayoutTitle => 'Till layout';
+
+  @override
   String get tillLeaveBody =>
       'The sale was sent and its answer did not come. Leaving keeps it waiting: open the till again and confirm it. Do not ring it up again.';
 
@@ -41431,10 +41877,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillLeaveTitle => 'The sale is not confirmed';
 
   @override
+  String get tillLotChoose => 'Choose the lot';
+
+  @override
+  String tillLotExpired(String date) {
+    return 'Past its date ($date): not sold';
+  }
+
+  @override
+  String tillLotExpires(String date) {
+    return 'Use by $date';
+  }
+
+  @override
+  String get tillLotFirstToExpire =>
+      'The first to expire (chosen by the stock)';
+
+  @override
+  String tillLotLine(String code) {
+    return 'Lot $code';
+  }
+
+  @override
+  String tillLotNone(String item) {
+    return '$item has no lot to choose: it is sold as it is.';
+  }
+
+  @override
+  String tillLotOnHand(String quantity, String unit) {
+    return '$quantity $unit on hand';
+  }
+
+  @override
   String get tillNextCustomer => 'Next customer';
 
   @override
   String get tillNotForCounter => 'This item is not for sale at the counter.';
+
+  @override
+  String get tillNotPrinted =>
+      'Receipt not printed — the sale is complete. Print again, or show the receipt to share it.';
 
   @override
   String tillNotReady(String operation) {
@@ -41444,6 +41926,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tillNotReadyHint =>
       'Nothing is numbered and nothing is taken until the country\'s operation is supported.';
+
+  @override
+  String get tillNothingToReprint => 'No sale to print again yet.';
 
   @override
   String get tillOfflineBanner =>
@@ -41584,7 +42069,101 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tillPriceField => 'New price';
+
+  @override
+  String get tillPriceNotAllowed =>
+      'You may not change a price at the till. The line is sold at the item\'s price.';
+
+  @override
+  String get tillPriceReason => 'Reason';
+
+  @override
+  String get tillPriceReasonHint => 'Kept on the receipt.';
+
+  @override
+  String get tillPriceReasonMissing => 'A changed price needs its reason.';
+
+  @override
+  String get tillPriceUnreadable => 'Type a number, such as 4.50.';
+
+  @override
   String get tillPricing => 'Pricing the basket…';
+
+  @override
+  String get tillPrintCopy => 'Print a copy';
+
+  @override
+  String get tillPrintReceipt => 'Print the receipt';
+
+  @override
+  String get tillPrintTotal => 'TOTAL';
+
+  @override
+  String get tillPrinted => 'Receipt printed.';
+
+  @override
+  String get tillPrinterCodePage => 'Code page';
+
+  @override
+  String get tillPrinterCodePage437 => 'PC437 (without the euro sign)';
+
+  @override
+  String get tillPrinterCodePage858 => 'PC858 (with the euro sign)';
+
+  @override
+  String get tillPrinterDrawer => 'A cash drawer is attached to the printer';
+
+  @override
+  String get tillPrinterHost => 'Printer address';
+
+  @override
+  String get tillPrinterHostHint =>
+      'A name or an address on this network, for example 192.168.1.50';
+
+  @override
+  String get tillPrinterHostRequired => 'Enter the printer\'s address.';
+
+  @override
+  String get tillPrinterMode => 'Print after a sale';
+
+  @override
+  String get tillPrinterModeAlways => 'Always';
+
+  @override
+  String get tillPrinterModeAsk => 'Offer it';
+
+  @override
+  String get tillPrinterModeNever => 'Only when asked';
+
+  @override
+  String get tillPrinterPaper => 'Paper width';
+
+  @override
+  String tillPrinterPaperWidth(String mm) {
+    return '$mm mm';
+  }
+
+  @override
+  String get tillPrinterPort => 'Port';
+
+  @override
+  String get tillPrinterPortInvalid => 'The port is a number from 1 to 65535.';
+
+  @override
+  String get tillPrinterSet => 'Set up the receipt printer';
+
+  @override
+  String get tillPrinterTest => 'Test print';
+
+  @override
+  String get tillPrinterTestSent => 'Test page sent.';
+
+  @override
+  String get tillPrinterTitle => 'Receipt printer';
+
+  @override
+  String get tillPrinting => 'Printing…';
 
   @override
   String get tillQuantityHint => 'An exact quantity, for example 1 or 0.350.';
@@ -41651,6 +42230,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tillReceiptCash => 'Cash';
+
+  @override
+  String get tillReceiptChange => 'Change';
+
+  @override
+  String tillReceiptCopy(String copy) {
+    return 'COPY $copy — not a new receipt';
+  }
+
+  @override
   String tillReceiptCorrects(String number) {
     return 'Corrects receipt $number';
   }
@@ -41690,9 +42280,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillReceiptShow => 'Show the receipt';
 
   @override
+  String get tillReceiptTax => 'of which tax';
+
+  @override
   String tillReceiptTaxLine(String percent, String tax, String net) {
     return 'VAT $percent: $tax on $net';
   }
+
+  @override
+  String get tillReceiptThanks => 'Thank you';
 
   @override
   String tillReceiptTotal(String amount) {
@@ -41710,6 +42306,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tillRetry => 'Try again';
+
+  @override
+  String get tillReturnNoDeposit =>
+      'The last item carries no deposit to take back.';
+
+  @override
+  String get tillReturnNotAllowed =>
+      'You may not take a deposit back at the till.';
+
+  @override
+  String get tillReturnNotDeposit =>
+      'This item is not a deposit any item is sold with.';
+
+  @override
+  String get tillReturnOffline =>
+      'A deposit is not taken back while the till is offline.';
+
+  @override
+  String get tillReturnTracked =>
+      'This deposit is tracked by lot or tag: it is not taken back at the till.';
+
+  @override
+  String tillReturnedLabel(String item) {
+    return 'Deposit returned: $item';
+  }
+
+  @override
+  String get tillReturnedLine => 'Deposit returned';
+
+  @override
+  String get tillRingUpFirst => 'Ring up an item first.';
 
   @override
   String get tillScanLabel => 'Scan a code';
@@ -42174,6 +42801,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unblockAction => 'Unblock';
+
+  @override
+  String get unitConversionDelete => 'Delete';
+
+  @override
+  String get unitConversionEdit => 'Change a conversion';
+
+  @override
+  String get unitConversionFactor => 'How many';
+
+  @override
+  String unitConversionFactorHelp(String from, String to) {
+    return 'How many $to make one $from';
+  }
+
+  @override
+  String get unitConversionFrom => 'From';
+
+  @override
+  String unitConversionLine(String from, String factor, String to) {
+    return '1 $from = $factor $to';
+  }
+
+  @override
+  String get unitConversionNew => 'Add a conversion';
+
+  @override
+  String get unitConversionTo => 'To';
+
+  @override
+  String get unitConversionsEmpty => 'No conversion is defined yet.';
+
+  @override
+  String get unitConversionsIntro =>
+      'A conversion says how many of one unit make another. It works both ways, in one step. An item\'s own conversion (a carton of 12) wins over these, and a packaging unit has none here.';
+
+  @override
+  String get unitConversionsTitle => 'Conversions';
 
   @override
   String get unknownWireInvoiceKind =>

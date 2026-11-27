@@ -3005,12 +3005,52 @@ Open **Stock → Reorder** (the feature *Reorder points* must be on). The page h
 
 You want one list that says, for every item and variant, what it is, what it costs and sells for, where it belongs and how much there is.
 
-Open **Stock → Items**. Each line shows the **barcode**, the **unit**, the **price** (the catalogue sale price), the **last known cost**, the **home place** and what is **on hand**. The cost appears only if your role may see finances or manage purchases; otherwise the line says *cost not shown*. A cost that no delivery has given yet stays *cost unknown*, never zero.
+Open **Stock → Items**. Each item shows its name, then its price, what is on hand and its home place, and a badge when the item needs something: *Low stock*, *No price* or *No place*. On a phone each item is a card; on a tablet held sideways or a computer the items are a table with the columns **Name**, **Price**, **On hand**, **Home place**, **Group** and **Status**, sorted by a click on **Name**, **Price** or **On hand**. Open an item to see and change everything about it ([An item's page](help:user.money.stock.item)), or act on it from the list ([Acting on an item from the list](help:user.money.stock.actions)).
 
-- **Home place**: tap the place icon on a line to say where the item belongs: its aisle, shelf or bin. A variant without its own home place has its item's. It is advice for putting away, counting and picking: stock may sit elsewhere, and changing it moves nothing and rewrites no history.
-- **Filter** by a place to see what is homed in it and in the places below it, or switch on *Only items with no home place* to see what still needs one.
+- **Filter** by a place to see what is homed in it and in the places below it, or choose the chip *Without a home place* to see what still needs one.
 - **Search** by name, barcode or address. Typing or scanning a barcode into the search and confirming opens that item.
 - Long lists load by pages: choose *Show more*.
+- The last known cost appears on the item's page only if your role may see finances or manage purchases; otherwise it says *cost not shown*. A cost that no delivery has given yet stays *cost unknown*, never zero.
+
+### Acting on an item from the list
+
+**Audience:** Administrator · Owner
+
+You want to change one thing about an item — its price, its place, its group — without opening its page.
+
+- **On a phone**, each card ends with a row of chips, each an icon and a word: **Edit** (name, price and VAT), **Place**, **Group**, **Tags**, **Settings**, **Variants** and **Suppliers**. Swipe the row sideways when it does not fit. A chip opens the same editor as the item's page; tap the card itself to open the page.
+- **On a tablet held sideways or a computer**, click a line to select it: it is highlighted and marked with a tick. The bar above the table then names the item and offers **Edit name, price and VAT**, **Place**, **Group**, **Tags**, **Stock settings**, **Variants**, **Supplier items** and **Open**. The arrow keys move the selection; Enter or a double click opens the item beside the list; **Clear the selection** lets go of it.
+- With nothing selected, the bar says *Select an item to act on it* and offers **Add an item**. The search, the place and *Without a home place* sit at its left.
+
+**Good to know**
+
+- Only what your role allows is offered: on a phone the other chips are not shown, so whoever may only see the stock has none; on a computer they are greyed out. **Edit name, price and VAT** needs the right to manage services, the rest the right to manage the stock.
+- After a save the list reads the item again: the line stays selected and shows its new values.
+- **Group** and **Tags** appear where the business uses item groups and tags.
+
+**See also:** [The item registry](help:user.money.stock.registry) · [An item's page](help:user.money.stock.item)
+
+### An item's page
+
+**Audience:** Administrator · Owner
+
+You want everything about one item in one place, and to change each part where you read it.
+
+Tap an item's card in **Stock → Items** on a phone: it opens as a page of its own. On a tablet held sideways or a computer, double-click its line, press Enter on it or choose **Open**: it opens beside the list, which keeps its search, filters and selection. Each part of the page has its own action, named for what it changes:
+
+- **Overview**: the price, the VAT, the unit, the barcode and the last known cost. **Edit name, price and VAT** opens the service's editor.
+- **Stock**: what is on hand and the home place, of the item or of each variant, and **Where it is**: the first places that hold it (**See every place** lists them all). **Change home place** says where the item belongs: its aisle, shelf or bin. It is advice for putting away, counting and picking: stock may sit elsewhere, and changing it moves nothing. **Edit units, codes and tracking** opens the item's stock settings.
+- **Group and tags**, where the business uses them: the group the item is in. **Change group** moves it and shows where each setting comes from; **Edit tags** binds or retires its tags.
+- **Variants**: the variants on sale, with their own prices. **Edit variants** adds or changes them.
+- **Supplier items**: the supplier articles that name this item. **Edit supplier items** maps another one.
+
+**Good to know**
+
+- **Edit name, price and VAT** needs the right to manage services; every other action needs the right to manage the stock. Whoever may only see the stock reads the overview, the stock and the variants, without any action.
+- The badges at the top of the page name what the item still needs.
+- After a save the page shows the new value at once, and so does the list.
+
+**See also:** [The item registry](help:user.money.stock.registry) · [Item groups](help:user.money.stock.groups)
 
 ### Item groups
 
@@ -3020,7 +3060,7 @@ You want to say once what a family of items has in common — how long it keeps,
 
 Open **Stock → Item groups** (it needs the *Item groups* feature under stock management). A group has a name, sits at the top or inside another group (one level of sub-groups, no more) and carries the settings you choose: **tracking**, **shelf life**, **tag mode**, **inventory unit**, **count every n days**, **minimum age** and **sold by weight**. A setting you leave *Not set* is not decided at this level.
 
-- **An item follows its group unless it keeps its own value.** The value in force is the item's own if it has one, else its sub-group's, else its group's. Open an item's **Group and inherited settings** (the folder icon on its line in **Stock → Items**) to see where each setting comes from (*From Drinks since 3 Dec* or *Own value*), to move it into another group, and to give an own value back with **Use the group's value**. The item's own **Stock settings** (tracking, shelf life, inventory unit) say *Own value* beside a setting where the item keeps a value of its own against its group.
+- **An item follows its group unless it keeps its own value.** The value in force is the item's own if it has one, else its sub-group's, else its group's. Open an item in **Stock → Items** and choose **Change group** to see where each setting comes from (*From Drinks since 3 Dec* or *Own value*), to move it into another group, and to give an own value back with **Use the group's value**. The item's own **Stock settings** (tracking, shelf life, inventory unit) say *Own value* beside a setting where the item keeps a value of its own against its group.
 - **Every change is previewed.** Saving a group first shows what the change reaches: *applies to 1, 1 keep their own value, 0 cannot be reached*. Nothing is applied until you save a second time; editing anything in between asks for a new preview. An item the change cannot reach (for example a unit on an item that already has movements) is listed, and the group's change still saves for the others.
 - **Proposals and prices.** A group can propose to a new item a **default purchase unit** with its factor (a number or a fraction such as 1/3), a **reorder point and quantity** and a **home zone**: they are copied into a new item as a starting point and reach no existing item. **VAT rate**, **supply class**, **price rounding** and **target margin on cost** are shown and set only by someone who may manage services and see the finances; for anyone else they are neither shown nor changed by a save.
 - **History.** The group's sheet lists every change with how many items it reached; an item's source line says since when.
@@ -3048,7 +3088,7 @@ A barcode scanner in keyboard mode (it types the code and presses Enter) works i
 
 You want to bind an NFC chip to an item or a place, and read chips as you work, with the phone you already have.
 
-With the *Tags* feature on and a phone that reads NFC, **Stock → Items** and **Stock → Places** show a tag button on each line, and the scan bar of a goods sheet shows **Read a tag**. The button is absent on a device without NFC (a desktop, most tablets, a phone with NFC switched off): use a scanner or a handheld reader there.
+With the *Tags* feature on and a phone that reads NFC, **Edit tags** on an item's page and the tag button on each line of **Stock → Places** read a tag, and the scan bar of a goods sheet shows **Read a tag**. The button is absent on a device without NFC (a desktop, most tablets, a phone with NFC switched off): use a scanner or a handheld reader there.
 
 - **Bind a tag.** Open the tags of an item or a place, tap **Read a tag** and hold the chip to the back of the phone. One read binds one tag. Reading the same chip again says it was already bound here and binds nothing new; a chip that is bound to something else is refused and says to what. An owner may carry several tags. The server takes the code in any case and with spaces, colons or dashes.
 - **Retire a tag** that is lost, damaged or replaced: choose the reason. A tag retired lately cannot be bound again at once (the waiting time is a stock setting), and a tag on a piece that is still in stock cannot be retired.
@@ -3070,6 +3110,20 @@ Where your country does not yet allow the counter, the till says which operation
 
 A traced good names what it was taken from. When you sell an item tracked by lot without choosing a lot, the sale takes it from the lots on hand, the first to expire first and never an expired one; under the sold line the till shows each lot's code as received with the quantity taken from it, for example **Lot SUP-A × 2 · Lot SUP-B × 1**, and each piece by its tag. Where the business uses a scanner, scan a piece's tag to ring up that piece: the sale takes exactly the pieces scanned, and the same piece twice is refused. These track IDs are frozen with the receipt: changing a lot or a tag later never alters a receipt already issued. In the stock, the trace of a lot or a piece names the receipt that sold it.
 
+To choose the lot yourself, press **Choose the lot** on the line: the lots on hand are listed with their date and what is left, the first to expire first. A lot past its date is shown and cannot be chosen. **The first to expire (chosen by the stock)** leaves the choice to the stock again. An item that is not tracked by lot says it has no lot to choose.
+
+### Print the receipt and open the drawer
+
+**Audience:** Administrator · Owner
+
+You sell at a counter with a receipt printer on your network (80 or 58 mm, ESC/POS), perhaps with a cash drawer plugged into it.
+
+Turn on **Receipt printer** (it needs till sessions). Each till's device sets its own printer: after a sale press **Set up the receipt printer**, or open **Receipt printer**, and enter the printer's address on your network (Printer address) and its port (9100 unless the printer says otherwise), the paper width, the code page, whether a cash drawer hangs on it, and whether a sale prints by itself, after asking, or only when asked. **Test print** prints a test page.
+
+After a cash sale the drawer opens. **Print the receipt** prints the receipt; **Print a copy** prints it again marked **COPY 1**, **COPY 2**, and so on: a copy is counted and never takes a new receipt number. The **Open the drawer** key of a till layout opens the drawer outside a sale. When the printer cannot be reached the till says **Receipt not printed — the sale is complete. Print again, or show the receipt to share it.**: the sale is complete either way, and the receipt can be shown and shared. In a browser nothing prints: printing needs the app.
+
+Tested so far: the bytes against goldens and a local listener. No printer model has been tried yet.
+
 ### Open the till, count and close it
 
 **Audience:** Administrator · Owner
@@ -3085,6 +3139,28 @@ Press **Open the till**, type the **Float in the drawer** (or, when your busines
 **Count and close** asks for the **Cash counted in the drawer** and what is **Taken to the bank**. When the business counts blind, the expected cash is not shown before the count; someone who may see the finances sees it, and the difference as they type. A count that differs from the expected cash is closed only with its reason, which the till asks for. After the close the till says what was expected, what was counted and the difference. Card payments still unanswered are listed apart and never counted as cash.
 
 **Day close.** Someone who may see the finances opens **Day close** from the till drawer and presses **Close the day** once every till is closed (a till still open is named and refuses it). The day's closed sessions become one numbered report: each session with what was expected, counted, the difference and its reason, the takings by tender and by tax rate, the cash paid in and out, the refunds and the range of receipt numbers. **Closed days** lists the reports already made; a closed day is never changed. This is the business's own record; the legal content a country asks of a day close comes with its own module.
+
+### Lay out your till
+
+**Audience:** Administrator · Owner
+
+You sell at a counter and want the till to fit how you sell: large keys for weighed bread, category pages for a bar, a scan field first for a hardware shop.
+
+Turn on **Till layouts** (it needs till sessions). In **Till drawer**, someone who may lay out the tills (owners and administrators by default) presses the layout button of a till. A till without a layout starts from a template: **Retail**, **Bakery and weighed goods**, **Café and bar**, **Studio desk** or **Hardware and catalogue**.
+
+The layout has a grid for each width the till is used at: **Phone width**, **Tablet width** and **Desk width**. **Add a widget** places an item key, a function key (such as **Take cash** or **Next customer**), a numeric keypad, a calculator, the basket, the total and change, or another tool at the first free place it fits. Tap a widget to select it; the buttons under the grid move it and make it wider, narrower, taller or shorter one step at a time. A step that would leave the grid, lie on another widget or make a tool too small to use is not offered.
+
+**Save** keeps a draft; **Publish to the till** makes it the layout the till uses. A till already open keeps its layout until its next session: the till never changes under a running sale. When someone else changed the layout since you opened it, the save is refused with **Someone changed this layout; reload it.** A layout the server cannot accept is refused with its first problem. A till without a published layout keeps the keys it generates from your items.
+
+At the till, the layout's keys work as you placed them. The **numeric keypad** types a quantity in your language's decimal mark (1,5 in French, 1.5 in English); the next item key you press sells that quantity, and a weighed item takes it as its weight instead of asking. **Quantity ×** puts the typed quantity on the last line instead. The **calculator** counts exactly, and **Onto the last line** makes its result the last line's quantity; it never sets a price. A **category key** opens the page it names.
+
+**Copy to another till** saves the layout as another till's draft, to publish there. **Reset to the generated keys** removes this till's layout and draft after you confirm: the till uses the keys it generates from your items again. In the Demo, the **Bakery counter** shows the Bakery template with its keypad and calculator.
+
+**Change a price** changes the price of the last line: type the new price (or type it on the keypad first) and a **Reason**, which the receipt keeps beside the item's own price. It needs the right **Change a price at the till** (owners and administrators by default); without it the till says so, and the line stays at the item's price. **Discount on a line** takes a percentage off the item's price of the last line, at most **Largest discount at the till** (0 by default, which means no discount at the till); a larger discount is refused with the limit named. A line takes a discount or a changed price, not both. A sale the till sends after selling offline keeps the price it held, within the offline price tolerance.
+
+**Reprint the last receipt** shows the last sale's receipt again, marked **COPY 1**, **COPY 2** and so on. A copy never takes a new receipt number, and every copy printed is counted.
+
+**Deposit return** takes back the deposit of the last item rung up (the bottles of a crate of water, say): type how many on the keypad first, or one is taken. The deposit is taken off the sale and shows as **Deposit returned** on the receipt; it comes back into stock when the sale is made. It needs the right **Change a price at the till**, it is not done offline, a deposit tracked by lot or tag is not taken back at the till, and a sale whose total would not be above zero is not made (pay the deposits out from the drawer instead).
 
 ### When the till is offline
 
@@ -3114,7 +3190,7 @@ You take a card at the counter, or a sale needs to be corrected afterwards, and 
 
 You decide whether a tag on an item names one batch or one piece, and what a bulk read counts.
 
-With the *Tags* feature on, an item carries a **tag mode**, set on its group and kept by the item unless it has an own value. Open an item's group settings (**Stock → Items**, the folder icon on its line) and read **Tag on this item**: it says where the value comes from (*From Drinks since 3 Dec* or *Own value*), lets you give the item its own value, and **Use the group's value** gives it back.
+With the *Tags* feature on, an item carries a **tag mode**, set on its group and kept by the item unless it has an own value. Open an item's group settings (**Change group** on its page in **Stock → Items**) and read **Tag on this item**: it says where the value comes from (*From Drinks since 3 Dec* or *Own value*), lets you give the item its own value, and **Use the group's value** gives it back.
 
 - **No tags.** The item carries no tag.
 - **One tag per batch.** One tag names one lot or one package: a crate, a bucket, a carton. Reading it counts one batch, never one piece.
@@ -3922,6 +3998,43 @@ You want your invoices and letters printed on the paper your country uses.
 
 **See also:** [Country](help:user.workspace.settings.country)
 
+### Master data
+
+**Audience:** Owner · Administrator with the permission
+
+Master data is the lists your business is set up with and that its pickers read: the units, the VAT rates, the items, the suppliers and the rest. **Master data** shows every kind in one place, grouped. Each card names the kind, says in one line what it is and how many records it holds, and opens the screen that edits it.
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), open **Master data**, or choose **Master data** under **Workspace setup** in the menu.
+2. Type in **Search** to keep only the cards whose name matches.
+3. Tap a card and edit its records on the screen it opens.
+
+**Good to know**
+
+- You see a card only when you may open its screen: its feature is on and you hold its permission.
+- A count that cannot be read says so, with **Try again**; it is never shown as 0.
+
+#### Measures and taxes
+
+**Units of measure** with their conversions, and **VAT rates**. The units are always here, whether or not the **Units of measure** feature is on.
+
+#### Catalogue
+
+**Items**, **Item groups** and **Services**: what the business stocks and sells.
+
+#### Places and stock
+
+**Places**, where the goods are kept, and **Tills**: the tills at the counter, each with its key layout.
+
+#### Partners
+
+**Suppliers** and **Billing customers**.
+
+#### Organisation
+
+**Sites**: the business's addresses and the levels at each.
+
 ### Units of measure
 
 **Audience:** Owner · Administrator with the permission
@@ -3932,11 +4045,10 @@ Your items, quotes and invoices are measured in units, and some units convert in
 
 **Steps**
 
-1. Turn on **Units of measure** under **Features** (it is off until you ask for it).
-2. In [Units of measure](app:/settings/units), tap **New unit**.
-3. Fill in **Unit code** (it cannot change later), **Your name for the unit**, **It measures** and **One unit equals** in the base unit of what it measures: 1000 for a km counted in m, 0.001 for a mm.
-4. Optionally fill in **UN/ECE code (for e-invoices)**, which e-invoices carry (KMT for a km).
-5. Tap **Save**.
+1. In [Units of measure](app:/settings/units), reached from **Master data**, tap **New unit**.
+2. Fill in **Unit code** (it cannot change later), **Your name for the unit**, **It measures** and **One unit equals** in the base unit of what it measures: 1000 for a km counted in m, 0.001 for a mm.
+3. Optionally fill in **UN/ECE code (for e-invoices)**, which e-invoices carry (KMT for a km).
+4. Tap **Save**.
 
 **Good to know**
 
@@ -3944,6 +4056,7 @@ Your items, quotes and invoices are measured in units, and some units convert in
 - A unit that is in use (an item counted in it, a stock movement, a quote or an invoice line) keeps its dimension and its factor for good: a correction is a new unit. A unit nobody uses can be archived (**Archive**) and shown again (**Show again**).
 - A conversion is exact: 2.5 km is 2500 m. Two kinds of unit never convert, and an answer that six decimals cannot hold is refused, never rounded.
 - Only the owner and the administrators allowed to change the workspace settings maintain the units.
+- The units are always here. The **Units of measure** feature under **Features** decides whether quotes and invoices offer your own units and whether the pickers of an item offer every unit; while it is off they offer the usual units only.
 
 **See also:** [Paper of the documents](help:user.workspace.settings.paper)
 

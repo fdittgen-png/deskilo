@@ -98,6 +98,10 @@ String _laterLabel(AppLocalizations l10n, WorkspacePermission permission) =>
           l10n.permManageBillingCustomers,
         WorkspacePermission.countStock =>
           l10n.permCountStock,
+        WorkspacePermission.configureTill =>
+          l10n.permConfigureTill,
+        WorkspacePermission.overrideTillPrice =>
+          l10n.permOverrideTillPrice,
         _ => permission.name,
       };
 
@@ -145,6 +149,8 @@ final Map<WorkspacePermission, String Function(AppLocalizations)> _allows = {
   WorkspacePermission.approveStockAdjustments: (l10n) => l10n.permAllowsApproveStockAdjustments,
   WorkspacePermission.manageBillingCustomers: (l10n) => l10n.permAllowsManageBillingCustomers,
   WorkspacePermission.countStock: (l10n) => l10n.permAllowsCountStock,
+  WorkspacePermission.configureTill: (l10n) => l10n.permAllowsConfigureTill,
+  WorkspacePermission.overrideTillPrice: (l10n) => l10n.permAllowsOverrideTillPrice,
 };
 
 /// The line of what [permission] allows.

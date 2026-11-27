@@ -6,17 +6,22 @@
 // list and its print, nothing else.
 import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
+import 'package:deskilo/core/ui/kit/status_chip.dart';
+import 'package:deskilo/features/money/domain/line_unit.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/presentation/widgets/purchase_order_record.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/money/providers/pickable_units_provider.dart';
 import 'package:deskilo/features/money/providers/purchase_order_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show VatRate;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/misc.dart';
@@ -38,8 +43,10 @@ const _workspace = Workspace(
 Widget _scope(List<Override> overrides) => purchaseOrdersApp(overrides);
 
 Future<(FakePurchaseOrderRepository, Widget)> _app(
-  Set<WorkspacePermission> permissions,
-) async {
+  Set<WorkspacePermission> permissions, {
+  List<ServiceItem> items = const [],
+  List<Override> extra = const [],
+}) async {
   final suppliers = FakeSupplierRepository();
   final alpha = await suppliers.save('ws', const SupplierDraft(name: 'Alpha'));
   final orders = FakePurchaseOrderRepository(
@@ -73,9 +80,28 @@ Future<(FakePurchaseOrderRepository, Widget)> _app(
       }),
       supplierRepositoryProvider.overrideWithValue(suppliers),
       purchaseOrderRepositoryProvider.overrideWithValue(orders),
-      servicesProvider.overrideWith((ref) async => const <ServiceItem>[]),
+      servicesProvider.overrideWith((ref) async => items),
+      ...extra,
+      pickableUnitsProvider.overrideWith(
+        (ref, workspaceId) => const [LineUnit(code: 'piece'), LineUnit(code: 'kg'), LineUnit(code: 'h')],
+      ),
+      vatRatesProvider.overrideWith(
+        (ref) async => const [
+          VatRate(id: 'r-std', label: 'Standard', percent: 20),
+          VatRate(id: 'r-red', label: 'Reduced', percent: 5.5),
+        ],
+      ),
     ]),
   );
+}
+
+/// Opens the picker under [key] and chooses the option whose text starts with [option].
+Future<void> _pick(WidgetTester tester, String key, String option) async {
+  await tester.ensureVisible(find.byKey(ValueKey(key)));
+  await tester.tap(find.byKey(ValueKey(key)));
+  await tester.pumpAndSettle();
+  await tester.tap(find.textContaining(option).last);
+  await tester.pumpAndSettle();
 }
 
 Future<void> _settle(WidgetTester tester) async {
@@ -121,10 +147,7 @@ void main() {
       find.byKey(const ValueKey('purchase-order-price-0')),
       '12,50',
     );
-    await tester.enterText(
-      find.byKey(const ValueKey('purchase-order-vat-0')),
-      '5.5',
-    );
+    await _pick(tester, 'purchase-order-vat-0', 'Reduced');
     await tester.tap(find.byKey(const ValueKey('purchase-order-save')));
     await _settle(tester);
     expect(orders.orders, hasLength(2));
@@ -178,8 +201,9 @@ void main() {
     final (_, app) = await _app({WorkspacePermission.viewFinances});
     await tester.pumpWidget(app);
     await _settle(tester);
+    await openOrder(tester, '2026-0001');
     expect(
-      find.byKey(const ValueKey('purchase-order-2026-0001')),
+      find.byKey(const ValueKey('purchase-order-panel-2026-0001')),
       findsOneWidget,
     );
     expect(
@@ -255,9 +279,28 @@ void main() {
     final id = orders.orders.single.id;
     final panel = find.byKey(const ValueKey('purchase-order-panel-2026-0001'));
 
+    // #4492 — the state is a word on its tone, in the table and on the record
+    // (beside an open order the table keeps only its staying columns).
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('records-rows')),
+        matching: find.widgetWithText(
+          StatusChip,
+          AppLocalizationsEn().purchasesStateDraft,
+        ),
+      ),
+      findsOneWidget,
+    );
+
     await openOrder(tester, '2026-0001');
     expect(orderAddress(tester), '/money/purchase-orders/order/$id');
     expect(panel, findsOneWidget);
+    expect(
+      tester.widget(
+        find.byKey(const ValueKey('purchase-order-state-2026-0001')),
+      ),
+      isA<StatusChip>(),
+    );
     expect(find.byKey(const ValueKey('records-rows')), findsOneWidget);
     expect(
       find.byKey(const ValueKey('records-total-EUR')),
@@ -310,10 +353,7 @@ void main() {
         find.byKey(const ValueKey('purchase-order-price-0')),
         '12,50',
       );
-      await tester.enterText(
-        find.byKey(const ValueKey('purchase-order-vat-0')),
-        '5.5',
-      );
+      await _pick(tester, 'purchase-order-vat-0', 'Reduced');
       await tester.pump();
       for (final amount in ['62.50', '3.44', '65.94']) {
         expect(
@@ -431,4 +471,108 @@ void main() {
       expect(orders.orders, hasLength(1));
     });
   });
+
+  // #4471 -- a unit and a VAT rate are picked from the master data, never typed.
+  for (final (label, size) in [('390 wide', const Size(390, 900)), ('1440 wide', const Size(1440, 900))]) {
+    group('the unit and the VAT rate of a line are picked ($label)', () {
+      testWidgets('a new line offers pickers, no text field, and saves what was picked', (tester) async {
+        tester.view.physicalSize = size;
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        final (orders, app) = await _app({WorkspacePermission.managePurchases});
+        await tester.pumpWidget(app);
+        await _settle(tester);
+        await tester.tap(find.byKey(const ValueKey('purchase-order-new')));
+        await _settle(tester);
+        expect(tester.takeException(), isNull);
+        for (final key in ['purchase-order-unit-0', 'purchase-order-vat-0']) {
+          expect(find.descendant(of: find.byKey(ValueKey(key)), matching: find.byType(TextField)), findsNothing, reason: '$key is not typed');
+        }
+        await tester.tap(find.byKey(const ValueKey('purchase-order-supplier')));
+        await _settle(tester);
+        await tester.tap(find.textContaining('Alpha').last);
+        await _settle(tester);
+        await tester.enterText(find.byKey(const ValueKey('purchase-order-desc-0')), 'Coffee beans');
+        await tester.enterText(find.byKey(const ValueKey('purchase-order-qty-0')), '5');
+        await tester.enterText(find.byKey(const ValueKey('purchase-order-price-0')), '12,50');
+        await _pick(tester, 'purchase-order-unit-0', 'kg');
+        await _pick(tester, 'purchase-order-vat-0', 'Reduced');
+        await tester.ensureVisible(find.byKey(const ValueKey('purchase-order-save')));
+        await tester.tap(find.byKey(const ValueKey('purchase-order-save')));
+        await _settle(tester);
+        final line = orders.orders.last.lines.single;
+        expect((line.unit, line.vatRatePercent), ('kg', 5.5));
+      });
+
+      testWidgets('a line that names a stocked item starts in the unit the supplier sells it in, and offers only what it converts from', (tester) async {
+        tester.view.physicalSize = size;
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        final (_, app) = await _app(
+          {WorkspacePermission.managePurchases},
+          items: const [ServiceItem(id: 'mugs', workspaceId: 'ws', name: 'Mugs', priceCents: 100, active: true)],
+          extra: [
+            itemOrderUnitsProvider.overrideWith(
+              (ref, key) async => const ItemOrderUnits(units: [LineUnit(code: 'piece'), LineUnit(code: 'kg')], defaultUnit: 'kg'),
+            ),
+          ],
+        );
+        await tester.pumpWidget(app);
+        await _settle(tester);
+        await tester.tap(find.byKey(const ValueKey('purchase-order-new')));
+        await _settle(tester);
+        await _pick(tester, 'purchase-order-item-0', 'Mugs');
+        await _settle(tester);
+        expect(tester.takeException(), isNull);
+        expect(find.descendant(of: find.byKey(const ValueKey('purchase-order-unit-0')), matching: find.text('kg')), findsWidgets);
+      });
+
+      testWidgets('an old free unit and percent are shown, flagged, and must be replaced before saving', (tester) async {
+        tester.view.physicalSize = size;
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        final (orders, app) = await _app({WorkspacePermission.managePurchases});
+        final first = orders.orders.single;
+        await orders.save(
+          'ws',
+          'old-free',
+          PurchaseOrderDraft(
+            supplierId: first.supplierId,
+            lines: const [
+              PurchaseOrderLineDraft(description: 'Old line', quantity: 1, unitPriceCents: 100, unit: 'box', vatRatePercent: 55),
+            ],
+          ),
+        );
+        await tester.pumpWidget(app);
+        await _settle(tester);
+        await openOrder(tester, '2026-0002');
+        await tester.tap(find.byKey(const ValueKey('purchase-order-edit-2026-0002')));
+        await _settle(tester);
+        expect(tester.takeException(), isNull);
+        expect(find.text('box'), findsOneWidget);
+        expect(find.textContaining('55'), findsWidgets);
+        for (final key in ['purchase-order-unit-0', 'purchase-order-vat-0']) {
+          await tester.ensureVisible(find.byKey(ValueKey(key)));
+          await tester.pump();
+          expect(
+            find.descendant(of: find.byKey(ValueKey(key)), matching: find.text('This is not in the list: pick one')),
+            findsOneWidget,
+            reason: '$key is flagged',
+          );
+        }
+        await tester.ensureVisible(find.byKey(const ValueKey('purchase-order-save')));
+        await tester.tap(find.byKey(const ValueKey('purchase-order-save')));
+        await _settle(tester);
+        expect(orders.orders.last.lines.single.unit, 'box', reason: 'nothing was saved');
+        await _pick(tester, 'purchase-order-unit-0', 'kg');
+        await _pick(tester, 'purchase-order-vat-0', 'Standard');
+        expect(find.text('This is not in the list: pick one'), findsNothing);
+        await tester.ensureVisible(find.byKey(const ValueKey('purchase-order-save')));
+        await tester.tap(find.byKey(const ValueKey('purchase-order-save')));
+        await _settle(tester);
+        final line = orders.orders.last.lines.single;
+        expect((line.unit, line.vatRatePercent), ('kg', 20));
+      });
+    });
+  }
 }

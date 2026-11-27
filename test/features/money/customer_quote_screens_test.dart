@@ -12,6 +12,7 @@ import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/core/time/calendar_days.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/ui/date_field.dart';
+import 'package:deskilo/core/ui/kit/status_chip.dart';
 import 'package:deskilo/features/money/domain/billing_customer.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
 import 'package:deskilo/features/money/domain/standalone_invoice.dart';
@@ -72,8 +73,9 @@ Future<_Setup> _open(
   bool withQuotes = true,
   List<Override> extra = const [],
   FakeCustomerQuoteRepository Function(DateTime Function() clock)? quotesOf,
+  Size size = const Size(900, 1600),
 }) async {
-  tester.view.physicalSize = const Size(900, 1600);
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   var clockNow = _now;
@@ -174,6 +176,62 @@ class _NotIssuable extends FakeCustomerQuoteRepository {
   }
 }
 
+/// A server whose invoice would now come to more than what was accepted: its context moved since the acceptance.
+class _Moved extends FakeCustomerQuoteRepository {
+  _Moved({required super.clock});
+
+  @override
+  Future<QuoteConversionPrep> prepareConversion(
+    String workspaceId,
+    String quoteId, {
+    required DateTime serviceDate,
+    required DateTime dueOn,
+  }) async {
+    final ready = await super.prepareConversion(workspaceId, quoteId, serviceDate: serviceDate, dueOn: dueOn);
+    return QuoteConversionPrep(
+      draftRevision: ready.draftRevision,
+      missing: const [],
+      acceptedTotalCents: ready.acceptedTotalCents,
+      wouldBeTotalCents: ready.acceptedTotalCents + 1000,
+      currency: ready.currency,
+      contextChanged: true,
+      reviewDigest: 'moved',
+    );
+  }
+}
+
+/// A server that commits the conversion and then loses the answer, and whose next read of the quote fails too: the sheet cannot know.
+class _LostAnswer extends FakeCustomerQuoteRepository {
+  _LostAnswer({required super.clock});
+
+  var _lost = false;
+  var _readFails = false;
+
+  @override
+  Future<QuoteConverted> convert(
+    String workspaceId,
+    String quoteId, {
+    required int draftRevision,
+    required String requestId,
+    String? reviewedDigest,
+  }) async {
+    final done = await super.convert(workspaceId, quoteId, draftRevision: draftRevision, requestId: requestId, reviewedDigest: reviewedDigest);
+    if (_lost) return done;
+    _lost = true;
+    _readFails = true;
+    throw Exception('the answer was lost');
+  }
+
+  @override
+  Future<CustomerQuote> quote(String workspaceId, String quoteId) async {
+    if (_readFails) {
+      _readFails = false;
+      throw Exception('the read failed too');
+    }
+    return super.quote(workspaceId, quoteId);
+  }
+}
+
 void main() {
   testWidgets('the list shows each quote with its reference, status and the '
       'amount its sent revision froze', (tester) async {
@@ -181,10 +239,36 @@ void main() {
     expect(find.text(_en.quotesIntro), findsOneWidget);
     expect(find.textContaining('QUO-0001'), findsOneWidget);
     expect(find.textContaining('Atelier Lumi'), findsWidgets);
-    expect(find.textContaining(_en.quoteStatusSent), findsOneWidget);
-    expect(find.textContaining(_en.invoicingStatusDraft), findsWidgets);
+    // #4492 — a records table: the state in its chip on the row and as a
+    // filter above it, the amount on the row and in the total under it.
+    expect(find.widgetWithText(StatusChip, _en.quoteStatusSent), findsOneWidget);
+    expect(find.widgetWithText(StatusChip, _en.invoicingStatusDraft), findsOneWidget);
+    expect(find.textContaining(_en.quoteStatusSent), findsWidgets);
+    // a column heading is set in capitals
+    expect(find.text(_en.quoteFieldValidUntil.toUpperCase()), findsOneWidget);
     // 1.5 h at 80.00 net, 20 % VAT: EUR 144.00, worked out when it was sent
-    expect(find.textContaining('144'), findsOneWidget);
+    expect(find.textContaining('144'), findsWidgets);
+  });
+
+  testWidgets('#4492 on a phone a quote is a card with the same facts; a draft '
+      'without a number is named by its customer and says its state once', (tester) async {
+    await _open(tester, const CustomerQuotesScreen(), size: const Size(390, 844));
+    final sent = find.byKey(const ValueKey('quote-row-quote-1'));
+    final draft = find.byKey(const ValueKey('quote-row-quote-2'));
+    expect(find.descendant(of: sent, matching: find.textContaining('QUO-0001')), findsOneWidget);
+    expect(find.descendant(of: sent, matching: find.textContaining('144')), findsOneWidget);
+    expect(find.descendant(of: draft, matching: find.text('Atelier Lumi')), findsOneWidget);
+    expect(
+      find.descendant(of: draft, matching: find.textContaining(_en.invoicingStatusDraft)),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('#4492 a row opens its quote', (tester) async {
+    await _open(tester, const CustomerQuotesScreen());
+    await tester.tap(find.text('QUO-0001'));
+    await _settle(tester);
+    expect(find.text('detail-quote-1'), findsOneWidget);
   });
 
   testWidgets('a list that could not be read says so and tries again; it is '
@@ -218,6 +302,15 @@ void main() {
     final setup = await _open(tester, const CustomerQuoteScreen(quoteId: 'quote-1'));
     expect(find.byKey(const ValueKey('quote-title')), findsOneWidget);
     expect(find.text('QUO-0001'), findsOneWidget);
+    // #4492 — the state is a word on its tone, as in the list; the customer
+    // stands beside it.
+    final state = find.byKey(const ValueKey('quote-status'));
+    expect(find.widgetWithText(StatusChip, _en.quoteStatusSent), findsOneWidget);
+    expect(find.descendant(of: state, matching: find.text(_en.quoteStatusSent)), findsOneWidget);
+    expect(
+      find.descendant(of: find.byKey(const ValueKey('quote-customer')), matching: find.text('Atelier Lumi'), matchRoot: true),
+      findsOneWidget,
+    );
     expect(find.byKey(const ValueKey('quote-total')), findsOneWidget);
     expect(find.byKey(const ValueKey('quote-sent-as')), findsOneWidget);
     expect(find.byKey(const ValueKey('quote-edit')), findsNothing);
@@ -340,6 +433,7 @@ void main() {
     await _settle(tester);
     expect(find.byKey(const ValueKey('quote-convert-accepted')), findsOneWidget);
     expect(find.textContaining('144'), findsWidgets);
+    expect(find.byKey(const ValueKey('quote-convert-document')), findsOneWidget, reason: 'the accepted lines, their tax and the total');
     await tester.tap(find.byKey(const ValueKey('quote-convert-issue')));
     await _settle(tester);
     expect(find.byKey(const ValueKey('quote-convert-done')), findsOneWidget);
@@ -427,4 +521,70 @@ void main() {
     expect(said, isNot(contains('buyer_address')));
     expect(find.byKey(const ValueKey('quote-convert-would-be')), findsNothing);
   });
+
+  for (final (label, size) in [('390 wide', const Size(390, 900)), ('1440 wide', const Size(1440, 900))]) {
+    testWidgets('#4405 a total that moved since the acceptance names both totals and never shows the accepted lines under the new one ($label)', (tester) async {
+      final setup = await _open(
+        tester,
+        const CustomerQuoteScreen(quoteId: 'quote-1'),
+        quotesOf: (clock) => _Moved(clock: clock),
+        size: size,
+      );
+      await setup.quotes.recordDecision(
+        setup.workspaceId,
+        'quote-1',
+        QuoteDecisionInput(accepted: true, revision: 1, decidedOn: setup.today, source: 'email'),
+      );
+      ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
+          .invalidate(customerQuoteProvider((workspaceId: setup.workspaceId, quoteId: 'quote-1')));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('quote-convert')));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('quote-convert-check')));
+      await _settle(tester);
+      expect(tester.takeException(), isNull);
+      expect(find.byKey(const ValueKey('quote-convert-accepted')), findsOneWidget);
+      expect(find.byKey(const ValueKey('quote-convert-would-be')), findsOneWidget);
+      expect(find.byKey(const ValueKey('quote-convert-differs')), findsOneWidget);
+      expect(find.byKey(const ValueKey('quote-convert-document')), findsNothing, reason: 'the accepted lines do not add up to the new total');
+      expect(tester.widget<FilledButton>(find.byKey(const ValueKey('quote-convert-issue'))).onPressed, isNull, reason: 'a review comes first');
+    });
+  }
+
+  for (final (label, size) in [('390 wide', const Size(390, 900)), ('1440 wide', const Size(1440, 900))]) {
+    testWidgets('#4405 an answer that did not come is looked for again in the quote, never guessed, and the invoice is found ($label)', (tester) async {
+      final setup = await _open(
+        tester,
+        const CustomerQuoteScreen(quoteId: 'quote-1'),
+        quotesOf: (clock) => _LostAnswer(clock: clock),
+        size: size,
+      );
+      await setup.quotes.recordDecision(
+        setup.workspaceId,
+        'quote-1',
+        QuoteDecisionInput(accepted: true, revision: 1, decidedOn: setup.today, source: 'email'),
+      );
+      ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
+          .invalidate(customerQuoteProvider((workspaceId: setup.workspaceId, quoteId: 'quote-1')));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('quote-convert')));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('quote-convert-check')));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('quote-convert-issue')));
+      await _settle(tester);
+      expect(tester.takeException(), isNull);
+      expect(find.byKey(const ValueKey('quote-convert-unknown')), findsOneWidget, reason: 'the answer is not known: it is said so');
+      expect(find.byKey(const ValueKey('quote-convert-done')), findsNothing);
+      // nothing else is offered while it is unknown: pressing the check changes nothing
+      await tester.tap(find.byKey(const ValueKey('quote-convert-check')));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('quote-convert-unknown')), findsOneWidget);
+      expect(find.byKey(const ValueKey('quote-convert-done')), findsNothing);
+      await tester.tap(find.byKey(const ValueKey('quote-convert-look')));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('quote-convert-done')), findsOneWidget, reason: 'the quote records its invoice');
+      expect(find.byKey(const ValueKey('quote-convert-unknown')), findsNothing);
+    });
+  }
 }

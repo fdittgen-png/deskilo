@@ -34,6 +34,7 @@ import '../domain/stock_scan_session.dart';
 import '../providers/stock_providers.dart';
 import 'put_away_context.dart';
 import 'put_away_tags.dart';
+import 'put_away_unit_field.dart';
 import 'stock_config_text.dart';
 import 'stock_quantity_field.dart';
 import 'stock_scan_bar.dart';
@@ -64,6 +65,9 @@ class _Part {
 
   /// A scan counted this line (the first scan replaces the quantity the form started with).
   bool scanned = false;
+
+  /// #4479 -- the unit the quantity is counted in when it is not the line's; null: the line's.
+  String? unit;
   String? place;
   String? variant;
   DateRead expiry = (date: null, problem: null);
@@ -134,7 +138,7 @@ class PutAwayDraft {
   /// The put-away may not exceed what the delivery being recorded brings.
   FieldErrors validateAgainst(AppLocalizations l10n, Map<int, double> delivered) => {
     for (final p in _parts)
-      if ((_quantityOf(p, delivered) ?? ExactQuantity.zero) > exactOfReceived(delivered[p.line.lineNo] ?? 0))
+      if (p.unit == null && (_quantityOf(p, delivered) ?? ExactQuantity.zero) > exactOfReceived(delivered[p.line.lineNo] ?? 0))
         'putaway-${p.line.lineNo}-qty': stockRefusalText(l10n, StockRefusal.overAllocated),
     ..._tagErrors(l10n, delivered),
   };
@@ -268,6 +272,7 @@ class PutAwayDraft {
         PutAwayAllocation(
           lineNo: p.line.lineNo,
           quantity: q.text,
+          unit: p.unit,
           locationId: p.place ?? '',
           variantId: p.variant,
           lotCode: p.lot.text.trim().isEmpty ? null : p.lot.text.trim(),
@@ -292,7 +297,7 @@ class PutAwayDraft {
     for (final p in _parts) {
       if (followsDelivery && p.qty.text.trim().isEmpty) continue;
       final q = _typed(p.qty.text);
-      if (q == null || q.isNegative || q > p.line.remaining) {
+      if (q == null || q.isNegative || (p.unit == null && q > p.line.remaining)) {
         errors['putaway-${p.line.lineNo}-qty'] = stockRefusalText(l10n, q == null || q.isNegative ? StockRefusal.quantityInvalid : StockRefusal.overAllocated);
       }
       if (p.place == null && q != null && q > ExactQuantity.zero) errors['putaway-${p.line.lineNo}-place'] = l10n.stockRequiredPlace;
@@ -331,9 +336,19 @@ class PutAwayDraft {
         controller: p.qty,
         focusNode: p.focus,
         fieldKey: 'putaway-$n-qty',
-        label: l10n.stockPutAwayQuantity(p.line.unit.isEmpty ? item.inventoryUnit : p.line.unit),
+        label: l10n.stockPutAwayQuantity(p.unit ?? (p.line.unit.isEmpty ? item.inventoryUnit : p.line.unit)),
         helper: followsDelivery ? l10n.stockPutAwayAll : null,
       ),
+      if (!this.context.perUnit.contains(n) && putAwayUnits(item, p.line.unit).length > 1)
+        PutAwayUnitField(
+          fieldKey: 'putaway-$n-unit',
+          units: putAwayUnits(item, p.line.unit),
+          value: p.unit ?? (p.line.unit.isEmpty ? item.inventoryUnit : p.line.unit),
+          onChanged: (u) {
+            p.unit = u == (p.line.unit.isEmpty ? item.inventoryUnit : p.line.unit) ? null : u;
+            refresh();
+          },
+        ),
       KeyedSubtree(
         // a scan sets the place from outside: the field starts again from it
         key: ValueKey('putaway-$n-place-${p.place}'),

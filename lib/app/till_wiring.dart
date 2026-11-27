@@ -13,16 +13,19 @@ import '../features/money/data/supabase_counter_book.dart';
 import '../features/money/data/supabase_counter_offline.dart';
 import '../features/money/data/supabase_counter_till.dart';
 import '../features/money/data/supabase_till_drawer.dart';
+import '../features/money/data/supabase_till_layouts.dart';
 import '../features/money/domain/till_drawer.dart';
 import '../features/money/providers/counter_book_providers.dart';
 import '../features/money/providers/till_drawer_providers.dart';
+import '../features/money/providers/till_layout_providers.dart';
+import '../features/money/providers/till_printer_providers.dart';
 import '../features/money/providers/till_providers.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/domain/workspace_permission.dart';
 import '../features/workspace/presentation/widgets/settings_editor.dart';
 import '../features/workspace/providers/operation_context_providers.dart';
 import '../features/workspace/providers/settings_providers.dart';
-import '../features/workspace/providers/workspace_providers.dart' show enabledFeaturesSyncProvider, myPermissionsProvider;
+import '../features/workspace/providers/workspace_providers.dart' show currentWorkspaceProvider, enabledFeaturesSyncProvider, myPermissionsProvider;
 
 /// Puts the live till in a scope's overrides (main.dart).
 final Override tillPortFromApp = tillPortProvider.overrideWith(
@@ -86,6 +89,29 @@ final Override counterSettingsEditorFromApp = counterSettingsEditorProvider.over
 );
 
 /// #4185 -- the counter's book (its receipts, corrections, refunds, returns and card answers) on the same server.
+/// #4448 -- till layouts on, and who may lay them out: from the business's features and the person's rights.
+/// #4368 -- the business the till prints for.
+final Override tillBusinessFromApp = tillBusinessProvider.overrideWith((ref) {
+  final w = ref.watch(currentWorkspaceProvider).value;
+  return (id: w?.id ?? '', name: w?.name ?? '');
+});
+
+/// #4368 -- the receipt printer on: from the business's features.
+final Override tillPrinterOnFromApp = tillPrinterOnProvider.overrideWith(
+  (ref) => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.counterReceiptPrinter),
+);
+final Override tillLayoutsOnFromApp = tillLayoutsOnProvider.overrideWith(
+  (ref) => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.counterTillLayout),
+);
+final Override mayLayOutTillsFromApp = mayLayOutTillsProvider.overrideWith(
+  (ref) =>
+      ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.counterTillLayout) &&
+      ref.watch(myPermissionsProvider).contains(WorkspacePermission.configureTill),
+);
+
+/// #4448 -- the till layouts on the same server.
+final Override tillLayoutPortFromApp = tillLayoutPortProvider.overrideWith((ref) => SupabaseTillLayouts(ref.watch(selectedWorkspaceClientProvider)));
+
 final Override counterBookPortFromApp = counterBookPortProvider.overrideWith(
   (ref) => SupabaseCounterBook(ref.watch(selectedWorkspaceClientProvider)),
 );

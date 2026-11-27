@@ -14451,11 +14451,11 @@ abstract class AppLocalizations {
   /// **'No document yet. Link your statutes, guides and statements from any drive.'**
   String get documentsEmpty;
 
-  /// Workspace document library (#500)
+  /// Document library, the add form: said under the link field when the link is not an https:// one
   ///
   /// In en, this message translates to:
-  /// **'A document needs a title and an https:// link.'**
-  String get documentsInvalid;
+  /// **'The link must start with https://.'**
+  String get documentsLinkNotHttps;
 
   /// Workspace document library (#500)
   ///
@@ -14492,6 +14492,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Title'**
   String get documentsTitleLabel;
+
+  /// Document library, the add form: said under the title field when it is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Give the document a title.'**
+  String get documentsTitleMissing;
 
   /// Workspace document library (#500)
   ///
@@ -19354,6 +19360,18 @@ abstract class AppLocalizations {
   /// **'Selling offline, cash only'**
   String get featureCounterOfflineCashTitle;
 
+  /// #4368 the receipt printer feature
+  ///
+  /// In en, this message translates to:
+  /// **'Print the till\'s receipt on a receipt printer on your local network (80 or 58 mm), and open the cash drawer it drives after a cash sale. Each till sets its own printer. Off, the receipt is shown and shared, nothing prints.'**
+  String get featureCounterReceiptPrinterDesc;
+
+  /// #4368 the receipt printer feature
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt printer'**
+  String get featureCounterReceiptPrinterTitle;
+
   /// #4184 feature description
   ///
   /// In en, this message translates to:
@@ -19365,6 +19383,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Counter receipts'**
   String get featureCounterReceiptsTitle;
+
+  /// #4448 feature description: the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Lay out each till for your trade: which keys sit where, its pages, and tools beside the basket such as a numeric keypad, a calculator or a scan field. Start from a template, publish it, and a till takes it at its next session. Off, every till keeps its generated keys.'**
+  String get featureCounterTillLayoutDesc;
+
+  /// #4448 feature name: the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Till layouts'**
+  String get featureCounterTillLayoutTitle;
 
   /// #4367 feature description
   ///
@@ -30061,12 +30091,6 @@ abstract class AppLocalizations {
   /// **'No group'**
   String get itemGroupAssignNone;
 
-  /// #4361 G12 item groups: itemGroupAssignOpen
-  ///
-  /// In en, this message translates to:
-  /// **'Group and inherited settings'**
-  String get itemGroupAssignOpen;
-
   /// #4361 G12 item groups: itemGroupAssignTitle
   ///
   /// In en, this message translates to:
@@ -30358,6 +30382,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No rounding'**
   String get itemGroupRoundingNone;
+
+  /// #4479 what one sale unit makes of the inventory unit
+  ///
+  /// In en, this message translates to:
+  /// **'What one of it makes of the inventory unit (sale)'**
+  String get itemGroupSaleFactor;
+
+  /// #4479 the price of one sale unit
+  ///
+  /// In en, this message translates to:
+  /// **'Price of one when sold'**
+  String get itemGroupSalePrice;
+
+  /// #4479 a group's proposed sale unit
+  ///
+  /// In en, this message translates to:
+  /// **'Sold in (unit)'**
+  String get itemGroupSaleUnit;
 
   /// #4361 G12 finance parameters of an item group
   ///
@@ -33424,17 +33466,137 @@ abstract class AppLocalizations {
   /// **'Managed profile'**
   String get managedProfileTitle;
 
+  /// #4485 how many records a kind of master data holds, on its card
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No records} one{{count} record} other{{count} records}}'**
+  String masterDataCount(int count);
+
+  /// #4485 one line under the Billing customers card
+  ///
+  /// In en, this message translates to:
+  /// **'Who you invoice'**
+  String get masterDataCustomersDesc;
+
+  /// #4485 group of the Master data page: items, item groups, services
+  ///
+  /// In en, this message translates to:
+  /// **'Catalogue'**
+  String get masterDataGroupCatalogue;
+
+  /// #4485 group of the Master data page: units and VAT rates
+  ///
+  /// In en, this message translates to:
+  /// **'Measures and taxes'**
+  String get masterDataGroupMeasures;
+
+  /// #4485 group of the Master data page: suppliers and customers
+  ///
+  /// In en, this message translates to:
+  /// **'Partners'**
+  String get masterDataGroupPartners;
+
+  /// #4485 group of the Master data page: stock places and tills
+  ///
+  /// In en, this message translates to:
+  /// **'Places and stock'**
+  String get masterDataGroupPlaces;
+
+  /// #4485 the Master data page's intro and its row in the workspace settings
+  ///
+  /// In en, this message translates to:
+  /// **'Every list the business is set up with, in one place. Tap a card to open its editor.'**
+  String get masterDataIntro;
+
+  /// #4485 one line under the Item groups card
+  ///
+  /// In en, this message translates to:
+  /// **'Settings shared by a group of items'**
+  String get masterDataItemGroupsDesc;
+
+  /// #4485 one line under the Items card
+  ///
+  /// In en, this message translates to:
+  /// **'What you stock and sell'**
+  String get masterDataItemsDesc;
+
+  /// #4485 the Master data page's search finds no card
+  ///
+  /// In en, this message translates to:
+  /// **'No master data matches the search.'**
+  String get masterDataNoMatch;
+
+  /// #4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit
+  ///
+  /// In en, this message translates to:
+  /// **'No unit'**
+  String get masterDataNoUnit;
+
+  /// #4471 a unit or a VAT rate is picked from the master data: masterDataNoVat
+  ///
+  /// In en, this message translates to:
+  /// **'No VAT'**
+  String get masterDataNoVat;
+
+  /// #4485 one line under the stock Places card
+  ///
+  /// In en, this message translates to:
+  /// **'Where your goods are kept'**
+  String get masterDataPlacesDesc;
+
   /// #3563 Helper under a field that names master data (a country, a currency): what can be typed.
   ///
   /// In en, this message translates to:
   /// **'Type a name or a code, or pick from the list'**
   String get masterDataSearchHint;
 
+  /// #4485 one line under the Services card
+  ///
+  /// In en, this message translates to:
+  /// **'The services you sell'**
+  String get masterDataServicesDesc;
+
+  /// #4485 one line under the Sites card
+  ///
+  /// In en, this message translates to:
+  /// **'Your addresses and the levels at each'**
+  String get masterDataSitesDesc;
+
+  /// #4485 one line under the Suppliers card
+  ///
+  /// In en, this message translates to:
+  /// **'Who you buy from'**
+  String get masterDataSuppliersDesc;
+
+  /// #4485 card of the Master data page: the tills
+  ///
+  /// In en, this message translates to:
+  /// **'Tills'**
+  String get masterDataTills;
+
+  /// #4485 one line under the Tills card
+  ///
+  /// In en, this message translates to:
+  /// **'The tills at the counter and their key layouts'**
+  String get masterDataTillsDesc;
+
   /// #3563 Error under a master-data field (country, currency) whose value is outside the catalogue; shown for a stored value too.
   ///
   /// In en, this message translates to:
   /// **'This is not a valid entry. Pick one from the list.'**
   String get masterDataUnknownCode;
+
+  /// #4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted
+  ///
+  /// In en, this message translates to:
+  /// **'This is not in the list: pick one'**
+  String get masterDataUnlisted;
+
+  /// #4485 one line under the VAT rates card
+  ///
+  /// In en, this message translates to:
+  /// **'The rates your documents charge'**
+  String get masterDataVatDesc;
 
   /// #1801 mcp_settings
   ///
@@ -36069,6 +36231,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mass'**
   String get measureDimensionMass;
+
+  /// #4479 dimension: a packaging unit, which converts only through an item's own factor
+  ///
+  /// In en, this message translates to:
+  /// **'Package'**
+  String get measureDimensionPackage;
 
   /// #4442 dimension: time
   ///
@@ -40814,6 +40982,12 @@ abstract class AppLocalizations {
   /// **'Approve the adjustment a stock count proposes.'**
   String get permAllowsApproveStockAdjustments;
 
+  /// #4448 the right to lay out the tills: what it allows
+  ///
+  /// In en, this message translates to:
+  /// **'Build, publish, copy and reset the layout of a till: its keys, pages and tools. Cashiers use the published layout without this right.'**
+  String get permAllowsConfigureTill;
+
   /// #4295 permission description
   ///
   /// In en, this message translates to:
@@ -40958,6 +41132,12 @@ abstract class AppLocalizations {
   /// **'Set up the kiosk and hand out badges.'**
   String get permAllowsOperateKiosk;
 
+  /// #4476 the right to change a till line price, with a reason
+  ///
+  /// In en, this message translates to:
+  /// **'Sell a till line at a price other than the item\'s, with a reason the receipt keeps. Without it, a till line is sold at the item\'s price.'**
+  String get permAllowsOverrideTillPrice;
+
   /// #3628 roles at the desk: one line of what the permission allows
   ///
   /// In en, this message translates to:
@@ -41047,6 +41227,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Approve stock adjustments'**
   String get permApproveStockAdjustments;
+
+  /// #4448 the right to lay out the tills: its name
+  ///
+  /// In en, this message translates to:
+  /// **'Lay out the tills'**
+  String get permConfigureTill;
 
   /// #4295 permission name
   ///
@@ -41239,6 +41425,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Operate the kiosk and badges'**
   String get permOperateKiosk;
+
+  /// #4476 the right to change a till line price, with a reason
+  ///
+  /// In en, this message translates to:
+  /// **'Change a price at the till'**
+  String get permOverrideTillPrice;
 
   /// #881 member payment conditions: permPaymentTermsEdit
   ///
@@ -47016,6 +47208,12 @@ abstract class AppLocalizations {
   /// **'This is the invoice\'s first payment: undo its later payments first. Nothing was changed.'**
   String get refusalBankMatchUndoLaterFirst;
 
+  /// #4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books.
+  ///
+  /// In en, this message translates to:
+  /// **'This date lies inside a closed period of the books: nothing was recorded. A date in the open period is possible; only the owner can reopen the period.'**
+  String get refusalBooksClosedPeriodDated;
+
   /// #1305 Shown when an invoice changed state before the action reached the server
   ///
   /// In en, this message translates to:
@@ -52104,6 +52302,24 @@ abstract class AppLocalizations {
   /// **'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.'**
   String get settingHintCounterFiscalObligation;
 
+  /// #4448 a till layout setting
+  ///
+  /// In en, this message translates to:
+  /// **'A cashier may reorder a till\'s keys on their own device without changing the published layout.'**
+  String get settingHintCounterLayoutCashierReorder;
+
+  /// #4448 a till layout setting
+  ///
+  /// In en, this message translates to:
+  /// **'The most cells one till layout may hold, over all its pages and sizes. A larger layout is refused when it is saved.'**
+  String get settingHintCounterLayoutMaxCells;
+
+  /// #4476 the setting counter.max_discount_percent
+  ///
+  /// In en, this message translates to:
+  /// **'The largest discount, in percent, a cashier may give on a till line. 0 means no discount at the till.'**
+  String get settingHintCounterMaxDiscount;
+
   /// #4373 setting hint
   ///
   /// In en, this message translates to:
@@ -52800,6 +53016,24 @@ abstract class AppLocalizations {
   /// **'Fiscal rules for counter sales'**
   String get settingLabelCounterFiscalObligation;
 
+  /// #4448 a till layout setting
+  ///
+  /// In en, this message translates to:
+  /// **'Cashiers reorder the keys'**
+  String get settingLabelCounterLayoutCashierReorder;
+
+  /// #4448 a till layout setting
+  ///
+  /// In en, this message translates to:
+  /// **'Till layout size'**
+  String get settingLabelCounterLayoutMaxCells;
+
+  /// #4476 the setting counter.max_discount_percent
+  ///
+  /// In en, this message translates to:
+  /// **'Largest discount at the till'**
+  String get settingLabelCounterMaxDiscount;
+
   /// #4373 setting label
   ///
   /// In en, this message translates to:
@@ -53405,6 +53639,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'cards'**
   String get settingUnitCards;
+
+  /// #4448 the unit of counter.layout_max_cells: grid cells of a till layout
+  ///
+  /// In en, this message translates to:
+  /// **'cells'**
+  String get settingUnitCells;
 
   /// #2472 personal directory: Unit of a setting counted in characters.
   ///
@@ -57347,6 +57587,12 @@ abstract class AppLocalizations {
   /// **'a total above zero'**
   String get standaloneFactTotal;
 
+  /// #4405 previewed document: standaloneFactTotalMismatch
+  ///
+  /// In en, this message translates to:
+  /// **'the lines do not add up to the accepted total'**
+  String get standaloneFactTotalMismatch;
+
   /// #4165 standalone invoice composer: standaloneFactUnknownSubject
   ///
   /// In en, this message translates to:
@@ -58664,12 +58910,6 @@ abstract class AppLocalizations {
   /// #4169 the stock editors: a label or message
   ///
   /// In en, this message translates to:
-  /// **'Stock settings'**
-  String get stockEditItem;
-
-  /// #4169 the stock editors: a label or message
-  ///
-  /// In en, this message translates to:
   /// **'Stock settings of {item}'**
   String stockEditItemTitle(String item);
 
@@ -58756,6 +58996,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Package unit'**
   String get stockEditUnitName;
+
+  /// #4479 the price of one of an item's units
+  ///
+  /// In en, this message translates to:
+  /// **'Price of one'**
+  String get stockEditUnitPrice;
+
+  /// #4479 what an empty unit price means
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty to use the item\'s price times the factor.'**
+  String get stockEditUnitPriceHelp;
 
   /// #4169 the stock editors: a label or message
   ///
@@ -58979,6 +59231,96 @@ abstract class AppLocalizations {
   /// **'Add an item'**
   String get stockItemAddTitle;
 
+  /// #4480 Stock items: the badge on an item's row and page for something the item needs
+  ///
+  /// In en, this message translates to:
+  /// **'Low stock'**
+  String get stockItemAttentionLow;
+
+  /// #4480 Stock items: the badge on an item's row and page for something the item needs
+  ///
+  /// In en, this message translates to:
+  /// **'No place'**
+  String get stockItemAttentionNoPlace;
+
+  /// #4480 Stock items: the badge on an item's row and page for something the item needs
+  ///
+  /// In en, this message translates to:
+  /// **'No price'**
+  String get stockItemAttentionNoPrice;
+
+  /// #4470 Stock items: tooltip of the button that opens the service editor for the item
+  ///
+  /// In en, this message translates to:
+  /// **'Edit name, price and VAT'**
+  String get stockItemEditDetails;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Change group'**
+  String get stockItemEditGroup;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Change home place'**
+  String get stockItemEditHome;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Edit units, codes and tracking'**
+  String get stockItemEditSettings;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Edit supplier items'**
+  String get stockItemEditSuppliers;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Edit tags'**
+  String get stockItemEditTags;
+
+  /// #4480 the page of one stock item: a section's worded action, which opens that section's editor
+  ///
+  /// In en, this message translates to:
+  /// **'Edit variants'**
+  String get stockItemEditVariants;
+
+  /// #4480 the page of one stock item: the label above one of its facts
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode'**
+  String get stockItemFactBarcode;
+
+  /// #4480 the page of one stock item: the label above one of its facts
+  ///
+  /// In en, this message translates to:
+  /// **'Last known cost'**
+  String get stockItemFactCost;
+
+  /// #4480 the page of one stock item: the label above one of its facts
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get stockItemFactVat;
+
+  /// #4480 Stock items: a filter chip above the list
+  ///
+  /// In en, this message translates to:
+  /// **'All items'**
+  String get stockItemFilterAll;
+
+  /// #4480 Stock items: a filter chip above the list
+  ///
+  /// In en, this message translates to:
+  /// **'Without a home place'**
+  String get stockItemFilterNoHome;
+
   /// #4350 a new item from the Stock page
   ///
   /// In en, this message translates to:
@@ -59039,6 +59381,72 @@ abstract class AppLocalizations {
   /// **'Counted in'**
   String get stockItemNewUnit;
 
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'In no group'**
+  String get stockItemNoGroup;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier article names this item yet.'**
+  String get stockItemNoSuppliers;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'This item has no variants.'**
+  String get stockItemNoVariants;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'None of it is in stock.'**
+  String get stockItemNothingOnHand;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Where it is'**
+  String get stockItemPlacesTitle;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Group and tags'**
+  String get stockItemSectionGroupTags;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get stockItemSectionOverview;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Stock'**
+  String get stockItemSectionStock;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier items'**
+  String get stockItemSectionSuppliers;
+
+  /// #4480 the page of one stock item: the title of one of its sections
+  ///
+  /// In en, this message translates to:
+  /// **'Variants'**
+  String get stockItemSectionVariants;
+
+  /// #4480 the page of one stock item: a line or a message
+  ///
+  /// In en, this message translates to:
+  /// **'See every place'**
+  String get stockItemSeeWhere;
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:
@@ -59050,6 +59458,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The items the business keeps and sells: each one\'s settings, variants and supplier articles.'**
   String get stockItemsIntro;
+
+  /// #4483 the desk's toolbar above the items grid while no row is selected: how to act on an item
+  ///
+  /// In en, this message translates to:
+  /// **'Select an item to act on it'**
+  String get stockItemsSelectHint;
 
   /// the stock pages and group (#4299)
   ///
@@ -59609,6 +60023,18 @@ abstract class AppLocalizations {
   /// **'Two variants have the same combination.'**
   String get stockReasonCombinationDuplicate;
 
+  /// #4479 the units of measure: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A conversion needs two different units.'**
+  String get stockReasonConversionSameUnit;
+
+  /// #4479 the units of measure: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This conversion is not defined.'**
+  String get stockReasonConversionUnknown;
+
   /// #4171 receiving into stock: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -59891,6 +60317,12 @@ abstract class AppLocalizations {
   /// **'More than arrived cannot be put away.'**
   String get stockReasonOverAllocated;
 
+  /// #4479 the units of measure: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A packaging unit has no general conversion: its factor is set on the item.'**
+  String get stockReasonPackageUnit;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -60140,12 +60572,6 @@ abstract class AppLocalizations {
   /// #4293 the registry of the stock: a label or a message
   ///
   /// In en, this message translates to:
-  /// **'cost {amount}'**
-  String stockRegistryCost(String amount);
-
-  /// #4293 the registry of the stock: a label or a message
-  ///
-  /// In en, this message translates to:
   /// **'cost not shown'**
   String get stockRegistryCostHidden;
 
@@ -60200,12 +60626,6 @@ abstract class AppLocalizations {
   /// #4293 the registry of the stock: a label or a message
   ///
   /// In en, this message translates to:
-  /// **'Only items with no home place'**
-  String get stockRegistryNoHomeFilter;
-
-  /// #4293 the registry of the stock: a label or a message
-  ///
-  /// In en, this message translates to:
   /// **'{quantity} on hand'**
   String stockRegistryOnHand(String quantity);
 
@@ -60214,12 +60634,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home place'**
   String get stockRegistryPlaceFilter;
-
-  /// #4293 the registry of the stock: a label or a message
-  ///
-  /// In en, this message translates to:
-  /// **'price {amount}'**
-  String stockRegistryPrice(String amount);
 
   /// #4293 the registry of the stock: a label or a message
   ///
@@ -61485,12 +61899,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add a variant'**
   String get stockVariantsAdd;
-
-  /// #4169 the stock editors: a label or message
-  ///
-  /// In en, this message translates to:
-  /// **'Variants'**
-  String get stockVariantsEdit;
 
   /// #4169 the stock editors: a label or message
   ///
@@ -65974,6 +66382,12 @@ abstract class AppLocalizations {
   /// **'Corrections: {amount}'**
   String tillDayCorrections(String amount);
 
+  /// #4478 the day report: deposits brought back; amount arrives formatted
+  ///
+  /// In en, this message translates to:
+  /// **'Deposits returned: {amount}'**
+  String tillDayDepositsReturned(String amount);
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -66070,6 +66484,12 @@ abstract class AppLocalizations {
   /// **'Business day: {date}'**
   String tillDayReportDate(String date);
 
+  /// #4368 the day report could not be printed
+  ///
+  /// In en, this message translates to:
+  /// **'The day report was not printed. Check the printer and try again.'**
+  String get tillDayReportNotPrinted;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -66152,6 +66572,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The deposit of {name} is not for sale at the counter. Nothing was added.'**
   String tillDepositMissing(String name);
+
+  /// #4476 a discount refused beyond the business's limit
+  ///
+  /// In en, this message translates to:
+  /// **'This discount is beyond what the business allows at the till.'**
+  String get tillDiscountBeyond;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Discount (%)'**
+  String get tillDiscountField;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'A discount is a percentage off the item\'s price, on a line without a changed price.'**
+  String get tillDiscountInvalid;
 
   /// #4367 till sessions: the cash drawer
   ///
@@ -66464,6 +66902,12 @@ abstract class AppLocalizations {
   /// **'The cash the drawer starts with, counted now.'**
   String get tillDrawerFloatHelp;
 
+  /// #4368 the Open drawer key
+  ///
+  /// In en, this message translates to:
+  /// **'The drawer did not open. Check the printer it hangs on.'**
+  String get tillDrawerKickFailed;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -66494,6 +66938,12 @@ abstract class AppLocalizations {
   /// **'No till has been set up yet. Someone who manages the sites adds it.'**
   String get tillDrawerNoTillsPerson;
 
+  /// #4368 the Open drawer key
+  ///
+  /// In en, this message translates to:
+  /// **'No cash drawer is set on this till\'s printer.'**
+  String get tillDrawerNotSet;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:
@@ -66517,6 +66967,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open {till}'**
   String tillDrawerOpenTitle(String till);
+
+  /// #4368 the Open drawer key
+  ///
+  /// In en, this message translates to:
+  /// **'The drawer is open.'**
+  String get tillDrawerOpened;
 
   /// #4367 till sessions: the cash drawer
   ///
@@ -66638,6 +67094,366 @@ abstract class AppLocalizations {
   /// **'Items to ring up'**
   String get tillKeysTitle;
 
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Add a widget'**
+  String get tillLayoutAdd;
+
+  /// #4448 the calculator's result becomes the last basket line's quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Onto the last line'**
+  String get tillLayoutCalcPush;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Which function?'**
+  String get tillLayoutChooseFunction;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Which item?'**
+  String get tillLayoutChooseItem;
+
+  /// #4448 a category key opens another page of the till layout
+  ///
+  /// In en, this message translates to:
+  /// **'Which page does it open?'**
+  String get tillLayoutChoosePage;
+
+  /// #4448 copying a till layout; till is the other till's name
+  ///
+  /// In en, this message translates to:
+  /// **'Copied as {till}\'s draft. Publish it there.'**
+  String tillLayoutCopied(String till);
+
+  /// #4448 copying a till layout to another till
+  ///
+  /// In en, this message translates to:
+  /// **'Copy to another till'**
+  String get tillLayoutCopy;
+
+  /// #4448 copying a till layout to another till
+  ///
+  /// In en, this message translates to:
+  /// **'Copy to which till?'**
+  String get tillLayoutCopyTo;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Lay out this till'**
+  String get tillLayoutEdit;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Take a card'**
+  String get tillLayoutFnCard;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit return'**
+  String get tillLayoutFnDeposit;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Discount on a line'**
+  String get tillLayoutFnDiscount;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Open the drawer'**
+  String get tillLayoutFnDrawer;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Change a price'**
+  String get tillLayoutFnPrice;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity ×'**
+  String get tillLayoutFnQuantity;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Reprint the last receipt'**
+  String get tillLayoutFnReprint;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Void a line'**
+  String get tillLayoutFnVoid;
+
+  /// #4448 a key of a published till layout whose item is no longer sold: shown disabled
+  ///
+  /// In en, this message translates to:
+  /// **'No longer for sale'**
+  String get tillLayoutGone;
+
+  /// #4448 the till layout editor; the reason is a reference: the server's problem code, as it named it
+  ///
+  /// In en, this message translates to:
+  /// **'This layout cannot be saved: {reason}'**
+  String tillLayoutInvalid(String reason);
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Calculator'**
+  String get tillLayoutKindCalculator;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested cash notes'**
+  String get tillLayoutKindCashNotes;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Category key'**
+  String get tillLayoutKindCategory;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Customer and note'**
+  String get tillLayoutKindCustomer;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Function key'**
+  String get tillLayoutKindFunction;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Item key'**
+  String get tillLayoutKindItem;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Numeric keypad'**
+  String get tillLayoutKindKeypad;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Studio passes'**
+  String get tillLayoutKindPasses;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Total and change'**
+  String get tillLayoutKindTotal;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'A widget this app does not know'**
+  String get tillLayoutKindUnknown;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'There is no free place for this widget on this grid.'**
+  String get tillLayoutNoRoom;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Desk'**
+  String get tillLayoutPageDesk;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Drinks'**
+  String get tillLayoutPageDrinks;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get tillLayoutPageFood;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Sale'**
+  String get tillLayoutPageSale;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Publish to the till'**
+  String get tillLayoutPublish;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Published. The till takes it at its next session.'**
+  String get tillLayoutPublished;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Reload'**
+  String get tillLayoutReload;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this widget'**
+  String get tillLayoutRemoveCell;
+
+  /// #4448 resetting a till to the keys it generates
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to the generated keys'**
+  String get tillLayoutReset;
+
+  /// #4448 resetting a till to the keys it generates
+  ///
+  /// In en, this message translates to:
+  /// **'This till goes back to the keys it makes from your items. Its layout and its draft are removed.'**
+  String get tillLayoutResetConfirm;
+
+  /// #4448 resetting a till to the keys it generates
+  ///
+  /// In en, this message translates to:
+  /// **'This till uses its generated keys again.'**
+  String get tillLayoutResetDone;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Desk width'**
+  String get tillLayoutSizeDesk;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Phone width'**
+  String get tillLayoutSizePhone;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Tablet width'**
+  String get tillLayoutSizeTablet;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Someone changed this layout; reload it.'**
+  String get tillLayoutStale;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Start from a template'**
+  String get tillLayoutStartFrom;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get tillLayoutStepDown;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Move left'**
+  String get tillLayoutStepLeft;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'One column narrower'**
+  String get tillLayoutStepNarrower;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Move right'**
+  String get tillLayoutStepRight;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'One row shorter'**
+  String get tillLayoutStepShorter;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'One row taller'**
+  String get tillLayoutStepTaller;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get tillLayoutStepUp;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'One column wider'**
+  String get tillLayoutStepWider;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Bakery and weighed goods: a keypad beside large keys'**
+  String get tillLayoutTemplateBakery;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Café and bar: category pages, no scan field'**
+  String get tillLayoutTemplateCafe;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware and catalogue: scan field and keypad first'**
+  String get tillLayoutTemplateHardware;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Retail: scan field, basket and pay keys'**
+  String get tillLayoutTemplateRetail;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Studio desk: passes and sessions'**
+  String get tillLayoutTemplateStudio;
+
+  /// #4448 the till layout editor
+  ///
+  /// In en, this message translates to:
+  /// **'Till layout'**
+  String get tillLayoutTitle;
+
   /// #4366 the till: what leaving with a sale waiting to be confirmed does
   ///
   /// In en, this message translates to:
@@ -66662,6 +67478,48 @@ abstract class AppLocalizations {
   /// **'The sale is not confirmed'**
   String get tillLeaveTitle;
 
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the lot'**
+  String get tillLotChoose;
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'Past its date ({date}): not sold'**
+  String tillLotExpired(String date);
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'Use by {date}'**
+  String tillLotExpires(String date);
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'The first to expire (chosen by the stock)'**
+  String get tillLotFirstToExpire;
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'Lot {code}'**
+  String tillLotLine(String code);
+
+  /// #4366 the seller chooses the lot a till line is sold from
+  ///
+  /// In en, this message translates to:
+  /// **'{item} has no lot to choose: it is sold as it is.'**
+  String tillLotNone(String item);
+
+  /// #4366 what is on hand of a lot; quantity arrives formatted in the reader's number format
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} {unit} on hand'**
+  String tillLotOnHand(String quantity, String unit);
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -66674,6 +67532,12 @@ abstract class AppLocalizations {
   /// **'This item is not for sale at the counter.'**
   String get tillNotForCounter;
 
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt not printed — the sale is complete. Print again, or show the receipt to share it.'**
+  String get tillNotPrinted;
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
@@ -66685,6 +67549,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing is numbered and nothing is taken until the country\'s operation is supported.'**
   String get tillNotReadyHint;
+
+  /// #4476 Reprint with no sale yet
+  ///
+  /// In en, this message translates to:
+  /// **'No sale to print again yet.'**
+  String get tillNothingToReprint;
 
   /// #4373 the till sells offline: the banner
   ///
@@ -66878,11 +67748,191 @@ abstract class AppLocalizations {
   /// **'Piece {code} is already in the basket.'**
   String tillPieceTwice(String code);
 
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'New price'**
+  String get tillPriceField;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'You may not change a price at the till. The line is sold at the item\'s price.'**
+  String get tillPriceNotAllowed;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get tillPriceReason;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Kept on the receipt.'**
+  String get tillPriceReasonHint;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'A changed price needs its reason.'**
+  String get tillPriceReasonMissing;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Type a number, such as 4.50.'**
+  String get tillPriceUnreadable;
+
   /// #4366 the till
   ///
   /// In en, this message translates to:
   /// **'Pricing the basket…'**
   String get tillPricing;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Print a copy'**
+  String get tillPrintCopy;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Print the receipt'**
+  String get tillPrintReceipt;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'TOTAL'**
+  String get tillPrintTotal;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt printed.'**
+  String get tillPrinted;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Code page'**
+  String get tillPrinterCodePage;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'PC437 (without the euro sign)'**
+  String get tillPrinterCodePage437;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'PC858 (with the euro sign)'**
+  String get tillPrinterCodePage858;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'A cash drawer is attached to the printer'**
+  String get tillPrinterDrawer;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Printer address'**
+  String get tillPrinterHost;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'A name or an address on this network, for example 192.168.1.50'**
+  String get tillPrinterHostHint;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the printer\'s address.'**
+  String get tillPrinterHostRequired;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Print after a sale'**
+  String get tillPrinterMode;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Always'**
+  String get tillPrinterModeAlways;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Offer it'**
+  String get tillPrinterModeAsk;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Only when asked'**
+  String get tillPrinterModeNever;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Paper width'**
+  String get tillPrinterPaper;
+
+  /// #4368 the till's receipt printer: a paper width in millimetres, the number arrives formatted
+  ///
+  /// In en, this message translates to:
+  /// **'{mm} mm'**
+  String tillPrinterPaperWidth(String mm);
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Port'**
+  String get tillPrinterPort;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'The port is a number from 1 to 65535.'**
+  String get tillPrinterPortInvalid;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Set up the receipt printer'**
+  String get tillPrinterSet;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Test print'**
+  String get tillPrinterTest;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Test page sent.'**
+  String get tillPrinterTestSent;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt printer'**
+  String get tillPrinterTitle;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Printing…'**
+  String get tillPrinting;
 
   /// #4366 the till
   ///
@@ -66984,6 +68034,24 @@ abstract class AppLocalizations {
   /// **'The registry names no counter operation for {country}: nothing is supported, and the till sells nothing.'**
   String tillReadinessUnknownCountry(String country);
 
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get tillReceiptCash;
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get tillReceiptChange;
+
+  /// #4476 a receipt printed again; copy is its number among the copies, a label (1, 2, ...)
+  ///
+  /// In en, this message translates to:
+  /// **'COPY {copy} — not a new receipt'**
+  String tillReceiptCopy(String copy);
+
   /// #4184 the counter receipt document; the number is a reference
   ///
   /// In en, this message translates to:
@@ -67037,11 +68105,23 @@ abstract class AppLocalizations {
   /// **'Show the receipt'**
   String get tillReceiptShow;
 
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'of which tax'**
+  String get tillReceiptTax;
+
   /// #4184 the counter receipt document; percent, tax and net arrive formatted
   ///
   /// In en, this message translates to:
   /// **'VAT {percent}: {tax} on {net}'**
   String tillReceiptTaxLine(String percent, String tax, String net);
+
+  /// #4368 the till's receipt printer
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you'**
+  String get tillReceiptThanks;
 
   /// #4184 the counter receipt document; amount arrives formatted
   ///
@@ -67066,6 +68146,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again'**
   String get tillRetry;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'The last item carries no deposit to take back.'**
+  String get tillReturnNoDeposit;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'You may not take a deposit back at the till.'**
+  String get tillReturnNotAllowed;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'This item is not a deposit any item is sold with.'**
+  String get tillReturnNotDeposit;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'A deposit is not taken back while the till is offline.'**
+  String get tillReturnOffline;
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'This deposit is tracked by lot or tag: it is not taken back at the till.'**
+  String get tillReturnTracked;
+
+  /// #4478 a returned deposit on the receipt; item is its name
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit returned: {item}'**
+  String tillReturnedLabel(String item);
+
+  /// #4478 a deposit returned at the till
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit returned'**
+  String get tillReturnedLine;
+
+  /// #4476 the till price keys
+  ///
+  /// In en, this message translates to:
+  /// **'Ring up an item first.'**
+  String get tillRingUpFirst;
 
   /// #4366 the till
   ///
@@ -67768,6 +68896,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unblock'**
   String get unblockAction;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get unitConversionDelete;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'Change a conversion'**
+  String get unitConversionEdit;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'How many'**
+  String get unitConversionFactor;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'How many {to} make one {from}'**
+  String unitConversionFactorHelp(String from, String to);
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get unitConversionFrom;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'1 {from} = {factor} {to}'**
+  String unitConversionLine(String from, String factor, String to);
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'Add a conversion'**
+  String get unitConversionNew;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get unitConversionTo;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'No conversion is defined yet.'**
+  String get unitConversionsEmpty;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'A conversion says how many of one unit make another. It works both ways, in one step. An item\'s own conversion (a carton of 12) wins over these, and a packaging unit has none here.'**
+  String get unitConversionsIntro;
+
+  /// #4479 Settings > Units of measure: the general conversions
+  ///
+  /// In en, this message translates to:
+  /// **'Conversions'**
+  String get unitConversionsTitle;
 
   /// #3730 the kind of an invoice whose kind a newer server sent and this app does not know.
   ///

@@ -6,6 +6,7 @@
 // combination is said under its variant before anything is sent; the saved
 // variant reads back with its label; a dimension gains a value; a supplier
 // article is mapped once and refused for a unit the item does not list.
+// #4480 -- each editor is opened from its section of the item's page, and the page shows what was saved.
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
@@ -13,7 +14,6 @@ import 'package:deskilo/core/demo/data/demo_stock_registry.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_drafts.dart';
 import 'package:deskilo/features/stock/domain/stock_variants.dart';
-import 'package:deskilo/features/stock/presentation/stock_items_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -23,6 +23,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
+import '../../helpers/screens/stock_items_app.dart';
 
 final _en = AppLocalizationsEn();
 
@@ -37,7 +38,8 @@ Future<void> _open(WidgetTester tester, DemoStockConfigCommands config, Size siz
   final ledger = DemoStockLedger('ws-1', config);
   await pumpApp(
     tester,
-    const StockItemsScreen(),
+    null,
+    router: stockItemsRouter(),
     size: size,
     overrides: [
       ...standardTestOverrides(),
@@ -67,9 +69,8 @@ void main() {
       testWidgets('a variant is one value per dimension, saved and read back with its label; the same combination twice is said under it and not sent', (tester) async {
         final config = DemoStockConfigCommands('ws-1');
         await _open(tester, config, size);
-        await tester.scrollUntilVisible(find.byKey(const ValueKey('stock-edit-variants-$_itemId')), 200, scrollable: find.descendant(of: find.byType(ListView), matching: find.byType(Scrollable)).first);
-        await tester.tap(find.byKey(const ValueKey('stock-edit-variants-$_itemId')));
-        await _settle(tester);
+        await openStockItem(tester, _itemId);
+        await tapItemAction(tester, 'stock-edit-variants-$_itemId');
         await tester.tap(find.byKey(const ValueKey('stock-variants-add')));
         await _settle(tester);
         await _choose(tester, 'stock-variant-0-demo-dim-colour', 'Red');
@@ -88,14 +89,17 @@ void main() {
         final saved = await config.variants('ws-1', 'demo-item-shirt');
         expect(saved.map((v) => v.label), ['Colour: Red', 'Colour: Blue']);
         expect((await config.item('ws-1', 'demo-item-shirt'))!.revision, 2, reason: 'the item revision moved with the variants');
+        // #4480 -- back on the item, its variants are listed.
+        final variants = find.byKey(const ValueKey('stock-item-section-variants'));
+        expect(find.descendant(of: variants, matching: find.text('Colour: Red')), findsOneWidget);
+        expect(find.descendant(of: variants, matching: find.text('Colour: Blue')), findsOneWidget);
       });
 
       testWidgets('a dimension gains a value, and the variant editor offers it', (tester) async {
         final config = DemoStockConfigCommands('ws-1');
         await _open(tester, config, size);
-        await tester.scrollUntilVisible(find.byKey(const ValueKey('stock-edit-variants-$_itemId')), 200, scrollable: find.descendant(of: find.byType(ListView), matching: find.byType(Scrollable)).first);
-        await tester.tap(find.byKey(const ValueKey('stock-edit-variants-$_itemId')));
-        await _settle(tester);
+        await openStockItem(tester, _itemId);
+        await tapItemAction(tester, 'stock-edit-variants-$_itemId');
         await tester.ensureVisible(find.byKey(const ValueKey('stock-dimensions-manage')));
         await tester.tap(find.byKey(const ValueKey('stock-dimensions-manage')));
         await _settle(tester);
@@ -116,9 +120,8 @@ void main() {
       testWidgets('a supplier article is mapped to the item; the same article twice is refused under its field', (tester) async {
         final config = DemoStockConfigCommands('ws-1');
         await _open(tester, config, size);
-        await tester.scrollUntilVisible(find.byKey(const ValueKey('stock-edit-mappings-$_itemId')), 200, scrollable: find.descendant(of: find.byType(ListView), matching: find.byType(Scrollable)).first);
-        await tester.tap(find.byKey(const ValueKey('stock-edit-mappings-$_itemId')));
-        await _settle(tester);
+        await openStockItem(tester, _itemId);
+        await tapItemAction(tester, 'stock-edit-mappings-$_itemId');
         expect(find.byKey(const ValueKey('stock-mappings-none')), findsOneWidget);
         for (final attempt in [1, 2]) {
           await tester.tap(find.byKey(const ValueKey('stock-mapping-add')));

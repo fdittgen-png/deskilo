@@ -453,13 +453,21 @@ constraint counter_offline_sales.counter_offline_sales_workspace_id_synced_by_me
 constraint counter_offline_sales.counter_offline_sales_workspace_id_till_session_id_fkey FOREIGN KEY (workspace_id, till_session_id) REFERENCES counter_till_sessions(workspace_id, id)
 constraint counter_offline_sales.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint counter_offline_sales.system_company_present CHECK ((company_id IS NOT NULL))
-constraint counter_receipt_lines.counter_receipt_lines_gross_minor_check CHECK ((gross_minor >= 0))
+constraint counter_receipt_copies.counter_receipt_copies_copy_no_check CHECK ((copy_no >= 1))
+constraint counter_receipt_copies.counter_receipt_copies_pkey PRIMARY KEY (id)
+constraint counter_receipt_copies.counter_receipt_copies_workspace_id_actor_member_id_fkey FOREIGN KEY (workspace_id, actor_member_id) REFERENCES members(workspace_id, id)
+constraint counter_receipt_copies.counter_receipt_copies_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint counter_receipt_copies.counter_receipt_copies_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint counter_receipt_copies.counter_receipt_copies_workspace_id_receipt_id_copy_no_key UNIQUE (workspace_id, receipt_id, copy_no)
+constraint counter_receipt_copies.counter_receipt_copies_workspace_id_receipt_id_fkey FOREIGN KEY (workspace_id, receipt_id) REFERENCES counter_receipts(workspace_id, id)
+constraint counter_receipt_copies.counter_receipt_copies_workspace_id_request_id_key UNIQUE (workspace_id, request_id)
+constraint counter_receipt_copies.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint counter_receipt_copies.system_company_present CHECK ((company_id IS NOT NULL))
+constraint counter_receipt_lines.counter_receipt_lines_amount_sign CHECK (((((frozen ->> 'kind'::text) IS DISTINCT FROM 'deposit_return'::text) AND (net_minor >= 0) AND (tax_minor >= 0) AND (gross_minor >= 0)) OR (((frozen ->> 'kind'::text) = 'deposit_return'::text) AND (net_minor <= 0) AND (tax_minor <= 0) AND (gross_minor <= 0))))
 constraint counter_receipt_lines.counter_receipt_lines_line_no_check CHECK ((line_no >= 1))
-constraint counter_receipt_lines.counter_receipt_lines_net_minor_check CHECK ((net_minor >= 0))
 constraint counter_receipt_lines.counter_receipt_lines_pkey PRIMARY KEY (id)
 constraint counter_receipt_lines.counter_receipt_lines_quantity_check CHECK ((quantity > (0)::numeric))
 constraint counter_receipt_lines.counter_receipt_lines_receipt_id_line_no_key UNIQUE (receipt_id, line_no)
-constraint counter_receipt_lines.counter_receipt_lines_tax_minor_check CHECK ((tax_minor >= 0))
 constraint counter_receipt_lines.counter_receipt_lines_workspace_id_corrects_line_id_fkey FOREIGN KEY (workspace_id, corrects_line_id) REFERENCES counter_receipt_lines(workspace_id, id)
 constraint counter_receipt_lines.counter_receipt_lines_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint counter_receipt_lines.counter_receipt_lines_workspace_id_id_key UNIQUE (workspace_id, id)
@@ -482,8 +490,7 @@ constraint counter_receipts.counter_receipts_session_fkey FOREIGN KEY (workspace
 constraint counter_receipts.counter_receipts_source_kind_check CHECK ((source_kind ~ '^[a-z_]{1,32}$'::text))
 constraint counter_receipts.counter_receipts_source_ref_check CHECK ((char_length(source_ref) <= 200))
 constraint counter_receipts.counter_receipts_state_check CHECK ((state = ANY (ARRAY['draft'::text, 'finalized'::text])))
-constraint counter_receipts.counter_receipts_tax_minor_check CHECK (((tax_minor IS NULL) OR (tax_minor >= 0)))
-constraint counter_receipts.counter_receipts_total_minor_check CHECK (((total_minor IS NULL) OR (total_minor >= 0)))
+constraint counter_receipts.counter_receipts_total_minor_sign CHECK (((total_minor IS NULL) OR (total_minor >= 0) OR (state = 'draft'::text)))
 constraint counter_receipts.counter_receipts_workspace_id_corrects_receipt_id_fkey FOREIGN KEY (workspace_id, corrects_receipt_id) REFERENCES counter_receipts(workspace_id, id)
 constraint counter_receipts.counter_receipts_workspace_id_created_by_member_id_fkey FOREIGN KEY (workspace_id, created_by_member_id) REFERENCES members(workspace_id, id)
 constraint counter_receipts.counter_receipts_workspace_id_finalized_by_member_id_fkey FOREIGN KEY (workspace_id, finalized_by_member_id) REFERENCES members(workspace_id, id)
@@ -1079,6 +1086,10 @@ constraint item_groups.item_groups_count_every_days_check CHECK (((count_every_d
 constraint item_groups.item_groups_default_purchase_factor_den_check CHECK ((default_purchase_factor_den > 0))
 constraint item_groups.item_groups_default_purchase_factor_num_check CHECK ((default_purchase_factor_num > 0))
 constraint item_groups.item_groups_default_purchase_unit_check CHECK (((char_length(btrim(default_purchase_unit)) >= 1) AND (char_length(btrim(default_purchase_unit)) <= 30)))
+constraint item_groups.item_groups_default_sale_factor_den_check CHECK ((default_sale_factor_den > 0))
+constraint item_groups.item_groups_default_sale_factor_num_check CHECK ((default_sale_factor_num > 0))
+constraint item_groups.item_groups_default_sale_price_cents_check CHECK (((default_sale_price_cents >= 0) AND (default_sale_price_cents <= 2000000000)))
+constraint item_groups.item_groups_default_sale_unit_check CHECK (((char_length(btrim(default_sale_unit)) >= 1) AND (char_length(btrim(default_sale_unit)) <= 30)))
 constraint item_groups.item_groups_deposit_minor_check CHECK ((deposit_minor >= 0))
 constraint item_groups.item_groups_inventory_unit_fkey FOREIGN KEY (workspace_id, inventory_unit) REFERENCES workspace_units(workspace_id, code)
 constraint item_groups.item_groups_label_template_check CHECK (((char_length(btrim(label_template)) >= 1) AND (char_length(btrim(label_template)) <= 60)))
@@ -1090,6 +1101,7 @@ constraint item_groups.item_groups_quick_key_colour_check CHECK ((quick_key_colo
 constraint item_groups.item_groups_reorder_point_default_check CHECK ((reorder_point_default >= (0)::numeric))
 constraint item_groups.item_groups_reorder_quantity_default_check CHECK ((reorder_quantity_default > (0)::numeric))
 constraint item_groups.item_groups_revision_check CHECK ((revision >= 1))
+constraint item_groups.item_groups_sale_factor_pair CHECK (((default_sale_factor_num IS NULL) = (default_sale_factor_den IS NULL)))
 constraint item_groups.item_groups_shelf_life_days_check CHECK (((shelf_life_days >= 1) AND (shelf_life_days <= 36500)))
 constraint item_groups.item_groups_supply_class_check CHECK ((supply_class = ANY (ARRAY['property'::text, 'general'::text])))
 constraint item_groups.item_groups_tag_mode_check CHECK ((tag_mode = ANY (ARRAY['none'::text, 'per_batch'::text, 'per_unit'::text])))
@@ -1109,6 +1121,7 @@ constraint item_units.item_units_factor_den_check CHECK ((factor_den > 0))
 constraint item_units.item_units_factor_num_check CHECK ((factor_num > 0))
 constraint item_units.item_units_item_id_unit_key UNIQUE (item_id, unit)
 constraint item_units.item_units_pkey PRIMARY KEY (id)
+constraint item_units.item_units_price_cents_check CHECK (((price_cents IS NULL) OR ((price_cents >= 0) AND (price_cents <= 2000000000))))
 constraint item_units.item_units_unit_check CHECK (((char_length(btrim(unit)) >= 1) AND (char_length(btrim(unit)) <= 30)))
 constraint item_units.item_units_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint item_units.item_units_workspace_id_item_id_fkey FOREIGN KEY (workspace_id, item_id) REFERENCES services(workspace_id, id) ON DELETE CASCADE
@@ -2694,6 +2707,16 @@ constraint tax_reference.tax_reference_pkey PRIMARY KEY (id)
 constraint tax_reference.tax_reference_shape CHECK (tax_reference_valid(domain, value))
 constraint tax_reference.tax_reference_source_check CHECK ((btrim(source) <> ''::text))
 constraint tax_reference.tax_reference_version UNIQUE (domain, country, key, valid_from)
+constraint till_layouts.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint till_layouts.system_company_present CHECK ((company_id IS NOT NULL))
+constraint till_layouts.till_layouts_layout_check CHECK ((jsonb_typeof(layout) = 'object'::text))
+constraint till_layouts.till_layouts_name_check CHECK (((char_length(btrim(name)) >= 1) AND (char_length(btrim(name)) <= 60)))
+constraint till_layouts.till_layouts_one_per_status UNIQUE (till_id, status)
+constraint till_layouts.till_layouts_pkey PRIMARY KEY (id)
+constraint till_layouts.till_layouts_status_check CHECK ((status = ANY (ARRAY['draft'::text, 'published'::text])))
+constraint till_layouts.till_layouts_till_id_fkey FOREIGN KEY (till_id) REFERENCES counter_tills(id) ON DELETE CASCADE
+constraint till_layouts.till_layouts_version_check CHECK ((version >= 1))
+constraint till_layouts.till_layouts_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint trace_reports.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint trace_reports.trace_reports_app_version_check CHECK (((char_length(app_version) >= 1) AND (char_length(app_version) <= 40)))
 constraint trace_reports.trace_reports_device_id_check CHECK ((device_id ~ '^[A-Za-z0-9_-]{8,64}$'::text))
@@ -2702,6 +2725,15 @@ constraint trace_reports.trace_reports_failure_type_check CHECK (((char_length(f
 constraint trace_reports.trace_reports_pkey PRIMARY KEY (id)
 constraint trace_reports.trace_reports_platform_check CHECK (((char_length(platform) >= 1) AND (char_length(platform) <= 40)))
 constraint trace_reports.trace_reports_schema_version_check CHECK ((schema_version >= 0))
+constraint unit_conversions.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint unit_conversions.system_company_present CHECK ((company_id IS NOT NULL))
+constraint unit_conversions.unit_conversions_check CHECK ((from_unit <> to_unit))
+constraint unit_conversions.unit_conversions_factor_den_check CHECK ((factor_den > 0))
+constraint unit_conversions.unit_conversions_factor_num_check CHECK ((factor_num > 0))
+constraint unit_conversions.unit_conversions_pkey PRIMARY KEY (id)
+constraint unit_conversions.unit_conversions_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint unit_conversions.unit_conversions_workspace_id_from_unit_fkey FOREIGN KEY (workspace_id, from_unit) REFERENCES workspace_units(workspace_id, code)
+constraint unit_conversions.unit_conversions_workspace_id_to_unit_fkey FOREIGN KEY (workspace_id, to_unit) REFERENCES workspace_units(workspace_id, code)
 constraint usage_records.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint usage_records.system_company_present CHECK ((company_id IS NOT NULL))
 constraint usage_records.usage_records_basis_check CHECK ((basis = ANY (ARRAY['reserved'::text, 'corrected'::text])))
@@ -2964,7 +2996,7 @@ constraint workspace_units.system_columns_order CHECK ((modified_datetime >= cre
 constraint workspace_units.system_company_present CHECK ((company_id IS NOT NULL))
 constraint workspace_units.workspace_units_check CHECK ((built_in OR (label IS NOT NULL)))
 constraint workspace_units.workspace_units_code_check CHECK ((code ~ '^[a-z][a-z0-9_]{0,19}$'::text))
-constraint workspace_units.workspace_units_dimension_check CHECK ((dimension = ANY (ARRAY['count'::text, 'mass'::text, 'volume'::text, 'length'::text, 'area'::text, 'time'::text])))
+constraint workspace_units.workspace_units_dimension_check CHECK ((dimension = ANY (ARRAY['count'::text, 'mass'::text, 'volume'::text, 'length'::text, 'area'::text, 'time'::text, 'package'::text])))
 constraint workspace_units.workspace_units_factor_den_check CHECK ((factor_den > 0))
 constraint workspace_units.workspace_units_factor_num_check CHECK ((factor_num > 0))
 constraint workspace_units.workspace_units_label_check CHECK (((label IS NULL) OR ((char_length(btrim(label)) >= 1) AND (char_length(btrim(label)) <= 40))))
@@ -3146,6 +3178,7 @@ routine public.book_actor(p_workspace_id uuid, p_owner boolean) -> uuid | functi
 routine public.book_chart(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b41fc3441b69
 routine public.book_local_day(p_workspace_id uuid, p_at timestamp with time zone) -> date | function | definer | stable | exec:service_role | body:331853c631d1
 routine public.book_period_closed(p_workspace_id uuid, p_day date) -> boolean | function | definer | stable | exec:service_role | body:48ddadaf666d
+routine public.book_period_dated_guard() -> trigger | function | definer | volatile | exec:service_role | body:45e46a4ddcfc
 routine public.book_period_json(p book_periods) -> jsonb | function | definer | stable | exec:service_role | body:6e70242182da
 routine public.book_period_match_guard() -> trigger | function | definer | volatile | exec:service_role | body:d96b788952db
 routine public.book_period_vat_close() -> trigger | function | definer | volatile | exec:service_role | body:95211731251d
@@ -3231,30 +3264,34 @@ routine public.cost_allocation_rules_v1(p_workspace_id uuid) -> jsonb | function
 routine public.counter_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:66c1d614d21a
 routine public.counter_adapters() -> text[] | function | invoker | immutable | exec:service_role | body:eea3a873b58c
 routine public.counter_cash_entry_v1(p_workspace_id uuid, p_request_id uuid, p_session_id uuid, p_kind text, p_amount_minor bigint, p_reason text, p_purchase_document_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:717b11c0e3ac
-routine public.counter_day_close_v1(p_workspace_id uuid, p_request_id uuid, p_site_id uuid, p_business_date date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:56cbabae9905
+routine public.counter_day_close_v1(p_workspace_id uuid, p_request_id uuid, p_site_id uuid, p_business_date date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:574e10fa7ef5
 routine public.counter_day_report_v1(p_workspace_id uuid, p_day_close_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e7ad269ace0
 routine public.counter_denominations_total(p_denominations jsonb) -> bigint | function | invoker | immutable | exec:service_role | body:fe05c177ae65
 routine public.counter_finance_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:95d8874f4ca3
-routine public.counter_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:a9c6b6fdca6f
+routine public.counter_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:e4459a02061f
 routine public.counter_goods_parts(p_workspace_id uuid, p_item_id uuid, p_variant_id uuid, p_from uuid, p_quantity text, p_unit text, p_input jsonb, p_taken jsonb) -> jsonb | function | definer | stable | exec:service_role | body:2cf395fe5aa1
-routine public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d83f1a38055e
+routine public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:97446c3ccbce
+routine public.counter_item_lots_v1(p_workspace_id uuid, p_item_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e794467544c8
 routine public.counter_line_compute(p_workspace_id uuid, p_line jsonb, p_index integer, p_currency text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:36efd33a36e8
-routine public.counter_lines_of(p_workspace_id uuid, p_lines jsonb, p_currency text, p_basis text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:bfe50aa31258
+routine public.counter_line_prices(p_workspace_id uuid, p_kind text, p_lines jsonb) -> jsonb | function | definer | stable | exec:service_role | body:672c0c73ce0d
+routine public.counter_lines_of(p_workspace_id uuid, p_lines jsonb, p_currency text, p_basis text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:4a10e5651bcf
 routine public.counter_offline_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:7b010a54dd5a
 routine public.counter_offline_body_total(p_workspace_id uuid, p_body jsonb, p_digits integer) -> bigint | function | definer | stable | exec:service_role | body:2628b4f30ce6
 routine public.counter_offline_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:46b7fe95de2a
 routine public.counter_offline_gap_list(p_session_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:567066e980a1
 routine public.counter_offline_gaps(p_session_id uuid, p_devices uuid[]) -> jsonb | function | definer | stable | exec:service_role | body:d75982a0db7c
 routine public.counter_offline_list_v1(p_workspace_id uuid, p_session_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:965bd6b91c33
-routine public.counter_offline_sync_v1(p_workspace_id uuid, p_session_id uuid, p_offline_since timestamp with time zone, p_sales jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:eef50bcac091
+routine public.counter_offline_sync_v1(p_workspace_id uuid, p_session_id uuid, p_offline_since timestamp with time zone, p_sales jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:dc9d2aa06550
 routine public.counter_open_session(p_workspace_id uuid, p_till text) -> uuid | function | definer | volatile | exec:service_role | body:3fb1d7861f42
 routine public.counter_operation_row(p_workspace_id uuid, p_operation text) -> counter_country_operations | function | definer | stable | exec:service_role | body:59a85833376f
 routine public.counter_operation_state(p_workspace_id uuid, p_operation text) -> text | function | definer | stable | exec:service_role | body:b59b96f02cf4
 routine public.counter_readiness_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9e12e5da4551
-routine public.counter_receipt_correct_v1(p_workspace_id uuid, p_request_id uuid, p_original_id uuid, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1452fbfd8264
+routine public.counter_receipt_copies_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:c25aadf4ae3d
+routine public.counter_receipt_copy_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1bf513d62361
+routine public.counter_receipt_correct_v1(p_workspace_id uuid, p_request_id uuid, p_original_id uuid, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:181ef537604f
 routine public.counter_receipt_decode(p_frozen jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:928178fe46df
-routine public.counter_receipt_draft_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7c2cb5fd1066
-routine public.counter_receipt_finalize_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_tenders jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:36e7b2ba62d8
+routine public.counter_receipt_draft_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a9d71bcb21be
+routine public.counter_receipt_finalize_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_tenders jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ef62bdcefa83
 routine public.counter_refund_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_refunds jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5bdff69dd04a
 routine public.counter_refunds_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:581cb131a084
 routine public.counter_require_operation(p_workspace_id uuid, p_operation text) -> counter_country_operations | function | definer | stable | exec:service_role | body:d1fc60a0d6e8
@@ -3389,7 +3426,7 @@ routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | defi
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:60e99a54bb53
 routine public.export_my_personal_data_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d7b715189c7e
 routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:92590453f1db
-routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:efc6593f2d82
+routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1d45cb25b602
 routine public.extend_rights_request(p_request_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04408416313f
 routine public.feature_available_in(p_country text, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:afd99a4fede6
 routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:1d4c5b503042
@@ -3440,7 +3477,7 @@ routine public.hand_payment_intent(p_intent uuid) -> boolean | function | define
 routine public.handle_new_user() -> trigger | function | definer | volatile | exec:service_role | body:283ccda0aedd
 routine public.has_badge_pin() -> boolean | function | definer | stable | exec:authenticated,service_role | body:b706db9793bb
 routine public.has_permission(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:3fbfe0580efb
-routine public.has_permission_raw(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:c89e4a3763c3
+routine public.has_permission_raw(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:1adae2fd39bd
 routine public.hmrc_actor(p_workspace_id uuid, p_purpose text) -> uuid | function | definer | stable | exec:service_role | body:51b3589ac90b
 routine public.hmrc_connection_manageable_v1(p_connection_id uuid, p_purpose text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0bf13fd3e12b
 routine public.hmrc_connection_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f9328e95d3ce
@@ -3505,7 +3542,7 @@ routine public.invoice_dunning_state_core(p_invoice_id uuid, p_at timestamp with
 routine public.invoice_email_send_json(p_send uuid) -> jsonb | function | definer | stable | exec:service_role | body:bfb95b7f8f5f
 routine public.invoice_email_state_v1(p_workspace_id uuid, p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9e9729f10099
 routine public.invoice_essentials_missing(p_workspace_id uuid, p_member_id uuid, p_parties jsonb, p_vat_totals jsonb) -> text[] | function | definer | stable | exec:service_role | body:4bfb219079c9
-routine public.invoice_goods_return(p_workspace_id uuid, p_actor uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:d1a30872eda2
+routine public.invoice_goods_return(p_workspace_id uuid, p_actor uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:4061e613bc15
 routine public.invoice_goods_tracks_freeze(p_workspace_id uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:d2069f0a2607
 routine public.invoice_issue_draft(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_replaces uuid, p_correction_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:12b1d88976d2
 routine public.invoice_issue_readiness(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_replaces uuid, p_correction_reason text) -> text[] | function | definer | volatile | exec:authenticated,service_role | body:4acf86115aa7
@@ -3543,6 +3580,7 @@ routine public.invoice_original_orphan_age() -> interval | function | invoker | 
 routine public.invoice_original_sweep_cap() -> integer | function | invoker | immutable | exec:service_role | body:e6528d16b93d
 routine public.invoice_original_xml_max_bytes() -> integer | function | invoker | immutable | exec:authenticated,service_role | body:770442338eed
 routine public.invoice_originals_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:8caacaa7487f
+routine public.invoice_originals_kept() -> trigger | function | invoker | volatile | exec:service_role | body:97752a916975
 routine public.invoice_originals_sweep_claim_v1(p_lease_seconds integer) -> TABLE(lease_token uuid, mode text, candidates jsonb) | function | definer | volatile | exec:service_role | body:48808ac823be
 routine public.invoice_payment_received(p_invoice uuid) -> boolean | function | definer | stable | exec:service_role | body:e43d61fc501a
 routine public.invoice_provenance_stamp() -> trigger | function | definer | volatile | exec:service_role | body:684ce055c003
@@ -3579,20 +3617,21 @@ routine public.item_group_actor(p_workspace_id uuid) -> uuid | function | define
 routine public.item_group_assign_core(p_workspace_id uuid, p_me uuid, p_request_id uuid, p_item_id uuid, p_expected integer, p_group_id uuid, p_dry boolean) -> jsonb | function | definer | volatile | exec:service_role | body:49189b5b2b06
 routine public.item_group_assign_v1(p_workspace_id uuid, p_request_id uuid, p_item_id uuid, p_expected_revision integer, p_group_id uuid, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:47ed274ddf48
 routine public.item_group_business_default(p_workspace_id uuid, p_param text) -> jsonb | function | definer | stable | exec:service_role | body:e29d304b68f6
-routine public.item_group_check_value(p_workspace_id uuid, p_param text, p_value jsonb) -> void | function | definer | stable | exec:service_role | body:bb9727998a99
+routine public.item_group_check_value(p_workspace_id uuid, p_param text, p_value jsonb) -> void | function | definer | stable | exec:service_role | body:7d80c540b206
 routine public.item_group_delete_v1(p_workspace_id uuid, p_request_id uuid, p_group_id uuid, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:94fd91e75513
 routine public.item_group_finance_guard(p_workspace_id uuid, p_params text[]) -> void | function | definer | stable | exec:service_role | body:12cba0630cf1
 routine public.item_group_history_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:2b985ba95c55
 routine public.item_group_history_v1(p_workspace_id uuid, p_group_id uuid, p_item_id uuid, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:df9e7a4b0cd5
 routine public.item_group_lock(p_ids uuid[], p_exclusive boolean) -> void | function | definer | volatile | exec:service_role | body:7773d10092c7
 routine public.item_group_param_finance(p_param text) -> boolean | function | invoker | immutable | exec:service_role | body:5149d9a75821
-routine public.item_group_param_kind(p_param text) -> text | function | invoker | immutable | exec:service_role | body:3956673584aa
-routine public.item_group_params() -> text[] | function | invoker | immutable | exec:service_role | body:f2839941d19a
-routine public.item_group_save_core(p_workspace_id uuid, p_me uuid, p_request_id uuid, p_group_id uuid, p_expected integer, p_body jsonb, p_params jsonb, p_dry boolean) -> jsonb | function | definer | volatile | exec:service_role | body:398f426b0289
+routine public.item_group_param_kind(p_param text) -> text | function | invoker | immutable | exec:service_role | body:9fe69677ca51
+routine public.item_group_params() -> text[] | function | invoker | immutable | exec:service_role | body:c324f52d1e64
+routine public.item_group_save_core(p_workspace_id uuid, p_me uuid, p_request_id uuid, p_group_id uuid, p_expected integer, p_body jsonb, p_params jsonb, p_dry boolean) -> jsonb | function | definer | volatile | exec:service_role | body:417ae580e991
 routine public.item_group_save_v1(p_workspace_id uuid, p_request_id uuid, p_group_id uuid, p_expected_revision integer, p_body jsonb, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:72cbd8667efa
 routine public.item_groups_depth() -> trigger | function | invoker | volatile | exec:service_role | body:d4c86b15b62f
 routine public.item_groups_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0e98a226efa1
 routine public.item_override_save_v1(p_workspace_id uuid, p_request_id uuid, p_item_id uuid, p_expected_revision integer, p_parameter text, p_mode text, p_value jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:87a3cb7e4190
+routine public.item_unit_price(p_workspace_id uuid, p_item_id uuid, p_unit text) -> bigint | function | definer | stable | exec:service_role | body:9df00776aceb
 routine public.join_by_invitation(p_code text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ad163de0b3f1
 routine public.join_workspace(p_invite_code text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:71d677dd0dc5
 routine public.jsonb_text_array(p jsonb) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:d77408f879dc
@@ -3840,7 +3879,7 @@ routine public.member_pause_money(p_member_id uuid, p_from date, p_to date) -> j
 routine public.member_paused_on(p_member_id uuid, p_day date, p_current text) -> boolean | function | definer | stable | exec:service_role | body:165156d1fbaa
 routine public.member_pct_in(p_member_id uuid, p_first date, p_current integer) -> integer | function | definer | stable | exec:service_role | body:bcacb274bd3a
 routine public.member_period_invoiced(p_member_id uuid, p_first date) -> boolean | function | definer | stable | exec:service_role | body:56e095a7be0e
-routine public.member_permission_raw(p_member_id uuid, perm text) -> boolean | function | definer | stable | exec:service_role | body:e453fad697dc
+routine public.member_permission_raw(p_member_id uuid, perm text) -> boolean | function | definer | stable | exec:service_role | body:57156b566566
 routine public.member_price_negotiation(p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:748e36d6fe4e
 routine public.member_profile_projection(p_subject uuid, p_purposes text[], p_viewer uuid) -> jsonb | function | definer | stable | exec:service_role | body:505d01342812
 routine public.member_profile_purposes(p_workspace uuid, p_subject uuid) -> text[] | function | definer | stable | exec:service_role | body:60fbc840b60d
@@ -4046,6 +4085,8 @@ routine public.place_visible_to(p_member uuid, p_office uuid, p_level uuid) -> b
 routine public.plan_media_orphans(p_workspace_id uuid, p_limit integer) -> SETOF text | function | definer | stable | exec:authenticated,service_role | body:9d9ed014d04e
 routine public.post_context_notice(p_context_kind text, p_context_id uuid, p_notice jsonb, p_body text) -> uuid | function | definer | volatile | exec:service_role | body:d77a52768f00
 routine public.postal_region_rules() -> jsonb | function | invoker | immutable | exec:service_role | body:95e4509a2045
+routine public.posted_rows_no_truncate() -> trigger | function | definer | volatile | exec:service_role | body:ed79bce05c14
+routine public.posted_site_kept() -> trigger | function | invoker | volatile | exec:service_role | body:b365ac0a566c
 routine public.posting_account(p_issuer_site_id uuid, p_role text, p_qualifier text, p_day date) -> TABLE(code text, problem text) | function | definer | stable | exec:service_role | body:5adcca634cb9
 routine public.posting_at_rate(p_entry jsonb, p_currency text, p_rate numeric, p_rate_date date, p_source text) -> jsonb | function | invoker | immutable | exec:service_role | body:fb515e5ba01c
 routine public.posting_bank_entry(p_workspace_id uuid, p_invoice_id uuid, p_entry jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fb7360981238
@@ -4144,7 +4185,7 @@ routine public.purchase_request_begin(p_workspace_id uuid, p_request_id uuid, p_
 routine public.purchase_request_end(p_workspace_id uuid, p_request_id uuid, p_operation text, p_digest text, p_result jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:d966beee0b55
 routine public.purchase_resource_site(p_workspace_id uuid, p_kind text, p_id uuid) -> TABLE(found boolean, site_id uuid) | function | definer | stable | exec:service_role | body:da2892f9638b
 routine public.purchase_state_of_event(p_status text) -> text | function | invoker | immutable | exec:service_role | body:d221debfbdf6
-routine public.purchase_write_lines(p_workspace_id uuid, p_purchase_id uuid, p_lines jsonb) -> void | function | definer | volatile | exec:service_role | body:5efec05cf1f6
+routine public.purchase_write_lines(p_workspace_id uuid, p_purchase_id uuid, p_lines jsonb) -> void | function | definer | volatile | exec:service_role | body:41bce3deca9b
 routine public.purge_expired_field_answer_holds() -> integer | function | definer | volatile | exec:service_role | body:8dcbf0fddd71
 routine public.push_delivery_headers(p_anon_key text) -> jsonb | function | definer | volatile | exec:service_role | body:a8a21aab9941
 routine public.put_away_receipt_v1(p_workspace_id uuid, p_receipt_id uuid, p_request_id uuid, p_allocations jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:90a795dd947a
@@ -4310,7 +4351,7 @@ routine public.rights_due_on(p_received timestamp with time zone, p_timezone tex
 routine public.rights_outcome_valid(p_outcome jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:6f796d1ba736
 routine public.rights_requests_guard() -> trigger | function | invoker | volatile | exec:service_role | body:dbf713b357cb
 routine public.role_holds(ws uuid, p_role text, perm text) -> boolean | function | definer | stable | exec:service_role | body:f5ded1680290
-routine public.role_permission_catalog() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:972dbd1409fe
+routine public.role_permission_catalog() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:f9ccdc51674c
 routine public.rollback_deployment(p_deployment_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c05549d60433
 routine public.room_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:586b028bb1cc
 routine public.room_audience_has(p_rental uuid, p_member uuid) -> boolean | function | definer | stable | exec:service_role | body:e7423e536921
@@ -4345,12 +4386,12 @@ routine public.save_mcp_policy(p_workspace_id uuid, p_expected_revision integer,
 routine public.save_premises_lease_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_payload jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:61eb984039bb
 routine public.save_purchase_draft_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:68d6e1c38dc4
 routine public.save_purchase_order_mail_settings_v1(p_workspace_id uuid, p_sender_email text, p_sender_name text, p_api_key text, p_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:db57f3672cba
-routine public.save_purchase_order_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f20d8a983bef
+routine public.save_purchase_order_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:22b6c02c8bb2
 routine public.save_room_rental_v1(p_workspace_id uuid, p_office_id uuid, p_supplier_id uuid, p_available_from date, p_available_until date, p_cost_kind text, p_cost_cents bigint, p_period text, p_status text, p_document_id uuid, p_revision integer, p_audience_all boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:558593482042
 routine public.save_setup_journey(p_workspace_id uuid, p_answers jsonb, p_levels jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3ea7b7ed1f4c
 routine public.save_setup_step_draft(p_workspace_id uuid, p_step text, p_payload jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fdb127d50874
 routine public.save_standalone_invoice_draft_v1(p_workspace_id uuid, p_draft_id uuid, p_expected_revision integer, p_subject uuid, p_service_date date, p_due_on date, p_buyer_reference text, p_purchase_order text, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:469627be70ed
-routine public.save_stock_item_v1(p_workspace_id uuid, p_item_id uuid, p_expected_revision integer, p_request_id uuid, p_item jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2742619c88b6
+routine public.save_stock_item_v1(p_workspace_id uuid, p_item_id uuid, p_expected_revision integer, p_request_id uuid, p_item jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1ed870a9e2ef
 routine public.save_stock_location_v1(p_workspace_id uuid, p_place_id uuid, p_expected_revision integer, p_request_id uuid, p_place jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7caa3b8e9970
 routine public.save_stock_reorder_point_v1(p_workspace_id uuid, p_point_id uuid, p_expected_revision integer, p_request_id uuid, p_point jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:222f8211fec5
 routine public.save_supplier(p_workspace_id uuid, p_supplier_id uuid, p_name text, p_tax_id text, p_tax_id_kind text, p_street text, p_postal_code text, p_city text, p_country_code text, p_contact text, p_number text, p_subdivision text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:527806d558d6
@@ -4381,7 +4422,7 @@ routine public.send_member_note(p_workspace_id uuid, p_to_member_id uuid, p_body
 routine public.send_workspace_application_message(p_event_id uuid, p_body text, p_expected_account uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:f316d7071863
 routine public.service_fulfilment_actor(p_workspace uuid) -> members | function | definer | stable | exec:service_role | body:1a9e2c1cd693
 routine public.service_fulfilment_digest(p_text text) -> text | function | invoker | immutable | exec:service_role | body:98b5527e39bb
-routine public.service_fulfilment_direct_scope(p_workspace uuid, p_scope jsonb) -> jsonb | function | definer | stable | exec:service_role | body:f246972368da
+routine public.service_fulfilment_direct_scope(p_workspace uuid, p_scope jsonb) -> jsonb | function | definer | stable | exec:service_role | body:e43c4dc05ddc
 routine public.service_fulfilment_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:5371d420b58e
 routine public.service_fulfilment_invoice_ids(f service_fulfilments) -> SETOF uuid | function | definer | stable | exec:service_role | body:d4d01d76053d
 routine public.service_fulfilment_json(f service_fulfilments) -> jsonb | function | definer | stable | exec:service_role | body:11d89631a565
@@ -4494,7 +4535,7 @@ routine public.setup_current_levels(p_flags jsonb, p_country text) -> jsonb | fu
 routine public.setup_hours_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4f359045c81a
 routine public.setup_invitation_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:5852379a5e56
 routine public.setup_level_arguments() -> text[] | function | invoker | immutable | exec:service_role | body:7f746fc5ea32
-routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:9ed7fc536a6e
+routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:7d4a247f5577
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
 routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c01c658a9993
 routine public.setup_member_rights_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fa33dc1d0dfa
@@ -4586,6 +4627,7 @@ routine public.stock_lot_expired(p_lot_id uuid, p_today date) -> boolean | funct
 routine public.stock_low_rows(p_workspace_id uuid, p_site_id uuid) -> TABLE(point_id uuid, item_id uuid, item_name text, unit text, variant_id uuid, site_id uuid, site_code text, on_hand numeric, reorder_point numeric, proposed numeric, since timestamp with time zone) | function | definer | stable | exec:service_role | body:2bc321a04c67
 routine public.stock_low_v1(p_workspace_id uuid, p_site_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3d2533bcbc41
 routine public.stock_move_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_occurred_at timestamp with time zone, p_links jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:42ba9613b417
+routine public.stock_movement_details_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:0ad5d01d4e7e
 routine public.stock_movement_trace_v1(p_workspace_id uuid, p_movement_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3d441a273701
 routine public.stock_movements_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:1b7b1f624968
 routine public.stock_movements_apply() -> trigger | function | definer | volatile | exec:service_role | body:f4ceeeff72de
@@ -4604,7 +4646,7 @@ routine public.stock_pieces_move(p_workspace_id uuid, p_item_id uuid, p_variant 
 routine public.stock_place(p_workspace_id uuid, p_kind text) -> uuid | function | definer | stable | exec:service_role | body:d8a6625b10f4
 routine public.stock_place_is_virtual(p_location_id uuid) -> boolean | function | definer | stable | exec:service_role | body:51374325b462
 routine public.stock_place_tree(p_workspace_id uuid, p_root uuid) -> TABLE(id uuid, depth integer) | function | definer | stable | exec:service_role | body:5b3743876319
-routine public.stock_put_away_apply(p_workspace_id uuid, p_actor uuid, p_command uuid, p_receipt_id uuid, p_allocations jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:902a7617ac92
+routine public.stock_put_away_apply(p_workspace_id uuid, p_actor uuid, p_command uuid, p_receipt_id uuid, p_allocations jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:310366613b5f
 routine public.stock_read_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:91e0d63c0a45
 routine public.stock_read_distinct(p_codes text[], p_limit integer, OUT p_distinct text[], OUT p_more boolean) -> record | function | invoker | immutable | exec:service_role | body:6c27105a19df
 routine public.stock_read_invalid(p_codes text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:2aa088002d5d
@@ -4638,7 +4680,7 @@ routine public.stock_tags_v1(p_workspace_id uuid, p_owner jsonb) -> jsonb | func
 routine public.stock_take(p_workspace_id uuid, p_item_id uuid, p_location_id uuid, p_quantity numeric, p_variant_id uuid) -> TABLE(lot_id uuid, quantity numeric) | function | definer | stable | exec:service_role | body:ffff382dca6c
 routine public.stock_take_in_tree(p_workspace_id uuid, p_item_id uuid, p_root uuid, p_quantity numeric) -> TABLE(location_id uuid, lot_id uuid, quantity numeric) | function | definer | volatile | exec:service_role | body:8caba843359a
 routine public.stock_take_out(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:service_role | body:073e036ff9f3
-routine public.stock_to_inventory(p_item_id uuid, p_unit text, p_quantity numeric) -> numeric | function | definer | stable | exec:service_role | body:a57c72164054
+routine public.stock_to_inventory(p_item_id uuid, p_unit text, p_quantity numeric) -> numeric | function | definer | stable | exec:service_role | body:0de855070b7e
 routine public.stock_trace_bills(p_workspace_id uuid, p_order_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:f3570ce0afd3
 routine public.stock_trace_chain_v1(p_workspace_id uuid, p_lot_id uuid, p_piece_id uuid, p_movement_id uuid, p_counter_line_id uuid, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:8b53d85da128
 routine public.stock_trace_find_v1(p_workspace_id uuid, p_code text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:224a3e757011
@@ -4653,7 +4695,7 @@ routine public.stock_transfer_load_v1(p_workspace_id uuid, p_request_id uuid, p_
 routine public.stock_transfer_receive_v1(p_workspace_id uuid, p_request_id uuid, p_transfer_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:da146b514dee
 routine public.stock_transfer_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:20cbe40c6baa
 routine public.stock_transit_place(p_workspace_id uuid) -> uuid | function | definer | volatile | exec:service_role | body:1d8476503f84
-routine public.stock_unit_factor(p_item_id uuid, p_unit text) -> TABLE(num bigint, den bigint) | function | definer | stable | exec:service_role | body:132692c598d9
+routine public.stock_unit_factor(p_item_id uuid, p_unit text) -> TABLE(num bigint, den bigint) | function | definer | stable | exec:service_role | body:9cbb5fff4a44
 routine public.stock_valuation_v1(p_workspace_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d4beccf42a39
 routine public.stock_value_at_v1(p_workspace_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ea761add5e0f
 routine public.stock_variant_label(p_variant_id uuid) -> text | function | definer | stable | exec:service_role | body:3c5414fbb3c4
@@ -4697,7 +4739,7 @@ routine public.tell_owners_kiosk_device(p_workspace_id uuid, p_change text, p_de
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:ecac5a5db6a0
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:fedaee315f94
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:41d51bce65a7
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
@@ -4713,12 +4755,27 @@ routine public.template_snapshot(p_template workspace_templates, p_workspace_id 
 routine public.template_supported_schema_versions() -> integer[] | function | invoker | immutable | exec:authenticated,service_role | body:53e229c024d6
 routine public.template_walk_payload(p_configuration jsonb, p_floor_plan jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:fb9a295f1ab3
 routine public.template_wording_check(p_workspace_id uuid, p_config jsonb) -> void | function | definer | stable | exec:service_role | body:2d5eb567bc03
+routine public.till_layout_functions() -> SETOF text | function | invoker | immutable | exec:service_role | body:98a5ac6a6fb5
+routine public.till_layout_kinds() -> TABLE(kind text, min_cols integer, min_rows integer) | function | invoker | immutable | exec:service_role | body:d3df071d1c14
+routine public.till_layout_max_bytes() -> integer | function | invoker | immutable | exec:service_role | body:c09ad6eba05a
+routine public.till_layout_max_grid_side() -> integer | function | invoker | immutable | exec:service_role | body:3a779ffed504
+routine public.till_layout_problems(p_workspace_id uuid, p_name text, p_layout jsonb, p_max_cells integer) -> text[] | function | definer | stable | exec:service_role | body:2d530c19efb2
+routine public.till_layout_publish_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_expected_version integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f51623025526
+routine public.till_layout_reset_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f320b4400f09
+routine public.till_layout_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_expected_version integer, p_layout jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5ae3fc7e2d12
 routine public.toggle_message_star(p_kind text, p_message_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:88ca42478a05
 routine public.touch_conversation() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1a8384fd9011
 routine public.touch_last_seen() -> void | function | definer | volatile | exec:authenticated,service_role | body:2d50fbe02f88
 routine public.transition_service_fulfilment_v1(p_workspace_id uuid, p_fulfilment_id uuid, p_expected_revision integer, p_to text, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e1ef6dfd4ba8
 routine public.unarchive_conversation_on_message() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1ef58a6f7319
 routine public.unblock_account(p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:913dd34e1777
+routine public.unit_conversion_delete_v1(p_workspace_id uuid, p_request_id uuid, p_from text, p_to text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:14f001643f29
+routine public.unit_conversion_save_v1(p_workspace_id uuid, p_request_id uuid, p_conversion jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:80b8019068ec
+routine public.unit_conversions_link(p_workspace_id uuid, p_code text) -> void | function | definer | volatile | exec:service_role | body:74bf8ea34ab2
+routine public.unit_convert(p_workspace_id uuid, p_item_id uuid, p_from text, p_to text, p_quantity numeric) -> numeric | function | definer | stable | exec:service_role | body:c5ba4f15e3e1
+routine public.unit_factor(p_workspace_id uuid, p_item_id uuid, p_from text, p_to text) -> TABLE(num bigint, den bigint) | function | definer | stable | exec:service_role | body:fd1278cf0397
+routine public.unit_is_convertible(p_workspace uuid, p_item uuid, p_unit text) -> boolean | function | definer | stable | exec:service_role | body:f71d7869d8c0
+routine public.unit_is_pickable(p_workspace uuid, p_unit text, p_item uuid) -> boolean | function | definer | stable | exec:service_role | body:eab23831ab44
 routine public.unmatch_bank_line_in_v1(p_line_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:afb740029be2
 routine public.unreconcile_bank_line_out_v1(p_line_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:afe6df043a4c
 routine public.unset_my_kiosk(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:f2b9fedee125
@@ -4742,6 +4799,7 @@ routine public.vat_declarations_guard() -> trigger | function | invoker | volati
 routine public.vat_input_amounts(p_workspace_id uuid, p_start date, p_end date) -> TABLE(expense_id uuid, tax_point date, percent numeric, category text, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:f52b62e95390
 routine public.vat_input_split(p_gross bigint, p_percent numeric, p_share numeric) -> TABLE(net_cents bigint, deductible_cents bigint) | function | invoker | immutable | exec:service_role | body:95597107b5ee
 routine public.vat_percent_components(p_country text, p_percent numeric) -> jsonb | function | definer | stable | exec:service_role | body:6cecb7e04f44
+routine public.vat_percent_is_known(p_workspace uuid, p_percent numeric) -> boolean | function | definer | stable | exec:service_role | body:26147489c0ec
 routine public.vat_period_overlaps_filed(p_workspace_id uuid, p_start date, p_end date) -> boolean | function | definer | stable | exec:service_role | body:7da21367be94
 routine public.vat_rate_family(p_rate_id uuid) -> SETOF vat_rates | function | definer | stable | exec:service_role | body:be13b7375d62
 routine public.vat_rate_id_by_label(p_workspace_id uuid, p_label text) -> uuid | function | definer | stable | exec:service_role | body:c5e190aea085
@@ -4811,10 +4869,11 @@ routine public.workspace_template_readable(p_template_id uuid) -> boolean | func
 routine public.workspace_today(p_workspace_id uuid) -> date | function | definer | stable | exec:service_role | body:56c50f5742ec
 routine public.workspace_twin_id(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:02071934850f
 routine public.workspace_unit_archive_v1(p_workspace_id uuid, p_request_id uuid, p_code text, p_archived boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:4cb302832647
-routine public.workspace_unit_convert(p_workspace_id uuid, p_quantity text, p_from text, p_to text) -> text | function | definer | stable | exec:authenticated,service_role | body:abc0fb3a3fca
-routine public.workspace_unit_save_v1(p_workspace_id uuid, p_request_id uuid, p_unit jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:78782902f76f
+routine public.workspace_unit_convert(p_workspace_id uuid, p_quantity text, p_from text, p_to text) -> text | function | definer | stable | exec:authenticated,service_role | body:9d13ba51af80
+routine public.workspace_unit_save_v1(p_workspace_id uuid, p_request_id uuid, p_unit jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9763e57a1800
 routine public.workspace_unit_uses(p_workspace_id uuid, p_code text) -> bigint | function | definer | stable | exec:service_role | body:9a210da765f5
 routine public.workspace_units_guard() -> trigger | function | invoker | volatile | exec:service_role | body:04a18d4d9d9f
+routine public.workspace_units_relink() -> trigger | function | definer | volatile | exec:service_role | body:bb02521c4814
 routine public.workspace_units_seed(p_workspace_id uuid) -> void | function | definer | volatile | exec:service_role | body:4dc6ea73cb44
 routine public.workspace_units_seed_trigger() -> trigger | function | definer | volatile | exec:service_role | body:856d2cbe5a46
 routine public.workspaces_administrator_role() -> trigger | function | definer | volatile | exec:service_role | body:7826864bdda3
@@ -4896,21 +4955,33 @@ trigger conversation_participants.customer_subject_refused CREATE TRIGGER custom
 trigger conversation_participants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversation_participants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger conversations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_cash_entries.counter_cash_entries_frozen CREATE TRIGGER counter_cash_entries_frozen BEFORE DELETE OR UPDATE ON public.counter_cash_entries FOR EACH ROW EXECUTE FUNCTION counter_till_frozen_guard()
+trigger counter_cash_entries.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_cash_entries FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_cash_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_cash_entries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_country_operations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_country_operations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_day_closes.counter_day_closes_frozen CREATE TRIGGER counter_day_closes_frozen BEFORE DELETE OR UPDATE ON public.counter_day_closes FOR EACH ROW EXECUTE FUNCTION counter_till_frozen_guard()
+trigger counter_day_closes.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_day_closes FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_day_closes.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_day_closes FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_offline_sales.counter_offline_sales_frozen CREATE TRIGGER counter_offline_sales_frozen BEFORE DELETE OR UPDATE ON public.counter_offline_sales FOR EACH ROW EXECUTE FUNCTION counter_offline_frozen_guard()
+trigger counter_offline_sales.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_offline_sales FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_offline_sales.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_offline_sales FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger counter_receipt_copies.counter_receipt_copies_frozen CREATE TRIGGER counter_receipt_copies_frozen BEFORE DELETE OR UPDATE ON public.counter_receipt_copies FOR EACH ROW EXECUTE FUNCTION counter_receipt_copies_frozen()
+trigger counter_receipt_copies.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_receipt_copies FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
+trigger counter_receipt_copies.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_receipt_copies FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_receipt_lines.counter_receipt_lines_frozen CREATE TRIGGER counter_receipt_lines_frozen BEFORE DELETE OR UPDATE ON public.counter_receipt_lines FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()
+trigger counter_receipt_lines.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_receipt_lines FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_receipt_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_receipt_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_receipts.counter_receipts_frozen CREATE TRIGGER counter_receipts_frozen BEFORE DELETE OR UPDATE ON public.counter_receipts FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()
+trigger counter_receipts.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_receipts FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_receipts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_receipts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_refunds.counter_refunds_frozen CREATE TRIGGER counter_refunds_frozen BEFORE DELETE OR UPDATE ON public.counter_refunds FOR EACH ROW EXECUTE FUNCTION counter_refunds_frozen()
+trigger counter_refunds.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_refunds FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_refunds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_refunds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_tenders.counter_tenders_frozen CREATE TRIGGER counter_tenders_frozen BEFORE DELETE OR UPDATE ON public.counter_tenders FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()
+trigger counter_tenders.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_tenders FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
+trigger counter_tenders.posted_site_kept CREATE TRIGGER posted_site_kept BEFORE UPDATE ON public.counter_tenders FOR EACH ROW WHEN ((old.site_id IS DISTINCT FROM new.site_id)) EXECUTE FUNCTION posted_site_kept()
 trigger counter_tenders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_tenders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_till_sessions.counter_till_sessions_frozen CREATE TRIGGER counter_till_sessions_frozen BEFORE DELETE OR UPDATE ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION counter_till_frozen_guard()
+trigger counter_till_sessions.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_till_sessions FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_till_sessions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_tills.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_tills FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger credit_products.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.credit_products FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -4944,6 +5015,7 @@ trigger event_decisions.event_decisions_fill_workspace CREATE TRIGGER event_deci
 trigger event_decisions.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.event_decisions REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger event_decisions.record_workspace_application_decision CREATE TRIGGER record_workspace_application_decision AFTER INSERT ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION record_workspace_application_decision()
 trigger event_decisions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger events.book_period_dated_guard CREATE TRIGGER book_period_dated_guard BEFORE INSERT ON public.events FOR EACH ROW WHEN ((new.type = 'payment'::text)) EXECUTE FUNCTION book_period_dated_guard()
 trigger events.capture_workspace_application CREATE TRIGGER capture_workspace_application AFTER INSERT ON public.events FOR EACH ROW EXECUTE FUNCTION capture_workspace_application()
 trigger events.events_apply_expense_occurrence CREATE TRIGGER events_apply_expense_occurrence AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION apply_expense_occurrence_decision()
 trigger events.events_apply_expense_repartition CREATE TRIGGER events_apply_expense_repartition AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION apply_expense_repartition_decision()
@@ -5010,8 +5082,10 @@ trigger invoice_dunning_holds.zz_system_columns_stamp CREATE TRIGGER zz_system_c
 trigger invoice_email_sends.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_email_sends FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_issue_notices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_issue_notices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_line_tracks.invoice_line_tracks_frozen CREATE TRIGGER invoice_line_tracks_frozen BEFORE DELETE OR UPDATE ON public.invoice_line_tracks FOR EACH ROW EXECUTE FUNCTION invoice_line_tracks_frozen_guard()
+trigger invoice_line_tracks.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.invoice_line_tracks FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger invoice_line_tracks.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_line_tracks FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_match_history.invoice_match_history_append_only CREATE TRIGGER invoice_match_history_append_only BEFORE DELETE OR UPDATE ON public.invoice_match_history FOR EACH ROW EXECUTE FUNCTION invoice_match_history_append_only()
+trigger invoice_match_history.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.invoice_match_history FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger invoice_match_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_match_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_match_payments.invoice_match_payments_allocation_sum CREATE TRIGGER invoice_match_payments_allocation_sum BEFORE INSERT OR UPDATE OF amount_cents, payment_ledger_id ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION guard_payment_allocation_sum()
 trigger invoice_match_payments.invoice_match_payments_history CREATE TRIGGER invoice_match_payments_history AFTER INSERT OR DELETE OR UPDATE ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION invoice_match_history_rows()
@@ -5022,7 +5096,9 @@ trigger invoice_matches.invoice_matches_history CREATE TRIGGER invoice_matches_h
 trigger invoice_matches.invoice_matches_refuse_moved CREATE TRIGGER invoice_matches_refuse_moved BEFORE INSERT OR UPDATE OF payment_ledger_id, credit_ledger_id ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION refuse_match_of_moved_credit()
 trigger invoice_matches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_maturities.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_maturities FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger invoice_originals.invoice_originals_no_delete CREATE TRIGGER invoice_originals_no_delete BEFORE DELETE ON public.invoice_originals FOR EACH ROW EXECUTE FUNCTION invoice_originals_kept()
 trigger invoice_originals.invoice_originals_no_update CREATE TRIGGER invoice_originals_no_update BEFORE UPDATE ON public.invoice_originals FOR EACH ROW EXECUTE FUNCTION invoice_originals_immutable()
+trigger invoice_originals.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.invoice_originals FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger invoice_originals.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_originals FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_reminders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_reminders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_transmission_artifacts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_transmission_artifacts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -5043,6 +5119,7 @@ trigger invoices.invoice_provenance_stamp CREATE TRIGGER invoice_provenance_stam
 trigger invoices.invoice_qrr_freeze CREATE TRIGGER invoice_qrr_freeze BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_qrr_freeze()
 trigger invoices.invoices_no_mutation CREATE TRIGGER invoices_no_mutation BEFORE DELETE OR UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoices_immutable()
 trigger invoices.invoices_reimbursement_guard CREATE TRIGGER invoices_reimbursement_guard BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoices_reimbursement_guard()
+trigger invoices.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.invoices FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger invoices.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.invoices REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger invoices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger item_codes.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.item_codes FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -5062,10 +5139,13 @@ trigger lease_settlements.zz_system_columns_stamp CREATE TRIGGER zz_system_colum
 trigger lease_terms.lease_terms_guard CREATE TRIGGER lease_terms_guard BEFORE DELETE OR UPDATE ON public.lease_terms FOR EACH ROW EXECUTE FUNCTION lease_terms_guard()
 trigger lease_terms.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.lease_terms FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger ledger_credit_moves.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.ledger_credit_moves FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger ledger_entries.book_period_dated_guard CREATE TRIGGER book_period_dated_guard BEFORE INSERT ON public.ledger_entries FOR EACH ROW WHEN (((new.kind = 'credit'::text) AND (new.category = 'payment'::text) AND (new.event_id IS NOT NULL) AND (new.occurred_on IS NOT NULL))) EXECUTE FUNCTION book_period_dated_guard()
 trigger ledger_entries.ledger_apply_declared_claim CREATE TRIGGER ledger_apply_declared_claim AFTER INSERT ON public.ledger_entries FOR EACH ROW WHEN ((new.event_id IS NOT NULL)) EXECUTE FUNCTION apply_declared_payment_claim()
 trigger ledger_entries.ledger_entries_no_rewrite CREATE TRIGGER ledger_entries_no_rewrite BEFORE DELETE OR UPDATE ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION ledger_entries_append_only()
 trigger ledger_entries.ledger_entries_supply_class CREATE TRIGGER ledger_entries_supply_class BEFORE INSERT ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION ledger_entry_supply_class()
 trigger ledger_entries.ledger_payment_allocation_mode CREATE TRIGGER ledger_payment_allocation_mode BEFORE INSERT ON public.ledger_entries FOR EACH ROW WHEN ((new.event_id IS NOT NULL)) EXECUTE FUNCTION ledger_payment_allocation_mode()
+trigger ledger_entries.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.ledger_entries FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
+trigger ledger_entries.posted_site_kept CREATE TRIGGER posted_site_kept BEFORE UPDATE ON public.ledger_entries FOR EACH ROW WHEN ((old.site_id IS DISTINCT FROM new.site_id)) EXECUTE FUNCTION posted_site_kept()
 trigger ledger_entries.purchase_obligation_credit_link CREATE TRIGGER purchase_obligation_credit_link AFTER INSERT ON public.ledger_entries FOR EACH ROW WHEN (((new.kind = 'credit'::text) AND (new.category = 'expense'::text) AND (new.event_id IS NOT NULL))) EXECUTE FUNCTION purchase_obligation_credit_link()
 trigger ledger_entries.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.ledger_entries REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger ledger_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -5151,6 +5231,7 @@ trigger offices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp B
 trigger opening_hours_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.opening_hours_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger organisation_houses.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.organisation_houses FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger organisations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.organisations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger outgoing_payments.book_period_dated_guard CREATE TRIGGER book_period_dated_guard BEFORE INSERT ON public.outgoing_payments FOR EACH ROW EXECUTE FUNCTION book_period_dated_guard()
 trigger outgoing_payments.outgoing_payments_guard CREATE TRIGGER outgoing_payments_guard BEFORE DELETE OR UPDATE ON public.outgoing_payments FOR EACH ROW EXECUTE FUNCTION outgoing_payments_guard()
 trigger outgoing_payments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.outgoing_payments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger packages.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.packages REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
@@ -5321,8 +5402,14 @@ trigger stock_locations.stock_locations_address_follow CREATE TRIGGER stock_loca
 trigger stock_locations.stock_locations_keep_history CREATE TRIGGER stock_locations_keep_history BEFORE DELETE ON public.stock_locations FOR EACH ROW EXECUTE FUNCTION stock_locations_keep_history()
 trigger stock_locations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_locations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_lots.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_lots FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_movement_handling_units.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.stock_movement_handling_units FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
+trigger stock_movement_handling_units.stock_movement_handling_units_append_only CREATE TRIGGER stock_movement_handling_units_append_only BEFORE DELETE OR UPDATE ON public.stock_movement_handling_units FOR EACH ROW EXECUTE FUNCTION stock_movement_details_append_only()
 trigger stock_movement_handling_units.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_movement_handling_units FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_movement_units.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.stock_movement_units FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
+trigger stock_movement_units.stock_movement_units_append_only CREATE TRIGGER stock_movement_units_append_only BEFORE DELETE OR UPDATE ON public.stock_movement_units FOR EACH ROW EXECUTE FUNCTION stock_movement_details_append_only()
 trigger stock_movement_units.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_movement_units FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_movements.book_period_dated_guard CREATE TRIGGER book_period_dated_guard BEFORE INSERT ON public.stock_movements FOR EACH ROW EXECUTE FUNCTION book_period_dated_guard()
+trigger stock_movements.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.stock_movements FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger stock_movements.stock_movements_append_only CREATE TRIGGER stock_movements_append_only BEFORE DELETE OR UPDATE ON public.stock_movements FOR EACH ROW EXECUTE FUNCTION stock_movements_append_only()
 trigger stock_movements.stock_movements_apply CREATE TRIGGER stock_movements_apply AFTER INSERT ON public.stock_movements FOR EACH ROW EXECUTE FUNCTION stock_movements_apply()
 trigger stock_movements.stock_movements_reorder CREATE TRIGGER stock_movements_reorder AFTER INSERT ON public.stock_movements FOR EACH ROW EXECUTE FUNCTION stock_movements_reorder()
@@ -5334,8 +5421,10 @@ trigger stock_receipt_allocations.zz_system_columns_stamp CREATE TRIGGER zz_syst
 trigger stock_reorder_points.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_reorder_points FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_repack_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_repack_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_repacks.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_repacks FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_returns.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.stock_returns FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger stock_returns.stock_returns_append_only CREATE TRIGGER stock_returns_append_only BEFORE DELETE OR UPDATE ON public.stock_returns FOR EACH ROW EXECUTE FUNCTION stock_returns_append_only()
 trigger stock_returns.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_returns FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_reversals.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.stock_reversals FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger stock_reversals.stock_reversals_append_only CREATE TRIGGER stock_reversals_append_only BEFORE DELETE OR UPDATE ON public.stock_reversals FOR EACH ROW EXECUTE FUNCTION stock_returns_append_only()
 trigger stock_reversals.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_reversals FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_tagged_units.stock_hu_pieces CREATE CONSTRAINT TRIGGER stock_hu_pieces AFTER UPDATE OF state, location_id ON public.stock_tagged_units DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION stock_hu_pieces_check()
@@ -5350,7 +5439,9 @@ trigger supplier_review_candidates.zz_system_columns_stamp CREATE TRIGGER zz_sys
 trigger suppliers.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.suppliers FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger tax_exemption_certificates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.tax_exemption_certificates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger tax_reference.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.tax_reference FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger till_layouts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.till_layouts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger trace_reports.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.trace_reports FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger unit_conversions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.unit_conversions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger usage_records.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.usage_records FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger validation_policies.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.validation_policies REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger validation_policies.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.validation_policies FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -5358,9 +5449,12 @@ trigger vat_declarations.book_period_vat_close CREATE TRIGGER book_period_vat_cl
 trigger vat_declarations.vat_declarations_guard CREATE TRIGGER vat_declarations_guard BEFORE INSERT OR UPDATE ON public.vat_declarations FOR EACH ROW EXECUTE FUNCTION vat_declarations_guard()
 trigger vat_declarations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.vat_declarations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger vat_rates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.vat_rates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger vat_return_entries.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.vat_return_entries FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger vat_return_entries.vat_return_entries_guard CREATE TRIGGER vat_return_entries_guard BEFORE INSERT OR DELETE OR UPDATE ON public.vat_return_entries FOR EACH ROW EXECUTE FUNCTION vat_return_entries_guard()
 trigger vat_return_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.vat_return_entries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger verifactu_records.national_channel_from_verifactu CREATE TRIGGER national_channel_from_verifactu AFTER UPDATE OF submission_status ON public.verifactu_records FOR EACH ROW WHEN (((new.submission_status = 'accepted'::text) AND (old.submission_status <> 'accepted'::text))) EXECUTE FUNCTION national_channel_from_verifactu()
+trigger verifactu_records.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.verifactu_records FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
+trigger verifactu_records.posted_site_kept CREATE TRIGGER posted_site_kept BEFORE UPDATE ON public.verifactu_records FOR EACH ROW WHEN ((old.site_id IS DISTINCT FROM new.site_id)) EXECUTE FUNCTION posted_site_kept()
 trigger verifactu_records.verifactu_records_append_only CREATE TRIGGER verifactu_records_append_only BEFORE DELETE OR UPDATE ON public.verifactu_records FOR EACH ROW EXECUTE FUNCTION verifactu_records_append_only()
 trigger verifactu_records.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.verifactu_records FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_application_messages.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_application_messages FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -5393,6 +5487,8 @@ trigger workspace_template_applications.zz_system_columns_stamp CREATE TRIGGER z
 trigger workspace_template_grants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_template_grants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_templates.template_regional_capture CREATE TRIGGER template_regional_capture BEFORE INSERT OR UPDATE ON public.workspace_templates FOR EACH ROW EXECUTE FUNCTION template_regional_capture()
 trigger workspace_templates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_templates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger workspace_units.workspace_units_relink_insert CREATE TRIGGER workspace_units_relink_insert AFTER INSERT ON public.workspace_units FOR EACH ROW EXECUTE FUNCTION workspace_units_relink()
+trigger workspace_units.workspace_units_relink_update CREATE TRIGGER workspace_units_relink_update AFTER UPDATE OF dimension, factor_num, factor_den ON public.workspace_units FOR EACH ROW WHEN ((((old.dimension IS DISTINCT FROM new.dimension) OR (old.factor_num IS DISTINCT FROM new.factor_num)) OR (old.factor_den IS DISTINCT FROM new.factor_den))) EXECUTE FUNCTION workspace_units_relink()
 trigger workspace_units.workspace_units_rules CREATE TRIGGER workspace_units_rules BEFORE DELETE OR UPDATE ON public.workspace_units FOR EACH ROW EXECUTE FUNCTION workspace_units_guard()
 trigger workspace_units.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_units FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspaces.analytics_opening_hours CREATE TRIGGER analytics_opening_hours AFTER INSERT OR UPDATE OF booking_rules ON public.workspaces FOR EACH ROW EXECUTE FUNCTION analytics_workspace_changed()

@@ -70,6 +70,10 @@ void main() {
           WorkspacePermission.accessProd,
           // #1921 — admins keep reading the capacity figures.
           WorkspacePermission.viewAnalytics,
+          // #4448 — admins lay out the tills.
+          WorkspacePermission.configureTill,
+          // #4476 — admins change a price at the till.
+          WorkspacePermission.overrideTillPrice,
         },
       );
       expect(defaultPermissionsFor(PermissionRole.member), isEmpty);

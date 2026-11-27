@@ -89,6 +89,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.stockHandlingUnits,
   WorkspaceFeature.counterOfflineCash,
   WorkspaceFeature.unitsOfMeasure,
+  WorkspaceFeature.counterTillLayout,
+  WorkspaceFeature.counterReceiptPrinter,
   // #4165 — a customer invoice without a member-month is asked for.
   WorkspaceFeature.standaloneInvoicing,
   // #1598 — renaming the gear a member sees is asked for, never
@@ -282,6 +284,8 @@ void main() {
       'stockHandlingUnits': true,
       'counterOfflineCash': true,
       'unitsOfMeasure': true,
+      'counterTillLayout': true,
+      'counterReceiptPrinter': true,
       'standaloneInvoicing': true,
       'billingCustomers': true,
       'customerQuotes': true,

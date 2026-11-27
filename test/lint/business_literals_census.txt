@@ -117,8 +117,7 @@ maxLength|lib/features/money/presentation/widgets/premises_lease_notice_dialog.d
 maxLength|lib/features/money/presentation/widgets/premises_lease_term_dialogs.dart|1
 maxLength|lib/features/money/presentation/widgets/purchase_decision_bar.dart|1
 maxLength|lib/features/money/presentation/widgets/purchase_dialogs.dart|2
-maxLength|lib/features/money/presentation/widgets/purchase_item_fields.dart|1
-maxLength|lib/features/money/presentation/widgets/purchase_order_form.dart|4
+maxLength|lib/features/money/presentation/widgets/purchase_order_form.dart|3
 maxLength|lib/features/money/presentation/widgets/purchase_order_mail_sheet.dart|3
 maxLength|lib/features/money/presentation/widgets/purchase_order_receipt_actions.dart|1
 maxLength|lib/features/money/presentation/widgets/purchase_order_record.dart|1

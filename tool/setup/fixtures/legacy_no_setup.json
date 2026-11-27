@@ -399,6 +399,8 @@
    "deployToDev",
    "accessProd",
    "viewAnalytics",
+   "configureTill",
+   "overrideTillPrice",
    "useMessages",
    "makeReservations",
    "viewCalendar",
@@ -446,7 +448,9 @@
    "manageStock",
    "approveStockAdjustments",
    "manageBillingCustomers",
-   "countStock"
+   "countStock",
+   "configureTill",
+   "overrideTillPrice"
   ],
   "member": [
    "useMessages",

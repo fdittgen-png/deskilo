@@ -16,23 +16,30 @@ import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_ledger.dart';
 import 'package:deskilo/features/stock/domain/stock_operations.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
+import 'package:deskilo/features/stock/domain/unit_conversions.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show LineTrack, LineTrackKind;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'demo_stock_candidates.dart';
 import 'demo_stock_config_commands.dart';
+import 'demo_unit_conversions.dart';
 import 'money/demo_standalone_invoice_commands.dart' show DemoInvoiceGoods;
 
 // #4366 -- the beans are weighed at the counter and sit under their own key colour; the till categories are the shop's shelves.
 const _beans = StockItem(id: 'demo-item-beans', name: 'Coffee beans', unit: 'kg', tillCategory: 'Coffee', quickKeyColour: '#6d4c41', soldByWeight: true);
 const _milk = StockItem(id: 'demo-item-milk', name: 'Oat milk', unit: 'l', tillCategory: 'Fresh');
 const _mugs = StockItem(id: 'demo-item-mugs', name: 'Mugs', unit: 'piece', tillCategory: 'Gifts');
-const _syrup = StockItem(id: 'demo-item-syrup', name: 'Syrup', unit: 'l', tillCategory: 'Coffee');
+// #4487 -- the syrup comes in a glass bottle: its deposit goes with it at the till, and is taken back there (#4478).
+const _syrup = StockItem(id: 'demo-item-syrup', name: 'Syrup', unit: 'l', tillCategory: 'Coffee', depositItemId: _bottleDeposit);
+const _bottle = StockItem(id: _bottleDeposit, name: 'Bottle deposit', unit: 'piece', tillCategory: 'Coffee');
 // A T-shirt with no stock yet: the item the Demo's variants are edited on.
 const _shirt = StockItem(id: 'demo-item-shirt', name: 'T-shirt', unit: 'piece');
 // #4362 -- a gift basket, each piece tagged one by one, and a crate of apples, one tag per crate.
 const _basket = StockItem(id: 'demo-item-basket', name: 'Gift basket', unit: 'piece');
 const _apples = StockItem(id: 'demo-item-apples', name: 'Apples, crate', unit: 'piece');
+
+/// #4487 -- the Demo's one deposit item: the glass bottle of its syrup.
+const _bottleDeposit = 'demo-item-bottle';
 
 const _main = 'demo-place-main';
 const _shelf = 'demo-place-shelf';
@@ -78,12 +85,13 @@ typedef DemoStockPost = StockPost;
 /// The in-memory goods ledger of the reference business: the domain's [StockLedger], seeded with the story and
 /// reading the places and units of the Demo's configuration.
 class DemoStockLedger implements DemoInvoiceGoods {
-  DemoStockLedger(this.workspaceId, this._config, [DateTime Function()? now, this.candidates]) {
+  DemoStockLedger(this.workspaceId, this._config, [DateTime Function()? now, this.candidates, UnitConversions? conversions]) {
     core = StockLedger(
       workspaceId,
       items: () => itemList,
       places: () => _config.placeMap,
       units: _config.unitsOf,
+      conversions: conversions is DemoUnitConversions ? () => conversions.rows(workspaceId) : null,
       clock: now ?? (() => _anchor),
       prefix: 'demo',
     );
@@ -133,7 +141,7 @@ class DemoStockLedger implements DemoInvoiceGoods {
   /// The ledger every Demo stock fake reads and writes.
   late final StockLedger core;
 
-  static const items = [_beans, _milk, _mugs, _syrup, _shirt, _basket, _apples];
+  static const items = [_beans, _milk, _mugs, _syrup, _shirt, _basket, _apples, _bottle];
 
   /// #4350 -- the services turned into items in this session.
   final DemoStockCandidates? candidates;

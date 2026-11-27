@@ -14,6 +14,7 @@ import '../../features/stock/presentation/stock_counts_screen.dart';
 import '../../features/stock/presentation/stock_cycle_counts_screen.dart';
 import '../../features/stock/presentation/stock_entry.dart';
 import '../../features/stock/presentation/stock_expiry_screen.dart';
+import '../../features/stock/presentation/stock_item_page.dart';
 import '../../features/stock/presentation/stock_items_screen.dart';
 import '../../features/stock/presentation/stock_movement_screen.dart';
 import '../../features/stock/presentation/stock_places_screen.dart';
@@ -74,6 +75,10 @@ List<RouteBase> stockRoutes(RouteEnv env) {
           path: 'items',
           redirect: env.guard(access),
           builder: (context, state) => StockItemsScreen(addFirst: state.uri.queryParameters['add'] == '1'),
+          // #4480 — one item at its own address: beside the list on a wide window, a page of its own on a phone.
+          routes: [
+            GoRoute(path: ':itemId', redirect: env.guard(access), pageBuilder: stockItemRoutePage),
+          ],
         ),
         GoRoute(
           path: 'places',

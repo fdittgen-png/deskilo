@@ -893,5 +893,12 @@
  "optPerHourDefault": "{n} pro Stunde (Standard)",
  "optKilobytes": "{n} KB",
  "optKilobytesDefault": "{n} KB (Standard)",
- "optReportsOff": "Keine (Fehlerberichte aus)"
+ "optReportsOff": "Keine (Fehlerberichte aus)",
+ "counterLayoutMaxCells": "Größe des Kassenlayouts",
+ "counterLayoutMaxCellsHint": "Die meisten Zellen eines Kassenlayouts. In den Einstellungen der App festgelegt.",
+ "counterLayoutCashierReorder": "Kassierer ordnen die Tasten",
+ "counterLayoutCashierReorderHint": "Ein Kassierer darf die Tasten einer Kasse auf seinem Gerät umordnen. In den Einstellungen der App festgelegt.",
+ "optCells": "{n} Zellen",
+ "counterMaxDiscount": "Größter Rabatt an der Kasse",
+ "counterMaxDiscountHint": "Der größte Rabatt, den eine Kasse auf eine Zeile geben darf. In den Einstellungen der App festgelegt."
 }

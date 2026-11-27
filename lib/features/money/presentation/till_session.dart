@@ -13,6 +13,7 @@ import '../../../core/trace/refusal_text.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/counter_book.dart' show TenderKind, TenderState;
 import '../domain/counter_till.dart';
+import '../domain/till_keypad.dart';
 import '../domain/till_quantity.dart';
 import 'till_offline_controller.dart';
 import 'till_offline_mode.dart';
@@ -91,10 +92,15 @@ class TillSession {
     });
   }
 
+  /// #4476 -- the receipt of the last sale this till made, kept past the next customer: what Reprint prints again.
+  String? lastSold;
+
   /// Whether the basket may still be changed: not once it is sold, and not while a sale is waiting to be confirmed.
   bool get _open => _now.sold == null && !_now.unconfirmed && _now.card == null;
 
-  String _linesKey(List<TillLine> lines) => [for (final l in lines) '${l.itemId}:${l.quantity}:${l.pieces.join('+')}'].join(',');
+  String _linesKey(List<TillLine> lines) => [
+    for (final l in lines) '${l.itemId}:${l.quantity}:${l.pieces.join('+')}:${l.price ?? ''}:${l.priceReason ?? ''}:${l.discount ?? ''}:${l.lot?.id ?? ''}:${l.returned ? 'r' : ''}',
+  ].join(',');
 
   /// Rings up [quantity] (one by default) of [itemId]: a new line, or more on the line it already has. [ageConfirmed] is
   /// the age the operator confirmed for the line; [deposit] is the item whose deposit goes with it, as a line that
@@ -114,13 +120,15 @@ class TillSession {
       return Future.value();
     }
     final lines = [..._now.lines];
-    final at = lines.indexWhere((l) => l.itemId == itemId && l.depositFor == null);
+    final at = lines.indexWhere((l) => l.itemId == itemId && l.depositFor == null && !l.returned);
     if (at < 0) {
       lines.add(TillLine(itemId: itemId, name: name, quantity: q, unit: unit, ageConfirmed: ageConfirmed));
     } else {
       final more = tillQuantitySum(lines[at].quantity, q);
       if (more == null) return Future.value();
-      lines[at] = TillLine(itemId: itemId, name: name, quantity: more, unit: unit, ageConfirmed: ageConfirmed ?? lines[at].ageConfirmed);
+      final had = lines[at];
+      lines[at] = TillLine(itemId: itemId, name: name, quantity: more, unit: unit, ageConfirmed: ageConfirmed ?? had.ageConfirmed)
+          .withPricing(price: had.price, reason: had.priceReason, discount: had.discount);
     }
     if (deposit != null) _followDeposit(lines, itemId, deposit);
     return _price(lines);
@@ -149,7 +157,7 @@ class TillSession {
 
   /// Keeps the deposit line of [itemId] at the quantity of the line it belongs to.
   void _followDeposit(List<TillLine> lines, String itemId, ({String itemId, String name, String unit}) deposit) {
-    final parent = lines.indexWhere((l) => l.itemId == itemId && l.depositFor == null);
+    final parent = lines.indexWhere((l) => l.itemId == itemId && l.depositFor == null && !l.returned);
     final at = lines.indexWhere((l) => l.depositFor == itemId);
     final line = TillLine(itemId: deposit.itemId, name: deposit.name, quantity: lines[parent].quantity, unit: deposit.unit, depositFor: itemId);
     if (at < 0) {
@@ -178,6 +186,46 @@ class TillSession {
     });
     return true;
   }
+
+  /// #4476 -- line [index] at [price] for [reason], or [discount] % off, or (both null) at the item's price; false if not exact.
+  Future<bool> setPricing(int index, {String? price, String? reason, String? discount}) async {
+    final p = price == null ? null : tillMillionths(price);
+    final d = discount == null ? null : tillMillionths(discount);
+    if ((price != null && (p == null || p < 0)) || (discount != null && (d == null || d <= 0)) || index < 0 || index >= _now.lines.length) {
+      return false;
+    }
+    await _serial(() {
+      if (!_open || index >= _now.lines.length) return Future.value();
+      final lines = [..._now.lines];
+      lines[index] = lines[index].withPricing(
+        price: p == null ? null : tillDecimalText(p),
+        reason: reason?.trim(),
+        discount: d == null ? null : tillDecimalText(d),
+      );
+      return _price(lines);
+    });
+    return true;
+  }
+
+  /// #4366 -- line [index] sold from [lot], or (null) the first to expire; a line of named pieces keeps their lots.
+  Future<void> setLot(int index, TillLot? lot) => _serial(() {
+    if (!_open || index < 0 || index >= _now.lines.length || _now.lines[index].pieces.isNotEmpty) return Future.value();
+    final lines = [..._now.lines];
+    lines[index] = lines[index].withLot(lot);
+    return _price(lines);
+  });
+
+  /// #4478 -- [quantity] of the deposit item [itemId] brought back, taken off the sale; never offline (the server decides it).
+  Future<void> addReturn({required String itemId, required String name, required String unit, String quantity = '1'}) => _serial(() {
+    final q = tillQuantityOf(quantity);
+    if (!_open) return Future.value();
+    final lines = q == null ? null : tillLinesWithReturn(_now.lines, itemId: itemId, name: name, unit: unit, quantity: q);
+    if (lines == null || offline.value.active) {
+      _set(_now.copyWith(problem: () => q == null ? const TillQuantityMissing() : const TillReturnOffline()));
+      return Future.value();
+    }
+    return _price(lines);
+  });
 
   /// Takes line [index] out; a line's deposit goes with it.
   Future<void> remove(int index) => _serial(() {
@@ -363,7 +411,8 @@ class TillSession {
         TraceLogger.instance.warn('money', 'till sale ${sold.number} made after the till was closed');
         return;
       }
-      _set(_now.copyWith(sold: () => sold, change: () => _givenMinor - total).withCard(null).withUnconfirmed(value: false));
+      lastSold = sold.receiptId;
+      _set(_now.copyWith(sold: () => sold, change: () => _givenMinor - total).withCard(null).withUnconfirmed(value: false).withSoldCash(value: sent.any((t) => TenderKind.of(t.kind) == TenderKind.cash)));
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'till sale not confirmed', error: e, stackTrace: st);
       final refusal = knownRefusalOf(e);

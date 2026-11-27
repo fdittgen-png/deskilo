@@ -70,6 +70,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   // #4299 — the item registry and the places read like the stock; its settings
   // are for who manages the stock or the configuration.
   '/stock/items': {_P.viewStock, _P.manageStock},
+  '/stock/items/:itemId': {_P.viewStock, _P.manageStock},
   '/stock/places': {_P.viewStock, _P.manageStock},
   '/stock/settings': {_P.manageStock, _P.manageConfiguration},
   '/money/customers': {_P.manageBillingCustomers, _P.issueInvoices, _P.viewFinances},
@@ -80,6 +81,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   // #4367 — the cash drawer of the till: the counter opens and closes its session; the finances read every one.
   '/till/drawer': {_P.issueInvoices, _P.viewFinances},
   '/till/day': {_P.viewFinances},
+  '/till/layout/:tillId': {_P.configureTill}, // #4448
   // #4185 — the counter's receipts: the counter corrects, the finances settle a card answer.
   '/till/receipts': {_P.issueInvoices, _P.viewFinances},
   '/money/quotes/:id': {_P.issueInvoices, _P.viewFinances},
@@ -116,6 +118,13 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/settings/colours': {_P.workspaceSettings},
   '/settings/questions': {_P.workspaceSettings},
   '/settings/units': {_P.workspaceSettings}, // #4442
+  // #4485 — the Master data page: who may open one of its kinds' screens (the
+  // page shows each card to whom that screen opens; master_data_test holds
+  // this set to the union of theirs).
+  '/settings/master-data': {
+    _P.workspaceSettings, _P.manageBilling, _P.viewStock, _P.manageStock, _P.manageServices, _P.issueInvoices,
+    _P.viewFinances, _P.managePurchases, _P.manageBillingCustomers, _P.manageSites,
+  },
   '/settings/public-page': {_P.workspaceSettings},
   '/legal-identity': {_P.workspaceSettings},
   '/settings/sites': {_P.manageSites},

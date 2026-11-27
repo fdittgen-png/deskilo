@@ -5372,9 +5372,9 @@
   "@documentsEmpty": {
     "description": "Workspace document library (#500)"
   },
-  "documentsInvalid": "Ein Dokument braucht einen Titel und einen https://-Link.",
-  "@documentsInvalid": {
-    "description": "Workspace document library (#500)"
+  "documentsLinkNotHttps": "Der Link muss mit https:// beginnen.",
+  "@documentsLinkNotHttps": {
+    "description": "Document library, the add form: said under the link field when the link is not an https:// one"
   },
   "documentsProviderLabel": "Gespeichert auf",
   "@documentsProviderLabel": {
@@ -5399,6 +5399,10 @@
   "documentsTitleLabel": "Titel",
   "@documentsTitleLabel": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsTitleMissing": "Geben Sie dem Dokument einen Titel.",
+  "@documentsTitleMissing": {
+    "description": "Document library, the add form: said under the title field when it is empty"
   },
   "documentsUrlHelper": "Fügen Sie den Freigabelink Ihres Drives ein — die Zugriffsrechte bleiben dort verwaltet.",
   "@documentsUrlHelper": {
@@ -7289,8 +7293,12 @@
   "@featureCounterOfflineCashTitle": {
     "description": "#4373 feature name"
   },
+  "featureCounterReceiptPrinterDesc": "Den Kassenbon auf einem Bondrucker im lokalen Netz drucken (80 oder 58 mm) und nach einem Barverkauf die angeschlossene Kassenlade öffnen. Jede Kasse stellt ihren eigenen Drucker ein. Aus: Der Beleg wird gezeigt und geteilt, nichts wird gedruckt.",
+  "featureCounterReceiptPrinterTitle": "Bondrucker",
   "featureCounterReceiptsDesc": "Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.",
   "featureCounterReceiptsTitle": "Kassenbelege",
+  "featureCounterTillLayoutDesc": "Gestalten Sie jede Kasse für Ihr Geschäft: welche Tasten wo liegen, ihre Seiten und Werkzeuge neben dem Warenkorb wie ein Ziffernblock, ein Rechner oder ein Scanfeld. Beginnen Sie mit einer Vorlage, veröffentlichen Sie sie, und eine Kasse übernimmt sie mit ihrer nächsten Sitzung. Aus: Jede Kasse behält ihre erzeugten Tasten.",
+  "featureCounterTillLayoutTitle": "Kassenlayouts",
   "featureCounterTillSessionsDesc": "Eine Kasse mit ihrem Wechselgeld eröffnen, die Schublade beim Abschluss zählen und den Tag mit seinem Bericht abschließen. Ein Verkauf braucht eine geöffnete Kasse; das erwartete Bargeld wird aus dem Eingenommenen abgeleitet, nie eingetippt.",
   "featureCounterTillSessionsTitle": "Kassensitzungen und Tagesabschluss",
   "featureCountriesEuName": "der Europäischen Union",
@@ -11369,7 +11377,6 @@
     "description": "#3587 list view: one line per customer"
   },
   "itemGroupAssignNone": "Keine Gruppe",
-  "itemGroupAssignOpen": "Gruppe und geerbte Einstellungen",
   "itemGroupAssignTitle": "Gruppe von {item}",
   "itemGroupClose": "Schließen",
   "itemGroupConfirm": "Prüfen Sie, was das erreicht, und speichern Sie dann erneut, um es anzuwenden.",
@@ -11461,6 +11468,18 @@
   "itemGroupRoundingNone": "Keine Rundung",
   "@itemGroupRoundingNone": {
     "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSaleFactor": "Was eine davon in der Lagereinheit ergibt (Verkauf)",
+  "@itemGroupSaleFactor": {
+    "description": "#4479 what one sale unit makes of the inventory unit"
+  },
+  "itemGroupSalePrice": "Preis von einer beim Verkauf",
+  "@itemGroupSalePrice": {
+    "description": "#4479 the price of one sale unit"
+  },
+  "itemGroupSaleUnit": "Verkauft in (Einheit)",
+  "@itemGroupSaleUnit": {
+    "description": "#4479 a group's proposed sale unit"
   },
   "itemGroupSet": "Gesetzt",
   "@itemGroupSet": {
@@ -12824,8 +12843,37 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataCount": "{count, plural, =0{Keine Einträge} one{{count} Eintrag} other{{count} Einträge}}",
+  "masterDataCustomersDesc": "Wem Sie Rechnungen stellen",
+  "masterDataGroupCatalogue": "Verkaufskatalog",
+  "masterDataGroupMeasures": "Maße und Steuern",
+  "masterDataGroupPartners": "Geschäftspartner",
+  "masterDataGroupPlaces": "Lagerorte und Bestand",
+  "masterDataIntro": "Alle Listen, mit denen das Unternehmen eingerichtet ist, an einem Ort. Tippen Sie auf eine Karte, um ihren Editor zu öffnen.",
+  "masterDataItemGroupsDesc": "Gemeinsame Einstellungen einer Artikelgruppe",
+  "masterDataItemsDesc": "Was Sie lagern und verkaufen",
+  "masterDataNoMatch": "Keine Stammdaten passen zur Suche.",
+  "masterDataNoUnit": "Keine Einheit",
+  "@masterDataNoUnit": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
+  },
+  "masterDataNoVat": "Keine MwSt.",
+  "@masterDataNoVat": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
+  },
+  "masterDataPlacesDesc": "Wo Ihre Waren lagern",
   "masterDataSearchHint": "Namen oder Code eingeben oder aus der Liste wählen",
+  "masterDataServicesDesc": "Die Leistungen, die Sie verkaufen",
+  "masterDataSitesDesc": "Ihre Adressen und die Ebenen an jeder",
+  "masterDataSuppliersDesc": "Bei wem Sie einkaufen",
+  "masterDataTills": "Kassen",
+  "masterDataTillsDesc": "Die Kassen am Tresen und ihre Tastenbelegung",
   "masterDataUnknownCode": "Das ist kein gültiger Eintrag. Wählen Sie einen aus der Liste.",
+  "masterDataUnlisted": "Das steht nicht in der Liste: bitte eines wählen",
+  "@masterDataUnlisted": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
+  },
+  "masterDataVatDesc": "Die Sätze, die Ihre Belege berechnen",
   "mcpApiReference": "API-Referenz",
   "mcpApiReferenceHint": "Was ein Assistent aufrufen kann und wie es autorisiert wird",
   "mcpAssistantsTitle": "Assistenten",
@@ -13298,6 +13346,10 @@
   "measureDimensionMass": "Masse",
   "@measureDimensionMass": {
     "description": "#4442 dimension: mass"
+  },
+  "measureDimensionPackage": "Gebinde",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
   },
   "measureDimensionTime": "Zeit",
   "@measureDimensionTime": {
@@ -14720,6 +14772,7 @@
   "permAllowsAccessProd": "Die Produktionsseite eines Entwicklungs- und Produktionspaars betreten.",
   "permAllowsApproveExpenses": "Von Mitgliedern eingereichte Ausgaben genehmigen.",
   "permAllowsApproveStockAdjustments": "Die von einer Inventur vorgeschlagene Korrektur genehmigen.",
+  "permAllowsConfigureTill": "Das Layout einer Kasse erstellen, veröffentlichen, kopieren und zurücksetzen: ihre Tasten, Seiten und Werkzeuge. Kassierer nutzen das veröffentlichte Layout ohne dieses Recht.",
   "permAllowsCountStock": "Die Zeilen einer Inventuraufgabe zählen, ohne zu sehen, was das Buch führt: die Aufgaben und das Zählen jeder Zeile, sonst nichts.",
   "permAllowsDeployToDev": "Den Entwicklungs-Space aus der Produktion auffrischen.",
   "permAllowsDeployToProd": "Konfiguration und Stammdaten von der Entwicklung in die Produktion übertragen.",
@@ -14744,6 +14797,7 @@
   "permAllowsManageStock": "Waren einlagern, umlagern und auslagern.",
   "permAllowsManageValidation": "Festlegen, welche Anfragen genehmigt werden müssen und von wem.",
   "permAllowsOperateKiosk": "Den Kiosk einrichten und Badges ausgeben.",
+  "permAllowsOverrideTillPrice": "Eine Kassenzeile zu einem anderen Preis als dem des Artikels verkaufen, mit einem Grund, den der Beleg festhält. Ohne dieses Recht wird eine Kassenzeile zum Preis des Artikels verkauft.",
   "permAllowsPaymentTermsEdit": "Eine Änderung der Zahlungsbedingungen eines Mitglieds beantragen; die Genehmigung entscheidet.",
   "permAllowsRecordOutgoingPayments": "Die an ein Mitglied für eine genehmigte Forderung gezahlte Summe erfassen und stornieren.",
   "permAllowsUseMessages": "Unterhaltungen, den Hinweis-Feed und Benachrichtigungen nutzen.",
@@ -14762,6 +14816,7 @@
     "description": "Permission label (#513)"
   },
   "permApproveStockAdjustments": "Bestandskorrekturen genehmigen",
+  "permConfigureTill": "Kassen gestalten",
   "permCountStock": "Bestand blind zählen",
   "permDeployToDev": "In die Entwicklung ausrollen",
   "@permDeployToDev": {
@@ -14851,6 +14906,7 @@
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
   },
+  "permOverrideTillPrice": "Preis an der Kasse ändern",
   "permPaymentTermsEdit": "Änderung der Zahlungsbedingungen beantragen",
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
@@ -16833,6 +16889,10 @@
   "refusalBankMatchUndoLaterFirst": "Dies ist die erste Zahlung der Rechnung: Machen Sie zuerst die späteren Zahlungen rückgängig. Nichts wurde geändert.",
   "@refusalBankMatchUndoLaterFirst": {
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
+  },
+  "refusalBooksClosedPeriodDated": "Dieses Datum liegt in einem abgeschlossenen Buchungszeitraum: Es wurde nichts erfasst. Ein Datum im offenen Zeitraum ist möglich; nur der Inhaber kann den Zeitraum wieder öffnen.",
+  "@refusalBooksClosedPeriodDated": {
+    "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
   },
   "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.",
   "refusalCounterCashEntry": "Diese Bargeldbuchung wird nicht angenommen: Der Grund steht nicht auf der Liste, der Betrag liegt über Ihrer Grenze, oder die Zahlen ergeben nicht den Betrag.",
@@ -19346,6 +19406,9 @@
   "settingHintCounterCustomerlessSales": "Erlaubt: Ein Verkauf kann ohne Kundennamen erfolgen. Abgelehnt: Jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an.",
   "settingHintCounterDocumentChannel": "Geteilt (Nachricht oder Mail), gedruckt oder beides. Der Beleg ist in jedem Fall dasselbe unveränderliche Dokument.",
   "settingHintCounterFiscalObligation": "Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.",
+  "settingHintCounterLayoutCashierReorder": "Ein Kassierer darf die Tasten einer Kasse auf seinem eigenen Gerät umordnen, ohne das veröffentlichte Layout zu ändern.",
+  "settingHintCounterLayoutMaxCells": "Die meisten Zellen, die ein Kassenlayout über alle Seiten und Größen haben darf. Ein größeres Layout wird beim Speichern abgelehnt.",
+  "settingHintCounterMaxDiscount": "Der größte Rabatt in Prozent, den eine Kassiererin oder ein Kassierer auf eine Kassenzeile geben darf. 0 heißt: kein Rabatt an der Kasse.",
   "settingHintCounterOfflineMaxMinutes": "Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.",
   "@settingHintCounterOfflineMaxMinutes": {
     "description": "#4373 setting hint"
@@ -19606,6 +19669,9 @@
   "settingLabelCounterCustomerlessSales": "Verkäufe ohne genannten Kunden",
   "settingLabelCounterDocumentChannel": "Wie ein Kassenbeleg die Kasse verlässt",
   "settingLabelCounterFiscalObligation": "Steuerliche Vorgaben für Kassenverkäufe",
+  "settingLabelCounterLayoutCashierReorder": "Kassierer ordnen die Tasten",
+  "settingLabelCounterLayoutMaxCells": "Größe des Kassenlayouts",
+  "settingLabelCounterMaxDiscount": "Größter Rabatt an der Kasse",
   "settingLabelCounterOfflineMaxMinutes": "Längste Offline-Zeit (Minuten)",
   "@settingLabelCounterOfflineMaxMinutes": {
     "description": "#4373 setting label"
@@ -19884,6 +19950,7 @@
   "@settingUnitCards": {
     "description": "#2579 report limits"
   },
+  "settingUnitCells": "Zellen",
   "settingUnitCharacters": "Zeichen",
   "settingUnitCurrencyUnits": "Währungseinheiten",
   "@settingUnitCurrencyUnits": {
@@ -20898,6 +20965,10 @@
   "@standaloneFactTotal": {
     "description": "#4165 standalone invoice composer: standaloneFactTotal"
   },
+  "standaloneFactTotalMismatch": "die Positionen ergeben nicht die angenommene Summe",
+  "@standaloneFactTotalMismatch": {
+    "description": "#4405 previewed document: standaloneFactTotalMismatch"
+  },
   "standaloneFactUnknownSubject": "der Kunde",
   "@standaloneFactUnknownSubject": {
     "description": "#4165 standalone invoice composer: standaloneFactUnknownSubject"
@@ -21416,10 +21487,6 @@
   "@stockEditInventoryUnitChoice": {
     "description": "#4169 the stock editors: a label or message"
   },
-  "stockEditItem": "Lagereinstellungen",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Lagereinstellungen von {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -21484,6 +21551,14 @@
   "stockEditUnitName": "Verpackungseinheit",
   "@stockEditUnitName": {
     "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditUnitPrice": "Preis von einem",
+  "@stockEditUnitPrice": {
+    "description": "#4479 the price of one of an item's units"
+  },
+  "stockEditUnitPriceHelp": "Leer lassen: Preis des Artikels mal Faktor.",
+  "@stockEditUnitPriceHelp": {
+    "description": "#4479 what an empty unit price means"
   },
   "stockEditUnitsHint": "Eine Verpackung enthält eine Anzahl Lagereinheiten; ein Drittel Liter ist 1 geteilt durch 3.",
   "@stockEditUnitsHint": {
@@ -21594,6 +21669,21 @@
   "stockItemAddNone": "Jede Leistung wird bereits im Lager geführt, oder es gibt noch keine. Legen Sie zuerst eine Leistung an und kommen Sie dann zurück.",
   "stockItemAddOpenServices": "Leistungen öffnen",
   "stockItemAddTitle": "Artikel hinzufügen",
+  "stockItemAttentionLow": "Niedriger Bestand",
+  "stockItemAttentionNoPlace": "Kein Lagerort",
+  "stockItemAttentionNoPrice": "Kein Preis",
+  "stockItemEditDetails": "Name, Preis und MwSt. bearbeiten",
+  "stockItemEditGroup": "Gruppe ändern",
+  "stockItemEditHome": "Festen Lagerort ändern",
+  "stockItemEditSettings": "Einheiten, Codes und Verfolgung bearbeiten",
+  "stockItemEditSuppliers": "Lieferantenartikel bearbeiten",
+  "stockItemEditTags": "Tags bearbeiten",
+  "stockItemEditVariants": "Varianten bearbeiten",
+  "stockItemFactBarcode": "Barcode",
+  "stockItemFactCost": "Zuletzt bekannte Kosten",
+  "stockItemFactVat": "MwSt.",
+  "stockItemFilterAll": "Alle Artikel",
+  "stockItemFilterNoHome": "Ohne festen Lagerort",
   "stockItemNewBarcode": "Barcode (optional)",
   "stockItemNewHome": "Heimatort (optional)",
   "stockItemNewName": "Name",
@@ -21604,6 +21694,17 @@
   "stockItemNewPriceInvalid": "Geben Sie einen Preis ein oder lassen Sie das Feld leer.",
   "stockItemNewTitle": "Neuer Artikel",
   "stockItemNewUnit": "Gezählt in",
+  "stockItemNoGroup": "In keiner Gruppe",
+  "stockItemNoSuppliers": "Noch kein Lieferantenartikel verweist auf diesen Artikel.",
+  "stockItemNoVariants": "Dieser Artikel hat keine Varianten.",
+  "stockItemNothingOnHand": "Nichts davon ist auf Lager.",
+  "stockItemPlacesTitle": "Wo er liegt",
+  "stockItemSectionGroupTags": "Gruppe und Tags",
+  "stockItemSectionOverview": "Übersicht",
+  "stockItemSectionStock": "Bestand",
+  "stockItemSectionSuppliers": "Lieferantenartikel",
+  "stockItemSectionVariants": "Varianten",
+  "stockItemSeeWhere": "Alle Orte ansehen",
   "stockItemsEmpty": "Noch keine Artikel. Ein Artikel ist eine Leistung, die Sie im Lager führen: Wählen Sie Artikel hinzufügen.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
@@ -21612,6 +21713,7 @@
   "@stockItemsIntro": {
     "description": "the stock pages and group (#4299)"
   },
+  "stockItemsSelectHint": "Wählen Sie einen Artikel aus, um ihn zu bearbeiten",
   "stockItemsTitle": "Artikel",
   "@stockItemsTitle": {
     "description": "the stock pages and group (#4299)"
@@ -21911,6 +22013,14 @@
   "@stockReasonCombinationDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonConversionSameUnit": "Eine Umrechnung braucht zwei verschiedene Einheiten.",
+  "@stockReasonConversionSameUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonConversionUnknown": "Diese Umrechnung ist nicht festgelegt.",
+  "@stockReasonConversionUnknown": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonCostInvalid": "Diese Kosten sind ungültig: eine Summe in Nebeneinheiten und ein Kurs nur für eine andere Währung.",
   "@stockReasonCostInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -22057,6 +22167,10 @@
   "@stockReasonOverAllocated": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
   },
+  "stockReasonPackageUnit": "Eine Verpackungseinheit hat keine allgemeine Umrechnung: ihr Faktor steht am Artikel.",
+  "@stockReasonPackageUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonParentInactive": "Der übergeordnete Lagerort ist nicht mehr in Gebrauch.",
   "@stockReasonParentInactive": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -22182,7 +22296,6 @@
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockRegistryAllPlaces": "Alle Lagerorte",
-  "stockRegistryCost": "Kosten {amount}",
   "stockRegistryCostHidden": "Kosten nicht angezeigt",
   "stockRegistryCostUnknown": "Kosten unbekannt",
   "stockRegistryHome": "Lagerort {address}",
@@ -22192,10 +22305,8 @@
   "stockRegistryHomeTitle": "Fester Lagerort von {item}",
   "stockRegistryMore": "Mehr anzeigen",
   "stockRegistryNoHome": "kein fester Lagerort",
-  "stockRegistryNoHomeFilter": "Nur Artikel ohne festen Lagerort",
   "stockRegistryOnHand": "{quantity} vorrätig",
   "stockRegistryPlaceFilter": "Lagerort",
-  "stockRegistryPrice": "Preis {amount}",
   "stockRegistrySearch": "Artikel nach Name, Barcode oder Adresse suchen",
   "stockReorderCreateDraft": "Bestellentwurf erstellen",
   "stockReorderDraftCreated": "Bestellentwurf {number} erstellt. Nichts wurde bestellt oder gesendet.",
@@ -22541,10 +22652,6 @@
   },
   "stockVariantsAdd": "Variante hinzufügen",
   "@stockVariantsAdd": {
-    "description": "#4169 the stock editors: a label or message"
-  },
-  "stockVariantsEdit": "Varianten",
-  "@stockVariantsEdit": {
     "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsHint": "Eine Variante ist je ein Wert jeder Dimension, etwa rot und Größe M. Der Bestand wird je Variante geführt.",
@@ -24085,6 +24192,7 @@
   "tillDayByRate": "Verkäufe nach Steuersatz",
   "tillDayByTender": "Einnahmen nach Zahlungsart",
   "tillDayCorrections": "Korrekturen: {amount}",
+  "tillDayDepositsReturned": "Zurückgenommenes Pfand: {amount}",
   "tillDayDifferences": "Gesamtdifferenz der Schubladen: {amount}",
   "tillDayHelp": "Fasst die geschlossenen Sitzungen der Kassen in einem nummerierten Bericht zusammen. Zuerst muss jede Kasse geschlossen sein.",
   "tillDayItem": "{number} · {date}",
@@ -24101,6 +24209,7 @@
   "tillDayRefusalNothing": "An diesem Tag wurde keine Sitzung geschlossen: Es gibt nichts abzuschließen.",
   "tillDayRefusalTillOpen": "Die Kasse {name} ist noch offen. Zählen und schließen Sie sie zuerst.",
   "tillDayReportDate": "Geschäftstag: {date}",
+  "tillDayReportNotPrinted": "Der Tagesbericht wurde nicht gedruckt. Prüfen Sie den Drucker und versuchen Sie es erneut.",
   "tillDayReportTitle": "Tagesbericht {number}",
   "tillDaySalesTotal": "Verkäufe: {amount}",
   "tillDaySessionLine": "{till}: erwartet {expected}, gezählt {counted}, Differenz {difference}",
@@ -24125,6 +24234,9 @@
       }
     }
   },
+  "tillDiscountBeyond": "Dieser Rabatt liegt über dem, was das Unternehmen an der Kasse erlaubt.",
+  "tillDiscountField": "Rabatt (%)",
+  "tillDiscountInvalid": "Ein Rabatt ist ein Prozentsatz vom Artikelpreis, auf einer Zeile ohne geänderten Preis.",
   "tillDrawerAddTill": "Kasse hinzufügen",
   "tillDrawerAmountInvalid": "Geben Sie einen Betrag ein.",
   "tillDrawerAmountZero": "Der Betrag muss größer als null sein.",
@@ -24176,15 +24288,18 @@
   "tillDrawerFailed": "Die Kasse konnte das nicht ausführen. Versuchen Sie es erneut.",
   "tillDrawerFloat": "Wechselgeld in der Schublade",
   "tillDrawerFloatHelp": "Das Bargeld, mit dem die Schublade beginnt, jetzt gezählt.",
+  "tillDrawerKickFailed": "Die Kassenlade ging nicht auf. Prüfen Sie den Drucker, an dem sie hängt.",
   "tillDrawerLoadFailed": "Die Kassen konnten nicht gelesen werden.",
   "tillDrawerManage": "Kassen und Schubladen",
   "tillDrawerNameMissing": "Geben Sie der Kasse einen Namen.",
   "tillDrawerNoTills": "Es gibt noch keine Kasse. Legen Sie die erste an, um eine Schublade zu zählen.",
   "tillDrawerNoTillsPerson": "Es ist noch keine Kasse angelegt. Wer die Standorte verwaltet, legt sie an.",
+  "tillDrawerNotSet": "Am Drucker dieser Kasse ist keine Kassenlade eingestellt.",
   "tillDrawerOpenAction": "Kasse öffnen",
   "tillDrawerOpenFirstBody": "Öffnen Sie vor dem Verkauf eine Kasse mit ihrem Wechselgeld.",
   "tillDrawerOpenFirstTitle": "Keine Kasse ist offen",
   "tillDrawerOpenTitle": "{till} öffnen",
+  "tillDrawerOpened": "Die Kassenlade ist offen.",
   "tillDrawerRefusalAboveLimit": "Eine so hohe Entnahme erfasst jemand, der ausgehende Zahlungen erfassen darf.",
   "tillDrawerRefusalAlreadyOpen": "Diese Kasse ist schon offen. Zählen und schließen Sie sie, bevor Sie sie erneut öffnen oder abschalten.",
   "tillDrawerRefusalDenominations": "Die Zählungen nach Stückelung ergeben nicht den Betrag.",
@@ -24205,6 +24320,66 @@
   "tillFailed": "Die Kasse konnte das nicht ausführen. Versuchen Sie es erneut.",
   "tillKeysEmpty": "Es gibt noch nichts zu verkaufen. Legen Sie zuerst Artikel im Lager an.",
   "tillKeysTitle": "Artikel zum Kassieren",
+  "tillLayoutAdd": "Element hinzufügen",
+  "tillLayoutCalcPush": "Auf die letzte Zeile",
+  "tillLayoutChooseFunction": "Welche Funktion?",
+  "tillLayoutChooseItem": "Welcher Artikel?",
+  "tillLayoutChoosePage": "Welche Seite öffnet sie?",
+  "tillLayoutCopied": "Als Entwurf von {till} kopiert. Dort veröffentlichen.",
+  "tillLayoutCopy": "Auf eine andere Kasse kopieren",
+  "tillLayoutCopyTo": "Auf welche Kasse kopieren?",
+  "tillLayoutEdit": "Diese Kasse gestalten",
+  "tillLayoutFnCard": "Karte annehmen",
+  "tillLayoutFnDeposit": "Pfandrückgabe",
+  "tillLayoutFnDiscount": "Rabatt auf eine Zeile",
+  "tillLayoutFnDrawer": "Schublade öffnen",
+  "tillLayoutFnPrice": "Preis ändern",
+  "tillLayoutFnQuantity": "Menge ×",
+  "tillLayoutFnReprint": "Letzten Beleg nachdrucken",
+  "tillLayoutFnVoid": "Zeile stornieren",
+  "tillLayoutGone": "Nicht mehr im Verkauf",
+  "tillLayoutInvalid": "Dieses Layout kann nicht gespeichert werden: {reason}",
+  "tillLayoutKindCalculator": "Rechner",
+  "tillLayoutKindCashNotes": "Vorgeschlagene Scheine",
+  "tillLayoutKindCategory": "Kategorietaste",
+  "tillLayoutKindCustomer": "Kunde und Notiz",
+  "tillLayoutKindFunction": "Funktionstaste",
+  "tillLayoutKindItem": "Artikeltaste",
+  "tillLayoutKindKeypad": "Ziffernblock",
+  "tillLayoutKindPasses": "Studiokarten",
+  "tillLayoutKindTotal": "Summe und Rückgeld",
+  "tillLayoutKindUnknown": "Ein Element, das diese App nicht kennt",
+  "tillLayoutNoRoom": "Auf diesem Raster ist kein freier Platz für dieses Element.",
+  "tillLayoutPageDesk": "Theke",
+  "tillLayoutPageDrinks": "Getränke",
+  "tillLayoutPageFood": "Speisen",
+  "tillLayoutPageSale": "Verkauf",
+  "tillLayoutPublish": "An die Kasse veröffentlichen",
+  "tillLayoutPublished": "Veröffentlicht. Die Kasse übernimmt es mit der nächsten Sitzung.",
+  "tillLayoutReload": "Neu laden",
+  "tillLayoutRemoveCell": "Dieses Element entfernen",
+  "tillLayoutReset": "Auf die erzeugten Tasten zurücksetzen",
+  "tillLayoutResetConfirm": "Diese Kasse kehrt zu den Tasten zurück, die sie aus Ihren Artikeln erzeugt. Ihr Layout und ihr Entwurf werden entfernt.",
+  "tillLayoutResetDone": "Diese Kasse nutzt wieder ihre erzeugten Tasten.",
+  "tillLayoutSizeDesk": "Desktopbreite",
+  "tillLayoutSizePhone": "Telefonbreite",
+  "tillLayoutSizeTablet": "Tabletbreite",
+  "tillLayoutStale": "Jemand hat dieses Layout geändert; laden Sie es neu.",
+  "tillLayoutStartFrom": "Mit einer Vorlage beginnen",
+  "tillLayoutStepDown": "Nach unten",
+  "tillLayoutStepLeft": "Nach links",
+  "tillLayoutStepNarrower": "Eine Spalte schmaler",
+  "tillLayoutStepRight": "Nach rechts",
+  "tillLayoutStepShorter": "Eine Zeile niedriger",
+  "tillLayoutStepTaller": "Eine Zeile höher",
+  "tillLayoutStepUp": "Nach oben",
+  "tillLayoutStepWider": "Eine Spalte breiter",
+  "tillLayoutTemplateBakery": "Bäckerei und Wiegeware: ein Ziffernblock neben großen Tasten",
+  "tillLayoutTemplateCafe": "Café und Bar: Kategorieseiten, kein Scanfeld",
+  "tillLayoutTemplateHardware": "Baumarkt und Katalog: zuerst Scanfeld und Ziffernblock",
+  "tillLayoutTemplateRetail": "Einzelhandel: Scanfeld, Warenkorb und Bezahltasten",
+  "tillLayoutTemplateStudio": "Studiotheke: Karten und Sitzungen",
+  "tillLayoutTitle": "Kassenlayout",
   "tillLeaveBody": "Der Verkauf wurde gesendet, die Antwort blieb aus. Beim Verlassen bleibt er offen: Öffnen Sie die Kasse erneut und bestätigen Sie ihn. Buchen Sie ihn nicht noch einmal.",
   "@tillLeaveBody": {
     "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
@@ -24221,13 +24396,25 @@
   "@tillLeaveTitle": {
     "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
   },
+  "tillLotChoose": "Charge wählen",
+  "tillLotExpired": "Abgelaufen ({date}): wird nicht verkauft",
+  "tillLotExpires": "Verwendbar bis {date}",
+  "tillLotFirstToExpire": "Die zuerst ablaufende (vom Bestand gewählt)",
+  "tillLotLine": "Charge {code}",
+  "tillLotNone": "{item} hat keine Charge zur Auswahl: Es wird so verkauft.",
+  "tillLotOnHand": "{quantity} {unit} vorrätig",
   "tillNextCustomer": "Nächster Kunde",
   "tillNotForCounter": "Dieser Artikel ist an der Kasse nicht verkäuflich.",
   "@tillNotForCounter": {
     "description": "#4366 the till"
   },
+  "tillNotPrinted": "Beleg nicht gedruckt — der Verkauf ist abgeschlossen. Erneut drucken oder den Beleg zeigen und teilen.",
+  "@tillNotPrinted": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillNotReady": "In Ihrem Land noch nicht bereit: {operation}",
   "tillNotReadyHint": "Es wird nichts nummeriert und nichts kassiert, solange der Vorgang des Landes nicht unterstützt wird.",
+  "tillNothingToReprint": "Noch kein Verkauf zum erneuten Drucken.",
   "tillOfflineBanner": "Offline – nur Barzahlung. Die Verkäufe bleiben auf diesem Gerät und werden gesendet, sobald die Verbindung wieder da ist.",
   "@tillOfflineBanner": {
     "description": "#4373 the till sells offline: the banner"
@@ -24376,7 +24563,114 @@
       }
     }
   },
+  "tillPriceField": "Neuer Preis",
+  "tillPriceNotAllowed": "Sie dürfen an der Kasse keinen Preis ändern. Die Zeile wird zum Preis des Artikels verkauft.",
+  "tillPriceReason": "Grund",
+  "tillPriceReasonHint": "Wird auf dem Beleg festgehalten.",
+  "tillPriceReasonMissing": "Ein geänderter Preis braucht einen Grund.",
+  "tillPriceUnreadable": "Geben Sie eine Zahl ein, etwa 4,50.",
   "tillPricing": "Warenkorb wird berechnet …",
+  "tillPrintCopy": "Kopie drucken",
+  "@tillPrintCopy": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintReceipt": "Beleg drucken",
+  "@tillPrintReceipt": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintTotal": "SUMME",
+  "@tillPrintTotal": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinted": "Beleg gedruckt.",
+  "@tillPrinted": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage": "Zeichensatz",
+  "@tillPrinterCodePage": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage437": "PC437 (ohne Eurozeichen)",
+  "@tillPrinterCodePage437": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage858": "PC858 (mit Eurozeichen)",
+  "@tillPrinterCodePage858": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterDrawer": "Eine Kassenlade hängt am Drucker",
+  "@tillPrinterDrawer": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHost": "Adresse des Druckers",
+  "@tillPrinterHost": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostHint": "Ein Name oder eine Adresse in diesem Netz, zum Beispiel 192.168.1.50",
+  "@tillPrinterHostHint": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostRequired": "Geben Sie die Adresse des Druckers ein.",
+  "@tillPrinterHostRequired": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterMode": "Nach einem Verkauf drucken",
+  "@tillPrinterMode": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAlways": "Immer",
+  "@tillPrinterModeAlways": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAsk": "Anbieten",
+  "@tillPrinterModeAsk": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeNever": "Nur auf Wunsch",
+  "@tillPrinterModeNever": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaper": "Papierbreite",
+  "@tillPrinterPaper": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaperWidth": "{mm} mm",
+  "@tillPrinterPaperWidth": {
+    "description": "#4368 the till's receipt printer: a paper width in millimetres, the number arrives formatted",
+    "placeholders": {
+      "mm": {
+        "type": "String"
+      }
+    }
+  },
+  "tillPrinterPort": "Netzwerkport",
+  "@tillPrinterPort": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPortInvalid": "Der Port ist eine Zahl von 1 bis 65535.",
+  "@tillPrinterPortInvalid": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterSet": "Bondrucker einrichten",
+  "@tillPrinterSet": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTest": "Testdruck",
+  "@tillPrinterTest": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTestSent": "Testseite gesendet.",
+  "@tillPrinterTestSent": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTitle": "Bondrucker",
+  "@tillPrinterTitle": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinting": "Wird gedruckt…",
+  "@tillPrinting": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillQuantityHint": "Eine genaue Menge, zum Beispiel 1 oder 0,350.",
   "tillQuantityRefused": "Geben Sie eine Menge über null mit höchstens sechs Dezimalstellen ein.",
   "tillQuantityTitle": "Verkaufte Menge",
@@ -24393,6 +24687,15 @@
   "tillReadinessUnavailable": "Nicht verfügbar",
   "tillReadinessUnconfirmed": "Noch nicht von einer Steuerberatung bestätigt.",
   "tillReadinessUnknownCountry": "Das Register nennt für {country} keinen Kassenvorgang: nichts ist unterstützt, und die Kasse verkauft nichts.",
+  "tillReceiptCash": "Bar",
+  "@tillReceiptCash": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptChange": "Rückgeld",
+  "@tillReceiptChange": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptCopy": "KOPIE {copy} — kein neuer Beleg",
   "tillReceiptCorrects": "Berichtigt Beleg {number}",
   "tillReceiptDisagrees": "Die Beträge dieses Belegs stimmen nicht miteinander überein. Er wird gezeigt, wie er festgeschrieben wurde; sagen Sie es Ihrer Verwaltung.",
   "tillReceiptIssuedUnder": "Ausgestellt nach: {specification} ({version})",
@@ -24401,7 +24704,15 @@
   "tillReceiptPrintNote": "Mit der App ist kein Belegdrucker verbunden: Drucken Sie über das Teilen-Menü.",
   "tillReceiptShare": "Beleg teilen",
   "tillReceiptShow": "Beleg anzeigen",
+  "tillReceiptTax": "davon Steuer",
+  "@tillReceiptTax": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillReceiptTaxLine": "MwSt. {percent}: {tax} auf {net}",
+  "tillReceiptThanks": "Vielen Dank",
+  "@tillReceiptThanks": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillReceiptTotal": "Summe {amount}",
   "tillReceiptUnreadable": "Dieser Beleg wurde von einer neueren Version von DesKilo geschrieben: Aktualisieren Sie die App, um ihn zu lesen.",
   "tillRemoveLine": "{name} aus dem Warenkorb nehmen",
@@ -24409,6 +24720,14 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillReturnNoDeposit": "Der letzte Artikel hat kein Pfand zum Zurücknehmen.",
+  "tillReturnNotAllowed": "Sie dürfen an der Kasse kein Pfand zurücknehmen.",
+  "tillReturnNotDeposit": "Dieser Artikel ist kein Pfand eines verkauften Artikels.",
+  "tillReturnOffline": "Pfand wird nicht zurückgenommen, solange die Kasse offline ist.",
+  "tillReturnTracked": "Dieses Pfand wird nach Charge oder Etikett verfolgt: Es wird nicht an der Kasse zurückgenommen.",
+  "tillReturnedLabel": "Pfand zurück: {item}",
+  "tillReturnedLine": "Pfand zurückgenommen",
+  "tillRingUpFirst": "Erfassen Sie zuerst einen Artikel.",
   "tillScanLabel": "Code scannen",
   "@tillScanLabel": {
     "description": "#4366 the till"
@@ -24591,6 +24910,69 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Blockierung aufheben",
+  "unitConversionDelete": "Löschen",
+  "@unitConversionDelete": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionEdit": "Umrechnung ändern",
+  "@unitConversionEdit": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactor": "Wie viele",
+  "@unitConversionFactor": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactorHelp": "Wie viele {to} ergeben ein {from}",
+  "@unitConversionFactorHelp": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionFrom": "Von",
+  "@unitConversionFrom": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionLine": "1 {from} = {factor} {to}",
+  "@unitConversionLine": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "factor": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionNew": "Umrechnung hinzufügen",
+  "@unitConversionNew": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionTo": "Nach",
+  "@unitConversionTo": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsEmpty": "Noch keine Umrechnung festgelegt.",
+  "@unitConversionsEmpty": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsIntro": "Eine Umrechnung sagt, wie viele einer Einheit eine andere ergeben. Sie gilt in beide Richtungen, in einem Schritt. Die eigene Umrechnung eines Artikels (ein Karton zu 12) geht diesen vor, und eine Verpackungseinheit hat hier keine.",
+  "@unitConversionsIntro": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsTitle": "Umrechnungen",
+  "@unitConversionsTitle": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
   "unknownWireInvoiceKind": "Eine Art, die diese App-Version nicht kennt",
   "unknownWireKindFeatures": "Diese Art stellt außerdem {count, plural, one{eine Funktion} other{{count} Funktionen}} ein, die diese App-Version nicht kennt. Aktualisieren Sie die App, um sie zu wählen.",
   "unknownWireReadOnly": "Diese App-Version weiß nicht, was dieser Eintrag ist: Er kann gelesen, aber nicht geändert werden. Aktualisieren Sie die App, um damit zu arbeiten.",

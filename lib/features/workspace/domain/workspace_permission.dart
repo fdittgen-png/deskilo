@@ -161,7 +161,15 @@ enum WorkspacePermission {
   /// #4295 — count the stock a cycle count task names, blind: the task reader and
   /// the line count, and nothing of what the ledger holds. It does not imply
   /// `manageStock`. Not an admin default.
-  countStock;
+  countStock,
+
+  /// #4448 — lay out the tills: build, publish, copy and reset a till's layout of keys, pages and tools. Cashiers use the
+  /// published layout without it. An admin default.
+  configureTill,
+
+  /// #4476 — sell a till line at a price other than the item's, with a reason the receipt keeps. Without it a till line
+  /// is sold at the item's price. An admin default.
+  overrideTillPrice;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;
@@ -211,6 +219,10 @@ Set<WorkspacePermission> defaultPermissionsFor(PermissionRole role) =>
           // #1921 — admins already read capacity through
           // manageReservations; the narrower right keeps that.
           WorkspacePermission.viewAnalytics,
+          // #4448 — admins lay out the tills.
+          WorkspacePermission.configureTill,
+          // #4476 — admins change a price at the till, with a reason.
+          WorkspacePermission.overrideTillPrice,
         },
       PermissionRole.member => <WorkspacePermission>{},
     };

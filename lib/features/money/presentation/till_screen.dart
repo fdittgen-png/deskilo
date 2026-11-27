@@ -32,7 +32,7 @@ import 'counter_readiness_panel.dart';
 import 'counter_receipt_view.dart';
 import 'till_basket.dart';
 import 'till_cash_dialog.dart';
-import 'till_keys.dart';
+import 'till_layout/till_layout_keys.dart';
 import 'till_offline_mode.dart';
 import 'till_offline_panel.dart';
 import 'till_offline_report.dart';
@@ -364,10 +364,10 @@ class _TillState extends ConsumerState<_Till> {
 
   /// A tap on a key: a weighed item asks the weight first, an age-restricted one the customer's age, an item with a
   /// deposit adds it; what cannot be rung up is said, and nothing is added.
-  Future<void> _ring(TillKey key) async {
+  Future<void> _ring(TillKey key, {String? typed}) async {
     final l10n = context.l10n;
-    var quantity = '1';
-    if (key.weighed) {
+    var quantity = typed ?? '1';   // #4448 a quantity typed on the layout's keypad stands for the weight too
+    if (key.weighed && typed == null) {
       final typed = await showTillQuantityDialog(context, current: TillLine(itemId: key.id, name: key.name, quantity: '', unit: key.unit), weigh: true);
       if (typed == null) return;
       final exact = tillQuantityOf(typed);
@@ -450,7 +450,7 @@ class _TillState extends ConsumerState<_Till> {
           children: [
             if (widget.scan != null) TillScanField(onScan: _scanned),
             Expanded(
-              child: TillKeys(key: const ValueKey('till-keys'), items: widget.keys, onTap: (i) => unawaited(_ring(i))),
+              child: TillKeysOrLayout(key: const ValueKey('till-keys-area'), workspaceId: widget.workspaceId, tillId: widget.till?.id, items: widget.keys, session: _session, onTap: (i, typed) => unawaited(_ring(i, typed: typed)), onPayCash: () => unawaited(_pay(_session.state.value))),
             ),
           ],
         );
@@ -462,7 +462,7 @@ class _TillState extends ConsumerState<_Till> {
               key: const ValueKey('till-basket'),
               state: state,
               onQuantity: _setQuantity,
-              onRemove: (i) => unawaited(_session.remove(i)),
+              onRemove: (i) => unawaited(_session.remove(i)), onLot: (i) => unawaited(chooseTillLot(context, ref.read(tillLotsPortProvider), _session, i)),
               onPay: () => unawaited(_pay(state)),
               onNext: _session.next,
               onRetry: () => unawaited(_session.retry()),

@@ -3030,7 +3030,7 @@ Choisissez **Créer un code d'invitation**. Le code s'affiche une seule fois, av
 
 La liste montre chaque invitation comme invitée, en lecture, expirée ou terminée. **Mettre fin à l'accès** arrête la lecture à partir de là ; rien n'est effacé, les factures et leur historique restent tels quels. Le client n'est jamais un membre : aucune réservation, aucun annuaire, aucune communauté, aucun rôle ni forfait ne découle de l'accès. Si la liste ne peut pas être lue, réessayez plutôt que de la croire vide ; si une réponse n'arrive pas, choisissez à nouveau **Créer un code d'invitation** : la même demande donne la même invitation, jamais une seconde.
 
-**Voir aussi :** [Clients facturés](#clients-facturés)
+**Voir aussi:** [Clients facturés](#clients-facturés)
 
 <!-- anchor: user.money.invoices.standalone -->
 ### Une facture client sans mois
@@ -3054,7 +3054,7 @@ Vous avez rendu un service à un client désigné aujourd'hui (une consultation,
 - Votre brouillon reste tel quel quand vous redimensionnez la fenêtre ou qu'une vérification est refusée. Si la réponse à **Émettre la facture** n'arrive pas, la même confirmation n'émet jamais une seconde facture : cherchez-la à nouveau.
 - Modifier ensuite le catalogue ou le client ne change jamais une facture émise.
 
-**Voir aussi :** [Clients facturés](#clients-facturés) · [Payer des factures sans mois](#payer-des-factures-sans-mois)
+**Voir aussi:** [Clients facturés](#clients-facturés) · [Payer des factures sans mois](#payer-des-factures-sans-mois)
 
 <!-- anchor: user.money.quotes -->
 ### Devis
@@ -3145,12 +3145,54 @@ Les **seuils de réapprovisionnement** (sous les deux listes) font qu’un artic
 
 Vous voulez une seule liste qui dise, pour chaque article et chaque variante, ce que c’est, ce que cela coûte et se vend, où c’est rangé et combien il y en a.
 
-Ouvrez **Stock → Articles**. Chaque ligne montre le **code-barres**, l’**unité**, le **prix** (le prix de vente du catalogue), le **dernier coût connu**, l’**emplacement de rangement** et ce qui est **en stock**. Le coût n’apparaît que si votre rôle peut voir les finances ou gérer les achats ; sinon la ligne indique *coût non affiché*. Un coût qu’aucune livraison n’a encore donné reste *coût inconnu*, jamais zéro.
+Ouvrez **Stock → Articles**. Chaque article montre son nom, puis son prix, ce qui est en stock et son emplacement de rangement, et un badge quand l’article attend quelque chose : *Stock bas*, *Sans prix* ou *Sans emplacement*. Sur un téléphone, chaque article est une carte ; sur une tablette tenue à l’horizontale ou un ordinateur, les articles forment un tableau aux colonnes **Nom**, **Prix**, **En stock**, **Emplacement de rangement**, **Groupe** et **Statut**, trié d’un clic sur **Nom**, **Prix** ou **En stock**. Ouvrez un article pour tout voir et tout modifier ([La page d’un article](#la-page-dun-article)), ou agissez depuis la liste ([Agir sur un article depuis la liste](#agir-sur-un-article-depuis-la-liste)).
 
-- **Emplacement de rangement** : touchez l’icône d’emplacement d’une ligne pour dire où l’article est rangé : son allée, son étagère ou son bac. Une variante sans emplacement propre prend celui de son article. C’est un conseil pour le rangement, l’inventaire et le prélèvement : le stock peut être ailleurs, et le changer ne déplace rien et ne réécrit aucun historique.
-- **Filtrez** par un emplacement pour voir ce qui y est rangé et dans les emplacements en dessous, ou activez *Seulement les articles sans emplacement de rangement* pour voir ce qui en attend encore un.
+- **Filtrez** par un emplacement pour voir ce qui y est rangé et dans les emplacements en dessous, ou choisissez la puce *Sans emplacement de rangement* pour voir ce qui en attend encore un.
 - **Recherchez** par nom, code-barres ou adresse. Saisir ou scanner un code-barres dans la recherche et valider ouvre cet article.
 - Les longues listes se chargent par pages : choisissez *Afficher plus*.
+- Le dernier coût connu n’apparaît sur la page de l’article que si votre rôle peut voir les finances ou gérer les achats ; sinon elle indique *coût non affiché*. Un coût qu’aucune livraison n’a encore donné reste *coût inconnu*, jamais zéro.
+
+<!-- anchor: user.money.stock.actions -->
+### Agir sur un article depuis la liste
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez changer une chose d’un article — son prix, son emplacement, son groupe — sans ouvrir sa page.
+
+- **Sur un téléphone**, chaque carte se termine par une rangée de puces, chacune une icône et un mot : **Modifier** (nom, prix et TVA), **Emplacement**, **Groupe**, **Puces**, **Réglages**, **Variantes** et **Fournisseurs**. Faites glisser la rangée de côté quand elle ne tient pas. Une puce ouvre le même éditeur que la page de l’article ; touchez la carte elle-même pour ouvrir la page.
+- **Sur une tablette tenue à l’horizontale ou un ordinateur**, cliquez une ligne pour la sélectionner : elle est mise en évidence et cochée. La barre au-dessus du tableau nomme alors l’article et propose **Modifier le nom, le prix et la TVA**, **Emplacement**, **Groupe**, **Puces**, **Réglages du stock**, **Variantes**, **Articles fournisseur** et **Ouvrir**. Les flèches déplacent la sélection ; Entrée ou un double clic ouvre l’article à côté de la liste ; **Effacer la sélection** le relâche.
+- Sans sélection, la barre dit *Sélectionnez un article pour agir dessus* et propose **Ajouter un article**. La recherche, l’emplacement et *Sans emplacement de rangement* sont à sa gauche.
+
+**Bon à savoir**
+
+- Seul ce que votre rôle permet est proposé : sur un téléphone les autres puces n’apparaissent pas, celui qui peut seulement voir le stock n’en a donc aucune ; sur un ordinateur elles sont grisées. **Modifier le nom, le prix et la TVA** demande le droit de gérer les prestations, le reste celui de gérer le stock.
+- Après un enregistrement, la liste relit l’article : la ligne reste sélectionnée et montre ses nouvelles valeurs.
+- **Groupe** et **Puces** apparaissent là où l’entreprise utilise les groupes d’articles et les puces.
+
+**Voir aussi:** [Le registre des articles](#le-registre-des-articles) · [La page d’un article](#la-page-dun-article)
+
+<!-- anchor: user.money.stock.item -->
+### La page d’un article
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez tout ce qui concerne un article au même endroit, et modifier chaque partie là où vous la lisez.
+
+Sur un téléphone, touchez la carte d’un article dans **Stock → Articles** : il s’ouvre comme une page à part. Sur une tablette tenue à l’horizontale ou un ordinateur, double-cliquez sa ligne, appuyez sur Entrée ou choisissez **Ouvrir** : il s’ouvre à côté de la liste, qui garde sa recherche, ses filtres et sa sélection. Chaque partie de la page a sa propre action, nommée d’après ce qu’elle modifie :
+
+- **Aperçu** : le prix, la TVA, l’unité, le code-barres et le dernier coût connu. **Modifier le nom, le prix et la TVA** ouvre l’éditeur du service.
+- **Stock** : ce qui est en stock et l’emplacement de rangement, de l’article ou de chaque variante, et **Où il se trouve** : les premiers emplacements qui le contiennent (**Voir tous les emplacements** les montre tous). **Changer l’emplacement de rangement** dit où l’article est rangé : son allée, son étagère ou son bac. C’est un conseil pour le rangement, l’inventaire et le prélèvement : le stock peut être ailleurs, et le changer ne déplace rien. **Modifier les unités, les codes et le suivi** ouvre les réglages du stock de l’article.
+- **Groupe et puces**, là où l’entreprise les utilise : le groupe de l’article. **Changer de groupe** le déplace et montre d’où vient chaque réglage ; **Modifier les puces** lie ou retire ses puces.
+- **Variantes** : les variantes en vente, avec leurs propres prix. **Modifier les variantes** en ajoute ou les change.
+- **Articles fournisseur** : les articles de fournisseurs qui désignent cet article. **Modifier les articles fournisseur** en associe un autre.
+
+**Bon à savoir**
+
+- **Modifier le nom, le prix et la TVA** demande le droit de gérer les services ; toute autre action, le droit de gérer le stock. Qui peut seulement voir le stock lit l’aperçu, le stock et les variantes, sans aucune action.
+- Les badges en haut de la page disent ce que l’article attend encore.
+- Après un enregistrement, la page montre aussitôt la nouvelle valeur, la liste aussi.
+
+**Voir aussi:** [Le registre des articles](#le-registre-des-articles) · [Groupes d’articles](#groupes-darticles)
 
 <!-- anchor: user.money.stock.groups -->
 ### Groupes d’articles
@@ -3161,7 +3203,7 @@ Vous voulez dire une fois ce qu’une famille d’articles a en commun — combi
 
 Ouvrez **Stock → Groupes d’articles** (il faut la fonction *Groupes d’articles* sous la gestion du stock). Un groupe a un nom, se place au sommet ou dans un autre groupe (un seul niveau de sous-groupes) et porte les réglages que vous choisissez : **suivi**, **durée de conservation**, **mode de puce**, **unité de stock**, **compter tous les n jours**, **âge minimum** et **vendu au poids**. Un réglage laissé *Non défini* n’est pas décidé à ce niveau.
 
-- **Un article suit son groupe tant qu’il n’a pas sa propre valeur.** La valeur en vigueur est celle de l’article s’il en a une, sinon celle de son sous-groupe, sinon celle de son groupe. Ouvrez **Groupe et réglages hérités** d’un article (l’icône de dossier sur sa ligne dans **Stock → Articles**) pour voir d’où vient chaque réglage (*Du groupe Boissons depuis le 3 déc.* ou *Valeur propre*), le déplacer dans un autre groupe et rendre une valeur propre avec **Utiliser la valeur du groupe**. Dans les **réglages de stock** de l’article, *Valeur propre* s’affiche à côté d’un réglage pour lequel l’article garde sa propre valeur face à son groupe (suivi, durée de conservation, unité de stock).
+- **Un article suit son groupe tant qu’il n’a pas sa propre valeur.** La valeur en vigueur est celle de l’article s’il en a une, sinon celle de son sous-groupe, sinon celle de son groupe. Ouvrez un article dans **Stock → Articles** et choisissez **Changer de groupe** pour voir d’où vient chaque réglage (*Du groupe Boissons depuis le 3 déc.* ou *Valeur propre*), le déplacer dans un autre groupe et rendre une valeur propre avec **Utiliser la valeur du groupe**. Dans les **réglages de stock** de l’article, *Valeur propre* s’affiche à côté d’un réglage pour lequel l’article garde sa propre valeur face à son groupe (suivi, durée de conservation, unité de stock).
 - **Chaque changement est prévisualisé.** En enregistrant un groupe, vous voyez d’abord ce que le changement atteint : *s’applique à 1, 1 gardent leur propre valeur, 0 ne peuvent pas être atteints*. Rien n’est appliqué avant un deuxième enregistrement ; toute modification entre-temps demande un nouvel aperçu. Un article que le changement ne peut pas atteindre (par exemple une unité sur un article qui a déjà des mouvements) est listé, et le changement du groupe est enregistré pour les autres.
 - **Propositions et prix.** Un groupe peut proposer à un nouvel article une **unité d'achat par défaut** avec son facteur (un nombre ou une fraction comme 1/3), un **seuil et une quantité de réapprovisionnement** et une **zone de rangement** : ils sont copiés dans un nouvel article comme point de départ et n'atteignent aucun article existant. Le **taux de TVA**, la **nature de la prestation**, l'**arrondi du prix** et la **marge cible sur le coût** ne sont montrés et réglés que par qui peut gérer les services et voir les finances ; pour tous les autres, ils ne sont ni montrés ni modifiés par un enregistrement.
 - **Historique.** La feuille du groupe liste chaque changement avec le nombre d’articles atteints ; la ligne d’origine d’un article dit depuis quand.
@@ -3190,7 +3232,7 @@ Un scanner de codes-barres en mode clavier (il saisit le code puis appuie sur En
 
 Vous voulez associer une puce NFC à un article ou à un emplacement, et lire des puces en travaillant, avec le téléphone que vous avez déjà.
 
-Avec la fonction *Puces* activée et un téléphone qui lit le NFC, **Stock → Articles** et **Stock → Emplacements** affichent un bouton de puces sur chaque ligne, et la barre de scan d’une feuille de marchandises affiche **Lire une puce**. Le bouton est absent sur un appareil sans NFC (un ordinateur, la plupart des tablettes, un téléphone dont le NFC est coupé) : utilisez-y un scanner ou un lecteur portable.
+Avec la fonction *Puces* activée et un téléphone qui lit le NFC, **Modifier les puces** sur la page d’un article et le bouton de puces de chaque ligne de **Stock → Emplacements** lisent une puce, et la barre de scan d’une feuille de marchandises affiche **Lire une puce**. Le bouton est absent sur un appareil sans NFC (un ordinateur, la plupart des tablettes, un téléphone dont le NFC est coupé) : utilisez-y un scanner ou un lecteur portable.
 
 - **Associer une puce.** Ouvrez les puces d’un article ou d’un emplacement, touchez **Lire une puce** et approchez la puce du dos du téléphone. Une lecture associe une puce. Relire la même puce indique qu’elle était déjà associée ici et n’associe rien de nouveau ; une puce associée à autre chose est refusée et dit à quoi. Un propriétaire peut porter plusieurs puces. Le serveur accepte le code en majuscules ou minuscules, avec espaces, deux-points ou tirets.
 - **Retirer une puce** perdue, abîmée ou remplacée : choisissez le motif. Une puce retirée récemment ne peut pas être associée de nouveau tout de suite (le délai est un réglage du stock), et une puce sur une pièce encore en stock ne peut pas être retirée.
@@ -3213,6 +3255,21 @@ Là où votre pays n'autorise pas encore la caisse, elle nomme l'opération manq
 
 Un article tracé indique d'où il a été pris. Quand vous vendez un article suivi par lot sans choisir de lot, la vente le prend dans les lots en stock, celui qui expire le premier d'abord et jamais un lot périmé ; sous la ligne vendue, la caisse affiche le code de chaque lot tel qu'il a été reçu, avec la quantité prise, par exemple **Lot SUP-A × 2 · Lot SUP-B × 1**, et chaque pièce par son étiquette. Si l'entreprise utilise un lecteur, scannez l'étiquette d'une pièce pour l'ajouter : la vente prend exactement les pièces scannées, et la même pièce deux fois est refusée. Ces identifiants de traçabilité sont figés avec le ticket : modifier plus tard un lot ou une étiquette ne change jamais un ticket déjà émis. Dans le stock, la traçabilité d'un lot ou d'une pièce indique le ticket qui l'a vendu.
 
+Pour choisir le lot vous-même, appuyez sur **Choisir le lot** sur la ligne : les lots en stock sont listés avec leur date et ce qu'il en reste, le premier à expirer en premier. Un lot dont la date est dépassée est affiché et ne peut pas être choisi. **Le premier à expirer (choisi par le stock)** rend le choix au stock. Un article qui n'est pas suivi par lot dit qu'il n'a pas de lot à choisir.
+
+<!-- anchor: user.money.till-printer -->
+### Imprimer le ticket et ouvrir le tiroir
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous vendez au comptoir avec une imprimante de tickets sur votre réseau (80 ou 58 mm, ESC/POS), peut-être avec un tiroir-caisse branché dessus.
+
+Activez **Imprimante de tickets** (il faut les sessions de caisse). L'appareil de chaque caisse règle sa propre imprimante : après une vente, appuyez sur **Configurer l'imprimante de tickets**, ou ouvrez **Imprimante de tickets**, puis saisissez l'adresse de l'imprimante sur votre réseau (Adresse de l'imprimante) et son port (9100 sauf indication contraire de l'imprimante), la largeur du papier, la page de codes, si un tiroir-caisse y est relié et si une vente s'imprime d'elle-même, après demande ou seulement à la demande. **Impression d'essai** imprime une page de test.
+
+Après une vente en espèces, le tiroir s'ouvre. **Imprimer le ticket** imprime le ticket ; **Imprimer une copie** l'imprime de nouveau marqué **DUPLICATA 1**, **DUPLICATA 2**, etc. : un duplicata est compté et ne prend jamais un nouveau numéro de ticket. La touche **Ouvrir le tiroir** d'une disposition de caisse ouvre le tiroir hors vente. Quand l'imprimante est injoignable, la caisse affiche **Ticket non imprimé — la vente est terminée. Imprimez à nouveau, ou affichez le ticket pour le partager.** : la vente est terminée dans tous les cas, et le ticket peut être affiché et partagé. Dans un navigateur rien ne s'imprime : l'impression demande l'application.
+
+Testé à ce jour : les octets par rapport aux fichiers de référence et un récepteur local. Aucun modèle d'imprimante n'a encore été essayé.
+
 <!-- anchor: user.money.till-drawer -->
 ### Ouvrir la caisse, compter et fermer
 
@@ -3229,6 +3286,29 @@ Appuyez sur **Ouvrir la caisse**, saisissez le **Fond de caisse** (ou, si votre 
 **Compter et fermer** demande les **Espèces comptées dans le tiroir** et ce qui est **Déposé à la banque**. Quand l'entreprise compte à l'aveugle, les espèces attendues ne s'affichent pas avant le comptage ; une personne qui peut voir les finances les voit, ainsi que l'écart pendant la saisie. Un comptage qui diffère des espèces attendues ne se ferme qu'avec son motif, que la caisse demande. Après la fermeture, la caisse indique ce qui était attendu, ce qui a été compté et l'écart. Les paiements par carte sans réponse sont listés à part et jamais comptés comme espèces.
 
 **Clôture de la journée.** Une personne qui peut voir les finances ouvre **Clôture de la journée** depuis le tiroir-caisse et appuie sur **Clôturer la journée** quand chaque caisse est fermée (une caisse encore ouverte est nommée et refuse la clôture). Les sessions fermées du jour forment un rapport numéroté : chaque session avec l'attendu, le compté, l'écart et son motif, les encaissements par moyen de paiement et par taux de taxe, les espèces entrées et sorties, les remboursements et la plage des numéros de tickets. **Journées clôturées** liste les rapports déjà faits ; une journée clôturée ne change jamais. C'est le registre propre de l'entreprise ; le contenu légal qu'un pays demande à une clôture de journée vient avec son propre module.
+
+<!-- anchor: user.money.till-layout -->
+### Disposer votre caisse
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous vendez au comptoir et voulez une caisse adaptée à votre façon de vendre : de grandes touches pour le pain pesé, des pages par catégorie pour un bar, un champ de scan d'abord pour une quincaillerie.
+
+Activez **Dispositions de caisse** (il faut les sessions de caisse). Dans **Tiroir-caisse**, une personne qui peut disposer les caisses (par défaut les propriétaires et les administrateurs) appuie sur le bouton de disposition d'une caisse. Une caisse sans disposition part d'un modèle : **Commerce**, **Boulangerie et produits pesés**, **Café et bar**, **Accueil de studio** ou **Quincaillerie et catalogue**.
+
+La disposition a une grille pour chaque largeur où la caisse est utilisée : **Largeur téléphone**, **Largeur tablette** et **Largeur bureau**. **Ajouter un élément** place une touche article, une touche de fonction (comme **Encaisser en espèces** ou **Client suivant**), un pavé numérique, une calculatrice, le panier, le total et la monnaie ou un autre outil à la première place libre où il tient. Touchez un élément pour le sélectionner ; les boutons sous la grille le déplacent et l'élargissent, le rétrécissent, l'allongent ou le raccourcissent d'un pas à la fois. Un pas qui sortirait de la grille, chevaucherait un autre élément ou rendrait un outil trop petit n'est pas proposé.
+
+**Enregistrer** garde un brouillon ; **Publier sur la caisse** en fait la disposition de la caisse. Une caisse déjà ouverte garde sa disposition jusqu'à sa prochaine session : la caisse ne change jamais pendant une vente. Si quelqu'un d'autre a modifié la disposition depuis que vous l'avez ouverte, l'enregistrement est refusé avec **Quelqu'un a modifié cette disposition ; rechargez-la.** Une disposition que le serveur ne peut pas accepter est refusée avec son premier problème. Une caisse sans disposition publiée garde les touches qu'elle génère à partir de vos articles.
+
+À la caisse, les touches agissent comme vous les avez placées. Le **pavé numérique** saisit une quantité avec le séparateur décimal de votre langue (1,5) ; la touche d'article suivante vend cette quantité, et un article pesé la prend comme poids au lieu de la demander. **Quantité ×** place plutôt la quantité saisie sur la dernière ligne. La **calculatrice** compte exactement, et **Sur la dernière ligne** fait de son résultat la quantité de la dernière ligne ; elle ne fixe jamais un prix. Une **touche de catégorie** ouvre la page qu'elle nomme.
+
+**Copier sur une autre caisse** enregistre la disposition comme brouillon d'une autre caisse, à publier là-bas. **Revenir aux touches générées** supprime, après confirmation, la disposition et le brouillon de cette caisse : la caisse utilise de nouveau les touches qu'elle crée à partir de vos articles. Dans la démo, le **Bakery counter** montre le modèle Boulangerie avec son pavé et sa calculatrice.
+
+**Changer un prix** modifie le prix de la dernière ligne : saisissez le nouveau prix (ou d'abord sur le pavé) et un **Motif**, que le ticket conserve à côté du prix de l'article. Il faut le droit **Modifier un prix à la caisse** (propriétaires et administrateurs par défaut) ; sans lui, la caisse le dit et la ligne reste au prix de l'article. **Remise sur une ligne** retire un pourcentage du prix de l'article de la dernière ligne, au plus **Remise maximale à la caisse** (0 par défaut, soit aucune remise à la caisse) ; une remise plus forte est refusée en nommant la limite. Une ligne prend une remise ou un prix modifié, pas les deux. Une vente que la caisse envoie après avoir vendu hors ligne garde son prix, dans la tolérance de prix hors ligne.
+
+**Réimprimer le dernier ticket** affiche de nouveau le ticket de la dernière vente, marqué **DUPLICATA 1**, **DUPLICATA 2**, etc. Un duplicata ne prend jamais un nouveau numéro de ticket, et chaque duplicata imprimé est compté.
+
+**Retour de consigne** reprend la consigne du dernier article enregistré (les bouteilles d'un pack d'eau, par exemple) : saisissez d'abord le nombre sur le pavé, sinon une seule est reprise. La consigne est déduite de la vente et figure comme **Consigne reprise** sur le ticket ; elle revient en stock quand la vente est faite. Il faut le droit **Modifier un prix à la caisse**, ce n'est pas possible hors ligne, une consigne suivie par lot ou étiquette n'est pas reprise à la caisse, et une vente dont le total ne serait pas supérieur à zéro n'est pas faite (remboursez alors les consignes depuis le tiroir).
 
 <!-- anchor: user.money.till-offline -->
 ### Quand la caisse est hors ligne
@@ -3261,7 +3341,7 @@ Les **Tickets de caisse** listent ce que la caisse a fait. **Corriger cette vent
 
 Vous décidez si une puce sur un article désigne un lot ou une pièce, et ce que compte une lecture en masse.
 
-Avec la fonction *Puces* activée, un article a un **mode de puce**, posé sur son groupe et gardé par l'article tant qu'il n'a pas de valeur propre. Ouvrez les réglages de groupe d'un article (**Stock → Articles**, l'icône de dossier sur sa ligne) et lisez **Étiquette sur cet article** : elle dit d'où vient la valeur (*De Boissons depuis le 3 déc.* ou *Valeur propre*), laisse donner à l'article une valeur propre, et **Reprendre la valeur du groupe** la rend.
+Avec la fonction *Puces* activée, un article a un **mode de puce**, posé sur son groupe et gardé par l'article tant qu'il n'a pas de valeur propre. Ouvrez les réglages de groupe d'un article (**Changer de groupe** sur sa page dans **Stock → Articles**) et lisez **Étiquette sur cet article** : elle dit d'où vient la valeur (*De Boissons depuis le 3 déc.* ou *Valeur propre*), laisse donner à l'article une valeur propre, et **Reprendre la valeur du groupe** la rend.
 
 - **Pas de puce.** L'article ne porte pas de puce.
 - **Une puce par lot.** Une puce désigne un lot ou un colis : une caisse, un seau, un carton. La lire compte un lot, jamais une pièce.
@@ -3433,7 +3513,7 @@ Une entreprise qui vous facture peut vous remettre un code, pour que vous lisiez
 - Accepter ne fait pas de vous un membre de l'entreprise. L'entreprise peut mettre fin à l'accès, et vous aussi ; rien n'est effacé à la fin.
 - Payer ces factures d'ici n'est pas encore proposé.
 
-**Voir aussi :** [Vos finances dans tous vos espaces](#vos-finances-dans-tous-vos-espaces)
+**Voir aussi:** [Vos finances dans tous vos espaces](#vos-finances-dans-tous-vos-espaces)
 
 <!-- anchor: user.money.finances.standalone -->
 ### Payer des factures sans mois
@@ -3456,7 +3536,7 @@ Une entreprise vous a émis des factures qui n'appartiennent à aucun mois. Elle
 - L'argent est comptabilisé le mois où il arrive. Ce qu'une facture ne prend pas reste votre crédit auprès de l'entreprise jusqu'à son affectation.
 - Une entreprise dont le service de paiement est trop ancien le dit avant tout envoi.
 
-**Voir aussi :** [Vos finances entre espaces](#vos-finances-dans-tous-vos-espaces)
+**Voir aussi:** [Vos finances entre espaces](#vos-finances-dans-tous-vos-espaces)
 
 <!-- anchor: user.money.businesses -->
 ### Vos activités en un coup d'œil
@@ -4114,6 +4194,49 @@ Vous voulez que vos factures et vos lettres s'impriment sur le papier qu'utilise
 
 **Voir aussi:** [Pays](#pays)
 
+<!-- anchor: user.workspace.settings.master-data -->
+### Données de base
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+Les données de base sont les listes avec lesquelles votre entreprise est configurée et que ses sélecteurs lisent : les unités, les taux de TVA, les articles, les fournisseurs et le reste. **Données de base** montre chaque sorte en un seul endroit, par groupe. Chaque carte nomme la sorte, dit en une ligne ce qu’elle est et combien d’enregistrements elle contient, et ouvre l’écran qui la modifie.
+
+**Étapes**
+
+1. Dans [Espace](https://fdittgen-png.github.io/deskilo/#/workspace-settings), ouvrez **Données de base**, ou choisissez **Données de base** sous **Configurer l’espace** dans le menu.
+2. Tapez dans **Rechercher** pour ne garder que les cartes dont le nom correspond.
+3. Touchez une carte et modifiez ses enregistrements dans l’écran qu’elle ouvre.
+
+**Bon à savoir**
+
+- Vous ne voyez une carte que si vous pouvez ouvrir son écran : sa fonctionnalité est activée et vous détenez son autorisation.
+- Un nombre qui ne peut pas être lu le dit, avec **Réessayer** ; il n’est jamais affiché comme 0.
+
+<!-- anchor: user.workspace.master-data.measures -->
+#### Mesures et taxes
+
+**Unités de mesure** avec leurs conversions, et **Taux de TVA**. Les unités sont toujours là, que la fonctionnalité **Unités de mesure** soit activée ou non.
+
+<!-- anchor: user.workspace.master-data.catalogue -->
+#### Catalogue de vente
+
+**Articles**, **Groupes d’articles** et **Services** : ce que l’entreprise stocke et vend.
+
+<!-- anchor: user.workspace.master-data.places -->
+#### Emplacements et stock
+
+**Emplacements**, où les marchandises sont rangées, et **Caisses** : les caisses du comptoir, chacune avec la disposition de ses touches.
+
+<!-- anchor: user.workspace.master-data.partners -->
+#### Partenaires
+
+**Fournisseurs** et **Clients facturés**.
+
+<!-- anchor: user.workspace.master-data.organisation -->
+#### Organisation
+
+**Sites** : les adresses de l’entreprise et les niveaux de chacune.
+
 <!-- anchor: user.workspace.settings.units -->
 ### Unités de mesure
 
@@ -4125,11 +4248,10 @@ Vos articles, devis et factures sont mesurés dans des unités, et certaines se 
 
 **Étapes**
 
-1. Activez **Unités de mesure** sous **Fonctionnalités** (elle est désactivée tant que vous ne la demandez pas).
-2. Dans [Unités de mesure](https://fdittgen-png.github.io/deskilo/#/settings/units), touchez **Nouvelle unité**.
-3. Renseignez **Code de l’unité** (il ne pourra plus changer), **Votre nom pour l’unité**, **Elle mesure** et **Une unité vaut** dans l’unité de base de ce qu’elle mesure : 1000 pour un km compté en m, 0,001 pour un mm.
-4. Si vous le souhaitez, renseignez **Code UN/ECE (pour les factures électroniques)**, que portent les factures électroniques (KMT pour un km).
-5. Touchez **Enregistrer**.
+1. Dans [Unités de mesure](https://fdittgen-png.github.io/deskilo/#/settings/units), atteint depuis **Données de base**, touchez **Nouvelle unité**.
+2. Renseignez **Code de l’unité** (il ne pourra plus changer), **Votre nom pour l’unité**, **Elle mesure** et **Une unité vaut** dans l’unité de base de ce qu’elle mesure : 1000 pour un km compté en m, 0,001 pour un mm.
+3. Si vous le souhaitez, renseignez **Code UN/ECE (pour les factures électroniques)**, que portent les factures électroniques (KMT pour un km).
+4. Touchez **Enregistrer**.
 
 **Bon à savoir**
 
@@ -4137,6 +4259,7 @@ Vos articles, devis et factures sont mesurés dans des unités, et certaines se 
 - Une unité utilisée (un article compté avec elle, un mouvement de stock, un devis ou une ligne de facture) garde pour toujours sa dimension et son facteur : une correction est une nouvelle unité. Une unité que personne n’utilise peut être archivée (**Archiver**) puis affichée de nouveau (**Afficher de nouveau**).
 - Une conversion est exacte : 2,5 km font 2500 m. Deux sortes d’unités ne se convertissent jamais, et un résultat que six décimales ne peuvent pas contenir est refusé, jamais arrondi.
 - Seuls le propriétaire et les administrateurs autorisés à modifier les réglages de l’espace tiennent les unités.
+- Les unités sont toujours là. La fonctionnalité **Unités de mesure** sous **Fonctionnalités** décide si les devis et les factures proposent vos propres unités et si les sélecteurs d’un article proposent toutes les unités ; tant qu’elle est désactivée, ils ne proposent que les unités habituelles.
 
 **Voir aussi:** [Papier des documents](#papier-des-documents)
 

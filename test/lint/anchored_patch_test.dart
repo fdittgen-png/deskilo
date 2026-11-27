@@ -29,6 +29,31 @@ import 'lint_sources.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #4479/0968 restates stock_to_inventory, stock_unit_factor and workspace_unit_convert from the bodies the earlier patches
+  // left (0747/0836/0951 with 0952's item units and 0963's package dimension): the dimension step is replaced by
+  // unit_factor/unit_convert, every other line is theirs. Proved on dev rolled back: 27 cases, parity table 15 cases.
+  'stock_to_inventory@0968',
+  'stock_unit_factor@0968',
+  'workspace_unit_convert@0968',
+  // #4448/0958 restates has_permission_raw from the LIVE dev definition (pg_get_functiondef at schema 956, the body every
+  // later patch left: the custom roles branch, the co-owner, admin and member branches and the adminInvoicing grant) and
+  // adds only 'configureTill' to the admin defaults; pgTAP 571 green on dev with 0958 and 0959, rolled back.
+  'has_permission_raw@0958',
+  // #4476/0964 restates has_permission_raw from 0958's text (the live dev body at schema 959, nothing patched it since) and
+  // adds only 'overrideTillPrice' to the admin defaults; pgTAP 573 green on dev with 0964 and 0965, rolled back.
+  'has_permission_raw@0964',
+  // #4492/0976 restates counter_goods_return_v1 from the replayed body (the effective schema of Quality run 45834744067,
+  // master at schema 974): 0897's text with the one condition 0973 patched in, a returned deposit refused, carried over.
+  // What differs is the return itself: the sale's own movements, lot by lot, bounded by what is still out, recorded as
+  // a reversal. pgTAP 587, 525, 580 and 581 green on the replay with it (Tools · Database preview).
+  'counter_goods_return_v1@0976',
+  // #4476/0965 patches counter_receipt_draft_v1 at one asserted anchor of its live dev body (0894 + 0908): its lines pass
+  // counter_line_prices first. pgTAP 573 green, and every counter suite (520-532, 553-570) unchanged with it, rolled back.
+  'counter_receipt_draft_v1@0965',
+  // #4476/0965 patches counter_offline_sync_v1 at one asserted anchor of its live dev body (0944): before it drafts a sale it
+  // marks its transaction (deskilo.counter_offline_sync), the only way a line keeps the offline price tolerance. 555 and 570
+  // green with it, rolled back.
+  'counter_offline_sync_v1@0965',
   // #4436/0947 restates counter_receipt_finalize_v1 from the LIVE dev body (pg_get_functiondef at schema 943:
   // md5(prosrc) 82076ff9fd420cc1a000a8265d50d298, the 0939 body, which carries 0908's share lock on the sale's till
   // session). The diff to it adds only the goods items' lock before their lots are planned and the plan around what
@@ -219,7 +244,6 @@ const _reviewed = {
 /// against `pg_get_functiondef` on the live project, move it to `_reviewed` with what you checked), never grow.
 const _foundWhenWidened = {
   'clear_einvoice_credentials@0796',
-  'counter_receipt_finalize_v1@0939',
   'invoice_legal_snapshot@0794',
   'mcp_execute_v1@0411',
   'mcp_execute_v1@0412',

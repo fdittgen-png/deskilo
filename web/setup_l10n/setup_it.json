@@ -893,5 +893,12 @@
  "optPerHourDefault": "{n} all'ora (predefinito)",
  "optKilobytes": "{n} KB",
  "optKilobytesDefault": "{n} KB (predefinito)",
- "optReportsOff": "Nessuna (segnalazioni di errore disattivate)"
+ "optReportsOff": "Nessuna (segnalazioni di errore disattivate)",
+ "counterLayoutMaxCells": "Dimensione del layout di cassa",
+ "counterLayoutMaxCellsHint": "Il numero massimo di celle di un layout di cassa. Impostato nelle impostazioni dell'app.",
+ "counterLayoutCashierReorder": "I cassieri riordinano i tasti",
+ "counterLayoutCashierReorderHint": "Un cassiere può riordinare i tasti di una cassa sul proprio dispositivo. Impostato nelle impostazioni dell'app.",
+ "optCells": "{n} celle",
+ "counterMaxDiscount": "Sconto massimo alla cassa",
+ "counterMaxDiscountHint": "Lo sconto massimo che un cassiere può applicare a una riga. Impostato nelle impostazioni dell'app."
 }

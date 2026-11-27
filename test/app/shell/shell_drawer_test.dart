@@ -52,7 +52,7 @@ Future<void> _reveal(WidgetTester tester, String key) async {
     'drawer-cash' => 'Cash & accounting',
     // #2313 — every report and the BI in their own group.
     'drawer-bi' || 'drawer-reports-finance' || 'drawer-reports-documents' || 'drawer-reports-templates' => 'Reporting',
-    'drawer-setup-guide' || 'drawer-availability' => 'Workspace setup',
+    'drawer-setup-guide' || 'drawer-master-data' || 'drawer-availability' => 'Workspace setup',
     _ => null,
   };
   if (group != null && find.byKey(ValueKey(key)).evaluate().isEmpty) {
@@ -256,6 +256,20 @@ void main() {
     expect(find.byKey(const ValueKey('shell-drawer')), findsNothing,
         reason: 'the Configure workspace door opened its page');
     expect(tester.takeException(), isNull);
+  });
+
+  // #4485 — the Master data page is a door of the Workspace setup group.
+  testWidgets('the Workspace setup group opens the Master data page', (tester) async {
+    await _pump(tester, web: true);
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pump(const Duration(seconds: 1));
+    await _reveal(tester, 'drawer-master-data');
+    await tester.tap(find.byKey(const ValueKey('drawer-master-data')));
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(find.byKey(const ValueKey('master-data-list')), findsOneWidget);
+    expect(find.byKey(const ValueKey('master-data-card-units')), findsOneWidget);
   });
 
   // #2137 — every administration entry asks the permission its route

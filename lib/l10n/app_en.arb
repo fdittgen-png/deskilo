@@ -12051,9 +12051,9 @@
   "@documentsEmpty": {
     "description": "Workspace document library (#500)"
   },
-  "documentsInvalid": "A document needs a title and an https:// link.",
-  "@documentsInvalid": {
-    "description": "Workspace document library (#500)"
+  "documentsLinkNotHttps": "The link must start with https://.",
+  "@documentsLinkNotHttps": {
+    "description": "Document library, the add form: said under the link field when the link is not an https:// one"
   },
   "documentsProviderLabel": "Stored on",
   "@documentsProviderLabel": {
@@ -12078,6 +12078,10 @@
   "documentsTitleLabel": "Title",
   "@documentsTitleLabel": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsTitleMissing": "Give the document a title.",
+  "@documentsTitleMissing": {
+    "description": "Document library, the add form: said under the title field when it is empty"
   },
   "documentsUrlHelper": "Paste the share link from your drive — access rights stay managed there.",
   "@documentsUrlHelper": {
@@ -15930,6 +15934,14 @@
   "@featureCounterOfflineCashTitle": {
     "description": "#4373 feature name"
   },
+  "featureCounterReceiptPrinterDesc": "Print the till's receipt on a receipt printer on your local network (80 or 58 mm), and open the cash drawer it drives after a cash sale. Each till sets its own printer. Off, the receipt is shown and shared, nothing prints.",
+  "@featureCounterReceiptPrinterDesc": {
+    "description": "#4368 the receipt printer feature"
+  },
+  "featureCounterReceiptPrinterTitle": "Receipt printer",
+  "@featureCounterReceiptPrinterTitle": {
+    "description": "#4368 the receipt printer feature"
+  },
   "featureCounterReceiptsDesc": "A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country's operation is supported, and says plainly where it is not.",
   "@featureCounterReceiptsDesc": {
     "description": "#4184 feature description"
@@ -15937,6 +15949,14 @@
   "featureCounterReceiptsTitle": "Counter receipts",
   "@featureCounterReceiptsTitle": {
     "description": "#4184 feature name"
+  },
+  "featureCounterTillLayoutDesc": "Lay out each till for your trade: which keys sit where, its pages, and tools beside the basket such as a numeric keypad, a calculator or a scan field. Start from a template, publish it, and a till takes it at its next session. Off, every till keeps its generated keys.",
+  "@featureCounterTillLayoutDesc": {
+    "description": "#4448 feature description: the till layout editor"
+  },
+  "featureCounterTillLayoutTitle": "Till layouts",
+  "@featureCounterTillLayoutTitle": {
+    "description": "#4448 feature name: the till layout editor"
   },
   "featureCounterTillSessionsDesc": "Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed.",
   "@featureCounterTillSessionsDesc": {
@@ -24823,10 +24843,6 @@
   "@itemGroupAssignNone": {
     "description": "#4361 G12 item groups: itemGroupAssignNone"
   },
-  "itemGroupAssignOpen": "Group and inherited settings",
-  "@itemGroupAssignOpen": {
-    "description": "#4361 G12 item groups: itemGroupAssignOpen"
-  },
   "itemGroupAssignTitle": "Group of {item}",
   "@itemGroupAssignTitle": {
     "description": "#4361 G12 item groups: itemGroupAssignTitle",
@@ -25065,6 +25081,18 @@
   "itemGroupRoundingNone": "No rounding",
   "@itemGroupRoundingNone": {
     "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSaleFactor": "What one of it makes of the inventory unit (sale)",
+  "@itemGroupSaleFactor": {
+    "description": "#4479 what one sale unit makes of the inventory unit"
+  },
+  "itemGroupSalePrice": "Price of one when sold",
+  "@itemGroupSalePrice": {
+    "description": "#4479 the price of one sale unit"
+  },
+  "itemGroupSaleUnit": "Sold in (unit)",
+  "@itemGroupSaleUnit": {
+    "description": "#4479 a group's proposed sale unit"
   },
   "itemGroupSet": "Set",
   "@itemGroupSet": {
@@ -27796,13 +27824,98 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataCount": "{count, plural, =0{No records} one{{count} record} other{{count} records}}",
+  "@masterDataCount": {
+    "description": "#4485 how many records a kind of master data holds, on its card",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "masterDataCustomersDesc": "Who you invoice",
+  "@masterDataCustomersDesc": {
+    "description": "#4485 one line under the Billing customers card"
+  },
+  "masterDataGroupCatalogue": "Catalogue",
+  "@masterDataGroupCatalogue": {
+    "description": "#4485 group of the Master data page: items, item groups, services"
+  },
+  "masterDataGroupMeasures": "Measures and taxes",
+  "@masterDataGroupMeasures": {
+    "description": "#4485 group of the Master data page: units and VAT rates"
+  },
+  "masterDataGroupPartners": "Partners",
+  "@masterDataGroupPartners": {
+    "description": "#4485 group of the Master data page: suppliers and customers"
+  },
+  "masterDataGroupPlaces": "Places and stock",
+  "@masterDataGroupPlaces": {
+    "description": "#4485 group of the Master data page: stock places and tills"
+  },
+  "masterDataIntro": "Every list the business is set up with, in one place. Tap a card to open its editor.",
+  "@masterDataIntro": {
+    "description": "#4485 the Master data page's intro and its row in the workspace settings"
+  },
+  "masterDataItemGroupsDesc": "Settings shared by a group of items",
+  "@masterDataItemGroupsDesc": {
+    "description": "#4485 one line under the Item groups card"
+  },
+  "masterDataItemsDesc": "What you stock and sell",
+  "@masterDataItemsDesc": {
+    "description": "#4485 one line under the Items card"
+  },
+  "masterDataNoMatch": "No master data matches the search.",
+  "@masterDataNoMatch": {
+    "description": "#4485 the Master data page's search finds no card"
+  },
+  "masterDataNoUnit": "No unit",
+  "@masterDataNoUnit": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
+  },
+  "masterDataNoVat": "No VAT",
+  "@masterDataNoVat": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
+  },
+  "masterDataPlacesDesc": "Where your goods are kept",
+  "@masterDataPlacesDesc": {
+    "description": "#4485 one line under the stock Places card"
+  },
   "masterDataSearchHint": "Type a name or a code, or pick from the list",
   "@masterDataSearchHint": {
     "description": "#3563 Helper under a field that names master data (a country, a currency): what can be typed."
   },
+  "masterDataServicesDesc": "The services you sell",
+  "@masterDataServicesDesc": {
+    "description": "#4485 one line under the Services card"
+  },
+  "masterDataSitesDesc": "Your addresses and the levels at each",
+  "@masterDataSitesDesc": {
+    "description": "#4485 one line under the Sites card"
+  },
+  "masterDataSuppliersDesc": "Who you buy from",
+  "@masterDataSuppliersDesc": {
+    "description": "#4485 one line under the Suppliers card"
+  },
+  "masterDataTills": "Tills",
+  "@masterDataTills": {
+    "description": "#4485 card of the Master data page: the tills"
+  },
+  "masterDataTillsDesc": "The tills at the counter and their key layouts",
+  "@masterDataTillsDesc": {
+    "description": "#4485 one line under the Tills card"
+  },
   "masterDataUnknownCode": "This is not a valid entry. Pick one from the list.",
   "@masterDataUnknownCode": {
     "description": "#3563 Error under a master-data field (country, currency) whose value is outside the catalogue; shown for a stored value too."
+  },
+  "masterDataUnlisted": "This is not in the list: pick one",
+  "@masterDataUnlisted": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
+  },
+  "masterDataVatDesc": "The rates your documents charge",
+  "@masterDataVatDesc": {
+    "description": "#4485 one line under the VAT rates card"
   },
   "mcpApiReference": "API reference",
   "@mcpApiReference": {
@@ -29861,6 +29974,10 @@
   "measureDimensionMass": "Mass",
   "@measureDimensionMass": {
     "description": "#4442 dimension: mass"
+  },
+  "measureDimensionPackage": "Package",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
   },
   "measureDimensionTime": "Time",
   "@measureDimensionTime": {
@@ -33763,6 +33880,10 @@
   "@permAllowsApproveStockAdjustments": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
   },
+  "permAllowsConfigureTill": "Build, publish, copy and reset the layout of a till: its keys, pages and tools. Cashiers use the published layout without this right.",
+  "@permAllowsConfigureTill": {
+    "description": "#4448 the right to lay out the tills: what it allows"
+  },
   "permAllowsCountStock": "Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.",
   "@permAllowsCountStock": {
     "description": "#4295 permission description"
@@ -33859,6 +33980,10 @@
   "@permAllowsOperateKiosk": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
   },
+  "permAllowsOverrideTillPrice": "Sell a till line at a price other than the item's, with a reason the receipt keeps. Without it, a till line is sold at the item's price.",
+  "@permAllowsOverrideTillPrice": {
+    "description": "#4476 the right to change a till line price, with a reason"
+  },
   "permAllowsPaymentTermsEdit": "Request a change of a member's payment conditions; validation decides.",
   "@permAllowsPaymentTermsEdit": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
@@ -33918,6 +34043,10 @@
   "permApproveStockAdjustments": "Approve stock adjustments",
   "@permApproveStockAdjustments": {
     "description": "a permission in the role matrix (#3824)"
+  },
+  "permConfigureTill": "Lay out the tills",
+  "@permConfigureTill": {
+    "description": "#4448 the right to lay out the tills: its name"
   },
   "permCountStock": "Count stock, blind",
   "@permCountStock": {
@@ -34046,6 +34175,10 @@
   "permOperateKiosk": "Operate the kiosk and badges",
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
+  },
+  "permOverrideTillPrice": "Change a price at the till",
+  "@permOverrideTillPrice": {
+    "description": "#4476 the right to change a till line price, with a reason"
   },
   "permPaymentTermsEdit": "Request payment-condition changes",
   "@permPaymentTermsEdit": {
@@ -38613,6 +38746,10 @@
   "@refusalBankMatchUndoLaterFirst": {
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
+  "refusalBooksClosedPeriodDated": "This date lies inside a closed period of the books: nothing was recorded. A date in the open period is possible; only the owner can reopen the period.",
+  "@refusalBooksClosedPeriodDated": {
+    "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
+  },
   "refusalChangedMeanwhile": "This changed in the meantime. Reopen it to see where it stands.",
   "@refusalChangedMeanwhile": {
     "description": "#1305 Shown when an invoice changed state before the action reached the server"
@@ -42530,6 +42667,18 @@
   "@settingHintCounterFiscalObligation": {
     "description": "#4184 setting label/hint"
   },
+  "settingHintCounterLayoutCashierReorder": "A cashier may reorder a till's keys on their own device without changing the published layout.",
+  "@settingHintCounterLayoutCashierReorder": {
+    "description": "#4448 a till layout setting"
+  },
+  "settingHintCounterLayoutMaxCells": "The most cells one till layout may hold, over all its pages and sizes. A larger layout is refused when it is saved.",
+  "@settingHintCounterLayoutMaxCells": {
+    "description": "#4448 a till layout setting"
+  },
+  "settingHintCounterMaxDiscount": "The largest discount, in percent, a cashier may give on a till line. 0 means no discount at the till.",
+  "@settingHintCounterMaxDiscount": {
+    "description": "#4476 the setting counter.max_discount_percent"
+  },
   "settingHintCounterOfflineMaxMinutes": "How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.",
   "@settingHintCounterOfflineMaxMinutes": {
     "description": "#4373 setting hint"
@@ -42994,6 +43143,18 @@
   "@settingLabelCounterFiscalObligation": {
     "description": "#4184 setting label/hint"
   },
+  "settingLabelCounterLayoutCashierReorder": "Cashiers reorder the keys",
+  "@settingLabelCounterLayoutCashierReorder": {
+    "description": "#4448 a till layout setting"
+  },
+  "settingLabelCounterLayoutMaxCells": "Till layout size",
+  "@settingLabelCounterLayoutMaxCells": {
+    "description": "#4448 a till layout setting"
+  },
+  "settingLabelCounterMaxDiscount": "Largest discount at the till",
+  "@settingLabelCounterMaxDiscount": {
+    "description": "#4476 the setting counter.max_discount_percent"
+  },
   "settingLabelCounterOfflineMaxMinutes": "Longest offline period (minutes)",
   "@settingLabelCounterOfflineMaxMinutes": {
     "description": "#4373 setting label"
@@ -43424,6 +43585,10 @@
   "settingUnitCards": "cards",
   "@settingUnitCards": {
     "description": "#2579 report limits"
+  },
+  "settingUnitCells": "cells",
+  "@settingUnitCells": {
+    "description": "#4448 the unit of counter.layout_max_cells: grid cells of a till layout"
   },
   "settingUnitCharacters": "characters",
   "@settingUnitCharacters": {
@@ -46590,6 +46755,10 @@
   "@standaloneFactTotal": {
     "description": "#4165 standalone invoice composer: standaloneFactTotal"
   },
+  "standaloneFactTotalMismatch": "the lines do not add up to the accepted total",
+  "@standaloneFactTotalMismatch": {
+    "description": "#4405 previewed document: standaloneFactTotalMismatch"
+  },
   "standaloneFactUnknownSubject": "the customer",
   "@standaloneFactUnknownSubject": {
     "description": "#4165 standalone invoice composer: standaloneFactUnknownSubject"
@@ -47669,10 +47838,6 @@
   "@stockEditInventoryUnitChoice": {
     "description": "#4169 the stock editors: a label or message"
   },
-  "stockEditItem": "Stock settings",
-  "@stockEditItem": {
-    "description": "#4169 the stock editors: a label or message"
-  },
   "stockEditItemTitle": "Stock settings of {item}",
   "@stockEditItemTitle": {
     "placeholders": {
@@ -47737,6 +47902,14 @@
   "stockEditUnitName": "Package unit",
   "@stockEditUnitName": {
     "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditUnitPrice": "Price of one",
+  "@stockEditUnitPrice": {
+    "description": "#4479 the price of one of an item's units"
+  },
+  "stockEditUnitPriceHelp": "Leave empty to use the item's price times the factor.",
+  "@stockEditUnitPriceHelp": {
+    "description": "#4479 what an empty unit price means"
   },
   "stockEditUnitsHint": "A package holds a number of inventory units; a third of a litre is 1 divided by 3.",
   "@stockEditUnitsHint": {
@@ -47912,6 +48085,66 @@
   "@stockItemAddTitle": {
     "description": "#4350 adding an item, and the first-run stock page"
   },
+  "stockItemAttentionLow": "Low stock",
+  "@stockItemAttentionLow": {
+    "description": "#4480 Stock items: the badge on an item's row and page for something the item needs"
+  },
+  "stockItemAttentionNoPlace": "No place",
+  "@stockItemAttentionNoPlace": {
+    "description": "#4480 Stock items: the badge on an item's row and page for something the item needs"
+  },
+  "stockItemAttentionNoPrice": "No price",
+  "@stockItemAttentionNoPrice": {
+    "description": "#4480 Stock items: the badge on an item's row and page for something the item needs"
+  },
+  "stockItemEditDetails": "Edit name, price and VAT",
+  "@stockItemEditDetails": {
+    "description": "#4470 Stock items: tooltip of the button that opens the service editor for the item"
+  },
+  "stockItemEditGroup": "Change group",
+  "@stockItemEditGroup": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditHome": "Change home place",
+  "@stockItemEditHome": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditSettings": "Edit units, codes and tracking",
+  "@stockItemEditSettings": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditSuppliers": "Edit supplier items",
+  "@stockItemEditSuppliers": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditTags": "Edit tags",
+  "@stockItemEditTags": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemEditVariants": "Edit variants",
+  "@stockItemEditVariants": {
+    "description": "#4480 the page of one stock item: a section's worded action, which opens that section's editor"
+  },
+  "stockItemFactBarcode": "Barcode",
+  "@stockItemFactBarcode": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactCost": "Last known cost",
+  "@stockItemFactCost": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFactVat": "VAT",
+  "@stockItemFactVat": {
+    "description": "#4480 the page of one stock item: the label above one of its facts"
+  },
+  "stockItemFilterAll": "All items",
+  "@stockItemFilterAll": {
+    "description": "#4480 Stock items: a filter chip above the list"
+  },
+  "stockItemFilterNoHome": "Without a home place",
+  "@stockItemFilterNoHome": {
+    "description": "#4480 Stock items: a filter chip above the list"
+  },
   "stockItemNewBarcode": "Barcode (optional)",
   "@stockItemNewBarcode": {
     "description": "#4350 a new item from the Stock page"
@@ -47957,6 +48190,50 @@
   "@stockItemNewUnit": {
     "description": "#4350 a new item from the Stock page"
   },
+  "stockItemNoGroup": "In no group",
+  "@stockItemNoGroup": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemNoSuppliers": "No supplier article names this item yet.",
+  "@stockItemNoSuppliers": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemNoVariants": "This item has no variants.",
+  "@stockItemNoVariants": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemNothingOnHand": "None of it is in stock.",
+  "@stockItemNothingOnHand": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemPlacesTitle": "Where it is",
+  "@stockItemPlacesTitle": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
+  "stockItemSectionGroupTags": "Group and tags",
+  "@stockItemSectionGroupTags": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionOverview": "Overview",
+  "@stockItemSectionOverview": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionStock": "Stock",
+  "@stockItemSectionStock": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionSuppliers": "Supplier items",
+  "@stockItemSectionSuppliers": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSectionVariants": "Variants",
+  "@stockItemSectionVariants": {
+    "description": "#4480 the page of one stock item: the title of one of its sections"
+  },
+  "stockItemSeeWhere": "See every place",
+  "@stockItemSeeWhere": {
+    "description": "#4480 the page of one stock item: a line or a message"
+  },
   "stockItemsEmpty": "No items yet. An item is a service you keep in stock: choose Add an item.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
@@ -47964,6 +48241,10 @@
   "stockItemsIntro": "The items the business keeps and sells: each one's settings, variants and supplier articles.",
   "@stockItemsIntro": {
     "description": "the stock pages and group (#4299)"
+  },
+  "stockItemsSelectHint": "Select an item to act on it",
+  "@stockItemsSelectHint": {
+    "description": "#4483 the desk's toolbar above the items grid while no row is selected: how to act on an item"
   },
   "stockItemsTitle": "Items",
   "@stockItemsTitle": {
@@ -48425,6 +48706,14 @@
   "@stockReasonCombinationDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonConversionSameUnit": "A conversion needs two different units.",
+  "@stockReasonConversionSameUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
+  "stockReasonConversionUnknown": "This conversion is not defined.",
+  "@stockReasonConversionUnknown": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonCostInvalid": "This cost is not valid: a total in minor units, and a rate only for another currency.",
   "@stockReasonCostInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -48613,6 +48902,10 @@
   "@stockReasonOverAllocated": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
   },
+  "stockReasonPackageUnit": "A packaging unit has no general conversion: its factor is set on the item.",
+  "@stockReasonPackageUnit": {
+    "description": "#4479 the units of measure: a text under a field the server refused"
+  },
   "stockReasonParentInactive": "The place it is inside is no longer in use.",
   "@stockReasonParentInactive": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -48777,15 +49070,6 @@
   "@stockRegistryAllPlaces": {
     "description": "#4293 the registry of the stock: a label or a message"
   },
-  "stockRegistryCost": "cost {amount}",
-  "@stockRegistryCost": {
-    "description": "#4293 the registry of the stock: a label or a message",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "stockRegistryCostHidden": "cost not shown",
   "@stockRegistryCostHidden": {
     "description": "#4293 the registry of the stock: a label or a message"
@@ -48832,10 +49116,6 @@
   "@stockRegistryNoHome": {
     "description": "#4293 the registry of the stock: a label or a message"
   },
-  "stockRegistryNoHomeFilter": "Only items with no home place",
-  "@stockRegistryNoHomeFilter": {
-    "description": "#4293 the registry of the stock: a label or a message"
-  },
   "stockRegistryOnHand": "{quantity} on hand",
   "@stockRegistryOnHand": {
     "description": "#4293 the registry of the stock: a label or a message",
@@ -48848,15 +49128,6 @@
   "stockRegistryPlaceFilter": "Home place",
   "@stockRegistryPlaceFilter": {
     "description": "#4293 the registry of the stock: a label or a message"
-  },
-  "stockRegistryPrice": "price {amount}",
-  "@stockRegistryPrice": {
-    "description": "#4293 the registry of the stock: a label or a message",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
   },
   "stockRegistrySearch": "Find an item by name, barcode or address",
   "@stockRegistrySearch": {
@@ -50027,10 +50298,6 @@
   },
   "stockVariantsAdd": "Add a variant",
   "@stockVariantsAdd": {
-    "description": "#4169 the stock editors: a label or message"
-  },
-  "stockVariantsEdit": "Variants",
-  "@stockVariantsEdit": {
     "description": "#4169 the stock editors: a label or message"
   },
   "stockVariantsHint": "A variant is one value of each dimension, such as red and size M. Stock is kept per variant.",
@@ -53421,6 +53688,15 @@
       }
     }
   },
+  "tillDayDepositsReturned": "Deposits returned: {amount}",
+  "@tillDayDepositsReturned": {
+    "description": "#4478 the day report: deposits brought back; amount arrives formatted",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "tillDayDifferences": "Total difference of the drawers: {amount}",
   "@tillDayDifferences": {
     "description": "#4367 till sessions: the cash drawer",
@@ -53545,6 +53821,10 @@
       }
     }
   },
+  "tillDayReportNotPrinted": "The day report was not printed. Check the printer and try again.",
+  "@tillDayReportNotPrinted": {
+    "description": "#4368 the day report could not be printed"
+  },
   "tillDayReportTitle": "Day report {number}",
   "@tillDayReportTitle": {
     "description": "#4367 till sessions: the cash drawer",
@@ -53635,6 +53915,18 @@
         "type": "String"
       }
     }
+  },
+  "tillDiscountBeyond": "This discount is beyond what the business allows at the till.",
+  "@tillDiscountBeyond": {
+    "description": "#4476 a discount refused beyond the business's limit"
+  },
+  "tillDiscountField": "Discount (%)",
+  "@tillDiscountField": {
+    "description": "#4476 the till price keys"
+  },
+  "tillDiscountInvalid": "A discount is a percentage off the item's price, on a line without a changed price.",
+  "@tillDiscountInvalid": {
+    "description": "#4476 the till price keys"
   },
   "tillDrawerAddTill": "Add a till",
   "@tillDrawerAddTill": {
@@ -53920,6 +54212,10 @@
   "@tillDrawerFloatHelp": {
     "description": "#4367 till sessions: the cash drawer"
   },
+  "tillDrawerKickFailed": "The drawer did not open. Check the printer it hangs on.",
+  "@tillDrawerKickFailed": {
+    "description": "#4368 the Open drawer key"
+  },
   "tillDrawerLoadFailed": "The tills could not be read.",
   "@tillDrawerLoadFailed": {
     "description": "#4367 till sessions: the cash drawer"
@@ -53939,6 +54235,10 @@
   "tillDrawerNoTillsPerson": "No till has been set up yet. Someone who manages the sites adds it.",
   "@tillDrawerNoTillsPerson": {
     "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerNotSet": "No cash drawer is set on this till's printer.",
+  "@tillDrawerNotSet": {
+    "description": "#4368 the Open drawer key"
   },
   "tillDrawerOpenAction": "Open the till",
   "@tillDrawerOpenAction": {
@@ -53960,6 +54260,10 @@
         "type": "String"
       }
     }
+  },
+  "tillDrawerOpened": "The drawer is open.",
+  "@tillDrawerOpened": {
+    "description": "#4368 the Open drawer key"
   },
   "tillDrawerRefusalAboveLimit": "A paid-out this large is recorded by someone who may record outgoing payments.",
   "@tillDrawerRefusalAboveLimit": {
@@ -54046,6 +54350,256 @@
   "@tillKeysTitle": {
     "description": "#4366 the till"
   },
+  "tillLayoutAdd": "Add a widget",
+  "@tillLayoutAdd": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutCalcPush": "Onto the last line",
+  "@tillLayoutCalcPush": {
+    "description": "#4448 the calculator's result becomes the last basket line's quantity"
+  },
+  "tillLayoutChooseFunction": "Which function?",
+  "@tillLayoutChooseFunction": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutChooseItem": "Which item?",
+  "@tillLayoutChooseItem": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutChoosePage": "Which page does it open?",
+  "@tillLayoutChoosePage": {
+    "description": "#4448 a category key opens another page of the till layout"
+  },
+  "tillLayoutCopied": "Copied as {till}'s draft. Publish it there.",
+  "@tillLayoutCopied": {
+    "description": "#4448 copying a till layout; till is the other till's name",
+    "placeholders": {
+      "till": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLayoutCopy": "Copy to another till",
+  "@tillLayoutCopy": {
+    "description": "#4448 copying a till layout to another till"
+  },
+  "tillLayoutCopyTo": "Copy to which till?",
+  "@tillLayoutCopyTo": {
+    "description": "#4448 copying a till layout to another till"
+  },
+  "tillLayoutEdit": "Lay out this till",
+  "@tillLayoutEdit": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnCard": "Take a card",
+  "@tillLayoutFnCard": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnDeposit": "Deposit return",
+  "@tillLayoutFnDeposit": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnDiscount": "Discount on a line",
+  "@tillLayoutFnDiscount": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnDrawer": "Open the drawer",
+  "@tillLayoutFnDrawer": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnPrice": "Change a price",
+  "@tillLayoutFnPrice": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnQuantity": "Quantity ×",
+  "@tillLayoutFnQuantity": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnReprint": "Reprint the last receipt",
+  "@tillLayoutFnReprint": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutFnVoid": "Void a line",
+  "@tillLayoutFnVoid": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutGone": "No longer for sale",
+  "@tillLayoutGone": {
+    "description": "#4448 a key of a published till layout whose item is no longer sold: shown disabled"
+  },
+  "tillLayoutInvalid": "This layout cannot be saved: {reason}",
+  "@tillLayoutInvalid": {
+    "description": "#4448 the till layout editor; the reason is a reference: the server's problem code, as it named it",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLayoutKindCalculator": "Calculator",
+  "@tillLayoutKindCalculator": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCashNotes": "Suggested cash notes",
+  "@tillLayoutKindCashNotes": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCategory": "Category key",
+  "@tillLayoutKindCategory": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindCustomer": "Customer and note",
+  "@tillLayoutKindCustomer": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindFunction": "Function key",
+  "@tillLayoutKindFunction": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindItem": "Item key",
+  "@tillLayoutKindItem": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindKeypad": "Numeric keypad",
+  "@tillLayoutKindKeypad": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindPasses": "Studio passes",
+  "@tillLayoutKindPasses": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindTotal": "Total and change",
+  "@tillLayoutKindTotal": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutKindUnknown": "A widget this app does not know",
+  "@tillLayoutKindUnknown": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutNoRoom": "There is no free place for this widget on this grid.",
+  "@tillLayoutNoRoom": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageDesk": "Desk",
+  "@tillLayoutPageDesk": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageDrinks": "Drinks",
+  "@tillLayoutPageDrinks": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageFood": "Food",
+  "@tillLayoutPageFood": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPageSale": "Sale",
+  "@tillLayoutPageSale": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPublish": "Publish to the till",
+  "@tillLayoutPublish": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutPublished": "Published. The till takes it at its next session.",
+  "@tillLayoutPublished": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutReload": "Reload",
+  "@tillLayoutReload": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutRemoveCell": "Remove this widget",
+  "@tillLayoutRemoveCell": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutReset": "Reset to the generated keys",
+  "@tillLayoutReset": {
+    "description": "#4448 resetting a till to the keys it generates"
+  },
+  "tillLayoutResetConfirm": "This till goes back to the keys it makes from your items. Its layout and its draft are removed.",
+  "@tillLayoutResetConfirm": {
+    "description": "#4448 resetting a till to the keys it generates"
+  },
+  "tillLayoutResetDone": "This till uses its generated keys again.",
+  "@tillLayoutResetDone": {
+    "description": "#4448 resetting a till to the keys it generates"
+  },
+  "tillLayoutSizeDesk": "Desk width",
+  "@tillLayoutSizeDesk": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutSizePhone": "Phone width",
+  "@tillLayoutSizePhone": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutSizeTablet": "Tablet width",
+  "@tillLayoutSizeTablet": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStale": "Someone changed this layout; reload it.",
+  "@tillLayoutStale": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStartFrom": "Start from a template",
+  "@tillLayoutStartFrom": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepDown": "Move down",
+  "@tillLayoutStepDown": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepLeft": "Move left",
+  "@tillLayoutStepLeft": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepNarrower": "One column narrower",
+  "@tillLayoutStepNarrower": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepRight": "Move right",
+  "@tillLayoutStepRight": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepShorter": "One row shorter",
+  "@tillLayoutStepShorter": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepTaller": "One row taller",
+  "@tillLayoutStepTaller": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepUp": "Move up",
+  "@tillLayoutStepUp": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutStepWider": "One column wider",
+  "@tillLayoutStepWider": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateBakery": "Bakery and weighed goods: a keypad beside large keys",
+  "@tillLayoutTemplateBakery": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateCafe": "Café and bar: category pages, no scan field",
+  "@tillLayoutTemplateCafe": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateHardware": "Hardware and catalogue: scan field and keypad first",
+  "@tillLayoutTemplateHardware": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateRetail": "Retail: scan field, basket and pay keys",
+  "@tillLayoutTemplateRetail": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTemplateStudio": "Studio desk: passes and sessions",
+  "@tillLayoutTemplateStudio": {
+    "description": "#4448 the till layout editor"
+  },
+  "tillLayoutTitle": "Till layout",
+  "@tillLayoutTitle": {
+    "description": "#4448 the till layout editor"
+  },
   "tillLeaveBody": "The sale was sent and its answer did not come. Leaving keeps it waiting: open the till again and confirm it. Do not ring it up again.",
   "@tillLeaveBody": {
     "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
@@ -54062,6 +54616,62 @@
   "@tillLeaveTitle": {
     "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
   },
+  "tillLotChoose": "Choose the lot",
+  "@tillLotChoose": {
+    "description": "#4366 the seller chooses the lot a till line is sold from"
+  },
+  "tillLotExpired": "Past its date ({date}): not sold",
+  "@tillLotExpired": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotExpires": "Use by {date}",
+  "@tillLotExpires": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotFirstToExpire": "The first to expire (chosen by the stock)",
+  "@tillLotFirstToExpire": {
+    "description": "#4366 the seller chooses the lot a till line is sold from"
+  },
+  "tillLotLine": "Lot {code}",
+  "@tillLotLine": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotNone": "{item} has no lot to choose: it is sold as it is.",
+  "@tillLotNone": {
+    "description": "#4366 the seller chooses the lot a till line is sold from",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "tillLotOnHand": "{quantity} {unit} on hand",
+  "@tillLotOnHand": {
+    "description": "#4366 what is on hand of a lot; quantity arrives formatted in the reader's number format",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
   "tillNextCustomer": "Next customer",
   "@tillNextCustomer": {
     "description": "#4366 the till"
@@ -54069,6 +54679,10 @@
   "tillNotForCounter": "This item is not for sale at the counter.",
   "@tillNotForCounter": {
     "description": "#4366 the till"
+  },
+  "tillNotPrinted": "Receipt not printed — the sale is complete. Print again, or show the receipt to share it.",
+  "@tillNotPrinted": {
+    "description": "#4368 the till's receipt printer"
   },
   "tillNotReady": "Not ready in your country: {operation}",
   "@tillNotReady": {
@@ -54082,6 +54696,10 @@
   "tillNotReadyHint": "Nothing is numbered and nothing is taken until the country's operation is supported.",
   "@tillNotReadyHint": {
     "description": "#4366 the till"
+  },
+  "tillNothingToReprint": "No sale to print again yet.",
+  "@tillNothingToReprint": {
+    "description": "#4476 Reprint with no sale yet"
   },
   "tillOfflineBanner": "Offline — cash only. Sales are kept on this device and sent when the connection returns.",
   "@tillOfflineBanner": {
@@ -54249,9 +54867,134 @@
       }
     }
   },
+  "tillPriceField": "New price",
+  "@tillPriceField": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceNotAllowed": "You may not change a price at the till. The line is sold at the item's price.",
+  "@tillPriceNotAllowed": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceReason": "Reason",
+  "@tillPriceReason": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceReasonHint": "Kept on the receipt.",
+  "@tillPriceReasonHint": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceReasonMissing": "A changed price needs its reason.",
+  "@tillPriceReasonMissing": {
+    "description": "#4476 the till price keys"
+  },
+  "tillPriceUnreadable": "Type a number, such as 4.50.",
+  "@tillPriceUnreadable": {
+    "description": "#4476 the till price keys"
+  },
   "tillPricing": "Pricing the basket…",
   "@tillPricing": {
     "description": "#4366 the till"
+  },
+  "tillPrintCopy": "Print a copy",
+  "@tillPrintCopy": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintReceipt": "Print the receipt",
+  "@tillPrintReceipt": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintTotal": "TOTAL",
+  "@tillPrintTotal": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinted": "Receipt printed.",
+  "@tillPrinted": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage": "Code page",
+  "@tillPrinterCodePage": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage437": "PC437 (without the euro sign)",
+  "@tillPrinterCodePage437": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage858": "PC858 (with the euro sign)",
+  "@tillPrinterCodePage858": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterDrawer": "A cash drawer is attached to the printer",
+  "@tillPrinterDrawer": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHost": "Printer address",
+  "@tillPrinterHost": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostHint": "A name or an address on this network, for example 192.168.1.50",
+  "@tillPrinterHostHint": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostRequired": "Enter the printer's address.",
+  "@tillPrinterHostRequired": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterMode": "Print after a sale",
+  "@tillPrinterMode": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAlways": "Always",
+  "@tillPrinterModeAlways": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAsk": "Offer it",
+  "@tillPrinterModeAsk": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeNever": "Only when asked",
+  "@tillPrinterModeNever": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaper": "Paper width",
+  "@tillPrinterPaper": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaperWidth": "{mm} mm",
+  "@tillPrinterPaperWidth": {
+    "description": "#4368 the till's receipt printer: a paper width in millimetres, the number arrives formatted",
+    "placeholders": {
+      "mm": {
+        "type": "String"
+      }
+    }
+  },
+  "tillPrinterPort": "Port",
+  "@tillPrinterPort": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPortInvalid": "The port is a number from 1 to 65535.",
+  "@tillPrinterPortInvalid": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterSet": "Set up the receipt printer",
+  "@tillPrinterSet": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTest": "Test print",
+  "@tillPrinterTest": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTestSent": "Test page sent.",
+  "@tillPrinterTestSent": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTitle": "Receipt printer",
+  "@tillPrinterTitle": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinting": "Printing…",
+  "@tillPrinting": {
+    "description": "#4368 the till's receipt printer"
   },
   "tillQuantityHint": "An exact quantity, for example 1 or 0.350.",
   "@tillQuantityHint": {
@@ -54346,6 +55089,23 @@
       }
     }
   },
+  "tillReceiptCash": "Cash",
+  "@tillReceiptCash": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptChange": "Change",
+  "@tillReceiptChange": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptCopy": "COPY {copy} — not a new receipt",
+  "@tillReceiptCopy": {
+    "description": "#4476 a receipt printed again; copy is its number among the copies, a label (1, 2, ...)",
+    "placeholders": {
+      "copy": {
+        "type": "String"
+      }
+    }
+  },
   "tillReceiptCorrects": "Corrects receipt {number}",
   "@tillReceiptCorrects": {
     "description": "#4184 the counter receipt document; the number is a reference",
@@ -54410,6 +55170,10 @@
   "@tillReceiptShow": {
     "description": "#4184 the counter receipt document"
   },
+  "tillReceiptTax": "of which tax",
+  "@tillReceiptTax": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillReceiptTaxLine": "VAT {percent}: {tax} on {net}",
   "@tillReceiptTaxLine": {
     "description": "#4184 the counter receipt document; percent, tax and net arrive formatted",
@@ -54424,6 +55188,10 @@
         "type": "String"
       }
     }
+  },
+  "tillReceiptThanks": "Thank you",
+  "@tillReceiptThanks": {
+    "description": "#4368 the till's receipt printer"
   },
   "tillReceiptTotal": "Total {amount}",
   "@tillReceiptTotal": {
@@ -54450,6 +55218,43 @@
   "tillRetry": "Try again",
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
+  },
+  "tillReturnNoDeposit": "The last item carries no deposit to take back.",
+  "@tillReturnNoDeposit": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnNotAllowed": "You may not take a deposit back at the till.",
+  "@tillReturnNotAllowed": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnNotDeposit": "This item is not a deposit any item is sold with.",
+  "@tillReturnNotDeposit": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnOffline": "A deposit is not taken back while the till is offline.",
+  "@tillReturnOffline": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnTracked": "This deposit is tracked by lot or tag: it is not taken back at the till.",
+  "@tillReturnTracked": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillReturnedLabel": "Deposit returned: {item}",
+  "@tillReturnedLabel": {
+    "description": "#4478 a returned deposit on the receipt; item is its name",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "tillReturnedLine": "Deposit returned",
+  "@tillReturnedLine": {
+    "description": "#4478 a deposit returned at the till"
+  },
+  "tillRingUpFirst": "Ring up an item first.",
+  "@tillRingUpFirst": {
+    "description": "#4476 the till price keys"
   },
   "tillScanLabel": "Scan a code",
   "@tillScanLabel": {
@@ -54967,6 +55772,69 @@
   "unblockAction": "Unblock",
   "@unblockAction": {
     "description": "Shown as a text in blocked people card (me)."
+  },
+  "unitConversionDelete": "Delete",
+  "@unitConversionDelete": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionEdit": "Change a conversion",
+  "@unitConversionEdit": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactor": "How many",
+  "@unitConversionFactor": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionFactorHelp": "How many {to} make one {from}",
+  "@unitConversionFactorHelp": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionFrom": "From",
+  "@unitConversionFrom": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionLine": "1 {from} = {factor} {to}",
+  "@unitConversionLine": {
+    "description": "#4479 Settings > Units of measure: the general conversions",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "factor": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "unitConversionNew": "Add a conversion",
+  "@unitConversionNew": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionTo": "To",
+  "@unitConversionTo": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsEmpty": "No conversion is defined yet.",
+  "@unitConversionsEmpty": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsIntro": "A conversion says how many of one unit make another. It works both ways, in one step. An item's own conversion (a carton of 12) wins over these, and a packaging unit has none here.",
+  "@unitConversionsIntro": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
+  },
+  "unitConversionsTitle": "Conversions",
+  "@unitConversionsTitle": {
+    "description": "#4479 Settings > Units of measure: the general conversions"
   },
   "unknownWireInvoiceKind": "A kind this version of the app does not know",
   "@unknownWireInvoiceKind": {

@@ -2,12 +2,9 @@
   "stockRegistrySearch": "Artikel nach Name, Barcode oder Adresse suchen",
   "stockRegistryPlaceFilter": "Lagerort",
   "stockRegistryAllPlaces": "Alle Lagerorte",
-  "stockRegistryNoHomeFilter": "Nur Artikel ohne festen Lagerort",
   "stockRegistryMore": "Mehr anzeigen",
   "stockRegistryCostHidden": "Kosten nicht angezeigt",
   "stockRegistryCostUnknown": "Kosten unbekannt",
-  "stockRegistryCost": "Kosten {amount}",
-  "stockRegistryPrice": "Preis {amount}",
   "stockRegistryHome": "Lagerort {address}",
   "stockRegistryNoHome": "kein fester Lagerort",
   "stockRegistryOnHand": "{quantity} vorrätig",
@@ -15,5 +12,6 @@
   "stockRegistryHomeTitle": "Fester Lagerort von {item}",
   "stockRegistryHomeHelp": "Wohin dieser Artikel gehört, damit Wareneingang, Zählung und Kommissionierung wissen, wohin er kommt. Es ist ein Hinweis: Bestand kann anderswo liegen, und eine Änderung bewegt nichts.",
   "stockRegistryHomeNone": "Kein fester Lagerort",
-  "stockReasonHomeInvalid": "Wählen Sie einen Lagerort dieses Unternehmens, der in Gebrauch ist und kein Lieferanten-, Kunden-, Verlust- oder Transitort ist."
+  "stockReasonHomeInvalid": "Wählen Sie einen Lagerort dieses Unternehmens, der in Gebrauch ist und kein Lieferanten-, Kunden-, Verlust- oder Transitort ist.",
+  "stockItemEditDetails": "Name, Preis und MwSt. bearbeiten"
 }
