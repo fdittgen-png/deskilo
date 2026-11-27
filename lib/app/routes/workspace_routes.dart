@@ -208,6 +208,41 @@ List<RouteBase> _settingsRoutes(RouteEnv env) {
       ),
       builder: (context, state) => const QuestionsScreen(),
     ),
+    ..._masterDataRoutes(env),
+    GoRoute(
+      path: '/reports',
+      redirect: env.guard(
+        RouteAccess(
+          when: (c) => workspaceReportsAvailable(
+            c.enabledFeatures,
+            c.permissions,
+            isAdmin: c.isAdmin,
+          ),
+          to: '/settings',
+        ),
+      ),
+      builder: (context, state) => WorkspaceSettingsScreen(
+        reportsOnly: true,
+        reportSection: state.uri.queryParameters['section'],
+      ), // #2313
+    ),
+    GoRoute(
+      path: '/availability',
+      redirect: env.guard(
+        const RouteAccess(
+          // #3550 — today its hours and rules serve place bookings only.
+          features: [WorkspaceFeature.placeBooking],
+          permission: WorkspacePermission.workspaceSettings,
+        ),
+      ),
+      builder: (context, state) => const AvailabilityScreen(),
+    ),
+  ];
+}
+
+/// The settings pages of the business's master data and its devices.
+List<RouteBase> _masterDataRoutes(RouteEnv env) {
+  return [
     // #4442 — the units of measure of this business and their conversions.
     // #4485 — always reachable: the pickers read the units whether or not
     // the units feature is on, which governs their advanced uses only.
@@ -244,34 +279,6 @@ List<RouteBase> _settingsRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const DevicesScreen(),
-    ),
-    GoRoute(
-      path: '/reports',
-      redirect: env.guard(
-        RouteAccess(
-          when: (c) => workspaceReportsAvailable(
-            c.enabledFeatures,
-            c.permissions,
-            isAdmin: c.isAdmin,
-          ),
-          to: '/settings',
-        ),
-      ),
-      builder: (context, state) => WorkspaceSettingsScreen(
-        reportsOnly: true,
-        reportSection: state.uri.queryParameters['section'],
-      ), // #2313
-    ),
-    GoRoute(
-      path: '/availability',
-      redirect: env.guard(
-        const RouteAccess(
-          // #3550 — today its hours and rules serve place bookings only.
-          features: [WorkspaceFeature.placeBooking],
-          permission: WorkspacePermission.workspaceSettings,
-        ),
-      ),
-      builder: (context, state) => const AvailabilityScreen(),
     ),
   ];
 }

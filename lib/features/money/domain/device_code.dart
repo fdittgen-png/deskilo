@@ -35,7 +35,14 @@ enum DeviceCodeRefusal {
 /// digits and the fingerprint's first 10 bits (its [proof]), which the board's enrollment checks.
 @immutable
 class DeviceCode {
-  const DeviceCode({required this.shortId, required this.profile, required this.proof, this.id, this.fingerprint, this.firmware});
+  const DeviceCode({
+    required this.shortId,
+    required this.profile,
+    required this.proof,
+    this.id,
+    this.fingerprint,
+    this.firmware,
+  });
 
   /// The first 8 hex digits of the board's id, upper case.
   final String shortId;
@@ -79,23 +86,28 @@ DeviceCodeRead readDeviceCode(String text) {
   return t.startsWith(_qrPrefix) ? _readQr(t) : _readTyped(t);
 }
 
+// The QR's parameters (the board's qr_payload, firmware/till/main).
+const _qrId = 'id', _qrFingerprint = 'fp', _qrBoard = 'board', _qrFirmware = 'fw';
+
 DeviceCodeRead _readQr(String t) {
   final q = Uri.tryParse(t)?.queryParameters ?? const <String, String>{};
-  final id = q['id'] ?? '', fp = q['fp'] ?? '';
+  final id = q[_qrId] ?? '', fp = q[_qrFingerprint] ?? '';
   if (!RegExp(r'^[0-9a-fA-F]{8}-').hasMatch(id) || !RegExp(r'^[0-9A-F]{4}-[0-9A-F]{4}$').hasMatch(fp)) {
     return const DeviceCodeRefused(DeviceCodeRefusal.length);
   }
-  final profile = BoardProfile.values.where((p) => p.key == q['board']).firstOrNull;
+  final profile = BoardProfile.values.where((p) => p.key == q[_qrBoard]).firstOrNull;
   if (profile == null) return const DeviceCodeRefused(DeviceCodeRefusal.profile);
   final proof = (int.parse(fp.substring(0, 2), radix: 16) << 2) | (int.parse(fp.substring(2, 4), radix: 16) >> 6);
-  return DeviceCodeOk(DeviceCode(
-    shortId: id.substring(0, 8).toUpperCase(),
-    profile: profile,
-    proof: proof,
-    id: id.toLowerCase(),
-    fingerprint: fp,
-    firmware: q['fw'],
-  ));
+  return DeviceCodeOk(
+    DeviceCode(
+      shortId: id.substring(0, 8).toUpperCase(),
+      profile: profile,
+      proof: proof,
+      id: id.toLowerCase(),
+      fingerprint: fp,
+      firmware: q[_qrFirmware],
+    ),
+  );
 }
 
 DeviceCodeRead _readTyped(String t) {
@@ -112,11 +124,13 @@ DeviceCodeRead _readTyped(String t) {
   if (v >= _codeSpace) return const DeviceCodeRefused(DeviceCodeRefusal.check);
   final profileNo = (v ~/ _proofSpace) % 4;
   if (profileNo >= BoardProfile.values.length) return const DeviceCodeRefused(DeviceCodeRefusal.profile);
-  return DeviceCodeOk(DeviceCode(
-    shortId: (v ~/ (_proofSpace * 4)).toRadixString(16).toUpperCase().padLeft(8, '0'),
-    profile: BoardProfile.values[profileNo],
-    proof: v % _proofSpace,
-  ));
+  return DeviceCodeOk(
+    DeviceCode(
+      shortId: (v ~/ (_proofSpace * 4)).toRadixString(16).toUpperCase().padLeft(8, '0'),
+      profile: BoardProfile.values[profileNo],
+      proof: v % _proofSpace,
+    ),
+  );
 }
 
 /// The position-weighted sum of the data symbols, mod 31 (the board's `check_of`, readable_code.c).

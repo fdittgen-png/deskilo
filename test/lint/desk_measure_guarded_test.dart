@@ -25,6 +25,7 @@ const _notGuardedYet = <String, String>{
   '/stock/reorder': '#4294 two lists of rows and cards: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/stock/value': '#4173 a total, a list of unpriced goods and a list of priced goods: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/settings/units': '#4442 a list by dimension and a sheet: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
+  '/settings/devices': '#4466 a scanner or a typed code and the board found: its widget tests measure it at phone and desk widths; joins the guards with the till guard',
   '/stock/units': '#4435 a list and sheets: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/stock/expiry': '#4431 a filter form and a list of rows: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/stock/groups': '#4361 a list of groups and a sheet: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',

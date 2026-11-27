@@ -74,6 +74,7 @@ import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/counter_book.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
+import 'package:deskilo/features/money/domain/device_code.dart';
 import 'package:deskilo/features/money/domain/einvoice_inbox.dart';
 import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
@@ -1880,7 +1881,27 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'new receipt; a printer that cannot be reached is refused and the sale stays made',
     (_) => receiptPrinterJourney(),
   ),
+  // #4466 — a till board read by its QR code and by its typed code: the same board; a typo refused for its reason.
+  WorkspaceFeature.counterEmbeddedTerminal: _action(
+    _owner,
+    "the owner reads the counter's till board by its QR code and by the code beside it, and both name the same board; "
+    'two symbols swapped are refused as a check failure, and nothing is sent',
+    (_) => _deviceCodeJourney(),
+  ),
 };
+
+/// #4466 — the board's QR and its readable code name one board; a swapped pair is refused.
+bool _deviceCodeJourney() {
+  const qr = 'deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=ideaspark_st7789_v1&fw=1.0.3&fp=AB12-CD34';
+  final scanned = readDeviceCode(qr), typed = readDeviceCode(readableDeviceCode(0x11111111, 1, 684));
+  if (scanned is! DeviceCodeOk || typed is! DeviceCodeOk) return false;
+  final a = scanned.code, b = typed.code;
+  final same = a.shortId == b.shortId && a.profile == b.profile && a.proof == b.proof;
+  final good = readableDeviceCode(0x11111111, 1, 684);
+  final swapped = '${good[1]}${good[0]}${good.substring(2)}';
+  final refused = readDeviceCode(swapped);
+  return same && (good[0] == good[1] || (refused is DeviceCodeRefused && refused.reason == DeviceCodeRefusal.check));
+}
 
 bool _open(_World w, String member) => w.f.money.invoices.any(
   (i) =>

@@ -673,7 +673,7 @@ I suoi articoli, preventivi e fatture sono misurati in unità, e alcune unità s
 
 **Destinatari:** Proprietario · Amministratore con il permesso
 
-Un terminale di cassa è il piccolo schermo al banco che incassa (#4466). Lo si collega all'attività da **Dispositivi**: l'app legge il codice QR del terminale, o il codice di 10 caratteri accanto, e mostra di quale terminale si tratta.
+Un terminale di cassa è il piccolo schermo al banco che incassa. Lo si collega all'attività da **Dispositivi**: l'app legge il codice QR del terminale, o il codice di 10 caratteri accanto, e mostra di quale terminale si tratta.
 
 **Passaggi**
 

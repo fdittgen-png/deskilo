@@ -33,6 +33,7 @@ const Map<String, String> _noLayoutOfItsOwn = {
   '/stock/value': '#4173 a total and two lists; its widget tests render it at phone and desk widths',
   '/stock/units': '#4435 a list and sheets; widget tests render it at phone and desk',
   '/settings/units': '#4442 a list by dimension and a sheet; widget tests render it at phone and desk',
+  '/settings/devices': '#4466 a scanner or a typed code and the board found; its widget tests render it at phone and desk',
   '/stock/expiry': '#4431 a filter form and a list; widget tests render it at phone and desk',
   '/stock/groups': '#4361 a list of groups and a sheet; its widget tests render it at phone and desk widths',
   '/stock/cycle-counts': '#4295 tabs of lists and a sheet; its widget tests render it at phone and desk widths',

@@ -13,6 +13,8 @@ import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/scan/scan_no_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/kit/form_scroll.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/device_code.dart';
 
@@ -40,67 +42,62 @@ class _DevicesScreenState extends State<DevicesScreen> {
     final l10n = context.l10n;
     final camera = widget.cameraAvailable ?? qrScanSupported;
     return Scaffold(
-      appBar: AppBar(
-        title: HelpDotTitle(l10n.devicePairingTitle, l10n.devicePairingTitle, anchor: HelpAnchor.settingsDevices),
+      appBar: pageBar(
+        context,
+        title: l10n.devicePairingTitle,
+        actions: [HelpDot(l10n.devicePairingTitle, anchor: HelpAnchor.settingsDevices)],
       ),
-      body: SingleChildScrollView(
-        padding: AppSpacing.gutterAll,
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 560),
-            child: ListenableBuilder(
-              listenable: _form,
-              builder: (context, _) => Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(l10n.devicePairingNone, key: const ValueKey('device-pairing-none')),
-                  const FormGap.large(),
-                  FormSection(
-                    title: l10n.devicePairingConnect,
-                    children: [
-                      if (camera) ...[
-                        Text(l10n.devicePairingScanHint),
-                        const FormGap.small(),
-                        SizedBox(
-                          height: 240,
-                          child: ScanCameraBox(
-                            cameraKey: const ValueKey('device-pairing-camera'),
-                            defaultFront: false,
-                            onCode: _form.read,
-                          ),
-                        ),
-                      ] else
-                        Text(scanNoCameraSentence(l10n), key: const ValueKey('device-pairing-no-camera')),
-                      const FormGap(),
-                      AppTextField(
-                        key: const ValueKey('device-pairing-code'),
-                        controller: _form.typed,
-                        label: l10n.devicePairingType,
-                        helper: l10n.devicePairingTypeHelper,
-                        error: switch (_form.refusal) {
-                          null => null,
-                          final r => _refusalText(l10n, r),
-                        },
-                        textInputAction: TextInputAction.done,
-                        onChanged: (_) => _form.edited(),
-                        onSubmitted: _form.read,
-                      ),
-                      const FormGap.small(),
-                      Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: FilledButton(
-                          key: const ValueKey('device-pairing-check'),
-                          onPressed: () => _form.read(_form.typed.text),
-                          child: Text(l10n.devicePairingCheck),
-                        ),
-                      ),
-                    ],
+      // the route's form measure sets the width (#4421)
+      body: ListenableBuilder(
+        listenable: _form,
+        builder: (context, _) => FormScroll(
+          padding: AppSpacing.gutterAll,
+          children: [
+            Text(l10n.devicePairingNone, key: const ValueKey('device-pairing-none')),
+            const FormGap.large(),
+            FormSection(
+              title: l10n.devicePairingConnect,
+              children: [
+                if (camera) ...[
+                  Text(l10n.devicePairingScanHint),
+                  const FormGap.small(),
+                  SizedBox(
+                    height: 240,
+                    child: ScanCameraBox(
+                      cameraKey: const ValueKey('device-pairing-camera'),
+                      defaultFront: false,
+                      onCode: _form.read,
+                    ),
                   ),
-                  if (_form.found case final code?) ...[const FormGap.large(), _Found(code: code)],
-                ],
-              ),
+                ] else
+                  Text(scanNoCameraSentence(l10n), key: const ValueKey('device-pairing-no-camera')),
+                const FormGap(),
+                AppTextField(
+                  key: const ValueKey('device-pairing-code'),
+                  controller: _form.typed,
+                  label: l10n.devicePairingType,
+                  helper: l10n.devicePairingTypeHelper,
+                  error: switch (_form.refusal) {
+                    null => null,
+                    final r => _refusalText(l10n, r),
+                  },
+                  textInputAction: TextInputAction.done,
+                  onChanged: (_) => _form.edited(),
+                  onSubmitted: _form.read,
+                ),
+                const FormGap.small(),
+                Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: FilledButton(
+                    key: const ValueKey('device-pairing-check'),
+                    onPressed: () => _form.read(_form.typed.text),
+                    child: Text(l10n.devicePairingCheck),
+                  ),
+                ),
+              ],
             ),
-          ),
+            if (_form.found case final code?) ...[const FormGap.large(), _Found(code: code)],
+          ],
         ),
       ),
     );
