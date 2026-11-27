@@ -3738,7 +3738,6 @@ routine public.match_invoice_part(p_actor members, p_invoice_id uuid, p_payment_
 routine public.match_purchase_commitments_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_matches jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ed8832a5c76f
 routine public.may_deploy(p_from uuid, p_to uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:51c0d6622d7d
 routine public.may_manage_kiosk_devices(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:c811a3134efe
-routine public.may_manage_till_terminals(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:2ff7c6cb803f
 routine public.may_validate_by(p_member_id uuid, p_workspace_id uuid, p_type text) -> boolean | function | definer | stable | exec:service_role | body:f0c113269349
 routine public.may_validate_event_type(p_workspace_id uuid, p_type text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:976e7011ef32
 routine public.may_view_invoice(p_invoice_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:4a02ac9c0f76
@@ -4793,17 +4792,17 @@ routine public.till_layout_problems(p_workspace_id uuid, p_name text, p_layout j
 routine public.till_layout_publish_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_expected_version integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f51623025526
 routine public.till_layout_reset_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f320b4400f09
 routine public.till_layout_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_expected_version integer, p_layout jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5ae3fc7e2d12
-routine public.till_terminal_approve_v1(p_terminal_id uuid, p_fingerprint text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:23084500348b
+routine public.till_terminal_approve_v1(p_terminal_id uuid, p_fingerprint text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7c11a3828256
 routine public.till_terminal_claim_v1(p_code text, p_device_id uuid, p_secret_hash text, p_firmware text, p_protocol text, p_claim_request_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:cdffb8adc42d
-routine public.till_terminal_code_cancel_v1(p_code_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:d0505c2ce708
-routine public.till_terminal_code_create_v1(p_workspace_id uuid, p_till_id uuid, p_device_id uuid, p_board_profile text, p_secret_hash text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e29442e4997f
+routine public.till_terminal_code_cancel_v1(p_code_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:f6e5ee285df5
+routine public.till_terminal_code_create_v1(p_workspace_id uuid, p_till_id uuid, p_device_id uuid, p_board_profile text, p_secret_hash text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:cfed96cd777d
 routine public.till_terminal_code_normal(p_code text) -> text | function | invoker | immutable | exec:service_role | body:3313a21d56bb
 routine public.till_terminal_fingerprint(p_secret_hash text) -> text | function | invoker | immutable | exec:service_role | body:96803719c623
-routine public.till_terminal_member(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:82329b41ccf0
 routine public.till_terminal_new_code() -> text | function | invoker | volatile | exec:service_role | body:bb016e7bfab5
-routine public.till_terminal_revoke_v1(p_terminal_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:32bc3130c039
+routine public.till_terminal_owner(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:1a0fd4f9f3bb
+routine public.till_terminal_revoke_v1(p_terminal_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:7c1401c37ead
 routine public.till_terminal_status_v1(p_device_id uuid, p_secret text) -> jsonb | function | definer | volatile | exec:service_role | body:a7e35177dd77
-routine public.till_terminals_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:43cb95b2c7a5
+routine public.till_terminals_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c0eb77a8d35a
 routine public.toggle_message_star(p_kind text, p_message_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:88ca42478a05
 routine public.touch_conversation() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1a8384fd9011
 routine public.touch_last_seen() -> void | function | definer | volatile | exec:authenticated,service_role | body:2d50fbe02f88

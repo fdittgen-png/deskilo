@@ -2,9 +2,14 @@
 //
 // #4454 -- the till boards on the server: the owner's functions of migration 0984. A refusal comes back as the
 // contract's reason (TillBoardRefused); anything else is the read's failure.
+import 'dart:convert';
+
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../codes/dk_code.dart';
+import '../data/app_failure_from.dart';
+import '../failure/app_failure.dart';
 import '../trace/trace_logger.dart';
 import 'device_board.dart';
 import 'device_code.dart';
@@ -17,21 +22,35 @@ class SupabaseTillBoards implements TillBoardPort {
   Future<Object?> _call(String fn, Map<String, Object?> params) async {
     try {
       return await _client.rpc<Object?>(fn, params: params);
-    } on PostgrestException catch (e, st) {
-      final refusal = _refusalOf(e);
-      TraceLogger.instance.log(TraceLevel.info, 'till', 'a till board command ($fn): ${refusal ?? e.code}', error: e, stackTrace: st);
+    } on Object catch (e, st) {
+      final failure = appFailureFrom(e);
+      TraceLogger.instance.log(TraceLevel.info, 'till', 'a till board command ($fn): $failure', error: e, stackTrace: st);
+      final refusal = failure is Refusal ? _refusalOf(failure) : null;
       if (refusal == null) rethrow;
-      throw TillBoardRefused(refusal);
+      Error.throwWithStackTrace(TillBoardRefused(refusal), st);
     }
   }
 
-  static TillBoardRefusal? _refusalOf(PostgrestException e) {
-    if (e.code == '42501') return TillBoardRefusal.notAllowed;
-    if (e.code != '22023') return null;
-    final m = e.message;
-    if (m.startsWith('scope_mismatch')) return TillBoardRefusal.scope;
-    if (m.startsWith('pair_used')) return TillBoardRefusal.used;
-    return TillBoardRefusal.proof;
+  /// The contract's reason for the server's refusal (0984: DKN01 not allowed, DKL02 with its reason), or null.
+  static TillBoardRefusal? _refusalOf(Refusal r) => switch (r.code) {
+    DkCode.dkn01 => TillBoardRefusal.notAllowed,
+    DkCode.dkl02 => switch (_reason(r.details)) {
+      'till' => TillBoardRefusal.scope,
+      'used' => TillBoardRefusal.used,
+      _ => TillBoardRefusal.proof,
+    },
+    _ => null,
+  };
+
+  /// The `reason` of a refusal's JSON detail, or empty: a detail that is not our JSON is no hint.
+  static String _reason(String? details) {
+    if (details == null) return '';
+    try {
+      return JsonReader.orEmpty(jsonDecode(details), context: 'till board refusal').stringOr('reason');
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'till', 'a refusal detail without a reason', error: e, stackTrace: st);
+      return '';
+    }
   }
 
   @override

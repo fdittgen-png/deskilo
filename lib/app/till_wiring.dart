@@ -25,9 +25,11 @@ import '../features/money/providers/till_providers.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/domain/workspace_permission.dart';
 import '../features/workspace/presentation/widgets/settings_editor.dart';
+import '../features/workspace/providers/active_workspace_providers.dart' show activeWorkspaceIdProvider;
 import '../features/workspace/providers/operation_context_providers.dart';
 import '../features/workspace/providers/settings_providers.dart';
-import '../features/workspace/providers/workspace_providers.dart' show currentWorkspaceProvider, enabledFeaturesSyncProvider, myPermissionsProvider;
+import '../features/workspace/providers/workspace_providers.dart'
+    show currentWorkspaceProvider, enabledFeaturesSyncProvider, myMemberProvider, myPermissionsProvider;
 
 /// Puts the live till in a scope's overrides (main.dart).
 final Override tillPortFromApp = tillPortProvider.overrideWith(
@@ -109,6 +111,14 @@ final Override mayLayOutTillsFromApp = mayLayOutTillsProvider.overrideWith(
   (ref) =>
       ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.counterTillLayout) &&
       ref.watch(myPermissionsProvider).contains(WorkspacePermission.configureTill),
+);
+
+/// #4454 -- Settings › Devices acts for the open business; its owner is offered the board commands.
+final Override deviceScopeFromApp = deviceScopeProvider.overrideWith(
+  (ref) => (
+    workspaceId: ref.watch(activeWorkspaceIdProvider).value,
+    owner: ref.watch(myMemberProvider).value?.isOwner ?? false,
+  ),
 );
 
 /// #4454 -- the till boards on the same server.

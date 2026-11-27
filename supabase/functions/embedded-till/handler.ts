@@ -15,7 +15,6 @@
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { describeError, logLine } from "../_shared/log.ts";
 import { ok } from "../_shared/respond.ts";
-import { callerOf } from "../badge-signin/badge_guard.ts";
 
 export type Rpc = (
   fn: string,
@@ -36,7 +35,7 @@ export const CORS = {
 };
 
 /** The largest body a board sends: a claim is about 300 bytes. */
-export const MAX_BODY_BYTES = 1024;
+export const MAX_BODY_BYTES = 1024; // not-mirrored: the request size of the function
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const HEX64 = /^[0-9a-f]{64}$/;
@@ -53,7 +52,7 @@ function refused(reason: string, status = 200): Response {
 }
 
 /** The most sources one instance keeps a budget for; past it, the oldest is forgotten. */
-export const MAX_SOURCES = 10_000;
+export const MAX_SOURCES = 10_000; // not-mirrored: the memory one instance gives its budget
 
 /** A small budget of attempts per source and minute, kept in this instance's memory: a cost bound, not the lock on a
  * code (the database bounds a code's attempts and life, and 60 random bits are not guessed). Ended minutes are
@@ -77,9 +76,12 @@ export function budget(perMinute: number, now: () => number = Date.now): (source
   };
 }
 
-/** The source a budget counts: the hop the platform's proxy appended (badge-signin's rule), never a value the
- * caller wrote first in the header. */
-export const sourceOf = (req: Request): string => callerOf(req) || "unknown";
+/** The source a budget counts: the hop the platform's proxy appended (badge-signin's callerOf rule), never a value
+ * the caller wrote first in the header. */
+export const sourceOf = (req: Request): string => {
+  const hops = (req.headers.get("x-forwarded-for") ?? "").split(",").map((h) => h.trim()).filter(Boolean);
+  return (hops.length > 0 ? hops[hops.length - 1] : req.headers.get("cf-connecting-ip")) || "unknown";
+};
 
 /** The body read no further than its ceiling: a declared length over it, or more bytes than it, stop the read. */
 async function bodyOf(req: Request): Promise<Record<string, unknown> | "too_large" | null> {

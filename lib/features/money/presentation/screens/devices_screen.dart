@@ -6,25 +6,25 @@
 // QR code the owner chooses a till and is given the code that connects it (TillBoardList approves and removes).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart' show DateFormat;
 
 import '../../../../core/devices/connected_boards_provider.dart';
 import '../../../../core/devices/device_board.dart';
 import '../../../../core/devices/device_code.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/scan/scan_no_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/till_drawer.dart';
 import '../../providers/till_drawer_providers.dart';
 import 'till_board_list.dart';
@@ -56,8 +56,9 @@ class _DevicesScreenState extends ConsumerState<DevicesScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final camera = widget.cameraAvailable ?? qrScanSupported;
-    final workspaceId = widget.workspaceId ?? ref.watch(activeWorkspaceIdProvider).value;
-    final owner = widget.owner ?? ref.watch(myMemberProvider).value?.isOwner ?? false;
+    final scope = ref.watch(deviceScopeProvider);
+    final workspaceId = widget.workspaceId ?? scope.workspaceId;
+    final owner = widget.owner ?? scope.owner;
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.devicePairingTitle),
@@ -196,11 +197,42 @@ class _FoundState extends ConsumerState<_Found> {
     setState(() => _busy = true);
     try {
       await command(ref.read(tillBoardPortProvider));
-    } on Object catch (e) {
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'till', 'a till board code refused or failed', error: e, stackTrace: st);
       if (mounted) AppSnack.error(context, tillBoardFailureText(l10n, e));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
+  }
+
+  /// What the card offers for connecting the board: a scan for a typed code, the new firmware for an older QR, the
+  /// till and the code for the owner, nothing for anyone else.
+  Widget _connect(BuildContext context, DeviceCode code, String? workspaceId) {
+    final l10n = context.l10n;
+    if (code.id == null) return Text(l10n.devicePairingScanToConnect, key: const ValueKey('device-pairing-scan-to-connect'));
+    if (!code.connectable) return Text(l10n.devicePairingNeedsFirmware, key: const ValueKey('device-pairing-needs-firmware'));
+    if (workspaceId == null) return const SizedBox.shrink();
+    if (_given case final given?) {
+      return _GivenCode(
+        given: given,
+        busy: _busy,
+        onWithdraw: () => _run((port) async {
+          await port.cancelCode(given.id);
+          if (mounted) setState(() => _given = null);
+        }),
+      );
+    }
+    return _TillChoice(
+      workspaceId: workspaceId,
+      tillId: _tillId,
+      onTill: (id) => setState(() => _tillId = id),
+      onGetCode: _busy || _tillId == null
+          ? null
+          : () => _run((port) async {
+              final given = await port.code(workspaceId, _tillId!, code);
+              if (mounted) setState(() => _given = given);
+            }),
+    );
   }
 
   @override
@@ -221,28 +253,7 @@ class _FoundState extends ConsumerState<_Found> {
             Text(l10n.devicePairingBoard(code.shortId, code.profile.model)),
             Text(l10n.devicePairingFingerprint(code.fingerprintShown)),
             const FormGap(),
-            if (code.id == null)
-              Text(l10n.devicePairingScanToConnect, key: const ValueKey('device-pairing-scan-to-connect'))
-            else if (!code.connectable)
-              Text(l10n.devicePairingNeedsFirmware, key: const ValueKey('device-pairing-needs-firmware'))
-            else if (workspaceId != null)
-              if (_given case final given?)
-                _GivenCode(given: given, busy: _busy, onWithdraw: () => _run((port) async {
-                  await port.cancelCode(given.id);
-                  if (mounted) setState(() => _given = null);
-                }))
-              else
-                _TillChoice(
-                  workspaceId: workspaceId,
-                  tillId: _tillId,
-                  onTill: (id) => setState(() => _tillId = id),
-                  onGetCode: _busy || _tillId == null
-                      ? null
-                      : () => _run((port) async {
-                          final given = await port.code(workspaceId, _tillId!, code);
-                          if (mounted) setState(() => _given = given);
-                        }),
-                ),
+            _connect(context, code, workspaceId),
           ],
         ),
       ),
@@ -304,7 +315,7 @@ class _GivenCode extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final time = DateFormat.Hm(Localizations.localeOf(context).toLanguageTag()).format(given.expiresAt.toLocal());
+    final time = appFormatOf(context).time(given.expiresAt);
     return Column(
       key: const ValueKey('device-pairing-code-given'),
       crossAxisAlignment: CrossAxisAlignment.start,

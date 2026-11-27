@@ -8,6 +8,7 @@
 import 'package:deskilo/app/master_data/master_data_kinds.dart';
 import 'package:deskilo/app/master_data/master_data_page.dart';
 import 'package:deskilo/app/route_access.dart';
+import 'package:deskilo/core/devices/connected_boards_provider.dart';
 import 'package:deskilo/core/navigation/routes.dart';
 import 'package:deskilo/features/money/providers/billing_customer_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
@@ -64,6 +65,7 @@ List<Override> _reads({Exception? unitsFail}) => [
   suppliersProvider(_ws).overrideWith((ref) async => const []),
   billingCustomersProvider(_ws).overrideWith((ref) async => const []),
   sitesProvider.overrideWith((ref) async => const []),
+  connectedTillBoardsProvider(_ws).overrideWith((ref) async => const []),
 ];
 
 Future<GoRouter> _open(

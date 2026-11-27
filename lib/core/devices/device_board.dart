@@ -5,6 +5,7 @@
 // board, given once. The port the Devices page reads and acts through.
 import 'package:meta/meta.dart' show immutable;
 
+import '../failure/app_failure.dart' show TypedRefusal;
 import 'device_code.dart';
 
 enum TillBoardStatus {
@@ -58,7 +59,7 @@ class TillBoardCode {
 /// Why the server refused a board command, in the contract's words.
 enum TillBoardRefusal { notAllowed, scope, proof, used }
 
-class TillBoardRefused implements Exception {
+class TillBoardRefused implements TypedRefusal {
   const TillBoardRefused(this.reason);
   final TillBoardRefusal reason;
 

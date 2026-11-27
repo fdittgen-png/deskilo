@@ -12,3 +12,7 @@ final connectedTillBoardsProvider = FutureProvider.autoDispose.family<List<TillB
   (ref, workspaceId) => ref.watch(tillBoardPortProvider).boards(workspaceId),
   retry: (_, _) => null,
 );
+
+/// #4454 -- the business Settings › Devices acts for and whether the person is its owner (who alone connects, approves
+/// and removes a board; the server decides anyway). The app wires it from the open business (`deviceScopeFromApp`).
+final deviceScopeProvider = Provider<({String? workspaceId, bool owner})>((ref) => (workspaceId: null, owner: false));

@@ -10,6 +10,7 @@ import '../../../../core/devices/connected_boards_provider.dart';
 import '../../../../core/devices/device_board.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -59,7 +60,8 @@ class _BoardCard extends ConsumerWidget {
     final l10n = context.l10n;
     try {
       await command(ref.read(tillBoardPortProvider));
-    } on Object catch (e) {
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'till', 'a till board command refused or failed', error: e, stackTrace: st);
       if (context.mounted) AppSnack.error(context, tillBoardFailureText(l10n, e));
     }
     ref.invalidate(connectedTillBoardsProvider(workspaceId));
@@ -73,6 +75,7 @@ class _BoardCard extends ConsumerWidget {
           content: Text(body),
           actions: [
             TextButton(
+              key: const ValueKey('device-board-cancel'),
               onPressed: () => Navigator.of(context).pop(false),
               child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
             ),
