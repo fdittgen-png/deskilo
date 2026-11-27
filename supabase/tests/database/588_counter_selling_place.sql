@@ -6,8 +6,8 @@
 -- first wherever it lies in that tree, the place itself first for goods without a lot, and never the back store beside
 -- it; a shortage is refused and nothing moves, and the same request passes once the shelf is refilled, once; a till
 -- without a place sells from the business's selling place (MAIN and everything below it, or the place the setting
--- names; a code that is no place refuses the sale); a line that names its place leaves from it alone; goods taken back
--- return to the selling place of the till that sold them. Rolled back.
+-- names; a code that is no place refuses the sale); a line that names its place leaves from it alone; each movement
+-- of a sale keeps the place it left, which is what a return needs. Rolled back.
 begin;
 select plan(33);
 
@@ -260,17 +260,13 @@ select is(pg_temp.moves(current_setting('t.r12')), 'SHELF-B:L-TWO-A:1 SHELF-B:L-
   'one and three of the same yoghurt: the second line takes what the first left on the shelf, then the floor; no lot is drawn twice');
 select is(pg_temp.bal(301, 'SHELF-B') || '/' || pg_temp.bal(301, 'FLOOR'), '0/1', 'and the places hold what is left');
 
--- ── goods taken back return to the selling place of the till that sold them ──────────────────────────────────────────────────
-select pg_temp.keep('t.c', pg_temp.run_as(pg_temp.u(1), format('select public.counter_receipt_correct_v1(%L, %L, %L, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(8350),
-  pg_temp.j(current_setting('t.r4')) ->> 'receipt_id',
-  format('{"reason": "stale", "lines": [{"corrects_line_id": "%s", "quantity": "1"}]}',
-    (select id from public.counter_receipt_lines where receipt_id = (pg_temp.j(current_setting('t.r4')) ->> 'receipt_id')::uuid and line_no = 1)))));
-select pg_temp.keep('t.back', pg_temp.run_as(pg_temp.u(1), format('select public.counter_goods_return_v1(%L, %L, %L, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(8351),
-  pg_temp.j(current_setting('t.c')) ->> 'receipt_id',
-  format('[{"corrects_line_id": "%s", "quantity": "1"}]',
-    (select id from public.counter_receipt_lines where receipt_id = (pg_temp.j(current_setting('t.c')) ->> 'receipt_id')::uuid and line_no = 1)))));
-select is(pg_temp.moves(current_setting('t.c'), 'return_in') || ' ' || pg_temp.bal(302, 'FLOOR') || '/' || pg_temp.bal(302, 'MAIN'), 'FLOOR::1 0/0',
-  'a loaf taken back after a correction returns to the floor, where the front till sells, not to the main store');
+-- ── what a return needs: each movement of a sale names its receipt line and the place it left ─────────────────────────────────────────
+select is((select string_agg(l.code || ':' || trim_scale(m.quantity)::text, ' ' order by m.line_no, m.part)
+             from public.stock_movements m join public.stock_locations l on l.id = m.from_location_id
+            where m.workspace_id = pg_temp.u(101) and m.reason = 'sale'
+              and m.counter_line_id = (select x.id from public.counter_receipt_lines x
+                                        where x.receipt_id = (pg_temp.j(current_setting('t.r4')) ->> 'receipt_id')::uuid and x.line_no = 1)),
+  'FLOOR:2 SHELF-A:2', 'the sale of the four loaves left two movements, each with the line it belongs to and the place it left: goods taken back can be put where they were');
 
 -- ── a business that set nothing and keeps nothing below MAIN: a sale posts what it posted ────────────────────────────────────
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, vat_regime, feature_flags, role_permissions) values

@@ -2,8 +2,7 @@
 -- risk: additive
 -- apps: additive
 -- (one column, one setting, new functions; counter_goods_parts and counter_item_lots_v1 gain a defaulted parameter, so a
--- call with the old arguments still answers; counter_receipt_finalize_v1 and counter_goods_return_v1 restated whole from
--- their live definitions)
+-- call with the old arguments still answers; counter_receipt_finalize_v1 restated whole from its live definition)
 --
 -- #4492 (row 11, D1) -- the till sells from the selling place. Until now a counter sale took goods from the place whose
 -- code is MAIN and from nowhere else: goods put on a shelf place were refused at the till. Now:
@@ -11,7 +10,7 @@
 --   * A till has a SELLING PLACE: `counter_tills.selling_place_id`, set with the till (counter_till_save_v2). A till
 --     that names none, and a counter without till sessions, sell from the place the business names by its code in the
 --     setting `counter.selling_place` (default MAIN). `counter_selling_place(workspace, till)` is the one rule; the
---     sale, the lots the till offers, a returned deposit and goods taken back all read it.
+--     sale, the lots the till offers and a returned deposit read it.
 --   * A sale draws from the selling place AND EVERY PLACE IN USE BELOW IT (stock_place_tree, as the invoice path's main
 --     store already does): a lot-tracked item from the lot that expires first wherever it lies in that tree, never an
 --     expired one; a named lot, an untracked item and named pieces from the places that hold them, the selling place
@@ -21,8 +20,11 @@
 --     a sale another place can serve.
 --     A place outside the tree -- a back store beside it -- is never sold from.
 --   * A line that names its place (`from_location_id`) leaves from that place alone, as before.
---   * A returned deposit comes back to the selling place itself; goods taken back after a correction go to the selling
---     place of the till that sold them (was: MAIN), unless the line names a place.
+--   * A returned deposit comes back to the selling place itself.
+--   * Goods taken back after a correction are NOT changed here: counter_goods_return_v1 still puts them in MAIN unless
+--     the line names a place. Each movement of a sale keeps the place it left (stock_movements.from_location_id, with
+--     counter_line_id), and counter_selling_place(workspace, till) answers the till's place: a return reads one of the
+--     two when it is taught to go back there.
 --
 -- A business that set nothing: the selling place is MAIN, as before. What changes for it is the tree: goods lying at
 -- a place below MAIN are now sold from as well (they were refused, or MAIN went below zero), and of two lots the one
@@ -648,91 +650,6 @@ end;
 $fn$;
 revoke execute on function public.counter_receipt_finalize_v1(uuid, uuid, uuid, int, jsonb) from public, anon;
 grant execute on function public.counter_receipt_finalize_v1(uuid, uuid, uuid, int, jsonb) to authenticated;
-
--- ── goods taken back: to the selling place of the till that sold them ────────────────────────────────────────────────────
--- restates counter_goods_return_v1 whole from its live definition (0897 as patched by 0973, digest fdc5b32c6744)
--- restates 0897
-create or replace function public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_lines jsonb)
-returns jsonb language plpgsql volatile security definer set search_path = public as $fn$
-declare
-  v_me uuid;
-  v_digest text;
-  v_done jsonb;
-  v_rec public.counter_receipts;
-  e jsonb;
-  v_idx int := 0;
-  v_line public.counter_receipt_lines;
-  v_qty numeric;
-  v_back numeric;
-  v_to uuid;
-  v_move jsonb := '[]'::jsonb;
-  v_seen uuid[] := array[]::uuid[];
-  v_moved jsonb;
-  v_result jsonb;
-begin
-  v_me := public.counter_actor(p_workspace_id);
-  if not public.has_permission(p_workspace_id, 'manageStock') then
-    raise exception 'not allowed to take goods back into stock' using errcode = 'DKN01';
-  end if;
-  if not public.feature_effective(p_workspace_id, 'stockManagement') then
-    raise exception 'goods are not sold here: the goods ledger is off' using errcode = 'DKL07', detail = 'goods_off';
-  end if;
-  if p_request_id is null or p_correction_id is null or coalesce(jsonb_typeof(p_lines), '') <> 'array' or jsonb_array_length(p_lines) = 0 then
-    raise exception 'a return is recorded with a request id, the correction and its lines' using errcode = '22023';
-  end if;
-  v_digest := md5(p_correction_id::text || '|' || p_lines::text);
-  v_done := public.purchase_request_begin(p_workspace_id, p_request_id, 'counter_goods_return', v_digest);
-  if v_done is not null then
-    return v_done || jsonb_build_object('replayed', true);
-  end if;
-  select * into v_rec from public.counter_receipts x where x.id = p_correction_id and x.workspace_id = p_workspace_id for update;
-  if v_rec.id is null or v_rec.kind <> 'correction' or v_rec.state <> 'finalized' then
-    raise exception 'a return follows a finalized correction' using errcode = 'DKL04';
-  end if;
-  perform public.counter_require_operation(p_workspace_id, 'correct_receipt');
-  for e in select value from jsonb_array_elements(p_lines) loop
-    v_idx := v_idx + 1;
-    select * into v_line from public.counter_receipt_lines l
-     where l.workspace_id = p_workspace_id and l.receipt_id = v_rec.id and l.id = nullif(e ->> 'corrects_line_id', '')::uuid;
-    if v_line.id is null or v_line.id = any (v_seen) or (v_line.frozen ->> 'supply') <> 'goods' or v_line.item_id is null
-       or v_line.frozen ->> 'kind' = 'deposit_return' then
-      raise exception 'this is not a goods line of the correction' using errcode = 'DKL08', detail = jsonb_build_object('line', v_idx, 'reason', 'line_unknown')::text;
-    end if;
-    v_seen := v_seen || v_line.id;
-    if coalesce(e ->> 'quantity', '') !~ '^[0-9]{1,12}(\.[0-9]{1,6})?$' or (e ->> 'quantity')::numeric <= 0 then
-      raise exception 'this quantity is not a quantity' using errcode = 'DKL08', detail = jsonb_build_object('line', v_idx, 'reason', 'quantity')::text;
-    end if;
-    v_qty := (e ->> 'quantity')::numeric;
-    -- per line of the correction: the line's own id is in the movement's links
-    select coalesce(sum(m.entered_quantity), 0) into v_back from public.stock_movements m
-     where m.workspace_id = p_workspace_id and m.counter_line_id = v_line.id and m.reason = 'return_in';
-    if v_qty > v_line.quantity - v_back then
-      raise exception 'more is taken back than the correction credits' using errcode = 'DKL08',
-        detail = jsonb_build_object('line', v_idx, 'reason', 'return_beyond', 'left', trim_scale(v_line.quantity - v_back)::text)::text;
-    end if;
-    v_to := coalesce(nullif(e ->> 'to_location_id', '')::uuid,
-                     public.counter_selling_place(p_workspace_id,
-                       (select s.till_id from public.counter_receipts o
-                          join public.counter_till_sessions s on s.id = o.till_session_id
-                         where o.id = v_rec.corrects_receipt_id and o.workspace_id = p_workspace_id)));
-    if v_to is null then
-      raise exception 'no place to put the goods back' using errcode = 'DKL07', detail = 'to_place';
-    end if;
-    v_move := v_move || jsonb_build_array(jsonb_strip_nulls(jsonb_build_object(
-      'item_id', v_line.item_id, 'variant_id', v_line.variant_id, 'quantity', trim_scale(v_qty)::text,
-      'unit', v_line.frozen #>> '{commercial,unit,code}', 'from', public.stock_place(p_workspace_id, 'customer'), 'to', v_to,
-      'counter_line_id', v_line.id)));
-  end loop;
-  perform set_config('deskilo.counter_links', 'on', true);
-  v_moved := public.stock_apply_lines(p_workspace_id, v_me, p_request_id, v_move, 'return_in', now(),
-                                      jsonb_build_object('counter_receipt_id', v_rec.id), 'generic');
-  perform set_config('deskilo.counter_links', 'off', true);
-  v_result := jsonb_build_object('correction_id', v_rec.id, 'movements', jsonb_array_length(v_moved), 'replayed', false);
-  return public.purchase_request_end(p_workspace_id, p_request_id, 'counter_goods_return', v_digest, v_result);
-end;
-$fn$;
-revoke execute on function public.counter_goods_return_v1(uuid, uuid, uuid, jsonb) from public, anon;
-grant execute on function public.counter_goods_return_v1(uuid, uuid, uuid, jsonb) to authenticated;
 
 -- ── the lots a till may sell an item from: those of its selling place and the places below it ───────────────────────────
 -- restates 0967 with one parameter more: the till. Without it, the lots at the business's selling place. A lot lying at
