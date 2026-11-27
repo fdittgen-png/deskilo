@@ -1,0 +1,167 @@
+{
+  "contract": "embedded_till/v1",
+  "amounts": [
+    {
+      "text": "0",
+      "valid": true
+    },
+    {
+      "text": "-0",
+      "valid": false
+    },
+    {
+      "text": "007",
+      "valid": false
+    },
+    {
+      "text": "12",
+      "valid": true
+    },
+    {
+      "text": "-12",
+      "valid": true
+    },
+    {
+      "text": "1.5",
+      "valid": false
+    },
+    {
+      "text": "",
+      "valid": false
+    },
+    {
+      "text": "+1",
+      "valid": false
+    },
+    {
+      "text": "9007199254740991",
+      "valid": true
+    },
+    {
+      "text": "9007199254740992",
+      "valid": true
+    },
+    {
+      "text": "9007199254740993",
+      "valid": true
+    },
+    {
+      "text": "9223372036854775807",
+      "valid": true
+    },
+    {
+      "text": "9223372036854775808",
+      "valid": false
+    },
+    {
+      "text": "-9223372036854775808",
+      "valid": true
+    },
+    {
+      "text": "-9223372036854775809",
+      "valid": false
+    },
+    {
+      "text": "1e3",
+      "valid": false
+    },
+    {
+      "text": " 5",
+      "valid": false
+    }
+  ],
+  "quantities": [
+    {
+      "text": "1",
+      "valid": true
+    },
+    {
+      "text": "0",
+      "valid": false
+    },
+    {
+      "text": "0.000000",
+      "valid": false
+    },
+    {
+      "text": "0.5",
+      "valid": true
+    },
+    {
+      "text": "1.5",
+      "valid": true
+    },
+    {
+      "text": "1.",
+      "valid": false
+    },
+    {
+      "text": ".5",
+      "valid": false
+    },
+    {
+      "text": "1.1234567",
+      "valid": false
+    },
+    {
+      "text": "999999999999",
+      "valid": true
+    },
+    {
+      "text": "1000000000000",
+      "valid": false
+    },
+    {
+      "text": "-1",
+      "valid": false
+    },
+    {
+      "text": "1,5",
+      "valid": false
+    }
+  ],
+  "exponents": [
+    {
+      "value": 0,
+      "valid": true
+    },
+    {
+      "value": 1,
+      "valid": false
+    },
+    {
+      "value": 2,
+      "valid": true
+    },
+    {
+      "value": 3,
+      "valid": true
+    },
+    {
+      "value": 4,
+      "valid": false
+    }
+  ],
+  "sums": [
+    {
+      "a": "9223372036854775807",
+      "b": "1",
+      "ok": false
+    },
+    {
+      "a": "9223372036854775806",
+      "b": "1",
+      "ok": true
+    },
+    {
+      "a": "-9223372036854775808",
+      "b": "-1",
+      "ok": false
+    },
+    {
+      "a": "100",
+      "b": "-30",
+      "ok": true
+    }
+  ]
+}

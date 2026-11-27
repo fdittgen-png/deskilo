@@ -1,0 +1,746 @@
+{
+  "contract": "embedded_till/v1",
+  "cases": [
+    {
+      "name": "bakery_default",
+      "currency": "EUR",
+      "exponent": 2,
+      "till_keys": [
+        {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "name": "Baguette",
+          "unit": "piece",
+          "category": "Bread",
+          "colour": "#C8A165"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "name": "Sourdough",
+          "unit": "piece",
+          "category": "Bread",
+          "colour": "#c8a165"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "name": "Rye",
+          "unit": "piece",
+          "category": "Bread"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000010",
+          "name": "Pastry 0",
+          "unit": "piece",
+          "category": "Pastry",
+          "colour": "#FF8800"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000011",
+          "name": "Pastry 1",
+          "unit": "piece",
+          "category": "Pastry",
+          "colour": "#FF8800"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000012",
+          "name": "Pastry 2",
+          "unit": "piece",
+          "category": "Pastry",
+          "colour": "#FF8800"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000013",
+          "name": "Pastry 3",
+          "unit": "piece",
+          "category": "Pastry",
+          "colour": "#FF8800"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "name": "Pastry 4",
+          "unit": "piece",
+          "category": "Pastry",
+          "colour": "#FF8800"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000015",
+          "name": "Pastry 5",
+          "unit": "piece",
+          "category": "Pastry",
+          "colour": "#FF8800"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000016",
+          "name": "Pastry 6",
+          "unit": "piece",
+          "category": "Pastry",
+          "colour": "#FF8800"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000017",
+          "name": "Pastry 7",
+          "unit": "piece",
+          "category": "Pastry",
+          "colour": "#FF8800"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000018",
+          "name": "Pastry 8",
+          "unit": "piece",
+          "category": "Pastry",
+          "colour": "#FF8800"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000030",
+          "name": "Coffee",
+          "unit": "piece"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000031",
+          "name": "Tea",
+          "unit": "piece",
+          "colour": "not-a-colour"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000040",
+          "name": "Cheese",
+          "unit": "kg",
+          "category": "Deli",
+          "weighed": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000041",
+          "name": "Red wine",
+          "unit": "piece",
+          "category": "Deli",
+          "minAge": 18
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000042",
+          "name": "Oat milk",
+          "unit": "l",
+          "category": "Deli",
+          "depositItemId": "00000000-0000-4000-8000-000000000060"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000050",
+          "name": "Crème brûlée aux fruits rouges de la maison très longue étiquette",
+          "unit": "piece",
+          "category": "Deli"
+        }
+      ]
+    },
+    {
+      "name": "over_the_page_ceiling",
+      "currency": "CHF",
+      "exponent": 2,
+      "till_keys": [
+        {
+          "id": "00000000-0000-4000-8000-000000001000",
+          "name": "Item 000",
+          "unit": "piece",
+          "category": "Cat 00"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001001",
+          "name": "Item 001",
+          "unit": "piece",
+          "category": "Cat 00"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001002",
+          "name": "Item 002",
+          "unit": "piece",
+          "category": "Cat 00"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001003",
+          "name": "Item 003",
+          "unit": "piece",
+          "category": "Cat 00"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001004",
+          "name": "Item 004",
+          "unit": "piece",
+          "category": "Cat 00"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001005",
+          "name": "Item 005",
+          "unit": "piece",
+          "category": "Cat 00"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001006",
+          "name": "Item 006",
+          "unit": "piece",
+          "category": "Cat 00"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001007",
+          "name": "Item 007",
+          "unit": "piece",
+          "category": "Cat 00"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001008",
+          "name": "Item 008",
+          "unit": "piece",
+          "category": "Cat 01"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001009",
+          "name": "Item 009",
+          "unit": "piece",
+          "category": "Cat 01"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001010",
+          "name": "Item 010",
+          "unit": "piece",
+          "category": "Cat 01"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001011",
+          "name": "Item 011",
+          "unit": "piece",
+          "category": "Cat 01"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001012",
+          "name": "Item 012",
+          "unit": "piece",
+          "category": "Cat 01"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001013",
+          "name": "Item 013",
+          "unit": "piece",
+          "category": "Cat 01"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001014",
+          "name": "Item 014",
+          "unit": "piece",
+          "category": "Cat 01"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001015",
+          "name": "Item 015",
+          "unit": "piece",
+          "category": "Cat 01"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001016",
+          "name": "Item 016",
+          "unit": "piece",
+          "category": "Cat 02"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001017",
+          "name": "Item 017",
+          "unit": "piece",
+          "category": "Cat 02"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001018",
+          "name": "Item 018",
+          "unit": "piece",
+          "category": "Cat 02"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001019",
+          "name": "Item 019",
+          "unit": "piece",
+          "category": "Cat 02"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001020",
+          "name": "Item 020",
+          "unit": "piece",
+          "category": "Cat 02"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001021",
+          "name": "Item 021",
+          "unit": "piece",
+          "category": "Cat 02"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001022",
+          "name": "Item 022",
+          "unit": "piece",
+          "category": "Cat 02"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001023",
+          "name": "Item 023",
+          "unit": "piece",
+          "category": "Cat 02"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001024",
+          "name": "Item 024",
+          "unit": "piece",
+          "category": "Cat 03"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001025",
+          "name": "Item 025",
+          "unit": "piece",
+          "category": "Cat 03"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001026",
+          "name": "Item 026",
+          "unit": "piece",
+          "category": "Cat 03"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001027",
+          "name": "Item 027",
+          "unit": "piece",
+          "category": "Cat 03"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001028",
+          "name": "Item 028",
+          "unit": "piece",
+          "category": "Cat 03"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001029",
+          "name": "Item 029",
+          "unit": "piece",
+          "category": "Cat 03"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001030",
+          "name": "Item 030",
+          "unit": "piece",
+          "category": "Cat 03"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001031",
+          "name": "Item 031",
+          "unit": "piece",
+          "category": "Cat 03"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001032",
+          "name": "Item 032",
+          "unit": "piece",
+          "category": "Cat 04"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001033",
+          "name": "Item 033",
+          "unit": "piece",
+          "category": "Cat 04"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001034",
+          "name": "Item 034",
+          "unit": "piece",
+          "category": "Cat 04"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001035",
+          "name": "Item 035",
+          "unit": "piece",
+          "category": "Cat 04"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001036",
+          "name": "Item 036",
+          "unit": "piece",
+          "category": "Cat 04"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001037",
+          "name": "Item 037",
+          "unit": "piece",
+          "category": "Cat 04"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001038",
+          "name": "Item 038",
+          "unit": "piece",
+          "category": "Cat 04"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001039",
+          "name": "Item 039",
+          "unit": "piece",
+          "category": "Cat 04"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001040",
+          "name": "Item 040",
+          "unit": "piece",
+          "category": "Cat 05"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001041",
+          "name": "Item 041",
+          "unit": "piece",
+          "category": "Cat 05"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001042",
+          "name": "Item 042",
+          "unit": "piece",
+          "category": "Cat 05"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001043",
+          "name": "Item 043",
+          "unit": "piece",
+          "category": "Cat 05"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001044",
+          "name": "Item 044",
+          "unit": "piece",
+          "category": "Cat 05"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001045",
+          "name": "Item 045",
+          "unit": "piece",
+          "category": "Cat 05"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001046",
+          "name": "Item 046",
+          "unit": "piece",
+          "category": "Cat 05"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001047",
+          "name": "Item 047",
+          "unit": "piece",
+          "category": "Cat 05"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001048",
+          "name": "Item 048",
+          "unit": "piece",
+          "category": "Cat 06"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001049",
+          "name": "Item 049",
+          "unit": "piece",
+          "category": "Cat 06"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001050",
+          "name": "Item 050",
+          "unit": "piece",
+          "category": "Cat 06"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001051",
+          "name": "Item 051",
+          "unit": "piece",
+          "category": "Cat 06"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001052",
+          "name": "Item 052",
+          "unit": "piece",
+          "category": "Cat 06"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001053",
+          "name": "Item 053",
+          "unit": "piece",
+          "category": "Cat 06"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001054",
+          "name": "Item 054",
+          "unit": "piece",
+          "category": "Cat 06"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001055",
+          "name": "Item 055",
+          "unit": "piece",
+          "category": "Cat 06"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001056",
+          "name": "Item 056",
+          "unit": "piece",
+          "category": "Cat 07"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001057",
+          "name": "Item 057",
+          "unit": "piece",
+          "category": "Cat 07"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001058",
+          "name": "Item 058",
+          "unit": "piece",
+          "category": "Cat 07"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001059",
+          "name": "Item 059",
+          "unit": "piece",
+          "category": "Cat 07"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001060",
+          "name": "Item 060",
+          "unit": "piece",
+          "category": "Cat 07"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001061",
+          "name": "Item 061",
+          "unit": "piece",
+          "category": "Cat 07"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001062",
+          "name": "Item 062",
+          "unit": "piece",
+          "category": "Cat 07"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001063",
+          "name": "Item 063",
+          "unit": "piece",
+          "category": "Cat 07"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001064",
+          "name": "Item 064",
+          "unit": "piece",
+          "category": "Cat 08"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001065",
+          "name": "Item 065",
+          "unit": "piece",
+          "category": "Cat 08"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001066",
+          "name": "Item 066",
+          "unit": "piece",
+          "category": "Cat 08"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001067",
+          "name": "Item 067",
+          "unit": "piece",
+          "category": "Cat 08"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001068",
+          "name": "Item 068",
+          "unit": "piece",
+          "category": "Cat 08"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001069",
+          "name": "Item 069",
+          "unit": "piece",
+          "category": "Cat 08"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001070",
+          "name": "Item 070",
+          "unit": "piece",
+          "category": "Cat 08"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001071",
+          "name": "Item 071",
+          "unit": "piece",
+          "category": "Cat 08"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001072",
+          "name": "Item 072",
+          "unit": "piece",
+          "category": "Cat 09"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001073",
+          "name": "Item 073",
+          "unit": "piece",
+          "category": "Cat 09"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001074",
+          "name": "Item 074",
+          "unit": "piece",
+          "category": "Cat 09"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001075",
+          "name": "Item 075",
+          "unit": "piece",
+          "category": "Cat 09"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001076",
+          "name": "Item 076",
+          "unit": "piece",
+          "category": "Cat 09"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001077",
+          "name": "Item 077",
+          "unit": "piece",
+          "category": "Cat 09"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001078",
+          "name": "Item 078",
+          "unit": "piece",
+          "category": "Cat 09"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001079",
+          "name": "Item 079",
+          "unit": "piece",
+          "category": "Cat 09"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001080",
+          "name": "Item 080",
+          "unit": "piece",
+          "category": "Cat 10"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001081",
+          "name": "Item 081",
+          "unit": "piece",
+          "category": "Cat 10"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001082",
+          "name": "Item 082",
+          "unit": "piece",
+          "category": "Cat 10"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001083",
+          "name": "Item 083",
+          "unit": "piece",
+          "category": "Cat 10"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001084",
+          "name": "Item 084",
+          "unit": "piece",
+          "category": "Cat 10"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001085",
+          "name": "Item 085",
+          "unit": "piece",
+          "category": "Cat 10"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001086",
+          "name": "Item 086",
+          "unit": "piece",
+          "category": "Cat 10"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001087",
+          "name": "Item 087",
+          "unit": "piece",
+          "category": "Cat 10"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001088",
+          "name": "Item 088",
+          "unit": "piece",
+          "category": "Cat 11"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001089",
+          "name": "Item 089",
+          "unit": "piece",
+          "category": "Cat 11"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001090",
+          "name": "Item 090",
+          "unit": "piece",
+          "category": "Cat 11"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001091",
+          "name": "Item 091",
+          "unit": "piece",
+          "category": "Cat 11"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001092",
+          "name": "Item 092",
+          "unit": "piece",
+          "category": "Cat 11"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001093",
+          "name": "Item 093",
+          "unit": "piece",
+          "category": "Cat 11"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001094",
+          "name": "Item 094",
+          "unit": "piece",
+          "category": "Cat 11"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001095",
+          "name": "Item 095",
+          "unit": "piece",
+          "category": "Cat 11"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001096",
+          "name": "Item 096",
+          "unit": "piece",
+          "category": "Cat 12"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001097",
+          "name": "Item 097",
+          "unit": "piece",
+          "category": "Cat 12"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001098",
+          "name": "Item 098",
+          "unit": "piece",
+          "category": "Cat 12"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001099",
+          "name": "Item 099",
+          "unit": "piece",
+          "category": "Cat 12"
+        }
+      ]
+    },
+    {
+      "name": "no_keys",
+      "currency": "JPY",
+      "exponent": 0,
+      "till_keys": []
+    }
+  ]
+}
