@@ -1,0 +1,60 @@
+{
+  "#": "#4466 -- the readable pairing code of a board: 9 symbols of base 31 (no 0 O 1 I L) holding the board's short id (32 bits), its profile (2 bits) and a proof (10 bits of its fingerprint), then a check symbol (the position-weighted sum mod 31), shown as XXXXX-XXXXX. Read by the firmware host tests and the Dart tests alike.",
+  "alphabet": "23456789ABCDEFGHJKMNPQRSTUVWXYZ",
+  "codes": [
+    {
+      "short_id": "91e10764",
+      "profile": 0,
+      "proof": 675,
+      "code": "DSDF5-WTUC4"
+    },
+    {
+      "short_id": "00000000",
+      "profile": 0,
+      "proof": 0,
+      "code": "22222-22222"
+    },
+    {
+      "short_id": "ffffffff",
+      "profile": 3,
+      "proof": 1023,
+      "code": "PNF54-DM6HF"
+    },
+    {
+      "short_id": "1234abcd",
+      "profile": 1,
+      "proof": 341,
+      "code": "3GGPV-545M5"
+    },
+    {
+      "short_id": "7f00ff00",
+      "profile": 0,
+      "proof": 512,
+      "code": "C98XJ-XDBY8"
+    }
+  ],
+  "refused": [
+    {
+      "code": "DSD25-WTUC4",
+      "reason": "check"
+    },
+    {
+      "code": "SDDF5-WTUC4",
+      "reason": "check"
+    },
+    {
+      "code": "DSOF5-WTUC4",
+      "reason": "alphabet"
+    },
+    {
+      "code": "DSDF5-WT",
+      "reason": "length"
+    }
+  ],
+  "lenient": [
+    {
+      "typed": "dsdf5 wtuc4",
+      "code": "DSDF5-WTUC4"
+    }
+  ]
+}

@@ -127,6 +127,7 @@ signed-out on  /settings -> /auth
 signed-out on  /settings/assistant-setup -> /auth
 signed-out on  /settings/assistants -> /auth
 signed-out on  /settings/colours -> /auth
+signed-out on  /settings/devices -> /auth
 signed-out on  /settings/master-data -> /auth
 signed-out on  /settings/number-sequences -> /auth
 signed-out on  /settings/payment-terms -> /auth
@@ -310,6 +311,7 @@ signed-out off /settings -> /auth
 signed-out off /settings/assistant-setup -> /auth
 signed-out off /settings/assistants -> /auth
 signed-out off /settings/colours -> /auth
+signed-out off /settings/devices -> /auth
 signed-out off /settings/master-data -> /auth
 signed-out off /settings/number-sequences -> /auth
 signed-out off /settings/payment-terms -> /auth
@@ -493,6 +495,7 @@ no-space on  /settings -> (open)
 no-space on  /settings/assistant-setup -> /me
 no-space on  /settings/assistants -> /me
 no-space on  /settings/colours -> /me
+no-space on  /settings/devices -> /me
 no-space on  /settings/master-data -> /me
 no-space on  /settings/number-sequences -> /me
 no-space on  /settings/payment-terms -> /me
@@ -676,6 +679,7 @@ no-space off /settings -> (open)
 no-space off /settings/assistant-setup -> /me
 no-space off /settings/assistants -> /me
 no-space off /settings/colours -> /me
+no-space off /settings/devices -> /me
 no-space off /settings/master-data -> /me
 no-space off /settings/number-sequences -> /me
 no-space off /settings/payment-terms -> /me
@@ -859,6 +863,7 @@ member on  /settings -> (open)
 member on  /settings/assistant-setup -> /calendar
 member on  /settings/assistants -> /calendar
 member on  /settings/colours -> /calendar
+member on  /settings/devices -> /calendar
 member on  /settings/master-data -> /calendar
 member on  /settings/number-sequences -> /calendar
 member on  /settings/payment-terms -> (open)
@@ -1042,6 +1047,7 @@ member off /settings -> (open)
 member off /settings/assistant-setup -> /messages
 member off /settings/assistants -> /messages
 member off /settings/colours -> /messages
+member off /settings/devices -> /messages
 member off /settings/master-data -> /messages
 member off /settings/number-sequences -> /messages
 member off /settings/payment-terms -> /settings
@@ -1225,6 +1231,7 @@ admin on  /settings -> (open)
 admin on  /settings/assistant-setup -> /calendar
 admin on  /settings/assistants -> /calendar
 admin on  /settings/colours -> /calendar
+admin on  /settings/devices -> /calendar
 admin on  /settings/master-data -> (open)
 admin on  /settings/number-sequences -> /calendar
 admin on  /settings/payment-terms -> (open)
@@ -1409,6 +1416,7 @@ admin off /settings -> (open)
 admin off /settings/assistant-setup -> /messages
 admin off /settings/assistants -> /messages
 admin off /settings/colours -> /messages
+admin off /settings/devices -> /messages
 admin off /settings/master-data -> /settings
 admin off /settings/number-sequences -> /messages
 admin off /settings/payment-terms -> /settings
@@ -1592,6 +1600,7 @@ owner on  /settings -> (open)
 owner on  /settings/assistant-setup -> (open)
 owner on  /settings/assistants -> (open)
 owner on  /settings/colours -> /settings
+owner on  /settings/devices -> /settings
 owner on  /settings/master-data -> (open)
 owner on  /settings/number-sequences -> /settings
 owner on  /settings/payment-terms -> (open)
@@ -1776,6 +1785,7 @@ owner off /settings -> (open)
 owner off /settings/assistant-setup -> (open)
 owner off /settings/assistants -> (open)
 owner off /settings/colours -> /settings
+owner off /settings/devices -> /settings
 owner off /settings/master-data -> (open)
 owner off /settings/number-sequences -> /settings
 owner off /settings/payment-terms -> /settings

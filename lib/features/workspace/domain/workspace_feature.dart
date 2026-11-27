@@ -446,7 +446,8 @@ enum WorkspaceFeature {
   counterOfflineCash,
   unitsOfMeasure,
   counterTillLayout,
-  counterReceiptPrinter;
+  counterReceiptPrinter,
+  counterEmbeddedTerminal;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

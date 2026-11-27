@@ -1,0 +1,94 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# #4474 -- the till terminal firmware on every change to it: the host tests of its rules and screens, its generated
+# texts, both board images built with the pinned ESP-IDF, and the images kept as an artifact. The board itself is
+# qualified on the bench, not here.
+name: CI · Till firmware
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    paths:
+      - 'firmware/till/**'
+      - 'contracts/embedded_till/**'
+      - 'test/fixtures/device_pairing_codes.json'
+      - 'tools/build_till_strings.py'
+      - 'tools/till_provision.py'
+      - '.github/workflows/till-firmware.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'firmware/till/**'
+      - 'contracts/embedded_till/**'
+      - 'test/fixtures/device_pairing_codes.json'
+      - 'tools/build_till_strings.py'
+      - 'tools/till_provision.py'
+      - '.github/workflows/till-firmware.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: till-firmware-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  IDF_TAG: v5.3.1
+  IDF_COMMIT: c8fc5f643b7a7b0d3b182d3df610844e3dc9bd74
+
+jobs:
+  firmware:
+    name: till · firmware
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: The board's texts are what the generator writes
+        run: python3 tools/build_till_strings.py --check
+      - name: Install the pinned ESP-IDF
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch "$IDF_TAG" --recursive --shallow-submodules https://github.com/espressif/esp-idf.git "$RUNNER_TEMP/esp-idf"
+          test "$(git -C "$RUNNER_TEMP/esp-idf" rev-parse HEAD)" = "$IDF_COMMIT"
+          IDF_TOOLS_PATH="$RUNNER_TEMP/idf-tools" "$RUNNER_TEMP/esp-idf/install.sh" esp32
+      - name: Host tests of the rules
+        run: IDF_PATH="$RUNNER_TEMP/esp-idf" bash firmware/till/test/host/run.sh
+      - name: Build the E32R40T and the ideaspark images
+        run: |
+          set -euo pipefail
+          export IDF_TOOLS_PATH="$RUNNER_TEMP/idf-tools"
+          . "$RUNNER_TEMP/esp-idf/export.sh"
+          cd firmware/till
+          idf.py -B build build
+          idf.py -B build-ideaspark -D SDKCONFIG=sdkconfig.ideaspark \
+            -D SDKCONFIG_DEFAULTS="sdkconfig.defaults;sdkconfig.defaults.ideaspark" build
+          idf.py -B build size > build/size-report.txt
+          idf.py -B build-ideaspark size > build-ideaspark/size-report.txt
+          git diff --exit-code -- dependencies.lock
+      - name: Host tests of the screens in five languages
+        run: bash firmware/till/test/host/run_ui.sh
+      - name: Keep the images
+        uses: actions/upload-artifact@v4
+        with:
+          name: till-firmware-${{ github.sha }}
+          if-no-files-found: error
+          retention-days: 30
+          path: |
+            firmware/till/build/flasher_args.json
+            firmware/till/build/flash_args
+            firmware/till/build/bootloader/bootloader.bin
+            firmware/till/build/partition_table/partition-table.bin
+            firmware/till/build/ota_data_initial.bin
+            firmware/till/build/deskilo_till.bin
+            firmware/till/build/deskilo_till.elf
+            firmware/till/build/size-report.txt
+            firmware/till/build-ideaspark/flasher_args.json
+            firmware/till/build-ideaspark/flash_args
+            firmware/till/build-ideaspark/bootloader/bootloader.bin
+            firmware/till/build-ideaspark/partition_table/partition-table.bin
+            firmware/till/build-ideaspark/ota_data_initial.bin
+            firmware/till/build-ideaspark/deskilo_till.bin
+            firmware/till/build-ideaspark/deskilo_till.elf
+            firmware/till/build-ideaspark/size-report.txt
+            firmware/till/third_party/

@@ -82,6 +82,8 @@ const _switches = <WorkspaceFeature>{
   WorkspaceFeature.counterTillLayout,
   // #4368 — asked for at the till, where its device's printer is set.
   WorkspaceFeature.counterReceiptPrinter,
+  // #4466 — asked for where a till board is connected (Settings › Devices).
+  WorkspaceFeature.counterEmbeddedTerminal,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,
   WorkspaceFeature.seatDayTimeline,

@@ -1,0 +1,19 @@
+{
+  "@@locale": "fr",
+  "devicePairingTitle": "Appareils",
+  "devicePairingSubtitle": "Terminaux de caisse : en relier un par son code QR ou son code",
+  "devicePairingNone": "Aucun terminal de caisse n'est encore relié à cette entreprise.",
+  "devicePairingConnect": "Relier un appareil",
+  "devicePairingScanHint": "Présentez le code QR du terminal à la caméra. Pour l'afficher, maintenez le bouton BOOT du terminal 3 secondes.",
+  "devicePairingType": "Saisir le code",
+  "devicePairingTypeHelper": "Les 10 caractères à côté du code QR du terminal, par exemple 3DNGP-UN9CG.",
+  "devicePairingCheck": "Vérifier le code",
+  "devicePairingRefusedLength": "Le code d'un terminal compte 10 caractères, comme XXXXX-XXXXX.",
+  "devicePairingRefusedAlphabet": "Le code d'un terminal ne contient jamais 0, O, 1, I ou L, ni d'autres signes : vérifiez le caractère sur le terminal.",
+  "devicePairingRefusedCheck": "Aucun terminal n'affiche ce code : un caractère est faux, ou deux sont inversés. Comparez-le avec le terminal.",
+  "devicePairingRefusedProfile": "Ce terminal est d'un modèle que cette application ne connaît pas encore. Mettez l'application à jour, puis reliez-le.",
+  "devicePairingFound": "Terminal trouvé",
+  "devicePairingBoard": "Terminal {id} · {model}",
+  "devicePairingFingerprint": "Empreinte {fingerprint} : comparez-la avec l'écran du terminal.",
+  "devicePairingLater": "Relier le terminal à cette entreprise viendra avec une prochaine mise à jour : rien ne lui a été envoyé."
+}

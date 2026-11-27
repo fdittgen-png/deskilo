@@ -1011,6 +1011,35 @@
       "lib/features/workspace/presentation/screens/pending_approval_screen.dart": 1,
 
       "lib/features/workspace/presentation/widgets/bi_charts.dart": 1
+    },
+    "demoFeatureImports": {
+      "auth": 14,
+
+      "calendar": 2,
+
+      "directory": 27,
+
+      "events": 28,
+
+      "kiosk": 1,
+
+      "mcp": 12,
+
+      "me": 13,
+
+      "money": 325,
+
+      "plan": 61,
+
+      "profile": 16,
+
+      "reservations": 38,
+
+      "stock": 72,
+
+      "visits": 3,
+
+      "workspace": 292
     }
   },
   "functions": [

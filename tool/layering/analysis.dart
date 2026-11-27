@@ -253,6 +253,24 @@ String shortestCycle(Iterable<String> members, Iterable<String> edges) {
   return [...best, best.first].join(' -> ');
 }
 
+/// #4404 -- the imports of `lib/core/demo` into each feature (the Demo mirrors the features by design, so
+/// [coreToFeatureImports] leaves it out), per feature name: a count that only falls while the move of #2495 waits.
+Map<String, int> demoToFeatureImports(Iterable<File> files) {
+  final counts = <String, int>{};
+  for (final file in files) {
+    if (!file.path.startsWith('lib/core/demo/')) continue;
+    for (final m in importRe.allMatches(file.readAsStringSync())) {
+      final imp = m.group(1)!;
+      final resolved = imp.startsWith('package:deskilo/')
+          ? imp.replaceFirst('package:deskilo/', 'lib/')
+          : resolveRelative(file.path.substring(0, file.path.lastIndexOf('/')), imp);
+      final target = resolved == null ? null : featureOf(resolved);
+      if (target != null) counts.update(target, (n) => n + 1, ifAbsent: () => 1);
+    }
+  }
+  return counts;
+}
+
 /// Imports from `lib/core` (outside `core/demo`, which mirrors the
 /// features by design) into a feature, counted per `core/<area>`.
 Map<String, int> coreToFeatureImports(Iterable<File> files) {

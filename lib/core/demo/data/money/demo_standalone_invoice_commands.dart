@@ -89,6 +89,9 @@ class DemoStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
       missing.add('line_${n}_goods_off');
     } else if (sells && (l.itemId == null || !goods!.sells(l.itemId!))) {
       missing.add('line_${n}_item');
+    } else if (sells && qty.value != null && goods!.inInventoryUnit(l.itemId!, l.unitCode, ExactQuantity.parse(l.quantity)) == null) {
+      // a unit the item has no defined conversion from (0942: `unit`), never read as one
+      missing.add('line_${n}_unit');
     } else if (!sells && l.supply != 'general' && l.supply != 'property') {
       missing.add('line_${n}_supply');
     }
@@ -274,7 +277,9 @@ class DemoStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
   /// The goods lines of [lines]: their number on the invoice, the item and the exact quantity.
   List<({int n, String itemId, ExactQuantity quantity})> _sold(List<StandaloneLine> lines) => [
     for (final (i, l) in lines.indexed)
-      if (l.supply == 'goods' && l.itemId != null) (n: i + 1, itemId: l.itemId!, quantity: ExactQuantity.parse(l.quantity)),
+      // the ledger moves the item's inventory unit: a carton of 12 leaves 12 pieces (0942 stock_to_inventory)
+      if (l.supply == 'goods' && l.itemId != null)
+        (n: i + 1, itemId: l.itemId!, quantity: goods?.inInventoryUnit(l.itemId!, l.unitCode, ExactQuantity.parse(l.quantity)) ?? ExactQuantity.parse(l.quantity)),
   ];
 }
 
@@ -282,6 +287,9 @@ class DemoStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
 abstract interface class DemoInvoiceGoods {
   /// Whether [itemId] is an item the ledger keeps.
   bool sells(String itemId);
+
+  /// #4479 -- [quantity] counted in [unit] as the item's inventory unit, or null when no conversion is defined.
+  ExactQuantity? inInventoryUnit(String itemId, String unit, ExactQuantity quantity);
 
   /// The index of the first line the main store cannot serve, or null.
   int? shortLine(List<({String itemId, ExactQuantity quantity})> lines);

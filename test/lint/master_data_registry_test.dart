@@ -22,6 +22,7 @@ const Map<String, String> _masterDataEditors = {
   '/services': 'the services the business sells',
   '/stock/places': '#4299 the stock places',
   '/till/drawer': '#4367 the tills (and, from each, its layout)',
+  '/settings/devices': '#4466 the till boards connected to the business',
   '/money/suppliers': '#3070 the suppliers',
   '/money/customers': '#4164 the billing customers',
   '/settings/sites': '#945 the sites',
