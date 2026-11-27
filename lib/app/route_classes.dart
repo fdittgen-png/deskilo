@@ -302,7 +302,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/till/day', RouteClass.workspace, namesRole: true, place: 'drawer-till-drawer', measure: PageMeasure.work), // #4367
   RouteRule('/till/layout/:tillId', RouteClass.workspace, namesRole: true, place: 'drawer-till-drawer', measure: PageMeasure.work), // #4448
   RouteRule('/till/receipts', RouteClass.workspace, namesRole: true, place: 'drawer-till', measure: PageMeasure.reading), // #4185
-  RouteRule('/money/quotes', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
+  RouteRule('/money/quotes', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.work), // #4166, #4492: a records table
   RouteRule('/money/quotes/:id', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
   RouteRule('/money/quotes/:id/edit', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
   RouteRule('/money/engagements', RouteClass.workspace, namesRole: true, place: 'drawer-engagements', measure: PageMeasure.reading), // #4178

@@ -18,6 +18,7 @@ import '../../../../core/shortcuts/app_shortcuts.dart';
 import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/purchase.dart';
@@ -53,11 +54,10 @@ class PurchaseOrdersScreen extends ConsumerWidget {
           onPressed: () => context.push(Routes.workspaceSettings),
         ),
       if (desk && mayAdd)
-        TextButton.icon(
+        pageBarAction(
           key: const ValueKey('purchase-order-new'),
+          label: l10n.purchaseOrderNew,
           onPressed: add,
-          icon: const Icon(Icons.add),
-          label: Text(l10n.purchaseOrderNew),
         ),
     ];
     if (desk && workspace != null) {

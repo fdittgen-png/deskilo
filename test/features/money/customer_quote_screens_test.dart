@@ -12,6 +12,7 @@ import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/core/time/calendar_days.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/ui/date_field.dart';
+import 'package:deskilo/core/ui/kit/status_chip.dart';
 import 'package:deskilo/features/money/domain/billing_customer.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
 import 'package:deskilo/features/money/domain/standalone_invoice.dart';
@@ -238,10 +239,36 @@ void main() {
     expect(find.text(_en.quotesIntro), findsOneWidget);
     expect(find.textContaining('QUO-0001'), findsOneWidget);
     expect(find.textContaining('Atelier Lumi'), findsWidgets);
-    expect(find.textContaining(_en.quoteStatusSent), findsOneWidget);
-    expect(find.textContaining(_en.invoicingStatusDraft), findsWidgets);
+    // #4492 — a records table: the state in its chip on the row and as a
+    // filter above it, the amount on the row and in the total under it.
+    expect(find.widgetWithText(StatusChip, _en.quoteStatusSent), findsOneWidget);
+    expect(find.widgetWithText(StatusChip, _en.invoicingStatusDraft), findsOneWidget);
+    expect(find.textContaining(_en.quoteStatusSent), findsWidgets);
+    // a column heading is set in capitals
+    expect(find.text(_en.quoteFieldValidUntil.toUpperCase()), findsOneWidget);
     // 1.5 h at 80.00 net, 20 % VAT: EUR 144.00, worked out when it was sent
-    expect(find.textContaining('144'), findsOneWidget);
+    expect(find.textContaining('144'), findsWidgets);
+  });
+
+  testWidgets('#4492 on a phone a quote is a card with the same facts; a draft '
+      'without a number is named by its customer and says its state once', (tester) async {
+    await _open(tester, const CustomerQuotesScreen(), size: const Size(390, 844));
+    final sent = find.byKey(const ValueKey('quote-row-quote-1'));
+    final draft = find.byKey(const ValueKey('quote-row-quote-2'));
+    expect(find.descendant(of: sent, matching: find.textContaining('QUO-0001')), findsOneWidget);
+    expect(find.descendant(of: sent, matching: find.textContaining('144')), findsOneWidget);
+    expect(find.descendant(of: draft, matching: find.text('Atelier Lumi')), findsOneWidget);
+    expect(
+      find.descendant(of: draft, matching: find.textContaining(_en.invoicingStatusDraft)),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('#4492 a row opens its quote', (tester) async {
+    await _open(tester, const CustomerQuotesScreen());
+    await tester.tap(find.text('QUO-0001'));
+    await _settle(tester);
+    expect(find.text('detail-quote-1'), findsOneWidget);
   });
 
   testWidgets('a list that could not be read says so and tries again; it is '

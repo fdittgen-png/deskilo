@@ -9,6 +9,7 @@
 // is not the place's name is drawn as before; off the desk, always.
 import 'package:flutter/material.dart';
 
+import '../../theme/app_spacing.dart';
 import 'page_title.dart';
 
 /// The bar of a page titled [title], for [Scaffold.appBar].
@@ -36,6 +37,19 @@ PreferredSizeWidget pageBar(
     bottom: bottom,
   );
 }
+
+/// #4492 — the one main action of a page's bar (sheets A1 and B1 of
+/// docs/design/ux-2026-11): filled and worded, never an icon alone, the same
+/// on every records page. [key] is the button's own, so a test and the
+/// recorder press what a person presses. Null [onPressed] disables it.
+Widget pageBarAction({
+  required Key key,
+  required String label,
+  required VoidCallback? onPressed,
+}) => Padding(
+  padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
+  child: FilledButton(key: key, onPressed: onPressed, child: Text(label)),
+);
 
 /// A page's bar on the desk when it would show nothing but the place's
 /// name: no height, the name told to the desk. Public for the tests that
