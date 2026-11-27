@@ -317,8 +317,6 @@ class InvoicingList extends StatelessWidget {
           key: ValueKey('invoicing-customer-${row.customerId}'),
           name: row.customerName,
           caption: _captionOf(context, l, format, row),
-          invoices: '${row.invoices.length}',
-          oldest: _chipOf(l, format, row.invoices.first),
           owes: [
             for (final e in row.owes.byCurrency.entries)
               format.moneyIn(e.key).formatMinor(e.value),

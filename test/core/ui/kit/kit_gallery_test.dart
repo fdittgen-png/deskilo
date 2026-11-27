@@ -127,22 +127,12 @@ class _GalleryState extends State<_Gallery> {
       key: ValueKey('kit-customer-$name'),
       name: name,
       caption: const Text('2 invoices · 50 days late'),
-      invoices: '2',
-      oldest: const StatusChip(label: '50 days late', tone: StatusTone.due),
       owes: const ['CHF 200.00'],
       action: action,
-      wide: wide,
       onTap: () {},
     );
     final customers = RowList(
       rows: [
-        if (wide)
-          const CustomerHeader(
-            customer: 'Customer',
-            invoices: 'Invoices',
-            oldest: 'Oldest',
-            owes: 'Owes',
-          ),
         customer(
           'SASU KaloA',
           action: FilledButton.tonal(

@@ -33,6 +33,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/kit/list_detail_scaffold.dart';
 import '../../../../core/ui/kit/page_bar.dart';
+import '../../../../core/ui/kit/page_more_menu.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/scoped_messenger.dart';
@@ -246,21 +247,9 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
             ),
           ),
       ],
-      // Worded, so the title bar never shows an unnamed icon.
-      child: ConstrainedBox(
-        // The worded button is a whole target, not just its words.
-        constraints: const BoxConstraints(minHeight: 48),
-        child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(MaterialLocalizations.of(context).moreButtonTooltip),
-            const Icon(Icons.arrow_drop_down),
-          ],
-        ),
-      ),
-      ),
+      // Worded, so the title bar never shows an unnamed icon; on a phone
+      // the ⋮ named by the tooltip (#4492: the main action keeps its words).
+      child: pageMoreFace(context),
     );
   }
 

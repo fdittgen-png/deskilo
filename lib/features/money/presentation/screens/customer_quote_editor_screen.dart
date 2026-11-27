@@ -211,6 +211,7 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
         : ref.watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)));
     // The working draft is taken before the page under it is built, so the
     // bar's actions and the fields say the same quote from the first frame.
+    // #4414 kept: a guard on the draft taken, the failure is drawn below
     if (read != null && read.hasValue && !read.hasError) _form.load(read.requireValue);
     Widget body;
     if (id == null) {

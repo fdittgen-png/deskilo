@@ -46,9 +46,27 @@ Widget pageBarAction({
   required Key key,
   required String label,
   required VoidCallback? onPressed,
-}) => Padding(
-  padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
-  child: FilledButton(key: key, onPressed: onPressed, child: Text(label)),
+}) => Builder(
+  // #4492 — never wider than half the window: on a narrow phone at large
+  // text the words end in an ellipsis rather than push the bar over.
+  builder: (context) => Padding(
+    padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
+    child: ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.sizeOf(context).width / 2,
+      ),
+      child: FilledButton(
+        key: key,
+        onPressed: onPressed,
+        child: Text(
+          label,
+          maxLines: 1,
+          softWrap: false,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    ),
+  ),
 );
 
 /// A page's bar on the desk when it would show nothing but the place's

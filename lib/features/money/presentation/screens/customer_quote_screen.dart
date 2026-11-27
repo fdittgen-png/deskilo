@@ -190,6 +190,7 @@ class _CustomerQuoteScreenState extends ConsumerState<CustomerQuoteScreen> {
         : ref.watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)));
     // The bar and the actions say what was read: while the read has failed
     // they stay away, so nothing is offered on an answer of before.
+    // #4414 kept: a guard on the actions, the failure is drawn by AsyncReadBody
     final quote = read == null || read.hasError ? null : read.value;
     final acts =
         id != null && quote != null && canIssue && (quote.openForActions || quote.invoiceId != null);

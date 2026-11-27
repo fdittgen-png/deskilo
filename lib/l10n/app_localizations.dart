@@ -46176,7 +46176,7 @@ abstract class AppLocalizations {
   /// **'Order number: {value}'**
   String quoteOrderLine(String value);
 
-  /// the name of one quote's page in its bar: the word and the quote's number (#4492)
+  /// the name of one quote's page in its bar: the word and the quote's number, a reference such as QUO-0001 (#4492)
   ///
   /// In en, this message translates to:
   /// **'Quote {number}'**

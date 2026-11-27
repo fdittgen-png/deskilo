@@ -4,10 +4,38 @@
 // word "More", never an unnamed icon, and every line a sentence a person
 // reads (sheets A1 and B1 of docs/design/ux-2026-11). The page's one main
 // action stays outside it ([pageBarAction] or the bottom bar); a line that
-// has no action heads the lines after it.
+// has no action heads the lines after it. On a phone (compact width) the
+// word gives way to the ⋮ named "More": the page's main action keeps its
+// words, and the bar holds both at 320 dp and in every language.
 import 'package:flutter/material.dart';
 
 import '../../theme/app_spacing.dart';
+import '../adaptive/window_class.dart';
+
+/// The face of a page's More button: the word and its arrow, or on a phone
+/// the ⋮ (its name is the menu's tooltip).
+Widget pageMoreFace(BuildContext context) {
+  if (WindowClass.of(context) == WindowClass.compact) {
+    return const SizedBox.square(
+      dimension: 48,
+      child: Icon(Icons.more_vert),
+    );
+  }
+  return ConstrainedBox(
+    // The worded button is a whole target, not just its words.
+    constraints: const BoxConstraints(minHeight: 48),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(MaterialLocalizations.of(context).moreButtonTooltip),
+          const Icon(Icons.arrow_drop_down),
+        ],
+      ),
+    ),
+  );
+}
 
 /// One line of a page's More menu.
 @immutable
@@ -80,17 +108,7 @@ class PageMoreMenu extends StatelessWidget {
               child: Text(e.label),
             ),
       ],
-      child: ConstrainedBox(
-        // The worded button is a whole target, not just its words.
-        constraints: const BoxConstraints(minHeight: 48),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [Text(word), const Icon(Icons.arrow_drop_down)],
-          ),
-        ),
-      ),
+      child: pageMoreFace(context),
     );
   }
 }

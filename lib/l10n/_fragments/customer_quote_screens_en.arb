@@ -18,7 +18,7 @@
   },
   "quotePageTitle": "Quote {number}",
   "@quotePageTitle": {
-    "description": "the name of one quote's page in its bar: the word and the quote's number (#4492)",
+    "description": "the name of one quote's page in its bar: the word and the quote's number, a reference such as QUO-0001 (#4492)",
     "placeholders": {
       "number": {
         "type": "String"
