@@ -16857,6 +16857,10 @@
   "@refusalBankMatchUndoLaterFirst": {
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
+  "refusalBooksClosedPeriodDated": "Esta fecha está dentro de un periodo contable cerrado: no se registró nada. Es posible una fecha del periodo abierto; solo el propietario puede reabrir el periodo.",
+  "@refusalBooksClosedPeriodDated": {
+    "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
+  },
   "refusalChangedMeanwhile": "Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.",
   "refusalCounterCashEntry": "Este apunte de efectivo no se acepta: el motivo no está en la lista, el importe supera su límite, o las cuentas no suman.",
   "refusalCounterChanged": "Este ticket cambió mientras tanto: ábralo de nuevo.",

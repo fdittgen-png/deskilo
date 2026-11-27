@@ -13768,6 +13768,7 @@ const Set<String> uiLabelKeys = {
   'refusalBankMatchClosedPeriod',
   'refusalBankMatchSeveralPayments',
   'refusalBankMatchUndoLaterFirst',
+  'refusalBooksClosedPeriodDated',
   'refusalChangedMeanwhile',
   'refusalCounterCashEntry',
   'refusalCounterChanged',

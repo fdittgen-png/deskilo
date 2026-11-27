@@ -8146,6 +8146,7 @@ Map<String, _Getter> _part18() => {
   'quotesNew': (l) => l.quotesNew,
   'readinessStateUnavailable': (l) => l.readinessStateUnavailable,
   'refusalAccountingClosed': (l) => l.refusalAccountingClosed,
+  'refusalBooksClosedPeriodDated': (l) => l.refusalBooksClosedPeriodDated,
   'refusalMemberReturnsAsNew': (l) => l.refusalMemberReturnsAsNew,
   'refusalStockMove': (l) => l.refusalStockMove,
   'refusalStockOnlyExpired': (l) => l.refusalStockOnlyExpired,

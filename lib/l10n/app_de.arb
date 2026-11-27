@@ -16857,6 +16857,10 @@
   "@refusalBankMatchUndoLaterFirst": {
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
+  "refusalBooksClosedPeriodDated": "Dieses Datum liegt in einem abgeschlossenen Buchungszeitraum: Es wurde nichts erfasst. Ein Datum im offenen Zeitraum ist möglich; nur der Inhaber kann den Zeitraum wieder öffnen.",
+  "@refusalBooksClosedPeriodDated": {
+    "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
+  },
   "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.",
   "refusalCounterCashEntry": "Diese Bargeldbuchung wird nicht angenommen: Der Grund steht nicht auf der Liste, der Betrag liegt über Ihrer Grenze, oder die Zahlen ergeben nicht den Betrag.",
   "refusalCounterChanged": "Dieser Beleg hat sich inzwischen geändert: Öffnen Sie ihn erneut.",

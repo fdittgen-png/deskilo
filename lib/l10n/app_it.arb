@@ -16857,6 +16857,10 @@
   "@refusalBankMatchUndoLaterFirst": {
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
+  "refusalBooksClosedPeriodDated": "Questa data è compresa in un periodo contabile chiuso: nulla è stato registrato. È possibile una data del periodo aperto; solo il proprietario può riaprire il periodo.",
+  "@refusalBooksClosedPeriodDated": {
+    "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
+  },
   "refusalChangedMeanwhile": "Nel frattempo è cambiato. Lo riapra per vedere a che punto è.",
   "refusalCounterCashEntry": "Questa registrazione di contante non è accettata: il motivo non è nell'elenco, l'importo supera il Suo limite, oppure i conteggi non tornano.",
   "refusalCounterChanged": "Questo scontrino è cambiato nel frattempo: lo riapra.",

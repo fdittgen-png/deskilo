@@ -47082,6 +47082,12 @@ abstract class AppLocalizations {
   /// **'This is the invoice\'s first payment: undo its later payments first. Nothing was changed.'**
   String get refusalBankMatchUndoLaterFirst;
 
+  /// #4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books.
+  ///
+  /// In en, this message translates to:
+  /// **'This date lies inside a closed period of the books: nothing was recorded. A date in the open period is possible; only the owner can reopen the period.'**
+  String get refusalBooksClosedPeriodDated;
+
   /// #1305 Shown when an invoice changed state before the action reached the server
   ///
   /// In en, this message translates to:
