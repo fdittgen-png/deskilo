@@ -7,7 +7,7 @@
 -- before (`stock_reversals`); and the void of the invoice (`void_invoice` -> `invoice_goods_return`), which returned every
 -- sale of the invoice in full and recorded no reversal. Neither knew of the other: one jar brought back and the invoice
 -- then voided returned five for four sold, and a voided invoice's sale could be returned again in full by the stock door
--- (measured by `584_invoice_goods_come_back_once.sql`).
+-- (measured by `586_invoice_goods_come_back_once.sql`).
 --
 -- The void is now a customer return like any other, in the one record the bound reads:
 --   * it returns, for each sale of the invoice, what has not been reversed on it yet (nothing for a sale already

@@ -45,7 +45,7 @@ const _reviewed = {
   // #4492/0976 restates counter_goods_return_v1 from the replayed body (the effective schema of Quality run 45834744067,
   // master at schema 974): 0897's text with the one condition 0973 patched in, a returned deposit refused, carried over.
   // What differs is the return itself: the sale's own movements, lot by lot, bounded by what is still out, recorded as
-  // a reversal. pgTAP 585, 525, 580 and 581 green on the replay with it (Tools · Database preview).
+  // a reversal. pgTAP 587, 525, 580 and 581 green on the replay with it (Tools · Database preview).
   'counter_goods_return_v1@0976',
   // #4476/0965 patches counter_receipt_draft_v1 at one asserted anchor of its live dev body (0894 + 0908): its lines pass
   // counter_line_prices first. pgTAP 573 green, and every counter suite (520-532, 553-570) unchanged with it, rolled back.

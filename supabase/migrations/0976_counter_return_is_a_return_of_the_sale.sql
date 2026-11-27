@@ -9,7 +9,7 @@
 -- recorded no reversal. Neither door knew of the other: three mugs sold, two taken back at the counter, and the stock door
 -- still took back three -- 12 on hand of 10 received; two teas of a lot at 3.00 sold and taken back left the lot at 8 and
 -- two in no lot, the stock worth 24.00 instead of 30.00; an item tracked by lot could not come back at all (DKG06)
--- (measured by `585_counter_goods_come_back_once.sql`).
+-- (measured by `587_counter_goods_come_back_once.sql`).
 --
 -- The counter's return is now a customer return of the sale's own movements, in the one record the bound reads, as the
 -- void of an invoice is since 0975:
