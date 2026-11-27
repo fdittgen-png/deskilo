@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4479 (0975): an item group carries the unit its items are sold in, what one of it makes of the inventory unit and its price, as it
+-- #4479 (0983): an item group carries the unit its items are sold in, what one of it makes of the inventory unit and its price, as it
 -- carries the purchase unit: proposals, stored with the group, never inherited. A sale unit that is not one of the business's units is
 -- refused; a price that is no whole number of minor units is refused; the factor is both parts or none; the groups' catalogue names
 -- the four as proposals. Rolled back.
