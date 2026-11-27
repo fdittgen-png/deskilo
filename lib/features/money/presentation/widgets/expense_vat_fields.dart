@@ -105,8 +105,9 @@ Future<List<double>> expenseVatPercents(WidgetRef ref, String vatRegime) async {
     rates = await ref.read(vatRatesProvider.future);
   } on Object {
     // The caller's guarded read traces it; the failed read is dropped here so
-    // the next try asks the server again.
-    ref.invalidate(vatRatesProvider);
+    // the next try asks the server again. A screen that was left has no read
+    // to drop: its providers went with it.
+    if (ref.context.mounted) ref.invalidate(vatRatesProvider);
     rethrow;
   }
   return {
@@ -139,15 +140,16 @@ Future<T> whenExpenseVatRead<T>(
     );
   }
   final failed = unread;
+  // The screen that asked may be gone by the time the rates are read: then
+  // nothing opens and nothing is said on it.
+  if (!context.mounted) return unopened;
   if (failed == null) return open();
-  if (context.mounted) {
-    final l10n = context.l10n;
-    AppSnack.error(context, switch (classifyReadFailure(failed)) {
-      ReadFailure.transient => l10n.readStateOffline,
-      ReadFailure.denied => l10n.readStateDenied,
-      ReadFailure.other => l10n.readStateFailed,
-    });
-  }
+  final l10n = context.l10n;
+  AppSnack.error(context, switch (classifyReadFailure(failed)) {
+    ReadFailure.transient => l10n.readStateOffline,
+    ReadFailure.denied => l10n.readStateDenied,
+    ReadFailure.other => l10n.readStateFailed,
+  });
   return unopened;
 }
 

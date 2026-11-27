@@ -189,6 +189,40 @@ if grep -q 'error' "$ERRORS"; then
 fi
 echo "restore clean"
 
+# #4492 -- the default privileges, as the PLATFORM sets them. The entries
+# restored above are the stack's AFTER its replay, and three migrations narrow
+# them (0563 the tables, 0614 and 0618 the functions): a project installed
+# into them never gave `authenticated` the EXECUTE that 173 functions created
+# before 0618 inherit on a real project, so the installed schema was not the
+# one the replay builds (scripts/upgrade_equivalence_check.sh compares the
+# two, grant by grant, and is what found it). A new project has, for the role
+# the migrations run as, everything on new tables, functions and sequences of
+# `public` for the three API roles, and no role-wide entry of its own. The
+# same check proves these statements: with them the two are equal.
+asql -d "$EMPTY" -q -v ON_ERROR_STOP=1 <<'SQL' || fail "could not set the platform's default privileges"
+alter default privileges for role postgres in schema public
+  grant all on tables to postgres, anon, authenticated, service_role;
+alter default privileges for role postgres in schema public
+  grant all on functions to postgres, anon, authenticated, service_role;
+alter default privileges for role postgres in schema public
+  grant all on sequences to postgres, anon, authenticated, service_role;
+alter default privileges for role postgres grant execute on functions to public;
+alter default privileges for role postgres revoke execute on functions from service_role;
+-- pg_graphql's schemas are granted by the platform when the extension is
+-- created; a dump of the extension's own schemas does not carry that.
+do $grants$
+declare s text;
+begin
+  foreach s in array array['graphql', 'graphql_public'] loop
+    if to_regnamespace(s) is not null then
+      execute format('grant usage on schema %I to anon, authenticated, service_role', s);
+      execute format('grant usage on schema %I to postgres with grant option', s);
+    end if;
+  end loop;
+end
+$grants$;
+SQL
+
 # Proof that it is an empty Supabase project, before anything is installed.
 SHAPE="$(asql -d "$EMPTY" -At -v ON_ERROR_STOP=1 -c "
   select concat_ws(' ',
@@ -214,6 +248,14 @@ for db in "$INSTALL" "$RESUME" "$FOREIGN"; do
     || fail "could not copy the empty project into $db"
 done
 echo "prepared in $((SECONDS - started))s"
+
+# #4492 — PREPARE_ONLY=1 (with KEEP_EMPTY=1) stops here: the empty project
+# alone, for a check that installs into copies of it without the Dart
+# toolchain (scripts/upgrade_equivalence_check.sh on the database preview).
+if [ "${PREPARE_ONLY:-}" = 1 ]; then
+  echo "prepare only: $EMPTY is ready"
+  exit 0
+fi
 
 echo "--- the lifecycle"
 dart run tool/instance_lifecycle_check.dart \
