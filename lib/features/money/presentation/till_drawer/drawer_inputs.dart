@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/till_drawer.dart';
 import '../../domain/till_drawer_rules.dart';
@@ -27,11 +28,24 @@ class SameIntent {
   }
 }
 
-/// The rows of a count by denomination: a value and a number of pieces each, added and removed by the person.
+/// The rows of a count by denomination: a value and a number of pieces each, added and removed by the person -- or,
+/// #4511, one row per note and coin of the till ([values], minor units), where only the number of pieces is entered.
 class DenominationRows extends ChangeNotifier {
-  DenominationRows() {
-    add();
+  DenominationRows({this.values = const []}) {
+    if (values.isEmpty) {
+      add();
+    } else {
+      for (final _ in values) {
+        rows.add((value: TextEditingController(), count: TextEditingController()));
+      }
+    }
   }
+
+  /// The till's notes and coins, largest first; empty when its currency is counted with typed values.
+  final List<int> values;
+
+  /// Whether the rows are the till's own notes and coins.
+  bool get listed => values.isNotEmpty;
 
   final List<({TextEditingController value, TextEditingController count})> rows = [];
 
@@ -53,6 +67,17 @@ class DenominationRows extends ChangeNotifier {
 
   /// The typed rows as a count, or null when one is not complete; read with the person's own number format.
   Denominations? read(BuildContext context) {
+    if (listed) {
+      // a note or coin left empty is none of it
+      final counts = <int, int>{};
+      for (var i = 0; i < values.length; i++) {
+        final text = rows[i].count.text.trim();
+        final n = text.isEmpty ? 0 : int.tryParse(text);
+        if (n == null) return null;
+        if (n > 0) counts[values[i]] = n;
+      }
+      return Denominations(counts);
+    }
     final format = appFormatOf(context);
     return denominationsOfRows([
       for (final r in rows) (value: format.parseMinor(r.value.text), count: int.tryParse(r.count.text.trim())),
@@ -95,7 +120,16 @@ class DenominationFields extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 3,
-                      child: AppTextField(
+                      child: rows.listed
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: AppSpacing.md),
+                              child: Text(
+                                appFormatOf(context).moneyIn(currency).formatMinor(rows.values[i]),
+                                key: ValueKey('drawer-denom-value-$i'),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            )
+                          : AppTextField(
                         key: ValueKey('drawer-denom-value-$i'),
                         controller: rows.rows[i].value,
                         label: l10n.tillDrawerDenomValue,
@@ -116,6 +150,7 @@ class DenominationFields extends StatelessWidget {
                         onChanged: (_) => rows.changed(),
                       ),
                     ),
+                    if (!rows.listed)
                     IconButton(
                       key: ValueKey('drawer-denom-remove-$i'),
                       tooltip: l10n.tillDrawerDenomRemove,
@@ -125,6 +160,7 @@ class DenominationFields extends StatelessWidget {
                   ],
                 ),
               ),
+            if (!rows.listed)
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: TextButton.icon(

@@ -21,7 +21,17 @@ import 'drawer_text.dart';
 /// What the close sheet is opened over: the session, its till, how the business counts and what the server gave as expected
 /// (null while the count is blind).
 class CloseSheetInput {
-  const CloseSheetInput({required this.session, required this.tillName, required this.currency, required this.byDenomination, required this.expected});
+  const CloseSheetInput({
+    required this.session,
+    required this.tillName,
+    required this.currency,
+    required this.byDenomination,
+    required this.expected,
+    this.values = const [],
+  });
+
+  /// #4511 -- the till's notes and coins, largest first; empty when its currency is counted with typed values.
+  final List<int> values;
 
   final DrawerSession session;
   final String tillName;
@@ -49,7 +59,7 @@ class _CloseForm {
   final AppLocalizations _l10n;
   final AppFormat _format;
   final FormControllers _fields = FormControllers();
-  final DenominationRows _rows = DenominationRows();
+  late final DenominationRows _rows = DenominationRows(values: _input.values);
   final SameIntent _intent = SameIntent();
   DrawerClosed? closed;
   bool _askReason = false;

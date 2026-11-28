@@ -42627,6 +42627,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillDrawerTillNewTitle => 'Neue Kasse';
 
   @override
+  String get tillDrawerTillNotes => 'Scheine und Münzen dieser Kasse';
+
+  @override
+  String get tillDrawerTillNotesHint =>
+      'Die Kasse wird mit diesen gezählt. Keiner abgeschaltet: alle der Währung.';
+
+  @override
   String get tillDrawerTillSave => 'Kasse speichern';
 
   @override

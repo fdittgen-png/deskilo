@@ -42680,6 +42680,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillDrawerTillNewTitle => 'Nouvelle caisse';
 
   @override
+  String get tillDrawerTillNotes => 'Billets et pièces de ce tiroir';
+
+  @override
+  String get tillDrawerTillNotesHint =>
+      'Le tiroir est compté avec ceux-ci. Aucun désactivé : tous ceux de la devise.';
+
+  @override
   String get tillDrawerTillSave => 'Enregistrer la caisse';
 
   @override

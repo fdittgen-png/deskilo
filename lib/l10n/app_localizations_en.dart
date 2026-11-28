@@ -42153,6 +42153,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillDrawerTillNewTitle => 'New till';
 
   @override
+  String get tillDrawerTillNotes => 'Notes and coins in this drawer';
+
+  @override
+  String get tillDrawerTillNotesHint =>
+      'The drawer is counted in these. None switched off: all of the currency\'s.';
+
+  @override
   String get tillDrawerTillSave => 'Save the till';
 
   @override

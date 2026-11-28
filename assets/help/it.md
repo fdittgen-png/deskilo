@@ -3180,9 +3180,9 @@ Provato finora: i byte rispetto ai file di riferimento e un ricevitore locale. N
 
 Si gestisce un cassetto di cassa e si vuole sapere che il denaro al suo interno sia corretto a fine giornata.
 
-Aprire **Cassetto di cassa** nel menu delle vendite (richiede la funzione sessioni di cassa e il diritto di emettere fatture o di vedere le finanze). Ogni cassa dell'attività è elencata con il suo stato. Chi gestisce le sedi aggiunge una cassa con **Aggiungere una cassa** e può rinominarla o disattivarla.
+Aprire **Cassetto di cassa** nel menu delle vendite (richiede la funzione sessioni di cassa e il diritto di emettere fatture o di vedere le finanze). Ogni cassa dell'attività è elencata con il suo stato. Chi gestisce le sedi aggiunge una cassa con **Aggiungere una cassa** e può rinominarla o disattivarla. Nella scheda di una cassa, **Banconote e monete di questo cassetto** stabilisce con quali viene contata; un cassetto senza monete da 1 e 2 centesimi, per esempio, non le elenca mai. Un conteggio che nomina una banconota o una moneta che la cassa non tiene viene rifiutato.
 
-Premere **Aprire la cassa**, digitare il **Fondo cassa nel cassetto** (o, se l'attività conta per taglio, il valore di ogni banconota o moneta e quanti pezzi) e confermare. Una cassa ha una sola sessione aperta alla volta e, con le sessioni di cassa, la cassa vende solo su una sessione aperta: senza sessione aperta propone **Aprire la cassa** invece di vendere.
+Premere **Aprire la cassa**, digitare il **Fondo cassa nel cassetto** (o, se l'attività conta per taglio, quanti pezzi di ogni banconota e moneta elencata dalla cassa; una valuta di cui l'app non conosce le banconote si conta digitando il valore di ciascun pezzo) e confermare. Una cassa ha una sola sessione aperta alla volta e, con le sessioni di cassa, la cassa vende solo su una sessione aperta: senza sessione aperta propone **Aprire la cassa** invece di vendere.
 
 **Versamento o prelievo** registra il denaro messo nel cassetto o prelevato, con un **Motivo** scelto dall'elenco dell'attività. Un prelievo oltre il limite dell'attività viene registrato da chi può registrare i pagamenti in uscita.
 

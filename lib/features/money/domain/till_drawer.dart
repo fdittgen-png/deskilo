@@ -20,7 +20,7 @@ class DrawerSession {
 
 /// A till of the business and the session open on it, when one is.
 class DrawerTill {
-  const DrawerTill({required this.id, required this.name, required this.active, this.siteId, this.session});
+  const DrawerTill({required this.id, required this.name, required this.active, this.siteId, this.session, this.denominations});
 
   final String id;
   final String name;
@@ -29,6 +29,9 @@ class DrawerTill {
 
   /// The open session the person may read; null when none is open (or it is another cashier's, which they do not read).
   final DrawerSession? session;
+
+  /// #4511 -- the notes and coins this till's drawer carries, in minor units; null is every current one of the currency.
+  final List<int>? denominations;
 
   bool get isOpen => session != null;
 
@@ -40,6 +43,7 @@ class DrawerTill {
       active: r.boolOr('active', fallback: true),
       siteId: r.stringOrNull('site_id'),
       session: session,
+      denominations: _values(r.raw('denominations')),
     );
   }
 
@@ -54,6 +58,9 @@ DrawerSession drawerSessionFromRow(Object? json) {
   final r = JsonReader.of(json, context: 'counter_till_sessions');
   return DrawerSession(id: r.string('id'), tillId: r.string('till_id'), floatMinor: _minor(r, 'float_minor'), openedByMemberId: r.stringOr('opened_by_member_id'));
 }
+
+/// #4511 -- a till's pick of notes and coins as the server sends it (a list of numbers or texts), or null.
+List<int>? _values(Object? raw) => raw is List ? [for (final v in raw) int.parse('$v')] : null;
 
 /// Minor units as the server sends them: a number or a text.
 int _minor(JsonReader r, String key) => int.parse('${r.raw(key)}');
@@ -227,6 +234,10 @@ abstract interface class TillDrawerPort {
   Future<DrawerTill> saveTill(String workspaceId, {required String requestId, String? tillId, required String name, String? siteId, required bool active});
 
   Future<DrawerOpened> openSession(String workspaceId, {required String requestId, required String tillId, required int floatMinor, Denominations? denominations});
+
+  /// #4511 -- the notes and coins [tillId]'s drawer carries ([values], minor units; empty is every current one of the
+  /// currency). Answers the pick, null for every one.
+  Future<List<int>?> setTillDenominations(String workspaceId, {required String tillId, required List<int> values});
 
   /// A cash entry in or out of the drawer of [sessionId]; a request id replays the entry it made.
   Future<DrawerEntryMade> cashEntry(String workspaceId, {required String requestId, required String sessionId, required DrawerEntry entry});

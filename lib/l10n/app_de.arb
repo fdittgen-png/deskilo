@@ -24639,6 +24639,8 @@
   "tillDrawerTillActive": "In Benutzung",
   "tillDrawerTillName": "Name der Kasse",
   "tillDrawerTillNewTitle": "Neue Kasse",
+  "tillDrawerTillNotes": "Scheine und Münzen dieser Kasse",
+  "tillDrawerTillNotesHint": "Die Kasse wird mit diesen gezählt. Keiner abgeschaltet: alle der Währung.",
   "tillDrawerTillSave": "Kasse speichern",
   "tillDrawerTitle": "Kassenschublade",
   "tillFailed": "Die Kasse konnte das nicht ausführen. Versuchen Sie es erneut.",

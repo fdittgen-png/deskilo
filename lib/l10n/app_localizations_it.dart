@@ -42551,6 +42551,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillDrawerTillNewTitle => 'Nuova cassa';
 
   @override
+  String get tillDrawerTillNotes => 'Banconote e monete di questo cassetto';
+
+  @override
+  String get tillDrawerTillNotesHint =>
+      'Il cassetto viene contato con queste. Nessuna disattivata: tutte quelle della valuta.';
+
+  @override
   String get tillDrawerTillSave => 'Salvare la cassa';
 
   @override

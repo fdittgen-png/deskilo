@@ -3330,9 +3330,9 @@ Tested so far: the bytes against goldens and a local listener. No printer model 
 
 You work a cash drawer and want to know that the money in it is right at the end of the day.
 
-Open **Till drawer** in the sales menu (it needs the till sessions feature and the right to issue invoices or to see the finances). Every till of the business is listed with its state. Someone who manages the sites adds a till with **Add a till** and can rename it or switch it off.
+Open **Till drawer** in the sales menu (it needs the till sessions feature and the right to issue invoices or to see the finances). Every till of the business is listed with its state. Someone who manages the sites adds a till with **Add a till** and can rename it or switch it off. In a till's sheet, **Notes and coins in this drawer** sets which notes and coins it is counted in; a drawer without 1 and 2 cent coins, for example, never lists them. A count naming a note or coin the till does not carry is refused.
 
-Press **Open the till**, type the **Float in the drawer** (or, when your business counts by denomination, the value of each note or coin and how many) and confirm. A till has one open session at a time, and with till sessions on the till sells only on an open session: with none open it offers **Open the till** instead of selling.
+Press **Open the till**, type the **Float in the drawer** (or, when your business counts by denomination, how many of each note and coin the till lists; a currency the app has no notes for is counted with the value of each typed) and confirm. A till has one open session at a time, and with till sessions on the till sells only on an open session: with none open it offers **Open the till** instead of selling.
 
 **Paid in or out** records cash put into or taken out of the drawer, with a **Reason** chosen from your business's list. A paid-out above the business's limit is recorded by someone who may record outgoing payments.
 

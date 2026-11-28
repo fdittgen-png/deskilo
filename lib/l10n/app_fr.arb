@@ -24639,6 +24639,8 @@
   "tillDrawerTillActive": "En service",
   "tillDrawerTillName": "Nom de la caisse",
   "tillDrawerTillNewTitle": "Nouvelle caisse",
+  "tillDrawerTillNotes": "Billets et pièces de ce tiroir",
+  "tillDrawerTillNotesHint": "Le tiroir est compté avec ceux-ci. Aucun désactivé : tous ceux de la devise.",
   "tillDrawerTillSave": "Enregistrer la caisse",
   "tillDrawerTitle": "Tiroir-caisse",
   "tillFailed": "La caisse n'a pas pu le faire. Réessayez.",
