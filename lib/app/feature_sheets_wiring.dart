@@ -109,7 +109,7 @@ final List<Override> featureSheetsFromApp = [
     ];
   }),
   // #4498 — the names of the sites, for a lease form (the money feature reads no more of the workspace than it has to).
-  leaseSiteNamesProvider.overrideWith((ref) => {for (final s in ref.watch(sitesProvider).value ?? const <Site>[]) s.id: s.name}),
+  leaseSiteNamesProvider.overrideWith((ref) => {for (final s in ref.watch(sitesProvider).value ?? const <Site>[]) s.id: s.name}), // empty-ok: no sites read yet means no names to show
   // #4294 — the names the low-stock notice of the inbox reads (events never import the stock).
   eventNameSourcesProvider.overrideWithValue(const [stockEventNames]),
 ];
