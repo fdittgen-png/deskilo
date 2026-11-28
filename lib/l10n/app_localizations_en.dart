@@ -44562,6 +44562,52 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get vatex132Label => 'Activities in the public interest (art. 132)';
+
+  @override
+  String get vatex132Text =>
+      'Exempt based on article 132 of Council Directive 2006/112/EC';
+
+  @override
+  String get vatex143Label => 'Imports (art. 143)';
+
+  @override
+  String get vatex143Text =>
+      'Exempt based on article 143 of Council Directive 2006/112/EC';
+
+  @override
+  String get vatex148Label => 'International transport (art. 148)';
+
+  @override
+  String get vatex148Text =>
+      'Exempt based on article 148 of Council Directive 2006/112/EC';
+
+  @override
+  String get vatex151Label => 'Diplomatic and international bodies (art. 151)';
+
+  @override
+  String get vatex151Text =>
+      'Exempt based on article 151 of Council Directive 2006/112/EC';
+
+  @override
+  String get vatex309Label => 'Travel services outside the EU (art. 309)';
+
+  @override
+  String get vatex309Text =>
+      'Exempt based on article 309 of Council Directive 2006/112/EC';
+
+  @override
+  String get vatex79cLabel =>
+      'Costs paid on the customer\'s behalf (art. 79 c)';
+
+  @override
+  String get vatex79cText =>
+      'Exempt based on article 79, point c of Council Directive 2006/112/EC';
+
+  @override
+  String get vatexOLabel => 'Not subject to VAT';
+
+  @override
   String get viesCheckExplainer =>
       'VIES is the EU\'s register of VAT numbers. A valid answer, with its consultation number, is the evidence that this customer is a business; a reverse-charged invoice is issued only after one.';
 

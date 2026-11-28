@@ -45058,6 +45058,52 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get vatex132Label => 'Dem Gemeinwohl dienende Tätigkeiten (Art. 132)';
+
+  @override
+  String get vatex132Text =>
+      'Steuerbefreit nach Artikel 132 der Richtlinie 2006/112/EG';
+
+  @override
+  String get vatex143Label => 'Einfuhren (Art. 143)';
+
+  @override
+  String get vatex143Text =>
+      'Steuerbefreit nach Artikel 143 der Richtlinie 2006/112/EG';
+
+  @override
+  String get vatex148Label => 'Internationale Beförderung (Art. 148)';
+
+  @override
+  String get vatex148Text =>
+      'Steuerbefreit nach Artikel 148 der Richtlinie 2006/112/EG';
+
+  @override
+  String get vatex151Label =>
+      'Diplomatische und internationale Einrichtungen (Art. 151)';
+
+  @override
+  String get vatex151Text =>
+      'Steuerbefreit nach Artikel 151 der Richtlinie 2006/112/EG';
+
+  @override
+  String get vatex309Label => 'Reiseleistungen außerhalb der EU (Art. 309)';
+
+  @override
+  String get vatex309Text =>
+      'Steuerbefreit nach Artikel 309 der Richtlinie 2006/112/EG';
+
+  @override
+  String get vatex79cLabel => 'Auslagen im Namen des Kunden (Art. 79 c)';
+
+  @override
+  String get vatex79cText =>
+      'Steuerbefreit nach Artikel 79 Buchstabe c der Richtlinie 2006/112/EG';
+
+  @override
+  String get vatexOLabel => 'Nicht der Mehrwertsteuer unterliegend';
+
+  @override
   String get viesCheckExplainer =>
       'VIES ist das EU-Verzeichnis der USt-IdNrn. Eine gültige Antwort mit ihrer Abfragenummer belegt, dass dieser Kunde ein Unternehmen ist; eine Rechnung mit Steuerschuldnerschaft des Empfängers wird erst danach ausgestellt.';
 

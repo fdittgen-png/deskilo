@@ -44933,6 +44933,52 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get vatex132Label => 'Actividades de interés general (art. 132)';
+
+  @override
+  String get vatex132Text =>
+      'Exento en virtud del artículo 132 de la Directiva 2006/112/CE';
+
+  @override
+  String get vatex143Label => 'Importaciones (art. 143)';
+
+  @override
+  String get vatex143Text =>
+      'Exento en virtud del artículo 143 de la Directiva 2006/112/CE';
+
+  @override
+  String get vatex148Label => 'Transporte internacional (art. 148)';
+
+  @override
+  String get vatex148Text =>
+      'Exento en virtud del artículo 148 de la Directiva 2006/112/CE';
+
+  @override
+  String get vatex151Label =>
+      'Organismos diplomáticos e internacionales (art. 151)';
+
+  @override
+  String get vatex151Text =>
+      'Exento en virtud del artículo 151 de la Directiva 2006/112/CE';
+
+  @override
+  String get vatex309Label => 'Servicios de viaje fuera de la UE (art. 309)';
+
+  @override
+  String get vatex309Text =>
+      'Exento en virtud del artículo 309 de la Directiva 2006/112/CE';
+
+  @override
+  String get vatex79cLabel => 'Suplidos por cuenta del cliente (art. 79 c)';
+
+  @override
+  String get vatex79cText =>
+      'Exento en virtud del artículo 79, letra c), de la Directiva 2006/112/CE';
+
+  @override
+  String get vatexOLabel => 'No sujeto al IVA';
+
+  @override
   String get viesCheckExplainer =>
       'VIES es el registro europeo de números de IVA. Una respuesta válida, con su número de consulta, prueba que este cliente es una empresa; una factura con inversión del sujeto pasivo solo se emite después.';
 

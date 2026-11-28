@@ -71698,6 +71698,84 @@ abstract class AppLocalizations {
   /// **'until {date}'**
   String vatUntilDate(String date);
 
+  /// #4501 the VATEX exemption reason (EN 16931 BT-121) and its legal wording (BT-120): vatex132Label
+  ///
+  /// In en, this message translates to:
+  /// **'Activities in the public interest (art. 132)'**
+  String get vatex132Label;
+
+  /// #4501 the VATEX exemption reason (EN 16931 BT-121) and its legal wording (BT-120): vatex132Text
+  ///
+  /// In en, this message translates to:
+  /// **'Exempt based on article 132 of Council Directive 2006/112/EC'**
+  String get vatex132Text;
+
+  /// #4501 the VATEX exemption reason (EN 16931 BT-121) and its legal wording (BT-120): vatex143Label
+  ///
+  /// In en, this message translates to:
+  /// **'Imports (art. 143)'**
+  String get vatex143Label;
+
+  /// #4501 the VATEX exemption reason (EN 16931 BT-121) and its legal wording (BT-120): vatex143Text
+  ///
+  /// In en, this message translates to:
+  /// **'Exempt based on article 143 of Council Directive 2006/112/EC'**
+  String get vatex143Text;
+
+  /// #4501 the VATEX exemption reason (EN 16931 BT-121) and its legal wording (BT-120): vatex148Label
+  ///
+  /// In en, this message translates to:
+  /// **'International transport (art. 148)'**
+  String get vatex148Label;
+
+  /// #4501 the VATEX exemption reason (EN 16931 BT-121) and its legal wording (BT-120): vatex148Text
+  ///
+  /// In en, this message translates to:
+  /// **'Exempt based on article 148 of Council Directive 2006/112/EC'**
+  String get vatex148Text;
+
+  /// #4501 the VATEX exemption reason (EN 16931 BT-121) and its legal wording (BT-120): vatex151Label
+  ///
+  /// In en, this message translates to:
+  /// **'Diplomatic and international bodies (art. 151)'**
+  String get vatex151Label;
+
+  /// #4501 the VATEX exemption reason (EN 16931 BT-121) and its legal wording (BT-120): vatex151Text
+  ///
+  /// In en, this message translates to:
+  /// **'Exempt based on article 151 of Council Directive 2006/112/EC'**
+  String get vatex151Text;
+
+  /// #4501 the VATEX exemption reason (EN 16931 BT-121) and its legal wording (BT-120): vatex309Label
+  ///
+  /// In en, this message translates to:
+  /// **'Travel services outside the EU (art. 309)'**
+  String get vatex309Label;
+
+  /// #4501 the VATEX exemption reason (EN 16931 BT-121) and its legal wording (BT-120): vatex309Text
+  ///
+  /// In en, this message translates to:
+  /// **'Exempt based on article 309 of Council Directive 2006/112/EC'**
+  String get vatex309Text;
+
+  /// #4501 the VATEX exemption reason (EN 16931 BT-121) and its legal wording (BT-120): vatex79cLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Costs paid on the customer\'s behalf (art. 79 c)'**
+  String get vatex79cLabel;
+
+  /// #4501 the VATEX exemption reason (EN 16931 BT-121) and its legal wording (BT-120): vatex79cText
+  ///
+  /// In en, this message translates to:
+  /// **'Exempt based on article 79, point c of Council Directive 2006/112/EC'**
+  String get vatex79cText;
+
+  /// #4501 the VATEX exemption reason (EN 16931 BT-121) and its legal wording (BT-120): vatexOLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Not subject to VAT'**
+  String get vatexOLabel;
+
   /// #2354 VIES evidence: viesCheckExplainer
   ///
   /// In en, this message translates to:

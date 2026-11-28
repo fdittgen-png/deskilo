@@ -45120,6 +45120,52 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get vatex132Label => 'Activités d\'intérêt général (art. 132)';
+
+  @override
+  String get vatex132Text =>
+      'Exonération de TVA, article 132 de la directive 2006/112/CE';
+
+  @override
+  String get vatex143Label => 'Importations (art. 143)';
+
+  @override
+  String get vatex143Text =>
+      'Exonération de TVA, article 143 de la directive 2006/112/CE';
+
+  @override
+  String get vatex148Label => 'Transport international (art. 148)';
+
+  @override
+  String get vatex148Text =>
+      'Exonération de TVA, article 148 de la directive 2006/112/CE';
+
+  @override
+  String get vatex151Label =>
+      'Organismes diplomatiques et internationaux (art. 151)';
+
+  @override
+  String get vatex151Text =>
+      'Exonération de TVA, article 151 de la directive 2006/112/CE';
+
+  @override
+  String get vatex309Label => 'Services de voyage hors de l\'UE (art. 309)';
+
+  @override
+  String get vatex309Text =>
+      'Exonération de TVA, article 309 de la directive 2006/112/CE';
+
+  @override
+  String get vatex79cLabel => 'Débours pour le compte du client (art. 79 c)';
+
+  @override
+  String get vatex79cText =>
+      'Exonération de TVA, article 79, point c) de la directive 2006/112/CE';
+
+  @override
+  String get vatexOLabel => 'Non soumis à la TVA';
+
+  @override
   String get viesCheckExplainer =>
       'VIES est le registre européen des numéros de TVA. Une réponse valide, avec son numéro de consultation, prouve que ce client est une entreprise ; une facture autoliquidée n\'est émise qu\'après une telle réponse.';
 
