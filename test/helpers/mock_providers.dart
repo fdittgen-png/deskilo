@@ -41,6 +41,7 @@ import 'package:deskilo/core/demo/data/mcp_onboarding_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/money/demo_credit_moves.dart';
+import 'package:deskilo/core/demo/data/money/demo_expense_categories.dart';
 import 'package:deskilo/core/demo/data/money/demo_invoice_original_repository.dart';
 import 'package:deskilo/core/demo/data/money/demo_settlement_reviews.dart';
 import 'package:deskilo/core/demo/data/oauth_consent_repository.dart';
@@ -121,6 +122,7 @@ import 'package:deskilo/features/money/providers/account_activity_providers.dart
 import 'package:deskilo/features/money/providers/company_lookup_providers.dart';
 import 'package:deskilo/features/money/providers/credit_move_providers.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';
+import 'package:deskilo/features/money/providers/expense_category_providers.dart';
 import 'package:deskilo/features/money/providers/invoice_group_providers.dart';
 import 'package:deskilo/features/money/providers/invoice_original_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
@@ -380,6 +382,8 @@ List<Override> standardTestOverrides({
   return [
     // No disk in a widget test: a recording lives in memory.
     recorderLogBackendProvider.overrideWithValue(MemoryRecorderLogBackend()),
+    // #4512 — the business's expense categories, in memory: the five a business starts with.
+    expenseCategoryRepositoryProvider.overrideWith((ref) => DemoExpenseCategories()),
     // #3853 — the stored originals of the invoices, in memory.
     invoiceOriginalRepositoryProvider.overrideWithValue(
       invoiceOriginals ??
