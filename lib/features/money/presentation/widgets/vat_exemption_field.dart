@@ -60,7 +60,6 @@ class VatExemptionField extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final document = lookupAppLocalizations(_supported(watchDocumentLanguage(ref)));
     final code = vatExemptionCodeOfWording(category, value, _wordingsOf);
     final stored = value.trim();
     return Padding(
@@ -75,7 +74,8 @@ class VatExemptionField extends ConsumerWidget {
         ],
         onChanged: (picked) {
           if (picked == null || picked == stored) return;
-          onChanged(vatExemptionWording(document, picked));
+          // the wording is written in the business's document language, read when the code is picked
+          onChanged(vatExemptionWording(lookupAppLocalizations(_supported(resolveMemberReportLanguage(ref))), picked));
         },
       ),
     );

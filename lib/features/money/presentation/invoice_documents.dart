@@ -96,12 +96,6 @@ DateTime invoiceDueAt(WidgetRef ref, Invoice invoice) =>
 AppLocalizations l10nForLanguage(String language) =>
     lookupAppLocalizations(Locale(language));
 
-/// #4501 -- the business's document language, rebuilding the caller once the business is read.
-String watchDocumentLanguage(WidgetRef ref) {
-  ref.watch(currentWorkspaceProvider);
-  return resolveMemberReportLanguage(ref);
-}
-
 /// Resolves a document's language for a reader (#496): member's
 /// preferred → the business's document language → its country's (#3850).
 String resolveMemberReportLanguage(WidgetRef ref, {String memberLocale = ''}) {
