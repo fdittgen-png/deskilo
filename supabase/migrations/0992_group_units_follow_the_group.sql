@@ -158,4 +158,17 @@ $fn$;
 revoke execute on function public.item_unit_price(uuid, uuid, text) from public, anon, authenticated;
 
 notify pgrst, 'reload schema';
+-- ── the house command fences the group's sale price like an item's own ─────
+-- restates 0783: `default_sale_price_cents` is an amount of a carried table (pgTAP 434); kept when the house's currency is the
+-- head's, 0 when it differs.
+create or replace function public.organisation_house_fenced_amounts()
+returns jsonb language sql immutable set search_path = public as $fn$
+  select '{"services": ["price_cents", "default_sale_price_cents"],
+           "packages": ["price_cents"],
+           "validation_policies": ["min_amount_cents"],
+           "closure_days": []}'::jsonb
+$fn$;
+revoke execute on function public.organisation_house_fenced_amounts() from public, anon;
+grant execute on function public.organisation_house_fenced_amounts() to authenticated;
+
 select public.set_deskilo_schema_version(992);
