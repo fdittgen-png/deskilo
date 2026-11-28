@@ -37896,6 +37896,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The in-transit place belongs to the transfers between sites.';
 
   @override
+  String get stockReasonUnitArchived =>
+      'This unit is archived and cannot be used again.';
+
+  @override
   String get stockReasonUnitDuplicate => 'This unit is listed twice.';
 
   @override

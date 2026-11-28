@@ -1,0 +1,6 @@
+{
+  "stockReasonUnitArchived": "This unit is archived and cannot be used again.",
+  "@stockReasonUnitArchived": {
+    "description": "#4479 the stock editors: a text under a field the server refused"
+  }
+}

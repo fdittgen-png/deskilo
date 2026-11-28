@@ -22329,6 +22329,10 @@
   "@stockReasonTransitIsSystem": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReasonUnitArchived": "Esta unidad está archivada y ya no se puede usar.",
+  "@stockReasonUnitArchived": {
+    "description": "#4479 the stock editors: a text under a field the server refused"
+  },
   "stockReasonUnitDuplicate": "Esta unidad aparece dos veces.",
   "@stockReasonUnitDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"

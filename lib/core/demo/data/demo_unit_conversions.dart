@@ -46,6 +46,7 @@ class DemoUnitConversions implements UnitConversions {
     final to = units[conversion.toUnit];
     if (from == null) throw const StockConfigRefused('from_unit', StockRefusal.unitUnknown);
     if (to == null) throw const StockConfigRefused('to_unit', StockRefusal.unitUnknown);
+    if (from.archived || to.archived) throw const StockConfigRefused('unit', StockRefusal.unitArchived);
     if (from.code == to.code) throw const StockConfigRefused('to_unit', StockRefusal.conversionSameUnit);
     if (from.dimension == UnitDimension.package || to.dimension == UnitDimension.package) {
       throw const StockConfigRefused('from_unit', StockRefusal.packageUnit);

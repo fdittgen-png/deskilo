@@ -123,6 +123,7 @@ String _reasonText(AppLocalizations l10n, StockRefusal reason) => switch (reason
   StockRefusal.transferNeedsTransit => l10n.stockReasonTransferNeedsTransit,
   StockRefusal.transferUnknown => l10n.stockReasonTransferUnknown,
   StockRefusal.transitIsSystem => l10n.stockReasonTransitIsSystem,
+  StockRefusal.unitArchived => l10n.stockReasonUnitArchived,
   StockRefusal.unitDuplicate => l10n.stockReasonUnitDuplicate,
   StockRefusal.unitFixed => l10n.measureReasonFixed,
   StockRefusal.unitInUse => l10n.stockReasonUnitInUse,

@@ -46,6 +46,11 @@ class PurchaseOrderForm {
         for (final l in order?.lines ?? const <PurchaseOrderLine>[])
           l.vatRatePercent,
       ],
+      vatRateIds = [
+        if (order == null) null,
+        for (final l in order?.lines ?? const <PurchaseOrderLine>[])
+          l.vatRateId,
+      ],
       fields = FormControllers({
         'note': order?.note ?? '',
         'email': order?.recipientEmail ?? '',
@@ -79,6 +84,9 @@ class PurchaseOrderForm {
 
   /// The VAT percent of each line: none, or the percent of the rate that was picked (#4471).
   final List<double?> vatPercents;
+
+  /// The rate each line holds, by identity; null for none, or for a line stored before it named a rate (#4479).
+  final List<String?> vatRateIds;
 
   /// What the pickers offered the last time the form was drawn: a unit or a percent outside them cannot be saved (#4471).
   List<LineUnit> _unitsOffered = const [];
@@ -143,6 +151,7 @@ class PurchaseOrderForm {
               ).minor ??
               -1,
           vatRatePercent: vatPercents[i],
+          vatRateId: vatRateIds[i],
         ),
     ],
   );
@@ -183,7 +192,7 @@ class PurchaseOrderForm {
       }
       if (one.contains(PurchaseOrderProblem.lineVatRate)) {
         out['vat-$i'] = l10n.purchaseOrderBadVatRate;
-      } else if (_ratesOffered case final rates? when !vatPercentIsListed(rates, l.vatRatePercent)) {
+      } else if (_ratesOffered case final rates? when !vatRateIsListed(rates, l.vatRateId, l.vatRatePercent)) {
         out['vat-$i'] = l10n.masterDataUnlisted;
       }
       if (!unitIsListed(_unitsOffered, l.unit)) out['unit-$i'] = l10n.masterDataUnlisted;
@@ -312,6 +321,7 @@ class PurchaseOrderForm {
                 lines++;
                 itemIds.add(null);
                 vatPercents.add(null);
+                vatRateIds.add(null);
                 _bump();
                 refresh();
               },
@@ -361,10 +371,12 @@ class PurchaseOrderForm {
                 }
                 itemIds[j] = itemIds[j + 1];
                 vatPercents[j] = vatPercents[j + 1];
+                vatRateIds[j] = vatRateIds[j + 1];
               }
               lines--;
               itemIds.removeLast();
               vatPercents.removeLast();
+              vatRateIds.removeLast();
               _bump();
               refresh();
             },
@@ -425,12 +437,14 @@ class PurchaseOrderForm {
       currency: currency,
       allowNegative: false,
     ),
-    VatPercentPicker(
+    VatRatePicker(
       key: ValueKey('purchase-order-vat-$i'),
-      value: vatPercents[i],
+      rateId: vatRateIds[i],
+      percent: vatPercents[i],
       label: l10n.purchaseOrderVatRate,
-      onChanged: (percent) {
-        vatPercents[i] = percent;
+      onChanged: (rate) {
+        vatPercents[i] = rate?.percent;
+        vatRateIds[i] = rate?.id;
         _bump();
         refresh();
       },

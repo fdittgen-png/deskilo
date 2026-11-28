@@ -60767,6 +60767,12 @@ abstract class AppLocalizations {
   /// **'The in-transit place belongs to the transfers between sites.'**
   String get stockReasonTransitIsSystem;
 
+  /// #4479 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This unit is archived and cannot be used again.'**
+  String get stockReasonUnitArchived;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:

@@ -10,7 +10,10 @@
 library;
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'purchase_order_mail_settings.dart';
 import 'purchase_order_receipt.dart';
+
+export 'purchase_order_mail_settings.dart' show PurchaseOrderMailDraft, PurchaseOrderMailSettings;
 
 /// Where an order stands. Only a draft is edited; received and cancelled
 /// are final.
@@ -50,6 +53,7 @@ class PurchaseOrderLine {
     this.serviceId,
     this.unit = '',
     this.vatRatePercent,
+    this.vatRateId,
     this.receivedQuantity = 0,
   });
 
@@ -63,6 +67,7 @@ class PurchaseOrderLine {
       unit: r.stringOr('unit'),
       unitPriceCents: r.integer('unit_price_cents'),
       vatRatePercent: r.doubleOrNull('vat_rate_percent'),
+      vatRateId: r.stringOrNull('vat_rate_id'),
       receivedQuantity: r.doubleOrNull('received_quantity') ?? 0,
     );
   }
@@ -76,6 +81,9 @@ class PurchaseOrderLine {
 
   /// Null when the order does not state it.
   final double? vatRatePercent;
+
+  /// The rate that was picked, when the line names one (#4479); a line stored before holds its percent alone.
+  final String? vatRateId;
   final double receivedQuantity;
 
   /// The line before VAT, rounded to the minor unit.
@@ -173,18 +181,7 @@ class PurchaseOrder {
 
   /// A draft whose recipient is an address it can be e-mailed to.
   bool get emailable =>
-      state == PurchaseOrderState.draft && _isOrderEmail(recipientEmail);
-}
-
-/// An address an order may be e-mailed to: one address, no line breaks,
-/// nothing a mail header reads as a name or a list (0681, 0683).
-bool _isOrderEmail(String value) {
-  final v = value.trim();
-  return v.length <= 254 &&
-      !value.contains(RegExp(r'[\r\n]')) &&
-      RegExp(
-        r'^[^\s@<>",;()\[\]\\]+@[^\s@<>",;()\[\]\\]+\.[^\s@<>",;()\[\]\\]+$',
-      ).hasMatch(v);
+      state == PurchaseOrderState.draft && isOrderEmail(recipientEmail);
 }
 
 /// One line of a draft.
@@ -196,6 +193,7 @@ class PurchaseOrderLineDraft {
     this.description = '',
     this.unit = '',
     this.vatRatePercent,
+    this.vatRateId,
   });
 
   final String? serviceId;
@@ -204,6 +202,9 @@ class PurchaseOrderLineDraft {
   final String unit;
   final int unitPriceCents;
   final double? vatRatePercent;
+
+  /// The rate the person picked: the server reads the percent from it (#4479).
+  final String? vatRateId;
 
   /// The line before VAT, rounded to the minor unit; 0 while its quantity
   /// or price is not a valid entry (the form says so under the field).
@@ -223,7 +224,8 @@ class PurchaseOrderLineDraft {
     'quantity': quantity,
     'unit': unit.trim(),
     'unit_price_cents': unitPriceCents,
-    'vat_rate_percent': ?vatRatePercent,
+    'vat_rate_id': ?vatRateId,
+    if (vatRateId == null) 'vat_rate_percent': ?vatRatePercent,
   };
 }
 
@@ -287,7 +289,7 @@ class PurchaseOrderDraft {
       if (l.vatRatePercent case final r? when r < 0 || r >= 100)
         PurchaseOrderProblem.lineVatRate,
     },
-    if (recipientEmail.trim().isNotEmpty && !_isOrderEmail(recipientEmail))
+    if (recipientEmail.trim().isNotEmpty && !isOrderEmail(recipientEmail))
       PurchaseOrderProblem.recipientEmail,
   };
 
@@ -366,57 +368,6 @@ class PurchaseOrderSend {
 
   /// Nobody knows whether it left: a person decides.
   bool get awaitsDecision => state == PurchaseOrderSendState.unconfirmed;
-}
-
-/// How the space e-mails its orders: the sender, and whether a key is
-/// stored. The key itself never reaches the app.
-class PurchaseOrderMailSettings {
-  const PurchaseOrderMailSettings({
-    required this.senderEmail,
-    required this.hasApiKey,
-    required this.revision,
-    this.senderName = '',
-  });
-
-  factory PurchaseOrderMailSettings.fromJson(Object? raw) {
-    final r = JsonReader.of(raw, context: 'purchase order mail settings');
-    return PurchaseOrderMailSettings(
-      senderEmail: r.stringOr('sender_email'),
-      senderName: r.stringOr('sender_name'),
-      hasApiKey: r.isTrue('has_api_key'),
-      revision: r.integer('revision'),
-    );
-  }
-
-  final String senderEmail;
-  final String senderName;
-  final bool hasApiKey;
-  final int revision;
-}
-
-/// What the mail settings form sends; an empty [apiKey] keeps the stored
-/// one.
-class PurchaseOrderMailDraft {
-  const PurchaseOrderMailDraft({
-    required this.senderEmail,
-    this.senderName = '',
-    this.apiKey = '',
-    this.revision = 0,
-  });
-
-  final String senderEmail;
-  final String senderName;
-  final String apiKey;
-  final int revision;
-
-  /// Whether the form may be sent: a sender address, a name a mail header
-  /// can carry, and a key on the first configuration.
-  bool validFor(PurchaseOrderMailSettings? current) =>
-      _isOrderEmail(senderEmail) &&
-      !senderName.contains(RegExp(r'[\r\n<>"]')) &&
-      ((current?.hasApiKey ?? false) || apiKey.trim().isNotEmpty) &&
-      (apiKey.trim().isEmpty ||
-          RegExp(r'^[A-Za-z0-9_\-]{8,200}$').hasMatch(apiKey.trim()));
 }
 
 /// The order's PDF and its words, for the e-mail.

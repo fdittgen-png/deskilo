@@ -89,6 +89,7 @@ Future<(FakePurchaseOrderRepository, Widget)> _app(
         (ref) async => const [
           VatRate(id: 'r-std', label: 'Standard', percent: 20),
           VatRate(id: 'r-red', label: 'Reduced', percent: 5.5),
+          VatRate(id: 'r-books', label: 'Books', percent: 5.5),
         ],
       ),
     ]),
@@ -147,7 +148,8 @@ void main() {
       find.byKey(const ValueKey('purchase-order-price-0')),
       '12,50',
     );
-    await _pick(tester, 'purchase-order-vat-0', 'Reduced');
+    // #4479 -- two rates share a percentage: the one picked is the one kept, by its identity
+    await _pick(tester, 'purchase-order-vat-0', 'Books');
     await tester.tap(find.byKey(const ValueKey('purchase-order-save')));
     await _settle(tester);
     expect(orders.orders, hasLength(2));
@@ -157,8 +159,9 @@ void main() {
         saved.reference,
         saved.lines.single.unitPriceCents,
         saved.lines.single.vatRatePercent,
+        saved.lines.single.vatRateId,
       ),
-      ('2026-0002', 1250, 5.5),
+      ('2026-0002', 1250, 5.5, 'r-books'),
     );
 
     // The order's actions are in its record, beside the table.

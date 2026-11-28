@@ -55,7 +55,7 @@ void main() {
       if (_editors.contains(path)) continue;
       typed.addAll(typedUnitOrRate(path, f.readAsStringSync()));
     }
-    expect(typed.difference(_stillTyped), isEmpty, reason: 'a unit or a VAT rate is picked from the master data (UnitPickerField, VatPercentPicker, VatRateField)');
+    expect(typed.difference(_stillTyped), isEmpty, reason: 'a unit or a VAT rate is picked from the master data (UnitPickerField, VatRatePicker, VatRateField)');
     expect(_stillTyped.difference(typed), isEmpty, reason: 'picked now: take it off _stillTyped, the ceiling only falls');
   });
 }
