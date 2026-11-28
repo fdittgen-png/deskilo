@@ -163,6 +163,11 @@ const paperName=p=>T(p==='Letter'?'identityPaperLetter':'identityPaperA4');
 const paperCountry=()=>COUNTRIES.find(c=>c[0]===(S&&S.country))||['','','','','A4',['A4','Letter']];
 const paperOpts=()=>{const c=paperCountry();return[['',T('identityPaperFollows',{paper:paperName(c[4]),country:countryName(c[0])})],...(c[5].length>1?c[5].map(p=>[p,paperName(p)]):[])]};
 const paperHint=()=>{const c=paperCountry();return c[5].length>1?T('identityPaperHint'):T(PAYMENT_SLIP_COUNTRIES.includes(c[0])?'identityPaperOnlySlip':'identityPaperOnly',{paper:paperName(c[5][0])})};
+// #4497 — what a 0 % VAT rate is (UNCL5305: zero-rated, exempt, outside the scope), and the exemption reason a rate
+// of category E or O names: the VATEX codes of deskilo_invoice_model's vatRateExemptionCodes, mirrored here
+// (test/lint/vatex_codes_parity_test.dart keeps the two equal). The label and the legal wording are setup texts.
+const VAT_ZERO_CATEGORIES=[['Z','vatCatZero'],['E','vatCatExempt'],['O','vatCatOutside']];
+const VAT_EXEMPTIONS=[['E','VATEX-EU-79-C','vatex79cLabel','vatex79cText'],['E','VATEX-EU-132','vatex132Label','vatex132Text'],['E','VATEX-EU-143','vatex143Label','vatex143Text'],['E','VATEX-EU-148','vatex148Label','vatex148Text'],['E','VATEX-EU-151','vatex151Label','vatex151Text'],['E','VATEX-EU-309','vatex309Label','vatex309Text'],['O','VATEX-EU-O','vatexOLabel','vatexOText']];
 const VAT_GROUPS=[['standard','vatGroupStandard'],['intermediate','vatGroupIntermediate'],['reduced','vatGroupReduced'],['super_reduced','vatGroupSuperReduced'],['zero','vatGroupZero'],['exempt','vatGroupExempt'],['not_subject','vatGroupNotSubject'],['deposit','vatGroupDeposit'],['excise','vatGroupExcise']];
 // ISO weekday numbers; the short names come from the browser, in the page language.
 const WD=['1','2','3','4','5','6','7'];

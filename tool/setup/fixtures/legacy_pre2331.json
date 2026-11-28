@@ -529,7 +529,7 @@
    "name": "Locker",
    "price": "10",
    "supply": "property",
-   "vat": "20"
+   "vatKey": "vat-1"
   }
  ],
  "sites": [

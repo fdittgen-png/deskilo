@@ -105,6 +105,7 @@ async function bodyOf(req: Request): Promise<Record<string, unknown> | "too_larg
     const value = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes.subarray(0, n)));
     return value && typeof value === "object" && !Array.isArray(value) ? value : null;
   } catch (_) {
+    // handled: a body that is not UTF-8 JSON is no request; the caller answers protocol_unsupported
     return null;
   }
 }

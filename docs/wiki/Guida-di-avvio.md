@@ -1689,6 +1689,7 @@ Vuole sapere che cosa l'IVA Le chiederà prima di attivarla.
 - Il server calcola ogni dichiarazione dalle Sue fatture, dagli incassi e dall'esigibilità. La presenti Lei stesso all'amministrazione finanziaria, poi la segni come presentata con il riferimento della ricevuta: l'app non trasmette nulla.
 - Scelga la periodicità in **Periodicità della dichiarazione IVA** nell'identità legale. Un periodo presentato è bloccato: ciò che vi cambia in seguito è dichiarato come rettifica nella dichiarazione successiva.
 - Il giornale delle dichiarazioni ha una propria serie di numerazione.
+- Nel questionario di configurazione, un'aliquota dello 0 % dice se è **Aliquota zero**, **Esente** o **Fuori campo IVA**; un'aliquota esente o fuori campo sceglie il suo **Motivo dell'esenzione** da un elenco; ogni servizio sceglie una delle aliquote, e due aliquote non hanno mai lo stesso nome. L'esportazione attende che ogni servizio abbia la sua aliquota.
 
 **Vedi anche:** [Regime IVA](Guida-utente#regime-iva) · [Quando l'IVA diventa esigibile](Guida-utente#quando-liva-diventa-esigibile)
 

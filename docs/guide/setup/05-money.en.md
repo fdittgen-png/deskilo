@@ -289,6 +289,7 @@ You want to know what VAT will ask of you before you switch it on.
 - The server computes each return from your invoices, payments and tax points. File it yourself with the tax authority, then mark it filed with the receipt reference it gave you: the app transmits nothing.
 - Choose how often you file under **VAT return period** on the legal identity. A filed period is locked: what changes in it later is declared as a correction in the next return.
 - The declaration journal has its own number series.
+- In the setup questionnaire, a 0 % rate says whether it is **Zero-rated**, **Exempt** or **Outside the scope of VAT**; an exempt or out-of-scope rate names its **Exemption reason** from a list; each service picks one of the rates, and two rates never share a name. The export waits until every service has its rate.
 
 **See also:** [VAT regime](help:user.money.vat.regime) · [When VAT falls due](help:user.money.vat.due)
 
