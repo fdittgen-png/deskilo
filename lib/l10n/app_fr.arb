@@ -19532,6 +19532,7 @@
     "description": "#4373 setting hint"
   },
   "settingHintCounterPaidOutLimit": "Le plus grand montant, en unités mineures de la devise de l'entreprise (centimes), d'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.",
+  "settingHintCounterTerminalOperatorMinutes": "Combien de temps un caissier qui a autorisé un terminal de caisse y vend avant de l'autoriser à nouveau ; jamais plus longtemps que sa propre connexion.",
   "settingHintCounterTerminalPairAttempts": "Combien de fois un code peut être présenté avec un mauvais appareil ou une mauvaise preuve avant d'être épuisé.",
   "settingHintCounterTerminalPairMinutes": "Durée de validité du code qui relie un appareil de caisse. Un changement vaut pour le prochain code, pas pour un code déjà donné.",
   "settingHintDirectoryGeocoderUrl": "Le service compatible Photon qui place une adresse publiée sur la carte de découverte : une adresse https sur l'internet public, sans nom d'utilisateur, mot de passe, requête ni #. Laissez vide pour utiliser l'adresse avec laquelle cette version de l'application a été construite, sinon le service public Photon.",
@@ -19797,6 +19798,7 @@
     "description": "#4373 setting label"
   },
   "settingLabelCounterPaidOutLimit": "Plus grand retrait sans autorisation",
+  "settingLabelCounterTerminalOperatorMinutes": "Caissier d'un appareil : minutes",
   "settingLabelCounterTerminalPairAttempts": "Code de connexion d'un appareil : essais",
   "settingLabelCounterTerminalPairMinutes": "Code de connexion d'un appareil : minutes",
   "settingLabelDirectoryGeocoderUrl": "Service de recherche d'adresse",

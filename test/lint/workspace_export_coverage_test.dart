@@ -150,6 +150,10 @@ const Map<String, String> _notExported = {
   'till_terminal_codes':
       '#4454 -- the codes that connect a till board, each kept as its hash and valid '
           'minutes: a security record of this server; an export never carries a code or its hash',
+  'till_terminal_leases':
+      '#4454 -- who sells on a till board: the hash of the board\'s lease token and the cashier\'s '
+          'access token, encrypted, erased when the lease ends: a security record of this server; an '
+          'export never carries a token or its hash',
   'till_terminals':
       '#4454 -- the till boards connected to the business, with the hash of each '
           'board\'s secret: a security record of this server, bound to the board; an '

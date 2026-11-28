@@ -919,5 +919,7 @@
  "legalErrZeroTreatment": "{label}: choose whether this 0 % rate is zero-rated, exempt or outside the scope of VAT.",
  "legalErrExemptionReason": "{label}: choose the reason of this exemption.",
  "legalErrDuplicateVatLabel": "Two VAT rates are named {label}: give each its own name.",
- "servicesErrVatRate": "{name}: choose its VAT rate among the rates of the Legal step."
+ "servicesErrVatRate": "{name}: choose its VAT rate among the rates of the Legal step.",
+ "counterTerminalOperatorMinutes": "Till board cashier: minutes",
+ "counterTerminalOperatorMinutesHint": "How long a cashier who authorized a till board sells on it before authorizing it again; never longer than their own sign-in. Set in the app's settings."
 }

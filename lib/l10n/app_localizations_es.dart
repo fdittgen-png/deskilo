@@ -33183,6 +33183,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.';
 
   @override
+  String get settingHintCounterTerminalOperatorMinutes =>
+      'Cuánto tiempo vende un cajero que autorizó un terminal de caja antes de autorizarlo de nuevo; nunca más que su propia sesión.';
+
+  @override
   String get settingHintCounterTerminalPairAttempts =>
       'Cuántas veces puede presentarse un código con un dispositivo o una prueba incorrectos antes de agotarse.';
 
@@ -33649,6 +33653,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelCounterPaidOutLimit => 'Mayor salida sin autorización';
+
+  @override
+  String get settingLabelCounterTerminalOperatorMinutes =>
+      'Cajero de un dispositivo: minutos';
 
   @override
   String get settingLabelCounterTerminalPairAttempts =>

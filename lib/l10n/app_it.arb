@@ -19532,6 +19532,7 @@
     "description": "#4373 setting hint"
   },
   "settingHintCounterPaidOutLimit": "L'importo massimo, in unità minori della valuta dell'attività (centesimi), di un prelievo dal cassetto senza qualcuno che possa registrare pagamenti in uscita. 0 significa nessun limite.",
+  "settingHintCounterTerminalOperatorMinutes": "Per quanto tempo un cassiere che ha autorizzato un terminale di cassa vi vende prima di autorizzarlo di nuovo; mai più a lungo del proprio accesso.",
   "settingHintCounterTerminalPairAttempts": "Quante volte un codice può essere presentato con un dispositivo o una prova errati prima di esaurirsi.",
   "settingHintCounterTerminalPairMinutes": "Per quanto tempo vale il codice che collega un dispositivo di cassa. Una modifica vale per il prossimo codice, non per uno già dato.",
   "settingHintDirectoryGeocoderUrl": "Il servizio compatibile con Photon che colloca un indirizzo pubblicato sulla mappa di scoperta: un indirizzo https sull'internet pubblica, senza nome utente, password, query né #. Lasci vuoto per usare l'indirizzo con cui è stata costruita questa versione dell'app, altrimenti il servizio pubblico Photon.",
@@ -19797,6 +19798,7 @@
     "description": "#4373 setting label"
   },
   "settingLabelCounterPaidOutLimit": "Prelievo massimo senza autorizzazione",
+  "settingLabelCounterTerminalOperatorMinutes": "Cassiere di un dispositivo: minuti",
   "settingLabelCounterTerminalPairAttempts": "Codice di collegamento di un dispositivo: tentativi",
   "settingLabelCounterTerminalPairMinutes": "Codice di collegamento di un dispositivo: minuti",
   "settingLabelDirectoryGeocoderUrl": "Servizio di ricerca indirizzi",

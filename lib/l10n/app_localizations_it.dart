@@ -33219,6 +33219,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'L\'importo massimo, in unità minori della valuta dell\'attività (centesimi), di un prelievo dal cassetto senza qualcuno che possa registrare pagamenti in uscita. 0 significa nessun limite.';
 
   @override
+  String get settingHintCounterTerminalOperatorMinutes =>
+      'Per quanto tempo un cassiere che ha autorizzato un terminale di cassa vi vende prima di autorizzarlo di nuovo; mai più a lungo del proprio accesso.';
+
+  @override
   String get settingHintCounterTerminalPairAttempts =>
       'Quante volte un codice può essere presentato con un dispositivo o una prova errati prima di esaurirsi.';
 
@@ -33685,6 +33689,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelCounterPaidOutLimit =>
       'Prelievo massimo senza autorizzazione';
+
+  @override
+  String get settingLabelCounterTerminalOperatorMinutes =>
+      'Cassiere di un dispositivo: minuti';
 
   @override
   String get settingLabelCounterTerminalPairAttempts =>

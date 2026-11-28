@@ -19532,6 +19532,7 @@
     "description": "#4373 setting hint"
   },
   "settingHintCounterPaidOutLimit": "Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.",
+  "settingHintCounterTerminalOperatorMinutes": "Wie lange ein Kassierer, der ein Kassenterminal freigegeben hat, darauf verkauft, bevor er es erneut freigibt; nie länger als seine eigene Anmeldung.",
   "settingHintCounterTerminalPairAttempts": "Wie oft ein Code mit einem falschen Gerät oder Nachweis vorgelegt werden darf, bevor er verbraucht ist.",
   "settingHintCounterTerminalPairMinutes": "Wie lange der Code gilt, der ein Kassengerät verbindet. Eine Änderung gilt für den nächsten Code, nicht für einen bereits vergebenen.",
   "settingHintDirectoryGeocoderUrl": "Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.",
@@ -19797,6 +19798,7 @@
     "description": "#4373 setting label"
   },
   "settingLabelCounterPaidOutLimit": "Größte Entnahme ohne Freigabe",
+  "settingLabelCounterTerminalOperatorMinutes": "Kassierer eines Geräts: Minuten",
   "settingLabelCounterTerminalPairAttempts": "Verbindungscode eines Geräts: Versuche",
   "settingLabelCounterTerminalPairMinutes": "Verbindungscode eines Geräts: Minuten",
   "settingLabelDirectoryGeocoderUrl": "Adresssuchdienst",

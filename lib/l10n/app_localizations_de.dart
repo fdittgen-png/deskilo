@@ -33268,6 +33268,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.';
 
   @override
+  String get settingHintCounterTerminalOperatorMinutes =>
+      'Wie lange ein Kassierer, der ein Kassenterminal freigegeben hat, darauf verkauft, bevor er es erneut freigibt; nie länger als seine eigene Anmeldung.';
+
+  @override
   String get settingHintCounterTerminalPairAttempts =>
       'Wie oft ein Code mit einem falschen Gerät oder Nachweis vorgelegt werden darf, bevor er verbraucht ist.';
 
@@ -33726,6 +33730,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelCounterPaidOutLimit => 'Größte Entnahme ohne Freigabe';
+
+  @override
+  String get settingLabelCounterTerminalOperatorMinutes =>
+      'Kassierer eines Geräts: Minuten';
 
   @override
   String get settingLabelCounterTerminalPairAttempts =>

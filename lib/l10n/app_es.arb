@@ -19532,6 +19532,7 @@
     "description": "#4373 setting hint"
   },
   "settingHintCounterPaidOutLimit": "El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.",
+  "settingHintCounterTerminalOperatorMinutes": "Cuánto tiempo vende un cajero que autorizó un terminal de caja antes de autorizarlo de nuevo; nunca más que su propia sesión.",
   "settingHintCounterTerminalPairAttempts": "Cuántas veces puede presentarse un código con un dispositivo o una prueba incorrectos antes de agotarse.",
   "settingHintCounterTerminalPairMinutes": "Cuánto tiempo es válido el código que conecta un dispositivo de caja. Un cambio se aplica al próximo código, no a uno ya dado.",
   "settingHintDirectoryGeocoderUrl": "El servicio compatible con Photon que sitúa una dirección publicada en el mapa de descubrimiento: una dirección https en la internet pública, sin nombre de usuario, contraseña, consulta ni #. Déjelo vacío para usar la dirección con la que se construyó esta versión de la aplicación; si no, el servicio público Photon.",
@@ -19797,6 +19798,7 @@
     "description": "#4373 setting label"
   },
   "settingLabelCounterPaidOutLimit": "Mayor salida sin autorización",
+  "settingLabelCounterTerminalOperatorMinutes": "Cajero de un dispositivo: minutos",
   "settingLabelCounterTerminalPairAttempts": "Código de conexión de un dispositivo: intentos",
   "settingLabelCounterTerminalPairMinutes": "Código de conexión de un dispositivo: minutos",
   "settingLabelDirectoryGeocoderUrl": "Servicio de búsqueda de direcciones",

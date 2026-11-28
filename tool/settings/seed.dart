@@ -2266,6 +2266,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
+    since: 'till_terminal_leases',
+    row: (
+      key: 'counter.terminal_operator_minutes',
+      type: 'int',
+      defaultValue: 30,
+      min: 1,
+      max: 60,
+      unit: 'minutes',
+      group: 'business',
+      scopes: ['workspace'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'till boards (#4454)',
+      note: 'How long a cashier who authorized a till board may sell on it before authorizing it again, in minutes; never longer than their own sign-in lasts. A change applies to the next authorization, never to one already given.',
+    ),
+  ),
+  (
     since: 'till_layout_registry',
     row: (
       key: 'counter.layout_max_cells',

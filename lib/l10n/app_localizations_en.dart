@@ -32940,6 +32940,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.';
 
   @override
+  String get settingHintCounterTerminalOperatorMinutes =>
+      'How long a cashier who authorized a till board sells on it before authorizing it again; never longer than their own sign-in.';
+
+  @override
   String get settingHintCounterTerminalPairAttempts =>
       'How many times a code may be presented with the wrong board or proof before it is used up.';
 
@@ -33397,6 +33401,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelCounterPaidOutLimit =>
       'Largest paid-out without approval';
+
+  @override
+  String get settingLabelCounterTerminalOperatorMinutes =>
+      'Board cashier: minutes';
 
   @override
   String get settingLabelCounterTerminalPairAttempts =>

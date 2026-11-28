@@ -919,5 +919,7 @@
  "legalErrZeroTreatment": "{label}: indichi se questa aliquota dello 0 % è un'aliquota zero, un'esenzione o fuori campo IVA.",
  "legalErrExemptionReason": "{label}: scelga il motivo di questa esenzione.",
  "legalErrDuplicateVatLabel": "Due aliquote IVA si chiamano {label}: dia a ciascuna un nome proprio.",
- "servicesErrVatRate": "{name}: scelga la sua aliquota IVA tra quelle del passo Legale."
+ "servicesErrVatRate": "{name}: scelga la sua aliquota IVA tra quelle del passo Legale.",
+ "counterTerminalOperatorMinutes": "Cassiere di un dispositivo: minuti",
+ "counterTerminalOperatorMinutesHint": "Per quanto tempo un cassiere che ha autorizzato un terminale di cassa vi vende prima di autorizzarlo di nuovo; mai più a lungo del proprio accesso. Impostato nelle impostazioni dell'app."
 }

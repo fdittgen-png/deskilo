@@ -919,5 +919,7 @@
  "legalErrZeroTreatment": "{label}: indique si este tipo del 0 % es tipo cero, exento o no sujeto al IVA.",
  "legalErrExemptionReason": "{label}: elija el motivo de esta exención.",
  "legalErrDuplicateVatLabel": "Dos tipos de IVA se llaman {label}: dé a cada uno su propio nombre.",
- "servicesErrVatRate": "{name}: elija su tipo de IVA entre los del paso Legal."
+ "servicesErrVatRate": "{name}: elija su tipo de IVA entre los del paso Legal.",
+ "counterTerminalOperatorMinutes": "Cajero de un dispositivo: minutos",
+ "counterTerminalOperatorMinutesHint": "Cuánto tiempo vende un cajero que autorizó un terminal de caja antes de autorizarlo de nuevo; nunca más que su propia sesión. Se ajusta en la configuración de la aplicación."
 }

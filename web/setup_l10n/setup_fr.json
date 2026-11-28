@@ -919,5 +919,7 @@
  "legalErrZeroTreatment": "{label} : indiquez si ce taux de 0 % est un taux zéro, une exonération ou hors du champ de la TVA.",
  "legalErrExemptionReason": "{label} : choisissez le motif de cette exonération.",
  "legalErrDuplicateVatLabel": "Deux taux de TVA s'appellent {label} : donnez à chacun son propre nom.",
- "servicesErrVatRate": "{name} : choisissez son taux de TVA parmi ceux de l'étape Légal."
+ "servicesErrVatRate": "{name} : choisissez son taux de TVA parmi ceux de l'étape Légal.",
+ "counterTerminalOperatorMinutes": "Caissier d'un appareil : minutes",
+ "counterTerminalOperatorMinutesHint": "Combien de temps un caissier qui a autorisé un terminal de caisse y vend avant de l'autoriser à nouveau ; jamais plus longtemps que sa propre connexion. Réglé dans les paramètres de l'application."
 }

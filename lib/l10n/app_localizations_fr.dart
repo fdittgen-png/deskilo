@@ -33321,6 +33321,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le plus grand montant, en unités mineures de la devise de l\'entreprise (centimes), d\'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.';
 
   @override
+  String get settingHintCounterTerminalOperatorMinutes =>
+      'Combien de temps un caissier qui a autorisé un terminal de caisse y vend avant de l\'autoriser à nouveau ; jamais plus longtemps que sa propre connexion.';
+
+  @override
   String get settingHintCounterTerminalPairAttempts =>
       'Combien de fois un code peut être présenté avec un mauvais appareil ou une mauvaise preuve avant d\'être épuisé.';
 
@@ -33787,6 +33791,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelCounterPaidOutLimit =>
       'Plus grand retrait sans autorisation';
+
+  @override
+  String get settingLabelCounterTerminalOperatorMinutes =>
+      'Caissier d\'un appareil : minutes';
 
   @override
   String get settingLabelCounterTerminalPairAttempts =>

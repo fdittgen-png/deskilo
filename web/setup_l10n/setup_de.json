@@ -919,5 +919,7 @@
  "legalErrZeroTreatment": "{label}: Wählen Sie, ob dieser Satz von 0 % ein Nullsatz, eine Steuerbefreiung oder nicht steuerbar ist.",
  "legalErrExemptionReason": "{label}: Wählen Sie den Grund dieser Befreiung.",
  "legalErrDuplicateVatLabel": "Zwei Steuersätze heißen {label}: Geben Sie jedem einen eigenen Namen.",
- "servicesErrVatRate": "{name}: Wählen Sie den Steuersatz unter denen des Schritts Rechtliches."
+ "servicesErrVatRate": "{name}: Wählen Sie den Steuersatz unter denen des Schritts Rechtliches.",
+ "counterTerminalOperatorMinutes": "Kassierer eines Geräts: Minuten",
+ "counterTerminalOperatorMinutesHint": "Wie lange ein Kassierer, der ein Kassenterminal freigegeben hat, darauf verkauft, bevor er es erneut freigibt; nie länger als seine eigene Anmeldung. In den Einstellungen der App festgelegt."
 }

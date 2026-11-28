@@ -52818,6 +52818,12 @@ abstract class AppLocalizations {
   /// **'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.'**
   String get settingHintCounterPaidOutLimit;
 
+  /// #4454 the setting counter.terminal_operator_minutes in the business settings
+  ///
+  /// In en, this message translates to:
+  /// **'How long a cashier who authorized a till board sells on it before authorizing it again; never longer than their own sign-in.'**
+  String get settingHintCounterTerminalOperatorMinutes;
+
   /// #4454 the setting counter.terminal_pair_attempts in the business settings
   ///
   /// In en, this message translates to:
@@ -53543,6 +53549,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Largest paid-out without approval'**
   String get settingLabelCounterPaidOutLimit;
+
+  /// #4454 the setting counter.terminal_operator_minutes in the business settings
+  ///
+  /// In en, this message translates to:
+  /// **'Board cashier: minutes'**
+  String get settingLabelCounterTerminalOperatorMinutes;
 
   /// #4454 the setting counter.terminal_pair_attempts in the business settings
   ///
