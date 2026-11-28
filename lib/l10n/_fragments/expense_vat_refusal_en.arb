@@ -1,6 +1,6 @@
 {
   "refusalExpenseVat": "The VAT of this expense is not accepted: pick a VAT rate of this business, and enter the VAT a supplier abroad charged only as the rate and amount on its document.",
   "@refusalExpenseVat": {
-    "description": "#4479 (0994) DKV01: the VAT treatment of an expense is refused"
+    "description": "#4479 (0994) DKV02: the VAT treatment of an expense is refused"
   }
 }

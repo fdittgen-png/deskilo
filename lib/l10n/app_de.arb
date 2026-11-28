@@ -17072,7 +17072,7 @@
   "refusalCounterUnsupported": "Dieser Vorgang wird für Ihr Land in dem in den Einstellungen erklärten Fall nicht unterstützt: Es wurde nichts nummeriert und nichts angenommen.",
   "refusalExpenseVat": "Die Umsatzsteuer dieser Ausgabe wird nicht angenommen: Wählen Sie einen Steuersatz dieses Unternehmens und geben Sie von einem Lieferanten im Ausland berechnete Umsatzsteuer nur als Satz und Betrag des Belegs an.",
   "@refusalExpenseVat": {
-    "description": "#4479 (0994) DKV01: the VAT treatment of an expense is refused"
+    "description": "#4479 (0994) DKV02: the VAT treatment of an expense is refused"
   },
   "refusalMainStoreExpired": "Das Hauptlager enthält nur {held} von den {asked}, die dieser Verkauf verlangt, die verkäuflich sind: der Rest ist abgelaufen. Nichts wurde entnommen und der Verkauf wurde nicht bestätigt.",
   "@refusalMainStoreExpired": {

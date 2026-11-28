@@ -1,6 +1,6 @@
 {
   "refusalExpenseVat": "L’IVA di questa spesa non è accettata: scegliere un’aliquota IVA di questa attività e indicare l’IVA addebitata da un fornitore all’estero solo come aliquota e importo del suo documento.",
   "@refusalExpenseVat": {
-    "description": "#4479 (0994) DKV01: the VAT treatment of an expense is refused"
+    "description": "#4479 (0994) DKV02: the VAT treatment of an expense is refused"
   }
 }
