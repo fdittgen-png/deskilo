@@ -23,7 +23,7 @@
 --     without a rate id keeps working as before (a schedule, the MCP).
 --   * the document's facts: `supplier_country` (a country code, differing from the space's for an acquisition or foreign
 --     VAT), `document_number`, `document_date`.
--- A refusal of the treatment carries DKV01 (the app reads it by its code).
+-- A refusal of the treatment carries DKV02 (the app reads it by its code).
 -- Every reader of `payload.vat.percent` (the return, the purchase bridge) keeps reading it: a foreign-charged or untaxed
 -- expense carries no `percent`, so it reaches none of them. A filed return is untouched.
 
@@ -50,36 +50,36 @@ begin
     return null;
   end if;
   if not public.feature_effective(p_workspace_id, 'inputVat') then
-    raise exception 'input VAT is switched off in this space' using errcode = 'DKV01';
+    raise exception 'input VAT is switched off in this space' using errcode = 'DKV02';
   end if;
   v_treat := coalesce(nullif(p_vat ->> 'treatment', ''), case when v_acquisition then 'acquisition' else 'domestic' end);
   if v_treat not in ('domestic', 'acquisition', 'foreign_charged', 'none') then
-    raise exception 'unknown input tax treatment of an expense' using errcode = 'DKV01';
+    raise exception 'unknown input tax treatment of an expense' using errcode = 'DKV02';
   end if;
   if v_treat = 'acquisition' then
     v_acquisition := true;
   elsif v_acquisition then
-    raise exception 'the acquisition flag belongs to the acquisition treatment' using errcode = 'DKV01';
+    raise exception 'the acquisition flag belongs to the acquisition treatment' using errcode = 'DKV02';
   end if;
 
   select upper(btrim(coalesce(w.country_code, ''))) into v_space_country from public.workspaces w where w.id = p_workspace_id;
   v_country := nullif(upper(btrim(coalesce(p_vat ->> 'supplier_country', ''))), '');
   if v_country is not null and v_country !~ '^[A-Z][A-Z]$' then
-    raise exception 'the supplier''s country is a country code' using errcode = 'DKV01';
+    raise exception 'the supplier''s country is a country code' using errcode = 'DKV02';
   end if;
   if v_country is not null then
     if v_treat = 'domestic' and v_country <> v_space_country then
-      raise exception 'a domestic expense comes from a supplier in the space''s country' using errcode = 'DKV01';
+      raise exception 'a domestic expense comes from a supplier in the space''s country' using errcode = 'DKV02';
     end if;
     if v_treat in ('acquisition', 'foreign_charged') and v_country = v_space_country then
-      raise exception 'a supplier in the space''s own country is not a supplier abroad' using errcode = 'DKV01';
+      raise exception 'a supplier in the space''s own country is not a supplier abroad' using errcode = 'DKV02';
     end if;
     v_facts := v_facts || jsonb_build_object('supplier_country', v_country);
   end if;
   v_number := nullif(btrim(coalesce(p_vat ->> 'document_number', '')), '');
   if v_number is not null then
     if char_length(v_number) > 60 then
-      raise exception 'the document number is at most 60 characters' using errcode = 'DKV01';
+      raise exception 'the document number is at most 60 characters' using errcode = 'DKV02';
     end if;
     v_facts := v_facts || jsonb_build_object('document_number', v_number);
   end if;
@@ -96,18 +96,18 @@ begin
     -- the supplier's own VAT, kept as a fact: never looked up in the space's catalogue, never deducted, never filed
     if nullif(p_vat ->> 'vat_rate_id', '') is not null or nullif(p_vat ->> 'percent', '') is not null
        or coalesce((p_vat ->> 'asset')::boolean, false) then
-      raise exception 'VAT charged abroad carries no rate of this space, no deduction and is no asset' using errcode = 'DKV01';
+      raise exception 'VAT charged abroad carries no rate of this space, no deduction and is no asset' using errcode = 'DKV02';
     end if;
     if v_country is null then
-      raise exception 'VAT charged abroad names the supplier''s country' using errcode = 'DKV01';
+      raise exception 'VAT charged abroad names the supplier''s country' using errcode = 'DKV02';
     end if;
     v_stated := (p_vat ->> 'stated_percent')::numeric;
     if v_stated is null or v_stated <= 0 or v_stated > 100 then
-      raise exception 'the VAT a supplier abroad charged is stated as a rate between 0 and 100' using errcode = 'DKV01';
+      raise exception 'the VAT a supplier abroad charged is stated as a rate between 0 and 100' using errcode = 'DKV02';
     end if;
     v_stated_tax := nullif(p_vat ->> 'stated_tax_cents', '')::bigint;
     if v_stated_tax is not null and v_stated_tax < 0 then
-      raise exception 'the VAT a supplier abroad charged is not negative' using errcode = 'DKV01';
+      raise exception 'the VAT a supplier abroad charged is not negative' using errcode = 'DKV02';
     end if;
     return jsonb_build_object('treatment', 'foreign_charged', 'stated_percent', trim_scale(v_stated))
            || case when v_stated_tax is null then '{}'::jsonb else jsonb_build_object('stated_tax_cents', v_stated_tax) end
@@ -120,17 +120,17 @@ begin
     select r.percent into v_percent from public.vat_rates r
      where r.id = v_rate_id and r.workspace_id = p_workspace_id and r.active;
     if not found then
-      raise exception 'vat_rate_unknown: the VAT rate is not an active rate of this space' using errcode = 'DKV01';
+      raise exception 'vat_rate_unknown: the VAT rate is not an active rate of this space' using errcode = 'DKV02';
     end if;
   else
     v_percent := (p_vat ->> 'percent')::numeric;
   end if;
   v_share := coalesce((p_vat ->> 'deductible_pct')::numeric, 100);
   if v_percent is null or v_percent <= 0 or v_percent > 100 then
-    raise exception 'the VAT rate of an expense lies between 0 and 100' using errcode = 'DKV01';
+    raise exception 'the VAT rate of an expense lies between 0 and 100' using errcode = 'DKV02';
   end if;
   if v_share < 0 or v_share > 100 then
-    raise exception 'the deductible share lies between 0 and 100' using errcode = 'DKV01';
+    raise exception 'the deductible share lies between 0 and 100' using errcode = 'DKV02';
   end if;
   if v_acquisition and not exists (
        select 1 from public.workspaces w
@@ -139,7 +139,7 @@ begin
           on r.domain = 'form_box' and r.country = upper(btrim(coalesce(w.country_code, '')))
          and r.valid_from <= today.d and (r.valid_to is null or r.valid_to > today.d)
         where w.id = p_workspace_id and coalesce(r.value -> 'categories' ? 'acquisition', false)) then
-    raise exception 'this space''s return has no acquisition tax box' using errcode = 'DKV01';
+    raise exception 'this space''s return has no acquisition tax box' using errcode = 'DKV02';
   end if;
   -- The space's own VAT and the acquisition keep the shape they always had (the acquisition is its flag, the space's own
   -- VAT is the absence of any treatment); only what is new is stored: the identity of the rate and the document's facts.

@@ -65,7 +65,7 @@ select matches(pg_temp.t(101, '{"treatment": "refund"}'), 'unknown input tax tre
 
 select throws_ok(
   $$ select public.expense_vat_payload('00000000-0000-4000-8000-000000000101', '{"treatment": "refund"}'::jsonb) $$,
-  'DKV01', null, 'a refusal of the treatment carries its code');
+  'DKV02', null, 'a refusal of the treatment carries its code');
 
 select * from finish();
 rollback;

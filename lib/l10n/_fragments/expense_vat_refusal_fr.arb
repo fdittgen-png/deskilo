@@ -1,6 +1,6 @@
 {
   "refusalExpenseVat": "La TVA de cette dépense n’est pas acceptée : choisissez un taux de TVA de cette entreprise et saisissez la TVA facturée par un fournisseur à l’étranger uniquement comme taux et montant de son document.",
   "@refusalExpenseVat": {
-    "description": "#4479 (0994) DKV01: the VAT treatment of an expense is refused"
+    "description": "#4479 (0994) DKV02: the VAT treatment of an expense is refused"
   }
 }
