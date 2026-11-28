@@ -6832,7 +6832,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'An archived reason is no longer offered; the entries recorded with it keep it.';
 
   @override
-  String get cashReasonsArchivedMark => 'archived';
+  String cashReasonsArchivedName(String name) {
+    return '$name (archived)';
+  }
 
   @override
   String get cashReasonsBuiltinHint => 'Named by the app in every language.';

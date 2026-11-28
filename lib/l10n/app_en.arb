@@ -8977,9 +8977,14 @@
   "@cashReasonsArchivedHelp": {
     "description": "#4514 under the archive switch"
   },
-  "cashReasonsArchivedMark": "archived",
-  "@cashReasonsArchivedMark": {
-    "description": "#4514 beside an archived reason in the list"
+  "cashReasonsArchivedName": "{name} (archived)",
+  "@cashReasonsArchivedName": {
+    "description": "#4514 an archived reason in the list",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "cashReasonsBuiltinHint": "Named by the app in every language.",
   "@cashReasonsBuiltinHint": {

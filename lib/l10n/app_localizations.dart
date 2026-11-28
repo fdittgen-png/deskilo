@@ -10745,11 +10745,11 @@ abstract class AppLocalizations {
   /// **'An archived reason is no longer offered; the entries recorded with it keep it.'**
   String get cashReasonsArchivedHelp;
 
-  /// #4514 beside an archived reason in the list
+  /// #4514 an archived reason in the list
   ///
   /// In en, this message translates to:
-  /// **'archived'**
-  String get cashReasonsArchivedMark;
+  /// **'{name} (archived)'**
+  String cashReasonsArchivedName(String name);
 
   /// #4514 a built-in reason has no name to type
   ///

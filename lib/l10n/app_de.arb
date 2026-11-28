@@ -3957,7 +3957,7 @@
   "cashReasonsAdd": "Grund hinzufügen",
   "cashReasonsArchived": "Archiviert",
   "cashReasonsArchivedHelp": "Ein archivierter Grund wird nicht mehr angeboten; die mit ihm erfassten Bewegungen behalten ihn.",
-  "cashReasonsArchivedMark": "archiviert",
+  "cashReasonsArchivedName": "{name} (archiviert)",
   "cashReasonsBuiltinHint": "Von der App in jeder Sprache benannt.",
   "cashReasonsEdit": "Grund",
   "cashReasonsName": "Name",

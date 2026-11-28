@@ -38,7 +38,7 @@ void main() {
     expect(f.day.salesByTender, {'cash': 210});
     expect(f.day.paidOutMinor, 500);
     expect(f.day.firstReceipt, f.day.lastReceipt);
-    expect(f.day.sessions.last.differenceReason, 'a coin was lost');
+    expect(f.day.sessions.last.differenceReason, 'counting_error');
     expect(f.dayRefusedAgain, DkCode.dkl14);
     expect(await tillDrawerJourney(), isTrue);
   });

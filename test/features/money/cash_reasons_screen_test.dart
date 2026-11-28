@@ -109,7 +109,7 @@ void main() {
           await _tap(tester, 'cash-reason-save');
           expect(
             find.text(
-              '${_en.tillCashReasonExpense} (${_en.cashReasonsArchivedMark})',
+              _en.cashReasonsArchivedName(_en.tillCashReasonExpense),
             ),
             findsOneWidget,
           );

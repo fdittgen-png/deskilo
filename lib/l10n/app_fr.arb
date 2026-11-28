@@ -3957,7 +3957,7 @@
   "cashReasonsAdd": "Ajouter un motif",
   "cashReasonsArchived": "Archivé",
   "cashReasonsArchivedHelp": "Un motif archivé n'est plus proposé ; les mouvements enregistrés avec lui le gardent.",
-  "cashReasonsArchivedMark": "archivé",
+  "cashReasonsArchivedName": "{name} (archivé)",
   "cashReasonsBuiltinHint": "Nommé par l'application dans chaque langue.",
   "cashReasonsEdit": "Motif",
   "cashReasonsName": "Nom",

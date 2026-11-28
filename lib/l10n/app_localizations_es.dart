@@ -6870,7 +6870,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un motivo archivado ya no se ofrece; los movimientos registrados con él lo conservan.';
 
   @override
-  String get cashReasonsArchivedMark => 'archivado';
+  String cashReasonsArchivedName(String name) {
+    return '$name (archivado)';
+  }
 
   @override
   String get cashReasonsBuiltinHint =>

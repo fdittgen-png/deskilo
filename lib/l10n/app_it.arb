@@ -3957,7 +3957,7 @@
   "cashReasonsAdd": "Aggiungere un motivo",
   "cashReasonsArchived": "Archiviato",
   "cashReasonsArchivedHelp": "Un motivo archiviato non è più proposto; i movimenti registrati con esso lo conservano.",
-  "cashReasonsArchivedMark": "archiviato",
+  "cashReasonsArchivedName": "{name} (archiviato)",
   "cashReasonsBuiltinHint": "Indicato dall'app in ogni lingua.",
   "cashReasonsEdit": "Motivo",
   "cashReasonsName": "Nome",

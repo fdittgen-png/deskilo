@@ -17,6 +17,9 @@ enum CashReasonProcess {
   /// The value the server keeps.
   final String wire;
 
+  /// The process of a cash entry of [kind] (`paid_in` or `paid_out`, the entry's own wire value).
+  static CashReasonProcess ofEntryKind(String kind) => fromWire(kind) ?? paidOut;
+
   static CashReasonProcess? fromWire(String wire) {
     for (final p in values) {
       if (p.wire == wire) return p;
@@ -57,6 +60,29 @@ const List<CashReason> kBuiltinCashReasons = [
     position: 40,
   ),
 ];
+
+/// A built-in reason, by its code; [unknown] for any other (a business's own, or a text stored before).
+enum BuiltinCashReason {
+  change('change'),
+  expense('expense'),
+  countingError('counting_error'),
+  other('other'),
+  unknown('');
+
+  const BuiltinCashReason(this.code);
+
+  final String code;
+
+  static BuiltinCashReason of(String code) {
+    for (final b in values) {
+      if (b != unknown && b.code == code) return b;
+    }
+    return unknown;
+  }
+}
+
+/// The fields of a reason's sheet, as its errors are keyed.
+enum CashReasonField { name, processes }
 
 /// The code a business's own reason gets from its [name], as the server makes it (0999): lower case, a run of anything
 /// but a letter or a digit becomes one underscore.
