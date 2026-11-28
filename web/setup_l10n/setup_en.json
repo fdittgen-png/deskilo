@@ -919,19 +919,5 @@
  "legalErrZeroTreatment": "{label}: choose whether this 0 % rate is zero-rated, exempt or outside the scope of VAT.",
  "legalErrExemptionReason": "{label}: choose the reason of this exemption.",
  "legalErrDuplicateVatLabel": "Two VAT rates are named {label}: give each its own name.",
- "servicesErrVatRate": "{name}: choose its VAT rate among the rates of the Legal step.",
- "vatex79cLabel": "Costs paid on the customer's behalf (art. 79 c)",
- "vatex79cText": "Exempt based on article 79, point c of Council Directive 2006/112/EC",
- "vatex132Label": "Activities in the public interest (art. 132)",
- "vatex132Text": "Exempt based on article 132 of Council Directive 2006/112/EC",
- "vatex143Label": "Imports (art. 143)",
- "vatex143Text": "Exempt based on article 143 of Council Directive 2006/112/EC",
- "vatex148Label": "International transport (art. 148)",
- "vatex148Text": "Exempt based on article 148 of Council Directive 2006/112/EC",
- "vatex151Label": "Diplomatic and international bodies (art. 151)",
- "vatex151Text": "Exempt based on article 151 of Council Directive 2006/112/EC",
- "vatex309Label": "Travel services outside the EU (art. 309)",
- "vatex309Text": "Exempt based on article 309 of Council Directive 2006/112/EC",
- "vatexOLabel": "Not subject to VAT",
- "vatexOText": "Not subject to VAT"
+ "servicesErrVatRate": "{name}: choose its VAT rate among the rates of the Legal step."
 }

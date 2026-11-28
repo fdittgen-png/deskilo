@@ -28,15 +28,17 @@ void main() {
     expect(r.stdout, isNot(contains('gh run download')));
   });
 
-  test('a stale contract: exit 1, the file to commit and the download line',
-      () {
-    final r = _verdict({..._allGreen, 'CONTRACT': 'failure'});
-    expect(r.exitCode, 1);
-    expect(r.stdout, contains('| Effective contract | failure |'));
-    expect(r.stdout, contains('assets/instance/contract.txt'));
-    expect(r.stdout, contains('gh run download 42 -n database-preview'));
-    expect(r.stdout, contains('| Policies | ok |'));
-  });
+  test(
+    'a stale contract: exit 1, the file to commit and the download line',
+    () {
+      final r = _verdict({..._allGreen, 'CONTRACT': 'failure'});
+      expect(r.exitCode, 1);
+      expect(r.stdout, contains('| Effective contract | failure |'));
+      expect(r.stdout, contains('assets/instance/contract.txt'));
+      expect(r.stdout, contains('gh run download 42 -n database-preview'));
+      expect(r.stdout, contains('| Policies | ok |'));
+    },
+  );
 
   test('a failed replay skips the rest: none of them counts as a success', () {
     final r = _verdict({
@@ -54,6 +56,46 @@ void main() {
     final r = _verdict({..._allGreen, 'PGTAP': ''});
     expect(r.exitCode, 1);
     expect(r.stdout, contains('| Database tests | not run |'));
+  });
+
+  test('files only: a stale contract and policy list are files to commit, and green', () {
+    final r = _verdict({
+      ..._allGreen,
+      'CONTRACT': 'failure',
+      'POLICIES': 'failure',
+      'FILES': 'true',
+    });
+    expect(r.exitCode, 0, reason: '${r.stdout}${r.stderr}');
+    expect(r.stdout, contains('| Effective contract | to commit |'));
+    expect(r.stdout, contains('| Policies | to commit |'));
+    expect(r.stdout, contains('gh run download 42 -n database-preview'));
+    expect(r.stdout, isNot(contains('Every check succeeded')));
+  });
+
+  test('files only never hides a failed replay or a failed database test', () {
+    final replay = _verdict({
+      'REPLAY': 'failure',
+      'POLICIES': 'skipped',
+      'CONTRACT': 'skipped',
+      'PGTAP': 'skipped',
+      'FILES': 'true',
+    });
+    expect(replay.exitCode, 1);
+    expect(replay.stdout, contains('| Effective contract | skipped |'));
+    final pgtap = _verdict({
+      ..._allGreen,
+      'CONTRACT': 'failure',
+      'PGTAP': 'failure',
+      'FILES': 'true',
+    });
+    expect(pgtap.exitCode, 1);
+    expect(pgtap.stdout, contains('| Database tests | failure |'));
+  });
+
+  test('without files only, a stale contract stays red', () {
+    final r = _verdict({..._allGreen, 'CONTRACT': 'failure', 'FILES': 'false'});
+    expect(r.exitCode, 1);
+    expect(r.stdout, contains('| Effective contract | failure |'));
   });
 
   test('the same lines reach the run summary', () {

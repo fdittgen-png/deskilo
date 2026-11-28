@@ -104,7 +104,11 @@ Future<VatFilingFacts?> _askFacts(
     return askSpanishFilingFacts(context, l10n);
   }
   if (asked.contains('italianDeclarant')) {
-    return askItalianDeclarant(context, l10n);
+    return askItalianDeclarant(
+      context,
+      l10n,
+      roles: vatFilingOf(save.country)?.factChoices['declarantRole'] ?? const [],
+    );
   }
   return Future.value(const VatFilingFacts());
 }

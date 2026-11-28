@@ -10,6 +10,8 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/vat_catalogue.dart';
+import '../../domain/vat_exemption_reasons.dart';
+import 'vat_exemption_field.dart';
 
 /// One editable row of the VAT rate editor. The controllers live here so a
 /// rename never rebuilds into a lost cursor.
@@ -300,17 +302,13 @@ class VatGroupSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         for (final (index, draft) in drafts.indexed)
-          if (draft.group.category == 'E' || draft.group.category == 'O')
-            Padding(
+          if (vatCategoryNamesExemption(draft.group.category))
+            VatExemptionField(
               key: ValueKey('vat-rate-exemption-$index'),
-              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-              child: TextField(
-                controller: draft.exemption,
-                decoration: InputDecoration(
-                  labelText:
-                      '${draft.label.text} · ${l10n.vatExemptionReasonField}',
-                ),
-              ),
+              category: draft.group.category,
+              value: draft.exemption.text,
+              label: '${draft.label.text} · ${l10n.vatExemptionReasonField}',
+              onChanged: (wording) => draft.exemption.text = wording,
             ),
         Padding(
           key: const ValueKey('vat-group-examples'),
