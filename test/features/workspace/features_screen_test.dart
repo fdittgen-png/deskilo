@@ -96,7 +96,8 @@ void main() {
     // #4448 — counterTillLayout: till layouts are asked for.
     // #4368 — counterReceiptPrinter: the receipt printer is asked for.
     // #4466 — counterEmbeddedTerminal: till boards are asked for.
-    expect(onCount, featureManifest.length - 80);
+    // #4514 — counterCashReasons: editing the cash reasons is asked for.
+    expect(onCount, featureManifest.length - 81);
   });
 
   testWidgets(
