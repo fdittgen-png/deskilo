@@ -10,6 +10,7 @@ import 'package:deskilo/core/demo/data/bank_statement_repository.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/files/file_drop_backend.dart';
 import 'package:deskilo/features/money/domain/bank/bank_import_settings.dart';
+import 'package:deskilo/features/money/domain/bank/bank_records.dart' show BankAccount;
 import 'package:deskilo/features/money/presentation/widgets/bank_statements_sheet.dart';
 import 'package:deskilo/features/money/providers/bank_statement_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
@@ -27,6 +28,8 @@ final _camt = File(
 
 XFile _dropped(String name) =>
     FakeDroppedFile(name, bytes: Uint8List.fromList(_camt));
+
+const _account = BankAccount(id: 'acct-1', name: 'Postfinance', iban: 'CH9300762011623852957', currency: 'CHF');
 
 void main() {
   late FakeBankStatementRepository bank;
@@ -54,6 +57,8 @@ void main() {
         overrides: [
           ...drop.overrides(available: available),
           bankStatementRepositoryProvider.overrideWithValue(bank),
+        // #4496: the account the files are imported into
+        bankAccountRepositoryProvider.overrideWithValue(FakeBankAccountRepository(bank, accounts: const [_account])),
           invoicesProvider.overrideWith((ref) async => []),
           invoiceMatchesProvider.overrideWith((ref) async => {}),
           if (maxBytes != null)

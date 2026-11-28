@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show ProviderBase;
 
 import '../../core/devices/connected_boards_provider.dart';
+import '../../features/money/providers/bank_statement_providers.dart';
 import '../../features/money/providers/billing_customer_providers.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/money/providers/supplier_providers.dart';
@@ -32,5 +33,6 @@ ProviderBase<AsyncValue<List<Object?>>> masterDataSource(
   MasterDataKind.devices => connectedTillBoardsProvider(workspaceId),
   MasterDataKind.suppliers => suppliersProvider(workspaceId),
   MasterDataKind.customers => billingCustomersProvider(workspaceId),
+  MasterDataKind.bankAccounts => bankAccountsProvider(workspaceId),
   MasterDataKind.sites => sitesProvider,
 };

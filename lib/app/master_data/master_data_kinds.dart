@@ -99,6 +99,12 @@ enum MasterDataKind {
     Icons.people_outline,
     [WorkspaceFeature.billingCustomers],
   ),
+  bankAccounts(
+    MasterDataGroup.organisation,
+    Routes.moneyBankAccounts,
+    Icons.account_balance_outlined,
+    [WorkspaceFeature.bankImport],
+  ),
   sites(
     MasterDataGroup.organisation,
     Routes.settingsSites,
@@ -129,6 +135,7 @@ enum MasterDataKind {
     devices => l10n.devicePairingTitle,
     suppliers => l10n.bookRoleSuppliers,
     customers => l10n.billingCustomersTitle,
+    bankAccounts => l10n.bankAccountsTitle,
     sites => l10n.featureMultiSite,
   };
 
@@ -144,6 +151,7 @@ enum MasterDataKind {
     devices => l10n.devicePairingSubtitle,
     suppliers => l10n.masterDataSuppliersDesc,
     customers => l10n.masterDataCustomersDesc,
+    bankAccounts => l10n.bankAccountsSubtitle,
     sites => l10n.masterDataSitesDesc,
   };
 

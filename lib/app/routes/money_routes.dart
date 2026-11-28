@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/navigation/list_detail_route.dart';
+import '../../core/navigation/routes.dart';
 import '../../features/money/application/arrived_accounting_sign_in.dart';
 import '../../features/money/domain/accounting_sign_in_return.dart';
 import '../../features/money/domain/invoicing_wizard.dart';
@@ -14,6 +15,7 @@ import '../../features/money/presentation/invoicing/invoice_page.dart';
 import '../../features/money/presentation/invoicing/invoicing_customer_actions.dart';
 import '../../features/money/presentation/screens/accounting_exports_screen.dart';
 import '../../features/money/presentation/screens/accounting_sign_in_return_screen.dart';
+import '../../features/money/presentation/screens/bank_accounts_screen.dart';
 import '../../features/money/presentation/screens/billing_screen.dart';
 import '../../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../../features/money/presentation/screens/guest_passes_screen.dart';
@@ -273,6 +275,12 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const GuestPassesScreen(),
+    ),
+    // #4496 — the bank accounts statements are imported into (Master data).
+    GoRoute(
+      path: Routes.moneyBankAccounts,
+      redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.bankImport], to: '/money')),
+      builder: (context, state) => const BankAccountsScreen(),
     ),
     // #3070 — the suppliers as a screen: list, search, a deep link.
     GoRoute(

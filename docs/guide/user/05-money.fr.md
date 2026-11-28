@@ -590,6 +590,25 @@ Vous voulez voir l'argent enregistré en entrée et en sortie, et ce qui reste �
 
 **Voir aussi:** [Ce que l'espace doit : À payer](help:user.money.purchases.to-pay)
 
+<!-- anchor: user.money.bank.accounts -->
+### Comptes bancaires
+
+**Public:** Administrateur·rice · Propriétaire
+
+Un compte bancaire est un seul enregistrement de l'entreprise : le compte dans lequel ses relevés sont importés, quel que soit le nom que lui donnent les fichiers de la banque.
+
+**Étapes**
+
+1. Ouvrez **Réglages**, puis **Données de base**, puis **Comptes bancaires**.
+2. Touchez **Ajouter un compte bancaire** et indiquez son **Nom**, son **IBAN**, d'éventuels **Autres identifiants** et les noms sous lesquels il est **Aussi appelé** (un par ligne), sa **Devise** et, si l'entreprise tient sa comptabilité ici, son **Compte comptable**.
+3. À l'import d'un relevé, choisissez son compte : un fichier d'un même compte sous deux noms n'importe jamais deux fois un mouvement.
+
+**Bon à savoir**
+
+- **Relevés sans compte** liste les noms sous lesquels des relevés ont été importés et qu'aucun compte ne porte encore. Touchez **Ajouter à un compte** pour ajouter un nom à son compte : ses relevés sont alors de ce compte.
+- Un nom, un IBAN ou un identifiant n'appartient qu'à un seul compte.
+- Un compte qui ne sert plus est archivé : ses relevés le gardent.
+
 <!-- anchor: user.money.suppliers.balance -->
 ### Soldes des fournisseurs
 

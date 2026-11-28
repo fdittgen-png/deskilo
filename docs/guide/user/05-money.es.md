@@ -590,6 +590,25 @@ Quiere ver el dinero registrado que entró y salió, y lo que queda por pagar.
 
 **Véase también:** [Lo que debe el espacio: Por pagar](help:user.money.purchases.to-pay)
 
+<!-- anchor: user.money.bank.accounts -->
+### Cuentas bancarias
+
+**Público:** Administrador/a · Propietario
+
+Una cuenta bancaria es un único registro de la empresa: la cuenta en la que se importan sus extractos, sea cual sea el nombre que le den los archivos del banco.
+
+**Pasos**
+
+1. Abra **Ajustes**, luego **Datos maestros** y luego **Cuentas bancarias**.
+2. Toque **Añadir una cuenta bancaria** e indique su **Nombre**, su **IBAN**, los **Otros identificadores** y los nombres con los que está **También llamada** (uno por línea), su **Moneda** y, si la empresa lleva aquí su contabilidad, su **Cuenta contable**.
+3. Al importar un extracto, elija su cuenta: un archivo de una misma cuenta con dos nombres nunca importa un movimiento dos veces.
+
+**Conviene saber**
+
+- **Extractos sin cuenta** lista los nombres con los que se importaron extractos y que ninguna cuenta lleva todavía. Toque **Añadir a una cuenta** para añadir un nombre a su cuenta: sus extractos pasan a ser de esa cuenta.
+- Un nombre, un IBAN o un identificador pertenece a una sola cuenta.
+- Una cuenta que ya no se usa se archiva: sus extractos la conservan.
+
 <!-- anchor: user.money.suppliers.balance -->
 ### Saldos de proveedores
 

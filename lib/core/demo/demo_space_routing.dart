@@ -216,7 +216,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
         ..mayUnmatch = (() => ref
             .read(myPermissionsProvider)
             .contains(WorkspacePermission.issueInvoices));
-    }),
+    }), bankAccountRepositoryProvider.overrideWith((ref) => demoBankAccountsOf(demoPickSpace<FakeBankStatementRepository>(ref, banks))), // #4496
     // #3060 F5 — the register a plain member reads is their own invoices,
     // as on the server.
     invoiceQueriesProvider.overrideWith((ref) {

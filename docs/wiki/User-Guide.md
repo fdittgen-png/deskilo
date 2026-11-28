@@ -3001,6 +3001,25 @@ You want to see the money recorded in and out, and what is still to pay.
 
 **See also:** [What the space owes: To pay](#what-the-space-owes-to-pay)
 
+<!-- anchor: user.money.bank.accounts -->
+### Bank accounts
+
+**Audience:** Administrator · Owner
+
+A bank account is one record of the business: the account its bank statements are imported into, whatever name the bank's files give it.
+
+**Steps**
+
+1. Open **Settings**, then **Master data**, then **Bank accounts**.
+2. Tap **Add a bank account** and give its **Name**, its **IBAN**, any **Other identifiers** and the names it is **Also known as** (one per line), its **Currency** and, when the business keeps its books here, its **Ledger account**.
+3. When you import a statement, pick the account it is of: a file of one account under two names never imports a movement twice.
+
+**Good to know**
+
+- **Statements without an account** lists the names earlier statements were imported under that no account carries yet. Tap **Add to an account** to add a name to its account: its statements are then of that account.
+- A name, an IBAN or an identifier belongs to one account only.
+- An account no longer used is archived: its statements keep it.
+
 <!-- anchor: user.money.suppliers.balance -->
 ### Supplier balances
 

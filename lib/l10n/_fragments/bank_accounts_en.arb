@@ -1,0 +1,180 @@
+{
+  "@@locale": "en",
+  "bankAccountsTitle": "Bank accounts",
+  "@bankAccountsTitle": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountsSubtitle": "The accounts bank statements are imported into",
+  "@bankAccountsSubtitle": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountsNone": "No bank account yet.",
+  "@bankAccountsNone": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountAdd": "Add a bank account",
+  "@bankAccountAdd": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountEdit": "Bank account",
+  "@bankAccountEdit": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountName": "Name",
+  "@bankAccountName": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountIbanHint": "Optional. Spaces do not matter.",
+  "@bankAccountIbanHint": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountIdentifiers": "Other identifiers",
+  "@bankAccountIdentifiers": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountIdentifiersHint": "An account number or the bank's own reference, one per line.",
+  "@bankAccountIdentifiersHint": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountAliases": "Also known as",
+  "@bankAccountAliases": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountAliasesHint": "Other names statements of this account were imported under, one per line.",
+  "@bankAccountAliasesHint": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountCurrency": "Currency",
+  "@bankAccountCurrency": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountLedger": "Ledger account",
+  "@bankAccountLedger": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountLedgerNone": "None",
+  "@bankAccountLedgerNone": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountArchive": "Archive",
+  "@bankAccountArchive": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountArchived": "Archived",
+  "@bankAccountArchived": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountSaved": "{count, plural, =0{Saved.} one{Saved: {count} statement is now of this account.} other{Saved: {count} statements are now of this account.}}",
+  "@bankAccountSaved": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bankUnattachedTitle": "Statements without an account",
+  "@bankUnattachedTitle": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankUnattachedHint": "These names belong to no account yet: add each to the names of its account.",
+  "@bankUnattachedHint": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankUnattachedRow": "{name} ({currency}): {count, plural, one{{count} statement} other{{count} statements}}",
+  "@bankUnattachedRow": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bankUnattachedAssign": "Add to an account",
+  "@bankUnattachedAssign": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankImportNeedsAccount": "Add the bank account first, under Settings › Master data › Bank accounts.",
+  "@bankImportNeedsAccount": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankImportAccountTitle": "Which account is this file of?",
+  "@bankImportAccountTitle": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankImportAccountPick": "Import into it",
+  "@bankImportAccountPick": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankCsvIntoAccount": "Into the account {name}, in {currency}.",
+  "@bankCsvIntoAccount": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "bankAccountRefusedNone": "Pick the bank account this statement is of.",
+  "@bankAccountRefusedNone": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountRefusedOther": "This file is of the account {name}, not of {account}. Pick its account, or add {name} to the names of {account}.",
+  "@bankAccountRefusedOther": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "bankAccountRefusedCurrency": "The statement is in another currency than the account {account} ({currency}).",
+  "@bankAccountRefusedCurrency": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into",
+    "placeholders": {
+      "account": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "bankAccountRefusedName": "A bank account needs a name of 1 to 64 characters.",
+  "@bankAccountRefusedName": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountRefusedIban": "This is not an IBAN.",
+  "@bankAccountRefusedIban": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountRefusedTaken": "Another bank account of the business is already known by {name}.",
+  "@bankAccountRefusedTaken": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bankAccountRefusedBookAccount": "The ledger account must be a posting asset account of the business.",
+  "@bankAccountRefusedBookAccount": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  },
+  "bankAccountRefusedCurrencyKept": "The account's statements are in its currency: the currency stays.",
+  "@bankAccountRefusedCurrencyKept": {
+    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
+  }
+}

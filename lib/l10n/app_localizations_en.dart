@@ -2210,6 +2210,103 @@ class AppLocalizationsEn extends AppLocalizations {
   String get badgeTokenOnce => 'Save this QR now — it is shown only once.';
 
   @override
+  String get bankAccountAdd => 'Add a bank account';
+
+  @override
+  String get bankAccountAliases => 'Also known as';
+
+  @override
+  String get bankAccountAliasesHint =>
+      'Other names statements of this account were imported under, one per line.';
+
+  @override
+  String get bankAccountArchive => 'Archive';
+
+  @override
+  String get bankAccountArchived => 'Archived';
+
+  @override
+  String get bankAccountCurrency => 'Currency';
+
+  @override
+  String get bankAccountEdit => 'Bank account';
+
+  @override
+  String get bankAccountIbanHint => 'Optional. Spaces do not matter.';
+
+  @override
+  String get bankAccountIdentifiers => 'Other identifiers';
+
+  @override
+  String get bankAccountIdentifiersHint =>
+      'An account number or the bank\'s own reference, one per line.';
+
+  @override
+  String get bankAccountLedger => 'Ledger account';
+
+  @override
+  String get bankAccountLedgerNone => 'None';
+
+  @override
+  String get bankAccountName => 'Name';
+
+  @override
+  String get bankAccountRefusedBookAccount =>
+      'The ledger account must be a posting asset account of the business.';
+
+  @override
+  String bankAccountRefusedCurrency(String account, String currency) {
+    return 'The statement is in another currency than the account $account ($currency).';
+  }
+
+  @override
+  String get bankAccountRefusedCurrencyKept =>
+      'The account\'s statements are in its currency: the currency stays.';
+
+  @override
+  String get bankAccountRefusedIban => 'This is not an IBAN.';
+
+  @override
+  String get bankAccountRefusedName =>
+      'A bank account needs a name of 1 to 64 characters.';
+
+  @override
+  String get bankAccountRefusedNone =>
+      'Pick the bank account this statement is of.';
+
+  @override
+  String bankAccountRefusedOther(String name, String account) {
+    return 'This file is of the account $name, not of $account. Pick its account, or add $name to the names of $account.';
+  }
+
+  @override
+  String bankAccountRefusedTaken(String name) {
+    return 'Another bank account of the business is already known by $name.';
+  }
+
+  @override
+  String bankAccountSaved(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Saved: $count statements are now of this account.',
+      one: 'Saved: $count statement is now of this account.',
+      zero: 'Saved.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bankAccountsNone => 'No bank account yet.';
+
+  @override
+  String get bankAccountsSubtitle =>
+      'The accounts bank statements are imported into';
+
+  @override
+  String get bankAccountsTitle => 'Bank accounts';
+
+  @override
   String get bankBasisAmount => 'same amount and payer';
 
   @override
@@ -2334,6 +2431,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bankCsvHeader => 'The first row names the columns';
 
   @override
+  String bankCsvIntoAccount(String name, String currency) {
+    return 'Into the account $name, in $currency.';
+  }
+
+  @override
   String bankCsvNeedsAccount(int max) {
     String _temp0 = intl.Intl.pluralLogic(
       max,
@@ -2400,11 +2502,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bankFormatTitle => 'Which file is this?';
 
   @override
+  String get bankImportAccountPick => 'Import into it';
+
+  @override
+  String get bankImportAccountTitle => 'Which account is this file of?';
+
+  @override
   String get bankImportAction => 'Import a statement';
 
   @override
   String get bankImportFailed =>
       'The statement could not be imported. Nothing was added.';
+
+  @override
+  String get bankImportNeedsAccount =>
+      'Add the bank account first, under Settings › Master data › Bank accounts.';
 
   @override
   String get bankImportRepeated =>
@@ -2680,6 +2792,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bankStatementsTitle => 'Bank statements';
+
+  @override
+  String get bankUnattachedAssign => 'Add to an account';
+
+  @override
+  String get bankUnattachedHint =>
+      'These names belong to no account yet: add each to the names of its account.';
+
+  @override
+  String bankUnattachedRow(String name, String currency, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count statements',
+      one: '$count statement',
+    );
+    return '$name ($currency): $_temp0';
+  }
+
+  @override
+  String get bankUnattachedTitle => 'Statements without an account';
 
   @override
   String get bankUndoBody =>

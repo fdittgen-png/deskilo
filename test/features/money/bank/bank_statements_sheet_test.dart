@@ -48,6 +48,8 @@ final _camt = File(
   'test/features/money/fixtures/bank/camt054_notification.xml',
 ).readAsBytesSync();
 
+const _account = BankAccount(id: 'acct-1', name: 'Postfinance', iban: 'CH9300762011623852957', currency: 'CHF');
+
 void main() {
   late FakeMoneyRepository money;
   late FakeBankStatementRepository bank;
@@ -67,6 +69,8 @@ void main() {
     await tester.pumpWidget(ProviderScope(
       overrides: [
         bankStatementRepositoryProvider.overrideWithValue(bank),
+        // #4496: the account the files are imported into
+        bankAccountRepositoryProvider.overrideWithValue(FakeBankAccountRepository(bank, accounts: const [_account])),
         invoicesProvider.overrideWith((ref) async => [...money.invoices]),
         invoiceMatchesProvider.overrideWith((ref) async => {...money.invoiceMatchesStore}),
         filePickerProvider.overrideWithValue(
