@@ -4881,22 +4881,26 @@ routine public.till_layout_publish_v1(p_workspace_id uuid, p_request_id uuid, p_
 routine public.till_layout_reset_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f320b4400f09
 routine public.till_layout_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_expected_version integer, p_layout jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5ae3fc7e2d12
 routine public.till_terminal_approve_v1(p_terminal_id uuid, p_fingerprint text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7c11a3828256
+routine public.till_terminal_cashier_asked(p_terminal_id uuid) -> boolean | function | definer | stable | exec:service_role | body:c1de93ce315c
+routine public.till_terminal_cashier_boards_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ddcea42590ab
 routine public.till_terminal_claim_v1(p_code text, p_device_id uuid, p_secret_hash text, p_firmware text, p_protocol text, p_claim_request_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:cdffb8adc42d
 routine public.till_terminal_code_cancel_v1(p_code_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:f6e5ee285df5
 routine public.till_terminal_code_create_v1(p_workspace_id uuid, p_till_id uuid, p_device_id uuid, p_board_profile text, p_secret_hash text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:cfed96cd777d
 routine public.till_terminal_code_normal(p_code text) -> text | function | invoker | immutable | exec:service_role | body:3313a21d56bb
+routine public.till_terminal_current_lease(p_terminal_id uuid) -> till_terminal_leases | function | definer | stable | exec:service_role | body:5beb62dad1cf
 routine public.till_terminal_fingerprint(p_secret_hash text) -> text | function | invoker | immutable | exec:service_role | body:96803719c623
 routine public.till_terminal_lease_grant_v1(p_terminal_id uuid, p_token_ciphertext bytea, p_token_nonce bytea, p_token_expires_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3a155bd507f1
 routine public.till_terminal_lease_request_v1(p_device_id uuid, p_secret text, p_lease_hash text) -> jsonb | function | definer | volatile | exec:service_role | body:74681a93ddcc
 routine public.till_terminal_lease_resolve_v1(p_device_id uuid, p_secret text, p_lease_hash text) -> jsonb | function | definer | volatile | exec:service_role | body:1a1ee5322a2e
 routine public.till_terminal_lease_revoke_v1(p_lease_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:02f24bd845ae
+routine public.till_terminal_lease_shown(p_lease till_terminal_leases) -> jsonb | function | definer | stable | exec:service_role | body:7e3004c5ae3f
 routine public.till_terminal_leases_end() -> trigger | function | definer | volatile | exec:service_role | body:352dc122e2b3
 routine public.till_terminal_new_code() -> text | function | invoker | volatile | exec:service_role | body:bb016e7bfab5
 routine public.till_terminal_owner(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:1a0fd4f9f3bb
 routine public.till_terminal_proven(p_device_id uuid, p_secret text, OUT terminal till_terminals, OUT reason text) -> record | function | invoker | stable | exec:service_role | body:d3f6942d6958
 routine public.till_terminal_revoke_v1(p_terminal_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:7c1401c37ead
 routine public.till_terminal_status_v1(p_device_id uuid, p_secret text) -> jsonb | function | definer | volatile | exec:service_role | body:a7e35177dd77
-routine public.till_terminals_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c0eb77a8d35a
+routine public.till_terminals_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:afb0eb35049b
 routine public.toggle_message_star(p_kind text, p_message_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:88ca42478a05
 routine public.touch_conversation() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1a8384fd9011
 routine public.touch_last_seen() -> void | function | definer | volatile | exec:authenticated,service_role | body:2d50fbe02f88
