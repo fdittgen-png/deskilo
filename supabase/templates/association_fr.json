@@ -116,6 +116,7 @@
         "einvoiceCustomerDelivery": false,
         "environmentPairs": false,
         "eventsTab": false,
+        "expenseCategories": false,
         "expenseRepartition": false,
         "expenseRepartitionWizard": false,
         "externalRooms": false,
