@@ -65911,7 +65911,7 @@ abstract class AppLocalizations {
   /// #2362 sales tax: taxCertInvalidState
   ///
   /// In en, this message translates to:
-  /// **'Two letters, or *'**
+  /// **'Pick the state, or mark the certificate multistate.'**
   String get taxCertInvalidState;
 
   /// #2362 sales tax: taxCertKind
@@ -65944,6 +65944,12 @@ abstract class AppLocalizations {
   /// **'Resale'**
   String get taxCertKindResale;
 
+  /// #4501 FIN-11 a certificate valid in several states (SST, MTC)
+  ///
+  /// In en, this message translates to:
+  /// **'Multistate certificate (SST or MTC)'**
+  String get taxCertMultistate;
+
   /// #2362 sales tax: taxCertNumber
   ///
   /// In en, this message translates to:
@@ -65961,12 +65967,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save certificate'**
   String get taxCertSave;
-
-  /// #2362 sales tax: taxCertState
-  ///
-  /// In en, this message translates to:
-  /// **'State (two letters, or * for a multistate certificate)'**
-  String get taxCertState;
 
   /// #2362 sales tax: taxCertSubtitle
   ///

@@ -10,6 +10,7 @@ import 'package:deskilo/features/money/domain/tax_exemption_certificate.dart';
 import 'package:deskilo/features/money/presentation/widgets/member_tax_certificates.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -110,7 +111,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(repo.certificates['member-1'], isNull);
 
-    await tester.enterText(find.byKey(const ValueKey('tax-cert-state')), 'ny');
+    // #4501 -- the state is picked from the country's states
+    expect(find.text(AppLocalizationsEn().taxCertInvalidState), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('tax-cert-state')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Alabama').last);
+    await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('tax-cert-number')),
       'ST-119.1',
@@ -121,10 +127,26 @@ void main() {
     final saved = repo.certificates['member-1']!.single;
     expect(
       (saved.kind, saved.state, saved.number),
-      ('resale', 'NY', 'ST-119.1'),
+      ('resale', 'AL', 'ST-119.1'),
     );
     expect(find.textContaining('ST-119.1'), findsOneWidget);
     expect(find.byKey(ValueKey('tax-cert-end-${saved.id}')), findsOneWidget);
+  });
+
+  testWidgets('a multistate certificate is marked, not typed as a star (#4501)', (tester) async {
+    final repo = await _pump(tester);
+    await tester.tap(find.byKey(tile));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('tax-cert-add')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('tax-cert-multistate')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('tax-cert-state')), findsNothing, reason: 'no state to pick');
+    await tester.enterText(find.byKey(const ValueKey('tax-cert-number')), 'SST-42');
+    await tester.tap(find.byKey(const ValueKey('tax-cert-save')));
+    await tester.pumpAndSettle();
+    expect(repo.certificates['member-1']!.single.state, multistateCertificate);
+    expect(find.textContaining(AppLocalizationsEn().taxCertMultistate), findsOneWidget);
   });
 
   testWidgets('ending a certificate closes it today', (tester) async {

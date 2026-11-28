@@ -13,11 +13,13 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/address_region_field.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/tax_exemption_certificate.dart';
+import '../../providers/bank_statement_providers.dart' show currentWorkspaceProvider;
 import '../../providers/sales_tax_providers.dart';
 import '../invoice_actions.dart';
 
@@ -130,7 +132,8 @@ class _CertificatesSheet extends ConsumerWidget {
             key: ValueKey('tax-cert-${c.id}'),
             contentPadding: EdgeInsets.zero,
             title: Text(
-              '${_kindName(l10n, c.kind)} · ${c.number} (${c.state})',
+              '${_kindName(l10n, c.kind)} · ${c.number} '
+              '(${c.state == multistateCertificate ? l10n.taxCertMultistate : c.state})',
             ),
             subtitle: Text(
               c.validTo == null
@@ -159,10 +162,15 @@ class _CertificatesSheet extends ConsumerWidget {
     );
   }
 
-  Future<bool> _add(BuildContext context, WidgetRef ref) {
+  Future<bool> _add(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
+    // #4501 (FIN-11) -- the state is one of the business country's regions, picked, or the certificate is multistate
+    final country = (await ref.read(currentWorkspaceProvider.future))?.countryCode ?? '';
+    if (!context.mounted) return false;
+    var state = '';
+    var multistate = false;
+    String? stateError;
     final fields = FormControllers({
-      'state': '',
       'number': '',
       'from': isoDay(ref.read(clockProvider).now()),
       'to': '',
@@ -175,14 +183,16 @@ class _CertificatesSheet extends ConsumerWidget {
         submitLabel: l10n.taxCertSave,
         submitKey: const ValueKey('tax-cert-save'),
         onDispose: fields.dispose,
-        validate: () => {
-          if (!RegExp(r'^([A-Za-z]{2}|\*)$').hasMatch(fields.text('state')))
-            'state': l10n.taxCertInvalidState,
-          if (fields.text('number').isEmpty) 'number': l10n.taxRefRequired,
-          if (_day(fields.text('from')) == null)
-            'from': l10n.taxCertInvalidDate,
-          if (fields.text('to').isNotEmpty && _day(fields.text('to')) == null)
-            'to': l10n.taxCertInvalidDate,
+        validate: () {
+          stateError = !multistate && state.isEmpty ? l10n.taxCertInvalidState : null;
+          return {
+            'state': ?stateError,
+            if (fields.text('number').isEmpty) 'number': l10n.taxRefRequired,
+            if (_day(fields.text('from')) == null)
+              'from': l10n.taxCertInvalidDate,
+            if (fields.text('to').isNotEmpty && _day(fields.text('to')) == null)
+              'to': l10n.taxCertInvalidDate,
+          };
         },
         onSubmit: () async {
           try {
@@ -193,7 +203,7 @@ class _CertificatesSheet extends ConsumerWidget {
                     workspaceId: workspaceId,
                     memberId: memberId,
                     kind: kind,
-                    state: fields.text('state').toUpperCase(),
+                    state: multistate ? multistateCertificate : state,
                     number: fields.text('number'),
                     validFrom: _day(fields.text('from'))!,
                     validTo: _day(fields.text('to')),
@@ -224,8 +234,25 @@ class _CertificatesSheet extends ConsumerWidget {
               onChanged: (x) => kind = x ?? kind,
             ),
           ),
+          SwitchListTile(
+            key: const ValueKey('tax-cert-multistate'),
+            contentPadding: EdgeInsets.zero,
+            title: Text(l10n.taxCertMultistate),
+            value: multistate,
+            onChanged: (v) {
+              multistate = v;
+              refresh();
+            },
+          ),
+          if (!multistate)
+            AddressRegionField(
+              fieldKey: 'tax-cert-state',
+              country: country,
+              value: state,
+              error: stateError,
+              onChanged: (v) => state = v,
+            ),
           for (final (key, label) in [
-            ('state', l10n.taxCertState),
             ('number', l10n.taxCertNumber),
             ('from', l10n.taxCertValidFrom),
             ('to', l10n.taxCertValidTo),

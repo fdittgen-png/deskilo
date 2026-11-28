@@ -53367,7 +53367,7 @@
   "@taxCertInvalidDate": {
     "description": "#2362 sales tax: taxCertInvalidDate"
   },
-  "taxCertInvalidState": "Two letters, or *",
+  "taxCertInvalidState": "Pick the state, or mark the certificate multistate.",
   "@taxCertInvalidState": {
     "description": "#2362 sales tax: taxCertInvalidState"
   },
@@ -53391,6 +53391,10 @@
   "@taxCertKindResale": {
     "description": "#2362 sales tax: taxCertKindResale"
   },
+  "taxCertMultistate": "Multistate certificate (SST or MTC)",
+  "@taxCertMultistate": {
+    "description": "#4501 FIN-11 a certificate valid in several states (SST, MTC)"
+  },
   "taxCertNumber": "Certificate number",
   "@taxCertNumber": {
     "description": "#2362 sales tax: taxCertNumber"
@@ -53407,10 +53411,6 @@
   "taxCertSave": "Save certificate",
   "@taxCertSave": {
     "description": "#2362 sales tax: taxCertSave"
-  },
-  "taxCertState": "State (two letters, or * for a multistate certificate)",
-  "@taxCertState": {
-    "description": "#2362 sales tax: taxCertState"
   },
   "taxCertSubtitle": "Sales tax: lines of this customer go out untaxed while one is in force",
   "@taxCertSubtitle": {

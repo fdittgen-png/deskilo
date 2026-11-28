@@ -104,10 +104,6 @@
   "@taxCertKindOther": {
     "description": "#2362 sales tax: taxCertKindOther"
   },
-  "taxCertState": "Bundesstaat (zwei Buchstaben, oder * für eine Mehrstaaten-Bescheinigung)",
-  "@taxCertState": {
-    "description": "#2362 sales tax: taxCertState"
-  },
   "taxCertNumber": "Nummer der Bescheinigung",
   "@taxCertNumber": {
     "description": "#2362 sales tax: taxCertNumber"
@@ -120,7 +116,7 @@
   "@taxCertValidTo": {
     "description": "#2362 sales tax: taxCertValidTo"
   },
-  "taxCertInvalidState": "Zwei Buchstaben oder *",
+  "taxCertInvalidState": "Wählen Sie den Bundesstaat, oder kennzeichnen Sie die Bescheinigung als Mehrstaaten-Bescheinigung.",
   "@taxCertInvalidState": {
     "description": "#2362 sales tax: taxCertInvalidState"
   },
@@ -160,5 +156,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "taxCertMultistate": "Mehrstaaten-Bescheinigung (SST oder MTC)"
 }

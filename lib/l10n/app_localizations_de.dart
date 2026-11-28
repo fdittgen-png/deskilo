@@ -41431,7 +41431,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxCertInvalidDate => 'Datum als JJJJ-MM-TT eingeben';
 
   @override
-  String get taxCertInvalidState => 'Zwei Buchstaben oder *';
+  String get taxCertInvalidState =>
+      'Wählen Sie den Bundesstaat, oder kennzeichnen Sie die Bescheinigung als Mehrstaaten-Bescheinigung.';
 
   @override
   String get taxCertKind => 'Art';
@@ -41449,6 +41450,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxCertKindResale => 'Wiederverkauf';
 
   @override
+  String get taxCertMultistate => 'Mehrstaaten-Bescheinigung (SST oder MTC)';
+
+  @override
   String get taxCertNumber => 'Nummer der Bescheinigung';
 
   @override
@@ -41458,10 +41462,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taxCertSave => 'Bescheinigung speichern';
-
-  @override
-  String get taxCertState =>
-      'Bundesstaat (zwei Buchstaben, oder * für eine Mehrstaaten-Bescheinigung)';
 
   @override
   String get taxCertSubtitle =>
