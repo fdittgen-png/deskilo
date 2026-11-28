@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4517 (1003): the owner's list of the till boards says of each whether it asks for a cashier and who sells on it
+-- #4517 (1002): the owner's list of the till boards says of each whether it asks for a cashier and who sells on it
 -- until when; whom may sell reads the paired boards, whether each asks, and whether they sell on it themselves, or the
 -- display name of who does; a member who may not sell reads nothing; no token, nonce or hash is ever read. Rolled back.
 begin;
