@@ -67,6 +67,26 @@ class SupabaseTillDrawer implements TillDrawerPort {
       }));
 
   @override
+  Future<List<CashReason>> cashReasons(String workspaceId) async {
+    final rows = await fetchConfigurationList(
+      table: 'counter_cash_reasons',
+      build: () => _client.from('counter_cash_reasons').select('code, builtin, name, processes, archived, sort_order').eq('workspace_id', workspaceId).order('sort_order', ascending: true).order('code', ascending: true),
+    );
+    return [for (final r in rows) CashReason.fromJson(r)];
+  }
+
+  @override
+  Future<CashReason> saveCashReason(String workspaceId, {String? code, required String name, required Set<CashReasonProcess> processes, int? position, bool? archived}) async =>
+      CashReason.fromJson(await _call('counter_cash_reason_save_v1', {
+        'p_workspace_id': workspaceId,
+        'p_code': code,
+        'p_name': name,
+        'p_processes': [for (final p in processes) p.wire],
+        'p_sort_order': position,
+        'p_archived': archived,
+      }));
+
+  @override
   Future<DrawerEntryMade> cashEntry(String workspaceId, {required String requestId, required String sessionId, required DrawerEntry entry}) async =>
       DrawerEntryMade.fromJson(await _call('counter_cash_entry_v1', {
         'p_workspace_id': workspaceId,

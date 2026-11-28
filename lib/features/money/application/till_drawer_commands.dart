@@ -30,6 +30,13 @@ class TillDrawerCommands {
     return picked;
   }
 
+  /// #4514 -- a new reason of the business's own (null [code]) or the edit of one.
+  Future<CashReason> saveCashReason({String? code, required String name, required Set<CashReasonProcess> processes, bool? archived}) async {
+    final saved = await _port.saveCashReason(workspaceId, code: code, name: name, processes: processes, archived: archived);
+    _ref.invalidate(cashReasonsProvider(workspaceId));
+    return saved;
+  }
+
   Future<DrawerOpened> openSession({required String requestId, required String tillId, required int floatMinor, Denominations? denominations}) async {
     final opened = await _port.openSession(workspaceId, requestId: requestId, tillId: tillId, floatMinor: floatMinor, denominations: denominations);
     _ref.invalidate(tillDrawerProvider(workspaceId));

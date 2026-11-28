@@ -81,6 +81,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   // #4367 — the cash drawer of the till: the counter opens and closes its session; the finances read every one.
   '/till/drawer': {_P.issueInvoices, _P.viewFinances},
   '/till/day': {_P.viewFinances},
+  '/till/reasons': {_P.configureTill}, // #4514
   '/till/layout/:tillId': {_P.configureTill}, // #4448
   // #4185 — the counter's receipts: the counter corrects, the finances settle a card answer.
   '/till/receipts': {_P.issueInvoices, _P.viewFinances},
@@ -126,7 +127,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   // this set to the union of theirs).
   '/settings/master-data': {
     _P.workspaceSettings, _P.manageBilling, _P.viewStock, _P.manageStock, _P.manageServices, _P.issueInvoices,
-    _P.viewFinances, _P.managePurchases, _P.manageBillingCustomers, _P.manageSites,
+    _P.viewFinances, _P.managePurchases, _P.manageBillingCustomers, _P.manageSites, _P.configureTill,
   },
   '/settings/public-page': {_P.workspaceSettings},
   '/legal-identity': {_P.workspaceSettings},

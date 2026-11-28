@@ -6,7 +6,10 @@
 // the screens use. Amounts are MINOR units; a denomination is the value of one note or coin in minor units, counted.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
+import 'cash_reason.dart';
 import 'till_day.dart';
+
+export 'cash_reason.dart';
 
 /// One session of a till, open: the float it started with and who opened it.
 class DrawerSession {
@@ -170,24 +173,17 @@ class DrawerClosed {
   }
 }
 
-/// How the drawer is counted, from the business's settings: `counter.blind_count`, `counter.count_by_denomination`,
-/// `counter.cash_reasons` and `counter.paid_out_limit_minor`. The blind count is the server's to enforce: the expected
-/// figure is simply not given to the counter.
+/// How the drawer is counted, from the business's settings: `counter.blind_count`, `counter.count_by_denomination` and
+/// `counter.paid_out_limit_minor`. The blind count is the server's to enforce: the expected figure is simply not given to
+/// the counter. The reasons of a cash entry are the business's records (#4514, [TillDrawerPort.cashReasons]).
 class DrawerSettings {
-  const DrawerSettings({required this.blindCount, required this.byDenomination, required this.reasons, required this.paidOutLimitMinor});
+  const DrawerSettings({required this.blindCount, required this.byDenomination, required this.paidOutLimitMinor});
 
   final bool blindCount;
   final bool byDenomination;
-  final List<String> reasons;
 
   /// 0 means no limit.
   final int paidOutLimitMinor;
-
-  /// The business's comma list, trimmed and without empty entries.
-  static List<String> reasonsOf(String list) => [
-    for (final r in list.split(','))
-      if (r.trim().isNotEmpty) r.trim(),
-  ];
 }
 
 /// A count by denomination: the value of one note or coin in minor units, and how many of it.
@@ -238,6 +234,13 @@ abstract interface class TillDrawerPort {
   /// #4511 -- the notes and coins [tillId]'s drawer carries ([values], minor units; empty is every current one of the
   /// currency). Answers the pick, null for every one.
   Future<List<int>?> setTillDenominations(String workspaceId, {required String tillId, required List<int> values});
+
+  /// #4514 -- the business's cash reasons, archived ones included, in its order.
+  Future<List<CashReason>> cashReasons(String workspaceId);
+
+  /// #4514 -- writes a reason: a new one of the business's own (no [code]), or an existing one's name (its own only),
+  /// processes, position and archive. Who configures the tills, where cash reasons are on.
+  Future<CashReason> saveCashReason(String workspaceId, {String? code, required String name, required Set<CashReasonProcess> processes, int? position, bool? archived});
 
   /// A cash entry in or out of the drawer of [sessionId]; a request id replays the entry it made.
   Future<DrawerEntryMade> cashEntry(String workspaceId, {required String requestId, required String sessionId, required DrawerEntry entry});

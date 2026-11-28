@@ -2323,6 +2323,19 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
 ];
+/// #4514 -- a setting a later migration removed: its row stays above for the block of the migration that created it,
+/// and leaves the registry, the compile-time defaults and the editor. Key -> the migration that removed it.
+const Map<String, String> retiredSettingKeys = {
+  // the cash reasons are records of the business (counter_cash_reasons)
+  'counter.cash_reasons': 'counter_cash_reasons',
+};
+
+/// The rows the registry holds today.
+List<({SettingSeed row, String since})> get liveSettingSeeds => [
+  for (final s in settingSeeds)
+    if (!retiredSettingKeys.containsKey(s.row.key)) s,
+];
+
 String _q(String s) => "'${s.replaceAll("'", "''")}'";
 
 String _num(num? n) => n == null ? 'null' : '$n';
@@ -2373,7 +2386,7 @@ String? settingSeedBlockOf(String migration) {
 
 /// The app's offline copy: one row per line, sorted by key.
 String settingRegistryJson() {
-  final rows = [for (final s in settingSeeds) s.row]
+  final rows = [for (final s in liveSettingSeeds) s.row]
     ..sort((a, b) => a.key.compareTo(b.key));
   final lines = [
     for (final r in rows)
@@ -2409,7 +2422,7 @@ String settingConstName(String key) {
 /// is GENERATED from the rows above so there is no second place to type a
 /// default; the live value is always the registry's, through `SettingsSet`.
 String settingDefaultsDart() {
-  final rows = [for (final s in settingSeeds) s.row]
+  final rows = [for (final s in liveSettingSeeds) s.row]
     ..sort((a, b) => a.key.compareTo(b.key));
   final b = StringBuffer()
     ..writeln('// SPDX-License-Identifier: AGPL-3.0-or-later')

@@ -10,11 +10,13 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/form_choice_controls.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/till_drawer_commands.dart';
 import '../../domain/till_drawer.dart';
 import '../../domain/till_drawer_rules.dart';
+import 'cash_reason_text.dart';
 import 'drawer_inputs.dart';
 import 'drawer_text.dart';
 
@@ -28,7 +30,11 @@ class CloseSheetInput {
     required this.byDenomination,
     required this.expected,
     this.values = const [],
+    this.reasons = const [],
   });
+
+  /// #4514 -- the business's cash reasons; a difference is closed with an active count-difference one.
+  final List<CashReason> reasons;
 
   /// #4511 -- the till's notes and coins, largest first; empty when its currency is counted with typed values.
   final List<int> values;
@@ -63,6 +69,7 @@ class _CloseForm {
   final SameIntent _intent = SameIntent();
   DrawerClosed? closed;
   bool _askReason = false;
+  String? _reason;
   VoidCallback _refreshSheet = () {};
 
   String get _currency => _input.currency;
@@ -101,13 +108,13 @@ class _CloseForm {
       byDenomination: _input.byDenomination,
       denominations: _counted(),
       expectedMinor: _known,
-      differenceReason: _fields.text('reason'),
+      differenceReason: _reason ?? '',
     ),
   );
 
   Future<String?> _submit() async {
     final count = _countedMinor()!;
-    final reason = _fields.text('reason');
+    final reason = _reason ?? '';
     final denominations = _counted();
     try {
       closed = await _commands.closeSession(
@@ -186,13 +193,28 @@ class _CloseForm {
 
   List<Widget> _reasonField() => [
     const FormGap(),
-    AppTextField(
-      key: const ValueKey('drawer-close-reason'),
-      controller: _fields['reason'],
-      fieldKey: 'differenceReason',
-      label: _l10n.tillDrawerDifferenceReason,
-      helper: _askReason ? _l10n.tillDrawerDifferenceAsked : null,
-      maxLength: kDrawerReasonMaxLength,
+    Text(_l10n.tillDrawerDifferenceReason, style: Theme.of(_context).textTheme.titleSmall),
+    if (_askReason) Text(_l10n.tillDrawerDifferenceAsked),
+    const FormGap.small(),
+    AppChoiceChips<String>(
+      key: const ValueKey('drawer-close-reasons'),
+      choices: [
+        for (final r in cashReasonsFor(_input.reasons, CashReasonProcess.countDifference))
+          AppChoice(value: r.code, key: ValueKey('drawer-close-reason-${r.code}'), label: cashReasonLabel(_l10n, r)),
+      ],
+      selected: _reason,
+      onSelected: (r) {
+        _reason = r;
+        _refreshSheet();
+      },
+    ),
+    Builder(
+      builder: (c) {
+        final error = FormErrorsScope.maybeOf(c)?.errors['differenceReason'];
+        return error == null
+            ? const SizedBox.shrink()
+            : Text(error, key: const ValueKey('drawer-close-reason-error'), style: TextStyle(color: Theme.of(c).colorScheme.error));
+      },
     ),
   ];
 }

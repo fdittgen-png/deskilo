@@ -52,8 +52,9 @@ const _mirrors = <Mirror>[
   Mirror('ServiceLimits.categoryMaxLength (0711)', _service, 'categoryMaxLength', r'char_length\(category\) between 1 and (\d+)'),
   Mirror('kTillNameMaxLength (0907)', _drawer, 'kTillNameMaxLength', r'name text not null check \(char_length\(btrim\(name\)\) between 1 and (\d+)\)',
       migration: '0907'),
-  Mirror('kDrawerReasonMaxLength (0907)', _drawer, 'kDrawerReasonMaxLength',
-      r'difference_reason is null or char_length\(difference_reason\) <= (\d+)', migration: '0907'),
+  // #4514 -- a business's own cash reason is a name of at most this many characters; a difference names a reason.
+  Mirror('kCashReasonNameMaxLength (0999)', 'lib/features/money/domain/cash_reason.dart', 'kCashReasonNameMaxLength',
+      r'name text check \(name is null or char_length\(btrim\(name\)\) between 1 and (\d+)\)', migration: '0999'),
   // #3556 -- the app refuses a selection over the payment function's limit before anything is sent.
   Mirror('maxClaimedInvoices (create-payment-order)', 'lib/features/money/domain/payment_claims.dart',
       'maxClaimedInvoices', r'export const MAX_CLAIMED_INVOICES = (\d+);',

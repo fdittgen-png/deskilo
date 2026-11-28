@@ -1,0 +1,23 @@
+{
+  "featureCounterCashReasonsTitle": "Bargeldgründe",
+  "featureCounterCashReasonsDesc": "Die Gründe für Bargeld, das in eine Kassenschublade eingezahlt oder entnommen wird, und für eine abweichende Zählung benennen, neben den vorgegebenen. Aus: Die Kasse bietet die Gründe an, wie sie sind.",
+  "tillCashReasonChange": "Wechselgeld",
+  "tillCashReasonExpense": "Ausgabe",
+  "tillCashReasonCountingError": "Zählfehler",
+  "tillCashReasonOther": "Sonstiges",
+  "tillCashReasonCountDifference": "Zähldifferenz",
+  "cashReasonsTitle": "Bargeldgründe",
+  "cashReasonsSubtitle": "Die Gründe, die jemand für Bargeld in oder aus einer Schublade und für eine abweichende Zählung angibt.",
+  "cashReasonsAdd": "Grund hinzufügen",
+  "cashReasonsEdit": "Grund",
+  "cashReasonsName": "Name",
+  "cashReasonsProcesses": "Verwendet für",
+  "cashReasonsArchived": "Archiviert",
+  "cashReasonsArchivedHelp": "Ein archivierter Grund wird nicht mehr angeboten; die mit ihm erfassten Bewegungen behalten ihn.",
+  "cashReasonsBuiltinHint": "Von der App in jeder Sprache benannt.",
+  "cashReasonsNameMissing": "Geben Sie dem Grund einen Namen.",
+  "cashReasonsNameTooLong": "Ein Name hat höchstens {max} Zeichen.",
+  "cashReasonsProcessMissing": "Wählen Sie mindestens eine Verwendung.",
+  "cashReasonsSaved": "Grund gespeichert.",
+  "cashReasonsArchivedName": "{name} (archiviert)"
+}

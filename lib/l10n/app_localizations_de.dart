@@ -6873,6 +6873,55 @@ class AppLocalizationsDe extends AppLocalizations {
   String get cashHubToPay => 'Zu zahlen';
 
   @override
+  String get cashReasonsAdd => 'Grund hinzufügen';
+
+  @override
+  String get cashReasonsArchived => 'Archiviert';
+
+  @override
+  String get cashReasonsArchivedHelp =>
+      'Ein archivierter Grund wird nicht mehr angeboten; die mit ihm erfassten Bewegungen behalten ihn.';
+
+  @override
+  String cashReasonsArchivedName(String name) {
+    return '$name (archiviert)';
+  }
+
+  @override
+  String get cashReasonsBuiltinHint => 'Von der App in jeder Sprache benannt.';
+
+  @override
+  String get cashReasonsEdit => 'Grund';
+
+  @override
+  String get cashReasonsName => 'Name';
+
+  @override
+  String get cashReasonsNameMissing => 'Geben Sie dem Grund einen Namen.';
+
+  @override
+  String cashReasonsNameTooLong(int max) {
+    return 'Ein Name hat höchstens $max Zeichen.';
+  }
+
+  @override
+  String get cashReasonsProcessMissing =>
+      'Wählen Sie mindestens eine Verwendung.';
+
+  @override
+  String get cashReasonsProcesses => 'Verwendet für';
+
+  @override
+  String get cashReasonsSaved => 'Grund gespeichert.';
+
+  @override
+  String get cashReasonsSubtitle =>
+      'Die Gründe, die jemand für Bargeld in oder aus einer Schublade und für eine abweichende Zählung angibt.';
+
+  @override
+  String get cashReasonsTitle => 'Bargeldgründe';
+
+  @override
   String get chBareLetting => 'Wir vermieten nur Räume';
 
   @override
@@ -12419,6 +12468,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'Die Raumdatei (XML) trägt die gesamte Konfiguration — Tarife, rechtliche Identität, Buchungs- und Freigaberegeln, Rollen, Dokumentvorlagen, Standorte, Schließtage — und der Import wendet sie an, auch auf einen Raum, der schon Buchungen hat. Aus: die Datei trägt nur Einstellungen und Grundriss.';
+
+  @override
+  String get featureCounterCashReasonsDesc =>
+      'Die Gründe für Bargeld, das in eine Kassenschublade eingezahlt oder entnommen wird, und für eine abweichende Zählung benennen, neben den vorgegebenen. Aus: Die Kasse bietet die Gründe an, wie sie sind.';
+
+  @override
+  String get featureCounterCashReasonsTitle => 'Bargeldgründe';
 
   @override
   String get featureCounterEmbeddedTerminalDesc =>
@@ -33342,10 +33398,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Solange eine Sitzung offen ist, sieht die Kasse das erwartete Bargeld nicht: Sie zählt die Schublade und sieht die Differenz nach dem Abschluss. Wer die Finanzen sehen darf, sieht es immer.';
 
   @override
-  String get settingHintCounterCashReasons =>
-      'Die Gründe, die jemand für Geld angeben kann, das in die Schublade eingezahlt oder entnommen wird, durch Kommas getrennt (zum Beispiel Wechselgeld, Ausgabe, sonstiges).';
-
-  @override
   String get settingHintCounterCountByDenomination =>
       'Wechselgeld und gezählte Schublade werden nach Stückelung angegeben (wie viele von jedem Schein und jeder Münze) statt als Summe. Die Zahlen müssen den Betrag ergeben.';
 
@@ -33809,9 +33861,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelCounterBlindCount => 'Die Schublade blind zählen';
-
-  @override
-  String get settingLabelCounterCashReasons => 'Gründe für Bargeld ein und aus';
 
   @override
   String get settingLabelCounterCountByDenomination => 'Nach Stückelung zählen';
@@ -42156,6 +42205,21 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tillCashInvalid => 'Geben Sie den gegebenen Betrag als Zahl ein.';
+
+  @override
+  String get tillCashReasonChange => 'Wechselgeld';
+
+  @override
+  String get tillCashReasonCountDifference => 'Zähldifferenz';
+
+  @override
+  String get tillCashReasonCountingError => 'Zählfehler';
+
+  @override
+  String get tillCashReasonExpense => 'Ausgabe';
+
+  @override
+  String get tillCashReasonOther => 'Sonstiges';
 
   @override
   String get tillCashShort => 'Der gegebene Betrag ist kleiner als die Summe.';

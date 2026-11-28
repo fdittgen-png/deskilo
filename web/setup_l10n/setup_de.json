@@ -886,8 +886,6 @@
  "counterByDenominationHint": "Wechselgeld und gezählte Schublade werden Schein für Schein und Münze für Münze angegeben. Einzustellen in den Einstellungen der App.",
  "counterPaidOutLimit": "Größte Entnahme ohne Freigabe",
  "counterPaidOutLimitHint": "Eine Entnahme darüber braucht jemanden, der ausgehende Zahlungen erfassen darf. Einzustellen in den Einstellungen der App.",
- "counterCashReasons": "Gründe für Bargeld ein und aus",
- "counterCashReasonsHint": "Durch Kommas getrennt, zum Beispiel Wechselgeld, Ausgabe, sonstiges. Einzustellen in den Einstellungen der App.",
  "optNoLimit": "Keine Grenze",
  "optPerHour": "{n} pro Stunde",
  "optPerHourDefault": "{n} pro Stunde (Standard)",

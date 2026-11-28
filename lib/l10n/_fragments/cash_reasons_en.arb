@@ -1,0 +1,96 @@
+{
+  "featureCounterCashReasonsTitle": "Cash reasons",
+  "@featureCounterCashReasonsTitle": {
+    "description": "#4514 the cash reasons feature"
+  },
+  "featureCounterCashReasonsDesc": "Name the reasons of cash put into or taken out of a till drawer, and of a count that differs, beside the built-in ones. Off: the till offers the reasons as they are.",
+  "@featureCounterCashReasonsDesc": {
+    "description": "#4514 what the cash reasons feature does"
+  },
+  "tillCashReasonChange": "Change",
+  "@tillCashReasonChange": {
+    "description": "#4514 the built-in reason: change for the drawer"
+  },
+  "tillCashReasonExpense": "Expense",
+  "@tillCashReasonExpense": {
+    "description": "#4514 the built-in reason: a small expense paid from the drawer"
+  },
+  "tillCashReasonCountingError": "Counting error",
+  "@tillCashReasonCountingError": {
+    "description": "#4514 the built-in reason of a count difference: a counting error"
+  },
+  "tillCashReasonOther": "Other",
+  "@tillCashReasonOther": {
+    "description": "#4514 the built-in reason: other"
+  },
+  "tillCashReasonCountDifference": "Count difference",
+  "@tillCashReasonCountDifference": {
+    "description": "#4514 a use of a reason: a count that differs at close"
+  },
+  "cashReasonsTitle": "Cash reasons",
+  "@cashReasonsTitle": {
+    "description": "#4514 the cash reasons screen title and master data card"
+  },
+  "cashReasonsSubtitle": "The reasons a person gives for cash in or out of a drawer and for a count that differs.",
+  "@cashReasonsSubtitle": {
+    "description": "#4514 the master data card line"
+  },
+  "cashReasonsAdd": "Add a reason",
+  "@cashReasonsAdd": {
+    "description": "#4514 button adding a reason"
+  },
+  "cashReasonsEdit": "Reason",
+  "@cashReasonsEdit": {
+    "description": "#4514 the reason sheet title"
+  },
+  "cashReasonsName": "Name",
+  "@cashReasonsName": {
+    "description": "#4514 the reason name field"
+  },
+  "cashReasonsProcesses": "Used for",
+  "@cashReasonsProcesses": {
+    "description": "#4514 the uses of a reason"
+  },
+  "cashReasonsArchived": "Archived",
+  "@cashReasonsArchived": {
+    "description": "#4514 the archive switch"
+  },
+  "cashReasonsArchivedHelp": "An archived reason is no longer offered; the entries recorded with it keep it.",
+  "@cashReasonsArchivedHelp": {
+    "description": "#4514 under the archive switch"
+  },
+  "cashReasonsBuiltinHint": "Named by the app in every language.",
+  "@cashReasonsBuiltinHint": {
+    "description": "#4514 a built-in reason has no name to type"
+  },
+  "cashReasonsNameMissing": "Give the reason a name.",
+  "@cashReasonsNameMissing": {
+    "description": "#4514 refusal: no name"
+  },
+  "cashReasonsNameTooLong": "A name has at most {max} characters.",
+  "@cashReasonsNameTooLong": {
+    "description": "#4514 refusal: a name too long [not a count: max]",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "cashReasonsProcessMissing": "Choose at least one use.",
+  "@cashReasonsProcessMissing": {
+    "description": "#4514 refusal: no use chosen"
+  },
+  "cashReasonsSaved": "Reason saved.",
+  "@cashReasonsSaved": {
+    "description": "#4514 after a save"
+  },
+  "cashReasonsArchivedName": "{name} (archived)",
+  "@cashReasonsArchivedName": {
+    "description": "#4514 an archived reason in the list",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
+}

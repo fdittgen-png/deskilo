@@ -323,8 +323,7 @@ const List<RouteCoverage> routeCoverage = [
     category: ProtectedSurface.payment,
   ),
   RouteCoverage('/invoices', CoverageStatus.excluded, category: ProtectedSurface.payment),
-  // #3607, #3614 — an open invoice's and a customer's address: the same
-  // payment surface.
+  // #3607, #3614 — an open invoice's and a customer's address: the same payment surface.
   RouteCoverage('/invoices/:id', CoverageStatus.excluded, category: ProtectedSurface.payment),
   RouteCoverage('/invoices/customer/:id', CoverageStatus.excluded, category: ProtectedSurface.payment),
   RouteCoverage(
@@ -404,6 +403,7 @@ const List<RouteCoverage> routeCoverage = [
   // #4448 -- the till layout editor, opened from the drawer.
   RouteCoverage('/till/layout/:tillId', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/till/day', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/till/reasons', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/till/receipts', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes/:id', CoverageStatus.planned, owner: '#1884'),

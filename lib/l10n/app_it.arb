@@ -3954,6 +3954,20 @@
   "carnetsTitle": "Carnet",
   "cashHubInOut": "Entrate e uscite per mese",
   "cashHubToPay": "Da pagare",
+  "cashReasonsAdd": "Aggiungere un motivo",
+  "cashReasonsArchived": "Archiviato",
+  "cashReasonsArchivedHelp": "Un motivo archiviato non è più proposto; i movimenti registrati con esso lo conservano.",
+  "cashReasonsArchivedName": "{name} (archiviato)",
+  "cashReasonsBuiltinHint": "Indicato dall'app in ogni lingua.",
+  "cashReasonsEdit": "Motivo",
+  "cashReasonsName": "Nome",
+  "cashReasonsNameMissing": "Indichi un nome per il motivo.",
+  "cashReasonsNameTooLong": "Un nome ha al massimo {max} caratteri.",
+  "cashReasonsProcessMissing": "Scelga almeno un uso.",
+  "cashReasonsProcesses": "Usato per",
+  "cashReasonsSaved": "Motivo salvato.",
+  "cashReasonsSubtitle": "I motivi indicati per il contante entrato o uscito da un cassetto e per un conteggio che differisce.",
+  "cashReasonsTitle": "Motivi di contante",
   "chBareLetting": "Affittiamo solo locali nudi",
   "@chBareLetting": {
     "description": "#2360: chBareLetting"
@@ -7475,6 +7489,8 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterCashReasonsDesc": "Indicare i motivi del contante versato in un cassetto di cassa o prelevato, e di un conteggio che differisce, accanto a quelli previsti. Disattivato: la cassa propone i motivi così come sono.",
+  "featureCounterCashReasonsTitle": "Motivi di contante",
   "featureCounterEmbeddedTerminalDesc": "Collegare un terminale di cassa, il piccolo schermo al banco che incassa, a questa attività: Impostazioni › Dispositivi legge il suo codice QR o il codice digitato e mostra di quale terminale si tratta. Disattivato: nessuna pagina dei dispositivi.",
   "featureCounterEmbeddedTerminalTitle": "Terminali di cassa",
   "featureCounterOfflineCashDesc": "Quando la connessione cade, la cassa continua a vendere in contanti, registra ogni vendita sul dispositivo e invia le vendite in ordine al ritorno della connessione. Gli altri metodi di pagamento attendono la connessione.",
@@ -19655,7 +19671,6 @@
     "description": "#2487 settings: Setting hint."
   },
   "settingHintCounterBlindCount": "Finché una sessione è aperta la cassa non vede il contante atteso: conta il cassetto e vede la differenza dopo la chiusura. Chi può vedere le finanze lo vede sempre.",
-  "settingHintCounterCashReasons": "I motivi che una persona può indicare per il denaro versato nel cassetto o prelevato, separati da virgole (per esempio resto, spesa, altro).",
   "settingHintCounterCountByDenomination": "Il fondo e il cassetto contato si indicano per tagli (quanti di ogni banconota e moneta) invece che come totale. I conteggi devono dare l'importo.",
   "settingHintCounterCustomerlessSales": "Consentite: si può vendere senza indicare un cliente. Rifiutate: ogni vendita ne indica uno. Una vendita senza cliente non crea mai un account, un socio o un abbonamento.",
   "settingHintCounterDocumentChannel": "Condiviso (messaggio o posta), stampato o entrambi. Lo scontrino è lo stesso documento immutabile in ogni caso.",
@@ -19921,7 +19936,6 @@
     "description": "#2487 settings: Setting label."
   },
   "settingLabelCounterBlindCount": "Contare il cassetto alla cieca",
-  "settingLabelCounterCashReasons": "Motivi di entrate e uscite di contante",
   "settingLabelCounterCountByDenomination": "Contare per tagli",
   "settingLabelCounterCustomerlessSales": "Vendite senza cliente indicato",
   "settingLabelCounterDocumentChannel": "Come lo scontrino lascia il banco",
@@ -24502,6 +24516,11 @@
   "tillCashExact": "Importo esatto",
   "tillCashGiven": "Contanti dati",
   "tillCashInvalid": "Inserisca l'importo dato come numero.",
+  "tillCashReasonChange": "Resto",
+  "tillCashReasonCountDifference": "Differenza di conteggio",
+  "tillCashReasonCountingError": "Errore di conteggio",
+  "tillCashReasonExpense": "Spesa",
+  "tillCashReasonOther": "Altro",
   "tillCashShort": "I contanti dati sono inferiori al totale.",
   "tillCategoryAll": "Tutti",
   "@tillCategoryAll": {

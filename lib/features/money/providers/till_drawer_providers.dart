@@ -38,6 +38,13 @@ final drawerSettingsProvider = FutureProvider.autoDispose<DrawerSettings>(
   retry: (_, _) => null,
 );
 
+/// #4514 -- the business's cash reasons, archived ones included, in its order: the till offers the active ones of a
+/// process, the Master data page lists and edits them all. The till reads them whatever the cash reasons feature.
+final cashReasonsProvider = FutureProvider.autoDispose.family<List<CashReason>, String>(
+  (ref, workspaceId) => ref.watch(tillDrawerPortProvider).cashReasons(workspaceId),
+  retry: (_, _) => null,
+);
+
 /// #4367 -- whether the business runs till sessions (a sale needs an open session on its till). Off until the app wires it from
 /// the business's features (`tillSessionsFromApp`): a business that does not run them sells as before, on no till.
 final tillSessionsEnabledProvider = Provider<bool>((ref) => false);

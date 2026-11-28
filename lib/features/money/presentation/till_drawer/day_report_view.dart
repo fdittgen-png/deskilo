@@ -8,11 +8,14 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/cash_reason.dart';
 import '../../domain/till_day.dart';
+import 'cash_reason_text.dart';
 import 'day_report_print.dart';
 
-/// Shows [report] full screen; closed with the back button or the close icon.
-Future<void> showDayReport(BuildContext context, DayReport report, {required String currency}) => showDialog<void>(
+/// Shows [report] full screen; closed with the back button or the close icon. A difference's reason is said by the name of
+/// one of [reasons] (#4514).
+Future<void> showDayReport(BuildContext context, DayReport report, {required String currency, List<CashReason> reasons = const []}) => showDialog<void>(
   context: context,
   builder: (c) => Dialog.fullscreen(
     child: Scaffold(
@@ -21,7 +24,7 @@ Future<void> showDayReport(BuildContext context, DayReport report, {required Str
         actions: [DayReportPrintButton(report: report, currency: currency)], // #4368
         leading: IconButton(key: const ValueKey('day-report-close'), tooltip: MaterialLocalizations.of(c).closeButtonTooltip, icon: const Icon(Icons.close), onPressed: () => Navigator.of(c).pop()),
       ),
-      body: _DayReportView(report: report, currency: currency),
+      body: _DayReportView(report: report, currency: currency, reasons: reasons),
     ),
   ),
 );
@@ -35,10 +38,11 @@ String dayTenderName(AppLocalizations l10n, String kind) => switch (kind) {
 
 /// The report as a scrolling column of figures.
 class _DayReportView extends StatelessWidget {
-  const _DayReportView({required this.report, required this.currency});
+  const _DayReportView({required this.report, required this.currency, required this.reasons});
 
   final DayReport report;
   final String currency;
+  final List<CashReason> reasons;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +70,7 @@ class _DayReportView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(l10n.tillDaySessionLine(s.till, m(s.expectedMinor), m(s.countedMinor), m(s.differenceMinor)), key: ValueKey('day-session-${s.till}')),
-                      if (s.differenceReason.isNotEmpty) Text(l10n.tillDaySessionReason(s.differenceReason)),
+                      if (s.differenceReason.isNotEmpty) Text(l10n.tillDaySessionReason(cashReasonText(l10n, s.differenceReason, reasons))),
                       if (s.bankedMinor > 0) Text(l10n.tillDrawerClosedBanked(m(s.bankedMinor))),
                     ],
                   ),

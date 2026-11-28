@@ -77,6 +77,7 @@ final Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  'counter_cash_reasons': 'the reasons of cash in and out of a till drawer (#4514): the built-in ones come with every business, its own ones are a few names typed again on Master data, and the cash entries and counts exported keep the code they were recorded with',
   'till_layouts': 'the arrangement of a till\'s keys and tools (#4448): it names this installation\'s tills and items by their ids, which a workbook of one business does not carry; a layout is set up again from its trade template in a few taps, and the tills and items it arranges are exported',
   'billing_access_grants': 'an account\'s access to one billing customer\'s documents (#4164): a login of this installation and a one-time code, which identify nobody outside it and must never leave it in a workbook; the billing customers themselves are exported (billing_parties), and access is granted again only by a new invitation',
   'configuration_choice_events': 'the server\'s record of what each confirmation of a business kind did (#4168): append-only provenance of a configuration choice, never a business record; the settings and features it concerns are exported with the workspace, and the person who confirmed is a user id returned to them by their own rights request',

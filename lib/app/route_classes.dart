@@ -300,6 +300,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/till', RouteClass.workspace, namesRole: true, place: 'drawer-till', measure: PageMeasure.work), // #4366
   RouteRule('/till/drawer', RouteClass.workspace, namesRole: true, place: 'drawer-till-drawer', measure: PageMeasure.work), // #4367
   RouteRule('/till/day', RouteClass.workspace, namesRole: true, place: 'drawer-till-drawer', measure: PageMeasure.work), // #4367
+  RouteRule('/till/reasons', RouteClass.workspace, namesRole: true, place: 'drawer-till-drawer', measure: PageMeasure.work), // #4514
   RouteRule('/till/layout/:tillId', RouteClass.workspace, namesRole: true, place: 'drawer-till-drawer', measure: PageMeasure.work), // #4448
   RouteRule('/till/receipts', RouteClass.workspace, namesRole: true, place: 'drawer-till', measure: PageMeasure.reading), // #4185
   RouteRule('/money/quotes', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.work), // #4166, #4492: a records table

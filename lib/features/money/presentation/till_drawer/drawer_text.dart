@@ -53,6 +53,8 @@ String? drawerRefusalText(AppLocalizations l10n, Object error) {
     (DkCode.dkl12, 'name_taken') => l10n.tillDrawerRefusalNameTaken,
     (DkCode.dkl13, 'denominations') => l10n.tillDrawerRefusalDenominations,
     (DkCode.dkl13, 'reason_unknown') => l10n.tillDrawerRefusalReasonUnknown,
+    (DkCode.dkl13, 'reason_name') => l10n.cashReasonsNameMissing, // #4514
+    (DkCode.dkl13, 'reason_process') => l10n.cashReasonsProcessMissing,
     (DkCode.dkl13, 'above_limit') => l10n.tillDrawerRefusalAboveLimit,
     (DkCode.dkl13, 'difference_reason') => l10n.tillDrawerRefusalDifference,
     (DkCode.dkl14, 'till_open') => l10n.tillDayRefusalTillOpen(_drawerRefusalName(error)),

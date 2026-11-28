@@ -1,0 +1,23 @@
+{
+  "featureCounterCashReasonsTitle": "Motivos de efectivo",
+  "featureCounterCashReasonsDesc": "Nombrar los motivos del efectivo que entra en un cajón de caja o sale de él, y de un recuento que difiere, junto a los previstos. Desactivado: la caja ofrece los motivos tal como están.",
+  "tillCashReasonChange": "Cambio",
+  "tillCashReasonExpense": "Gasto",
+  "tillCashReasonCountingError": "Error de recuento",
+  "tillCashReasonOther": "Otro",
+  "tillCashReasonCountDifference": "Diferencia de recuento",
+  "cashReasonsTitle": "Motivos de efectivo",
+  "cashReasonsSubtitle": "Los motivos que una persona da para el efectivo que entra o sale de un cajón y para un recuento que difiere.",
+  "cashReasonsAdd": "Añadir un motivo",
+  "cashReasonsEdit": "Motivo",
+  "cashReasonsName": "Nombre",
+  "cashReasonsProcesses": "Se usa para",
+  "cashReasonsArchived": "Archivado",
+  "cashReasonsArchivedHelp": "Un motivo archivado ya no se ofrece; los movimientos registrados con él lo conservan.",
+  "cashReasonsBuiltinHint": "Nombrado por la aplicación en cada idioma.",
+  "cashReasonsNameMissing": "Dé un nombre al motivo.",
+  "cashReasonsNameTooLong": "Un nombre tiene como máximo {max} caracteres.",
+  "cashReasonsProcessMissing": "Elija al menos un uso.",
+  "cashReasonsSaved": "Motivo guardado.",
+  "cashReasonsArchivedName": "{name} (archivado)"
+}

@@ -1,6 +1,6 @@
 # #4423 -- literal row-key subscripts per file outside data/ and domain/*from_json*.
 # Only falls: test/lint/row_key_budget_test.dart explains and records.
-# total 1606 in 271 files
+# total 1605 in 271 files
 6 lib/app/desk_calendar/desk_calendar.dart
 8 lib/app/entry_intents.dart
 1 lib/app/resume_places.dart
@@ -147,7 +147,7 @@
 6 lib/features/money/presentation/settlement_texts.dart
 2 lib/features/money/presentation/swiss_qr_page.dart
 2 lib/features/money/presentation/till_drawer/cash_entry_sheet.dart
-3 lib/features/money/presentation/till_drawer/close_sheet.dart
+2 lib/features/money/presentation/till_drawer/close_sheet.dart
 1 lib/features/money/presentation/till_drawer/drawer_inputs.dart
 1 lib/features/money/presentation/till_drawer/open_sheet.dart
 1 lib/features/money/presentation/till_drawer/till_edit_sheet.dart

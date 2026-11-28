@@ -10727,6 +10727,90 @@ abstract class AppLocalizations {
   /// **'To pay'**
   String get cashHubToPay;
 
+  /// #4514 button adding a reason
+  ///
+  /// In en, this message translates to:
+  /// **'Add a reason'**
+  String get cashReasonsAdd;
+
+  /// #4514 the archive switch
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get cashReasonsArchived;
+
+  /// #4514 under the archive switch
+  ///
+  /// In en, this message translates to:
+  /// **'An archived reason is no longer offered; the entries recorded with it keep it.'**
+  String get cashReasonsArchivedHelp;
+
+  /// #4514 an archived reason in the list
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (archived)'**
+  String cashReasonsArchivedName(String name);
+
+  /// #4514 a built-in reason has no name to type
+  ///
+  /// In en, this message translates to:
+  /// **'Named by the app in every language.'**
+  String get cashReasonsBuiltinHint;
+
+  /// #4514 the reason sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get cashReasonsEdit;
+
+  /// #4514 the reason name field
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get cashReasonsName;
+
+  /// #4514 refusal: no name
+  ///
+  /// In en, this message translates to:
+  /// **'Give the reason a name.'**
+  String get cashReasonsNameMissing;
+
+  /// #4514 refusal: a name too long [not a count: max]
+  ///
+  /// In en, this message translates to:
+  /// **'A name has at most {max} characters.'**
+  String cashReasonsNameTooLong(int max);
+
+  /// #4514 refusal: no use chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Choose at least one use.'**
+  String get cashReasonsProcessMissing;
+
+  /// #4514 the uses of a reason
+  ///
+  /// In en, this message translates to:
+  /// **'Used for'**
+  String get cashReasonsProcesses;
+
+  /// #4514 after a save
+  ///
+  /// In en, this message translates to:
+  /// **'Reason saved.'**
+  String get cashReasonsSaved;
+
+  /// #4514 the master data card line
+  ///
+  /// In en, this message translates to:
+  /// **'The reasons a person gives for cash in or out of a drawer and for a count that differs.'**
+  String get cashReasonsSubtitle;
+
+  /// #4514 the cash reasons screen title and master data card
+  ///
+  /// In en, this message translates to:
+  /// **'Cash reasons'**
+  String get cashReasonsTitle;
+
   /// #2360: chBareLetting
   ///
   /// In en, this message translates to:
@@ -19947,6 +20031,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.'**
   String get featureConfigurationTransferDesc;
+
+  /// #4514 what the cash reasons feature does
+  ///
+  /// In en, this message translates to:
+  /// **'Name the reasons of cash put into or taken out of a till drawer, and of a count that differs, beside the built-in ones. Off: the till offers the reasons as they are.'**
+  String get featureCounterCashReasonsDesc;
+
+  /// #4514 the cash reasons feature
+  ///
+  /// In en, this message translates to:
+  /// **'Cash reasons'**
+  String get featureCounterCashReasonsTitle;
 
   /// #4466 the till boards feature
   ///
@@ -52965,12 +53061,6 @@ abstract class AppLocalizations {
   /// #4367 setting label/hint or refusal
   ///
   /// In en, this message translates to:
-  /// **'The reasons a person may give for money paid into or out of the drawer, separated by commas (for example change, expense, other).'**
-  String get settingHintCounterCashReasons;
-
-  /// #4367 setting label/hint or refusal
-  ///
-  /// In en, this message translates to:
   /// **'The float and the counted drawer are given by denomination (how many of each note and coin) rather than as a total. The counts must add up to the amount.'**
   String get settingHintCounterCountByDenomination;
 
@@ -53693,12 +53783,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Count the drawer blind'**
   String get settingLabelCounterBlindCount;
-
-  /// #4367 setting label/hint or refusal
-  ///
-  /// In en, this message translates to:
-  /// **'Reasons for cash in and out'**
-  String get settingLabelCounterCashReasons;
 
   /// #4367 setting label/hint or refusal
   ///
@@ -67125,6 +67209,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter the amount given as a number.'**
   String get tillCashInvalid;
+
+  /// #4514 the built-in reason: change for the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get tillCashReasonChange;
+
+  /// #4514 a use of a reason: a count that differs at close
+  ///
+  /// In en, this message translates to:
+  /// **'Count difference'**
+  String get tillCashReasonCountDifference;
+
+  /// #4514 the built-in reason of a count difference: a counting error
+  ///
+  /// In en, this message translates to:
+  /// **'Counting error'**
+  String get tillCashReasonCountingError;
+
+  /// #4514 the built-in reason: a small expense paid from the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get tillCashReasonExpense;
+
+  /// #4514 the built-in reason: other
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get tillCashReasonOther;
 
   /// #4366 the till
   ///

@@ -5,9 +5,8 @@
 import 'till_drawer.dart';
 
 /// The field a problem belongs to.
-/// The longest name a till takes and the longest reason a note carries: the server's own checks (`counter_tills`, 0907).
+/// The longest name a till takes: the server's own check (`counter_tills`, 0907).
 const int kTillNameMaxLength = 60;
-const int kDrawerReasonMaxLength = 200;
 
 enum DrawerField { name, amount, reason, banked, differenceReason }
 

@@ -17,7 +17,7 @@ import '../../helpers/pump_app.dart';
 
 final _en = AppLocalizationsEn();
 
-const _blind = DrawerSettings(blindCount: true, byDenomination: false, reasons: ['change', 'expense', 'other'], paidOutLimitMinor: 0);
+const _blind = DrawerSettings(blindCount: true, byDenomination: false, paidOutLimitMinor: 0);
 
 Future<void> _settle(WidgetTester tester) async {
   await tester.pump();
@@ -90,7 +90,7 @@ void main() {
 
       // #4511 -- the till's notes and coins are listed; only how many of each is entered
       testWidgets('by denomination the till\'s notes and coins are listed and add up to the float', (tester) async {
-        const settings = DrawerSettings(blindCount: true, byDenomination: true, reasons: ['change'], paidOutLimitMinor: 0);
+        const settings = DrawerSettings(blindCount: true, byDenomination: true, paidOutLimitMinor: 0);
         await _open(tester, DemoTillDrawer(), size, settings: settings);
         await _tap(tester, 'drawer-open-demo-till-front');
         final fifty = cashValuesOf('EUR').indexOf(5000);
@@ -103,7 +103,7 @@ void main() {
       });
 
       testWidgets('a till that carries no cents lists none, and its pick is made in its sheet', (tester) async {
-        const settings = DrawerSettings(blindCount: true, byDenomination: true, reasons: ['change'], paidOutLimitMinor: 0);
+        const settings = DrawerSettings(blindCount: true, byDenomination: true, paidOutLimitMinor: 0);
         final drawer = DemoTillDrawer();
         await _open(tester, drawer, size, settings: settings);
         await _tap(tester, 'drawer-edit-demo-till-front');
@@ -119,7 +119,7 @@ void main() {
       });
 
       testWidgets('a currency the reference does not list is counted with typed values, as before', (tester) async {
-        const settings = DrawerSettings(blindCount: true, byDenomination: true, reasons: ['change'], paidOutLimitMinor: 0);
+        const settings = DrawerSettings(blindCount: true, byDenomination: true, paidOutLimitMinor: 0);
         await _open(tester, DemoTillDrawer(currency: 'THB'), size, settings: settings, currency: 'THB');
         await _tap(tester, 'drawer-open-demo-till-front');
         await _type(tester, 'drawer-denom-value-0', '50');
@@ -141,6 +141,23 @@ void main() {
         expect(find.textContaining('95.00'), findsWidgets);
       });
 
+      testWidgets('a paid-in offers its own reasons, by name (#4514)', (tester) async {
+        final drawer = await _openedDrawer(seesFinances: true);
+        await _open(tester, drawer, size);
+        await _tap(tester, 'drawer-entry-demo-till-front');
+        expect(find.text(_en.tillCashReasonExpense), findsOneWidget);
+        await _tap(tester, 'drawer-entry-reason-expense');
+        await _tap(tester, 'drawer-entry-paid_in');
+        expect(find.byKey(const ValueKey('drawer-entry-reason-expense')), findsNothing);
+        expect(find.text(_en.tillCashReasonChange), findsOneWidget);
+        await _type(tester, 'drawer-entry-amount', '5');
+        await _tap(tester, 'drawer-entry-submit');
+        expect(find.text(_en.tillDrawerEntryReasonMissing), findsOneWidget, reason: 'the paid-out reason was dropped with the kind');
+        await _tap(tester, 'drawer-entry-reason-change');
+        await _tap(tester, 'drawer-entry-submit');
+        expect(find.text(_en.tillDrawerEntryDone), findsOneWidget);
+      });
+
       testWidgets('counted blind, the expected cash is not shown before the count; a difference asks for its reason', (tester) async {
         final drawer = await _openedDrawer();
         await _open(tester, drawer, size);
@@ -149,9 +166,11 @@ void main() {
         expect(find.byKey(const ValueKey('drawer-close-expected')), findsNothing);
         await _type(tester, 'drawer-counted', '90');
         await _tap(tester, 'drawer-close-submit');
-        expect(find.byKey(const ValueKey('drawer-close-reason')), findsOneWidget);
+        expect(find.byKey(const ValueKey('drawer-close-reasons')), findsOneWidget);
         expect(find.text(_en.tillDrawerRefusalDifference), findsOneWidget);
-        await _type(tester, 'drawer-close-reason', 'a note was given as change twice');
+        // #4514 -- the count-difference reasons, by name; not a paid-out one
+        expect(find.byKey(const ValueKey('drawer-close-reason-expense')), findsNothing);
+        await _tap(tester, 'drawer-close-reason-counting_error');
         await _tap(tester, 'drawer-close-submit');
         expect(find.byKey(const ValueKey('drawer-closed-counts')), findsOneWidget);
         expect(find.text(_en.tillDrawerClosedShort('€10.00')), findsOneWidget);
@@ -164,7 +183,7 @@ void main() {
         await _tap(tester, 'drawer-close-demo-till-front');
         expect(find.byKey(const ValueKey('drawer-close-expected')), findsOneWidget);
         await _type(tester, 'drawer-counted', '100');
-        expect(find.byKey(const ValueKey('drawer-close-reason')), findsNothing);
+        expect(find.byKey(const ValueKey('drawer-close-reasons')), findsNothing);
         await _tap(tester, 'drawer-close-submit');
         expect(find.text(_en.tillDrawerClosedSame), findsOneWidget);
       });

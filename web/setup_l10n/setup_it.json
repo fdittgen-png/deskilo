@@ -886,8 +886,6 @@
  "counterByDenominationHint": "Il fondo e il cassetto contato si indicano banconota per banconota e moneta per moneta. Si imposta nelle impostazioni dell'app.",
  "counterPaidOutLimit": "Prelievo massimo senza autorizzazione",
  "counterPaidOutLimitHint": "Un prelievo oltre questo richiede qualcuno che possa registrare pagamenti in uscita. Si imposta nelle impostazioni dell'app.",
- "counterCashReasons": "Motivi di entrate e uscite di contante",
- "counterCashReasonsHint": "Separati da virgole, per esempio resto, spesa, altro. Si imposta nelle impostazioni dell'app.",
  "optNoLimit": "Nessun limite",
  "optPerHour": "{n} all'ora",
  "optPerHourDefault": "{n} all'ora (predefinito)",

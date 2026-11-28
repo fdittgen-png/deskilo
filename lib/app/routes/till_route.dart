@@ -10,6 +10,7 @@ import '../../core/navigation/routes.dart';
 import '../../core/ui/loading_view.dart';
 import '../../features/money/domain/counter_till.dart';
 import '../../features/money/domain/service_item.dart';
+import '../../features/money/presentation/till_drawer/cash_reasons_screen.dart';
 import '../../features/money/presentation/till_drawer/till_day_screen.dart';
 import '../../features/money/presentation/till_drawer/till_drawer_screen.dart';
 import '../../features/money/presentation/till_layout/till_layout_screen.dart';
@@ -106,6 +107,14 @@ class _TillDayRoute extends ConsumerWidget {
   }
 }
 
+/// #4514 — the cash reasons of the open business.
+class _CashReasonsRoute extends ConsumerWidget {
+  const _CashReasonsRoute();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => CashReasonsScreen(workspaceId: ref.watch(currentWorkspaceProvider).value?.id);
+}
+
 /// #4436 -- what a scanned code rings up at the till: an item by its own code or its tag, one piece by its tag.
 /// A variant, a lot, a package unit or a place is not something the till rings up yet: it names nothing here.
 @visibleForTesting
@@ -147,6 +156,14 @@ List<RouteBase> tillRoutes(RouteEnv env) => [
         const RouteAccess(features: [WorkspaceFeature.counterTillLayout], permission: WorkspacePermission.configureTill, to: '/till/drawer'),
       ),
       builder: (context, state) => _TillLayoutRoute(tillId: state.pathParameters[_tillParam] ?? '', tillName: state.uri.queryParameters[_nameQuery] ?? ''),
+    ),
+    // #4514 — the cash reasons: who configures the tills names them, where till sessions and cash reasons are on.
+    GoRoute(
+      path: Routes.tillCashReasons,
+      redirect: env.guard(
+        const RouteAccess(features: [WorkspaceFeature.counterTillSessions, WorkspaceFeature.counterCashReasons], permission: WorkspacePermission.configureTill, to: '/till/drawer'),
+      ),
+      builder: (context, state) => const _CashReasonsRoute(),
     ),
     // #4367 — the day close: the finances close the business day and read its report.
     GoRoute(

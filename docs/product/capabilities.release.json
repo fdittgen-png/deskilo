@@ -1572,6 +1572,12 @@
       "capabilities": []
     },
     {
+      "key": "counterCashReasons",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "counterEmbeddedTerminal",
       "maturity": "beta",
       "lifecycle": "active",

@@ -416,7 +416,8 @@ enum WorkspaceFeature {
   /// #3824 — the goods ledger (feature_manifest_stock.dart).
   stockManagement,
   /// #4004 — the organisation of a customer's businesses.
-  organisation, expenseCategories, // #4512: the expense categories, the business's own list
+  organisation,
+  expenseCategories,
   /// #4165 — a standalone customer invoice, with no member-month behind it.
   standaloneInvoicing,
   /// #4164 — billing customers: who the business invoices, account or not.
@@ -447,7 +448,8 @@ enum WorkspaceFeature {
   unitsOfMeasure,
   counterTillLayout,
   counterReceiptPrinter,
-  counterEmbeddedTerminal;
+  counterEmbeddedTerminal,
+  counterCashReasons;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -457,8 +459,7 @@ enum WorkspaceFeature {
 const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {...earlyFeatureManifest, ...midFeatureManifest, ...lateFeatureManifest, ...stockFeatureManifest, ...organisationFeatureManifest};
 
 /// #2566 — a flag nobody has chosen is what a NEW workspace stores for it:
-/// a core flag follows `defaultOn`, a platform flag is off. SQL twin:
-/// `feature_raw`.
+/// a core flag follows `defaultOn`, a platform flag is off. SQL twin: `feature_raw`.
 bool _unchosenFeatureIsOn(FeatureManifestEntry entry) =>
     entry.tier == FeatureTier.core && entry.defaultOn;
 
@@ -489,8 +490,7 @@ Set<WorkspaceFeature> resolveEnabledFeatures(
   return enabled;
 }
 
-/// Everything [feature] NEEDS in order to work, nearest parent first
-/// (#800).
+/// Everything [feature] NEEDS in order to work, nearest parent first (#800).
 ///
 /// The registry has always expressed the hierarchy downwards — a child
 /// is ineffective while its parent is off. Read upwards it answers the

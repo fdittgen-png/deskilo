@@ -473,7 +473,7 @@ List<Override> _tillOverrides(DemoSpaces<DemoTill> tills, DemoSpaces<DemoTillDra
     tillDrawerPortProvider.overrideWith((ref) {
       return demoPickSpace<DemoTillDrawer>(ref, drawers)
         ..rules = (() => ref.read(currentSettingsProvider).asData?.value == null
-            ? const DrawerSettings(blindCount: true, byDenomination: false, reasons: ['change', 'expense', 'other'], paidOutLimitMinor: 0)
+            ? const DrawerSettings(blindCount: true, byDenomination: false, paidOutLimitMinor: 0)
             : _drawerSettingsOf(ref.read(currentSettingsProvider).requireValue))
         ..canSeeFinances = (() => ref.read(myPermissionsProvider).contains(WorkspacePermission.viewFinances))
         ..canRecordOutgoing = (() => ref.read(myPermissionsProvider).contains(WorkspacePermission.recordOutgoingPayments))
@@ -495,6 +495,5 @@ DemoSpaces<DemoTill> _demoTills(DemoFixture fixture, DemoSpaces<DemoTillDrawer> 
 DrawerSettings _drawerSettingsOf(SettingsSet settings) => DrawerSettings(
   blindCount: settings.read<bool>('counter.blind_count'),
   byDenomination: settings.read<bool>('counter.count_by_denomination'),
-  reasons: DrawerSettings.reasonsOf(settings.read<String>('counter.cash_reasons')),
   paidOutLimitMinor: settings.read<int>('counter.paid_out_limit_minor'),
 );

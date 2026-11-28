@@ -83,14 +83,6 @@
   "@settingHintCounterPaidOutLimit": {
     "description": "#4367 setting label/hint or refusal"
   },
-  "settingLabelCounterCashReasons": "Reasons for cash in and out",
-  "@settingLabelCounterCashReasons": {
-    "description": "#4367 setting label/hint or refusal"
-  },
-  "settingHintCounterCashReasons": "The reasons a person may give for money paid into or out of the drawer, separated by commas (for example change, expense, other).",
-  "@settingHintCounterCashReasons": {
-    "description": "#4367 setting label/hint or refusal"
-  },
   "refusalCounterTill": "The till is not ready for this: open it first, or it is already open or closed.",
   "@refusalCounterTill": {
     "description": "#4367 setting label/hint or refusal"

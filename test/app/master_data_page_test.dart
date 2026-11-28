@@ -66,6 +66,7 @@ List<Override> _reads({Exception? unitsFail}) => [
   billingCustomersProvider(_ws).overrideWith((ref) async => const []),
   sitesProvider.overrideWith((ref) async => const []),
   connectedTillBoardsProvider(_ws).overrideWith((ref) async => const []),
+  cashReasonsProvider(_ws).overrideWith((ref) async => const []),
 ];
 
 Future<GoRouter> _open(

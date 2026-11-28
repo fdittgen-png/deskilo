@@ -738,6 +738,10 @@ window.SETUP_REGISTRY={
   [
    "counterEmbeddedTerminal",
    false
+  ],
+  [
+   "counterCashReasons",
+   true
   ]
  ],
  "requires": {
@@ -1597,7 +1601,8 @@ window.SETUP_PROCESSES=[
      "counterOfflineCash",
      "counterTillLayout",
      "counterReceiptPrinter",
-     "counterEmbeddedTerminal"
+     "counterEmbeddedTerminal",
+     "counterCashReasons"
     ]
    }
   ]
@@ -2143,7 +2148,8 @@ window.SETUP_LEVELS={
       "unitsOfMeasure",
       "counterTillLayout",
       "counterReceiptPrinter",
-      "counterEmbeddedTerminal"
+      "counterEmbeddedTerminal",
+      "counterCashReasons"
      ],
      "needs": {
       "money": "invoices"

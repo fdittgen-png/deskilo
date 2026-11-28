@@ -17,6 +17,7 @@
     "roleAssignment>customRoles@lib/features/workspace/presentation/widgets/invite_sheet.dart": "Deliberate: customRoles is additive and requires nothing (feature_manifest_late); the Roles screen and the invite sheet offer the role links only where both it and roleAssignment are on, and Settings reaches customRoles alone."
   },
   "screenGates": {
+    "counterReceipts>counterCashReasons": "#4514: the cash reasons page lives under the till routes, which ask counterReceipts; the flag has no registry parent by the template rule, and its card and route also ask counterTillSessions",
     "memberPage>vatCounterparty": "Reviewed, deliberate (#2522): the one surface is the administrator's VAT-treatment tile of the member page (member_page_cards.dart, key member-page-vat-treatment). requires holds one parent, and vatCounterparty's is vatManagement: a buyer's VAT kind means nothing without VAT, while the member page is only where it is edited. With memberPage off the tile is unreachable and a stored treatment keeps applying; no requires change.",
     "placeBooking>bookingPolicies": "Deliberate (#3550, owner via Fable 2026-11-10): bookingPolicies keeps no place parent, because a later booking type (appointments, classes) reuses it. Today its only surfaces serve place bookings (the Reserve hub header and the availability screen), so placeBooking gates the screen and not the flag."
   },

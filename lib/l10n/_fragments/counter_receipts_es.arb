@@ -20,8 +20,6 @@
   "settingHintCounterCountByDenomination": "El fondo y el cajón contado se dan por denominaciones (cuántos de cada billete y moneda) en lugar de un total. Las cuentas deben sumar el importe.",
   "settingLabelCounterPaidOutLimit": "Mayor salida sin autorización",
   "settingHintCounterPaidOutLimit": "El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.",
-  "settingLabelCounterCashReasons": "Motivos de entradas y salidas de efectivo",
-  "settingHintCounterCashReasons": "Los motivos que una persona puede dar para el dinero que entra o sale del cajón, separados por comas (por ejemplo cambio, gasto, otro).",
   "refusalCounterTill": "La caja no está lista para esto: ábrala primero, o ya está abierta o cerrada.",
   "refusalCounterCashEntry": "Este apunte de efectivo no se acepta: el motivo no está en la lista, el importe supera su límite, o las cuentas no suman.",
   "refusalCounterDayClose": "No se puede cerrar el día: una caja sigue abierta, o el día ya está cerrado.",

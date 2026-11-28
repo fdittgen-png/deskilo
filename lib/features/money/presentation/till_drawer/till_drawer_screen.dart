@@ -126,19 +126,21 @@ class _TillCard extends ConsumerWidget {
 
   Future<void> _entry(BuildContext context, WidgetRef ref, DrawerSession session) async {
     final settings = await ref.read(drawerSettingsProvider.future);
+    final reasons = await ref.read(cashReasonsProvider(workspaceId).future);
     if (!context.mounted) return;
-    final done = await showCashEntrySheet(context, ref.read(tillDrawerCommandsProvider(workspaceId)), session: session, currency: currency, settings: settings);
+    final done = await showCashEntrySheet(context, ref.read(tillDrawerCommandsProvider(workspaceId)), session: session, currency: currency, settings: settings, reasons: reasons);
     if (done && context.mounted) AppSnack.success(context, context.l10n.tillDrawerEntryDone);
   }
 
   Future<void> _close(BuildContext context, WidgetRef ref, DrawerSession session) async {
     final settings = await ref.read(drawerSettingsProvider.future);
     final expected = await ref.refresh(drawerExpectedProvider((workspaceId: workspaceId, sessionId: session.id)).future);
+    final reasons = await ref.read(cashReasonsProvider(workspaceId).future);
     if (!context.mounted) return;
     final closed = await showCloseTillSheet(
       context,
       ref.read(tillDrawerCommandsProvider(workspaceId)),
-      CloseSheetInput(session: session, tillName: till.name, currency: currency, byDenomination: settings.byDenomination, expected: expected, values: tillCashValues(currency, till.denominations)),
+      CloseSheetInput(session: session, tillName: till.name, currency: currency, byDenomination: settings.byDenomination, expected: expected, values: tillCashValues(currency, till.denominations), reasons: reasons),
     );
     if (closed != null && context.mounted) await showDrawerClosedDialog(context, closed, currency: currency);
   }
