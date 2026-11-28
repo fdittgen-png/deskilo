@@ -13420,6 +13420,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureSubscriptionInvoicesTitle => 'Subscription invoices';
 
   @override
+  String get featureSupplierContactsDesc =>
+      'Each supplier has contacts, each with a role, and one of them is its preferred purchasing contact; the supplier also carries the terms agreed once (the currency of its orders, the days its bills are due, the days its orders take). A new order starts from them.';
+
+  @override
+  String get featureSupplierContactsTitle => 'Supplier contacts';
+
+  @override
   String get featureSupplyClassificationDesc =>
       'Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears, except in a business that books no places, whose new services start as general services.';
 
@@ -21591,6 +21598,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get masterDataSitesDesc => 'Your addresses and the levels at each';
 
   @override
+  String get masterDataSupplierContactRolesDesc =>
+      'The roles of a supplier\'s contacts: orders, invoices, delivery, accounting, your own.';
+
+  @override
   String get masterDataSuppliersDesc => 'Who you buy from';
 
   @override
@@ -28374,6 +28385,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchaseOrderReceivedOn => 'Arrived on';
 
   @override
+  String purchaseOrderRecipientFromContact(String name) {
+    return 'Preferred purchasing contact: $name';
+  }
+
+  @override
   String get purchaseOrderRefused =>
       'The order was not changed. Check the entries and try again.';
 
@@ -30107,6 +30123,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalStockVariant =>
       'This item has variants: name which one (colour, size) to move, sell or count. Nothing was changed.';
+
+  @override
+  String get refusalSupplierContact =>
+      'This supplier contact cannot be saved: check its name, its role and its e-mail, or ask the owner to bring a retired role back.';
 
   @override
   String get refusalVatRateVersioned =>
@@ -39375,6 +39395,116 @@ class AppLocalizationsEn extends AppLocalizations {
       'Maintain VAT groups, rates and declarations.';
 
   @override
+  String get supplierContactAdd => 'New contact';
+
+  @override
+  String get supplierContactEditTitle => 'Edit the contact';
+
+  @override
+  String get supplierContactEmail => 'E-mail';
+
+  @override
+  String get supplierContactEmailInvalid =>
+      'Enter an e-mail address, or leave it empty.';
+
+  @override
+  String get supplierContactFromText =>
+      'Make a contact of the old contact text';
+
+  @override
+  String get supplierContactName => 'Name';
+
+  @override
+  String get supplierContactNameRequired => 'Give the contact a name.';
+
+  @override
+  String get supplierContactNote => 'Note';
+
+  @override
+  String get supplierContactPhone => 'Phone';
+
+  @override
+  String get supplierContactPreferred => 'Preferred purchasing contact';
+
+  @override
+  String get supplierContactPreferredMark => 'Preferred for orders';
+
+  @override
+  String get supplierContactPreferredNeedsEmail =>
+      'The preferred purchasing contact has an e-mail.';
+
+  @override
+  String get supplierContactRestore => 'Bring back';
+
+  @override
+  String get supplierContactRetire => 'Retire';
+
+  @override
+  String get supplierContactRetiredMark => 'Retired';
+
+  @override
+  String get supplierContactRole => 'Role';
+
+  @override
+  String get supplierContactRoleAccounting => 'Accounting';
+
+  @override
+  String get supplierContactRoleAdd => 'New role';
+
+  @override
+  String get supplierContactRoleDelivery => 'Delivery';
+
+  @override
+  String get supplierContactRoleEditTitle => 'Edit the role';
+
+  @override
+  String get supplierContactRoleInvoices => 'Invoices and payments';
+
+  @override
+  String get supplierContactRoleName => 'Name';
+
+  @override
+  String get supplierContactRoleNameRequired => 'Give the role a name.';
+
+  @override
+  String get supplierContactRoleNameTaken =>
+      'Another active role already has this name.';
+
+  @override
+  String get supplierContactRoleNewTitle => 'New contact role';
+
+  @override
+  String get supplierContactRoleOrders => 'Orders';
+
+  @override
+  String get supplierContactRoleOther => 'Other';
+
+  @override
+  String get supplierContactRoleRetiredSection => 'Retired roles';
+
+  @override
+  String get supplierContactRolesEmpty => 'No role yet.';
+
+  @override
+  String get supplierContactRolesSubtitle =>
+      'The roles a business gives the contacts of its suppliers';
+
+  @override
+  String get supplierContactRolesTitle => 'Contact roles';
+
+  @override
+  String get supplierContactSaveFailed =>
+      'The contact was not saved. Try again.';
+
+  @override
+  String get supplierContactsNone => 'No contact yet.';
+
+  @override
+  String supplierContactsTitle(String supplier) {
+    return 'Contacts of $supplier';
+  }
+
+  @override
   String get supplierFieldEdited => 'Edited by you';
 
   @override
@@ -39513,6 +39643,26 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get supplierTermsCurrency => 'Currency of its orders';
+
+  @override
+  String get supplierTermsInvalid =>
+      'Enter a currency code of three letters and days between 0 and 365.';
+
+  @override
+  String get supplierTermsLeadDays =>
+      'Days an order expects its goods after it is sent';
+
+  @override
+  String get supplierTermsNone => 'none';
+
+  @override
+  String get supplierTermsPaymentDays => 'Days a bill is due after its date';
+
+  @override
+  String get supplierTermsTitle => 'Terms agreed with this supplier';
+
+  @override
   String get suppliersAdd => 'Add supplier';
 
   @override
@@ -39560,6 +39710,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get suppliersBankValid => 'valid';
+
+  @override
+  String get suppliersContacts => 'Contacts';
 
   @override
   String get suppliersEdit => 'Edit supplier';

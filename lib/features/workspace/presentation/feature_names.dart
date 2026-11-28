@@ -59,6 +59,7 @@ String featureName(AppLocalizations l10n, WorkspaceFeature feature) => switch (f
       WorkspaceFeature.paymentReminders => l10n.featurePaymentRemindersTitle,
       WorkspaceFeature.supplyExpenses => l10n.featureSupplyExpensesTitle,
       WorkspaceFeature.expenseCategories => l10n.featureExpenseCategoriesTitle,
+      WorkspaceFeature.supplierContacts => l10n.featureSupplierContactsTitle,
       WorkspaceFeature.validationScopes => l10n.featureValidationScopesTitle,
       WorkspaceFeature.validationChain => l10n.featureValidationChainTitle,
       WorkspaceFeature.richMessageRefs => l10n.featureRichMessageRefsTitle,

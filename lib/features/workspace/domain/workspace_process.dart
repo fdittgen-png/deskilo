@@ -229,6 +229,7 @@ const workspaceProcesses = <WorkspaceProcess>[
     WorkspaceSubprocess('expenses', [
       WorkspaceFeature.supplyExpenses,
       WorkspaceFeature.expenseCategories, // #4512
+      WorkspaceFeature.supplierContacts, // #4518
       WorkspaceFeature.expenseRepartitionWizard,
       WorkspaceFeature.scheduledExpenses,
       WorkspaceFeature.expenseRepartition,

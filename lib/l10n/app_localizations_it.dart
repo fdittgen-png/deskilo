@@ -13518,6 +13518,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureSubscriptionInvoicesTitle => 'Fatture di abbonamento';
 
   @override
+  String get featureSupplierContactsDesc =>
+      'Ogni fornitore ha contatti, ciascuno con un ruolo, e uno di essi è il suo contatto di acquisto preferito; il fornitore porta anche le condizioni concordate una volta (la valuta dei suoi ordini, i giorni di scadenza delle sue fatture, i giorni di consegna dei suoi ordini). Un nuovo ordine parte da queste.';
+
+  @override
+  String get featureSupplierContactsTitle => 'Contatti dei fornitori';
+
+  @override
   String get featureSupplyClassificationDesc =>
       'Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l\'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un\'impresa di un altro Stato UE applica l\'inversione contabile. Disattivato: la scelta scompare, tranne in un\'attività che non prenota spazi, i cui nuovi servizi partono come servizi generici.';
 
@@ -21760,6 +21767,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get masterDataSitesDesc => 'Gli indirizzi e i piani di ciascuno';
 
   @override
+  String get masterDataSupplierContactRolesDesc =>
+      'I ruoli dei contatti di un fornitore: ordini, fatture, consegna, contabilità, i propri.';
+
+  @override
   String get masterDataSuppliersDesc => 'Da chi si acquista';
 
   @override
@@ -28610,6 +28621,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purchaseOrderReceivedOn => 'Arrivato il';
 
   @override
+  String purchaseOrderRecipientFromContact(String name) {
+    return 'Contatto di acquisto preferito: $name';
+  }
+
+  @override
   String get purchaseOrderRefused =>
       'L’ordine non è stato modificato. Controlla i dati e riprova.';
 
@@ -30354,6 +30370,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalStockVariant =>
       'Questo articolo ha delle varianti: indicare quale (colore, taglia) spostare, vendere o contare. Nulla è stato modificato.';
+
+  @override
+  String get refusalSupplierContact =>
+      'Questo contatto del fornitore non può essere salvato: controllare nome, ruolo ed e-mail, oppure chiedere al titolare di ripristinare un ruolo ritirato.';
 
   @override
   String get refusalVatRateVersioned =>
@@ -39739,6 +39759,116 @@ class AppLocalizationsIt extends AppLocalizations {
       'Gestire gruppi, aliquote e dichiarazioni IVA.';
 
   @override
+  String get supplierContactAdd => 'Nuovo contatto';
+
+  @override
+  String get supplierContactEditTitle => 'Modificare il contatto';
+
+  @override
+  String get supplierContactEmail => 'E-mail';
+
+  @override
+  String get supplierContactEmailInvalid =>
+      'Inserire un indirizzo e-mail, oppure lasciare il campo vuoto.';
+
+  @override
+  String get supplierContactFromText =>
+      'Fare un contatto dal vecchio testo di contatto';
+
+  @override
+  String get supplierContactName => 'Nome';
+
+  @override
+  String get supplierContactNameRequired => 'Dare un nome al contatto.';
+
+  @override
+  String get supplierContactNote => 'Nota';
+
+  @override
+  String get supplierContactPhone => 'Telefono';
+
+  @override
+  String get supplierContactPreferred => 'Contatto di acquisto preferito';
+
+  @override
+  String get supplierContactPreferredMark => 'Preferito per gli ordini';
+
+  @override
+  String get supplierContactPreferredNeedsEmail =>
+      'Il contatto di acquisto preferito ha un indirizzo e-mail.';
+
+  @override
+  String get supplierContactRestore => 'Ripristinare';
+
+  @override
+  String get supplierContactRetire => 'Ritirare';
+
+  @override
+  String get supplierContactRetiredMark => 'Ritirato';
+
+  @override
+  String get supplierContactRole => 'Ruolo';
+
+  @override
+  String get supplierContactRoleAccounting => 'Contabilità';
+
+  @override
+  String get supplierContactRoleAdd => 'Nuovo ruolo';
+
+  @override
+  String get supplierContactRoleDelivery => 'Consegna';
+
+  @override
+  String get supplierContactRoleEditTitle => 'Modificare il ruolo';
+
+  @override
+  String get supplierContactRoleInvoices => 'Fatture e pagamenti';
+
+  @override
+  String get supplierContactRoleName => 'Nome';
+
+  @override
+  String get supplierContactRoleNameRequired => 'Dare un nome al ruolo.';
+
+  @override
+  String get supplierContactRoleNameTaken =>
+      'Un altro ruolo attivo ha già questo nome.';
+
+  @override
+  String get supplierContactRoleNewTitle => 'Nuovo ruolo di contatto';
+
+  @override
+  String get supplierContactRoleOrders => 'Ordini';
+
+  @override
+  String get supplierContactRoleOther => 'Altro';
+
+  @override
+  String get supplierContactRoleRetiredSection => 'Ruoli ritirati';
+
+  @override
+  String get supplierContactRolesEmpty => 'Nessun ruolo per ora.';
+
+  @override
+  String get supplierContactRolesSubtitle =>
+      'I ruoli che un’attività dà ai contatti dei suoi fornitori';
+
+  @override
+  String get supplierContactRolesTitle => 'Ruoli dei contatti';
+
+  @override
+  String get supplierContactSaveFailed =>
+      'Il contatto non è stato salvato. Riprovare.';
+
+  @override
+  String get supplierContactsNone => 'Nessun contatto per ora.';
+
+  @override
+  String supplierContactsTitle(String supplier) {
+    return 'Contatti di $supplier';
+  }
+
+  @override
   String get supplierFieldEdited => 'Modificato da Lei';
 
   @override
@@ -39877,6 +40007,27 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get supplierTermsCurrency => 'Valuta dei suoi ordini';
+
+  @override
+  String get supplierTermsInvalid =>
+      'Inserire un codice valuta di tre lettere e giorni tra 0 e 365.';
+
+  @override
+  String get supplierTermsLeadDays =>
+      'Giorni di consegna attesi per un ordine dopo il suo invio';
+
+  @override
+  String get supplierTermsNone => 'nessuna';
+
+  @override
+  String get supplierTermsPaymentDays =>
+      'Giorni di scadenza di una fattura dopo la sua data';
+
+  @override
+  String get supplierTermsTitle => 'Condizioni concordate con questo fornitore';
+
+  @override
   String get suppliersAdd => 'Aggiungi fornitore';
 
   @override
@@ -39924,6 +40075,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get suppliersBankValid => 'valido';
+
+  @override
+  String get suppliersContacts => 'Contatti';
 
   @override
   String get suppliersEdit => 'Modifica fornitore';

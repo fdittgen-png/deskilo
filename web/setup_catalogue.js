@@ -644,6 +644,10 @@ window.SETUP_REGISTRY={
    false
   ],
   [
+   "supplierContacts",
+   false
+  ],
+  [
    "standaloneInvoicing",
    false
   ],
@@ -851,6 +855,7 @@ window.SETUP_REGISTRY={
   "invoiceEmail": "invoicing",
   "kioskEnrolment": "kioskMode",
   "stockManagement": "services",
+  "supplierContacts": "supplyExpenses",
   "standaloneInvoicing": "invoicing",
   "billingCustomers": "invoicing",
   "customerQuotes": "invoicing",
@@ -1691,6 +1696,7 @@ window.SETUP_PROCESSES=[
     "features": [
      "supplyExpenses",
      "expenseCategories",
+     "supplierContacts",
      "expenseRepartitionWizard",
      "scheduledExpenses",
      "expenseRepartition",

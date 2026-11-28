@@ -1580,6 +1580,10 @@ window.SETUP_L10N={
     "Expense categories",
     "The business keeps its own list of the categories an expense is filed under: add one, rename one, put them in order, retire one that is no longer used. An expense keeps the category it was filed under."
    ],
+   "supplierContacts": [
+    "Supplier contacts",
+    "Each supplier has contacts, each with a role, and one of them is its preferred purchasing contact; the supplier also carries the terms agreed once (the currency of its orders, the days its bills are due, the days its orders take). A new order starts from them."
+   ],
    "standaloneInvoicing": [
     "Standalone invoices",
     "Invoice a named customer for a completed service or an agreed deliverable today, with itemised lines and explicit dates, and no booking, subscription or month behind it. The server computes every amount; you confirm a preview and issue it. Off: invoices are issued per member and month as before."
@@ -3677,6 +3681,10 @@ window.SETUP_L10N={
    "expenseCategories": [
     "Catégories de dépenses",
     "L’entreprise tient sa propre liste des catégories sous lesquelles une dépense est classée : en ajouter une, la renommer, les ordonner, retirer celle qui ne sert plus. Une dépense garde la catégorie sous laquelle elle a été classée."
+   ],
+   "supplierContacts": [
+    "Contacts des fournisseurs",
+    "Chaque fournisseur a des contacts, chacun avec un rôle, et l’un d’eux est son contact d’achat préféré ; le fournisseur porte aussi les conditions convenues une fois (la devise de ses commandes, les jours d’échéance de ses factures, les jours de livraison de ses commandes). Une nouvelle commande en part."
    ],
    "standaloneInvoicing": [
     "Factures ponctuelles",
@@ -5776,6 +5784,10 @@ window.SETUP_L10N={
     "Ausgabenkategorien",
     "Das Unternehmen führt seine eigene Liste der Kategorien, unter denen eine Ausgabe erfasst wird: eine hinzufügen, umbenennen, ordnen, eine nicht mehr gebrauchte stilllegen. Eine Ausgabe behält die Kategorie, unter der sie erfasst wurde."
    ],
+   "supplierContacts": [
+    "Lieferantenkontakte",
+    "Jeder Lieferant hat Kontakte mit je einer Rolle, einer davon ist sein bevorzugter Einkaufskontakt; der Lieferant trägt außerdem die einmal vereinbarten Bedingungen (die Währung seiner Bestellungen, die Tage bis zur Fälligkeit seiner Rechnungen, die Tage bis zur Lieferung seiner Bestellungen). Eine neue Bestellung geht von ihnen aus."
+   ],
    "standaloneInvoicing": [
     "Einzelrechnungen",
     "Einem benannten Kunden noch heute eine erbrachte Leistung oder ein vereinbartes Ergebnis berechnen, mit einzelnen Positionen und ausdrücklichen Daten, ohne Buchung, Abo oder Monat dahinter. Der Server berechnet jeden Betrag; Sie bestätigen eine Vorschau und stellen die Rechnung aus. Aus: Rechnungen werden wie bisher je Mitglied und Monat ausgestellt."
@@ -7874,6 +7886,10 @@ window.SETUP_L10N={
     "Categorías de gastos",
     "El negocio lleva su propia lista de las categorías bajo las que se registra un gasto: añadir una, renombrarla, ordenarlas, retirar la que ya no se usa. Un gasto conserva la categoría bajo la que se registró."
    ],
+   "supplierContacts": [
+    "Contactos de proveedores",
+    "Cada proveedor tiene contactos, cada uno con un rol, y uno de ellos es su contacto de compras preferido; el proveedor lleva además las condiciones acordadas una vez (la moneda de sus pedidos, los días de vencimiento de sus facturas, los días de entrega de sus pedidos). Un pedido nuevo parte de ellas."
+   ],
    "standaloneInvoicing": [
     "Facturas independientes",
     "Facturar hoy a un cliente identificado una prestación realizada o un entregable acordado, con líneas detalladas y fechas explícitas, sin reserva, suscripción ni mes detrás. El servidor calcula cada importe; usted confirma una vista previa y emite la factura. Desactivado: las facturas se emiten por miembro y mes como antes."
@@ -9971,6 +9987,10 @@ window.SETUP_L10N={
    "expenseCategories": [
     "Categorie di spesa",
     "L’attività tiene un proprio elenco delle categorie sotto cui si registra una spesa: aggiungerne una, rinominarla, ordinarle, ritirare quella non più usata. Una spesa conserva la categoria sotto cui è stata registrata."
+   ],
+   "supplierContacts": [
+    "Contatti dei fornitori",
+    "Ogni fornitore ha contatti, ciascuno con un ruolo, e uno di essi è il suo contatto di acquisto preferito; il fornitore porta anche le condizioni concordate una volta (la valuta dei suoi ordini, i giorni di scadenza delle sue fatture, i giorni di consegna dei suoi ordini). Un nuovo ordine parte da queste."
    ],
    "standaloneInvoicing": [
     "Fatture singole",

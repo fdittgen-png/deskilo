@@ -111,6 +111,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> midFeatureManifest = {
     surface: FeatureSurface.money,
     tier: FeatureTier.platform,
   ),
+  // #4518 — a supplier's contacts, each with a role, and its preferred purchasing contact; its commercial defaults (the currency of its
+  // orders, the term of its bills, the lead time of its orders). On by default, under the suppliers. Off: a supplier has its one contact
+  // text, an order types its recipient as before.
+  WorkspaceFeature.supplierContacts: FeatureManifestEntry(
+    feature: WorkspaceFeature.supplierContacts,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.supplyExpenses,
+  ),
   // #732 — a validation rule names its scope: admins, listed persons of
   // any role, or every member. Off: owner + admins as before.
   WorkspaceFeature.validationScopes:

@@ -13538,6 +13538,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureSubscriptionInvoicesTitle => 'Abo-Rechnungen';
 
   @override
+  String get featureSupplierContactsDesc =>
+      'Jeder Lieferant hat Kontakte mit je einer Rolle, einer davon ist sein bevorzugter Einkaufskontakt; der Lieferant trägt außerdem die einmal vereinbarten Bedingungen (die Währung seiner Bestellungen, die Tage bis zur Fälligkeit seiner Rechnungen, die Tage bis zur Lieferung seiner Bestellungen). Eine neue Bestellung geht von ihnen aus.';
+
+  @override
+  String get featureSupplierContactsTitle => 'Lieferantenkontakte';
+
+  @override
   String get featureSupplyClassificationDesc =>
       'Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, außer in einem Betrieb, der keine Plätze bucht; dort beginnen neue Leistungen als allgemeine Dienstleistungen.';
 
@@ -21794,6 +21801,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get masterDataSitesDesc => 'Ihre Adressen und die Ebenen an jeder';
 
   @override
+  String get masterDataSupplierContactRolesDesc =>
+      'Die Rollen der Lieferantenkontakte: Bestellungen, Rechnungen, Lieferung, Buchhaltung, eigene.';
+
+  @override
   String get masterDataSuppliersDesc => 'Bei wem Sie einkaufen';
 
   @override
@@ -28654,6 +28665,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchaseOrderReceivedOn => 'Angekommen am';
 
   @override
+  String purchaseOrderRecipientFromContact(String name) {
+    return 'Bevorzugter Einkaufskontakt: $name';
+  }
+
+  @override
   String get purchaseOrderRefused =>
       'Die Bestellung wurde nicht geändert. Prüfen Sie die Angaben und versuchen Sie es erneut.';
 
@@ -30402,6 +30418,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalStockVariant =>
       'Dieser Artikel hat Varianten: Geben Sie an, welche (Farbe, Größe) bewegt, verkauft oder gezählt wird. Nichts wurde geändert.';
+
+  @override
+  String get refusalSupplierContact =>
+      'Dieser Lieferantenkontakt kann nicht gespeichert werden: Prüfen Sie Name, Rolle und E-Mail, oder bitten Sie den Inhaber, eine stillgelegte Rolle wieder zu aktivieren.';
 
   @override
   String get refusalVatRateVersioned =>
@@ -39806,6 +39826,118 @@ class AppLocalizationsDe extends AppLocalizations {
       'Umsatzsteuergruppen, Steuersätze und Meldungen verwalten.';
 
   @override
+  String get supplierContactAdd => 'Neuer Kontakt';
+
+  @override
+  String get supplierContactEditTitle => 'Kontakt bearbeiten';
+
+  @override
+  String get supplierContactEmail => 'E-Mail';
+
+  @override
+  String get supplierContactEmailInvalid =>
+      'Geben Sie eine E-Mail-Adresse ein oder lassen Sie das Feld leer.';
+
+  @override
+  String get supplierContactFromText =>
+      'Aus dem alten Kontakttext einen Kontakt machen';
+
+  @override
+  String get supplierContactName => 'Name';
+
+  @override
+  String get supplierContactNameRequired =>
+      'Geben Sie dem Kontakt einen Namen.';
+
+  @override
+  String get supplierContactNote => 'Notiz';
+
+  @override
+  String get supplierContactPhone => 'Telefon';
+
+  @override
+  String get supplierContactPreferred => 'Bevorzugter Einkaufskontakt';
+
+  @override
+  String get supplierContactPreferredMark => 'Bevorzugt für Bestellungen';
+
+  @override
+  String get supplierContactPreferredNeedsEmail =>
+      'Der bevorzugte Einkaufskontakt hat eine E-Mail-Adresse.';
+
+  @override
+  String get supplierContactRestore => 'Wieder aktivieren';
+
+  @override
+  String get supplierContactRetire => 'Stilllegen';
+
+  @override
+  String get supplierContactRetiredMark => 'Stillgelegt';
+
+  @override
+  String get supplierContactRole => 'Rolle';
+
+  @override
+  String get supplierContactRoleAccounting => 'Buchhaltung';
+
+  @override
+  String get supplierContactRoleAdd => 'Neue Rolle';
+
+  @override
+  String get supplierContactRoleDelivery => 'Lieferung';
+
+  @override
+  String get supplierContactRoleEditTitle => 'Rolle bearbeiten';
+
+  @override
+  String get supplierContactRoleInvoices => 'Rechnungen und Zahlungen';
+
+  @override
+  String get supplierContactRoleName => 'Bezeichnung';
+
+  @override
+  String get supplierContactRoleNameRequired =>
+      'Geben Sie der Rolle einen Namen.';
+
+  @override
+  String get supplierContactRoleNameTaken =>
+      'Eine andere aktive Rolle hat bereits diesen Namen.';
+
+  @override
+  String get supplierContactRoleNewTitle => 'Neue Kontaktrolle';
+
+  @override
+  String get supplierContactRoleOrders => 'Bestellungen';
+
+  @override
+  String get supplierContactRoleOther => 'Sonstiges';
+
+  @override
+  String get supplierContactRoleRetiredSection => 'Stillgelegte Rollen';
+
+  @override
+  String get supplierContactRolesEmpty => 'Noch keine Rolle.';
+
+  @override
+  String get supplierContactRolesSubtitle =>
+      'Die Rollen, die ein Unternehmen den Kontakten seiner Lieferanten gibt';
+
+  @override
+  String get supplierContactRolesTitle => 'Kontaktrollen';
+
+  @override
+  String get supplierContactSaveFailed =>
+      'Der Kontakt wurde nicht gespeichert. Versuchen Sie es erneut.';
+
+  @override
+  String get supplierContactsNone => 'Noch kein Kontakt.';
+
+  @override
+  String supplierContactsTitle(String supplier) {
+    return 'Kontakte von $supplier';
+  }
+
+  @override
   String get supplierFieldEdited => 'Von Ihnen geändert';
 
   @override
@@ -39946,6 +40078,28 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get supplierTermsCurrency => 'Währung seiner Bestellungen';
+
+  @override
+  String get supplierTermsInvalid =>
+      'Geben Sie einen Währungscode aus drei Buchstaben und Tage zwischen 0 und 365 ein.';
+
+  @override
+  String get supplierTermsLeadDays =>
+      'Tage, nach denen eine Bestellung nach dem Versand ihre Ware erwartet';
+
+  @override
+  String get supplierTermsNone => 'keine';
+
+  @override
+  String get supplierTermsPaymentDays =>
+      'Tage bis zur Fälligkeit einer Rechnung nach ihrem Datum';
+
+  @override
+  String get supplierTermsTitle =>
+      'Mit diesem Lieferanten vereinbarte Bedingungen';
+
+  @override
   String get suppliersAdd => 'Lieferant hinzufügen';
 
   @override
@@ -39993,6 +40147,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get suppliersBankValid => 'gültig';
+
+  @override
+  String get suppliersContacts => 'Kontakte';
 
   @override
   String get suppliersEdit => 'Lieferant bearbeiten';

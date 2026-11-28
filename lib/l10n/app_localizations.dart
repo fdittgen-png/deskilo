@@ -21826,6 +21826,18 @@ abstract class AppLocalizations {
   /// **'Subscription invoices'**
   String get featureSubscriptionInvoicesTitle;
 
+  /// #4518 supplier contacts: featureSupplierContactsDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Each supplier has contacts, each with a role, and one of them is its preferred purchasing contact; the supplier also carries the terms agreed once (the currency of its orders, the days its bills are due, the days its orders take). A new order starts from them.'**
+  String get featureSupplierContactsDesc;
+
+  /// #4518 supplier contacts: featureSupplierContactsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier contacts'**
+  String get featureSupplierContactsTitle;
+
   /// #2354 place of supply: featureSupplyClassificationDesc
   ///
   /// In en, this message translates to:
@@ -34330,6 +34342,12 @@ abstract class AppLocalizations {
   /// **'Your addresses and the levels at each'**
   String get masterDataSitesDesc;
 
+  /// #4518 supplier contacts: masterDataSupplierContactRolesDesc
+  ///
+  /// In en, this message translates to:
+  /// **'The roles of a supplier\'s contacts: orders, invoices, delivery, accounting, your own.'**
+  String get masterDataSupplierContactRolesDesc;
+
   /// #4485 one line under the Suppliers card
   ///
   /// In en, this message translates to:
@@ -45426,6 +45444,12 @@ abstract class AppLocalizations {
   /// **'Arrived on'**
   String get purchaseOrderReceivedOn;
 
+  /// #4518 supplier contacts: purchaseOrderRecipientFromContact
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred purchasing contact: {name}'**
+  String purchaseOrderRecipientFromContact(String name);
+
   /// #3307 purchase orders
   ///
   /// In en, this message translates to:
@@ -48305,6 +48329,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This item has variants: name which one (colour, size) to move, sell or count. Nothing was changed.'**
   String get refusalStockVariant;
+
+  /// #4518 supplier contacts: refusalSupplierContact
+  ///
+  /// In en, this message translates to:
+  /// **'This supplier contact cannot be saved: check its name, its role and its e-mail, or ask the owner to bring a retired role back.'**
+  String get refusalSupplierContact;
 
   /// #2356: refusalVatRateVersioned
   ///
@@ -63184,6 +63214,210 @@ abstract class AppLocalizations {
   /// **'Maintain VAT groups, rates and declarations.'**
   String get subprocessTaxDesc;
 
+  /// #4518 supplier contacts: supplierContactAdd
+  ///
+  /// In en, this message translates to:
+  /// **'New contact'**
+  String get supplierContactAdd;
+
+  /// #4518 supplier contacts: supplierContactEditTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the contact'**
+  String get supplierContactEditTitle;
+
+  /// #4518 supplier contacts: supplierContactEmail
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail'**
+  String get supplierContactEmail;
+
+  /// #4518 supplier contacts: supplierContactEmailInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an e-mail address, or leave it empty.'**
+  String get supplierContactEmailInvalid;
+
+  /// #4518 supplier contacts: supplierContactFromText
+  ///
+  /// In en, this message translates to:
+  /// **'Make a contact of the old contact text'**
+  String get supplierContactFromText;
+
+  /// #4518 supplier contacts: supplierContactName
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get supplierContactName;
+
+  /// #4518 supplier contacts: supplierContactNameRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Give the contact a name.'**
+  String get supplierContactNameRequired;
+
+  /// #4518 supplier contacts: supplierContactNote
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get supplierContactNote;
+
+  /// #4518 supplier contacts: supplierContactPhone
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get supplierContactPhone;
+
+  /// #4518 supplier contacts: supplierContactPreferred
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred purchasing contact'**
+  String get supplierContactPreferred;
+
+  /// #4518 supplier contacts: supplierContactPreferredMark
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred for orders'**
+  String get supplierContactPreferredMark;
+
+  /// #4518 supplier contacts: supplierContactPreferredNeedsEmail
+  ///
+  /// In en, this message translates to:
+  /// **'The preferred purchasing contact has an e-mail.'**
+  String get supplierContactPreferredNeedsEmail;
+
+  /// #4518 supplier contacts: supplierContactRestore
+  ///
+  /// In en, this message translates to:
+  /// **'Bring back'**
+  String get supplierContactRestore;
+
+  /// #4518 supplier contacts: supplierContactRetire
+  ///
+  /// In en, this message translates to:
+  /// **'Retire'**
+  String get supplierContactRetire;
+
+  /// #4518 supplier contacts: supplierContactRetiredMark
+  ///
+  /// In en, this message translates to:
+  /// **'Retired'**
+  String get supplierContactRetiredMark;
+
+  /// #4518 supplier contacts: supplierContactRole
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get supplierContactRole;
+
+  /// #4518 supplier contacts: supplierContactRoleAccounting
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting'**
+  String get supplierContactRoleAccounting;
+
+  /// #4518 supplier contacts: supplierContactRoleAdd
+  ///
+  /// In en, this message translates to:
+  /// **'New role'**
+  String get supplierContactRoleAdd;
+
+  /// #4518 supplier contacts: supplierContactRoleDelivery
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery'**
+  String get supplierContactRoleDelivery;
+
+  /// #4518 supplier contacts: supplierContactRoleEditTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the role'**
+  String get supplierContactRoleEditTitle;
+
+  /// #4518 supplier contacts: supplierContactRoleInvoices
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices and payments'**
+  String get supplierContactRoleInvoices;
+
+  /// #4518 supplier contacts: supplierContactRoleName
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get supplierContactRoleName;
+
+  /// #4518 supplier contacts: supplierContactRoleNameRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Give the role a name.'**
+  String get supplierContactRoleNameRequired;
+
+  /// #4518 supplier contacts: supplierContactRoleNameTaken
+  ///
+  /// In en, this message translates to:
+  /// **'Another active role already has this name.'**
+  String get supplierContactRoleNameTaken;
+
+  /// #4518 supplier contacts: supplierContactRoleNewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'New contact role'**
+  String get supplierContactRoleNewTitle;
+
+  /// #4518 supplier contacts: supplierContactRoleOrders
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get supplierContactRoleOrders;
+
+  /// #4518 supplier contacts: supplierContactRoleOther
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get supplierContactRoleOther;
+
+  /// #4518 supplier contacts: supplierContactRoleRetiredSection
+  ///
+  /// In en, this message translates to:
+  /// **'Retired roles'**
+  String get supplierContactRoleRetiredSection;
+
+  /// #4518 supplier contacts: supplierContactRolesEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No role yet.'**
+  String get supplierContactRolesEmpty;
+
+  /// #4518 supplier contacts: supplierContactRolesSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'The roles a business gives the contacts of its suppliers'**
+  String get supplierContactRolesSubtitle;
+
+  /// #4518 supplier contacts: supplierContactRolesTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Contact roles'**
+  String get supplierContactRolesTitle;
+
+  /// #4518 supplier contacts: supplierContactSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The contact was not saved. Try again.'**
+  String get supplierContactSaveFailed;
+
+  /// #4518 supplier contacts: supplierContactsNone
+  ///
+  /// In en, this message translates to:
+  /// **'No contact yet.'**
+  String get supplierContactsNone;
+
+  /// #4518 supplier contacts: supplierContactsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts of {supplier}'**
+  String supplierContactsTitle(String supplier);
+
   /// #2863 supplier lookup
   ///
   /// In en, this message translates to:
@@ -63406,6 +63640,42 @@ abstract class AppLocalizations {
   /// **'A supplier with the same name exists: {supplier}. Check it is not the same company; you can still save.'**
   String supplierSimilarName(String supplier);
 
+  /// #4518 supplier contacts: supplierTermsCurrency
+  ///
+  /// In en, this message translates to:
+  /// **'Currency of its orders'**
+  String get supplierTermsCurrency;
+
+  /// #4518 supplier contacts: supplierTermsInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a currency code of three letters and days between 0 and 365.'**
+  String get supplierTermsInvalid;
+
+  /// #4518 supplier contacts: supplierTermsLeadDays
+  ///
+  /// In en, this message translates to:
+  /// **'Days an order expects its goods after it is sent'**
+  String get supplierTermsLeadDays;
+
+  /// #4518 supplier contacts: supplierTermsNone
+  ///
+  /// In en, this message translates to:
+  /// **'none'**
+  String get supplierTermsNone;
+
+  /// #4518 supplier contacts: supplierTermsPaymentDays
+  ///
+  /// In en, this message translates to:
+  /// **'Days a bill is due after its date'**
+  String get supplierTermsPaymentDays;
+
+  /// #4518 supplier contacts: supplierTermsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Terms agreed with this supplier'**
+  String get supplierTermsTitle;
+
   /// #2567 suppliers
   ///
   /// In en, this message translates to:
@@ -63495,6 +63765,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'valid'**
   String get suppliersBankValid;
+
+  /// #4518 supplier contacts: suppliersContacts
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts'**
+  String get suppliersContacts;
 
   /// #2567 suppliers
   ///

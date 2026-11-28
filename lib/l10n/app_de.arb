@@ -8192,6 +8192,14 @@
   },
   "featureSubscriptionInvoicesDesc": "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.",
   "featureSubscriptionInvoicesTitle": "Abo-Rechnungen",
+  "featureSupplierContactsDesc": "Jeder Lieferant hat Kontakte mit je einer Rolle, einer davon ist sein bevorzugter Einkaufskontakt; der Lieferant trägt außerdem die einmal vereinbarten Bedingungen (die Währung seiner Bestellungen, die Tage bis zur Fälligkeit seiner Rechnungen, die Tage bis zur Lieferung seiner Bestellungen). Eine neue Bestellung geht von ihnen aus.",
+  "@featureSupplierContactsDesc": {
+    "description": "#4518 supplier contacts: featureSupplierContactsDesc"
+  },
+  "featureSupplierContactsTitle": "Lieferantenkontakte",
+  "@featureSupplierContactsTitle": {
+    "description": "#4518 supplier contacts: featureSupplierContactsTitle"
+  },
   "featureSupplyClassificationDesc": "Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, außer in einem Betrieb, der keine Plätze bucht; dort beginnen neue Leistungen als allgemeine Dienstleistungen.",
   "featureSupplyClassificationTitle": "Leistungsort je Leistung",
   "featureSupplyExpensesDesc": "Eine Ausgabe kann ein Vorrat für den Raum sein (Kaffeekapseln, Staubsaugerbeutel…): genehmigt, füllt sie eine verbrauchbare Leistung mit Stückpreis auf oder legt sie an; Verbräuche zählen den Bestand herunter.",
@@ -13123,6 +13131,10 @@
   "masterDataSearchHint": "Namen oder Code eingeben oder aus der Liste wählen",
   "masterDataServicesDesc": "Die Leistungen, die Sie verkaufen",
   "masterDataSitesDesc": "Ihre Adressen und die Ebenen an jeder",
+  "masterDataSupplierContactRolesDesc": "Die Rollen der Lieferantenkontakte: Bestellungen, Rechnungen, Lieferung, Buchhaltung, eigene.",
+  "@masterDataSupplierContactRolesDesc": {
+    "description": "#4518 supplier contacts: masterDataSupplierContactRolesDesc"
+  },
   "masterDataSuppliersDesc": "Bei wem Sie einkaufen",
   "masterDataTills": "Kassen",
   "masterDataTillsDesc": "Die Kassen am Tresen und ihre Tastenbelegung",
@@ -16144,6 +16156,15 @@
   "purchaseOrderReceiveTitle": "Lieferung zu {reference}",
   "purchaseOrderReceiveTooMany": "Mehr als von dieser Position noch aussteht",
   "purchaseOrderReceivedOn": "Angekommen am",
+  "purchaseOrderRecipientFromContact": "Bevorzugter Einkaufskontakt: {name}",
+  "@purchaseOrderRecipientFromContact": {
+    "description": "#4518 supplier contacts: purchaseOrderRecipientFromContact",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "purchaseOrderRefused": "Die Bestellung wurde nicht geändert. Prüfen Sie die Angaben und versuchen Sie es erneut.",
   "purchaseOrderRemoveLine": "Position entfernen",
   "purchaseOrderSave": "Entwurf speichern",
@@ -17275,6 +17296,10 @@
   "refusalStockVariant": "Dieser Artikel hat Varianten: Geben Sie an, welche (Farbe, Größe) bewegt, verkauft oder gezählt wird. Nichts wurde geändert.",
   "@refusalStockVariant": {
     "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."
+  },
+  "refusalSupplierContact": "Dieser Lieferantenkontakt kann nicht gespeichert werden: Prüfen Sie Name, Rolle und E-Mail, oder bitten Sie den Inhaber, eine stillgelegte Rolle wieder zu aktivieren.",
+  "@refusalSupplierContact": {
+    "description": "#4518 supplier contacts: refusalSupplierContact"
   },
   "refusalVatRateVersioned": "Dieser Satz steht bereits auf ausgestellten Rechnungen, sein Prozentsatz bleibt daher unverändert. Nutzen Sie „Änderung per Gesetz“, um den neuen Wert ab einem Datum festzulegen. Es wurde nichts gespeichert.",
   "@refusalVatRateVersioned": {
@@ -23077,6 +23102,147 @@
   "subprocessStructureDesc": "Standorte und die Verfügbarkeit von Planobjekten verwalten.",
   "subprocessTax": "Umsatzsteuerverwaltung",
   "subprocessTaxDesc": "Umsatzsteuergruppen, Steuersätze und Meldungen verwalten.",
+  "supplierContactAdd": "Neuer Kontakt",
+  "@supplierContactAdd": {
+    "description": "#4518 supplier contacts: supplierContactAdd"
+  },
+  "supplierContactEditTitle": "Kontakt bearbeiten",
+  "@supplierContactEditTitle": {
+    "description": "#4518 supplier contacts: supplierContactEditTitle"
+  },
+  "supplierContactEmail": "E-Mail",
+  "@supplierContactEmail": {
+    "description": "#4518 supplier contacts: supplierContactEmail"
+  },
+  "supplierContactEmailInvalid": "Geben Sie eine E-Mail-Adresse ein oder lassen Sie das Feld leer.",
+  "@supplierContactEmailInvalid": {
+    "description": "#4518 supplier contacts: supplierContactEmailInvalid"
+  },
+  "supplierContactFromText": "Aus dem alten Kontakttext einen Kontakt machen",
+  "@supplierContactFromText": {
+    "description": "#4518 supplier contacts: supplierContactFromText"
+  },
+  "supplierContactName": "Name",
+  "@supplierContactName": {
+    "description": "#4518 supplier contacts: supplierContactName"
+  },
+  "supplierContactNameRequired": "Geben Sie dem Kontakt einen Namen.",
+  "@supplierContactNameRequired": {
+    "description": "#4518 supplier contacts: supplierContactNameRequired"
+  },
+  "supplierContactNote": "Notiz",
+  "@supplierContactNote": {
+    "description": "#4518 supplier contacts: supplierContactNote"
+  },
+  "supplierContactPhone": "Telefon",
+  "@supplierContactPhone": {
+    "description": "#4518 supplier contacts: supplierContactPhone"
+  },
+  "supplierContactPreferred": "Bevorzugter Einkaufskontakt",
+  "@supplierContactPreferred": {
+    "description": "#4518 supplier contacts: supplierContactPreferred"
+  },
+  "supplierContactPreferredMark": "Bevorzugt für Bestellungen",
+  "@supplierContactPreferredMark": {
+    "description": "#4518 supplier contacts: supplierContactPreferredMark"
+  },
+  "supplierContactPreferredNeedsEmail": "Der bevorzugte Einkaufskontakt hat eine E-Mail-Adresse.",
+  "@supplierContactPreferredNeedsEmail": {
+    "description": "#4518 supplier contacts: supplierContactPreferredNeedsEmail"
+  },
+  "supplierContactRestore": "Wieder aktivieren",
+  "@supplierContactRestore": {
+    "description": "#4518 supplier contacts: supplierContactRestore"
+  },
+  "supplierContactRetire": "Stilllegen",
+  "@supplierContactRetire": {
+    "description": "#4518 supplier contacts: supplierContactRetire"
+  },
+  "supplierContactRetiredMark": "Stillgelegt",
+  "@supplierContactRetiredMark": {
+    "description": "#4518 supplier contacts: supplierContactRetiredMark"
+  },
+  "supplierContactRole": "Rolle",
+  "@supplierContactRole": {
+    "description": "#4518 supplier contacts: supplierContactRole"
+  },
+  "supplierContactRoleAccounting": "Buchhaltung",
+  "@supplierContactRoleAccounting": {
+    "description": "#4518 supplier contacts: supplierContactRoleAccounting"
+  },
+  "supplierContactRoleAdd": "Neue Rolle",
+  "@supplierContactRoleAdd": {
+    "description": "#4518 supplier contacts: supplierContactRoleAdd"
+  },
+  "supplierContactRoleDelivery": "Lieferung",
+  "@supplierContactRoleDelivery": {
+    "description": "#4518 supplier contacts: supplierContactRoleDelivery"
+  },
+  "supplierContactRoleEditTitle": "Rolle bearbeiten",
+  "@supplierContactRoleEditTitle": {
+    "description": "#4518 supplier contacts: supplierContactRoleEditTitle"
+  },
+  "supplierContactRoleInvoices": "Rechnungen und Zahlungen",
+  "@supplierContactRoleInvoices": {
+    "description": "#4518 supplier contacts: supplierContactRoleInvoices"
+  },
+  "supplierContactRoleName": "Bezeichnung",
+  "@supplierContactRoleName": {
+    "description": "#4518 supplier contacts: supplierContactRoleName"
+  },
+  "supplierContactRoleNameRequired": "Geben Sie der Rolle einen Namen.",
+  "@supplierContactRoleNameRequired": {
+    "description": "#4518 supplier contacts: supplierContactRoleNameRequired"
+  },
+  "supplierContactRoleNameTaken": "Eine andere aktive Rolle hat bereits diesen Namen.",
+  "@supplierContactRoleNameTaken": {
+    "description": "#4518 supplier contacts: supplierContactRoleNameTaken"
+  },
+  "supplierContactRoleNewTitle": "Neue Kontaktrolle",
+  "@supplierContactRoleNewTitle": {
+    "description": "#4518 supplier contacts: supplierContactRoleNewTitle"
+  },
+  "supplierContactRoleOrders": "Bestellungen",
+  "@supplierContactRoleOrders": {
+    "description": "#4518 supplier contacts: supplierContactRoleOrders"
+  },
+  "supplierContactRoleOther": "Sonstiges",
+  "@supplierContactRoleOther": {
+    "description": "#4518 supplier contacts: supplierContactRoleOther"
+  },
+  "supplierContactRoleRetiredSection": "Stillgelegte Rollen",
+  "@supplierContactRoleRetiredSection": {
+    "description": "#4518 supplier contacts: supplierContactRoleRetiredSection"
+  },
+  "supplierContactRolesEmpty": "Noch keine Rolle.",
+  "@supplierContactRolesEmpty": {
+    "description": "#4518 supplier contacts: supplierContactRolesEmpty"
+  },
+  "supplierContactRolesSubtitle": "Die Rollen, die ein Unternehmen den Kontakten seiner Lieferanten gibt",
+  "@supplierContactRolesSubtitle": {
+    "description": "#4518 supplier contacts: supplierContactRolesSubtitle"
+  },
+  "supplierContactRolesTitle": "Kontaktrollen",
+  "@supplierContactRolesTitle": {
+    "description": "#4518 supplier contacts: supplierContactRolesTitle"
+  },
+  "supplierContactSaveFailed": "Der Kontakt wurde nicht gespeichert. Versuchen Sie es erneut.",
+  "@supplierContactSaveFailed": {
+    "description": "#4518 supplier contacts: supplierContactSaveFailed"
+  },
+  "supplierContactsNone": "Noch kein Kontakt.",
+  "@supplierContactsNone": {
+    "description": "#4518 supplier contacts: supplierContactsNone"
+  },
+  "supplierContactsTitle": "Kontakte von {supplier}",
+  "@supplierContactsTitle": {
+    "description": "#4518 supplier contacts: supplierContactsTitle",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
   "supplierFieldEdited": "Von Ihnen geändert",
   "@supplierFieldEdited": {
     "description": "#2863 supplier lookup"
@@ -23244,6 +23410,30 @@
   "supplierNameMissing": "Ein Lieferant braucht einen Namen.",
   "supplierSaving": "Lieferant wird gespeichert…",
   "supplierSimilarName": "Ein Lieferant mit demselben Namen existiert: {supplier}. Prüfen Sie, ob es nicht dasselbe Unternehmen ist; Sie können trotzdem speichern.",
+  "supplierTermsCurrency": "Währung seiner Bestellungen",
+  "@supplierTermsCurrency": {
+    "description": "#4518 supplier contacts: supplierTermsCurrency"
+  },
+  "supplierTermsInvalid": "Geben Sie einen Währungscode aus drei Buchstaben und Tage zwischen 0 und 365 ein.",
+  "@supplierTermsInvalid": {
+    "description": "#4518 supplier contacts: supplierTermsInvalid"
+  },
+  "supplierTermsLeadDays": "Tage, nach denen eine Bestellung nach dem Versand ihre Ware erwartet",
+  "@supplierTermsLeadDays": {
+    "description": "#4518 supplier contacts: supplierTermsLeadDays"
+  },
+  "supplierTermsNone": "keine",
+  "@supplierTermsNone": {
+    "description": "#4518 supplier contacts: supplierTermsNone"
+  },
+  "supplierTermsPaymentDays": "Tage bis zur Fälligkeit einer Rechnung nach ihrem Datum",
+  "@supplierTermsPaymentDays": {
+    "description": "#4518 supplier contacts: supplierTermsPaymentDays"
+  },
+  "supplierTermsTitle": "Mit diesem Lieferanten vereinbarte Bedingungen",
+  "@supplierTermsTitle": {
+    "description": "#4518 supplier contacts: supplierTermsTitle"
+  },
   "suppliersAdd": "Lieferant hinzufügen",
   "@suppliersAdd": {
     "description": "#2567 suppliers"
@@ -23313,6 +23503,10 @@
   "suppliersBankValid": "gültig",
   "@suppliersBankValid": {
     "description": "#2567 suppliers"
+  },
+  "suppliersContacts": "Kontakte",
+  "@suppliersContacts": {
+    "description": "#4518 supplier contacts: suppliersContacts"
   },
   "suppliersEdit": "Lieferant bearbeiten",
   "@suppliersEdit": {
