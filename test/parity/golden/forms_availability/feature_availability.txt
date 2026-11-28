@@ -158,6 +158,7 @@ kioskEnrolment | everywhere | y y y y y y y y y y
 quickSearch | everywhere | y y y y y y y y y y
 stockManagement | everywhere | y y y y y y y y y y
 organisation | everywhere | y y y y y y y y y y
+expenseCategories | everywhere | y y y y y y y y y y
 standaloneInvoicing | everywhere | y y y y y y y y y y
 billingCustomers | everywhere | y y y y y y y y y y
 customerQuotes | everywhere | y y y y y y y y y y
@@ -182,3 +183,4 @@ unitsOfMeasure | everywhere | y y y y y y y y y y
 counterTillLayout | everywhere | y y y y y y y y y y
 counterReceiptPrinter | everywhere | y y y y y y y y y y
 counterEmbeddedTerminal | everywhere | y y y y y y y y y y
+counterCashReasons | everywhere | y y y y y y y y y y
