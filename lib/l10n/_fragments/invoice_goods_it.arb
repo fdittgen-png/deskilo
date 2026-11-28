@@ -4,7 +4,7 @@
   "@settingLabelStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
   },
-  "settingHintStockInvoiceSalePlace": "Il codice di un luogo dell’attività che detiene scorte, per esempio MAIN. I beni venduti in fattura escono da lì all’emissione della fattura.",
+  "settingHintStockInvoiceSalePlace": "Scegliete il luogo da cui partono le merci vendute su una fattura, come sede › luogo. Un codice impostato prima vale ancora finché un solo luogo lo porta.",
   "@settingHintStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
   },
@@ -68,7 +68,7 @@
   "@standaloneFieldStock": {
     "description": "#4433 goods sold on an invoice: standaloneFieldStock"
   },
-  "standaloneFactSalePlace": "il luogo da cui si vende: indicare un luogo con scorte nelle impostazioni dell’attività",
+  "standaloneFactSalePlace": "il luogo da cui partono le merci vendute non è impostato, è ambiguo o non è più utilizzabile: sceglietene uno con scorte nelle impostazioni di magazzino",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
   }

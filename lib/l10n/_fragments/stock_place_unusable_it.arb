@@ -1,0 +1,6 @@
+{
+  "stockReasonPlaceUnusable": "Questo luogo non può essere usato: sceglietene uno in uso che tiene scorte.",
+  "@stockReasonPlaceUnusable": {
+    "description": "#4495 the place picked for a setting cannot be used"
+  }
+}

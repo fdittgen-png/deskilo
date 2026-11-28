@@ -147,6 +147,13 @@ const Map<String, String> _notExported = {
   'invoice_issue_notices':
       '#3672 -- whether telling a customer about a new invoice was queued: a delivery '
           'record of this server; the invoices and their feed events are exported themselves',
+  'till_terminal_codes':
+      '#4454 -- the codes that connect a till board, each kept as its hash and valid '
+          'minutes: a security record of this server; an export never carries a code or its hash',
+  'till_terminals':
+      '#4454 -- the till boards connected to the business, with the hash of each '
+          'board\'s secret: a security record of this server, bound to the board; an '
+          'export never carries a secret or its hash',
   'kiosk_devices':
       '#3675 -- the devices a business enrolled as kiosks, with the hash of each '
           'credential: a security record of this server, bound to the device it '

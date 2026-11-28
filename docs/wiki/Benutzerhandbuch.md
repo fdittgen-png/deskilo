@@ -4268,20 +4268,23 @@ Ihre Artikel, Angebote und Rechnungen werden in Einheiten gemessen, und manche E
 
 **Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
 
-Ein Kassenterminal ist der kleine Bildschirm an der Theke, der Zahlungen annimmt. Sie verbinden es unter **Geräte** mit Ihrem Unternehmen: Die App liest den QR-Code des Terminals oder den 10-stelligen Code daneben und zeigt, welches Terminal es ist.
+Ein Kassenterminal ist der kleine Bildschirm an der Theke, der Zahlungen annimmt. Sie verbinden es unter **Geräte** mit Ihrem Unternehmen: Die App liest den QR-Code des Terminals, zeigt, welches Terminal es ist, und gibt Ihnen den Code, der es mit einer Kasse verbindet. Das Terminal wartet dann auf Ihre Freigabe.
 
 **Schritte**
 
 1. Schalten Sie **Kassenterminals** unter **Funktionen** ein (es braucht **Kassensitzungen und Tagesabschluss** und ist aus, bis Sie es anfordern).
 2. Halten Sie am Terminal die **BOOT**-Taste 3 Sekunden gedrückt: Es zeigt seinen QR-Code und seinen Code, etwa 3DNGP-UN9CG. Ein noch nicht eingerichtetes Terminal zeigt sie von selbst.
-3. Halten Sie in [Geräte](https://fdittgen-png.github.io/deskilo/#/settings/devices) den QR-Code vor die Kamera, oder tippen Sie den Code unter **Code eintippen** ein und tippen Sie auf **Code prüfen**.
-4. Vergleichen Sie das Terminal und seinen **Fingerabdruck** mit dem Bildschirm des Terminals.
+3. Halten Sie unter [Geräte](https://fdittgen-png.github.io/deskilo/#/settings/devices) den QR-Code vor die Kamera. Vergleichen Sie das Terminal und seinen **Fingerabdruck** mit dem Bildschirm des Terminals.
+4. Wählen Sie die **Kasse**, der das Terminal dient, und tippen Sie auf **Verbindungscode erhalten**. Der Code gilt einmal, nur für dieses Terminal, so viele Minuten, wie Ihre Einstellungen vorgeben (standardmäßig 5).
+5. Hat das Terminal den Code verwendet, erscheint es in der Liste als **Wartet auf Ihre Freigabe**. Tippen Sie auf **Freigeben**, prüfen Sie, dass der Bildschirm des Terminals den von der App genannten Fingerabdruck zeigt, und bestätigen Sie: Das Terminal ist **Verbunden**.
 
 **Gut zu wissen**
 
+- Nur der Inhaber des Unternehmens erhält einen Code, gibt ein Terminal frei oder entfernt es. Wer die Einstellungen öffnen darf, sieht die Liste.
+- **Entfernen** beendet die Verbindung eines Terminals mit dem Unternehmen. Um es wieder zu nutzen, verbinden Sie es mit einem neuen Code.
+- Den Code neben dem QR-Code einzutippen (wo es keine Kamera gibt) zeigt, welches Terminal es ist; zum Verbinden scannen Sie seinen QR-Code. Ein Terminal, dessen QR-Code zum Verbinden nicht angenommen wird, braucht zuerst die neue Firmware.
+- Ein Code, den ein falsches Terminal zu oft vorlegt, ist verbraucht (standardmäßig 5-mal). Beide Zahlen stehen in den Einstellungen des Unternehmens: **Verbindungscode eines Geräts: Minuten** und **Verbindungscode eines Geräts: Versuche**.
 - Ein Code enthält nie 0, O, 1, I oder L. Ein falsches Zeichen oder zwei vertauschte werden sofort abgelehnt, in Worten unter dem Feld; Groß- und Kleinschreibung, Leerzeichen und Bindestriche spielen keine Rolle.
-- Ohne Kamera (Browser, Desktop) leistet das Eintippen des Codes dasselbe.
-- Das Verbinden des Terminals mit dem Unternehmen kommt mit einem späteren Update: Heute liest und prüft die App das Terminal und sendet ihm nichts.
 
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organisation

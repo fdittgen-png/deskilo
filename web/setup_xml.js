@@ -36,6 +36,11 @@ function migrate(raw){
  if(m.vatExigibility==='payment')m.vatExigibility='cash';
  // #2357 — a period this page does not know reads as quarterly.
  if(m.vatPeriod!==undefined&&!VATPERIOD.some(([v])=>v===m.vatPeriod))m.vatPeriod='quarter';
+ // #4497 — a service named its VAT by a percentage; it now names the rate's own key: the first rate with that
+ // percentage, as the export used to pick it. A percentage no rate has is left unpicked (the review says so).
+ if(Array.isArray(m.vatRates))m.vatRates.forEach((r,i)=>{if(r&&!r.key)r.key='vat-'+(i+1)});
+ if(Array.isArray(m.services))m.services.forEach(s=>{if(!s||s.vatKey!==undefined)return;
+  const r=(m.vatRates||[]).find(r=>s.vat!==''&&s.vat!=null&&parseFloat(r.percent)===parseFloat(s.vat));s.vatKey=r?r.key:'';delete s.vat});
  return m;
 }
 // A save written by an older version of this page is missing whatever
@@ -179,8 +184,13 @@ function numberSequences(){const nb=S.numbering,mb=S.memberNumbering,dig=x=>Math
  return [{journal:'invoice',prefix:pre(nb.prefix),suffix:'',date_part:dp,digits:dig(nb.digits),reset:ok.includes(nb.reset)?nb.reset:ok[ok.length-1],gapless:true},
   {journal:'member',prefix:pre(mb.prefix),suffix:'',date_part:'none',digits:dig(mb.digits),reset:'never',gapless:true}];
 }
+// #4497 — an exempt or out-of-scope rate's reason, in the legal wording of the business's document language (English
+// when none is chosen): the same in every language the page is shown in.
+function exemptionWording(r){const e=VAT_EXEMPTIONS.find(([c,code])=>c===r.category&&code===r.reason);if(!e)return '';
+ const lang=LOCALES.includes(S.language)?S.language:'en';return L10N[lang]?.s?.[e[3]]??L10N.en.s[e[3]]}
 function tablesConfig(){
- const vatLabel=pct=>{if(pct===''||pct==null)return null;const r=(S.vatRates||[]).find(r=>parseFloat(r.percent)===parseFloat(pct));return r?String(r.label).trim():null};
+ // #4497 — a service names its VAT rate by the rate's key; the configuration binds it by the rate's label (unique).
+ const vatLabel=key=>{const r=(S.vatRates||[]).find(r=>key&&r.key===key);return r?String(r.label).trim():null};
  const t={
   fee_bands:S.tiers.filter(x=>x.fee!=='').map(x=>({from_pct:int(x.from,0),to_pct:int(x.to,100),fee_cents:cents(x.fee),overage_fee_cents:cents(x.over)})),
   packages:S.packages.filter(p=>p.name.trim()).map(p=>({name:p.name.trim(),days:int(p.days,0),price_cents:cents(p.price),active:true,vat_rate:null})),
@@ -189,11 +199,11 @@ function tablesConfig(){
  };
  if(on('invoicing')&&registered())t.number_sequences=numberSequences();
  const supplyClass=registered()&&on('vatManagement')&&on('supplyClassification');
- if(on('services'))t.services=S.services.filter(x=>x.name.trim()).map(x=>({name:x.name.trim(),price_cents:cents(x.price),active:true,stock:null,vat_rate:vatLabel(x.vat),...(supplyClass?{supply_class:x.supply==='general'?'general':'property'}:{})}));
+ if(on('services'))t.services=S.services.filter(x=>x.name.trim()).map(x=>({name:x.name.trim(),price_cents:cents(x.price),active:true,stock:null,vat_rate:vatLabel(x.vatKey),...(supplyClass?{supply_class:x.supply==='general'?'general':'property'}:{})}));
  // #2331 — group and exemption are NOT NULL columns (defaults 'standard'
  // and ''): a null made the import refuse the whole configuration.
  if(on('vatManagement')&&registered())t.vat_rates=S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).map((r,i)=>({label:String(r.label).trim(),percent:parseFloat(r.percent),
-   category:parseFloat(r.percent)>0?'S':'Z',is_default:i===0,active:true,group_key:on('vatGroups')&&r.group?r.group:'standard',outside_base:false,exemption_reason:'',valid_from:on('vatRateHistory')&&r.validFrom?r.validFrom:'1900-01-01',valid_to:null,supersedes:null}));
+   category:parseFloat(r.percent)>0?'S':r.category,is_default:i===0,active:true,group_key:on('vatGroups')&&r.group?r.group:'standard',outside_base:false,exemption_reason:exemptionWording(r),valid_from:on('vatRateHistory')&&r.validFrom?r.validFrom:'1900-01-01',valid_to:null,supersedes:null}));
  if(on('multiSite'))t.sites=S.sites.filter(x=>String(x.name).trim()).map((x,i)=>({name:x.name.trim(),street:x.street||'',postal_code:x.postal||'',city:x.city||'',country_code:S.country||'',subdivision:String(x.subdivision||'').trim().toUpperCase(),
    legal_id:x.legalId||'',is_default:i===0,sort_order:i,vat_id:'',tax_exemption_reason:''}));
  return t;

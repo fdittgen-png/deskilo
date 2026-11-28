@@ -21,12 +21,15 @@ enum ScannedKind {
 
 /// A place the code names.
 class ScannedPlace {
-  const ScannedPlace({required this.id, required this.code, required this.name, required this.kind});
+  const ScannedPlace({required this.id, required this.code, required this.name, required this.kind, this.path = ''});
 
   final String id;
   final String code;
   final String name;
   final String kind;
+
+  /// #4495 -- the full path as a person reads it (`Site B › Shop`), said when a code several places carry is asked about.
+  final String path;
 }
 
 /// An item the code names; an assistant session gets names only, so the id may be empty.
@@ -57,6 +60,7 @@ class StockCodeResolution {
     required this.code,
     this.matchedBy,
     this.place,
+    this.placeChoices = const [],
     this.item,
     this.variantId,
     this.variantLabel,
@@ -73,6 +77,7 @@ class StockCodeResolution {
     : kind = ScannedKind.unknown,
       matchedBy = null,
       place = null,
+      placeChoices = const [],
       item = null,
       variantId = null,
       variantLabel = null,
@@ -91,6 +96,13 @@ class StockCodeResolution {
   /// How the server matched it (`place_barcode`, `gtin`, `unit_code`, `lot_label`, `tag`, ...), when it says.
   final String? matchedBy;
   final ScannedPlace? place;
+
+  /// #4495 -- the places a code names when SEVERAL carry it (no [place] then): the app asks which.
+  final List<ScannedPlace> placeChoices;
+
+  /// Whether the scan names a code several places carry: none is chosen until the person says which.
+  bool get asksWhichPlace => kind == ScannedKind.place && place == null && placeChoices.length > 1;
+
   final ScannedItem? item;
   final String? variantId;
   final String? variantLabel;
@@ -120,6 +132,11 @@ class StockCodeResolution {
     if (p != null) {
       place = ScannedPlace(id: p.stringOr('id'), code: p.stringOr('code'), name: p.stringOr('name'), kind: p.stringOr('kind'));
     }
+    final choices = <ScannedPlace>[];
+    for (final e in r.listOrAbsent('places')) {
+      final c = JsonReader.of(e, context: 'stock_resolve_code.places');
+      choices.add(ScannedPlace(id: c.stringOr('id'), code: c.stringOr('code'), name: c.stringOr('name'), kind: c.stringOr('kind'), path: c.stringOr('path')));
+    }
     ScannedItem? item;
     final i = r.objectOrNull('item');
     if (i != null) item = ScannedItem(id: i.stringOr('id'), name: i.stringOr('name'), unit: i.stringOr('unit'));
@@ -140,6 +157,7 @@ class StockCodeResolution {
       code: code,
       matchedBy: r.stringOrNull('matched_by'),
       place: place,
+      placeChoices: choices,
       item: item,
       variantId: v?.stringOrNull('id'),
       variantLabel: v?.stringOrNull('label'),

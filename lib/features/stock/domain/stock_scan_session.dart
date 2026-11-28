@@ -25,6 +25,9 @@ enum ScanOutcome {
 
   /// A tag read a second time in this sheet: ignored.
   alreadyRead,
+
+  /// #4495 -- the code is carried by several places: the person is asked which one.
+  askPlace,
 }
 
 /// A counted line: an item (and variant) with an exact quantity in its inventory unit, as a fraction.
@@ -81,11 +84,14 @@ class ScanLine {
 
 /// The result of one scan, for the sheet to show.
 class ScanResult {
-  const ScanResult(this.outcome, {this.line, this.place, this.code, this.asksQuantity = false, this.fromTag = false});
+  const ScanResult(this.outcome, {this.line, this.place, this.choices = const [], this.code, this.asksQuantity = false, this.fromTag = false});
 
   final ScanOutcome outcome;
   final ScanLine? line;
   final ScannedPlace? place;
+
+  /// The places a code several places carry names, for [ScanOutcome.askPlace].
+  final List<ScannedPlace> choices;
   final String? code;
 
   /// The business asks for the quantity of a repeated scan (`stock.repeated_scan` = ask_quantity): the line was
@@ -117,6 +123,9 @@ class StockScanSession {
     ({String? lot, String? expiresOn})? gs1,
   }) {
     // a tag bound to a place names that place, like its barcode does
+    if (resolution.asksWhichPlace) {
+      return ScanResult(ScanOutcome.askPlace, choices: resolution.placeChoices, code: resolution.code, fromTag: fromTag);
+    }
     final place = resolution.place;
     final namesPlace = resolution.kind == ScannedKind.place || (resolution.kind == ScannedKind.tag && resolution.item == null);
     if (namesPlace && place != null) {

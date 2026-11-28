@@ -8714,6 +8714,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get developmentWatermark => 'SVILUPPO';
 
   @override
+  String get devicePairingApprove => 'Approvare';
+
+  @override
+  String devicePairingApproveBody(String fingerprint) {
+    return 'Approvi questo dispositivo solo se il suo schermo mostra l\'impronta $fingerprint.';
+  }
+
+  @override
   String devicePairingBoard(String id, String model) {
     return 'Terminale $id · $model';
   }
@@ -8722,7 +8730,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get devicePairingCheck => 'Verificare il codice';
 
   @override
+  String devicePairingCode(String code) {
+    return 'Codice di collegamento: $code';
+  }
+
+  @override
+  String devicePairingCodeHint(String time) {
+    return 'Valido fino alle $time, una sola volta, solo per questo dispositivo.';
+  }
+
+  @override
   String get devicePairingConnect => 'Collegare un dispositivo';
+
+  @override
+  String get devicePairingFailed => 'Il server non ha risposto: riprovi.';
 
   @override
   String devicePairingFingerprint(String fingerprint) {
@@ -8733,12 +8754,27 @@ class AppLocalizationsIt extends AppLocalizations {
   String get devicePairingFound => 'Terminale trovato';
 
   @override
-  String get devicePairingLater =>
-      'Il collegamento del terminale a questa attività arriverà con un prossimo aggiornamento: non gli è stato inviato nulla.';
+  String get devicePairingGetCode => 'Ottenere un codice di collegamento';
+
+  @override
+  String get devicePairingNeedsFirmware =>
+      'Questo dispositivo ha bisogno del nuovo firmware prima di poter essere collegato.';
+
+  @override
+  String get devicePairingNoTill =>
+      'Aggiunga prima una cassa: un dispositivo serve una cassa.';
 
   @override
   String get devicePairingNone =>
       'Nessun terminale di cassa è ancora collegato a questa attività.';
+
+  @override
+  String get devicePairingNotOwner =>
+      'Solo il titolare dell\'attività collega, approva o rimuove un dispositivo.';
+
+  @override
+  String get devicePairingNotWaiting =>
+      'Questo dispositivo non è più in attesa di approvazione.';
 
   @override
   String get devicePairingRefusedAlphabet =>
@@ -8757,12 +8793,41 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo terminale è di un modello che l\'app non conosce ancora. Aggiorni l\'app, poi lo colleghi.';
 
   @override
+  String get devicePairingRevoke => 'Rimuovere';
+
+  @override
+  String get devicePairingRevokeBody =>
+      'Questo dispositivo non sarà più collegato all\'attività. Per usarlo di nuovo, lo colleghi con un nuovo codice.';
+
+  @override
   String get devicePairingScanHint =>
       'Avvicini il codice QR del terminale alla fotocamera. Per mostrarlo, tenga premuto il pulsante BOOT del terminale per 3 secondi.';
 
   @override
+  String get devicePairingScanToConnect =>
+      'Per collegare questo dispositivo, scansioni il suo codice QR.';
+
+  @override
+  String get devicePairingStatusPaired => 'Collegato';
+
+  @override
+  String get devicePairingStatusPending => 'In attesa della Sua approvazione';
+
+  @override
   String get devicePairingSubtitle =>
       'Terminali di cassa: collegarne uno tramite il codice QR o il codice';
+
+  @override
+  String devicePairingTill(String till) {
+    return 'Cassa: $till';
+  }
+
+  @override
+  String get devicePairingTillInactive =>
+      'Questa cassa non è attiva: ne scelga un\'altra.';
+
+  @override
+  String get devicePairingTillPick => 'Cassa';
 
   @override
   String get devicePairingTitle => 'Dispositivi';
@@ -8773,6 +8838,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get devicePairingTypeHelper =>
       'I 10 caratteri accanto al codice QR del terminale, per esempio 3DNGP-UN9CG.';
+
+  @override
+  String get devicePairingWithdraw => 'Ritirare il codice';
+
+  @override
+  String get devicePairingWrongFingerprint =>
+      'L\'impronta non corrisponde a questo dispositivo.';
 
   @override
   String get directoryApproximate => 'Posizione approssimativa dell’indirizzo';
@@ -32980,6 +33052,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'L\'importo massimo, in unità minori della valuta dell\'attività (centesimi), di un prelievo dal cassetto senza qualcuno che possa registrare pagamenti in uscita. 0 significa nessun limite.';
 
   @override
+  String get settingHintCounterTerminalPairAttempts =>
+      'Quante volte un codice può essere presentato con un dispositivo o una prova errati prima di esaurirsi.';
+
+  @override
+  String get settingHintCounterTerminalPairMinutes =>
+      'Per quanto tempo vale il codice che collega un dispositivo di cassa. Una modifica vale per il prossimo codice, non per uno già dato.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'Il servizio compatibile con Photon che colloca un indirizzo pubblicato sulla mappa di scoperta: un indirizzo https sull\'internet pubblica, senza nome utente, password, query né #. Lasci vuoto per usare l\'indirizzo con cui è stata costruita questa versione dell\'app, altrimenti il servizio pubblico Photon.';
 
@@ -33253,7 +33333,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingHintStockInvoiceSalePlace =>
-      'Il codice di un luogo dell’attività che detiene scorte, per esempio MAIN. I beni venduti in fattura escono da lì all’emissione della fattura.';
+      'Scegliete il luogo da cui partono le merci vendute su una fattura, come sede › luogo. Un codice impostato prima vale ancora finché un solo luogo lo porta.';
 
   @override
   String get settingHintStockPriceRounding =>
@@ -33438,6 +33518,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelCounterPaidOutLimit =>
       'Prelievo massimo senza autorizzazione';
+
+  @override
+  String get settingLabelCounterTerminalPairAttempts =>
+      'Codice di collegamento di un dispositivo: tentativi';
+
+  @override
+  String get settingLabelCounterTerminalPairMinutes =>
+      'Codice di collegamento di un dispositivo: minuti';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>
@@ -33768,6 +33856,28 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingOriginWorkspace => 'Impostato per questo spazio';
+
+  @override
+  String settingPlaceAmbiguous(String code) {
+    return 'Il codice $code è portato da più luoghi: sceglietene uno. Le fatture con merci sono rifiutate finché non lo fate.';
+  }
+
+  @override
+  String settingPlaceFromCode(String path, String code) {
+    return '$path (trovato dal codice $code: sceglietelo per fissarlo)';
+  }
+
+  @override
+  String get settingPlaceGone =>
+      'Il luogo scelto non è più utilizzabile: sceglietene un altro. Le fatture con merci sono rifiutate finché non lo fate.';
+
+  @override
+  String settingPlaceMissing(String code) {
+    return 'Nessun luogo utilizzabile porta il codice $code: sceglietene uno. Le fatture con merci sono rifiutate finché non lo fate.';
+  }
+
+  @override
+  String get settingPlacePick => 'Luogo';
 
   @override
   String get settingProblemAboveMax => 'Sopra il massimo';
@@ -36321,7 +36431,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get standaloneFactSalePlace =>
-      'il luogo da cui si vende: indicare un luogo con scorte nelle impostazioni dell’attività';
+      'il luogo da cui partono le merci vendute non è impostato, è ambiguo o non è più utilizzabile: sceglietene uno con scorte nelle impostazioni di magazzino';
 
   @override
   String get standaloneFactSalesTax =>
@@ -38042,6 +38152,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'L\'uso deve essere prelievo o riserva.';
 
   @override
+  String get stockReasonPlaceUnusable =>
+      'Questo luogo non può essere usato: sceglietene uno in uso che tiene scorte.';
+
+  @override
   String get stockReasonPointFixed =>
       'Articolo, variante e sede di un punto di riordino non si cambiano: ne crei un altro.';
 
@@ -38546,6 +38660,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String stockScanUnknownTag(String code) {
     return 'Tag $code sconosciuto';
+  }
+
+  @override
+  String stockScanWhichPlace(String code) {
+    return 'Più luoghi portano il codice $code: quale?';
   }
 
   @override

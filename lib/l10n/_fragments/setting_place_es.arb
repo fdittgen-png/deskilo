@@ -1,0 +1,40 @@
+{
+  "settingPlacePick": "Lugar",
+  "@settingPlacePick": {
+    "description": "#4495 the place of a setting"
+  },
+  "settingPlaceFromCode": "{path} (encontrado por el código {code}: elíjalo para fijarlo)",
+  "@settingPlaceFromCode": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceAmbiguous": "El código {code} lo llevan varios lugares: elija uno. Las facturas con mercancías se rechazan hasta que lo haga.",
+  "@settingPlaceAmbiguous": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceMissing": "Ningún lugar utilizable lleva el código {code}: elija uno. Las facturas con mercancías se rechazan hasta que lo haga.",
+  "@settingPlaceMissing": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceGone": "El lugar elegido ya no se puede usar: elija otro. Las facturas con mercancías se rechazan hasta que lo haga.",
+  "@settingPlaceGone": {
+    "description": "#4495 the place of a setting"
+  }
+}

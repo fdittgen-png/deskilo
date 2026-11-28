@@ -11500,6 +11500,19 @@
   "@developmentWatermark": {
     "description": "#917 workspace environment: developmentWatermark"
   },
+  "devicePairingApprove": "Approve",
+  "@devicePairingApprove": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
+  },
+  "devicePairingApproveBody": "Approve this board only if its screen shows the fingerprint {fingerprint}.",
+  "@devicePairingApproveBody": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one",
+    "placeholders": {
+      "fingerprint": {
+        "type": "String"
+      }
+    }
+  },
   "devicePairingBoard": "Board {id} · {model}",
   "@devicePairingBoard": {
     "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code",
@@ -11520,9 +11533,31 @@
   "@devicePairingCheck": {
     "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
   },
+  "devicePairingCode": "Connection code: {code}",
+  "@devicePairingCode": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "devicePairingCodeHint": "Valid until {time}, once, for this board only.",
+  "@devicePairingCodeHint": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "devicePairingConnect": "Connect a device",
   "@devicePairingConnect": {
     "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingFailed": "The server did not answer: try again.",
+  "@devicePairingFailed": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
   },
   "devicePairingFingerprint": "Fingerprint {fingerprint}: compare it with the board's screen.",
   "@devicePairingFingerprint": {
@@ -11539,13 +11574,29 @@
   "@devicePairingFound": {
     "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
   },
-  "devicePairingLater": "Connecting the board to this business comes with a later update: nothing has been sent to it.",
-  "@devicePairingLater": {
-    "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  "devicePairingGetCode": "Get a connection code",
+  "@devicePairingGetCode": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
+  },
+  "devicePairingNeedsFirmware": "This board needs the new firmware before it can be connected.",
+  "@devicePairingNeedsFirmware": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
+  },
+  "devicePairingNoTill": "Add a till first: a board serves one till.",
+  "@devicePairingNoTill": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
   },
   "devicePairingNone": "No till board is connected to this business yet.",
   "@devicePairingNone": {
     "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingNotOwner": "Only the business's owner connects, approves or removes a board.",
+  "@devicePairingNotOwner": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
+  },
+  "devicePairingNotWaiting": "This board is no longer waiting for approval.",
+  "@devicePairingNotWaiting": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
   },
   "devicePairingRefusedAlphabet": "A board's code never holds 0, O, 1, I or L, nor other signs: check the character on the board.",
   "@devicePairingRefusedAlphabet": {
@@ -11563,13 +11614,50 @@
   "@devicePairingRefusedProfile": {
     "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
   },
+  "devicePairingRevoke": "Remove",
+  "@devicePairingRevoke": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
+  },
+  "devicePairingRevokeBody": "This board will no longer be connected to the business. To use it again, connect it with a new code.",
+  "@devicePairingRevokeBody": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
+  },
   "devicePairingScanHint": "Hold the board's QR code in front of the camera. To show it, hold the board's BOOT button for 3 seconds.",
   "@devicePairingScanHint": {
     "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
   },
+  "devicePairingScanToConnect": "To connect this board, scan its QR code.",
+  "@devicePairingScanToConnect": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
+  },
+  "devicePairingStatusPaired": "Connected",
+  "@devicePairingStatusPaired": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
+  },
+  "devicePairingStatusPending": "Waiting for your approval",
+  "@devicePairingStatusPending": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
+  },
   "devicePairingSubtitle": "Till boards: connect one by its QR code or its code",
   "@devicePairingSubtitle": {
     "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingTill": "Till: {till}",
+  "@devicePairingTill": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one",
+    "placeholders": {
+      "till": {
+        "type": "String"
+      }
+    }
+  },
+  "devicePairingTillInactive": "This till is not active: choose another.",
+  "@devicePairingTillInactive": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
+  },
+  "devicePairingTillPick": "Till",
+  "@devicePairingTillPick": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
   },
   "devicePairingTitle": "Devices",
   "@devicePairingTitle": {
@@ -11582,6 +11670,14 @@
   "devicePairingTypeHelper": "The 10 characters beside the board's QR code, for example 3DNGP-UN9CG.",
   "@devicePairingTypeHelper": {
     "description": "#4466 Settings › Devices: connecting a till board by its QR code or its typed code"
+  },
+  "devicePairingWithdraw": "Withdraw the code",
+  "@devicePairingWithdraw": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
+  },
+  "devicePairingWrongFingerprint": "The fingerprint does not match this board.",
+  "@devicePairingWrongFingerprint": {
+    "description": "#4454 Settings › Devices: the till boards stored, approved and removed, and the code that connects one"
   },
   "directoryApproximate": "Approximate address location",
   "@directoryApproximate": {
@@ -42786,6 +42882,14 @@
   "@settingHintCounterPaidOutLimit": {
     "description": "#4367 setting label/hint or refusal"
   },
+  "settingHintCounterTerminalPairAttempts": "How many times a code may be presented with the wrong board or proof before it is used up.",
+  "@settingHintCounterTerminalPairAttempts": {
+    "description": "#4454 the setting counter.terminal_pair_attempts in the business settings"
+  },
+  "settingHintCounterTerminalPairMinutes": "How long the code that connects a till board stays valid. A change applies to the next code, not to one already given.",
+  "@settingHintCounterTerminalPairMinutes": {
+    "description": "#4454 the setting counter.terminal_pair_minutes in the business settings"
+  },
   "settingHintDirectoryGeocoderUrl": "The Photon-compatible service that places a published address on the discovery map: an https address on the public internet, without a user name, password, query or #. Leave it empty to use the address this app version was built with, else the public Photon service.",
   "@settingHintDirectoryGeocoderUrl": {
     "description": "#2488 Setting hint."
@@ -43058,7 +43162,7 @@
   "@settingHintStockGroupDefaultTagMode": {
     "description": "#4361 setting label/hint"
   },
-  "settingHintStockInvoiceSalePlace": "The code of a place of the business that holds stock, for example MAIN. Goods sold on an invoice leave from there when the invoice is issued.",
+  "settingHintStockInvoiceSalePlace": "Pick the place goods sold on an invoice leave from, as site › place. A code set before still works while only one place carries it.",
   "@settingHintStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
   },
@@ -43261,6 +43365,14 @@
   "settingLabelCounterPaidOutLimit": "Largest paid-out without approval",
   "@settingLabelCounterPaidOutLimit": {
     "description": "#4367 setting label/hint or refusal"
+  },
+  "settingLabelCounterTerminalPairAttempts": "Board connection code: attempts",
+  "@settingLabelCounterTerminalPairAttempts": {
+    "description": "#4454 the setting counter.terminal_pair_attempts in the business settings"
+  },
+  "settingLabelCounterTerminalPairMinutes": "Board connection code: minutes",
+  "@settingLabelCounterTerminalPairMinutes": {
+    "description": "#4454 the setting counter.terminal_pair_minutes in the business settings"
   },
   "settingLabelDirectoryGeocoderUrl": "Address lookup service",
   "@settingLabelDirectoryGeocoderUrl": {
@@ -43617,6 +43729,44 @@
   "settingOriginWorkspace": "Set for this workspace",
   "@settingOriginWorkspace": {
     "description": "#2484 settings: Origin."
+  },
+  "settingPlaceAmbiguous": "The code {code} is carried by several places: pick one. Invoices with goods are refused until you do.",
+  "@settingPlaceAmbiguous": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceFromCode": "{path} (found by the code {code}: pick it to settle it)",
+  "@settingPlaceFromCode": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceGone": "The picked place is no longer usable: pick another. Invoices with goods are refused until you do.",
+  "@settingPlaceGone": {
+    "description": "#4495 the place of a setting"
+  },
+  "settingPlaceMissing": "No usable place carries the code {code}: pick one. Invoices with goods are refused until you do.",
+  "@settingPlaceMissing": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlacePick": "Place",
+  "@settingPlacePick": {
+    "description": "#4495 the place of a setting"
   },
   "settingProblemAboveMax": "Above the maximum",
   "@settingProblemAboveMax": {
@@ -46822,7 +46972,7 @@
   "@standaloneFactLines": {
     "description": "#4165 standalone invoice composer: standaloneFactLines"
   },
-  "standaloneFactSalePlace": "the place goods are sold from: set a place that holds stock in the business settings",
+  "standaloneFactSalePlace": "the place goods are sold from is not set, is ambiguous or is no longer usable: pick one place that holds stock in the stock settings",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
   },
@@ -49005,6 +49155,10 @@
   "@stockReasonPickRoleUnknown": {
     "description": "#4293 the places of the stock: a label, a message or a setting"
   },
+  "stockReasonPlaceUnusable": "That place cannot be used: pick a place that is in use and holds stock.",
+  "@stockReasonPlaceUnusable": {
+    "description": "#4495 the place picked for a setting cannot be used"
+  },
   "stockReasonPointFixed": "The item, variant and site of a reorder point cannot be changed: make another.",
   "@stockReasonPointFixed": {
     "description": "#4294 reorder points: a label or a message"
@@ -49707,6 +49861,15 @@
   "stockScanUnknownTag": "Unknown tag {code}",
   "@stockScanUnknownTag": {
     "description": "#4363 G14: stockScanUnknownTag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanWhichPlace": "Several places carry the code {code}: which one?",
+  "@stockScanWhichPlace": {
+    "description": "#4495 a scanned code several places carry",
     "placeholders": {
       "code": {
         "type": "String"

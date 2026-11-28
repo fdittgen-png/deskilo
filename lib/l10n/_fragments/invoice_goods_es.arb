@@ -4,7 +4,7 @@
   "@settingLabelStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
   },
-  "settingHintStockInvoiceSalePlace": "El código de un lugar de la empresa que tiene existencias, por ejemplo MAIN. Los bienes vendidos en factura salen de allí al emitir la factura.",
+  "settingHintStockInvoiceSalePlace": "Elija el lugar del que salen las mercancías vendidas en una factura, como sitio › lugar. Un código fijado antes sigue valiendo mientras solo un lugar lo lleve.",
   "@settingHintStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
   },
@@ -68,7 +68,7 @@
   "@standaloneFieldStock": {
     "description": "#4433 goods sold on an invoice: standaloneFieldStock"
   },
-  "standaloneFactSalePlace": "el lugar del que se vende: indique un lugar con existencias en los ajustes de la empresa",
+  "standaloneFactSalePlace": "el lugar desde el que se venden las mercancías no está fijado, es ambiguo o ya no se puede usar: elija en los ajustes de existencias un lugar con existencias",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
   }

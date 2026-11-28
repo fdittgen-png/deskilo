@@ -4,7 +4,7 @@
   "@settingLabelStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
   },
-  "settingHintStockInvoiceSalePlace": "The code of a place of the business that holds stock, for example MAIN. Goods sold on an invoice leave from there when the invoice is issued.",
+  "settingHintStockInvoiceSalePlace": "Pick the place goods sold on an invoice leave from, as site › place. A code set before still works while only one place carries it.",
   "@settingHintStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
   },
@@ -68,7 +68,7 @@
   "@standaloneFieldStock": {
     "description": "#4433 goods sold on an invoice: standaloneFieldStock"
   },
-  "standaloneFactSalePlace": "the place goods are sold from: set a place that holds stock in the business settings",
+  "standaloneFactSalePlace": "the place goods are sold from is not set, is ambiguous or is no longer usable: pick one place that holds stock in the stock settings",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
   }
