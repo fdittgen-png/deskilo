@@ -82,6 +82,7 @@ import 'package:deskilo/features/money/domain/service_fulfilment.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/money/presentation/expense_category_names.dart' show activeExpenseCategories;
 import 'package:deskilo/features/money/providers/expense_category_providers.dart' show InMemoryExpenseCategories;
+import 'package:deskilo/features/money/providers/supplier_contact_providers.dart' show InMemorySupplierContacts;
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/stock/domain/handling_units.dart';
@@ -1578,6 +1579,28 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         refused = e.details == 'label_taken';
       }
       return offered.contains(cleaning.code) && !offered.contains('supplies') && refused;
+    },
+  ),
+  // #4518 — supplier contacts: a preferred purchasing contact, swapped by another; a malformed e-mail and a preferred one without e-mail are refused.
+  WorkspaceFeature.supplierContacts: _action(
+    _owner,
+    'Ada gives a supplier two contacts and makes the second the preferred purchasing one: the first stops being preferred, and an address that is no address is refused',
+    (w) async {
+      final repo = InMemorySupplierContacts();
+      final roles = await repo.roles(demoFirstSpaceId);
+      final orders = roles.firstWhere((r) => r.code == 'orders').id;
+      Future<void> add(String name, String email, {bool preferred = false}) => repo.saveContact(
+        demoFirstSpaceId, supplierId: 's1', name: name, roleId: orders, email: email, phone: '', note: '', preferred: preferred, requestId: 'r-$name');
+      await add('Ana', 'ana@acme.test', preferred: true);
+      await add('Bob', 'bob@acme.test', preferred: true);
+      final contacts = await repo.contacts(demoFirstSpaceId, 's1');
+      var refused = false;
+      try {
+        await add('Cy', 'not-an-address');
+      } on PostgrestException catch (e) {
+        refused = e.details == 'email_invalid';
+      }
+      return contacts.where((c) => c.preferred).map((c) => c.name).toList().join() == 'Bob' && refused;
     },
   ),
   // #4431 — the expiry report: what expired and what is about to, by date, the five basket pieces one by one, and a place keeps

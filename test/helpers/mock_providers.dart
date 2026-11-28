@@ -117,6 +117,7 @@ import 'package:deskilo/features/money/domain/invoice_original.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/domain/recorded_payments.dart'
     show RecordedPaymentsRepository;
+import 'package:deskilo/features/money/domain/supplier_contact.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/money/providers/company_lookup_providers.dart';
@@ -129,6 +130,7 @@ import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/recorded_payments_providers.dart'
     show recordedPaymentsRepositoryProvider;
 import 'package:deskilo/features/money/providers/settlement_review_providers.dart';
+import 'package:deskilo/features/money/providers/supplier_contact_providers.dart';
 import 'package:deskilo/features/money/providers/usage_read_providers.dart';
 import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/plan/domain/accessory_repository.dart';
@@ -264,6 +266,7 @@ List<Override> standardTestOverrides({
   // #3853 — a test of the stored originals brings its own store.
   InvoiceOriginalRepository? invoiceOriginals,
   ExpenseCategoryRepository? expenseCategories,
+  SupplierContactRepository? supplierContacts,
   // #3587 — a test of the payments read brings its own; else the Demo's
   // reader over the money fake.
   RecordedPaymentsRepository? recordedPayments,
@@ -385,6 +388,7 @@ List<Override> standardTestOverrides({
     recorderLogBackendProvider.overrideWithValue(MemoryRecorderLogBackend()),
     // #4512 — the business's expense categories, in memory: the five a business starts with.
     expenseCategoryRepositoryProvider.overrideWith((ref) => expenseCategories ?? InMemoryExpenseCategories()),
+    supplierContactRepositoryProvider.overrideWith((ref) => supplierContacts ?? InMemorySupplierContacts()),
     // #3853 — the stored originals of the invoices, in memory.
     invoiceOriginalRepositoryProvider.overrideWithValue(
       invoiceOriginals ??

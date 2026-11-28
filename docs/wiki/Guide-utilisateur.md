@@ -3040,6 +3040,27 @@ Les catégories sous lesquelles une dépense ou un justificatif est classé form
 - Deux catégories actives ne peuvent pas porter le même nom. Une catégorie n’est jamais supprimée, seulement retirée.
 - Le formulaire de dépense et celui du justificatif ne proposent que les catégories de cette liste.
 
+<!-- anchor: user.money.supplier.contacts -->
+### Contacts et conditions des fournisseurs
+
+**Public:** Administrateur · Propriétaire
+
+Un fournisseur a des contacts, chacun avec un rôle, et l’un d’eux est son contact d’achat préféré. Il porte aussi ce qui a été convenu une fois : la devise de ses commandes, les jours d’échéance de ses factures et les jours de livraison de ses commandes.
+
+**Étapes**
+
+1. Ouvrez **Achats**, puis **Fournisseurs**, et touchez **Contacts** sur un fournisseur.
+2. Touchez **Nouveau contact**, indiquez **Nom**, **Rôle**, **E-mail** et **Téléphone**, et activez **Contact d’achat préféré** pour la personne à qui une nouvelle commande est adressée. Un autre contact préféré ne l’est plus.
+3. Sous **Conditions convenues avec ce fournisseur**, saisissez **Devise de ses commandes**, **Jours d’échéance d’une facture après sa date** et **Jours de livraison attendus d’une commande après son envoi**, puis enregistrez.
+4. Ouvrez **Paramètres**, puis **Données de référence**, puis **Rôles des contacts** pour ajouter, renommer, ordonner ou retirer les rôles.
+
+**Bon à savoir**
+
+- Le contact d’achat préféré a une adresse e-mail. Une nouvelle commande au fournisseur démarre avec cette adresse comme destinataire et avec le délai comme jour attendu ; ce que vous saisissez par-dessus reste.
+- Un contact retiré n’est plus préféré et peut être rétabli. Un contact n’est jamais supprimé.
+- L’ancien texte de contact d’un fournisseur peut devenir son premier contact avec **Faire un contact de l’ancien texte de contact**.
+- Les rôles sont Commandes, Factures et paiements, Livraison, Comptabilité et Autre jusqu’à ce que vous teniez votre propre liste.
+
 <!-- anchor: user.money.suppliers.balance -->
 ### Soldes des fournisseurs
 

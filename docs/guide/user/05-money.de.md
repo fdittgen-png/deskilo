@@ -629,6 +629,27 @@ Die Kategorien, unter denen eine Ausgabe oder ein Beleg erfasst wird, sind die e
 - Zwei aktive Kategorien können nicht denselben Namen tragen. Eine Kategorie wird nie gelöscht, nur stillgelegt.
 - Das Ausgabenformular und das Belegformular bieten nur die Kategorien dieser Liste an.
 
+<!-- anchor: user.money.supplier.contacts -->
+### Lieferantenkontakte und Bedingungen
+
+**Zielgruppe:** Administrator · Inhaber
+
+Ein Lieferant hat Kontakte mit je einer Rolle, einer davon ist sein bevorzugter Einkaufskontakt. Außerdem trägt er, was einmal vereinbart wurde: die Währung seiner Bestellungen, die Tage bis zur Fälligkeit seiner Rechnungen und die Tage bis zur Lieferung seiner Bestellungen.
+
+**Schritte**
+
+1. Öffnen Sie **Einkäufe**, dann **Lieferanten**, und tippen Sie bei einem Lieferanten auf **Kontakte**.
+2. Tippen Sie auf **Neuer Kontakt**, geben Sie **Name**, **Rolle**, **E-Mail** und **Telefon** an und schalten Sie **Bevorzugter Einkaufskontakt** für die Person ein, an die eine neue Bestellung geht. Ein anderer bisher bevorzugter Kontakt ist es dann nicht mehr.
+3. Geben Sie unter **Mit diesem Lieferanten vereinbarte Bedingungen** die **Währung seiner Bestellungen**, die **Tage bis zur Fälligkeit einer Rechnung nach ihrem Datum** und die **Tage, nach denen eine Bestellung nach dem Versand ihre Ware erwartet** an und speichern Sie.
+4. Öffnen Sie **Einstellungen**, dann **Stammdaten**, dann **Kontaktrollen**, um Rollen hinzuzufügen, umzubenennen, zu ordnen oder stillzulegen.
+
+**Gut zu wissen**
+
+- Der bevorzugte Einkaufskontakt hat eine E-Mail-Adresse. Eine neue Bestellung an den Lieferanten beginnt mit dieser Adresse als Empfänger und mit der Lieferzeit als erwartetem Tag; was Sie darüber tippen, bleibt.
+- Ein stillgelegter Kontakt ist nicht mehr bevorzugt und kann wieder aktiviert werden. Ein Kontakt wird nie gelöscht.
+- Der alte Kontakttext eines Lieferanten kann mit **Aus dem alten Kontakttext einen Kontakt machen** sein erster Kontakt werden.
+- Die Rollen sind Bestellungen, Rechnungen und Zahlungen, Lieferung, Buchhaltung und Sonstiges, bis Sie eine eigene Liste führen.
+
 <!-- anchor: user.money.suppliers.balance -->
 ### Lieferantensalden
 

@@ -2906,6 +2906,26 @@ The categories an expense or a receipt is filed under are the business's own lis
 - Two active categories cannot share a name. A category is never deleted, only retired.
 - The expense form and the receipt form offer only the categories on this list.
 
+### Supplier contacts and terms
+
+**Audience:** Administrator · Owner
+
+A supplier has contacts, each with a role, and one of them is its preferred purchasing contact. It also carries what was agreed once: the currency of its orders, the days its bills are due and the days its orders take.
+
+**Steps**
+
+1. Open **Purchases**, then **Suppliers**, and tap **Contacts** on a supplier.
+2. Tap **New contact**, give its **Name**, **Role**, **E-mail** and **Phone**, and switch on **Preferred purchasing contact** for the person a new order is addressed to. Another contact that was preferred stops being so.
+3. Under **Terms agreed with this supplier** enter the **Currency of its orders**, the **Days a bill is due after its date** and the **Days an order expects its goods after it is sent**, and save.
+4. Open **Settings**, then **Master data**, then **Contact roles** to add, rename, order or retire the roles.
+
+**Good to know**
+
+- The preferred purchasing contact has an e-mail address. A new purchase order to the supplier starts with that address as its recipient and with the lead time as its expected day; what you type over them stays.
+- A retired contact is no longer preferred and can be brought back. A contact is never deleted.
+- A supplier's old contact text can be made its first contact with **Make a contact of the old contact text**.
+- The roles are Orders, Invoices and payments, Delivery, Accounting and Other until you keep a list of your own.
+
 ### Supplier balances
 
 **Audience:** Administrator · Owner

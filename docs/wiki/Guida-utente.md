@@ -3040,6 +3040,27 @@ Le categorie sotto cui si registra una spesa o un giustificativo sono l’elenco
 - Due categorie attive non possono avere lo stesso nome. Una categoria non viene mai eliminata, solo ritirata.
 - Il modulo di spesa e quello del giustificativo propongono solo le categorie di questo elenco.
 
+<!-- anchor: user.money.supplier.contacts -->
+### Contatti e condizioni dei fornitori
+
+**Destinatari:** Amministratore · Titolare
+
+Un fornitore ha contatti, ciascuno con un ruolo, e uno di essi è il suo contatto di acquisto preferito. Porta anche quanto concordato una volta: la valuta dei suoi ordini, i giorni di scadenza delle sue fatture e i giorni di consegna dei suoi ordini.
+
+**Passaggi**
+
+1. Aprire **Acquisti**, poi **Fornitori**, e toccare **Contatti** su un fornitore.
+2. Toccare **Nuovo contatto**, indicare **Nome**, **Ruolo**, **E-mail** e **Telefono**, e attivare **Contatto di acquisto preferito** per la persona a cui è indirizzato un nuovo ordine. Un altro contatto che era preferito smette di esserlo.
+3. In **Condizioni concordate con questo fornitore** inserire **Valuta dei suoi ordini**, **Giorni di scadenza di una fattura dopo la sua data** e **Giorni di consegna attesi per un ordine dopo il suo invio**, e salvare.
+4. Aprire **Impostazioni**, poi **Dati anagrafici**, poi **Ruoli dei contatti** per aggiungere, rinominare, ordinare o ritirare i ruoli.
+
+**Da sapere**
+
+- Il contatto di acquisto preferito ha un indirizzo e-mail. Un nuovo ordine al fornitore parte con quell’indirizzo come destinatario e con il tempo di consegna come giorno atteso; ciò che si scrive sopra resta.
+- Un contatto ritirato non è più preferito e si può ripristinare. Un contatto non viene mai eliminato.
+- Il vecchio testo di contatto di un fornitore può diventare il suo primo contatto con **Fare un contatto dal vecchio testo di contatto**.
+- I ruoli sono Ordini, Fatture e pagamenti, Consegna, Contabilità e Altro finché non si tiene un elenco proprio.
+
 <!-- anchor: user.money.suppliers.balance -->
 ### Saldi dei fornitori
 

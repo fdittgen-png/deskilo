@@ -35,6 +35,7 @@ List<Override> demoPurchasingOverrides(
   return [
     // #4512 -- the business's expense categories, kept in memory
     expenseCategoryRepositoryProvider.overrideWith((ref) => InMemoryExpenseCategories()),
+    supplierContactRepositoryProvider.overrideWith((ref) => InMemorySupplierContacts()),
     supplierRepositoryProvider.overrideWith(
       (ref) => demoPickSpace(ref, all).suppliers,
     ),

@@ -3040,6 +3040,27 @@ Las categorías bajo las que se registra un gasto o un justificante son la lista
 - Dos categorías activas no pueden tener el mismo nombre. Una categoría nunca se borra, solo se retira.
 - El formulario de gasto y el del justificante ofrecen solo las categorías de esta lista.
 
+<!-- anchor: user.money.supplier.contacts -->
+### Contactos y condiciones de proveedores
+
+**Público:** Administrador · Propietario
+
+Un proveedor tiene contactos, cada uno con un rol, y uno de ellos es su contacto de compras preferido. También lleva lo acordado una vez: la moneda de sus pedidos, los días de vencimiento de sus facturas y los días de entrega de sus pedidos.
+
+**Pasos**
+
+1. Abra **Compras**, luego **Proveedores**, y pulse **Contactos** en un proveedor.
+2. Pulse **Nuevo contacto**, indique **Nombre**, **Rol**, **Correo electrónico** y **Teléfono**, y active **Contacto de compras preferido** para la persona a quien se dirige un pedido nuevo. Otro contacto que fuera preferido deja de serlo.
+3. En **Condiciones acordadas con este proveedor** introduzca **Moneda de sus pedidos**, **Días de vencimiento de una factura desde su fecha** y **Días que un pedido espera su mercancía desde su envío**, y guarde.
+4. Abra **Ajustes**, luego **Datos maestros**, luego **Roles de contacto** para añadir, renombrar, ordenar o retirar los roles.
+
+**Conviene saber**
+
+- El contacto de compras preferido tiene correo electrónico. Un pedido nuevo al proveedor empieza con esa dirección como destinatario y con el plazo como día esperado; lo que escriba encima se mantiene.
+- Un contacto retirado deja de ser preferido y se puede recuperar. Un contacto nunca se elimina.
+- El texto de contacto antiguo de un proveedor puede ser su primer contacto con **Hacer un contacto del texto de contacto antiguo**.
+- Los roles son Pedidos, Facturas y pagos, Entrega, Contabilidad y Otro hasta que lleve una lista propia.
+
 <!-- anchor: user.money.suppliers.balance -->
 ### Saldos de proveedores
 
