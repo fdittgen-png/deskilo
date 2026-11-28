@@ -37308,6 +37308,21 @@
       }
     }
   },
+  "purchaseOrderMailTextTo": "Hello {contact},\n\nPlease find attached our purchase order {reference}.\n\nKind regards,\n{space}",
+  "@purchaseOrderMailTextTo": {
+    "description": "#4518 purchase order e-mail to the preferred contact",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "space": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
   "purchaseOrderMarkSent": "Mark as sent",
   "@purchaseOrderMarkSent": {
     "description": "#3307 purchase orders"

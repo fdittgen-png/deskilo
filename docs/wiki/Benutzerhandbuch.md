@@ -3060,6 +3060,7 @@ Ein Lieferant hat Kontakte mit je einer Rolle, einer davon ist sein bevorzugter 
 - Ein stillgelegter Kontakt ist nicht mehr bevorzugt und kann wieder aktiviert werden. Ein Kontakt wird nie gelöscht.
 - Der alte Kontakttext eines Lieferanten kann mit **Aus dem alten Kontakttext einen Kontakt machen** sein erster Kontakt werden.
 - Die Rollen sind Bestellungen, Rechnungen und Zahlungen, Lieferung, Buchhaltung und Sonstiges, bis Sie eine eigene Liste führen.
+- Eine neue Rechnung des Lieferanten schlägt ihr Fälligkeitsdatum vor: das Rechnungsdatum (oder heute) plus die Tage bis zur Fälligkeit. Die Bestellung und ihre E-Mail nennen den bevorzugten Einkaufskontakt.
 
 <!-- anchor: user.money.suppliers.balance -->
 ### Lieferantensalden

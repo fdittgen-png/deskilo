@@ -218,6 +218,21 @@ void main() {
     });
   });
 
+  test('#4518 the preferred purchasing contact is named first in the supplier block, and only when there is one', () async {
+    final o = await _repo().save('ws', 'r1', _draft());
+    Map<String, Object?> data(String contact) => purchaseOrderReportData(
+      o,
+      supplier: _alpha,
+      format: (money: (m) => '$m', date: (d) => '$d', quantity: (q) => '$q'),
+      issued: DateTime(2026, 11, 4),
+      issuedBy: 'Atelier',
+      contactName: contact,
+    );
+    expect((data('Ana Martin')['client_address']! as String).split('\n').first, 'Ana Martin');
+    expect(data('')['client_address'], isNot(startsWith('\n')));
+    expect(data('')['client_address'], isNot(contains('Ana Martin')));
+  });
+
   test(
     'the document prints the supplier in the window, the lines and totals',
     () async {

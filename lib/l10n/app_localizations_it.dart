@@ -28566,6 +28566,15 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String purchaseOrderMailTextTo(
+    String reference,
+    String space,
+    String contact,
+  ) {
+    return 'Buongiorno $contact,\n\nin allegato il nostro ordine $reference.\n\nCordiali saluti,\n$space';
+  }
+
+  @override
   String get purchaseOrderMarkSent => 'Segna come inviato';
 
   @override

@@ -12,6 +12,14 @@ import '../../providers/supplier_contact_providers.dart';
 typedef SupplierOrderStart = ({String? email, String? contactName, DateTime? expectedOn});
 
 abstract final class SupplierOrderDefaults {
+  /// The day a bill from [supplierId] is due: [from] (the bill's date, or today) plus the days the supplier agreed; null where it agreed none.
+  static Future<DateTime?> dueOn(WidgetRef ref, String workspaceId, String supplierId, {DateTime? from}) async {
+    final days = (await ref.read(supplierTermsProvider((workspaceId: workspaceId, supplierId: supplierId)).future)).paymentTermDays;
+    if (days == null) return null;
+    final base = from ?? ref.read(clockProvider).now();
+    return DateTime(base.year, base.month, base.day + days);
+  }
+
   /// The recipient and the expected day of a new order to [supplierId]; null parts where the supplier states none.
   static Future<SupplierOrderStart> of(WidgetRef ref, String workspaceId, String supplierId) async {
     final key = (workspaceId: workspaceId, supplierId: supplierId);

@@ -45348,6 +45348,16 @@ abstract class AppLocalizations {
   /// **'Hello,\n\nPlease find attached our purchase order {reference}.\n\nKind regards,\n{space}'**
   String purchaseOrderMailText(String reference, String space);
 
+  /// #4518 purchase order e-mail to the preferred contact
+  ///
+  /// In en, this message translates to:
+  /// **'Hello {contact},\n\nPlease find attached our purchase order {reference}.\n\nKind regards,\n{space}'**
+  String purchaseOrderMailTextTo(
+    String reference,
+    String space,
+    String contact,
+  );
+
   /// #3307 purchase orders
   ///
   /// In en, this message translates to:

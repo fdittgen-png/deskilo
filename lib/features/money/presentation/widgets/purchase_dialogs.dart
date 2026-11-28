@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,11 +21,13 @@ import '../../domain/purchase.dart';
 import '../../domain/purchase_order.dart';
 import '../../providers/purchase_providers.dart';
 import '../../providers/supplier_providers.dart';
+import '../screens/money_view_data.dart';
 import 'purchase_bill_order_field.dart';
 import 'purchase_exchange_rate.dart';
 import 'purchase_item_fields.dart';
 import 'purchase_labels.dart';
 import 'purchase_place_field.dart';
+import 'supplier_order_defaults.dart';
 
 /// Captures a supplier bill as a draft and saves it. True once the server
 /// has it; a refusal keeps the dialog and every entry, and a retry of the
@@ -63,6 +67,9 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
   DateRead _invoiceDate = (date: null, problem: null);
   DateRead _dueDate = (date: null, problem: null);
   bool _invalid = false;
+
+  /// Bumped when the due date is proposed, so its field shows it.
+  int _dueProposed = 0;
 
   // The entries of the last attempt and the id they were sent under.
   PurchaseBillDraft? _attempted;
@@ -203,7 +210,26 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
     _pickSupplier(order.supplierId);
   }
 
-  void _pickSupplier(String? id) => setState(() => _supplierId = id);
+  void _pickSupplier(String? id) {
+    setState(() => _supplierId = id);
+    if (id != null) unawaited(_proposeDue(id));
+  }
+
+  /// #4518 -- the due date a supplier's agreed term gives; only where none was entered, and a failed read leaves the field as it was.
+  Future<void> _proposeDue(String supplier) async {
+    if (!MoneyViewData.gates(ref).supplierContactsOn || _dueDate.date != null) return;
+    final DateTime? due;
+    try {
+      due = await SupplierOrderDefaults.dueOn(ref, widget.workspaceId, supplier, from: _invoiceDate.date);
+    } on Object {
+      return; // the person enters it as before
+    }
+    if (!mounted || due == null || _supplierId != supplier || _dueDate.date != null) return;
+    setState(() {
+      _dueDate = (date: due, problem: null);
+      _dueProposed++;
+    });
+  }
 
   static bool _same(PurchaseBillDraft a, PurchaseBillDraft b) =>
       a.grossCents == b.grossCents &&
@@ -385,15 +411,18 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               ),
             ]),
             _section(l10n.invoicePageMorePayment, [
-              AppDateField(
-                key: const ValueKey('purchase-due-date'),
-                fieldKey: 'dueDate',
-                label: optional(l10n.purchasesDueDate),
-                value: _dueDate.date,
-                pickerHelpText: l10n.purchasesPickDate,
-                showProblem: _invalid,
-                onChanged: (d) => _dueDate = d,
-                onSubmitted: (_) => _save(),
+              KeyedSubtree(
+                key: ValueKey('purchase-due-proposed-$_dueProposed'),
+                child: AppDateField(
+                    key: const ValueKey('purchase-due-date'),
+                    fieldKey: 'dueDate',
+                    label: optional(l10n.purchasesDueDate),
+                    value: _dueDate.date,
+                    pickerHelpText: l10n.purchasesPickDate,
+                    showProblem: _invalid,
+                    onChanged: (d) => _dueDate = d,
+                    onSubmitted: (_) => _save(),
+                  ),
               ),
             ]),
             _accounting(l10n),

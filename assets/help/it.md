@@ -2925,6 +2925,7 @@ Un fornitore ha contatti, ciascuno con un ruolo, e uno di essi è il suo contatt
 - Un contatto ritirato non è più preferito e si può ripristinare. Un contatto non viene mai eliminato.
 - Il vecchio testo di contatto di un fornitore può diventare il suo primo contatto con **Fare un contatto dal vecchio testo di contatto**.
 - I ruoli sono Ordini, Fatture e pagamenti, Consegna, Contabilità e Altro finché non si tiene un elenco proprio.
+- Una nuova fattura del fornitore propone la sua scadenza: la data della fattura (o oggi) più i giorni di scadenza. L’ordine e la sua e-mail nominano il contatto di acquisto preferito.
 
 ### Saldi dei fornitori
 

@@ -16140,6 +16140,21 @@
   "purchaseOrderMailSenderName": "Nom de l’expéditeur",
   "purchaseOrderMailSettings": "Envoi par e-mail",
   "purchaseOrderMailText": "Bonjour,\n\nVeuillez trouver ci-joint notre bon de commande {reference}.\n\nCordialement,\n{space}",
+  "purchaseOrderMailTextTo": "Bonjour {contact},\n\nVeuillez trouver ci-joint notre bon de commande {reference}.\n\nCordialement,\n{space}",
+  "@purchaseOrderMailTextTo": {
+    "description": "#4518 purchase order e-mail to the preferred contact",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "space": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
   "purchaseOrderMarkSent": "Marquer comme envoyée",
   "purchaseOrderNeedsDescription": "Indiquez ce qui est commandé ou choisissez un article",
   "purchaseOrderNeedsPrice": "Un prix unitaire, 0 ou plus",

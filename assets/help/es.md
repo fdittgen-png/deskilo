@@ -2925,6 +2925,7 @@ Un proveedor tiene contactos, cada uno con un rol, y uno de ellos es su contacto
 - Un contacto retirado deja de ser preferido y se puede recuperar. Un contacto nunca se elimina.
 - El texto de contacto antiguo de un proveedor puede ser su primer contacto con **Hacer un contacto del texto de contacto antiguo**.
 - Los roles son Pedidos, Facturas y pagos, Entrega, Contabilidad y Otro hasta que lleve una lista propia.
+- Una factura nueva del proveedor propone su vencimiento: la fecha de la factura (o hoy) más los días de vencimiento. El pedido y su correo nombran al contacto de compras preferido.
 
 ### Saldos de proveedores
 

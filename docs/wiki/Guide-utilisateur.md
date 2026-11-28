@@ -3060,6 +3060,7 @@ Un fournisseur a des contacts, chacun avec un rôle, et l’un d’eux est son c
 - Un contact retiré n’est plus préféré et peut être rétabli. Un contact n’est jamais supprimé.
 - L’ancien texte de contact d’un fournisseur peut devenir son premier contact avec **Faire un contact de l’ancien texte de contact**.
 - Les rôles sont Commandes, Factures et paiements, Livraison, Comptabilité et Autre jusqu’à ce que vous teniez votre propre liste.
+- Une nouvelle facture du fournisseur propose son échéance : la date de la facture (ou aujourd’hui) plus les jours d’échéance. Le bon de commande et son e-mail nomment le contact d’achat préféré.
 
 <!-- anchor: user.money.suppliers.balance -->
 ### Soldes des fournisseurs

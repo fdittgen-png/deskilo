@@ -14,5 +14,20 @@
   "purchaseOrderMailKeyKept": "Hay una clave guardada. Déjelo vacío para conservarla; nunca se vuelve a mostrar.",
   "purchaseOrderMailInvalid": "Una dirección de remitente, un nombre sin < > ni comillas y, la primera vez, la clave de API",
   "businessMailSenderSubtitle": "El remitente de sus pedidos y recordatorios por correo electrónico",
-  "businessMailSenderWhere": "Envío de correos, en la configuración de la empresa"
+  "businessMailSenderWhere": "Envío de correos, en la configuración de la empresa",
+  "purchaseOrderMailTextTo": "Hola {contact}:\n\nAdjuntamos nuestro pedido {reference}.\n\nUn cordial saludo,\n{space}",
+  "@purchaseOrderMailTextTo": {
+    "description": "#4518 purchase order e-mail to the preferred contact",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "space": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      }
+    }
+  }
 }

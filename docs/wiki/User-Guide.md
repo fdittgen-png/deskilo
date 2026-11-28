@@ -3060,6 +3060,7 @@ A supplier has contacts, each with a role, and one of them is its preferred purc
 - A retired contact is no longer preferred and can be brought back. A contact is never deleted.
 - A supplier's old contact text can be made its first contact with **Make a contact of the old contact text**.
 - The roles are Orders, Invoices and payments, Delivery, Accounting and Other until you keep a list of your own.
+- A new bill from the supplier proposes its due date: the bill's date (or today) plus the days a bill is due. The purchase order and its e-mail name the preferred purchasing contact.
 
 <!-- anchor: user.money.suppliers.balance -->
 ### Supplier balances

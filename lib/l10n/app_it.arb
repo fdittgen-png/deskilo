@@ -16140,6 +16140,21 @@
   "purchaseOrderMailSenderName": "Nome del mittente",
   "purchaseOrderMailSettings": "Invio per e-mail",
   "purchaseOrderMailText": "Buongiorno,\n\nin allegato il nostro ordine {reference}.\n\nCordiali saluti,\n{space}",
+  "purchaseOrderMailTextTo": "Buongiorno {contact},\n\nin allegato il nostro ordine {reference}.\n\nCordiali saluti,\n{space}",
+  "@purchaseOrderMailTextTo": {
+    "description": "#4518 purchase order e-mail to the preferred contact",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "space": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
   "purchaseOrderMarkSent": "Segna come inviato",
   "purchaseOrderNeedsDescription": "Indica cosa si ordina o scegli un articolo",
   "purchaseOrderNeedsPrice": "Un prezzo unitario, 0 o più",
