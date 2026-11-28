@@ -54,4 +54,4 @@ $fn$;
 revoke execute on function public.counter_board_receipt_finalize_v1(uuid, uuid, uuid, uuid, int, jsonb) from public, anon;
 grant execute on function public.counter_board_receipt_finalize_v1(uuid, uuid, uuid, uuid, int, jsonb) to authenticated;
 
-select public.set_deskilo_schema_version(1002);
+select public.set_deskilo_schema_version(1001);

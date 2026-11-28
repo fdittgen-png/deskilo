@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4517 (1002): a board's command acts only on its own till's receipts. The board functions take the lease's till: a
+-- #4517 (1001): a board's command acts only on its own till's receipts. The board functions take the lease's till: a
 -- new draft goes to that till's open session; a revision or a finalization of a receipt of another till of the
 -- business is answered as an unknown receipt, and changes nothing; the board's own receipts are revised and
 -- finalized as before. Rolled back.
