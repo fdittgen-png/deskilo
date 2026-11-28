@@ -325,6 +325,7 @@ fr editorParkingNameDefault
 fr editorParkingStandard
 fr editorSlot15
 fr editorSlot30
+fr editorSlot5
 fr editorToolImage
 fr einvoiceEnvProd
 fr eventTypeServiceCharge
