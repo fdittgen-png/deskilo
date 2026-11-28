@@ -17872,11 +17872,47 @@ abstract class AppLocalizations {
   /// **'Waiting for your confirmation'**
   String get eventsPendingHeader;
 
+  /// #4512 expense categories: expenseCategoriesEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No category yet.'**
+  String get expenseCategoriesEmpty;
+
+  /// #4512 expense categories: expenseCategoriesSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'The categories an expense or a receipt is filed under'**
+  String get expenseCategoriesSubtitle;
+
+  /// #4512 expense categories: expenseCategoriesTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Expense categories'**
+  String get expenseCategoriesTitle;
+
+  /// #4512 expense categories: expenseCategoryAdd
+  ///
+  /// In en, this message translates to:
+  /// **'New category'**
+  String get expenseCategoryAdd;
+
+  /// #4512 expense categories: expenseCategoryBuiltInMark
+  ///
+  /// In en, this message translates to:
+  /// **'Built in'**
+  String get expenseCategoryBuiltInMark;
+
   /// Expense category option
   ///
   /// In en, this message translates to:
   /// **'Coffee & kitchen'**
   String get expenseCategoryCoffee;
+
+  /// #4512 expense categories: expenseCategoryEditTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the category'**
+  String get expenseCategoryEditTitle;
 
   /// Expense category option
   ///
@@ -17884,11 +17920,83 @@ abstract class AppLocalizations {
   /// **'Equipment'**
   String get expenseCategoryEquipment;
 
+  /// #4512 expense categories: expenseCategoryMoveDown
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get expenseCategoryMoveDown;
+
+  /// #4512 expense categories: expenseCategoryMoveUp
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get expenseCategoryMoveUp;
+
+  /// #4512 expense categories: expenseCategoryName
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get expenseCategoryName;
+
+  /// #4512 expense categories: expenseCategoryNameHint
+  ///
+  /// In en, this message translates to:
+  /// **'How the category reads on an expense, for instance Cleaning'**
+  String get expenseCategoryNameHint;
+
+  /// #4512 expense categories: expenseCategoryNameRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Give the category a name.'**
+  String get expenseCategoryNameRequired;
+
+  /// #4512 expense categories: expenseCategoryNameTaken
+  ///
+  /// In en, this message translates to:
+  /// **'Another active category already has this name.'**
+  String get expenseCategoryNameTaken;
+
+  /// #4512 expense categories: expenseCategoryNewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'New expense category'**
+  String get expenseCategoryNewTitle;
+
   /// Expense category option
   ///
   /// In en, this message translates to:
   /// **'Other'**
   String get expenseCategoryOther;
+
+  /// #4512 expense categories: expenseCategoryRestore
+  ///
+  /// In en, this message translates to:
+  /// **'Bring back'**
+  String get expenseCategoryRestore;
+
+  /// #4512 expense categories: expenseCategoryRetire
+  ///
+  /// In en, this message translates to:
+  /// **'Retire'**
+  String get expenseCategoryRetire;
+
+  /// #4512 expense categories: expenseCategoryRetiredMark
+  ///
+  /// In en, this message translates to:
+  /// **'Retired'**
+  String get expenseCategoryRetiredMark;
+
+  /// #4512 expense categories: expenseCategoryRetiredSection
+  ///
+  /// In en, this message translates to:
+  /// **'Retired categories'**
+  String get expenseCategoryRetiredSection;
+
+  /// #4512 expense categories: expenseCategorySaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The category was not saved. Try again.'**
+  String get expenseCategorySaveFailed;
 
   /// Expense category option
   ///
@@ -20163,6 +20271,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Activity feed and pending confirmations.'**
   String get featureEventsTabDesc;
+
+  /// #4512 expense categories: featureExpenseCategoriesDesc
+  ///
+  /// In en, this message translates to:
+  /// **'The business keeps its own list of the categories an expense is filed under: add one, rename one, put them in order, retire one that is no longer used. An expense keeps the category it was filed under.'**
+  String get featureExpenseCategoriesDesc;
+
+  /// #4512 expense categories: featureExpenseCategoriesTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Expense categories'**
+  String get featureExpenseCategoriesTitle;
 
   /// Shown as a text in feature copy (workspace).
   ///
@@ -34018,6 +34138,12 @@ abstract class AppLocalizations {
   /// **'Who you invoice'**
   String get masterDataCustomersDesc;
 
+  /// #4512 expense categories: masterDataExpenseCategoriesDesc
+  ///
+  /// In en, this message translates to:
+  /// **'The categories an expense or a receipt is filed under: your own list, in your own words.'**
+  String get masterDataExpenseCategoriesDesc;
+
   /// #4485 group of the Master data page: items, item groups, services
   ///
   /// In en, this message translates to:
@@ -47849,6 +47975,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.'**
   String get refusalCounterUnsupported;
+
+  /// #4512 expense categories: refusalExpenseCategory
+  ///
+  /// In en, this message translates to:
+  /// **'This expense category cannot be used: pick one the business has on offer, or ask the owner to bring it back.'**
+  String get refusalExpenseCategory;
 
   /// #4479 (0994) DKV02: the VAT treatment of an expense is refused
   ///

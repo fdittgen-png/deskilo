@@ -133,6 +133,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.financeFaces: statementsSharedExpensesAssessment,
   WorkspaceFeature.paymentReminders: _ownerBeta,
   WorkspaceFeature.supplyExpenses: supplyExpensesAssessment,
+  WorkspaceFeature.expenseCategories: _ownerBeta,
   WorkspaceFeature.validationScopes: approvalsAssessment,
   WorkspaceFeature.validationChain: approvalsAssessment,
   WorkspaceFeature.richMessageRefs: _ownerBeta,

@@ -1,0 +1,90 @@
+{
+  "featureExpenseCategoriesTitle": "Categorías de gastos",
+  "@featureExpenseCategoriesTitle": {
+    "description": "#4512 expense categories: featureExpenseCategoriesTitle"
+  },
+  "featureExpenseCategoriesDesc": "El negocio lleva su propia lista de las categorías bajo las que se registra un gasto: añadir una, renombrarla, ordenarlas, retirar la que ya no se usa. Un gasto conserva la categoría bajo la que se registró.",
+  "@featureExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: featureExpenseCategoriesDesc"
+  },
+  "expenseCategoriesTitle": "Categorías de gastos",
+  "@expenseCategoriesTitle": {
+    "description": "#4512 expense categories: expenseCategoriesTitle"
+  },
+  "expenseCategoriesSubtitle": "Las categorías bajo las que se registra un gasto o un justificante",
+  "@expenseCategoriesSubtitle": {
+    "description": "#4512 expense categories: expenseCategoriesSubtitle"
+  },
+  "masterDataExpenseCategoriesDesc": "Las categorías bajo las que se registra un gasto o un justificante: su propia lista, con sus propias palabras.",
+  "@masterDataExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: masterDataExpenseCategoriesDesc"
+  },
+  "expenseCategoryAdd": "Nueva categoría",
+  "@expenseCategoryAdd": {
+    "description": "#4512 expense categories: expenseCategoryAdd"
+  },
+  "expenseCategoryName": "Nombre",
+  "@expenseCategoryName": {
+    "description": "#4512 expense categories: expenseCategoryName"
+  },
+  "expenseCategoryNameHint": "Cómo se lee la categoría en un gasto, por ejemplo Limpieza",
+  "@expenseCategoryNameHint": {
+    "description": "#4512 expense categories: expenseCategoryNameHint"
+  },
+  "expenseCategoryNameRequired": "Dé un nombre a la categoría.",
+  "@expenseCategoryNameRequired": {
+    "description": "#4512 expense categories: expenseCategoryNameRequired"
+  },
+  "expenseCategoryNameTaken": "Otra categoría activa ya tiene este nombre.",
+  "@expenseCategoryNameTaken": {
+    "description": "#4512 expense categories: expenseCategoryNameTaken"
+  },
+  "expenseCategoryRetire": "Retirar",
+  "@expenseCategoryRetire": {
+    "description": "#4512 expense categories: expenseCategoryRetire"
+  },
+  "expenseCategoryRestore": "Recuperar",
+  "@expenseCategoryRestore": {
+    "description": "#4512 expense categories: expenseCategoryRestore"
+  },
+  "expenseCategoryRetiredMark": "Retirada",
+  "@expenseCategoryRetiredMark": {
+    "description": "#4512 expense categories: expenseCategoryRetiredMark"
+  },
+  "expenseCategoryBuiltInMark": "Integrada",
+  "@expenseCategoryBuiltInMark": {
+    "description": "#4512 expense categories: expenseCategoryBuiltInMark"
+  },
+  "expenseCategoryEditTitle": "Editar la categoría",
+  "@expenseCategoryEditTitle": {
+    "description": "#4512 expense categories: expenseCategoryEditTitle"
+  },
+  "expenseCategoryNewTitle": "Nueva categoría de gastos",
+  "@expenseCategoryNewTitle": {
+    "description": "#4512 expense categories: expenseCategoryNewTitle"
+  },
+  "expenseCategoryRetiredSection": "Categorías retiradas",
+  "@expenseCategoryRetiredSection": {
+    "description": "#4512 expense categories: expenseCategoryRetiredSection"
+  },
+  "expenseCategoriesEmpty": "Todavía no hay ninguna categoría.",
+  "@expenseCategoriesEmpty": {
+    "description": "#4512 expense categories: expenseCategoriesEmpty"
+  },
+  "refusalExpenseCategory": "Esta categoría de gastos no puede usarse: elija una que el negocio ofrezca, o pida al propietario que la recupere.",
+  "@refusalExpenseCategory": {
+    "description": "#4512 expense categories: refusalExpenseCategory"
+  },
+  "expenseCategorySaveFailed": "La categoría no se guardó. Inténtelo de nuevo.",
+  "@expenseCategorySaveFailed": {
+    "description": "#4512 expense categories: expenseCategorySaveFailed"
+  },
+  "expenseCategoryMoveUp": "Subir",
+  "@expenseCategoryMoveUp": {
+    "description": "#4512 expense categories: expenseCategoryMoveUp"
+  },
+  "expenseCategoryMoveDown": "Bajar",
+  "@expenseCategoryMoveDown": {
+    "description": "#4512 expense categories: expenseCategoryMoveDown"
+  }
+}

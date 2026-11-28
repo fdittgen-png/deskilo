@@ -1578,6 +1578,10 @@ window.SETUP_L10N={
     "Organisation of businesses",
     "This business heads an organisation of the customer's businesses: a site in another country or currency is a house, a business of its own with its country's rules. Off: no organisation is made or changed from this business; a house still leaves one, and members still see where they are."
    ],
+   "expenseCategories": [
+    "Expense categories",
+    "The business keeps its own list of the categories an expense is filed under: add one, rename one, put them in order, retire one that is no longer used. An expense keeps the category it was filed under."
+   ],
    "standaloneInvoicing": [
     "Standalone invoices",
     "Invoice a named customer for a completed service or an agreed deliverable today, with itemised lines and explicit dates, and no booking, subscription or month behind it. The server computes every amount; you confirm a preview and issue it. Off: invoices are issued per member and month as before."
@@ -3669,6 +3673,10 @@ window.SETUP_L10N={
    "organisation": [
     "Organisation d’entreprises",
     "Cette entreprise est à la tête d’une organisation des entreprises du client : un site dans un autre pays ou une autre devise est une maison, une entreprise à part entière avec les règles de son pays. Désactivé : aucune organisation n’est créée ni modifiée depuis cette entreprise ; une maison peut toujours la quitter, et les membres voient toujours où ils sont."
+   ],
+   "expenseCategories": [
+    "Catégories de dépenses",
+    "L’entreprise tient sa propre liste des catégories sous lesquelles une dépense est classée : en ajouter une, la renommer, les ordonner, retirer celle qui ne sert plus. Une dépense garde la catégorie sous laquelle elle a été classée."
    ],
    "standaloneInvoicing": [
     "Factures ponctuelles",
@@ -5762,6 +5770,10 @@ window.SETUP_L10N={
     "Organisation von Unternehmen",
     "Dieses Unternehmen führt eine Organisation der Unternehmen des Kunden: ein Standort in einem anderen Land oder einer anderen Währung ist ein Haus, ein eigenes Unternehmen mit den Regeln seines Landes. Aus: Von diesem Unternehmen aus wird keine Organisation angelegt oder geändert; ein Haus kann sie weiterhin verlassen, und Mitglieder sehen weiterhin, wo sie sind."
    ],
+   "expenseCategories": [
+    "Ausgabenkategorien",
+    "Das Unternehmen führt seine eigene Liste der Kategorien, unter denen eine Ausgabe erfasst wird: eine hinzufügen, umbenennen, ordnen, eine nicht mehr gebrauchte stilllegen. Eine Ausgabe behält die Kategorie, unter der sie erfasst wurde."
+   ],
    "standaloneInvoicing": [
     "Einzelrechnungen",
     "Einem benannten Kunden noch heute eine erbrachte Leistung oder ein vereinbartes Ergebnis berechnen, mit einzelnen Positionen und ausdrücklichen Daten, ohne Buchung, Abo oder Monat dahinter. Der Server berechnet jeden Betrag; Sie bestätigen eine Vorschau und stellen die Rechnung aus. Aus: Rechnungen werden wie bisher je Mitglied und Monat ausgestellt."
@@ -7854,6 +7866,10 @@ window.SETUP_L10N={
     "Organización de empresas",
     "Esta empresa encabeza una organización de las empresas del cliente: un centro en otro país o en otra moneda es una casa, una empresa propia con las normas de su país. Desactivado: no se crea ni se cambia ninguna organización desde esta empresa; una casa puede seguir saliendo de ella y los miembros siguen viendo dónde están."
    ],
+   "expenseCategories": [
+    "Categorías de gastos",
+    "El negocio lleva su propia lista de las categorías bajo las que se registra un gasto: añadir una, renombrarla, ordenarlas, retirar la que ya no se usa. Un gasto conserva la categoría bajo la que se registró."
+   ],
    "standaloneInvoicing": [
     "Facturas independientes",
     "Facturar hoy a un cliente identificado una prestación realizada o un entregable acordado, con líneas detalladas y fechas explícitas, sin reserva, suscripción ni mes detrás. El servidor calcula cada importe; usted confirma una vista previa y emite la factura. Desactivado: las facturas se emiten por miembro y mes como antes."
@@ -9945,6 +9961,10 @@ window.SETUP_L10N={
    "organisation": [
     "Organizzazione di aziende",
     "Questa azienda è a capo di un’organizzazione delle aziende del cliente: una sede in un altro paese o in un’altra valuta è una casa, un’azienda a sé con le regole del suo paese. Disattivato: nessuna organizzazione viene creata o modificata da questa azienda; una casa può sempre lasciarla e i membri vedono sempre dove si trovano."
+   ],
+   "expenseCategories": [
+    "Categorie di spesa",
+    "L’attività tiene un proprio elenco delle categorie sotto cui si registra una spesa: aggiungerne una, rinominarla, ordinarle, ritirare quella non più usata. Una spesa conserva la categoria sotto cui è stata registrata."
    ],
    "standaloneInvoicing": [
     "Fatture singole",

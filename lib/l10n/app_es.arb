@@ -6930,9 +6930,81 @@
   "eventsEmpty": "Aún no hay eventos.",
   "eventsFilterAll": "Todos",
   "eventsPendingHeader": "Esperando su confirmación",
+  "expenseCategoriesEmpty": "Todavía no hay ninguna categoría.",
+  "@expenseCategoriesEmpty": {
+    "description": "#4512 expense categories: expenseCategoriesEmpty"
+  },
+  "expenseCategoriesSubtitle": "Las categorías bajo las que se registra un gasto o un justificante",
+  "@expenseCategoriesSubtitle": {
+    "description": "#4512 expense categories: expenseCategoriesSubtitle"
+  },
+  "expenseCategoriesTitle": "Categorías de gastos",
+  "@expenseCategoriesTitle": {
+    "description": "#4512 expense categories: expenseCategoriesTitle"
+  },
+  "expenseCategoryAdd": "Nueva categoría",
+  "@expenseCategoryAdd": {
+    "description": "#4512 expense categories: expenseCategoryAdd"
+  },
+  "expenseCategoryBuiltInMark": "Integrada",
+  "@expenseCategoryBuiltInMark": {
+    "description": "#4512 expense categories: expenseCategoryBuiltInMark"
+  },
   "expenseCategoryCoffee": "Café y cocina",
+  "expenseCategoryEditTitle": "Editar la categoría",
+  "@expenseCategoryEditTitle": {
+    "description": "#4512 expense categories: expenseCategoryEditTitle"
+  },
   "expenseCategoryEquipment": "Equipamiento",
+  "expenseCategoryMoveDown": "Bajar",
+  "@expenseCategoryMoveDown": {
+    "description": "#4512 expense categories: expenseCategoryMoveDown"
+  },
+  "expenseCategoryMoveUp": "Subir",
+  "@expenseCategoryMoveUp": {
+    "description": "#4512 expense categories: expenseCategoryMoveUp"
+  },
+  "expenseCategoryName": "Nombre",
+  "@expenseCategoryName": {
+    "description": "#4512 expense categories: expenseCategoryName"
+  },
+  "expenseCategoryNameHint": "Cómo se lee la categoría en un gasto, por ejemplo Limpieza",
+  "@expenseCategoryNameHint": {
+    "description": "#4512 expense categories: expenseCategoryNameHint"
+  },
+  "expenseCategoryNameRequired": "Dé un nombre a la categoría.",
+  "@expenseCategoryNameRequired": {
+    "description": "#4512 expense categories: expenseCategoryNameRequired"
+  },
+  "expenseCategoryNameTaken": "Otra categoría activa ya tiene este nombre.",
+  "@expenseCategoryNameTaken": {
+    "description": "#4512 expense categories: expenseCategoryNameTaken"
+  },
+  "expenseCategoryNewTitle": "Nueva categoría de gastos",
+  "@expenseCategoryNewTitle": {
+    "description": "#4512 expense categories: expenseCategoryNewTitle"
+  },
   "expenseCategoryOther": "Otro",
+  "expenseCategoryRestore": "Recuperar",
+  "@expenseCategoryRestore": {
+    "description": "#4512 expense categories: expenseCategoryRestore"
+  },
+  "expenseCategoryRetire": "Retirar",
+  "@expenseCategoryRetire": {
+    "description": "#4512 expense categories: expenseCategoryRetire"
+  },
+  "expenseCategoryRetiredMark": "Retirada",
+  "@expenseCategoryRetiredMark": {
+    "description": "#4512 expense categories: expenseCategoryRetiredMark"
+  },
+  "expenseCategoryRetiredSection": "Categorías retiradas",
+  "@expenseCategoryRetiredSection": {
+    "description": "#4512 expense categories: expenseCategoryRetiredSection"
+  },
+  "expenseCategorySaveFailed": "La categoría no se guardó. Inténtelo de nuevo.",
+  "@expenseCategorySaveFailed": {
+    "description": "#4512 expense categories: expenseCategorySaveFailed"
+  },
   "expenseCategorySupplies": "Material",
   "expenseInvalidAmount": "Introduzca un importe mayor que cero.",
   "expenseInvalidDeductible": "Introduzca una parte entre 0 y 100.",
@@ -7529,6 +7601,14 @@
   },
   "featureEventsTab": "Pestaña Eventos",
   "featureEventsTabDesc": "Actividad y confirmaciones pendientes.",
+  "featureExpenseCategoriesDesc": "El negocio lleva su propia lista de las categorías bajo las que se registra un gasto: añadir una, renombrarla, ordenarlas, retirar la que ya no se usa. Un gasto conserva la categoría bajo la que se registró.",
+  "@featureExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: featureExpenseCategoriesDesc"
+  },
+  "featureExpenseCategoriesTitle": "Categorías de gastos",
+  "@featureExpenseCategoriesTitle": {
+    "description": "#4512 expense categories: featureExpenseCategoriesTitle"
+  },
   "featureExpenseRepartitionDesc": "Un gasto común (limpieza, mejora de internet, una silla rota) repartido entre los socios — partes iguales, prorrata de la suscripción, prorrata del uso o una clave por socio — con cada parte previsualizada antes de contabilizarse. Las partes se convierten en líneas de la próxima factura de uso; una reversión genera notas de crédito. Pasa por las reglas de validación. Desactivado: sin reparto.",
   "featureExpenseRepartitionTitle": "Gastos compartidos",
   "featureExpenseRepartitionWizard": "Asistente de reparto",
@@ -12999,6 +13079,10 @@
   },
   "masterDataCount": "{count, plural, =0{Ningún registro} one{{count} registro} other{{count} registros}}",
   "masterDataCustomersDesc": "A quién factura",
+  "masterDataExpenseCategoriesDesc": "Las categorías bajo las que se registra un gasto o un justificante: su propia lista, con sus propias palabras.",
+  "@masterDataExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: masterDataExpenseCategoriesDesc"
+  },
   "masterDataGroupCatalogue": "Catálogo",
   "masterDataGroupMeasures": "Medidas e impuestos",
   "masterDataGroupPartners": "Socios comerciales",
@@ -17070,6 +17154,10 @@
   "refusalCounterTenders": "Los cobros no saldan exactamente esta venta, o uno de ellos no se acepta aquí.",
   "refusalCounterTill": "La caja no está lista para esto: ábrala primero, o ya está abierta o cerrada.",
   "refusalCounterUnsupported": "Esta operación no está soportada para su país en el caso que declaró en los ajustes: no se numeró nada y no se cobró nada.",
+  "refusalExpenseCategory": "Esta categoría de gastos no puede usarse: elija una que el negocio ofrezca, o pida al propietario que la recupere.",
+  "@refusalExpenseCategory": {
+    "description": "#4512 expense categories: refusalExpenseCategory"
+  },
   "refusalExpenseVat": "No se acepta el IVA de este gasto: elija un tipo de IVA de este negocio e indique el IVA repercutido por un proveedor en el extranjero solo como el tipo y el importe de su documento.",
   "@refusalExpenseVat": {
     "description": "#4479 (0994) DKV02: the VAT treatment of an expense is refused"

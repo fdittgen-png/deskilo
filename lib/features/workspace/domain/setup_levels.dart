@@ -250,6 +250,7 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
       needs: {SetupProcess.money: 'invoices'},
       features: {
         WorkspaceFeature.supplyExpenses,
+        WorkspaceFeature.expenseCategories, // #4512
         WorkspaceFeature.expenseRepartition,
         WorkspaceFeature.expenseRepartitionWizard,
         WorkspaceFeature.scheduledExpenses,

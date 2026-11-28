@@ -11285,13 +11285,71 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eventsPendingHeader => 'In attesa della sua conferma';
 
   @override
+  String get expenseCategoriesEmpty => 'Nessuna categoria per ora.';
+
+  @override
+  String get expenseCategoriesSubtitle =>
+      'Le categorie sotto cui si registra una spesa o un giustificativo';
+
+  @override
+  String get expenseCategoriesTitle => 'Categorie di spesa';
+
+  @override
+  String get expenseCategoryAdd => 'Nuova categoria';
+
+  @override
+  String get expenseCategoryBuiltInMark => 'Predefinita';
+
+  @override
   String get expenseCategoryCoffee => 'Caffè e cucina';
+
+  @override
+  String get expenseCategoryEditTitle => 'Modificare la categoria';
 
   @override
   String get expenseCategoryEquipment => 'Attrezzatura';
 
   @override
+  String get expenseCategoryMoveDown => 'Sposta giù';
+
+  @override
+  String get expenseCategoryMoveUp => 'Sposta su';
+
+  @override
+  String get expenseCategoryName => 'Nome';
+
+  @override
+  String get expenseCategoryNameHint =>
+      'Come si legge la categoria su una spesa, ad esempio Pulizia';
+
+  @override
+  String get expenseCategoryNameRequired => 'Dare un nome alla categoria.';
+
+  @override
+  String get expenseCategoryNameTaken =>
+      'Un’altra categoria attiva ha già questo nome.';
+
+  @override
+  String get expenseCategoryNewTitle => 'Nuova categoria di spesa';
+
+  @override
   String get expenseCategoryOther => 'Altro';
+
+  @override
+  String get expenseCategoryRestore => 'Ripristinare';
+
+  @override
+  String get expenseCategoryRetire => 'Ritirare';
+
+  @override
+  String get expenseCategoryRetiredMark => 'Ritirata';
+
+  @override
+  String get expenseCategoryRetiredSection => 'Categorie ritirate';
+
+  @override
+  String get expenseCategorySaveFailed =>
+      'La categoria non è stata salvata. Riprovare.';
 
   @override
   String get expenseCategorySupplies => 'Materiale';
@@ -12534,6 +12592,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureEventsTabDesc =>
       'Cronologia delle attività e conferme in sospeso.';
+
+  @override
+  String get featureExpenseCategoriesDesc =>
+      'L’attività tiene un proprio elenco delle categorie sotto cui si registra una spesa: aggiungerne una, rinominarla, ordinarle, ritirare quella non più usata. Una spesa conserva la categoria sotto cui è stata registrata.';
+
+  @override
+  String get featureExpenseCategoriesTitle => 'Categorie di spesa';
 
   @override
   String get featureExpenseRepartitionDesc =>
@@ -21587,6 +21652,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get masterDataCustomersDesc => 'A chi si fattura';
 
   @override
+  String get masterDataExpenseCategoriesDesc =>
+      'Le categorie sotto cui si registra una spesa o un giustificativo: un elenco proprio, con parole proprie.';
+
+  @override
   String get masterDataGroupCatalogue => 'Catalogo';
 
   @override
@@ -30074,6 +30143,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalCounterUnsupported =>
       'Questa operazione non è supportata per il Suo paese nel caso dichiarato nelle impostazioni: non è stato numerato nulla e non è stato incassato nulla.';
+
+  @override
+  String get refusalExpenseCategory =>
+      'Questa categoria di spesa non può essere usata: scegliere una che l’attività offre, oppure chiedere al titolare di ripristinarla.';
 
   @override
   String get refusalExpenseVat =>

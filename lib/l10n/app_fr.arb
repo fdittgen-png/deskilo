@@ -6930,9 +6930,81 @@
   "eventsEmpty": "Aucun événement pour l'instant.",
   "eventsFilterAll": "Tous",
   "eventsPendingHeader": "En attente de votre confirmation",
+  "expenseCategoriesEmpty": "Aucune catégorie pour l’instant.",
+  "@expenseCategoriesEmpty": {
+    "description": "#4512 expense categories: expenseCategoriesEmpty"
+  },
+  "expenseCategoriesSubtitle": "Les catégories sous lesquelles une dépense ou un justificatif est classé",
+  "@expenseCategoriesSubtitle": {
+    "description": "#4512 expense categories: expenseCategoriesSubtitle"
+  },
+  "expenseCategoriesTitle": "Catégories de dépenses",
+  "@expenseCategoriesTitle": {
+    "description": "#4512 expense categories: expenseCategoriesTitle"
+  },
+  "expenseCategoryAdd": "Nouvelle catégorie",
+  "@expenseCategoryAdd": {
+    "description": "#4512 expense categories: expenseCategoryAdd"
+  },
+  "expenseCategoryBuiltInMark": "Intégrée",
+  "@expenseCategoryBuiltInMark": {
+    "description": "#4512 expense categories: expenseCategoryBuiltInMark"
+  },
   "expenseCategoryCoffee": "Café et cuisine",
+  "expenseCategoryEditTitle": "Modifier la catégorie",
+  "@expenseCategoryEditTitle": {
+    "description": "#4512 expense categories: expenseCategoryEditTitle"
+  },
   "expenseCategoryEquipment": "Équipement",
+  "expenseCategoryMoveDown": "Descendre",
+  "@expenseCategoryMoveDown": {
+    "description": "#4512 expense categories: expenseCategoryMoveDown"
+  },
+  "expenseCategoryMoveUp": "Monter",
+  "@expenseCategoryMoveUp": {
+    "description": "#4512 expense categories: expenseCategoryMoveUp"
+  },
+  "expenseCategoryName": "Nom",
+  "@expenseCategoryName": {
+    "description": "#4512 expense categories: expenseCategoryName"
+  },
+  "expenseCategoryNameHint": "Comment la catégorie se lit sur une dépense, par exemple Nettoyage",
+  "@expenseCategoryNameHint": {
+    "description": "#4512 expense categories: expenseCategoryNameHint"
+  },
+  "expenseCategoryNameRequired": "Donnez un nom à la catégorie.",
+  "@expenseCategoryNameRequired": {
+    "description": "#4512 expense categories: expenseCategoryNameRequired"
+  },
+  "expenseCategoryNameTaken": "Une autre catégorie active porte déjà ce nom.",
+  "@expenseCategoryNameTaken": {
+    "description": "#4512 expense categories: expenseCategoryNameTaken"
+  },
+  "expenseCategoryNewTitle": "Nouvelle catégorie de dépenses",
+  "@expenseCategoryNewTitle": {
+    "description": "#4512 expense categories: expenseCategoryNewTitle"
+  },
   "expenseCategoryOther": "Autre",
+  "expenseCategoryRestore": "Rétablir",
+  "@expenseCategoryRestore": {
+    "description": "#4512 expense categories: expenseCategoryRestore"
+  },
+  "expenseCategoryRetire": "Retirer",
+  "@expenseCategoryRetire": {
+    "description": "#4512 expense categories: expenseCategoryRetire"
+  },
+  "expenseCategoryRetiredMark": "Retirée",
+  "@expenseCategoryRetiredMark": {
+    "description": "#4512 expense categories: expenseCategoryRetiredMark"
+  },
+  "expenseCategoryRetiredSection": "Catégories retirées",
+  "@expenseCategoryRetiredSection": {
+    "description": "#4512 expense categories: expenseCategoryRetiredSection"
+  },
+  "expenseCategorySaveFailed": "La catégorie n’a pas été enregistrée. Réessayez.",
+  "@expenseCategorySaveFailed": {
+    "description": "#4512 expense categories: expenseCategorySaveFailed"
+  },
   "expenseCategorySupplies": "Fournitures",
   "expenseInvalidAmount": "Saisissez un montant supérieur à zéro.",
   "expenseInvalidDeductible": "Saisissez une part entre 0 et 100.",
@@ -7529,6 +7601,14 @@
   },
   "featureEventsTab": "Onglet Événements",
   "featureEventsTabDesc": "Fil d'activité et confirmations en attente.",
+  "featureExpenseCategoriesDesc": "L’entreprise tient sa propre liste des catégories sous lesquelles une dépense est classée : en ajouter une, la renommer, les ordonner, retirer celle qui ne sert plus. Une dépense garde la catégorie sous laquelle elle a été classée.",
+  "@featureExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: featureExpenseCategoriesDesc"
+  },
+  "featureExpenseCategoriesTitle": "Catégories de dépenses",
+  "@featureExpenseCategoriesTitle": {
+    "description": "#4512 expense categories: featureExpenseCategoriesTitle"
+  },
   "featureExpenseRepartitionDesc": "Une dépense commune (ménage, montée en débit internet, chaise cassée) répartie entre les membres — parts égales, au prorata de l'abonnement, au prorata de l'usage, ou une clé par membre — chaque part prévisualisée avant d'être comptabilisée. Les parts deviennent des lignes de la prochaine facture de consommation ; une annulation produit des avoirs. Passe par les règles de validation. Désactivé : pas de répartition.",
   "featureExpenseRepartitionTitle": "Dépenses partagées",
   "featureExpenseRepartitionWizard": "Assistant de répartition",
@@ -12999,6 +13079,10 @@
   },
   "masterDataCount": "{count, plural, =0{Aucun enregistrement} one{{count} enregistrement} other{{count} enregistrements}}",
   "masterDataCustomersDesc": "Ceux que vous facturez",
+  "masterDataExpenseCategoriesDesc": "Les catégories sous lesquelles une dépense ou un justificatif est classé : votre propre liste, avec vos propres mots.",
+  "@masterDataExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: masterDataExpenseCategoriesDesc"
+  },
   "masterDataGroupCatalogue": "Catalogue de vente",
   "masterDataGroupMeasures": "Mesures et taxes",
   "masterDataGroupPartners": "Partenaires",
@@ -17070,6 +17154,10 @@
   "refusalCounterTenders": "Les règlements ne soldent pas exactement cette vente, ou l'un d'eux n'est pas pris en charge ici.",
   "refusalCounterTill": "La caisse n'est pas prête pour cela : ouvrez-la d'abord, ou elle est déjà ouverte ou fermée.",
   "refusalCounterUnsupported": "Cette opération n'est pas prise en charge pour votre pays dans le cas que vous avez déclaré dans les paramètres : rien n'a été numéroté et rien n'a été encaissé.",
+  "refusalExpenseCategory": "Cette catégorie de dépenses ne peut pas être utilisée : choisissez-en une que l’entreprise propose, ou demandez au propriétaire de la rétablir.",
+  "@refusalExpenseCategory": {
+    "description": "#4512 expense categories: refusalExpenseCategory"
+  },
   "refusalExpenseVat": "La TVA de cette dépense n’est pas acceptée : choisissez un taux de TVA de cette entreprise et saisissez la TVA facturée par un fournisseur à l’étranger uniquement comme taux et montant de son document.",
   "@refusalExpenseVat": {
     "description": "#4479 (0994) DKV02: the VAT treatment of an expense is refused"

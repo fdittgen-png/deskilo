@@ -640,6 +640,10 @@ window.SETUP_REGISTRY={
    true
   ],
   [
+   "expenseCategories",
+   false
+  ],
+  [
    "standaloneInvoicing",
    false
   ],
@@ -1681,6 +1685,7 @@ window.SETUP_PROCESSES=[
     "key": "expenses",
     "features": [
      "supplyExpenses",
+     "expenseCategories",
      "expenseRepartitionWizard",
      "scheduledExpenses",
      "expenseRepartition",
@@ -2103,7 +2108,8 @@ window.SETUP_LEVELS={
       "supplyExpenses",
       "expenseRepartitionWizard",
       "scheduledExpenses",
-      "expenseRepartition"
+      "expenseRepartition",
+      "expenseCategories"
      ],
      "needs": {
       "money": "invoices"

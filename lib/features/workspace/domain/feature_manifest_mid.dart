@@ -103,6 +103,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> midFeatureManifest = {
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.services,
   ),
+  // #4512 — the categories an expense is filed under are the business's own list (add, rename, order, retire), kept on
+  // the Master data page. On by default: the four a business began with are rows of that list. Off: the page offers no
+  // editor; the pickers still read the list.
+  WorkspaceFeature.expenseCategories: FeatureManifestEntry(
+    feature: WorkspaceFeature.expenseCategories,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+  ),
   // #732 — a validation rule names its scope: admins, listed persons of
   // any role, or every member. Off: owner + admins as before.
   WorkspaceFeature.validationScopes:

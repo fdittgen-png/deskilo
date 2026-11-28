@@ -1,0 +1,90 @@
+{
+  "featureExpenseCategoriesTitle": "Catégories de dépenses",
+  "@featureExpenseCategoriesTitle": {
+    "description": "#4512 expense categories: featureExpenseCategoriesTitle"
+  },
+  "featureExpenseCategoriesDesc": "L’entreprise tient sa propre liste des catégories sous lesquelles une dépense est classée : en ajouter une, la renommer, les ordonner, retirer celle qui ne sert plus. Une dépense garde la catégorie sous laquelle elle a été classée.",
+  "@featureExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: featureExpenseCategoriesDesc"
+  },
+  "expenseCategoriesTitle": "Catégories de dépenses",
+  "@expenseCategoriesTitle": {
+    "description": "#4512 expense categories: expenseCategoriesTitle"
+  },
+  "expenseCategoriesSubtitle": "Les catégories sous lesquelles une dépense ou un justificatif est classé",
+  "@expenseCategoriesSubtitle": {
+    "description": "#4512 expense categories: expenseCategoriesSubtitle"
+  },
+  "masterDataExpenseCategoriesDesc": "Les catégories sous lesquelles une dépense ou un justificatif est classé : votre propre liste, avec vos propres mots.",
+  "@masterDataExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: masterDataExpenseCategoriesDesc"
+  },
+  "expenseCategoryAdd": "Nouvelle catégorie",
+  "@expenseCategoryAdd": {
+    "description": "#4512 expense categories: expenseCategoryAdd"
+  },
+  "expenseCategoryName": "Nom",
+  "@expenseCategoryName": {
+    "description": "#4512 expense categories: expenseCategoryName"
+  },
+  "expenseCategoryNameHint": "Comment la catégorie se lit sur une dépense, par exemple Nettoyage",
+  "@expenseCategoryNameHint": {
+    "description": "#4512 expense categories: expenseCategoryNameHint"
+  },
+  "expenseCategoryNameRequired": "Donnez un nom à la catégorie.",
+  "@expenseCategoryNameRequired": {
+    "description": "#4512 expense categories: expenseCategoryNameRequired"
+  },
+  "expenseCategoryNameTaken": "Une autre catégorie active porte déjà ce nom.",
+  "@expenseCategoryNameTaken": {
+    "description": "#4512 expense categories: expenseCategoryNameTaken"
+  },
+  "expenseCategoryRetire": "Retirer",
+  "@expenseCategoryRetire": {
+    "description": "#4512 expense categories: expenseCategoryRetire"
+  },
+  "expenseCategoryRestore": "Rétablir",
+  "@expenseCategoryRestore": {
+    "description": "#4512 expense categories: expenseCategoryRestore"
+  },
+  "expenseCategoryRetiredMark": "Retirée",
+  "@expenseCategoryRetiredMark": {
+    "description": "#4512 expense categories: expenseCategoryRetiredMark"
+  },
+  "expenseCategoryBuiltInMark": "Intégrée",
+  "@expenseCategoryBuiltInMark": {
+    "description": "#4512 expense categories: expenseCategoryBuiltInMark"
+  },
+  "expenseCategoryEditTitle": "Modifier la catégorie",
+  "@expenseCategoryEditTitle": {
+    "description": "#4512 expense categories: expenseCategoryEditTitle"
+  },
+  "expenseCategoryNewTitle": "Nouvelle catégorie de dépenses",
+  "@expenseCategoryNewTitle": {
+    "description": "#4512 expense categories: expenseCategoryNewTitle"
+  },
+  "expenseCategoryRetiredSection": "Catégories retirées",
+  "@expenseCategoryRetiredSection": {
+    "description": "#4512 expense categories: expenseCategoryRetiredSection"
+  },
+  "expenseCategoriesEmpty": "Aucune catégorie pour l’instant.",
+  "@expenseCategoriesEmpty": {
+    "description": "#4512 expense categories: expenseCategoriesEmpty"
+  },
+  "refusalExpenseCategory": "Cette catégorie de dépenses ne peut pas être utilisée : choisissez-en une que l’entreprise propose, ou demandez au propriétaire de la rétablir.",
+  "@refusalExpenseCategory": {
+    "description": "#4512 expense categories: refusalExpenseCategory"
+  },
+  "expenseCategorySaveFailed": "La catégorie n’a pas été enregistrée. Réessayez.",
+  "@expenseCategorySaveFailed": {
+    "description": "#4512 expense categories: expenseCategorySaveFailed"
+  },
+  "expenseCategoryMoveUp": "Monter",
+  "@expenseCategoryMoveUp": {
+    "description": "#4512 expense categories: expenseCategoryMoveUp"
+  },
+  "expenseCategoryMoveDown": "Descendre",
+  "@expenseCategoryMoveDown": {
+    "description": "#4512 expense categories: expenseCategoryMoveDown"
+  }
+}

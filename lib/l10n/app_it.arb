@@ -6930,9 +6930,81 @@
   "eventsEmpty": "Ancora nessun evento.",
   "eventsFilterAll": "Tutti",
   "eventsPendingHeader": "In attesa della sua conferma",
+  "expenseCategoriesEmpty": "Nessuna categoria per ora.",
+  "@expenseCategoriesEmpty": {
+    "description": "#4512 expense categories: expenseCategoriesEmpty"
+  },
+  "expenseCategoriesSubtitle": "Le categorie sotto cui si registra una spesa o un giustificativo",
+  "@expenseCategoriesSubtitle": {
+    "description": "#4512 expense categories: expenseCategoriesSubtitle"
+  },
+  "expenseCategoriesTitle": "Categorie di spesa",
+  "@expenseCategoriesTitle": {
+    "description": "#4512 expense categories: expenseCategoriesTitle"
+  },
+  "expenseCategoryAdd": "Nuova categoria",
+  "@expenseCategoryAdd": {
+    "description": "#4512 expense categories: expenseCategoryAdd"
+  },
+  "expenseCategoryBuiltInMark": "Predefinita",
+  "@expenseCategoryBuiltInMark": {
+    "description": "#4512 expense categories: expenseCategoryBuiltInMark"
+  },
   "expenseCategoryCoffee": "Caffè e cucina",
+  "expenseCategoryEditTitle": "Modificare la categoria",
+  "@expenseCategoryEditTitle": {
+    "description": "#4512 expense categories: expenseCategoryEditTitle"
+  },
   "expenseCategoryEquipment": "Attrezzatura",
+  "expenseCategoryMoveDown": "Sposta giù",
+  "@expenseCategoryMoveDown": {
+    "description": "#4512 expense categories: expenseCategoryMoveDown"
+  },
+  "expenseCategoryMoveUp": "Sposta su",
+  "@expenseCategoryMoveUp": {
+    "description": "#4512 expense categories: expenseCategoryMoveUp"
+  },
+  "expenseCategoryName": "Nome",
+  "@expenseCategoryName": {
+    "description": "#4512 expense categories: expenseCategoryName"
+  },
+  "expenseCategoryNameHint": "Come si legge la categoria su una spesa, ad esempio Pulizia",
+  "@expenseCategoryNameHint": {
+    "description": "#4512 expense categories: expenseCategoryNameHint"
+  },
+  "expenseCategoryNameRequired": "Dare un nome alla categoria.",
+  "@expenseCategoryNameRequired": {
+    "description": "#4512 expense categories: expenseCategoryNameRequired"
+  },
+  "expenseCategoryNameTaken": "Un’altra categoria attiva ha già questo nome.",
+  "@expenseCategoryNameTaken": {
+    "description": "#4512 expense categories: expenseCategoryNameTaken"
+  },
+  "expenseCategoryNewTitle": "Nuova categoria di spesa",
+  "@expenseCategoryNewTitle": {
+    "description": "#4512 expense categories: expenseCategoryNewTitle"
+  },
   "expenseCategoryOther": "Altro",
+  "expenseCategoryRestore": "Ripristinare",
+  "@expenseCategoryRestore": {
+    "description": "#4512 expense categories: expenseCategoryRestore"
+  },
+  "expenseCategoryRetire": "Ritirare",
+  "@expenseCategoryRetire": {
+    "description": "#4512 expense categories: expenseCategoryRetire"
+  },
+  "expenseCategoryRetiredMark": "Ritirata",
+  "@expenseCategoryRetiredMark": {
+    "description": "#4512 expense categories: expenseCategoryRetiredMark"
+  },
+  "expenseCategoryRetiredSection": "Categorie ritirate",
+  "@expenseCategoryRetiredSection": {
+    "description": "#4512 expense categories: expenseCategoryRetiredSection"
+  },
+  "expenseCategorySaveFailed": "La categoria non è stata salvata. Riprovare.",
+  "@expenseCategorySaveFailed": {
+    "description": "#4512 expense categories: expenseCategorySaveFailed"
+  },
   "expenseCategorySupplies": "Materiale",
   "expenseInvalidAmount": "Inserisca un importo maggiore di zero.",
   "expenseInvalidDeductible": "Inserisca una quota tra 0 e 100.",
@@ -7529,6 +7601,14 @@
   },
   "featureEventsTab": "Scheda Eventi",
   "featureEventsTabDesc": "Cronologia delle attività e conferme in sospeso.",
+  "featureExpenseCategoriesDesc": "L’attività tiene un proprio elenco delle categorie sotto cui si registra una spesa: aggiungerne una, rinominarla, ordinarle, ritirare quella non più usata. Una spesa conserva la categoria sotto cui è stata registrata.",
+  "@featureExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: featureExpenseCategoriesDesc"
+  },
+  "featureExpenseCategoriesTitle": "Categorie di spesa",
+  "@featureExpenseCategoriesTitle": {
+    "description": "#4512 expense categories: featureExpenseCategoriesTitle"
+  },
   "featureExpenseRepartitionDesc": "Una spesa comune (pulizie, potenziamento internet, una sedia rotta) ripartita tra i membri — quote uguali, in proporzione all'abbonamento, in proporzione all'utilizzo o una chiave per membro — con ogni quota in anteprima prima della registrazione. Le quote diventano righe della prossima fattura di utilizzo; uno storno genera note di credito. Passa dalle regole di convalida. Disattivato: nessuna ripartizione.",
   "featureExpenseRepartitionTitle": "Spese condivise",
   "featureExpenseRepartitionWizard": "Assistente di ripartizione",
@@ -12999,6 +13079,10 @@
   },
   "masterDataCount": "{count, plural, =0{Nessuna voce} one{{count} voce} other{{count} voci}}",
   "masterDataCustomersDesc": "A chi si fattura",
+  "masterDataExpenseCategoriesDesc": "Le categorie sotto cui si registra una spesa o un giustificativo: un elenco proprio, con parole proprie.",
+  "@masterDataExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: masterDataExpenseCategoriesDesc"
+  },
   "masterDataGroupCatalogue": "Catalogo",
   "masterDataGroupMeasures": "Misure e imposte",
   "masterDataGroupPartners": "Partner commerciali",
@@ -17070,6 +17154,10 @@
   "refusalCounterTenders": "I pagamenti non saldano esattamente questa vendita, oppure uno di essi non è accettato qui.",
   "refusalCounterTill": "La cassa non è pronta per questo: la apra prima, oppure è già aperta o chiusa.",
   "refusalCounterUnsupported": "Questa operazione non è supportata per il Suo paese nel caso dichiarato nelle impostazioni: non è stato numerato nulla e non è stato incassato nulla.",
+  "refusalExpenseCategory": "Questa categoria di spesa non può essere usata: scegliere una che l’attività offre, oppure chiedere al titolare di ripristinarla.",
+  "@refusalExpenseCategory": {
+    "description": "#4512 expense categories: refusalExpenseCategory"
+  },
   "refusalExpenseVat": "L’IVA di questa spesa non è accettata: scegliere un’aliquota IVA di questa attività e indicare l’IVA addebitata da un fornitore all’estero solo come aliquota e importo del suo documento.",
   "@refusalExpenseVat": {
     "description": "#4479 (0994) DKV02: the VAT treatment of an expense is refused"

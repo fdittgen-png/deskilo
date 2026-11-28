@@ -6930,9 +6930,81 @@
   "eventsEmpty": "Noch keine Ereignisse.",
   "eventsFilterAll": "Alle",
   "eventsPendingHeader": "Wartet auf Ihre Bestätigung",
+  "expenseCategoriesEmpty": "Noch keine Kategorie.",
+  "@expenseCategoriesEmpty": {
+    "description": "#4512 expense categories: expenseCategoriesEmpty"
+  },
+  "expenseCategoriesSubtitle": "Die Kategorien, unter denen eine Ausgabe oder ein Beleg erfasst wird",
+  "@expenseCategoriesSubtitle": {
+    "description": "#4512 expense categories: expenseCategoriesSubtitle"
+  },
+  "expenseCategoriesTitle": "Ausgabenkategorien",
+  "@expenseCategoriesTitle": {
+    "description": "#4512 expense categories: expenseCategoriesTitle"
+  },
+  "expenseCategoryAdd": "Neue Kategorie",
+  "@expenseCategoryAdd": {
+    "description": "#4512 expense categories: expenseCategoryAdd"
+  },
+  "expenseCategoryBuiltInMark": "Vorgegeben",
+  "@expenseCategoryBuiltInMark": {
+    "description": "#4512 expense categories: expenseCategoryBuiltInMark"
+  },
   "expenseCategoryCoffee": "Kaffee & Küche",
+  "expenseCategoryEditTitle": "Kategorie bearbeiten",
+  "@expenseCategoryEditTitle": {
+    "description": "#4512 expense categories: expenseCategoryEditTitle"
+  },
   "expenseCategoryEquipment": "Ausstattung",
+  "expenseCategoryMoveDown": "Nach unten",
+  "@expenseCategoryMoveDown": {
+    "description": "#4512 expense categories: expenseCategoryMoveDown"
+  },
+  "expenseCategoryMoveUp": "Nach oben",
+  "@expenseCategoryMoveUp": {
+    "description": "#4512 expense categories: expenseCategoryMoveUp"
+  },
+  "expenseCategoryName": "Name",
+  "@expenseCategoryName": {
+    "description": "#4512 expense categories: expenseCategoryName"
+  },
+  "expenseCategoryNameHint": "Wie die Kategorie auf einer Ausgabe steht, zum Beispiel Reinigung",
+  "@expenseCategoryNameHint": {
+    "description": "#4512 expense categories: expenseCategoryNameHint"
+  },
+  "expenseCategoryNameRequired": "Geben Sie der Kategorie einen Namen.",
+  "@expenseCategoryNameRequired": {
+    "description": "#4512 expense categories: expenseCategoryNameRequired"
+  },
+  "expenseCategoryNameTaken": "Eine andere aktive Kategorie hat bereits diesen Namen.",
+  "@expenseCategoryNameTaken": {
+    "description": "#4512 expense categories: expenseCategoryNameTaken"
+  },
+  "expenseCategoryNewTitle": "Neue Ausgabenkategorie",
+  "@expenseCategoryNewTitle": {
+    "description": "#4512 expense categories: expenseCategoryNewTitle"
+  },
   "expenseCategoryOther": "Sonstiges",
+  "expenseCategoryRestore": "Wieder aktivieren",
+  "@expenseCategoryRestore": {
+    "description": "#4512 expense categories: expenseCategoryRestore"
+  },
+  "expenseCategoryRetire": "Stilllegen",
+  "@expenseCategoryRetire": {
+    "description": "#4512 expense categories: expenseCategoryRetire"
+  },
+  "expenseCategoryRetiredMark": "Stillgelegt",
+  "@expenseCategoryRetiredMark": {
+    "description": "#4512 expense categories: expenseCategoryRetiredMark"
+  },
+  "expenseCategoryRetiredSection": "Stillgelegte Kategorien",
+  "@expenseCategoryRetiredSection": {
+    "description": "#4512 expense categories: expenseCategoryRetiredSection"
+  },
+  "expenseCategorySaveFailed": "Die Kategorie wurde nicht gespeichert. Versuchen Sie es erneut.",
+  "@expenseCategorySaveFailed": {
+    "description": "#4512 expense categories: expenseCategorySaveFailed"
+  },
   "expenseCategorySupplies": "Verbrauchsmaterial",
   "expenseInvalidAmount": "Geben Sie einen Betrag über null ein.",
   "expenseInvalidDeductible": "Geben Sie einen Anteil zwischen 0 und 100 ein.",
@@ -7529,6 +7601,14 @@
   },
   "featureEventsTab": "Ereignis-Tab",
   "featureEventsTabDesc": "Aktivitätsverlauf und ausstehende Bestätigungen.",
+  "featureExpenseCategoriesDesc": "Das Unternehmen führt seine eigene Liste der Kategorien, unter denen eine Ausgabe erfasst wird: eine hinzufügen, umbenennen, ordnen, eine nicht mehr gebrauchte stilllegen. Eine Ausgabe behält die Kategorie, unter der sie erfasst wurde.",
+  "@featureExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: featureExpenseCategoriesDesc"
+  },
+  "featureExpenseCategoriesTitle": "Ausgabenkategorien",
+  "@featureExpenseCategoriesTitle": {
+    "description": "#4512 expense categories: featureExpenseCategoriesTitle"
+  },
   "featureExpenseRepartitionDesc": "Eine gemeinsame Ausgabe (Reinigung, schnelleres Internet, ein kaputter Stuhl) auf die Mitglieder verteilt — gleiche Anteile, anteilig zum Abonnement, anteilig zur Nutzung oder ein Schlüssel je Mitglied — jeder Anteil vor der Buchung in der Vorschau. Die Anteile werden Positionen der nächsten Nutzungsrechnung; eine Umkehrung bucht Gutschriften. Läuft über die Bestätigungsregeln. Aus: keine Verteilung.",
   "featureExpenseRepartitionTitle": "Gemeinsame Ausgaben",
   "featureExpenseRepartitionWizard": "Umlage-Assistent",
@@ -12999,6 +13079,10 @@
   },
   "masterDataCount": "{count, plural, =0{Keine Einträge} one{{count} Eintrag} other{{count} Einträge}}",
   "masterDataCustomersDesc": "Wem Sie Rechnungen stellen",
+  "masterDataExpenseCategoriesDesc": "Die Kategorien, unter denen eine Ausgabe oder ein Beleg erfasst wird: Ihre eigene Liste, in Ihren eigenen Worten.",
+  "@masterDataExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: masterDataExpenseCategoriesDesc"
+  },
   "masterDataGroupCatalogue": "Verkaufskatalog",
   "masterDataGroupMeasures": "Maße und Steuern",
   "masterDataGroupPartners": "Geschäftspartner",
@@ -17070,6 +17154,10 @@
   "refusalCounterTenders": "Die Zahlungen begleichen diesen Verkauf nicht genau, oder eine davon wird hier nicht angenommen.",
   "refusalCounterTill": "Die Kasse ist dafür nicht bereit: Öffnen Sie sie zuerst, oder sie ist schon offen oder geschlossen.",
   "refusalCounterUnsupported": "Dieser Vorgang wird für Ihr Land in dem in den Einstellungen erklärten Fall nicht unterstützt: Es wurde nichts nummeriert und nichts angenommen.",
+  "refusalExpenseCategory": "Diese Ausgabenkategorie kann nicht verwendet werden: Wählen Sie eine, die das Unternehmen anbietet, oder bitten Sie den Inhaber, sie wieder zu aktivieren.",
+  "@refusalExpenseCategory": {
+    "description": "#4512 expense categories: refusalExpenseCategory"
+  },
   "refusalExpenseVat": "Die Umsatzsteuer dieser Ausgabe wird nicht angenommen: Wählen Sie einen Steuersatz dieses Unternehmens und geben Sie von einem Lieferanten im Ausland berechnete Umsatzsteuer nur als Satz und Betrag des Belegs an.",
   "@refusalExpenseVat": {
     "description": "#4479 (0994) DKV02: the VAT treatment of an expense is refused"

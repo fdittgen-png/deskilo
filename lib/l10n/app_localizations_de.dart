@@ -11304,13 +11304,72 @@ class AppLocalizationsDe extends AppLocalizations {
   String get eventsPendingHeader => 'Wartet auf Ihre Bestätigung';
 
   @override
+  String get expenseCategoriesEmpty => 'Noch keine Kategorie.';
+
+  @override
+  String get expenseCategoriesSubtitle =>
+      'Die Kategorien, unter denen eine Ausgabe oder ein Beleg erfasst wird';
+
+  @override
+  String get expenseCategoriesTitle => 'Ausgabenkategorien';
+
+  @override
+  String get expenseCategoryAdd => 'Neue Kategorie';
+
+  @override
+  String get expenseCategoryBuiltInMark => 'Vorgegeben';
+
+  @override
   String get expenseCategoryCoffee => 'Kaffee & Küche';
+
+  @override
+  String get expenseCategoryEditTitle => 'Kategorie bearbeiten';
 
   @override
   String get expenseCategoryEquipment => 'Ausstattung';
 
   @override
+  String get expenseCategoryMoveDown => 'Nach unten';
+
+  @override
+  String get expenseCategoryMoveUp => 'Nach oben';
+
+  @override
+  String get expenseCategoryName => 'Name';
+
+  @override
+  String get expenseCategoryNameHint =>
+      'Wie die Kategorie auf einer Ausgabe steht, zum Beispiel Reinigung';
+
+  @override
+  String get expenseCategoryNameRequired =>
+      'Geben Sie der Kategorie einen Namen.';
+
+  @override
+  String get expenseCategoryNameTaken =>
+      'Eine andere aktive Kategorie hat bereits diesen Namen.';
+
+  @override
+  String get expenseCategoryNewTitle => 'Neue Ausgabenkategorie';
+
+  @override
   String get expenseCategoryOther => 'Sonstiges';
+
+  @override
+  String get expenseCategoryRestore => 'Wieder aktivieren';
+
+  @override
+  String get expenseCategoryRetire => 'Stilllegen';
+
+  @override
+  String get expenseCategoryRetiredMark => 'Stillgelegt';
+
+  @override
+  String get expenseCategoryRetiredSection => 'Stillgelegte Kategorien';
+
+  @override
+  String get expenseCategorySaveFailed =>
+      'Die Kategorie wurde nicht gespeichert. Versuchen Sie es erneut.';
 
   @override
   String get expenseCategorySupplies => 'Verbrauchsmaterial';
@@ -12551,6 +12610,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureEventsTabDesc =>
       'Aktivitätsverlauf und ausstehende Bestätigungen.';
+
+  @override
+  String get featureExpenseCategoriesDesc =>
+      'Das Unternehmen führt seine eigene Liste der Kategorien, unter denen eine Ausgabe erfasst wird: eine hinzufügen, umbenennen, ordnen, eine nicht mehr gebrauchte stilllegen. Eine Ausgabe behält die Kategorie, unter der sie erfasst wurde.';
+
+  @override
+  String get featureExpenseCategoriesTitle => 'Ausgabenkategorien';
 
   @override
   String get featureExpenseRepartitionDesc =>
@@ -21620,6 +21686,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get masterDataCustomersDesc => 'Wem Sie Rechnungen stellen';
 
   @override
+  String get masterDataExpenseCategoriesDesc =>
+      'Die Kategorien, unter denen eine Ausgabe oder ein Beleg erfasst wird: Ihre eigene Liste, in Ihren eigenen Worten.';
+
+  @override
   String get masterDataGroupCatalogue => 'Verkaufskatalog';
 
   @override
@@ -30120,6 +30190,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalCounterUnsupported =>
       'Dieser Vorgang wird für Ihr Land in dem in den Einstellungen erklärten Fall nicht unterstützt: Es wurde nichts nummeriert und nichts angenommen.';
+
+  @override
+  String get refusalExpenseCategory =>
+      'Diese Ausgabenkategorie kann nicht verwendet werden: Wählen Sie eine, die das Unternehmen anbietet, oder bitten Sie den Inhaber, sie wieder zu aktivieren.';
 
   @override
   String get refusalExpenseVat =>

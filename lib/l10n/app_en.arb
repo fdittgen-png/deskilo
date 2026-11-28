@@ -14987,17 +14987,89 @@
   "@eventsPendingHeader": {
     "description": "Header above pinned pending-confirmation cards (spec §8)"
   },
+  "expenseCategoriesEmpty": "No category yet.",
+  "@expenseCategoriesEmpty": {
+    "description": "#4512 expense categories: expenseCategoriesEmpty"
+  },
+  "expenseCategoriesSubtitle": "The categories an expense or a receipt is filed under",
+  "@expenseCategoriesSubtitle": {
+    "description": "#4512 expense categories: expenseCategoriesSubtitle"
+  },
+  "expenseCategoriesTitle": "Expense categories",
+  "@expenseCategoriesTitle": {
+    "description": "#4512 expense categories: expenseCategoriesTitle"
+  },
+  "expenseCategoryAdd": "New category",
+  "@expenseCategoryAdd": {
+    "description": "#4512 expense categories: expenseCategoryAdd"
+  },
+  "expenseCategoryBuiltInMark": "Built in",
+  "@expenseCategoryBuiltInMark": {
+    "description": "#4512 expense categories: expenseCategoryBuiltInMark"
+  },
   "expenseCategoryCoffee": "Coffee & kitchen",
   "@expenseCategoryCoffee": {
     "description": "Expense category option"
+  },
+  "expenseCategoryEditTitle": "Edit the category",
+  "@expenseCategoryEditTitle": {
+    "description": "#4512 expense categories: expenseCategoryEditTitle"
   },
   "expenseCategoryEquipment": "Equipment",
   "@expenseCategoryEquipment": {
     "description": "Expense category option"
   },
+  "expenseCategoryMoveDown": "Move down",
+  "@expenseCategoryMoveDown": {
+    "description": "#4512 expense categories: expenseCategoryMoveDown"
+  },
+  "expenseCategoryMoveUp": "Move up",
+  "@expenseCategoryMoveUp": {
+    "description": "#4512 expense categories: expenseCategoryMoveUp"
+  },
+  "expenseCategoryName": "Name",
+  "@expenseCategoryName": {
+    "description": "#4512 expense categories: expenseCategoryName"
+  },
+  "expenseCategoryNameHint": "How the category reads on an expense, for instance Cleaning",
+  "@expenseCategoryNameHint": {
+    "description": "#4512 expense categories: expenseCategoryNameHint"
+  },
+  "expenseCategoryNameRequired": "Give the category a name.",
+  "@expenseCategoryNameRequired": {
+    "description": "#4512 expense categories: expenseCategoryNameRequired"
+  },
+  "expenseCategoryNameTaken": "Another active category already has this name.",
+  "@expenseCategoryNameTaken": {
+    "description": "#4512 expense categories: expenseCategoryNameTaken"
+  },
+  "expenseCategoryNewTitle": "New expense category",
+  "@expenseCategoryNewTitle": {
+    "description": "#4512 expense categories: expenseCategoryNewTitle"
+  },
   "expenseCategoryOther": "Other",
   "@expenseCategoryOther": {
     "description": "Expense category option"
+  },
+  "expenseCategoryRestore": "Bring back",
+  "@expenseCategoryRestore": {
+    "description": "#4512 expense categories: expenseCategoryRestore"
+  },
+  "expenseCategoryRetire": "Retire",
+  "@expenseCategoryRetire": {
+    "description": "#4512 expense categories: expenseCategoryRetire"
+  },
+  "expenseCategoryRetiredMark": "Retired",
+  "@expenseCategoryRetiredMark": {
+    "description": "#4512 expense categories: expenseCategoryRetiredMark"
+  },
+  "expenseCategoryRetiredSection": "Retired categories",
+  "@expenseCategoryRetiredSection": {
+    "description": "#4512 expense categories: expenseCategoryRetiredSection"
+  },
+  "expenseCategorySaveFailed": "The category was not saved. Try again.",
+  "@expenseCategorySaveFailed": {
+    "description": "#4512 expense categories: expenseCategorySaveFailed"
   },
   "expenseCategorySupplies": "Supplies",
   "@expenseCategorySupplies": {
@@ -16573,6 +16645,14 @@
   "featureEventsTabDesc": "Activity feed and pending confirmations.",
   "@featureEventsTabDesc": {
     "description": "One-line description under the Events tab switch"
+  },
+  "featureExpenseCategoriesDesc": "The business keeps its own list of the categories an expense is filed under: add one, rename one, put them in order, retire one that is no longer used. An expense keeps the category it was filed under.",
+  "@featureExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: featureExpenseCategoriesDesc"
+  },
+  "featureExpenseCategoriesTitle": "Expense categories",
+  "@featureExpenseCategoriesTitle": {
+    "description": "#4512 expense categories: featureExpenseCategoriesTitle"
   },
   "featureExpenseRepartitionDesc": "A shared expense (a cleaning bill, an internet upgrade, a broken chair) split over the members — equal shares, pro rata of the subscription, pro rata of usage, or a key per member — with every share previewed before it is booked. The shares land as charge lines on the next usage invoice; a reversal books credit notes. Through the validation rules. Off: no distribution.",
   "@featureExpenseRepartitionDesc": {
@@ -28296,6 +28376,10 @@
   "@masterDataCustomersDesc": {
     "description": "#4485 one line under the Billing customers card"
   },
+  "masterDataExpenseCategoriesDesc": "The categories an expense or a receipt is filed under: your own list, in your own words.",
+  "@masterDataExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: masterDataExpenseCategoriesDesc"
+  },
   "masterDataGroupCatalogue": "Catalogue",
   "@masterDataGroupCatalogue": {
     "description": "#4485 group of the Master data page: items, item groups, services"
@@ -39272,6 +39356,10 @@
   "refusalCounterUnsupported": "This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.",
   "@refusalCounterUnsupported": {
     "description": "#4184 refusal"
+  },
+  "refusalExpenseCategory": "This expense category cannot be used: pick one the business has on offer, or ask the owner to bring it back.",
+  "@refusalExpenseCategory": {
+    "description": "#4512 expense categories: refusalExpenseCategory"
   },
   "refusalExpenseVat": "The VAT of this expense is not accepted: pick a VAT rate of this business, and enter the VAT a supplier abroad charged only as the rate and amount on its document.",
   "@refusalExpenseVat": {

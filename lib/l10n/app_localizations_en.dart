@@ -11203,13 +11203,71 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventsPendingHeader => 'Waiting for your confirmation';
 
   @override
+  String get expenseCategoriesEmpty => 'No category yet.';
+
+  @override
+  String get expenseCategoriesSubtitle =>
+      'The categories an expense or a receipt is filed under';
+
+  @override
+  String get expenseCategoriesTitle => 'Expense categories';
+
+  @override
+  String get expenseCategoryAdd => 'New category';
+
+  @override
+  String get expenseCategoryBuiltInMark => 'Built in';
+
+  @override
   String get expenseCategoryCoffee => 'Coffee & kitchen';
+
+  @override
+  String get expenseCategoryEditTitle => 'Edit the category';
 
   @override
   String get expenseCategoryEquipment => 'Equipment';
 
   @override
+  String get expenseCategoryMoveDown => 'Move down';
+
+  @override
+  String get expenseCategoryMoveUp => 'Move up';
+
+  @override
+  String get expenseCategoryName => 'Name';
+
+  @override
+  String get expenseCategoryNameHint =>
+      'How the category reads on an expense, for instance Cleaning';
+
+  @override
+  String get expenseCategoryNameRequired => 'Give the category a name.';
+
+  @override
+  String get expenseCategoryNameTaken =>
+      'Another active category already has this name.';
+
+  @override
+  String get expenseCategoryNewTitle => 'New expense category';
+
+  @override
   String get expenseCategoryOther => 'Other';
+
+  @override
+  String get expenseCategoryRestore => 'Bring back';
+
+  @override
+  String get expenseCategoryRetire => 'Retire';
+
+  @override
+  String get expenseCategoryRetiredMark => 'Retired';
+
+  @override
+  String get expenseCategoryRetiredSection => 'Retired categories';
+
+  @override
+  String get expenseCategorySaveFailed =>
+      'The category was not saved. Try again.';
 
   @override
   String get expenseCategorySupplies => 'Supplies';
@@ -12441,6 +12499,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureEventsTabDesc => 'Activity feed and pending confirmations.';
+
+  @override
+  String get featureExpenseCategoriesDesc =>
+      'The business keeps its own list of the categories an expense is filed under: add one, rename one, put them in order, retire one that is no longer used. An expense keeps the category it was filed under.';
+
+  @override
+  String get featureExpenseCategoriesTitle => 'Expense categories';
 
   @override
   String get featureExpenseRepartitionDesc =>
@@ -21420,6 +21485,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get masterDataCustomersDesc => 'Who you invoice';
 
   @override
+  String get masterDataExpenseCategoriesDesc =>
+      'The categories an expense or a receipt is filed under: your own list, in your own words.';
+
+  @override
   String get masterDataGroupCatalogue => 'Catalogue';
 
   @override
@@ -29827,6 +29896,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalCounterUnsupported =>
       'This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.';
+
+  @override
+  String get refusalExpenseCategory =>
+      'This expense category cannot be used: pick one the business has on offer, or ask the owner to bring it back.';
 
   @override
   String get refusalExpenseVat =>

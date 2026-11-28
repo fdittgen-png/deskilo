@@ -417,6 +417,8 @@ enum WorkspaceFeature {
   stockManagement,
   /// #4004 — the organisation of a customer's businesses.
   organisation,
+  /// #4512 — the expense categories of the business: its own list, kept on the Master data page.
+  expenseCategories,
   /// #4165 — a standalone customer invoice, with no member-month behind it.
   standaloneInvoicing,
   /// #4164 — billing customers: who the business invoices, account or not.

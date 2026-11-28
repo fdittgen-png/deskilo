@@ -1,0 +1,90 @@
+{
+  "featureExpenseCategoriesTitle": "Ausgabenkategorien",
+  "@featureExpenseCategoriesTitle": {
+    "description": "#4512 expense categories: featureExpenseCategoriesTitle"
+  },
+  "featureExpenseCategoriesDesc": "Das Unternehmen führt seine eigene Liste der Kategorien, unter denen eine Ausgabe erfasst wird: eine hinzufügen, umbenennen, ordnen, eine nicht mehr gebrauchte stilllegen. Eine Ausgabe behält die Kategorie, unter der sie erfasst wurde.",
+  "@featureExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: featureExpenseCategoriesDesc"
+  },
+  "expenseCategoriesTitle": "Ausgabenkategorien",
+  "@expenseCategoriesTitle": {
+    "description": "#4512 expense categories: expenseCategoriesTitle"
+  },
+  "expenseCategoriesSubtitle": "Die Kategorien, unter denen eine Ausgabe oder ein Beleg erfasst wird",
+  "@expenseCategoriesSubtitle": {
+    "description": "#4512 expense categories: expenseCategoriesSubtitle"
+  },
+  "masterDataExpenseCategoriesDesc": "Die Kategorien, unter denen eine Ausgabe oder ein Beleg erfasst wird: Ihre eigene Liste, in Ihren eigenen Worten.",
+  "@masterDataExpenseCategoriesDesc": {
+    "description": "#4512 expense categories: masterDataExpenseCategoriesDesc"
+  },
+  "expenseCategoryAdd": "Neue Kategorie",
+  "@expenseCategoryAdd": {
+    "description": "#4512 expense categories: expenseCategoryAdd"
+  },
+  "expenseCategoryName": "Name",
+  "@expenseCategoryName": {
+    "description": "#4512 expense categories: expenseCategoryName"
+  },
+  "expenseCategoryNameHint": "Wie die Kategorie auf einer Ausgabe steht, zum Beispiel Reinigung",
+  "@expenseCategoryNameHint": {
+    "description": "#4512 expense categories: expenseCategoryNameHint"
+  },
+  "expenseCategoryNameRequired": "Geben Sie der Kategorie einen Namen.",
+  "@expenseCategoryNameRequired": {
+    "description": "#4512 expense categories: expenseCategoryNameRequired"
+  },
+  "expenseCategoryNameTaken": "Eine andere aktive Kategorie hat bereits diesen Namen.",
+  "@expenseCategoryNameTaken": {
+    "description": "#4512 expense categories: expenseCategoryNameTaken"
+  },
+  "expenseCategoryRetire": "Stilllegen",
+  "@expenseCategoryRetire": {
+    "description": "#4512 expense categories: expenseCategoryRetire"
+  },
+  "expenseCategoryRestore": "Wieder aktivieren",
+  "@expenseCategoryRestore": {
+    "description": "#4512 expense categories: expenseCategoryRestore"
+  },
+  "expenseCategoryRetiredMark": "Stillgelegt",
+  "@expenseCategoryRetiredMark": {
+    "description": "#4512 expense categories: expenseCategoryRetiredMark"
+  },
+  "expenseCategoryBuiltInMark": "Vorgegeben",
+  "@expenseCategoryBuiltInMark": {
+    "description": "#4512 expense categories: expenseCategoryBuiltInMark"
+  },
+  "expenseCategoryEditTitle": "Kategorie bearbeiten",
+  "@expenseCategoryEditTitle": {
+    "description": "#4512 expense categories: expenseCategoryEditTitle"
+  },
+  "expenseCategoryNewTitle": "Neue Ausgabenkategorie",
+  "@expenseCategoryNewTitle": {
+    "description": "#4512 expense categories: expenseCategoryNewTitle"
+  },
+  "expenseCategoryRetiredSection": "Stillgelegte Kategorien",
+  "@expenseCategoryRetiredSection": {
+    "description": "#4512 expense categories: expenseCategoryRetiredSection"
+  },
+  "expenseCategoriesEmpty": "Noch keine Kategorie.",
+  "@expenseCategoriesEmpty": {
+    "description": "#4512 expense categories: expenseCategoriesEmpty"
+  },
+  "refusalExpenseCategory": "Diese Ausgabenkategorie kann nicht verwendet werden: Wählen Sie eine, die das Unternehmen anbietet, oder bitten Sie den Inhaber, sie wieder zu aktivieren.",
+  "@refusalExpenseCategory": {
+    "description": "#4512 expense categories: refusalExpenseCategory"
+  },
+  "expenseCategorySaveFailed": "Die Kategorie wurde nicht gespeichert. Versuchen Sie es erneut.",
+  "@expenseCategorySaveFailed": {
+    "description": "#4512 expense categories: expenseCategorySaveFailed"
+  },
+  "expenseCategoryMoveUp": "Nach oben",
+  "@expenseCategoryMoveUp": {
+    "description": "#4512 expense categories: expenseCategoryMoveUp"
+  },
+  "expenseCategoryMoveDown": "Nach unten",
+  "@expenseCategoryMoveDown": {
+    "description": "#4512 expense categories: expenseCategoryMoveDown"
+  }
+}

@@ -64,6 +64,7 @@ String featureDescription(AppLocalizations l10n, WorkspaceFeature feature) => sw
       WorkspaceFeature.financeFaces => l10n.featureFinanceFacesDesc,
       WorkspaceFeature.paymentReminders => l10n.featurePaymentRemindersDesc,
       WorkspaceFeature.supplyExpenses => l10n.featureSupplyExpensesDesc,
+      WorkspaceFeature.expenseCategories => l10n.featureExpenseCategoriesDesc,
       WorkspaceFeature.validationScopes => l10n.featureValidationScopesDesc,
       WorkspaceFeature.validationChain => l10n.featureValidationChainDesc,
       WorkspaceFeature.richMessageRefs => l10n.featureRichMessageRefsDesc,
