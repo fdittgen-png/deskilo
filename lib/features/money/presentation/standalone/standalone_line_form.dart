@@ -375,6 +375,7 @@ class StandaloneLineEditor extends StatelessWidget {
             if (rates.length > 1)
               DropdownButtonFormField<String?>(
                 key: ValueKey('standalone-line-$index-rate'),
+                isExpanded: true,
                 initialValue: form.rateId,
                 decoration: InputDecoration(labelText: l.standaloneInvoiceLineRate),
                 items: [

@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 -- apps: additive
--- (the quote line cleaner, both draft saves and the standalone line restated whole from their live definitions; one new
+-- (the quote line cleaner, both draft saves and the standalone line restated whole from their live definitions, their uuid reads without a catch-all; one new
 --  function; no table, no stored value moves)
 --
 -- #4510 (FIN-05, #4500 package 4) -- a line of a quote or of a standalone invoice may name the catalogue service it was
@@ -18,7 +18,7 @@
 --     draft or invoice.
 -- Every function keeps its signature and its ACL (create or replace).
 
--- restates 0942 (customer_quote_line_clean)
+-- restates 0828 (customer_quote_line_clean; 0942 patched it at anchors, the text below carries them)
 CREATE OR REPLACE FUNCTION public.customer_quote_line_clean(p_line jsonb, p_index integer)
  RETURNS jsonb
  LANGUAGE plpgsql
@@ -62,13 +62,16 @@ begin
      or (coalesce(v_unit ->> 'un_ece_code', '') <> '' and (v_unit ->> 'un_ece_code') !~ '^[A-Z0-9]{2,3}$') then
     v_missing := v_missing || (v_pre || 'unit');
   end if;
-  begin v_line_id := coalesce((p_line ->> 'line_id')::uuid, gen_random_uuid());
-  exception when others then v_line_id := null; v_missing := v_missing || (v_pre || 'line_id'); end;
-  begin v_rate := nullif(p_line ->> 'vat_rate_id', '')::uuid;
-  exception when others then v_missing := v_missing || (v_pre || 'vat_rate'); end;
+  if p_line ->> 'line_id' is null then v_line_id := gen_random_uuid();
+  elsif (p_line ->> 'line_id') ~ '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$' then v_line_id := (p_line ->> 'line_id')::uuid;
+  else v_line_id := null; v_missing := v_missing || (v_pre || 'line_id'); end if;
+  if nullif(p_line ->> 'vat_rate_id', '') is null then v_rate := null;
+  elsif (p_line ->> 'vat_rate_id') ~ '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$' then v_rate := (p_line ->> 'vat_rate_id')::uuid;
+  else v_missing := v_missing || (v_pre || 'vat_rate'); end if;
   -- #4510: a line may name the catalogue service it was picked from (its own, never goods); the business's catalogue is read when the draft is saved
-  begin v_service := nullif(p_line ->> 'service_id', '')::uuid;
-  exception when others then v_missing := v_missing || (v_pre || 'service'); end;
+  if nullif(p_line ->> 'service_id', '') is null then v_service := null;
+  elsif (p_line ->> 'service_id') ~ '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$' then v_service := (p_line ->> 'service_id')::uuid;
+  else v_missing := v_missing || (v_pre || 'service'); end if;
   if v_service is not null and v_supply = 'goods' then v_missing := v_missing || (v_pre || 'service'); end if;
   if cardinality(v_missing) > 0 then
     return jsonb_build_object('line', null, 'missing', to_jsonb(v_missing));
@@ -86,7 +89,7 @@ begin
 end
 $function$;
 
--- restates 0828 (save_customer_quote_draft_v1)
+-- restates 0844 (save_customer_quote_draft_v1)
 CREATE OR REPLACE FUNCTION public.save_customer_quote_draft_v1(p_workspace_id uuid, p_quote_id uuid, p_expected_version integer, p_subject uuid, p_issued_on date, p_valid_until date, p_buyer_reference text, p_purchase_order text, p_notes text, p_lines jsonb)
  RETURNS jsonb
  LANGUAGE plpgsql
@@ -163,7 +166,7 @@ begin
 end
 $function$;
 
--- restates 0820 (save_standalone_invoice_draft_v1)
+-- restates 0826 (save_standalone_invoice_draft_v1)
 CREATE OR REPLACE FUNCTION public.save_standalone_invoice_draft_v1(p_workspace_id uuid, p_draft_id uuid, p_expected_revision integer, p_subject uuid, p_service_date date, p_due_on date, p_buyer_reference text, p_purchase_order text, p_lines jsonb)
  RETURNS jsonb
  LANGUAGE plpgsql
@@ -281,9 +284,7 @@ begin
      or (v_unit_un <> '' and v_unit_un !~ '^[A-Z0-9]{2,3}$') then
     v_missing := v_missing || (v_pre || 'unit');
   end if;
-  begin
-    v_line_id := (p_line ->> 'line_id')::uuid;
-  exception when others then v_line_id := null; end;
+  v_line_id := case when (p_line ->> 'line_id') ~ '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$' then (p_line ->> 'line_id')::uuid end;
   if v_line_id is null then v_missing := v_missing || (v_pre || 'line_id'); end if;
   if cardinality(v_missing) > 0 then
     return jsonb_build_object('line', null, 'missing', to_jsonb(v_missing));
@@ -362,12 +363,11 @@ begin
   for e in select x from jsonb_array_elements(coalesce(p_new, '[]'::jsonb)) x loop
     v_idx := v_idx + 1;
     if jsonb_typeof(e) <> 'object' or nullif(e ->> 'service_id', '') is null then continue; end if;
-    begin
-      v_id := (e ->> 'service_id')::uuid;
-    exception when others then
+    if (e ->> 'service_id') !~ '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$' then
       v_out := v_out || ('line_' || v_idx || '_service');
       continue;
-    end;
+    end if;
+    v_id := (e ->> 'service_id')::uuid;
     select * into v_svc from public.services s where s.id = v_id and s.workspace_id = p_workspace_id;
     if v_svc.id is null or coalesce(v_svc.stockable, false) or coalesce(e ->> 'supply', '') = 'goods' then
       v_out := v_out || ('line_' || v_idx || '_service');
@@ -381,5 +381,11 @@ begin
 end
 $fn$;
 revoke execute on function public.catalogue_service_lines_missing(uuid, jsonb, jsonb) from public, anon, authenticated;
+
+-- the four restated functions keep the grants they have (create or replace keeps them); stated here so the file says who may call them
+revoke execute on function public.customer_quote_line_clean(jsonb, integer) from public, anon, authenticated;
+revoke execute on function public.standalone_invoice_line_v1(jsonb, integer, text, numeric, text, date) from public, anon, authenticated;
+revoke execute on function public.save_customer_quote_draft_v1(uuid, uuid, integer, uuid, date, date, text, text, text, jsonb) from public, anon;
+revoke execute on function public.save_standalone_invoice_draft_v1(uuid, uuid, integer, uuid, date, date, text, text, jsonb) from public, anon;
 
 select public.set_deskilo_schema_version(996);
