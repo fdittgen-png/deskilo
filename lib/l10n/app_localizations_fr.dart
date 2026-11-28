@@ -9536,6 +9536,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get dunningSettingsTitle => 'Règles de relance';
 
   @override
+  String eInvoiceAddressIdentifierRefused(String scheme) {
+    return 'Cet identifiant n’a pas la forme du schéma $scheme.';
+  }
+
+  @override
+  String get eInvoiceAddressSchemeRefused =>
+      'Choisissez le schéma de l’adresse dans la liste.';
+
+  @override
   String get eInvoiceChannelGapBuyerEndpoint =>
       'l’adresse électronique du client (BT-49) sur son profil';
 
@@ -43694,6 +43703,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get unblockAction => 'Débloquer';
 
   @override
+  String get unitConversionAuthored => 'Saisie par vous';
+
+  @override
   String get unitConversionDelete => 'Supprimer';
 
   @override
@@ -43714,6 +43726,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String unitConversionLine(String from, String factor, String to) {
     return '1 $from = $factor $to';
   }
+
+  @override
+  String get unitConversionNeedsReview =>
+      'L’unité a changé depuis votre saisie : vérifiez-la et enregistrez-la de nouveau.';
 
   @override
   String get unitConversionNew => 'Ajouter une conversion';
@@ -45121,6 +45137,52 @@ class AppLocalizationsFr extends AppLocalizations {
   String vatUntilDate(String date) {
     return 'jusqu\'au $date';
   }
+
+  @override
+  String get vatex132Label => 'Activités d\'intérêt général (art. 132)';
+
+  @override
+  String get vatex132Text =>
+      'Exonération de TVA, article 132 de la directive 2006/112/CE';
+
+  @override
+  String get vatex143Label => 'Importations (art. 143)';
+
+  @override
+  String get vatex143Text =>
+      'Exonération de TVA, article 143 de la directive 2006/112/CE';
+
+  @override
+  String get vatex148Label => 'Transport international (art. 148)';
+
+  @override
+  String get vatex148Text =>
+      'Exonération de TVA, article 148 de la directive 2006/112/CE';
+
+  @override
+  String get vatex151Label =>
+      'Organismes diplomatiques et internationaux (art. 151)';
+
+  @override
+  String get vatex151Text =>
+      'Exonération de TVA, article 151 de la directive 2006/112/CE';
+
+  @override
+  String get vatex309Label => 'Services de voyage hors de l\'UE (art. 309)';
+
+  @override
+  String get vatex309Text =>
+      'Exonération de TVA, article 309 de la directive 2006/112/CE';
+
+  @override
+  String get vatex79cLabel => 'Débours pour le compte du client (art. 79 c)';
+
+  @override
+  String get vatex79cText =>
+      'Exonération de TVA, article 79, point c) de la directive 2006/112/CE';
+
+  @override
+  String get vatexOLabel => 'Non soumis à la TVA';
 
   @override
   String get viesCheckExplainer =>

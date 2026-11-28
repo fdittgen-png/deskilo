@@ -16,11 +16,16 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
+import '../../../core/ui/master_data_field.dart';
 import '../domain/measure_unit_form.dart';
 import '../domain/stock_config.dart';
+import '../domain/unece_unit_codes.dart';
 import '../domain/workspace_units.dart';
 import 'measure_unit_text.dart';
 import 'stock_config_text.dart';
+
+/// The UN/ECE codes the form offers (#4479): the Recommendation 20 / 21 list.
+final _eceOptions = [for (final e in uneceUnitCodes.entries) MasterDataOption(code: e.key, name: e.value)];
 
 /// Opens the form of [unit] (null: a new unit) over the business's [all] units. [onDone] runs once it is saved.
 Future<void> showMeasureUnitSheet(
@@ -35,11 +40,12 @@ Future<void> showMeasureUnitSheet(
   final locale = appFormatOf(context).locale;
   final isNew = unit == null;
   final fixed = unit?.builtIn ?? false;
+  final storedEce = unit?.unEceCode ?? '';
   final fields = FormControllers({
     'code': unit?.code ?? '',
     'name': unit?.label ?? '',
     'factor': unit == null ? '' : factorText(unit).replaceAll('.', decimalSeparatorOf(locale)),
-    'ece': unit?.unEceCode ?? '',
+    'ece': storedEce,
   });
   final requestId = newRequestId();
   var dimension = unit?.dimension;
@@ -53,6 +59,7 @@ Future<void> showMeasureUnitSheet(
       dimension: dimension,
       factor: factor(),
       unEceCode: fields['ece'].text,
+      storedUnEceCode: storedEce,
     ),
   );
   return showAppFormSheet(
@@ -136,12 +143,13 @@ Future<void> showMeasureUnitSheet(
           inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         ),
         const FormGap(),
-        AppTextField(
-          key: const ValueKey('measure-unit-ece'),
+        // #4479 -- the code is chosen from the Recommendation 20 / 21 list; one stored before it stays until changed
+        MasterDataField(
+          textKey: const ValueKey('measure-unit-ece'),
           controller: fields['ece'],
           fieldKey: MeasureUnitField.unEceCode.name,
           label: l10n.measureUnitEceField,
-          textInputAction: TextInputAction.done,
+          options: _eceOptions,
         ),
       ],
     ),

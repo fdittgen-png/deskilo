@@ -937,8 +937,7 @@ window.SETUP_L10N={
    "vatex151Text": "Exempt based on article 151 of Council Directive 2006/112/EC",
    "vatex309Label": "Travel services outside the EU (art. 309)",
    "vatex309Text": "Exempt based on article 309 of Council Directive 2006/112/EC",
-   "vatexOLabel": "Not subject to VAT",
-   "vatexOText": "Not subject to VAT"
+   "vatexOLabel": "Not subject to VAT"
   },
   "feature": {
    "calendarTab": [
@@ -3028,8 +3027,7 @@ window.SETUP_L10N={
    "vatex151Text": "Exonération de TVA, article 151 de la directive 2006/112/CE",
    "vatex309Label": "Services de voyage hors de l'UE (art. 309)",
    "vatex309Text": "Exonération de TVA, article 309 de la directive 2006/112/CE",
-   "vatexOLabel": "Non soumis à la TVA",
-   "vatexOText": "Non soumis à la TVA"
+   "vatexOLabel": "Non soumis à la TVA"
   },
   "feature": {
    "calendarTab": [
@@ -5119,8 +5117,7 @@ window.SETUP_L10N={
    "vatex151Text": "Steuerbefreit nach Artikel 151 der Richtlinie 2006/112/EG",
    "vatex309Label": "Reiseleistungen außerhalb der EU (Art. 309)",
    "vatex309Text": "Steuerbefreit nach Artikel 309 der Richtlinie 2006/112/EG",
-   "vatexOLabel": "Nicht der Mehrwertsteuer unterliegend",
-   "vatexOText": "Nicht der Mehrwertsteuer unterliegend"
+   "vatexOLabel": "Nicht der Mehrwertsteuer unterliegend"
   },
   "feature": {
    "calendarTab": [
@@ -7210,8 +7207,7 @@ window.SETUP_L10N={
    "vatex151Text": "Exento en virtud del artículo 151 de la Directiva 2006/112/CE",
    "vatex309Label": "Servicios de viaje fuera de la UE (art. 309)",
    "vatex309Text": "Exento en virtud del artículo 309 de la Directiva 2006/112/CE",
-   "vatexOLabel": "No sujeto al IVA",
-   "vatexOText": "No sujeto al IVA"
+   "vatexOLabel": "No sujeto al IVA"
   },
   "feature": {
    "calendarTab": [
@@ -9301,8 +9297,7 @@ window.SETUP_L10N={
    "vatex151Text": "Esente ai sensi dell'articolo 151 della direttiva 2006/112/CE",
    "vatex309Label": "Servizi di viaggio fuori dall'UE (art. 309)",
    "vatex309Text": "Esente ai sensi dell'articolo 309 della direttiva 2006/112/CE",
-   "vatexOLabel": "Non soggetto a IVA",
-   "vatexOText": "Non soggetto a IVA"
+   "vatexOLabel": "Non soggetto a IVA"
   },
   "feature": {
    "calendarTab": [

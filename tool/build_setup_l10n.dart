@@ -32,11 +32,13 @@ import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/locale/report_language.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
+import 'package:deskilo/features/money/domain/vat_exemption_reasons.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/domain/setup_obligations.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 /// The locales the page offers — the app's own, English first.
@@ -242,6 +244,16 @@ String _arbString(Map<String, dynamic> arb, String key, String locale) {
   return value;
 }
 
+/// #4501 -- the VATEX exemption reasons' names and legal wordings, which the app names too: `vatex<stem>Label` and,
+/// where it differs from the name, `vatex<stem>Text`.
+Map<String, String> _vatexWords(Map<String, dynamic> arb, String locale) => {
+      for (final codes in vatRateExemptionCodes.values)
+        for (final code in codes)
+          for (final kind in ['Label', 'Text'])
+            if (arb.containsKey('vatex${vatexArbStem(code)}$kind'))
+              'vatex${vatexArbStem(code)}$kind': _arbString(arb, 'vatex${vatexArbStem(code)}$kind', locale),
+    };
+
 /// The whole resource, as the file's exact text.
 String buildSetupL10n() {
   final names = _getterMap(File(_featureNames).readAsStringSync());
@@ -252,7 +264,7 @@ String buildSetupL10n() {
     final arb = _readJson('lib/l10n/app_$locale.arb');
     final strings = _readJson(setupStringsPath(locale));
     out[locale] = {
-      's': strings,
+      's': {...strings, ..._vatexWords(arb, locale)},
       'feature': {
         for (final f in WorkspaceFeature.values)
           f.name: [
