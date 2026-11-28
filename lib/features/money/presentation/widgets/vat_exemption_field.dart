@@ -11,6 +11,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/dropdown_field.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/vat_exemption_reasons.dart';
+import '../../providers/bank_statement_providers.dart' show currentWorkspaceProvider;
 import '../invoice_documents.dart';
 
 /// The name of [code] in the reader's language.
@@ -60,6 +61,7 @@ class VatExemptionField extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    ref.watch(currentWorkspaceProvider); // the business is read, so a pick writes its document language
     final code = vatExemptionCodeOfWording(category, value, _wordingsOf);
     final stored = value.trim();
     return Padding(
