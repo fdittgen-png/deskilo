@@ -16962,6 +16962,10 @@
     "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
   },
   "refusalChangedMeanwhile": "Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.",
+  "refusalChoiceInUse": "Un choix déjà fait ne peut être ni supprimé ni renommé : retirez-le plutôt, il reste sur les réponses qui le portent.",
+  "@refusalChoiceInUse": {
+    "description": "#4498 a choice an answer holds"
+  },
   "refusalCounterCashEntry": "Cette écriture d'espèces n'est pas acceptée : le motif n'est pas dans la liste, le montant dépasse votre limite, ou les nombres ne correspondent pas.",
   "refusalCounterChanged": "Ce ticket a changé entre-temps : rouvrez-le.",
   "refusalCounterCorrectionBeyond": "Une correction ne peut pas dépasser ce qu'il reste de la ligne d'origine.",

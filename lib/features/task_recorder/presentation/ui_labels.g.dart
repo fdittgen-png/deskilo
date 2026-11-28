@@ -1222,6 +1222,7 @@ Map<String, _Getter> _part2() => {
   'readinessReasonStaleExport': (l) => l.readinessReasonStaleExport,
   'readinessSetAsideFailed': (l) => l.readinessSetAsideFailed,
   'recordsLocationCraNotice': (l) => l.recordsLocationCraNotice,
+  'refusalChoiceInUse': (l) => l.refusalChoiceInUse,
   'refusalCounterTill': (l) => l.refusalCounterTill,
   'registerPaymentDate': (l) => l.registerPaymentDate,
   'reminderEmailNoAddress': (l) => l.reminderEmailNoAddress,

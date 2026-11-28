@@ -29875,6 +29875,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.';
 
   @override
+  String get refusalChoiceInUse =>
+      'Eine bereits gewählte Auswahl kann nicht entfernt oder umbenannt werden: Stellen Sie sie stattdessen ein, dann bleibt sie bei den Antworten erhalten, die sie enthalten.';
+
+  @override
   String get refusalCounterCashEntry =>
       'Diese Bargeldbuchung wird nicht angenommen: Der Grund steht nicht auf der Liste, der Betrag liegt über Ihrer Grenze, oder die Zahlen ergeben nicht den Betrag.';
 

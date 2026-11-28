@@ -29585,6 +29585,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This changed in the meantime. Reopen it to see where it stands.';
 
   @override
+  String get refusalChoiceInUse =>
+      'A choice that has been made cannot be removed or renamed: retire it instead, and it stays on the answers that hold it.';
+
+  @override
   String get refusalCounterCashEntry =>
       'This cash entry is not accepted: the reason is not on the list, the amount is above the limit for you, or the counts do not add up.';
 

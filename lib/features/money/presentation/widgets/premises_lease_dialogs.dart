@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
@@ -14,8 +16,8 @@ import '../../../../core/ui/app_date_picker.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/premises_lease.dart';
+import '../../providers/lease_site_names_provider.dart';
 import '../../providers/money_providers.dart' show memberLabelsProvider;
 import '../../providers/premises_lease_providers.dart';
 import '../../providers/supplier_providers.dart';
@@ -59,6 +61,9 @@ class LeaseDateButton extends StatelessWidget {
     );
   }
 }
+
+/// The most characters the covered levels of a lease take (the column's own limit).
+const _levelsMax = 300;
 
 /// Records a new lease, or amends [lease] while it is a draft or running.
 /// True once the server has it; a refusal keeps the dialog and every entry,
@@ -136,9 +141,8 @@ class _LeaseDialogState extends ConsumerState<_LeaseDialog> {
       noticeMonths: months,
       depositCents: deposit,
       indexationNote: _indexation.text.trim(),
-      areaM2: double.tryParse(_area.text.trim().replaceAll(',', '.')),
+      areaM2: parseDecimalInput(_area.text, locale: appFormatOf(context).locale, grouping: false, allowNegative: false)?.toDouble(),
       coveredLevels: _levels.text.trim(),
-      siteId: widget.lease?.siteId,
       responsibleMemberId: widget.lease?.responsibleMemberId,
       contractDocumentId: widget.lease?.contractDocumentId,
       requestId: _requestId,
@@ -168,7 +172,6 @@ class _LeaseDialogState extends ConsumerState<_LeaseDialog> {
       indexationNote: draft.indexationNote,
       areaM2: draft.areaM2,
       coveredLevels: draft.coveredLevels,
-      siteId: draft.siteId,
       responsibleMemberId: draft.responsibleMemberId,
       contractDocumentId: draft.contractDocumentId,
       requestId: _requestId,
@@ -191,7 +194,7 @@ class _LeaseDialogState extends ConsumerState<_LeaseDialog> {
   List<Widget> _references(AppLocalizations l10n) {
     final lease = widget.lease;
     if (lease == null) return const [];
-    final site = lease.siteId == null ? null : ref.watch(sitesProvider).value?.where((s) => s.id == lease.siteId).firstOrNull?.name;
+    final site = lease.siteId == null ? null : ref.watch(leaseSiteNamesProvider)[lease.siteId];
     final who = lease.responsibleMemberId == null ? null : ref.watch(memberLabelsProvider)[lease.responsibleMemberId];
     final lines = [
       if (lease.siteId != null) ('lease-site', l10n.leaseRefSite(site ?? lease.siteId!)),
@@ -287,12 +290,14 @@ class _LeaseDialogState extends ConsumerState<_LeaseDialog> {
               controller: _area,
               label: l10n.leaseFieldArea,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
             ),
+            const FormGap.small(),
             AppTextField(
               key: const ValueKey('lease-levels'),
               controller: _levels,
               label: l10n.leaseFieldLevels,
-              maxLength: 300,
+              maxLength: _levelsMax,
             ),
             ..._references(l10n),
             AppTextField(

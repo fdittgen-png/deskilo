@@ -38971,6 +38971,10 @@
   "@refusalChangedMeanwhile": {
     "description": "#1305 Shown when an invoice changed state before the action reached the server"
   },
+  "refusalChoiceInUse": "A choice that has been made cannot be removed or renamed: retire it instead, and it stays on the answers that hold it.",
+  "@refusalChoiceInUse": {
+    "description": "#4498 a choice an answer holds"
+  },
   "refusalCounterCashEntry": "This cash entry is not accepted: the reason is not on the list, the amount is above the limit for you, or the counts do not add up.",
   "@refusalCounterCashEntry": {
     "description": "#4367 setting label/hint or refusal"

@@ -16962,6 +16962,10 @@
     "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
   },
   "refusalChangedMeanwhile": "Nel frattempo è cambiato. Lo riapra per vedere a che punto è.",
+  "refusalChoiceInUse": "Una scelta già fatta non può essere rimossa né rinominata: ritiratela, e resterà sulle risposte che la contengono.",
+  "@refusalChoiceInUse": {
+    "description": "#4498 a choice an answer holds"
+  },
   "refusalCounterCashEntry": "Questa registrazione di contante non è accettata: il motivo non è nell'elenco, l'importo supera il Suo limite, oppure i conteggi non tornano.",
   "refusalCounterChanged": "Questo scontrino è cambiato nel frattempo: lo riapra.",
   "refusalCounterCorrectionBeyond": "Una correzione non può superare ciò che resta della riga originale.",

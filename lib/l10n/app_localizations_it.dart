@@ -29831,6 +29831,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nel frattempo è cambiato. Lo riapra per vedere a che punto è.';
 
   @override
+  String get refusalChoiceInUse =>
+      'Una scelta già fatta non può essere rimossa né rinominata: ritiratela, e resterà sulle risposte che la contengono.';
+
+  @override
   String get refusalCounterCashEntry =>
       'Questa registrazione di contante non è accettata: il motivo non è nell\'elenco, l\'importo supera il Suo limite, oppure i conteggi non tornano.';
 

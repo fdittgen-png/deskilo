@@ -234,7 +234,6 @@ class LeaseDraft {
     this.indexationNote = '',
     this.areaM2,
     this.coveredLevels = '',
-    this.siteId,
     this.responsibleMemberId,
     this.contractDocumentId,
   });
@@ -250,7 +249,6 @@ class LeaseDraft {
   final String indexationNote;
   final double? areaM2;
   final String coveredLevels;
-  final String? siteId;
   final String? responsibleMemberId;
   final String? contractDocumentId;
   final String requestId;
@@ -265,8 +263,7 @@ class LeaseDraft {
     'indexation_note': indexationNote,
     'area_m2': areaM2,
     'covered_levels': coveredLevels,
-    // a reference the lease holds is sent back as it is, never left out and so never dropped
-    'site_id': ?siteId,
+    // a reference the lease holds is sent back as it is; its site is not sent at all (the server keeps what a save does not name)
     'responsible_member_id': ?responsibleMemberId,
     'contract_document_id': ?contractDocumentId,
   };

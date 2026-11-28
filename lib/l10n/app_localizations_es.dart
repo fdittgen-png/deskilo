@@ -29799,6 +29799,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
 
   @override
+  String get refusalChoiceInUse =>
+      'Una opción ya elegida no se puede eliminar ni renombrar: retírela, y seguirá en las respuestas que la contienen.';
+
+  @override
   String get refusalCounterCashEntry =>
       'Este apunte de efectivo no se acepta: el motivo no está en la lista, el importe supera su límite, o las cuentas no suman.';
 

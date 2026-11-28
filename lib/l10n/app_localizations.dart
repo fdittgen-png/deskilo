@@ -47472,6 +47472,12 @@ abstract class AppLocalizations {
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
 
+  /// #4498 a choice an answer holds
+  ///
+  /// In en, this message translates to:
+  /// **'A choice that has been made cannot be removed or renamed: retire it instead, and it stays on the answers that hold it.'**
+  String get refusalChoiceInUse;
+
   /// #4367 setting label/hint or refusal
   ///
   /// In en, this message translates to:

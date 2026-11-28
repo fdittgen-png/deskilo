@@ -1,0 +1,6 @@
+{
+  "refusalChoiceInUse": "A choice that has been made cannot be removed or renamed: retire it instead, and it stays on the answers that hold it.",
+  "@refusalChoiceInUse": {
+    "description": "#4498 a choice an answer holds"
+  }
+}

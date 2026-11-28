@@ -82,7 +82,7 @@ begin
   if exists (select 1 from public.workspace_field_options o
               join public.workspace_field_values fv on fv.definition_id = d.id and fv.text_value = o.key
              where o.definition_id = d.id and not (o.key = any(v_keys))) then
-    raise exception 'a choice that has been made cannot be removed or renamed; retire it instead' using errcode = 'DKW01';
+    raise exception 'a choice that has been made cannot be removed or renamed; retire it instead' using errcode = 'DKW01', detail = jsonb_build_object('reason', 'choice_in_use')::text;
   end if;
   delete from public.workspace_field_options o
    where o.definition_id = d.id and not (o.key = any(v_keys));$n$, 'the removal of choices');

@@ -16962,6 +16962,10 @@
     "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
   },
   "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.",
+  "refusalChoiceInUse": "Eine bereits gewählte Auswahl kann nicht entfernt oder umbenannt werden: Stellen Sie sie stattdessen ein, dann bleibt sie bei den Antworten erhalten, die sie enthalten.",
+  "@refusalChoiceInUse": {
+    "description": "#4498 a choice an answer holds"
+  },
   "refusalCounterCashEntry": "Diese Bargeldbuchung wird nicht angenommen: Der Grund steht nicht auf der Liste, der Betrag liegt über Ihrer Grenze, oder die Zahlen ergeben nicht den Betrag.",
   "refusalCounterChanged": "Dieser Beleg hat sich inzwischen geändert: Öffnen Sie ihn erneut.",
   "refusalCounterCorrectionBeyond": "Eine Korrektur kann nicht über das hinausgehen, was von der ursprünglichen Zeile übrig ist.",

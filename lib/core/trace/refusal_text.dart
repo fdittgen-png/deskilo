@@ -81,6 +81,9 @@ enum KnownRefusal {
   /// #4008 (0782) — DKM01: a member who left comes back as a new member,
   /// never by changing their old row (for instance to paused).
   memberReturnsAsNew,
+
+  /// #4498 (0986) -- DKW01: a choice an answer holds is retired, never removed or renamed.
+  choiceInUse,
 }
 
 /// Substrings of server refusals that mean "you may not".
@@ -134,6 +137,8 @@ const Map<String, KnownRefusal> _codedRefusals = {
   DkCode.dkl16: KnownRefusal.counterOfflineConflict,
   // #4008 — a member who left (0782).
   DkCode.dkm01: KnownRefusal.memberReturnsAsNew,
+  // #4498 — a choice that has been made (0986).
+  DkCode.dkw01: KnownRefusal.choiceInUse,
 };
 
 /// #3811 — the server's refusal code and its DETAIL, for a screen that reads
@@ -212,6 +217,7 @@ String? _counterRefusalText(AppLocalizations l10n, KnownRefusal refusal) => swit
       KnownRefusal.counterDayOpen => l10n.refusalCounterDayOpen,
       KnownRefusal.counterOfflineConflict => l10n.refusalCounterOfflineConflict,
       KnownRefusal.memberReturnsAsNew => l10n.refusalMemberReturnsAsNew,
+      KnownRefusal.choiceInUse => l10n.refusalChoiceInUse,
       _ => null,
     };
 

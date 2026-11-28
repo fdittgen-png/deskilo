@@ -8,11 +8,10 @@ import 'dart:async';
 import 'package:deskilo/core/demo/data/premises_lease_repository.dart';
 import 'package:deskilo/features/money/domain/premises_lease.dart';
 import 'package:deskilo/features/money/presentation/widgets/premises_lease_dialogs.dart';
+import 'package:deskilo/features/money/providers/lease_site_names_provider.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/premises_lease_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
-import 'package:deskilo/features/workspace/domain/site.dart';
-import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +47,7 @@ void main() {
         overrides: [
           premisesLeaseRepositoryProvider.overrideWithValue(repo),
           suppliersProvider.overrideWith((ref, ws) async => const [Supplier(id: 'sup-1', number: '1', name: 'Landlord')]),
-          sitesProvider.overrideWith((ref) async => const [Site(id: 'site-1', workspaceId: 'ws', name: 'Main building')]),
+          leaseSiteNamesProvider.overrideWithValue(const {'site-1': 'Main building'}),
           memberLabelsProvider.overrideWithValue(const {'member-1': 'Alex Martin'}),
         ],
         child: MaterialApp(

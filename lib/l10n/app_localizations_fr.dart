@@ -29920,6 +29920,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.';
 
   @override
+  String get refusalChoiceInUse =>
+      'Un choix déjà fait ne peut être ni supprimé ni renommé : retirez-le plutôt, il reste sur les réponses qui le portent.';
+
+  @override
   String get refusalCounterCashEntry =>
       'Cette écriture d\'espèces n\'est pas acceptée : le motif n\'est pas dans la liste, le montant dépasse votre limite, ou les nombres ne correspondent pas.';
 

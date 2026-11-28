@@ -13875,6 +13875,7 @@ const Set<String> uiLabelKeys = {
   'refusalBankMatchUndoLaterFirst',
   'refusalBooksClosedPeriodDated',
   'refusalChangedMeanwhile',
+  'refusalChoiceInUse',
   'refusalCounterCashEntry',
   'refusalCounterChanged',
   'refusalCounterCorrectionBeyond',
