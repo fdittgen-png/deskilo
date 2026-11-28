@@ -33,6 +33,13 @@ void main() {
       );
     });
 
+    test('the resource editor offers the slots of the contract, the five-minute one included (#4501)', () {
+      expect(BookingGranularity.ownSlotMinutes, [5, 15, 30, 60, 1440]);
+      for (final m in BookingGranularity.ownSlotMinutes) {
+        expect(BookingGranularity.forSlot(m, BookingGranularity.flexible), isNot(BookingGranularity.flexible), reason: '$m maps to a grid');
+      }
+    });
+
     test('the server accepts exactly the slots the client maps', () {
       final sql = File('supabase/migrations/0441_resource_booking_slot.sql')
           .readAsStringSync();

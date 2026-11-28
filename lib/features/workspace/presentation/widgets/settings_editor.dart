@@ -24,6 +24,7 @@ import '../../providers/setting_places_provider.dart';
 import '../../providers/settings_providers.dart';
 import '../settings_labels.dart';
 import 'setting_place_sheet.dart';
+import 'setting_value_field.dart';
 
 /// The settings of [scope] (and [group], when given). [workspaceId] is null
 /// for the platform's own values; [canEdit] is whether the signed-in person
@@ -263,16 +264,7 @@ class _SettingTile extends ConsumerWidget {
           }
         },
         builder: (context, refresh) => [
-          AppTextField(
-            key: const ValueKey('setting-value'),
-            controller: fields['value'],
-            fieldKey: 'value',
-            label: l10n.biPrintColValue,
-            suffixText: settingUnitLabel(l10n, d.unit),
-            keyboardType: TextInputType.text,
-            maxLength: d.type == SettingType.text ? d.max?.toInt() : null,
-            helper: settingRangeLabel(l10n, d),
-          ),
+          settingValueField(l10n, d, fields, refresh),
           const FormGap(),
           AppTextField(
             key: const ValueKey('setting-note'),

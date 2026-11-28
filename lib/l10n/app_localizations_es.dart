@@ -10015,6 +10015,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get editorSlot30 => '30 minutos';
 
   @override
+  String get editorSlot5 => '5 minutos';
+
+  @override
   String get editorSlot60 => '1 hora';
 
   @override

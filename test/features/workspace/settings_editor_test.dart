@@ -42,6 +42,25 @@ final _guardrail = SettingDefinition(
   note: 'The badge reader accepts at most eight digits.',
 );
 
+final _flag = SettingDefinition(
+  key: 'dunning.send_copy',
+  type: SettingType.boolean,
+  defaultValue: false,
+  group: 'dunning',
+  scopes: {SettingScope.workspace},
+  editPermission: 'workspaceSettings',
+);
+
+final _mode = SettingDefinition(
+  key: 'dunning.mode',
+  type: SettingType.choice,
+  defaultValue: 'soft',
+  choices: ['soft', 'firm'],
+  group: 'dunning',
+  scopes: {SettingScope.workspace},
+  editPermission: 'workspaceSettings',
+);
+
 Future<FakeSettingsRepository> _pump(
   WidgetTester tester, {
   bool canEdit = true,
@@ -104,6 +123,30 @@ void main() {
     expect(store.writes.single.workspaceId, 'ws-1');
     expect(find.text('Now: 30 days'), findsOneWidget);
     expect(find.textContaining('Set for this workspace'), findsOneWidget);
+  });
+
+  testWidgets('a yes/no setting is a switch and an enum a choice among its own choices (#4501)', (tester) async {
+    final store = await _pump(tester, defs: [_flag, _mode]);
+    await tester.tap(find.byKey(const ValueKey('setting-edit-dunning.send_copy')));
+    await tester.pumpAndSettle();
+    expect(find.byType(Switch), findsOneWidget);
+    expect(find.byType(TextField), findsOneWidget, reason: 'only the note is typed');
+    await tester.tap(find.byType(Switch));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('setting-save')));
+    await tester.pumpAndSettle();
+    expect(store.writes.single.value, true);
+
+    await tester.tap(find.byKey(const ValueKey('setting-edit-dunning.mode')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('setting-value')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('setting-value')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('firm').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('setting-save')));
+    await tester.pumpAndSettle();
+    expect(store.writes.last.value, 'firm');
   });
 
   testWidgets('the history lists the versions, the closed one included', (tester) async {

@@ -112,6 +112,39 @@ void main() {
     expect(find.text('Nordlicht GmbH'), findsOneWidget);
   });
 
+  testWidgets('the region is edited with the country-aware picker and asked again when the country changes (#4501)', (tester) async {
+    final (repo, container) = await _open(tester, seeded: false);
+    await tester.tap(find.byKey(const ValueKey('billing-customer-add')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.descendant(of: find.byKey(const ValueKey('billing-customer-company')), matching: find.byType(EditableText)),
+      'Rossi SRL',
+    );
+    // France has no region to ask for; Italy asks for its province
+    expect(find.byKey(const ValueKey('billing-customer-region')), findsNothing);
+    await tester.enterText(find.byKey(const ValueKey('billing-customer-country')), 'Ital');
+    await tester.pumpAndSettle();
+    await tester.tap(find.textContaining('Italy').last);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('billing-customer-region')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('billing-customer-save')));
+    await tester.pumpAndSettle();
+    expect(repo.calls, isNot(contains('create')));
+    expect(find.text('An address in this country needs its region.'), findsOneWidget);
+
+    await tester.ensureVisible(find.byKey(const ValueKey('billing-customer-region')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('billing-customer-region')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Agrigento').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('billing-customer-save')));
+    await tester.pumpAndSettle();
+    expect(repo.calls, contains('create'));
+    final workspace = container.read(currentWorkspaceProvider).value!;
+    expect(repo.of(workspace.id).single.draft.subdivision, 'AG');
+  });
+
   testWidgets('edit: a stale revision is refused in words, the sheet stays '
       'open and nothing is saved', (tester) async {
     final (repo, container) = await _open(tester);

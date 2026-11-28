@@ -100,6 +100,14 @@ enum BookingGranularity {
         _ => workspace,
       };
 
+  /// #4501 -- the slots a resource can be booked in, read from this contract: every minute grid the server enforces, then the full
+  /// working day. The resource editor offers exactly these (and the database accepts exactly these: 0441).
+  static List<int> get ownSlotMinutes => [
+    for (final g in values)
+      if (g.isMinuteGrid) g.stepMinutes!,
+    1440,
+  ];
+
   /// The granularity for [wireName]; null / unknown values fall back to
   /// [flexible] (forward compatibility: rules written by a newer app
   /// version must not crash an older client).
