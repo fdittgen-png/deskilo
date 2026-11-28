@@ -25077,6 +25077,10 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Débloquer",
+  "unitConversionAuthored": "Saisie par vous",
+  "@unitConversionAuthored": {
+    "description": "#4479 a conversion written by a person"
+  },
   "unitConversionDelete": "Supprimer",
   "@unitConversionDelete": {
     "description": "#4479 Settings > Units of measure: the general conversions"
@@ -25119,6 +25123,10 @@
         "type": "String"
       }
     }
+  },
+  "unitConversionNeedsReview": "L’unité a changé depuis votre saisie : vérifiez-la et enregistrez-la de nouveau.",
+  "@unitConversionNeedsReview": {
+    "description": "#4479 an authored conversion whose unit was edited after it was written"
   },
   "unitConversionNew": "Ajouter une conversion",
   "@unitConversionNew": {

@@ -69431,6 +69431,12 @@ abstract class AppLocalizations {
   /// **'Unblock'**
   String get unblockAction;
 
+  /// #4479 a conversion written by a person
+  ///
+  /// In en, this message translates to:
+  /// **'Written by you'**
+  String get unitConversionAuthored;
+
   /// #4479 Settings > Units of measure: the general conversions
   ///
   /// In en, this message translates to:
@@ -69466,6 +69472,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'1 {from} = {factor} {to}'**
   String unitConversionLine(String from, String factor, String to);
+
+  /// #4479 an authored conversion whose unit was edited after it was written
+  ///
+  /// In en, this message translates to:
+  /// **'The unit changed after you wrote this: check it and save it again.'**
+  String get unitConversionNeedsReview;
 
   /// #4479 Settings > Units of measure: the general conversions
   ///

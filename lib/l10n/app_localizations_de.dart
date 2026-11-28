@@ -43637,6 +43637,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get unblockAction => 'Blockierung aufheben';
 
   @override
+  String get unitConversionAuthored => 'Von Ihnen festgelegt';
+
+  @override
   String get unitConversionDelete => 'Löschen';
 
   @override
@@ -43657,6 +43660,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String unitConversionLine(String from, String factor, String to) {
     return '1 $from = $factor $to';
   }
+
+  @override
+  String get unitConversionNeedsReview =>
+      'Die Einheit wurde nach Ihrer Eingabe geändert: bitte prüfen und erneut speichern.';
 
   @override
   String get unitConversionNew => 'Umrechnung hinzufügen';

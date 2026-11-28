@@ -56246,6 +56246,10 @@
   "@unblockAction": {
     "description": "Shown as a text in blocked people card (me)."
   },
+  "unitConversionAuthored": "Written by you",
+  "@unitConversionAuthored": {
+    "description": "#4479 a conversion written by a person"
+  },
   "unitConversionDelete": "Delete",
   "@unitConversionDelete": {
     "description": "#4479 Settings > Units of measure: the general conversions"
@@ -56288,6 +56292,10 @@
         "type": "String"
       }
     }
+  },
+  "unitConversionNeedsReview": "The unit changed after you wrote this: check it and save it again.",
+  "@unitConversionNeedsReview": {
+    "description": "#4479 an authored conversion whose unit was edited after it was written"
   },
   "unitConversionNew": "Add a conversion",
   "@unitConversionNew": {

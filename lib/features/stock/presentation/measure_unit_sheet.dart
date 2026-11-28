@@ -16,8 +16,10 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
+import '../../../core/ui/master_data_field.dart';
 import '../domain/measure_unit_form.dart';
 import '../domain/stock_config.dart';
+import '../domain/unece_unit_codes.dart';
 import '../domain/workspace_units.dart';
 import 'measure_unit_text.dart';
 import 'stock_config_text.dart';
@@ -53,6 +55,7 @@ Future<void> showMeasureUnitSheet(
       dimension: dimension,
       factor: factor(),
       unEceCode: fields['ece'].text,
+      storedUnEceCode: unit?.unEceCode ?? '',
     ),
   );
   return showAppFormSheet(
@@ -136,12 +139,13 @@ Future<void> showMeasureUnitSheet(
           inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         ),
         const FormGap(),
-        AppTextField(
-          key: const ValueKey('measure-unit-ece'),
+        // #4479 -- the code is chosen from the Recommendation 20 / 21 list; one stored before it stays until changed
+        MasterDataField(
+          textKey: const ValueKey('measure-unit-ece'),
           controller: fields['ece'],
           fieldKey: MeasureUnitField.unEceCode.name,
           label: l10n.measureUnitEceField,
-          textInputAction: TextInputAction.done,
+          options: [for (final e in uneceUnitCodes.entries) MasterDataOption(code: e.key, name: e.value)],
         ),
       ],
     ),

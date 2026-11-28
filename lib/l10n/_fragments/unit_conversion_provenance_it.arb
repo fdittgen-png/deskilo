@@ -1,0 +1,10 @@
+{
+  "unitConversionAuthored": "Scritta da lei",
+  "@unitConversionAuthored": {
+    "description": "#4479 a conversion written by a person"
+  },
+  "unitConversionNeedsReview": "L’unità è cambiata dopo la sua scrittura: la controlli e la salvi di nuovo.",
+  "@unitConversionNeedsReview": {
+    "description": "#4479 an authored conversion whose unit was edited after it was written"
+  }
+}

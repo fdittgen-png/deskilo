@@ -43153,6 +43153,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unblockAction => 'Unblock';
 
   @override
+  String get unitConversionAuthored => 'Written by you';
+
+  @override
   String get unitConversionDelete => 'Delete';
 
   @override
@@ -43173,6 +43176,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String unitConversionLine(String from, String factor, String to) {
     return '1 $from = $factor $to';
   }
+
+  @override
+  String get unitConversionNeedsReview =>
+      'The unit changed after you wrote this: check it and save it again.';
 
   @override
   String get unitConversionNew => 'Add a conversion';
