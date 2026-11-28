@@ -331,17 +331,9 @@ void main() {
         'create or replace function public.currency_minor_digits(',
       ),
     );
-    Set<String> listed(String digits) {
-      final m = RegExp(r"any \(array\[([^\]]*)\]\) then " + digits)
-          .firstMatch(body)!;
-      return {
-        for (final c in RegExp(r"'([A-Z]{3})'").allMatches(m.group(1)!))
-          c.group(1)!,
-      };
-    }
-
-    expect(listed('0'), Currencies.zeroDecimal);
-    expect(listed('3'), Currencies.threeDecimal);
+    // #4501 -- the server reads the one currency reference, whose rows test/lint/currency_reference_parity_test.dart
+    // keeps equal to the app's
+    expect(body, contains('from public.currency_reference'));
   });
 
   test('a bill in another currency sends its currency and its rate', () {

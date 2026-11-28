@@ -1,0 +1,6 @@
+{
+  "refusalExpenseVat": "No se acepta el IVA de este gasto: elija un tipo de IVA de este negocio e indique el IVA repercutido por un proveedor en el extranjero solo como el tipo y el importe de su documento.",
+  "@refusalExpenseVat": {
+    "description": "#4479 (0994) DKV02: the VAT treatment of an expense is refused"
+  }
+}

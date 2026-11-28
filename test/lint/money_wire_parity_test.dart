@@ -29,9 +29,8 @@ void main() {
   test('the TypeScript currency tables are the Dart ones', () {
     expect(_tsSet('ZERO_DECIMAL'), Currencies.zeroDecimal);
     expect(_tsSet('THREE_DECIMAL'), Currencies.threeDecimal);
-    final twoDecimal = Currencies.selectable
-        .where((c) => Currencies.minorDigits(c) == 2)
-        .toSet();
+    // #4501 -- every currency of the reference with two minor digits
+    final twoDecimal = {for (final c in currencyReference) if (c.minorDigits == 2) c.code};
     expect(_tsSet('TWO_DECIMAL'), twoDecimal);
     // Every reviewed currency, and only those, has a TypeScript exponent.
     expect({

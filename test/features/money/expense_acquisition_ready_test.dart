@@ -13,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/screens/expense_vat_kind.dart';
 import '../../helpers/screens/money_screen.dart' show pumpMoney;
 import '../../helpers/screens/supply_expense.dart' show openExpenseSheet;
 import '../../helpers/test_workspace_context.dart';
@@ -40,12 +41,21 @@ void _ready(WidgetTester tester, {required bool ready}) =>
         .read(testContextReady.notifier)
         .set(ready: ready);
 
+const _abroad = 'Bought from a supplier abroad';
+
 Future<void> _pickRate(WidgetTester tester, String prefix) async {
-  await tester.ensureVisible(_key('$prefix-vat-rate'));
-  await tester.tap(_key('$prefix-vat-rate'));
+  await pickVatKind(tester, prefix, 'VAT of this country');
+  await pickVatRate(tester, prefix, 'Normal · 8.1%');
+}
+
+/// Whether the kind picker of [prefix] offers the purchase from abroad; opens it and closes it again on the space's own VAT.
+Future<bool> _offersAbroad(WidgetTester tester, String prefix) async {
+  await tester.tap(_key('$prefix-vat-kind'));
   await tester.pumpAndSettle();
-  await tester.tap(find.text('8.1%').last);
+  final offered = find.text(_abroad).evaluate().isNotEmpty;
+  await tester.tap(find.text('VAT of this country').last);
   await tester.pumpAndSettle();
+  return offered;
 }
 
 void main() {
@@ -62,11 +72,11 @@ void main() {
     await openExpenseSheet(tester);
     await _pickRate(tester, 'expense');
     expect(_key('expense-vat-asset'), findsOneWidget);
-    expect(_key('expense-vat-acquisition'), findsNothing);
+    expect(await _offersAbroad(tester, 'expense'), isFalse);
 
     _ready(tester, ready: true);
     await tester.pumpAndSettle();
-    expect(_key('expense-vat-acquisition'), findsOneWidget);
+    expect(await _offersAbroad(tester, 'expense'), isTrue);
   });
 
   testWidgets('the scheduled expense sheet does the same', (tester) async {
@@ -89,10 +99,10 @@ void main() {
     await tester.pumpAndSettle();
     await _pickRate(tester, 'schedule');
     expect(_key('schedule-vat-asset'), findsOneWidget);
-    expect(_key('schedule-vat-acquisition'), findsNothing);
+    expect(await _offersAbroad(tester, 'schedule'), isFalse);
 
     _ready(tester, ready: true);
     await tester.pumpAndSettle();
-    expect(_key('schedule-vat-acquisition'), findsOneWidget);
+    expect(await _offersAbroad(tester, 'schedule'), isTrue);
   });
 }

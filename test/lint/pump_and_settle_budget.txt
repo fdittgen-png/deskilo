@@ -50,6 +50,7 @@
 # review {"path":"test/features/reservations/bound_confirmation_switch_test.dart","before":0,"after":20,"invariant":"each real confirmation (own-seat cancel, booking confirm, detail cancel, deletion request) is driven to its dialog or sheet, the context is switched, and the confirm tap settles on the stale refusal; the unchanged-context twins settle on the write","cost":"nine widget tests, about two seconds in all"}
 # review {"path":"test/features/money/billing_customers_screen_test.dart","before":0,"after":10,"invariant":"each test opens the real sheet and settles the list, the sheet and the refusal it shows; a stale revision and a lost answer are asserted by the words on the screen","cost":"about one second for the file"}
 # review {"path":"test/features/reservations/bound_confirmation_switch_test.dart","before":20,"after":33,"invariant":"the detail time edit (with and without a repeat), extend, end early and the hub series-preview confirmation are each driven to their picker or question, the context is switched, and the confirming tap settles on the stale refusal with no write on either installation; the unchanged-context twins settle on the one write","cost":"eight further widget tests, about three seconds in all"}
+# review {"path":"test/features/money/member_tax_certificates_test.dart","before":0,"after":13,"invariant":"#4501 a certificate's state is picked from the business country's states, or the certificate marked multistate: the sheet opens, the state list opens and the state is picked, the switch is turned, each settled once before the stored certificate or its line is read","cost":"four tests, about 3 s locally"}
 19 test/app/desk_members/members_desk_test.dart
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
@@ -114,7 +115,6 @@
 11 test/features/money/finance_attention_test.dart
 10 test/features/money/guest_pass_invoice_screen_test.dart
 12 test/features/money/guest_passes_screen_test.dart
-14 test/features/money/input_vat_test.dart
 16 test/features/money/invoice_groups_screen_test.dart
 11 test/features/money/invoice_journey_test.dart
 11 test/features/money/invoice_register_table_test.dart
@@ -125,6 +125,7 @@
 13 test/features/money/invoicing_navigation_ux_test.dart
 17 test/features/money/invoicing_wizard_test.dart
 29 test/features/money/legal_identity_test.dart
+13 test/features/money/member_tax_certificates_test.dart
 40 test/features/money/money_screen_test.dart
 44 test/features/money/my_finances_selection_test.dart
 16 test/features/money/number_sequences_screen_test.dart

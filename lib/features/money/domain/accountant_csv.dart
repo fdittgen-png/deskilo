@@ -45,6 +45,10 @@ const int accountantCsvMaxText = 1000;
 /// shared by every CSV writer since #2385: see [csvCell]. Numbers never
 /// pass through here: a credit note's `-12.00` stays a number. The
 /// stored value is untouched; only this export's text changes.
+/// #4501 -- an amount in its document's currency; a currency the reference does not hold has no digits, so its amounts
+/// stay empty (the hand-off's preflight blocks the file and names the document).
+String _amountText(int minor, String currency) => Currencies.isKnown(currency) ? minorToText(minor, currency) : '';
+
 String _accountantCsvText(String? value) =>
     csvCell(value, maxLength: accountantCsvMaxText);
 
@@ -210,9 +214,9 @@ String buildAccountantCsv({
       _accountantCsvText(invoice.title),
       _accountantCsvText(invoice.currency),
       // #1077 — the document's own currency decides the grain.
-      minorToText(invoice.netCents, invoice.currency),
-      minorToText(invoice.vatCents, invoice.currency),
-      minorToText(accountantGrossCents(invoice), invoice.currency),
+      _amountText(invoice.netCents, invoice.currency),
+      _amountText(invoice.vatCents, invoice.currency),
+      _amountText(accountantGrossCents(invoice), invoice.currency),
       // Which rates, so a reader can see at a glance that a period mixes
       // them — the single most common surprise in a coworking ledger.
       _accountantCsvText([
@@ -227,7 +231,7 @@ String buildAccountantCsv({
       day(invoice.voidedAt),
       _accountantCsvText(invoice.voidedByName),
       _accountantCsvText(invoice.replacesNumber),
-      if (match == null) '' else minorToText(match.paidCents, invoice.currency),
+      if (match == null) '' else _amountText(match.paidCents, invoice.currency),
       if (match == null) '' else day(match.matchedAt),
       // The pending/confirmed distinction is exported rather than
       // filtered. The mapped formats drop pending settlements because
@@ -238,7 +242,7 @@ String buildAccountantCsv({
       _accountantCsvText(match?.note),
       _accountantCsvText(_taxComponentsJson(invoice)),
       for (final key in taxKeys)
-        minorToText(taxes[invoice.id]![key] ?? 0, invoice.currency),
+        _amountText(taxes[invoice.id]![key] ?? 0, invoice.currency),
     ].join(','));
   }
   return buffer.toString();

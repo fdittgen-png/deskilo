@@ -1,0 +1,10 @@
+{
+  "itemGroupUnitsFollowHint": "Suivi par chaque article de ce groupe qui n’a pas d’unité propre",
+  "@itemGroupUnitsFollowHint": {
+    "description": "#4479 the group sheet: the units are followed live by the items without their own"
+  },
+  "itemGroupSetOwn": "Fixer la sienne",
+  "@itemGroupSetOwn": {
+    "description": "#4479 an item takes its own unit against its group"
+  }
+}

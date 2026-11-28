@@ -66,7 +66,7 @@ String itemGroupValueText(AppLocalizations l10n, String param, Object? value) {
 String itemGroupSummary(AppLocalizations l10n, ItemGroup g) => [
   for (final p in itemGroupEditable)
     if (g.params[p] != null) l10n.labelWithValue(itemGroupParamLabel(l10n, p), itemGroupValueText(l10n, p, g.params[p])),
-  for (final p in itemGroupProposals)
+  for (final p in [...itemGroupUnits, ...itemGroupProposals])
     // the factor is one number: its numerator speaks for the pair
     if (g.params[p] != null && p != groupParamPurchaseFactorDen && p != groupParamSaleFactorDen) l10n.labelWithValue(itemGroupParamLabel(l10n, p), _proposalText(l10n, g, p)),
 ].join(' · ');

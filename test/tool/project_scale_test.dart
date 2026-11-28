@@ -33,9 +33,6 @@ const _notUsed = {
   924, // reserved with 0922-0923 (#4432), not needed
   932, // reserved for #4436, renumbered to 0939-0940
   933, // reserved for #4436, renumbered to 0939-0940
-  992, // 2e's lane, in batch 21
-  993, // the currency reference (#4501), in batch 21
-  994, // 2e's lane, on its own branch
 };
 
 int _valueOf(List<Measure> all, String startsWith) => all

@@ -639,6 +639,11 @@ const Map<String, Set<String>> _notExportedColumns = {
     'group_id', 'group_overrides', 'tag_mode', 'count_every_days',
     'sold_by_weight', 'weight_basis', 'min_age', 'label_template',
     'till_category', 'quick_key_colour', 'deposit_item_id', 'deposit_minor',
+    // #4479 — the units an item keeps of its own against its group (purchase and sale unit, factors, sale price):
+    // overrides of the group's values, read through item_effective_core like the parameters above and set again
+    // from the group's sheet by a configuration transfer.
+    'default_purchase_unit', 'default_purchase_factor_num', 'default_purchase_factor_den',
+    'default_sale_unit', 'default_sale_factor_num', 'default_sale_factor_den', 'default_sale_price_cents',
   },
   'reservations': {
     // #4216 — whether a removed place was a hidden one: the reading rule of a
