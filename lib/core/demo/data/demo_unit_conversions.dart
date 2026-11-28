@@ -26,7 +26,17 @@ class DemoUnitConversions implements UnitConversions {
 
   /// A unit was made or its factor changed: its conversions are written again (0968 `workspace_units_relink`).
   void unitSaved(String workspaceId, WorkspaceUnit unit, List<WorkspaceUnit> all) {
-    final list = rows(workspaceId)..removeWhere((c) => c.fromUnit == unit.code || c.toUnit == unit.code);
+    // #4479 -- the generated rows of the unit are written again; an authored row stays, asked to be looked at
+    final list = rows(workspaceId);
+    for (var i = list.length - 1; i >= 0; i--) {
+      final c = list[i];
+      if (c.fromUnit != unit.code && c.toUnit != unit.code) continue;
+      if (!c.authored) {
+        list.removeAt(i);
+      } else {
+        list[i] = UnitConversion(fromUnit: c.fromUnit, toUnit: c.toUnit, factorNum: c.factorNum, factorDen: c.factorDen, authored: true, needsReview: true);
+      }
+    }
     for (final c in linkedConversions(all)) {
       if ((c.fromUnit == unit.code || c.toUnit == unit.code) && !list.any((o) => o.joins(c.fromUnit, c.toUnit))) list.add(c);
     }
@@ -58,6 +68,7 @@ class DemoUnitConversions implements UnitConversions {
       toUnit: conversion.toUnit,
       factorNum: conversion.factorNum ~/ g,
       factorDen: conversion.factorDen ~/ g,
+      authored: true,
     );
     rows(workspaceId)
       ..removeWhere((c) => c.joins(written.fromUnit, written.toUnit))

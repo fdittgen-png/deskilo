@@ -12,7 +12,14 @@ import 'workspace_units.dart';
 
 /// One general conversion: 1 [fromUnit] is [factorNum] / [factorDen] [toUnit].
 class UnitConversion {
-  const UnitConversion({required this.fromUnit, required this.toUnit, required this.factorNum, required this.factorDen});
+  const UnitConversion({
+    required this.fromUnit,
+    required this.toUnit,
+    required this.factorNum,
+    required this.factorDen,
+    this.authored = false,
+    this.needsReview = false,
+  });
 
   /// Reads a row of `unit_conversions` or the answer of `unit_conversion_save_v1`.
   factory UnitConversion.fromJson(Object? json) {
@@ -22,6 +29,8 @@ class UnitConversion {
       toUnit: r.string('to_unit'),
       factorNum: r.integer('factor_num'),
       factorDen: r.integer('factor_den'),
+      authored: r.boolOr('authored', fallback: false),
+      needsReview: r.boolOr('needs_review', fallback: false),
     );
   }
 
@@ -29,6 +38,12 @@ class UnitConversion {
   final String toUnit;
   final int factorNum;
   final int factorDen;
+
+  /// #4479 -- written by a person (kept when a unit is edited), not generated from the two units' factors.
+  final bool authored;
+
+  /// An authored conversion whose unit was edited after it was written: shown for review until it is saved again.
+  final bool needsReview;
 
   /// Whether this conversion is between [a] and [b], whichever way round it is written.
   bool joins(String a, String b) => (fromUnit == a && toUnit == b) || (fromUnit == b && toUnit == a);
