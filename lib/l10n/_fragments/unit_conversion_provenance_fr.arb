@@ -1,0 +1,10 @@
+{
+  "unitConversionAuthored": "Saisie par vous",
+  "@unitConversionAuthored": {
+    "description": "#4479 a conversion written by a person"
+  },
+  "unitConversionNeedsReview": "L’unité a changé depuis votre saisie : vérifiez-la et enregistrez-la de nouveau.",
+  "@unitConversionNeedsReview": {
+    "description": "#4479 an authored conversion whose unit was edited after it was written"
+  }
+}

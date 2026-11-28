@@ -23,6 +23,7 @@ import 'tax_reference_labels.dart';
 import 'tax_reference_language_fields.dart';
 import 'tax_reference_paper_fields.dart';
 import 'tax_reference_sales_fields.dart';
+import 'vat_exemption_field.dart';
 
 export 'tax_reference_labels.dart';
 
@@ -340,8 +341,8 @@ class _VersionForm {
         },
       );
 
-  Widget _pick(String k, String label, Iterable<String> items) =>
-      _choice(k, label, choice[k]!, items, (x) => choice[k] = x);
+  Widget _pick(String k, String label, Iterable<String> items) => _choice(k, label, choice[k]!, items, (x) => choice[k] = x);
+  Widget _exemption(String k, String label) => taxReferenceExemptionField(fields[k], category, label); // #4501
 
   List<Widget> _domainFields(AppLocalizations l10n, VoidCallback refresh) =>
       switch (domain) {
@@ -406,8 +407,8 @@ class _VersionForm {
             _choice('group', l10n.taxRefGroup, group,
                 VatGroup.values.map((g) => g.wire), (x) => group = x),
             _choice('category', l10n.taxRefCategory, category,
-                const ['S', 'Z', 'E', 'O'], (x) => category = x),
-            _text('reason', l10n.taxRefExemptionReason),
+                const ['S', 'Z', 'E', 'O'], (x) { category = x; refresh(); }),
+            _exemption('reason', l10n.taxRefExemptionReason),
             _text('position', l10n.taxRefPosition, type: TextInputType.number),
           ],
         TaxDomain.formBox => [

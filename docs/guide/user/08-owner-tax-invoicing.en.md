@@ -546,7 +546,7 @@ A group says what kind of rate this is, so the invoice puts it in the right cate
 
 1. Open [VAT](app:/vat).
 2. On each rate, when the **VAT groups** feature is on, choose a **Group**: **Standard**, **Intermediate**, **Reduced**, **Super-reduced**, **Zero rate**, **Exempt**, **Not subject**, **Deposit (outside VAT)** or **Excise-bearing**.
-3. For an exempt or not-subject group, fill the **Exemption reason** that appears.
+3. For an exempt or not-subject group, pick the **Exemption reason** that appears: the article of the EU VAT Directive that exempts it, or **Not subject to VAT**. The invoice prints its legal wording in the language of your documents; a reason written before the list stays shown until you pick one.
 4. Tap **Save**.
 
 **Good to know**
