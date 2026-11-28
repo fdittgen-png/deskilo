@@ -92,6 +92,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.counterTillLayout,
   WorkspaceFeature.counterReceiptPrinter,
   WorkspaceFeature.counterEmbeddedTerminal,
+  // #4514 — editing the cash reasons is asked for; the till reads them anyway.
+  WorkspaceFeature.counterCashReasons,
   // #4165 — a customer invoice without a member-month is asked for.
   WorkspaceFeature.standaloneInvoicing,
   // #1598 — renaming the gear a member sees is asked for, never
@@ -288,6 +290,7 @@ void main() {
       'counterTillLayout': true,
       'counterReceiptPrinter': true,
       'counterEmbeddedTerminal': true,
+      'counterCashReasons': true,
       'standaloneInvoicing': true,
       'billingCustomers': true,
       'customerQuotes': true,

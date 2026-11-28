@@ -4,7 +4,7 @@
 --
 -- #4514 (audit STK-10) -- the reasons of cash put into or taken out of a till drawer, and of a count's difference, are
 -- records of the business, not a comma-separated text.
---   * counterCashReasons       a flag under counterTillSessions, on by default: the reasons' card on Master data. The
+--   * counterCashReasons       a flag under counterTillSessions, off by default: the reasons' card on Master data. The
 --                              till reads the reasons whatever the flag; every door refuses a reason that is not active
 --                              for its process.
 --   * counter_cash_reasons     a business's reasons: a code (stable, unique in the business), the processes it serves
@@ -20,7 +20,7 @@
 --     reason                   whatever door writes it; a reason stored before keeps its text.
 -- BEGIN FEATURE REGISTRY ROWS (dart run tool/build_feature_registry_sql.dart)
 insert into public.feature_registry_entries (feature_key, parent, default_on, core, countries) values
-('counterCashReasons', 'counterTillSessions', true, false, null)
+('counterCashReasons', 'counterTillSessions', false, false, null)
 on conflict (feature_key) do update set parent = excluded.parent, default_on = excluded.default_on, core = excluded.core, countries = excluded.countries;
 -- END FEATURE REGISTRY ROWS
 
