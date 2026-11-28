@@ -286,11 +286,15 @@ abstract interface class BankStatementRepository {
 
   /// Imports [statement] read from a file whose bytes digest to
   /// [sourceSha256]; the same digest imports nothing a second time.
+  /// #4496 -- into the bank account [bankAccountId]: its earlier movements are
+  /// found whichever name their files gave the account. Null: the account the
+  /// statement's own name names.
   Future<BankImportResult> importStatement(
     String workspaceId, {
     required BankStatement statement,
     required String sourceSha256,
     required String fileName,
+    String? bankAccountId,
   });
 
   /// The writes below answer the line's status after them; null when the

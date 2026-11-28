@@ -112,11 +112,13 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
     required BankStatement statement,
     required String sourceSha256,
     required String fileName,
+    String? bankAccountId,
   }) async => BankImportResult.fromJson(
     await _client.rpc<Object?>(
-      'import_bank_statement_v1',
+      bankAccountId == null ? 'import_bank_statement_v1' : 'import_bank_statement_v2',
       params: {
         'p_workspace_id': workspaceId,
+        'p_bank_account_id': ?bankAccountId,
         'p_statement': {
           'format': statement.format.name,
           'account': statement.account,

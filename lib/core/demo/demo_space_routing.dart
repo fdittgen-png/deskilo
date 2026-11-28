@@ -22,6 +22,7 @@ import '../../features/events/providers/event_providers.dart';
 import '../../features/me/providers/me_providers.dart' show myReservationsSourcesFromMe, pendingAdmissionsFromMe;
 import '../../features/money/domain/hmrc_submission.dart';
 import '../../features/money/domain/till_drawer.dart' show DrawerSettings;
+import '../../features/money/providers/bank_account_providers.dart';
 import '../../features/money/providers/bank_statement_providers.dart';
 import '../../features/money/providers/counter_book_providers.dart';
 import '../../features/money/providers/credit_move_providers.dart';
@@ -54,6 +55,7 @@ import '../settings/settings.dart' show SettingsSet;
 import '../storage/resume_place_store.dart';
 import '../time/clock.dart';
 import 'data/bank_statement_repository.dart';
+import 'data/demo_bank_accounts.dart';
 import 'data/demo_booking_prices.dart';
 import 'data/demo_item_groups.dart';
 import 'data/demo_stock_candidates.dart';
@@ -217,6 +219,8 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
             .read(myPermissionsProvider)
             .contains(WorkspacePermission.issueInvoices));
     }),
+    // #4496 — the space's bank accounts, beside its statements.
+    bankAccountRepositoryProvider.overrideWith((ref) => demoBankAccountsOf(demoPickSpace<FakeBankStatementRepository>(ref, banks))),
     // #3060 F5 — the register a plain member reads is their own invoices,
     // as on the server.
     invoiceQueriesProvider.overrideWith((ref) {

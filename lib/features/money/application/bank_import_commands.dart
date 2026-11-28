@@ -46,6 +46,7 @@ class BankImportCommands {
     required BankFileFormat format,
     required BankImportSettings settings,
     BankCsvMapping? csv,
+    String? bankAccountId,
   }) async {
     final BankStatement statement;
     try {
@@ -67,6 +68,7 @@ class BankImportCommands {
       statement: statement,
       sourceSha256: digest,
       fileName: _cut(fileName, BankColumnWidths.fileName),
+      bankAccountId: bankAccountId,
     );
     // #2380 — the original after its statement: the server keeps a file only
     // for a statement its uploader imported (0621). A failed upload of a new
