@@ -164,7 +164,8 @@ class _GroupDraft {
       groupParamDepositItem: depositItem,
       groupParamDepositMinor: _int('depositMinor'),
       groupParamLabelTemplate: _text('labelTemplate'),
-      ..._units.parameters(),
+      // the units decide what an item sells for and costs: sent only by someone who may see it, as the VAT rate is
+      if (financeAllowed) ..._units.parameters(),
       'reorder_point_default': _decimal('reorderPoint'),
       'reorder_quantity_default': _decimal('reorderQty'),
       'home_zone_id': zone,
@@ -191,7 +192,7 @@ class _GroupDraft {
     for (final (key, field) in [('shelf', 'shelf'), ('count', 'count'), ('age', 'age')])
       if (fields.text(key).isNotEmpty && (_int(key) ?? 0) < 1) field: l10n.stockReasonOutOfRange,
     ..._tillErrors(l10n),
-    ..._units.errors(l10n),
+    if (financeAllowed) ..._units.errors(l10n),
     if (fields.text('reorderPoint').isNotEmpty && _decimal('reorderPoint') == null) 'reorderPoint': l10n.stockReasonOutOfRange,
     if (fields.text('reorderQty').isNotEmpty && (_decimal('reorderQty') == null || _isZero(_decimal('reorderQty')!))) 'reorderQty': l10n.stockReasonOutOfRange,
     if (financeAllowed && fields.text('margin').isNotEmpty && marginBpsOfPercent(decimalTextFromInput(fields.text('margin'), locale: locale, grouping: false) ?? '') == null) 'margin': l10n.stockReasonOutOfRange,
@@ -353,9 +354,11 @@ class _GroupDraft {
   List<Widget> _proposalFields(BuildContext context, AppLocalizations l10n, void Function(void Function()) edit) => [
       const FormGap(),
       // #4479 -- the units are followed by the items of the group that keep none of their own
-      Text(l10n.itemGroupUnitsFollowHint, key: const ValueKey('item-group-units-follow'), style: Theme.of(context).textTheme.bodySmall),
-      const FormGap.small(),
-      ..._units.widgets(l10n, edit, () => _preview = null),
+      if (financeAllowed) ...[
+        Text(l10n.itemGroupUnitsFollowHint, key: const ValueKey('item-group-units-follow'), style: Theme.of(context).textTheme.bodySmall),
+        const FormGap.small(),
+        ..._units.widgets(l10n, edit, () => _preview = null),
+      ],
       Text(l10n.itemGroupProposalHint, key: const ValueKey('item-group-proposals'), style: Theme.of(context).textTheme.bodySmall),
       const FormGap.small(),
       StockQuantityField(

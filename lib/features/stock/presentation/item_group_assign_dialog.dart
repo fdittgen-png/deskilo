@@ -21,6 +21,8 @@ import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../workspace/domain/workspace_permission.dart';
+import '../../workspace/providers/workspace_providers.dart';
 import '../application/stock_reads.dart';
 import '../domain/item_groups.dart';
 import '../providers/stock_providers.dart';
@@ -187,6 +189,12 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
     if (problem != null && mounted) _view.value = _view.value.said(problem);
   }
 
+  /// The units are what an item costs or sells for: changed only by someone who may manage services AND see the finances.
+  bool get _mayChangeUnits {
+    final held = ref.read(myPermissionsProvider);
+    return held.contains(WorkspacePermission.manageServices) && held.contains(WorkspacePermission.viewFinances);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -241,6 +249,7 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
             ItemGroupUnitRow(
               block: block,
               effective: data.effective,
+              canChange: _mayChangeUnits,
               onSetOwn: () => unawaited(_setOwnUnit(block, data.effective, data)),
               onUseGroup: () => unawaited(_useGroupUnits(block, data.effective)),
             ),

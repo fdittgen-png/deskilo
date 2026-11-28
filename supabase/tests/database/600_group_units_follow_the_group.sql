@@ -4,7 +4,7 @@
 -- unit and goes back to the group's; a move into a group brings the group's unit; a sub-group's value comes before its group's;
 -- the preview counts what it reaches. Nothing is written into the item by the group. Rolled back.
 begin;
-select plan(17);
+select plan(20);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -24,16 +24,16 @@ begin
   return v;
 end
 $f$;
-create or replace function pg_temp.sv(p_req int, p_group int, p_exp int, p_body text, p_apply boolean default true) returns text language sql as $f$
-  select pg_temp.run_as(pg_temp.u(1), format('select public.item_group_save_v1(%L, %L, %L, %s, %L::jsonb, %L)::text',
+create or replace function pg_temp.sv(p_req int, p_group int, p_exp int, p_body text, p_apply boolean default true, p_user int default 1) returns text language sql as $f$
+  select pg_temp.run_as(pg_temp.u(p_user), format('select public.item_group_save_v1(%L, %L, %L, %s, %L::jsonb, %L)::text',
     pg_temp.u(101), pg_temp.u(p_req), pg_temp.u(p_group), p_exp, p_body, p_apply))
 $f$;
 create or replace function pg_temp.asg(p_req int, p_item int, p_exp int, p_group int) returns text language sql as $f$
   select pg_temp.run_as(pg_temp.u(1), format('select public.item_group_assign_v1(%L, %L, %L, %s, %L, true)::text',
     pg_temp.u(101), pg_temp.u(p_req), pg_temp.u(p_item), p_exp, pg_temp.u(p_group)))
 $f$;
-create or replace function pg_temp.ovr(p_req int, p_item int, p_exp int, p_param text, p_mode text, p_value text default null) returns text language sql as $f$
-  select pg_temp.run_as(pg_temp.u(1), format('select public.item_override_save_v1(%L, %L, %L, %s, %L, %L, %L::jsonb)::text',
+create or replace function pg_temp.ovr(p_req int, p_item int, p_exp int, p_param text, p_mode text, p_value text default null, p_user int default 1) returns text language sql as $f$
+  select pg_temp.run_as(pg_temp.u(p_user), format('select public.item_override_save_v1(%L, %L, %L, %s, %L, %L, %L::jsonb)::text',
     pg_temp.u(101), pg_temp.u(p_req), pg_temp.u(p_item), p_exp, p_param, p_mode, p_value))
 $f$;
 create or replace function pg_temp.rev(p_item int) returns int language sql stable as $f$
@@ -46,12 +46,13 @@ $f$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
-values (pg_temp.u(1), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'groupunits-1@deskilo.test', '', now(), now(), now());
+select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'groupunits-' || n || '@deskilo.test', '', now(), now(), now() from generate_series(1, 2) n;
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags, role_permissions) values
   (pg_temp.u(101), 'Group units', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1),
-   '{"services": true, "stockManagement": true, "stockItemGroups": true}', '{}');
+   '{"services": true, "stockManagement": true, "stockItemGroups": true}', '{"admin": ["manageStock"]}');
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values
-  (pg_temp.u(201), pg_temp.u(101), pg_temp.u(1), true, true, 'active');
+  (pg_temp.u(201), pg_temp.u(101), pg_temp.u(1), true, true, 'active'),
+  (pg_temp.u(202), pg_temp.u(101), pg_temp.u(2), false, true, 'active');
 insert into public.workspace_units (workspace_id, code, label, dimension, factor_num, factor_den) values
   (pg_temp.u(101), 'carton', 'Carton', 'package', 1, 1),
   (pg_temp.u(101), 'pallet', 'Pallet', 'package', 1, 1);
@@ -95,6 +96,11 @@ select is(pg_temp.ovr(907, 302, pg_temp.rev(302), 'default_sale_unit', 'inherit'
 select is(pg_temp.ovr(908, 302, pg_temp.rev(302), 'default_sale_unit', 'set', '"zzz"'), 'ERR DKG11', 'an own unit that is not one of the business''s is refused');
 select is(pg_temp.ovr(909, 302, pg_temp.rev(302), 'default_sale_factor_num', 'set', '0'), 'ERR DKG11', 'and so is a factor of nothing');
 select is(pg_temp.eff(302, 'default_purchase_factor_num'), '480|group', 'the purchase factor follows the group as well');
+
+-- the units are what an item costs or sells for: the stock manager who may not see the finances changes none of them
+select is(pg_temp.sv(910, 502, 0, '{"name": "Plates", "parameters": {"default_sale_price_cents": 900}}', true, 2), 'ERR DKN01', 'a stock manager without the finances cannot give a group a sale price');
+select is(pg_temp.ovr(911, 301, pg_temp.rev(301), 'default_purchase_unit', 'set', '"carton"', 2), 'ERR DKN01', 'nor give an item its own purchase unit');
+select is(pg_temp.sv(912, 503, 0, '{"name": "Bowls"}', true, 2)::jsonb ->> 'created', 'true', 'but they still make a group, for what is not a price or a unit');
 
 select * from finish();
 rollback;

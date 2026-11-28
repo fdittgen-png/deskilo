@@ -41,10 +41,13 @@ String itemUnitBlockText(AppLocalizations l10n, AppFormat format, ItemUnitBlock 
 
 /// One block of an item: what is in force, where it comes from, and the ways to take its own or give it back.
 class ItemGroupUnitRow extends StatelessWidget {
-  const ItemGroupUnitRow({super.key, required this.block, required this.effective, required this.onSetOwn, required this.onUseGroup});
+  const ItemGroupUnitRow({super.key, required this.block, required this.effective, required this.canChange, required this.onSetOwn, required this.onUseGroup});
 
   final ItemUnitBlock block;
   final ItemEffective effective;
+
+  /// Whether the reader may change what an item costs or sells for (manage services and see the finances): the units are that.
+  final bool canChange;
   final VoidCallback onSetOwn;
   final VoidCallback onUseGroup;
 
@@ -68,13 +71,14 @@ class ItemGroupUnitRow extends StatelessWidget {
         children: [
           Text(l10n.labelWithValue(label, itemUnitBlockText(l10n, format, block, effective))),
           if (source.isNotEmpty) Text(source, key: ValueKey('item-group-unit-source-$name'), style: Theme.of(context).textTheme.bodySmall),
-          Wrap(
-            spacing: AppSpacing.sm,
-            children: [
-              TextButton(key: ValueKey('item-group-unit-own-$name'), onPressed: onSetOwn, child: Text(l10n.itemGroupSetOwn)),
-              if (_own) TextButton(key: ValueKey('item-group-unit-use-$name'), onPressed: onUseGroup, child: Text(l10n.itemGroupUseGroup)),
-            ],
-          ),
+          if (canChange)
+            Wrap(
+              spacing: AppSpacing.sm,
+              children: [
+                TextButton(key: ValueKey('item-group-unit-own-$name'), onPressed: onSetOwn, child: Text(l10n.itemGroupSetOwn)),
+                if (_own) TextButton(key: ValueKey('item-group-unit-use-$name'), onPressed: onUseGroup, child: Text(l10n.itemGroupUseGroup)),
+              ],
+            ),
         ],
       ),
     );

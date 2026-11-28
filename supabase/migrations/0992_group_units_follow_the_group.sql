@@ -29,6 +29,18 @@ alter table public.services
   add constraint services_default_purchase_factor_pair check ((default_purchase_factor_num is null) = (default_purchase_factor_den is null)),
   add constraint services_default_sale_factor_pair check ((default_sale_factor_num is null) = (default_sale_factor_den is null));
 
+-- The units now decide the price a line is sold at and the unit it is bought in, so they are what an item costs or sells for: changing them
+-- takes the same two rights as the VAT rate or the margin (manage services and see the finances), on a group and on an item. Before, as
+-- proposals no item read, they were stored without that gate.
+-- restates 0883
+create or replace function public.item_group_param_finance(p_param text)
+returns boolean language sql immutable set search_path = public as $fn$
+  select p_param in ('vat_rate_id', 'supply_class', 'price_rounding', 'target_margin_bps',
+                     'default_purchase_unit', 'default_purchase_factor_num', 'default_purchase_factor_den',
+                     'default_sale_unit', 'default_sale_factor_num', 'default_sale_factor_den', 'default_sale_price_cents');
+$fn$;
+revoke execute on function public.item_group_param_finance(text) from public, anon, authenticated;
+
 -- restates 0883 (patched by 0980)
 create or replace function public.item_group_param_kind(p_param text)
 returns text language sql immutable set search_path = public as $fn$
