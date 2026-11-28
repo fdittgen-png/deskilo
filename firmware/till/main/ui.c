@@ -148,31 +148,53 @@ void ui_toggle_pairing(const char *payload, const char *fp, const char *readable
     lv_obj_set_pos(s_pairing, 0, 0);
     lv_obj_set_style_bg_color(s_pairing, lv_color_white(), 0);
     lv_obj_set_style_radius(s_pairing, 0, 0);
+    lv_obj_set_style_pad_all(s_pairing, 0, 0);   // #4508: the glass is the layout's, edge to edge
+    lv_obj_set_style_border_width(s_pairing, 0, 0);
     lv_obj_clear_flag(s_pairing, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_add_flag(s_pairing, LV_OBJ_FLAG_CLICKABLE);
     lv_obj_add_event_cb(s_pairing, pairing_close_cb, LV_EVENT_CLICKED, NULL);
     bool wide = w > h;
-    lv_coord_t side = (wide ? h : w) - 40;   // the QR as large as the short side allows, with its quiet zone
-    lv_obj_t *qr = lv_qrcode_create(s_pairing, side, lv_color_black(), lv_color_white());
+    // #4508 -- the QR dark on light with a quiet zone of its own colour around it, and beside (or under) it one column:
+    // the readable code first, then the fingerprint and the hint, laid out so nothing overlaps or leaves the screen
+    const lv_coord_t quiet = 12;
+    lv_coord_t side = (wide ? h : w * 2 / 3) - 2 * quiet - 8;
+    lv_obj_t *box = lv_obj_create(s_pairing);   // the quiet zone: white around the code, on every glass
+    lv_obj_remove_style_all(box);
+    lv_obj_set_style_bg_color(box, lv_color_white(), 0);
+    lv_obj_set_style_bg_opa(box, LV_OPA_COVER, 0);
+    lv_obj_set_style_pad_all(box, quiet, 0);
+    lv_obj_set_size(box, side + 2 * quiet, side + 2 * quiet);
+    lv_obj_clear_flag(box, LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_CLICKABLE);
+    lv_obj_align(box, wide ? LV_ALIGN_LEFT_MID : LV_ALIGN_TOP_MID, wide ? 4 : 0, wide ? 0 : 4);
+    lv_obj_t *qr = lv_qrcode_create(box, side, lv_color_black(), lv_color_white());
     lv_qrcode_update(qr, s_pair_payload, strlen(s_pair_payload));
-    lv_obj_align(qr, wide ? LV_ALIGN_LEFT_MID : LV_ALIGN_TOP_MID, wide ? 4 : 0, wide ? 0 : 4);
-    // #4466: the readable code, large, for whoever types it instead of scanning
-    lv_obj_t *code = lv_label_create(s_pairing);
+    lv_obj_center(qr);
+    lv_obj_t *col = lv_obj_create(s_pairing);
+    lv_obj_remove_style_all(col);
+    lv_obj_set_size(col, wide ? w - side - 2 * quiet - 20 : w - 16, wide ? h - 8 : h - side - 2 * quiet - 16);
+    lv_obj_align_to(col, box, wide ? LV_ALIGN_OUT_RIGHT_MID : LV_ALIGN_OUT_BOTTOM_MID, wide ? 8 : 0, wide ? 0 : 4);
+    lv_obj_set_flex_flow(col, LV_FLEX_FLOW_COLUMN);
+    lv_obj_set_flex_align(col, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_START);
+    lv_obj_set_style_pad_row(col, 8, 0);
+    lv_obj_clear_flag(col, LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_CLICKABLE);
+    lv_obj_t *title = lv_label_create(col);
+    lv_label_set_text(title, T(S_PAIR_TITLE));
+    lv_label_set_long_mode(title, LV_LABEL_LONG_WRAP);
+    lv_obj_set_width(title, LV_PCT(100));
+    lv_obj_set_style_text_font(title, &till_font_14, 0);
+    // #4466: the readable code, as large as its 11 characters fit the column, for whoever types it instead of scanning
+    lv_obj_t *code = lv_label_create(col);
     lv_label_set_text(code, s_pair_readable);
-    lv_obj_set_style_text_font(code, w < 240 ? &till_font_20 : &till_font_28, 0);   // the narrow glass: 20, so all 11 fit
-    lv_obj_t *t = lv_label_create(s_pairing);
-    char text[256];
-    snprintf(text, sizeof text, "%s\n\n", T(S_PAIR_TITLE));
-    size_t n = strlen(text);
-    snprintf(text + n, sizeof text - n, T(S_PAIR_CODE), s_pair_fp);
-    n = strlen(text);
-    snprintf(text + n, sizeof text - n, "\n\n%s", T(S_PAIR_HINT));
-    lv_label_set_text(t, text);
+    lv_obj_set_style_text_font(code, &till_font_20, 0);
+    lv_obj_t *print = lv_label_create(col);
+    lv_label_set_text_fmt(print, T(S_PAIR_CODE), s_pair_fp);
+    lv_obj_set_style_text_font(print, &till_font_16, 0);
+    lv_obj_t *t = lv_label_create(col);
+    lv_label_set_text(t, T(S_PAIR_HINT));
     lv_label_set_long_mode(t, LV_LABEL_LONG_WRAP);
+    lv_obj_set_width(t, LV_PCT(100));
     lv_obj_set_style_text_font(t, &till_font_14, 0);
-    lv_obj_set_width(t, wide ? w - side - 24 : w - 16);
-    lv_obj_align(t, wide ? LV_ALIGN_RIGHT_MID : LV_ALIGN_BOTTOM_MID, wide ? -4 : 0, wide ? 0 : -4);
-    lv_obj_align_to(code, t, LV_ALIGN_OUT_TOP_MID, 0, -6);
+    lv_obj_set_style_text_color(t, lv_color_hex(0x444444), 0);
 }
 static void pairing_cb(lv_event_t *e) {
     if (s_settings) { lv_obj_del(s_settings); s_settings = NULL; }
