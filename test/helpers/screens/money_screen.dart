@@ -11,6 +11,8 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 
 import '../fake_event_repository.dart';
+import 'package:deskilo/features/money/domain/expense_category.dart';
+
 import '../fake_money_repository.dart';
 import '../mock_providers.dart';
 
@@ -20,6 +22,9 @@ Future<FakeMoneyRepository> pumpMoney(
   FakeEventRepository? events,
   FakeWorkspaceRepository? workspace,
   List<Override> extraOverrides = const [],
+
+  /// #4512 -- the business's expense categories; the five it starts with when null.
+  ExpenseCategoryRepository? expenseCategories,
 
   /// The scope's retry policy for a failed read; null keeps Riverpod's own.
   Duration? Function(int retryCount, Object error)? retry,
@@ -44,6 +49,7 @@ Future<FakeMoneyRepository> pumpMoney(
         money: money,
         events: events,
         workspace: workspace,
+        expenseCategories: expenseCategories,
       ).followedBy(extraOverrides).toList(),
       child: const DeskiloApp(),
     ),

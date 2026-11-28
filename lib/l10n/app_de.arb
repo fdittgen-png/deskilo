@@ -6964,7 +6964,7 @@
   "@expenseCategoryMoveUp": {
     "description": "#4512 expense categories: expenseCategoryMoveUp"
   },
-  "expenseCategoryName": "Name",
+  "expenseCategoryName": "Bezeichnung",
   "@expenseCategoryName": {
     "description": "#4512 expense categories: expenseCategoryName"
   },

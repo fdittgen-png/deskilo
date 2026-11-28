@@ -11335,7 +11335,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get expenseCategoryMoveUp => 'Nach oben';
 
   @override
-  String get expenseCategoryName => 'Name';
+  String get expenseCategoryName => 'Bezeichnung';
 
   @override
   String get expenseCategoryNameHint =>

@@ -1706,6 +1706,12 @@
       "capabilities": []
     },
     {
+      "key": "expenseCategories",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "expenseRepartition",
       "maturity": "beta",
       "lifecycle": "active",

@@ -23,7 +23,7 @@
   "@expenseCategoryAdd": {
     "description": "#4512 expense categories: expenseCategoryAdd"
   },
-  "expenseCategoryName": "Name",
+  "expenseCategoryName": "Bezeichnung",
   "@expenseCategoryName": {
     "description": "#4512 expense categories: expenseCategoryName"
   },
