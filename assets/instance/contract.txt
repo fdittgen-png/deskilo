@@ -575,6 +575,10 @@ constraint credit_products.credit_products_workspace_id_fkey FOREIGN KEY (worksp
 constraint credit_products.credit_products_workspace_id_id_key UNIQUE (workspace_id, id)
 constraint credit_products.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint credit_products.system_company_present CHECK ((company_id IS NOT NULL))
+constraint currency_reference.currency_reference_code_check CHECK ((code ~ '^[A-Z]{3}$'::text))
+constraint currency_reference.currency_reference_minor_digits_check CHECK (((minor_digits >= 0) AND (minor_digits <= 4)))
+constraint currency_reference.currency_reference_pkey PRIMARY KEY (code)
+constraint currency_reference.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint customer_quote_conversions.customer_quote_conversions_draft_id_key UNIQUE (draft_id)
 constraint customer_quote_conversions.customer_quote_conversions_invoice_id_key UNIQUE (invoice_id)
 constraint customer_quote_conversions.customer_quote_conversions_pkey PRIMARY KEY (quote_id)
@@ -3390,7 +3394,7 @@ routine public.create_subscription_level(p_workspace_id uuid, p_percent integer)
 routine public.create_workspace(p_name text, p_country_code text, p_currency_code text, p_timezone text, p_environment text, p_with_twin boolean, p_feature_flags jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:7362a342e0eb
 routine public.create_workspace_once(p_client_request_id uuid, p_name text, p_country_code text, p_currency_code text, p_timezone text, p_environment text, p_with_twin boolean, p_feature_flags jsonb, p_template_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:1be3d02c11a4
 routine public.create_workspace_twin(p_workspace_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:df10fe1153d4
-routine public.currency_minor_digits(p_currency text) -> integer | function | invoker | immutable | exec:authenticated,service_role | body:01dad38d3031
+routine public.currency_minor_digits(p_currency text) -> integer | function | invoker | stable | exec:authenticated,service_role | body:412ba865763b
 routine public.current_privacy_notice(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:18b05ca5e88e
 routine public.customer_quote_actor(p_workspace uuid) -> members | function | definer | stable | exec:service_role | body:960642c8bb9a
 routine public.customer_quote_dry_run(p_workspace uuid, p_actor members, p_subject uuid, p_lines jsonb, p_on date) -> jsonb | function | definer | volatile | exec:service_role | body:3af87de5f3cd
@@ -4571,7 +4575,7 @@ routine public.set_stock_home_v1(p_workspace_id uuid, p_item_id uuid, p_variant_
 routine public.set_supplier_bank(p_supplier_id uuid, p_account_holder text, p_iban text, p_bic text) -> integer | function | definer | volatile | exec:authenticated,service_role | body:cd9a4434261e
 routine public.set_supplier_status(p_supplier_id uuid, p_status text) -> void | function | definer | volatile | exec:authenticated,service_role | body:0d297c73d180
 routine public.set_tax_exemption_certificate(p_workspace_id uuid, p_member_id uuid, p_kind text, p_state text, p_number text, p_valid_from date, p_valid_to date, p_file_path text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:179463889b51
-routine public.set_tax_reference(p_domain text, p_country text, p_key text, p_value jsonb, p_source text, p_confirmed boolean, p_valid_from date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:0740c27295fd
+routine public.set_tax_reference(p_domain text, p_country text, p_key text, p_value jsonb, p_source text, p_confirmed boolean, p_valid_from date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a775d8f6a1ec
 routine public.set_vat_rates(p_workspace_id uuid, p_rates jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:04ca401a987c
 routine public.set_visibility(p_field text, p_audience text, p_workspaces uuid[]) -> void | function | definer | volatile | exec:authenticated,service_role | body:46ce2c8861bb
 routine public.set_visibility_if_unchanged_network_v1(p_field text, p_audience text, p_workspace_refs text[], p_expected jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:472c31a146b4
@@ -4803,6 +4807,7 @@ routine public.sync_person_preferences() -> trigger | function | definer | volat
 routine public.system_column_names() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:a9f38911774d
 routine public.system_columns_stamp() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:300c2d072fc0
 routine public.tax_reference(p_domain text, p_country text, p_on date) -> TABLE(id uuid, domain text, country text, key text, valid_from date, valid_to date, value jsonb, source text, confirmed boolean) | function | definer | stable | exec:authenticated,service_role | body:7a175f70fb39
+routine public.tax_reference_code_refusal(p_domain text, p_value jsonb, p_stored jsonb) -> text | function | invoker | stable | exec:service_role | body:7994378ada0a
 routine public.tax_reference_history(p_domain text, p_country text, p_key text) -> TABLE(id uuid, domain text, country text, key text, valid_from date, valid_to date, value jsonb, source text, confirmed boolean) | function | definer | stable | exec:authenticated,service_role | body:6d2fb6df5d0a
 routine public.tax_reference_revision(p_country text) -> text | function | definer | stable | exec:service_role | body:5294c0e41125
 routine public.tax_reference_valid(p_domain text, p_value jsonb) -> boolean | function | invoker | immutable | exec:service_role | body:56417e602ff9
@@ -5074,6 +5079,7 @@ trigger counter_till_sessions.posted_rows_no_truncate CREATE TRIGGER posted_rows
 trigger counter_till_sessions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_tills.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_tills FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger credit_products.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.credit_products FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger currency_reference.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.currency_reference FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger customer_quote_conversions.customer_quote_conversions_frozen CREATE TRIGGER customer_quote_conversions_frozen BEFORE DELETE OR UPDATE ON public.customer_quote_conversions FOR EACH ROW EXECUTE FUNCTION customer_quote_frozen()
 trigger customer_quote_conversions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.customer_quote_conversions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger customer_quote_decisions.customer_quote_decisions_frozen CREATE TRIGGER customer_quote_decisions_frozen BEFORE DELETE OR UPDATE ON public.customer_quote_decisions FOR EACH ROW EXECUTE FUNCTION customer_quote_frozen()

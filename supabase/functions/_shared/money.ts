@@ -27,12 +27,20 @@ const ZERO_DECIMAL = new Set([
 ]);
 /** Codes with THREE minor digits — Currencies.threeDecimal. */
 const THREE_DECIMAL = new Set(["BHD","IQD","JOD","KWD","LYD","OMR","TND"]);
-/** The two-decimal codes an owner may pick — Currencies.selectable (the
- * zero-decimal ones among them are listed above). */
+/** #4501 -- every other currency of the reference (deskilo_money_kernel currencyReference) has two minor digits. */
 const TWO_DECIMAL = new Set([
-  "AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP",
-  "HKD","HRK","HUF","ILS","INR","MXN","NOK",
-  "NZD","PLN","RON","SEK","SGD","TRY","USD","ZAR",
+  "AED","AFN","ALL","AMD","ANG","AOA","ARS","AUD","AWG","AZN","BAM","BBD",
+  "BDT","BGN","BMD","BND","BOB","BRL","BSD","BTN","BWP","BYN","BZD","CAD",
+  "CDF","CHF","CNY","COP","CRC","CUP","CVE","CZK","DKK","DOP","DZD","EGP",
+  "ERN","ETB","EUR","FJD","FKP","GBP","GEL","GHS","GIP","GMD","GTQ","GYD",
+  "HKD","HNL","HRK","HTG","HUF","IDR","ILS","INR","IRR","JMD","KES","KGS",
+  "KHR","KPW","KYD","KZT","LAK","LBP","LKR","LRD","LSL","MAD","MDL","MGA",
+  "MKD","MMK","MNT","MOP","MRU","MUR","MVR","MWK","MXN","MYR","MZN","NAD",
+  "NGN","NIO","NOK","NPR","NZD","PAB","PEN","PGK","PHP","PKR","PLN","QAR",
+  "RON","RSD","RUB","SAR","SBD","SCR","SDG","SEK","SGD","SHP","SLE","SOS",
+  "SRD","SSP","STN","SVC","SYP","SZL","THB","TJS","TMT","TOP","TRY","TTD",
+  "TWD","TZS","UAH","USD","UYU","UZS","VES","WST","XCD","XCG","YER","ZAR",
+  "ZMW","ZWG",
 ]);
 
 /** The largest magnitude that survives JSON (an IEEE double) exactly —

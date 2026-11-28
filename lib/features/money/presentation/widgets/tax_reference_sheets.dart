@@ -17,6 +17,7 @@ import '../../../../core/vat/threshold_effects.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/tax_reference_commands.dart';
 import '../../domain/einvoice_mandates.dart';
+import 'tax_reference_code_fields.dart';
 import 'tax_reference_component_fields.dart';
 import 'tax_reference_gate_fields.dart';
 import 'tax_reference_labels.dart';
@@ -304,18 +305,9 @@ class _VersionForm {
     };
   }
 
+  // #4501 -- a country, a currency or a time zone is picked (tax_reference_code_fields.dart)
   Widget _text(String k, String label, {bool enabled = true, TextInputType? type}) =>
-      Padding(
-        padding: const EdgeInsets.only(bottom: AppSpacing.md),
-        child: AppTextField(
-          key: ValueKey('tax-ref-$k'),
-          controller: fields[k],
-          fieldKey: k,
-          label: label,
-          enabled: enabled,
-          keyboardType: type,
-        ),
-      );
+      taxReferenceField(fields[k], k, label, enabled: enabled, type: type);
 
   Widget _choice(String k, String label, String current, Iterable<String> items,
           ValueChanged<String> onChanged) =>

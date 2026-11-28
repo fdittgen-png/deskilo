@@ -23855,7 +23855,7 @@
   "@taxCertInvalidDate": {
     "description": "#2362 sales tax: taxCertInvalidDate"
   },
-  "taxCertInvalidState": "Zwei Buchstaben oder *",
+  "taxCertInvalidState": "Wählen Sie den Bundesstaat, oder kennzeichnen Sie die Bescheinigung als Mehrstaaten-Bescheinigung.",
   "@taxCertInvalidState": {
     "description": "#2362 sales tax: taxCertInvalidState"
   },
@@ -23879,6 +23879,7 @@
   "@taxCertKindResale": {
     "description": "#2362 sales tax: taxCertKindResale"
   },
+  "taxCertMultistate": "Mehrstaaten-Bescheinigung (SST oder MTC)",
   "taxCertNumber": "Nummer der Bescheinigung",
   "@taxCertNumber": {
     "description": "#2362 sales tax: taxCertNumber"
@@ -23895,10 +23896,6 @@
   "taxCertSave": "Bescheinigung speichern",
   "@taxCertSave": {
     "description": "#2362 sales tax: taxCertSave"
-  },
-  "taxCertState": "Bundesstaat (zwei Buchstaben, oder * für eine Mehrstaaten-Bescheinigung)",
-  "@taxCertState": {
-    "description": "#2362 sales tax: taxCertState"
   },
   "taxCertSubtitle": "Sales Tax: Zeilen dieses Kunden bleiben unversteuert, solange eine Bescheinigung gilt",
   "@taxCertSubtitle": {

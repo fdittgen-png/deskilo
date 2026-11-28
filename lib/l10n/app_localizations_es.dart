@@ -41328,7 +41328,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxCertInvalidDate => 'Introduzca la fecha como AAAA-MM-DD';
 
   @override
-  String get taxCertInvalidState => 'Dos letras, o *';
+  String get taxCertInvalidState =>
+      'Elija el estado, o marque el certificado como multiestatal.';
 
   @override
   String get taxCertKind => 'Tipo';
@@ -41346,6 +41347,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxCertKindResale => 'Reventa';
 
   @override
+  String get taxCertMultistate => 'Certificado multiestatal (SST o MTC)';
+
+  @override
   String get taxCertNumber => 'Número del certificado';
 
   @override
@@ -41355,10 +41359,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taxCertSave => 'Guardar el certificado';
-
-  @override
-  String get taxCertState =>
-      'Estado (dos letras, o * para un certificado multiestatal)';
 
   @override
   String get taxCertSubtitle =>

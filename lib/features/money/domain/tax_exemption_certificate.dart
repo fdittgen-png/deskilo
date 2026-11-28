@@ -16,6 +16,9 @@ const List<String> taxExemptionKinds = [
   'other',
 ];
 
+/// #4501 (FIN-11) -- the state of a multistate certificate (SST, MTC), valid in every state that takes one.
+const multistateCertificate = '*';
+
 class TaxExemptionCertificate {
   const TaxExemptionCertificate({
     required this.id,

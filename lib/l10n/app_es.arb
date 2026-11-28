@@ -23855,7 +23855,7 @@
   "@taxCertInvalidDate": {
     "description": "#2362 sales tax: taxCertInvalidDate"
   },
-  "taxCertInvalidState": "Dos letras, o *",
+  "taxCertInvalidState": "Elija el estado, o marque el certificado como multiestatal.",
   "@taxCertInvalidState": {
     "description": "#2362 sales tax: taxCertInvalidState"
   },
@@ -23879,6 +23879,7 @@
   "@taxCertKindResale": {
     "description": "#2362 sales tax: taxCertKindResale"
   },
+  "taxCertMultistate": "Certificado multiestatal (SST o MTC)",
   "taxCertNumber": "Número del certificado",
   "@taxCertNumber": {
     "description": "#2362 sales tax: taxCertNumber"
@@ -23895,10 +23896,6 @@
   "taxCertSave": "Guardar el certificado",
   "@taxCertSave": {
     "description": "#2362 sales tax: taxCertSave"
-  },
-  "taxCertState": "Estado (dos letras, o * para un certificado multiestatal)",
-  "@taxCertState": {
-    "description": "#2362 sales tax: taxCertState"
   },
   "taxCertSubtitle": "Impuesto sobre las ventas: las líneas de este cliente salen sin impuesto mientras haya un certificado vigente",
   "@taxCertSubtitle": {
