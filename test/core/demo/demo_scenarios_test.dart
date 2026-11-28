@@ -80,6 +80,8 @@ import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/service_fulfilment.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
+import 'package:deskilo/features/money/presentation/expense_category_names.dart' show activeExpenseCategories;
+import 'package:deskilo/features/money/providers/expense_category_providers.dart' show InMemoryExpenseCategories;
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/stock/domain/handling_units.dart';
@@ -1557,6 +1559,25 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         refused = e.reason == StockRefusal.registryUnit;
       }
       return metres && kilometres && refused && all.length == 18; // the 13 built-ins, the 4 packaging units of the Demo, the drum
+    },
+  ),
+  // #4512 — expense categories: the business keeps its own list; one added is offered, one retired is not, a name is kept once.
+  WorkspaceFeature.expenseCategories: _action(
+    _owner,
+    'Ada adds Cleaning and retires Supplies: an expense is offered Cleaning and not Supplies, and a second Cleaning is refused',
+    (w) async {
+      final repo = InMemoryExpenseCategories();
+      final cleaning = await repo.save(demoFirstSpaceId, label: 'Cleaning', requestId: 'req-1');
+      final supplies = (await repo.categories(demoFirstSpaceId)).firstWhere((c) => c.code == 'supplies');
+      await repo.setRetired(demoFirstSpaceId, supplies.id, retired: true, requestId: 'req-2');
+      final offered = [for (final c in activeExpenseCategories(await repo.categories(demoFirstSpaceId))) c.code];
+      var refused = false;
+      try {
+        await repo.save(demoFirstSpaceId, label: 'cleaning', requestId: 'req-3');
+      } on PostgrestException catch (e) {
+        refused = e.details == 'label_taken';
+      }
+      return offered.contains(cleaning.code) && !offered.contains('supplies') && refused;
     },
   ),
   // #4431 — the expiry report: what expired and what is about to, by date, the five basket pieces one by one, and a place keeps

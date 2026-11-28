@@ -4,7 +4,7 @@
 #   lib/features/stock/** -- the stock lane (StockRefusal);
 #   lib/features/money/**/*till*, *counter* -- the till lane;
 #   customer_quote_editor_screen, standalone_invoice_screen, standalone_line_form -- the document composer lane.
-# total 940 in 166 files
+# total 937 in 165 files
 1 lib/core/demo/presentation/demo_setup_card.dart
 3 lib/features/auth/presentation/screens/linked_accounts_screen.dart
 2 lib/features/calendar/presentation/screens/calendar_screen.dart
@@ -77,7 +77,6 @@
 1 lib/features/money/presentation/widgets/einvoice_receipt_line.dart
 1 lib/features/money/presentation/widgets/einvoice_resolve_dialog.dart
 3 lib/features/money/presentation/widgets/expense_repartition_sheet.dart
-3 lib/features/money/presentation/widgets/expense_sheet.dart
 3 lib/features/money/presentation/widgets/invoice_integrity_chip.dart
 2 lib/features/money/presentation/widgets/legal_identity_sections.dart
 3 lib/features/money/presentation/widgets/member_tax_certificates.dart

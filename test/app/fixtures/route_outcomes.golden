@@ -82,6 +82,7 @@ signed-out on  /money/cash -> /auth
 signed-out on  /money/customers -> /auth
 signed-out on  /money/engagements -> /auth
 signed-out on  /money/engagements/:id -> /auth
+signed-out on  /money/expense-categories -> /auth
 signed-out on  /money/guest-passes -> /auth
 signed-out on  /money/payments -> /auth
 signed-out on  /money/purchase-orders -> /auth
@@ -267,6 +268,7 @@ signed-out off /money/cash -> /auth
 signed-out off /money/customers -> /auth
 signed-out off /money/engagements -> /auth
 signed-out off /money/engagements/:id -> /auth
+signed-out off /money/expense-categories -> /auth
 signed-out off /money/guest-passes -> /auth
 signed-out off /money/payments -> /auth
 signed-out off /money/purchase-orders -> /auth
@@ -452,6 +454,7 @@ no-space on  /money/cash -> /me
 no-space on  /money/customers -> /me
 no-space on  /money/engagements -> /me
 no-space on  /money/engagements/:id -> /me
+no-space on  /money/expense-categories -> /me
 no-space on  /money/guest-passes -> /me
 no-space on  /money/payments -> /me
 no-space on  /money/purchase-orders -> /me
@@ -637,6 +640,7 @@ no-space off /money/cash -> /me
 no-space off /money/customers -> /me
 no-space off /money/engagements -> /me
 no-space off /money/engagements/:id -> /me
+no-space off /money/expense-categories -> /me
 no-space off /money/guest-passes -> /me
 no-space off /money/payments -> /me
 no-space off /money/purchase-orders -> /me
@@ -822,6 +826,7 @@ member on  /money/cash -> /calendar
 member on  /money/customers -> /calendar
 member on  /money/engagements -> /calendar
 member on  /money/engagements/:id -> /calendar
+member on  /money/expense-categories -> /calendar
 member on  /money/guest-passes -> /calendar
 member on  /money/payments -> /calendar
 member on  /money/purchase-orders -> /calendar
@@ -1007,6 +1012,7 @@ member off /money/cash -> /messages
 member off /money/customers -> /messages
 member off /money/engagements -> /messages
 member off /money/engagements/:id -> /messages
+member off /money/expense-categories -> /messages
 member off /money/guest-passes -> /messages
 member off /money/payments -> /messages
 member off /money/purchase-orders -> /messages
@@ -1192,6 +1198,7 @@ admin on  /money/cash -> (open)
 admin on  /money/customers -> /money
 admin on  /money/engagements -> /money
 admin on  /money/engagements/:id -> /money
+admin on  /money/expense-categories -> /calendar
 admin on  /money/guest-passes -> /money
 admin on  /money/payments -> (open)
 admin on  /money/purchase-orders -> /money
@@ -1378,6 +1385,7 @@ admin off /money/cash -> /messages
 admin off /money/customers -> /messages
 admin off /money/engagements -> /messages
 admin off /money/engagements/:id -> /messages
+admin off /money/expense-categories -> /messages
 admin off /money/guest-passes -> /messages
 admin off /money/payments -> /messages
 admin off /money/purchase-orders -> /messages
@@ -1563,6 +1571,7 @@ owner on  /money/cash -> (open)
 owner on  /money/customers -> /money
 owner on  /money/engagements -> /money
 owner on  /money/engagements/:id -> /money
+owner on  /money/expense-categories -> (open)
 owner on  /money/guest-passes -> /money
 owner on  /money/payments -> (open)
 owner on  /money/purchase-orders -> /money
@@ -1749,6 +1758,7 @@ owner off /money/cash -> /messages
 owner off /money/customers -> /messages
 owner off /money/engagements -> /messages
 owner off /money/engagements/:id -> /messages
+owner off /money/expense-categories -> /messages
 owner off /money/guest-passes -> /messages
 owner off /money/payments -> /messages
 owner off /money/purchase-orders -> /messages

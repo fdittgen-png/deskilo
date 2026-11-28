@@ -16,9 +16,9 @@ import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/expense_category_commands.dart';
 import '../../domain/expense_category.dart';
+import '../../providers/bank_statement_providers.dart' show currentWorkspaceProvider;
 import '../../providers/expense_category_providers.dart';
 import '../expense_category_names.dart';
 
