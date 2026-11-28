@@ -19584,6 +19584,7 @@
     "description": "#4373 setting hint"
   },
   "settingHintCounterPaidOutLimit": "Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.",
+  "settingHintCounterTerminalOperatorMinutes": "Wie lange ein Kassierer, der ein Kassenterminal freigegeben hat, darauf verkauft, bevor er es erneut freigibt; nie länger als seine eigene Anmeldung.",
   "settingHintCounterTerminalPairAttempts": "Wie oft ein Code mit einem falschen Gerät oder Nachweis vorgelegt werden darf, bevor er verbraucht ist.",
   "settingHintCounterTerminalPairMinutes": "Wie lange der Code gilt, der ein Kassengerät verbindet. Eine Änderung gilt für den nächsten Code, nicht für einen bereits vergebenen.",
   "settingHintDirectoryGeocoderUrl": "Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.",
@@ -19849,6 +19850,7 @@
     "description": "#4373 setting label"
   },
   "settingLabelCounterPaidOutLimit": "Größte Entnahme ohne Freigabe",
+  "settingLabelCounterTerminalOperatorMinutes": "Kassierer eines Geräts: Minuten",
   "settingLabelCounterTerminalPairAttempts": "Verbindungscode eines Geräts: Versuche",
   "settingLabelCounterTerminalPairMinutes": "Verbindungscode eines Geräts: Minuten",
   "settingLabelDirectoryGeocoderUrl": "Adresssuchdienst",
@@ -21225,6 +21227,10 @@
   "@standaloneFieldQuantity": {
     "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
   },
+  "standaloneFieldService": "eine Leistung des Katalogs, die angeboten wird",
+  "@standaloneFieldService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneFieldService"
+  },
   "standaloneFieldStock": "Waren, die der Bestand so verkaufen kann, wie sie erfasst sind",
   "@standaloneFieldStock": {
     "description": "#4433 goods sold on an invoice: standaloneFieldStock"
@@ -21306,6 +21312,10 @@
   "@standaloneInvoiceLineNoGoods": {
     "description": "#4433 goods sold on an invoice: standaloneInvoiceLineNoGoods"
   },
+  "standaloneInvoiceLineNoService": "Keine Leistung (freie Zeile)",
+  "@standaloneInvoiceLineNoService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineNoService"
+  },
   "standaloneInvoiceLinePieces": "Etiketten der verkauften Stücke",
   "@standaloneInvoiceLinePieces": {
     "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePieces"
@@ -21329,6 +21339,10 @@
   "standaloneInvoiceLineRateDefault": "Standardsatz des Betriebs",
   "@standaloneInvoiceLineRateDefault": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineRateDefault"
+  },
+  "standaloneInvoiceLineService": "Leistung aus dem Katalog",
+  "@standaloneInvoiceLineService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineService"
   },
   "standaloneInvoiceLineUnit": "Einheit",
   "@standaloneInvoiceLineUnit": {
@@ -24533,6 +24547,8 @@
   "tillDrawerTillActive": "In Benutzung",
   "tillDrawerTillName": "Name der Kasse",
   "tillDrawerTillNewTitle": "Neue Kasse",
+  "tillDrawerTillNotes": "Scheine und Münzen dieser Kasse",
+  "tillDrawerTillNotesHint": "Die Kasse wird mit diesen gezählt. Keiner abgeschaltet: alle der Währung.",
   "tillDrawerTillSave": "Kasse speichern",
   "tillDrawerTitle": "Kassenschublade",
   "tillFailed": "Die Kasse konnte das nicht ausführen. Versuchen Sie es erneut.",

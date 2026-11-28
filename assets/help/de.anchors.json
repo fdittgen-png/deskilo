@@ -132,6 +132,7 @@
   "user.money.customers.access": "Kontozugang für einen Rechnungskunden",
   "user.money.invoices.standalone": "Eine Kundenrechnung ohne Monat",
   "user.money.quotes": "Angebote",
+  "user.money.lines.service": "Eine Zeile aus Ihren Leistungen wählen",
   "user.money.engagements": "Leistungsaufträge",
   "user.money.stock": "Lager",
   "user.money.stock.places": "Lagerorte und Adressen",

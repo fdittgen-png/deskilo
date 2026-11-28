@@ -132,6 +132,7 @@
   "user.money.customers.access": "Account access for a billing customer",
   "user.money.invoices.standalone": "A customer invoice without a month",
   "user.money.quotes": "Quotes",
+  "user.money.lines.service": "Picking a line from your services",
   "user.money.engagements": "Service engagements",
   "user.money.stock": "Stock",
   "user.money.stock.places": "Places and addresses",

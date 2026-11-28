@@ -2,7 +2,7 @@
 //
 // #4366 -- taking cash: the amount the customer gave, "exact" for the total, the change said by the till. Answers the
 // amount in minor units, or null when it was cancelled.
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show Currencies;
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show Currencies, cashNotesOf;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -82,7 +82,7 @@ class _CashDialogState extends State<_CashDialog> {
               spacing: 8,
               runSpacing: 8,
               children: [
-                for (final amount in tillCashSuggestions(widget.totalMinor, minorDigits: Currencies.minorDigits(widget.currency)))
+                for (final amount in tillCashSuggestions(widget.totalMinor, minorDigits: Currencies.minorDigits(widget.currency), notes: cashNotesOf(widget.currency)))
                   if (amount != widget.totalMinor)
                     ActionChip(
                       key: ValueKey('till-cash-note-$amount'),

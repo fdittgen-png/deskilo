@@ -2952,6 +2952,19 @@ How long a new quote stays valid when you state no end date, and the longest val
 
 On a sent quote, **Share the PDF** opens the offer as a document: a quote, with its own reference and how long it is valid, the customer, the lines and what they come to as they were frozen when it was sent (the net, the VAT per rate and the total). It is never an invoice and carries no invoice number. You can view it, save it or share it.
 
+### Picking a line from your services
+
+**Audience:** Administrator · Owner
+
+On a quote and on an invoice without a month, each line can be picked from your service catalogue instead of written from scratch. In the line, open **Service of the catalogue** and choose one. The line is filled in with the service's name (when the description is empty or still the name of the service you chose before), its price as a price that includes VAT, its VAT rate and what it supplies, and it remembers which service it came from. Choose **No service (free line)** to write an ad hoc line in your own words: both kinds can be mixed on one document.
+
+**Good to know**
+
+- Everything the service filled in can still be changed on the line. What stays on the line is what you agreed with the customer.
+- Changing or retiring the service in the catalogue afterwards never changes a quote, a draft or an invoice already written. A retired service stays shown on the line that holds it and is no longer offered for a new line.
+- Items kept in stock are not services: choose them with **Sold from stock** on the line.
+- A service that is not one of your active services is refused when the quote or the draft is saved, and the line is named.
+
 ### Service engagements
 
 **Audience:** Administrator · Owner
@@ -3148,9 +3161,9 @@ Tested so far: the bytes against goldens and a local listener. No printer model 
 
 You work a cash drawer and want to know that the money in it is right at the end of the day.
 
-Open **Till drawer** in the sales menu (it needs the till sessions feature and the right to issue invoices or to see the finances). Every till of the business is listed with its state. Someone who manages the sites adds a till with **Add a till** and can rename it or switch it off.
+Open **Till drawer** in the sales menu (it needs the till sessions feature and the right to issue invoices or to see the finances). Every till of the business is listed with its state. Someone who manages the sites adds a till with **Add a till** and can rename it or switch it off. In a till's sheet, **Notes and coins in this drawer** sets which notes and coins it is counted in; a drawer without 1 and 2 cent coins, for example, never lists them. A count naming a note or coin the till does not carry is refused.
 
-Press **Open the till**, type the **Float in the drawer** (or, when your business counts by denomination, the value of each note or coin and how many) and confirm. A till has one open session at a time, and with till sessions on the till sells only on an open session: with none open it offers **Open the till** instead of selling.
+Press **Open the till**, type the **Float in the drawer** (or, when your business counts by denomination, how many of each note and coin the till lists; a currency the app has no notes for is counted with the value of each typed) and confirm. A till has one open session at a time, and with till sessions on the till sells only on an open session: with none open it offers **Open the till** instead of selling.
 
 **Paid in or out** records cash put into or taken out of the drawer, with a **Reason** chosen from your business's list. A paid-out above the business's limit is recorded by someone who may record outgoing payments.
 
@@ -4098,6 +4111,7 @@ A till board is the small screen at the counter that takes payments. You connect
 - **Remove** ends a board's connection to the business. To use it again, connect it with a new code.
 - Typing the code beside the QR (where there is no camera) shows which board it is; to connect it, scan its QR code. A board whose QR code is not accepted for connecting needs the new firmware first.
 - A code a wrong board presents too often is used up (5 times by default). Both numbers are in the business settings: **Board connection code: minutes** and **Board connection code: attempts**.
+- A board sells only for a cashier who authorized it, in their own sign-in. **Board cashier: minutes** (30 by default) is how long one authorization lasts, never longer than the cashier's sign-in; signing out ends it.
 - A code never holds 0, O, 1, I or L. One wrong character, or two swapped, is refused at once, in words under the field; capitals, spaces and dashes do not matter.
 
 ### Organisation

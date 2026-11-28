@@ -52896,6 +52896,12 @@ abstract class AppLocalizations {
   /// **'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.'**
   String get settingHintCounterPaidOutLimit;
 
+  /// #4454 the setting counter.terminal_operator_minutes in the business settings
+  ///
+  /// In en, this message translates to:
+  /// **'How long a cashier who authorized a till board sells on it before authorizing it again; never longer than their own sign-in.'**
+  String get settingHintCounterTerminalOperatorMinutes;
+
   /// #4454 the setting counter.terminal_pair_attempts in the business settings
   ///
   /// In en, this message translates to:
@@ -53621,6 +53627,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Largest paid-out without approval'**
   String get settingLabelCounterPaidOutLimit;
+
+  /// #4454 the setting counter.terminal_operator_minutes in the business settings
+  ///
+  /// In en, this message translates to:
+  /// **'Board cashier: minutes'**
+  String get settingLabelCounterTerminalOperatorMinutes;
 
   /// #4454 the setting counter.terminal_pair_attempts in the business settings
   ///
@@ -58277,6 +58289,12 @@ abstract class AppLocalizations {
   /// **'a quantity above zero with at most six decimals'**
   String get standaloneFieldQuantity;
 
+  /// #4510 FIN-05 service catalogue as a line source: standaloneFieldService
+  ///
+  /// In en, this message translates to:
+  /// **'a service of the catalogue that is on offer'**
+  String get standaloneFieldService;
+
   /// #4433 goods sold on an invoice: standaloneFieldStock
   ///
   /// In en, this message translates to:
@@ -58391,6 +58409,12 @@ abstract class AppLocalizations {
   /// **'Nothing from stock (a service)'**
   String get standaloneInvoiceLineNoGoods;
 
+  /// #4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineNoService
+  ///
+  /// In en, this message translates to:
+  /// **'No service (free line)'**
+  String get standaloneInvoiceLineNoService;
+
   /// #4433 goods sold on an invoice: standaloneInvoiceLinePieces
   ///
   /// In en, this message translates to:
@@ -58426,6 +58450,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The business’s default rate'**
   String get standaloneInvoiceLineRateDefault;
+
+  /// #4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineService
+  ///
+  /// In en, this message translates to:
+  /// **'Service of the catalogue'**
+  String get standaloneInvoiceLineService;
 
   /// #4165 standalone invoice composer: standaloneInvoiceLineUnit
   ///
@@ -67687,6 +67717,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New till'**
   String get tillDrawerTillNewTitle;
+
+  /// #4511 the section of the till sheet listing the notes and coins its drawer carries
+  ///
+  /// In en, this message translates to:
+  /// **'Notes and coins in this drawer'**
+  String get tillDrawerTillNotes;
+
+  /// #4511 under the till notes and coins section
+  ///
+  /// In en, this message translates to:
+  /// **'The drawer is counted in these. None switched off: all of the currency\'s.'**
+  String get tillDrawerTillNotesHint;
 
   /// #4367 till sessions: the cash drawer
   ///

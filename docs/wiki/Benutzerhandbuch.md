@@ -3090,6 +3090,20 @@ Wie lange ein neues Angebot gültig bleibt, wenn Sie kein Enddatum angeben, und 
 
 Bei einem gesendeten Angebot öffnet **PDF teilen** das Angebot als Dokument: ein Angebot mit eigener Referenz und Gültigkeit, dem Kunden, den Positionen und dem, was sie ergeben, so wie beim Senden festgeschrieben (netto, Umsatzsteuer je Satz und Gesamtbetrag). Es ist nie eine Rechnung und trägt keine Rechnungsnummer. Sie können es ansehen, speichern oder teilen.
 
+<!-- anchor: user.money.lines.service -->
+### Eine Zeile aus Ihren Leistungen wählen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Auf einem Angebot und auf einer Rechnung ohne Monat kann jede Zeile aus Ihrem Leistungskatalog gewählt werden, statt sie neu zu schreiben. Öffnen Sie in der Zeile **Leistung aus dem Katalog** und wählen Sie eine. Die Zeile wird mit dem Namen der Leistung gefüllt (wenn die Beschreibung leer ist oder noch der Name der zuvor gewählten Leistung), mit ihrem Preis als Preis inklusive Umsatzsteuer, ihrem Steuersatz und dem, was sie liefert; die Zeile merkt sich, aus welcher Leistung sie stammt. Mit **Keine Leistung (freie Zeile)** schreiben Sie eine Zeile in eigenen Worten: beide Arten lassen sich in einem Dokument mischen.
+
+**Gut zu wissen**
+
+- Alles, was die Leistung eingetragen hat, bleibt in der Zeile änderbar. In der Zeile steht, was Sie mit dem Kunden vereinbart haben.
+- Eine spätere Änderung oder Stilllegung der Leistung im Katalog ändert kein bereits geschriebenes Angebot, keinen Entwurf und keine Rechnung. Eine stillgelegte Leistung bleibt in der Zeile sichtbar, die sie enthält, und wird für neue Zeilen nicht mehr angeboten.
+- Artikel im Bestand sind keine Leistungen: Wählen Sie sie in der Zeile mit **Aus dem Bestand verkauft**.
+- Eine Leistung, die nicht zu Ihren aktiven Leistungen gehört, wird beim Speichern des Angebots oder des Entwurfs abgelehnt, die Zeile wird genannt.
+
 <!-- anchor: user.money.engagements -->
 ### Leistungsaufträge
 
@@ -3296,9 +3310,9 @@ Bisher getestet: die Bytes gegen Referenzdateien und ein lokaler Empfänger. Noc
 
 Sie führen eine Kassenschublade und wollen am Tagesende wissen, dass das Geld darin stimmt.
 
-Öffnen Sie **Kassenschublade** im Verkaufsmenü (es braucht die Funktion Kassensitzungen und das Recht, Rechnungen auszustellen oder die Finanzen zu sehen). Jede Kasse des Betriebs steht mit ihrem Zustand in der Liste. Wer die Standorte verwaltet, legt mit **Kasse hinzufügen** eine Kasse an und kann sie umbenennen oder abschalten.
+Öffnen Sie **Kassenschublade** im Verkaufsmenü (es braucht die Funktion Kassensitzungen und das Recht, Rechnungen auszustellen oder die Finanzen zu sehen). Jede Kasse des Betriebs steht mit ihrem Zustand in der Liste. Wer die Standorte verwaltet, legt mit **Kasse hinzufügen** eine Kasse an und kann sie umbenennen oder abschalten. Im Blatt einer Kasse legt **Scheine und Münzen dieser Kasse** fest, mit welchen sie gezählt wird; eine Schublade ohne 1- und 2-Cent-Münzen etwa listet diese nie auf. Eine Zählung mit einem Schein oder einer Münze, die die Kasse nicht führt, wird abgelehnt.
 
-Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade** ein (oder, wenn Ihr Betrieb nach Stückelung zählt, den Wert jedes Scheins oder jeder Münze und die Anzahl) und bestätigen Sie. Eine Kasse hat jeweils eine offene Sitzung, und mit Kassensitzungen verkauft die Kasse nur auf einer offenen Sitzung: ohne offene Sitzung bietet sie **Kasse öffnen** statt des Verkaufs an.
+Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade** ein (oder, wenn Ihr Betrieb nach Stückelung zählt, die Anzahl jedes Scheins und jeder Münze, die die Kasse auflistet; eine Währung, deren Scheine die App nicht kennt, wird mit dem eingetippten Wert jedes Stücks gezählt) und bestätigen Sie. Eine Kasse hat jeweils eine offene Sitzung, und mit Kassensitzungen verkauft die Kasse nur auf einer offenen Sitzung: ohne offene Sitzung bietet sie **Kasse öffnen** statt des Verkaufs an.
 
 **Einlage oder Entnahme** erfasst Bargeld, das in die Schublade gelegt oder entnommen wird, mit einem **Grund** aus der Liste Ihres Betriebs. Eine Entnahme über dem Limit des Betriebs erfasst, wer ausgehende Zahlungen erfassen darf.
 
@@ -4303,6 +4317,7 @@ Ein Kassenterminal ist der kleine Bildschirm an der Theke, der Zahlungen annimmt
 - **Entfernen** beendet die Verbindung eines Terminals mit dem Unternehmen. Um es wieder zu nutzen, verbinden Sie es mit einem neuen Code.
 - Den Code neben dem QR-Code einzutippen (wo es keine Kamera gibt) zeigt, welches Terminal es ist; zum Verbinden scannen Sie seinen QR-Code. Ein Terminal, dessen QR-Code zum Verbinden nicht angenommen wird, braucht zuerst die neue Firmware.
 - Ein Code, den ein falsches Terminal zu oft vorlegt, ist verbraucht (standardmäßig 5-mal). Beide Zahlen stehen in den Einstellungen des Unternehmens: **Verbindungscode eines Geräts: Minuten** und **Verbindungscode eines Geräts: Versuche**.
+- Ein Terminal verkauft nur für einen Kassierer, der es in seiner eigenen Anmeldung freigegeben hat. **Kassierer eines Geräts: Minuten** (standardmäßig 30) legt fest, wie lange eine Freigabe gilt, nie länger als die Anmeldung des Kassierers; Abmelden beendet sie.
 - Ein Code enthält nie 0, O, 1, I oder L. Ein falsches Zeichen oder zwei vertauschte werden sofort abgelehnt, in Worten unter dem Feld; Groß- und Kleinschreibung, Leerzeichen und Bindestriche spielen keine Rolle.
 
 <!-- anchor: user.workspace.settings.organisation -->

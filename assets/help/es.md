@@ -2952,6 +2952,19 @@ El tiempo que un presupuesto nuevo permanece válido cuando no indica fecha de f
 
 En un presupuesto enviado, **Compartir el PDF** abre la oferta como documento: un presupuesto, con su propia referencia y su plazo de validez, el cliente, las líneas y lo que suman tal como se fijaron al enviarlo (el neto, el IVA por tipo y el total). Nunca es una factura y no lleva número de factura. Puede verlo, guardarlo o compartirlo.
 
+### Elegir una línea entre sus servicios
+
+**Público:** Administrador/a · Propietario
+
+En un presupuesto y en una factura sin mes, cada línea puede elegirse de su catálogo de servicios en lugar de escribirse desde cero. En la línea, abra **Servicio del catálogo** y elija uno. La línea se rellena con el nombre del servicio (cuando la descripción está vacía o aún lleva el nombre del servicio elegido antes), su precio como precio con IVA incluido, su tipo de IVA y lo que suministra, y recuerda de qué servicio procede. Elija **Ningún servicio (línea libre)** para escribir una línea con sus propias palabras: ambos tipos pueden mezclarse en un mismo documento.
+
+**Conviene saber**
+
+- Todo lo que rellenó el servicio sigue siendo modificable en la línea. Lo que queda en la línea es lo que acordó con el cliente.
+- Cambiar o retirar después el servicio del catálogo nunca modifica un presupuesto, un borrador ni una factura ya escritos. Un servicio retirado sigue mostrándose en la línea que lo tiene y ya no se ofrece para una línea nueva.
+- Los artículos en existencias no son servicios: elíjalos con **Vendido de las existencias** en la línea.
+- Un servicio que no es uno de sus servicios activos se rechaza al guardar el presupuesto o el borrador, y se nombra la línea.
+
 ### Servicios en curso
 
 **Público:** Administrador/a · Propietario
@@ -3148,9 +3161,9 @@ Probado hasta ahora: los bytes frente a archivos de referencia y un receptor loc
 
 Usted lleva un cajón de caja y quiere saber que el dinero que contiene es correcto al final del día.
 
-Abra **Cajón de caja** en el menú de ventas (requiere la función de sesiones de caja y el derecho de emitir facturas o de ver las finanzas). Cada caja del negocio aparece con su estado. Quien gestiona las sedes añade una caja con **Añadir una caja** y puede renombrarla o desactivarla.
+Abra **Cajón de caja** en el menú de ventas (requiere la función de sesiones de caja y el derecho de emitir facturas o de ver las finanzas). Cada caja del negocio aparece con su estado. Quien gestiona las sedes añade una caja con **Añadir una caja** y puede renombrarla o desactivarla. En la ficha de una caja, **Billetes y monedas de este cajón** fija con cuáles se cuenta; un cajón sin monedas de 1 y 2 céntimos, por ejemplo, nunca las lista. Un recuento que nombra un billete o una moneda que la caja no lleva se rechaza.
 
-Pulse **Abrir la caja**, escriba el **Fondo del cajón** (o, si su negocio cuenta por denominación, el valor de cada billete o moneda y cuántos hay) y confirme. Una caja tiene una sola sesión abierta a la vez, y con las sesiones de caja la caja solo vende sobre una sesión abierta: sin ninguna abierta, ofrece **Abrir la caja** en lugar de vender.
+Pulse **Abrir la caja**, escriba el **Fondo del cajón** (o, si su negocio cuenta por denominación, cuántos hay de cada billete y moneda que la caja lista; una moneda cuyos billetes la aplicación no conoce se cuenta escribiendo el valor de cada uno) y confirme. Una caja tiene una sola sesión abierta a la vez, y con las sesiones de caja la caja solo vende sobre una sesión abierta: sin ninguna abierta, ofrece **Abrir la caja** en lugar de vender.
 
 **Entrada o salida de efectivo** registra el dinero puesto en el cajón o sacado de él, con un **Motivo** elegido de la lista de su negocio. Una salida por encima del límite del negocio la registra quien puede registrar pagos salientes.
 
@@ -4098,6 +4111,7 @@ Un terminal de caja es la pequeña pantalla del mostrador que cobra. Lo conecta 
 - **Quitar** pone fin a la conexión de un terminal con la empresa. Para volver a usarlo, conéctelo con un código nuevo.
 - Escribir el código junto al QR (donde no hay cámara) muestra qué terminal es; para conectarlo, escanee su código QR. Un terminal cuyo código QR no se acepta para conectar necesita primero el nuevo firmware.
 - Un código que un terminal equivocado presenta demasiadas veces se agota (5 veces por defecto). Ambos números están en la configuración de la empresa: **Código de conexión de un dispositivo: minutos** y **Código de conexión de un dispositivo: intentos**.
+- Un terminal solo vende para un cajero que lo autorizó desde su propia sesión. **Cajero de un dispositivo: minutos** (30 por defecto) fija cuánto dura una autorización, nunca más que la sesión del cajero; cerrar la sesión la termina.
 - Un código nunca contiene 0, O, 1, I ni L. Un carácter erróneo, o dos intercambiados, se rechaza al instante, con palabras bajo el campo; mayúsculas, espacios y guiones no importan.
 
 ### Organización

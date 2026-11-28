@@ -82,6 +82,8 @@ abstract final class SettingDefaults {
   static const int counterOfflinePriceTolerancePercent = 0;
   /// `counter.paid_out_limit_minor`
   static const int counterPaidOutLimitMinor = 0;
+  /// `counter.terminal_operator_minutes`
+  static const int counterTerminalOperatorMinutes = 30;
   /// `counter.terminal_pair_attempts`
   static const int counterTerminalPairAttempts = 5;
   /// `counter.terminal_pair_minutes`

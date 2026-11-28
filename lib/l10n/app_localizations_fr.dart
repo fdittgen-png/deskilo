@@ -33366,6 +33366,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le plus grand montant, en unités mineures de la devise de l\'entreprise (centimes), d\'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.';
 
   @override
+  String get settingHintCounterTerminalOperatorMinutes =>
+      'Combien de temps un caissier qui a autorisé un terminal de caisse y vend avant de l\'autoriser à nouveau ; jamais plus longtemps que sa propre connexion.';
+
+  @override
   String get settingHintCounterTerminalPairAttempts =>
       'Combien de fois un code peut être présenté avec un mauvais appareil ou une mauvaise preuve avant d\'être épuisé.';
 
@@ -33832,6 +33836,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelCounterPaidOutLimit =>
       'Plus grand retrait sans autorisation';
+
+  @override
+  String get settingLabelCounterTerminalOperatorMinutes =>
+      'Caissier d\'un appareil : minutes';
 
   @override
   String get settingLabelCounterTerminalPairAttempts =>
@@ -36829,6 +36837,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'une quantité supérieure à zéro, avec six décimales au plus';
 
   @override
+  String get standaloneFieldService =>
+      'un service du catalogue qui est proposé';
+
+  @override
   String get standaloneFieldStock =>
       'des biens que le stock peut vendre tels que saisis';
 
@@ -36892,6 +36904,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get standaloneInvoiceLineNoGoods => 'Rien du stock (une prestation)';
 
   @override
+  String get standaloneInvoiceLineNoService => 'Aucun service (ligne libre)';
+
+  @override
   String get standaloneInvoiceLinePieces => 'Étiquettes des pièces vendues';
 
   @override
@@ -36910,6 +36925,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get standaloneInvoiceLineRateDefault =>
       'Le taux par défaut de l’entreprise';
+
+  @override
+  String get standaloneInvoiceLineService => 'Service du catalogue';
 
   @override
   String get standaloneInvoiceLineUnit => 'Unité';
@@ -42584,6 +42602,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tillDrawerTillNewTitle => 'Nouvelle caisse';
+
+  @override
+  String get tillDrawerTillNotes => 'Billets et pièces de ce tiroir';
+
+  @override
+  String get tillDrawerTillNotesHint =>
+      'Le tiroir est compté avec ceux-ci. Aucun désactivé : tous ceux de la devise.';
 
   @override
   String get tillDrawerTillSave => 'Enregistrer la caisse';

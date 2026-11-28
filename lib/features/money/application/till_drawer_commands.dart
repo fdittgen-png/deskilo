@@ -23,6 +23,13 @@ class TillDrawerCommands {
     return till;
   }
 
+  /// #4511 -- the notes and coins a till's drawer carries; empty is every current one of the currency.
+  Future<List<int>?> setTillDenominations({required String tillId, required List<int> values}) async {
+    final picked = await _port.setTillDenominations(workspaceId, tillId: tillId, values: values);
+    _ref.invalidate(tillDrawerProvider(workspaceId));
+    return picked;
+  }
+
   Future<DrawerOpened> openSession({required String requestId, required String tillId, required int floatMinor, Denominations? denominations}) async {
     final opened = await _port.openSession(workspaceId, requestId: requestId, tillId: tillId, floatMinor: floatMinor, denominations: denominations);
     _ref.invalidate(tillDrawerProvider(workspaceId));

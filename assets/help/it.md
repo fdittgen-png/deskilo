@@ -2952,6 +2952,19 @@ Per quanto tempo un nuovo preventivo resta valido quando non indica una data di 
 
 Su un preventivo inviato, **Condividi il PDF** apre l’offerta come documento: un preventivo, con un riferimento proprio e la durata di validità, il cliente, le righe e quanto risultano, così come sono state fissate all’invio (il netto, l’IVA per aliquota e il totale). Non è mai una fattura e non reca alcun numero di fattura. Può visualizzarlo, salvarlo o condividerlo.
 
+### Scegliere una riga tra i propri servizi
+
+**Destinatari:** Amministratore · Proprietario
+
+In un preventivo e in una fattura senza mese, ogni riga può essere scelta dal catalogo dei servizi invece di essere scritta da zero. Nella riga, aprire **Servizio del catalogo** e sceglierne uno. La riga viene compilata con il nome del servizio (quando la descrizione è vuota o porta ancora il nome del servizio scelto prima), il suo prezzo come prezzo IVA inclusa, la sua aliquota IVA e ciò che fornisce, e ricorda da quale servizio proviene. Scegliere **Nessun servizio (riga libera)** per scrivere una riga con parole proprie: i due tipi possono convivere in uno stesso documento.
+
+**Da sapere**
+
+- Tutto ciò che il servizio ha compilato resta modificabile nella riga. Nella riga resta ciò che è stato concordato con il cliente.
+- Modificare o ritirare poi il servizio dal catalogo non cambia mai un preventivo, una bozza o una fattura già scritti. Un servizio ritirato resta visibile nella riga che lo contiene e non viene più proposto per una riga nuova.
+- Gli articoli tenuti in magazzino non sono servizi: si scelgono con **Venduto dalle scorte** nella riga.
+- Un servizio che non è tra i servizi attivi viene rifiutato al salvataggio del preventivo o della bozza, e la riga viene indicata.
+
 ### Servizi in corso
 
 **Destinatari:** Amministratore · Proprietario
@@ -3148,9 +3161,9 @@ Provato finora: i byte rispetto ai file di riferimento e un ricevitore locale. N
 
 Si gestisce un cassetto di cassa e si vuole sapere che il denaro al suo interno sia corretto a fine giornata.
 
-Aprire **Cassetto di cassa** nel menu delle vendite (richiede la funzione sessioni di cassa e il diritto di emettere fatture o di vedere le finanze). Ogni cassa dell'attività è elencata con il suo stato. Chi gestisce le sedi aggiunge una cassa con **Aggiungere una cassa** e può rinominarla o disattivarla.
+Aprire **Cassetto di cassa** nel menu delle vendite (richiede la funzione sessioni di cassa e il diritto di emettere fatture o di vedere le finanze). Ogni cassa dell'attività è elencata con il suo stato. Chi gestisce le sedi aggiunge una cassa con **Aggiungere una cassa** e può rinominarla o disattivarla. Nella scheda di una cassa, **Banconote e monete di questo cassetto** stabilisce con quali viene contata; un cassetto senza monete da 1 e 2 centesimi, per esempio, non le elenca mai. Un conteggio che nomina una banconota o una moneta che la cassa non tiene viene rifiutato.
 
-Premere **Aprire la cassa**, digitare il **Fondo cassa nel cassetto** (o, se l'attività conta per taglio, il valore di ogni banconota o moneta e quanti pezzi) e confermare. Una cassa ha una sola sessione aperta alla volta e, con le sessioni di cassa, la cassa vende solo su una sessione aperta: senza sessione aperta propone **Aprire la cassa** invece di vendere.
+Premere **Aprire la cassa**, digitare il **Fondo cassa nel cassetto** (o, se l'attività conta per taglio, quanti pezzi di ogni banconota e moneta elencata dalla cassa; una valuta di cui l'app non conosce le banconote si conta digitando il valore di ciascun pezzo) e confermare. Una cassa ha una sola sessione aperta alla volta e, con le sessioni di cassa, la cassa vende solo su una sessione aperta: senza sessione aperta propone **Aprire la cassa** invece di vendere.
 
 **Versamento o prelievo** registra il denaro messo nel cassetto o prelevato, con un **Motivo** scelto dall'elenco dell'attività. Un prelievo oltre il limite dell'attività viene registrato da chi può registrare i pagamenti in uscita.
 
@@ -4098,6 +4111,7 @@ Un terminale di cassa è il piccolo schermo al banco che incassa. Lo si collega 
 - **Rimuovere** termina il collegamento di un terminale con l'attività. Per usarlo di nuovo, lo colleghi con un nuovo codice.
 - Digitare il codice accanto al QR (dove non c'è fotocamera) mostra di quale terminale si tratta; per collegarlo, scansioni il suo codice QR. Un terminale il cui codice QR non viene accettato per il collegamento ha bisogno prima del nuovo firmware.
 - Un codice presentato troppe volte da un terminale sbagliato si esaurisce (5 volte per impostazione predefinita). Entrambi i numeri sono nelle impostazioni dell'attività: **Codice di collegamento di un dispositivo: minuti** e **Codice di collegamento di un dispositivo: tentativi**.
+- Un terminale vende solo per un cassiere che lo ha autorizzato dal proprio accesso. **Cassiere di un dispositivo: minuti** (30 per impostazione predefinita) stabilisce quanto dura un'autorizzazione, mai più dell'accesso del cassiere; uscire la termina.
 - Un codice non contiene mai 0, O, 1, I o L. Un carattere sbagliato, o due invertiti, viene rifiutato subito, a parole sotto il campo; maiuscole, spazi e trattini non contano.
 
 ### Organizzazione

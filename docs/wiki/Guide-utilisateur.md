@@ -3090,6 +3090,20 @@ La durée pendant laquelle un nouveau devis reste valable quand vous n’indique
 
 Sur un devis envoyé, **Partager le PDF** ouvre l’offre comme un document : un devis, avec sa propre référence et sa durée de validité, le client, les lignes et ce qu’elles représentent telles qu’elles ont été figées à l’envoi (le net, la TVA par taux et le total). Ce n’est jamais une facture et il ne porte aucun numéro de facture. Vous pouvez le consulter, l’enregistrer ou le partager.
 
+<!-- anchor: user.money.lines.service -->
+### Choisir une ligne parmi vos services
+
+**Public:** Administrateur·rice · Propriétaire
+
+Sur un devis et sur une facture sans mois, chaque ligne peut être choisie dans votre catalogue de services au lieu d’être écrite de zéro. Dans la ligne, ouvrez **Service du catalogue** et choisissez-en un. La ligne est remplie avec le nom du service (quand la description est vide ou porte encore le nom du service choisi avant), son prix en prix TTC, son taux de TVA et ce qu’il fournit, et elle retient de quel service elle vient. Choisissez **Aucun service (ligne libre)** pour écrire une ligne avec vos propres mots : les deux sortes peuvent se mêler dans un même document.
+
+**Bon à savoir**
+
+- Tout ce que le service a rempli reste modifiable sur la ligne. Ce qui reste sur la ligne, c’est ce que vous avez convenu avec le client.
+- Modifier ou retirer ensuite le service du catalogue ne change jamais un devis, un brouillon ou une facture déjà écrits. Un service retiré reste affiché sur la ligne qui le porte et n’est plus proposé pour une nouvelle ligne.
+- Les articles gardés en stock ne sont pas des services : choisissez-les avec **Vendu depuis le stock** sur la ligne.
+- Un service qui n’est pas l’un de vos services actifs est refusé à l’enregistrement du devis ou du brouillon, et la ligne est nommée.
+
 <!-- anchor: user.money.engagements -->
 ### Prestations suivies
 
@@ -3296,9 +3310,9 @@ Testé à ce jour : les octets par rapport aux fichiers de référence et un ré
 
 Vous tenez un tiroir-caisse et voulez savoir que l'argent qu'il contient est juste en fin de journée.
 
-Ouvrez **Tiroir-caisse** dans le menu des ventes (il demande la fonction sessions de caisse et le droit d'émettre des factures ou de voir les finances). Chaque caisse de l'entreprise est listée avec son état. Une personne qui gère les sites ajoute une caisse avec **Ajouter une caisse** et peut la renommer ou la désactiver.
+Ouvrez **Tiroir-caisse** dans le menu des ventes (il demande la fonction sessions de caisse et le droit d'émettre des factures ou de voir les finances). Chaque caisse de l'entreprise est listée avec son état. Une personne qui gère les sites ajoute une caisse avec **Ajouter une caisse** et peut la renommer ou la désactiver. Dans la fiche d'une caisse, **Billets et pièces de ce tiroir** fixe ceux avec lesquels elle est comptée ; un tiroir sans pièces de 1 et 2 centimes, par exemple, ne les liste jamais. Un comptage qui nomme un billet ou une pièce que la caisse ne porte pas est refusé.
 
-Appuyez sur **Ouvrir la caisse**, saisissez le **Fond de caisse** (ou, si votre entreprise compte par coupure, la valeur de chaque billet ou pièce et leur nombre) et confirmez. Une caisse n'a qu'une session ouverte à la fois, et avec les sessions de caisse la caisse ne vend que sur une session ouverte : sans session ouverte, elle propose **Ouvrir la caisse** au lieu de vendre.
+Appuyez sur **Ouvrir la caisse**, saisissez le **Fond de caisse** (ou, si votre entreprise compte par coupure, le nombre de chaque billet et de chaque pièce que la caisse liste ; une devise dont l'application ne connaît pas les billets se compte en saisissant la valeur de chacun) et confirmez. Une caisse n'a qu'une session ouverte à la fois, et avec les sessions de caisse la caisse ne vend que sur une session ouverte : sans session ouverte, elle propose **Ouvrir la caisse** au lieu de vendre.
 
 **Entrée ou sortie d'espèces** enregistre l'argent mis dans le tiroir ou retiré, avec un **Motif** choisi dans la liste de votre entreprise. Une sortie au-delà de la limite de l'entreprise est enregistrée par une personne qui peut enregistrer des paiements sortants.
 
@@ -4303,6 +4317,7 @@ Un terminal de caisse est le petit écran du comptoir qui encaisse. Vous le reli
 - **Retirer** met fin à la liaison d'un terminal avec l'entreprise. Pour l'utiliser à nouveau, reliez-le avec un nouveau code.
 - Saisir le code à côté du QR (là où il n'y a pas de caméra) indique de quel terminal il s'agit ; pour le relier, scannez son code QR. Un terminal dont le code QR n'est pas accepté pour la liaison a d'abord besoin du nouveau micrologiciel.
 - Un code présenté trop souvent par un mauvais terminal est épuisé (5 fois par défaut). Les deux nombres se trouvent dans les paramètres de l'entreprise : **Code de connexion d'un appareil : minutes** et **Code de connexion d'un appareil : essais**.
+- Un terminal ne vend que pour un caissier qui l'a autorisé, depuis sa propre connexion. **Caissier d'un appareil : minutes** (30 par défaut) fixe la durée d'une autorisation, jamais plus longue que la connexion du caissier ; se déconnecter y met fin.
 - Un code ne contient jamais 0, O, 1, I ni L. Un caractère faux, ou deux inversés, est refusé aussitôt, en clair sous le champ ; majuscules, espaces et tirets ne comptent pas.
 
 <!-- anchor: user.workspace.settings.organisation -->

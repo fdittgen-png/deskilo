@@ -112,5 +112,7 @@
   "settingUnitCells": "celle",
   "settingLabelCounterMaxDiscount": "Sconto massimo alla cassa",
   "settingHintCounterMaxDiscount": "Lo sconto massimo, in percentuale, che un cassiere può applicare a una riga di cassa. 0 significa nessuno sconto alla cassa.",
-  "tillDayDepositsReturned": "Vuoti resi: {amount}"
+  "tillDayDepositsReturned": "Vuoti resi: {amount}",
+  "tillDrawerTillNotes": "Banconote e monete di questo cassetto",
+  "tillDrawerTillNotesHint": "Il cassetto viene contato con queste. Nessuna disattivata: tutte quelle della valuta."
 }

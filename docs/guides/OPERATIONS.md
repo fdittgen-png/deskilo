@@ -304,6 +304,28 @@ e-mail settings are the operator's to deploy.
 
 The language decides nothing but the words: no authorization reads it.
 
+## Till boards: the cashier's key (#4454)
+
+A till board sells as the cashier who authorized it. The `embedded-till`
+function keeps that cashier's sign-in sealed in the database with a key of its
+own. Without the key, no cashier can authorize a board: the function answers
+`terminal_not_configured`. Boards still connect and wait for approval.
+
+1. Make the key: 32 random bytes, base64.
+   `openssl rand -base64 32`
+2. Give it to the function, on the project the boards use:
+   `supabase secrets set EMBEDDED_TILL_TOKEN_KEY=<the key>`
+3. Keep it only there. It is not in the app, the setup page or an export.
+   The database holds what it sealed, never the key.
+4. Changing the key ends every running authorization: each cashier authorizes
+   their board again. Nothing sold is lost.
+
+A board's command reaches the till's own functions with the cashier's sign-in,
+so the cashier's rights and the business's features decide, as in the app.
+An authorization ends at the earlier of the cashier's own sign-in and the
+business setting `counter.terminal_operator_minutes` (30 minutes by default).
+Signing out ends it at the next command.
+
 ## What is deliberately not here
 
 **No Docker Compose.** DesKilo is a Supabase application, not a

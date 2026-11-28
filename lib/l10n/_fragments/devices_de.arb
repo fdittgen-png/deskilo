@@ -38,5 +38,7 @@
   "settingLabelCounterTerminalPairMinutes": "Verbindungscode eines Geräts: Minuten",
   "settingHintCounterTerminalPairMinutes": "Wie lange der Code gilt, der ein Kassengerät verbindet. Eine Änderung gilt für den nächsten Code, nicht für einen bereits vergebenen.",
   "settingLabelCounterTerminalPairAttempts": "Verbindungscode eines Geräts: Versuche",
-  "settingHintCounterTerminalPairAttempts": "Wie oft ein Code mit einem falschen Gerät oder Nachweis vorgelegt werden darf, bevor er verbraucht ist."
+  "settingHintCounterTerminalPairAttempts": "Wie oft ein Code mit einem falschen Gerät oder Nachweis vorgelegt werden darf, bevor er verbraucht ist.",
+  "settingLabelCounterTerminalOperatorMinutes": "Kassierer eines Geräts: Minuten",
+  "settingHintCounterTerminalOperatorMinutes": "Wie lange ein Kassierer, der ein Kassenterminal freigegeben hat, darauf verkauft, bevor er es erneut freigibt; nie länger als seine eigene Anmeldung."
 }

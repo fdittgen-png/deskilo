@@ -23,6 +23,7 @@ const helpAnchorIndex = <String>{
   HelpAnchor.moneyStandaloneInvoice,
   HelpAnchor.moneyStandalonePayment,
   HelpAnchor.moneyQuotes,
+  HelpAnchor.moneyLineService,
   HelpAnchor.moneyEngagements,
   HelpAnchor.moneyStock,
   HelpAnchor.moneyStockPlaces,

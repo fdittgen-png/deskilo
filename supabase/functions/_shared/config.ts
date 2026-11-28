@@ -13,6 +13,8 @@ export const KEYS = {
   mollieApiBase: "MOLLIE_API_BASE",
   pushSharedSecret: "PUSH_SHARED_SECRET",
   fcmServiceAccount: "FCM_SERVICE_ACCOUNT",
+  /** #4454 -- the key the embedded-till function seals the cashiers' tokens with: 32 random bytes, base64. */
+  embeddedTillTokenKey: "EMBEDDED_TILL_TOKEN_KEY",
 } as const;
 
 /** The value of an environment key, or undefined. */

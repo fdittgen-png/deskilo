@@ -19584,6 +19584,7 @@
     "description": "#4373 setting hint"
   },
   "settingHintCounterPaidOutLimit": "Le plus grand montant, en unités mineures de la devise de l'entreprise (centimes), d'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.",
+  "settingHintCounterTerminalOperatorMinutes": "Combien de temps un caissier qui a autorisé un terminal de caisse y vend avant de l'autoriser à nouveau ; jamais plus longtemps que sa propre connexion.",
   "settingHintCounterTerminalPairAttempts": "Combien de fois un code peut être présenté avec un mauvais appareil ou une mauvaise preuve avant d'être épuisé.",
   "settingHintCounterTerminalPairMinutes": "Durée de validité du code qui relie un appareil de caisse. Un changement vaut pour le prochain code, pas pour un code déjà donné.",
   "settingHintDirectoryGeocoderUrl": "Le service compatible Photon qui place une adresse publiée sur la carte de découverte : une adresse https sur l'internet public, sans nom d'utilisateur, mot de passe, requête ni #. Laissez vide pour utiliser l'adresse avec laquelle cette version de l'application a été construite, sinon le service public Photon.",
@@ -19849,6 +19850,7 @@
     "description": "#4373 setting label"
   },
   "settingLabelCounterPaidOutLimit": "Plus grand retrait sans autorisation",
+  "settingLabelCounterTerminalOperatorMinutes": "Caissier d'un appareil : minutes",
   "settingLabelCounterTerminalPairAttempts": "Code de connexion d'un appareil : essais",
   "settingLabelCounterTerminalPairMinutes": "Code de connexion d'un appareil : minutes",
   "settingLabelDirectoryGeocoderUrl": "Service de recherche d'adresse",
@@ -21225,6 +21227,10 @@
   "@standaloneFieldQuantity": {
     "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
   },
+  "standaloneFieldService": "un service du catalogue qui est proposé",
+  "@standaloneFieldService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneFieldService"
+  },
   "standaloneFieldStock": "des biens que le stock peut vendre tels que saisis",
   "@standaloneFieldStock": {
     "description": "#4433 goods sold on an invoice: standaloneFieldStock"
@@ -21306,6 +21312,10 @@
   "@standaloneInvoiceLineNoGoods": {
     "description": "#4433 goods sold on an invoice: standaloneInvoiceLineNoGoods"
   },
+  "standaloneInvoiceLineNoService": "Aucun service (ligne libre)",
+  "@standaloneInvoiceLineNoService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineNoService"
+  },
   "standaloneInvoiceLinePieces": "Étiquettes des pièces vendues",
   "@standaloneInvoiceLinePieces": {
     "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePieces"
@@ -21329,6 +21339,10 @@
   "standaloneInvoiceLineRateDefault": "Le taux par défaut de l’entreprise",
   "@standaloneInvoiceLineRateDefault": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineRateDefault"
+  },
+  "standaloneInvoiceLineService": "Service du catalogue",
+  "@standaloneInvoiceLineService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineService"
   },
   "standaloneInvoiceLineUnit": "Unité",
   "@standaloneInvoiceLineUnit": {
@@ -24533,6 +24547,8 @@
   "tillDrawerTillActive": "En service",
   "tillDrawerTillName": "Nom de la caisse",
   "tillDrawerTillNewTitle": "Nouvelle caisse",
+  "tillDrawerTillNotes": "Billets et pièces de ce tiroir",
+  "tillDrawerTillNotesHint": "Le tiroir est compté avec ceux-ci. Aucun désactivé : tous ceux de la devise.",
   "tillDrawerTillSave": "Enregistrer la caisse",
   "tillDrawerTitle": "Tiroir-caisse",
   "tillFailed": "La caisse n'a pas pu le faire. Réessayez.",

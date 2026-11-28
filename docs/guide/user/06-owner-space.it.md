@@ -689,6 +689,7 @@ Un terminale di cassa è il piccolo schermo al banco che incassa. Lo si collega 
 - **Rimuovere** termina il collegamento di un terminale con l'attività. Per usarlo di nuovo, lo colleghi con un nuovo codice.
 - Digitare il codice accanto al QR (dove non c'è fotocamera) mostra di quale terminale si tratta; per collegarlo, scansioni il suo codice QR. Un terminale il cui codice QR non viene accettato per il collegamento ha bisogno prima del nuovo firmware.
 - Un codice presentato troppe volte da un terminale sbagliato si esaurisce (5 volte per impostazione predefinita). Entrambi i numeri sono nelle impostazioni dell'attività: **Codice di collegamento di un dispositivo: minuti** e **Codice di collegamento di un dispositivo: tentativi**.
+- Un terminale vende solo per un cassiere che lo ha autorizzato dal proprio accesso. **Cassiere di un dispositivo: minuti** (30 per impostazione predefinita) stabilisce quanto dura un'autorizzazione, mai più dell'accesso del cassiere; uscire la termina.
 - Un codice non contiene mai 0, O, 1, I o L. Un carattere sbagliato, o due invertiti, viene rifiutato subito, a parole sotto il campo; maiuscole, spazi e trattini non contano.
 
 <!-- anchor: user.workspace.settings.organisation -->

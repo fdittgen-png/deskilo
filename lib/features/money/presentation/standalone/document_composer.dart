@@ -12,10 +12,11 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/invoice_goods.dart';
+import '../../domain/invoice_services.dart';
 import '../../domain/standalone_invoice.dart';
 import '../../providers/line_units_provider.dart';
 import '../../providers/money_providers.dart' show vatRatesProvider;
-import '../../providers/standalone_invoice_providers.dart' show invoiceGoodsItemsProvider;
+import '../../providers/standalone_invoice_providers.dart' show invoiceGoodsItemsProvider, invoiceServicesProvider;
 import 'standalone_line_form.dart';
 
 /// What a commercial document holds while it is composed. The dates are what the person set: null until they do, so a screen
@@ -150,6 +151,10 @@ class DocumentComposer extends ConsumerWidget {
     final goods = featureOn(keys, 'stockManagement', byDefault: false)
         ? ref.watch(invoiceGoodsItemsProvider(workspaceId)).value ?? const <InvoiceGoodsItem>[] // empty-ok: the items only offer a choice; none leaves every line a service
         : const <InvoiceGoodsItem>[];
+    // #4510 -- with the service catalogue on, a line may be picked from it
+    final services = featureOn(keys, 'services', byDefault: true)
+        ? ref.watch(invoiceServicesProvider(workspaceId)).value ?? const <InvoiceService>[] // empty-ok: the catalogue only offers a choice; none leaves every line free
+        : const <InvoiceService>[];
     final namesPieces = pieces && featureOn(keys, 'stockTags', byDefault: false);
     final units = ref.watch(lineUnitsProvider(workspaceId));
     final typed = onReferenceChanged ?? () {};
@@ -226,6 +231,7 @@ class DocumentComposer extends ConsumerWidget {
             form: line,
             rates: rates,
             goods: goods,
+            services: services,
             pieces: namesPieces,
             units: units,
             workspaceId: workspaceId,

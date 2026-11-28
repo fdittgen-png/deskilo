@@ -38,5 +38,7 @@
   "settingLabelCounterTerminalPairMinutes": "Código de conexión de un dispositivo: minutos",
   "settingHintCounterTerminalPairMinutes": "Cuánto tiempo es válido el código que conecta un dispositivo de caja. Un cambio se aplica al próximo código, no a uno ya dado.",
   "settingLabelCounterTerminalPairAttempts": "Código de conexión de un dispositivo: intentos",
-  "settingHintCounterTerminalPairAttempts": "Cuántas veces puede presentarse un código con un dispositivo o una prueba incorrectos antes de agotarse."
+  "settingHintCounterTerminalPairAttempts": "Cuántas veces puede presentarse un código con un dispositivo o una prueba incorrectos antes de agotarse.",
+  "settingLabelCounterTerminalOperatorMinutes": "Cajero de un dispositivo: minutos",
+  "settingHintCounterTerminalOperatorMinutes": "Cuánto tiempo vende un cajero que autorizó un terminal de caja antes de autorizarlo de nuevo; nunca más que su propia sesión."
 }

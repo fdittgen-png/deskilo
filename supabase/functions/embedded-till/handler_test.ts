@@ -5,7 +5,7 @@
 // or a source past its budget is refused before the database; a database that fails or answers nothing readable is
 // "uncertain", never a refusal the board would believe. The database's own rules are pgTAP 592's.
 import { assertEquals } from "jsr:@std/assert@1";
-import { budget, handle, MAX_BODY_BYTES, MAX_SOURCES, sourceOf } from "./handler.ts";
+import { budget, handle, MAX_BODY_BYTES, MAX_COMMAND_BYTES, MAX_SOURCES, sourceOf } from "./handler.ts";
 
 const DEVICE = "11111111-1111-4111-8111-111111111111";
 const HASH = "ab".repeat(32);
@@ -150,7 +150,7 @@ Deno.test("a flood of new sources never shuts out a new board", () => {
 Deno.test("a body that declares more than the ceiling is not read", async () => {
   const d = db();
   const res = await handle(
-    new Request("http://x", { method: "POST", body: "{}", headers: { "content-length": String(MAX_BODY_BYTES + 1) } }),
+    new Request("http://x", { method: "POST", body: "{}", headers: { "content-length": String(MAX_COMMAND_BYTES + 1) } }),
     d.deps,
   );
   assertEquals([res.status, d.calls.length], [413, 0]);

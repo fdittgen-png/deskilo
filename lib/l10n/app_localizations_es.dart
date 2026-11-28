@@ -33227,6 +33227,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.';
 
   @override
+  String get settingHintCounterTerminalOperatorMinutes =>
+      'Cuánto tiempo vende un cajero que autorizó un terminal de caja antes de autorizarlo de nuevo; nunca más que su propia sesión.';
+
+  @override
   String get settingHintCounterTerminalPairAttempts =>
       'Cuántas veces puede presentarse un código con un dispositivo o una prueba incorrectos antes de agotarse.';
 
@@ -33693,6 +33697,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelCounterPaidOutLimit => 'Mayor salida sin autorización';
+
+  @override
+  String get settingLabelCounterTerminalOperatorMinutes =>
+      'Cajero de un dispositivo: minutos';
 
   @override
   String get settingLabelCounterTerminalPairAttempts =>
@@ -36675,6 +36683,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'una cantidad mayor que cero con seis decimales como máximo';
 
   @override
+  String get standaloneFieldService =>
+      'un servicio del catálogo que está en oferta';
+
+  @override
   String get standaloneFieldStock =>
       'bienes que las existencias pueden vender tal como se han introducido';
 
@@ -36739,6 +36751,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Nada de las existencias (un servicio)';
 
   @override
+  String get standaloneInvoiceLineNoService => 'Ningún servicio (línea libre)';
+
+  @override
   String get standaloneInvoiceLinePieces => 'Etiquetas de las piezas vendidas';
 
   @override
@@ -36757,6 +36772,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get standaloneInvoiceLineRateDefault =>
       'El tipo por defecto de la empresa';
+
+  @override
+  String get standaloneInvoiceLineService => 'Servicio del catálogo';
 
   @override
   String get standaloneInvoiceLineUnit => 'Unidad';
@@ -42404,6 +42422,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tillDrawerTillNewTitle => 'Caja nueva';
+
+  @override
+  String get tillDrawerTillNotes => 'Billetes y monedas de este cajón';
+
+  @override
+  String get tillDrawerTillNotesHint =>
+      'El cajón se cuenta con estos. Ninguno desactivado: todos los de la moneda.';
 
   @override
   String get tillDrawerTillSave => 'Guardar la caja';

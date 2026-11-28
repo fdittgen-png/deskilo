@@ -38,5 +38,7 @@
   "settingLabelCounterTerminalPairMinutes": "Code de connexion d'un appareil : minutes",
   "settingHintCounterTerminalPairMinutes": "Durée de validité du code qui relie un appareil de caisse. Un changement vaut pour le prochain code, pas pour un code déjà donné.",
   "settingLabelCounterTerminalPairAttempts": "Code de connexion d'un appareil : essais",
-  "settingHintCounterTerminalPairAttempts": "Combien de fois un code peut être présenté avec un mauvais appareil ou une mauvaise preuve avant d'être épuisé."
+  "settingHintCounterTerminalPairAttempts": "Combien de fois un code peut être présenté avec un mauvais appareil ou une mauvaise preuve avant d'être épuisé.",
+  "settingLabelCounterTerminalOperatorMinutes": "Caissier d'un appareil : minutes",
+  "settingHintCounterTerminalOperatorMinutes": "Combien de temps un caissier qui a autorisé un terminal de caisse y vend avant de l'autoriser à nouveau ; jamais plus longtemps que sa propre connexion."
 }

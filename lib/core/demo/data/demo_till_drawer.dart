@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'package:deskilo/features/money/domain/till_day.dart';
 import 'package:deskilo/features/money/domain/till_drawer.dart';
 import 'package:deskilo/features/money/domain/till_drawer_rules.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show cashValuesOf, tillCashValues;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../codes/dk_code.dart';
@@ -56,7 +57,10 @@ class _Session {
 }
 
 class DemoTillDrawer implements TillDrawerPort {
-  DemoTillDrawer({List<DrawerTill>? tills}) : _tills = [...(tills ?? _seeded)];
+  DemoTillDrawer({List<DrawerTill>? tills, this.currency = 'EUR'}) : _tills = [...(tills ?? _seeded)];
+
+  /// #4511 -- the business currency, whose notes and coins the tills count in.
+  final String currency;
 
   static const _seeded = [
     DrawerTill(id: 'demo-till-front', name: 'Front counter', active: true),
@@ -126,6 +130,7 @@ class DemoTillDrawer implements TillDrawerPort {
       active: t.active,
       siteId: t.siteId,
       session: s == null ? null : DrawerSession(id: s.id, tillId: s.tillId, floatMinor: s.floatMinor, openedByMemberId: s.openedBy),
+      denominations: t.denominations,
     );
   }
 
@@ -146,17 +151,45 @@ class DemoTillDrawer implements TillDrawerPort {
       _tills.add(made);
       return _answered[requestId] = made;
     }
-    final at = _tills.indexWhere((t) => t.id == tillId);
+    final at = _tillAt(tillId);
     if (at < 0) throw _refused(DkCode.dkl12, 'not a till of this business', reason: 'till_unknown');
     if (!active && _openOn(tillId) != null) throw _refused(DkCode.dkl12, 'a till with an open session is closed first', reason: 'already_open');
-    final saved = DrawerTill(id: tillId, name: clean, active: active, siteId: siteId);
+    final saved = DrawerTill(id: tillId, name: clean, active: active, siteId: siteId, denominations: _tills[at].denominations);
     _tills[at] = saved;
     return _answered[requestId] = saved;
+  }
+
+  /// Where [tillId] is in the list, or -1.
+  int _tillAt(String tillId) => _tills.indexWhere((t) => t.id == tillId);
+
+  @override
+  Future<List<int>?> setTillDenominations(String workspaceId, {required String tillId, required List<int> values}) async {
+    final at = _tillAt(tillId);
+    if (at < 0) throw _refused(DkCode.dkl02, 'no such till in this business', reason: 'till');
+    final current = cashValuesOf(currency);
+    for (final v in values) {
+      if (!current.contains(v)) throw _refused(DkCode.dkl02, 'a value the currency has no note or coin of', reason: 'denomination');
+    }
+    final t = _tills[at];
+    final picked = values.isEmpty ? null : [for (final v in current) if (values.contains(v)) v];
+    _tills[at] = DrawerTill(id: t.id, name: t.name, active: t.active, siteId: t.siteId, denominations: picked);
+    return picked;
+  }
+
+  /// #4511 (0997) -- a count names only the till's notes and coins; a currency not listed takes any value.
+  void _countedInTill(String tillId, Denominations? counted) {
+    final till = _tills.where((t) => t.id == tillId).firstOrNull;
+    final values = tillCashValues(currency, till?.denominations);
+    if (counted == null || values.isEmpty) return;
+    for (final v in counted.counts.keys) {
+      if (!values.contains(v)) throw _refused(DkCode.dkl02, 'a value this till has no note or coin of', reason: 'denomination');
+    }
   }
 
   @override
   Future<DrawerOpened> openSession(String workspaceId, {required String requestId, required String tillId, required int floatMinor, Denominations? denominations}) async {
     if (_answered[requestId] != null) return _replayed(requestId);
+    _countedInTill(tillId, denominations);
     if (floatMinor < 0) throw _refused(PgCode.invalidParameterValue, 'a session is opened with its float');
     if (rules().byDenomination && denominations?.totalMinor != floatMinor) {
       throw _refused(DkCode.dkl13, 'the float is counted by denomination and adds up', reason: 'denominations');
@@ -218,6 +251,7 @@ class DemoTillDrawer implements TillDrawerPort {
       throw _refused(DkCode.dkl13, 'the drawer is counted by denomination and adds up', reason: 'denominations');
     }
     final s = _open(sessionId);
+    _countedInTill(s.tillId, denominations);
     final difference = countedMinor - s.expected;
     if (difference != 0 && (differenceReason ?? '').trim().isEmpty) {
       throw _refused(DkCode.dkl13, 'a difference is closed with its reason', reason: 'difference_reason', more: canSeeFinances() ? {'difference_minor': '$difference'} : const {});

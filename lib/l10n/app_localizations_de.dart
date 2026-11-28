@@ -33313,6 +33313,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.';
 
   @override
+  String get settingHintCounterTerminalOperatorMinutes =>
+      'Wie lange ein Kassierer, der ein Kassenterminal freigegeben hat, darauf verkauft, bevor er es erneut freigibt; nie länger als seine eigene Anmeldung.';
+
+  @override
   String get settingHintCounterTerminalPairAttempts =>
       'Wie oft ein Code mit einem falschen Gerät oder Nachweis vorgelegt werden darf, bevor er verbraucht ist.';
 
@@ -33771,6 +33775,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelCounterPaidOutLimit => 'Größte Entnahme ohne Freigabe';
+
+  @override
+  String get settingLabelCounterTerminalOperatorMinutes =>
+      'Kassierer eines Geräts: Minuten';
 
   @override
   String get settingLabelCounterTerminalPairAttempts =>
@@ -36758,6 +36766,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'eine Menge über null mit höchstens sechs Nachkommastellen';
 
   @override
+  String get standaloneFieldService =>
+      'eine Leistung des Katalogs, die angeboten wird';
+
+  @override
   String get standaloneFieldStock =>
       'Waren, die der Bestand so verkaufen kann, wie sie erfasst sind';
 
@@ -36825,6 +36837,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nichts aus dem Bestand (eine Dienstleistung)';
 
   @override
+  String get standaloneInvoiceLineNoService => 'Keine Leistung (freie Zeile)';
+
+  @override
   String get standaloneInvoiceLinePieces => 'Etiketten der verkauften Stücke';
 
   @override
@@ -36842,6 +36857,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get standaloneInvoiceLineRateDefault => 'Standardsatz des Betriebs';
+
+  @override
+  String get standaloneInvoiceLineService => 'Leistung aus dem Katalog';
 
   @override
   String get standaloneInvoiceLineUnit => 'Einheit';
@@ -42530,6 +42548,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tillDrawerTillNewTitle => 'Neue Kasse';
+
+  @override
+  String get tillDrawerTillNotes => 'Scheine und Münzen dieser Kasse';
+
+  @override
+  String get tillDrawerTillNotesHint =>
+      'Die Kasse wird mit diesen gezählt. Keiner abgeschaltet: alle der Währung.';
 
   @override
   String get tillDrawerTillSave => 'Kasse speichern';

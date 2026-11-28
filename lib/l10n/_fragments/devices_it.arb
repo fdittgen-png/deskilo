@@ -38,5 +38,7 @@
   "settingLabelCounterTerminalPairMinutes": "Codice di collegamento di un dispositivo: minuti",
   "settingHintCounterTerminalPairMinutes": "Per quanto tempo vale il codice che collega un dispositivo di cassa. Una modifica vale per il prossimo codice, non per uno già dato.",
   "settingLabelCounterTerminalPairAttempts": "Codice di collegamento di un dispositivo: tentativi",
-  "settingHintCounterTerminalPairAttempts": "Quante volte un codice può essere presentato con un dispositivo o una prova errati prima di esaurirsi."
+  "settingHintCounterTerminalPairAttempts": "Quante volte un codice può essere presentato con un dispositivo o una prova errati prima di esaurirsi.",
+  "settingLabelCounterTerminalOperatorMinutes": "Cassiere di un dispositivo: minuti",
+  "settingHintCounterTerminalOperatorMinutes": "Per quanto tempo un cassiere che ha autorizzato un terminale di cassa vi vende prima di autorizzarlo di nuovo; mai più a lungo del proprio accesso."
 }

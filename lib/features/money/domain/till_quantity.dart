@@ -45,8 +45,20 @@ int? tillLineAmount(int unitMinor, String quantity) {
 /// The cash a customer may hand over for [totalMinor], from the currency's own decimal structure and not a table of
 /// notes: the amount itself, then the total rounded up to the next whole 1, 2, 5, 10, 20, 50, 100... units of the
 /// currency, the nearest first, without repeats; at most [count] amounts. [minorDigits] is the currency's decimals.
-List<int> tillCashSuggestions(int totalMinor, {required int minorDigits, int count = 4}) {
+///
+/// #4511 -- with the currency's [notes] (smallest first), the amount, then the total rounded up to the next whole note
+/// of each value: what a customer hands over in the notes that exist.
+List<int> tillCashSuggestions(int totalMinor, {required int minorDigits, int count = 4, List<int> notes = const []}) {
   if (totalMinor <= 0 || minorDigits < 0 || count < 1) return const [];
+  if (notes.isNotEmpty) {
+    final out = <int>[totalMinor];
+    for (final note in notes) {
+      if (out.length == count) break;
+      final up = ((totalMinor + note - 1) ~/ note) * note;
+      if (!out.contains(up)) out.add(up);
+    }
+    return out..sort();
+  }
   var unit = 1;
   for (var i = 0; i < minorDigits; i++) {
     unit *= 10;
