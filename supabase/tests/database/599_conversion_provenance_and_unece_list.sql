@@ -72,8 +72,8 @@ select is(pg_temp.row_of('drum', 'cm'), null, 'the generated rows of the old dim
 -- UN/ECE
 select alike(pg_temp.save(906, '{"code": "bale", "label": "Bale", "dimension": "count", "factor_num": 1, "factor_den": 1, "un_ece_code": "QQQ"}'),
   'ERR DKG11%ece_invalid%', 'a code of the right shape that is not on the list is refused');
-select is((pg_temp.save(907, '{"code": "bale", "label": "Bale", "dimension": "count", "factor_num": 1, "factor_den": 1, "un_ece_code": "BG"}')::jsonb) ->> 'un_ece_code',
-  'BG', 'a code on the list is taken');
+select is((pg_temp.save(907, '{"code": "bale", "label": "Bale", "dimension": "count", "factor_num": 1, "factor_den": 1, "un_ece_code": "XBG"}')::jsonb) ->> 'un_ece_code',
+  'XBG', 'a code on the list is taken');
 -- a code stored before the list stays until it is changed
 update public.workspace_units set un_ece_code = 'QZQ' where workspace_id = pg_temp.u(101) and code = 'bale';
 select is((pg_temp.save(908, '{"code": "bale", "label": "Bale of rope"}')::jsonb) ->> 'un_ece_code', 'QZQ',
