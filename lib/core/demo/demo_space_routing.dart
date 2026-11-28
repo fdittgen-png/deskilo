@@ -292,7 +292,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
     // #4433 -- and sells goods from the business's own goods ledger
     (ref) => money(ref).standaloneInvoiceCommands..goods = stocks.of(ref).ledger,
   ), // #4165
-  invoiceGoodsCatalogueProvider.overrideWith((ref) => DemoInvoiceGoodsCatalogue(stocks.of(ref).ledger)),
+  invoiceGoodsCatalogueProvider.overrideWith((ref) => DemoInvoiceGoodsCatalogue(stocks.of(ref).ledger)), invoiceServiceCatalogueProvider.overrideWith((ref) => ServiceItemCatalogue(money(ref).commercialTerms.fetchServices)), // #4510
   taxReportingRepositoryProvider.overrideWith(
     (ref) => money(ref).taxReporting,
   ),

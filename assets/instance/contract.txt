@@ -3297,6 +3297,7 @@ routine public.capability_linked_correction(p_connection_id uuid, p_document_kin
 routine public.capability_lock_key(p_workspace_id uuid, p_key text) -> bigint | function | invoker | immutable | exec:service_role | body:28cb32d3da22
 routine public.capability_states_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a39585c04634
 routine public.capture_workspace_application() -> trigger | function | definer | volatile | exec:service_role | body:4d7f356fd850
+routine public.catalogue_service_lines_missing(p_workspace_id uuid, p_new jsonb, p_old jsonb) -> text[] | function | definer | stable | exec:service_role | body:b7f582a87f70
 routine public.charging_stations_fee() -> trigger | function | definer | volatile | exec:service_role | body:832f6a1e1b26
 routine public.charging_stations_guard() -> trigger | function | definer | volatile | exec:service_role | body:ef1c3eea42cf
 routine public.check_in_reservation(p_reservation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:611a8a3ed887
@@ -3413,7 +3414,7 @@ routine public.customer_quote_actor(p_workspace uuid) -> members | function | de
 routine public.customer_quote_dry_run(p_workspace uuid, p_actor members, p_subject uuid, p_lines jsonb, p_on date) -> jsonb | function | definer | volatile | exec:service_role | body:3af87de5f3cd
 routine public.customer_quote_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:a7af5988fd9e
 routine public.customer_quote_json(q customer_quotes) -> jsonb | function | definer | stable | exec:service_role | body:06cd8bbe5e29
-routine public.customer_quote_line_clean(p_line jsonb, p_index integer) -> jsonb | function | invoker | stable | exec:service_role | body:93eddf736cfc
+routine public.customer_quote_line_clean(p_line jsonb, p_index integer) -> jsonb | function | invoker | stable | exec:service_role | body:42833fd251d4
 routine public.customer_quote_lines_clean(p_lines jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:d6d1d7c180dc
 routine public.customer_quote_v1(p_workspace_id uuid, p_quote_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:20334cce7f88
 routine public.customer_quotes_readable(p_workspace uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:c9117d02d948
@@ -4467,7 +4468,7 @@ routine public.save_book_mapping(p_workspace_id uuid, p_issuer_site_id uuid, p_r
 routine public.save_book_profile(p_workspace_id uuid, p_issuer_site_id uuid, p_authority_mode text, p_external_system text, p_functional_currency text, p_fiscal_year_start_month integer, p_fiscal_year_start_day integer, p_accounting_basis text, p_effective_from date, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a8c6b0169bf2
 routine public.save_business_mail_sender_v1(p_workspace_id uuid, p_sender_email text, p_sender_name text, p_api_key text, p_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9d32a811aedd
 routine public.save_cost_allocation_rule_v1(p_workspace_id uuid, p_rule_id uuid, p_expected_revision integer, p_rule jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9938c7e70922
-routine public.save_customer_quote_draft_v1(p_workspace_id uuid, p_quote_id uuid, p_expected_version integer, p_subject uuid, p_issued_on date, p_valid_until date, p_buyer_reference text, p_purchase_order text, p_notes text, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ea66229475af
+routine public.save_customer_quote_draft_v1(p_workspace_id uuid, p_quote_id uuid, p_expected_version integer, p_subject uuid, p_issued_on date, p_valid_until date, p_buyer_reference text, p_purchase_order text, p_notes text, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f093ca8b327f
 routine public.save_guest_pass_offer(p_workspace_id uuid, p_id uuid, p_name text, p_unit text, p_price_cents integer, p_vat_rate_id uuid, p_active boolean) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:0e0314dc12ca
 routine public.save_item_dimension_v1(p_workspace_id uuid, p_dimension_id uuid, p_expected_revision integer, p_request_id uuid, p_dimension jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3b904a5b5470
 routine public.save_item_variants_v1(p_workspace_id uuid, p_item_id uuid, p_expected_revision integer, p_request_id uuid, p_variants jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d8957f4a18d0
@@ -4479,7 +4480,7 @@ routine public.save_purchase_order_v1(p_workspace_id uuid, p_request_id uuid, p_
 routine public.save_room_rental_v1(p_workspace_id uuid, p_office_id uuid, p_supplier_id uuid, p_available_from date, p_available_until date, p_cost_kind text, p_cost_cents bigint, p_period text, p_status text, p_document_id uuid, p_revision integer, p_audience_all boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:558593482042
 routine public.save_setup_journey(p_workspace_id uuid, p_answers jsonb, p_levels jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3ea7b7ed1f4c
 routine public.save_setup_step_draft(p_workspace_id uuid, p_step text, p_payload jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fdb127d50874
-routine public.save_standalone_invoice_draft_v1(p_workspace_id uuid, p_draft_id uuid, p_expected_revision integer, p_subject uuid, p_service_date date, p_due_on date, p_buyer_reference text, p_purchase_order text, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:469627be70ed
+routine public.save_standalone_invoice_draft_v1(p_workspace_id uuid, p_draft_id uuid, p_expected_revision integer, p_subject uuid, p_service_date date, p_due_on date, p_buyer_reference text, p_purchase_order text, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:47de01ed08c5
 routine public.save_stock_item_v1(p_workspace_id uuid, p_item_id uuid, p_expected_revision integer, p_request_id uuid, p_item jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1ed870a9e2ef
 routine public.save_stock_location_v1(p_workspace_id uuid, p_place_id uuid, p_expected_revision integer, p_request_id uuid, p_place jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7caa3b8e9970
 routine public.save_stock_reorder_point_v1(p_workspace_id uuid, p_point_id uuid, p_expected_revision integer, p_request_id uuid, p_point jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:222f8211fec5
@@ -4647,7 +4648,7 @@ routine public.standalone_invoice_goods_input(p_workspace_id uuid, p_line jsonb,
 routine public.standalone_invoice_goods_mark(p_line jsonb, p_input jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:81687464ee8e
 routine public.standalone_invoice_goods_post(p_workspace_id uuid, p_actor uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:01b4fa5ada72
 routine public.standalone_invoice_issue_core(p_workspace_id uuid, p_actor members, p_draft standalone_invoice_drafts) -> uuid | function | definer | volatile | exec:service_role | body:53ec6841b9d5
-routine public.standalone_invoice_line_v1(p_line jsonb, p_index integer, p_currency text, p_percent numeric, p_category text, p_tax_point date) -> jsonb | function | invoker | stable | exec:service_role | body:5167a928fed0
+routine public.standalone_invoice_line_v1(p_line jsonb, p_index integer, p_currency text, p_percent numeric, p_category text, p_tax_point date) -> jsonb | function | invoker | stable | exec:service_role | body:f7e30ba20a9d
 routine public.standalone_invoice_subject(p_workspace_id uuid, p_subject uuid) -> members | function | definer | stable | exec:service_role | body:03bed41502dd
 routine public.start_space_inquiry(p_workspace uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:24335253d564
 routine public.start_space_inquiry_v1(p_workspace uuid, p_body text, p_request_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:307a68c96e0f

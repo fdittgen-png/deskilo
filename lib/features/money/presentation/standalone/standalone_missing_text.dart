@@ -7,6 +7,9 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/previewed_document.dart';
 import '../widgets/invoice_missing_sales_tax.dart';
 
+/// #4510 -- the missing fact of a line that names a service the business does not offer.
+const _serviceFact = 'service';
+
 String _text(AppLocalizations l, String key) {
   final line = RegExp(r'^line_(\d+)_(.+)$').firstMatch(key);
   if (line != null) {
@@ -21,6 +24,7 @@ String _text(AppLocalizations l, String key) {
       'vat_rate' => l.standaloneFieldVatRate,
       'amount' => l.standaloneFieldAmount,
       'line_id' => l.standaloneFieldLineId,
+      _serviceFact => l.standaloneFieldService,
       final other => _goodsFact(l, other) ?? other ?? key,
     };
     return l.standaloneInvoiceMissingLine(line.group(1)!, fact);

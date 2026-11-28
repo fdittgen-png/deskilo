@@ -11,12 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/decimal_input.dart';
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/invoice_goods.dart';
+import '../../domain/invoice_services.dart';
 import '../../domain/line_unit.dart';
 import '../../domain/standalone_invoice.dart';
+import '../../providers/money_providers.dart' show invoicingBusinessProvider;
 import 'goods_unit_field.dart';
 import 'line_unit_text.dart';
 
@@ -53,6 +57,8 @@ class StandaloneLineForm {
       gross = (from ?? _newLine).grossPrice,
       rateId = from?.vatRateId,
       itemId = from?.itemId,
+      serviceId = from?.serviceId,
+      serviceSupply = from?.serviceId == null ? null : from?.supply,
       goodsUnit = from != null && from.isGoods ? (code: from.unitCode, label: from.unitLabel, un: from.unEceCode) : null,
       description = TextEditingController(text: from?.description),
       quantityField = TextEditingController(text: from?.quantity),
@@ -83,6 +89,32 @@ class StandaloneLineForm {
   bool gross;
   String? rateId;
 
+  /// #4510 -- the catalogue service the line was picked from, and what it then supplies; null for an ad-hoc line.
+  String? serviceId;
+  String? serviceSupply;
+
+  /// The service picked on this line before: while the description still holds its name, picking another replaces it.
+  String? pickedName;
+
+  /// Fills the line in from [service] (or frees it, for none): its name when the description is empty or still the previous
+  /// service's, its price as the gross price in [locale], its VAT rate and what it supplies. Every field stays editable and is
+  /// what the line saves: the catalogue is read to fill the line in, never to compute it.
+  void pick(InvoiceService? service, {required String priceText}) {
+    final typed = description.text.trim();
+    serviceId = service?.id;
+    serviceSupply = service?.supply;
+    if (service == null) {
+      pickedName = null;
+      return;
+    }
+    if (typed.isEmpty || typed == pickedName) description.text = service.name;
+    pickedName = service.name;
+    price.text = priceText;
+    autoPrice = priceText;
+    gross = true;
+    rateId = service.vatRateId;
+  }
+
   /// #4433 -- the stock item the line sells, and the unit it is then counted in (the item's own); null for a service.
   String? itemId;
   ({String code, String label, String un})? goodsUnit;
@@ -101,6 +133,7 @@ class StandaloneLineForm {
   /// units of the business are read (`startGoodsLine`), never a table of this file.
   void sell(InvoiceGoodsItem? item) {
     itemId = item?.id;
+    if (item != null) serviceId = null;
     goodsUnit = item == null ? null : (code: item.unit, label: item.unit, un: '');
     if (item != null && description.text.trim().isEmpty) description.text = item.name;
     if (item == null) tags.clear();
@@ -134,7 +167,7 @@ class StandaloneLineForm {
       unitPrice: decimalTextFromInput(price.text, locale: locale) ?? price.text.trim(),
       grossPrice: gross,
       vatRateId: () => rateId,
-    ).withGoods((itemId: itemId, tags: itemId == null ? const <String>[] : pieceTagsOf(tags.text))).withLineId(lineId);
+    ).withGoods((itemId: itemId, tags: itemId == null ? const <String>[] : pieceTagsOf(tags.text))).withService(serviceId, supply: serviceSupply).withLineId(lineId);
   }
 }
 
@@ -160,6 +193,7 @@ class StandaloneLineEditor extends StatelessWidget {
     required this.onRemove,
     this.enabled = true,
     this.goods = const [],
+    this.services = const [],
     this.pieces = false,
     this.units = const [],
     this.workspaceId = '',
@@ -174,6 +208,9 @@ class StandaloneLineEditor extends StatelessWidget {
 
   /// #4433 -- the items kept in stock a line may sell; none offers no choice.
   final List<InvoiceGoodsItem> goods;
+
+  /// #4510 -- the services of the catalogue a line may be picked from; none offers no choice.
+  final List<InvoiceService> services;
 
   /// Whether a line may name the pieces it sells (a standalone invoice; a quote names none).
   final bool pieces;
@@ -206,6 +243,40 @@ class StandaloneLineEditor extends StatelessWidget {
             : null,
       ),
     };
+  }
+
+  /// #4510 -- the catalogue service the line is picked from: its name, price, rate and supply fill the line in; "no service" keeps an ad-hoc one.
+  Widget _serviceField(BuildContext context) {
+    final l = context.l10n;
+    final held = form.serviceId;
+    final known = services.any((s) => s.id == held);
+    return DropdownButtonFormField<String?>(
+      key: ValueKey('standalone-line-$index-service'),
+      isExpanded: true,
+      initialValue: held,
+      decoration: InputDecoration(
+        labelText: l.standaloneInvoiceLineService,
+        suffixIcon: HelpDot(l.standaloneInvoiceLineService, anchor: HelpAnchor.moneyLineService),
+      ),
+      items: [
+        DropdownMenuItem<String?>(child: Text(l.standaloneInvoiceLineNoService)),
+        // a service that is retired since stays shown on the line that holds it
+        if (held != null && !known) DropdownMenuItem<String?>(value: held, child: Text(form.description.text)),
+        for (final s in services) DropdownMenuItem<String?>(value: s.id, child: Text(s.name, overflow: TextOverflow.ellipsis)),
+      ],
+      onChanged: enabled
+          ? (v) {
+              final picked = services.where((s) => s.id == v).firstOrNull;
+              final locale = appFormatOf(context).locale;
+              final text = picked == null
+                  ? ''
+                  : amountInputText(picked.priceCents, currency: ProviderScope.containerOf(context).read(invoicingBusinessProvider).currency, locale: locale);
+              if (v == held) return;
+              form.pick(picked, priceText: text);
+              onChanged();
+            }
+          : null,
+    );
   }
 
   @override
@@ -249,6 +320,10 @@ class StandaloneLineEditor extends StatelessWidget {
                       }
                     : null,
               ),
+            ],
+            if ((services.isNotEmpty || form.serviceId != null) && form.itemId == null) ...[
+              const FormGap(),
+              _serviceField(context),
             ],
             const FormGap(),
             Row(
@@ -300,6 +375,7 @@ class StandaloneLineEditor extends StatelessWidget {
             if (rates.length > 1)
               DropdownButtonFormField<String?>(
                 key: ValueKey('standalone-line-$index-rate'),
+                isExpanded: true,
                 initialValue: form.rateId,
                 decoration: InputDecoration(labelText: l.standaloneInvoiceLineRate),
                 items: [

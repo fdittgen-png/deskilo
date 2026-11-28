@@ -2952,6 +2952,19 @@ El tiempo que un presupuesto nuevo permanece válido cuando no indica fecha de f
 
 En un presupuesto enviado, **Compartir el PDF** abre la oferta como documento: un presupuesto, con su propia referencia y su plazo de validez, el cliente, las líneas y lo que suman tal como se fijaron al enviarlo (el neto, el IVA por tipo y el total). Nunca es una factura y no lleva número de factura. Puede verlo, guardarlo o compartirlo.
 
+### Elegir una línea entre sus servicios
+
+**Público:** Administrador/a · Propietario
+
+En un presupuesto y en una factura sin mes, cada línea puede elegirse de su catálogo de servicios en lugar de escribirse desde cero. En la línea, abra **Servicio del catálogo** y elija uno. La línea se rellena con el nombre del servicio (cuando la descripción está vacía o aún lleva el nombre del servicio elegido antes), su precio como precio con IVA incluido, su tipo de IVA y lo que suministra, y recuerda de qué servicio procede. Elija **Ningún servicio (línea libre)** para escribir una línea con sus propias palabras: ambos tipos pueden mezclarse en un mismo documento.
+
+**Conviene saber**
+
+- Todo lo que rellenó el servicio sigue siendo modificable en la línea. Lo que queda en la línea es lo que acordó con el cliente.
+- Cambiar o retirar después el servicio del catálogo nunca modifica un presupuesto, un borrador ni una factura ya escritos. Un servicio retirado sigue mostrándose en la línea que lo tiene y ya no se ofrece para una línea nueva.
+- Los artículos en existencias no son servicios: elíjalos con **Vendido de las existencias** en la línea.
+- Un servicio que no es uno de sus servicios activos se rechaza al guardar el presupuesto o el borrador, y se nombra la línea.
+
 ### Servicios en curso
 
 **Público:** Administrador/a · Propietario

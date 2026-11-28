@@ -26,6 +26,7 @@ class StandaloneLine {
     this.vatRateId,
     this.itemId,
     this.pieceTags = const [],
+    this.serviceId,
   });
 
   /// The line's own identity, kept across saves; null until the server gave it.
@@ -54,6 +55,10 @@ class StandaloneLine {
   /// #4433 -- the tags of the pieces a goods line sells, for an item tracked piece by piece; empty otherwise.
   final List<String> pieceTags;
 
+  /// #4510 -- the catalogue service the line was picked from; null for an ad-hoc line. The line's price, rate and supply are
+  /// what was agreed and stay as saved: the catalogue only fills the line in.
+  final String? serviceId;
+
   /// Whether the line sells goods from the stock.
   bool get isGoods => itemId != null;
 
@@ -81,6 +86,7 @@ class StandaloneLine {
     vatRateId: vatRateId == null ? this.vatRateId : vatRateId(),
     itemId: itemId,
     pieceTags: pieceTags,
+    serviceId: serviceId,
   );
 
   /// The same line selling [goods] (the item, or none, and the piece tags): the supply kind follows the item, and a line
@@ -99,6 +105,7 @@ class StandaloneLine {
     vatRateId: vatRateId,
     itemId: goods.itemId,
     pieceTags: goods.itemId == null ? const [] : goods.tags,
+    serviceId: goods.itemId == null ? serviceId : null,
   );
 
   Map<String, Object?> toWire() => {
@@ -112,8 +119,27 @@ class StandaloneLine {
     'supply': supply,
     if (vatRateId != null) 'vat_rate_id': vatRateId,
     if (itemId != null) 'item_id': itemId,
+    if (serviceId != null) 'service_id': serviceId,
     if (pieceTags.isNotEmpty) 'units': [for (final t in pieceTags) {'tag': t}],
   };
+
+  /// The same line picked from the catalogue service [id] (or from none): a service line supplies [supply], `property` or `general`.
+  StandaloneLine withService(String? id, {String? supply}) => StandaloneLine(
+    lineId: lineId,
+    description: description,
+    quantity: quantity,
+    unitCode: unitCode,
+    unitLabel: unitLabel,
+    unEceCode: unEceCode,
+    unitPrice: unitPrice,
+    grossPrice: grossPrice,
+    baseQuantity: baseQuantity,
+    supply: id == null || isGoods ? this.supply : (supply ?? this.supply),
+    vatRateId: vatRateId,
+    itemId: itemId,
+    pieceTags: pieceTags,
+    serviceId: isGoods ? null : id,
+  );
 
   StandaloneLine withLineId(String? id) => StandaloneLine(
     lineId: id,
@@ -129,6 +155,7 @@ class StandaloneLine {
     vatRateId: vatRateId,
     itemId: itemId,
     pieceTags: pieceTags,
+    serviceId: serviceId,
   );
 
   factory StandaloneLine.fromJson(JsonReader r) {
@@ -146,6 +173,7 @@ class StandaloneLine {
       supply: r.stringOr('supply', 'general'),
       vatRateId: r.stringOrNull('vat_rate_id'),
       itemId: r.stringOrNull('item_id'),
+      serviceId: r.stringOrNull('service_id'),
       pieceTags: [
         for (final u in r.objects('units', (u) => u.stringOr('tag')))
           if (u.isNotEmpty) u,

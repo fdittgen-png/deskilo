@@ -36381,6 +36381,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'a quantity above zero with at most six decimals';
 
   @override
+  String get standaloneFieldService =>
+      'a service of the catalogue that is on offer';
+
+  @override
   String get standaloneFieldStock => 'goods the stock can sell as entered';
 
   @override
@@ -36443,6 +36447,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get standaloneInvoiceLineNoGoods => 'Nothing from stock (a service)';
 
   @override
+  String get standaloneInvoiceLineNoService => 'No service (free line)';
+
+  @override
   String get standaloneInvoiceLinePieces => 'Tags of the pieces sold';
 
   @override
@@ -36460,6 +36467,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get standaloneInvoiceLineRateDefault => 'The business’s default rate';
+
+  @override
+  String get standaloneInvoiceLineService => 'Service of the catalogue';
 
   @override
   String get standaloneInvoiceLineUnit => 'Unit';

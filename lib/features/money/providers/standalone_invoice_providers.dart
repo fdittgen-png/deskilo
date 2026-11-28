@@ -1,11 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show SupplyClass;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/settings/setting_defaults.g.dart';
 import '../application/issue_standalone_invoice.dart';
 import '../data/supabase_invoice_goods_catalogue.dart';
+import '../data/supabase_invoice_service_catalogue.dart';
 import '../data/supabase_standalone_invoice_commands.dart';
 import '../domain/invoice_goods.dart';
+import '../domain/invoice_services.dart';
+import '../domain/service_item.dart';
 import '../domain/standalone_invoice.dart';
 import 'credit_providers.dart' show moneyClientProvider;
 import 'money_providers.dart' show dunningRulesProvider;
@@ -24,6 +28,37 @@ final invoiceGoodsCatalogueProvider = Provider<InvoiceGoodsCatalogue>(
 /// #4433 -- the items a goods line may sell in a business, read once per composer.
 final invoiceGoodsItemsProvider = FutureProvider.autoDispose.family<List<InvoiceGoodsItem>, String>(
   (ref, workspaceId) => ref.watch(invoiceGoodsCatalogueProvider).items(workspaceId),
+  retry: (_, _) => null,
+);
+
+/// #4510 -- the services of the catalogue a quote or an invoice line may be picked from. The Demo overrides it.
+final invoiceServiceCatalogueProvider = Provider<InvoiceServiceCatalogue>(
+  (ref) => SupabaseInvoiceServiceCatalogue(ref.watch(moneyClientProvider)),
+);
+
+/// #4510 -- the catalogue as a list of the business's service rows (the Demo's): the active ones that are not kept in stock.
+class ServiceItemCatalogue implements InvoiceServiceCatalogue {
+  ServiceItemCatalogue(this._read);
+
+  final Future<List<ServiceItem>> Function(String workspaceId) _read;
+
+  @override
+  Future<List<InvoiceService>> services(String workspaceId) async => [
+    for (final s in await _read(workspaceId))
+      if (s.active && s.stock == null)
+        InvoiceService(
+          id: s.id,
+          name: s.name,
+          priceCents: s.priceCents,
+          vatRateId: s.vatRateId.isEmpty ? null : s.vatRateId,
+          supply: s.supplyClass == SupplyClass.general ? 'general' : 'property',
+        ),
+  ];
+}
+
+/// #4510 -- the services a line may be picked from in a business, read once per composer.
+final invoiceServicesProvider = FutureProvider.autoDispose.family<List<InvoiceService>, String>(
+  (ref, workspaceId) => ref.watch(invoiceServiceCatalogueProvider).services(workspaceId),
   retry: (_, _) => null,
 );
 

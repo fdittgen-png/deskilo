@@ -132,6 +132,7 @@
   "user.money.customers.access": "Accesso con account per un cliente fatturato",
   "user.money.invoices.standalone": "Una fattura cliente senza mese",
   "user.money.quotes": "Preventivi",
+  "user.money.lines.service": "Scegliere una riga tra i propri servizi",
   "user.money.engagements": "Servizi in corso",
   "user.money.stock": "Magazzino",
   "user.money.stock.places": "Ubicazioni e indirizzi",

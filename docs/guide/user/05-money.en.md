@@ -679,6 +679,20 @@ How long a new quote stays valid when you state no end date, and the longest val
 
 On a sent quote, **Share the PDF** opens the offer as a document: a quote, with its own reference and how long it is valid, the customer, the lines and what they come to as they were frozen when it was sent (the net, the VAT per rate and the total). It is never an invoice and carries no invoice number. You can view it, save it or share it.
 
+<!-- anchor: user.money.lines.service -->
+### Picking a line from your services
+
+**Audience:** Administrator · Owner
+
+On a quote and on an invoice without a month, each line can be picked from your service catalogue instead of written from scratch. In the line, open **Service of the catalogue** and choose one. The line is filled in with the service's name (when the description is empty or still the name of the service you chose before), its price as a price that includes VAT, its VAT rate and what it supplies, and it remembers which service it came from. Choose **No service (free line)** to write an ad hoc line in your own words: both kinds can be mixed on one document.
+
+**Good to know**
+
+- Everything the service filled in can still be changed on the line. What stays on the line is what you agreed with the customer.
+- Changing or retiring the service in the catalogue afterwards never changes a quote, a draft or an invoice already written. A retired service stays shown on the line that holds it and is no longer offered for a new line.
+- Items kept in stock are not services: choose them with **Sold from stock** on the line.
+- A service that is not one of your active services is refused when the quote or the draft is saved, and the line is named.
+
 <!-- anchor: user.money.engagements -->
 ### Service engagements
 

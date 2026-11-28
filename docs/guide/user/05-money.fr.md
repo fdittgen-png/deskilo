@@ -679,6 +679,20 @@ La durée pendant laquelle un nouveau devis reste valable quand vous n’indique
 
 Sur un devis envoyé, **Partager le PDF** ouvre l’offre comme un document : un devis, avec sa propre référence et sa durée de validité, le client, les lignes et ce qu’elles représentent telles qu’elles ont été figées à l’envoi (le net, la TVA par taux et le total). Ce n’est jamais une facture et il ne porte aucun numéro de facture. Vous pouvez le consulter, l’enregistrer ou le partager.
 
+<!-- anchor: user.money.lines.service -->
+### Choisir une ligne parmi vos services
+
+**Public:** Administrateur·rice · Propriétaire
+
+Sur un devis et sur une facture sans mois, chaque ligne peut être choisie dans votre catalogue de services au lieu d’être écrite de zéro. Dans la ligne, ouvrez **Service du catalogue** et choisissez-en un. La ligne est remplie avec le nom du service (quand la description est vide ou porte encore le nom du service choisi avant), son prix en prix TTC, son taux de TVA et ce qu’il fournit, et elle retient de quel service elle vient. Choisissez **Aucun service (ligne libre)** pour écrire une ligne avec vos propres mots : les deux sortes peuvent se mêler dans un même document.
+
+**Bon à savoir**
+
+- Tout ce que le service a rempli reste modifiable sur la ligne. Ce qui reste sur la ligne, c’est ce que vous avez convenu avec le client.
+- Modifier ou retirer ensuite le service du catalogue ne change jamais un devis, un brouillon ou une facture déjà écrits. Un service retiré reste affiché sur la ligne qui le porte et n’est plus proposé pour une nouvelle ligne.
+- Les articles gardés en stock ne sont pas des services : choisissez-les avec **Vendu depuis le stock** sur la ligne.
+- Un service qui n’est pas l’un de vos services actifs est refusé à l’enregistrement du devis ou du brouillon, et la ligne est nommée.
+
 <!-- anchor: user.money.engagements -->
 ### Prestations suivies
 

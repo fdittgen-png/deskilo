@@ -58289,6 +58289,12 @@ abstract class AppLocalizations {
   /// **'a quantity above zero with at most six decimals'**
   String get standaloneFieldQuantity;
 
+  /// #4510 FIN-05 service catalogue as a line source: standaloneFieldService
+  ///
+  /// In en, this message translates to:
+  /// **'a service of the catalogue that is on offer'**
+  String get standaloneFieldService;
+
   /// #4433 goods sold on an invoice: standaloneFieldStock
   ///
   /// In en, this message translates to:
@@ -58403,6 +58409,12 @@ abstract class AppLocalizations {
   /// **'Nothing from stock (a service)'**
   String get standaloneInvoiceLineNoGoods;
 
+  /// #4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineNoService
+  ///
+  /// In en, this message translates to:
+  /// **'No service (free line)'**
+  String get standaloneInvoiceLineNoService;
+
   /// #4433 goods sold on an invoice: standaloneInvoiceLinePieces
   ///
   /// In en, this message translates to:
@@ -58438,6 +58450,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The business’s default rate'**
   String get standaloneInvoiceLineRateDefault;
+
+  /// #4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineService
+  ///
+  /// In en, this message translates to:
+  /// **'Service of the catalogue'**
+  String get standaloneInvoiceLineService;
 
   /// #4165 standalone invoice composer: standaloneInvoiceLineUnit
   ///

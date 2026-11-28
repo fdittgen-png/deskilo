@@ -149,6 +149,7 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
       'commercial': {
         'version': 1,
         'line_id': l.lineId,
+        if (l.serviceId != null) 'service_id': l.serviceId,
         'quantity': l.quantity,
         'unit': {'code': l.unitCode, 'label': l.unitLabel, 'un_ece_code': l.unEceCode},
         'supply': l.supply,

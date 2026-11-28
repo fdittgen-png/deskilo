@@ -47340,6 +47340,10 @@
   "@standaloneFieldQuantity": {
     "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
   },
+  "standaloneFieldService": "a service of the catalogue that is on offer",
+  "@standaloneFieldService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneFieldService"
+  },
   "standaloneFieldStock": "goods the stock can sell as entered",
   "@standaloneFieldStock": {
     "description": "#4433 goods sold on an invoice: standaloneFieldStock"
@@ -47421,6 +47425,10 @@
   "@standaloneInvoiceLineNoGoods": {
     "description": "#4433 goods sold on an invoice: standaloneInvoiceLineNoGoods"
   },
+  "standaloneInvoiceLineNoService": "No service (free line)",
+  "@standaloneInvoiceLineNoService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineNoService"
+  },
   "standaloneInvoiceLinePieces": "Tags of the pieces sold",
   "@standaloneInvoiceLinePieces": {
     "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePieces"
@@ -47444,6 +47452,10 @@
   "standaloneInvoiceLineRateDefault": "The business’s default rate",
   "@standaloneInvoiceLineRateDefault": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineRateDefault"
+  },
+  "standaloneInvoiceLineService": "Service of the catalogue",
+  "@standaloneInvoiceLineService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineService"
   },
   "standaloneInvoiceLineUnit": "Unit",
   "@standaloneInvoiceLineUnit": {
