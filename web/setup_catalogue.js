@@ -737,7 +737,7 @@ window.SETUP_REGISTRY={
   ],
   [
    "counterCashReasons",
-   false
+   true
   ]
  ],
  "requires": {
