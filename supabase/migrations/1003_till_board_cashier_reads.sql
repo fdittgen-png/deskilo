@@ -84,4 +84,4 @@ $fn$;
 revoke execute on function public.till_terminal_cashier_boards_v1(uuid) from public, anon;
 grant execute on function public.till_terminal_cashier_boards_v1(uuid) to authenticated;
 
-select public.set_deskilo_schema_version(1002);
+select public.set_deskilo_schema_version(1003);

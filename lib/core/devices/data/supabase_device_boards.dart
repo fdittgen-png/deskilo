@@ -67,6 +67,7 @@ class SupabaseTillBoards implements TillBoardPort {
     final status = TillBoardStatus.of(r.stringOrNull('status'));
     if (status == null) return null;
     final profileKey = r.stringOrNull('board_profile');
+    final lease = r.objectOrNull('lease');
     return TillBoard(
       id: r.string('id'),
       tillId: r.string('till_id'),
@@ -74,10 +75,78 @@ class SupabaseTillBoards implements TillBoardPort {
       deviceId: r.string('device_id'),
       profile: BoardProfile.values.where((p) => p.key == profileKey).firstOrNull,
       fingerprint: r.string('fingerprint'),
-      firmware: r.string('firmware'),
+      firmware: r.stringOr('firmware'),
       status: status,
+      cashierAsked: r.boolOr('cashier_asked', fallback: false),
+      lease: lease == null
+          ? null
+          : TillBoardLease(
+              id: lease.string('id'),
+              memberName: lease.stringOr('member_name'),
+              expiresAt: DateTime.parse(lease.string('expires_at')),
+              mine: r.boolOr('mine', fallback: false),
+            ),
     );
   }
+
+  @override
+  Future<List<TillBoard>> cashierBoards(String workspaceId) async {
+    final rows = await _call('till_terminal_cashier_boards_v1', {'p_workspace_id': workspaceId});
+    return [
+      for (final row in rows is List ? rows : const <Object?>[])
+        ?_cashierBoard(row),
+    ];
+  }
+
+  /// A row of the cashiers' list: a paired board, without its profile and firmware.
+  static TillBoard? _cashierBoard(Object? row) {
+    if (row is! Map) return null;
+    return _board({...row, 'status': TillBoardStatus.paired.wire, 'board_profile': null, 'firmware': ''});
+  }
+
+  @override
+  Future<DateTime> authorize(String boardId) async {
+    final Object? data;
+    try {
+      data = (await _client.functions.invoke('embedded-till', body: {'action': 'operator.authorize', 'terminal_id': boardId})).data;
+    } on FunctionException catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'till', 'a board was not authorized: ${e.status}', error: e, stackTrace: st);
+      Error.throwWithStackTrace(TillBoardAuthorizeRefused(_authorizeRefusalOf(e.details)), st);
+    }
+    final r = JsonReader.of(data, context: 'embedded-till operator.authorize');
+    if (r.boolOr('ok', fallback: false)) {
+      return DateTime.parse(r.objectOrNull('result')?.string('expires_at') ?? r.string('expires_at'));
+    }
+    throw TillBoardAuthorizeRefused(_authorizeRefusalOf(data));
+  }
+
+  /// The words of a refused authorization: the edge function's reason, or the server's code and its detail's reason.
+  static TillBoardAuthorizeRefusal _authorizeRefusalOf(Object? answer) {
+    final r = JsonReader.orEmpty(answer is String ? _decoded(answer) : answer, context: 'embedded-till refusal');
+    final code = r.stringOr('code');
+    final detail = r.raw('detail');
+    final reason = code.isEmpty ? r.stringOr('reason') : _reason(detail is String ? detail : null);
+    return switch ((code, reason)) {
+      (DkCode.dkn01, _) => TillBoardAuthorizeRefusal.notAllowed,
+      (_, 'no_request') => TillBoardAuthorizeRefusal.noRequest,
+      (_, 'device_revoked' || 'pair_pending' || 'terminal') => TillBoardAuthorizeRefusal.notPaired,
+      (_, 'operator_token' || 'operator_revoked' || 'operator_expired') => TillBoardAuthorizeRefusal.signIn,
+      (_, 'terminal_not_configured') => TillBoardAuthorizeRefusal.notConfigured,
+      _ => TillBoardAuthorizeRefusal.uncertain,
+    };
+  }
+
+  static Object? _decoded(String text) {
+    try {
+      return jsonDecode(text);
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'till', 'an answer that is not JSON', error: e, stackTrace: st);
+      return null;
+    }
+  }
+
+  @override
+  Future<bool> endLease(String leaseId) async => await _call('till_terminal_lease_revoke_v1', {'p_lease_id': leaseId}) == true;
 
   @override
   Future<TillBoardCode> code(String workspaceId, String tillId, DeviceCode scanned) async {

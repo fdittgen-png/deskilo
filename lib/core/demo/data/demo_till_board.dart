@@ -36,6 +36,7 @@ class DemoTillBoards implements TillBoardPort {
       fingerprint: scanned.code.fingerprint!,
       firmware: scanned.code.firmware ?? '',
       status: TillBoardStatus.paired,
+      cashierAsked: true, // #4517 -- the simulated board asks for a cashier from the start
     );
   }
 
@@ -68,20 +69,40 @@ class DemoTillBoards implements TillBoardPort {
     final b = _boards[boardId];
     if (b == null || b.status != TillBoardStatus.pendingApproval) throw const TillBoardRefused(TillBoardRefusal.used);
     if (fingerprint.trim().toUpperCase() != b.fingerprint) throw const TillBoardRefused(TillBoardRefusal.proof);
-    _boards[boardId] = TillBoard(
-      id: b.id,
-      tillId: b.tillId,
-      tillName: b.tillName,
-      deviceId: b.deviceId,
-      profile: b.profile,
-      fingerprint: b.fingerprint,
-      firmware: b.firmware,
-      status: TillBoardStatus.paired,
-    );
+    _boards[boardId] = b.copyWith(status: TillBoardStatus.paired);
   }
 
   @override
   Future<bool> revoke(String boardId) async {
     return _boards.remove(boardId) != null;
+  }
+
+  /// #4517 -- the paired boards, as whom may sell reads them: an ended lease is nobody's.
+  @override
+  Future<List<TillBoard>> cashierBoards(String workspaceId) async => [
+    for (final b in _boards.values)
+      if (b.status == TillBoardStatus.paired)
+        if (b.lease != null && !b.lease!.expiresAt.isAfter(_now())) b.copyWith(lease: () => null) else b,
+  ];
+
+  @override
+  Future<DateTime> authorize(String boardId) async {
+    final b = _boards[boardId];
+    if (b == null || b.status != TillBoardStatus.paired) throw const TillBoardAuthorizeRefused(TillBoardAuthorizeRefusal.notPaired);
+    if (!b.cashierAsked) throw const TillBoardAuthorizeRefused(TillBoardAuthorizeRefusal.noRequest);
+    final until = _now().add(const Duration(minutes: SettingDefaults.counterTerminalOperatorMinutes));
+    _boards[boardId] = b.copyWith(cashierAsked: false, lease: () => TillBoardLease(id: 'demo-lease-${_next++}', memberName: '', expiresAt: until, mine: true));
+    return until;
+  }
+
+  @override
+  Future<bool> endLease(String leaseId) async {
+    for (final b in _boards.values) {
+      if (b.lease?.id == leaseId) {
+        _boards[b.id] = b.copyWith(cashierAsked: true, lease: () => null); // the simulated board asks again
+        return true;
+      }
+    }
+    return false;
   }
 }
