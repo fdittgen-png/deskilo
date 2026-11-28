@@ -4,7 +4,7 @@
   "@settingLabelStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
   },
-  "settingHintStockInvoiceSalePlace": "Der Code eines Orts des Unternehmens, der Bestand führt, zum Beispiel MAIN. Auf Rechnung verkaufte Waren gehen beim Ausstellen der Rechnung von dort ab.",
+  "settingHintStockInvoiceSalePlace": "Wählen Sie den Ort, von dem auf einer Rechnung verkaufte Waren abgehen, als Standort › Ort. Ein früher gesetzter Code gilt weiter, solange nur ein Ort ihn trägt.",
   "@settingHintStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
   },
@@ -68,7 +68,7 @@
   "@standaloneFieldStock": {
     "description": "#4433 goods sold on an invoice: standaloneFieldStock"
   },
-  "standaloneFactSalePlace": "der Ort, von dem verkauft wird: einen Ort mit Bestand in den Unternehmenseinstellungen festlegen",
+  "standaloneFactSalePlace": "der Ort, von dem Waren verkauft werden, ist nicht festgelegt, nicht eindeutig oder nicht mehr nutzbar: Wählen Sie in den Lagereinstellungen einen Ort mit Bestand",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
   }

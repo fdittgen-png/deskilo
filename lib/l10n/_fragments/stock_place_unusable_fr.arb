@@ -1,0 +1,6 @@
+{
+  "stockReasonPlaceUnusable": "Cet emplacement ne peut pas être utilisé : choisissez un emplacement en service qui contient du stock.",
+  "@stockReasonPlaceUnusable": {
+    "description": "#4495 the place picked for a setting cannot be used"
+  }
+}

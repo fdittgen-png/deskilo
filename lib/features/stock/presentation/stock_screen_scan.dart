@@ -11,6 +11,7 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../domain/stock_code_resolver.dart';
 import '../providers/stock_providers.dart';
+import 'scanned_place_choice.dart';
 
 class StockScreenScan {
   const StockScreenScan(this._ref);
@@ -36,6 +37,12 @@ class StockScreenScan {
     if (answer.kind == ScannedKind.unknown) {
       AppSnack.info(context, l10n.stockScanUnknown(answer.code));
       return null;
+    }
+    if (answer.asksWhichPlace) {
+      // #4495 -- a code several places carry: the person says which, never the first
+      final chosen = await showScannedPlaceChoice(context, answer.code, answer.placeChoices);
+      if (chosen == null) return null;
+      return StockCodeResolution(kind: ScannedKind.place, code: answer.code, matchedBy: 'place_code', place: chosen);
     }
     return answer;
   }

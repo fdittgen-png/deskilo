@@ -71,6 +71,7 @@ enum StockRefusal {
   parentInactive('parent_inactive'),
   pickRoleUnknown('pick_role_unknown'),
   placeUnknown('place_unknown'),
+  placeUnusable('place_unusable'),
   pointFixed('point_fixed'),
   pointTwice('point_twice'),
   preferredTwice('preferred_twice'),

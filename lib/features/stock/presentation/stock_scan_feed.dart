@@ -70,6 +70,14 @@ class StockScanFeed extends ChangeNotifier {
     unawaited(_drain());
   }
 
+  /// #4495 -- the person said which of the places a scanned code names: applied as the place scanned.
+  void choosePlace(ScannedPlace place) {
+    final answer = StockCodeResolution(kind: ScannedKind.place, code: place.code, matchedBy: 'place_code', place: place);
+    last = session.apply(answer, placeAllowed: placeAllowed, itemAllowed: itemAllowed);
+    onResult(last!);
+    if (!_closed) notifyListeners();
+  }
+
   final Set<String> _tags = {};
 
   /// A tag was read by NFC ([uid] as the tag's upper-case hex): the same resolution as a scan, but a tag read a

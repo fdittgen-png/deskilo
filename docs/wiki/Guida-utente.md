@@ -4268,20 +4268,23 @@ I suoi articoli, preventivi e fatture sono misurati in unità, e alcune unità s
 
 **Destinatari:** Proprietario · Amministratore con il permesso
 
-Un terminale di cassa è il piccolo schermo al banco che incassa. Lo si collega all'attività da **Dispositivi**: l'app legge il codice QR del terminale, o il codice di 10 caratteri accanto, e mostra di quale terminale si tratta.
+Un terminale di cassa è il piccolo schermo al banco che incassa. Lo si collega all'attività da **Dispositivi**: l'app legge il codice QR del terminale, mostra di quale terminale si tratta e Le dà il codice che lo collega a una cassa. Il terminale attende poi la Sua approvazione.
 
 **Passaggi**
 
 1. Attivi **Terminali di cassa** in **Funzionalità** (richiede **Sessioni di cassa e chiusura della giornata** ed è disattivato finché non lo richiede).
 2. Sul terminale, tenga premuto il pulsante **BOOT** per 3 secondi: mostra il codice QR e il codice, per esempio 3DNGP-UN9CG. Un terminale non ancora configurato li mostra da sé.
-3. In [Dispositivi](https://fdittgen-png.github.io/deskilo/#/settings/devices), avvicini il codice QR alla fotocamera, oppure digiti il codice in **Digitare il codice** e tocchi **Verificare il codice**.
-4. Confronti il terminale e la sua **Impronta** con lo schermo del terminale.
+3. In [Dispositivi](https://fdittgen-png.github.io/deskilo/#/settings/devices), avvicini il codice QR alla fotocamera. Confronti il terminale e la sua **Impronta** con lo schermo del terminale.
+4. Scelga la **Cassa** servita dal terminale e tocchi **Ottenere un codice di collegamento**. Il codice vale una sola volta, solo per questo terminale, per i minuti indicati dalle impostazioni (5 per impostazione predefinita).
+5. Quando il terminale ha usato il codice, compare nell'elenco come **In attesa della Sua approvazione**. Tocchi **Approvare**, verifichi che lo schermo del terminale mostri l'impronta indicata dall'app e confermi: il terminale è **Collegato**.
 
 **Da sapere**
 
-- Un codice non contiene mai 0, O, 1, I o L. Un carattere errato, o due invertiti, viene rifiutato subito, a parole sotto il campo; maiuscole, spazi e trattini non contano.
-- Senza fotocamera (browser, computer), digitare il codice fa lo stesso.
-- Il collegamento del terminale all'attività arriverà con un prossimo aggiornamento: oggi l'app legge e verifica il terminale, e non gli invia nulla.
+- Solo il titolare dell'attività ottiene un codice, approva un terminale o lo rimuove. Chi può aprire le impostazioni vede l'elenco.
+- **Rimuovere** termina il collegamento di un terminale con l'attività. Per usarlo di nuovo, lo colleghi con un nuovo codice.
+- Digitare il codice accanto al QR (dove non c'è fotocamera) mostra di quale terminale si tratta; per collegarlo, scansioni il suo codice QR. Un terminale il cui codice QR non viene accettato per il collegamento ha bisogno prima del nuovo firmware.
+- Un codice presentato troppe volte da un terminale sbagliato si esaurisce (5 volte per impostazione predefinita). Entrambi i numeri sono nelle impostazioni dell'attività: **Codice di collegamento di un dispositivo: minuti** e **Codice di collegamento di un dispositivo: tentativi**.
+- Un codice non contiene mai 0, O, 1, I o L. Un carattere sbagliato, o due invertiti, viene rifiutato subito, a parole sotto il campo; maiuscole, spazi e trattini non contano.
 
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organizzazione

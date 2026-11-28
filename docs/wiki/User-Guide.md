@@ -4268,20 +4268,23 @@ Your items, quotes and invoices are measured in units, and some units convert in
 
 **Audience:** Owner · Administrator with the permission
 
-A till board is the small screen at the counter that takes payments. You connect it to your business from **Devices**: the app reads the board's QR code, or the code of 10 characters beside it, and shows which board it is.
+A till board is the small screen at the counter that takes payments. You connect it to your business from **Devices**: the app reads the board's QR code, shows which board it is, and gives you the code that connects it to one till. The board then waits until you approve it.
 
 **Steps**
 
 1. Turn on **Till boards** under **Features** (it needs **Till sessions and day close** and is off until you ask for it).
 2. On the board, hold the **BOOT** button for 3 seconds: it shows its QR code and its code, such as 3DNGP-UN9CG. A board not yet set up shows them by itself.
-3. In [Devices](https://fdittgen-png.github.io/deskilo/#/settings/devices), hold the QR code in front of the camera, or type the code under **Type the code** and tap **Check the code**.
-4. Compare the board and its **Fingerprint** with the board's screen.
+3. In [Devices](https://fdittgen-png.github.io/deskilo/#/settings/devices), hold the QR code in front of the camera. Compare the board and its **Fingerprint** with the board's screen.
+4. Choose the **Till** the board serves and tap **Get a connection code**. The code is valid once, for this board only, for the minutes your settings give (5 by default).
+5. When the board has used the code, it appears in the list as **Waiting for your approval**. Tap **Approve**, check that the board's screen shows the fingerprint the app names, and confirm: the board is **Connected**.
 
 **Good to know**
 
+- Only the business's owner gets a code, approves a board or removes one. Whoever may open the settings sees the list.
+- **Remove** ends a board's connection to the business. To use it again, connect it with a new code.
+- Typing the code beside the QR (where there is no camera) shows which board it is; to connect it, scan its QR code. A board whose QR code is not accepted for connecting needs the new firmware first.
+- A code a wrong board presents too often is used up (5 times by default). Both numbers are in the business settings: **Board connection code: minutes** and **Board connection code: attempts**.
 - A code never holds 0, O, 1, I or L. One wrong character, or two swapped, is refused at once, in words under the field; capitals, spaces and dashes do not matter.
-- Where there is no camera (a browser, a desktop), typing the code does the same.
-- Connecting the board to the business comes with a later update: today the app reads and checks the board, and sends it nothing.
 
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organisation

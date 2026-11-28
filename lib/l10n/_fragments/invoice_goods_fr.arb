@@ -4,7 +4,7 @@
   "@settingLabelStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingLabelStockInvoiceSalePlace"
   },
-  "settingHintStockInvoiceSalePlace": "Le code d’un lieu de l’entreprise qui détient du stock, par exemple MAIN. Les biens vendus sur facture en partent à l’émission de la facture.",
+  "settingHintStockInvoiceSalePlace": "Choisissez l'emplacement d'où partent les marchandises vendues sur une facture, sous la forme site › emplacement. Un code fixé avant reste valable tant qu'un seul emplacement le porte.",
   "@settingHintStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
   },
@@ -68,7 +68,7 @@
   "@standaloneFieldStock": {
     "description": "#4433 goods sold on an invoice: standaloneFieldStock"
   },
-  "standaloneFactSalePlace": "le lieu d’où partent les ventes : indiquez un lieu qui détient du stock dans les réglages de l’entreprise",
+  "standaloneFactSalePlace": "l'emplacement d'où partent les marchandises vendues n'est pas fixé, est ambigu ou n'est plus utilisable : choisissez dans les réglages du stock un emplacement qui contient du stock",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
   }

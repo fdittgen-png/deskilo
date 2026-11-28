@@ -1,0 +1,9 @@
+{
+  "stockScanWhichPlace": "Plusieurs emplacements portent le code {code} : lequel ?",
+  "@stockScanWhichPlace": {
+    "description": "#4495 a scanned code several places carry",
+    "placeholders": {
+      "code": {"type": "String"}
+    }
+  }
+}
