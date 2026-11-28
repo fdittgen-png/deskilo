@@ -166,7 +166,7 @@ begin
 end
 $function$;
 
--- restates 0826 (save_standalone_invoice_draft_v1)
+-- restates 0820 (save_standalone_invoice_draft_v1)
 CREATE OR REPLACE FUNCTION public.save_standalone_invoice_draft_v1(p_workspace_id uuid, p_draft_id uuid, p_expected_revision integer, p_subject uuid, p_service_date date, p_due_on date, p_buyer_reference text, p_purchase_order text, p_lines jsonb)
  RETURNS jsonb
  LANGUAGE plpgsql
