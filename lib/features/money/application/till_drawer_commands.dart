@@ -5,7 +5,6 @@
 // asked from (a test replaces the port, nothing else).
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../domain/cash_reason.dart';
 import '../domain/till_drawer.dart';
 import '../providers/till_drawer_providers.dart';
 

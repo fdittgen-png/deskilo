@@ -11,7 +11,6 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_choice_controls.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../application/till_drawer_commands.dart';
-import '../../domain/cash_reason.dart';
 import '../../domain/till_drawer.dart';
 import '../../domain/till_drawer_rules.dart';
 import 'cash_reason_text.dart';

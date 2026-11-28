@@ -17,6 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 const Map<String, String> _masterDataEditors = {
   '/settings/units': '#4442 the units of measure and their conversions',
   '/vat': 'the VAT rates',
+  '/till/reasons': '#4514 the cash reasons of the tills',
   '/stock/items': '#4299 the item registry',
   '/stock/groups': '#4361 the item groups',
   '/services': 'the services the business sells',

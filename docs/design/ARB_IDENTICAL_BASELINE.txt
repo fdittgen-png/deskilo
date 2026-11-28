@@ -32,6 +32,7 @@ de calendarKindCheckIn
 de calendarKindCheckOut
 de calendarViewAgenda
 de carnetName
+de cashReasonsName
 de consentVersion
 de consentVersionNumber
 de conversationAdmin

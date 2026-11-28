@@ -56,20 +56,22 @@ class CashReasonsScreen extends ConsumerWidget {
               alignment: Alignment.topCenter,
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 720),
-                child: AsyncReadBody.part(
-                  value: ref.watch(cashReasonsProvider(id)),
-                  isEmpty: (rows) => rows.isEmpty,
-                  refusal: (e) => drawerRefusalWords(l10n, e),
-                  retryKey: const ValueKey('cash-reasons-retry'),
-                  onRetry: () => ref.invalidate(cashReasonsProvider(id)),
-                  data: (reasons) => ListView(
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    children: [
-                      Text(l10n.cashReasonsSubtitle),
-                      const FormGap(),
-                      for (final r in reasons) _tile(context, ref, id, r),
-                    ],
-                  ),
+                child: ListView(
+                  padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, kFabSafeBottom),
+                  children: [
+                    Text(l10n.cashReasonsSubtitle),
+                    const FormGap(),
+                    AsyncReadBody.part(
+                      value: ref.watch(cashReasonsProvider(id)),
+                      isEmpty: (rows) => rows.isEmpty,
+                      refusal: (e) => drawerRefusalWords(l10n, e),
+                      retryKey: const ValueKey('cash-reasons-retry'),
+                      onRetry: () => ref.invalidate(cashReasonsProvider(id)),
+                      data: (reasons) => Column(
+                        children: [for (final r in reasons) _tile(context, ref, id, r)],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

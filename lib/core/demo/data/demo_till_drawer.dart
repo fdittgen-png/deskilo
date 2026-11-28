@@ -6,7 +6,6 @@
 // is closed with its reason; a request id answers the same act again.
 import 'dart:convert';
 
-import 'package:deskilo/features/money/domain/cash_reason.dart';
 import 'package:deskilo/features/money/domain/till_day.dart';
 import 'package:deskilo/features/money/domain/till_drawer.dart';
 import 'package:deskilo/features/money/domain/till_drawer_rules.dart';
@@ -15,6 +14,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../codes/dk_code.dart';
 import '../../codes/pg_code.dart';
+import '../demo_table.dart';
 
 PostgrestException _refused(String code, String message, {String? reason, Map<String, Object?> more = const {}}) => PostgrestException(
   message: message,
@@ -211,7 +211,7 @@ class DemoTillDrawer implements TillDrawerPort {
   }
 
   /// #4514 (0999) -- the business's cash reasons: the built-in ones, then its own.
-  final List<CashReason> _reasons = [...kBuiltinCashReasons];
+  final DemoTable<CashReason> _reasons = DemoTable((r) => r.code, kBuiltinCashReasons);
 
   /// An active reason of [process], by its code, or the refusal the server gives.
   void _reasonOnList(String code, CashReasonProcess process) {
@@ -238,7 +238,7 @@ class DemoTillDrawer implements TillDrawerPort {
       _reasons.add(reason);
       return reason;
     }
-    final at = _reasons.indexWhere((r) => r.code == code);
+    final at = _reasons.indexOfId(code);
     if (at < 0) throw _refused(DkCode.dkl13, 'no such reason in this business', reason: 'reason_unknown');
     final was = _reasons[at];
     if (!was.builtin && (named.isEmpty || named.length > kCashReasonNameMaxLength)) {

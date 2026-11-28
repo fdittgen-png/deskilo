@@ -69,7 +69,7 @@
   },
   "cashReasonsNameTooLong": "A name has at most {max} characters.",
   "@cashReasonsNameTooLong": {
-    "description": "#4514 refusal: a name too long",
+    "description": "#4514 refusal: a name too long [not a count: max]",
     "placeholders": {
       "max": {
         "type": "int"

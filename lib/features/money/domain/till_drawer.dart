@@ -9,6 +9,8 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'cash_reason.dart';
 import 'till_day.dart';
 
+export 'cash_reason.dart';
+
 /// One session of a till, open: the float it started with and who opened it.
 class DrawerSession {
   const DrawerSession({required this.id, required this.tillId, required this.floatMinor, required this.openedByMemberId});

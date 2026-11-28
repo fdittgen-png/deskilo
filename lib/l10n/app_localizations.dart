@@ -10775,7 +10775,7 @@ abstract class AppLocalizations {
   /// **'Give the reason a name.'**
   String get cashReasonsNameMissing;
 
-  /// #4514 refusal: a name too long
+  /// #4514 refusal: a name too long [not a count: max]
   ///
   /// In en, this message translates to:
   /// **'A name has at most {max} characters.'**

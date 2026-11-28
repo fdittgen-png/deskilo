@@ -3,7 +3,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../domain/cash_reason.dart';
 import '../domain/till_day.dart';
 import '../domain/till_drawer.dart';
 
@@ -69,7 +68,10 @@ class SupabaseTillDrawer implements TillDrawerPort {
 
   @override
   Future<List<CashReason>> cashReasons(String workspaceId) async {
-    final rows = await _client.from('counter_cash_reasons').select('code, builtin, name, processes, archived, sort_order').eq('workspace_id', workspaceId).order('sort_order', ascending: true).order('code', ascending: true);
+    final rows = await fetchConfigurationList(
+      table: 'counter_cash_reasons',
+      build: () => _client.from('counter_cash_reasons').select('code, builtin, name, processes, archived, sort_order').eq('workspace_id', workspaceId).order('sort_order', ascending: true).order('code', ascending: true),
+    );
     return [for (final r in rows) CashReason.fromJson(r)];
   }
 

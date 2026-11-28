@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/codes/dk_code.dart';
 import '../../../core/data/server_error.dart';
-import '../domain/cash_reason.dart';
 import '../domain/till_day.dart';
 import '../domain/till_drawer.dart';
 

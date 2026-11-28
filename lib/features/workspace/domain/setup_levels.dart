@@ -301,8 +301,7 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.counterOfflineCash,
         // #4442
         WorkspaceFeature.unitsOfMeasure,
-        WorkspaceFeature.counterTillLayout, WorkspaceFeature.counterReceiptPrinter, WorkspaceFeature.counterEmbeddedTerminal, // #4448, #4368, #4466
-        WorkspaceFeature.counterCashReasons, // #4514
+        WorkspaceFeature.counterTillLayout, WorkspaceFeature.counterReceiptPrinter, WorkspaceFeature.counterEmbeddedTerminal, WorkspaceFeature.counterCashReasons, // #4448, #4368, #4466, #4514
       },
     ),
   ],
