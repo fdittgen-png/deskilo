@@ -8,12 +8,11 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../features/money/domain/bank/bank_records.dart';
 import '../../../features/money/domain/bank/bank_statement.dart';
-import '../../text/collation.dart';
 import 'bank_unmatch_in.dart';
 import 'money_repository.dart';
 
-// #4496 -- the Demo's bank accounts, beside its statements.
-part 'demo_bank_accounts.dart';
+// #4496 -- the Demo's bank accounts are seeded with its statements.
+export 'bank_statement_demo_seed.dart' show FakeBankAccountRepository, demoBankAccountsOf;
 
 /// The bank statements in memory, with the server's rules the screens
 /// show (import_bank_statement_v1 and the line decisions of #2380): the
@@ -40,7 +39,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
 
   String _id(String kind) => 'demo-$kind-${_next++}';
 
-  /// The financial fields of a movement, without the account's name (0988's movement_hash).
+  /// The financial fields of a movement, without the account's name (0986's movement_hash).
   static String _hash(BankLine l) => sha256
       .convert(
         utf8.encode(
