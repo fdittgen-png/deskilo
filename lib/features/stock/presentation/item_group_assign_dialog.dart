@@ -142,7 +142,7 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
         submitLabel: l10n.itemGroupSetOwn,
         submitKey: const ValueKey('item-group-unit-own-save'),
         validate: () => form.fields.errors(l10n),
-        onSubmit: () => _sendUnits({for (final e in form.values().entries) if (e.value != null) e.key: e.value!}, 'set'),
+        onSubmit: () => _sendUnits({for (final e in form.values().entries) if (e.value != null) e.key: e.value!}, own: true),
         builder: (context, refresh) => form.widgets(l10n, (f) {
           f();
           refresh();
@@ -153,13 +153,13 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
   }
 
   Future<void> _useGroupUnits(ItemUnitBlock block, ItemEffective effective) async {
-    final problem = await _sendUnits({for (final p in block.parameters) if (effective.params[p]?.own ?? false) p: ''}, 'inherit');
+    final problem = await _sendUnits({for (final p in block.parameters) if (effective.params[p]?.own ?? false) p: ''}, own: false);
     if (!mounted) return;
     problem == null ? _reload() : _view.value = _view.value.said(problem);
   }
 
   /// One override call per parameter, each at the revision the last one left (a save raises it by one); null when all were made.
-  Future<String?> _sendUnits(Map<String, Object> values, String mode) async {
+  Future<String?> _sendUnits(Map<String, Object> values, {required bool own}) async {
     final l10n = context.l10n;
     final port = ref.read(itemGroupsProvider);
     return guardSave(
@@ -168,7 +168,7 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
       action: () async {
         for (final e in values.entries) {
           final revision = (await _load()).revision;
-          await port.setOverride(widget.workspaceId, newRequestId(), (itemId: widget.itemId, expectedRevision: revision, parameter: e.key, mode: mode, value: mode == 'set' ? e.value : null));
+          await port.setOverride(widget.workspaceId, newRequestId(), (itemId: widget.itemId, expectedRevision: revision, parameter: e.key, mode: own ? 'set' : 'inherit', value: own ? e.value : null));
         }
       },
       problem: (e) => stockProblemText(l10n, e, subject: StockSubject.group),

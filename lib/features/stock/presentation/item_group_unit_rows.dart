@@ -29,7 +29,7 @@ enum ItemUnitBlock {
 }
 
 /// The unit blocks as they read for an item: the unit, its factor and its price, as one line.
-String itemUnitBlockText(AppLocalizations l10n, AppFormat format, ItemUnitBlock block, ItemEffective effective) {
+String _itemUnitBlockText(AppLocalizations l10n, AppFormat format, ItemUnitBlock block, ItemEffective effective) {
   Object? value(String p) => effective.params[p]?.value;
   final unit = value(block.parameters.first);
   if (unit == null) return l10n.itemGroupNotSet;
@@ -69,7 +69,7 @@ class ItemGroupUnitRow extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.labelWithValue(label, itemUnitBlockText(l10n, format, block, effective))),
+          Text(l10n.labelWithValue(label, _itemUnitBlockText(l10n, format, block, effective))),
           if (source.isNotEmpty) Text(source, key: ValueKey('item-group-unit-source-$name'), style: Theme.of(context).textTheme.bodySmall),
           if (canChange)
             Wrap(
