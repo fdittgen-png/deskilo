@@ -5848,7 +5848,7 @@ Eine Gruppe sagt, um welche Art von Satz es sich handelt, damit die Rechnung ihn
 
 1. Öffnen Sie [USt](app:/vat).
 2. Wählen Sie bei jedem Satz, sobald die Funktion **USt-Gruppen** eingeschaltet ist, eine **Gruppe**: **Regelsatz**, **Zwischensatz**, **Ermäßigt**, **Stark ermäßigt**, **Nullsatz**, **Steuerfrei**, **Nicht steuerbar**, **Pfand (außerhalb der USt)** oder **Verbrauchsteuerpflichtig**.
-3. Füllen Sie bei einer steuerfreien oder nicht steuerbaren Gruppe den erscheinenden **Befreiungsvermerk** aus.
+3. Wählen Sie bei einer steuerfreien oder nicht steuerbaren Gruppe den erscheinenden **Befreiungsvermerk**: den Artikel der Mehrwertsteuerrichtlinie, der sie befreit, oder **Nicht der Mehrwertsteuer unterliegend**. Die Rechnung druckt den gesetzlichen Wortlaut in der Sprache Ihrer Dokumente; ein vor der Liste geschriebener Vermerk bleibt sichtbar, bis Sie einen wählen.
 4. Tippen Sie auf **Speichern**.
 
 **Gut zu wissen**

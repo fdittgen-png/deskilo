@@ -5489,6 +5489,8 @@
   "dunningLevels": "Nombre de niveaux de relance",
   "dunningSaved": "Règles de relance enregistrées.",
   "dunningSettingsTitle": "Règles de relance",
+  "eInvoiceAddressIdentifierRefused": "Cet identifiant n’a pas la forme du schéma {scheme}.",
+  "eInvoiceAddressSchemeRefused": "Choisissez le schéma de l’adresse dans la liste.",
   "eInvoiceChannelGapBuyerEndpoint": "l’adresse électronique du client (BT-49) sur son profil",
   "@eInvoiceChannelGapBuyerEndpoint": {
     "description": "#2358 channel gap"
@@ -25085,6 +25087,10 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Débloquer",
+  "unitConversionAuthored": "Saisie par vous",
+  "@unitConversionAuthored": {
+    "description": "#4479 a conversion written by a person"
+  },
   "unitConversionDelete": "Supprimer",
   "@unitConversionDelete": {
     "description": "#4479 Settings > Units of measure: the general conversions"
@@ -25127,6 +25133,10 @@
         "type": "String"
       }
     }
+  },
+  "unitConversionNeedsReview": "L’unité a changé depuis votre saisie : vérifiez-la et enregistrez-la de nouveau.",
+  "@unitConversionNeedsReview": {
+    "description": "#4479 an authored conversion whose unit was edited after it was written"
   },
   "unitConversionNew": "Ajouter une conversion",
   "@unitConversionNew": {
@@ -26302,6 +26312,19 @@
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
   "vatUntilDate": "jusqu'au {date}",
+  "vatex132Label": "Activités d'intérêt général (art. 132)",
+  "vatex132Text": "Exonération de TVA, article 132 de la directive 2006/112/CE",
+  "vatex143Label": "Importations (art. 143)",
+  "vatex143Text": "Exonération de TVA, article 143 de la directive 2006/112/CE",
+  "vatex148Label": "Transport international (art. 148)",
+  "vatex148Text": "Exonération de TVA, article 148 de la directive 2006/112/CE",
+  "vatex151Label": "Organismes diplomatiques et internationaux (art. 151)",
+  "vatex151Text": "Exonération de TVA, article 151 de la directive 2006/112/CE",
+  "vatex309Label": "Services de voyage hors de l'UE (art. 309)",
+  "vatex309Text": "Exonération de TVA, article 309 de la directive 2006/112/CE",
+  "vatex79cLabel": "Débours pour le compte du client (art. 79 c)",
+  "vatex79cText": "Exonération de TVA, article 79, point c) de la directive 2006/112/CE",
+  "vatexOLabel": "Non soumis à la TVA",
   "viesCheckExplainer": "VIES est le registre européen des numéros de TVA. Une réponse valide, avec son numéro de consultation, prouve que ce client est une entreprise ; une facture autoliquidée n'est émise qu'après une telle réponse.",
   "viesCheckFailed": "VIES n'a pas pu être interrogé. Réessayez plus tard.",
   "viesCheckNow": "Vérifier maintenant",

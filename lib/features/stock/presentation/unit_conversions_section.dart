@@ -85,6 +85,10 @@ class UnitConversionsSection extends ConsumerWidget {
                   key: ValueKey('unit-conversion-${c.fromUnit}-${c.toUnit}'),
                   contentPadding: EdgeInsets.zero,
                   title: Text(l10n.unitConversionLine(_name(context, c.fromUnit), conversionFactorText(c), _name(context, c.toUnit))),
+                  // #4479 -- a conversion a person wrote says so; one whose unit was edited since asks to be looked at
+                  subtitle: c.needsReview
+                      ? Text(l10n.unitConversionNeedsReview, key: ValueKey('unit-conversion-review-${c.fromUnit}-${c.toUnit}'))
+                      : (c.authored ? Text(l10n.unitConversionAuthored) : null),
                   onTap: () => _edit(context, ref, c),
                   trailing: IconButton(
                     key: ValueKey('unit-conversion-delete-${c.fromUnit}-${c.toUnit}'),

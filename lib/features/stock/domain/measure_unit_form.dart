@@ -4,6 +4,7 @@
 // there is the rare case, not the usual one. The form maps each problem to the sentence under its field.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import 'unece_unit_codes.dart';
 import 'workspace_units.dart';
 
 /// The fields of the unit form that can be wrong.
@@ -24,6 +25,7 @@ class MeasureUnitInput {
     required this.dimension,
     required this.factor,
     required this.unEceCode,
+    this.storedUnEceCode = '',
   });
 
   final bool isNew;
@@ -33,6 +35,9 @@ class MeasureUnitInput {
   final UnitDimension? dimension;
   final ExactQuantity? factor;
   final String unEceCode;
+
+  /// The code the unit holds now: one stored before the list stays until it is changed (#4479).
+  final String storedUnEceCode;
 }
 
 /// The fields that are wrong in what the person typed.
@@ -41,7 +46,9 @@ Set<MeasureUnitField> measureUnitProblems(MeasureUnitInput input) => {
   if (input.name.trim().length > 40 || (input.isNew && input.name.trim().isEmpty)) MeasureUnitField.name,
   if (input.isNew && input.dimension == null) MeasureUnitField.dimension,
   if (!input.fixed && (input.factor == null || factorOfQuantity(input.factor!) == null)) MeasureUnitField.factor,
-  if (input.unEceCode.trim().isNotEmpty && !_ece.hasMatch(input.unEceCode.trim())) MeasureUnitField.unEceCode,
+  if (input.unEceCode.trim().isNotEmpty &&
+      (!_ece.hasMatch(input.unEceCode.trim()) || (input.unEceCode.trim() != input.storedUnEceCode.trim() && !isUneceUnitCode(input.unEceCode))))
+    MeasureUnitField.unEceCode,
 };
 
 /// The unit a quantity of [dimension] is counted in: the built-in whose factor is 1.

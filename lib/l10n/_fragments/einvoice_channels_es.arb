@@ -350,5 +350,7 @@
   "eInvoiceSentNone": "No se envió ningún documento para esta factura.",
   "@eInvoiceSentNone": {
     "description": "#4120 no sent document to download for this invoice"
-  }
+  },
+  "eInvoiceAddressSchemeRefused": "Elija el esquema de la dirección en la lista.",
+  "eInvoiceAddressIdentifierRefused": "Este identificador no tiene la forma del esquema {scheme}."
 }

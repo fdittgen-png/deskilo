@@ -5489,6 +5489,8 @@
   "dunningLevels": "Numero di livelli di sollecito",
   "dunningSaved": "Regole di sollecito salvate.",
   "dunningSettingsTitle": "Regole di sollecito",
+  "eInvoiceAddressIdentifierRefused": "Questo identificativo non ha la forma dello schema {scheme}.",
+  "eInvoiceAddressSchemeRefused": "Scegliere lo schema dell’indirizzo dall’elenco.",
   "eInvoiceChannelGapBuyerEndpoint": "l’indirizzo elettronico del cliente (BT-49) nel suo profilo",
   "@eInvoiceChannelGapBuyerEndpoint": {
     "description": "#2358 channel gap"
@@ -25085,6 +25087,10 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Sblocca",
+  "unitConversionAuthored": "Scritta da lei",
+  "@unitConversionAuthored": {
+    "description": "#4479 a conversion written by a person"
+  },
   "unitConversionDelete": "Elimina",
   "@unitConversionDelete": {
     "description": "#4479 Settings > Units of measure: the general conversions"
@@ -25127,6 +25133,10 @@
         "type": "String"
       }
     }
+  },
+  "unitConversionNeedsReview": "L’unità è cambiata dopo la sua scrittura: la controlli e la salvi di nuovo.",
+  "@unitConversionNeedsReview": {
+    "description": "#4479 an authored conversion whose unit was edited after it was written"
   },
   "unitConversionNew": "Aggiungi una conversione",
   "@unitConversionNew": {
@@ -26302,6 +26312,19 @@
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
   "vatUntilDate": "fino al {date}",
+  "vatex132Label": "Attività di interesse pubblico (art. 132)",
+  "vatex132Text": "Esente ai sensi dell'articolo 132 della direttiva 2006/112/CE",
+  "vatex143Label": "Importazioni (art. 143)",
+  "vatex143Text": "Esente ai sensi dell'articolo 143 della direttiva 2006/112/CE",
+  "vatex148Label": "Trasporto internazionale (art. 148)",
+  "vatex148Text": "Esente ai sensi dell'articolo 148 della direttiva 2006/112/CE",
+  "vatex151Label": "Organismi diplomatici e internazionali (art. 151)",
+  "vatex151Text": "Esente ai sensi dell'articolo 151 della direttiva 2006/112/CE",
+  "vatex309Label": "Servizi di viaggio fuori dall'UE (art. 309)",
+  "vatex309Text": "Esente ai sensi dell'articolo 309 della direttiva 2006/112/CE",
+  "vatex79cLabel": "Spese anticipate per conto del cliente (art. 79 c)",
+  "vatex79cText": "Esente ai sensi dell'articolo 79, lettera c), della direttiva 2006/112/CE",
+  "vatexOLabel": "Non soggetto a IVA",
   "viesCheckExplainer": "VIES è il registro europeo delle partite IVA. Una risposta valida, con il suo numero di consultazione, prova che questo cliente è un'impresa; una fattura in inversione contabile viene emessa solo dopo.",
   "viesCheckFailed": "Non è stato possibile interrogare VIES. Riprovi più tardi.",
   "viesCheckNow": "Verifica ora",

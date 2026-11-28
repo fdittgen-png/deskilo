@@ -91,6 +91,7 @@ void main() {
       'POLICIES',
       'CONTRACT',
       'PGTAP',
+      'FILES',
     ]);
   });
 

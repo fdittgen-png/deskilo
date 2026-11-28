@@ -919,19 +919,5 @@
  "legalErrZeroTreatment": "{label}: indichi se questa aliquota dello 0 % è un'aliquota zero, un'esenzione o fuori campo IVA.",
  "legalErrExemptionReason": "{label}: scelga il motivo di questa esenzione.",
  "legalErrDuplicateVatLabel": "Due aliquote IVA si chiamano {label}: dia a ciascuna un nome proprio.",
- "servicesErrVatRate": "{name}: scelga la sua aliquota IVA tra quelle del passo Legale.",
- "vatex79cLabel": "Spese anticipate per conto del cliente (art. 79 c)",
- "vatex79cText": "Esente ai sensi dell'articolo 79, lettera c), della direttiva 2006/112/CE",
- "vatex132Label": "Attività di interesse pubblico (art. 132)",
- "vatex132Text": "Esente ai sensi dell'articolo 132 della direttiva 2006/112/CE",
- "vatex143Label": "Importazioni (art. 143)",
- "vatex143Text": "Esente ai sensi dell'articolo 143 della direttiva 2006/112/CE",
- "vatex148Label": "Trasporto internazionale (art. 148)",
- "vatex148Text": "Esente ai sensi dell'articolo 148 della direttiva 2006/112/CE",
- "vatex151Label": "Organismi diplomatici e internazionali (art. 151)",
- "vatex151Text": "Esente ai sensi dell'articolo 151 della direttiva 2006/112/CE",
- "vatex309Label": "Servizi di viaggio fuori dall'UE (art. 309)",
- "vatex309Text": "Esente ai sensi dell'articolo 309 della direttiva 2006/112/CE",
- "vatexOLabel": "Non soggetto a IVA",
- "vatexOText": "Non soggetto a IVA"
+ "servicesErrVatRate": "{name}: scelga la sua aliquota IVA tra quelle del passo Legale."
 }

@@ -9494,6 +9494,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get dunningSettingsTitle => 'Regole di sollecito';
 
   @override
+  String eInvoiceAddressIdentifierRefused(String scheme) {
+    return 'Questo identificativo non ha la forma dello schema $scheme.';
+  }
+
+  @override
+  String get eInvoiceAddressSchemeRefused =>
+      'Scegliere lo schema dell’indirizzo dall’elenco.';
+
+  @override
   String get eInvoiceChannelGapBuyerEndpoint =>
       'l’indirizzo elettronico del cliente (BT-49) nel suo profilo';
 
@@ -43571,6 +43580,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get unblockAction => 'Sblocca';
 
   @override
+  String get unitConversionAuthored => 'Scritta da lei';
+
+  @override
   String get unitConversionDelete => 'Elimina';
 
   @override
@@ -43591,6 +43603,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String unitConversionLine(String from, String factor, String to) {
     return '1 $from = $factor $to';
   }
+
+  @override
+  String get unitConversionNeedsReview =>
+      'L’unità è cambiata dopo la sua scrittura: la controlli e la salvi di nuovo.';
 
   @override
   String get unitConversionNew => 'Aggiungi una conversione';
@@ -44992,6 +45008,53 @@ class AppLocalizationsIt extends AppLocalizations {
   String vatUntilDate(String date) {
     return 'fino al $date';
   }
+
+  @override
+  String get vatex132Label => 'Attività di interesse pubblico (art. 132)';
+
+  @override
+  String get vatex132Text =>
+      'Esente ai sensi dell\'articolo 132 della direttiva 2006/112/CE';
+
+  @override
+  String get vatex143Label => 'Importazioni (art. 143)';
+
+  @override
+  String get vatex143Text =>
+      'Esente ai sensi dell\'articolo 143 della direttiva 2006/112/CE';
+
+  @override
+  String get vatex148Label => 'Trasporto internazionale (art. 148)';
+
+  @override
+  String get vatex148Text =>
+      'Esente ai sensi dell\'articolo 148 della direttiva 2006/112/CE';
+
+  @override
+  String get vatex151Label =>
+      'Organismi diplomatici e internazionali (art. 151)';
+
+  @override
+  String get vatex151Text =>
+      'Esente ai sensi dell\'articolo 151 della direttiva 2006/112/CE';
+
+  @override
+  String get vatex309Label => 'Servizi di viaggio fuori dall\'UE (art. 309)';
+
+  @override
+  String get vatex309Text =>
+      'Esente ai sensi dell\'articolo 309 della direttiva 2006/112/CE';
+
+  @override
+  String get vatex79cLabel =>
+      'Spese anticipate per conto del cliente (art. 79 c)';
+
+  @override
+  String get vatex79cText =>
+      'Esente ai sensi dell\'articolo 79, lettera c), della direttiva 2006/112/CE';
+
+  @override
+  String get vatexOLabel => 'Non soggetto a IVA';
 
   @override
   String get viesCheckExplainer =>

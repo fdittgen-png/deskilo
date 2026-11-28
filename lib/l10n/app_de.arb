@@ -5489,6 +5489,8 @@
   "dunningLevels": "Anzahl der Mahnstufen",
   "dunningSaved": "Mahnregeln gespeichert.",
   "dunningSettingsTitle": "Mahnregeln",
+  "eInvoiceAddressIdentifierRefused": "Diese Kennung hat nicht die Form des Schemas {scheme}.",
+  "eInvoiceAddressSchemeRefused": "Wählen Sie das Adressschema aus der Liste.",
   "eInvoiceChannelGapBuyerEndpoint": "die elektronische Adresse des Kunden (BT-49) in seinem Profil",
   "@eInvoiceChannelGapBuyerEndpoint": {
     "description": "#2358 channel gap"
@@ -25085,6 +25087,10 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Blockierung aufheben",
+  "unitConversionAuthored": "Von Ihnen festgelegt",
+  "@unitConversionAuthored": {
+    "description": "#4479 a conversion written by a person"
+  },
   "unitConversionDelete": "Löschen",
   "@unitConversionDelete": {
     "description": "#4479 Settings > Units of measure: the general conversions"
@@ -25127,6 +25133,10 @@
         "type": "String"
       }
     }
+  },
+  "unitConversionNeedsReview": "Die Einheit wurde nach Ihrer Eingabe geändert: bitte prüfen und erneut speichern.",
+  "@unitConversionNeedsReview": {
+    "description": "#4479 an authored conversion whose unit was edited after it was written"
   },
   "unitConversionNew": "Umrechnung hinzufügen",
   "@unitConversionNew": {
@@ -26302,6 +26312,19 @@
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
   "vatUntilDate": "bis {date}",
+  "vatex132Label": "Dem Gemeinwohl dienende Tätigkeiten (Art. 132)",
+  "vatex132Text": "Steuerbefreit nach Artikel 132 der Richtlinie 2006/112/EG",
+  "vatex143Label": "Einfuhren (Art. 143)",
+  "vatex143Text": "Steuerbefreit nach Artikel 143 der Richtlinie 2006/112/EG",
+  "vatex148Label": "Internationale Beförderung (Art. 148)",
+  "vatex148Text": "Steuerbefreit nach Artikel 148 der Richtlinie 2006/112/EG",
+  "vatex151Label": "Diplomatische und internationale Einrichtungen (Art. 151)",
+  "vatex151Text": "Steuerbefreit nach Artikel 151 der Richtlinie 2006/112/EG",
+  "vatex309Label": "Reiseleistungen außerhalb der EU (Art. 309)",
+  "vatex309Text": "Steuerbefreit nach Artikel 309 der Richtlinie 2006/112/EG",
+  "vatex79cLabel": "Auslagen im Namen des Kunden (Art. 79 c)",
+  "vatex79cText": "Steuerbefreit nach Artikel 79 Buchstabe c der Richtlinie 2006/112/EG",
+  "vatexOLabel": "Nicht der Mehrwertsteuer unterliegend",
   "viesCheckExplainer": "VIES ist das EU-Verzeichnis der USt-IdNrn. Eine gültige Antwort mit ihrer Abfragenummer belegt, dass dieser Kunde ein Unternehmen ist; eine Rechnung mit Steuerschuldnerschaft des Empfängers wird erst danach ausgestellt.",
   "viesCheckFailed": "VIES konnte nicht abgefragt werden. Versuchen Sie es später erneut.",
   "viesCheckNow": "Jetzt prüfen",
