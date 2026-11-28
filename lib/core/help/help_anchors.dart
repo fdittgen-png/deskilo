@@ -39,6 +39,9 @@ abstract final class HelpAnchor {
   /// #4166 — the customer quotes: an offer to a billing customer, sent and
   /// amended as revisions.
   static const moneyQuotes = 'user.money.quotes';
+
+  /// #4510 — a line of a quote or an invoice picked from the service catalogue.
+  static const moneyLineService = 'user.money.lines.service';
   static const moneyEngagements = 'user.money.engagements';
   static const moneyStock = 'user.money.stock';
   static const moneyStockPlaces = 'user.money.stock.places';

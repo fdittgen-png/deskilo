@@ -3090,6 +3090,20 @@ Per quanto tempo un nuovo preventivo resta valido quando non indica una data di 
 
 Su un preventivo inviato, **Condividi il PDF** apre l’offerta come documento: un preventivo, con un riferimento proprio e la durata di validità, il cliente, le righe e quanto risultano, così come sono state fissate all’invio (il netto, l’IVA per aliquota e il totale). Non è mai una fattura e non reca alcun numero di fattura. Può visualizzarlo, salvarlo o condividerlo.
 
+<!-- anchor: user.money.lines.service -->
+### Scegliere una riga tra i propri servizi
+
+**Destinatari:** Amministratore · Proprietario
+
+In un preventivo e in una fattura senza mese, ogni riga può essere scelta dal catalogo dei servizi invece di essere scritta da zero. Nella riga, aprire **Servizio del catalogo** e sceglierne uno. La riga viene compilata con il nome del servizio (quando la descrizione è vuota o porta ancora il nome del servizio scelto prima), il suo prezzo come prezzo IVA inclusa, la sua aliquota IVA e ciò che fornisce, e ricorda da quale servizio proviene. Scegliere **Nessun servizio (riga libera)** per scrivere una riga con parole proprie: i due tipi possono convivere in uno stesso documento.
+
+**Da sapere**
+
+- Tutto ciò che il servizio ha compilato resta modificabile nella riga. Nella riga resta ciò che è stato concordato con il cliente.
+- Modificare o ritirare poi il servizio dal catalogo non cambia mai un preventivo, una bozza o una fattura già scritti. Un servizio ritirato resta visibile nella riga che lo contiene e non viene più proposto per una riga nuova.
+- Gli articoli tenuti in magazzino non sono servizi: si scelgono con **Venduto dalle scorte** nella riga.
+- Un servizio che non è tra i servizi attivi viene rifiutato al salvataggio del preventivo o della bozza, e la riga viene indicata.
+
 <!-- anchor: user.money.engagements -->
 ### Servizi in corso
 

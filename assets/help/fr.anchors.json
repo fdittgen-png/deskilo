@@ -132,6 +132,7 @@
   "user.money.customers.access": "Accès par compte d'un client facturé",
   "user.money.invoices.standalone": "Une facture client sans mois",
   "user.money.quotes": "Devis",
+  "user.money.lines.service": "Choisir une ligne parmi vos services",
   "user.money.engagements": "Prestations suivies",
   "user.money.stock": "Stock",
   "user.money.stock.places": "Emplacements et adresses",

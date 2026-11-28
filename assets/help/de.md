@@ -2952,6 +2952,19 @@ Wie lange ein neues Angebot gültig bleibt, wenn Sie kein Enddatum angeben, und 
 
 Bei einem gesendeten Angebot öffnet **PDF teilen** das Angebot als Dokument: ein Angebot mit eigener Referenz und Gültigkeit, dem Kunden, den Positionen und dem, was sie ergeben, so wie beim Senden festgeschrieben (netto, Umsatzsteuer je Satz und Gesamtbetrag). Es ist nie eine Rechnung und trägt keine Rechnungsnummer. Sie können es ansehen, speichern oder teilen.
 
+### Eine Zeile aus Ihren Leistungen wählen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Auf einem Angebot und auf einer Rechnung ohne Monat kann jede Zeile aus Ihrem Leistungskatalog gewählt werden, statt sie neu zu schreiben. Öffnen Sie in der Zeile **Leistung aus dem Katalog** und wählen Sie eine. Die Zeile wird mit dem Namen der Leistung gefüllt (wenn die Beschreibung leer ist oder noch der Name der zuvor gewählten Leistung), mit ihrem Preis als Preis inklusive Umsatzsteuer, ihrem Steuersatz und dem, was sie liefert; die Zeile merkt sich, aus welcher Leistung sie stammt. Mit **Keine Leistung (freie Zeile)** schreiben Sie eine Zeile in eigenen Worten: beide Arten lassen sich in einem Dokument mischen.
+
+**Gut zu wissen**
+
+- Alles, was die Leistung eingetragen hat, bleibt in der Zeile änderbar. In der Zeile steht, was Sie mit dem Kunden vereinbart haben.
+- Eine spätere Änderung oder Stilllegung der Leistung im Katalog ändert kein bereits geschriebenes Angebot, keinen Entwurf und keine Rechnung. Eine stillgelegte Leistung bleibt in der Zeile sichtbar, die sie enthält, und wird für neue Zeilen nicht mehr angeboten.
+- Artikel im Bestand sind keine Leistungen: Wählen Sie sie in der Zeile mit **Aus dem Bestand verkauft**.
+- Eine Leistung, die nicht zu Ihren aktiven Leistungen gehört, wird beim Speichern des Angebots oder des Entwurfs abgelehnt, die Zeile wird genannt.
+
 ### Leistungsaufträge
 
 **Zielgruppe:** Administrator:in · Inhaber

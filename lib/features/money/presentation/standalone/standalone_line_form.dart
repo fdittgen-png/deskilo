@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/decimal_input.dart';
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -252,7 +254,10 @@ class StandaloneLineEditor extends StatelessWidget {
       key: ValueKey('standalone-line-$index-service'),
       isExpanded: true,
       initialValue: held,
-      decoration: InputDecoration(labelText: l.standaloneInvoiceLineService),
+      decoration: InputDecoration(
+        labelText: l.standaloneInvoiceLineService,
+        suffixIcon: HelpDot(l.standaloneInvoiceLineService, anchor: HelpAnchor.moneyLineService),
+      ),
       items: [
         DropdownMenuItem<String?>(child: Text(l.standaloneInvoiceLineNoService)),
         // a service that is retired since stays shown on the line that holds it
