@@ -36,7 +36,8 @@ class EInvoiceSchemeField extends StatelessWidget {
 }
 
 /// '0009 · SIRET (FR)', 'EM · E-mail'.
-String easSchemeLabel(EasScheme s) => '${s.code} · ${s.name}${s.country.isEmpty ? '' : ' (${s.country})'}';
+@visibleForTesting
+String easSchemeLabel(EasScheme s) => '${s.code} · ${s.name}';
 
 /// What the person is told when an address cannot be stored.
 String easRefusalText(AppLocalizations l10n, EasRefusal refusal, String scheme) => switch (refusal) {

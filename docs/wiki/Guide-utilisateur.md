@@ -6153,7 +6153,7 @@ Un groupe dit de quel type de taux il s'agit, pour que la facture le range dans 
 
 1. Ouvrez [TVA](https://fdittgen-png.github.io/deskilo/#/vat).
 2. Sur chaque taux, lorsque la fonctionnalité **Groupes de TVA** est activée, choisissez un **Groupe** : **Normal**, **Intermédiaire**, **Réduit**, **Super-réduit**, **Taux zéro**, **Exonéré**, **Non assujetti**, **Consigne (hors TVA)** ou **Produit à accises**.
-3. Pour un groupe exonéré ou non assujetti, choisissez la **Mention d'exonération** qui apparaît : l'article de la directive TVA qui l'exonère, ou **Non soumis à la TVA**. La facture en imprime la formule légale dans la langue de vos documents ; une mention saisie avant la liste reste affichée tant que vous n'en choisissez pas une (#4501).
+3. Pour un groupe exonéré ou non assujetti, choisissez la **Mention d'exonération** qui apparaît : l'article de la directive TVA qui l'exonère, ou **Non soumis à la TVA**. La facture en imprime la formule légale dans la langue de vos documents ; une mention saisie avant la liste reste affichée tant que vous n'en choisissez pas une.
 4. Touchez **Enregistrer**.
 
 **Bon à savoir**

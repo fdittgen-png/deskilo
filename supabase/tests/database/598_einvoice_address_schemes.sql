@@ -58,17 +58,17 @@ select is(public.einvoice_address_refusal('', '', '', ''), null, 'no address is 
 select is(pg_temp.addr('0009', '73282932000074'), 'ok', 'a customer''s SIRET is stored');
 select is((select einvoice_endpoint_scheme || ':' || einvoice_endpoint_id from public.members where id = pg_temp.u(202)),
   '0009:73282932000074', 'under its scheme');
-select is(pg_temp.addr('XX99', '73282932000074'), 'ERR 22023 {"reason": "scheme"}', 'an unknown scheme is refused');
-select is(pg_temp.addr('0009', '7328293200'), 'ERR 22023 {"reason": "identifier"}', 'so is an identifier of another form');
+select is(pg_temp.addr('XX99', '73282932000074'), 'ERR DKL02 {"reason": "scheme"}', 'an unknown scheme is refused');
+select is(pg_temp.addr('0009', '7328293200'), 'ERR DKL02 {"reason": "identifier"}', 'so is an identifier of another form');
 update public.members set einvoice_endpoint_scheme = 'ZZ01', einvoice_endpoint_id = 'legacy-42' where id = pg_temp.u(202);
 select is(pg_temp.err(pg_temp.u(1), format('select public.set_member_einvoice_address(%L, %L, %L, %L)',
   pg_temp.u(202), 'legacy-42', 'zz01', '75')), 'ok', 'an address stored before, under a scheme no longer offered, is kept');
-select is(pg_temp.addr('ZZ01', 'legacy-43'), 'ERR 22023 {"reason": "scheme"}', 'until it is changed');
+select is(pg_temp.addr('ZZ01', 'legacy-43'), 'ERR DKL02 {"reason": "scheme"}', 'until it is changed');
 
 -- the business's own address
 select is(pg_temp.legal('0225', '732829320'), 'ok', 'the business''s address under the directory scheme is stored');
-select is(pg_temp.legal('0225', '7328'), 'ERR 22023 {"reason": "identifier"}', 'one of another form is refused');
-select is(pg_temp.legal('QQ', '732829320'), 'ERR 22023 {"reason": "scheme"}', 'and one under an unknown scheme');
+select is(pg_temp.legal('0225', '7328'), 'ERR DKL02 {"reason": "identifier"}', 'one of another form is refused');
+select is(pg_temp.legal('QQ', '732829320'), 'ERR DKL02 {"reason": "scheme"}', 'and one under an unknown scheme');
 -- an address stored before the list (the guard is off for the seed only)
 set session_replication_role = replica;
 update public.workspaces set invoice_legal = invoice_legal || '{"einvoice_endpoint_scheme": "ZZ01", "einvoice_endpoint_id": "old"}'

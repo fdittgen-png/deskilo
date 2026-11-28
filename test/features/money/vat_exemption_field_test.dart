@@ -3,7 +3,6 @@
 // #4501 -- an exempt or out-of-scope VAT rate's reason is picked from the VATEX codes, never typed: the pick writes the
 // code's legal wording in the business's document language, a stored wording of a code shows as that code in any
 // language, and a stored wording no code has stays visible, as its own choice, until another is picked.
-import 'package:deskilo/core/ui/form_kit.dart';
 import 'package:deskilo/features/money/domain/vat_exemption_reasons.dart';
 import 'package:deskilo/features/money/presentation/widgets/vat_exemption_field.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -50,7 +49,7 @@ Future<List<String>> _pump(WidgetTester tester, {required String category, Strin
 }
 
 Future<void> _open(WidgetTester tester) async {
-  await tester.tap(find.byKey(const ValueKey('reason')));
+  await tester.tap(find.byKey(const ValueKey('vat-exemption-reason')));
   await tester.pumpAndSettle();
 }
 
@@ -110,12 +109,12 @@ void main() {
   });
 
   testWidgets('the tax reference sheet shows the reason for E and O, and for any rate that holds one', (tester) async {
-    final fields = FormControllers({'reason': ''});
-    addTearDown(fields.dispose);
+    final reason = TextEditingController();
+    addTearDown(reason.dispose);
     Future<void> show(String category) async {
       await pumpApp(
         tester,
-        Scaffold(body: taxReferenceExemptionField(fields, category, 'Reason')),
+        Scaffold(body: taxReferenceExemptionField(reason, category, 'Reason')),
         overrides: [currentWorkspaceProvider.overrideWith((ref) async => _workspace)],
       );
       await tester.pumpAndSettle();
@@ -125,7 +124,7 @@ void main() {
     expect(find.byType(VatExemptionField), findsNothing);
     await show('E');
     expect(find.byType(VatExemptionField), findsOneWidget);
-    fields['reason'].text = 'hors champ';
+    reason.text = 'hors champ';
     await show('S');
     expect(find.text('hors champ'), findsOneWidget);
   });

@@ -9,13 +9,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/dropdown_field.dart';
-import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/vat_exemption_reasons.dart';
 import '../invoice_documents.dart';
 
 /// The name of [code] in the reader's language.
+@visibleForTesting
 String vatExemptionLabel(AppLocalizations l10n, String code) => switch (vatexArbStem(code)) {
   '79c' => l10n.vatex79cLabel,
   '132' => l10n.vatex132Label,
@@ -27,6 +26,7 @@ String vatExemptionLabel(AppLocalizations l10n, String code) => switch (vatexArb
 };
 
 /// The legal wording of [code] as an invoice prints it.
+@visibleForTesting
 String vatExemptionWording(AppLocalizations l10n, String code) => switch (vatexArbStem(code)) {
   '79c' => l10n.vatex79cText,
   '132' => l10n.vatex132Text,
@@ -60,13 +60,13 @@ class VatExemptionField extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    ref.watch(currentWorkspaceProvider); // the document language follows the business once it is read
-    final document = lookupAppLocalizations(_supported(resolveMemberReportLanguage(ref)));
+    final document = lookupAppLocalizations(_supported(watchDocumentLanguage(ref)));
     final code = vatExemptionCodeOfWording(category, value, _wordingsOf);
     final stored = value.trim();
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
       child: AppDropdownField<String>(
+        key: const ValueKey('vat-exemption-reason'),
         label: label,
         value: code ?? (stored.isEmpty ? null : stored),
         items: [
@@ -82,16 +82,16 @@ class VatExemptionField extends ConsumerWidget {
   }
 }
 
-/// The tax reference sheet's exemption reason (its `reason` field): shown for a rate of category E or O, and for any
-/// rate that holds one, so a stored wording stays visible until it is changed.
-Widget taxReferenceExemptionField(FormControllers fields, String category, String label) =>
-    vatCategoryNamesExemption(category) || fields.text('reason').isNotEmpty
+/// The tax reference sheet's exemption reason, held by [reason]: shown for a rate of category E or O, and for any rate
+/// that holds one, so a stored wording stays visible until it is changed.
+Widget taxReferenceExemptionField(TextEditingController reason, String category, String label) =>
+    vatCategoryNamesExemption(category) || reason.text.trim().isNotEmpty
     ? VatExemptionField(
         key: ValueKey('tax-ref-reason-$category'),
         category: category,
-        value: fields.text('reason'),
+        value: reason.text.trim(),
         label: label,
-        onChanged: (wording) => fields['reason'].text = wording,
+        onChanged: (wording) => reason.text = wording,
       )
     : const SizedBox.shrink();
 

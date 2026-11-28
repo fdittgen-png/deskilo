@@ -3,18 +3,19 @@
 // #4501 (FIN-09) -- the e-invoicing address schemes are one list: the invoice model's easSchemes, which the app
 // offers, and the server's `public.einvoice_scheme_pattern` (0990, or the latest migration that defines it), which
 // refuses what the list does not hold. Same codes, same patterns, same order.
-import 'dart:io';
 
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-final _case = RegExp(r"^\s*when '([A-Z0-9]+)' then '((?:[^']|'')*)'\s*$", multiLine: true);
+import 'lint_sources.dart';
+
+final _row = RegExp(r"^\s*\('([A-Z0-9]+)', '((?:[^']|'')*)'\),?\s*$", multiLine: true);
 
 /// The body of the latest migration's `einvoice_scheme_pattern`.
 String _latestDefinition() {
-  final files = Directory('supabase/migrations').listSync().whereType<File>().map((f) => f.path).toList()..sort();
-  for (final path in files.reversed) {
-    final sql = File(path).readAsStringSync();
+  final files = sqlFiles('supabase/migrations')..sort((a, b) => a.path.compareTo(b.path));
+  for (final file in files.reversed) {
+    final sql = file.readAsStringSync();
     final at = sql.indexOf('create or replace function public.einvoice_scheme_pattern(');
     if (at < 0) continue;
     return sql.substring(at, sql.indexOf(r'$fn$;', at));
@@ -28,7 +29,7 @@ void main() {
   test('the server\'s definition is found', () => expect(body, isNotEmpty));
 
   test('the server holds the invoice model\'s schemes, with the same patterns, in the same order', () {
-    final server = [for (final m in _case.allMatches(body)) (m[1]!, m[2]!.replaceAll("''", "'"))];
+    final server = [for (final m in _row.allMatches(body)) (m[1]!, m[2]!.replaceAll("''", "'"))];
     expect(server, [for (final s in easSchemes) (s.code, s.pattern)]);
   });
 

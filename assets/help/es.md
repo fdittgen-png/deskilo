@@ -5848,7 +5848,7 @@ Un grupo indica de qué clase es el tipo, para que la factura lo coloque en la c
 
 1. Abra [IVA](app:/vat).
 2. En cada tipo, cuando la función **Grupos de IVA** está activada, elija un **Grupo**: **General**, **Intermedio**, **Reducido**, **Superreducido**, **Tipo cero**, **Exento**, **No sujeto**, **Envase retornable (fuera del IVA)** o **Con impuestos especiales**.
-3. Para un grupo exento o no sujeto, elija la **Mención de exención** que aparece: el artículo de la Directiva del IVA que lo exime, o **No sujeto al IVA**. La factura imprime su fórmula legal en el idioma de sus documentos; una mención escrita antes de la lista sigue visible hasta que elija una (#4501).
+3. Para un grupo exento o no sujeto, elija la **Mención de exención** que aparece: el artículo de la Directiva del IVA que lo exime, o **No sujeto al IVA**. La factura imprime su fórmula legal en el idioma de sus documentos; una mención escrita antes de la lista sigue visible hasta que elija una.
 4. Pulse **Guardar**.
 
 **Conviene saber**

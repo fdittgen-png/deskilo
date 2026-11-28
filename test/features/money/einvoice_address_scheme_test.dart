@@ -50,7 +50,7 @@ Future<_Addresses> _openTile(WidgetTester tester, Member member) async {
     Scaffold(body: MemberEInvoiceAddressTile(member: member)),
     overrides: [memberEInvoiceAddressesProvider.overrideWithValue(addresses)],
   );
-  await tester.pumpAndSettle();
+  await tester.pump();
   await tester.tap(find.byKey(const ValueKey('member-page-einvoice-address')));
   await tester.pumpAndSettle();
   return addresses;
@@ -74,7 +74,7 @@ void main() {
     await tester.enterText(find.byKey(const ValueKey('member-einvoice-endpoint')), '7328');
     await tester.tap(find.byKey(const ValueKey('member-einvoice-save')));
     await tester.pumpAndSettle();
-    expect(find.text(_l10n.eInvoiceAddressIdentifierRefused('SIRET')), findsOneWidget);
+    expect(find.text(_l10n.eInvoiceAddressIdentifierRefused('SIRET (FR)')), findsOneWidget);
     expect(addresses.stored, isEmpty, reason: 'the dialog stays open, nothing is sent');
 
     await tester.enterText(find.byKey(const ValueKey('member-einvoice-endpoint')), '73282932000074');
@@ -112,15 +112,15 @@ void main() {
         ),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
     expect(find.text('ZZ01'), findsWidgets);
     expect(form.addressAccepted(_l10n), isTrue, reason: 'the address as stored');
 
     await _pick(tester, const ValueKey('legal-identity-einvoice-scheme'), easSchemeLabel(_scheme('0225')));
     expect(form.endpointScheme.text, '0225');
     expect(form.addressAccepted(_l10n), isFalse);
-    await tester.pumpAndSettle();
-    expect(find.text(_l10n.eInvoiceAddressIdentifierRefused('Annuaire')), findsOneWidget);
+    await tester.pump();
+    expect(find.text(_l10n.eInvoiceAddressIdentifierRefused('Annuaire (FR)')), findsOneWidget);
 
     form.endpointId.text = '732829320';
     expect(form.addressAccepted(_l10n), isTrue);

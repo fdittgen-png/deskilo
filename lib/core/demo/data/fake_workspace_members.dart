@@ -250,7 +250,7 @@ mixin FakeWorkspaceMembers on FakeWorkspaceState
       if (refusal != null) {
         throw PostgrestException(
           message: 'the e-invoicing address is not of a scheme of the list',
-          code: '22023',
+          code: DkCode.dkl02,
           details: '{"reason": "${refusal.name}"}',
         );
       }

@@ -5848,7 +5848,7 @@ Un gruppo dice di che tipo di aliquota si tratta, così la fattura la colloca ne
 
 1. Apra [IVA](app:/vat).
 2. Su ogni aliquota, quando la funzione **Gruppi IVA** è attiva, scelga un **Gruppo**: **Ordinaria**, **Intermedia**, **Ridotta**, **Super-ridotta**, **Aliquota zero**, **Esente**, **Non soggetta**, **Cauzione (fuori IVA)** o **Con accise**.
-3. Per un gruppo esente o non soggetto, scelga la **Dicitura di esenzione** che compare: l'articolo della direttiva IVA che lo esenta, oppure **Non soggetto a IVA**. La fattura ne stampa la formula di legge nella lingua dei documenti; una dicitura scritta prima dell'elenco resta visibile finché non se ne sceglie una (#4501).
+3. Per un gruppo esente o non soggetto, scelga la **Dicitura di esenzione** che compare: l'articolo della direttiva IVA che lo esenta, oppure **Non soggetto a IVA**. La fattura ne stampa la formula di legge nella lingua dei documenti; una dicitura scritta prima dell'elenco resta visibile finché non se ne sceglie una.
 4. Tocchi **Salva**.
 
 **Da sapere**

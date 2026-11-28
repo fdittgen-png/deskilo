@@ -5,14 +5,13 @@
 // scheme is checked with that scheme's own shape. The server holds the same list (`public.einvoice_scheme_pattern`,
 // migration 0990); test/lint/eas_schemes_parity_test.dart keeps the two equal.
 
-/// One scheme: its EAS [code], the [name] the identifier is known by, the [country] whose register issues it (empty
-/// for an international one) and the [pattern] a whole identifier matches.
+/// One scheme: its EAS [code], the [name] the identifier is known by (with the country whose register issues it, for
+/// a national one) and the [pattern] a whole identifier matches.
 class EasScheme {
-  const EasScheme(this.code, this.name, this.country, this.pattern);
+  const EasScheme(this.code, this.name, this.pattern);
 
   final String code;
   final String name;
-  final String country;
   final String pattern;
 
   /// Whether [identifier], as stored (trimmed), is one of this scheme's.
@@ -21,29 +20,29 @@ class EasScheme {
 
 /// The schemes offered, in the order of their codes.
 const easSchemes = <EasScheme>[
-  EasScheme('0002', 'SIREN', 'FR', r'[0-9]{9}'),
-  EasScheme('0007', 'Organisationsnummer', 'SE', r'[0-9]{10}'),
-  EasScheme('0009', 'SIRET', 'FR', r'[0-9]{14}'),
-  EasScheme('0060', 'DUNS', '', r'[0-9]{9}'),
-  EasScheme('0088', 'GLN', '', r'[0-9]{13}'),
-  EasScheme('0106', 'KvK', 'NL', r'[0-9]{8}'),
-  EasScheme('0151', 'ABN', 'AU', r'[0-9]{11}'),
-  EasScheme('0183', 'UID', 'CH', r'CHE[0-9]{9}'),
-  EasScheme('0190', 'OIN', 'NL', r'[0-9]{20}'),
-  EasScheme('0192', 'Organisasjonsnummer', 'NO', r'[0-9]{9}'),
-  EasScheme('0201', 'Codice IPA', 'IT', r'[A-Z0-9]{6}'),
-  EasScheme('0204', 'Leitweg-ID', 'DE', r'[0-9]{2,12}(-[A-Z0-9]{1,30})?-[0-9]{2}'),
-  EasScheme('0208', 'Numéro d’entreprise', 'BE', r'[01][0-9]{9}'),
-  EasScheme('0210', 'Codice fiscale', 'IT', r'[A-Z0-9]{11}|[A-Z0-9]{16}'),
-  EasScheme('0211', 'Partita IVA', 'IT', r'[0-9]{11}'),
-  EasScheme('0225', 'Annuaire', 'FR', r'[0-9]{9}(_[A-Za-z0-9_.+-]{1,100})?'),
-  EasScheme('9915', 'UID', 'AT', r'ATU[0-9]{8}'),
-  EasScheme('9920', 'NIF-IVA', 'ES', r'ES[A-Z0-9][0-9]{7}[A-Z0-9]'),
-  EasScheme('9925', 'TVA', 'BE', r'BE[01][0-9]{9}'),
-  EasScheme('9930', 'USt-IdNr.', 'DE', r'DE[0-9]{9}'),
-  EasScheme('9944', 'BTW', 'NL', r'NL[0-9]{9}B[0-9]{2}'),
-  EasScheme('9957', 'TVA', 'FR', r'FR[A-Z0-9]{2}[0-9]{9}'),
-  EasScheme('EM', 'E-mail', '', r'[^@\s]+@[^@\s]+\.[^@\s]+'),
+  EasScheme('0002', 'SIREN (FR)', r'[0-9]{9}'),
+  EasScheme('0007', 'Organisationsnummer (SE)', r'[0-9]{10}'),
+  EasScheme('0009', 'SIRET (FR)', r'[0-9]{14}'),
+  EasScheme('0060', 'DUNS', r'[0-9]{9}'),
+  EasScheme('0088', 'GLN', r'[0-9]{13}'),
+  EasScheme('0106', 'KvK (NL)', r'[0-9]{8}'),
+  EasScheme('0151', 'ABN (AU)', r'[0-9]{11}'),
+  EasScheme('0183', 'UID (CH)', r'CHE[0-9]{9}'),
+  EasScheme('0190', 'OIN (NL)', r'[0-9]{20}'),
+  EasScheme('0192', 'Organisasjonsnummer (NO)', r'[0-9]{9}'),
+  EasScheme('0201', 'Codice IPA (IT)', r'[A-Z0-9]{6}'),
+  EasScheme('0204', 'Leitweg-ID (DE)', r'[0-9]{2,12}(-[A-Z0-9]{1,30})?-[0-9]{2}'),
+  EasScheme('0208', 'Numéro d’entreprise (BE)', r'[01][0-9]{9}'),
+  EasScheme('0210', 'Codice fiscale (IT)', r'[A-Z0-9]{11}|[A-Z0-9]{16}'),
+  EasScheme('0211', 'Partita IVA (IT)', r'[0-9]{11}'),
+  EasScheme('0225', 'Annuaire (FR)', r'[0-9]{9}(_[A-Za-z0-9_.+-]{1,100})?'),
+  EasScheme('9915', 'UID (AT)', r'ATU[0-9]{8}'),
+  EasScheme('9920', 'NIF-IVA (ES)', r'ES[A-Z0-9][0-9]{7}[A-Z0-9]'),
+  EasScheme('9925', 'TVA (BE)', r'BE[01][0-9]{9}'),
+  EasScheme('9930', 'USt-IdNr. (DE)', r'DE[0-9]{9}'),
+  EasScheme('9944', 'BTW (NL)', r'NL[0-9]{9}B[0-9]{2}'),
+  EasScheme('9957', 'TVA (FR)', r'FR[A-Z0-9]{2}[0-9]{9}'),
+  EasScheme('EM', 'E-mail', r'[^@\s]+@[^@\s]+\.[^@\s]+'),
 ];
 
 /// The scheme of [code], or null for one not offered.

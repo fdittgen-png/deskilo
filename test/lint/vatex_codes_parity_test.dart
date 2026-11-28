@@ -19,6 +19,13 @@ List<(String, String, String, String)> _setupList() {
   return [for (final m in _row.allMatches(line)) (m[1]!, m[2]!, m[3]!, m[4]!)];
 }
 
+/// The page's words by language, as web/setup_l10n.js gives them.
+Map<String, Object?> _setupStrings() {
+  final js = File('web/setup_l10n.js').readAsStringSync();
+  final start = js.indexOf('window.SETUP_L10N=') + 'window.SETUP_L10N='.length;
+  return jsonDecode(js.substring(start, js.lastIndexOf(';'))) as Map<String, Object?>;
+}
+
 void main() {
   final rows = _setupList();
 
@@ -37,7 +44,8 @@ void main() {
   test('every code offered has its label and its legal wording in the five languages', () {
     final missing = <String>[];
     for (final lang in ['en', 'fr', 'de', 'es', 'it']) {
-      final texts = jsonDecode(File('web/setup_l10n/setup_$lang.json').readAsStringSync()) as Map<String, Object?>;
+      // #4501 -- the words are the app's (lib/l10n/_fragments/vat_exemptions_*.arb), as the page loads them
+      final texts = (_setupStrings()[lang] as Map<String, Object?>)['s'] as Map<String, Object?>;
       for (final (_, code, label, text) in rows) {
         for (final k in [label, text]) {
           if ((texts[k] as String? ?? '').trim().isEmpty) missing.add('$lang $code $k');

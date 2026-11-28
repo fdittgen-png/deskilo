@@ -408,7 +408,7 @@ class _VersionForm {
                 VatGroup.values.map((g) => g.wire), (x) => group = x),
             _choice('category', l10n.taxRefCategory, category,
                 const ['S', 'Z', 'E', 'O'], (x) { category = x; refresh(); }),
-            taxReferenceExemptionField(fields, category, l10n.taxRefExemptionReason),
+            taxReferenceExemptionField(fields['reason'], category, l10n.taxRefExemptionReason),
             _text('position', l10n.taxRefPosition, type: TextInputType.number),
           ],
         TaxDomain.formBox => [
