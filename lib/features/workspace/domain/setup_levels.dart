@@ -430,8 +430,7 @@ const Map<SetupPreset, SetupLevelVector> setupPresets = {
   },
 };
 
-/// The rank of [level] within [process]; -1 when it is not one of its
-/// levels.
+/// The rank of [level] within [process]; -1 when it is not one of its levels.
 @visibleForTesting
 int setupLevelRank(SetupProcess process, String level) =>
     setupLevels[process]!.indexWhere((l) => l.id == level);

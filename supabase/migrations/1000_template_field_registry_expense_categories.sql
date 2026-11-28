@@ -241,7 +241,7 @@ as $registry$
     {"id":"workspace.feature_flags.coOwner","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"workspaceAccess"},
     {"id":"workspace.feature_flags.configurableSettings","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"operations"},
     {"id":"workspace.feature_flags.configurationTransfer","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.dataExport"],"process":"operations"},
-    {"id":"workspace.feature_flags.counterCashReasons","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"membershipCommerce"},
+    {"id":"workspace.feature_flags.counterCashReasons","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.counterTillSessions"],"process":"membershipCommerce"},
     {"id":"workspace.feature_flags.counterEmbeddedTerminal","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.counterTillSessions"],"process":"membershipCommerce"},
     {"id":"workspace.feature_flags.counterOfflineCash","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.counterTillSessions"],"process":"membershipCommerce"},
     {"id":"workspace.feature_flags.counterReceiptPrinter","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.counterTillSessions"],"process":"membershipCommerce"},
