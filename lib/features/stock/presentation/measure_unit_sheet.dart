@@ -24,6 +24,9 @@ import '../domain/workspace_units.dart';
 import 'measure_unit_text.dart';
 import 'stock_config_text.dart';
 
+/// The UN/ECE codes the form offers (#4479): the Recommendation 20 / 21 list.
+final _eceOptions = [for (final e in uneceUnitCodes.entries) MasterDataOption(code: e.key, name: e.value)];
+
 /// Opens the form of [unit] (null: a new unit) over the business's [all] units. [onDone] runs once it is saved.
 Future<void> showMeasureUnitSheet(
   BuildContext context,
@@ -37,11 +40,12 @@ Future<void> showMeasureUnitSheet(
   final locale = appFormatOf(context).locale;
   final isNew = unit == null;
   final fixed = unit?.builtIn ?? false;
+  final storedEce = unit?.unEceCode ?? '';
   final fields = FormControllers({
     'code': unit?.code ?? '',
     'name': unit?.label ?? '',
     'factor': unit == null ? '' : factorText(unit).replaceAll('.', decimalSeparatorOf(locale)),
-    'ece': unit?.unEceCode ?? '',
+    'ece': storedEce,
   });
   final requestId = newRequestId();
   var dimension = unit?.dimension;
@@ -55,7 +59,7 @@ Future<void> showMeasureUnitSheet(
       dimension: dimension,
       factor: factor(),
       unEceCode: fields['ece'].text,
-      storedUnEceCode: unit?.unEceCode ?? '',
+      storedUnEceCode: storedEce,
     ),
   );
   return showAppFormSheet(
@@ -145,7 +149,7 @@ Future<void> showMeasureUnitSheet(
           controller: fields['ece'],
           fieldKey: MeasureUnitField.unEceCode.name,
           label: l10n.measureUnitEceField,
-          options: [for (final e in uneceUnitCodes.entries) MasterDataOption(code: e.key, name: e.value)],
+          options: _eceOptions,
         ),
       ],
     ),

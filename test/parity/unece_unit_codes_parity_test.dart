@@ -12,8 +12,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 Set<String> _serverCodes() {
   final sql = File('supabase/migrations/0990_conversion_provenance_and_unece_list.sql').readAsStringSync();
-  final body = RegExp(r'unece_unit_known\(p_code text\).*?array\[(.*?)\]::text\[\]', dotAll: true).firstMatch(sql)!.group(1)!;
-  return {for (final m in RegExp(r"'([A-Z0-9]{2,3})'").allMatches(body)) m.group(1)!};
+  final body = RegExp(r"unece_unit_known\(p_code text\).*?regexp_split_to_array\('([^']*)'", dotAll: true).firstMatch(sql)!.group(1)!;
+  return body.split(' ').toSet();
 }
 
 MeasureUnitInput _input(String ece, {String stored = ''}) => MeasureUnitInput(

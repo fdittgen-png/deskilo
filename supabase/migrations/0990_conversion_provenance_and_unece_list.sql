@@ -79,17 +79,7 @@ revoke execute on function pg_temp.replace_statement(text, text, text, text) fro
 -- ── 2. the UN/ECE list ──────────────────────────────────────────────────
 create or replace function public.unece_unit_known(p_code text)
 returns boolean language sql immutable set search_path = public as $fn$
-  select p_code = any(array[
-    'ACR', 'ACT', 'AMP', 'ANN', 'ARE', 'BA', 'BE', 'BG', 'BL', 'BO',
-    'BX', 'C62', 'CA', 'CLT', 'CMK', 'CMQ', 'CMT', 'CR', 'CS', 'CT',
-    'DAY', 'DLT', 'DMQ', 'DMT', 'DR', 'DZN', 'E48', 'EA', 'FOT', 'FTK',
-    'GLI', 'GLL', 'GRM', 'GRO', 'H87', 'HAR', 'HLT', 'HUR', 'INH', 'INK',
-    'JOU', 'JR', 'KGM', 'KJO', 'KMK', 'KMT', 'KWH', 'KWT', 'LBR', 'LPA',
-    'LS', 'LTR', 'MGM', 'MIN', 'MLT', 'MMK', 'MMQ', 'MMT', 'MON', 'MTK',
-    'MTQ', 'MTR', 'MWH', 'NAR', 'NIU', 'NPR', 'ONZ', 'P1', 'PA', 'PF',
-    'PK', 'PL', 'PR', 'PT', 'QT', 'RO', 'SA', 'SEC', 'SET', 'SMI',
-    'ST', 'TN', 'TNE', 'TU', 'VLT', 'WEE', 'WTT', 'YDK', 'YRD', 'ZZ'
-  ]::text[]);
+  select p_code = any(regexp_split_to_array('ACR ACT AMP ANN ARE BA BE BG BL BO BX C62 CA CLT CMK CMQ CMT CR CS CT DAY DLT DMQ DMT DR DZN E48 EA FOT FTK GLI GLL GRM GRO H87 HAR HLT HUR INH INK JOU JR KGM KJO KMK KMT KWH KWT LBR LPA LS LTR MGM MIN MLT MMK MMQ MMT MON MTK MTQ MTR MWH NAR NIU NPR ONZ P1 PA PF PK PL PR PT QT RO SA SEC SET SMI ST TN TNE TU VLT WEE WTT YDK YRD ZZ', ' '));
 $fn$;
 revoke execute on function public.unece_unit_known(text) from public, anon, authenticated;
 

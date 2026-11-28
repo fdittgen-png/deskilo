@@ -6,98 +6,103 @@
 // test/parity/unece_unit_codes_parity_test.dart: a code is added to both or to neither.
 library;
 
+/// One line per code: the code, a space, the Recommendation's name for it.
+const String _list = '''
+ACR acre
+ACT activity
+AMP ampere
+ANN year
+ARE are
+BA barrel
+BE bundle
+BG bag
+BL block
+BO bottle
+BX box
+C62 one
+CA can
+CLT centilitre
+CMK square centimetre
+CMQ cubic centimetre
+CMT centimetre
+CR crate
+CS case
+CT carton
+DAY day
+DLT decilitre
+DMQ cubic decimetre
+DMT decimetre
+DR drum
+DZN dozen
+E48 service unit
+EA each
+FOT foot
+FTK square foot
+GLI gallon (UK)
+GLL gallon (US)
+GRM gram
+GRO gross
+H87 piece
+HAR hectare
+HLT hectolitre
+HUR hour
+INH inch
+INK square inch
+JOU joule
+JR jar
+KGM kilogram
+KJO kilojoule
+KMK square kilometre
+KMT kilometre
+KWH kilowatt hour
+KWT kilowatt
+LBR pound
+LPA litre of pure alcohol
+LS lump sum
+LTR litre
+MGM milligram
+MIN minute
+MLT millilitre
+MMK square millimetre
+MMQ cubic millimetre
+MMT millimetre
+MON month
+MTK square metre
+MTQ cubic metre
+MTR metre
+MWH megawatt hour
+NAR number of articles
+NIU number of international units
+NPR number of pairs
+ONZ ounce
+P1 percent
+PA packet
+PF pallet
+PK package
+PL pail
+PR pair
+PT pint (US)
+QT quart (US)
+RO roll
+SA sack
+SEC second
+SET set
+SMI mile (statute mile)
+ST sheet
+TN tin
+TNE tonne (metric ton)
+TU tube
+VLT volt
+WEE week
+WTT watt
+YDK square yard
+YRD yard
+ZZ mutually defined
+''';
+
 /// Every code a unit may be given, with the Recommendation's name for it.
-const Map<String, String> uneceUnitCodes = {
-  'ACR': 'acre',
-  'ACT': 'activity',
-  'AMP': 'ampere',
-  'ANN': 'year',
-  'ARE': 'are',
-  'BA': 'barrel',
-  'BE': 'bundle',
-  'BG': 'bag',
-  'BL': 'block',
-  'BO': 'bottle',
-  'BX': 'box',
-  'C62': 'one',
-  'CA': 'can',
-  'CLT': 'centilitre',
-  'CMK': 'square centimetre',
-  'CMQ': 'cubic centimetre',
-  'CMT': 'centimetre',
-  'CR': 'crate',
-  'CS': 'case',
-  'CT': 'carton',
-  'DAY': 'day',
-  'DLT': 'decilitre',
-  'DMQ': 'cubic decimetre',
-  'DMT': 'decimetre',
-  'DR': 'drum',
-  'DZN': 'dozen',
-  'E48': 'service unit',
-  'EA': 'each',
-  'FOT': 'foot',
-  'FTK': 'square foot',
-  'GLI': 'gallon (UK)',
-  'GLL': 'gallon (US)',
-  'GRM': 'gram',
-  'GRO': 'gross',
-  'H87': 'piece',
-  'HAR': 'hectare',
-  'HLT': 'hectolitre',
-  'HUR': 'hour',
-  'INH': 'inch',
-  'INK': 'square inch',
-  'JOU': 'joule',
-  'JR': 'jar',
-  'KGM': 'kilogram',
-  'KJO': 'kilojoule',
-  'KMK': 'square kilometre',
-  'KMT': 'kilometre',
-  'KWH': 'kilowatt hour',
-  'KWT': 'kilowatt',
-  'LBR': 'pound',
-  'LPA': 'litre of pure alcohol',
-  'LS': 'lump sum',
-  'LTR': 'litre',
-  'MGM': 'milligram',
-  'MIN': 'minute',
-  'MLT': 'millilitre',
-  'MMK': 'square millimetre',
-  'MMQ': 'cubic millimetre',
-  'MMT': 'millimetre',
-  'MON': 'month',
-  'MTK': 'square metre',
-  'MTQ': 'cubic metre',
-  'MTR': 'metre',
-  'MWH': 'megawatt hour',
-  'NAR': 'number of articles',
-  'NIU': 'number of international units',
-  'NPR': 'number of pairs',
-  'ONZ': 'ounce',
-  'P1': 'percent',
-  'PA': 'packet',
-  'PF': 'pallet',
-  'PK': 'package',
-  'PL': 'pail',
-  'PR': 'pair',
-  'PT': 'pint (US)',
-  'QT': 'quart (US)',
-  'RO': 'roll',
-  'SA': 'sack',
-  'SEC': 'second',
-  'SET': 'set',
-  'SMI': 'mile (statute mile)',
-  'ST': 'sheet',
-  'TN': 'tin',
-  'TNE': 'tonne (metric ton)',
-  'TU': 'tube',
-  'VLT': 'volt',
-  'WEE': 'week',
-  'WTT': 'watt',
-  'YDK': 'square yard',
-  'YRD': 'yard',
-  'ZZ': 'mutually defined',
+final Map<String, String> uneceUnitCodes = {
+  for (final line in _list.trim().split('\n')) line.substring(0, line.indexOf(' ')): line.substring(line.indexOf(' ') + 1),
 };
 
 /// Whether [code] (trimmed, as the server reads it) is on the list.
