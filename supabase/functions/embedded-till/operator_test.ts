@@ -7,7 +7,7 @@
 // call made as the cashier with every digit kept both ways; a refusal keeps its code, and a lost or unreadable answer
 // is uncertain. The database's own rules are pgTAP 603's.
 import { assert, assertEquals } from "jsr:@std/assert@1";
-import { handle, type RestCall, type Verified } from "./handler.ts";
+import { COMMANDS, handle, type RestCall, type Verified } from "./handler.ts";
 
 const DEVICE = "11111111-1111-4111-8111-111111111111";
 const TERMINAL = "33333333-3333-4333-8333-333333333333";
@@ -118,10 +118,23 @@ Deno.test("a draft goes to the till as the cashier, its workspace and till the l
   assertEquals(await res.text(), `{"ok":true,"result":${answer}}`, "the answer comes back byte for byte");
   assertEquals(d.rpcCalls[0], { fn: "till_terminal_lease_resolve_v1", args: { p_device_id: DEVICE, p_secret: SECRET, p_lease_hash: await sha(TOKEN) } });
   const [{ fn, body, bearer }] = d.restCalls;
-  assertEquals([fn, bearer], ["counter_receipt_draft_v1", BEARER]);
+  assertEquals([fn, bearer], ["counter_board_receipt_draft_v1", BEARER]);
   assertEquals(body,
-    `{"p_workspace_id":"${WS}","p_request_id":"${REQUEST}","p_receipt_id":null,"p_expected_revision":0,` +
-      `"p_body":{"lines":[{"item_id":"i","quantity":"2","unit_price_minor":9007199254740993}],"till_id":"${TILL}"}}`);
+    `{"p_workspace_id":"${WS}","p_till_id":"${TILL}","p_request_id":"${REQUEST}","p_receipt_id":null,"p_expected_revision":0,` +
+      `"p_lines":[{"item_id":"i","quantity":"2","unit_price_minor":9007199254740993}]}`);
+});
+
+Deno.test("a board's command acts only on its own till's receipts: a finalize goes to the board function with the lease's till", async () => {
+  const d = deps(await lease(), { status: 200, text: '{"number":"T-1"}' });
+  const res = await handle(post(command("finalize", { request_id: REQUEST, receipt_id: REQUEST, expected_revision: 2, tenders: [] })), d.deps);
+  assertEquals((await res.json()).ok, true);
+  const [{ fn, body }] = d.restCalls;
+  assertEquals(fn, "counter_board_receipt_finalize_v1");
+  assertEquals(body,
+    `{"p_workspace_id":"${WS}","p_till_id":"${TILL}","p_request_id":"${REQUEST}","p_receipt_id":"${REQUEST}","p_expected_revision":2,"p_tenders":[]}`);
+  for (const spec of Object.values(COMMANDS)) {
+    if (spec.args.includes("receipt_id")) assertEquals(spec.fn.startsWith("counter_board_"), true, spec.fn);
+  }
 });
 
 Deno.test("the board names no workspace, no till and no function: anything else is no command", async () => {

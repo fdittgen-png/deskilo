@@ -3367,6 +3367,9 @@ routine public.cost_allocation_rule_json(r bi_cost_allocation_rules) -> jsonb | 
 routine public.cost_allocation_rules_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:789cffb7df60
 routine public.counter_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:66c1d614d21a
 routine public.counter_adapters() -> text[] | function | invoker | immutable | exec:service_role | body:eea3a873b58c
+routine public.counter_board_receipt_draft_v1(p_workspace_id uuid, p_till_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:4bb83e9b5f98
+routine public.counter_board_receipt_finalize_v1(p_workspace_id uuid, p_till_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_tenders jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6e55307697b5
+routine public.counter_board_receipt_of_till(p_workspace_id uuid, p_till_id uuid, p_receipt_id uuid) -> void | function | definer | stable | exec:service_role | body:69fcf532664c
 routine public.counter_cash_entries_reason() -> trigger | function | definer | volatile | exec:service_role | body:e85dc5f68e6b
 routine public.counter_cash_entry_v1(p_workspace_id uuid, p_request_id uuid, p_session_id uuid, p_kind text, p_amount_minor bigint, p_reason text, p_purchase_document_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:42339a6f0eda
 routine public.counter_cash_reason_active(p_workspace_id uuid, p_code text, p_process text) -> boolean | function | definer | stable | exec:service_role | body:e5b089ec5b57
