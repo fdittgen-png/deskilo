@@ -4338,6 +4338,7 @@ Un terminal de caja es la pequeña pantalla del mostrador que cobra. Lo conecta 
 - Escribir el código junto al QR (donde no hay cámara) muestra qué terminal es; para conectarlo, escanee su código QR. Un terminal cuyo código QR no se acepta para conectar necesita primero el nuevo firmware.
 - Un código que un terminal equivocado presenta demasiadas veces se agota (5 veces por defecto). Ambos números están en la configuración de la empresa: **Código de conexión de un dispositivo: minutos** y **Código de conexión de un dispositivo: intentos**.
 - Un terminal solo vende para un cajero que lo autorizó desde su propia sesión. **Cajero de un dispositivo: minutos** (30 por defecto) fija cuánto dura una autorización, nunca más que la sesión del cajero; cerrar la sesión la termina.
+- **Vender en un terminal de caja.** En **Cajón de caja**, **Terminales de caja** lista los terminales conectados para quien puede vender. Un terminal que **Pide un cajero** ofrece **Vender en este terminal a mi nombre**: desde entonces vende a su nombre hasta la hora indicada (**Usted vende en él hasta las** …). **Terminar** lo detiene; el terminal conserva su cesta y vuelve a pedir un cajero. En **Dispositivos**, cada terminal dice quién vende en él y hasta cuándo, y el propietario puede **Terminar**.
 - Un código nunca contiene 0, O, 1, I ni L. Un carácter erróneo, o dos intercambiados, se rechaza al instante, con palabras bajo el campo; mayúsculas, espacios y guiones no importan.
 
 <!-- anchor: user.workspace.settings.organisation -->
