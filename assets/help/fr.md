@@ -2935,6 +2935,7 @@ Vous avez rendu un service à un client désigné aujourd'hui (une consultation,
 - Les montants et la taxe sont toujours calculés par le serveur, jamais repris de l'écran ; le prix est dans la devise de l'établissement.
 - Votre brouillon reste tel quel quand vous redimensionnez la fenêtre ou qu'une vérification est refusée. Si la réponse à **Émettre la facture** n'arrive pas, la même confirmation n'émet jamais une seconde facture : cherchez-la à nouveau.
 - Modifier ensuite le catalogue ou le client ne change jamais une facture émise.
+- Une ligne vendue depuis le stock est dans l’unité propre de l’article jusqu’à ce que vous la changiez : le sélecteur **Unité** liste d’abord les unités dans lesquelles l’article se convertit déjà, puis toutes les autres unités de l’entreprise. En choisir une demande combien d’unités de l’article elle contient (1 carton = 12 pièces) ; une fois enregistrée, la ligne prend l’unité à son prix converti et le stock bouge dans l’unité de l’article. **Nouvelle unité…** ouvre l’éditeur des unités et vous ramène au brouillon.
 
 **Voir aussi:** [Clients facturés](help:user.money.customers.billing) · [Payer des factures sans mois](help:user.money.finances.standalone)
 

@@ -21296,6 +21296,56 @@
       }
     }
   },
+  "standaloneInvoiceLineConversionFactor": "Wie viele {base}",
+  "@standaloneInvoiceLineConversionFactor": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionFactor",
+    "placeholders": {
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineConversionFailed": "Die Umrechnung wurde nicht gespeichert. Die Zeile behält ihre Einheit.",
+  "@standaloneInvoiceLineConversionFailed": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionFailed"
+  },
+  "standaloneInvoiceLineConversionHint": "Der Artikel wird in {base} geführt: Sagen Sie, wie viele {base} eine {unit} enthält, dann kann die Zeile in {unit} verkauft werden.",
+  "@standaloneInvoiceLineConversionHint": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionHint",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineConversionInvalid": "Geben Sie eine Zahl über 0 mit höchstens drei Nachkommastellen ein.",
+  "@standaloneInvoiceLineConversionInvalid": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionInvalid"
+  },
+  "standaloneInvoiceLineConversionOne": "1 {unit} =",
+  "@standaloneInvoiceLineConversionOne": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionOne",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineConversionTitle": "{unit} in {base}",
+  "@standaloneInvoiceLineConversionTitle": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionTitle",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
   "standaloneInvoiceLineDescription": "Beschreibung",
   "@standaloneInvoiceLineDescription": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineDescription"
@@ -21307,6 +21357,10 @@
   "standaloneInvoiceLineGross": "Der Preis enthält die Steuer",
   "@standaloneInvoiceLineGross": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineGross"
+  },
+  "standaloneInvoiceLineNewUnit": "Neue Einheit…",
+  "@standaloneInvoiceLineNewUnit": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineNewUnit"
   },
   "standaloneInvoiceLineNoGoods": "Nichts aus dem Bestand (eine Dienstleistung)",
   "@standaloneInvoiceLineNoGoods": {
@@ -21347,6 +21401,15 @@
   "standaloneInvoiceLineUnit": "Einheit",
   "@standaloneInvoiceLineUnit": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineUnit"
+  },
+  "standaloneInvoiceLineUnitDefine": "{unit} (Umrechnung festlegen)",
+  "@standaloneInvoiceLineUnitDefine": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineUnitDefine",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
   },
   "standaloneInvoiceLines": "Positionen",
   "@standaloneInvoiceLines": {

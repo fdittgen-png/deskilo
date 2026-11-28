@@ -2935,6 +2935,7 @@ Sie haben heute eine Leistung für einen benannten Kunden erbracht (eine Beratun
 - Beträge und Steuer berechnet immer der Server, nie der Bildschirm; der Preis steht in der Währung des Betriebs.
 - Ihr Entwurf bleibt beim Ändern der Fenstergröße oder nach einer abgelehnten Prüfung erhalten. Kommt die Antwort auf **Rechnung ausstellen** nicht an, stellt dieselbe Bestätigung nie eine zweite Rechnung aus: Suchen Sie sie erneut.
 - Spätere Änderungen an Katalog oder Kunde ändern eine ausgestellte Rechnung nie.
+- Eine Zeile aus dem Bestand steht in der eigenen Einheit des Artikels, bis Sie sie ändern: Die Auswahl **Einheit** führt zuerst die Einheiten auf, in die der Artikel schon umrechnet, dann jede andere Einheit des Unternehmens. Wählen Sie eine davon, wird gefragt, wie viele Einheiten des Artikels sie enthält (1 Karton = 12 Stück); nach dem Speichern nimmt die Zeile die Einheit zu ihrem umgerechneten Preis, und der Bestand bewegt sich in der Einheit des Artikels. **Neue Einheit…** öffnet den Einheiteneditor und führt zum Entwurf zurück.
 
 **Siehe auch:** [Rechnungskunden](help:user.money.customers.billing) · [Rechnungen ohne Monat bezahlen](help:user.money.finances.standalone)
 

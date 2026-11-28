@@ -58385,6 +58385,42 @@ abstract class AppLocalizations {
   /// **'Invoice {number} issued'**
   String standaloneInvoiceIssued(String number);
 
+  /// #4516 the unit of a goods line: standaloneInvoiceLineConversionFactor
+  ///
+  /// In en, this message translates to:
+  /// **'How many {base}'**
+  String standaloneInvoiceLineConversionFactor(String base);
+
+  /// #4516 the unit of a goods line: standaloneInvoiceLineConversionFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The conversion was not saved. The line keeps its unit.'**
+  String get standaloneInvoiceLineConversionFailed;
+
+  /// #4516 the unit of a goods line: standaloneInvoiceLineConversionHint
+  ///
+  /// In en, this message translates to:
+  /// **'The item is counted in {base}: say how many {base} one {unit} holds, and the line can be sold in {unit}.'**
+  String standaloneInvoiceLineConversionHint(String unit, String base);
+
+  /// #4516 the unit of a goods line: standaloneInvoiceLineConversionInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a number above 0, with at most three decimals.'**
+  String get standaloneInvoiceLineConversionInvalid;
+
+  /// #4516 the unit of a goods line: standaloneInvoiceLineConversionOne
+  ///
+  /// In en, this message translates to:
+  /// **'1 {unit} ='**
+  String standaloneInvoiceLineConversionOne(String unit);
+
+  /// #4516 the unit of a goods line: standaloneInvoiceLineConversionTitle
+  ///
+  /// In en, this message translates to:
+  /// **'{unit} in {base}'**
+  String standaloneInvoiceLineConversionTitle(String unit, String base);
+
   /// #4165 standalone invoice composer: standaloneInvoiceLineDescription
   ///
   /// In en, this message translates to:
@@ -58402,6 +58438,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The price includes tax'**
   String get standaloneInvoiceLineGross;
+
+  /// #4516 the unit of a goods line: standaloneInvoiceLineNewUnit
+  ///
+  /// In en, this message translates to:
+  /// **'New unit…'**
+  String get standaloneInvoiceLineNewUnit;
 
   /// #4433 goods sold on an invoice: standaloneInvoiceLineNoGoods
   ///
@@ -58462,6 +58504,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unit'**
   String get standaloneInvoiceLineUnit;
+
+  /// #4516 the unit of a goods line: standaloneInvoiceLineUnitDefine
+  ///
+  /// In en, this message translates to:
+  /// **'{unit} (set a conversion)'**
+  String standaloneInvoiceLineUnitDefine(String unit);
 
   /// #4165 standalone invoice composer: standaloneInvoiceLines
   ///

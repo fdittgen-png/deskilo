@@ -6,9 +6,12 @@
 // or members feature.
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 import 'package:flutter_riverpod/misc.dart' show Override;
+import 'package:go_router/go_router.dart';
 
+import '../core/ids/request_id.dart';
 import '../core/navigation/feature_sheets.dart'
     show FeatureSheet, featureSheetsProvider, memberProfileOpenerProvider;
+import '../core/navigation/routes.dart';
 import '../features/calendar/presentation/widgets/access_sheet.dart';
 import '../features/events/providers/event_providers.dart';
 import '../features/members/presentation/member_profile_link.dart';
@@ -20,7 +23,7 @@ import '../features/money/providers/line_units_provider.dart';
 import '../features/money/providers/money_providers.dart' show servicesProvider;
 import '../features/money/providers/pickable_units_provider.dart';
 import '../features/stock/domain/group_unit_defaults.dart';
-import '../features/stock/domain/stock_config.dart' show stockAddressJoint;
+import '../features/stock/domain/stock_config.dart' show StockItemConfig, StockUnitDraft, stockAddressJoint;
 import '../features/stock/domain/unit_conversions.dart';
 import '../features/stock/domain/workspace_units.dart';
 import '../features/stock/presentation/purchase_order_stock_seam_impl.dart';
@@ -32,6 +35,7 @@ import '../features/workspace/domain/site.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/providers/setting_places_provider.dart';
 import '../features/workspace/providers/workspace_providers.dart';
+import 'route_access.dart' show mayOpen;
 import 'stock_expiry_print.dart';
 import 'stock_service_creator.dart';
 
@@ -88,7 +92,40 @@ final List<Override> featureSheetsFromApp = [
     final start = [supplied, own, config.inventoryUnit].firstWhere((c) => c != null && codes.contains(c), orElse: () => null);
     final sold = group.saleStart(config.units);
     final sale = [sold, config.inventoryUnit].firstWhere((c) => c != null && codes.contains(c), orElse: () => null);
-    return ItemOrderUnits(units: offered, defaultUnit: start, saleUnit: sale);
+    return ItemOrderUnits(units: offered, defaultUnit: start, saleUnit: sale, inventoryUnit: config.inventoryUnit);
+  }),
+  // #4516 — a unit the item cannot convert to yet is made one of its authored conversions, on the line (money never imports the stock).
+  itemConversionSaverProvider.overrideWith(
+    (ref) => ({required workspaceId, required itemId, required unit, required factorNum, required factorDen}) async {
+      final commands = ref.read(stockConfigCommandsProvider);
+      final config = await commands.item(workspaceId, itemId);
+      if (config == null || !config.stockable || config.units.any((u) => u.unit == unit)) return false;
+      await commands.saveItem(
+        workspaceId,
+        StockItemConfig(
+          itemId: config.itemId,
+          revision: config.revision,
+          stockable: config.stockable,
+          purchasable: config.purchasable,
+          sellable: config.sellable,
+          inventoryUnit: config.inventoryUnit,
+          tracking: config.tracking,
+          shelfLifeDays: config.shelfLifeDays,
+          units: [...config.units, StockUnitDraft(unit: unit, factorNum: factorNum, factorDen: factorDen)],
+          codes: config.codes,
+        ),
+        newRequestId(),
+      );
+      return true;
+    },
+  ),
+  // #4516 — "New unit…" on a line opens the Master data units editor and comes back to the draft, for whoever may edit the units.
+  newUnitOpenerProvider.overrideWith((ref) {
+    if (!mayOpen(Routes.settingsUnits, ref.watch(myPermissionsProvider))) return null;
+    return (context, workspaceId) async {
+      await context.push<void>(Routes.settingsUnits);
+      ref.invalidate(stock_units.workspaceUnitListProvider(workspaceId));
+    };
   }),
   // #4479 — the price of one unit of an item sold on a quote or an invoice: its own, else the item's price times its factor.
   itemUnitPriceProvider.overrideWith((ref, key) async {

@@ -3072,6 +3072,7 @@ Hoy ha prestado un servicio a un cliente concreto (una consulta, una clase, un e
 - Los importes y el impuesto los calcula siempre el servidor, nunca se toman de la pantalla; el precio está en la moneda del negocio.
 - Su borrador se conserva al cambiar el tamaño de la ventana o si se rechaza una comprobación. Si la respuesta a **Emitir la factura** no llega, la misma confirmación nunca emite una segunda factura: búsquela de nuevo.
 - Cambiar después el catálogo o el cliente nunca modifica una factura emitida.
+- Una línea vendida de las existencias está en la unidad propia del artículo hasta que la cambie: el selector **Unidad** lista primero las unidades a las que el artículo ya se convierte y después todas las demás unidades del negocio. Elegir una de estas pregunta cuántas unidades del artículo contiene (1 caja = 12 piezas); una vez guardada, la línea toma la unidad a su precio convertido y las existencias se mueven en la unidad del artículo. **Nueva unidad…** abre el editor de unidades y vuelve al borrador.
 
 **Véase también:** [Clientes facturados](#clientes-facturados) · [Pagar facturas sin mes](#pagar-facturas-sin-mes)
 

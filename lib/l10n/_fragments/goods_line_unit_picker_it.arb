@@ -1,0 +1,65 @@
+{
+  "standaloneInvoiceLineUnitDefine": "{unit} (definire una conversione)",
+  "@standaloneInvoiceLineUnitDefine": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineUnitDefine",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineNewUnit": "Nuova unità…",
+  "@standaloneInvoiceLineNewUnit": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineNewUnit"
+  },
+  "standaloneInvoiceLineConversionTitle": "{unit} in {base}",
+  "@standaloneInvoiceLineConversionTitle": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionTitle",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineConversionOne": "1 {unit} =",
+  "@standaloneInvoiceLineConversionOne": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionOne",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineConversionFactor": "Quanti {base}",
+  "@standaloneInvoiceLineConversionFactor": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionFactor",
+    "placeholders": {
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineConversionInvalid": "Inserire un numero maggiore di 0, con al massimo tre decimali.",
+  "@standaloneInvoiceLineConversionInvalid": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionInvalid"
+  },
+  "standaloneInvoiceLineConversionFailed": "La conversione non è stata salvata. La riga conserva la sua unità.",
+  "@standaloneInvoiceLineConversionFailed": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionFailed"
+  },
+  "standaloneInvoiceLineConversionHint": "L’articolo è contato in {base}: indicare quanti {base} contiene un {unit}, e la riga potrà essere venduta in {unit}.",
+  "@standaloneInvoiceLineConversionHint": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionHint",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  }
+}

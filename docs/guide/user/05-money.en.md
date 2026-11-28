@@ -661,6 +661,7 @@ You have done a job for a named customer today (a consultation, a lesson, an agr
 - Amounts and tax are always computed by the server, never taken from the screen; the price is in the business's currency.
 - Your draft stays as it is when you resize the window or a check is refused. If an answer to **Issue the invoice** does not arrive, the same confirmation never issues a second invoice: look it up again.
 - Changing the catalogue or the customer afterwards never changes an issued invoice.
+- A line sold from stock is in the item's own unit until you change it: the **Unit** picker lists the units the item already converts from first, then every other unit of the business. Choosing one of those asks how many of the item's unit it holds (1 box = 12 pieces); once saved, the line takes the unit at its converted price and the stock moves in the item's unit. **New unit…** opens the units editor and brings you back to the draft.
 
 **See also:** [Billing customers](help:user.money.customers.billing) · [Paying invoices without a month](help:user.money.finances.standalone)
 

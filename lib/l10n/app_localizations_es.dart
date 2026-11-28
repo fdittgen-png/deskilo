@@ -36738,6 +36738,34 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String standaloneInvoiceLineConversionFactor(String base) {
+    return 'Cuántos $base';
+  }
+
+  @override
+  String get standaloneInvoiceLineConversionFailed =>
+      'No se guardó la conversión. La línea conserva su unidad.';
+
+  @override
+  String standaloneInvoiceLineConversionHint(String unit, String base) {
+    return 'El artículo se cuenta en $base: indique cuántos $base contiene un $unit y la línea podrá venderse en $unit.';
+  }
+
+  @override
+  String get standaloneInvoiceLineConversionInvalid =>
+      'Introduzca un número mayor que 0, con tres decimales como máximo.';
+
+  @override
+  String standaloneInvoiceLineConversionOne(String unit) {
+    return '1 $unit =';
+  }
+
+  @override
+  String standaloneInvoiceLineConversionTitle(String unit, String base) {
+    return '$unit en $base';
+  }
+
+  @override
   String get standaloneInvoiceLineDescription => 'Descripción';
 
   @override
@@ -36745,6 +36773,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get standaloneInvoiceLineGross => 'El precio incluye el impuesto';
+
+  @override
+  String get standaloneInvoiceLineNewUnit => 'Nueva unidad…';
 
   @override
   String get standaloneInvoiceLineNoGoods =>
@@ -36778,6 +36809,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get standaloneInvoiceLineUnit => 'Unidad';
+
+  @override
+  String standaloneInvoiceLineUnitDefine(String unit) {
+    return '$unit (definir una conversión)';
+  }
 
   @override
   String get standaloneInvoiceLines => 'Líneas';

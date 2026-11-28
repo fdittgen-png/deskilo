@@ -2935,6 +2935,7 @@ Oggi ha reso un servizio a un cliente indicato (una consulenza, una lezione, un 
 - Importi e imposta li calcola sempre il server, mai presi dalla schermata; il prezzo è nella valuta dell'attività.
 - La bozza resta com'è quando si ridimensiona la finestra o una verifica viene rifiutata. Se la risposta a **Emettere la fattura** non arriva, la stessa conferma non emette mai una seconda fattura: la si cerchi di nuovo.
 - Modificare poi il catalogo o il cliente non cambia mai una fattura emessa.
+- Una riga venduta dalle scorte è nell’unità propria dell’articolo finché non la si cambia: il selettore **Unità** elenca prima le unità in cui l’articolo si converte già, poi ogni altra unità dell’attività. Sceglierne una chiede quante unità dell’articolo contiene (1 scatola = 12 pezzi); una volta salvata, la riga prende l’unità al suo prezzo convertito e le scorte si muovono nell’unità dell’articolo. **Nuova unità…** apre l’editor delle unità e riporta alla bozza.
 
 **Vedere anche:** [Clienti fatturati](help:user.money.customers.billing) · [Pagare fatture senza mese](help:user.money.finances.standalone)
 

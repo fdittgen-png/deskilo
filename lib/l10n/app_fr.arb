@@ -21296,6 +21296,56 @@
       }
     }
   },
+  "standaloneInvoiceLineConversionFactor": "Combien de {base}",
+  "@standaloneInvoiceLineConversionFactor": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionFactor",
+    "placeholders": {
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineConversionFailed": "La conversion n’a pas été enregistrée. La ligne garde son unité.",
+  "@standaloneInvoiceLineConversionFailed": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionFailed"
+  },
+  "standaloneInvoiceLineConversionHint": "L’article est compté en {base} : dites combien de {base} contient un {unit}, et la ligne pourra être vendue en {unit}.",
+  "@standaloneInvoiceLineConversionHint": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionHint",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineConversionInvalid": "Saisissez un nombre supérieur à 0, avec trois décimales au plus.",
+  "@standaloneInvoiceLineConversionInvalid": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionInvalid"
+  },
+  "standaloneInvoiceLineConversionOne": "1 {unit} =",
+  "@standaloneInvoiceLineConversionOne": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionOne",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineConversionTitle": "{unit} en {base}",
+  "@standaloneInvoiceLineConversionTitle": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineConversionTitle",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
   "standaloneInvoiceLineDescription": "Description",
   "@standaloneInvoiceLineDescription": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineDescription"
@@ -21307,6 +21357,10 @@
   "standaloneInvoiceLineGross": "Le prix est TTC",
   "@standaloneInvoiceLineGross": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineGross"
+  },
+  "standaloneInvoiceLineNewUnit": "Nouvelle unité…",
+  "@standaloneInvoiceLineNewUnit": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineNewUnit"
   },
   "standaloneInvoiceLineNoGoods": "Rien du stock (une prestation)",
   "@standaloneInvoiceLineNoGoods": {
@@ -21347,6 +21401,15 @@
   "standaloneInvoiceLineUnit": "Unité",
   "@standaloneInvoiceLineUnit": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineUnit"
+  },
+  "standaloneInvoiceLineUnitDefine": "{unit} (définir une conversion)",
+  "@standaloneInvoiceLineUnitDefine": {
+    "description": "#4516 the unit of a goods line: standaloneInvoiceLineUnitDefine",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
   },
   "standaloneInvoiceLines": "Lignes",
   "@standaloneInvoiceLines": {
