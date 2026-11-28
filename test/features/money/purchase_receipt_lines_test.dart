@@ -94,6 +94,7 @@ Widget _app(_Receipts repo) {
   final container = ProviderContainer(
     overrides: <Override>[
       purchaseRepositoryProvider.overrideWithValue(repo),
+      expenseCategoryRepositoryProvider.overrideWithValue(InMemoryExpenseCategories()),
       currentWorkspaceProvider.overrideWith((ref) async => _workspace),
       enabledFeaturesSyncProvider.overrideWithValue({
         WorkspaceFeature.purchases,

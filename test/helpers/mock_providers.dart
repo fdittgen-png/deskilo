@@ -112,6 +112,7 @@ import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/credit_move.dart';
 import 'package:deskilo/features/money/domain/credit_product.dart';
+import 'package:deskilo/features/money/domain/expense_category.dart';
 import 'package:deskilo/features/money/domain/invoice_original.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/domain/recorded_payments.dart'
@@ -262,6 +263,7 @@ List<Override> standardTestOverrides({
   FakeOrganisationRepository? organisations,
   // #3853 — a test of the stored originals brings its own store.
   InvoiceOriginalRepository? invoiceOriginals,
+  ExpenseCategoryRepository? expenseCategories,
   // #3587 — a test of the payments read brings its own; else the Demo's
   // reader over the money fake.
   RecordedPaymentsRepository? recordedPayments,
@@ -382,7 +384,7 @@ List<Override> standardTestOverrides({
     // No disk in a widget test: a recording lives in memory.
     recorderLogBackendProvider.overrideWithValue(MemoryRecorderLogBackend()),
     // #4512 — the business's expense categories, in memory: the five a business starts with.
-    expenseCategoryRepositoryProvider.overrideWith((ref) => InMemoryExpenseCategories()),
+    expenseCategoryRepositoryProvider.overrideWith((ref) => expenseCategories ?? InMemoryExpenseCategories()),
     // #3853 — the stored originals of the invoices, in memory.
     invoiceOriginalRepositoryProvider.overrideWithValue(
       invoiceOriginals ??

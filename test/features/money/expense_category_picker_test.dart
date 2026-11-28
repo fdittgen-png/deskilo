@@ -3,26 +3,25 @@
 // category it renamed or added, and files the expense under the one picked, by its code.
 import 'package:deskilo/features/money/providers/expense_category_providers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/screens/money_screen.dart' show pumpMoney;
 import '../../helpers/screens/supply_expense.dart' show openExpenseSheet;
 
-Future<List<Override>> _own(InMemoryExpenseCategories repo) async {
+Future<void> _own(InMemoryExpenseCategories repo) async {
   final cleaning = await repo.save('ws-1', label: 'Cleaning', requestId: 'r1');
   final supplies = (await repo.categories('ws-1')).firstWhere((c) => c.code == 'supplies');
   await repo.setRetired('ws-1', supplies.id, retired: true, requestId: 'r2');
   expect(cleaning.builtIn, isFalse);
-  return [expenseCategoryRepositoryProvider.overrideWithValue(repo)];
 }
 
 void main() {
   testWidgets('the sheet offers the active categories, the business\'s own words, and files under the one picked', (tester) async {
     final money = FakeMoneyRepository();
-    final overrides = await _own(InMemoryExpenseCategories());
-    await pumpMoney(tester, money: money, extraOverrides: overrides);
+    final categories = InMemoryExpenseCategories();
+    await _own(categories);
+    await pumpMoney(tester, money: money, expenseCategories: categories);
     await openExpenseSheet(tester);
     final picker = find.byKey(const ValueKey('expense-sheet-money-expense-category-label'));
     await tester.tap(picker);
