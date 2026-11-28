@@ -1,0 +1,19 @@
+{
+  "boardCashierTitle": "Terminaux de caisse",
+  "boardCashierNone": "Aucun terminal de caisse n'est relié à cette entreprise.",
+  "boardCashierAsks": "Demande un caissier",
+  "boardCashierSoldBy": "{name} vend dessus jusqu'à {time}",
+  "boardCashierSoldByUnnamed": "Un caissier vend dessus jusqu'à {time}",
+  "boardCashierMine": "Vous vendez dessus jusqu'à {time}",
+  "boardCashierSellAsMe": "Vendre sur ce terminal en mon nom",
+  "boardCashierEnd": "Terminer",
+  "boardCashierRenewHint": "Un terminal vend à votre nom jusqu'à l'heure indiquée, jamais au-delà de votre propre connexion. Quand cela se termine, le terminal garde son panier et demande de nouveau un caissier.",
+  "boardCashierAuthorized": "Le terminal vend en votre nom jusqu'à {time}.",
+  "boardCashierEnded": "Le terminal ne vend plus sous ce nom.",
+  "boardCashierRefusedNotAllowed": "Vous ne pouvez pas vendre dans cette entreprise.",
+  "boardCashierRefusedNoRequest": "Ce terminal ne demande pas de caissier en ce moment. Attendez qu'il indique qu'il en attend un.",
+  "boardCashierRefusedNotPaired": "Ce terminal n'est pas relié.",
+  "boardCashierRefusedSignIn": "Reconnectez-vous, puis réessayez.",
+  "boardCashierRefusedNotConfigured": "Les terminaux de caisse ne peuvent pas encore être autorisés sur cette installation.",
+  "boardCashierRefusedUncertain": "Pas de réponse de Deskilo. Regardez le terminal, puis réessayez."
+}

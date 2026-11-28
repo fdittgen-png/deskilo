@@ -67,6 +67,21 @@ class _Boards implements TillBoardPort {
     calls.add('revoke $boardId');
     return true;
   }
+
+  @override
+  Future<List<TillBoard>> cashierBoards(String workspaceId) async => list;
+
+  @override
+  Future<DateTime> authorize(String boardId) async {
+    calls.add('authorize $boardId');
+    return DateTime.utc(2026, 11, 27, 18, 30);
+  }
+
+  @override
+  Future<bool> endLease(String leaseId) async {
+    calls.add('end $leaseId');
+    return true;
+  }
 }
 
 const _waiting = TillBoard(

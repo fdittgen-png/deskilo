@@ -5493,6 +5493,70 @@ class AppLocalizationsEn extends AppLocalizations {
   String get blockedPeopleTitle => 'Blocked people';
 
   @override
+  String get boardCashierAsks => 'Asks for a cashier';
+
+  @override
+  String boardCashierAuthorized(String time) {
+    return 'The board sells as you until $time.';
+  }
+
+  @override
+  String get boardCashierEnd => 'End';
+
+  @override
+  String get boardCashierEnded => 'The board no longer sells under this name.';
+
+  @override
+  String boardCashierMine(String time) {
+    return 'You sell on it until $time';
+  }
+
+  @override
+  String get boardCashierNone => 'No till board is connected to this business.';
+
+  @override
+  String get boardCashierRefusedNoRequest =>
+      'This board is not asking for a cashier now. Wait until it shows that it waits for one.';
+
+  @override
+  String get boardCashierRefusedNotAllowed =>
+      'You may not sell in this business.';
+
+  @override
+  String get boardCashierRefusedNotConfigured =>
+      'Till boards cannot be authorized on this installation yet.';
+
+  @override
+  String get boardCashierRefusedNotPaired => 'This board is not connected.';
+
+  @override
+  String get boardCashierRefusedSignIn => 'Sign in again, then try once more.';
+
+  @override
+  String get boardCashierRefusedUncertain =>
+      'No answer from Deskilo. Look at the board, then try again.';
+
+  @override
+  String get boardCashierRenewHint =>
+      'A board sells under your name until the time shown, never past your own sign-in. When it ends, the board keeps its basket and asks for a cashier again.';
+
+  @override
+  String get boardCashierSellAsMe => 'Sell on this board as me';
+
+  @override
+  String boardCashierSoldBy(String name, String time) {
+    return '$name sells on it until $time';
+  }
+
+  @override
+  String boardCashierSoldByUnnamed(String time) {
+    return 'A cashier sells on it until $time';
+  }
+
+  @override
+  String get boardCashierTitle => 'Till boards';
+
+  @override
   String get bookAccountCode => 'Account code';
 
   @override

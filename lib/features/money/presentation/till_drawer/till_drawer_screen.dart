@@ -23,6 +23,7 @@ import '../../application/till_drawer_commands.dart';
 import '../../domain/till_drawer.dart';
 import '../../providers/till_drawer_providers.dart';
 import '../../providers/till_layout_providers.dart';
+import '../screens/till_board_cashier.dart';
 import 'cash_entry_sheet.dart';
 import 'close_sheet.dart';
 import 'drawer_text.dart';
@@ -32,7 +33,7 @@ import 'till_edit_sheet.dart';
 
 /// The drawer screen. [canManage] is whether the person may add and edit tills (the sites' managers).
 class TillDrawerScreen extends ConsumerWidget {
-  const TillDrawerScreen({super.key, required this.workspaceId, required this.currency, required this.canManage, this.canCloseDay = false});
+  const TillDrawerScreen({super.key, required this.workspaceId, required this.currency, required this.canManage, this.canCloseDay = false, this.showBoards = false});
 
   /// The open business; null while it is being read.
   final String? workspaceId;
@@ -41,6 +42,9 @@ class TillDrawerScreen extends ConsumerWidget {
 
   /// Whether the person may see the finances, and so close the day.
   final bool canCloseDay;
+
+  /// #4517 -- whether the till boards are listed for the person to sell on: where till boards are on, to whom may sell.
+  final bool showBoards;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,17 +66,18 @@ class TillDrawerScreen extends ConsumerWidget {
               label: Text(l10n.tillDrawerAddTill),
             )
           : null,
-      body: workspaceId == null ? const LoadingView() : _Tills(workspaceId: workspaceId, currency: currency, canManage: canManage),
+      body: workspaceId == null ? const LoadingView() : _Tills(workspaceId: workspaceId, currency: currency, canManage: canManage, showBoards: showBoards),
     );
   }
 }
 
 class _Tills extends ConsumerWidget {
-  const _Tills({required this.workspaceId, required this.currency, required this.canManage});
+  const _Tills({required this.workspaceId, required this.currency, required this.canManage, required this.showBoards});
 
   final String workspaceId;
   final String currency;
   final bool canManage;
+  final bool showBoards;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -91,6 +96,7 @@ class _Tills extends ConsumerWidget {
                 padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, kFabSafeBottom),
                 children: [
                   TerminalConsole(workspaceId: workspaceId),
+                  if (showBoards) TillBoardCashierCard(workspaceId: workspaceId),
                   if (tills.isEmpty)
                     Padding(
                       padding: const EdgeInsets.all(AppSpacing.lg),

@@ -5523,6 +5523,72 @@ class AppLocalizationsIt extends AppLocalizations {
   String get blockedPeopleTitle => 'Persone bloccate';
 
   @override
+  String get boardCashierAsks => 'Chiede un cassiere';
+
+  @override
+  String boardCashierAuthorized(String time) {
+    return 'Il terminale vende a Suo nome fino alle $time.';
+  }
+
+  @override
+  String get boardCashierEnd => 'Terminare';
+
+  @override
+  String get boardCashierEnded => 'Il terminale non vende più con questo nome.';
+
+  @override
+  String boardCashierMine(String time) {
+    return 'Lei vende su di esso fino alle $time';
+  }
+
+  @override
+  String get boardCashierNone =>
+      'Nessun terminale di cassa è collegato a questa attività.';
+
+  @override
+  String get boardCashierRefusedNoRequest =>
+      'Questo terminale non chiede un cassiere ora. Attenda che mostri di attenderne uno.';
+
+  @override
+  String get boardCashierRefusedNotAllowed =>
+      'Non può vendere in questa attività.';
+
+  @override
+  String get boardCashierRefusedNotConfigured =>
+      'I terminali di cassa non possono ancora essere autorizzati su questa installazione.';
+
+  @override
+  String get boardCashierRefusedNotPaired =>
+      'Questo terminale non è collegato.';
+
+  @override
+  String get boardCashierRefusedSignIn => 'Acceda di nuovo, poi riprovi.';
+
+  @override
+  String get boardCashierRefusedUncertain =>
+      'Nessuna risposta da Deskilo. Guardi il terminale, poi riprovi.';
+
+  @override
+  String get boardCashierRenewHint =>
+      'Un terminale vende a Suo nome fino all\'ora indicata, mai oltre il Suo accesso. Quando termina, il terminale conserva il carrello e chiede di nuovo un cassiere.';
+
+  @override
+  String get boardCashierSellAsMe => 'Vendere su questo terminale a mio nome';
+
+  @override
+  String boardCashierSoldBy(String name, String time) {
+    return '$name vende su di esso fino alle $time';
+  }
+
+  @override
+  String boardCashierSoldByUnnamed(String time) {
+    return 'Un cassiere vende su di esso fino alle $time';
+  }
+
+  @override
+  String get boardCashierTitle => 'Terminali di cassa';
+
+  @override
   String get bookAccountCode => 'Codice conto';
 
   @override

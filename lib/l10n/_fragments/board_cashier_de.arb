@@ -1,0 +1,19 @@
+{
+  "boardCashierTitle": "Kassenterminals",
+  "boardCashierNone": "Mit diesem Betrieb ist kein Kassenterminal verbunden.",
+  "boardCashierAsks": "Bittet um einen Kassierer",
+  "boardCashierSoldBy": "{name} verkauft darauf bis {time}",
+  "boardCashierSoldByUnnamed": "Ein Kassierer verkauft darauf bis {time}",
+  "boardCashierMine": "Sie verkaufen darauf bis {time}",
+  "boardCashierSellAsMe": "Auf diesem Terminal in meinem Namen verkaufen",
+  "boardCashierEnd": "Beenden",
+  "boardCashierRenewHint": "Ein Terminal verkauft in Ihrem Namen bis zur angezeigten Zeit, nie über Ihre eigene Anmeldung hinaus. Endet sie, behält das Terminal seinen Warenkorb und bittet erneut um einen Kassierer.",
+  "boardCashierAuthorized": "Das Terminal verkauft bis {time} in Ihrem Namen.",
+  "boardCashierEnded": "Das Terminal verkauft nicht mehr unter diesem Namen.",
+  "boardCashierRefusedNotAllowed": "Sie dürfen in diesem Betrieb nicht verkaufen.",
+  "boardCashierRefusedNoRequest": "Dieses Terminal bittet gerade nicht um einen Kassierer. Warten Sie, bis es anzeigt, dass es auf einen wartet.",
+  "boardCashierRefusedNotPaired": "Dieses Terminal ist nicht verbunden.",
+  "boardCashierRefusedSignIn": "Melden Sie sich erneut an und versuchen Sie es noch einmal.",
+  "boardCashierRefusedNotConfigured": "Kassenterminals können auf dieser Installation noch nicht freigegeben werden.",
+  "boardCashierRefusedUncertain": "Keine Antwort von Deskilo. Sehen Sie auf das Terminal und versuchen Sie es erneut."
+}

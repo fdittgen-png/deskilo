@@ -1,0 +1,93 @@
+{
+  "boardCashierTitle": "Till boards",
+  "@boardCashierTitle": {
+    "description": "#4517 a cashier authorizes a till board"
+  },
+  "boardCashierNone": "No till board is connected to this business.",
+  "@boardCashierNone": {
+    "description": "#4517 a cashier authorizes a till board"
+  },
+  "boardCashierAsks": "Asks for a cashier",
+  "@boardCashierAsks": {
+    "description": "#4517 a cashier authorizes a till board"
+  },
+  "boardCashierSoldBy": "{name} sells on it until {time}",
+  "@boardCashierSoldBy": {
+    "description": "#4517 a cashier authorizes a till board",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "boardCashierSoldByUnnamed": "A cashier sells on it until {time}",
+  "@boardCashierSoldByUnnamed": {
+    "description": "#4517 a cashier authorizes a till board",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "boardCashierMine": "You sell on it until {time}",
+  "@boardCashierMine": {
+    "description": "#4517 a cashier authorizes a till board",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "boardCashierSellAsMe": "Sell on this board as me",
+  "@boardCashierSellAsMe": {
+    "description": "#4517 a cashier authorizes a till board"
+  },
+  "boardCashierEnd": "End",
+  "@boardCashierEnd": {
+    "description": "#4517 a cashier authorizes a till board"
+  },
+  "boardCashierRenewHint": "A board sells under your name until the time shown, never past your own sign-in. When it ends, the board keeps its basket and asks for a cashier again.",
+  "@boardCashierRenewHint": {
+    "description": "#4517 a cashier authorizes a till board"
+  },
+  "boardCashierAuthorized": "The board sells as you until {time}.",
+  "@boardCashierAuthorized": {
+    "description": "#4517 a cashier authorizes a till board",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "boardCashierEnded": "The board no longer sells under this name.",
+  "@boardCashierEnded": {
+    "description": "#4517 a cashier authorizes a till board"
+  },
+  "boardCashierRefusedNotAllowed": "You may not sell in this business.",
+  "@boardCashierRefusedNotAllowed": {
+    "description": "#4517 a cashier authorizes a till board"
+  },
+  "boardCashierRefusedNoRequest": "This board is not asking for a cashier now. Wait until it shows that it waits for one.",
+  "@boardCashierRefusedNoRequest": {
+    "description": "#4517 a cashier authorizes a till board"
+  },
+  "boardCashierRefusedNotPaired": "This board is not connected.",
+  "@boardCashierRefusedNotPaired": {
+    "description": "#4517 a cashier authorizes a till board"
+  },
+  "boardCashierRefusedSignIn": "Sign in again, then try once more.",
+  "@boardCashierRefusedSignIn": {
+    "description": "#4517 a cashier authorizes a till board"
+  },
+  "boardCashierRefusedNotConfigured": "Till boards cannot be authorized on this installation yet.",
+  "@boardCashierRefusedNotConfigured": {
+    "description": "#4517 a cashier authorizes a till board"
+  },
+  "boardCashierRefusedUncertain": "No answer from Deskilo. Look at the board, then try again.",
+  "@boardCashierRefusedUncertain": {
+    "description": "#4517 a cashier authorizes a till board"
+  }
+}

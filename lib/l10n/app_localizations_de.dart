@@ -5535,6 +5535,75 @@ class AppLocalizationsDe extends AppLocalizations {
   String get blockedPeopleTitle => 'Blockierte Personen';
 
   @override
+  String get boardCashierAsks => 'Bittet um einen Kassierer';
+
+  @override
+  String boardCashierAuthorized(String time) {
+    return 'Das Terminal verkauft bis $time in Ihrem Namen.';
+  }
+
+  @override
+  String get boardCashierEnd => 'Beenden';
+
+  @override
+  String get boardCashierEnded =>
+      'Das Terminal verkauft nicht mehr unter diesem Namen.';
+
+  @override
+  String boardCashierMine(String time) {
+    return 'Sie verkaufen darauf bis $time';
+  }
+
+  @override
+  String get boardCashierNone =>
+      'Mit diesem Betrieb ist kein Kassenterminal verbunden.';
+
+  @override
+  String get boardCashierRefusedNoRequest =>
+      'Dieses Terminal bittet gerade nicht um einen Kassierer. Warten Sie, bis es anzeigt, dass es auf einen wartet.';
+
+  @override
+  String get boardCashierRefusedNotAllowed =>
+      'Sie dürfen in diesem Betrieb nicht verkaufen.';
+
+  @override
+  String get boardCashierRefusedNotConfigured =>
+      'Kassenterminals können auf dieser Installation noch nicht freigegeben werden.';
+
+  @override
+  String get boardCashierRefusedNotPaired =>
+      'Dieses Terminal ist nicht verbunden.';
+
+  @override
+  String get boardCashierRefusedSignIn =>
+      'Melden Sie sich erneut an und versuchen Sie es noch einmal.';
+
+  @override
+  String get boardCashierRefusedUncertain =>
+      'Keine Antwort von Deskilo. Sehen Sie auf das Terminal und versuchen Sie es erneut.';
+
+  @override
+  String get boardCashierRenewHint =>
+      'Ein Terminal verkauft in Ihrem Namen bis zur angezeigten Zeit, nie über Ihre eigene Anmeldung hinaus. Endet sie, behält das Terminal seinen Warenkorb und bittet erneut um einen Kassierer.';
+
+  @override
+  String get boardCashierSellAsMe =>
+      'Auf diesem Terminal in meinem Namen verkaufen';
+
+  @override
+  String boardCashierSoldBy(String name, String time) {
+    return '$name verkauft darauf bis $time';
+  }
+
+  @override
+  String boardCashierSoldByUnnamed(String time) {
+    return 'Ein Kassierer verkauft darauf bis $time';
+  }
+
+  @override
+  String get boardCashierTitle => 'Kassenterminals';
+
+  @override
   String get bookAccountCode => 'Kontonummer';
 
   @override

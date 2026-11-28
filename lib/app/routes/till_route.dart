@@ -71,8 +71,17 @@ class _TillDrawerRoute extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final manages = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageSites);
-    return TillDrawerScreen(workspaceId: workspace?.id, currency: workspace?.currencyCode ?? '', canManage: manages, canCloseDay: ref.watch(myPermissionsProvider).contains(WorkspacePermission.viewFinances));
+    final held = ref.watch(myPermissionsProvider);
+    final manages = held.contains(WorkspacePermission.manageSites);
+    // #4517 -- the till boards, for whom may sell, where till boards are on
+    final boards = held.contains(WorkspacePermission.issueInvoices) && ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.counterEmbeddedTerminal);
+    return TillDrawerScreen(
+      workspaceId: workspace?.id,
+      currency: workspace?.currencyCode ?? '',
+      canManage: manages,
+      canCloseDay: held.contains(WorkspacePermission.viewFinances),
+      showBoards: boards,
+    );
   }
 }
 

@@ -8645,6 +8645,108 @@ abstract class AppLocalizations {
   /// **'Blocked people'**
   String get blockedPeopleTitle;
 
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'Asks for a cashier'**
+  String get boardCashierAsks;
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'The board sells as you until {time}.'**
+  String boardCashierAuthorized(String time);
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get boardCashierEnd;
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'The board no longer sells under this name.'**
+  String get boardCashierEnded;
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'You sell on it until {time}'**
+  String boardCashierMine(String time);
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'No till board is connected to this business.'**
+  String get boardCashierNone;
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'This board is not asking for a cashier now. Wait until it shows that it waits for one.'**
+  String get boardCashierRefusedNoRequest;
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'You may not sell in this business.'**
+  String get boardCashierRefusedNotAllowed;
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'Till boards cannot be authorized on this installation yet.'**
+  String get boardCashierRefusedNotConfigured;
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'This board is not connected.'**
+  String get boardCashierRefusedNotPaired;
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in again, then try once more.'**
+  String get boardCashierRefusedSignIn;
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'No answer from Deskilo. Look at the board, then try again.'**
+  String get boardCashierRefusedUncertain;
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'A board sells under your name until the time shown, never past your own sign-in. When it ends, the board keeps its basket and asks for a cashier again.'**
+  String get boardCashierRenewHint;
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'Sell on this board as me'**
+  String get boardCashierSellAsMe;
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'{name} sells on it until {time}'**
+  String boardCashierSoldBy(String name, String time);
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'A cashier sells on it until {time}'**
+  String boardCashierSoldByUnnamed(String time);
+
+  /// #4517 a cashier authorizes a till board
+  ///
+  /// In en, this message translates to:
+  /// **'Till boards'**
+  String get boardCashierTitle;
+
   /// #1869 B chart of accounts
   ///
   /// In en, this message translates to:

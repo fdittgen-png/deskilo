@@ -14,6 +14,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
+import 'till_board_cashier.dart';
 
 /// The words for a refusal of a board command, or for a server that did not answer.
 String tillBoardFailureText(AppLocalizations l10n, Object error) => switch (error) {
@@ -106,6 +107,11 @@ class _BoardCard extends ConsumerWidget {
             Text(l10n.devicePairingTill(board.tillName)),
             Text(waiting ? l10n.devicePairingStatusPending : l10n.devicePairingStatusPaired),
             Text(l10n.devicePairingFingerprint(board.fingerprint), style: theme.textTheme.bodySmall),
+            // #4517 -- whether it asks for a cashier, and who sells on it until when
+            if (board.lease case final TillBoardLease lease)
+              Text(boardLeaseText(context, lease), key: ValueKey('device-board-lease-${board.shortId}'))
+            else if (board.cashierAsked)
+              Text(l10n.boardCashierAsks, key: ValueKey('device-board-asks-${board.shortId}')),
             if (owner)
               OverflowBar(
                 alignment: MainAxisAlignment.end,
@@ -121,6 +127,12 @@ class _BoardCard extends ConsumerWidget {
                     },
                     child: Text(l10n.devicePairingRevoke),
                   ),
+                  if (board.lease case final TillBoardLease lease)
+                    TextButton(
+                      key: ValueKey('device-board-end-${board.shortId}'),
+                      onPressed: () => _act(context, ref, (port) => port.endLease(lease.id)),
+                      child: Text(l10n.boardCashierEnd),
+                    ),
                   if (waiting)
                     FilledButton(
                       key: ValueKey('device-board-approve-${board.shortId}'),

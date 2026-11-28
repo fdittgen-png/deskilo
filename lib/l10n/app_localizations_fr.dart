@@ -5546,6 +5546,71 @@ class AppLocalizationsFr extends AppLocalizations {
   String get blockedPeopleTitle => 'Personnes bloquées';
 
   @override
+  String get boardCashierAsks => 'Demande un caissier';
+
+  @override
+  String boardCashierAuthorized(String time) {
+    return 'Le terminal vend en votre nom jusqu\'à $time.';
+  }
+
+  @override
+  String get boardCashierEnd => 'Terminer';
+
+  @override
+  String get boardCashierEnded => 'Le terminal ne vend plus sous ce nom.';
+
+  @override
+  String boardCashierMine(String time) {
+    return 'Vous vendez dessus jusqu\'à $time';
+  }
+
+  @override
+  String get boardCashierNone =>
+      'Aucun terminal de caisse n\'est relié à cette entreprise.';
+
+  @override
+  String get boardCashierRefusedNoRequest =>
+      'Ce terminal ne demande pas de caissier en ce moment. Attendez qu\'il indique qu\'il en attend un.';
+
+  @override
+  String get boardCashierRefusedNotAllowed =>
+      'Vous ne pouvez pas vendre dans cette entreprise.';
+
+  @override
+  String get boardCashierRefusedNotConfigured =>
+      'Les terminaux de caisse ne peuvent pas encore être autorisés sur cette installation.';
+
+  @override
+  String get boardCashierRefusedNotPaired => 'Ce terminal n\'est pas relié.';
+
+  @override
+  String get boardCashierRefusedSignIn => 'Reconnectez-vous, puis réessayez.';
+
+  @override
+  String get boardCashierRefusedUncertain =>
+      'Pas de réponse de Deskilo. Regardez le terminal, puis réessayez.';
+
+  @override
+  String get boardCashierRenewHint =>
+      'Un terminal vend à votre nom jusqu\'à l\'heure indiquée, jamais au-delà de votre propre connexion. Quand cela se termine, le terminal garde son panier et demande de nouveau un caissier.';
+
+  @override
+  String get boardCashierSellAsMe => 'Vendre sur ce terminal en mon nom';
+
+  @override
+  String boardCashierSoldBy(String name, String time) {
+    return '$name vend dessus jusqu\'à $time';
+  }
+
+  @override
+  String boardCashierSoldByUnnamed(String time) {
+    return 'Un caissier vend dessus jusqu\'à $time';
+  }
+
+  @override
+  String get boardCashierTitle => 'Terminaux de caisse';
+
+  @override
   String get bookAccountCode => 'Numéro de compte';
 
   @override
