@@ -35,6 +35,9 @@ class ItVatFilingContribution extends VatFilingContribution {
   Set<String> get factsAsked => const {'italianDeclarant'};
 
   @override
+  Map<String, List<String>> get factChoices => const {'declarantRole': lipeDeclarantRoles};
+
+  @override
   Set<String> get registers => const {'itRegistro'};
 
   @override

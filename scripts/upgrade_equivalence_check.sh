@@ -15,8 +15,11 @@
 #   upgraded   the empty project at 0226 with the archive of
 #              supabase/restore/archive_seed.sql, carried to 0689 with the
 #              in-flight e-invoice work of archive_seed_0689.sql, carried to
-#              0747 with the goods of archive_seed_0747.sql, then every later
-#              migration over those rows.
+#              0747 with the goods of archive_seed_0747.sql, carried to 0960
+#              with the rows that name an item's unit by its name (a barcode,
+#              a supplier mapping, a live tag: archive_seed_0960.sql, #4499),
+#              then every later migration over those rows; the three must
+#              still name the item's unit, and the unit its factor.
 #   the stack  the job's own replay (the local-stack action), the database
 #              assets/instance/contract.txt is read from.
 #
@@ -77,6 +80,8 @@ SEED=supabase/restore/archive_seed.sql
 STAGE_SEED=supabase/restore/archive_seed_0689.sql
 STOCK_AT="${STOCK_AT:-0747}"
 STOCK_SEED=supabase/restore/archive_seed_0747.sql
+UNIT_AT="${UNIT_AT:-0960}"
+UNIT_SEED=supabase/restore/archive_seed_0960.sql
 KNOWN="$HERE/upgrade_equivalence_known.txt"
 OUT="${EQUIV_OUT:-}"
 if [ -z "$OUT" ]; then
@@ -151,7 +156,7 @@ for f in supabase/migrations/*.sql; do emit "$f"; done | run_stream "$FRESH" fre
 [ "$(marker "$FRESH")" = "$latest" ] || fail "fresh: the marker reads '$(marker "$FRESH")', not $latest"
 say "$count migrations, marker $latest ($((SECONDS - t))s)"
 
-echo "--- upgraded: an archive at $BASELINE, in-flight work at $STAGE_AT, goods at $STOCK_AT, then the rest over them"
+echo "--- upgraded: an archive at $BASELINE, in-flight work at $STAGE_AT, goods at $STOCK_AT, unit names at $UNIT_AT, then the rest over them"
 t=$SECONDS
 {
   for f in supabase/migrations/*.sql; do
@@ -169,7 +174,12 @@ t=$SECONDS
   done
   emit "$STOCK_SEED"
   for f in supabase/migrations/*.sql; do
-    [ "$(version_of "$f")" -gt "$((10#$STOCK_AT))" ] && emit "$f"
+    v="$(version_of "$f")"
+    [ "$v" -gt "$((10#$STOCK_AT))" ] && [ "$v" -le "$((10#$UNIT_AT))" ] && emit "$f"
+  done
+  emit "$UNIT_SEED"
+  for f in supabase/migrations/*.sql; do
+    [ "$(version_of "$f")" -gt "$((10#$UNIT_AT))" ] && emit "$f"
   done
   true
 } | run_stream "$UPGRADED" upgraded
@@ -180,6 +190,21 @@ rows="$(psq "$UPGRADED" -At -c "select (select count(*) from public.invoices) ||
   || (select count(*) from public.invoice_transmissions) || ' transmissions, '
   || (select count(*) from public.stock_movements) || ' stock movements'")"
 say "the same $count migrations, over $rows; marker $latest ($((SECONDS - t))s)"
+# #4499 -- the barcode, the supplier's article and the tag on 'Box of 6' (archive_seed_0960.sql) each name the unit the
+# item holds after the upgrade, that unit is one of the business's, and it is still 6 pieces.
+units="$(psq "$UPGRADED" -At -F ' | ' -c "
+  select coalesce(u.unit, '-'), coalesce(u.factor_num || '/' || u.factor_den, '-'),
+         coalesce((select w.code from public.workspace_units w where w.workspace_id = u.workspace_id and w.code = u.unit), '-'),
+         coalesce((select c.unit from public.item_codes c where c.code = 'WATER-BOX6'), '-'),
+         coalesce((select m.purchase_unit from public.supplier_item_mappings m where m.article_ref = 'SPR-6'), '-'),
+         coalesce((select g.unit_code from public.stock_tags g where g.code = 'E28011606000020000004499'), '-')
+    from public.item_units u
+   where u.item_id = '00000000-0000-4000-8000-0000000a0501' and u.factor_num = 6 and u.factor_den = 1")"
+say "the unit 'Box of 6' after the upgrade (item unit | factor | business unit | barcode | supplier article | tag): $units"
+read -r u_unit _ u_factor _ u_business _ u_code _ u_mapping _ u_tag <<< "$units"
+[ "$u_unit" != "" ] && [ "$u_factor" = "6/1" ] && [ "$u_business" = "$u_unit" ] \
+  && [ "$u_code" = "$u_unit" ] && [ "$u_mapping" = "$u_unit" ] && [ "$u_tag" = "$u_unit" ] \
+  || fail "upgraded: a row that named the item's unit 'Box of 6' no longer names the unit the item holds ($units)"
 
 echo "--- what each installation is"
 print_of() { # <db> <file>

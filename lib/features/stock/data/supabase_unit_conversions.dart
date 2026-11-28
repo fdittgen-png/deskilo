@@ -20,7 +20,7 @@ class SupabaseUnitConversions implements UnitConversions {
       'unit_conversions',
       () => _client
           .from('unit_conversions')
-          .select('from_unit, to_unit, factor_num, factor_den')
+          .select('from_unit, to_unit, factor_num, factor_den, authored, needs_review')
           .eq('workspace_id', workspaceId)
           .order('from_unit', ascending: true)
           .order('to_unit', ascending: true),
