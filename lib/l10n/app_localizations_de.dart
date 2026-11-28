@@ -28610,6 +28610,15 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String purchaseOrderMailTextTo(
+    String reference,
+    String space,
+    String contact,
+  ) {
+    return 'Guten Tag $contact,\n\nanbei unsere Bestellung $reference.\n\nMit freundlichen Grüßen\n$space';
+  }
+
+  @override
   String get purchaseOrderMarkSent => 'Als gesendet markieren';
 
   @override

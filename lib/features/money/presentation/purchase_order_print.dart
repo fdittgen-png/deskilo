@@ -18,7 +18,9 @@ import '../../../core/ui/print_or_retry.dart';
 import '../domain/invoice_report.dart';
 import '../domain/purchase_order.dart';
 import '../domain/purchase_order_report.dart';
+import '../domain/supplier_contact.dart';
 import '../providers/supplier_providers.dart';
+import 'screens/money_view_data.dart';
 import 'invoice_document_locale.dart';
 import 'invoice_documents.dart';
 import 'report_actions.dart';
@@ -33,9 +35,20 @@ class PurchaseOrderPrint {
 
   DocumentLocale get _locale => businessDocumentLocale(ref);
 
+  /// #4518 -- the supplier's preferred purchasing contact, when the contacts are on and one has an address; a failed read names none.
+  Future<SupplierContact?> _contact(String workspaceId, String? supplierId) async {
+    if (supplierId == null || !MoneyViewData.gates(ref).supplierContactsOn) return null;
+    try {
+      final all = await ref.read(supplierContactsProvider((workspaceId: workspaceId, supplierId: supplierId)).future);
+      return all.where((c) => c.preferred && !c.retired).firstOrNull;
+    } on Object {
+      return null; // the order is written without a contact, as before
+    }
+  }
+
   /// The data and the rendered bands of [order] under [letterhead]; null
   /// once the screen is gone.
-  Future<({Map<String, Object?> data, InvoiceReport rendered, String title})?>
+  Future<({Map<String, Object?> data, InvoiceReport rendered, String title, String contact})?>
   _document(
     String workspaceId,
     PurchaseOrder order,
@@ -48,6 +61,8 @@ class PurchaseOrderPrint {
     // business's document language and its country's conventions, whoever
     // prints it.
     final locale = _locale;
+    final contact = await _contact(workspaceId, order.supplierId);
+    if (!context.mounted) return null;
     final l10n = l10nForLanguage(locale.language);
     final money = moneyFormat(order.currency, locale: locale.formatLocale);
     final day = DateFormat.yMMMd(locale.language);
@@ -62,6 +77,7 @@ class PurchaseOrderPrint {
       ),
       issued: ref.read(clockProvider).now(),
       issuedBy: letterhead.name,
+      contactName: contact?.name ?? '',
       letterhead: {
         'workspace': letterhead.name,
         'workspace_address': letterhead.address,
@@ -77,6 +93,7 @@ class PurchaseOrderPrint {
         language: locale.language,
       ),
       title: l10n.reportDocPurchaseOrderTitle(order.reference),
+      contact: contact?.name ?? '',
     );
   }
 
@@ -133,9 +150,10 @@ class PurchaseOrderPrint {
     final doc = await _document(workspaceId, order, letterhead);
     if (doc == null || !context.mounted) return null;
     final pdf = await _pdf(order, doc);
+    final who = doc.contact;
     return (
       subject: doc.title,
-      text: l10n.purchaseOrderMailText(order.reference, letterhead.name),
+      text: who.isEmpty ? l10n.purchaseOrderMailText(order.reference, letterhead.name) : l10n.purchaseOrderMailTextTo(order.reference, letterhead.name, who),
       pdfBase64: base64Encode(pdf.bytes),
       fileName: pdf.fileName,
     );

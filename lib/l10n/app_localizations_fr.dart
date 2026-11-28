@@ -28653,6 +28653,15 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String purchaseOrderMailTextTo(
+    String reference,
+    String space,
+    String contact,
+  ) {
+    return 'Bonjour $contact,\n\nVeuillez trouver ci-joint notre bon de commande $reference.\n\nCordialement,\n$space';
+  }
+
+  @override
   String get purchaseOrderMarkSent => 'Marquer comme envoyée';
 
   @override

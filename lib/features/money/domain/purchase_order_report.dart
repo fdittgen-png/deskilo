@@ -27,6 +27,7 @@ Map<String, Object?> purchaseOrderReportData(
   required DateTime issued,
   required String issuedBy,
   Map<String, Object?> letterhead = const {},
+  String contactName = '',
 }) => {
   ...letterhead,
   'number': order.reference,
@@ -38,6 +39,8 @@ Map<String, Object?> purchaseOrderReportData(
   },
   'client_name': supplier?.name ?? order.supplierName,
   'client_address': [
+    // #4518 -- the preferred purchasing contact, named first, where the supplier has one.
+    contactName,
     if (supplier != null) ...[
       supplier.street,
       // #3649 -- in the order of the supplier's country.

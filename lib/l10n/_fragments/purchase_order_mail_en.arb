@@ -85,5 +85,20 @@
   "businessMailSenderWhere": "E-mail sending, in the business settings",
   "@businessMailSenderWhere": {
     "description": "#3673 the business's one e-mail sender"
+  },
+  "purchaseOrderMailTextTo": "Hello {contact},\n\nPlease find attached our purchase order {reference}.\n\nKind regards,\n{space}",
+  "@purchaseOrderMailTextTo": {
+    "description": "#4518 purchase order e-mail to the preferred contact",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "space": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -14,5 +14,20 @@
   "purchaseOrderMailKeyKept": "Une clé est enregistrée. Laissez vide pour la garder ; elle n’est plus jamais affichée.",
   "purchaseOrderMailInvalid": "Une adresse d’expédition, un nom sans < > ni guillemets, et au premier enregistrement la clé d’API",
   "businessMailSenderSubtitle": "L'expéditeur de vos bons de commande et de vos relances par e-mail",
-  "businessMailSenderWhere": "Envoi d'e-mails, dans les paramètres de l'entreprise"
+  "businessMailSenderWhere": "Envoi d'e-mails, dans les paramètres de l'entreprise",
+  "purchaseOrderMailTextTo": "Bonjour {contact},\n\nVeuillez trouver ci-joint notre bon de commande {reference}.\n\nCordialement,\n{space}",
+  "@purchaseOrderMailTextTo": {
+    "description": "#4518 purchase order e-mail to the preferred contact",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "space": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      }
+    }
+  }
 }

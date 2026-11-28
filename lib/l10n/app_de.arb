@@ -16140,6 +16140,21 @@
   "purchaseOrderMailSenderName": "Absendername",
   "purchaseOrderMailSettings": "E-Mail-Versand",
   "purchaseOrderMailText": "Guten Tag,\n\nanbei finden Sie unsere Bestellung {reference}.\n\nMit freundlichen Grüßen\n{space}",
+  "purchaseOrderMailTextTo": "Guten Tag {contact},\n\nanbei unsere Bestellung {reference}.\n\nMit freundlichen Grüßen\n{space}",
+  "@purchaseOrderMailTextTo": {
+    "description": "#4518 purchase order e-mail to the preferred contact",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "space": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
   "purchaseOrderMarkSent": "Als gesendet markieren",
   "purchaseOrderNeedsDescription": "Geben Sie an, was bestellt wird, oder wählen Sie einen Artikel",
   "purchaseOrderNeedsPrice": "Ein Stückpreis, 0 oder mehr",

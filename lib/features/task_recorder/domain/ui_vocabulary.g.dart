@@ -6102,6 +6102,7 @@ const List<String> uiKeyPatterns = [
   'public-workspace-service-{}',
   'public-workspace-view-open-{}',
   'purchase-claim-{}',
+  'purchase-due-proposed-{}',
   'purchase-line-{}',
   'purchase-link-inbox-{}',
   'purchase-order-arrived-{}',
