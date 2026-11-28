@@ -13,6 +13,7 @@
 #include "cJSON.h"
 #include "cfg.h"
 #include "pay_logic.h"
+#include "layout_keys.h"
 #include "text_copy.h"
 #include "esp_crt_bundle.h"
 #include "esp_event.h"
@@ -173,9 +174,32 @@ bool api_sign_in(char *why, int cap) {
     return ok;
 }
 
+// #4508 -- the item keys of the till's published layout (#4448), in their order; 0 when the till has none (no layout,
+// the layouts switched off, or not readable), and the board then offers the products as before.
+static int layout_items(char ids[][40], int max) {
+    if (!g_cfg.till[0]) return 0;
+    char path[200];
+    snprintf(path, sizeof path, "/rest/v1/till_layouts?select=layout,version&till_id=eq.%s&status=eq.published&limit=1", g_cfg.till);
+    if (http(HTTP_METHOD_GET, path, NULL, true) != 200) return 0;
+    cJSON *j = cJSON_Parse(s_resp);
+    const cJSON *row = cJSON_GetArrayItem(j, 0), *v = cJSON_GetObjectItem(row, "version");
+    int n = layout_item_ids(cJSON_GetObjectItem(row, "layout"), ids, max);
+    if (n > 0) trace("layout v%d: %d item keys", cJSON_IsNumber(v) ? v->valueint : 0, n);
+    cJSON_Delete(j);
+    return n;
+}
+
 int api_products(product_t *out, int max, char *why, int cap) {
-    char path[320];
-    snprintf(path, sizeof path, "/rest/v1/services?select=id,name,price_cents&workspace_id=eq.%s&active=eq.true&sellable=eq.true&order=sort_order.asc.nullslast,name.asc&limit=%d", g_cfg.workspace, max);
+    char ids[MAX_PRODUCTS][40];
+    int keys = layout_items(ids, max < MAX_PRODUCTS ? max : MAX_PRODUCTS);
+    static char path[720];   // the item ids of a layout's keys: up to 8 uuids
+    if (keys > 0) {
+        int at = snprintf(path, sizeof path, "/rest/v1/services?select=id,name,price_cents&workspace_id=eq.%s&active=eq.true&sellable=eq.true&id=in.(", g_cfg.workspace);
+        for (int i = 0; i < keys; i++) at += snprintf(path + at, sizeof path - at, "%s%s", i ? "," : "", ids[i]);
+        snprintf(path + at, sizeof path - at, ")&limit=%d", max);
+    } else {
+        snprintf(path, sizeof path, "/rest/v1/services?select=id,name,price_cents&workspace_id=eq.%s&active=eq.true&sellable=eq.true&order=sort_order.asc.nullslast,name.asc&limit=%d", g_cfg.workspace, max);
+    }
     int st = http(HTTP_METHOD_GET, path, NULL, true);
     if (st != 200) { say(why, cap, T(S_WHY_PRODUCTS), st); return -1; }
     cJSON *j = cJSON_Parse(s_resp);
@@ -199,6 +223,16 @@ int api_products(product_t *out, int max, char *why, int cap) {
         n++;
     }
     cJSON_Delete(j);
+    // #4508 -- the layout's order, not the server's: a key whose item is no longer sold is left out
+    if (keys > 0) {
+        product_t sorted[MAX_PRODUCTS];
+        int m = 0;
+        for (int i = 0; i < keys; i++)
+            for (int k2 = 0; k2 < n; k2++)
+                if (!strcmp(out[k2].id, ids[i])) { sorted[m++] = out[k2]; break; }
+        memcpy(out, sorted, sizeof sorted[0] * m);
+        n = m;
+    }
     return n;
 }
 
