@@ -137,6 +137,22 @@ Deno.test("a board's command acts only on its own till's receipts: a finalize go
   }
 });
 
+Deno.test("the board reads its lease's till only: the catalogue and the roll carry the lease's till", async () => {
+  for (const [op, args, fn, body] of [
+    ["catalogue", { max: 8 }, "counter_board_catalogue_v1", `{"p_workspace_id":"${WS}","p_till_id":"${TILL}","p_max":8}`],
+    ["roll", {}, "counter_board_open_draft_v1", `{"p_workspace_id":"${WS}","p_till_id":"${TILL}"}`],
+  ] as const) {
+    const d = deps(await lease(), { status: 200, text: "null" });
+    const res = await handle(post(command(op, args)), d.deps);
+    assertEquals((await res.json()).ok, true, op);
+    assertEquals([d.restCalls[0].fn, d.restCalls[0].body], [fn, body], op);
+  }
+  for (const bad of [command("catalogue", { max: 0 }), command("catalogue", { max: 33 }), command("roll", { till_id: TILL })]) {
+    const d = deps(await lease());
+    assertEquals((await (await handle(post(bad), d.deps)).json()).reason, "protocol_unsupported", bad);
+  }
+});
+
 Deno.test("the board names no workspace, no till and no function: anything else is no command", async () => {
   for (
     const bad of [

@@ -66,6 +66,9 @@ export const COMMANDS: Record<string, { fn: string; args: readonly string[] }> =
   // receipt (a void, a reprint) joins the same way.
   draft: { fn: "counter_board_receipt_draft_v1", args: ["request_id", "receipt_id", "expected_revision", "lines"] },
   finalize: { fn: "counter_board_receipt_finalize_v1", args: ["request_id", "receipt_id", "expected_revision", "tenders"] },
+  // #4519 -- what the board reads, of its lease's till only (1004)
+  catalogue: { fn: "counter_board_catalogue_v1", args: ["max"] },
+  roll: { fn: "counter_board_open_draft_v1", args: [] },
 };
 
 /** The largest command a board sends: a basket of its lines. Enrollment stays at [MAX_BODY_BYTES]. */
@@ -191,6 +194,7 @@ function commandArgs(op: string, args: ExactValue | undefined): Record<string, E
     if (key === "request_id" && !(typeof v === "string" && UUID.test(v))) return null;
     if (key === "receipt_id" && !(v === null || v === undefined || (typeof v === "string" && UUID.test(v)))) return null;
     if (key === "expected_revision" && !(v === null || v === undefined || (asI64(v) !== null && (v as bigint) >= 0n))) return null;
+    if (key === "max" && !(v === undefined || (asI64(v) !== null && (v as bigint) >= 1n && (v as bigint) <= 32n))) return null;
     if ((key === "lines" || key === "tenders") && !Array.isArray(v)) return null;
     if (v !== undefined) out[key] = v;
   }
@@ -321,6 +325,11 @@ async function command(body: { [key: string]: ExactValue }, deps: Deps): Promise
     call.p_receipt_id = given.receipt_id ?? null;
     call.p_expected_revision = given.expected_revision ?? null;
     call.p_lines = given.lines;
+  } else if (op === "catalogue") {
+    call.p_till_id = str(data.till_id);
+    call.p_max = given.max ?? null;
+  } else if (op === "roll") {
+    call.p_till_id = str(data.till_id);
   } else if (op === "finalize") {
     call.p_till_id = str(data.till_id);
     call.p_request_id = given.request_id;
@@ -329,7 +338,7 @@ async function command(body: { [key: string]: ExactValue }, deps: Deps): Promise
     call.p_tenders = given.tenders;
   }
   logLine("info", "embedded-till", "command", { op, terminal: str(data.terminal_id), member: str(data.member_id) });
-  return await forward(COMMANDS[op].fn, stringifyExact(call), bearer, deps.rest, op !== "readiness");
+  return await forward(COMMANDS[op].fn, stringifyExact(call), bearer, deps.rest, op === "draft" || op === "finalize");
 }
 
 /** The till's function called as the cashier; its answer passed on exactly. A refusal keeps its code and detail; a
