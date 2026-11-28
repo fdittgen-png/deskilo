@@ -20,8 +20,10 @@ name: Tools · Database preview
 #   gh workflow run db-preview.yml --ref <branch>
 #
 # It uploads the contract and the policy list the replay produced, ready to
-# commit, and fails when a check failed. It gates nothing: the Quality run
-# stays the gate, and its database job is unchanged.
+# commit, and fails when a check failed. With `files: true` a contract or a
+# policy list that only needs committing does not fail it (27 Nov 2026: the
+# lanes ran it for the files alone, and every such run ended red). It gates
+# nothing: the Quality run stays the gate, and its database job is unchanged.
 on:
   workflow_dispatch:
     inputs:
@@ -32,6 +34,16 @@ on:
           prove a two-session script in minutes instead of a full quality round.
         required: false
         default: ''
+      files:
+        description: >-
+          Only produce the files to commit: a contract or a policy list that
+          differs from the committed one is reported as "to commit" and handed
+          over in the artifact, without failing the run. A failed replay or a
+          failed database test still fails it. For a branch whose anchored
+          patches the contract cannot be predicted for.
+        type: boolean
+        required: false
+        default: false
 
 concurrency:
   group: db-preview-${{ github.ref }}
@@ -149,4 +161,5 @@ jobs:
           POLICIES: ${{ steps.policies.outcome }}
           CONTRACT: ${{ steps.contract.outcome }}
           PGTAP: ${{ steps.pgtap.outcome }}
+          FILES: ${{ inputs.files }}
         run: bash scripts/db_preview_verdict.sh
