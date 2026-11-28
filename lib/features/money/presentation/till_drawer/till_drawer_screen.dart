@@ -3,6 +3,7 @@
 // #4367 (CS5) -- the cash drawer of the tills: every till with its state, the session open on it (its float and, to
 // someone who may see it, the cash it should hold), the doors to open it, to record cash paid in or out, and to count and
 // close it. The expected cash is the server's: while the drawer is counted blind the counter is not given it.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show tillCashValues;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -137,7 +138,7 @@ class _TillCard extends ConsumerWidget {
     final closed = await showCloseTillSheet(
       context,
       ref.read(tillDrawerCommandsProvider(workspaceId)),
-      CloseSheetInput(session: session, tillName: till.name, currency: currency, byDenomination: settings.byDenomination, expected: expected),
+      CloseSheetInput(session: session, tillName: till.name, currency: currency, byDenomination: settings.byDenomination, expected: expected, values: tillCashValues(currency, till.denominations)),
     );
     if (closed != null && context.mounted) await showDrawerClosedDialog(context, closed, currency: currency);
   }
@@ -175,7 +176,7 @@ class _TillCard extends ConsumerWidget {
                     key: ValueKey('drawer-edit-${till.id}'),
                     tooltip: l10n.tillDrawerEditTill,
                     icon: const Icon(Icons.edit_outlined),
-                    onPressed: () => showTillEditSheet(context, ref.read(tillDrawerCommandsProvider(workspaceId)), till: till),
+                    onPressed: () => showTillEditSheet(context, ref.read(tillDrawerCommandsProvider(workspaceId)), till: till, currency: currency),
                   ),
               ],
             ),

@@ -178,6 +178,15 @@ List<int> cashValuesOf(String currency) {
   return out;
 }
 
+/// #4511 -- the notes of [currency], smallest first; empty for a currency the reference does not list.
+List<int> cashNotesOf(String currency) {
+  final code = currency.trim().toUpperCase();
+  return [
+    for (final d in cashDenominations.reversed)
+      if (d.currency == code && d.form == CashForm.note && d.withdrawnOn == null) d.valueMinor,
+  ];
+}
+
 /// The values a till counts in: its own pick ([picked], null for none) among the currency's, in the currency's order;
 /// a pick that names no current value of the currency is the currency's whole list.
 List<int> tillCashValues(String currency, List<int>? picked) {

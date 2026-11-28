@@ -3148,9 +3148,9 @@ Bisher getestet: die Bytes gegen Referenzdateien und ein lokaler Empfänger. Noc
 
 Sie führen eine Kassenschublade und wollen am Tagesende wissen, dass das Geld darin stimmt.
 
-Öffnen Sie **Kassenschublade** im Verkaufsmenü (es braucht die Funktion Kassensitzungen und das Recht, Rechnungen auszustellen oder die Finanzen zu sehen). Jede Kasse des Betriebs steht mit ihrem Zustand in der Liste. Wer die Standorte verwaltet, legt mit **Kasse hinzufügen** eine Kasse an und kann sie umbenennen oder abschalten.
+Öffnen Sie **Kassenschublade** im Verkaufsmenü (es braucht die Funktion Kassensitzungen und das Recht, Rechnungen auszustellen oder die Finanzen zu sehen). Jede Kasse des Betriebs steht mit ihrem Zustand in der Liste. Wer die Standorte verwaltet, legt mit **Kasse hinzufügen** eine Kasse an und kann sie umbenennen oder abschalten. Im Blatt einer Kasse legt **Scheine und Münzen dieser Kasse** fest, mit welchen sie gezählt wird; eine Schublade ohne 1- und 2-Cent-Münzen etwa listet diese nie auf. Eine Zählung mit einem Schein oder einer Münze, die die Kasse nicht führt, wird abgelehnt.
 
-Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade** ein (oder, wenn Ihr Betrieb nach Stückelung zählt, den Wert jedes Scheins oder jeder Münze und die Anzahl) und bestätigen Sie. Eine Kasse hat jeweils eine offene Sitzung, und mit Kassensitzungen verkauft die Kasse nur auf einer offenen Sitzung: ohne offene Sitzung bietet sie **Kasse öffnen** statt des Verkaufs an.
+Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade** ein (oder, wenn Ihr Betrieb nach Stückelung zählt, die Anzahl jedes Scheins und jeder Münze, die die Kasse auflistet; eine Währung, deren Scheine die App nicht kennt, wird mit dem eingetippten Wert jedes Stücks gezählt) und bestätigen Sie. Eine Kasse hat jeweils eine offene Sitzung, und mit Kassensitzungen verkauft die Kasse nur auf einer offenen Sitzung: ohne offene Sitzung bietet sie **Kasse öffnen** statt des Verkaufs an.
 
 **Einlage oder Entnahme** erfasst Bargeld, das in die Schublade gelegt oder entnommen wird, mit einem **Grund** aus der Liste Ihres Betriebs. Eine Entnahme über dem Limit des Betriebs erfasst, wer ausgehende Zahlungen erfassen darf.
 

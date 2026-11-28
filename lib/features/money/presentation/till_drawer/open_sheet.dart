@@ -2,6 +2,7 @@
 //
 // #4367 -- opening a till: the float the drawer starts with, typed as a total or, when the business counts by
 // denomination, row by row. The server refuses a till that is already open or a count that does not add up.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show tillCashValues;
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/format_controller.dart';
@@ -25,7 +26,7 @@ Future<bool> showOpenTillSheet(
   final l10n = context.l10n;
   final format = appFormatOf(context);
   final fields = FormControllers();
-  final rows = DenominationRows();
+  final rows = DenominationRows(values: tillCashValues(currency, till.denominations)); // #4511 the till's notes and coins
   final intent = SameIntent();
   int? typed() => format.readAmount(fields.text('amount'), currency: currency, allowNegative: false).minor;
   Denominations? counted() => byDenomination ? rows.read(context) : null;

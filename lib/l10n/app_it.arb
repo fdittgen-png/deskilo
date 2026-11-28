@@ -24533,6 +24533,8 @@
   "tillDrawerTillActive": "In uso",
   "tillDrawerTillName": "Nome della cassa",
   "tillDrawerTillNewTitle": "Nuova cassa",
+  "tillDrawerTillNotes": "Banconote e monete di questo cassetto",
+  "tillDrawerTillNotesHint": "Il cassetto viene contato con queste. Nessuna disattivata: tutte quelle della valuta.",
   "tillDrawerTillSave": "Salvare la cassa",
   "tillDrawerTitle": "Cassetto di cassa",
   "tillFailed": "La cassa non ha potuto eseguirlo. Riprovi.",

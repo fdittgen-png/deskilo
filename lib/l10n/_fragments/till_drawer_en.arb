@@ -656,5 +656,13 @@
         "type": "String"
       }
     }
+  },
+  "tillDrawerTillNotes": "Notes and coins in this drawer",
+  "tillDrawerTillNotesHint": "The drawer is counted in these. None switched off: all of the currency's.",
+  "@tillDrawerTillNotes": {
+    "description": "#4511 the section of the till sheet listing the notes and coins its drawer carries"
+  },
+  "@tillDrawerTillNotesHint": {
+    "description": "#4511 under the till notes and coins section"
   }
 }

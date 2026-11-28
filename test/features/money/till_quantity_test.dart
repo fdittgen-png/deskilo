@@ -26,6 +26,8 @@ void main() {
     expect(tillCashSuggestions(210, minorDigits: 2), [210, 300, 400, 500]);
     // a currency without decimals steps in its own whole units
     expect(tillCashSuggestions(1340, minorDigits: 0), [1340, 1350, 1400, 1500]);
+    // #4511 -- with the currency's notes, the total rounded up to each note
+    expect(tillCashSuggestions(1340, minorDigits: 2, notes: const [500, 1000, 2000, 5000]), [1340, 1500, 2000, 5000]);
     expect(tillCashSuggestions(0, minorDigits: 2), isEmpty);
   });
 }

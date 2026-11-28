@@ -112,5 +112,7 @@
   "settingUnitCells": "celdas",
   "settingLabelCounterMaxDiscount": "Descuento máximo en la caja",
   "settingHintCounterMaxDiscount": "El descuento máximo, en porcentaje, que un cajero puede aplicar a una línea de caja. 0 significa ningún descuento en la caja.",
-  "tillDayDepositsReturned": "Envases devueltos: {amount}"
+  "tillDayDepositsReturned": "Envases devueltos: {amount}",
+  "tillDrawerTillNotes": "Billetes y monedas de este cajón",
+  "tillDrawerTillNotesHint": "El cajón se cuenta con estos. Ninguno desactivado: todos los de la moneda."
 }
