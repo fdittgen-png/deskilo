@@ -435,6 +435,15 @@ constraint counter_cash_entries.counter_cash_entries_workspace_id_recorded_by_me
 constraint counter_cash_entries.counter_cash_entries_workspace_id_session_id_fkey FOREIGN KEY (workspace_id, session_id) REFERENCES counter_till_sessions(workspace_id, id)
 constraint counter_cash_entries.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint counter_cash_entries.system_company_present CHECK ((company_id IS NOT NULL))
+constraint counter_cash_reasons.counter_cash_reasons_check CHECK ((builtin = (name IS NULL)))
+constraint counter_cash_reasons.counter_cash_reasons_code_check CHECK ((code ~ '^[a-z0-9_]{1,40}$'::text))
+constraint counter_cash_reasons.counter_cash_reasons_name_check CHECK (((name IS NULL) OR ((char_length(btrim(name)) >= 1) AND (char_length(btrim(name)) <= 60))))
+constraint counter_cash_reasons.counter_cash_reasons_pkey PRIMARY KEY (id)
+constraint counter_cash_reasons.counter_cash_reasons_processes_check CHECK ((((cardinality(processes) >= 1) AND (cardinality(processes) <= 3)) AND (processes <@ ARRAY['paid_in'::text, 'paid_out'::text, 'count_difference'::text])))
+constraint counter_cash_reasons.counter_cash_reasons_workspace_id_code_key UNIQUE (workspace_id, code)
+constraint counter_cash_reasons.counter_cash_reasons_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint counter_cash_reasons.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint counter_cash_reasons.system_company_present CHECK ((company_id IS NOT NULL))
 constraint counter_country_operations.counter_country_operations_check CHECK (((outcome = 'unavailable'::text) OR (adapter IS NOT NULL)))
 constraint counter_country_operations.counter_country_operations_check1 CHECK (((outcome = 'supported'::text) OR (reason <> ''::text)))
 constraint counter_country_operations.counter_country_operations_country_code_check CHECK ((country_code ~ '^[A-Z]{2}$'::text))
@@ -3348,7 +3357,12 @@ routine public.cost_allocation_rule_json(r bi_cost_allocation_rules) -> jsonb | 
 routine public.cost_allocation_rules_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:789cffb7df60
 routine public.counter_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:66c1d614d21a
 routine public.counter_adapters() -> text[] | function | invoker | immutable | exec:service_role | body:eea3a873b58c
-routine public.counter_cash_entry_v1(p_workspace_id uuid, p_request_id uuid, p_session_id uuid, p_kind text, p_amount_minor bigint, p_reason text, p_purchase_document_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:717b11c0e3ac
+routine public.counter_cash_entries_reason() -> trigger | function | definer | volatile | exec:service_role | body:e85dc5f68e6b
+routine public.counter_cash_entry_v1(p_workspace_id uuid, p_request_id uuid, p_session_id uuid, p_kind text, p_amount_minor bigint, p_reason text, p_purchase_document_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:42339a6f0eda
+routine public.counter_cash_reason_active(p_workspace_id uuid, p_code text, p_process text) -> boolean | function | definer | stable | exec:service_role | body:e5b089ec5b57
+routine public.counter_cash_reason_save_v1(p_workspace_id uuid, p_code text, p_name text, p_processes text[], p_sort_order integer, p_archived boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:714a8ff3dcc2
+routine public.counter_cash_reasons_builtin() -> TABLE(code text, processes text[], sort_order integer) | function | invoker | immutable | exec:service_role | body:3684a2d09de7
+routine public.counter_cash_reasons_seed(p_workspace_id uuid, p_words text) -> void | function | definer | volatile | exec:service_role | body:d357d6c4b2c1
 routine public.counter_count_refusal(p_till counter_tills, p_counted jsonb, p_stored jsonb) -> bigint | function | definer | stable | exec:service_role | body:b002311fd1e8
 routine public.counter_day_close_v1(p_workspace_id uuid, p_request_id uuid, p_site_id uuid, p_business_date date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:574e10fa7ef5
 routine public.counter_day_report_v1(p_workspace_id uuid, p_day_close_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e7ad269ace0
@@ -3395,6 +3409,7 @@ routine public.counter_till_frozen_guard() -> trigger | function | invoker | vol
 routine public.counter_till_or_finance_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:f0e35724ff78
 routine public.counter_till_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_site_id uuid, p_active boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:98c2a4d6aa78
 routine public.counter_till_sessions_counted_in_till() -> trigger | function | definer | volatile | exec:service_role | body:620eb58c9a98
+routine public.counter_till_sessions_difference_reason() -> trigger | function | definer | volatile | exec:service_role | body:60e63a4fd66d
 routine public.country_papers(p_country text, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:e88ec4f4583e
 routine public.courtesy_word(p_code text, p_lang text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:6ee8d303b265
 routine public.create_account_group(p_title text, p_users uuid[], p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8824f7fdaaa1
@@ -4635,7 +4650,7 @@ routine public.setup_current_levels(p_flags jsonb, p_country text) -> jsonb | fu
 routine public.setup_hours_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4f359045c81a
 routine public.setup_invitation_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:5852379a5e56
 routine public.setup_level_arguments() -> text[] | function | invoker | immutable | exec:service_role | body:7f746fc5ea32
-routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:ce6fe88d8958
+routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:f2fa844ee9d6
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
 routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c01c658a9993
 routine public.setup_member_rights_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fa33dc1d0dfa
@@ -4998,6 +5013,7 @@ routine public.workspace_units_relink() -> trigger | function | definer | volati
 routine public.workspace_units_seed(p_workspace_id uuid) -> void | function | definer | volatile | exec:service_role | body:4dc6ea73cb44
 routine public.workspace_units_seed_trigger() -> trigger | function | definer | volatile | exec:service_role | body:856d2cbe5a46
 routine public.workspaces_administrator_role() -> trigger | function | definer | volatile | exec:service_role | body:7826864bdda3
+routine public.workspaces_cash_reasons_seed() -> trigger | function | definer | volatile | exec:service_role | body:5717d0edd480
 routine public.workspaces_delegated_columns() -> trigger | function | invoker | volatile | exec:service_role | body:62d32635919b
 routine public.workspaces_einvoice_address() -> trigger | function | definer | volatile | exec:service_role | body:1809b78de6b6
 routine public.workspaces_hosted_here() -> trigger | function | definer | volatile | exec:service_role | body:80161ebd0ca7
@@ -5080,8 +5096,10 @@ trigger conversation_participants.customer_subject_refused CREATE TRIGGER custom
 trigger conversation_participants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversation_participants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger conversations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_cash_entries.counter_cash_entries_frozen CREATE TRIGGER counter_cash_entries_frozen BEFORE DELETE OR UPDATE ON public.counter_cash_entries FOR EACH ROW EXECUTE FUNCTION counter_till_frozen_guard()
+trigger counter_cash_entries.counter_cash_entries_reason CREATE TRIGGER counter_cash_entries_reason BEFORE INSERT ON public.counter_cash_entries FOR EACH ROW EXECUTE FUNCTION counter_cash_entries_reason()
 trigger counter_cash_entries.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_cash_entries FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_cash_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_cash_entries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger counter_cash_reasons.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_cash_reasons FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_country_operations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_country_operations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_day_closes.counter_day_closes_frozen CREATE TRIGGER counter_day_closes_frozen BEFORE DELETE OR UPDATE ON public.counter_day_closes FOR EACH ROW EXECUTE FUNCTION counter_till_frozen_guard()
 trigger counter_day_closes.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_day_closes FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
@@ -5106,6 +5124,7 @@ trigger counter_tenders.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_tr
 trigger counter_tenders.posted_site_kept CREATE TRIGGER posted_site_kept BEFORE UPDATE ON public.counter_tenders FOR EACH ROW WHEN ((old.site_id IS DISTINCT FROM new.site_id)) EXECUTE FUNCTION posted_site_kept()
 trigger counter_tenders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_tenders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_till_sessions.counter_till_sessions_counted_in_till CREATE TRIGGER counter_till_sessions_counted_in_till BEFORE INSERT OR UPDATE OF float_denominations, counted_denominations ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION counter_till_sessions_counted_in_till()
+trigger counter_till_sessions.counter_till_sessions_difference_reason CREATE TRIGGER counter_till_sessions_difference_reason BEFORE INSERT OR UPDATE OF difference_reason ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION counter_till_sessions_difference_reason()
 trigger counter_till_sessions.counter_till_sessions_frozen CREATE TRIGGER counter_till_sessions_frozen BEFORE DELETE OR UPDATE ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION counter_till_frozen_guard()
 trigger counter_till_sessions.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_till_sessions FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_till_sessions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -5634,6 +5653,7 @@ trigger workspaces.retire_invite_code CREATE TRIGGER retire_invite_code AFTER UP
 trigger workspaces.stamp_accessory_supplements_since CREATE TRIGGER stamp_accessory_supplements_since BEFORE UPDATE OF feature_flags ON public.workspaces FOR EACH ROW EXECUTE FUNCTION stamp_accessory_supplements_since()
 trigger workspaces.workspace_document_language_confirm CREATE TRIGGER workspace_document_language_confirm BEFORE UPDATE OF default_locale ON public.workspaces FOR EACH ROW WHEN (((old.document_language_confirmed IS FALSE) AND (NOT (new.document_language_confirmed IS DISTINCT FROM old.document_language_confirmed)))) EXECUTE FUNCTION workspace_document_language_confirm()
 trigger workspaces.workspaces_administrator_role CREATE TRIGGER workspaces_administrator_role AFTER INSERT ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_administrator_role()
+trigger workspaces.workspaces_cash_reasons_seed CREATE TRIGGER workspaces_cash_reasons_seed AFTER INSERT ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_cash_reasons_seed()
 trigger workspaces.workspaces_delegated_columns CREATE TRIGGER workspaces_delegated_columns BEFORE UPDATE ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_delegated_columns()
 trigger workspaces.workspaces_einvoice_address CREATE TRIGGER workspaces_einvoice_address BEFORE INSERT OR UPDATE OF invoice_legal ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_einvoice_address()
 trigger workspaces.workspaces_hosted_here CREATE TRIGGER workspaces_hosted_here BEFORE INSERT ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_hosted_here()
