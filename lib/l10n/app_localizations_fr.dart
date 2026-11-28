@@ -9536,6 +9536,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get dunningSettingsTitle => 'Règles de relance';
 
   @override
+  String eInvoiceAddressIdentifierRefused(String scheme) {
+    return 'Cet identifiant n’a pas la forme du schéma $scheme.';
+  }
+
+  @override
+  String get eInvoiceAddressSchemeRefused =>
+      'Choisissez le schéma de l’adresse dans la liste.';
+
+  @override
   String get eInvoiceChannelGapBuyerEndpoint =>
       'l’adresse électronique du client (BT-49) sur son profil';
 

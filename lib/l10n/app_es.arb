@@ -5489,6 +5489,8 @@
   "dunningLevels": "Número de niveles de recordatorio",
   "dunningSaved": "Reglas de recordatorio guardadas.",
   "dunningSettingsTitle": "Reglas de recordatorio",
+  "eInvoiceAddressIdentifierRefused": "Este identificador no tiene la forma del esquema {scheme}.",
+  "eInvoiceAddressSchemeRefused": "Elija el esquema de la dirección en la lista.",
   "eInvoiceChannelGapBuyerEndpoint": "la dirección electrónica del cliente (BT-49) en su perfil",
   "@eInvoiceChannelGapBuyerEndpoint": {
     "description": "#2358 channel gap"

@@ -9513,6 +9513,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get dunningSettingsTitle => 'Mahnregeln';
 
   @override
+  String eInvoiceAddressIdentifierRefused(String scheme) {
+    return 'Diese Kennung hat nicht die Form des Schemas $scheme.';
+  }
+
+  @override
+  String get eInvoiceAddressSchemeRefused =>
+      'Wählen Sie das Adressschema aus der Liste.';
+
+  @override
   String get eInvoiceChannelGapBuyerEndpoint =>
       'die elektronische Adresse des Kunden (BT-49) in seinem Profil';
 

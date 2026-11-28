@@ -9494,6 +9494,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get dunningSettingsTitle => 'Regole di sollecito';
 
   @override
+  String eInvoiceAddressIdentifierRefused(String scheme) {
+    return 'Questo identificativo non ha la forma dello schema $scheme.';
+  }
+
+  @override
+  String get eInvoiceAddressSchemeRefused =>
+      'Scegliere lo schema dell’indirizzo dall’elenco.';
+
+  @override
   String get eInvoiceChannelGapBuyerEndpoint =>
       'l’indirizzo elettronico del cliente (BT-49) nel suo profilo';
 

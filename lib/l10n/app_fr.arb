@@ -5489,6 +5489,8 @@
   "dunningLevels": "Nombre de niveaux de relance",
   "dunningSaved": "Règles de relance enregistrées.",
   "dunningSettingsTitle": "Règles de relance",
+  "eInvoiceAddressIdentifierRefused": "Cet identifiant n’a pas la forme du schéma {scheme}.",
+  "eInvoiceAddressSchemeRefused": "Choisissez le schéma de l’adresse dans la liste.",
   "eInvoiceChannelGapBuyerEndpoint": "l’adresse électronique du client (BT-49) sur son profil",
   "@eInvoiceChannelGapBuyerEndpoint": {
     "description": "#2358 channel gap"

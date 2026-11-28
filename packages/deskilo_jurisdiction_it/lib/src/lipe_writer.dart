@@ -37,8 +37,9 @@ const _vpElements = {
   'VP6_2': 'IvaCredito',
 };
 
-/// The codici carica of the schema (`CodiceCaricaDichiarante`).
-const _declarantRoles = {
+/// The codici carica of the schema (`CodiceCaricaDichiarante`), as the host
+/// offers them (#4501).
+const lipeDeclarantRoles = [
   '1',
   '2',
   '3',
@@ -53,7 +54,7 @@ const _declarantRoles = {
   '13',
   '14',
   '15',
-};
+];
 
 /// The LIPE of [context], or a [LipeRefusal] with the code of the first thing
 /// that stops it, in the order the writer always checked them: period, partita
@@ -119,7 +120,7 @@ Map<String, String> _frontespizio(FilingContext context) {
   final role = facts.declarantRole.trim();
   final hasDeclarant = declarantCf.isNotEmpty || role.isNotEmpty;
   if (hasDeclarant &&
-      (_fiscalCode(declarantCf) == null || !_declarantRoles.contains(role))) {
+      (_fiscalCode(declarantCf) == null || !lipeDeclarantRoles.contains(role))) {
     throw const LipeRefusal('declarant');
   }
   return {

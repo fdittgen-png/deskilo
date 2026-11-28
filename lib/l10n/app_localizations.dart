@@ -14973,6 +14973,18 @@ abstract class AppLocalizations {
   /// **'Reminder rules'**
   String get dunningSettingsTitle;
 
+  /// #4501 the identifier does not have the picked scheme's form
+  ///
+  /// In en, this message translates to:
+  /// **'This identifier is not of the {scheme} scheme\'s form.'**
+  String eInvoiceAddressIdentifierRefused(String scheme);
+
+  /// #4501 an e-invoicing address names a scheme not in the list
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the address scheme from the list.'**
+  String get eInvoiceAddressSchemeRefused;
+
   /// #2358 channel gap
   ///
   /// In en, this message translates to:

@@ -12496,6 +12496,19 @@
   "@dunningSettingsTitle": {
     "description": "Mahnwesen / reminder letters (#472)"
   },
+  "eInvoiceAddressIdentifierRefused": "This identifier is not of the {scheme} scheme's form.",
+  "@eInvoiceAddressIdentifierRefused": {
+    "description": "#4501 the identifier does not have the picked scheme's form",
+    "placeholders": {
+      "scheme": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceAddressSchemeRefused": "Pick the address scheme from the list.",
+  "@eInvoiceAddressSchemeRefused": {
+    "description": "#4501 an e-invoicing address names a scheme not in the list"
+  },
   "eInvoiceChannelGapBuyerEndpoint": "the customer’s electronic address (BT-49) on their profile",
   "@eInvoiceChannelGapBuyerEndpoint": {
     "description": "#2358 channel gap"

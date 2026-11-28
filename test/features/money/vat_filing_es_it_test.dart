@@ -16,6 +16,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/jurisdiction/filing_context_builder.dart';
+import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo_jurisdiction_es/deskilo_jurisdiction_es.dart';
@@ -478,17 +479,25 @@ void main() {
       find.byKey(const ValueKey('vat-filing-it-cf')),
       'RSSMRA80A01H501U',
     );
-    await tester.enterText(
-      find.byKey(const ValueKey('vat-filing-it-role')),
-      '1',
+    // #4501 -- the role is picked from the codici carica the file accepts
+    await tester.tap(find.byKey(const ValueKey('vat-filing-it-role')));
+    await tester.pumpAndSettle();
+    expect(
+      find.byType(DropdownMenuItem<String>).evaluate().length,
+      vatFilingOf('IT')!.factChoices['declarantRole']!.length,
     );
+    expect(find.text('10'), findsNothing, reason: 'no codice carica 10');
+    await tester.tap(find.text('15').last);
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('vat-filing-it-ok')));
     await tester.pumpAndSettle();
     expect(saved.keys, ['lipe-2026-07-01.xml']);
+    final xml = utf8.decode(saved.values.single);
     expect(
-      utf8.decode(saved.values.single),
+      xml,
       contains('<iv:CFDichiarante>RSSMRA80A01H501U</iv:CFDichiarante>'),
     );
+    expect(xml, contains('CodiceCaricaDichiarante>15<'));
   });
 
   testWidgets('an Italian space without its codice fiscale is told so', (

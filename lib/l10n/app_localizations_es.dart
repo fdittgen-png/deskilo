@@ -9490,6 +9490,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dunningSettingsTitle => 'Reglas de recordatorio';
 
   @override
+  String eInvoiceAddressIdentifierRefused(String scheme) {
+    return 'Este identificador no tiene la forma del esquema $scheme.';
+  }
+
+  @override
+  String get eInvoiceAddressSchemeRefused =>
+      'Elija el esquema de la dirección en la lista.';
+
+  @override
   String get eInvoiceChannelGapBuyerEndpoint =>
       'la dirección electrónica del cliente (BT-49) en su perfil';
 

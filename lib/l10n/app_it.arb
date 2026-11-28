@@ -5489,6 +5489,8 @@
   "dunningLevels": "Numero di livelli di sollecito",
   "dunningSaved": "Regole di sollecito salvate.",
   "dunningSettingsTitle": "Regole di sollecito",
+  "eInvoiceAddressIdentifierRefused": "Questo identificativo non ha la forma dello schema {scheme}.",
+  "eInvoiceAddressSchemeRefused": "Scegliere lo schema dell’indirizzo dall’elenco.",
   "eInvoiceChannelGapBuyerEndpoint": "l’indirizzo elettronico del cliente (BT-49) nel suo profilo",
   "@eInvoiceChannelGapBuyerEndpoint": {
     "description": "#2358 channel gap"

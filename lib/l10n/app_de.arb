@@ -5489,6 +5489,8 @@
   "dunningLevels": "Anzahl der Mahnstufen",
   "dunningSaved": "Mahnregeln gespeichert.",
   "dunningSettingsTitle": "Mahnregeln",
+  "eInvoiceAddressIdentifierRefused": "Diese Kennung hat nicht die Form des Schemas {scheme}.",
+  "eInvoiceAddressSchemeRefused": "Wählen Sie das Adressschema aus der Liste.",
   "eInvoiceChannelGapBuyerEndpoint": "die elektronische Adresse des Kunden (BT-49) in seinem Profil",
   "@eInvoiceChannelGapBuyerEndpoint": {
     "description": "#2358 channel gap"

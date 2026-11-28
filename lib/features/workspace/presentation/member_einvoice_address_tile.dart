@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show easAddressRefusal;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/einvoice_scheme_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../application/set_member_einvoice_address.dart';
 import '../domain/member.dart';
@@ -24,9 +26,10 @@ class MemberEInvoiceAddressTile extends ConsumerWidget {
       'scheme': member.einvoiceEndpointScheme,
       'county': member.billingSubdivision,
     });
+    String? error; // #4501 -- why the address cannot be stored, under its identifier
     final ok = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (context) => StatefulBuilder(builder: (context, setState) => AlertDialog(
         title: Text(l10n.memberEInvoiceAddressLabel),
         content: SingleChildScrollView(
           child: Column(
@@ -38,16 +41,20 @@ class MemberEInvoiceAddressTile extends ConsumerWidget {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const FormGap(),
+              EInvoiceSchemeField(
+                key: const ValueKey('member-einvoice-scheme'),
+                value: fields.text('scheme'),
+                onChanged: (code) => setState(() {
+                  fields['scheme'].text = code;
+                  error = null;
+                }),
+              ),
+              const FormGap(),
               AppTextField(
                 key: const ValueKey('member-einvoice-endpoint'),
                 controller: fields['id'],
                 label: l10n.eInvoiceEndpointIdField,
-              ),
-              const FormGap(),
-              AppTextField(
-                key: const ValueKey('member-einvoice-scheme'),
-                controller: fields['scheme'],
-                label: l10n.eInvoiceEndpointSchemeField,
+                error: error,
               ),
               const FormGap(),
               AppTextField(
@@ -66,11 +73,20 @@ class MemberEInvoiceAddressTile extends ConsumerWidget {
           ),
           FilledButton(
             key: const ValueKey('member-einvoice-save'),
-            onPressed: () => Navigator.of(context).pop(true),
+            onPressed: () {
+              final refusal = easAddressRefusal(
+                fields.text('scheme'),
+                fields.text('id'),
+                storedScheme: member.einvoiceEndpointScheme,
+                storedIdentifier: member.einvoiceEndpointId,
+              );
+              if (refusal == null) return Navigator.of(context).pop(true);
+              setState(() => error = easRefusalText(l10n, refusal, fields.text('scheme')));
+            },
             child: Text(l10n.commonSave),
           ),
         ],
-      ),
+      )),
     );
     final id = fields['id'].text;
     final scheme = fields['scheme'].text;
