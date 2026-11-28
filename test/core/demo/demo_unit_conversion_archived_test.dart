@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4479 (0989) -- the Demo refuses an archived unit in a new conversion, as the server does (`unit_archived`, field `unit`); a unit that
+// #4479 (0988) -- the Demo refuses an archived unit in a new conversion, as the server does (`unit_archived`, field `unit`); a unit that
 // is not archived is still taken.
 import 'package:deskilo/core/demo/data/demo_unit_conversions.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';

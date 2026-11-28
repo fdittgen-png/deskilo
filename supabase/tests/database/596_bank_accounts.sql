@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4496 (0988): a bank account is one record of the business, and a statement is imported into it. Two overlapping
+-- #4496 (0987): a bank account is one record of the business, and a statement is imported into it. Two overlapping
 -- files of one account import each common movement once, whether the second came in under its name or its IBAN; a
 -- movement without the bank's own id that looks like one already imported is held for review, not imported again. A
 -- statement with no account picked, with an account no account carries, of another account, or in another currency
