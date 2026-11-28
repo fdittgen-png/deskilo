@@ -6939,8 +6939,16 @@
   "@expenseInvalidDeductible": {
     "description": "#2357 input VAT: expenseInvalidDeductible"
   },
+  "expenseInvalidStatedVat": "Saisissez le taux de TVA indiqué sur le document, entre 0 et 100, et un montant qui n’est pas négatif.",
+  "@expenseInvalidStatedVat": {
+    "description": "#4479 expense input tax: expenseInvalidStatedVat"
+  },
   "expenseInvalidSupplyQuantity": "Saisissez au moins une unité.",
   "expenseInvalidUnitPrice": "Saisissez un prix unitaire valide, ou laissez-le vide.",
+  "expenseMissingSupplierCountry": "Choisissez le pays du fournisseur.",
+  "@expenseMissingSupplierCountry": {
+    "description": "#4479 expense input tax: expenseMissingSupplierCountry"
+  },
   "expenseMissingSupplyName": "Nommez le nouvel article.",
   "expenseSupplyHint": "Capsules de café, sacs d'aspirateur… Une fois validée, l'article va sur l'étagère comme service consommable : ceux qui l'utilisent le paient.",
   "expenseSupplyItem": "Article",
@@ -6976,6 +6984,14 @@
   "@expenseVatDeductibleHint": {
     "description": "#2357 input VAT: expenseVatDeductibleHint"
   },
+  "expenseVatDocumentNumber": "Numéro du document",
+  "@expenseVatDocumentNumber": {
+    "description": "#4479 expense input tax: expenseVatDocumentNumber"
+  },
+  "expenseVatForeignNote": "Cette TVA n’est pas déduite dans cette déclaration : un fournisseur à l’étranger l’a facturée et elle ne peut être réclamée qu’auprès de ce pays. Le taux et le montant restent attachés à la dépense pour cette demande.",
+  "@expenseVatForeignNote": {
+    "description": "#4479 expense input tax: expenseVatForeignNote"
+  },
   "expenseVatNone": "Sans TVA",
   "@expenseVatNone": {
     "description": "#2357 input VAT: expenseVatNone"
@@ -6983,6 +6999,30 @@
   "expenseVatRate": "TVA sur cette dépense",
   "@expenseVatRate": {
     "description": "#2357 input VAT: expenseVatRate"
+  },
+  "expenseVatStatedPercent": "Taux de TVA du document",
+  "@expenseVatStatedPercent": {
+    "description": "#4479 expense input tax: expenseVatStatedPercent"
+  },
+  "expenseVatStatedTax": "Montant de TVA du document",
+  "@expenseVatStatedTax": {
+    "description": "#4479 expense input tax: expenseVatStatedTax"
+  },
+  "expenseVatSupplierCountry": "Pays du fournisseur",
+  "@expenseVatSupplierCountry": {
+    "description": "#4479 expense input tax: expenseVatSupplierCountry"
+  },
+  "expenseVatTreatment": "Nature de la TVA",
+  "@expenseVatTreatment": {
+    "description": "#4479 expense input tax: expenseVatTreatment"
+  },
+  "expenseVatTreatmentDomestic": "TVA de ce pays",
+  "@expenseVatTreatmentDomestic": {
+    "description": "#4479 expense input tax: expenseVatTreatmentDomestic"
+  },
+  "expenseVatTreatmentForeign": "TVA facturée par un fournisseur à l’étranger",
+  "@expenseVatTreatmentForeign": {
+    "description": "#4479 expense input tax: expenseVatTreatmentForeign"
   },
   "exportAboutContents": "Ce que contient ce fichier",
   "exportAboutCurrency": "Les montants sont en",
@@ -17030,6 +17070,10 @@
   "refusalCounterTenders": "Les règlements ne soldent pas exactement cette vente, ou l'un d'eux n'est pas pris en charge ici.",
   "refusalCounterTill": "La caisse n'est pas prête pour cela : ouvrez-la d'abord, ou elle est déjà ouverte ou fermée.",
   "refusalCounterUnsupported": "Cette opération n'est pas prise en charge pour votre pays dans le cas que vous avez déclaré dans les paramètres : rien n'a été numéroté et rien n'a été encaissé.",
+  "refusalExpenseVat": "La TVA de cette dépense n’est pas acceptée : choisissez un taux de TVA de cette entreprise et saisissez la TVA facturée par un fournisseur à l’étranger uniquement comme taux et montant de son document.",
+  "@refusalExpenseVat": {
+    "description": "#4479 (0994) DKV01: the VAT treatment of an expense is refused"
+  },
   "refusalMainStoreExpired": "Le magasin principal ne contient que {held} sur les {asked} que cette vente demande qui soient vendables : le reste a dépassé sa date. Rien n’a été prélevé et la vente n’a pas été confirmée.",
   "@refusalMainStoreExpired": {
     "description": "#4170 a sale refused for what the main store holds",

@@ -11221,11 +11221,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expenseInvalidDeductible => 'Enter a share between 0 and 100.';
 
   @override
+  String get expenseInvalidStatedVat =>
+      'Enter the VAT rate shown on the document, between 0 and 100, and an amount that is not negative.';
+
+  @override
   String get expenseInvalidSupplyQuantity => 'Enter at least one unit.';
 
   @override
   String get expenseInvalidUnitPrice =>
       'Enter a valid unit price, or leave it empty.';
+
+  @override
+  String get expenseMissingSupplierCountry => 'Pick the supplier\'s country.';
 
   @override
   String get expenseMissingSupplyName => 'Name the new item.';
@@ -11282,10 +11289,35 @@ class AppLocalizationsEn extends AppLocalizations {
       '100 % unless part of the expense is private or serves an exempt activity.';
 
   @override
+  String get expenseVatDocumentNumber => 'Document number';
+
+  @override
+  String get expenseVatForeignNote =>
+      'This VAT is not deducted on this return: a supplier abroad charged it, and it can only be claimed back from that country. The rate and the amount stay with the expense for that claim.';
+
+  @override
   String get expenseVatNone => 'No VAT';
 
   @override
   String get expenseVatRate => 'VAT on this expense';
+
+  @override
+  String get expenseVatStatedPercent => 'VAT rate on the document';
+
+  @override
+  String get expenseVatStatedTax => 'VAT amount on the document';
+
+  @override
+  String get expenseVatSupplierCountry => 'Supplier\'s country';
+
+  @override
+  String get expenseVatTreatment => 'Kind of VAT';
+
+  @override
+  String get expenseVatTreatmentDomestic => 'VAT of this country';
+
+  @override
+  String get expenseVatTreatmentForeign => 'VAT charged by a supplier abroad';
 
   @override
   String get exportAboutContents => 'What this file holds';
@@ -29795,6 +29827,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalCounterUnsupported =>
       'This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.';
+
+  @override
+  String get refusalExpenseVat =>
+      'The VAT of this expense is not accepted: pick a VAT rate of this business, and enter the VAT a supplier abroad charged only as the rate and amount on its document.';
 
   @override
   String refusalMainStoreExpired(String held, String asked) {

@@ -1,0 +1,42 @@
+{
+  "expenseVatTreatment": "Nature de la TVA",
+  "@expenseVatTreatment": {
+    "description": "#4479 expense input tax: expenseVatTreatment"
+  },
+  "expenseVatTreatmentDomestic": "TVA de ce pays",
+  "@expenseVatTreatmentDomestic": {
+    "description": "#4479 expense input tax: expenseVatTreatmentDomestic"
+  },
+  "expenseVatTreatmentForeign": "TVA facturée par un fournisseur à l’étranger",
+  "@expenseVatTreatmentForeign": {
+    "description": "#4479 expense input tax: expenseVatTreatmentForeign"
+  },
+  "expenseVatForeignNote": "Cette TVA n’est pas déduite dans cette déclaration : un fournisseur à l’étranger l’a facturée et elle ne peut être réclamée qu’auprès de ce pays. Le taux et le montant restent attachés à la dépense pour cette demande.",
+  "@expenseVatForeignNote": {
+    "description": "#4479 expense input tax: expenseVatForeignNote"
+  },
+  "expenseVatSupplierCountry": "Pays du fournisseur",
+  "@expenseVatSupplierCountry": {
+    "description": "#4479 expense input tax: expenseVatSupplierCountry"
+  },
+  "expenseVatDocumentNumber": "Numéro du document",
+  "@expenseVatDocumentNumber": {
+    "description": "#4479 expense input tax: expenseVatDocumentNumber"
+  },
+  "expenseVatStatedPercent": "Taux de TVA du document",
+  "@expenseVatStatedPercent": {
+    "description": "#4479 expense input tax: expenseVatStatedPercent"
+  },
+  "expenseVatStatedTax": "Montant de TVA du document",
+  "@expenseVatStatedTax": {
+    "description": "#4479 expense input tax: expenseVatStatedTax"
+  },
+  "expenseMissingSupplierCountry": "Choisissez le pays du fournisseur.",
+  "@expenseMissingSupplierCountry": {
+    "description": "#4479 expense input tax: expenseMissingSupplierCountry"
+  },
+  "expenseInvalidStatedVat": "Saisissez le taux de TVA indiqué sur le document, entre 0 et 100, et un montant qui n’est pas négatif.",
+  "@expenseInvalidStatedVat": {
+    "description": "#4479 expense input tax: expenseInvalidStatedVat"
+  }
+}

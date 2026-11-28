@@ -6939,8 +6939,16 @@
   "@expenseInvalidDeductible": {
     "description": "#2357 input VAT: expenseInvalidDeductible"
   },
+  "expenseInvalidStatedVat": "Geben Sie den auf dem Beleg stehenden Steuersatz zwischen 0 und 100 an und einen Betrag, der nicht negativ ist.",
+  "@expenseInvalidStatedVat": {
+    "description": "#4479 expense input tax: expenseInvalidStatedVat"
+  },
   "expenseInvalidSupplyQuantity": "Geben Sie mindestens eine Einheit ein.",
   "expenseInvalidUnitPrice": "Geben Sie einen gültigen Stückpreis ein oder lassen Sie ihn leer.",
+  "expenseMissingSupplierCountry": "Wählen Sie das Land des Lieferanten.",
+  "@expenseMissingSupplierCountry": {
+    "description": "#4479 expense input tax: expenseMissingSupplierCountry"
+  },
   "expenseMissingSupplyName": "Benennen Sie den neuen Artikel.",
   "expenseSupplyHint": "Kaffeekapseln, Staubsaugerbeutel… Nach der Genehmigung steht der Artikel als verbrauchbare Leistung im Regal: wer ihn nutzt, zahlt dafür.",
   "expenseSupplyItem": "Artikel",
@@ -6976,6 +6984,14 @@
   "@expenseVatDeductibleHint": {
     "description": "#2357 input VAT: expenseVatDeductibleHint"
   },
+  "expenseVatDocumentNumber": "Belegnummer",
+  "@expenseVatDocumentNumber": {
+    "description": "#4479 expense input tax: expenseVatDocumentNumber"
+  },
+  "expenseVatForeignNote": "Diese Umsatzsteuer wird in dieser Meldung nicht abgezogen: Sie wurde von einem Lieferanten im Ausland berechnet und kann nur bei jenem Land zurückgefordert werden. Satz und Betrag bleiben für diesen Antrag bei der Ausgabe.",
+  "@expenseVatForeignNote": {
+    "description": "#4479 expense input tax: expenseVatForeignNote"
+  },
   "expenseVatNone": "Ohne Umsatzsteuer",
   "@expenseVatNone": {
     "description": "#2357 input VAT: expenseVatNone"
@@ -6983,6 +6999,30 @@
   "expenseVatRate": "Umsatzsteuer auf diese Ausgabe",
   "@expenseVatRate": {
     "description": "#2357 input VAT: expenseVatRate"
+  },
+  "expenseVatStatedPercent": "Umsatzsteuersatz auf dem Beleg",
+  "@expenseVatStatedPercent": {
+    "description": "#4479 expense input tax: expenseVatStatedPercent"
+  },
+  "expenseVatStatedTax": "Umsatzsteuerbetrag auf dem Beleg",
+  "@expenseVatStatedTax": {
+    "description": "#4479 expense input tax: expenseVatStatedTax"
+  },
+  "expenseVatSupplierCountry": "Land des Lieferanten",
+  "@expenseVatSupplierCountry": {
+    "description": "#4479 expense input tax: expenseVatSupplierCountry"
+  },
+  "expenseVatTreatment": "Art der Umsatzsteuer",
+  "@expenseVatTreatment": {
+    "description": "#4479 expense input tax: expenseVatTreatment"
+  },
+  "expenseVatTreatmentDomestic": "Umsatzsteuer dieses Landes",
+  "@expenseVatTreatmentDomestic": {
+    "description": "#4479 expense input tax: expenseVatTreatmentDomestic"
+  },
+  "expenseVatTreatmentForeign": "Von einem Lieferanten im Ausland berechnete Umsatzsteuer",
+  "@expenseVatTreatmentForeign": {
+    "description": "#4479 expense input tax: expenseVatTreatmentForeign"
   },
   "exportAboutContents": "Was diese Datei enthält",
   "exportAboutCurrency": "Beträge in",
@@ -17030,6 +17070,10 @@
   "refusalCounterTenders": "Die Zahlungen begleichen diesen Verkauf nicht genau, oder eine davon wird hier nicht angenommen.",
   "refusalCounterTill": "Die Kasse ist dafür nicht bereit: Öffnen Sie sie zuerst, oder sie ist schon offen oder geschlossen.",
   "refusalCounterUnsupported": "Dieser Vorgang wird für Ihr Land in dem in den Einstellungen erklärten Fall nicht unterstützt: Es wurde nichts nummeriert und nichts angenommen.",
+  "refusalExpenseVat": "Die Umsatzsteuer dieser Ausgabe wird nicht angenommen: Wählen Sie einen Steuersatz dieses Unternehmens und geben Sie von einem Lieferanten im Ausland berechnete Umsatzsteuer nur als Satz und Betrag des Belegs an.",
+  "@refusalExpenseVat": {
+    "description": "#4479 (0994) DKV01: the VAT treatment of an expense is refused"
+  },
   "refusalMainStoreExpired": "Das Hauptlager enthält nur {held} von den {asked}, die dieser Verkauf verlangt, die verkäuflich sind: der Rest ist abgelaufen. Nichts wurde entnommen und der Verkauf wurde nicht bestätigt.",
   "@refusalMainStoreExpired": {
     "description": "#4170 a sale refused for what the main store holds",

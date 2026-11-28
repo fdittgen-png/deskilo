@@ -6939,8 +6939,16 @@
   "@expenseInvalidDeductible": {
     "description": "#2357 input VAT: expenseInvalidDeductible"
   },
+  "expenseInvalidStatedVat": "Introduzca el tipo de IVA que figura en el documento, entre 0 y 100, y un importe no negativo.",
+  "@expenseInvalidStatedVat": {
+    "description": "#4479 expense input tax: expenseInvalidStatedVat"
+  },
   "expenseInvalidSupplyQuantity": "Introduzca al menos una unidad.",
   "expenseInvalidUnitPrice": "Introduzca un precio unitario válido o déjelo vacío.",
+  "expenseMissingSupplierCountry": "Elija el país del proveedor.",
+  "@expenseMissingSupplierCountry": {
+    "description": "#4479 expense input tax: expenseMissingSupplierCountry"
+  },
   "expenseMissingSupplyName": "Ponga nombre al nuevo artículo.",
   "expenseSupplyHint": "Cápsulas de café, bolsas de aspiradora… Una vez validado, el artículo pasa al estante como servicio consumible: quien lo usa lo paga.",
   "expenseSupplyItem": "Artículo",
@@ -6976,6 +6984,14 @@
   "@expenseVatDeductibleHint": {
     "description": "#2357 input VAT: expenseVatDeductibleHint"
   },
+  "expenseVatDocumentNumber": "Número del documento",
+  "@expenseVatDocumentNumber": {
+    "description": "#4479 expense input tax: expenseVatDocumentNumber"
+  },
+  "expenseVatForeignNote": "Este IVA no se deduce en esta declaración: lo repercutió un proveedor en el extranjero y solo puede reclamarse a ese país. El tipo y el importe quedan con el gasto para esa reclamación.",
+  "@expenseVatForeignNote": {
+    "description": "#4479 expense input tax: expenseVatForeignNote"
+  },
   "expenseVatNone": "Sin IVA",
   "@expenseVatNone": {
     "description": "#2357 input VAT: expenseVatNone"
@@ -6983,6 +6999,30 @@
   "expenseVatRate": "IVA de este gasto",
   "@expenseVatRate": {
     "description": "#2357 input VAT: expenseVatRate"
+  },
+  "expenseVatStatedPercent": "Tipo de IVA del documento",
+  "@expenseVatStatedPercent": {
+    "description": "#4479 expense input tax: expenseVatStatedPercent"
+  },
+  "expenseVatStatedTax": "Importe de IVA del documento",
+  "@expenseVatStatedTax": {
+    "description": "#4479 expense input tax: expenseVatStatedTax"
+  },
+  "expenseVatSupplierCountry": "País del proveedor",
+  "@expenseVatSupplierCountry": {
+    "description": "#4479 expense input tax: expenseVatSupplierCountry"
+  },
+  "expenseVatTreatment": "Tipo de IVA",
+  "@expenseVatTreatment": {
+    "description": "#4479 expense input tax: expenseVatTreatment"
+  },
+  "expenseVatTreatmentDomestic": "IVA de este país",
+  "@expenseVatTreatmentDomestic": {
+    "description": "#4479 expense input tax: expenseVatTreatmentDomestic"
+  },
+  "expenseVatTreatmentForeign": "IVA repercutido por un proveedor en el extranjero",
+  "@expenseVatTreatmentForeign": {
+    "description": "#4479 expense input tax: expenseVatTreatmentForeign"
   },
   "exportAboutContents": "Qué contiene este archivo",
   "exportAboutCurrency": "Importes en",
@@ -17030,6 +17070,10 @@
   "refusalCounterTenders": "Los cobros no saldan exactamente esta venta, o uno de ellos no se acepta aquí.",
   "refusalCounterTill": "La caja no está lista para esto: ábrala primero, o ya está abierta o cerrada.",
   "refusalCounterUnsupported": "Esta operación no está soportada para su país en el caso que declaró en los ajustes: no se numeró nada y no se cobró nada.",
+  "refusalExpenseVat": "No se acepta el IVA de este gasto: elija un tipo de IVA de este negocio e indique el IVA repercutido por un proveedor en el extranjero solo como el tipo y el importe de su documento.",
+  "@refusalExpenseVat": {
+    "description": "#4479 (0994) DKV01: the VAT treatment of an expense is refused"
+  },
   "refusalMainStoreExpired": "El almacén principal solo tiene {held} de los {asked} que pide esta venta aptos para vender: el resto ha caducado. No se retiró nada y la venta no se confirmó.",
   "@refusalMainStoreExpired": {
     "description": "#4170 a sale refused for what the main store holds",

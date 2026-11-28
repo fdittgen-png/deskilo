@@ -25,5 +25,7 @@ String? _moneyWords(AppLocalizations l10n, String code, String? details) =>
       DkCode.dkb07 => l10n.refusalBankMatchUndoLaterFirst,
       // #4492 (0978): a goods movement or a payment dated inside a closed period of the books.
       DkCode.dkb08 => l10n.refusalBooksClosedPeriodDated,
+      // #4479 (0994): the VAT treatment of an expense is not accepted (a rate that is not the space's, a supplier abroad's VAT with a rate of the space).
+      DkCode.dkv01 => l10n.refusalExpenseVat,
       _ => null,
     };

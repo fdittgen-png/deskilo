@@ -1,0 +1,42 @@
+{
+  "expenseVatTreatment": "Natura dell’IVA",
+  "@expenseVatTreatment": {
+    "description": "#4479 expense input tax: expenseVatTreatment"
+  },
+  "expenseVatTreatmentDomestic": "IVA di questo Paese",
+  "@expenseVatTreatmentDomestic": {
+    "description": "#4479 expense input tax: expenseVatTreatmentDomestic"
+  },
+  "expenseVatTreatmentForeign": "IVA addebitata da un fornitore all’estero",
+  "@expenseVatTreatmentForeign": {
+    "description": "#4479 expense input tax: expenseVatTreatmentForeign"
+  },
+  "expenseVatForeignNote": "Questa IVA non viene detratta in questa dichiarazione: l’ha addebitata un fornitore all’estero e può essere richiesta a rimborso solo a quel Paese. L’aliquota e l’importo restano con la spesa per tale richiesta.",
+  "@expenseVatForeignNote": {
+    "description": "#4479 expense input tax: expenseVatForeignNote"
+  },
+  "expenseVatSupplierCountry": "Paese del fornitore",
+  "@expenseVatSupplierCountry": {
+    "description": "#4479 expense input tax: expenseVatSupplierCountry"
+  },
+  "expenseVatDocumentNumber": "Numero del documento",
+  "@expenseVatDocumentNumber": {
+    "description": "#4479 expense input tax: expenseVatDocumentNumber"
+  },
+  "expenseVatStatedPercent": "Aliquota IVA del documento",
+  "@expenseVatStatedPercent": {
+    "description": "#4479 expense input tax: expenseVatStatedPercent"
+  },
+  "expenseVatStatedTax": "Importo IVA del documento",
+  "@expenseVatStatedTax": {
+    "description": "#4479 expense input tax: expenseVatStatedTax"
+  },
+  "expenseMissingSupplierCountry": "Scegliere il Paese del fornitore.",
+  "@expenseMissingSupplierCountry": {
+    "description": "#4479 expense input tax: expenseMissingSupplierCountry"
+  },
+  "expenseInvalidStatedVat": "Indicare l’aliquota IVA riportata sul documento, tra 0 e 100, e un importo non negativo.",
+  "@expenseInvalidStatedVat": {
+    "description": "#4479 expense input tax: expenseInvalidStatedVat"
+  }
+}

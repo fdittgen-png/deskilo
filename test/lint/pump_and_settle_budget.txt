@@ -115,7 +115,6 @@
 11 test/features/money/finance_attention_test.dart
 10 test/features/money/guest_pass_invoice_screen_test.dart
 12 test/features/money/guest_passes_screen_test.dart
-14 test/features/money/input_vat_test.dart
 16 test/features/money/invoice_groups_screen_test.dart
 11 test/features/money/invoice_journey_test.dart
 11 test/features/money/invoice_register_table_test.dart
