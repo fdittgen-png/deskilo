@@ -3043,7 +3043,7 @@ Las categorías bajo las que se registra un gasto o un justificante son la lista
 <!-- anchor: user.money.supplier.contacts -->
 ### Contactos y condiciones de proveedores
 
-**Público:** Administrador · Propietario
+**Público:** Administrador/a · Propietario
 
 Un proveedor tiene contactos, cada uno con un rol, y uno de ellos es su contacto de compras preferido. También lleva lo acordado una vez: la moneda de sus pedidos, los días de vencimiento de sus facturas y los días de entrega de sus pedidos.
 

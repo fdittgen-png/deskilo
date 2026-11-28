@@ -2908,7 +2908,7 @@ Die Kategorien, unter denen eine Ausgabe oder ein Beleg erfasst wird, sind die e
 
 ### Lieferantenkontakte und Bedingungen
 
-**Zielgruppe:** Administrator · Inhaber
+**Zielgruppe:** Administrator:in · Inhaber
 
 Ein Lieferant hat Kontakte mit je einer Rolle, einer davon ist sein bevorzugter Einkaufskontakt. Außerdem trägt er, was einmal vereinbart wurde: die Währung seiner Bestellungen, die Tage bis zur Fälligkeit seiner Rechnungen und die Tage bis zur Lieferung seiner Bestellungen.
 

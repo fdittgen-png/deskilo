@@ -3043,7 +3043,7 @@ Les catégories sous lesquelles une dépense ou un justificatif est classé form
 <!-- anchor: user.money.supplier.contacts -->
 ### Contacts et conditions des fournisseurs
 
-**Public:** Administrateur · Propriétaire
+**Public:** Administrateur·rice · Propriétaire
 
 Un fournisseur a des contacts, chacun avec un rôle, et l’un d’eux est son contact d’achat préféré. Il porte aussi ce qui a été convenu une fois : la devise de ses commandes, les jours d’échéance de ses factures et les jours de livraison de ses commandes.
 
