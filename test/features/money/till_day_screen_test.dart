@@ -43,11 +43,11 @@ void main() {
       await _tap(tester, 'day-close');
       expect(find.text(_en.tillDayRefusalTillOpen('Front counter')), findsOneWidget);
 
-      await drawer.closeSession('ws-1', requestId: 'c', sessionId: open.sessionId, count: const DrawerCount(countedMinor: 9900, differenceReason: 'a coin was lost', bankedMinor: 0));
+      await drawer.closeSession('ws-1', requestId: 'c', sessionId: open.sessionId, count: const DrawerCount(countedMinor: 9900, differenceReason: 'counting_error', bankedMinor: 0));
       await _tap(tester, 'day-close');
       expect(find.byKey(const ValueKey('day-report')), findsOneWidget);
       expect(find.byKey(const ValueKey('day-session-Front counter')), findsOneWidget);
-      expect(find.text(_en.tillDaySessionReason('a coin was lost')), findsOneWidget);
+      expect(find.text(_en.tillDaySessionReason(_en.tillCashReasonCountingError)), findsOneWidget);
       expect(find.textContaining('-€1.00'), findsWidgets);
       await _tap(tester, 'day-report-close');
       expect(find.byKey(const ValueKey('day-none')), findsNothing);

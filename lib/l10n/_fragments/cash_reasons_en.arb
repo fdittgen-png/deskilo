@@ -84,8 +84,13 @@
   "@cashReasonsSaved": {
     "description": "#4514 after a save"
   },
-  "cashReasonsArchivedMark": "archived",
-  "@cashReasonsArchivedMark": {
-    "description": "#4514 beside an archived reason in the list"
+  "cashReasonsArchivedName": "{name} (archived)",
+  "@cashReasonsArchivedName": {
+    "description": "#4514 an archived reason in the list",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

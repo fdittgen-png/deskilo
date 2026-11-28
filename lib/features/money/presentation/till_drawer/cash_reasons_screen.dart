@@ -52,29 +52,23 @@ class CashReasonsScreen extends ConsumerWidget {
             ),
       body: id == null
           ? const LoadingView()
-          : Align(
-              alignment: Alignment.topCenter,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 720),
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, kFabSafeBottom),
-                  children: [
-                    Text(l10n.cashReasonsSubtitle),
-                    const FormGap(),
-                    AsyncReadBody.part(
-                      value: ref.watch(cashReasonsProvider(id)),
-                      isEmpty: (rows) => rows.isEmpty,
-                      refusal: (e) => drawerRefusalWords(l10n, e),
-                      retryKey: const ValueKey('cash-reasons-retry'),
-                      onRetry: () => ref.invalidate(cashReasonsProvider(id)),
-                      data: (reasons) => Column(
-                        children: [for (final r in reasons) _tile(context, ref, id, r)],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+          : ListView(
+        padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, kFabSafeBottom),
+        children: [
+          Text(l10n.cashReasonsSubtitle),
+          const FormGap(),
+          AsyncReadBody.part(
+            value: ref.watch(cashReasonsProvider(id)),
+            isEmpty: (rows) => rows.isEmpty,
+            refusal: (e) => drawerRefusalWords(l10n, e),
+            retryKey: const ValueKey('cash-reasons-retry'),
+            onRetry: () => ref.invalidate(cashReasonsProvider(id)),
+            data: (reasons) => Column(
+              children: [for (final r in reasons) _tile(context, ref, id, r)],
             ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -88,7 +82,7 @@ class CashReasonsScreen extends ConsumerWidget {
       key: ValueKey('cash-reason-${r.code}'),
       title: Text(
         r.archived
-            ? '${cashReasonLabel(l10n, r)} (${l10n.cashReasonsArchivedMark})'
+            ? l10n.cashReasonsArchivedName(cashReasonLabel(l10n, r))
             : cashReasonLabel(l10n, r),
       ),
       subtitle: Text(uses),
@@ -103,7 +97,7 @@ class CashReasonsScreen extends ConsumerWidget {
     String id,
     CashReason? reason,
   ) async {
-    final saved = await showCashReasonSheet(
+    final saved = await _showCashReasonSheet(
       context,
       ref.read(tillDrawerCommandsProvider(id)),
       reason: reason,
@@ -115,7 +109,7 @@ class CashReasonsScreen extends ConsumerWidget {
 }
 
 /// Opens the sheet for a new reason of the business's own (null [reason]) or an existing one; true when it was saved.
-Future<bool> showCashReasonSheet(
+Future<bool> _showCashReasonSheet(
   BuildContext context,
   TillDrawerCommands commands, {
   CashReason? reason,
@@ -161,9 +155,10 @@ Future<bool> showCashReasonSheet(
       },
       builder: (context, refresh) => [
         if (builtin)
-          Text(
-            '${cashReasonLabel(l10n, reason!)} — ${l10n.cashReasonsBuiltinHint}',
+          Column(
             key: const ValueKey('cash-reason-builtin'),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [Text(cashReasonLabel(l10n, reason!), style: Theme.of(context).textTheme.titleMedium), Text(l10n.cashReasonsBuiltinHint)],
           )
         else
           AppTextField(
@@ -191,7 +186,7 @@ Future<bool> showCashReasonSheet(
           ),
         Builder(
           builder: (c) {
-            final error = FormErrorsScope.maybeOf(c)?.errors['processes'];
+            final error = FormErrorsScope.maybeOf(c)?.errors[CashReasonField.processes.name];
             return error == null
                 ? const SizedBox.shrink()
                 : Text(
@@ -227,9 +222,9 @@ Map<String, String> _errors(
   Set<CashReasonProblem> problems,
 ) => {
   if (problems.contains(CashReasonProblem.nameMissing))
-    'name': l10n.cashReasonsNameMissing,
+    CashReasonField.name.name: l10n.cashReasonsNameMissing,
   if (problems.contains(CashReasonProblem.nameTooLong))
-    'name': l10n.cashReasonsNameTooLong(kCashReasonNameMaxLength),
+    CashReasonField.name.name: l10n.cashReasonsNameTooLong(kCashReasonNameMaxLength),
   if (problems.contains(CashReasonProblem.processMissing))
-    'processes': l10n.cashReasonsProcessMissing,
+    CashReasonField.processes.name: l10n.cashReasonsProcessMissing,
 };

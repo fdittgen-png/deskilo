@@ -73,7 +73,7 @@ Future<TillDrawerFacts> tillDrawerFacts() => withDemoSession((fixture, outbox, c
     ws,
     requestId: 'j-close-3',
     sessionId: market.sessionId,
-    count: const DrawerCount(countedMinor: 4900, differenceReason: 'a coin was lost', bankedMinor: 0),
+    count: const DrawerCount(countedMinor: 4900, differenceReason: 'counting_error', bankedMinor: 0),
   );
   final day = await drawer.closeDay(ws, requestId: 'j-day', businessDate: '2026-11-23');
   String? again;

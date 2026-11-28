@@ -20,7 +20,7 @@
 --     reason                   whatever door writes it; a reason stored before keeps its text.
 -- BEGIN FEATURE REGISTRY ROWS (dart run tool/build_feature_registry_sql.dart)
 insert into public.feature_registry_entries (feature_key, parent, default_on, core, countries) values
-('counterCashReasons', null, true, false, null)
+('counterCashReasons', null, true, true, null)
 on conflict (feature_key) do update set parent = excluded.parent, default_on = excluded.default_on, core = excluded.core, countries = excluded.countries;
 -- END FEATURE REGISTRY ROWS
 

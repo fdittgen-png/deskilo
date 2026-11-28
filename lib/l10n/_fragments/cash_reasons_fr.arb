@@ -19,5 +19,5 @@
   "cashReasonsNameTooLong": "Un nom a au plus {max} caractères.",
   "cashReasonsProcessMissing": "Choisissez au moins un usage.",
   "cashReasonsSaved": "Motif enregistré.",
-  "cashReasonsArchivedMark": "archivé"
+  "cashReasonsArchivedName": "{name} (archivé)"
 }

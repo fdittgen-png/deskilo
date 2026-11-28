@@ -126,7 +126,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   // this set to the union of theirs).
   '/settings/master-data': {
     _P.workspaceSettings, _P.manageBilling, _P.viewStock, _P.manageStock, _P.manageServices, _P.issueInvoices,
-    _P.viewFinances, _P.managePurchases, _P.manageBillingCustomers, _P.manageSites,
+    _P.viewFinances, _P.managePurchases, _P.manageBillingCustomers, _P.manageSites, _P.configureTill,
   },
   '/settings/public-page': {_P.workspaceSettings},
   '/legal-identity': {_P.workspaceSettings},

@@ -259,7 +259,7 @@ class DemoTillDrawer implements TillDrawerPort {
     final (kind, amountMinor, reason) = (entry.kind, entry.amountMinor, entry.reason);
     if (_answered[requestId] != null) return _replayed(requestId);
     if (amountMinor <= 0) throw _refused(PgCode.invalidParameterValue, 'an entry has an amount');
-    _reasonOnList(reason, kind == 'paid_in' ? CashReasonProcess.paidIn : CashReasonProcess.paidOut);
+    _reasonOnList(reason, CashReasonProcess.ofEntryKind(kind));
     final session = _open(sessionId);
     final limit = rules().paidOutLimitMinor;
     if (kind == 'paid_out' && limit > 0 && amountMinor > limit && !canRecordOutgoing()) {

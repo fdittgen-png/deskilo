@@ -23,12 +23,12 @@ String cashReasonText(
   return _builtinName(l10n, stored) ?? stored;
 }
 
-String? _builtinName(AppLocalizations l10n, String code) => switch (code) {
-  'change' => l10n.tillCashReasonChange,
-  'expense' => l10n.tillCashReasonExpense,
-  'counting_error' => l10n.tillCashReasonCountingError,
-  'other' => l10n.tillCashReasonOther,
-  _ => null,
+String? _builtinName(AppLocalizations l10n, String code) => switch (BuiltinCashReason.of(code)) {
+  BuiltinCashReason.change => l10n.tillCashReasonChange,
+  BuiltinCashReason.expense => l10n.tillCashReasonExpense,
+  BuiltinCashReason.countingError => l10n.tillCashReasonCountingError,
+  BuiltinCashReason.other => l10n.tillCashReasonOther,
+  BuiltinCashReason.unknown => null,
 };
 
 /// The name of [process].

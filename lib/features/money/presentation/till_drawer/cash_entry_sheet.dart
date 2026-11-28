@@ -32,7 +32,7 @@ Future<bool> showCashEntrySheet(
   final intent = SameIntent();
   var kind = 'paid_out';
   String? reason;
-  List<CashReason> offered() => cashReasonsFor(reasons, kind == 'paid_in' ? CashReasonProcess.paidIn : CashReasonProcess.paidOut);
+  List<CashReason> offered() => cashReasonsFor(reasons, CashReasonProcess.ofEntryKind(kind));
   int? amount() => format.readAmount(fields.text('amount'), currency: currency, allowNegative: false).minor;
   return showAppFormSheet(
     context,
