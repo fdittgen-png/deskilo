@@ -16,6 +16,20 @@ static void fingerprint_of(const uint8_t secret[32], device_t *out) {
     for (int i = 0; i < 32; i++) snprintf(out->secret_hash + 2 * i, 3, "%02x", h[i]);
 }
 
+esp_err_t device_secret_hex(char out[65]) {
+    nvs_handle_t h;
+    esp_err_t e = nvs_open_from_partition(PART, NS, NVS_READONLY, &h);
+    if (e != ESP_OK) return e;
+    uint8_t secret[32];
+    size_t n = sizeof secret;
+    e = nvs_get_blob(h, "secret", secret, &n);
+    nvs_close(h);
+    if (e == ESP_OK && n != sizeof secret) e = ESP_ERR_INVALID_SIZE;
+    if (e == ESP_OK) for (int i = 0; i < 32; i++) snprintf(out + 2 * i, 3, "%02x", secret[i]);
+    memset(secret, 0, sizeof secret);
+    return e;
+}
+
 esp_err_t device_identity(device_t *out) {
     nvs_handle_t h;
     esp_err_t e = nvs_open_from_partition(PART, NS, NVS_READWRITE, &h);

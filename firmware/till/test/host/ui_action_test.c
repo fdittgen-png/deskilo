@@ -10,6 +10,7 @@
 #include "lvgl.h"
 #include "strings.h"
 #include "ui.h"
+#include "enroll.h"
 
 cfg_t g_cfg = {.role = "till"};
 static int failed, passed;
@@ -104,6 +105,44 @@ static shared_t state(int phase, int total) {
     return s;
 }
 
+// #4519 -- the board's link: the code keys connect it; a wrong code sends nothing; waiting hides the keys; selling hides it all.
+static bool press_top(const char *text) {
+    lv_obj_t *l = find(lv_layer_top(), text);
+    if (!l) return false;
+    lv_obj_t *b = lv_obj_get_parent(l);
+    lv_area_t a;
+    lv_obj_get_coords(b, &a);
+    px = (a.x1 + a.x2) / 2; py = (a.y1 + a.y2) / 2;
+    pressed = 1; pump(60);
+    pressed = 0; pump(60);
+    return true;
+}
+static void link_screens(void) {
+    shared_t s = state(PH_SELL, 0);
+    s.link = LINK_ENROLL;
+    snprintf(s.status, sizeof s.status, "%s", T(S_ST_CONNECT));
+    ui_refresh(&s); pump(50);
+    CHECK(find(lv_layer_top(), T(S_ST_CONNECT)) != NULL, "a board to connect asks for its code");
+    forget();
+    const char *code = "K7M29QXR4TNB";
+    bool all = true;
+    for (int i = 0; code[i]; i++) { char t[2] = {code[i], 0}; all = press_top(t) && all; }
+    CHECK(all, "every symbol of the code has its key");
+    press_top(T(S_BTN_CONNECT));
+    char n[ENROLL_CODE_LEN + 1];
+    enroll_code_normal(code, n);
+    CHECK(sent_kind == CMD_CODE && sent_value == enroll_code_pack(n), "the code typed is sent once complete");
+    forget();
+    press_top("7"); press_top(T(S_BTN_CONNECT));
+    CHECK(sent_count == 0 && find(lv_layer_top(), T(S_ST_CODE_BAD)) != NULL, "a code cut short sends nothing and says why");
+    s.link = LINK_PENDING;
+    ui_refresh(&s); pump(50);
+    CHECK(find(lv_layer_top(), T(S_BTN_CONNECT)) == NULL, "waiting for the owner shows no code keys");
+    s.link = LINK_SELLING;
+    ui_refresh(&s); pump(50);
+    CHECK(find(lv_layer_top(), T(S_ST_CONNECT)) == NULL, "a selling board shows the till, not the link");
+}
+
 static void one_language(const char *lang) {
     s_lang = lang;
     strings_set_lang(lang);
@@ -112,6 +151,7 @@ static void one_language(const char *lang) {
     static const ui_port_t port = {.send = rec_send, .factory_reset = rec_reset, .raw_touch = rec_raw, .save_cal = rec_save_cal};
     ui_init(&port);
     ui_build_till();
+    link_screens();
 
     // nothing priced: Pay cannot be pressed
     shared_t s = state(PH_SELL, 0);

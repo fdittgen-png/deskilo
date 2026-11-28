@@ -17,7 +17,7 @@ for f in $(find "$lvgl/src" -name '*.c'); do
 done
 wait
 cc -std=gnu11 -Wall -Wno-unused-parameter -DLV_CONF_INCLUDE_SIMPLE -I"$here/lvgl" -I"$lvgl" -I"$till/main" -I"$here/stubs" \
-  "$here/ui_action_test.c" "$here/trace_host.c" "$till/main/ui.c" "$till/main/touch_cal.c" "$till/main/strings.c" "$till/main/money_text.c" \
+  "$here/ui_action_test.c" "$here/trace_host.c" "$till/main/ui.c" "$till/main/enroll.c" "$till/main/touch_cal.c" "$till/main/strings.c" "$till/main/money_text.c" \
   "$till/main/till_font_14.c" "$till/main/till_font_16.c" "$till/main/till_font_20.c" "$till/main/till_font_28.c" \
   "${objs[@]}" -o "$out/ui_action_test"
 "$out/ui_action_test"

@@ -3,6 +3,7 @@
 // the trace box. LVGL only: what a tap means goes out through the port, what is shown comes in as a copy of the state, so
 // the host tests drive these very screens with a pointer on the Mac.
 #include "ui.h"
+#include "enroll.h"
 #include "readable_code.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -71,6 +72,82 @@ static void key_cb(lv_event_t *e) {
 static void next_cb(lv_event_t *e) { s_port.send(CMD_NEXT, 0, 0); }
 
 static const char *or_unset(const char *v) { return v[0] ? v : T(S_NOT_SET); }
+
+// ---- #4519: the link overlay: the board connects itself by the owner's code, waits for the approval and for a cashier ----
+static lv_obj_t *s_link_box, *s_link_text, *s_code_label, *s_code_keys;
+static char s_code[ENROLL_CODE_LEN + 1];
+static int s_code_n;
+enum { CODE_DEL = -1, CODE_OK = -2 };
+
+static void code_show(void) {
+    char t[24] = "";
+    for (int i = 0, o = 0; i < ENROLL_CODE_LEN; i++) {
+        if (i && i % 4 == 0) t[o++] = '-';
+        t[o++] = i < s_code_n ? s_code[i] : '_';
+        t[o] = 0;
+    }
+    lv_label_set_text(s_code_label, t);
+}
+static void code_key_cb(lv_event_t *e) {
+    int v = (int)(intptr_t)lv_event_get_user_data(e);
+    if (v == CODE_DEL) { if (s_code_n) s_code[--s_code_n] = 0; }
+    else if (v == CODE_OK) {
+        char n[ENROLL_CODE_LEN + 1];
+        if (enroll_code_normal(s_code, n)) { s_port.send(CMD_CODE, 0, enroll_code_pack(n)); s_code_n = 0; s_code[0] = 0; }
+        else lv_label_set_text(s_link_text, T(S_ST_CODE_BAD));
+    } else if (s_code_n < ENROLL_CODE_LEN) { s_code[s_code_n++] = enroll_symbol_char(v); s_code[s_code_n] = 0; }
+    code_show();
+}
+static void link_box_build(void) {
+    s_link_box = lv_obj_create(lv_layer_top());
+    lv_obj_set_size(s_link_box, LV_PCT(100), LV_PCT(100));
+    lv_obj_set_style_pad_all(s_link_box, 4, 0);
+    s_link_text = lv_label_create(s_link_box);
+    lv_label_set_long_mode(s_link_text, LV_LABEL_LONG_WRAP);
+    lv_obj_set_width(s_link_text, LV_PCT(100));
+    lv_obj_set_style_text_font(s_link_text, &till_font_16, 0);
+    lv_obj_align(s_link_text, LV_ALIGN_TOP_LEFT, 0, 0);
+    s_code_label = lv_label_create(s_link_box);
+    lv_obj_set_style_text_font(s_code_label, &till_font_20, 0);
+    lv_obj_align(s_code_label, LV_ALIGN_TOP_MID, 0, 44);
+    s_code_keys = lv_obj_create(s_link_box);
+    lv_obj_set_size(s_code_keys, LV_PCT(100), LV_PCT(66));
+    lv_obj_align(s_code_keys, LV_ALIGN_BOTTOM_MID, 0, 0);
+    lv_obj_set_flex_flow(s_code_keys, LV_FLEX_FLOW_ROW_WRAP);
+    lv_obj_set_style_pad_all(s_code_keys, 2, 0);
+    lv_obj_set_style_pad_gap(s_code_keys, 3, 0);
+    for (int v = -2; v < 32; v++) {
+        if (v == -1) continue;
+        lv_obj_t *b = lv_btn_create(s_code_keys);
+        lv_obj_set_size(b, LV_PCT(10), LV_PCT(22));
+        lv_obj_add_event_cb(b, code_key_cb, LV_EVENT_CLICKED, (void *)(intptr_t)v);
+        lv_obj_t *l = lv_label_create(b);
+        char t[2] = {enroll_symbol_char(v), 0};
+        lv_label_set_text(l, v == CODE_OK ? T(S_BTN_CONNECT) : t);
+        lv_obj_center(l);
+    }
+    lv_obj_t *del = lv_btn_create(s_code_keys);
+    lv_obj_set_size(del, LV_PCT(10), LV_PCT(22));
+    lv_obj_add_event_cb(del, code_key_cb, LV_EVENT_CLICKED, (void *)(intptr_t)CODE_DEL);
+    lv_obj_t *dl = lv_label_create(del);
+    lv_label_set_text(dl, "<");
+    lv_obj_center(dl);
+    code_show();
+}
+// The overlay over the till or the roll while the board does not sell: what it waits for, and the code keys to connect it.
+static void link_refresh(const shared_t *c) {
+    if (c->link == LINK_SELLING) {   // gone, with what was typed: the till or the roll is the whole screen again
+        if (s_link_box) { lv_obj_del(s_link_box); s_link_box = s_link_text = s_code_label = s_code_keys = NULL; }
+        s_code_n = 0;
+        s_code[0] = 0;
+        return;
+    }
+    if (!s_link_box) link_box_build();
+    lv_obj_clear_flag(s_link_box, LV_OBJ_FLAG_HIDDEN);
+    lv_label_set_text(s_link_text, c->status);
+    if (c->link == LINK_ENROLL) { lv_obj_clear_flag(s_code_keys, LV_OBJ_FLAG_HIDDEN); lv_obj_clear_flag(s_code_label, LV_OBJ_FLAG_HIDDEN); }
+    else { lv_obj_add_flag(s_code_keys, LV_OBJ_FLAG_HIDDEN); lv_obj_add_flag(s_code_label, LV_OBJ_FLAG_HIDDEN); }
+}
 
 // ---- the trace box: the newest lines on the screen; a tap shows them all and can send them to Deskilo ----
 static lv_obj_t *s_trace_box, *s_trace_label, *s_traces;
@@ -209,7 +286,7 @@ static void open_settings_cb(lv_event_t *e) {
     lv_obj_center(s_settings);
     lv_obj_t *t = lv_label_create(s_settings);
     lv_label_set_text_fmt(t, T(S_SETTINGS),
-        or_unset(g_cfg.role), or_unset(g_cfg.ssid), or_unset(g_cfg.workspace_name), g_cfg.email[0] ? T(S_SIGNED_IN) : T(S_NOT_SET), g_cfg.refresh[0] ? T(S_KEPT) : T(S_NOT_SET));
+        or_unset(g_cfg.role), or_unset(g_cfg.ssid), or_unset(g_cfg.workspace_name), or_unset(g_cfg.till));
     lv_obj_set_style_text_font(t, &till_font_16, 0);
     lv_obj_align(t, LV_ALIGN_TOP_LEFT, 0, 0);
     lv_obj_t *b1 = lv_btn_create(s_settings);
@@ -491,6 +568,7 @@ void ui_build_roll(void) {
 
 void ui_refresh(const shared_t *cp) {
     const shared_t copy = *cp;
+    link_refresh(&copy);   // #4519
     lv_label_set_text(s_status, copy.status);
     char m[40];
     if (s_roll_list) {   // roll

@@ -24,6 +24,9 @@ cc -std=c11 -Wall -Wextra -Wno-unused-parameter -Werror -I"$here/../../main" \
   "$here/text_copy_test.c" "$here/../../main/text_copy.c" -o "$out/text_copy_test"
 cc -std=c11 -Wall -Wextra -Wno-unused-parameter -Werror -I"$here/../../main" \
   "$here/basket_test.c" "$here/../../main/basket.c" -o "$out/basket_test"
+cc -std=c11 -Wall -Wextra -Wno-unused-parameter -Werror -I"$here/../../main" \
+  "$here/enroll_test.c" "$here/../../main/enroll.c" -o "$out/enroll_test"
+"$out/enroll_test"
 cc -std=c11 -Wall -Wextra -Wno-unused-parameter -Werror -I"$here/../../main" -I"$idf/components/json/cJSON" \
   "$here/layout_keys_test.c" "$here/../../main/layout_keys.c" "$idf/components/json/cJSON/cJSON.c" -o "$out/layout_keys_test"
 "$out/layout_keys_test"

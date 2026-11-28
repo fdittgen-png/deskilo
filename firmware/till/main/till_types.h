@@ -20,7 +20,8 @@ typedef struct {
 typedef struct { char item_id[40]; int qty; } basket_line_t;
 
 // The commands the screen sends to the network task.
-enum { CMD_TAP, CMD_NEXT, CMD_REPORT, CMD_PAY, CMD_CASH, CMD_RETRY, CMD_REFRESH };
+// #4519 CMD_CODE: the connection code typed, its symbols packed in the value (enroll.h)
+enum { CMD_TAP, CMD_NEXT, CMD_REPORT, CMD_PAY, CMD_CASH, CMD_RETRY, CMD_REFRESH, CMD_CODE };
 // The sale's phase: selling; the cash being counted; sent; paid; sent without a proven answer; a payment of another binding
 // waits and nothing is sold here.
 enum { PH_SELL, PH_CASH, PH_PAYING, PH_PAID, PH_UNCERTAIN, PH_BLOCKED };
@@ -41,5 +42,8 @@ typedef struct {
     int shown_items;
     int64_t shown_total;
     bool unconfirmed;
+    // #4519 where the board stands with the server (link_t, enroll.h) and the fingerprint the owner compares
+    int link;
+    char fingerprint[10];
     uint32_t version;
 } shared_t;

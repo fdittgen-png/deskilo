@@ -14,6 +14,8 @@ typedef struct {
 
 // Reads the identity, making it on the first start; ESP_OK with [out] filled.
 esp_err_t device_identity(device_t *out);
+// #4519 -- the secret as the board presents it to Deskilo (64 lower-case hex) into [out]; never shown, never traced.
+esp_err_t device_secret_hex(char out[65]);
 // #4466 -- the readable code of this board (XXXXX-XXXXX, readable_code.h): its short id, [profile] and the first 10
 // bits of its fingerprint; [out] holds READABLE_CODE_LEN.
 void device_readable_code(const device_t *d, int profile, char *out);

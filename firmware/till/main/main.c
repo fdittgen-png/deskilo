@@ -28,6 +28,7 @@
 #include "trace.h"
 #include "strings.h"
 #include "basket.h"
+#include "enroll.h"
 
 
 static const char *TAG = "till";
@@ -88,15 +89,84 @@ static void set_phase(int phase, const char *status) {
 
 static int save_attempt(const void *a) { return pending_save((const pending_t *)a) == ESP_OK ? 0 : 1; }
 
-// Sends the attempt; a session that ran out (401) is renewed and the SAME request asked once more.
+// Sends the attempt under the cashier's lease. A lease that ended sends nothing: the attempt stays kept, and is sent again,
+// the SAME request, once a cashier took the board again (#4519).
 static pay_result_t send_attempt(const void *a, char *number, int ncap, char *why, int cap) {
-    const pending_t *p = (const pending_t *)a;
-    pay_result_t r = api_finalize_cash(p, number, ncap, why, cap);
-    if (r == PAY_UNCERTAIN && strstr(why, "401")) {
-        char w2[96];
-        if (api_sign_in(w2, sizeof w2)) r = api_finalize_cash(p, number, ncap, why, cap);
+    return api_finalize_cash((const pending_t *)a, number, ncap, why, cap);
+}
+
+// ---- #4519: the board's link with the server: connected by the owner's code, approved, asking for a cashier, selling ----
+static link_t s_link = LINK_ENROLL;
+
+static void set_link_fn(void *a) {
+    S.link = *(const int *)a;
+    device_t d;
+    if (device_identity(&d) == ESP_OK) snprintf(S.fingerprint, sizeof S.fingerprint, "%s", d.fingerprint);
+    const char *say = S.link == LINK_ENROLL ? T(S_ST_CONNECT) : S.link == LINK_PENDING ? T(S_ST_APPROVE)
+                    : S.link == LINK_ASKING ? T(S_ST_ASK) : T(S_ST_CHOOSE);
+    snprintf(S.status, sizeof S.status, say, S.fingerprint);
+}
+static void set_link(link_t l) { int v = (int)l; s_link = l; with_lock(set_link_fn, &v); trace("link: %d", v); }
+
+// Until the board sells: its status with the server; the owner's code typed and claimed; the owner's approval waited for;
+// a cashier asked for and waited for. The basket and a kept payment stay as they are meanwhile.
+static void link_until_selling(void) {
+    char status[24], reason[32], why[96];
+    bool asked = false;
+    for (;;) {
+        if (s_link == LINK_ENROLL || s_link == LINK_PENDING) {
+            reason[0] = 0;
+            if (api_status(status, sizeof status, reason, sizeof reason)) {
+                link_t l = link_of_status(status);
+                if (l != s_link || l != LINK_PENDING) set_link(l);
+            } else if (!strcmp(reason, "uncertain")) { vTaskDelay(pdMS_TO_TICKS(3000)); continue; }
+            else if (s_link != LINK_ENROLL) set_link(LINK_ENROLL);
+        }
+        if (s_link == LINK_ENROLL) {
+            cmd_t c;
+            if (xQueueReceive(s_cmd, &c, pdMS_TO_TICKS(5000)) != pdTRUE || c.kind != CMD_CODE) continue;
+            char code[ENROLL_CODE_LEN + 1];
+            enroll_code_unpack(c.value, code);
+            set_status(T(S_ST_SENDING));
+            if (api_claim(code, status, sizeof status, why, sizeof why)) { trace("connection code taken: %s", status); set_link(link_of_status(status)); }
+            else { char t[96]; snprintf(t, sizeof t, T(S_ST_CODE_REFUSED), why); set_status(t); trace("connection code refused: %s", why); }
+            continue;
+        }
+        if (s_link == LINK_PENDING) { vTaskDelay(pdMS_TO_TICKS(3000)); continue; }
+        if (s_link == LINK_ASKING) {
+            if (!asked) {
+                reason[0] = 0;
+                if (!api_ask_cashier(reason, sizeof reason)) {
+                    link_t l = link_on(LINK_ASKING, reason);
+                    if (l != LINK_ASKING) set_link(l);
+                    vTaskDelay(pdMS_TO_TICKS(3000));
+                    continue;
+                }
+                asked = true;
+                trace("a cashier asked for");
+            }
+            reason[0] = 0;
+            if (api_leased(reason, sizeof reason)) { set_link(LINK_SELLING); trace("a cashier took the board"); return; }
+            link_t l = link_on(LINK_ASKING, reason);
+            if (l != LINK_ASKING) { asked = false; set_link(l); continue; }
+            if (strcmp(reason, "operator_pending") != 0 && strcmp(reason, "uncertain") != 0) asked = false;   // the request ended: ask again
+            vTaskDelay(pdMS_TO_TICKS(3000));
+            continue;
+        }
+        return;
     }
-    return r;
+}
+
+// After a call under the lease: a lease that ended asks for a cashier again, and the board waits, basket kept.
+static bool lease_still_held(void) {
+    const char *r = api_take_link_reason();
+    if (!r[0]) return true;
+    link_t l = link_on(LINK_SELLING, r);
+    if (l == LINK_SELLING) return true;
+    set_status(T(S_ST_LEASE_ENDED));
+    set_link(l);
+    link_until_selling();
+    return false;
 }
 
 // What an answer does to the sale: only a proven one moves it on; anything else keeps it uncertain and the next customer waits.
@@ -147,9 +217,8 @@ static void net_task(void *arg) {
     set_status(T(S_ST_WIFI));
     if (net_connect(g_cfg.ssid, g_cfg.wifi_pass) != ESP_OK) { trace("Wi-Fi or time failed"); set_status("Wi-Fi or time failed: check Settings"); vTaskDelete(NULL); }
     trace("Wi-Fi up");
-    set_status(T(S_ST_SIGNING_IN));
-    if (!api_sign_in(why, sizeof why)) { trace("%s", why); set_status(why); vTaskDelete(NULL); }   // no session: nothing to report with
-    trace("signed in");
+    set_link(LINK_ENROLL);
+    link_until_selling();
     xSemaphoreTake(s_lock, portMAX_DELAY); S.online = true; xSemaphoreGive(s_lock);
     if (!strcmp(g_cfg.role, "till")) {
         int n = api_products(prods, MAX_PRODUCTS, why, sizeof why);
@@ -172,23 +241,22 @@ static void net_task(void *arg) {
             }
         }
     } else set_status(T(S_ST_WAITING));
-    TickType_t last_refresh = xTaskGetTickCount();
     for (;;) {
         cmd_t c;
         bool got = xQueueReceive(s_cmd, &c, strcmp(g_cfg.role, "roll") == 0 ? pdMS_TO_TICKS(1500) : pdMS_TO_TICKS(1000)) == pdTRUE;
-        if (xTaskGetTickCount() - last_refresh > pdMS_TO_TICKS(40 * 60 * 1000)) { if (api_sign_in(why, sizeof why)) last_refresh = xTaskGetTickCount(); }
         static int idle;
         int phase_now;
         xSemaphoreTake(s_lock, portMAX_DELAY); phase_now = S.phase; xSemaphoreGive(s_lock);
         if (phase_now == PH_UNCERTAIN && ((got && c.kind == CMD_RETRY) || (!got && ++idle >= 10))) {
             idle = 0;
             pending_t p;
-            if (pending_load(&p)) settle(&p); else set_phase(PH_SELL, T(S_ST_CHOOSE));
+            if (pending_load(&p)) { settle(&p); lease_still_held(); } else set_phase(PH_SELL, T(S_ST_CHOOSE));
             continue;
         }
         if (got && c.kind == CMD_REPORT) { set_status(api_report(g_cfg.role, "till.traces_sent", "") ? T(S_ST_TRACES_SENT) : T(S_ST_TRACES_NOT_SENT)); continue; }
         if (!strcmp(g_cfg.role, "roll")) {
             bool ok = api_roll(&roll, why, sizeof why);
+            if (!ok && !lease_still_held()) continue;
             xSemaphoreTake(s_lock, portMAX_DELAY);
             bool changed = ok ? (strcmp(seen_receipt, roll.receipt_id) || seen_revision != roll.revision) : (seen_receipt[0] != 0 || why[0]);
             if (ok) { S.roll = roll; S.has_roll = true; snprintf(S.status, sizeof S.status, T(S_ST_RECEIPT), roll.receipt_id, roll.revision); }
@@ -241,6 +309,7 @@ static void net_task(void *arg) {
             char number[32] = "", pwhy[96] = "";
             pay_result_t r = pay_run(&p, save_attempt, send_attempt, number, sizeof number, pwhy, sizeof pwhy);   // kept first, then sent
             conclude(&p, r, number, pwhy);
+            lease_still_held();
             continue;
         }
         if (c.kind == CMD_RETRY) continue;
@@ -271,7 +340,7 @@ static void net_task(void *arg) {
         set_status(T(S_ST_SENDING));
         const int64_t t0 = esp_timer_get_time();
         bool ok = api_draft(sent.lines, sent.n, &roll, why, sizeof why);
-        if (!ok && strstr(why, "401")) { api_sign_in(why, sizeof why); ok = api_draft(sent.lines, sent.n, &roll, why, sizeof why); }
+        if (!ok && !lease_still_held()) ok = api_draft(sent.lines, sent.n, &roll, why, sizeof why);   // the same basket, once taken again
         xSemaphoreTake(s_lock, portMAX_DELAY);
         if (ok) {
             S.roll = roll; S.has_roll = true; basket_confirm(&s_local, sent.seq); s_last = sent; s_last.confirmed = sent.seq;

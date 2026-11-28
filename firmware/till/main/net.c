@@ -3,7 +3,6 @@
 #include "trace.h"
 #include "strings.h"
 #include "esp_app_desc.h"
-#include "esp_mac.h"
 #include <errno.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -12,6 +11,9 @@
 #include <time.h>
 #include "cJSON.h"
 #include "cfg.h"
+#include "device.h"
+#include "enroll.h"
+#include "mbedtls/sha256.h"
 #include "pay_logic.h"
 #include "layout_keys.h"
 #include "text_copy.h"
@@ -30,7 +32,6 @@
 static const char *TAG = "net";
 #define RESP_MAX 12288   // the contract's 16 KiB page ceiling, less the headers' room
 static char s_resp[RESP_MAX];
-static char s_access[1400];
 static EventGroupHandle_t s_ev;
 #define BIT_UP BIT0
 static bool s_up;
@@ -114,7 +115,7 @@ static esp_http_client_handle_t conn_for(const char *url, esp_http_client_method
 
 static int64_t ms_since(int64_t us) { return (esp_timer_get_time() - us) / 1000; }
 
-static int http(esp_http_client_method_t m, const char *path, const char *body, bool bearer) {
+static int http(esp_http_client_method_t m, const char *path, const char *body) {
     static char url[640];   // the server (95) and the longest query (the roll's, ~300) with room to spare
     if (snprintf(url, sizeof url, "%s%s", g_cfg.url, path) >= (int)sizeof url) {
         ESP_LOGE(TAG, "request address too long, not sent");
@@ -129,11 +130,10 @@ static int http(esp_http_client_method_t m, const char *path, const char *body, 
         if (!h) return -1;
         esp_http_client_set_header(h, "apikey", g_cfg.anon);
         esp_http_client_set_header(h, "Content-Type", "application/json");
-        if (bearer) {
-            static char auth[1440];
-            snprintf(auth, sizeof auth, "Bearer %s", s_access);
-            esp_http_client_set_header(h, "Authorization", auth);
-        } else esp_http_client_delete_header(h, "Authorization");
+        // #4519 -- the board signs in as nobody: the installation's public key, which the function's gateway verifies
+        static char auth[220];
+        snprintf(auth, sizeof auth, "Bearer %s", g_cfg.anon);
+        esp_http_client_set_header(h, "Authorization", auth);
         if (esp_http_client_open(h, len) != ESP_OK || (len > 0 && esp_http_client_write(h, body, len) != len)) {
             conn_drop();   // not sent: the kept connection was closed by the server; one new one is tried
             continue;
@@ -158,51 +158,179 @@ static int http(esp_http_client_method_t m, const char *path, const char *body, 
 
 const char *api_last_code(void) { return s_last_code; }
 
-bool api_sign_in(char *why, int cap) {
-    char body[260];
-    snprintf(body, sizeof body, "{\"refresh_token\":\"%s\"}", g_cfg.refresh);
-    int st = http(HTTP_METHOD_POST, "/auth/v1/token?grant_type=refresh_token", body, false);
-    if (st != 200) { say(why, cap, T(S_WHY_SIGNIN), st); return false; }
-    cJSON *j = cJSON_Parse(s_resp);
-    const cJSON *a = cJSON_GetObjectItem(j, "access_token"), *r = cJSON_GetObjectItem(j, "refresh_token");
-    bool ok = cJSON_IsString(a) && cJSON_IsString(r) && strlen(a->valuestring) < sizeof s_access;
-    if (ok) {
-        strcpy(s_access, a->valuestring);
-        if (strcmp(r->valuestring, g_cfg.refresh) != 0) cfg_save_refresh(r->valuestring);   // the server rotates it: keep the new one
-    } else say(why, cap, T(S_WHY_SIGNIN_BAD), st);
-    cJSON_Delete(j);
-    return ok;
+
+// ---- #4519: the board's own calls, through the installation's embedded-till function ----
+static void copy(char *d, size_t cap, const cJSON *s);
+#define EDGE "/functions/v1/embedded-till"
+static char s_lease[65];          // the lease token: random, in memory only, never written or traced
+static char s_link_reason[32];    // why the last command was refused by the lease, until main takes it
+static char s_claim_req[37];      // one claim request id per code: a lost answer is asked again the same
+
+static void put_str(cJSON *b, const char *k, const char *v) { cJSON_AddStringToObject(b, k, v); }
+
+// The board's proof: its id and its secret, added to [b]; false when the identity cannot be read.
+static bool add_proof(cJSON *b) {
+    device_t d;
+    char secret[65];
+    if (device_identity(&d) != ESP_OK || device_secret_hex(secret) != ESP_OK) return false;
+    put_str(b, "device_id", d.id);
+    put_str(b, "secret", secret);
+    memset(secret, 0, sizeof secret);
+    return true;
 }
 
-// #4508 -- the item keys of the till's published layout (#4448), in their order; 0 when the till has none (no layout,
-// the layouts switched off, or not readable), and the board then offers the products as before.
-static int layout_items(char ids[][40], int max) {
-    if (!g_cfg.till[0]) return 0;
-    char path[200];
-    snprintf(path, sizeof path, "/rest/v1/till_layouts?select=layout,version&till_id=eq.%s&status=eq.published&limit=1", g_cfg.till);
-    if (http(HTTP_METHOD_GET, path, NULL, true) != 200) return 0;
-    cJSON *j = cJSON_Parse(s_resp);
-    const cJSON *row = cJSON_GetArrayItem(j, 0), *v = cJSON_GetObjectItem(row, "version");
-    int n = layout_item_ids(cJSON_GetObjectItem(row, "layout"), ids, max);
-    if (n > 0) trace("layout v%d: %d item keys", cJSON_IsNumber(v) ? v->valueint : 0, n);
-    cJSON_Delete(j);
-    return n;
+// Posts [b] (deleted here) to the function; the HTTP status, the answer in s_resp. The body is never traced.
+static int edge(cJSON *b) {
+    char *body = cJSON_PrintUnformatted(b);
+    cJSON_Delete(b);
+    if (!body) return -1;
+    int st = http(HTTP_METHOD_POST, EDGE, body);
+    memset(body, 0, strlen(body));   // it held the secret
+    cJSON_free(body);
+    return st;
 }
 
+// The `reason` of the function's answer into [out]; empty when it has none.
+static void reason_of_answer(char *out, int cap) {
+    cJSON *j = cJSON_Parse(s_resp);
+    const cJSON *r = j ? cJSON_GetObjectItem(j, "reason") : NULL;
+    snprintf(out, cap, "%s", cJSON_IsString(r) ? r->valuestring : "");
+    cJSON_Delete(j);
+}
+
+const char *api_take_link_reason(void) {
+    static char taken[32];
+    snprintf(taken, sizeof taken, "%s", s_link_reason);
+    s_link_reason[0] = 0;
+    return taken;
+}
+
+// A command under the lease: [op] with [args] (deleted here). Answers as the till's own function would have over REST,
+// so the readers below stay as they were: 200 with the result's exact bytes in s_resp; 400 with {"code","details"} for
+// the server's refusal; -1 for an uncertain outcome; 401 for a lease that ended (its reason kept for main).
+static int command(const char *op, cJSON *args) {
+    cJSON *b = cJSON_CreateObject();
+    put_str(b, "action", "command");
+    if (!add_proof(b)) { cJSON_Delete(b); cJSON_Delete(args); return -1; }
+    put_str(b, "lease_token", s_lease);
+    put_str(b, "op", op);
+    cJSON_AddItemToObject(b, "args", args ? args : cJSON_CreateObject());
+    int st = edge(b);
+    if (st < 0) return -1;
+    static const char OK[] = "{\"ok\":true,\"result\":";
+    size_t n = strlen(s_resp);
+    if (st == 200 && strncmp(s_resp, OK, sizeof OK - 1) == 0 && n > sizeof OK && s_resp[n - 1] == '}') {
+        memmove(s_resp, s_resp + sizeof OK - 1, n - sizeof OK);   // the result's own bytes: every digit as the server sent it
+        s_resp[n - sizeof OK] = 0;
+        return 200;
+    }
+    cJSON *j = cJSON_Parse(s_resp);
+    const cJSON *r = j ? cJSON_GetObjectItem(j, "reason") : NULL, *code = j ? cJSON_GetObjectItem(j, "code") : NULL;
+    const cJSON *detail = j ? cJSON_GetObjectItem(j, "detail") : NULL;
+    const char *reason = cJSON_IsString(r) ? r->valuestring : "";
+    int out;
+    if (!strcmp(reason, "refused") && cJSON_IsString(code)) {
+        cJSON *e = cJSON_CreateObject();
+        put_str(e, "code", code->valuestring);
+        if (cJSON_IsString(detail)) put_str(e, "details", detail->valuestring);
+        char *t = cJSON_PrintUnformatted(e);
+        snprintf(s_resp, RESP_MAX, "%s", t ? t : "{}");
+        cJSON_free(t);
+        cJSON_Delete(e);
+        out = 400;
+    } else if (!strcmp(reason, "uncertain") || reason[0] == 0) {
+        out = -1;
+    } else {
+        snprintf(s_link_reason, sizeof s_link_reason, "%s", reason);
+        snprintf(s_last_code, sizeof s_last_code, "%s", reason);
+        trace("%s: %s", op, reason);
+        out = 401;
+    }
+    cJSON_Delete(j);
+    return out;
+}
+
+bool api_claim(const char *code, char *status, int status_cap, char *why, int cap) {
+    device_t d;
+    if (device_identity(&d) != ESP_OK) { say(why, cap, T(S_WHY_CLAIM), -1); return false; }
+    static char last_code[ENROLL_CODE_LEN + 1];
+    if (strcmp(last_code, code) || !s_claim_req[0]) { api_new_id(s_claim_req); snprintf(last_code, sizeof last_code, "%s", code); }
+    cJSON *b = cJSON_CreateObject();
+    put_str(b, "action", "enrollment.claim");
+    put_str(b, "code", code);
+    put_str(b, "device_id", d.id);
+    put_str(b, "secret_hash", d.secret_hash);
+    put_str(b, "firmware", esp_app_get_description()->version);
+    put_str(b, "protocol", "v1");
+    put_str(b, "claim_request_id", s_claim_req);
+    int st = edge(b);
+    cJSON *j = cJSON_Parse(s_resp);
+    const cJSON *ok = j ? cJSON_GetObjectItem(j, "ok") : NULL, *s2 = j ? cJSON_GetObjectItem(j, "status") : NULL;
+    bool took = st == 200 && cJSON_IsTrue(ok);
+    if (took) snprintf(status, status_cap, "%s", cJSON_IsString(s2) ? s2->valuestring : "");
+    else reason_of_answer(why, cap);
+    cJSON_Delete(j);
+    return took;
+}
+
+bool api_status(char *status, int status_cap, char *why_reason, int reason_cap) {
+    cJSON *b = cJSON_CreateObject();
+    put_str(b, "action", "enrollment.status");
+    if (!add_proof(b)) { cJSON_Delete(b); snprintf(why_reason, reason_cap, "no identity"); return false; }
+    int st = edge(b);
+    cJSON *j = cJSON_Parse(s_resp);
+    const cJSON *ok = j ? cJSON_GetObjectItem(j, "ok") : NULL;
+    bool known = st == 200 && cJSON_IsTrue(ok);
+    if (known) {
+        copy(status, status_cap, cJSON_GetObjectItem(j, "status"));
+        // the business and the till the board serves are the server's, never the board's own settings
+        copy(g_cfg.workspace, sizeof g_cfg.workspace, cJSON_GetObjectItem(j, "workspace_id"));
+        copy(g_cfg.till, sizeof g_cfg.till, cJSON_GetObjectItem(j, "till_id"));
+    } else if (st < 0) snprintf(why_reason, reason_cap, "uncertain");
+    else reason_of_answer(why_reason, reason_cap);
+    cJSON_Delete(j);
+    return known;
+}
+
+bool api_ask_cashier(char *why_reason, int reason_cap) {
+    uint8_t raw[32], hash[32];
+    esp_fill_random(raw, sizeof raw);
+    for (int i = 0; i < 32; i++) snprintf(s_lease + 2 * i, 3, "%02x", raw[i]);
+    mbedtls_sha256((const unsigned char *)s_lease, 64, hash, 0);
+    memset(raw, 0, sizeof raw);
+    char lease_hash[65];
+    for (int i = 0; i < 32; i++) snprintf(lease_hash + 2 * i, 3, "%02x", hash[i]);
+    cJSON *b = cJSON_CreateObject();
+    put_str(b, "action", "operator.request");
+    if (!add_proof(b)) { cJSON_Delete(b); snprintf(why_reason, reason_cap, "no identity"); return false; }
+    put_str(b, "lease_hash", lease_hash);
+    int st = edge(b);
+    cJSON *j = cJSON_Parse(s_resp);
+    bool took = st == 200 && cJSON_IsTrue(j ? cJSON_GetObjectItem(j, "ok") : NULL);
+    if (!took) { if (st < 0) snprintf(why_reason, reason_cap, "uncertain"); else reason_of_answer(why_reason, reason_cap); }
+    cJSON_Delete(j);
+    return took;
+}
+
+bool api_leased(char *why_reason, int reason_cap) {
+    int st = command("readiness", NULL);
+    if (st == 200 || st == 400) return true;   // the lease answered: a refusal of readiness is the till's, not the lease's
+    snprintf(why_reason, reason_cap, "%s", st == 401 ? api_take_link_reason() : "uncertain");
+    return false;
+}
+
+// #4508, #4519 -- the products of the board's till: the items its published layout's keys name, in the keys' order, or
+// the business's first sellable items without a layout (counter_board_catalogue_v1, of the lease's till).
 int api_products(product_t *out, int max, char *why, int cap) {
     char ids[MAX_PRODUCTS][40];
-    int keys = layout_items(ids, max < MAX_PRODUCTS ? max : MAX_PRODUCTS);
-    static char path[720];   // the item ids of a layout's keys: up to 8 uuids
-    if (keys > 0) {
-        int at = snprintf(path, sizeof path, "/rest/v1/services?select=id,name,price_cents&workspace_id=eq.%s&active=eq.true&sellable=eq.true&id=in.(", g_cfg.workspace);
-        for (int i = 0; i < keys; i++) at += snprintf(path + at, sizeof path - at, "%s%s", i ? "," : "", ids[i]);
-        snprintf(path + at, sizeof path - at, ")&limit=%d", max);
-    } else {
-        snprintf(path, sizeof path, "/rest/v1/services?select=id,name,price_cents&workspace_id=eq.%s&active=eq.true&sellable=eq.true&order=sort_order.asc.nullslast,name.asc&limit=%d", g_cfg.workspace, max);
-    }
-    int st = http(HTTP_METHOD_GET, path, NULL, true);
+    cJSON *args = cJSON_CreateObject();
+    cJSON_AddNumberToObject(args, "max", max < MAX_PRODUCTS ? max : MAX_PRODUCTS);
+    int st = command("catalogue", args);
     if (st != 200) { say(why, cap, T(S_WHY_PRODUCTS), st); return -1; }
-    cJSON *j = cJSON_Parse(s_resp);
+    cJSON *cat = cJSON_Parse(s_resp);
+    int keys = layout_item_ids(cJSON_GetObjectItem(cat, "layout"), ids, max < MAX_PRODUCTS ? max : MAX_PRODUCTS);
+    if (keys > 0) trace("layout: %d item keys", keys);
+    cJSON *j = cJSON_GetObjectItem(cat, "items");
     int n = 0;
     cJSON *it;
     cJSON_ArrayForEach(it, j) {
@@ -222,7 +350,7 @@ int api_products(product_t *out, int max, char *why, int cap) {
         out[n].price_minor = (int)price;
         n++;
     }
-    cJSON_Delete(j);
+    cJSON_Delete(cat);
     // #4508 -- the layout's order, not the server's: a key whose item is no longer sold is left out
     if (keys > 0) {
         product_t sorted[MAX_PRODUCTS];
@@ -258,17 +386,22 @@ static void copy(char *d, size_t cap, const cJSON *s) { if (cJSON_IsString(s)) {
 }
 
 bool api_draft(const basket_line_t *b, int n, roll_t *out, char *why, int cap) {
-    static char body[2048];
     char req[40];
     api_new_id(req);
-    int o = snprintf(body, sizeof body, "{\"p_workspace_id\":\"%s\",\"p_request_id\":\"%s\",", g_cfg.workspace, req);
-    if (s_receipt[0]) o += snprintf(body + o, sizeof body - o, "\"p_receipt_id\":\"%s\",\"p_expected_revision\":%d,", s_receipt, s_revision);
-    else o += snprintf(body + o, sizeof body - o, "\"p_receipt_id\":null,\"p_expected_revision\":null,");
-    o += snprintf(body + o, sizeof body - o, "\"p_body\":{\"lines\":[");
-    for (int i = 0; i < n && o < (int)sizeof body - 120; i++)
-        o += snprintf(body + o, sizeof body - o, "%s{\"item_id\":\"%s\",\"quantity\":\"%d\"}", i ? "," : "", b[i].item_id, b[i].qty);
-    o += snprintf(body + o, sizeof body - o, "]%s%s%s}}", g_cfg.till[0] ? ",\"till_id\":\"" : "", g_cfg.till[0] ? g_cfg.till : "", g_cfg.till[0] ? "\"" : "");
-    int st = http(HTTP_METHOD_POST, "/rest/v1/rpc/counter_receipt_draft_v1", body, true);
+    // #4519 -- the till is the lease's: the board never names it
+    cJSON *args = cJSON_CreateObject(), *lines = cJSON_AddArrayToObject(args, "lines");
+    put_str(args, "request_id", req);
+    if (s_receipt[0]) { put_str(args, "receipt_id", s_receipt); cJSON_AddNumberToObject(args, "expected_revision", s_revision); }
+    else { cJSON_AddNullToObject(args, "receipt_id"); cJSON_AddNullToObject(args, "expected_revision"); }
+    char qty[12];
+    for (int i = 0; i < n; i++) {
+        cJSON *l = cJSON_CreateObject();
+        put_str(l, "item_id", b[i].item_id);
+        snprintf(qty, sizeof qty, "%d", b[i].qty);
+        put_str(l, "quantity", qty);
+        cJSON_AddItemToArray(lines, l);
+    }
+    int st = command("draft", args);
     cJSON *j = cJSON_Parse(s_resp);
     if (st != 200 || !j) {
         const cJSON *msg = j ? cJSON_GetObjectItem(j, "message") : NULL;
@@ -303,19 +436,17 @@ bool api_draft(const basket_line_t *b, int n, roll_t *out, char *why, int cap) {
 }
 
 bool api_roll(roll_t *out, char *why, int cap) {
-    char path[400];
-    snprintf(path, sizeof path, "/rest/v1/counter_receipts?select=id,revision,currency,counter_receipt_lines(line_no,quantity,gross_minor,label:frozen-%%3E%%3Elabel)&workspace_id=eq.%s&state=eq.draft&order=modified_datetime.desc&limit=1", g_cfg.workspace);
-    int st = http(HTTP_METHOD_GET, path, NULL, true);
+    int st = command("roll", NULL);   // #4519 -- the newest open draft of the lease's till
     memset(out, 0, sizeof *out);
     if (st != 200) { say(why, cap, T(S_WHY_ROLL), st); return false; }
     cJSON *j = cJSON_Parse(s_resp);
-    const cJSON *r = cJSON_IsArray(j) ? cJSON_GetArrayItem(j, 0) : NULL;
+    const cJSON *r = cJSON_IsObject(j) ? j : NULL;
     if (!r) { cJSON_Delete(j); if (why) why[0] = 0; return false; }
     copy(out->receipt_id, sizeof out->receipt_id, cJSON_GetObjectItem(r, "id"));
     const cJSON *rv = cJSON_GetObjectItem(r, "revision");
     out->revision = revision_of(rv);
     copy(out->currency, sizeof out->currency, cJSON_GetObjectItem(r, "currency"));
-    const cJSON *ls = cJSON_GetObjectItem(r, "counter_receipt_lines"), *l;
+    const cJSON *ls = cJSON_GetObjectItem(r, "lines"), *l;
     cJSON_ArrayForEach(l, ls) {
         if (out->n >= MAX_LINES) break;
         roll_line_t *x = &out->lines[out->n++];
@@ -329,37 +460,22 @@ bool api_roll(roll_t *out, char *why, int cap) {
     return true;
 }
 
+// #4519 -- a trace report is sent by a signed-in person (submit_trace_report_v1); the board signs in as nobody, so it keeps
+// its traces on its screen until the reports have a board route of their own.
 bool api_report(const char *role, const char *failure_type, const char *failure_code) {
-    static char stack[3000];
-    trace_dump(stack, sizeof stack);
-    uint8_t mac[6] = {0};
-    esp_read_mac(mac, ESP_MAC_WIFI_STA);
-    char device[32], platform[40];
-    snprintf(device, sizeof device, "e32r40t-%02x%02x%02x%02x%02x%02x", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
-    snprintf(platform, sizeof platform, "esp32-e32r40t %s", role);
-    cJSON *b = cJSON_CreateObject();
-    cJSON_AddStringToObject(b, "p_device_id", device);
-    cJSON_AddStringToObject(b, "p_app_version", esp_app_get_description()->version);
-    cJSON_AddNullToObject(b, "p_schema_version");
-    cJSON_AddStringToObject(b, "p_platform", platform);
-    cJSON_AddStringToObject(b, "p_failure_type", failure_type);
-    if (failure_code && failure_code[0]) cJSON_AddStringToObject(b, "p_failure_code", failure_code); else cJSON_AddNullToObject(b, "p_failure_code");
-    cJSON_AddStringToObject(b, "p_stack", stack);
-    char *body = cJSON_PrintUnformatted(b);
-    cJSON_Delete(b);
-    if (!body) return false;
-    int st = http(HTTP_METHOD_POST, "/rest/v1/rpc/submit_trace_report_v1", body, true);
-    cJSON_free(body);
-    trace("trace report %s: %d %.20s", failure_type, st, st == 200 ? s_resp : "");
-    return st == 200;
+    trace("trace report %s: not sent, the board signs in as nobody", failure_type);
+    return false;
 }
 
 pay_result_t api_finalize_cash(const pending_t *p, char *number, int number_cap, char *why, int cap) {
-    static char body[512];
-    snprintf(body, sizeof body,
-             "{\"p_workspace_id\":\"%s\",\"p_request_id\":\"%s\",\"p_receipt_id\":\"%s\",\"p_expected_revision\":%d,"
-             "\"p_tenders\":[{\"kind\":\"cash\",\"amount_minor\":%lld}]}",
-             p->workspace, p->request_id, p->receipt_id, p->revision, (long long)p->total_minor);
-    int st = http(HTTP_METHOD_POST, "/rest/v1/rpc/counter_receipt_finalize_v1", body, true);
+    // #4519 -- exactly what [p] holds, so a retry is the same request; the till is the lease's
+    cJSON *args = cJSON_CreateObject(), *tenders = cJSON_AddArrayToObject(args, "tenders"), *t = cJSON_CreateObject();
+    put_str(args, "request_id", p->request_id);
+    put_str(args, "receipt_id", p->receipt_id);
+    cJSON_AddNumberToObject(args, "expected_revision", p->revision);
+    put_str(t, "kind", "cash");
+    cJSON_AddNumberToObject(t, "amount_minor", (double)p->total_minor);
+    cJSON_AddItemToArray(tenders, t);
+    int st = command("finalize", args);
     return pay_classify(st, st > 0 ? s_resp : NULL, p->receipt_id, number, number_cap, why, cap);
 }

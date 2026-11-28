@@ -28,9 +28,14 @@ unknown external circuit; the drawer's pinout, drive stage and pulse are not yet
 
 ## What a board keeps
 
-- The settings (`nvs`): Wi-Fi, the Deskilo server, the signed-in cashier's refresh token (never a password), the
-  company, the till, the role and the language. Written by `tools/till_provision.py`. A server address that is not a
-  plain `https://host[:port]` (no user, query or fragment; `main/server_url.c`) leaves the board unset.
+- The settings (`nvs`): Wi-Fi, the Deskilo server and its public key, the role and the language. Written by
+  `tools/till_provision.py`. No one's sign-in: a server address that is not a plain `https://host[:port]` (no user,
+  query or fragment; `main/server_url.c`) leaves the board unset.
+- Its identity (`attempts`): an id and a secret made once, at the first start. The board connects itself to a business
+  with the code its owner gets in Settings › Devices, typed on its screen; once the owner approved it, it asks for a
+  cashier, and sells only under the lease a cashier gives it from the app's till drawer (the embedded-till function's
+  `command`). The lease token lives in memory only; when the lease ends the board keeps its basket and asks again. The
+  business and the till it serves are the server's answer, never provisioned.
 - A payment sent and not yet answered (`attempts`), so it is asked again under the same request after a restart.
 - The touch calibration: 48 bytes with the mark `DTC1` and a CRC-32 (`main/touch_cal.c`). A kept calibration that
   fails either, or holds values no calibration gives, is not used, and the vendor's range applies until the board is
@@ -57,6 +62,7 @@ bash test/host/run_ui.sh    # the screens in five languages (needs the LVGL of o
 python3 ../../tools/build_till_strings.py --check       # the board's texts (l10n/till_*.json) are generated
 idf.py -B build -p <port> flash                          # then provision the board:
 python3 ../../tools/till_provision.py --port <port> --role till --anon <the project's public key>
+# then, on the board: the code from Deskilo › Devices; approve it there; a cashier chooses Sell on this board as me
 ```
 
 The firmware version shown in the pairing code is ESP-IDF's: `git describe` of the source, with `-dirty` when the
