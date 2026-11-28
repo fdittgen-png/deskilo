@@ -61,12 +61,12 @@ delete from public.setting_values where key = 'stock.invoice_sale_place' and wor
 
 select is(pg_temp.setp(pg_temp.u(512)::text), 'saved', 'the owner picks Site B / SHOP by its id');
 select is(pg_temp.pl(), pg_temp.u(512)::text, 'the goods leave Site B / SHOP, not the one created first');
-select like(pg_temp.setp('SHOP'), 'ERR DKG11%place_ambiguous%', 'a code that two places carry is refused when saved');
+select alike(pg_temp.setp('SHOP'), 'ERR DKG11%place_ambiguous%', 'a code that two places carry is refused when saved');
 select is(pg_temp.setp('BACK'), 'saved', 'a code that names one place is accepted');
 select is((select value #>> '{}' from public.setting_values where key = 'stock.invoice_sale_place' and workspace_id = pg_temp.u(101) and valid_to is null),
   pg_temp.u(513)::text, 'and stored as that place''s id');
-select like(pg_temp.setp(pg_temp.u(514)::text), 'ERR DKG11%place_unusable%', 'an archived place is refused when saved');
-select like(pg_temp.setp(pg_temp.u(521)::text), 'ERR DKG11%place_unusable%', 'a place of another business is refused');
+select alike(pg_temp.setp(pg_temp.u(514)::text), 'ERR DKG11%place_unusable%', 'an archived place is refused when saved');
+select alike(pg_temp.setp(pg_temp.u(521)::text), 'ERR DKG11%place_unusable%', 'a place of another business is refused');
 update public.stock_locations set active = false where id = pg_temp.u(513);
 select is(pg_temp.pl(), 'stock_sale_place', 'a pick archived since is refused again when an invoice is posted, with its reason');
 select is(pg_temp.setp(''), 'saved', 'an empty value is accepted: the code MAIN stays the default');
