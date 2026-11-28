@@ -6080,6 +6080,10 @@
   "@editorSlot30": {
     "description": "#2631 resource_editor: editorSlot30"
   },
+  "editorSlot5": "5 minutos",
+  "@editorSlot5": {
+    "description": "#4501 resource_editor: the five-minute booking slot"
+  },
   "editorSlot60": "1 hora",
   "@editorSlot60": {
     "description": "#2631 resource_editor: editorSlot60"

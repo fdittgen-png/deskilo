@@ -101,4 +101,20 @@ void main() {
     expect(results.single?.draft.subdivision, 'AG');
     expect(results.single?.draft.street, 'Via Brera 9');
   });
+
+  // #4501 (WS-01) -- the country is picked from the catalogue and checked when it is saved; a stored one stays until changed
+  testWidgets('a country outside the catalogue is refused when saved, a stored one is kept', (tester) async {
+    final results = await _open(tester, _brera.copyWith(countryCode: 'ZZ'));
+    expect(find.byKey(const ValueKey('site-country')), findsOneWidget);
+    await tester.tap(_save);
+    await tester.pumpAndSettle();
+    expect(results.single?.draft.countryCode, 'ZZ', reason: 'unchanged: it saves as it was');
+
+    final again = await _open(tester, _brera);
+    await tester.enterText(find.byKey(const ValueKey('site-country')), 'QQ');
+    await tester.tap(_save);
+    await tester.pumpAndSettle();
+    expect(again, isEmpty);
+    expect(find.text('This is not in the list: pick one'), findsOneWidget);
+  });
 }

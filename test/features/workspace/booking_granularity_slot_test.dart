@@ -6,6 +6,7 @@
 // else the workspace value.
 import 'dart:io';
 
+import 'package:deskilo/features/plan/presentation/widgets/resource_fields.dart' show ResourceDraft;
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -31,6 +32,14 @@ void main() {
         BookingGranularity.forSlot(7, BookingGranularity.halfDay),
         BookingGranularity.halfDay,
       );
+    });
+
+    test('the resource editor offers the slots of the contract, the five-minute one included (#4501)', () {
+      expect(BookingGranularity.ownSlotMinutes, [5, 15, 30, 60, 1440]);
+      expect(ResourceDraft.slots, [null, ...BookingGranularity.ownSlotMinutes], reason: 'the editor offers the contract, no more, no less');
+      for (final m in BookingGranularity.ownSlotMinutes) {
+        expect(BookingGranularity.forSlot(m, BookingGranularity.flexible), isNot(BookingGranularity.flexible), reason: '$m maps to a grid');
+      }
     });
 
     test('the server accepts exactly the slots the client maps', () {
