@@ -12,6 +12,7 @@ import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show easAddressRefusal;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../codes/dk_code.dart';
@@ -239,6 +240,20 @@ mixin FakeWorkspaceMembers on FakeWorkspaceState
   }) async {
     final i = otherMembers.indexWhere((m) => m.id == memberId);
     if (i >= 0) {
+      // #4501 (0989) -- a scheme of the list and an identifier of its form; the stored address is kept as it is
+      final refusal = easAddressRefusal(
+        endpointScheme,
+        endpointId,
+        storedScheme: otherMembers[i].einvoiceEndpointScheme,
+        storedIdentifier: otherMembers[i].einvoiceEndpointId,
+      );
+      if (refusal != null) {
+        throw PostgrestException(
+          message: 'the e-invoicing address is not of a scheme of the list',
+          code: DkCode.dkl02,
+          details: '{"reason": "${refusal.name}"}',
+        );
+      }
       otherMembers[i] = otherMembers[i].copyWith(
         einvoiceEndpointId: endpointId.trim(),
         einvoiceEndpointScheme: endpointScheme.trim().toUpperCase(),

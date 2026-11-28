@@ -9490,6 +9490,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dunningSettingsTitle => 'Reglas de recordatorio';
 
   @override
+  String eInvoiceAddressIdentifierRefused(String scheme) {
+    return 'Este identificador no tiene la forma del esquema $scheme.';
+  }
+
+  @override
+  String get eInvoiceAddressSchemeRefused =>
+      'Elija el esquema de la dirección en la lista.';
+
+  @override
   String get eInvoiceChannelGapBuyerEndpoint =>
       'la dirección electrónica del cliente (BT-49) en su perfil';
 
@@ -44934,6 +44943,52 @@ class AppLocalizationsEs extends AppLocalizations {
   String vatUntilDate(String date) {
     return 'hasta el $date';
   }
+
+  @override
+  String get vatex132Label => 'Actividades de interés general (art. 132)';
+
+  @override
+  String get vatex132Text =>
+      'Exento en virtud del artículo 132 de la Directiva 2006/112/CE';
+
+  @override
+  String get vatex143Label => 'Importaciones (art. 143)';
+
+  @override
+  String get vatex143Text =>
+      'Exento en virtud del artículo 143 de la Directiva 2006/112/CE';
+
+  @override
+  String get vatex148Label => 'Transporte internacional (art. 148)';
+
+  @override
+  String get vatex148Text =>
+      'Exento en virtud del artículo 148 de la Directiva 2006/112/CE';
+
+  @override
+  String get vatex151Label =>
+      'Organismos diplomáticos e internacionales (art. 151)';
+
+  @override
+  String get vatex151Text =>
+      'Exento en virtud del artículo 151 de la Directiva 2006/112/CE';
+
+  @override
+  String get vatex309Label => 'Servicios de viaje fuera de la UE (art. 309)';
+
+  @override
+  String get vatex309Text =>
+      'Exento en virtud del artículo 309 de la Directiva 2006/112/CE';
+
+  @override
+  String get vatex79cLabel => 'Suplidos por cuenta del cliente (art. 79 c)';
+
+  @override
+  String get vatex79cText =>
+      'Exento en virtud del artículo 79, letra c), de la Directiva 2006/112/CE';
+
+  @override
+  String get vatexOLabel => 'No sujeto al IVA';
 
   @override
   String get viesCheckExplainer =>

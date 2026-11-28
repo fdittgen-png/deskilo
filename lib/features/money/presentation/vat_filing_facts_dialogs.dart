@@ -6,6 +6,7 @@
 // return for a company.
 import 'package:flutter/material.dart';
 
+import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/vat_filing_files.dart';
@@ -20,12 +21,14 @@ Future<VatFilingFacts?> askSpanishFilingFacts(
 );
 
 /// Asks the declarant the LIPE names; null when cancelled.
+/// #4501 -- the role is picked from [roles], the codes the file accepts.
 Future<VatFilingFacts?> askItalianDeclarant(
   BuildContext context,
-  AppLocalizations l10n,
-) => showDialog<VatFilingFacts>(
+  AppLocalizations l10n, {
+  required List<String> roles,
+}) => showDialog<VatFilingFacts>(
   context: context,
-  builder: (context) => _ItalianDeclarantDialog(l10n: l10n),
+  builder: (context) => _ItalianDeclarantDialog(l10n: l10n, roles: roles),
 );
 
 class _SpanishFactsDialog extends StatefulWidget {
@@ -119,9 +122,10 @@ class _SpanishFactsDialogState extends State<_SpanishFactsDialog> {
 }
 
 class _ItalianDeclarantDialog extends StatefulWidget {
-  const _ItalianDeclarantDialog({required this.l10n});
+  const _ItalianDeclarantDialog({required this.l10n, required this.roles});
 
   final AppLocalizations l10n;
+  final List<String> roles;
 
   @override
   State<_ItalianDeclarantDialog> createState() =>
@@ -129,7 +133,8 @@ class _ItalianDeclarantDialog extends StatefulWidget {
 }
 
 class _ItalianDeclarantDialogState extends State<_ItalianDeclarantDialog> {
-  final _fields = FormControllers({'fiscalCode': '', 'role': ''});
+  final _fields = FormControllers({'fiscalCode': ''});
+  String? _role;
 
   @override
   void dispose() {
@@ -156,13 +161,13 @@ class _ItalianDeclarantDialogState extends State<_ItalianDeclarantDialog> {
               label: l10n.vatDeclFilingItDeclarantCf,
             ),
             const FormGap(),
-            AppTextField(
+            AppDropdownField<String>(
               key: const ValueKey('vat-filing-it-role'),
-              controller: _fields['role'],
-              fieldKey: 'role',
-              keyboardType: TextInputType.number,
               label: l10n.vatDeclFilingItDeclarantRole,
-              helper: l10n.vatDeclFilingItDeclarantRoleHelp,
+              hint: l10n.vatDeclFilingItDeclarantRoleHelp,
+              value: _role,
+              items: [for (final r in widget.roles) (r, r)],
+              onChanged: (r) => setState(() => _role = r),
             ),
           ],
         ),
@@ -178,7 +183,7 @@ class _ItalianDeclarantDialogState extends State<_ItalianDeclarantDialog> {
           onPressed: () => Navigator.of(context).pop(
             VatFilingFacts(
               declarantFiscalCode: _fields.text('fiscalCode'),
-              declarantRole: _fields.text('role'),
+              declarantRole: _role ?? '',
             ),
           ),
           child: Text(l10n.vatDeclLipeXml),

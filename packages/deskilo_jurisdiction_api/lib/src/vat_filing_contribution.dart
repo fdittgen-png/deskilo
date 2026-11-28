@@ -76,6 +76,12 @@ abstract class VatFilingContribution {
   /// host maps each to its dialog. None by default. Additive.
   Set<String> get factsAsked => const {};
 
+  /// The values a fact asked may take, by the fact's field id (Italy's
+  /// `declarantRole`: the codici carica its file accepts); the host offers
+  /// exactly these, in this order, instead of a typed field. None by default.
+  /// Additive: the contract stays at the same version.
+  Map<String, List<String>> get factChoices => const {};
+
   /// Whether [context] can be filed here, as stable issue codes.
   ///
   /// Returns the validated filing, or null with the issues in [result]. The

@@ -7,6 +7,7 @@ import '../../../../core/jurisdiction/installed_postal_layouts.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/address_region_field.dart';
+import '../../../../core/ui/einvoice_scheme_field.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 
@@ -26,8 +27,15 @@ class EInvoiceIdentityForm {
   final regionError = ValueNotifier<String?>(null);
   String _loadedRegion = '';
 
+  /// #4501 -- why the address cannot be saved, under its identifier.
+  final addressError = ValueNotifier<String?>(null);
+  String _loadedScheme = '';
+  String _loadedEndpoint = '';
+
   void load(InvoiceLegal legal) {
     _loadedRegion = regionCode(legal.subdivision);
+    _loadedScheme = legal.einvoiceEndpointScheme;
+    _loadedEndpoint = legal.einvoiceEndpointId;
     endpointId.text = legal.einvoiceEndpointId;
     endpointScheme.text = legal.einvoiceEndpointScheme;
     subdivision.text = legal.subdivision;
@@ -55,8 +63,22 @@ class EInvoiceIdentityForm {
     return refusal == null;
   }
 
+  /// #4501 -- whether the address may be saved: a scheme of the list and an identifier of its form, or the address
+  /// as it was stored.
+  bool addressAccepted(AppLocalizations l10n) {
+    final refusal = easAddressRefusal(
+      endpointScheme.text,
+      endpointId.text,
+      storedScheme: _loadedScheme,
+      storedIdentifier: _loadedEndpoint,
+    );
+    addressError.value = refusal == null ? null : easRefusalText(l10n, refusal, endpointScheme.text);
+    return refusal == null;
+  }
+
   void dispose() {
     regionError.dispose();
+    addressError.dispose();
     for (final c in [
       endpointId,
       endpointScheme,
@@ -101,16 +123,23 @@ class EInvoiceIdentityFields extends StatelessWidget {
           ),
         ),
         const FormGap(),
-        AppTextField(
-          key: const ValueKey('legal-identity-einvoice-endpoint'),
-          controller: form.endpointId,
-          label: l10n.eInvoiceEndpointIdField,
+        EInvoiceSchemeField(
+          key: const ValueKey('legal-identity-einvoice-scheme'),
+          value: form.endpointScheme.text,
+          onChanged: (code) {
+            form.endpointScheme.text = code;
+            form.addressError.value = null;
+          },
         ),
         const FormGap(),
-        AppTextField(
-          key: const ValueKey('legal-identity-einvoice-scheme'),
-          controller: form.endpointScheme,
-          label: l10n.eInvoiceEndpointSchemeField,
+        ValueListenableBuilder(
+          valueListenable: form.addressError,
+          builder: (context, error, _) => AppTextField(
+            key: const ValueKey('legal-identity-einvoice-endpoint'),
+            controller: form.endpointId,
+            label: l10n.eInvoiceEndpointIdField,
+            error: error,
+          ),
         ),
         const FormGap(),
         ValueListenableBuilder(
