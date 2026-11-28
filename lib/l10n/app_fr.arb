@@ -6937,8 +6937,16 @@
   "@expenseInvalidDeductible": {
     "description": "#2357 input VAT: expenseInvalidDeductible"
   },
+  "expenseInvalidStatedVat": "Saisissez le taux de TVA indiqué sur le document, entre 0 et 100, et un montant qui n’est pas négatif.",
+  "@expenseInvalidStatedVat": {
+    "description": "#4479 expense input tax: expenseInvalidStatedVat"
+  },
   "expenseInvalidSupplyQuantity": "Saisissez au moins une unité.",
   "expenseInvalidUnitPrice": "Saisissez un prix unitaire valide, ou laissez-le vide.",
+  "expenseMissingSupplierCountry": "Choisissez le pays du fournisseur.",
+  "@expenseMissingSupplierCountry": {
+    "description": "#4479 expense input tax: expenseMissingSupplierCountry"
+  },
   "expenseMissingSupplyName": "Nommez le nouvel article.",
   "expenseSupplyHint": "Capsules de café, sacs d'aspirateur… Une fois validée, l'article va sur l'étagère comme service consommable : ceux qui l'utilisent le paient.",
   "expenseSupplyItem": "Article",
@@ -6974,6 +6982,14 @@
   "@expenseVatDeductibleHint": {
     "description": "#2357 input VAT: expenseVatDeductibleHint"
   },
+  "expenseVatDocumentNumber": "Numéro du document",
+  "@expenseVatDocumentNumber": {
+    "description": "#4479 expense input tax: expenseVatDocumentNumber"
+  },
+  "expenseVatForeignNote": "Cette TVA n’est pas déduite dans cette déclaration : un fournisseur à l’étranger l’a facturée et elle ne peut être réclamée qu’auprès de ce pays. Le taux et le montant restent attachés à la dépense pour cette demande.",
+  "@expenseVatForeignNote": {
+    "description": "#4479 expense input tax: expenseVatForeignNote"
+  },
   "expenseVatNone": "Sans TVA",
   "@expenseVatNone": {
     "description": "#2357 input VAT: expenseVatNone"
@@ -6981,6 +6997,30 @@
   "expenseVatRate": "TVA sur cette dépense",
   "@expenseVatRate": {
     "description": "#2357 input VAT: expenseVatRate"
+  },
+  "expenseVatStatedPercent": "Taux de TVA du document",
+  "@expenseVatStatedPercent": {
+    "description": "#4479 expense input tax: expenseVatStatedPercent"
+  },
+  "expenseVatStatedTax": "Montant de TVA du document",
+  "@expenseVatStatedTax": {
+    "description": "#4479 expense input tax: expenseVatStatedTax"
+  },
+  "expenseVatSupplierCountry": "Pays du fournisseur",
+  "@expenseVatSupplierCountry": {
+    "description": "#4479 expense input tax: expenseVatSupplierCountry"
+  },
+  "expenseVatTreatment": "Nature de la TVA",
+  "@expenseVatTreatment": {
+    "description": "#4479 expense input tax: expenseVatTreatment"
+  },
+  "expenseVatTreatmentDomestic": "TVA de ce pays",
+  "@expenseVatTreatmentDomestic": {
+    "description": "#4479 expense input tax: expenseVatTreatmentDomestic"
+  },
+  "expenseVatTreatmentForeign": "TVA facturée par un fournisseur à l’étranger",
+  "@expenseVatTreatmentForeign": {
+    "description": "#4479 expense input tax: expenseVatTreatmentForeign"
   },
   "exportAboutContents": "Ce que contient ce fichier",
   "exportAboutCurrency": "Les montants sont en",

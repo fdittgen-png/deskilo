@@ -11294,11 +11294,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get expenseInvalidDeductible => 'Inserisca una quota tra 0 e 100.';
 
   @override
+  String get expenseInvalidStatedVat =>
+      'Indicare l’aliquota IVA riportata sul documento, tra 0 e 100, e un importo non negativo.';
+
+  @override
   String get expenseInvalidSupplyQuantity => 'Inserisca almeno un\'unità.';
 
   @override
   String get expenseInvalidUnitPrice =>
       'Inserisca un prezzo unitario valido o lo lasci vuoto.';
+
+  @override
+  String get expenseMissingSupplierCountry =>
+      'Scegliere il Paese del fornitore.';
 
   @override
   String get expenseMissingSupplyName => 'Dia un nome al nuovo articolo.';
@@ -11356,10 +11364,36 @@ class AppLocalizationsIt extends AppLocalizations {
       '100 % salvo che una parte della spesa sia privata o serva un\'attività esente.';
 
   @override
+  String get expenseVatDocumentNumber => 'Numero del documento';
+
+  @override
+  String get expenseVatForeignNote =>
+      'Questa IVA non viene detratta in questa dichiarazione: l’ha addebitata un fornitore all’estero e può essere richiesta a rimborso solo a quel Paese. L’aliquota e l’importo restano con la spesa per tale richiesta.';
+
+  @override
   String get expenseVatNone => 'Senza IVA';
 
   @override
   String get expenseVatRate => 'IVA su questa spesa';
+
+  @override
+  String get expenseVatStatedPercent => 'Aliquota IVA del documento';
+
+  @override
+  String get expenseVatStatedTax => 'Importo IVA del documento';
+
+  @override
+  String get expenseVatSupplierCountry => 'Paese del fornitore';
+
+  @override
+  String get expenseVatTreatment => 'Natura dell’IVA';
+
+  @override
+  String get expenseVatTreatmentDomestic => 'IVA di questo Paese';
+
+  @override
+  String get expenseVatTreatmentForeign =>
+      'IVA addebitata da un fornitore all’estero';
 
   @override
   String get exportAboutContents => 'Cosa contiene questo file';

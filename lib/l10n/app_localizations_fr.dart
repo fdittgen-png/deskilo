@@ -11336,11 +11336,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get expenseInvalidDeductible => 'Saisissez une part entre 0 et 100.';
 
   @override
+  String get expenseInvalidStatedVat =>
+      'Saisissez le taux de TVA indiqué sur le document, entre 0 et 100, et un montant qui n’est pas négatif.';
+
+  @override
   String get expenseInvalidSupplyQuantity => 'Saisissez au moins une unité.';
 
   @override
   String get expenseInvalidUnitPrice =>
       'Saisissez un prix unitaire valide, ou laissez-le vide.';
+
+  @override
+  String get expenseMissingSupplierCountry =>
+      'Choisissez le pays du fournisseur.';
 
   @override
   String get expenseMissingSupplyName => 'Nommez le nouvel article.';
@@ -11399,10 +11407,36 @@ class AppLocalizationsFr extends AppLocalizations {
       '100 % sauf si une partie de la dépense est privée ou sert une activité exonérée.';
 
   @override
+  String get expenseVatDocumentNumber => 'Numéro du document';
+
+  @override
+  String get expenseVatForeignNote =>
+      'Cette TVA n’est pas déduite dans cette déclaration : un fournisseur à l’étranger l’a facturée et elle ne peut être réclamée qu’auprès de ce pays. Le taux et le montant restent attachés à la dépense pour cette demande.';
+
+  @override
   String get expenseVatNone => 'Sans TVA';
 
   @override
   String get expenseVatRate => 'TVA sur cette dépense';
+
+  @override
+  String get expenseVatStatedPercent => 'Taux de TVA du document';
+
+  @override
+  String get expenseVatStatedTax => 'Montant de TVA du document';
+
+  @override
+  String get expenseVatSupplierCountry => 'Pays du fournisseur';
+
+  @override
+  String get expenseVatTreatment => 'Nature de la TVA';
+
+  @override
+  String get expenseVatTreatmentDomestic => 'TVA de ce pays';
+
+  @override
+  String get expenseVatTreatmentForeign =>
+      'TVA facturée par un fournisseur à l’étranger';
 
   @override
   String get exportAboutContents => 'Ce que contient ce fichier';

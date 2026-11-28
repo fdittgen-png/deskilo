@@ -57,9 +57,9 @@ Future<void> showExpenseSheet(
   ServiceItem? supplyItem;
   // #2357 — input VAT: the rate the expense carries, the share the space
   // may deduct and whether it bought a fixed asset.
-  final vatPercents = await expenseVatPercents(ref, workspace.vatRegime);
+  final vatRates = await expenseVatRates(ref, workspace.vatRegime);
   if (!context.mounted) return;
-  final vat = ExpenseVatChoice.of(ref, workspace.countryCode, fields['deductible']);
+  final vat = ExpenseVatChoice.of(ref, workspace.countryCode, fields);
   void prefillUnit() {
     final cents = appFormatOf(context).parseMinor(fields['amount'].text) ?? 0;
     final qty = int.tryParse(fields['supplyQuantity'].text) ?? 0;
@@ -81,6 +81,9 @@ Future<void> showExpenseSheet(
     vatPercent: vat.percent,
     deductible: fields['deductible'].text,
     vatFlags: vat.flags,
+    vatRateId: vat.rateId,
+    foreignVat: vat.foreign(appFormatOf(context).locale),
+    vatFacts: vat.facts,
   );
   // #1449 — the reason the typed expense cannot be filed, shown in the
   // sheet; the sheet only closes on a draft the rules accept.
@@ -96,6 +99,10 @@ Future<void> showExpenseSheet(
       l10n.expenseInvalidUnitPrice,
     ExpenseOutcome.invalidDeductible =>
       l10n.expenseInvalidDeductible,
+    ExpenseOutcome.missingSupplierCountry =>
+      l10n.expenseMissingSupplierCountry,
+    ExpenseOutcome.invalidStatedVat =>
+      l10n.expenseInvalidStatedVat,
   };
   // The field each refusal is about, so its words sit under that field.
   String? fieldOf(ExpenseOutcome outcome) => switch (outcome) {
@@ -105,6 +112,8 @@ Future<void> showExpenseSheet(
     ExpenseOutcome.invalidSupplyQuantity => 'supplyQuantity',
     ExpenseOutcome.invalidUnitPrice => 'supplyUnit',
     ExpenseOutcome.invalidDeductible => 'deductible',
+    ExpenseOutcome.missingSupplierCountry => 'vatCountry',
+    ExpenseOutcome.invalidStatedVat => 'statedPercent',
   };
   final failed =
       l10n.workspaceGenericError;
@@ -171,7 +180,7 @@ Future<void> showExpenseSheet(
         ...expenseVatFields(
           l10n: l10n,
           currency: currency,
-          percents: vatPercents,
+          rates: vatRates,
           choice: vat,
           amount: fields['amount'].text,
           refresh: refresh,

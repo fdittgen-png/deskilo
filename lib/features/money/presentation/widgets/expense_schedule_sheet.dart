@@ -236,9 +236,9 @@ Future<bool> _showCreateExpenseScheduleSheet(
   String? supplierId;
   final topic = l10n.helpTopicScheduledExpenses;
   // #2357 — the VAT every occurrence will carry.
-  final vatPercents = await expenseVatPercents(ref, workspace.vatRegime);
+  final vatRates = await expenseVatRates(ref, workspace.vatRegime);
   if (!context.mounted) return false;
-  final vat = ExpenseVatChoice.of(ref, workspace.countryCode, TextEditingController(text: '100'));
+  final vat = ExpenseVatChoice.of(ref, workspace.countryCode, FormControllers({'deductible': '100'}));
 
   final submitted = await showAppSheet<bool>(
     context: context,
@@ -278,7 +278,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
           ...expenseVatFields(
             l10n: l10n,
             currency: currency,
-            percents: vatPercents,
+            rates: vatRates,
             choice: vat,
             amount: amount.text,
             refresh: () => setSheetState(() {}),
@@ -373,6 +373,12 @@ Future<bool> _showCreateExpenseScheduleSheet(
     AppSnack.error(context, l10n.scheduleVatInvalid);
     return false;
   }
+  final locale = appFormatOf(context).locale;
+  final foreign = vat.foreign(locale);
+  if (foreign != null && (!foreign.valid || !vat.facts.containsKey('supplier_country'))) {
+    AppSnack.error(context, l10n.expenseInvalidStatedVat);
+    return false;
+  }
   final ok = await runGuarded(
     context,
     domain: 'money',
@@ -390,7 +396,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
           endsOn: endsOn,
           details: ScheduleDetails(
             description: description.text.trim(),
-            vat: vat.payload,
+            vat: vat.payload(locale),
             supplierId: supplierId,
           ),
         ),
