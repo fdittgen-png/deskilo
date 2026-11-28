@@ -69,5 +69,5 @@ abstract interface class ExpenseCategoryRepository {
   Future<ExpenseCategory> save(String workspaceId, {String? id, required String label, int? sortOrder, required String requestId});
 
   /// Retires [id], or brings it back.
-  Future<ExpenseCategory> setRetired(String workspaceId, String id, {required bool retired, required String requestId});
+  Future<void> setRetired(String workspaceId, String id, {required bool retired, required String requestId});
 }

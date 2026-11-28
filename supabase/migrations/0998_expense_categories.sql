@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 -- apps: additive
--- (one table with its rows seeded; purchase_documents.category_id; submit_expense, save_purchase_draft_v1, submit_purchase_v1 and
+-- (one table with its rows seeded; purchase_documents.category_id; submit_expense, save_purchase_draft_v1 and
 --  export_workspace_records patched at asserted anchors of their live definitions)
 --
 -- #4512 (FIN-06, #4500 package 4) -- the categories an expense is filed under are the business's own records.
@@ -17,9 +17,9 @@
 --     back) are the commands, for the right workspaceSettings and the feature expenseCategories.
 --   * expense_category_resolve is the one rule at every door: a category is named by its identity (category_id) or by the
 --     code of one of the business (case-folded); it must be active, a retired one only on a draft that already holds
---     it. Anything else is DKX01, the expense category refusal. submit_expense (a new defaulted parameter
---     p_category_id) and save_purchase_draft_v1 (payload.category_id, or the text of payload.category as a code) take
---     it; the event and the purchase keep the label the category had when they were filed (its code for a built-in
+--     it. Anything else is DKX01, the expense category refusal. submit_expense (the text of its category as a code; a
+--     purchase submitted through it names the category it holds) and save_purchase_draft_v1 (payload.category_id, or
+--     the text of payload.category as a code) take it; the event and the purchase keep the label the category had when they were filed (its code for a built-in
 --     with no label), so every reader of the text -- the obligations, the cost allocation, the accounting source, the
 --     DATEV facts -- reads what it read, and `category_id` beside it names the record.
 --   * The table joins the business's export.
@@ -239,8 +239,8 @@ grant execute on function public.expense_category_retire_v1(uuid, uuid, uuid, bo
 
 -- ── the writers take the one rule ──────────────────────────────────────────────────────────────────────
 -- Patched at asserted anchors of their live definitions (each digest equals the replay's on r22: submit_expense 8896fc904a9c,
--- save_purchase_draft_v1 68d6e1c38dc4, submit_purchase_v1 6ef3046564a5, export_workspace_records 1d45cb25b602), so what
--- 0413, 0590, 0587 and 0968 built is carried unchanged.
+-- save_purchase_draft_v1 68d6e1c38dc4, export_workspace_records 1d45cb25b602), so what 0413, 0590 and 0968 built is carried
+-- unchanged.
 create or replace function pg_temp.anchor_once(p_def text, p_old text, p_new text, p_what text)
 returns text
 language plpgsql
@@ -254,14 +254,12 @@ end
 $f$;
 revoke execute on function pg_temp.anchor_once(text, text, text, text) from public;
 
--- submit_expense (0413): a new defaulted parameter, so the old signature goes
+-- submit_expense (0413): the category is resolved by the code the caller names (a purchase submitted through it, by the
+-- identity it holds)
 do $patch$
 declare
   v_def text := pg_get_functiondef('public.submit_expense(uuid, integer, text, text, jsonb, jsonb)'::regprocedure);
 begin
-  v_def := pg_temp.anchor_once(v_def,
-    $o$p_supply jsonb DEFAULT NULL::jsonb, p_vat jsonb DEFAULT NULL::jsonb)$o$,
-    $n$p_supply jsonb DEFAULT NULL::jsonb, p_vat jsonb DEFAULT NULL::jsonb, p_category_id uuid DEFAULT NULL::uuid)$n$, 'the signature');
   v_def := pg_temp.anchor_once(v_def,
     $o$  v_service_id uuid;
 begin
@@ -276,12 +274,12 @@ $n$, 'the variables');
     $o$  if p_amount_cents <= 0 then raise exception 'amount must be positive'; end if;
 $o$,
     $o$  if p_amount_cents <= 0 then raise exception 'amount must be positive'; end if;
-$o$ || $n$  -- #4512: the category is one of the business's own, by identity or by the code it names; the event keeps its label.
-  -- A purchase submitted through here keeps the category it holds even if it was retired since.
+$o$ || $n$  -- #4512: the category is one of the business's own, by the code the caller names; the event keeps its label.
+  -- A purchase submitted through here names the category it holds, even one retired since.
   v_held := (select d.category_id from public.purchase_documents d
               where d.id = nullif(current_setting('deskilo.purchase_bridge', true), '')::uuid and d.workspace_id = p_workspace_id);
   select r.category_id, r.snapshot into v_cat_id, v_cat_text
-    from public.expense_category_resolve(p_workspace_id, p_category_id, p_category, v_held) r;
+    from public.expense_category_resolve(p_workspace_id, v_held, p_category, v_held) r;
 $n$, 'the amount check');
   v_def := pg_temp.anchor_once(v_def,
     $o$      'category', p_category,
@@ -292,9 +290,6 @@ $n$, 'the event payload');
   execute v_def;
 end
 $patch$;
-drop function public.submit_expense(uuid, integer, text, text, jsonb, jsonb);
-revoke execute on function public.submit_expense(uuid, integer, text, text, jsonb, jsonb, uuid) from public, anon;
-grant execute on function public.submit_expense(uuid, integer, text, text, jsonb, jsonb, uuid) to authenticated;
 
 -- save_purchase_draft_v1 (0590): the draft names its category by identity or by code
 do $patch$
@@ -346,30 +341,113 @@ end
 $patch$;
 revoke execute on function public.save_purchase_draft_v1(uuid, uuid, integer, jsonb) from public, anon;
 
--- submit_purchase_v1 (0587): the purchase names its category by identity
-do $patch$
+-- restates 0968 (export_workspace_records): the table joins the business's export
+CREATE OR REPLACE FUNCTION public.export_workspace_records(p_workspace_id uuid)
+ RETURNS jsonb
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
 declare
-  v_def text := pg_get_functiondef('public.submit_purchase_v1(uuid, uuid, integer, uuid)'::regprocedure);
+  v_tables text[] := array[
+    -- configuration, readable (the XML stays the re-importable copy)
+    'sites', 'fee_bands', 'packages', 'credit_products', 'vat_rates',
+    'accessories', 'seat_accessories', 'closure_days', 'validation_policies',
+    'workspace_roles', 'workspace_role_members', 'workspace_field_definitions',
+    'workspace_field_values', 'number_sequences', 'charging_stations',
+    'plan_images', 'setting_values',
+    -- member accounts
+    'member_credits', 'member_credit_uses', 'price_negotiations',
+    'quota_extensions', 'usage_records', 'invoice_matches', 'invoice_reminders',
+    'invoice_dunning_holds', 'tax_exemption_certificates',
+    -- purchases, premises, assets, books
+    'suppliers', 'purchase_documents', 'purchase_lines', 'purchase_obligations',
+    'outgoing_payments', 'expense_schedules', 'expense_occurrences',
+    'expense_repartitions', 'premises_leases', 'lease_terms',
+    'lease_settlements', 'room_rentals', 'room_rental_fees', 'workspace_assets',
+    'asset_valuation_batches', 'asset_valuation_rows', 'book_profiles',
+    'book_accounts', 'book_mappings', 'book_periods', 'vat_declarations',
+    'einvoice_inbox',
+    -- people the space is accountable to
+    'guest_participations', 'rights_requests',
+    -- #3307 the orders to the suppliers
+    'purchase_orders', 'purchase_order_lines', 'purchase_order_sends',
+    'purchase_order_receipts', 'purchase_order_receipt_lines',
+    -- #3308 the passes the space sells and the passes it sold
+    'guest_pass_offers', 'guest_passes',
+    -- #3824 the goods ledger
+    'item_units', 'item_codes', 'stock_locations', 'stock_lots', 'stock_movements',
+    'stock_balances',
+    -- #4362 the tags bound to items, places and pieces, and the named pieces
+    'stock_tags', 'stock_tagged_units', 'stock_movement_units',
+    'stock_handling_units', 'stock_handling_unit_lines', 'stock_handling_unit_pieces', 'stock_movement_handling_units',
+    'stock_repacks', 'stock_repack_lines',
+    -- #4184 the counter's receipts, their lines and their tenders
+    'counter_receipts', 'counter_receipt_lines', 'counter_tenders', 'counter_refunds',
+    -- #4367 the tills, their sessions, the cash entries and the day closes
+    'counter_tills', 'counter_till_sessions', 'counter_cash_entries', 'counter_day_closes',
+    -- #4373 the sales a till made offline, as the server received them
+    'counter_offline_sales',
+    -- #4164 the billing identity of each customer the business invoices
+    'billing_parties',
+    -- #4166 the customer quotes, their revisions, the decisions the issuer recorded and
+    -- the conversions into invoices
+    'customer_quotes', 'customer_quote_revisions', 'customer_quote_decisions',
+    'customer_quote_conversions',
+    -- #4169 the variants and the supplier's article
+    'item_dimensions', 'item_dimension_values', 'item_variants', 'item_variant_values',
+    'supplier_item_mappings',
+    -- #4171 what was put away from a delivery
+    'stock_receipt_allocations',
+    -- #4170 the transfers between sites and what each loaded
+    'stock_transfers', 'stock_transfer_lines',
+    -- #4294 the reorder points
+    'stock_reorder_points', 'item_groups', 'item_group_history',
+    -- #4172 the returns, and what each line reversed
+    'stock_returns', 'stock_reversals',
+    -- #4172 the counts and their decisions
+    'stock_counts',
+    -- #4295 the plans, the tasks and their lines
+    'stock_count_plans', 'stock_count_tasks', 'stock_count_task_lines',
+    -- #4178 the engagements of the services ordered, their steps and the invoice
+    -- lines that billed a direct commitment
+    'service_fulfilments', 'service_fulfilment_transitions', 'service_fulfilment_invoice_links',
+    -- #4436 the track IDs frozen on the goods lines of an issued invoice
+    'invoice_line_tracks',
+    -- #4442 the units of measure of the business and their conversions
+    'workspace_units', 'unit_conversions', 'expense_categories',
+    -- #4476 the copies printed of a counter receipt
+    'counter_receipt_copies'];
+  v_left_out text[] := public.system_column_names() || array['workspace_id', 'source_xml'];
+  v_table text;
+  v_columns text[];
+  v_rows jsonb;
+  v_out jsonb := '[]'::jsonb;
 begin
-  v_def := pg_temp.anchor_once(v_def,
-    $o$coalesce(v_desc, ''), v_supply, v_vat);$o$,
-    $n$coalesce(v_desc, ''), v_supply, v_vat, v_doc.category_id);$n$, 'the expense call');
-  execute v_def;
-end
-$patch$;
-revoke execute on function public.submit_purchase_v1(uuid, uuid, integer, uuid) from public, anon;
-
--- export_workspace_records (0968): the table joins the export
-do $patch$
-declare
-  v_def text := pg_get_functiondef('public.export_workspace_records(uuid)'::regprocedure);
-begin
-  v_def := pg_temp.anchor_once(v_def,
-    $o$'workspace_units', 'unit_conversions',$o$,
-    $n$'workspace_units', 'unit_conversions', 'expense_categories',$n$, 'the export list');
-  execute v_def;
-end
-$patch$;
+  if auth.uid() is null or not public.has_permission(p_workspace_id, 'exportData') then
+    raise exception 'only someone who may export this workspace''s data reads its records'
+      using errcode = 'DKN01';
+  end if;
+  foreach v_table in array v_tables loop
+    -- the sessions, their entries and the day closes carry the expected cash and the differences: the finances' to export
+    if v_table in ('counter_till_sessions', 'counter_cash_entries', 'counter_day_closes', 'counter_offline_sales', 'invoice_line_tracks') and not public.has_permission(p_workspace_id, 'viewFinances') then
+      continue;
+    end if;
+    select array_agg(c.column_name::text order by c.ordinal_position) into v_columns
+      from information_schema.columns c
+     where c.table_schema = 'public' and c.table_name = v_table
+       and c.column_name <> all (v_left_out);
+    execute format(
+      'select coalesce(jsonb_agg(jsonb_build_array(%s) order by created_datetime), ''[]''::jsonb)
+         from public.%I where workspace_id = $1',
+      (select string_agg(format('%I', c), ', ') from unnest(v_columns) c), v_table)
+      into v_rows using p_workspace_id;
+    v_out := v_out || jsonb_build_array(jsonb_build_object(
+      'table', v_table, 'columns', to_jsonb(v_columns), 'rows', v_rows));
+  end loop;
+  return v_out;
+end;
+$function$;
 revoke execute on function public.export_workspace_records(uuid) from public, anon;
 
 -- ── the builtin association template writes the feature flags: it names expenseCategories (dart run tool/build_builtin_templates.dart) ──

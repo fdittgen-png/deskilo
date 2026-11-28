@@ -6,7 +6,7 @@
 -- retires with the right and the feature, a plain member cannot; a name is kept once among the active ones; a category is
 -- never deleted and its code never moves. Rolled back.
 begin;
-select plan(18);
+select plan(19);
 
 create function pg_temp.u(n int) returns uuid language sql immutable as $$
   select ('00000000-0000-4000-8000-00004512' || lpad(n::text, 4, '0'))::uuid;
@@ -28,8 +28,8 @@ end $f$;
 create function pg_temp.cat(p_ws int, p_code text) returns uuid language sql stable as $f$
   select id from public.expense_categories where workspace_id = pg_temp.u(p_ws) and code = p_code
 $f$;
-create function pg_temp.exp(p_user int, p_ws int, p_cat text, p_id uuid default null) returns text language sql as $f$
-  select pg_temp.run_as(p_user, format('select public.submit_expense(%L, 1200, %L, ''x'', null, null, %L)::text', pg_temp.u(p_ws), p_cat, p_id))
+create function pg_temp.exp(p_user int, p_ws int, p_cat text) returns text language sql as $f$
+  select pg_temp.run_as(p_user, format('select public.submit_expense(%L, 1200, %L, ''x'', null, null)::text', pg_temp.u(p_ws), p_cat))
 $f$;
 create function pg_temp.save(p_user int, p_ws int, p_body jsonb) returns text language sql as $f$
   select pg_temp.run_as(p_user, format('select public.expense_category_save_v1(%L, gen_random_uuid(), %L::jsonb)::text', pg_temp.u(p_ws), p_body))
@@ -64,7 +64,7 @@ select is((select payload ->> 'category' || '|' || (payload ->> 'category_id') f
   'coffee|' || pg_temp.cat(101, 'coffee'), 'and keeps its label and its identity');
 select is(pg_temp.exp(2, 101, 'tea'), 'ERR DKX01 expense_category_unknown', 'a text that names no category is refused');
 select is(pg_temp.exp(2, 101, ''), 'ERR DKX01 expense_category_unknown', 'so is an empty one');
-select is(pg_temp.exp(2, 101, '', pg_temp.cat(102, 'coffee')), 'ERR DKX01 expense_category_unknown', 'and the category of another business');
+select is(pg_temp.exp(2, 101, 'c_nowhere'), 'ERR DKX01 expense_category_unknown', 'and a category of another business, which this one does not have');
 select is(pg_temp.exp(2, 101, 'scheduled'), 'ERR DKX01 expense_category_unknown', 'and a retired one');
 
 -- ── the owner keeps the list ──
@@ -73,7 +73,7 @@ select ok(current_setting('c.a') like '{%', 'the owner adds a category: ' || cur
 select is(pg_temp.save(2, 101, '{"label": "Printing"}'), 'ERR DKN01', 'a plain member cannot');
 select is(pg_temp.save(1, 103, '{"label": "Printing"}'), 'ERR DKN01', 'nor can anyone while the feature is off');
 select is(pg_temp.save(1, 101, '{"label": " cleaning "}'), 'ERR DKX01 label_taken', 'a name is kept once among the active ones');
-select is(pg_temp.exp(2, 101, '', (current_setting('c.a')::jsonb ->> 'id')::uuid) ~ '^[0-9a-f-]{36}$', true, 'an expense names the new category by identity');
+select is(pg_temp.exp(2, 101, current_setting('c.a')::jsonb ->> 'code') ~ '^[0-9a-f-]{36}$', true, 'an expense names the new category by its code');
 select is((select payload ->> 'category' from public.events where workspace_id = pg_temp.u(101) and type = 'expense'
             and payload ->> 'category_id' = current_setting('c.a')::jsonb ->> 'id' limit 1), 'Cleaning', 'and keeps the label it had');
 select set_config('c.r', pg_temp.save(1, 101, format('{"id": "%s", "label": "Cleaning supplies"}', current_setting('c.a')::jsonb ->> 'id')::jsonb), false);
@@ -90,6 +90,9 @@ select is(pg_temp.draft(2, 101, jsonb_build_object('kind', 'member_receipt', 'pu
   'category_id', current_setting('c.a')::jsonb ->> 'id', 'lines', jsonb_build_array(jsonb_build_object('description', 'Mop', 'gross_cents', 1200))), 1) ~ '^\{', true, 'the draft that holds it keeps it');
 select is(pg_temp.draft(2, 101, jsonb_build_object('kind', 'member_receipt', 'category_id', current_setting('c.a')::jsonb ->> 'id', 'lines', jsonb_build_array(jsonb_build_object('description', 'Mop', 'gross_cents', 1200)))),
   'ERR DKX01 expense_category_unknown', 'a new draft cannot start on it');
+
+select is(pg_temp.run_as(2, format('select (public.submit_purchase_v1(%L, %L, 2, gen_random_uuid()) ->> ''state'')', pg_temp.u(101), current_setting('d.a')::jsonb ->> 'purchase_id')),
+  'pending', 'the draft that holds the retired category is submitted: the expense it files keeps that category');
 
 select * from finish();
 rollback;

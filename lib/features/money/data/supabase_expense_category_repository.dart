@@ -32,15 +32,12 @@ class SupabaseExpenseCategoryRepository implements ExpenseCategoryRepository {
   }
 
   @override
-  Future<ExpenseCategory> setRetired(String workspaceId, String id, {required bool retired, required String requestId}) async {
-    final raw = await _client.rpc<Object?>('expense_category_retire_v1', params: {
+  Future<void> setRetired(String workspaceId, String id, {required bool retired, required String requestId}) async {
+    await _client.rpc<Object?>('expense_category_retire_v1', params: {
       'p_workspace_id': workspaceId,
       'p_request_id': requestId,
       'p_id': id,
       'p_retired': retired,
     });
-    final r = raw is Map ? raw : const <String, Object?>{};
-    final all = await categories(workspaceId);
-    return all.firstWhere((c) => c.id == (r['id'] ?? id), orElse: () => throw StateError('expense category $id not found'));
   }
 }

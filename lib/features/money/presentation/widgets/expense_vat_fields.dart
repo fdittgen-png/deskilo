@@ -35,6 +35,7 @@ import '../../application/submit_expense.dart';
 import '../../domain/vat_input.dart';
 import '../../providers/expense_category_providers.dart';
 import '../../providers/money_providers.dart';
+import '../expense_category_names.dart';
 import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 import '../vat_tax_point_labels.dart';
 
@@ -190,13 +191,14 @@ Future<T> whenExpenseVatRead<T>(
 }) async {
   final workspace = ref.read(currentWorkspaceProvider).value;
   Object? unread;
+  var none = false; // no category on offer: a sheet that cannot file under any is not opened
   if (workspace != null) {
     await guardRead<List<double>?>(
       domain: 'money',
       message: 'expense VAT rates failed',
       read: () async {
         // #4512 -- the sheet offers the business's own categories: they are read with the rates, or the sheet does not open
-        await ref.read(expenseCategoriesProvider(workspace.id).future);
+        none = activeExpenseCategories(await ref.read(expenseCategoriesProvider(workspace.id).future)).isEmpty;
         return _expenseVatPercents(ref, workspace.vatRegime);
       },
       fallback: (e) {
@@ -209,9 +211,10 @@ Future<T> whenExpenseVatRead<T>(
   // The screen that asked may be gone by the time the rates are read: then
   // nothing opens and nothing is said on it.
   if (!context.mounted) return unopened;
-  if (failed == null) return open();
   final l10n = context.l10n;
-  AppSnack.error(context, switch (classifyReadFailure(failed)) {
+  if (failed == null && !none) return open();
+  AppSnack.error(context, switch (failed == null ? null : classifyReadFailure(failed)) {
+    null => l10n.expenseCategoriesEmpty,
     ReadFailure.transient => l10n.readStateOffline,
     ReadFailure.denied => l10n.readStateDenied,
     ReadFailure.other => l10n.readStateFailed,
