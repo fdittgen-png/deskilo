@@ -4303,6 +4303,7 @@ A till board is the small screen at the counter that takes payments. You connect
 - **Remove** ends a board's connection to the business. To use it again, connect it with a new code.
 - Typing the code beside the QR (where there is no camera) shows which board it is; to connect it, scan its QR code. A board whose QR code is not accepted for connecting needs the new firmware first.
 - A code a wrong board presents too often is used up (5 times by default). Both numbers are in the business settings: **Board connection code: minutes** and **Board connection code: attempts**.
+- A board sells only for a cashier who authorized it, in their own sign-in. **Board cashier: minutes** (30 by default) is how long one authorization lasts, never longer than the cashier's sign-in; signing out ends it.
 - A code never holds 0, O, 1, I or L. One wrong character, or two swapped, is refused at once, in words under the field; capitals, spaces and dashes do not matter.
 
 <!-- anchor: user.workspace.settings.organisation -->

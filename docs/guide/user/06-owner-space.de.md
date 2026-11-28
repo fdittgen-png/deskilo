@@ -689,6 +689,7 @@ Ein Kassenterminal ist der kleine Bildschirm an der Theke, der Zahlungen annimmt
 - **Entfernen** beendet die Verbindung eines Terminals mit dem Unternehmen. Um es wieder zu nutzen, verbinden Sie es mit einem neuen Code.
 - Den Code neben dem QR-Code einzutippen (wo es keine Kamera gibt) zeigt, welches Terminal es ist; zum Verbinden scannen Sie seinen QR-Code. Ein Terminal, dessen QR-Code zum Verbinden nicht angenommen wird, braucht zuerst die neue Firmware.
 - Ein Code, den ein falsches Terminal zu oft vorlegt, ist verbraucht (standardmäßig 5-mal). Beide Zahlen stehen in den Einstellungen des Unternehmens: **Verbindungscode eines Geräts: Minuten** und **Verbindungscode eines Geräts: Versuche**.
+- Ein Terminal verkauft nur für einen Kassierer, der es in seiner eigenen Anmeldung freigegeben hat. **Kassierer eines Geräts: Minuten** (standardmäßig 30) legt fest, wie lange eine Freigabe gilt, nie länger als die Anmeldung des Kassierers; Abmelden beendet sie.
 - Ein Code enthält nie 0, O, 1, I oder L. Ein falsches Zeichen oder zwei vertauschte werden sofort abgelehnt, in Worten unter dem Feld; Groß- und Kleinschreibung, Leerzeichen und Bindestriche spielen keine Rolle.
 
 <!-- anchor: user.workspace.settings.organisation -->

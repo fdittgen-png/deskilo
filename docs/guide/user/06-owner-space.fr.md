@@ -689,6 +689,7 @@ Un terminal de caisse est le petit écran du comptoir qui encaisse. Vous le reli
 - **Retirer** met fin à la liaison d'un terminal avec l'entreprise. Pour l'utiliser à nouveau, reliez-le avec un nouveau code.
 - Saisir le code à côté du QR (là où il n'y a pas de caméra) indique de quel terminal il s'agit ; pour le relier, scannez son code QR. Un terminal dont le code QR n'est pas accepté pour la liaison a d'abord besoin du nouveau micrologiciel.
 - Un code présenté trop souvent par un mauvais terminal est épuisé (5 fois par défaut). Les deux nombres se trouvent dans les paramètres de l'entreprise : **Code de connexion d'un appareil : minutes** et **Code de connexion d'un appareil : essais**.
+- Un terminal ne vend que pour un caissier qui l'a autorisé, depuis sa propre connexion. **Caissier d'un appareil : minutes** (30 par défaut) fixe la durée d'une autorisation, jamais plus longue que la connexion du caissier ; se déconnecter y met fin.
 - Un code ne contient jamais 0, O, 1, I ni L. Un caractère faux, ou deux inversés, est refusé aussitôt, en clair sous le champ ; majuscules, espaces et tirets ne comptent pas.
 
 <!-- anchor: user.workspace.settings.organisation -->
