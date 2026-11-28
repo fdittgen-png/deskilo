@@ -15,7 +15,7 @@
 --   * #4499 (amended, with the owner's approval): a barcode (`item_codes.unit`) and a supplier's article
 --     (`supplier_item_mappings.purchase_unit`) name an item's unit through a foreign key that refused the rename, so an
 --     installation holding one on a typed name stopped here. The two keys now follow the rename (ON UPDATE CASCADE), and
---     a tag bound to the unit (`stock_tags.unit_code`, no key) moves with it. 0987 gives the keys the same rule on an
+--     a tag bound to the unit (`stock_tags.unit_code`, no key) moves with it. 0991 gives the keys the same rule on an
 --     installation that applied this file before the amendment. Proven by scripts/upgrade_equivalence_check.sh (its
 --     archive_seed_0960.sql stage).
 

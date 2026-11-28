@@ -133,6 +133,9 @@ class PremisesLease {
     required this.status,
     this.coveredLevels = '',
     this.areaM2,
+    this.siteId,
+    this.responsibleMemberId,
+    this.contractDocumentId,
     this.fixedUntil,
     this.noticeMonths = 0,
     this.noticeDeadline,
@@ -157,6 +160,9 @@ class PremisesLease {
       premises: r.stringOr('premises'),
       coveredLevels: r.stringOr('covered_levels'),
       areaM2: r.doubleOrNull('area_m2'),
+      siteId: r.stringOrNull('site_id'),
+      responsibleMemberId: r.stringOrNull('responsible_member_id'),
+      contractDocumentId: r.stringOrNull('contract_document_id'),
       startsOn: DateTime.parse(r.string('starts_on')),
       fixedUntil: DateTime.tryParse(r.stringOr('fixed_until')),
       noticeMonths: r.intOrNull('notice_months') ?? 0,
@@ -183,6 +189,11 @@ class PremisesLease {
   final String premises;
   final String coveredLevels;
   final double? areaM2;
+
+  /// #4498 -- what the lease refers to: its site, the member responsible for it and its contract document (kept by an edit).
+  final String? siteId;
+  final String? responsibleMemberId;
+  final String? contractDocumentId;
   final DateTime startsOn;
   final DateTime? fixedUntil;
   final int noticeMonths;
@@ -223,6 +234,8 @@ class LeaseDraft {
     this.indexationNote = '',
     this.areaM2,
     this.coveredLevels = '',
+    this.responsibleMemberId,
+    this.contractDocumentId,
   });
 
   final String? leaseId;
@@ -236,6 +249,8 @@ class LeaseDraft {
   final String indexationNote;
   final double? areaM2;
   final String coveredLevels;
+  final String? responsibleMemberId;
+  final String? contractDocumentId;
   final String requestId;
 
   Map<String, Object?> toPayload() => {
@@ -248,6 +263,9 @@ class LeaseDraft {
     'indexation_note': indexationNote,
     'area_m2': areaM2,
     'covered_levels': coveredLevels,
+    // a reference the lease holds is sent back as it is; its site is not sent at all (the server keeps what a save does not name)
+    'responsible_member_id': ?responsibleMemberId,
+    'contract_document_id': ?contractDocumentId,
   };
 }
 

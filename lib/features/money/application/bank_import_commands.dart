@@ -23,9 +23,14 @@ import '../domain/bank/csv_statement.dart';
 
 /// What reading and importing one file came to: the server's answer, or
 /// the reason the file was refused before anything was sent.
+/// #4496 -- where a file goes: the bank account it is imported into (null: the one its statement's name names), and
+/// for a CSV how it is read.
+typedef BankImportInto = ({String? bankAccountId, BankCsvMapping? csv});
+
 typedef BankImportOutcome = ({
   BankImportResult? result,
   BankFileException? refused,
+  BankAccountRefused? accountRefused,
 });
 
 
@@ -45,8 +50,9 @@ class BankImportCommands {
     required String fileName,
     required BankFileFormat format,
     required BankImportSettings settings,
-    BankCsvMapping? csv,
+    BankImportInto into = const (bankAccountId: null, csv: null),
   }) async {
+    final (:bankAccountId, :csv) = into;
     final BankStatement statement;
     try {
       statement = fitBankStatement(
@@ -59,15 +65,22 @@ class BankImportCommands {
         error: e,
         stackTrace: st,
       );
-      return (result: null, refused: e);
+      return (result: null, refused: e, accountRefused: null);
     }
     final digest = sha256.convert(bytes).toString();
-    final result = await _repository.importStatement(
-      workspaceId,
-      statement: statement,
-      sourceSha256: digest,
-      fileName: _cut(fileName, BankColumnWidths.fileName),
-    );
+    final BankImportResult result;
+    try {
+      result = await _repository.importStatement(
+        workspaceId,
+        statement: statement,
+        sourceSha256: digest,
+        fileName: _cut(fileName, BankColumnWidths.fileName),
+        bankAccountId: bankAccountId,
+      );
+    } on BankAccountRefused catch (e, st) {
+      TraceLogger.instance.warn('money', 'bank statement refused for its account: $e', error: e, stackTrace: st);
+      return (result: null, refused: null, accountRefused: e);
+    }
     // #2380 — the original after its statement: the server keeps a file only
     // for a statement its uploader imported (0621). A failed upload of a new
     // statement throws; importing the same file again finds it repeated and
@@ -88,7 +101,7 @@ class BankImportCommands {
         stackTrace: st,
       );
     }
-    return (result: result, refused: null);
+    return (result: result, refused: null, accountRefused: null);
   }
 
   /// Confirms [line] against [invoiceId] with the resolution its amount

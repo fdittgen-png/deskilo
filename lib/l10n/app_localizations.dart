@@ -3631,6 +3631,156 @@ abstract class AppLocalizations {
   /// **'Save this QR now — it is shown only once.'**
   String get badgeTokenOnce;
 
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Add a bank account'**
+  String get bankAccountAdd;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Also known as'**
+  String get bankAccountAliases;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Other names statements of this account were imported under, one per line.'**
+  String get bankAccountAliasesHint;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get bankAccountArchive;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get bankAccountArchived;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get bankAccountCurrency;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Bank account'**
+  String get bankAccountEdit;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. Spaces do not matter.'**
+  String get bankAccountIbanHint;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Other identifiers'**
+  String get bankAccountIdentifiers;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'An account number or the bank\'s own reference, one per line.'**
+  String get bankAccountIdentifiersHint;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Ledger account'**
+  String get bankAccountLedger;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get bankAccountLedgerNone;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get bankAccountName;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'The ledger account must be a posting asset account of the business.'**
+  String get bankAccountRefusedBookAccount;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'The statement is in another currency than the account {account} ({currency}).'**
+  String bankAccountRefusedCurrency(String account, String currency);
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'The account\'s statements are in its currency: the currency stays.'**
+  String get bankAccountRefusedCurrencyKept;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'This is not an IBAN.'**
+  String get bankAccountRefusedIban;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'A bank account needs a name of 1 to 64 characters.'**
+  String get bankAccountRefusedName;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the bank account this statement is of.'**
+  String get bankAccountRefusedNone;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'This file is of the account {name}, not of {account}. Pick its account, or add {name} to the names of {account}.'**
+  String bankAccountRefusedOther(String name, String account);
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Another bank account of the business is already known by {name}.'**
+  String bankAccountRefusedTaken(String name);
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Saved.} one{Saved: {count} statement is now of this account.} other{Saved: {count} statements are now of this account.}}'**
+  String bankAccountSaved(int count);
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'No bank account yet.'**
+  String get bankAccountsNone;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'The accounts bank statements are imported into'**
+  String get bankAccountsSubtitle;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Bank accounts'**
+  String get bankAccountsTitle;
+
   /// #2380 Why suggested: same amount, same payer, recent.
   ///
   /// In en, this message translates to:
@@ -3799,6 +3949,12 @@ abstract class AppLocalizations {
   /// **'The first row names the columns'**
   String get bankCsvHeader;
 
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Into the account {name}, in {currency}.'**
+  String bankCsvIntoAccount(String name, String currency);
+
   /// #2380 CSV sheet: the account is missing or longer than its column.
   ///
   /// In en, this message translates to:
@@ -3913,6 +4069,18 @@ abstract class AppLocalizations {
   /// **'Which file is this?'**
   String get bankFormatTitle;
 
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Import into it'**
+  String get bankImportAccountPick;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Which account is this file of?'**
+  String get bankImportAccountTitle;
+
   /// #2380 Bank statements: import a file.
   ///
   /// In en, this message translates to:
@@ -3924,6 +4092,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The statement could not be imported. Nothing was added.'**
   String get bankImportFailed;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Add the bank account first, under Settings › Master data › Bank accounts.'**
+  String get bankImportNeedsAccount;
 
   /// #2380 Snack: this very file was imported before.
   ///
@@ -4308,6 +4482,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bank statements'**
   String get bankStatementsTitle;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Add to an account'**
+  String get bankUnattachedAssign;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'These names belong to no account yet: add each to the names of its account.'**
+  String get bankUnattachedHint;
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'{name} ({currency}): {count, plural, one{{count} statement} other{{count} statements}}'**
+  String bankUnattachedRow(String name, String currency, int count);
+
+  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
+  ///
+  /// In en, this message translates to:
+  /// **'Statements without an account'**
+  String get bankUnattachedTitle;
 
   /// #2380 Undo dialog: what undoing a reconciliation does and that it stays on record.
   ///
@@ -15920,6 +16118,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'30 minutes'**
   String get editorSlot30;
+
+  /// #4501 resource_editor: the five-minute booking slot
+  ///
+  /// In en, this message translates to:
+  /// **'5 minutes'**
+  String get editorSlot5;
 
   /// #2631 resource_editor: editorSlot60
   ///
@@ -32225,6 +32429,12 @@ abstract class AppLocalizations {
   /// **'Every year'**
   String get leaseEveryYear;
 
+  /// #4498 what a lease holds and a save keeps
+  ///
+  /// In en, this message translates to:
+  /// **'Area (m²)'**
+  String get leaseFieldArea;
+
   /// #2569 premises lease
   ///
   /// In en, this message translates to:
@@ -32248,6 +32458,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Lessor (a supplier)'**
   String get leaseFieldLessor;
+
+  /// #4498 what a lease holds and a save keeps
+  ///
+  /// In en, this message translates to:
+  /// **'Covered levels'**
+  String get leaseFieldLevels;
 
   /// #2569 premises lease
   ///
@@ -32500,6 +32716,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, one{1 occurrence was already presented for a date after the end.} other{{count} occurrences were already presented for a date after the end.}}'**
   String leaseOccurrencesAfter(int count);
+
+  /// #4498 what a lease holds and a save keeps
+  ///
+  /// In en, this message translates to:
+  /// **'A contract document is attached'**
+  String get leaseRefDocument;
+
+  /// #4498 what a lease holds and a save keeps
+  ///
+  /// In en, this message translates to:
+  /// **'Responsible: {name}'**
+  String leaseRefResponsible(String name);
+
+  /// #4498 what a lease holds and a save keeps
+  ///
+  /// In en, this message translates to:
+  /// **'Site: {name}'**
+  String leaseRefSite(String name);
 
   /// #2569 premises lease
   ///
@@ -47442,6 +47676,12 @@ abstract class AppLocalizations {
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
 
+  /// #4498 a choice an answer holds
+  ///
+  /// In en, this message translates to:
+  /// **'A choice that has been made cannot be removed or renamed: retire it instead, and it stays on the answers that hold it.'**
+  String get refusalChoiceInUse;
+
   /// #4367 setting label/hint or refusal
   ///
   /// In en, this message translates to:
@@ -60766,6 +61006,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The in-transit place belongs to the transfers between sites.'**
   String get stockReasonTransitIsSystem;
+
+  /// #4479 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This unit is archived and cannot be used again.'**
+  String get stockReasonUnitArchived;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///

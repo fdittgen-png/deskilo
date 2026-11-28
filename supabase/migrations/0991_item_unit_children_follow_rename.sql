@@ -37,8 +37,8 @@ begin
   select count(*) into v_left from public.stock_tags t
    where t.owner_kind = 'unit' and t.state = 'active'
      and not exists (select 1 from public.item_units x where x.item_id = t.item_id and x.unit = t.unit_code);
-  raise notice '0987: % unit tags moved to their item''s unit, % still on a unit their item does not have', v_moved, v_left;
+  raise notice '0991: % unit tags moved to their item''s unit, % still on a unit their item does not have', v_moved, v_left;
 end
 $tags$;
 
-select public.set_deskilo_schema_version(987);
+select public.set_deskilo_schema_version(991);

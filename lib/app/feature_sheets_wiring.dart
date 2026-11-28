@@ -14,6 +14,7 @@ import '../features/members/presentation/member_profile_link.dart';
 import '../features/money/domain/line_unit.dart';
 import '../features/money/presentation/purchase_order_stock_seam.dart';
 import '../features/money/presentation/screens/tax_reference_screen.dart';
+import '../features/money/providers/lease_site_names_provider.dart';
 import '../features/money/providers/line_units_provider.dart';
 import '../features/money/providers/money_providers.dart' show servicesProvider;
 import '../features/money/providers/pickable_units_provider.dart';
@@ -25,6 +26,7 @@ import '../features/stock/presentation/stock_event_names.dart';
 import '../features/stock/providers/stock_providers.dart';
 import '../features/stock/providers/workspace_units_providers.dart' as stock_units;
 import '../features/workspace/domain/setting_place.dart';
+import '../features/workspace/domain/site.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/providers/setting_places_provider.dart';
 import '../features/workspace/providers/workspace_providers.dart';
@@ -106,6 +108,8 @@ final List<Override> featureSheetsFromApp = [
         if (p.active && p.isAddressable) SettingPlace(id: p.id, code: p.code, path: p.addressPath.split(stockAddressJoint).join(' › ')),
     ];
   }),
+  // #4498 — the names of the sites, for a lease form (the money feature reads no more of the workspace than it has to).
+  leaseSiteNamesProvider.overrideWith((ref) => {for (final s in ref.watch(sitesProvider).value ?? const <Site>[]) s.id: s.name}), // empty-ok: no sites read yet means no names to show
   // #4294 — the names the low-stock notice of the inbox reads (events never import the stock).
   eventNameSourcesProvider.overrideWithValue(const [stockEventNames]),
 ];

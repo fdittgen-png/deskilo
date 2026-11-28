@@ -100,6 +100,7 @@ enum StockRefusal {
   transferNeedsTransit('transfer_needs_transit'),
   transferUnknown('transfer_unknown'),
   transitIsSystem('transit_is_system'),
+  unitArchived('unit_archived'),
   unitDuplicate('unit_duplicate'),
   unitFixed('unit_fixed'),
   unitInUse('unit_in_use'),

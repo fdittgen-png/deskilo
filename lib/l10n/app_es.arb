@@ -951,6 +951,31 @@
   "badgeTapCardHint": "Acerca la tarjeta RFID/NFC a la parte trasera del dispositivo.",
   "badgeTapCardTitle": "Registrar una tarjeta",
   "badgeTokenOnce": "Guarde este QR ahora — solo se muestra una vez.",
+  "bankAccountAdd": "Añadir una cuenta bancaria",
+  "bankAccountAliases": "También llamada",
+  "bankAccountAliasesHint": "Otros nombres con los que se importaron extractos de esta cuenta, uno por línea.",
+  "bankAccountArchive": "Archivar",
+  "bankAccountArchived": "Archivada",
+  "bankAccountCurrency": "Moneda",
+  "bankAccountEdit": "Cuenta bancaria",
+  "bankAccountIbanHint": "Opcional. Los espacios no importan.",
+  "bankAccountIdentifiers": "Otros identificadores",
+  "bankAccountIdentifiersHint": "Un número de cuenta o la referencia del banco, uno por línea.",
+  "bankAccountLedger": "Cuenta contable",
+  "bankAccountLedgerNone": "Ninguna",
+  "bankAccountName": "Nombre",
+  "bankAccountRefusedBookAccount": "La cuenta contable debe ser una cuenta de activo imputable de la empresa.",
+  "bankAccountRefusedCurrency": "El extracto está en otra moneda que la cuenta {account} ({currency}).",
+  "bankAccountRefusedCurrencyKept": "Los extractos de la cuenta están en su moneda: la moneda se mantiene.",
+  "bankAccountRefusedIban": "Esto no es un IBAN.",
+  "bankAccountRefusedName": "Una cuenta bancaria necesita un nombre de 1 a 64 caracteres.",
+  "bankAccountRefusedNone": "Elija la cuenta bancaria de este extracto.",
+  "bankAccountRefusedOther": "Este archivo es de la cuenta {name}, no de {account}. Elija su cuenta o añada {name} a los nombres de {account}.",
+  "bankAccountRefusedTaken": "Otra cuenta bancaria de la empresa ya se llama {name}.",
+  "bankAccountSaved": "{count, plural, =0{Guardado.} one{Guardado: {count} extracto pertenece ahora a esta cuenta.} other{Guardado: {count} extractos pertenecen ahora a esta cuenta.}}",
+  "bankAccountsNone": "Todavía no hay ninguna cuenta bancaria.",
+  "bankAccountsSubtitle": "Las cuentas en las que se importan los extractos",
+  "bankAccountsTitle": "Cuentas bancarias",
   "bankBasisAmount": "mismo importe y pagador",
   "bankBasisCreditorReference": "referencia RF",
   "bankBasisInvoiceNumber": "número de factura en el concepto",
@@ -979,6 +1004,7 @@
   "bankCsvDecimalComma": "Los importes usan coma decimal",
   "bankCsvDuplicateColumn": "Una columna está elegida dos veces: dé a cada columna un solo significado.",
   "bankCsvHeader": "La primera fila nombra las columnas",
+  "bankCsvIntoAccount": "En la cuenta {name}, en {currency}.",
   "bankCsvNeedsAccount": "{max, plural, one{Indique la cuenta, con {max} carácter como máximo.} other{Indique la cuenta, con {max} caracteres como máximo.}}",
   "bankCsvNeedsAmount": "Elija la columna del importe.",
   "bankCsvNeedsCurrency": "Indique la moneda con tres letras (EUR, CHF).",
@@ -998,8 +1024,11 @@
   "bankFormatOfx": "OFX / QFX",
   "bankFormatRead": "Leer",
   "bankFormatTitle": "¿Qué archivo es?",
+  "bankImportAccountPick": "Importar en esta cuenta",
+  "bankImportAccountTitle": "¿De qué cuenta es este archivo?",
   "bankImportAction": "Importar un extracto",
   "bankImportFailed": "No se ha podido importar el extracto. No se ha añadido nada.",
+  "bankImportNeedsAccount": "Añada primero la cuenta bancaria, en Ajustes › Datos maestros › Cuentas bancarias.",
   "bankImportRepeated": "Este archivo ya se había importado. No se ha añadido nada.",
   "bankImported": "Importado: {created, plural, one{1 entrada nueva} other{{created} entradas nuevas}}, {known, plural, one{1 ya conocida} other{{known} ya conocidas}}, {review} por revisar.",
   "bankLineDuplicate": "Duplicado",
@@ -1136,6 +1165,10 @@
   "bankStatementsIntro": "Importe los archivos que genera su banco. Cada movimiento se lee una sola vez; los pagos se concilian con sus facturas cuando usted confirma.",
   "bankStatementsLoadFailed": "No se han podido cargar los extractos bancarios.",
   "bankStatementsTitle": "Extractos bancarios",
+  "bankUnattachedAssign": "Añadir a una cuenta",
+  "bankUnattachedHint": "Estos nombres aún no pertenecen a ninguna cuenta: añada cada uno a los nombres de su cuenta.",
+  "bankUnattachedRow": "{name} ({currency}): {count, plural, one{{count} extracto} other{{count} extractos}}",
+  "bankUnattachedTitle": "Extractos sin cuenta",
   "bankUndoBody": "El movimiento vuelve a estar abierto y el pago vuelve a figurar solo como registrado como realizado. La conciliación y el motivo por el que se deshizo quedan registrados.",
   "bankUndoConfirm": "Deshacer",
   "bankUndoReasonLabel": "Por qué se deshace",
@@ -6046,6 +6079,10 @@
   "editorSlot30": "30 minutos",
   "@editorSlot30": {
     "description": "#2631 resource_editor: editorSlot30"
+  },
+  "editorSlot5": "5 minutos",
+  "@editorSlot5": {
+    "description": "#4501 resource_editor: the five-minute booking slot"
   },
   "editorSlot60": "1 hora",
   "@editorSlot60": {
@@ -12143,6 +12180,10 @@
   "@leaseEveryYear": {
     "description": "#2569 premises lease"
   },
+  "leaseFieldArea": "Superficie (m²)",
+  "@leaseFieldArea": {
+    "description": "#4498 what a lease holds and a save keeps"
+  },
   "leaseFieldDeposit": "Fianza",
   "@leaseFieldDeposit": {
     "description": "#2569 premises lease"
@@ -12158,6 +12199,10 @@
   "leaseFieldLessor": "Arrendador (un proveedor)",
   "@leaseFieldLessor": {
     "description": "#2569 premises lease"
+  },
+  "leaseFieldLevels": "Niveles cubiertos",
+  "@leaseFieldLevels": {
+    "description": "#4498 what a lease holds and a save keeps"
   },
   "leaseFieldNoticeMonths": "Preaviso en meses",
   "@leaseFieldNoticeMonths": {
@@ -12367,6 +12412,28 @@
     "placeholders": {
       "count": {
         "type": "int"
+      }
+    }
+  },
+  "leaseRefDocument": "Hay un documento de contrato adjunto",
+  "@leaseRefDocument": {
+    "description": "#4498 what a lease holds and a save keeps"
+  },
+  "leaseRefResponsible": "Responsable: {name}",
+  "@leaseRefResponsible": {
+    "description": "#4498 what a lease holds and a save keeps",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseRefSite": "Sede: {name}",
+  "@leaseRefSite": {
+    "description": "#4498 what a lease holds and a save keeps",
+    "placeholders": {
+      "name": {
+        "type": "String"
       }
     }
   },
@@ -16932,6 +16999,10 @@
     "description": "#4492 Refusal DKB08: a goods movement or a payment is dated inside a closed period of the books."
   },
   "refusalChangedMeanwhile": "Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.",
+  "refusalChoiceInUse": "Una opción ya elegida no se puede eliminar ni renombrar: retírela, y seguirá en las respuestas que la contienen.",
+  "@refusalChoiceInUse": {
+    "description": "#4498 a choice an answer holds"
+  },
   "refusalCounterCashEntry": "Este apunte de efectivo no se acepta: el motivo no está en la lista, el importe supera su límite, o las cuentas no suman.",
   "refusalCounterChanged": "Este ticket cambió mientras tanto: ábralo de nuevo.",
   "refusalCounterCorrectionBeyond": "Una corrección no puede ir más allá de lo que queda de la línea original.",
@@ -22328,6 +22399,10 @@
   "stockReasonTransitIsSystem": "El lugar «en camino» pertenece a los traslados entre sedes.",
   "@stockReasonTransitIsSystem": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonUnitArchived": "Esta unidad está archivada y ya no se puede usar.",
+  "@stockReasonUnitArchived": {
+    "description": "#4479 the stock editors: a text under a field the server refused"
   },
   "stockReasonUnitDuplicate": "Esta unidad aparece dos veces.",
   "@stockReasonUnitDuplicate": {

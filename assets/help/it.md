@@ -2869,6 +2869,24 @@ Vuole vedere il denaro registrato in entrata e in uscita, e ciò che resta da pa
 
 **Vedi anche:** [Ciò che lo spazio deve: Da pagare](help:user.money.purchases.to-pay)
 
+### Conti bancari
+
+**Destinatari:** Amministratore · Proprietario
+
+Un conto bancario è un unico record dell'attività: il conto in cui si importano i suoi estratti, qualunque nome gli diano i file della banca.
+
+**Passaggi**
+
+1. Apra **Impostazioni**, poi **Dati anagrafici**, poi **Conti bancari**.
+2. Tocchi **Aggiungere un conto bancario** e indichi **Nome**, **IBAN**, eventuali **Altri identificativi** e i nomi con cui è **Noto anche come** (uno per riga), la **Valuta** e, se l'attività tiene qui la contabilità, il **Conto contabile**.
+3. All'importazione di un estratto, scelga il suo conto: un file dello stesso conto con due nomi non importa mai due volte un movimento.
+
+**Da sapere**
+
+- **Estratti senza conto** elenca i nomi con cui sono stati importati estratti e che nessun conto porta ancora. Tocchi **Aggiungere a un conto** per aggiungere un nome al suo conto: i suoi estratti sono allora di quel conto.
+- Un nome, un IBAN o un identificativo appartiene a un solo conto.
+- Un conto non più usato si archivia: i suoi estratti lo conservano.
+
 ### Saldi dei fornitori
 
 **Destinatari:** Amministratore · Proprietario

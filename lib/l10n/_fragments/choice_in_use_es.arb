@@ -1,0 +1,6 @@
+{
+  "refusalChoiceInUse": "Una opción ya elegida no se puede eliminar ni renombrar: retírela, y seguirá en las respuestas que la contienen.",
+  "@refusalChoiceInUse": {
+    "description": "#4498 a choice an answer holds"
+  }
+}

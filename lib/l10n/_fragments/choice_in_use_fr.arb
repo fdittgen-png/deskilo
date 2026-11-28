@@ -1,0 +1,6 @@
+{
+  "refusalChoiceInUse": "Un choix déjà fait ne peut être ni supprimé ni renommé : retirez-le plutôt, il reste sur les réponses qui le portent.",
+  "@refusalChoiceInUse": {
+    "description": "#4498 a choice an answer holds"
+  }
+}

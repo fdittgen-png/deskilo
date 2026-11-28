@@ -9,6 +9,7 @@ import '../../../../core/jurisdiction/installed_postal_layouts.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/address_region_field.dart';
+import '../../../../core/ui/country_field.dart';
 import '../../domain/site.dart';
 
 /// What the dialog decided: the site to save, or that it is to be deleted.
@@ -47,6 +48,7 @@ class _SiteEditDialogState extends State<SiteEditDialog> {
   );
   late String _region = _site?.subdivision ?? '';
   String? _regionError;
+  String? _countryError;
 
   @override
   void dispose() {
@@ -93,6 +95,11 @@ class _SiteEditDialogState extends State<SiteEditDialog> {
         draft.city != before.city ||
         draft.countryCode != before.countryCode ||
         draft.subdivision != before.subdivision;
+    // #4501 -- a country that is picked is one of the catalogue; one stored before stays as it is until changed
+    if (draft.countryCode != (before?.countryCode ?? '') && !isKnownOrEmptyCountry(draft.countryCode)) {
+      setState(() => _countryError = context.l10n.masterDataUnlisted);
+      return;
+    }
     final refusal = edited
         ? postalLayoutOf(draft.countryCode).regionRefusal(draft.subdivision)
         : null;
@@ -124,7 +131,14 @@ class _SiteEditDialogState extends State<SiteEditDialog> {
             _field('site-street', _street, l10n.siteStreet),
             _field('site-postal', _postal, l10n.sitePostalCode),
             _field('site-city', _city, l10n.siteCity),
-            _field('site-country', _country, l10n.siteCountry),
+            CountryField(
+              controller: _country,
+              textKey: const ValueKey('site-country'),
+              fieldKey: 'site-country',
+              label: l10n.siteCountry,
+              error: _countryError,
+              onChanged: (_) => setState(() => _countryError = null),
+            ),
             const SizedBox(height: AppSpacing.md),
             ValueListenableBuilder(
               valueListenable: _country,

@@ -11,6 +11,9 @@ import '../../../features/money/domain/bank/bank_statement.dart';
 import 'bank_unmatch_in.dart';
 import 'money_repository.dart';
 
+// #4496 -- the Demo's bank accounts are seeded with its statements.
+export 'bank_statement_demo_seed.dart' show FakeBankAccountRepository, demoBankAccountsOf;
+
 /// The bank statements in memory, with the server's rules the screens
 /// show (import_bank_statement_v1 and the line decisions of #2380): the
 /// same file imports nothing twice, a bank id already known for the
@@ -36,11 +39,11 @@ class FakeBankStatementRepository implements BankStatementRepository {
 
   String _id(String kind) => 'demo-$kind-${_next++}';
 
-  static String _hash(String account, BankLine l) => sha256
+  /// The financial fields of a movement, without the account's name (0987's movement_hash).
+  static String _hash(BankLine l) => sha256
       .convert(
         utf8.encode(
           [
-            account,
             l.bookingDate.toIso8601String(),
             l.valueDate.toIso8601String(),
             l.amountCents,
@@ -134,17 +137,23 @@ class FakeBankStatementRepository implements BankStatementRepository {
     required BankStatement statement,
     required String sourceSha256,
     required String fileName,
-  }) async => _import(statement, sourceSha256, fileName);
+    String? bankAccountId,
+  }) async => _import(statement, sourceSha256, fileName, bankAccountId);
 
   /// Seeds a deterministic statement in the in-memory Demo only.
   BankImportResult seedStatement(BankStatement statement, String digest, String fileName) =>
       _import(statement, digest, fileName);
 
+  /// #4496 -- the account a statement is of: the one picked, else the one its name is a key of.
+  final _accountOf = <String, String>{};
+
   BankImportResult _import(
     BankStatement statement,
     String sourceSha256,
-    String fileName,
-  ) {
+    String fileName, [
+    String? bankAccountId,
+  ]) {
+    final scope = bankAccountId ?? 'name:${bankAccountKey(statement.account)}';
     final known = _sources[sourceSha256];
     if (known != null) {
       return BankImportResult(
@@ -158,7 +167,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
     final id = _id('statement');
     final existing = [
       for (final s in statements)
-        if (s.account == statement.account) ...?_lines[s.id],
+        if (_accountOf[s.id] == scope) ...?_lines[s.id],
     ];
     final ids = {
       for (final l in existing)
@@ -172,7 +181,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
         skipped++;
         continue;
       }
-      final hash = _hash(statement.account, l);
+      final hash = _hash(l);
       final resembles = l.transactionId.isEmpty && hashes.contains(hash);
       if (resembles) review++;
       final line = _stored(
@@ -185,6 +194,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
     }
     _sources[sourceSha256] = id;
     _lines[id] = stored;
+    _accountOf[id] = scope;
     statements.add(
       StoredBankStatement(
         id: id,
