@@ -11,18 +11,21 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../settings_labels.dart';
 
-/// The field of `fields['value']` for [definition]; [refresh] redraws the sheet after a pick.
+/// The key of the value in the sheet's form controllers.
+const _valueField = 'value';
+
+/// The control that holds the value of [definition]; [refresh] redraws the sheet after a pick.
 Widget settingValueField(AppLocalizations l10n, SettingDefinition definition, FormControllers fields, VoidCallback refresh) {
   final d = definition;
-  final text = fields.text('value');
+  final text = fields.text(_valueField);
   return switch (d.type) {
     SettingType.boolean => SwitchListTile(
       key: const ValueKey('setting-value'),
       contentPadding: EdgeInsets.zero,
       title: Text(l10n.biPrintColValue),
-      value: text.trim() == 'true',
+      value: bool.tryParse(text.trim()) ?? false,
       onChanged: (on) {
-        fields['value'].text = '$on';
+        fields[_valueField].text = '$on';
         refresh();
       },
     ),
@@ -36,14 +39,14 @@ Widget settingValueField(AppLocalizations l10n, SettingDefinition definition, Fo
         for (final c in d.choices) (c, c),
       ],
       onChanged: (v) {
-        fields['value'].text = v ?? '';
+        fields[_valueField].text = v ?? '';
         refresh();
       },
     ),
     _ => AppTextField(
       key: const ValueKey('setting-value'),
-      controller: fields['value'],
-      fieldKey: 'value',
+      controller: fields[_valueField],
+      fieldKey: _valueField,
       label: l10n.biPrintColValue,
       suffixText: settingUnitLabel(l10n, d.unit),
       keyboardType: TextInputType.text,

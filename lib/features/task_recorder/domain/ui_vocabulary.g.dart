@@ -512,6 +512,7 @@ const Set<String> uiKeys = {
   'billing-customer-add',
   'billing-customer-capacity',
   'billing-customer-company',
+  'billing-customer-country',
   'billing-customer-region',
   'billing-customer-save',
   'billing-customers-empty',

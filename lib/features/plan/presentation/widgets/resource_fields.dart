@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/format/decimal_input.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/accessory.dart';
 import '../../domain/charging_station.dart';
 import '../../domain/seat.dart';
@@ -33,7 +32,8 @@ class ResourceDraft {
       kw == kw.roundToDouble() ? '${kw.round()}' : '$kw';
 
   /// The slots a resource can be booked in (null = the workspace's value).
-  static final slots = <int?>[null, ...BookingGranularity.ownSlotMinutes];
+  /// Pinned to `BookingGranularity.ownSlotMinutes` (the booking contract) by test/features/workspace/booking_granularity_slot_test.dart.
+  static const slots = <int?>[null, 5, 15, 30, 60, 1440];
 
   int? slotMinutes;
   ParkingKind? parkingKind;

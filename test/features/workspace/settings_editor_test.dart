@@ -128,24 +128,24 @@ void main() {
   testWidgets('a yes/no setting is a switch and an enum a choice among its own choices (#4501)', (tester) async {
     final store = await _pump(tester, defs: [_flag, _mode]);
     await tester.tap(find.byKey(const ValueKey('setting-edit-dunning.send_copy')));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 1));
     expect(find.byType(Switch), findsOneWidget);
     expect(find.byType(TextField), findsOneWidget, reason: 'only the note is typed');
     await tester.tap(find.byType(Switch));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 1));
     await tester.tap(find.byKey(const ValueKey('setting-save')));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 1));
     expect(store.writes.single.value, true);
 
     await tester.tap(find.byKey(const ValueKey('setting-edit-dunning.mode')));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 1));
     expect(find.byKey(const ValueKey('setting-value')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('setting-value')));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 1));
     await tester.tap(find.text('firm').last);
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 1));
     await tester.tap(find.byKey(const ValueKey('setting-save')));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 1));
     expect(store.writes.last.value, 'firm');
   });
 
