@@ -100,6 +100,12 @@ enum MasterDataKind {
     Icons.storefront_outlined,
     [WorkspaceFeature.supplyExpenses],
   ),
+  supplierContactRoles(
+    MasterDataGroup.partners,
+    Routes.moneySupplierContactRoles,
+    Icons.badge_outlined,
+    [WorkspaceFeature.supplyExpenses, WorkspaceFeature.supplierContacts],
+  ),
   customers(
     MasterDataGroup.partners,
     Routes.moneyCustomers,
@@ -148,6 +154,7 @@ enum MasterDataKind {
     cashReasons => l10n.cashReasonsTitle,
     devices => l10n.devicePairingTitle,
     suppliers => l10n.bookRoleSuppliers,
+    supplierContactRoles => l10n.supplierContactRolesTitle,
     customers => l10n.billingCustomersTitle,
     bankAccounts => l10n.bankAccountsTitle,
     expenseCategories => l10n.expenseCategoriesTitle,
@@ -166,6 +173,7 @@ enum MasterDataKind {
     cashReasons => l10n.cashReasonsSubtitle,
     devices => l10n.devicePairingSubtitle,
     suppliers => l10n.masterDataSuppliersDesc,
+    supplierContactRoles => l10n.masterDataSupplierContactRolesDesc,
     customers => l10n.masterDataCustomersDesc,
     bankAccounts => l10n.bankAccountsSubtitle,
     expenseCategories => l10n.masterDataExpenseCategoriesDesc,

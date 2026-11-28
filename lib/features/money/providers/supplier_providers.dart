@@ -8,6 +8,9 @@ import '../application/supplier_commands.dart';
 import '../data/supabase_supplier_repository.dart';
 import 'credit_providers.dart';
 
+// #4518 -- the contacts, the roles and the terms of the suppliers are read where the suppliers are
+export 'supplier_contact_providers.dart';
+
 final supplierRepositoryProvider = Provider<SupplierRepository>(
   (ref) => SupabaseSupplierRepository(ref.watch(moneyClientProvider)),
 );

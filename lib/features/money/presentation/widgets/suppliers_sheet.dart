@@ -21,8 +21,10 @@ import '../../domain/supplier_standing.dart';
 import '../../providers/purchase_providers.dart';
 import '../../providers/supplier_providers.dart';
 import '../invoice_actions.dart' show workspaceTaxReference;
+import '../screens/money_view_data.dart';
 import 'supplier_balance_line.dart';
 import 'supplier_bank_dialog.dart';
+import 'supplier_contacts_dialog.dart';
 import 'supplier_dialogs.dart';
 
 /// #2567 — opens the suppliers of [workspaceId]. The caller decides when to
@@ -138,6 +140,12 @@ class SuppliersView extends ConsumerWidget {
     );
     if (ok) _refresh(ref);
   }
+
+  /// #4518 -- whether the suppliers' contacts are on, and their door shown.
+  bool contactsOn(WidgetRef ref) => MoneyViewData.gates(ref).supplierContactsOn;
+
+  /// Opens [s]'s contacts and the terms agreed with it.
+  Future<void> contacts(BuildContext context, Supplier s) => showSupplierContactsDialog(context, workspaceId, s);
 
   /// Changes [s]'s bank account.
   Future<void> bank(BuildContext context, WidgetRef ref, Supplier s) async {
@@ -284,6 +292,13 @@ class SuppliersView extends ConsumerWidget {
                   icon: const Icon(Icons.edit_outlined),
                   onPressed: () => edit(context, ref, s),
                 ),
+                if (contactsOn(ref))
+                  IconButton(
+                    key: ValueKey('supplier-contacts-${s.id}'),
+                    tooltip: l10n.suppliersContacts,
+                    icon: const Icon(Icons.contacts_outlined),
+                    onPressed: () => contacts(context, s),
+                  ),
                 IconButton(
                   key: ValueKey('supplier-bank-${s.id}'),
                   tooltip: l10n.suppliersBank,

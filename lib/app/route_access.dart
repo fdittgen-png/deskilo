@@ -101,6 +101,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/money/cash': {_P.viewFinances, _P.manageBilling, _P.managePurchases},
   '/money/bank-accounts': {_P.viewFinances, _P.issueInvoices}, // #4496
   '/money/expense-categories': {_P.workspaceSettings}, // #4512
+  '/money/supplier-contact-roles': {_P.manageBilling}, // #4518
   '/invoices': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices},
   '/invoices/:id': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices},
   // #3614 — a customer's page is for who reads the finances or issues.

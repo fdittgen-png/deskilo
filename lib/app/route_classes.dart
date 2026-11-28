@@ -319,6 +319,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/money/cash', RouteClass.workspace, namesRole: true, place: 'drawer-cash', measure: PageMeasure.work),
   RouteRule('/money/bank-accounts', RouteClass.workspace, namesRole: true, place: 'drawer-cash', measure: PageMeasure.form), // #4496
   RouteRule('/money/expense-categories', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form), // #4512
+  RouteRule('/money/supplier-contact-roles', RouteClass.workspace, namesRole: true, place: 'drawer-suppliers', measure: PageMeasure.form), // #4518
   RouteRule('/money/accounting', RouteClass.workspace, namesRole: true, place: 'drawer-accounting', measure: PageMeasure.work), // #3616: a dashboard
   RouteRule('/money/accounting/exports', RouteClass.workspace, namesRole: true, place: 'drawer-accounting', measure: PageMeasure.work), // #3616
   RouteRule('/accounting/connected', RouteClass.workspace, namesRole: true, place: 'drawer-accounting', measure: PageMeasure.reading), // #3906: a target's sign-in, completed

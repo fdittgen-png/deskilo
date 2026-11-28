@@ -64,6 +64,8 @@ abstract final class Routes {
   static const moneyBankAccounts = '/money/bank-accounts';
   /// #4512 -- the categories an expense is filed under.
   static const moneyExpenseCategories = '/money/expense-categories';
+  /// #4518 -- the roles of a supplier's contacts.
+  static const moneySupplierContactRoles = '/money/supplier-contact-roles';
   static const nfcConfig = '/nfc-config';
   static const onboarding = '/onboarding';
   static const onboardingJoin = '/onboarding?join=1';

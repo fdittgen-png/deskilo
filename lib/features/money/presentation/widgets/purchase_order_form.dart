@@ -27,7 +27,9 @@ import '../../domain/purchase_order.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart' show vatRatesProvider;
 import '../../providers/pickable_units_provider.dart';
+import '../screens/money_view_data.dart';
 import 'master_data_pickers.dart';
+import 'supplier_order_defaults.dart';
 
 /// The form's state: its controllers, the chosen supplier, date and items,
 /// and the request id the current entries go under.
@@ -77,6 +79,9 @@ class PurchaseOrderForm {
   final String currency;
   final FormControllers fields;
   String? supplierId;
+
+  /// #4518 -- the preferred purchasing contact whose address the recipient was filled in from; null when it was typed.
+  String? recipientFrom;
   DateTime? expectedOn;
   DateInputProblem? expectedProblem;
   int lines;
@@ -111,6 +116,26 @@ class PurchaseOrderForm {
         if (_watched.add(c)) c.addListener(_bump);
       }
     }
+  }
+
+  /// #4518 -- a new order to [supplier] starts from what the supplier gave: the preferred contact's e-mail and the expected day, each only
+  /// where the entry is still empty. A read that fails leaves the draft as it was.
+  Future<void> _startFrom(WidgetRef ref, String supplier, VoidCallback refresh) async {
+    if (!MoneyViewData.gates(ref).supplierContactsOn) return;
+    final SupplierOrderStart start;
+    try {
+      start = await SupplierOrderDefaults.of(ref, workspaceId, supplier);
+    } on Object {
+      return; // the person types them as before
+    }
+    if (supplierId != supplier) return;
+    final email = start.email;
+    if (email != null && fields['email'].text.trim().isEmpty) {
+      fields['email'].text = email;
+      recipientFrom = start.contactName;
+    }
+    if (expectedOn == null && start.expectedOn != null) expectedOn = start.expectedOn;
+    refresh();
   }
 
   /// Disposes what the form holds; once, with the page.
@@ -279,6 +304,7 @@ class PurchaseOrderForm {
         onChanged: (v) {
           supplierId = v;
           refresh();
+          if (v != null && order == null) unawaited(_startFrom(ref, v, refresh));
         },
       ),
       const FormGap(),
@@ -301,6 +327,7 @@ class PurchaseOrderForm {
         controller: fields['email'],
         fieldKey: 'email',
         label: l10n.purchaseOrderEmail,
+        helper: recipientFrom == null ? null : l10n.purchaseOrderRecipientFromContact(recipientFrom!),
         keyboardType: TextInputType.emailAddress,
         autofillHints: const [AutofillHints.email],
         maxLength: 254,

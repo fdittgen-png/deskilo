@@ -37,6 +37,7 @@ import '../../features/money/presentation/screens/recorded_payments_screen.dart'
 import '../../features/money/presentation/screens/repartition_wizard_screen.dart';
 import '../../features/money/presentation/screens/report_editor_screen.dart';
 import '../../features/money/presentation/screens/services_screen.dart';
+import '../../features/money/presentation/screens/supplier_contact_roles_screen.dart';
 import '../../features/money/presentation/screens/suppliers_desk.dart';
 import '../../features/money/presentation/screens/suppliers_screen.dart';
 import '../../features/money/presentation/screens/vat_declarations_screen.dart';
@@ -288,6 +289,12 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
       path: Routes.moneyExpenseCategories,
       redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.expenseCategories], to: '/money')),
       builder: (context, state) => const ExpenseCategoriesScreen(),
+    ),
+    // #4518 — the roles of a supplier's contacts (Master data).
+    GoRoute(
+      path: Routes.moneySupplierContactRoles,
+      redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.supplyExpenses, WorkspaceFeature.supplierContacts], to: '/money')),
+      builder: (context, state) => const SupplierContactRolesScreen(),
     ),
     // #3070 — the suppliers as a screen: list, search, a deep link.
     GoRoute(

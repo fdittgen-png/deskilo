@@ -185,6 +185,9 @@ class MoneyViewData {
   /// verification VIES gives a member's VAT number.
   bool get supplierLookupOn => _on(WorkspaceFeature.viesVerification);
 
+  /// #4518 — the suppliers' contacts, their roles and the terms agreed with each supplier.
+  bool get supplierContactsOn => _on(WorkspaceFeature.supplierContacts);
+
   /// #2573 — the purchase documents: a member's own receipts, and the
   /// supplier bills of those who manage them.
   bool get purchasesOn => _on(WorkspaceFeature.purchases);

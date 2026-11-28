@@ -101,6 +101,7 @@ const helpAnchorIndex = <String>{
   HelpAnchor.settingsDevices,
   HelpAnchor.moneyBankAccounts,
   HelpAnchor.moneyExpenseCategories,
+  HelpAnchor.moneySupplierContacts,
   HelpAnchor.masterData,
   HelpAnchor.masterDataMeasures,
   HelpAnchor.masterDataCatalogue,

@@ -169,6 +169,13 @@ class SuppliersDesk extends ConsumerWidget {
           icon: Icons.edit_outlined,
           onRun: (s) => view.edit(context, ref, s),
         ),
+        if (view.contactsOn(ref))
+          RecordAction(
+            id: 'contacts',
+            label: l.suppliersContacts,
+            icon: Icons.contacts_outlined,
+            onRun: (s) => view.contacts(context, s),
+          ),
         RecordAction(
           id: 'bank',
           label: l.suppliersBank,

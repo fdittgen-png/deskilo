@@ -29,5 +29,7 @@ String? _moneyWords(AppLocalizations l10n, String code, String? details) =>
       DkCode.dkv02 => l10n.refusalExpenseVat,
       // #4512 (0998): an expense category that is unknown, retired or not the business's own.
       DkCode.dkx01 => l10n.refusalExpenseCategory,
+      // #4518 (1003): a supplier contact, its role or its terms are refused.
+      DkCode.dkx02 => l10n.refusalSupplierContact,
       _ => null,
     };

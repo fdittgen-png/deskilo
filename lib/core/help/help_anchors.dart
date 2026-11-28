@@ -23,6 +23,9 @@ abstract final class HelpAnchor {
 
   /// #4512 — the categories an expense is filed under, kept on the Master data page.
   static const moneyExpenseCategories = 'user.money.expense.categories';
+
+  /// #4518 — the contacts of a supplier, their roles and the terms agreed with it.
+  static const moneySupplierContacts = 'user.money.supplier.contacts';
   static const moneySupplierBalance = 'user.money.suppliers.balance';
 
   /// #4164 — the billing customers: whom the business invoices, with or

@@ -34,6 +34,7 @@ ProviderBase<AsyncValue<List<Object?>>> masterDataSource(
   MasterDataKind.cashReasons => cashReasonsProvider(workspaceId),
   MasterDataKind.devices => connectedTillBoardsProvider(workspaceId),
   MasterDataKind.suppliers => suppliersProvider(workspaceId),
+  MasterDataKind.supplierContactRoles => supplierContactRolesProvider(workspaceId),
   MasterDataKind.customers => billingCustomersProvider(workspaceId),
   MasterDataKind.bankAccounts => bankAccountsProvider(workspaceId),
   MasterDataKind.expenseCategories => expenseCategoriesProvider(workspaceId),
