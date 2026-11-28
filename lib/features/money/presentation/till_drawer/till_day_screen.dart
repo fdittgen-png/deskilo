@@ -19,6 +19,7 @@ import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../domain/cash_reason.dart';
 import '../../domain/till_day.dart';
 import '../../providers/business_day_provider.dart';
 import '../../providers/till_drawer_providers.dart';
@@ -50,9 +51,10 @@ class _TillDayScreenState extends ConsumerState<TillDayScreen> {
     try {
       final report = await ref.read(tillDrawerPortProvider).closeDay(workspaceId, requestId: _requestId, businessDate: day);
       ref.invalidate(dayClosesProvider(workspaceId));
+      final reasons = await _reasons(workspaceId);
       if (!mounted) return;
       setState(() => _closing = false);
-      await showDayReport(context, report, currency: widget.currency);
+      await showDayReport(context, report, currency: widget.currency, reasons: reasons);
     } on Object catch (e, st) {
       TraceLogger.instance.warn('money', 'the till drawer refused', error: e, stackTrace: st);
       if (!mounted) return;
@@ -63,11 +65,22 @@ class _TillDayScreenState extends ConsumerState<TillDayScreen> {
     }
   }
 
+  /// #4514 -- the reasons a difference is said by; a report is still shown when they cannot be read (each said as stored).
+  Future<List<CashReason>> _reasons(String workspaceId) async {
+    try {
+      return await ref.read(cashReasonsProvider(workspaceId).future);
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('money', 'the cash reasons were not read', error: e, stackTrace: st);
+      return const [];
+    }
+  }
+
   Future<void> _read(String workspaceId, DayCloseRow row) async {
     try {
       final report = await ref.read(tillDrawerPortProvider).dayReport(workspaceId, dayCloseId: row.id);
+      final reasons = await _reasons(workspaceId);
       if (!mounted) return;
-      await showDayReport(context, report, currency: widget.currency);
+      await showDayReport(context, report, currency: widget.currency, reasons: reasons);
     } on Object catch (e, st) {
       TraceLogger.instance.warn('money', 'the till drawer refused', error: e, stackTrace: st);
       if (!mounted) return;

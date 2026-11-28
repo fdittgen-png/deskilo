@@ -16,7 +16,7 @@ void main(List<String> args) {
   final out = File('assets/instance/settings_registry.json')
     ..parent.createSync(recursive: true)
     ..writeAsStringSync(settingRegistryJson());
-  stdout.writeln('wrote ${out.path}: ${settingSeeds.length} setting(s)');
+  stdout.writeln('wrote ${out.path}: ${liveSettingSeeds.length} setting(s)');
   File('lib/core/settings/setting_defaults.g.dart').writeAsStringSync(settingDefaultsDart());
   final i = args.indexOf('--migration');
   final j = args.indexOf('--since');

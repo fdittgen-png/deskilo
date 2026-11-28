@@ -886,8 +886,6 @@
  "counterByDenominationHint": "El fondo y el cajón contado se dan billete a billete y moneda a moneda. Se ajusta en los ajustes de la app.",
  "counterPaidOutLimit": "Mayor salida sin autorización",
  "counterPaidOutLimitHint": "Una salida por encima necesita a alguien que pueda registrar pagos salientes. Se ajusta en los ajustes de la app.",
- "counterCashReasons": "Motivos de entradas y salidas de efectivo",
- "counterCashReasonsHint": "Separados por comas, por ejemplo cambio, gasto, otro. Se ajusta en los ajustes de la app.",
  "optNoLimit": "Sin límite",
  "optPerHour": "{n} por hora",
  "optPerHourDefault": "{n} por hora (por defecto)",

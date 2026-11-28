@@ -207,4 +207,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.counterTillSessions,
     defaultOn: false,
   ),
+  // #4514 — the cash reasons' card on Master data: a business names its own reasons of cash in and out and of a count's
+  // difference, beside the built-in ones. On by default and without a parent (a default-on child of the default-off till
+  // sessions would contradict every template); its card and route also ask for till sessions. Off: the till offers the
+  // reasons as they are, and none is edited. The till reads the reasons whatever this flag.
+  WorkspaceFeature.counterCashReasons: FeatureManifestEntry(
+    feature: WorkspaceFeature.counterCashReasons,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.core,
+    since: 999,
+  ),
 };

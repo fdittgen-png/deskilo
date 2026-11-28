@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/codes/dk_code.dart';
 import '../../../core/data/server_error.dart';
+import '../domain/cash_reason.dart';
 import '../domain/till_day.dart';
 import '../domain/till_drawer.dart';
 
@@ -35,6 +36,13 @@ final drawerExpectedProvider = FutureProvider.autoDispose.family<DrawerCash?, ({
 /// default stands for what the business set nothing of); the Demo and the tests replace it.
 final drawerSettingsProvider = FutureProvider.autoDispose<DrawerSettings>(
   (ref) => throw UnimplementedError('the drawer settings are wired by the app'),
+  retry: (_, _) => null,
+);
+
+/// #4514 -- the business's cash reasons, archived ones included, in its order: the till offers the active ones of a
+/// process, the Master data page lists and edits them all. The till reads them whatever the cash reasons feature.
+final cashReasonsProvider = FutureProvider.autoDispose.family<List<CashReason>, String>(
+  (ref, workspaceId) => ref.watch(tillDrawerPortProvider).cashReasons(workspaceId),
   retry: (_, _) => null,
 );
 

@@ -5,6 +5,7 @@
 // asked from (a test replaces the port, nothing else).
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../domain/cash_reason.dart';
 import '../domain/till_drawer.dart';
 import '../providers/till_drawer_providers.dart';
 
@@ -28,6 +29,13 @@ class TillDrawerCommands {
     final picked = await _port.setTillDenominations(workspaceId, tillId: tillId, values: values);
     _ref.invalidate(tillDrawerProvider(workspaceId));
     return picked;
+  }
+
+  /// #4514 -- a new reason of the business's own (null [code]) or the edit of one.
+  Future<CashReason> saveCashReason({String? code, required String name, required Set<CashReasonProcess> processes, bool? archived}) async {
+    final saved = await _port.saveCashReason(workspaceId, code: code, name: name, processes: processes, archived: archived);
+    _ref.invalidate(cashReasonsProvider(workspaceId));
+    return saved;
   }
 
   Future<DrawerOpened> openSession({required String requestId, required String tillId, required int floatMinor, Denominations? denominations}) async {

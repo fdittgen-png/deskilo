@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4367 -- cash paid into or out of the drawer during a session, with a reason from the business's own list. A paid-out
+// #4367 -- cash paid into or out of the drawer during a session, with a reason from the business's own list (#4514: the
+// active reasons of the entry's kind, by name). A paid-out
 // above the business's limit is the server's to refuse for someone who may not record outgoing payments.
 import 'package:flutter/material.dart';
 
@@ -10,8 +11,10 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_choice_controls.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../application/till_drawer_commands.dart';
+import '../../domain/cash_reason.dart';
 import '../../domain/till_drawer.dart';
 import '../../domain/till_drawer_rules.dart';
+import 'cash_reason_text.dart';
 import 'drawer_inputs.dart';
 import 'drawer_text.dart';
 
@@ -22,6 +25,7 @@ Future<bool> showCashEntrySheet(
   required DrawerSession session,
   required String currency,
   required DrawerSettings settings,
+  required List<CashReason> reasons,
 }) {
   final l10n = context.l10n;
   final format = appFormatOf(context);
@@ -29,6 +33,7 @@ Future<bool> showCashEntrySheet(
   final intent = SameIntent();
   var kind = 'paid_out';
   String? reason;
+  List<CashReason> offered() => cashReasonsFor(reasons, kind == 'paid_in' ? CashReasonProcess.paidIn : CashReasonProcess.paidOut);
   int? amount() => format.readAmount(fields.text('amount'), currency: currency, allowNegative: false).minor;
   return showAppFormSheet(
     context,
@@ -66,6 +71,7 @@ Future<bool> showCashEntrySheet(
             selected: kind,
             onSelected: (k) {
               kind = k;
+              if (!offered().any((r) => r.code == reason)) reason = null;
               refresh();
             },
           ),
@@ -87,7 +93,7 @@ Future<bool> showCashEntrySheet(
           const FormGap.small(),
           AppChoiceChips<String>(
             key: const ValueKey('drawer-entry-reasons'),
-            choices: [for (final r in settings.reasons) AppChoice(value: r, key: ValueKey('drawer-entry-reason-$r'), label: r)],
+            choices: [for (final r in offered()) AppChoice(value: r.code, key: ValueKey('drawer-entry-reason-${r.code}'), label: cashReasonLabel(l10n, r))],
             selected: reason,
             onSelected: (r) {
               reason = r;

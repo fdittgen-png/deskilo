@@ -6822,6 +6822,52 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cashHubToPay => 'To pay';
 
   @override
+  String get cashReasonsAdd => 'Add a reason';
+
+  @override
+  String get cashReasonsArchived => 'Archived';
+
+  @override
+  String get cashReasonsArchivedHelp =>
+      'An archived reason is no longer offered; the entries recorded with it keep it.';
+
+  @override
+  String get cashReasonsArchivedMark => 'archived';
+
+  @override
+  String get cashReasonsBuiltinHint => 'Named by the app in every language.';
+
+  @override
+  String get cashReasonsEdit => 'Reason';
+
+  @override
+  String get cashReasonsName => 'Name';
+
+  @override
+  String get cashReasonsNameMissing => 'Give the reason a name.';
+
+  @override
+  String cashReasonsNameTooLong(int max) {
+    return 'A name has at most $max characters.';
+  }
+
+  @override
+  String get cashReasonsProcessMissing => 'Choose at least one use.';
+
+  @override
+  String get cashReasonsProcesses => 'Used for';
+
+  @override
+  String get cashReasonsSaved => 'Reason saved.';
+
+  @override
+  String get cashReasonsSubtitle =>
+      'The reasons a person gives for cash in or out of a drawer and for a count that differs.';
+
+  @override
+  String get cashReasonsTitle => 'Cash reasons';
+
+  @override
   String get chBareLetting => 'We only let bare rooms';
 
   @override
@@ -12249,6 +12295,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.';
+
+  @override
+  String get featureCounterCashReasonsDesc =>
+      'Name the reasons of cash put into or taken out of a till drawer, and of a count that differs, beside the built-in ones. Off: the till offers the reasons as they are.';
+
+  @override
+  String get featureCounterCashReasonsTitle => 'Cash reasons';
 
   @override
   String get featureCounterEmbeddedTerminalDesc =>
@@ -32935,10 +32988,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'While a session is open the counter does not see the expected cash: they count the drawer and see the difference after the close. Someone who may see the finances always sees it.';
 
   @override
-  String get settingHintCounterCashReasons =>
-      'The reasons a person may give for money paid into or out of the drawer, separated by commas (for example change, expense, other).';
-
-  @override
   String get settingHintCounterCountByDenomination =>
       'The float and the counted drawer are given by denomination (how many of each note and coin) rather than as a total. The counts must add up to the amount.';
 
@@ -33400,9 +33449,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelCounterBlindCount => 'Count the drawer blind';
-
-  @override
-  String get settingLabelCounterCashReasons => 'Reasons for cash in and out';
 
   @override
   String get settingLabelCounterCountByDenomination => 'Count by denomination';
@@ -41609,6 +41655,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tillCashInvalid => 'Enter the amount given as a number.';
+
+  @override
+  String get tillCashReasonChange => 'Change';
+
+  @override
+  String get tillCashReasonCountDifference => 'Count difference';
+
+  @override
+  String get tillCashReasonCountingError => 'Counting error';
+
+  @override
+  String get tillCashReasonExpense => 'Expense';
+
+  @override
+  String get tillCashReasonOther => 'Other';
 
   @override
   String get tillCashShort => 'The cash given is less than the total.';

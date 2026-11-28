@@ -6,6 +6,7 @@
 // is closed with its reason; a request id answers the same act again.
 import 'dart:convert';
 
+import 'package:deskilo/features/money/domain/cash_reason.dart';
 import 'package:deskilo/features/money/domain/till_day.dart';
 import 'package:deskilo/features/money/domain/till_drawer.dart';
 import 'package:deskilo/features/money/domain/till_drawer_rules.dart';
@@ -70,7 +71,7 @@ class DemoTillDrawer implements TillDrawerPort {
   ];
 
   /// The business's settings, read when an act needs them; the registry defaults until the app wires the real ones.
-  DrawerRules Function() rules = () => const DrawerSettings(blindCount: true, byDenomination: false, reasons: ['change', 'expense', 'other'], paidOutLimitMinor: 0);
+  DrawerRules Function() rules = () => const DrawerSettings(blindCount: true, byDenomination: false, paidOutLimitMinor: 0);
 
   /// Whether the signed-in person may see the finances (and so the expected cash of a blind count).
   bool Function() canSeeFinances = () => false;
@@ -209,12 +210,56 @@ class DemoTillDrawer implements TillDrawerPort {
     return s;
   }
 
+  /// #4514 (0999) -- the business's cash reasons: the built-in ones, then its own.
+  final List<CashReason> _reasons = [...kBuiltinCashReasons];
+
+  /// An active reason of [process], by its code, or the refusal the server gives.
+  void _reasonOnList(String code, CashReasonProcess process) {
+    if (!_reasons.any((r) => r.code == code.trim() && r.offeredFor(process))) {
+      throw _refused(DkCode.dkl13, 'this reason is not on the business\'s list', reason: 'reason_unknown');
+    }
+  }
+
+  @override
+  Future<List<CashReason>> cashReasons(String workspaceId) async => [..._reasons]..sort((a, b) => a.position.compareTo(b.position));
+
+  @override
+  Future<CashReason> saveCashReason(String workspaceId, {String? code, required String name, required Set<CashReasonProcess> processes, int? position, bool? archived}) async {
+    if (processes.isEmpty) throw _refused(DkCode.dkl13, 'a reason serves at least one process', reason: 'reason_process');
+    final named = name.trim();
+    if (code == null) {
+      if (named.isEmpty || named.length > kCashReasonNameMaxLength) throw _refused(DkCode.dkl13, 'a reason of the business has a name', reason: 'reason_name');
+      final base = cashReasonCodeOf(named);
+      var made = base;
+      for (var n = 2; _reasons.any((r) => r.code == made); n++) {
+        made = '${base}_$n';
+      }
+      final reason = CashReason(code: made, builtin: false, name: named, processes: processes, archived: archived ?? false, position: position ?? 100);
+      _reasons.add(reason);
+      return reason;
+    }
+    final at = _reasons.indexWhere((r) => r.code == code);
+    if (at < 0) throw _refused(DkCode.dkl13, 'no such reason in this business', reason: 'reason_unknown');
+    final was = _reasons[at];
+    if (!was.builtin && (named.isEmpty || named.length > kCashReasonNameMaxLength)) {
+      throw _refused(DkCode.dkl13, 'a reason of the business has a name', reason: 'reason_name');
+    }
+    return _reasons[at] = CashReason(
+      code: was.code,
+      builtin: was.builtin,
+      name: was.builtin ? null : named,
+      processes: processes,
+      archived: archived ?? was.archived,
+      position: position ?? was.position,
+    );
+  }
+
   @override
   Future<DrawerEntryMade> cashEntry(String workspaceId, {required String requestId, required String sessionId, required DrawerEntry entry}) async {
     final (kind, amountMinor, reason) = (entry.kind, entry.amountMinor, entry.reason);
     if (_answered[requestId] != null) return _replayed(requestId);
     if (amountMinor <= 0) throw _refused(PgCode.invalidParameterValue, 'an entry has an amount');
-    if (!rules().reasons.contains(reason.trim())) throw _refused(DkCode.dkl13, 'this reason is not on the list', reason: 'reason_unknown');
+    _reasonOnList(reason, kind == 'paid_in' ? CashReasonProcess.paidIn : CashReasonProcess.paidOut);
     final session = _open(sessionId);
     final limit = rules().paidOutLimitMinor;
     if (kind == 'paid_out' && limit > 0 && amountMinor > limit && !canRecordOutgoing()) {
@@ -256,6 +301,7 @@ class DemoTillDrawer implements TillDrawerPort {
     if (difference != 0 && (differenceReason ?? '').trim().isEmpty) {
       throw _refused(DkCode.dkl13, 'a difference is closed with its reason', reason: 'difference_reason', more: canSeeFinances() ? {'difference_minor': '$difference'} : const {});
     }
+    if ((differenceReason ?? '').trim().isNotEmpty) _reasonOnList(differenceReason!, CashReasonProcess.countDifference);
     s
       ..closed = true
       ..counted = countedMinor

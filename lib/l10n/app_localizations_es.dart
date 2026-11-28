@@ -6860,6 +6860,53 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cashHubToPay => 'Por pagar';
 
   @override
+  String get cashReasonsAdd => 'Añadir un motivo';
+
+  @override
+  String get cashReasonsArchived => 'Archivado';
+
+  @override
+  String get cashReasonsArchivedHelp =>
+      'Un motivo archivado ya no se ofrece; los movimientos registrados con él lo conservan.';
+
+  @override
+  String get cashReasonsArchivedMark => 'archivado';
+
+  @override
+  String get cashReasonsBuiltinHint =>
+      'Nombrado por la aplicación en cada idioma.';
+
+  @override
+  String get cashReasonsEdit => 'Motivo';
+
+  @override
+  String get cashReasonsName => 'Nombre';
+
+  @override
+  String get cashReasonsNameMissing => 'Dé un nombre al motivo.';
+
+  @override
+  String cashReasonsNameTooLong(int max) {
+    return 'Un nombre tiene como máximo $max caracteres.';
+  }
+
+  @override
+  String get cashReasonsProcessMissing => 'Elija al menos un uso.';
+
+  @override
+  String get cashReasonsProcesses => 'Se usa para';
+
+  @override
+  String get cashReasonsSaved => 'Motivo guardado.';
+
+  @override
+  String get cashReasonsSubtitle =>
+      'Los motivos que una persona da para el efectivo que entra o sale de un cajón y para un recuento que difiere.';
+
+  @override
+  String get cashReasonsTitle => 'Motivos de efectivo';
+
+  @override
   String get chBareLetting => 'Solo alquilamos locales desnudos';
 
   @override
@@ -12330,6 +12377,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'El archivo del espacio (XML) lleva toda la configuración — tarifas, identidad legal, reglas de reserva y validación, roles, diseños de documentos, sedes, días de cierre — y la importación la aplica, incluso en un espacio que ya tiene reservas. Desactivado: el archivo solo lleva ajustes y plano.';
+
+  @override
+  String get featureCounterCashReasonsDesc =>
+      'Nombrar los motivos del efectivo que entra en un cajón de caja o sale de él, y de un recuento que difiere, junto a los previstos. Desactivado: la caja ofrece los motivos tal como están.';
+
+  @override
+  String get featureCounterCashReasonsTitle => 'Motivos de efectivo';
 
   @override
   String get featureCounterEmbeddedTerminalDesc =>
@@ -33179,10 +33233,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Mientras una sesión está abierta, la caja no ve el efectivo esperado: cuenta el cajón y ve la diferencia después del cierre. Quien puede ver las finanzas siempre lo ve.';
 
   @override
-  String get settingHintCounterCashReasons =>
-      'Los motivos que una persona puede dar para el dinero que entra o sale del cajón, separados por comas (por ejemplo cambio, gasto, otro).';
-
-  @override
   String get settingHintCounterCountByDenomination =>
       'El fondo y el cajón contado se dan por denominaciones (cuántos de cada billete y moneda) en lugar de un total. Las cuentas deben sumar el importe.';
 
@@ -33652,10 +33702,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelCounterBlindCount => 'Contar el cajón a ciegas';
-
-  @override
-  String get settingLabelCounterCashReasons =>
-      'Motivos de entradas y salidas de efectivo';
 
   @override
   String get settingLabelCounterCountByDenomination =>
@@ -41955,6 +42001,21 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tillCashInvalid => 'Introduzca el importe entregado como número.';
+
+  @override
+  String get tillCashReasonChange => 'Cambio';
+
+  @override
+  String get tillCashReasonCountDifference => 'Diferencia de recuento';
+
+  @override
+  String get tillCashReasonCountingError => 'Error de recuento';
+
+  @override
+  String get tillCashReasonExpense => 'Gasto';
+
+  @override
+  String get tillCashReasonOther => 'Otro';
 
   @override
   String get tillCashShort => 'El efectivo entregado es inferior al total.';

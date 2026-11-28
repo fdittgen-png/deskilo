@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../domain/cash_reason.dart';
 import '../domain/till_day.dart';
 import '../domain/till_drawer.dart';
 
@@ -64,6 +65,23 @@ class SupabaseTillDrawer implements TillDrawerPort {
         'p_till_id': tillId,
         'p_float_minor': floatMinor,
         'p_denominations': denominations?.toJson(),
+      }));
+
+  @override
+  Future<List<CashReason>> cashReasons(String workspaceId) async {
+    final rows = await _client.from('counter_cash_reasons').select('code, builtin, name, processes, archived, sort_order').eq('workspace_id', workspaceId).order('sort_order', ascending: true).order('code', ascending: true);
+    return [for (final r in rows) CashReason.fromJson(r)];
+  }
+
+  @override
+  Future<CashReason> saveCashReason(String workspaceId, {String? code, required String name, required Set<CashReasonProcess> processes, int? position, bool? archived}) async =>
+      CashReason.fromJson(await _call('counter_cash_reason_save_v1', {
+        'p_workspace_id': workspaceId,
+        'p_code': code,
+        'p_name': name,
+        'p_processes': [for (final p in processes) p.wire],
+        'p_sort_order': position,
+        'p_archived': archived,
       }));
 
   @override

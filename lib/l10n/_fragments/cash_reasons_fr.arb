@@ -1,0 +1,23 @@
+{
+  "featureCounterCashReasonsTitle": "Motifs d'espèces",
+  "featureCounterCashReasonsDesc": "Nommer les motifs des espèces versées dans un tiroir de caisse ou retirées, et d'un comptage qui diffère, à côté des motifs prévus. Désactivé : la caisse propose les motifs tels quels.",
+  "tillCashReasonChange": "Monnaie",
+  "tillCashReasonExpense": "Dépense",
+  "tillCashReasonCountingError": "Erreur de comptage",
+  "tillCashReasonOther": "Autre",
+  "tillCashReasonCountDifference": "Écart de comptage",
+  "cashReasonsTitle": "Motifs d'espèces",
+  "cashReasonsSubtitle": "Les motifs qu'une personne donne pour des espèces entrées ou sorties d'un tiroir et pour un comptage qui diffère.",
+  "cashReasonsAdd": "Ajouter un motif",
+  "cashReasonsEdit": "Motif",
+  "cashReasonsName": "Nom",
+  "cashReasonsProcesses": "Utilisé pour",
+  "cashReasonsArchived": "Archivé",
+  "cashReasonsArchivedHelp": "Un motif archivé n'est plus proposé ; les mouvements enregistrés avec lui le gardent.",
+  "cashReasonsBuiltinHint": "Nommé par l'application dans chaque langue.",
+  "cashReasonsNameMissing": "Donnez un nom au motif.",
+  "cashReasonsNameTooLong": "Un nom a au plus {max} caractères.",
+  "cashReasonsProcessMissing": "Choisissez au moins un usage.",
+  "cashReasonsSaved": "Motif enregistré.",
+  "cashReasonsArchivedMark": "archivé"
+}

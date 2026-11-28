@@ -1,0 +1,23 @@
+{
+  "featureCounterCashReasonsTitle": "Motivi di contante",
+  "featureCounterCashReasonsDesc": "Indicare i motivi del contante versato in un cassetto di cassa o prelevato, e di un conteggio che differisce, accanto a quelli previsti. Disattivato: la cassa propone i motivi così come sono.",
+  "tillCashReasonChange": "Resto",
+  "tillCashReasonExpense": "Spesa",
+  "tillCashReasonCountingError": "Errore di conteggio",
+  "tillCashReasonOther": "Altro",
+  "tillCashReasonCountDifference": "Differenza di conteggio",
+  "cashReasonsTitle": "Motivi di contante",
+  "cashReasonsSubtitle": "I motivi indicati per il contante entrato o uscito da un cassetto e per un conteggio che differisce.",
+  "cashReasonsAdd": "Aggiungere un motivo",
+  "cashReasonsEdit": "Motivo",
+  "cashReasonsName": "Nome",
+  "cashReasonsProcesses": "Usato per",
+  "cashReasonsArchived": "Archiviato",
+  "cashReasonsArchivedHelp": "Un motivo archiviato non è più proposto; i movimenti registrati con esso lo conservano.",
+  "cashReasonsBuiltinHint": "Indicato dall'app in ogni lingua.",
+  "cashReasonsNameMissing": "Indichi un nome per il motivo.",
+  "cashReasonsNameTooLong": "Un nome ha al massimo {max} caratteri.",
+  "cashReasonsProcessMissing": "Scelga almeno un uso.",
+  "cashReasonsSaved": "Motivo salvato.",
+  "cashReasonsArchivedMark": "archiviato"
+}

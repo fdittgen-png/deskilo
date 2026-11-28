@@ -57,7 +57,6 @@ final Override drawerSettingsFromApp = drawerSettingsProvider.overrideWith((ref)
   return DrawerSettings(
     blindCount: settings.read<bool>('counter.blind_count'),
     byDenomination: settings.read<bool>('counter.count_by_denomination'),
-    reasons: DrawerSettings.reasonsOf(settings.read<String>('counter.cash_reasons')),
     paidOutLimitMinor: settings.read<int>('counter.paid_out_limit_minor'),
   );
 });

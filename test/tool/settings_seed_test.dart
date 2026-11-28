@@ -22,7 +22,7 @@ void main() {
     final text = File('assets/instance/settings_registry.json').readAsStringSync();
     expect(text, settingRegistryJson(), reason: 'dart run tool/build_settings_seed.dart');
     final defs = [for (final r in jsonDecode(text) as List) SettingDefinition.fromJson(r)];
-    expect(defs.map((d) => d.key), [for (final s in settingSeeds) s.row.key]..sort());
+    expect(defs.map((d) => d.key), [for (final s in liveSettingSeeds) s.row.key]..sort());
   });
 
   test('every migration that creates rows carries exactly its block', () {
@@ -36,6 +36,13 @@ void main() {
     }
   });
 
+  test('a retired setting is removed by the migration it names (#4514)', () {
+    for (final e in retiredSettingKeys.entries) {
+      final file = Directory('supabase/migrations').listSync().whereType<File>().singleWhere((f) => f.path.endsWith('_${e.value}.sql'));
+      expect(file.readAsStringSync(), contains("delete from public.setting_definitions where key = '${e.key}'"), reason: file.path);
+    }
+  });
+
   test('the compile-time defaults are the declaration\'s', () {
     expect(File('lib/core/settings/setting_defaults.g.dart').readAsStringSync(),
         settingDefaultsDart());
@@ -44,7 +51,7 @@ void main() {
 
   test('every registered setting has a label, a group name and a unit name in English', () {
     final l10n = lookupAppLocalizations(const Locale('en'));
-    for (final s in settingSeeds) {
+    for (final s in liveSettingSeeds) {
       final r = s.row;
       expect(settingLabel(l10n, r.key), isNot(r.key), reason: '${r.key} needs an ARB label');
       expect(settingHint(l10n, r.key), isNotNull, reason: '${r.key} needs an ARB hint');

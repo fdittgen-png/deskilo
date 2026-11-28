@@ -81,6 +81,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   // #4367 — the cash drawer of the till: the counter opens and closes its session; the finances read every one.
   '/till/drawer': {_P.issueInvoices, _P.viewFinances},
   '/till/day': {_P.viewFinances},
+  '/till/reasons': {_P.configureTill}, // #4514
   '/till/layout/:tillId': {_P.configureTill}, // #4448
   // #4185 — the counter's receipts: the counter corrects, the finances settle a card answer.
   '/till/receipts': {_P.issueInvoices, _P.viewFinances},

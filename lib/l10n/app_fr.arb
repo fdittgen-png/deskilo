@@ -3954,6 +3954,20 @@
   "carnetsTitle": "Carnets",
   "cashHubInOut": "Entrées et sorties par mois",
   "cashHubToPay": "À payer",
+  "cashReasonsAdd": "Ajouter un motif",
+  "cashReasonsArchived": "Archivé",
+  "cashReasonsArchivedHelp": "Un motif archivé n'est plus proposé ; les mouvements enregistrés avec lui le gardent.",
+  "cashReasonsArchivedMark": "archivé",
+  "cashReasonsBuiltinHint": "Nommé par l'application dans chaque langue.",
+  "cashReasonsEdit": "Motif",
+  "cashReasonsName": "Nom",
+  "cashReasonsNameMissing": "Donnez un nom au motif.",
+  "cashReasonsNameTooLong": "Un nom a au plus {max} caractères.",
+  "cashReasonsProcessMissing": "Choisissez au moins un usage.",
+  "cashReasonsProcesses": "Utilisé pour",
+  "cashReasonsSaved": "Motif enregistré.",
+  "cashReasonsSubtitle": "Les motifs qu'une personne donne pour des espèces entrées ou sorties d'un tiroir et pour un comptage qui diffère.",
+  "cashReasonsTitle": "Motifs d'espèces",
   "chBareLetting": "Nous ne louons que des locaux nus",
   "@chBareLetting": {
     "description": "#2360: chBareLetting"
@@ -7399,6 +7413,8 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterCashReasonsDesc": "Nommer les motifs des espèces versées dans un tiroir de caisse ou retirées, et d'un comptage qui diffère, à côté des motifs prévus. Désactivé : la caisse propose les motifs tels quels.",
+  "featureCounterCashReasonsTitle": "Motifs d'espèces",
   "featureCounterEmbeddedTerminalDesc": "Relier un terminal de caisse, le petit écran du comptoir qui encaisse, à cette entreprise : Paramètres › Appareils lit son code QR ou son code saisi et indique de quel terminal il s'agit. Désactivé : pas de page des appareils.",
   "featureCounterEmbeddedTerminalTitle": "Terminaux de caisse",
   "featureCounterOfflineCashDesc": "Quand la connexion est perdue, la caisse continue de vendre en espèces, enregistre chaque vente sur l'appareil et envoie les ventes dans l'ordre au retour de la connexion. Les autres moyens de paiement attendent la connexion.",
@@ -19563,7 +19579,6 @@
     "description": "#2487 settings: Setting hint."
   },
   "settingHintCounterBlindCount": "Tant qu'une session est ouverte, la caisse ne voit pas les espèces attendues : elle compte le tiroir et voit l'écart après la fermeture. Qui peut voir les finances le voit toujours.",
-  "settingHintCounterCashReasons": "Les motifs qu'une personne peut donner pour de l'argent versé dans le tiroir ou retiré, séparés par des virgules (par exemple monnaie, dépense, autre).",
   "settingHintCounterCountByDenomination": "Le fond de caisse et le tiroir compté sont donnés par coupures (combien de chaque billet et pièce) plutôt qu'en total. Les nombres doivent correspondre au montant.",
   "settingHintCounterCustomerlessSales": "Autorisées : une vente peut se faire sans nommer de client. Refusées : chaque vente en nomme un. Une vente sans client ne crée jamais de compte, de membre ni d'abonnement.",
   "settingHintCounterDocumentChannel": "Partagé (message ou courriel), imprimé, ou les deux. Le ticket est le même document immuable dans tous les cas.",
@@ -19829,7 +19844,6 @@
     "description": "#2487 settings: Setting label."
   },
   "settingLabelCounterBlindCount": "Compter le tiroir à l'aveugle",
-  "settingLabelCounterCashReasons": "Motifs des entrées et sorties d'espèces",
   "settingLabelCounterCountByDenomination": "Compter par coupures",
   "settingLabelCounterCustomerlessSales": "Ventes sans client nommé",
   "settingLabelCounterDocumentChannel": "Comment le ticket quitte le comptoir",
@@ -24410,6 +24424,11 @@
   "tillCashExact": "Compte juste",
   "tillCashGiven": "Espèces remises",
   "tillCashInvalid": "Saisissez le montant remis sous forme de nombre.",
+  "tillCashReasonChange": "Monnaie",
+  "tillCashReasonCountDifference": "Écart de comptage",
+  "tillCashReasonCountingError": "Erreur de comptage",
+  "tillCashReasonExpense": "Dépense",
+  "tillCashReasonOther": "Autre",
   "tillCashShort": "Les espèces remises sont inférieures au total.",
   "tillCategoryAll": "Tous",
   "@tillCategoryAll": {

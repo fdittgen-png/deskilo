@@ -100,7 +100,6 @@ String _counterSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'counter.offline_max_minutes' => l10n.settingLabelCounterOfflineMaxMinutes,
       'counter.offline_max_sales' => l10n.settingLabelCounterOfflineMaxSales,
       'counter.offline_price_tolerance_percent' => l10n.settingLabelCounterOfflinePriceTolerance,
-      'counter.cash_reasons' => l10n.settingLabelCounterCashReasons,
       _ => _itemGroupSettingLabel(l10n, key),
     };
 
@@ -268,7 +267,6 @@ String? _counterSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'counter.offline_max_minutes' => l10n.settingHintCounterOfflineMaxMinutes,
       'counter.offline_max_sales' => l10n.settingHintCounterOfflineMaxSales,
       'counter.offline_price_tolerance_percent' => l10n.settingHintCounterOfflinePriceTolerance,
-      'counter.cash_reasons' => l10n.settingHintCounterCashReasons,
       _ => _itemGroupSettingHint(l10n, key),
     };
 

@@ -80,6 +80,13 @@ enum MasterDataKind {
     Icons.point_of_sale_outlined,
     [WorkspaceFeature.counterTillSessions],
   ),
+  // #4514 — the reasons of cash in and out and of a count's difference
+  cashReasons(
+    MasterDataGroup.placesAndStock,
+    Routes.tillCashReasons,
+    Icons.label_outline,
+    [WorkspaceFeature.counterTillSessions, WorkspaceFeature.counterCashReasons],
+  ),
   // #4466 — the till boards: one connected by its QR code or its typed code
   devices(
     MasterDataGroup.placesAndStock,
@@ -132,6 +139,7 @@ enum MasterDataKind {
     services => l10n.servicesTitle,
     places => l10n.stockPlacesTitle,
     tills => l10n.masterDataTills,
+    cashReasons => l10n.cashReasonsTitle,
     devices => l10n.devicePairingTitle,
     suppliers => l10n.bookRoleSuppliers,
     customers => l10n.billingCustomersTitle,
@@ -148,6 +156,7 @@ enum MasterDataKind {
     services => l10n.masterDataServicesDesc,
     places => l10n.masterDataPlacesDesc,
     tills => l10n.masterDataTillsDesc,
+    cashReasons => l10n.cashReasonsSubtitle,
     devices => l10n.devicePairingSubtitle,
     suppliers => l10n.masterDataSuppliersDesc,
     customers => l10n.masterDataCustomersDesc,

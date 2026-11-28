@@ -6890,6 +6890,53 @@ class AppLocalizationsFr extends AppLocalizations {
   String get cashHubToPay => 'À payer';
 
   @override
+  String get cashReasonsAdd => 'Ajouter un motif';
+
+  @override
+  String get cashReasonsArchived => 'Archivé';
+
+  @override
+  String get cashReasonsArchivedHelp =>
+      'Un motif archivé n\'est plus proposé ; les mouvements enregistrés avec lui le gardent.';
+
+  @override
+  String get cashReasonsArchivedMark => 'archivé';
+
+  @override
+  String get cashReasonsBuiltinHint =>
+      'Nommé par l\'application dans chaque langue.';
+
+  @override
+  String get cashReasonsEdit => 'Motif';
+
+  @override
+  String get cashReasonsName => 'Nom';
+
+  @override
+  String get cashReasonsNameMissing => 'Donnez un nom au motif.';
+
+  @override
+  String cashReasonsNameTooLong(int max) {
+    return 'Un nom a au plus $max caractères.';
+  }
+
+  @override
+  String get cashReasonsProcessMissing => 'Choisissez au moins un usage.';
+
+  @override
+  String get cashReasonsProcesses => 'Utilisé pour';
+
+  @override
+  String get cashReasonsSaved => 'Motif enregistré.';
+
+  @override
+  String get cashReasonsSubtitle =>
+      'Les motifs qu\'une personne donne pour des espèces entrées ou sorties d\'un tiroir et pour un comptage qui diffère.';
+
+  @override
+  String get cashReasonsTitle => 'Motifs d\'espèces';
+
+  @override
   String get chBareLetting => 'Nous ne louons que des locaux nus';
 
   @override
@@ -12386,6 +12433,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'Le fichier de l\'espace (XML) emporte toute la configuration — tarifs, identité légale, règles de réservation et de validation, rôles, maquettes de documents, sites, jours de fermeture — et l\'import l\'applique, même sur un espace qui a déjà des réservations. Désactivé : le fichier n\'emporte que les réglages et le plan.';
+
+  @override
+  String get featureCounterCashReasonsDesc =>
+      'Nommer les motifs des espèces versées dans un tiroir de caisse ou retirées, et d\'un comptage qui diffère, à côté des motifs prévus. Désactivé : la caisse propose les motifs tels quels.';
+
+  @override
+  String get featureCounterCashReasonsTitle => 'Motifs d\'espèces';
 
   @override
   String get featureCounterEmbeddedTerminalDesc =>
@@ -33318,10 +33372,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Tant qu\'une session est ouverte, la caisse ne voit pas les espèces attendues : elle compte le tiroir et voit l\'écart après la fermeture. Qui peut voir les finances le voit toujours.';
 
   @override
-  String get settingHintCounterCashReasons =>
-      'Les motifs qu\'une personne peut donner pour de l\'argent versé dans le tiroir ou retiré, séparés par des virgules (par exemple monnaie, dépense, autre).';
-
-  @override
   String get settingHintCounterCountByDenomination =>
       'Le fond de caisse et le tiroir compté sont donnés par coupures (combien de chaque billet et pièce) plutôt qu\'en total. Les nombres doivent correspondre au montant.';
 
@@ -33791,10 +33841,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingLabelCounterBlindCount => 'Compter le tiroir à l\'aveugle';
-
-  @override
-  String get settingLabelCounterCashReasons =>
-      'Motifs des entrées et sorties d\'espèces';
 
   @override
   String get settingLabelCounterCountByDenomination => 'Compter par coupures';
@@ -42133,6 +42179,21 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get tillCashInvalid =>
       'Saisissez le montant remis sous forme de nombre.';
+
+  @override
+  String get tillCashReasonChange => 'Monnaie';
+
+  @override
+  String get tillCashReasonCountDifference => 'Écart de comptage';
+
+  @override
+  String get tillCashReasonCountingError => 'Erreur de comptage';
+
+  @override
+  String get tillCashReasonExpense => 'Dépense';
+
+  @override
+  String get tillCashReasonOther => 'Autre';
 
   @override
   String get tillCashShort => 'Les espèces remises sont inférieures au total.';

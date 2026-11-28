@@ -105,6 +105,9 @@ abstract final class Routes {
   static const tillReceipts = '/till/receipts';
   static const tillDrawer = '/till/drawer';
 
+  /// #4514 -- the business's cash reasons, from the Master data page.
+  static const tillCashReasons = '/till/reasons';
+
   /// #4448 -- the layout editor of one till (`?name=` its name); [tillLayoutOf] fills in the till.
   static const tillLayout = '/till/layout/:tillId';
 

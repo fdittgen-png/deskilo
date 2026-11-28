@@ -8965,6 +8965,67 @@
   "@cashHubToPay": {
     "description": "#2577 the cash page"
   },
+  "cashReasonsAdd": "Add a reason",
+  "@cashReasonsAdd": {
+    "description": "#4514 button adding a reason"
+  },
+  "cashReasonsArchived": "Archived",
+  "@cashReasonsArchived": {
+    "description": "#4514 the archive switch"
+  },
+  "cashReasonsArchivedHelp": "An archived reason is no longer offered; the entries recorded with it keep it.",
+  "@cashReasonsArchivedHelp": {
+    "description": "#4514 under the archive switch"
+  },
+  "cashReasonsArchivedMark": "archived",
+  "@cashReasonsArchivedMark": {
+    "description": "#4514 beside an archived reason in the list"
+  },
+  "cashReasonsBuiltinHint": "Named by the app in every language.",
+  "@cashReasonsBuiltinHint": {
+    "description": "#4514 a built-in reason has no name to type"
+  },
+  "cashReasonsEdit": "Reason",
+  "@cashReasonsEdit": {
+    "description": "#4514 the reason sheet title"
+  },
+  "cashReasonsName": "Name",
+  "@cashReasonsName": {
+    "description": "#4514 the reason name field"
+  },
+  "cashReasonsNameMissing": "Give the reason a name.",
+  "@cashReasonsNameMissing": {
+    "description": "#4514 refusal: no name"
+  },
+  "cashReasonsNameTooLong": "A name has at most {max} characters.",
+  "@cashReasonsNameTooLong": {
+    "description": "#4514 refusal: a name too long",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "cashReasonsProcessMissing": "Choose at least one use.",
+  "@cashReasonsProcessMissing": {
+    "description": "#4514 refusal: no use chosen"
+  },
+  "cashReasonsProcesses": "Used for",
+  "@cashReasonsProcesses": {
+    "description": "#4514 the uses of a reason"
+  },
+  "cashReasonsSaved": "Reason saved.",
+  "@cashReasonsSaved": {
+    "description": "#4514 after a save"
+  },
+  "cashReasonsSubtitle": "The reasons a person gives for cash in or out of a drawer and for a count that differs.",
+  "@cashReasonsSubtitle": {
+    "description": "#4514 the master data card line"
+  },
+  "cashReasonsTitle": "Cash reasons",
+  "@cashReasonsTitle": {
+    "description": "#4514 the cash reasons screen title and master data card"
+  },
   "chBareLetting": "We only let bare rooms",
   "@chBareLetting": {
     "description": "#2360: chBareLetting"
@@ -16338,6 +16399,14 @@
   "featureConfigurationTransferDesc": "The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.",
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "featureCounterCashReasonsDesc": "Name the reasons of cash put into or taken out of a till drawer, and of a count that differs, beside the built-in ones. Off: the till offers the reasons as they are.",
+  "@featureCounterCashReasonsDesc": {
+    "description": "#4514 what the cash reasons feature does"
+  },
+  "featureCounterCashReasonsTitle": "Cash reasons",
+  "@featureCounterCashReasonsTitle": {
+    "description": "#4514 the cash reasons feature"
   },
   "featureCounterEmbeddedTerminalDesc": "Connect a till board, the small screen at the counter that takes payments, to this business: Settings › Devices reads its QR code or its typed code and shows which board it is. Off: no devices page.",
   "@featureCounterEmbeddedTerminalDesc": {
@@ -43114,10 +43183,6 @@
   "@settingHintCounterBlindCount": {
     "description": "#4367 setting label/hint or refusal"
   },
-  "settingHintCounterCashReasons": "The reasons a person may give for money paid into or out of the drawer, separated by commas (for example change, expense, other).",
-  "@settingHintCounterCashReasons": {
-    "description": "#4367 setting label/hint or refusal"
-  },
   "settingHintCounterCountByDenomination": "The float and the counted drawer are given by denomination (how many of each note and coin) rather than as a total. The counts must add up to the amount.",
   "@settingHintCounterCountByDenomination": {
     "description": "#4367 setting label/hint or refusal"
@@ -43600,10 +43665,6 @@
   },
   "settingLabelCounterBlindCount": "Count the drawer blind",
   "@settingLabelCounterBlindCount": {
-    "description": "#4367 setting label/hint or refusal"
-  },
-  "settingLabelCounterCashReasons": "Reasons for cash in and out",
-  "@settingLabelCounterCashReasons": {
     "description": "#4367 setting label/hint or refusal"
   },
   "settingLabelCounterCountByDenomination": "Count by denomination",
@@ -54195,6 +54256,26 @@
   "tillCashInvalid": "Enter the amount given as a number.",
   "@tillCashInvalid": {
     "description": "#4366 the till"
+  },
+  "tillCashReasonChange": "Change",
+  "@tillCashReasonChange": {
+    "description": "#4514 the built-in reason: change for the drawer"
+  },
+  "tillCashReasonCountDifference": "Count difference",
+  "@tillCashReasonCountDifference": {
+    "description": "#4514 a use of a reason: a count that differs at close"
+  },
+  "tillCashReasonCountingError": "Counting error",
+  "@tillCashReasonCountingError": {
+    "description": "#4514 the built-in reason of a count difference: a counting error"
+  },
+  "tillCashReasonExpense": "Expense",
+  "@tillCashReasonExpense": {
+    "description": "#4514 the built-in reason: a small expense paid from the drawer"
+  },
+  "tillCashReasonOther": "Other",
+  "@tillCashReasonOther": {
+    "description": "#4514 the built-in reason: other"
   },
   "tillCashShort": "The cash given is less than the total.",
   "@tillCashShort": {

@@ -58,8 +58,6 @@ abstract final class SettingDefaults {
   static const int calendarRangeDays = 400;
   /// `counter.blind_count`
   static const bool counterBlindCount = true;
-  /// `counter.cash_reasons`
-  static const String counterCashReasons = 'change,expense,other';
   /// `counter.count_by_denomination`
   static const bool counterCountByDenomination = false;
   /// `counter.customerless_sales`

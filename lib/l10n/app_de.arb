@@ -3954,6 +3954,20 @@
   "carnetsTitle": "Mehrfachkarten",
   "cashHubInOut": "Ein- und Ausgänge nach Monat",
   "cashHubToPay": "Zu zahlen",
+  "cashReasonsAdd": "Grund hinzufügen",
+  "cashReasonsArchived": "Archiviert",
+  "cashReasonsArchivedHelp": "Ein archivierter Grund wird nicht mehr angeboten; die mit ihm erfassten Bewegungen behalten ihn.",
+  "cashReasonsArchivedMark": "archiviert",
+  "cashReasonsBuiltinHint": "Von der App in jeder Sprache benannt.",
+  "cashReasonsEdit": "Grund",
+  "cashReasonsName": "Name",
+  "cashReasonsNameMissing": "Geben Sie dem Grund einen Namen.",
+  "cashReasonsNameTooLong": "Ein Name hat höchstens {max} Zeichen.",
+  "cashReasonsProcessMissing": "Wählen Sie mindestens eine Verwendung.",
+  "cashReasonsProcesses": "Verwendet für",
+  "cashReasonsSaved": "Grund gespeichert.",
+  "cashReasonsSubtitle": "Die Gründe, die jemand für Bargeld in oder aus einer Schublade und für eine abweichende Zählung angibt.",
+  "cashReasonsTitle": "Bargeldgründe",
   "chBareLetting": "Wir vermieten nur Räume",
   "@chBareLetting": {
     "description": "#2360: chBareLetting"
@@ -7399,6 +7413,8 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterCashReasonsDesc": "Die Gründe für Bargeld, das in eine Kassenschublade eingezahlt oder entnommen wird, und für eine abweichende Zählung benennen, neben den vorgegebenen. Aus: Die Kasse bietet die Gründe an, wie sie sind.",
+  "featureCounterCashReasonsTitle": "Bargeldgründe",
   "featureCounterEmbeddedTerminalDesc": "Ein Kassenterminal, den kleinen Bildschirm an der Theke, der Zahlungen annimmt, mit diesem Unternehmen verbinden: Einstellungen › Geräte liest seinen QR-Code oder seinen eingetippten Code und zeigt, welches Terminal es ist. Aus: keine Geräteseite.",
   "featureCounterEmbeddedTerminalTitle": "Kassenterminals",
   "featureCounterOfflineCashDesc": "Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung.",
@@ -19563,7 +19579,6 @@
     "description": "#2487 settings: Setting hint."
   },
   "settingHintCounterBlindCount": "Solange eine Sitzung offen ist, sieht die Kasse das erwartete Bargeld nicht: Sie zählt die Schublade und sieht die Differenz nach dem Abschluss. Wer die Finanzen sehen darf, sieht es immer.",
-  "settingHintCounterCashReasons": "Die Gründe, die jemand für Geld angeben kann, das in die Schublade eingezahlt oder entnommen wird, durch Kommas getrennt (zum Beispiel Wechselgeld, Ausgabe, sonstiges).",
   "settingHintCounterCountByDenomination": "Wechselgeld und gezählte Schublade werden nach Stückelung angegeben (wie viele von jedem Schein und jeder Münze) statt als Summe. Die Zahlen müssen den Betrag ergeben.",
   "settingHintCounterCustomerlessSales": "Erlaubt: Ein Verkauf kann ohne Kundennamen erfolgen. Abgelehnt: Jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an.",
   "settingHintCounterDocumentChannel": "Geteilt (Nachricht oder Mail), gedruckt oder beides. Der Beleg ist in jedem Fall dasselbe unveränderliche Dokument.",
@@ -19829,7 +19844,6 @@
     "description": "#2487 settings: Setting label."
   },
   "settingLabelCounterBlindCount": "Die Schublade blind zählen",
-  "settingLabelCounterCashReasons": "Gründe für Bargeld ein und aus",
   "settingLabelCounterCountByDenomination": "Nach Stückelung zählen",
   "settingLabelCounterCustomerlessSales": "Verkäufe ohne genannten Kunden",
   "settingLabelCounterDocumentChannel": "Wie ein Kassenbeleg die Kasse verlässt",
@@ -24410,6 +24424,11 @@
   "tillCashExact": "Passend",
   "tillCashGiven": "Gegeben",
   "tillCashInvalid": "Geben Sie den gegebenen Betrag als Zahl ein.",
+  "tillCashReasonChange": "Wechselgeld",
+  "tillCashReasonCountDifference": "Zähldifferenz",
+  "tillCashReasonCountingError": "Zählfehler",
+  "tillCashReasonExpense": "Ausgabe",
+  "tillCashReasonOther": "Sonstiges",
   "tillCashShort": "Der gegebene Betrag ist kleiner als die Summe.",
   "tillCategoryAll": "Alle",
   "@tillCategoryAll": {

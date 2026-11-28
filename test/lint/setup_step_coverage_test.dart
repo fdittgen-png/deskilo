@@ -84,6 +84,8 @@ const _switches = <WorkspaceFeature>{
   WorkspaceFeature.counterReceiptPrinter,
   // #4466 — asked for where a till board is connected (Settings › Devices).
   WorkspaceFeature.counterEmbeddedTerminal,
+  // #4514 — the cash reasons are named on Master data, beside the tills.
+  WorkspaceFeature.counterCashReasons,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,
   WorkspaceFeature.seatDayTimeline,

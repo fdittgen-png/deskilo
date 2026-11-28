@@ -891,8 +891,6 @@ window.SETUP_L10N={
    "counterByDenominationHint": "The float and the counted drawer are given note by note and coin by coin. Set in the app's settings.",
    "counterPaidOutLimit": "Largest paid-out without approval",
    "counterPaidOutLimitHint": "A paid-out above this needs someone who may record outgoing payments. Set in the app's settings.",
-   "counterCashReasons": "Reasons for cash in and out",
-   "counterCashReasonsHint": "Separated by commas, for example change, expense, other. Set in the app's settings.",
    "optNoLimit": "No limit",
    "optPerHour": "{n} per hour",
    "optPerHourDefault": "{n} per hour (default)",
@@ -1673,6 +1671,10 @@ window.SETUP_L10N={
    "counterEmbeddedTerminal": [
     "Till boards",
     "Connect a till board, the small screen at the counter that takes payments, to this business: Settings › Devices reads its QR code or its typed code and shows which board it is. Off: no devices page."
+   ],
+   "counterCashReasons": [
+    "Cash reasons",
+    "Name the reasons of cash put into or taken out of a till drawer, and of a count that differs, beside the built-in ones. Off: the till offers the reasons as they are."
    ]
   },
   "process": {
@@ -2983,8 +2985,6 @@ window.SETUP_L10N={
    "counterByDenominationHint": "Le fond de caisse et le tiroir compté sont donnés billet par billet et pièce par pièce. Réglé dans les paramètres de l'app.",
    "counterPaidOutLimit": "Plus grand retrait sans autorisation",
    "counterPaidOutLimitHint": "Un retrait au-delà exige une personne pouvant enregistrer des paiements sortants. Réglé dans les paramètres de l'app.",
-   "counterCashReasons": "Motifs des entrées et sorties d'espèces",
-   "counterCashReasonsHint": "Séparés par des virgules, par exemple monnaie, dépense, autre. Réglé dans les paramètres de l'app.",
    "optNoLimit": "Aucune limite",
    "optPerHour": "{n} par heure",
    "optPerHourDefault": "{n} par heure (par défaut)",
@@ -3765,6 +3765,10 @@ window.SETUP_L10N={
    "counterEmbeddedTerminal": [
     "Terminaux de caisse",
     "Relier un terminal de caisse, le petit écran du comptoir qui encaisse, à cette entreprise : Paramètres › Appareils lit son code QR ou son code saisi et indique de quel terminal il s'agit. Désactivé : pas de page des appareils."
+   ],
+   "counterCashReasons": [
+    "Motifs d'espèces",
+    "Nommer les motifs des espèces versées dans un tiroir de caisse ou retirées, et d'un comptage qui diffère, à côté des motifs prévus. Désactivé : la caisse propose les motifs tels quels."
    ]
   },
   "process": {
@@ -5075,8 +5079,6 @@ window.SETUP_L10N={
    "counterByDenominationHint": "Wechselgeld und gezählte Schublade werden Schein für Schein und Münze für Münze angegeben. Einzustellen in den Einstellungen der App.",
    "counterPaidOutLimit": "Größte Entnahme ohne Freigabe",
    "counterPaidOutLimitHint": "Eine Entnahme darüber braucht jemanden, der ausgehende Zahlungen erfassen darf. Einzustellen in den Einstellungen der App.",
-   "counterCashReasons": "Gründe für Bargeld ein und aus",
-   "counterCashReasonsHint": "Durch Kommas getrennt, zum Beispiel Wechselgeld, Ausgabe, sonstiges. Einzustellen in den Einstellungen der App.",
    "optNoLimit": "Keine Grenze",
    "optPerHour": "{n} pro Stunde",
    "optPerHourDefault": "{n} pro Stunde (Standard)",
@@ -5857,6 +5859,10 @@ window.SETUP_L10N={
    "counterEmbeddedTerminal": [
     "Kassenterminals",
     "Ein Kassenterminal, den kleinen Bildschirm an der Theke, der Zahlungen annimmt, mit diesem Unternehmen verbinden: Einstellungen › Geräte liest seinen QR-Code oder seinen eingetippten Code und zeigt, welches Terminal es ist. Aus: keine Geräteseite."
+   ],
+   "counterCashReasons": [
+    "Bargeldgründe",
+    "Die Gründe für Bargeld, das in eine Kassenschublade eingezahlt oder entnommen wird, und für eine abweichende Zählung benennen, neben den vorgegebenen. Aus: Die Kasse bietet die Gründe an, wie sie sind."
    ]
   },
   "process": {
@@ -7167,8 +7173,6 @@ window.SETUP_L10N={
    "counterByDenominationHint": "El fondo y el cajón contado se dan billete a billete y moneda a moneda. Se ajusta en los ajustes de la app.",
    "counterPaidOutLimit": "Mayor salida sin autorización",
    "counterPaidOutLimitHint": "Una salida por encima necesita a alguien que pueda registrar pagos salientes. Se ajusta en los ajustes de la app.",
-   "counterCashReasons": "Motivos de entradas y salidas de efectivo",
-   "counterCashReasonsHint": "Separados por comas, por ejemplo cambio, gasto, otro. Se ajusta en los ajustes de la app.",
    "optNoLimit": "Sin límite",
    "optPerHour": "{n} por hora",
    "optPerHourDefault": "{n} por hora (por defecto)",
@@ -7949,6 +7953,10 @@ window.SETUP_L10N={
    "counterEmbeddedTerminal": [
     "Terminales de caja",
     "Conectar un terminal de caja, la pequeña pantalla del mostrador que cobra, a esta empresa: Ajustes › Dispositivos lee su código QR o su código escrito y muestra qué terminal es. Desactivado: sin página de dispositivos."
+   ],
+   "counterCashReasons": [
+    "Motivos de efectivo",
+    "Nombrar los motivos del efectivo que entra en un cajón de caja o sale de él, y de un recuento que difiere, junto a los previstos. Desactivado: la caja ofrece los motivos tal como están."
    ]
   },
   "process": {
@@ -9259,8 +9267,6 @@ window.SETUP_L10N={
    "counterByDenominationHint": "Il fondo e il cassetto contato si indicano banconota per banconota e moneta per moneta. Si imposta nelle impostazioni dell'app.",
    "counterPaidOutLimit": "Prelievo massimo senza autorizzazione",
    "counterPaidOutLimitHint": "Un prelievo oltre questo richiede qualcuno che possa registrare pagamenti in uscita. Si imposta nelle impostazioni dell'app.",
-   "counterCashReasons": "Motivi di entrate e uscite di contante",
-   "counterCashReasonsHint": "Separati da virgole, per esempio resto, spesa, altro. Si imposta nelle impostazioni dell'app.",
    "optNoLimit": "Nessun limite",
    "optPerHour": "{n} all'ora",
    "optPerHourDefault": "{n} all'ora (predefinito)",
@@ -10041,6 +10047,10 @@ window.SETUP_L10N={
    "counterEmbeddedTerminal": [
     "Terminali di cassa",
     "Collegare un terminale di cassa, il piccolo schermo al banco che incassa, a questa attività: Impostazioni › Dispositivi legge il suo codice QR o il codice digitato e mostra di quale terminale si tratta. Disattivato: nessuna pagina dei dispositivi."
+   ],
+   "counterCashReasons": [
+    "Motivi di contante",
+    "Indicare i motivi del contante versato in un cassetto di cassa o prelevato, e di un conteggio che differisce, accanto a quelli previsti. Disattivato: la cassa propone i motivi così come sono."
    ]
   },
   "process": {
