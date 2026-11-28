@@ -10,6 +10,14 @@
 --                                 test/lint/cash_denominations_parity_test.dart). A reference table: every authenticated
 --                                 person reads it, only a migration writes it. A currency it does not list is counted by
 --                                 its total.
+--   * the rows are each issuer's own list of the notes and coins that are current legal tender, read on 2026-11-28:
+--     AUD Reserve Bank of Australia + Royal Australian Mint; CAD Bank of Canada + Royal Canadian Mint (50 c added; the
+--     cent withdrawn from distribution in 2013); CHF Swiss National Bank (ninth series) + Swissmint; CZK Czech National
+--     Bank (20 and 50 Kc notes and haler coins no longer valid); DKK Danmarks Nationalbank (1 000-krone note no longer
+--     legal tender: removed); EUR European Central Bank (500 euro note still legal tender) + the common euro coins; GBP
+--     Bank of England (polymer notes; paper notes not legal tender since 2022) + Royal Mint; JPY Bank of Japan + Ministry
+--     of Finance; NOK Norges Bank (series VIII); PLN Narodowy Bank Polski; SEK Sveriges Riksbank; USD Federal Reserve
+--     Board + United States Mint. The same list, with each source, stands beside currencyReference.
 --   * counter_tills.denominations the values this till's drawer carries, picked among its business currency's; null is
 --                                 every current one. Set by who manages the tills (counter_till_denominations_set_v1).
 --   * a session's float and count by denomination name only values of the till's pick (DKL02 denomination); a count
@@ -46,6 +54,7 @@ insert into public.cash_denominations (currency, value_minor, form, withdrawn_on
   ('CAD', 500, 'note', null),
   ('CAD', 200, 'coin', null),
   ('CAD', 100, 'coin', null),
+  ('CAD', 50, 'coin', null),
   ('CAD', 25, 'coin', null),
   ('CAD', 10, 'coin', null),
   ('CAD', 5, 'coin', null),
@@ -74,7 +83,6 @@ insert into public.cash_denominations (currency, value_minor, form, withdrawn_on
   ('CZK', 500, 'coin', null),
   ('CZK', 200, 'coin', null),
   ('CZK', 100, 'coin', null),
-  ('DKK', 100000, 'note', null),
   ('DKK', 50000, 'note', null),
   ('DKK', 20000, 'note', null),
   ('DKK', 10000, 'note', null),

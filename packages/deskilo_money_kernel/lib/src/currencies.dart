@@ -24,6 +24,18 @@ final class CurrencyRef {
   final List<int> notes;
 }
 
+/// #4511 -- the coins and notes of a currency are those its issuer lists as current legal tender, read on 2026-11-28:
+/// AUD Reserve Bank of Australia (banknotes.rba.gov.au) and Royal Australian Mint (ramint.gov.au, 1 and 2 c are not
+/// currency); CAD Bank of Canada (bankofcanada.ca, the 1, 2, 25, 500 and 1 000 dollar notes not legal tender since
+/// 2021) and Royal Canadian Mint (mint.ca, the cent withdrawn from distribution in 2013); CHF Swiss National Bank
+/// (snb.ch, ninth series; coins 5 c to 5 Fr.); CZK Czech National Bank (cnb.cz, the 20 and 50 Kc notes and the haler
+/// coins no longer valid); DKK Danmarks Nationalbank (nationalbanken.dk, the 1 000-krone note no longer legal tender);
+/// EUR European Central Bank (ecb.europa.eu, the 500 euro note still legal tender though no longer issued) and the euro
+/// coins common to all; GBP Bank of England (bankofengland.co.uk, polymer 5 to 50, paper notes not legal tender since
+/// 2022) and Royal Mint (royalmint.com, 1 p to 2 pounds); JPY Bank of Japan and Ministry of Finance (boj.or.jp,
+/// mof.go.jp); NOK Norges Bank (norges-bank.no, series VIII notes, coins 1 to 20 kroner); PLN Narodowy Bank Polski
+/// (nbp.pl, notes 10 to 500 zl, coins 1 gr to 5 zl); SEK Sveriges Riksbank (riksbank.se, valid banknotes and coins);
+/// USD Federal Reserve Board (federalreserve.gov, 1 to 100 dollar notes) and United States Mint (usmint.gov).
 /// #4501 (MD-06) -- THE currency reference: the currencies of ISO 4217 a business or a person may hold amounts in (the
 /// funds, metals and testing codes left out), with their minor digits, in the order of their codes. The
 /// server holds the same rows (`public.currency_reference`, migration 0993; test/lint/currency_reference_parity_test.dart
@@ -55,7 +67,7 @@ const List<CurrencyRef> currencyReference = [
   CurrencyRef('BWP', 2),
   CurrencyRef('BYN', 2),
   CurrencyRef('BZD', 2),
-  CurrencyRef('CAD', 2, business: true, coins: [5, 10, 25, 100, 200], notes: [500, 1000, 2000, 5000, 10000]),
+  CurrencyRef('CAD', 2, business: true, coins: [5, 10, 25, 50, 100, 200], notes: [500, 1000, 2000, 5000, 10000]),
   CurrencyRef('CDF', 2),
   CurrencyRef('CHF', 2, business: true, coins: [5, 10, 20, 50, 100, 200, 500], notes: [1000, 2000, 5000, 10000, 20000, 100000]),
   CurrencyRef('CLP', 0),
@@ -66,7 +78,7 @@ const List<CurrencyRef> currencyReference = [
   CurrencyRef('CVE', 2),
   CurrencyRef('CZK', 2, business: true, coins: [100, 200, 500, 1000, 2000, 5000], notes: [10000, 20000, 50000, 100000, 200000, 500000]),
   CurrencyRef('DJF', 0),
-  CurrencyRef('DKK', 2, business: true, coins: [50, 100, 200, 500, 1000, 2000], notes: [5000, 10000, 20000, 50000, 100000]),
+  CurrencyRef('DKK', 2, business: true, coins: [50, 100, 200, 500, 1000, 2000], notes: [5000, 10000, 20000, 50000]),
   CurrencyRef('DOP', 2),
   CurrencyRef('DZD', 2),
   CurrencyRef('EGP', 2),
