@@ -64,6 +64,20 @@ esp_err_t board_init(void) {
 
 void board_backlight(bool on) { gpio_set_level(PIN_LCD_BL, on ? 1 : 0); }
 
+// #4508 -- the end of a pixel transfer, told to whoever drew
+static void (*s_drawn)(void *);
+static void *s_drawn_ctx;
+static bool drawn_isr(esp_lcd_panel_io_handle_t io, esp_lcd_panel_io_event_data_t *e, void *ctx) {
+    if (s_drawn) s_drawn(s_drawn_ctx);
+    return false;
+}
+void board_on_drawn(void (*done)(void *ctx), void *ctx) {
+    s_drawn = done;
+    s_drawn_ctx = ctx;
+    const esp_lcd_panel_io_callbacks_t cbs = {.on_color_trans_done = drawn_isr};
+    ESP_ERROR_CHECK(esp_lcd_panel_io_register_event_callbacks(s_io, &cbs, NULL));
+}
+
 esp_err_t board_draw(int x0, int y0, int x1, int y1, const void *pixels) {
     uint8_t ca[4] = {x0 >> 8, x0 & 0xFF, (x1 - 1) >> 8, (x1 - 1) & 0xFF};
     uint8_t ra[4] = {y0 >> 8, y0 & 0xFF, (y1 - 1) >> 8, (y1 - 1) & 0xFF};

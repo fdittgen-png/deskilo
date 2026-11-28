@@ -4,7 +4,12 @@ CONFIG_PARTITION_TABLE_CUSTOM=y
 CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
 CONFIG_PARTITION_TABLE_FILENAME="partitions.csv"
 CONFIG_APP_ROLLBACK_ENABLE=y
+# #4508 -- the CPU at full speed, and a reconnection resumes its TLS session instead of a whole handshake. The code stays
+# compiled for size: for speed it is 90 KB larger, leaving 8 % of an update slot free (1.44 of 1.5 MB), and a key's wait
+# is the network, not the CPU
 CONFIG_COMPILER_OPTIMIZATION_SIZE=y
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240=y
+CONFIG_ESP_TLS_CLIENT_SESSION_TICKETS=y
 CONFIG_LV_COLOR_16_SWAP=y
 CONFIG_LV_MEM_CUSTOM=y
 CONFIG_LV_USE_LOG=n
