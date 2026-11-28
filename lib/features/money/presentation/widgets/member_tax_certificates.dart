@@ -15,6 +15,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/address_region_field.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/form_choice_controls.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -22,6 +23,9 @@ import '../../domain/tax_exemption_certificate.dart';
 import '../../providers/bank_statement_providers.dart' show currentWorkspaceProvider;
 import '../../providers/sales_tax_providers.dart';
 import '../invoice_actions.dart';
+
+/// #4501 -- a certificate's state, or that it is multistate.
+String _stateName(AppLocalizations l10n, String state) => state == multistateCertificate ? l10n.taxCertMultistate : state;
 
 String _kindName(AppLocalizations l10n, String kind) => switch (kind) {
   'resale' => l10n.taxCertKindResale,
@@ -132,8 +136,7 @@ class _CertificatesSheet extends ConsumerWidget {
             key: ValueKey('tax-cert-${c.id}'),
             contentPadding: EdgeInsets.zero,
             title: Text(
-              '${_kindName(l10n, c.kind)} · ${c.number} '
-              '(${c.state == multistateCertificate ? l10n.taxCertMultistate : c.state})',
+              '${_kindName(l10n, c.kind)} · ${c.number} (${_stateName(l10n, c.state)})',
             ),
             subtitle: Text(
               c.validTo == null
@@ -234,10 +237,9 @@ class _CertificatesSheet extends ConsumerWidget {
               onChanged: (x) => kind = x ?? kind,
             ),
           ),
-          SwitchListTile(
+          AppSwitchRow(
             key: const ValueKey('tax-cert-multistate'),
-            contentPadding: EdgeInsets.zero,
-            title: Text(l10n.taxCertMultistate),
+            title: l10n.taxCertMultistate,
             value: multistate,
             onChanged: (v) {
               multistate = v;

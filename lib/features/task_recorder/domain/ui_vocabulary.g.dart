@@ -4522,6 +4522,7 @@ const Set<String> uiKeys = {
   'tax-cert-state',
   'tax-ref-components',
   'tax-ref-confirmed',
+  'tax-ref-time_zone',
   'tax-ref-withdraw-cancel',
   'tax-ref-withdraw-reason',
   'tax-ref-withdraw-submit',
