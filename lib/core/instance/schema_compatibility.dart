@@ -12,7 +12,7 @@
 /// Pinned to the migration directory by
 /// `test/lint/migration_version_marker_test.dart`, so a migration cannot
 /// land without the app saying it needs it.
-const int requiredSchemaVersion = 988;
+const int requiredSchemaVersion = 992;
 
 /// #3729 (K2) — the schema this build CANNOT WORK without: below it an
 /// installation is told to update. [requiredSchemaVersion] only says what
