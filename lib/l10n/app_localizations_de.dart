@@ -38330,6 +38330,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Platz „unterwegs“ gehört zu den Umlagerungen zwischen Standorten.';
 
   @override
+  String get stockReasonUnitArchived =>
+      'Diese Einheit ist archiviert und kann nicht mehr verwendet werden.';
+
+  @override
   String get stockReasonUnitDuplicate =>
       'Diese Einheit steht doppelt in der Liste.';
 

@@ -38238,6 +38238,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El lugar «en camino» pertenece a los traslados entre sedes.';
 
   @override
+  String get stockReasonUnitArchived =>
+      'Esta unidad está archivada y ya no se puede usar.';
+
+  @override
   String get stockReasonUnitDuplicate => 'Esta unidad aparece dos veces.';
 
   @override

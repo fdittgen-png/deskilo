@@ -6137,6 +6137,7 @@ Map<String, _Getter> _part13() => {
   'stockReasonConversionUnknown': (l) => l.stockReasonConversionUnknown,
   'stockReasonLotExpired': (l) => l.stockReasonLotExpired,
   'stockReasonReasonPlaces': (l) => l.stockReasonReasonPlaces,
+  'stockReasonUnitArchived': (l) => l.stockReasonUnitArchived,
   'stockReorderPointWhole': (l) => l.stockReorderPointWhole,
   'stockScanTerminator': (l) => l.stockScanTerminator,
   'stockScanTerminatorEnter': (l) => l.stockScanTerminatorEnter,

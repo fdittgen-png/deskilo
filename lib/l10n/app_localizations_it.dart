@@ -38275,6 +38275,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il luogo «in viaggio» appartiene ai trasferimenti tra sedi.';
 
   @override
+  String get stockReasonUnitArchived =>
+      'Questa unità è archiviata e non può più essere usata.';
+
+  @override
   String get stockReasonUnitDuplicate => 'Questa unità è elencata due volte.';
 
   @override

@@ -38398,6 +38398,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'L’emplacement « en route » appartient aux transferts entre sites.';
 
   @override
+  String get stockReasonUnitArchived =>
+      'Cette unité est archivée et ne peut plus être utilisée.';
+
+  @override
   String get stockReasonUnitDuplicate => 'Cette unité est listée deux fois.';
 
   @override
