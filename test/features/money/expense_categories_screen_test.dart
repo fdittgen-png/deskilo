@@ -2,7 +2,6 @@
 // #4512 — Master data › Expense categories on a phone and on a desk: the four a business starts with read in the app's words
 // (the retired scheduled one in its own section); one is added through its sheet, renamed, put in order, retired and brought back; a
 // name is required and an active name is kept once; the server's refusal is said, never silent.
-import 'package:deskilo/core/demo/data/money/demo_expense_categories.dart';
 import 'package:deskilo/features/money/domain/expense_category.dart';
 import 'package:deskilo/features/money/presentation/screens/expense_categories_screen.dart';
 import 'package:deskilo/features/money/providers/bank_statement_providers.dart' show currentWorkspaceProvider;
@@ -22,8 +21,8 @@ const _workspace = Workspace(
   inviteCode: 'x',
 );
 
-Future<DemoExpenseCategories> _pump(WidgetTester tester, Size size) async {
-  final repo = DemoExpenseCategories();
+Future<InMemoryExpenseCategories> _pump(WidgetTester tester, Size size) async {
+  final repo = InMemoryExpenseCategories();
   await pumpApp(
     tester,
     const ExpenseCategoriesScreen(),
@@ -51,7 +50,7 @@ Future<void> _name(WidgetTester tester, String text) async {
   await tester.pump();
 }
 
-Future<ExpenseCategory> _category(DemoExpenseCategories repo, String code) async =>
+Future<ExpenseCategory> _category(InMemoryExpenseCategories repo, String code) async =>
     (await repo.categories('ws-1')).firstWhere((c) => c.code == code);
 
 void main() {

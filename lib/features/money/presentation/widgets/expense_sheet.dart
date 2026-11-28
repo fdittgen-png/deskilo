@@ -15,7 +15,6 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/submit_expense.dart';
 import '../../domain/service_item.dart';
-import '../../providers/expense_category_providers.dart';
 import '../../providers/money_providers.dart';
 import '../expense_category_names.dart';
 import 'expense_outcome_text.dart';
@@ -30,12 +29,8 @@ Future<void> showExpenseSheet(
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
 
-  // #4512 -- the business's own categories: the sheet is opened after they were read (whenExpenseVatRead)
-  final categories = activeExpenseCategories(await ref.read(expenseCategoriesProvider(workspace.id).future));
-  if (categories.isEmpty) {
-    if (context.mounted) AppSnack.error(context, l10n.expenseCategoriesEmpty);
-    return;
-  }
+  final categories = await expenseCategoriesOnOffer(context, ref, workspace.id); // #4512
+  if (categories == null) return;
 
   // The form's text, created on demand and disposed with the sheet.
   final fields = FormControllers({'supplyQuantity': '1', 'deductible': '100'});

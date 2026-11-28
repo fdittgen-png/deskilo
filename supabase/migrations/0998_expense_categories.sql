@@ -1,8 +1,8 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 -- apps: additive
--- (one table with its rows seeded; two columns' worth of new reads: purchase_documents.category_id; submit_expense,
---  save_purchase_draft_v1 and export_workspace_records restated whole from their live definitions)
+-- (one table with its rows seeded; purchase_documents.category_id; submit_expense, save_purchase_draft_v1, submit_purchase_v1 and
+--  export_workspace_records patched at asserted anchors of their live definitions)
 --
 -- #4512 (FIN-06, #4500 package 4) -- the categories an expense is filed under are the business's own records.
 --
@@ -238,488 +238,138 @@ revoke execute on function public.expense_category_retire_v1(uuid, uuid, uuid, b
 grant execute on function public.expense_category_retire_v1(uuid, uuid, uuid, boolean) to authenticated;
 
 -- ── the writers take the one rule ──────────────────────────────────────────────────────────────────────
--- restates 0413 (submit_expense): a new defaulted parameter, so the old signature goes
-drop function if exists public.submit_expense(uuid, integer, text, text, jsonb, jsonb);
+-- Patched at asserted anchors of their live definitions (each digest equals the replay's on r22: submit_expense 8896fc904a9c,
+-- save_purchase_draft_v1 68d6e1c38dc4, submit_purchase_v1 6ef3046564a5, export_workspace_records 1d45cb25b602), so what
+-- 0413, 0590, 0587 and 0968 built is carried unchanged.
+create or replace function pg_temp.anchor_once(p_def text, p_old text, p_new text, p_what text)
+returns text
+language plpgsql
+as $f$
+begin
+  if (length(p_def) - length(replace(p_def, p_old, ''))) / length(p_old) <> 1 then
+    raise exception '0998: % is not found exactly once', p_what using errcode = 'P0001';
+  end if;
+  return replace(p_def, p_old, p_new);
+end
+$f$;
+revoke execute on function pg_temp.anchor_once(text, text, text, text) from public;
 
-CREATE OR REPLACE FUNCTION public.submit_expense(p_workspace_id uuid, p_amount_cents integer, p_category text, p_description text DEFAULT ''::text, p_supply jsonb DEFAULT NULL::jsonb, p_vat jsonb DEFAULT NULL::jsonb, p_category_id uuid DEFAULT NULL::uuid)
- RETURNS uuid
- LANGUAGE plpgsql
- SECURITY DEFINER
- SET search_path TO 'public'
-AS $function$
+-- submit_expense (0413): a new defaulted parameter, so the old signature goes
+do $patch$
 declare
-  v_actor public.members;
-  v_event_id uuid;
-  v_supply jsonb := null;
-  v_vat jsonb := null;
-  v_qty int;
-  v_unit int;
-  v_name text;
-  v_service_id uuid;
+  v_def text := pg_get_functiondef('public.submit_expense(uuid, integer, text, text, jsonb, jsonb)'::regprocedure);
+begin
+  v_def := pg_temp.anchor_once(v_def,
+    $o$p_supply jsonb DEFAULT NULL::jsonb, p_vat jsonb DEFAULT NULL::jsonb)$o$,
+    $n$p_supply jsonb DEFAULT NULL::jsonb, p_vat jsonb DEFAULT NULL::jsonb, p_category_id uuid DEFAULT NULL::uuid)$n$, 'the signature');
+  v_def := pg_temp.anchor_once(v_def,
+    $o$  v_service_id uuid;
+begin
+$o$,
+    $n$  v_service_id uuid;
   v_cat_id uuid;
   v_cat_text text;
   v_held uuid;
 begin
-  select * into v_actor from public.members
-    where workspace_id = p_workspace_id and user_id = auth.uid() and status = 'active';
-  if v_actor.id is null then raise exception 'not an active member'; end if;
-  if p_amount_cents <= 0 then raise exception 'amount must be positive'; end if;
-  -- #4512: the category is one of the business's own, by identity or by the code it names; the event keeps its label
-  -- a purchase submitted through here keeps the category it holds even if it was retired since
+$n$, 'the variables');
+  v_def := pg_temp.anchor_once(v_def,
+    $o$  if p_amount_cents <= 0 then raise exception 'amount must be positive'; end if;
+$o$,
+    $o$  if p_amount_cents <= 0 then raise exception 'amount must be positive'; end if;
+$o$ || $n$  -- #4512: the category is one of the business's own, by identity or by the code it names; the event keeps its label.
+  -- A purchase submitted through here keeps the category it holds even if it was retired since.
   v_held := (select d.category_id from public.purchase_documents d
               where d.id = nullif(current_setting('deskilo.purchase_bridge', true), '')::uuid and d.workspace_id = p_workspace_id);
-  select r.category_id, r.snapshot into v_cat_id, v_cat_text from public.expense_category_resolve(p_workspace_id, p_category_id, p_category, v_held) r;
-  if p_supply is not null then
-    v_qty := (p_supply ->> 'quantity')::int;
-    if v_qty is null or v_qty < 1 or v_qty > 9999 then
-      raise exception 'supply quantity must be between 1 and 9999';
-    end if;
-    v_unit := coalesce((p_supply ->> 'unit_price_cents')::int,
-                       ceil(p_amount_cents::numeric / v_qty)::int);
-    if v_unit < 0 then raise exception 'unit price must not be negative'; end if;
-    v_service_id := nullif(p_supply ->> 'service_id', '')::uuid;
-    if v_service_id is not null then
-      select name into v_name from public.services
-        where id = v_service_id and workspace_id = p_workspace_id;
-      if v_name is null then raise exception 'unknown service'; end if;
-    else
-      v_name := trim(coalesce(p_supply ->> 'name', ''));
-      if char_length(v_name) between 1 and 80 is not true then
-        raise exception 'supply name must be 1–80 characters';
-      end if;
-    end if;
-    v_supply := jsonb_build_object(
-      'name', v_name, 'quantity', v_qty, 'unit_price_cents', v_unit,
-      'service_id', v_service_id);
-  end if;
-  -- #2357 — the VAT the expense carried, the share the space deducts and
-  -- whether it bought a fixed asset (0413).
-  v_vat := public.expense_vat_payload(p_workspace_id, p_vat);
-  insert into public.events
-    (workspace_id, type, action, actor_member_id, subject_member_id, payload, status)
-  values (
-    p_workspace_id, 'expense', 'submitted', v_actor.id, v_actor.id,
-    jsonb_build_object(
-      'amount_cents', p_amount_cents,
-      'category', v_cat_text,
+  select r.category_id, r.snapshot into v_cat_id, v_cat_text
+    from public.expense_category_resolve(p_workspace_id, p_category_id, p_category, v_held) r;
+$n$, 'the amount check');
+  v_def := pg_temp.anchor_once(v_def,
+    $o$      'category', p_category,
+$o$,
+    $n$      'category', v_cat_text,
       'category_id', v_cat_id,
-      'note', p_description
-    ) || case when v_supply is null then '{}'::jsonb
-              else jsonb_build_object('supply', v_supply) end
-      || case when v_vat is null then '{}'::jsonb
-              else jsonb_build_object('vat', v_vat) end,
-    'pending'
-  ) returning id into v_event_id;
-  return v_event_id;
-end;
-$function$;
+$n$, 'the event payload');
+  execute v_def;
+end
+$patch$;
+drop function public.submit_expense(uuid, integer, text, text, jsonb, jsonb);
 revoke execute on function public.submit_expense(uuid, integer, text, text, jsonb, jsonb, uuid) from public, anon;
 grant execute on function public.submit_expense(uuid, integer, text, text, jsonb, jsonb, uuid) to authenticated;
 
--- restates 0590 (save_purchase_draft_v1)
-CREATE OR REPLACE FUNCTION public.save_purchase_draft_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb)
- RETURNS jsonb
- LANGUAGE plpgsql
- SECURITY DEFINER
- SET search_path TO 'public'
-AS $function$
+-- save_purchase_draft_v1 (0590): the draft names its category by identity or by code
+do $patch$
 declare
-  v_me uuid;
-  v_digest text;
-  v_done jsonb;
-  v_id uuid := nullif(p_payload ->> 'purchase_id', '')::uuid;
-  v_kind text;
-  v_doc public.purchase_documents;
-  v_ws public.workspaces;
-  v_supplier uuid := nullif(p_payload ->> 'supplier_id', '')::uuid;
-  v_payer text;
-  v_payer_member uuid;
-  v_manager boolean;
-  v_currency text;
-  v_original uuid := nullif(p_payload ->> 'original_document_id', '')::uuid;
-  v_result jsonb;
+  v_def text := pg_get_functiondef('public.save_purchase_draft_v1(uuid, uuid, integer, jsonb)'::regprocedure);
+begin
+  v_def := pg_temp.anchor_once(v_def,
+    $o$  v_result jsonb;
+begin
+$o$,
+    $n$  v_result jsonb;
   v_cat_given text := nullif(btrim(coalesce(p_payload ->> 'category', '')), '');
   v_cat_id uuid;
   v_cat_text text;
 begin
-  if auth.uid() is null then raise exception 'not signed in'; end if;
-  select m.id into v_me from public.members m
-   where m.workspace_id = p_workspace_id and m.user_id = auth.uid() and m.status = 'active';
-  if v_me is null then raise exception 'not an active member'; end if;
-  if not public.feature_effective(p_workspace_id, 'purchases') then
-    raise exception 'purchases are switched off in this space';
-  end if;
-  v_digest := md5(auth.uid()::text || coalesce(p_expected_revision, 0)::text || p_payload::text);
-  v_done := public.purchase_request_begin(p_workspace_id, p_request_id, 'save', v_digest);
-  if v_done is not null then return v_done; end if;
-
-  select * into v_ws from public.workspaces where id = p_workspace_id;
-  v_manager := public.has_permission(p_workspace_id, 'managePurchases');
-  v_kind := coalesce(nullif(p_payload ->> 'kind', ''), 'member_receipt');
-  if v_kind not in ('bill', 'credit_note', 'member_receipt') then
-    raise exception 'unknown purchase kind';
-  end if;
-  if v_kind <> 'member_receipt' and not v_manager then
-    raise exception 'not allowed to capture supplier bills';
-  end if;
-  v_currency := upper(coalesce(nullif(p_payload ->> 'currency', ''), v_ws.currency_code));
-  if v_currency !~ '^[A-Z]{3}$' then raise exception 'a currency is three capital letters'; end if;
-  if v_currency <> v_ws.currency_code
-     and (v_kind = 'member_receipt'
-          or not public.feature_effective(p_workspace_id, 'foreignCurrencyPurchases')) then
-    raise exception 'a purchase is in the currency of the space';
-  end if;
-  if v_supplier is not null and not exists (
-       select 1 from public.suppliers s
-        where s.id = v_supplier and s.workspace_id = p_workspace_id and s.status = 'active') then
-    raise exception 'unknown supplier';
-  end if;
-  if v_original is not null and (v_kind <> 'credit_note' or not exists (
-       select 1 from public.purchase_documents o
-        where o.id = v_original and o.workspace_id = p_workspace_id and o.kind = 'bill')) then
-    raise exception 'a credit note reverses a bill of this space';
-  end if;
-  if v_original is not null and not exists (
-       select 1 from public.purchase_documents o where o.id = v_original and o.currency = v_currency) then
-    raise exception 'a credit note is in the currency of its bill';
-  end if;
-  if v_kind = 'member_receipt' then
-    v_payer := 'member';
-    v_payer_member := v_me;
-  else
-    v_payer := coalesce(nullif(p_payload ->> 'payer_kind', ''), 'unpaid');
-    if v_payer not in ('workspace', 'member', 'unpaid') then raise exception 'unknown payer'; end if;
-    v_payer_member := case when v_payer = 'member'
-      then nullif(p_payload ->> 'payer_member_id', '')::uuid end;
-    if v_payer = 'member' and not exists (
-         select 1 from public.members m
-          where m.id = v_payer_member and m.workspace_id = p_workspace_id) then
-      raise exception 'unknown payer member';
-    end if;
-  end if;
-
-  -- #4512: a category named by identity or by its code is one of the business's own; an empty one is a draft not yet categorised
-  if v_id is null then
-    if coalesce(p_expected_revision, 0) <> 0 then raise exception 'stale revision'; end if;
+$n$, 'the variables');
+  v_def := pg_temp.anchor_once(v_def,
+    $o$    insert into public.purchase_documents
+      (workspace_id, kind, currency, category, supplier_id,$o$,
+    $n$    -- #4512: a category named by identity or by its code is one of the business's own; none is a draft not yet categorised
     if nullif(p_payload ->> 'category_id', '') is not null or v_cat_given is not null then
-      select r.category_id, r.snapshot into v_cat_id, v_cat_text from public.expense_category_resolve(p_workspace_id, nullif(p_payload ->> 'category_id', '')::uuid, v_cat_given, null) r;
+      select r.category_id, r.snapshot into v_cat_id, v_cat_text
+        from public.expense_category_resolve(p_workspace_id, nullif(p_payload ->> 'category_id', '')::uuid, v_cat_given, null) r;
     end if;
     insert into public.purchase_documents
-      (workspace_id, kind, currency, category, category_id, supplier_id, original_reference, original_date,
-       received_on, service_from, service_to, due_on, submitter_member_id, payer_kind,
-       payer_member_id, original_document_id)
-    values
-      (p_workspace_id, v_kind, v_currency, coalesce(v_cat_text, ''), v_cat_id,
-       v_supplier, left(coalesce(p_payload ->> 'original_reference', ''), 200),
-       nullif(p_payload ->> 'original_date', '')::date, nullif(p_payload ->> 'received_on', '')::date,
-       nullif(p_payload ->> 'service_from', '')::date, nullif(p_payload ->> 'service_to', '')::date,
-       nullif(p_payload ->> 'due_on', '')::date, v_me, v_payer, v_payer_member, v_original)
-    returning * into v_doc;
-  else
-    select * into v_doc from public.purchase_documents
-     where id = v_id and workspace_id = p_workspace_id for update;
-    if v_doc.id is null then raise exception 'unknown purchase'; end if;
-    if v_doc.kind = 'member_receipt' and v_doc.submitter_member_id <> v_me then
-      raise exception 'not your purchase';
-    end if;
-    if v_doc.kind <> 'member_receipt' and not v_manager then
-      raise exception 'not allowed to capture supplier bills';
-    end if;
-    if v_doc.kind <> v_kind then raise exception 'the kind of a purchase does not change'; end if;
-    if v_doc.state <> 'draft' then raise exception 'only a draft can be edited'; end if;
-    if v_doc.revision <> coalesce(p_expected_revision, 0) then raise exception 'stale revision'; end if;
-    if nullif(p_payload ->> 'category_id', '') is not null or v_cat_given is not null then
+      (workspace_id, kind, currency, category, category_id, supplier_id,$n$, 'the insert columns');
+  v_def := pg_temp.anchor_once(v_def,
+    $o$(p_workspace_id, v_kind, v_currency, left(coalesce(p_payload ->> 'category', ''), 80),$o$,
+    $n$(p_workspace_id, v_kind, v_currency, coalesce(v_cat_text, ''), v_cat_id,$n$, 'the insert values');
+  v_def := pg_temp.anchor_once(v_def,
+    $o$    update public.purchase_documents set
+        revision = revision + 1,
+        currency = v_currency,
+        category = left(coalesce(p_payload ->> 'category', ''), 80),
+$o$,
+    $n$    if nullif(p_payload ->> 'category_id', '') is not null or v_cat_given is not null then
       -- the draft keeps a category retired since; a new pick is an active one
-      select r.category_id, r.snapshot into v_cat_id, v_cat_text from public.expense_category_resolve(p_workspace_id, nullif(p_payload ->> 'category_id', '')::uuid, v_cat_given, v_doc.category_id) r;
+      select r.category_id, r.snapshot into v_cat_id, v_cat_text
+        from public.expense_category_resolve(p_workspace_id, nullif(p_payload ->> 'category_id', '')::uuid, v_cat_given, v_doc.category_id) r;
     end if;
     update public.purchase_documents set
         revision = revision + 1,
         currency = v_currency,
         category = coalesce(v_cat_text, ''),
         category_id = v_cat_id,
-        supplier_id = v_supplier,
-        original_reference = left(coalesce(p_payload ->> 'original_reference', ''), 200),
-        original_date = nullif(p_payload ->> 'original_date', '')::date,
-        received_on = nullif(p_payload ->> 'received_on', '')::date,
-        service_from = nullif(p_payload ->> 'service_from', '')::date,
-        service_to = nullif(p_payload ->> 'service_to', '')::date,
-        due_on = nullif(p_payload ->> 'due_on', '')::date,
-        payer_kind = v_payer, payer_member_id = v_payer_member,
-        original_document_id = v_original
-      where id = v_doc.id
-      returning * into v_doc;
-  end if;
-  perform public.purchase_write_lines(p_workspace_id, v_doc.id, p_payload -> 'lines');
-  -- The rate goes with the currency: back in the space's currency, a draft
-  -- keeps none.
-  if v_currency = v_ws.currency_code then
-    delete from public.document_exchange_rates x
-     where x.workspace_id = p_workspace_id and x.document_kind = 'purchase' and x.document_id = v_doc.id;
-  elsif jsonb_typeof(p_payload -> 'exchange_rate') = 'object' then
-    perform public.purchase_exchange_rate_write(p_workspace_id, v_doc.id, v_me, p_payload -> 'exchange_rate');
-  else
-    delete from public.document_exchange_rates x
-     where x.workspace_id = p_workspace_id and x.document_kind = 'purchase'
-       and x.document_id = v_doc.id and x.currency <> v_currency;
-  end if;
-  v_result := jsonb_build_object('purchase_id', v_doc.id, 'revision', v_doc.revision,
-                                 'state', v_doc.state);
-  return public.purchase_request_end(p_workspace_id, p_request_id, 'save', v_digest, v_result);
-end;
-$function$;
+$n$, 'the update');
+  execute v_def;
+end
+$patch$;
 revoke execute on function public.save_purchase_draft_v1(uuid, uuid, integer, jsonb) from public, anon;
 
--- restates 0587 (submit_purchase_v1): the purchase names its category by identity
-CREATE OR REPLACE FUNCTION public.submit_purchase_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_request_id uuid)
- RETURNS jsonb
- LANGUAGE plpgsql
- SECURITY DEFINER
- SET search_path TO 'public'
-AS $function$
+-- submit_purchase_v1 (0587): the purchase names its category by identity
+do $patch$
 declare
-  v_me uuid;
-  v_digest text;
-  v_done jsonb;
-  v_doc public.purchase_documents;
-  v_gross bigint;
-  v_net bigint;
-  v_tax bigint;
-  v_rates int;
-  v_unstated int;
-  v_unknown int;
-  v_assets int;
-  v_lines int;
-  v_percent numeric;
-  v_rec bigint;
-  v_unqualified int;
-  v_single boolean;
-  v_vat_lines boolean := false;
-  v_vat jsonb := null;
-  v_supply jsonb := null;
-  v_desc text;
-  v_event uuid;
-  v_state text;
-  v_result jsonb;
+  v_def text := pg_get_functiondef('public.submit_purchase_v1(uuid, uuid, integer, uuid)'::regprocedure);
 begin
-  if auth.uid() is null then raise exception 'not signed in'; end if;
-  select m.id into v_me from public.members m
-   where m.workspace_id = p_workspace_id and m.user_id = auth.uid() and m.status = 'active';
-  if v_me is null then raise exception 'not an active member'; end if;
-  if not public.feature_effective(p_workspace_id, 'purchases') then
-    raise exception 'purchases are switched off in this space';
-  end if;
-  v_digest := md5(auth.uid()::text || p_purchase_id::text || coalesce(p_revision, 0)::text);
-  v_done := public.purchase_request_begin(p_workspace_id, p_request_id, 'submit', v_digest);
-  if v_done is not null then return v_done; end if;
-
-  select * into v_doc from public.purchase_documents
-   where id = p_purchase_id and workspace_id = p_workspace_id for update;
-  if v_doc.id is null then raise exception 'unknown purchase'; end if;
-  if v_doc.kind = 'credit_note' then
-    raise exception 'a credit note is applied to its bill in a later step';
-  end if;
-  if v_doc.state <> 'draft' then raise exception 'only a draft can be submitted'; end if;
-  if v_doc.revision <> coalesce(p_revision, 0) then raise exception 'stale revision'; end if;
-  if v_doc.kind = 'bill' then
-    -- A supplier bill goes to a second person: the submitter captured it
-    -- (managePurchases, checked on the draft), the approver decides it.
-    if not public.has_permission(p_workspace_id, 'managePurchases') then
-      raise exception 'not allowed to capture supplier bills';
-    end if;
-    if v_doc.supplier_id is null then raise exception 'a bill needs its supplier'; end if;
-    if v_doc.payer_kind <> 'unpaid' then
-      raise exception 'only a bill still to be paid goes to approval';
-    end if;
-    select count(*), coalesce(sum(gross_cents), 0) into v_lines, v_gross
-      from public.purchase_lines where purchase_id = v_doc.id;
-    if v_lines = 0 or v_gross <= 0 then raise exception 'a bill needs an amount'; end if;
-    if v_gross > 2147483647 then raise exception 'the amount of a bill is too large'; end if;
-    -- Whoever sends it to approval cannot decide it either: the drafter and
-    -- the sender may be two people, and neither is the second person.
-    update public.purchase_documents
-       set state = 'pending', submitted_by_member_id = v_me where id = v_doc.id;
-    v_result := jsonb_build_object('purchase_id', v_doc.id, 'revision', v_doc.revision,
-                                   'state', 'pending');
-    return public.purchase_request_end(p_workspace_id, p_request_id, 'submit', v_digest, v_result);
-  end if;
-  if v_doc.submitter_member_id <> v_me then raise exception 'not your purchase'; end if;
-  if v_doc.category = '' then raise exception 'a receipt needs a category'; end if;
-
-  -- v_unstated: a line without a stated tax or rate (the one-rate payload
-  -- needs both); v_unknown: a line whose tax is not known at all, or taxed
-  -- at no stated rate.
-  select count(*), coalesce(sum(gross_cents), 0),
-         count(*) filter (where tax_cents is null or tax_rate_percent is null),
-         count(*) filter (where tax_cents is null or (tax_cents > 0 and coalesce(tax_rate_percent, 0) <= 0)),
-         count(distinct tax_rate_percent), count(*) filter (where recognition_kind = 'asset'),
-         coalesce(sum(net_cents), 0), coalesce(sum(tax_cents), 0),
-         coalesce(sum(recoverable_tax_cents), 0),
-         count(*) filter (where tax_cents > 0 and recoverable_tax_cents is null)
-    into v_lines, v_gross, v_unstated, v_unknown, v_rates, v_assets, v_net, v_tax, v_rec,
-         v_unqualified
-    from public.purchase_lines where purchase_id = v_doc.id;
-  if v_lines = 0 or v_gross <= 0 then raise exception 'a receipt needs an amount'; end if;
-  if v_gross > 2147483647 then raise exception 'the amount of a receipt is too large'; end if;
-  v_single := v_unstated = 0 and v_rates = 1 and v_assets in (0, v_lines);
-  if v_tax > 0 then
-    if v_unknown > 0 then
-      raise exception 'state the tax and the rate of every line of a taxed receipt';
-    end if;
-    if v_unqualified > 0 then
-      raise exception 'qualify the deductible tax of every line before submitting';
-    end if;
-    -- Each rate's lines follow from it: line by line, or as a whole.
-    if exists (
-         select 1 from (
-           select l.tax_rate_percent as r, sum(l.gross_cents)::bigint as g,
-                  sum(l.net_cents)::bigint as n,
-                  bool_and(l.net_cents = public.vat_split_net(l.gross_cents, l.tax_rate_percent)) as each_ok
-             from public.purchase_lines l
-            where l.purchase_id = v_doc.id and l.tax_rate_percent > 0
-            group by l.tax_rate_percent) x
-          where not x.each_ok and x.n <> public.vat_split_net(x.g, x.r)) then
-      raise exception 'the tax amounts do not follow from the rate';
-    end if;
-    if public.feature_effective(p_workspace_id, 'inputVat') then
-      if v_single then
-        -- One rate and one class: ONE rate and ONE deductible share on the
-        -- expense, as before.
-        select max(tax_rate_percent) into v_percent
-          from public.purchase_lines where purchase_id = v_doc.id;
-        v_vat := jsonb_build_object('percent', trim_scale(v_percent),
-                   'deductible_pct', trim_scale(round(v_rec::numeric * 100 / v_tax, 4)))
-                 || case when v_assets > 0 then jsonb_build_object('asset', true) else '{}'::jsonb end;
-      else
-        v_vat_lines := true;
-      end if;
-    end if;
-  end if;
-  select l.description, l.supply into v_desc, v_supply from public.purchase_lines l
-   where l.purchase_id = v_doc.id and l.line_no = 1;
-  if v_lines > 1 then v_supply := null; end if;
-
-  perform set_config('deskilo.purchase_bridge', v_doc.id::text, true);
-  perform set_config('deskilo.purchase_vat_lines', case when v_vat_lines then 'on' else '' end, true);
-  v_event := public.submit_expense(p_workspace_id, v_gross::int, v_doc.category,
-                                   coalesce(v_desc, ''), v_supply, v_vat, v_doc.category_id);
-  perform set_config('deskilo.purchase_vat_lines', '', true);
-  perform set_config('deskilo.purchase_bridge', '', true);
-
-  select d.state into v_state from public.purchase_documents d where d.id = v_doc.id;
-  v_result := jsonb_build_object('purchase_id', v_doc.id, 'event_id', v_event,
-                                 'revision', v_doc.revision, 'state', v_state);
-  return public.purchase_request_end(p_workspace_id, p_request_id, 'submit', v_digest, v_result);
-end;
-$function$;
+  v_def := pg_temp.anchor_once(v_def,
+    $o$coalesce(v_desc, ''), v_supply, v_vat);$o$,
+    $n$coalesce(v_desc, ''), v_supply, v_vat, v_doc.category_id);$n$, 'the expense call');
+  execute v_def;
+end
+$patch$;
 revoke execute on function public.submit_purchase_v1(uuid, uuid, integer, uuid) from public, anon;
 
--- restates 0968 (export_workspace_records): the table joins the export
-CREATE OR REPLACE FUNCTION public.export_workspace_records(p_workspace_id uuid)
- RETURNS jsonb
- LANGUAGE plpgsql
- STABLE SECURITY DEFINER
- SET search_path TO 'public'
-AS $function$
+-- export_workspace_records (0968): the table joins the export
+do $patch$
 declare
-  v_tables text[] := array[
-    -- configuration, readable (the XML stays the re-importable copy)
-    'sites', 'fee_bands', 'packages', 'credit_products', 'vat_rates',
-    'accessories', 'seat_accessories', 'closure_days', 'validation_policies',
-    'workspace_roles', 'workspace_role_members', 'workspace_field_definitions',
-    'workspace_field_values', 'number_sequences', 'charging_stations',
-    'plan_images', 'setting_values',
-    -- member accounts
-    'member_credits', 'member_credit_uses', 'price_negotiations',
-    'quota_extensions', 'usage_records', 'invoice_matches', 'invoice_reminders',
-    'invoice_dunning_holds', 'tax_exemption_certificates',
-    -- purchases, premises, assets, books
-    'suppliers', 'purchase_documents', 'purchase_lines', 'purchase_obligations',
-    'outgoing_payments', 'expense_schedules', 'expense_occurrences',
-    'expense_repartitions', 'premises_leases', 'lease_terms',
-    'lease_settlements', 'room_rentals', 'room_rental_fees', 'workspace_assets',
-    'asset_valuation_batches', 'asset_valuation_rows', 'book_profiles',
-    'book_accounts', 'book_mappings', 'book_periods', 'vat_declarations',
-    'einvoice_inbox',
-    -- people the space is accountable to
-    'guest_participations', 'rights_requests',
-    -- #3307 the orders to the suppliers
-    'purchase_orders', 'purchase_order_lines', 'purchase_order_sends',
-    'purchase_order_receipts', 'purchase_order_receipt_lines',
-    -- #3308 the passes the space sells and the passes it sold
-    'guest_pass_offers', 'guest_passes',
-    -- #3824 the goods ledger
-    'item_units', 'item_codes', 'stock_locations', 'stock_lots', 'stock_movements',
-    'stock_balances',
-    -- #4362 the tags bound to items, places and pieces, and the named pieces
-    'stock_tags', 'stock_tagged_units', 'stock_movement_units',
-    'stock_handling_units', 'stock_handling_unit_lines', 'stock_handling_unit_pieces', 'stock_movement_handling_units',
-    'stock_repacks', 'stock_repack_lines',
-    -- #4184 the counter's receipts, their lines and their tenders
-    'counter_receipts', 'counter_receipt_lines', 'counter_tenders', 'counter_refunds',
-    -- #4367 the tills, their sessions, the cash entries and the day closes
-    'counter_tills', 'counter_till_sessions', 'counter_cash_entries', 'counter_day_closes',
-    -- #4373 the sales a till made offline, as the server received them
-    'counter_offline_sales',
-    -- #4164 the billing identity of each customer the business invoices
-    'billing_parties',
-    -- #4166 the customer quotes, their revisions, the decisions the issuer recorded and
-    -- the conversions into invoices
-    'customer_quotes', 'customer_quote_revisions', 'customer_quote_decisions',
-    'customer_quote_conversions',
-    -- #4169 the variants and the supplier's article
-    'item_dimensions', 'item_dimension_values', 'item_variants', 'item_variant_values',
-    'supplier_item_mappings',
-    -- #4171 what was put away from a delivery
-    'stock_receipt_allocations',
-    -- #4170 the transfers between sites and what each loaded
-    'stock_transfers', 'stock_transfer_lines',
-    -- #4294 the reorder points
-    'stock_reorder_points', 'item_groups', 'item_group_history',
-    -- #4172 the returns, and what each line reversed
-    'stock_returns', 'stock_reversals',
-    -- #4172 the counts and their decisions
-    'stock_counts',
-    -- #4295 the plans, the tasks and their lines
-    'stock_count_plans', 'stock_count_tasks', 'stock_count_task_lines',
-    -- #4178 the engagements of the services ordered, their steps and the invoice
-    -- lines that billed a direct commitment
-    'service_fulfilments', 'service_fulfilment_transitions', 'service_fulfilment_invoice_links',
-    -- #4436 the track IDs frozen on the goods lines of an issued invoice
-    'invoice_line_tracks',
-    -- #4442 the units of measure of the business and their conversions
-    'workspace_units', 'unit_conversions', 'expense_categories',
-    -- #4476 the copies printed of a counter receipt
-    'counter_receipt_copies'];
-  v_left_out text[] := public.system_column_names() || array['workspace_id', 'source_xml'];
-  v_table text;
-  v_columns text[];
-  v_rows jsonb;
-  v_out jsonb := '[]'::jsonb;
+  v_def text := pg_get_functiondef('public.export_workspace_records(uuid)'::regprocedure);
 begin
-  if auth.uid() is null or not public.has_permission(p_workspace_id, 'exportData') then
-    raise exception 'only someone who may export this workspace''s data reads its records'
-      using errcode = 'DKN01';
-  end if;
-  foreach v_table in array v_tables loop
-    -- the sessions, their entries and the day closes carry the expected cash and the differences: the finances' to export
-    if v_table in ('counter_till_sessions', 'counter_cash_entries', 'counter_day_closes', 'counter_offline_sales', 'invoice_line_tracks') and not public.has_permission(p_workspace_id, 'viewFinances') then
-      continue;
-    end if;
-    select array_agg(c.column_name::text order by c.ordinal_position) into v_columns
-      from information_schema.columns c
-     where c.table_schema = 'public' and c.table_name = v_table
-       and c.column_name <> all (v_left_out);
-    execute format(
-      'select coalesce(jsonb_agg(jsonb_build_array(%s) order by created_datetime), ''[]''::jsonb)
-         from public.%I where workspace_id = $1',
-      (select string_agg(format('%I', c), ', ') from unnest(v_columns) c), v_table)
-      into v_rows using p_workspace_id;
-    v_out := v_out || jsonb_build_array(jsonb_build_object(
-      'table', v_table, 'columns', to_jsonb(v_columns), 'rows', v_rows));
-  end loop;
-  return v_out;
-end;
-$function$;
+  v_def := pg_temp.anchor_once(v_def,
+    $o$'workspace_units', 'unit_conversions',$o$,
+    $n$'workspace_units', 'unit_conversions', 'expense_categories',$n$, 'the export list');
+  execute v_def;
+end
+$patch$;
 revoke execute on function public.export_workspace_records(uuid) from public, anon;
 
 select public.set_deskilo_schema_version(998);

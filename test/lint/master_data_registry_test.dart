@@ -26,6 +26,7 @@ const Map<String, String> _masterDataEditors = {
   '/money/suppliers': '#3070 the suppliers',
   '/money/customers': '#4164 the billing customers',
   '/money/bank-accounts': '#4496 the bank accounts statements are imported into',
+  '/money/expense-categories': '#4512 the categories an expense or a receipt is filed under',
   '/settings/sites': '#945 the sites',
 };
 

@@ -1,21 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4512 -- the Demo's expense categories: the five a business starts with (scheduled retired), kept in memory with the rules the
+// #4512 -- the expense categories kept in memory (the Demo's, and the tests'): the five a business starts with (scheduled retired), under the rules the
 // server applies: a name is required for one that is not built in, an active name is kept once (case-folded), a code never moves,
 // nothing is deleted.
-import 'package:deskilo/features/money/domain/expense_category.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
-class DemoExpenseCategories implements ExpenseCategoryRepository {
+import '../../../core/codes/dk_code.dart';
+import '../domain/expense_category.dart';
+
+class InMemoryExpenseCategories implements ExpenseCategoryRepository {
   final Map<String, List<ExpenseCategory>> _byWorkspace = {};
   int _next = 0;
 
   List<ExpenseCategory> _of(String workspaceId) => _byWorkspace.putIfAbsent(workspaceId, () => [
-    for (final (i, code) in const ['coffee', 'supplies', 'equipment', 'other', 'scheduled'].indexed)
-      ExpenseCategory(id: '$workspaceId-cat-$code', code: code, label: '', sortOrder: (i + 1) * 10, builtIn: true, retired: code == 'scheduled'),
+    for (final (i, code) in BuiltInExpenseCategory.codes.indexed)
+      ExpenseCategory(id: '$workspaceId-cat-$code', code: code, label: '', sortOrder: (i + 1) * 10, builtIn: true, retired: code == BuiltInExpenseCategory.scheduled),
   ]);
 
-  PostgrestException _refused(String detail) => PostgrestException(message: 'expense category: $detail', code: 'DKX01', details: detail);
+  PostgrestException _refused(String detail) => PostgrestException(message: 'expense category: $detail', code: DkCode.dkx01, details: detail);
 
   @override
   Future<List<ExpenseCategory>> categories(String workspaceId) async => [

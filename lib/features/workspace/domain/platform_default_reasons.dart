@@ -37,6 +37,9 @@ const Map<WorkspaceFeature, String> platformDefaultReasons = {
   WorkspaceFeature.scheduledExpenses:
       'A configured space can schedule expenses with validation; each '
       'occurrence is presented for confirmation (#767).',
+  WorkspaceFeature.expenseCategories:
+      'Off, the business keeps the categories it began with and the Master data page offers no editor for them; the pickers read the '
+      'list either way (#4512).',
   WorkspaceFeature.supplyExpenses:
       'A configured space can explicitly submit a supply expense; its '
       'validation reimburses the buyer and restocks a service (#731).',

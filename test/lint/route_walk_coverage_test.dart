@@ -42,6 +42,7 @@ const Map<String, String> _noLayoutOfItsOwn = {
   '/till/receipts': '#4185 the receipts the till made with their sheets; widget tests render them at phone and desk',
   '/till/drawer': '#4367 the tills with their sessions and four sheets; widget tests render them at phone and desk',
   '/money/bank-accounts': '#4496 the accounts and a sheet; its widget tests render them at phone and desk',
+  '/money/expense-categories': '#4512 the categories and a sheet; its widget tests render them at phone and desk',
   '/settings/devices': '#4466 the boards connected and a code to read; its widget tests render it at phone and desk',
   '/till/layout/:tillId': '#4448 a grid, its toolbar and sheets; widget tests render it at three widths',
   '/stock/transfers': '#4170 a list of cards and three sheets; its widget tests render it at phone and desk widths',

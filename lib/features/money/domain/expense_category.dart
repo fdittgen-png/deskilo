@@ -5,6 +5,15 @@
 // expense keeps the label its category had when it was filed, so a rename or a retirement changes nothing already filed.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+/// The codes of the categories every business starts with.
+abstract final class BuiltInExpenseCategory {
+  static const coffee = 'coffee';
+  static const supplies = 'supplies';
+  static const equipment = 'equipment';
+  static const scheduled = 'scheduled';
+  static const codes = [coffee, supplies, equipment, 'other', scheduled];
+}
+
 /// One category of a business.
 class ExpenseCategory {
   const ExpenseCategory({
