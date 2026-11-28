@@ -106,8 +106,9 @@ class CashReasonsScreen extends ConsumerWidget {
       ref.read(tillDrawerCommandsProvider(id)),
       reason: reason,
     );
-    if (saved && context.mounted)
+    if (saved && context.mounted) {
       AppSnack.success(context, context.l10n.cashReasonsSaved);
+    }
   }
 }
 
