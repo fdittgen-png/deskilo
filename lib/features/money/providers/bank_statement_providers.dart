@@ -4,7 +4,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart' show FutureProvider, Provider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/bank/bank_account.dart';
 import '../../../core/data/unreadable_rows.dart';
 import '../../../core/settings/active_settings.dart';
 import '../application/bank_account_commands.dart';

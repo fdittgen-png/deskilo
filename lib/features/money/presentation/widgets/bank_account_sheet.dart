@@ -5,11 +5,12 @@
 // business's book, when it keeps one). The server decides; its refusal is said under the sheet's buttons.
 import 'package:flutter/material.dart';
 
-import '../../../../core/bank/bank_account.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/currency_field.dart';
+import '../../../../core/ui/dropdown_field.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../domain/bank/bank_records.dart';
 import '../../domain/bank/bank_statement.dart' show BankColumnWidths;
 import '../../domain/book_chart.dart';
 import '../bank_account_words.dart';
@@ -108,14 +109,11 @@ Future<int?> showBankAccountSheet(
         ),
         if (ledger.isNotEmpty) ...[
           const FormGap(),
-          DropdownButtonFormField<String?>(
+          AppDropdownField<String?>(
             key: const ValueKey('bank-account-ledger'),
-            initialValue: ledgerId,
-            decoration: InputDecoration(labelText: l10n.bankAccountLedger),
-            items: [
-              DropdownMenuItem<String?>(child: Text(l10n.bankAccountLedgerNone)),
-              for (final a in ledger) DropdownMenuItem<String?>(value: a.id, child: Text('${a.code} ${a.name}')),
-            ],
+            label: l10n.bankAccountLedger,
+            value: ledgerId,
+            items: [(null, l10n.bankAccountLedgerNone), for (final a in ledger) (a.id, '${a.code} ${a.name}')],
             onChanged: (id) => ledgerId = id,
           ),
         ],

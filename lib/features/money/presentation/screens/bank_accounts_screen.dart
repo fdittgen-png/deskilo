@@ -6,7 +6,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/bank/bank_account.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -17,6 +16,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
+import '../../domain/bank/bank_records.dart';
 import '../../domain/book_chart.dart';
 import '../../providers/bank_statement_providers.dart';
 import '../../providers/book_profile_providers.dart';

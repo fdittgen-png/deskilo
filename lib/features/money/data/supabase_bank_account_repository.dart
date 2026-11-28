@@ -7,12 +7,12 @@ import 'dart:convert';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/bank/bank_account.dart';
 import '../../../core/codes/dk_code.dart';
 import '../../../core/data/app_failure_from.dart';
 import '../../../core/data/paged_fetch.dart';
 import '../../../core/failure/app_failure.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../domain/bank/bank_records.dart';
 
 /// The reason of a refusal of 0988, or null when it is none of its own.
 BankAccountRefused? bankAccountRefusalOf(Object error) {

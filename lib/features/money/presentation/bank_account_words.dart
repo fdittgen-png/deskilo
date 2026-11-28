@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4496 -- what a refusal of a bank account, or of an import into one, says.
-import '../../../core/bank/bank_account.dart';
 import '../../../l10n/app_localizations.dart';
+import '../domain/bank/bank_records.dart';
 
 /// The words for [refused]; [account] is the account the import or the edit was about, when there is one.
 String bankAccountRefusalText(AppLocalizations l10n, BankAccountRefused refused, {BankAccount? account}) =>

@@ -11,7 +11,6 @@ import 'package:crypto/crypto.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show MatchResolution;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show supportedCurrencies;
 
-import '../../../core/bank/bank_account.dart';
 import '../../../core/trace/trace_logger.dart';
 
 import '../domain/bank/bank_file.dart';
@@ -24,6 +23,10 @@ import '../domain/bank/csv_statement.dart';
 
 /// What reading and importing one file came to: the server's answer, or
 /// the reason the file was refused before anything was sent.
+/// #4496 -- where a file goes: the bank account it is imported into (null: the one its statement's name names), and
+/// for a CSV how it is read.
+typedef BankImportInto = ({String? bankAccountId, BankCsvMapping? csv});
+
 typedef BankImportOutcome = ({
   BankImportResult? result,
   BankFileException? refused,
@@ -47,9 +50,9 @@ class BankImportCommands {
     required String fileName,
     required BankFileFormat format,
     required BankImportSettings settings,
-    BankCsvMapping? csv,
-    String? bankAccountId,
+    BankImportInto into = const (bankAccountId: null, csv: null),
   }) async {
+    final (:bankAccountId, :csv) = into;
     final BankStatement statement;
     try {
       statement = fitBankStatement(

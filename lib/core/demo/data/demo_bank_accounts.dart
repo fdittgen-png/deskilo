@@ -4,9 +4,7 @@
 // of (the IBAN they name), so its statements are imported into it; the reconciliation report's account is under a
 // name no account carries, so the Demo shows a name to attach. The same rules as the server's (0988): every name an
 // account is known by is its own, and an account known by a name takes on the statements under it.
-import '../../bank/bank_account.dart';
-import '../../text/collation.dart';
-import 'bank_statement_repository.dart';
+part of 'bank_statement_repository.dart';
 
 /// The one account store of a space's statements.
 final _stores = Expando<FakeBankAccountRepository>('demo bank accounts');
@@ -17,7 +15,10 @@ FakeBankAccountRepository demoBankAccountsOf(FakeBankStatementRepository bank) =
 const _demoBankIban = 'CH9300762011623852957';
 
 class FakeBankAccountRepository implements BankAccountRepository {
-  FakeBankAccountRepository(this._bank) {
+  FakeBankAccountRepository(this._bank, {List<BankAccount> accounts = const []}) {
+    for (final a in accounts) {
+      _accounts[a.id] = a;
+    }
     final of = _bank.statements.where((s) => bankAccountKey(s.account) == _demoBankIban);
     if (of.isNotEmpty) {
       _accounts['demo-bank-account-1'] = BankAccount(

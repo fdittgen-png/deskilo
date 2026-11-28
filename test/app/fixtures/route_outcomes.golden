@@ -77,6 +77,7 @@ signed-out on  /messages -> /auth
 signed-out on  /money -> /auth
 signed-out on  /money/accounting -> /auth
 signed-out on  /money/accounting/exports -> /auth
+signed-out on  /money/bank-accounts -> /auth
 signed-out on  /money/cash -> /auth
 signed-out on  /money/customers -> /auth
 signed-out on  /money/engagements -> /auth
@@ -261,6 +262,7 @@ signed-out off /messages -> /auth
 signed-out off /money -> /auth
 signed-out off /money/accounting -> /auth
 signed-out off /money/accounting/exports -> /auth
+signed-out off /money/bank-accounts -> /auth
 signed-out off /money/cash -> /auth
 signed-out off /money/customers -> /auth
 signed-out off /money/engagements -> /auth
@@ -445,6 +447,7 @@ no-space on  /messages -> /me
 no-space on  /money -> /me
 no-space on  /money/accounting -> /me
 no-space on  /money/accounting/exports -> /me
+no-space on  /money/bank-accounts -> /me
 no-space on  /money/cash -> /me
 no-space on  /money/customers -> /me
 no-space on  /money/engagements -> /me
@@ -629,6 +632,7 @@ no-space off /messages -> /me
 no-space off /money -> /me
 no-space off /money/accounting -> /me
 no-space off /money/accounting/exports -> /me
+no-space off /money/bank-accounts -> /me
 no-space off /money/cash -> /me
 no-space off /money/customers -> /me
 no-space off /money/engagements -> /me
@@ -813,6 +817,7 @@ member on  /messages -> /calendar
 member on  /money -> (open)
 member on  /money/accounting -> /calendar
 member on  /money/accounting/exports -> /calendar
+member on  /money/bank-accounts -> /calendar
 member on  /money/cash -> /calendar
 member on  /money/customers -> /calendar
 member on  /money/engagements -> /calendar
@@ -997,6 +1002,7 @@ member off /messages -> (open)
 member off /money -> /messages
 member off /money/accounting -> /messages
 member off /money/accounting/exports -> /messages
+member off /money/bank-accounts -> /messages
 member off /money/cash -> /messages
 member off /money/customers -> /messages
 member off /money/engagements -> /messages
@@ -1181,6 +1187,7 @@ admin on  /messages -> /calendar
 admin on  /money -> (open)
 admin on  /money/accounting -> (open)
 admin on  /money/accounting/exports -> /money
+admin on  /money/bank-accounts -> /money
 admin on  /money/cash -> (open)
 admin on  /money/customers -> /money
 admin on  /money/engagements -> /money
@@ -1366,6 +1373,7 @@ admin off /messages -> (open)
 admin off /money -> /messages
 admin off /money/accounting -> /messages
 admin off /money/accounting/exports -> /messages
+admin off /money/bank-accounts -> /messages
 admin off /money/cash -> /messages
 admin off /money/customers -> /messages
 admin off /money/engagements -> /messages
@@ -1550,6 +1558,7 @@ owner on  /messages -> /calendar
 owner on  /money -> (open)
 owner on  /money/accounting -> (open)
 owner on  /money/accounting/exports -> /money
+owner on  /money/bank-accounts -> /money
 owner on  /money/cash -> (open)
 owner on  /money/customers -> /money
 owner on  /money/engagements -> /money
@@ -1735,6 +1744,7 @@ owner off /messages -> (open)
 owner off /money -> /messages
 owner off /money/accounting -> /messages
 owner off /money/accounting/exports -> /messages
+owner off /money/bank-accounts -> /messages
 owner off /money/cash -> /messages
 owner off /money/customers -> /messages
 owner off /money/engagements -> /messages

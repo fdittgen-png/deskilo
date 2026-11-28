@@ -8,11 +8,12 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../features/money/domain/bank/bank_records.dart';
 import '../../../features/money/domain/bank/bank_statement.dart';
-import '../../bank/bank_account.dart' show bankAccountKey;
+import '../../text/collation.dart';
 import 'bank_unmatch_in.dart';
 import 'money_repository.dart';
 
-export 'demo_bank_accounts.dart' show demoBankAccountsOf; // #4496: the accounts beside the statements
+// #4496 -- the Demo's bank accounts, beside its statements.
+part 'demo_bank_accounts.dart';
 
 /// The bank statements in memory, with the server's rules the screens
 /// show (import_bank_statement_v1 and the line decisions of #2380): the

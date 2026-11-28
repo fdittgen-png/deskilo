@@ -2,7 +2,7 @@
 //
 // #4496 -- what is done to a business's bank accounts: one saved (made or changed), one archived, and a name earlier
 // statements were imported under added to an account's names, so its statements are of that account.
-import '../../../core/bank/bank_account.dart';
+import '../domain/bank/bank_records.dart';
 
 class BankAccountCommands {
   const BankAccountCommands(this._repository);

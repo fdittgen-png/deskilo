@@ -69,7 +69,7 @@ void main() {
         fileName: 'f',
         format: format,
         settings: _settings,
-        csv: csv,
+        into: (bankAccountId: null, csv: csv),
       );
 
   test('camt.054: the QR and the RF payment settle their two invoices in one '

@@ -7,12 +7,12 @@
 // are the bank account picked before: never typed here.
 import 'package:flutter/material.dart';
 
-import '../../../../core/bank/bank_account.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/bank_import_commands.dart';
+import '../../domain/bank/bank_records.dart';
 import '../../domain/bank/bank_statement.dart';
 import '../../domain/bank/csv_statement.dart';
 import '../bank_labels.dart';

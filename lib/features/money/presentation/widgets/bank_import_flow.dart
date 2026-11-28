@@ -8,7 +8,6 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/bank/bank_account.dart';
 import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -18,6 +17,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/bank_import_commands.dart';
 import '../../domain/bank/bank_file.dart';
+import '../../domain/bank/bank_records.dart';
 import '../../domain/bank/bank_statement.dart';
 import '../../domain/bank/csv_statement.dart';
 import '../../providers/bank_statement_providers.dart';
@@ -90,8 +90,7 @@ class BankImportFlow {
             fileName: file.name,
             format: format,
             settings: settings,
-            csv: csv,
-            bankAccountId: account.id,
+            into: (bankAccountId: account.id, csv: csv),
           ),
     );
     if (!ok || !context.mounted) return;

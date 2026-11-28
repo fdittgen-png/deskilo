@@ -3,7 +3,7 @@
 // one is added through its sheet, the IBAN in groups of four; a refusal of the server is said under the sheet; the
 // names earlier statements were imported under that no account carries are listed, and one is added to an account's
 // names, which says how many statements it took on; an account is archived.
-import 'package:deskilo/core/bank/bank_account.dart';
+import 'package:deskilo/features/money/domain/bank/bank_records.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/presentation/screens/bank_accounts_screen.dart';
 import 'package:deskilo/features/money/providers/bank_statement_providers.dart'
