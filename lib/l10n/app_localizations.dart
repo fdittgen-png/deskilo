@@ -16131,6 +16131,12 @@ abstract class AppLocalizations {
   /// **'30 minutes'**
   String get editorSlot30;
 
+  /// #4501 resource_editor: the five-minute booking slot
+  ///
+  /// In en, this message translates to:
+  /// **'5 minutes'**
+  String get editorSlot5;
+
   /// #2631 resource_editor: editorSlot60
   ///
   /// In en, this message translates to:

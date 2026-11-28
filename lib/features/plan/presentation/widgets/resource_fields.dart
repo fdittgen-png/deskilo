@@ -32,7 +32,8 @@ class ResourceDraft {
       kw == kw.roundToDouble() ? '${kw.round()}' : '$kw';
 
   /// The slots a resource can be booked in (null = the workspace's value).
-  static const slots = <int?>[null, 15, 30, 60, 1440];
+  /// Pinned to `BookingGranularity.ownSlotMinutes` (the booking contract) by test/features/workspace/booking_granularity_slot_test.dart.
+  static const slots = <int?>[null, 5, 15, 30, 60, 1440];
 
   int? slotMinutes;
   ParkingKind? parkingKind;
@@ -112,10 +113,12 @@ String accessoryChoiceLabel(Accessory accessory, String? supplement) =>
 String _slotLabel(BuildContext context, int? minutes) {
   final l10n = context.l10n;
   return switch (minutes) {
+    5 => l10n.editorSlot5,
     15 => l10n.editorSlot15,
     30 => l10n.editorSlot30,
     60 => l10n.editorSlot60,
     1440 => l10n.editorSlotDay,
+    final other? => '$other',
     _ => l10n.editorSlotWorkspace,
   };
 }
@@ -208,12 +211,14 @@ class _ResourceFieldsState extends State<ResourceFields> {
         if (widget.showSlot || isRoom || isParking) ...[
           DropdownButtonFormField<int?>(
             key: const ValueKey('editor-slot-minutes'),
-            initialValue: ResourceDraft.slots.contains(_draft.slotMinutes)
-                ? _draft.slotMinutes
-                : null,
+            initialValue: _draft.slotMinutes,
             decoration: InputDecoration(labelText: l10n.editorSlotLabel),
             items: [
-              for (final m in ResourceDraft.slots)
+              // a stored slot outside the contract stays visible until it is changed
+              for (final m in [
+                ...ResourceDraft.slots,
+                if (!ResourceDraft.slots.contains(_draft.slotMinutes)) _draft.slotMinutes,
+              ])
                 DropdownMenuItem<int?>(
                   value: m,
                   child: Text(_slotLabel(context, m)),

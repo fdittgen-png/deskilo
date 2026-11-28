@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4496 -- the bank accounts on the server: the rows of `bank_accounts` the person may read, and the functions of 0986
+// #4496 -- the bank accounts on the server: the rows of `bank_accounts` the person may read, and the functions of 0987
 // that write them. A refusal comes back as its reason (BankAccountRefused); anything else is the read's failure.
 import 'dart:convert';
 
@@ -14,7 +14,7 @@ import '../../../core/failure/app_failure.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/bank/bank_records.dart';
 
-/// The reason of a refusal of 0986, or null when it is none of its own.
+/// The reason of a refusal of 0987, or null when it is none of its own.
 BankAccountRefused? bankAccountRefusalOf(Object error) {
   final failure = appFailureFrom(error);
   if (failure is! Refusal || (failure.code != DkCode.dkl02 && failure.code != DkCode.dkb03)) return null;

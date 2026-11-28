@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4501 (0990): an e-invoicing address is stored under a scheme of the list and with an identifier of that scheme's
+-- #4501 (0989): an e-invoicing address is stored under a scheme of the list and with an identifier of that scheme's
 -- form, for a customer (set_member_einvoice_address) and for the business itself (workspaces.invoice_legal). An unknown
 -- scheme or an identifier of another form is refused with its reason; an address stored before, under a scheme the
 -- list does not offer, is kept as it is until it is changed. Rolled back.

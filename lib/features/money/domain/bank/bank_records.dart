@@ -349,12 +349,12 @@ DateTime _day(JsonReader r, String key) {
   return DateTime.utc(d.year, d.month, d.day);
 }
 
-// ── #4496 -- a bank account of the business (`bank_accounts`, migration 0986): the account a statement is imported
+// ── #4496 -- a bank account of the business (`bank_accounts`, migration 0987): the account a statement is imported
 // into, with the names it is known by (its name, its IBAN, other identifiers, aliases), its currency and the ledger
 // account it books to. A statement imported under a name no account carries yet is an [UnattachedBankName] until an
 // account is known by it.
 
-/// The longest name of an account (bank_accounts.name, 0986).
+/// The longest name of an account (bank_accounts.name, 0987).
 const bankAccountNameWidth = 64;
 
 /// A name as an account is matched by it: upper case, without its spaces (an IBAN in groups of four is the IBAN).
@@ -430,7 +430,7 @@ class UnattachedBankName {
   final int statements;
 }
 
-/// Why the server refused an account or an import into one (0986: DKL02 / DKB03 with its reason).
+/// Why the server refused an account or an import into one (0987: DKL02 / DKB03 with its reason).
 enum BankAccountRefusal { name, iban, currency, taken, bookAccount, none, otherAccount, other }
 
 class BankAccountRefused implements TypedRefusal {

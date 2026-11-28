@@ -39,7 +39,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
 
   String _id(String kind) => 'demo-$kind-${_next++}';
 
-  /// The financial fields of a movement, without the account's name (0986's movement_hash).
+  /// The financial fields of a movement, without the account's name (0987's movement_hash).
   static String _hash(BankLine l) => sha256
       .convert(
         utf8.encode(

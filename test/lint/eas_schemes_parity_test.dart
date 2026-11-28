@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4501 (FIN-09) -- the e-invoicing address schemes are one list: the invoice model's easSchemes, which the app
-// offers, and the server's `public.einvoice_scheme_pattern` (0990, or the latest migration that defines it), which
+// offers, and the server's `public.einvoice_scheme_pattern` (0989, or the latest migration that defines it), which
 // refuses what the list does not hold. Same codes, same patterns, same order.
 
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';

@@ -134,4 +134,4 @@ create trigger workspaces_einvoice_address
   before insert or update of invoice_legal on public.workspaces
   for each row execute function public.workspaces_einvoice_address();
 
-select public.set_deskilo_schema_version(990);
+select public.set_deskilo_schema_version(989);

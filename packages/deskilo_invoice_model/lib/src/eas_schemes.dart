@@ -3,7 +3,7 @@
 // #4501 (FIN-09) -- the electronic address schemes (the CEF EAS code list, EN 16931 BT-34 / BT-49 schemeID) a seller
 // or a buyer names its e-invoicing address under: picked by name, never typed, and the identifier entered under a
 // scheme is checked with that scheme's own shape. The server holds the same list (`public.einvoice_scheme_pattern`,
-// migration 0990); test/lint/eas_schemes_parity_test.dart keeps the two equal.
+// migration 0989); test/lint/eas_schemes_parity_test.dart keeps the two equal.
 
 /// One scheme: its EAS [code], the [name] the identifier is known by (with the country whose register issues it, for
 /// a national one) and the [pattern] a whole identifier matches.

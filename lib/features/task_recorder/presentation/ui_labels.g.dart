@@ -1463,6 +1463,7 @@ Map<String, _Getter> _part3() => {
   'editorAreaParking': (l) => l.editorAreaParking,
   'editorEmptyFloorAction': (l) => l.editorEmptyFloorAction,
   'editorOpenTooltip': (l) => l.editorOpenTooltip,
+  'editorSlot5': (l) => l.editorSlot5,
   'einvoiceConfigField': (l) => l.einvoiceConfigField,
   'environmentProdConfirmAction': (l) => l.environmentProdConfirmAction,
   'equipmentIntro': (l) => l.equipmentIntro,

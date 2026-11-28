@@ -240,7 +240,7 @@ mixin FakeWorkspaceMembers on FakeWorkspaceState
   }) async {
     final i = otherMembers.indexWhere((m) => m.id == memberId);
     if (i >= 0) {
-      // #4501 (0990) -- a scheme of the list and an identifier of its form; the stored address is kept as it is
+      // #4501 (0989) -- a scheme of the list and an identifier of its form; the stored address is kept as it is
       final refusal = easAddressRefusal(
         endpointScheme,
         endpointId,

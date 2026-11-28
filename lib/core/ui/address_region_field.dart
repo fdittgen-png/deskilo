@@ -70,16 +70,14 @@ class _AddressRegionFieldState extends State<AddressRegionField> {
             )
           : DropdownButtonFormField<String>(
               key: ValueKey(widget.fieldKey),
-              initialValue: field.names.containsKey(widget.value)
-                  ? widget.value
-                  : '',
+              initialValue: widget.value,
               isExpanded: true,
               decoration: InputDecoration(
                 labelText: label,
                 errorText: widget.error,
                 border: const OutlineInputBorder(),
               ),
-              items: _items(field),
+              items: _items(field, widget.value),
               onChanged: widget.enabled
                   ? (v) => widget.onChanged(v ?? '')
                   : null,
@@ -88,11 +86,13 @@ class _AddressRegionFieldState extends State<AddressRegionField> {
   }
 
   /// The country's regions by name, after an empty choice.
-  static List<DropdownMenuItem<String>> _items(RegionField field) {
+  static List<DropdownMenuItem<String>> _items(RegionField field, String current) {
     final byName = field.names.entries.toList()
       ..sort((a, b) => compareNames(a.value, b.value));
     return [
       const DropdownMenuItem(value: '', child: Text('')),
+      // #4501 -- a stored region the country's list does not hold stays visible until it is changed
+      if (current.isNotEmpty && !field.names.containsKey(current)) DropdownMenuItem(value: current, child: Text(current)),
       for (final e in byName)
         DropdownMenuItem(value: e.key, child: Text(e.value)),
     ];
