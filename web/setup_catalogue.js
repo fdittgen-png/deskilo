@@ -2119,7 +2119,8 @@ window.SETUP_LEVELS={
       "supplyExpenses",
       "expenseRepartitionWizard",
       "scheduledExpenses",
-      "expenseRepartition"
+      "expenseRepartition",
+      "supplierContacts"
      ],
      "needs": {
       "money": "invoices"

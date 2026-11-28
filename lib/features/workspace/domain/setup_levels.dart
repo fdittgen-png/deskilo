@@ -253,6 +253,7 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.expenseRepartition,
         WorkspaceFeature.expenseRepartitionWizard,
         WorkspaceFeature.scheduledExpenses,
+        WorkspaceFeature.supplierContacts,
       },
     ),
     SetupLevel(

@@ -69,6 +69,7 @@ const Map<String, Set<WorkspaceFeature>> setupStepTakesIn = {
   'services': {_F.accessorySupplements, _F.supplyClassification, _F.guestPasses},
   'purchases': {
     _F.supplyExpenses,
+    _F.supplierContacts,
     _F.expenseRepartition,
     _F.expenseRepartitionWizard,
     _F.scheduledExpenses,
