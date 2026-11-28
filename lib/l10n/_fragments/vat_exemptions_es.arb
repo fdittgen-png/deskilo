@@ -1,0 +1,16 @@
+{
+  "@@locale": "es",
+  "vatex79cLabel": "Suplidos por cuenta del cliente (art. 79 c)",
+  "vatex79cText": "Exento en virtud del artículo 79, letra c), de la Directiva 2006/112/CE",
+  "vatex132Label": "Actividades de interés general (art. 132)",
+  "vatex132Text": "Exento en virtud del artículo 132 de la Directiva 2006/112/CE",
+  "vatex143Label": "Importaciones (art. 143)",
+  "vatex143Text": "Exento en virtud del artículo 143 de la Directiva 2006/112/CE",
+  "vatex148Label": "Transporte internacional (art. 148)",
+  "vatex148Text": "Exento en virtud del artículo 148 de la Directiva 2006/112/CE",
+  "vatex151Label": "Organismos diplomáticos e internacionales (art. 151)",
+  "vatex151Text": "Exento en virtud del artículo 151 de la Directiva 2006/112/CE",
+  "vatex309Label": "Servicios de viaje fuera de la UE (art. 309)",
+  "vatex309Text": "Exento en virtud del artículo 309 de la Directiva 2006/112/CE",
+  "vatexOLabel": "No sujeto al IVA"
+}

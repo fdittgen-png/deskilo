@@ -12,8 +12,22 @@
 --     item's own inventory unit is the one it may not take (still `registry_unit`); anything else is `unit_unknown`.
 --   * `item_group_check_value` (0883, 0952): a group's `default_purchase_unit` is a unit of the business.
 --   * `unit_is_pickable` (0960): the item's own units are units of the business now; the answer is the business's units alone.
+--   * #4499 (amended, with the owner's approval): a barcode (`item_codes.unit`) and a supplier's article
+--     (`supplier_item_mappings.purchase_unit`) name an item's unit through a foreign key that refused the rename, so an
+--     installation holding one on a typed name stopped here. The two keys now follow the rename (ON UPDATE CASCADE), and
+--     a tag bound to the unit (`stock_tags.unit_code`, no key) moves with it. 0991 gives the keys the same rule on an
+--     installation that applied this file before the amendment. Proven by scripts/upgrade_equivalence_check.sh (its
+--     archive_seed_0960.sql stage).
 
 -- ── 1. the names in use become units of the business ────────────────────
+-- #4499: what names an item's unit follows its rename
+alter table public.item_codes drop constraint item_codes_item_id_unit_fkey;
+alter table public.item_codes add constraint item_codes_item_id_unit_fkey
+  foreign key (item_id, unit) references public.item_units (item_id, unit) on update cascade on delete cascade;
+alter table public.supplier_item_mappings drop constraint supplier_item_mappings_item_id_purchase_unit_fkey;
+alter table public.supplier_item_mappings add constraint supplier_item_mappings_item_id_purchase_unit_fkey
+  foreign key (item_id, purchase_unit) references public.item_units (item_id, unit) on update cascade;
+
 do $backfill$
 declare
   r record;
@@ -57,6 +71,11 @@ begin
    where i.workspace_id = b.workspace_id and btrim(i.unit) = b.name and i.unit is distinct from b.code
      and not exists (select 1 from public.item_units j where j.item_id = i.item_id and j.unit = b.code and j.id <> i.id);
   get diagnostics v_moved = row_count;
+  -- #4499: a tag bound to an item's unit names it by the same name: it follows the item's unit
+  update public.stock_tags t set unit_code = b.code from backfill_names b
+   where t.owner_kind = 'unit' and t.workspace_id = b.workspace_id and btrim(t.unit_code) = b.name
+     and exists (select 1 from public.item_units i where i.item_id = t.item_id and i.unit = b.code)
+     and not exists (select 1 from public.item_units i where i.item_id = t.item_id and i.unit = t.unit_code);
   update public.item_groups g set default_purchase_unit = b.code from backfill_names b
    where g.workspace_id = b.workspace_id and btrim(g.default_purchase_unit) = b.name and g.default_purchase_unit is distinct from b.code;
   update public.supplier_item_mappings m set purchase_unit = b.code from backfill_names b

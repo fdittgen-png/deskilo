@@ -9,6 +9,7 @@ export 'src/commercial_decimal.dart';
 export 'src/commercial_line_facts.dart';
 export 'src/commercial_line_snapshot.dart';
 export 'src/e_invoice_totals.dart';
+export 'src/eas_schemes.dart';
 export 'src/einvoice_format.dart';
 export 'src/einvoice_input.dart';
 export 'src/invoice.dart';

@@ -5,7 +5,7 @@
 // fills a sheet with ids; every command the sheet then calls is the one it already calls, with its own rights,
 // so resolving a code never authorises anything. This file is the answer and the port; the Supabase and Demo
 // resolvers implement it.
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader, JsonShapeException;
 
 /// What a code names.
 enum ScannedKind {
@@ -144,7 +144,11 @@ class StockCodeResolution {
     ScannedUnit? unit;
     final u = r.objectOrNull('unit');
     if (u != null) {
-      unit = ScannedUnit(unit: u.stringOr('unit'), factorNum: u.intOrNull('factor_num') ?? 1, factorDen: u.intOrNull('factor_den') ?? 1);
+      // #4499 -- a package unit without its factor (a tag still on a unit name no unit of the item has) is unreadable:
+      // the scan says so, it never counts one piece for a carton.
+      final num = u.integer('factor_num'), den = u.integer('factor_den');
+      if (num <= 0 || den <= 0) throw JsonShapeException('stock_resolve_code', 'unit.factor', 'a positive factor', '$num/$den');
+      unit = ScannedUnit(unit: u.stringOr('unit'), factorNum: num, factorDen: den);
     }
     final l = r.objectOrNull('lot');
     final t = r.objectOrNull('tag');

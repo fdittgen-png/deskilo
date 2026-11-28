@@ -104,7 +104,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   Future<void> _save() async {
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null || !_einvoice.regionAccepted(workspace.countryCode, l10n)) return;
+    if (workspace == null || !_einvoice.regionAccepted(workspace.countryCode, l10n) || !_einvoice.addressAccepted(l10n)) return;
     setState(() => _saving = true);
     final saved = await runGuarded(
       context,
