@@ -609,6 +609,26 @@ Un conto bancario è un unico record dell'attività: il conto in cui si importan
 - Un nome, un IBAN o un identificativo appartiene a un solo conto.
 - Un conto non più usato si archivia: i suoi estratti lo conservano.
 
+<!-- anchor: user.money.expense.categories -->
+### Categorie di spesa
+
+**Destinatari:** Amministratore · Proprietario
+
+Le categorie sotto cui si registra una spesa o un giustificativo sono l’elenco proprio dell’attività, con parole proprie. Un’attività inizia con quattro: Caffè e cucina, Materiale, Attrezzatura e Altro.
+
+**Passaggi**
+
+1. Aprire **Impostazioni**, poi **Dati anagrafici**, poi **Categorie di spesa**.
+2. Toccare **Nuova categoria**, indicare il **Nome** e salvare. Toccare una categoria per rinominarla, oppure usare **Sposta su** e **Sposta giù** per ordinarle come le propone il modulo di spesa.
+3. Toccare **Ritirare** su una categoria non più usata: non viene più proposta per una spesa nuova. **Categorie ritirate** le elenca, con **Ripristinare**.
+
+**Da sapere**
+
+- Una spesa conserva la categoria sotto cui è stata registrata: rinominare o ritirare una categoria non cambia mai ciò che è già registrato.
+- Una categoria predefinita si legge con le parole dell’app finché non le si dà un nome proprio; salvare un nome vuoto restituisce le parole dell’app.
+- Due categorie attive non possono avere lo stesso nome. Una categoria non viene mai eliminata, solo ritirata.
+- Il modulo di spesa e quello del giustificativo propongono solo le categorie di questo elenco.
+
 <!-- anchor: user.money.suppliers.balance -->
 ### Saldi dei fornitori
 

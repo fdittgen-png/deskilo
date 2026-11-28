@@ -3020,6 +3020,26 @@ Ein Bankkonto ist ein einziger Datensatz des Unternehmens: das Konto, in das sei
 - Ein Name, eine IBAN oder eine Kennung gehört nur zu einem Konto.
 - Ein nicht mehr genutztes Konto wird archiviert: Seine Auszüge behalten es.
 
+<!-- anchor: user.money.expense.categories -->
+### Ausgabenkategorien
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Die Kategorien, unter denen eine Ausgabe oder ein Beleg erfasst wird, sind die eigene Liste des Unternehmens, in seinen eigenen Worten. Ein Unternehmen beginnt mit vier: Kaffee & Küche, Verbrauchsmaterial, Ausstattung und Sonstiges.
+
+**Schritte**
+
+1. Öffnen Sie **Einstellungen**, dann **Stammdaten**, dann **Ausgabenkategorien**.
+2. Tippen Sie auf **Neue Kategorie**, geben Sie den **Name** ein und speichern Sie. Tippen Sie auf eine Kategorie, um sie umzubenennen, oder ordnen Sie sie mit **Nach oben** und **Nach unten** in der Reihenfolge, in der das Ausgabenformular sie anbietet.
+3. Tippen Sie bei einer nicht mehr gebrauchten Kategorie auf **Stilllegen**: Sie wird für neue Ausgaben nicht mehr angeboten. **Stillgelegte Kategorien** führt sie mit **Wieder aktivieren** auf.
+
+**Gut zu wissen**
+
+- Eine Ausgabe behält die Kategorie, unter der sie erfasst wurde: Umbenennen oder Stilllegen ändert nie, was schon erfasst ist.
+- Eine vorgegebene Kategorie steht in den Worten der App, bis Sie ihr einen eigenen Namen geben; ein leerer Name gibt die Worte der App zurück.
+- Zwei aktive Kategorien können nicht denselben Namen tragen. Eine Kategorie wird nie gelöscht, nur stillgelegt.
+- Das Ausgabenformular und das Belegformular bieten nur die Kategorien dieser Liste an.
+
 <!-- anchor: user.money.suppliers.balance -->
 ### Lieferantensalden
 

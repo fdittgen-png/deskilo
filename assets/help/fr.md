@@ -2887,6 +2887,25 @@ Un compte bancaire est un seul enregistrement de l'entreprise : le compte dans l
 - Un nom, un IBAN ou un identifiant n'appartient qu'à un seul compte.
 - Un compte qui ne sert plus est archivé : ses relevés le gardent.
 
+### Catégories de dépenses
+
+**Public:** Administrateur·rice · Propriétaire
+
+Les catégories sous lesquelles une dépense ou un justificatif est classé forment la liste propre de l’entreprise, avec ses propres mots. Une entreprise commence avec quatre : Café et cuisine, Fournitures, Équipement et Autre.
+
+**Étapes**
+
+1. Ouvrez **Paramètres**, puis **Données de référence**, puis **Catégories de dépenses**.
+2. Touchez **Nouvelle catégorie**, donnez son **Nom** et enregistrez. Touchez une catégorie pour la renommer, ou utilisez **Monter** et **Descendre** pour les ranger dans l’ordre où le formulaire de dépense les propose.
+3. Touchez **Retirer** sur une catégorie qui ne sert plus : elle n’est plus proposée pour une nouvelle dépense. **Catégories retirées** les liste, avec **Rétablir**.
+
+**Bon à savoir**
+
+- Une dépense garde la catégorie sous laquelle elle a été classée : renommer ou retirer une catégorie ne change jamais ce qui est déjà classé.
+- Une catégorie intégrée se lit avec les mots de l’application jusqu’à ce que vous lui donniez un nom à vous ; enregistrer un nom vide rend les mots de l’application.
+- Deux catégories actives ne peuvent pas porter le même nom. Une catégorie n’est jamais supprimée, seulement retirée.
+- Le formulaire de dépense et celui du justificatif ne proposent que les catégories de cette liste.
+
 ### Soldes des fournisseurs
 
 **Public:** Administrateur·rice · Propriétaire

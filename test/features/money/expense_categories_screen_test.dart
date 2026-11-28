@@ -59,7 +59,7 @@ void main() {
     group('on a $name', () {
       testWidgets('a business starts with four categories in the app\'s words, and scheduled retired', (tester) async {
         await _pump(tester, size);
-        for (final words in ['Coffee', 'Supplies', 'Equipment', 'Other']) {
+        for (final words in ['Coffee & kitchen', 'Supplies', 'Equipment', 'Other']) {
           expect(find.text(words), findsOneWidget);
         }
         expect(find.text('Retired categories'), findsOneWidget);
@@ -96,12 +96,12 @@ void main() {
         await _name(tester, 'Tea and coffee');
         await _tap(tester, const ValueKey('expense-category-save'));
         expect(find.text('Tea and coffee'), findsOneWidget);
-        expect(find.text('Coffee'), findsNothing);
+        expect(find.text('Coffee & kitchen'), findsNothing);
 
         await _tap(tester, ValueKey('expense-category-open-${coffee.id}'));
         await _name(tester, '');
         await _tap(tester, const ValueKey('expense-category-save'));
-        expect(find.text('Coffee'), findsOneWidget);
+        expect(find.text('Coffee & kitchen'), findsOneWidget);
       });
 
       testWidgets('one is put in order, retired and brought back', (tester) async {

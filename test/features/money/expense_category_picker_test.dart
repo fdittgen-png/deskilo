@@ -31,7 +31,7 @@ void main() {
     expect(find.text('Supplies'), findsNothing, reason: 'a retired category is not offered');
     expect(find.text('Scheduled expenses'), findsNothing);
     expect(find.text('Cleaning'), findsOneWidget);
-    expect(find.text('Coffee'), findsWidgets);
+    expect(find.text('Coffee & kitchen'), findsWidgets);
 
     await tester.tap(find.text('Cleaning').last);
     await tester.pumpAndSettle();

@@ -2887,6 +2887,25 @@ A bank account is one record of the business: the account its bank statements ar
 - A name, an IBAN or an identifier belongs to one account only.
 - An account no longer used is archived: its statements keep it.
 
+### Expense categories
+
+**Audience:** Administrator · Owner
+
+The categories an expense or a receipt is filed under are the business's own list, in its own words. A business starts with four: Coffee & kitchen, Supplies, Equipment and Other.
+
+**Steps**
+
+1. Open **Settings**, then **Master data**, then **Expense categories**.
+2. Tap **New category**, give its **Name** and save. Tap a category to rename it, or use **Move up** and **Move down** to put them in the order the expense form offers.
+3. Tap **Retire** on a category that is no longer used: it is no longer offered for a new expense. **Retired categories** lists them, with **Bring back**.
+
+**Good to know**
+
+- An expense keeps the category it was filed under: renaming or retiring a category never changes what was already filed.
+- A built-in category reads in the words of the app until you give it a name of your own; saving an empty name gives the app's words back.
+- Two active categories cannot share a name. A category is never deleted, only retired.
+- The expense form and the receipt form offer only the categories on this list.
+
 ### Supplier balances
 
 **Audience:** Administrator · Owner

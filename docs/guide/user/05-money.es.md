@@ -609,6 +609,26 @@ Una cuenta bancaria es un único registro de la empresa: la cuenta en la que se 
 - Un nombre, un IBAN o un identificador pertenece a una sola cuenta.
 - Una cuenta que ya no se usa se archiva: sus extractos la conservan.
 
+<!-- anchor: user.money.expense.categories -->
+### Categorías de gastos
+
+**Público:** Administrador/a · Propietario
+
+Las categorías bajo las que se registra un gasto o un justificante son la lista propia del negocio, con sus propias palabras. Un negocio empieza con cuatro: Café y cocina, Material, Equipamiento y Otro.
+
+**Pasos**
+
+1. Abra **Ajustes**, luego **Datos maestros**, luego **Categorías de gastos**.
+2. Toque **Nueva categoría**, indique su **Nombre** y guarde. Toque una categoría para renombrarla, o use **Subir** y **Bajar** para ordenarlas como las ofrece el formulario de gasto.
+3. Toque **Retirar** en una categoría que ya no se usa: deja de ofrecerse para un gasto nuevo. **Categorías retiradas** las lista, con **Recuperar**.
+
+**Conviene saber**
+
+- Un gasto conserva la categoría bajo la que se registró: renombrar o retirar una categoría nunca cambia lo ya registrado.
+- Una categoría integrada se lee con las palabras de la aplicación hasta que le dé un nombre propio; guardar un nombre vacío devuelve las palabras de la aplicación.
+- Dos categorías activas no pueden tener el mismo nombre. Una categoría nunca se borra, solo se retira.
+- El formulario de gasto y el del justificante ofrecen solo las categorías de esta lista.
+
 <!-- anchor: user.money.suppliers.balance -->
 ### Saldos de proveedores
 
