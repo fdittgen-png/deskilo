@@ -61,8 +61,11 @@ export type Deps = {
 /** The commands a board may send, each the till's existing function and what the board may pass to it. */
 export const COMMANDS: Record<string, { fn: string; args: readonly string[] }> = {
   readiness: { fn: "counter_readiness_v1", args: [] },
-  draft: { fn: "counter_receipt_draft_v1", args: ["request_id", "receipt_id", "expected_revision", "lines"] },
-  finalize: { fn: "counter_receipt_finalize_v1", args: ["request_id", "receipt_id", "expected_revision", "tenders"] },
+  // #4517 -- a board's command acts only on its own till's receipts: a command that names a receipt goes to a board
+  // function that takes the lease's till (1001), never to the till's function directly. A later command that names a
+  // receipt (a void, a reprint) joins the same way.
+  draft: { fn: "counter_board_receipt_draft_v1", args: ["request_id", "receipt_id", "expected_revision", "lines"] },
+  finalize: { fn: "counter_board_receipt_finalize_v1", args: ["request_id", "receipt_id", "expected_revision", "tenders"] },
 };
 
 /** The largest command a board sends: a basket of its lines. Enrollment stays at [MAX_BODY_BYTES]. */
@@ -313,11 +316,13 @@ async function command(body: { [key: string]: ExactValue }, deps: Deps): Promise
   }
   const call: Record<string, ExactValue> = { p_workspace_id: str(data.workspace_id) };
   if (op === "draft") {
+    call.p_till_id = str(data.till_id);
     call.p_request_id = given.request_id;
     call.p_receipt_id = given.receipt_id ?? null;
     call.p_expected_revision = given.expected_revision ?? null;
-    call.p_body = { lines: given.lines, till_id: str(data.till_id) };
+    call.p_lines = given.lines;
   } else if (op === "finalize") {
+    call.p_till_id = str(data.till_id);
     call.p_request_id = given.request_id;
     call.p_receipt_id = given.receipt_id ?? null;
     call.p_expected_revision = given.expected_revision ?? null;
