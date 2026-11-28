@@ -157,6 +157,8 @@ static void link_until_selling(void) {
     }
 }
 
+static bool pending_here(const pending_t *p);
+
 // After a call under the lease: a lease that ended asks for a cashier again, and the board waits, basket kept.
 static bool lease_still_held(void) {
     const char *r = api_take_link_reason();
@@ -166,6 +168,12 @@ static bool lease_still_held(void) {
     set_status(T(S_ST_LEASE_ENDED));
     set_link(l);
     link_until_selling();
+    // the board may now serve another business: a payment kept from before is checked against it again
+    pending_t p;
+    if (pending_load(&p) && !pending_here(&p)) {
+        trace("a payment of another business is pending (%.8s): nothing is sold here", p.request_id);
+        set_phase(PH_BLOCKED, T(S_ST_PENDING_OTHER));
+    }
     return false;
 }
 
@@ -201,8 +209,17 @@ static void conclude(const pending_t *p, pay_result_t r, const char *number, con
     }
 }
 
-// Asks Deskilo again about the attempt kept in flash: the same request, the same payload.
+// Whether a kept attempt was made in the business and on the server the board serves now. One of another binding is
+// never sent here (the board was connected again elsewhere): it waits, blocked, for the business it belongs to.
+static bool pending_here(const pending_t *p) { return !strcmp(p->workspace, g_cfg.workspace) && !strcmp(p->server, g_cfg.url); }
+
+// Asks Deskilo again about the attempt kept in flash: the same request, the same payload, in its own binding only.
 static void settle(const pending_t *p) {
+    if (!pending_here(p)) {
+        trace("a payment of another business is pending (%.8s): nothing is sold here", p->request_id);
+        set_phase(PH_BLOCKED, T(S_ST_PENDING_OTHER));
+        return;
+    }
     char number[32] = "", why[96] = "";
     pay_result_t r = send_attempt(p, number, sizeof number, why, sizeof why);
     conclude(p, r, number, why);
@@ -231,7 +248,7 @@ static void net_task(void *arg) {
         pending_t p;
         if (pending_load(&p)) {
             // a payment sent before the restart: settled first, under the binding it was made in, before anything is sold
-            if (strcmp(p.workspace, g_cfg.workspace) || strcmp(p.server, g_cfg.url)) {
+            if (!pending_here(&p)) {
                 trace("a payment of another business is pending (%.8s): nothing is sold here", p.request_id);
                 set_phase(PH_BLOCKED, T(S_ST_PENDING_OTHER));
             } else {
