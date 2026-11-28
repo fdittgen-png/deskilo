@@ -737,7 +737,7 @@ window.SETUP_REGISTRY={
   ],
   [
    "counterCashReasons",
-   true
+   false
   ]
  ],
  "requires": {
@@ -869,7 +869,8 @@ window.SETUP_REGISTRY={
   "counterOfflineCash": "counterTillSessions",
   "counterTillLayout": "counterTillSessions",
   "counterReceiptPrinter": "counterTillSessions",
-  "counterEmbeddedTerminal": "counterTillSessions"
+  "counterEmbeddedTerminal": "counterTillSessions",
+  "counterCashReasons": "counterTillSessions"
  },
  "availableIn": {
   "recapitulativeStatement": [
