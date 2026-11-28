@@ -20,6 +20,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/screens/expense_vat_kind.dart';
 import '../../helpers/screens/money_screen.dart' show pumpMoney;
 import '../../helpers/screens/supply_expense.dart' show openExpenseSheet;
 
@@ -48,10 +49,11 @@ Future<void> _tapKey(WidgetTester tester, String key) async {
   await tester.pumpAndSettle();
 }
 
-Future<void> _pickRate(WidgetTester tester, String prefix) async {
-  await _tapKey(tester, '$prefix-vat-rate');
-  await tester.tap(find.text('8.1%').last);
-  await tester.pumpAndSettle();
+const _abroad = 'Bought from a supplier abroad';
+
+Future<void> _pickRate(WidgetTester tester, String prefix, {String kind = _abroad}) async {
+  await pickVatKind(tester, prefix, kind);
+  await pickVatRate(tester, prefix, 'Normal · 8.1%');
 }
 
 const _opted = VatDeclarationLine(
@@ -84,7 +86,6 @@ void main() {
     await openExpenseSheet(tester);
     await tester.enterText(find.widgetWithText(TextField, 'Amount'), '100');
     await _pickRate(tester, 'expense');
-    await _tapKey(tester, 'expense-vat-acquisition');
     expect(
       find.textContaining(
         RegExp(r'Acquisition tax owed: .*8\.10 · deductible: .*8\.10'),
@@ -100,11 +101,13 @@ void main() {
     expect(money.submittedExpenseVat.single, {
       'percent': 8.1,
       'deductible_pct': 100.0,
+      'treatment': 'acquisition',
+      'vat_rate_id': 'std',
       'acquisition': true,
     });
   });
 
-  testWidgets('switched back off, the expense is an ordinary one', (
+  testWidgets('switched back to the space\'s own VAT, the expense is an ordinary one', (
     tester,
   ) async {
     final money = await pumpMoney(
@@ -115,8 +118,7 @@ void main() {
     await openExpenseSheet(tester);
     await tester.enterText(find.widgetWithText(TextField, 'Amount'), '108.10');
     await _pickRate(tester, 'expense');
-    await _tapKey(tester, 'expense-vat-acquisition');
-    await _tapKey(tester, 'expense-vat-acquisition');
+    await pickVatKind(tester, 'expense', 'VAT of this country');
     expect(find.textContaining('Acquisition tax owed: '), findsNothing);
     await tester.ensureVisible(find.text('Submit for confirmation'));
     await tester.tap(find.text('Submit for confirmation'));
@@ -125,6 +127,8 @@ void main() {
     expect(money.submittedExpenseVat.single, {
       'percent': 8.1,
       'deductible_pct': 100.0,
+      'treatment': 'domestic',
+      'vat_rate_id': 'std',
     });
   });
 
@@ -133,9 +137,11 @@ void main() {
   ) async {
     await pumpMoney(tester, money: _withRates(), workspace: _space('FR'));
     await openExpenseSheet(tester);
-    await _pickRate(tester, 'expense');
+    await _pickRate(tester, 'expense', kind: 'VAT of this country');
     expect(_key('expense-vat-asset'), findsOneWidget);
-    expect(_key('expense-vat-acquisition'), findsNothing);
+    await tester.tap(_key('expense-vat-kind'));
+    await tester.pumpAndSettle();
+    expect(find.text(_abroad), findsNothing);
   });
 
   testWidgets('a scheduled Swiss expense bought abroad says so for every '
@@ -157,13 +163,14 @@ void main() {
     await tester.enterText(_key('schedule-title'), 'Software');
     await tester.enterText(_key('schedule-amount'), '60');
     await _pickRate(tester, 'schedule');
-    await _tapKey(tester, 'schedule-vat-acquisition');
     await _tapKey(tester, 'schedule-submit');
 
     final id = money.expenseSchedules.single.id;
     expect(money.expenseScheduleVat[id], {
       'percent': 8.1,
       'deductible_pct': 100.0,
+      'treatment': 'acquisition',
+      'vat_rate_id': 'std',
       'acquisition': true,
     });
   });

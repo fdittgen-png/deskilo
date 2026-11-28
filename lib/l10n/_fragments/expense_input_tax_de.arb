@@ -1,0 +1,42 @@
+{
+  "expenseVatTreatment": "Art der Umsatzsteuer",
+  "@expenseVatTreatment": {
+    "description": "#4479 expense input tax: expenseVatTreatment"
+  },
+  "expenseVatTreatmentDomestic": "Umsatzsteuer dieses Landes",
+  "@expenseVatTreatmentDomestic": {
+    "description": "#4479 expense input tax: expenseVatTreatmentDomestic"
+  },
+  "expenseVatTreatmentForeign": "Von einem Lieferanten im Ausland berechnete Umsatzsteuer",
+  "@expenseVatTreatmentForeign": {
+    "description": "#4479 expense input tax: expenseVatTreatmentForeign"
+  },
+  "expenseVatForeignNote": "Diese Umsatzsteuer wird in dieser Meldung nicht abgezogen: Sie wurde von einem Lieferanten im Ausland berechnet und kann nur bei jenem Land zurückgefordert werden. Satz und Betrag bleiben für diesen Antrag bei der Ausgabe.",
+  "@expenseVatForeignNote": {
+    "description": "#4479 expense input tax: expenseVatForeignNote"
+  },
+  "expenseVatSupplierCountry": "Land des Lieferanten",
+  "@expenseVatSupplierCountry": {
+    "description": "#4479 expense input tax: expenseVatSupplierCountry"
+  },
+  "expenseVatDocumentNumber": "Belegnummer",
+  "@expenseVatDocumentNumber": {
+    "description": "#4479 expense input tax: expenseVatDocumentNumber"
+  },
+  "expenseVatStatedPercent": "Umsatzsteuersatz auf dem Beleg",
+  "@expenseVatStatedPercent": {
+    "description": "#4479 expense input tax: expenseVatStatedPercent"
+  },
+  "expenseVatStatedTax": "Umsatzsteuerbetrag auf dem Beleg",
+  "@expenseVatStatedTax": {
+    "description": "#4479 expense input tax: expenseVatStatedTax"
+  },
+  "expenseMissingSupplierCountry": "Wählen Sie das Land des Lieferanten.",
+  "@expenseMissingSupplierCountry": {
+    "description": "#4479 expense input tax: expenseMissingSupplierCountry"
+  },
+  "expenseInvalidStatedVat": "Geben Sie den auf dem Beleg stehenden Steuersatz zwischen 0 und 100 an und einen Betrag, der nicht negativ ist.",
+  "@expenseInvalidStatedVat": {
+    "description": "#4479 expense input tax: expenseInvalidStatedVat"
+  }
+}

@@ -15,7 +15,7 @@ const _format = AppFormat(locale: 'en', currencyCode: 'EUR');
 final _en = AppLocalizationsEn();
 
 GroupUnitProposals _of(Map<String, String> texts) =>
-    GroupUnitProposals(FormControllers({...GroupUnitProposals.initial(null, _format), ...texts}), _format, 'ws-1', builtInUnits);
+    GroupUnitProposals(FormControllers({...GroupUnitProposals.initial(const {}, _format), ...texts}), _format, 'ws-1', builtInUnits);
 
 void main() {
   test('a group reads its proposals back: the factor as one number or a fraction, the price as the member writes it', () {
@@ -35,7 +35,7 @@ void main() {
         'default_sale_price_cents': 1100,
       },
     );
-    expect(GroupUnitProposals.initial(group, _format), {
+    expect(GroupUnitProposals.initial(group.params, _format), {
       'purchaseUnit': 'kg',
       'purchaseFactor': '1/3',
       'saleUnit': 'l',

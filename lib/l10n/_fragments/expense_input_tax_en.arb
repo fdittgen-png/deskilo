@@ -1,0 +1,42 @@
+{
+  "expenseVatTreatment": "Kind of VAT",
+  "@expenseVatTreatment": {
+    "description": "#4479 expense input tax: expenseVatTreatment"
+  },
+  "expenseVatTreatmentDomestic": "VAT of this country",
+  "@expenseVatTreatmentDomestic": {
+    "description": "#4479 expense input tax: expenseVatTreatmentDomestic"
+  },
+  "expenseVatTreatmentForeign": "VAT charged by a supplier abroad",
+  "@expenseVatTreatmentForeign": {
+    "description": "#4479 expense input tax: expenseVatTreatmentForeign"
+  },
+  "expenseVatForeignNote": "This VAT is not deducted on this return: a supplier abroad charged it, and it can only be claimed back from that country. The rate and the amount stay with the expense for that claim.",
+  "@expenseVatForeignNote": {
+    "description": "#4479 expense input tax: expenseVatForeignNote"
+  },
+  "expenseVatSupplierCountry": "Supplier's country",
+  "@expenseVatSupplierCountry": {
+    "description": "#4479 expense input tax: expenseVatSupplierCountry"
+  },
+  "expenseVatDocumentNumber": "Document number",
+  "@expenseVatDocumentNumber": {
+    "description": "#4479 expense input tax: expenseVatDocumentNumber"
+  },
+  "expenseVatStatedPercent": "VAT rate on the document",
+  "@expenseVatStatedPercent": {
+    "description": "#4479 expense input tax: expenseVatStatedPercent"
+  },
+  "expenseVatStatedTax": "VAT amount on the document",
+  "@expenseVatStatedTax": {
+    "description": "#4479 expense input tax: expenseVatStatedTax"
+  },
+  "expenseMissingSupplierCountry": "Pick the supplier's country.",
+  "@expenseMissingSupplierCountry": {
+    "description": "#4479 expense input tax: expenseMissingSupplierCountry"
+  },
+  "expenseInvalidStatedVat": "Enter the VAT rate shown on the document, between 0 and 100, and an amount that is not negative.",
+  "@expenseInvalidStatedVat": {
+    "description": "#4479 expense input tax: expenseInvalidStatedVat"
+  }
+}

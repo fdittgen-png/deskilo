@@ -1,0 +1,10 @@
+{
+  "itemGroupUnitsFollowHint": "Wird von jedem Artikel dieser Gruppe übernommen, der keine eigene Einheit hat",
+  "@itemGroupUnitsFollowHint": {
+    "description": "#4479 the group sheet: the units are followed live by the items without their own"
+  },
+  "itemGroupSetOwn": "Eigene festlegen",
+  "@itemGroupSetOwn": {
+    "description": "#4479 an item takes its own unit against its group"
+  }
+}

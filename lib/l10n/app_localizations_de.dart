@@ -11323,12 +11323,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Geben Sie einen Anteil zwischen 0 und 100 ein.';
 
   @override
+  String get expenseInvalidStatedVat =>
+      'Geben Sie den auf dem Beleg stehenden Steuersatz zwischen 0 und 100 an und einen Betrag, der nicht negativ ist.';
+
+  @override
   String get expenseInvalidSupplyQuantity =>
       'Geben Sie mindestens eine Einheit ein.';
 
   @override
   String get expenseInvalidUnitPrice =>
       'Geben Sie einen gültigen Stückpreis ein oder lassen Sie ihn leer.';
+
+  @override
+  String get expenseMissingSupplierCountry =>
+      'Wählen Sie das Land des Lieferanten.';
 
   @override
   String get expenseMissingSupplyName => 'Benennen Sie den neuen Artikel.';
@@ -11386,10 +11394,36 @@ class AppLocalizationsDe extends AppLocalizations {
       '100 %, außer ein Teil der Ausgabe ist privat oder dient einer steuerfreien Tätigkeit.';
 
   @override
+  String get expenseVatDocumentNumber => 'Belegnummer';
+
+  @override
+  String get expenseVatForeignNote =>
+      'Diese Umsatzsteuer wird in dieser Meldung nicht abgezogen: Sie wurde von einem Lieferanten im Ausland berechnet und kann nur bei jenem Land zurückgefordert werden. Satz und Betrag bleiben für diesen Antrag bei der Ausgabe.';
+
+  @override
   String get expenseVatNone => 'Ohne Umsatzsteuer';
 
   @override
   String get expenseVatRate => 'Umsatzsteuer auf diese Ausgabe';
+
+  @override
+  String get expenseVatStatedPercent => 'Umsatzsteuersatz auf dem Beleg';
+
+  @override
+  String get expenseVatStatedTax => 'Umsatzsteuerbetrag auf dem Beleg';
+
+  @override
+  String get expenseVatSupplierCountry => 'Land des Lieferanten';
+
+  @override
+  String get expenseVatTreatment => 'Art der Umsatzsteuer';
+
+  @override
+  String get expenseVatTreatmentDomestic => 'Umsatzsteuer dieses Landes';
+
+  @override
+  String get expenseVatTreatmentForeign =>
+      'Von einem Lieferanten im Ausland berechnete Umsatzsteuer';
 
   @override
   String get exportAboutContents => 'Was diese Datei enthält';
@@ -19593,6 +19627,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get itemGroupSet => 'Gesetzt';
 
   @override
+  String get itemGroupSetOwn => 'Eigene festlegen';
+
+  @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
     return '$item: $parameter ($reason)';
   }
@@ -19632,6 +19669,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get itemGroupTrackingSerial => 'Pro Stück (seriell)';
+
+  @override
+  String get itemGroupUnitsFollowHint =>
+      'Wird von jedem Artikel dieser Gruppe übernommen, der keine eigene Einheit hat';
 
   @override
   String get itemGroupUseGroup => 'Wert der Gruppe verwenden';
@@ -30079,6 +30120,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalCounterUnsupported =>
       'Dieser Vorgang wird für Ihr Land in dem in den Einstellungen erklärten Fall nicht unterstützt: Es wurde nichts nummeriert und nichts angenommen.';
+
+  @override
+  String get refusalExpenseVat =>
+      'Die Umsatzsteuer dieser Ausgabe wird nicht angenommen: Wählen Sie einen Steuersatz dieses Unternehmens und geben Sie von einem Lieferanten im Ausland berechnete Umsatzsteuer nur als Satz und Betrag des Belegs an.';
 
   @override
   String refusalMainStoreExpired(String held, String asked) {
@@ -41440,7 +41485,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxCertInvalidDate => 'Datum als JJJJ-MM-TT eingeben';
 
   @override
-  String get taxCertInvalidState => 'Zwei Buchstaben oder *';
+  String get taxCertInvalidState =>
+      'Wählen Sie den Bundesstaat, oder kennzeichnen Sie die Bescheinigung als Mehrstaaten-Bescheinigung.';
 
   @override
   String get taxCertKind => 'Art';
@@ -41458,6 +41504,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxCertKindResale => 'Wiederverkauf';
 
   @override
+  String get taxCertMultistate => 'Mehrstaaten-Bescheinigung (SST oder MTC)';
+
+  @override
   String get taxCertNumber => 'Nummer der Bescheinigung';
 
   @override
@@ -41467,10 +41516,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taxCertSave => 'Bescheinigung speichern';
-
-  @override
-  String get taxCertState =>
-      'Bundesstaat (zwei Buchstaben, oder * für eine Mehrstaaten-Bescheinigung)';
 
   @override
   String get taxCertSubtitle =>

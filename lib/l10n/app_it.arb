@@ -6939,8 +6939,16 @@
   "@expenseInvalidDeductible": {
     "description": "#2357 input VAT: expenseInvalidDeductible"
   },
+  "expenseInvalidStatedVat": "Indicare l’aliquota IVA riportata sul documento, tra 0 e 100, e un importo non negativo.",
+  "@expenseInvalidStatedVat": {
+    "description": "#4479 expense input tax: expenseInvalidStatedVat"
+  },
   "expenseInvalidSupplyQuantity": "Inserisca almeno un'unità.",
   "expenseInvalidUnitPrice": "Inserisca un prezzo unitario valido o lo lasci vuoto.",
+  "expenseMissingSupplierCountry": "Scegliere il Paese del fornitore.",
+  "@expenseMissingSupplierCountry": {
+    "description": "#4479 expense input tax: expenseMissingSupplierCountry"
+  },
   "expenseMissingSupplyName": "Dia un nome al nuovo articolo.",
   "expenseSupplyHint": "Capsule di caffè, sacchetti per aspirapolvere… Una volta convalidato, l'articolo va sullo scaffale come servizio consumabile: chi lo usa lo paga.",
   "expenseSupplyItem": "Articolo",
@@ -6976,6 +6984,14 @@
   "@expenseVatDeductibleHint": {
     "description": "#2357 input VAT: expenseVatDeductibleHint"
   },
+  "expenseVatDocumentNumber": "Numero del documento",
+  "@expenseVatDocumentNumber": {
+    "description": "#4479 expense input tax: expenseVatDocumentNumber"
+  },
+  "expenseVatForeignNote": "Questa IVA non viene detratta in questa dichiarazione: l’ha addebitata un fornitore all’estero e può essere richiesta a rimborso solo a quel Paese. L’aliquota e l’importo restano con la spesa per tale richiesta.",
+  "@expenseVatForeignNote": {
+    "description": "#4479 expense input tax: expenseVatForeignNote"
+  },
   "expenseVatNone": "Senza IVA",
   "@expenseVatNone": {
     "description": "#2357 input VAT: expenseVatNone"
@@ -6983,6 +6999,30 @@
   "expenseVatRate": "IVA su questa spesa",
   "@expenseVatRate": {
     "description": "#2357 input VAT: expenseVatRate"
+  },
+  "expenseVatStatedPercent": "Aliquota IVA del documento",
+  "@expenseVatStatedPercent": {
+    "description": "#4479 expense input tax: expenseVatStatedPercent"
+  },
+  "expenseVatStatedTax": "Importo IVA del documento",
+  "@expenseVatStatedTax": {
+    "description": "#4479 expense input tax: expenseVatStatedTax"
+  },
+  "expenseVatSupplierCountry": "Paese del fornitore",
+  "@expenseVatSupplierCountry": {
+    "description": "#4479 expense input tax: expenseVatSupplierCountry"
+  },
+  "expenseVatTreatment": "Natura dell’IVA",
+  "@expenseVatTreatment": {
+    "description": "#4479 expense input tax: expenseVatTreatment"
+  },
+  "expenseVatTreatmentDomestic": "IVA di questo Paese",
+  "@expenseVatTreatmentDomestic": {
+    "description": "#4479 expense input tax: expenseVatTreatmentDomestic"
+  },
+  "expenseVatTreatmentForeign": "IVA addebitata da un fornitore all’estero",
+  "@expenseVatTreatmentForeign": {
+    "description": "#4479 expense input tax: expenseVatTreatmentForeign"
   },
   "exportAboutContents": "Cosa contiene questo file",
   "exportAboutCurrency": "Importi in",
@@ -11561,6 +11601,10 @@
   "@itemGroupSet": {
     "description": "#4361 G12 finance parameters of an item group"
   },
+  "itemGroupSetOwn": "Imposta la propria",
+  "@itemGroupSetOwn": {
+    "description": "#4479 an item takes its own unit against its group"
+  },
   "itemGroupSkippedLine": "{item}: {parameter} ({reason})",
   "itemGroupSkippedTitle": "Non raggiunti",
   "itemGroupSoldByWeight": "Venduto a peso",
@@ -11589,6 +11633,10 @@
     "description": "#4366 item groups: the till parameters"
   },
   "itemGroupTrackingSerial": "Per pezzo (seriale)",
+  "itemGroupUnitsFollowHint": "La seguono tutti gli articoli di questo gruppo senza unità propria",
+  "@itemGroupUnitsFollowHint": {
+    "description": "#4479 the group sheet: the units are followed live by the items without their own"
+  },
   "itemGroupUseGroup": "Usa il valore del gruppo",
   "itemGroupYes": "Sì",
   "itemGroupsAdd": "Aggiungi un gruppo",
@@ -17022,6 +17070,10 @@
   "refusalCounterTenders": "I pagamenti non saldano esattamente questa vendita, oppure uno di essi non è accettato qui.",
   "refusalCounterTill": "La cassa non è pronta per questo: la apra prima, oppure è già aperta o chiusa.",
   "refusalCounterUnsupported": "Questa operazione non è supportata per il Suo paese nel caso dichiarato nelle impostazioni: non è stato numerato nulla e non è stato incassato nulla.",
+  "refusalExpenseVat": "L’IVA di questa spesa non è accettata: scegliere un’aliquota IVA di questa attività e indicare l’IVA addebitata da un fornitore all’estero solo come aliquota e importo del suo documento.",
+  "@refusalExpenseVat": {
+    "description": "#4479 (0994) DKV02: the VAT treatment of an expense is refused"
+  },
   "refusalMainStoreExpired": "Il magazzino principale contiene solo {held} dei {asked} richiesti da questa vendita che siano vendibili: il resto è scaduto. Nulla è stato prelevato e la vendita non è stata confermata.",
   "@refusalMainStoreExpired": {
     "description": "#4170 a sale refused for what the main store holds",
@@ -23847,7 +23899,7 @@
   "@taxCertInvalidDate": {
     "description": "#2362 sales tax: taxCertInvalidDate"
   },
-  "taxCertInvalidState": "Due lettere, o *",
+  "taxCertInvalidState": "Scegliere lo Stato, oppure indicare un certificato multistato.",
   "@taxCertInvalidState": {
     "description": "#2362 sales tax: taxCertInvalidState"
   },
@@ -23871,6 +23923,7 @@
   "@taxCertKindResale": {
     "description": "#2362 sales tax: taxCertKindResale"
   },
+  "taxCertMultistate": "Certificato multistato (SST o MTC)",
   "taxCertNumber": "Numero del certificato",
   "@taxCertNumber": {
     "description": "#2362 sales tax: taxCertNumber"
@@ -23887,10 +23940,6 @@
   "taxCertSave": "Salva il certificato",
   "@taxCertSave": {
     "description": "#2362 sales tax: taxCertSave"
-  },
-  "taxCertState": "Stato (due lettere, o * per un certificato multistato)",
-  "@taxCertState": {
-    "description": "#2362 sales tax: taxCertState"
   },
   "taxCertSubtitle": "Sales tax: le righe di questo cliente escono senza imposta finché un certificato è in vigore",
   "@taxCertSubtitle": {

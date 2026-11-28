@@ -17908,6 +17908,12 @@ abstract class AppLocalizations {
   /// **'Enter a share between 0 and 100.'**
   String get expenseInvalidDeductible;
 
+  /// #4479 expense input tax: expenseInvalidStatedVat
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the VAT rate shown on the document, between 0 and 100, and an amount that is not negative.'**
+  String get expenseInvalidStatedVat;
+
   /// #1449 expense_rules
   ///
   /// In en, this message translates to:
@@ -17919,6 +17925,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter a valid unit price, or leave it empty.'**
   String get expenseInvalidUnitPrice;
+
+  /// #4479 expense input tax: expenseMissingSupplierCountry
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the supplier\'s country.'**
+  String get expenseMissingSupplierCountry;
 
   /// #1449 expense_rules
   ///
@@ -18010,6 +18022,18 @@ abstract class AppLocalizations {
   /// **'100 % unless part of the expense is private or serves an exempt activity.'**
   String get expenseVatDeductibleHint;
 
+  /// #4479 expense input tax: expenseVatDocumentNumber
+  ///
+  /// In en, this message translates to:
+  /// **'Document number'**
+  String get expenseVatDocumentNumber;
+
+  /// #4479 expense input tax: expenseVatForeignNote
+  ///
+  /// In en, this message translates to:
+  /// **'This VAT is not deducted on this return: a supplier abroad charged it, and it can only be claimed back from that country. The rate and the amount stay with the expense for that claim.'**
+  String get expenseVatForeignNote;
+
   /// #2357 input VAT: expenseVatNone
   ///
   /// In en, this message translates to:
@@ -18021,6 +18045,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'VAT on this expense'**
   String get expenseVatRate;
+
+  /// #4479 expense input tax: expenseVatStatedPercent
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rate on the document'**
+  String get expenseVatStatedPercent;
+
+  /// #4479 expense input tax: expenseVatStatedTax
+  ///
+  /// In en, this message translates to:
+  /// **'VAT amount on the document'**
+  String get expenseVatStatedTax;
+
+  /// #4479 expense input tax: expenseVatSupplierCountry
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier\'s country'**
+  String get expenseVatSupplierCountry;
+
+  /// #4479 expense input tax: expenseVatTreatment
+  ///
+  /// In en, this message translates to:
+  /// **'Kind of VAT'**
+  String get expenseVatTreatment;
+
+  /// #4479 expense input tax: expenseVatTreatmentDomestic
+  ///
+  /// In en, this message translates to:
+  /// **'VAT of this country'**
+  String get expenseVatTreatmentDomestic;
+
+  /// #4479 expense input tax: expenseVatTreatmentForeign
+  ///
+  /// In en, this message translates to:
+  /// **'VAT charged by a supplier abroad'**
+  String get expenseVatTreatmentForeign;
 
   /// #2861 workspace export: exportAboutContents
   ///
@@ -30845,6 +30905,12 @@ abstract class AppLocalizations {
   /// **'Set'**
   String get itemGroupSet;
 
+  /// #4479 an item takes its own unit against its group
+  ///
+  /// In en, this message translates to:
+  /// **'Set its own'**
+  String get itemGroupSetOwn;
+
   /// #4361 G12 item groups: itemGroupSkippedLine
   ///
   /// In en, this message translates to:
@@ -30922,6 +30988,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'By piece (serial)'**
   String get itemGroupTrackingSerial;
+
+  /// #4479 the group sheet: the units are followed live by the items without their own
+  ///
+  /// In en, this message translates to:
+  /// **'Followed by every item of this group that has no unit of its own'**
+  String get itemGroupUnitsFollowHint;
 
   /// #4361 G12 item groups: itemGroupUseGroup
   ///
@@ -47777,6 +47849,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.'**
   String get refusalCounterUnsupported;
+
+  /// #4479 (0994) DKV02: the VAT treatment of an expense is refused
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT of this expense is not accepted: pick a VAT rate of this business, and enter the VAT a supplier abroad charged only as the rate and amount on its document.'**
+  String get refusalExpenseVat;
 
   /// #4170 a sale refused for what the main store holds
   ///
@@ -65923,7 +66001,7 @@ abstract class AppLocalizations {
   /// #2362 sales tax: taxCertInvalidState
   ///
   /// In en, this message translates to:
-  /// **'Two letters, or *'**
+  /// **'Pick the state, or mark the certificate multistate.'**
   String get taxCertInvalidState;
 
   /// #2362 sales tax: taxCertKind
@@ -65956,6 +66034,12 @@ abstract class AppLocalizations {
   /// **'Resale'**
   String get taxCertKindResale;
 
+  /// #4501 FIN-11 a certificate valid in several states (SST, MTC)
+  ///
+  /// In en, this message translates to:
+  /// **'Multistate certificate (SST or MTC)'**
+  String get taxCertMultistate;
+
   /// #2362 sales tax: taxCertNumber
   ///
   /// In en, this message translates to:
@@ -65973,12 +66057,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save certificate'**
   String get taxCertSave;
-
-  /// #2362 sales tax: taxCertState
-  ///
-  /// In en, this message translates to:
-  /// **'State (two letters, or * for a multistate certificate)'**
-  String get taxCertState;
 
   /// #2362 sales tax: taxCertSubtitle
   ///

@@ -29,6 +29,12 @@ enum ExpenseOutcome {
   /// #2357 — the deductible share is not a percentage.
   invalidDeductible,
 
+  /// #4479 — VAT a supplier abroad charged needs that supplier's country.
+  missingSupplierCountry,
+
+  /// #4479 — the VAT a supplier abroad charged is not stated as a rate (or an amount) the document can have.
+  invalidStatedVat,
+
   /// Filed: waiting for the expense validators.
   submitted,
 }
@@ -38,6 +44,51 @@ enum ExpenseOutcome {
 /// abroad, so the amount carries no VAT and is the base of the acquisition
 /// tax the space owes (CH 383).
 typedef ExpenseVatFlags = ({bool asset, bool acquisition});
+
+/// The key of the supplier's country in the document facts of the VAT payload.
+const _supplierCountry = 'supplier_country';
+
+/// #4479 — the VAT a supplier abroad charged on its invoice, kept as a fact of the document: the stated rate and, when the
+/// document shows it, the amount. It is not deducted on the space's return (a refund from the supplier's state is a filing of
+/// its own, Directive 2008/9/EC), so the space's sales catalogue never interprets it.
+class ForeignVat {
+  const ForeignVat({required this.percent, this.taxCents});
+
+  final double? percent;
+  final int? taxCents;
+
+  /// Whether the stated rate is one a document can have, and the amount, when given, not negative.
+  bool get valid => percent != null && percent! > 0 && percent! <= 100 && (taxCents ?? 0) >= 0;
+}
+
+/// The VAT payload the expense RPCs take, one shape for a one-off expense and a scheduled one; null for an expense without VAT.
+Map<String, Object?>? expenseVatPayload({
+  required double? percent,
+  required double? deductiblePct,
+  String? rateId,
+  ExpenseVatFlags flags = (asset: false, acquisition: false),
+  ForeignVat? foreign,
+  Map<String, Object?> facts = const {},
+}) {
+  if (foreign != null) {
+    return {
+      'treatment': 'foreign_charged',
+      'stated_percent': foreign.percent,
+      if (foreign.taxCents != null) 'stated_tax_cents': foreign.taxCents,
+      ...facts,
+    };
+  }
+  if ((percent ?? 0) <= 0) return null;
+  return {
+    'percent': percent,
+    'deductible_pct': deductiblePct,
+    'treatment': flags.acquisition ? 'acquisition' : 'domestic',
+    'vat_rate_id': ?rateId,
+    if (flags.asset) 'asset': true,
+    if (flags.acquisition) 'acquisition': true,
+    ...facts,
+  };
+}
 
 /// What the person typed, as text, exactly as the sheet holds it.
 class ExpenseDraft {
@@ -55,6 +106,9 @@ class ExpenseDraft {
     this.vatPercent,
     this.deductible = '100',
     this.vatFlags = (asset: false, acquisition: false),
+    this.vatRateId,
+    this.foreignVat,
+    this.vatFacts = const {},
   });
 
   /// #3484 — the member's format locale: the amounts typed here read in it.
@@ -81,18 +135,28 @@ class ExpenseDraft {
 
   final ExpenseVatFlags vatFlags;
 
+  /// #4479 — the identity of the rate picked from the space's rates; the server resolves the percent from it.
+  final String? vatRateId;
+
+  /// #4479 — VAT a supplier abroad charged, as the document states it: not input tax of the space's return, so it has no
+  /// rate of the space and no share to deduct; null when the VAT is the space's own.
+  final ForeignVat? foreignVat;
+
+  /// #4479 — what the document says: its supplier's country, its number and its date, as typed or picked.
+  final Map<String, Object?> vatFacts;
+
   double? get deductiblePct =>
       parseDecimalInput(deductible, grouping: false)?.toDouble();
 
   /// The VAT payload the RPC takes, or null for an expense without VAT.
-  Map<String, Object?>? get vat => (vatPercent ?? 0) <= 0
-      ? null
-      : {
-          'percent': vatPercent,
-          'deductible_pct': deductiblePct,
-          if (vatFlags.asset) 'asset': true,
-          if (vatFlags.acquisition) 'acquisition': true,
-        };
+  Map<String, Object?>? get vat => expenseVatPayload(
+    percent: vatPercent,
+    deductiblePct: deductiblePct,
+    rateId: vatRateId,
+    flags: vatFlags,
+    foreign: foreignVat,
+    facts: vatFacts,
+  );
 
   int? get amountCents => parseMinorInput(amount, locale: locale);
   int? get quantity => int.tryParse(supplyQuantity.trim());
@@ -113,7 +177,11 @@ class ExpenseDraft {
 ExpenseOutcome expenseOutcome(ExpenseDraft draft) {
   final cents = draft.amountCents;
   if (cents == null || cents <= 0) return ExpenseOutcome.invalidAmount;
-  if (draft.vat != null) {
+  final foreign = draft.foreignVat;
+  if (foreign != null) {
+    if ((draft.vatFacts[_supplierCountry] as String? ?? '').isEmpty) return ExpenseOutcome.missingSupplierCountry;
+    if (!foreign.valid) return ExpenseOutcome.invalidStatedVat;
+  } else if (draft.vat != null) {
     final share = draft.deductiblePct;
     if (share == null || share < 0 || share > 100) {
       return ExpenseOutcome.invalidDeductible;

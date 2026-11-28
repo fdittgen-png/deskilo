@@ -104,10 +104,6 @@
   "@taxCertKindOther": {
     "description": "#2362 sales tax: taxCertKindOther"
   },
-  "taxCertState": "Estado (dos letras, o * para un certificado multiestatal)",
-  "@taxCertState": {
-    "description": "#2362 sales tax: taxCertState"
-  },
   "taxCertNumber": "Número del certificado",
   "@taxCertNumber": {
     "description": "#2362 sales tax: taxCertNumber"
@@ -120,7 +116,7 @@
   "@taxCertValidTo": {
     "description": "#2362 sales tax: taxCertValidTo"
   },
-  "taxCertInvalidState": "Dos letras, o *",
+  "taxCertInvalidState": "Elija el estado, o marque el certificado como multiestatal.",
   "@taxCertInvalidState": {
     "description": "#2362 sales tax: taxCertInvalidState"
   },
@@ -160,5 +156,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "taxCertMultistate": "Certificado multiestatal (SST o MTC)"
 }

@@ -4,6 +4,7 @@
 // composed here where every feature is visible: money, profile and the
 // workspace's messenger open them without importing the calendar, money
 // or members feature.
+import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../core/navigation/feature_sheets.dart'
@@ -18,6 +19,7 @@ import '../features/money/providers/lease_site_names_provider.dart';
 import '../features/money/providers/line_units_provider.dart';
 import '../features/money/providers/money_providers.dart' show servicesProvider;
 import '../features/money/providers/pickable_units_provider.dart';
+import '../features/stock/domain/group_unit_defaults.dart';
 import '../features/stock/domain/stock_config.dart' show stockAddressJoint;
 import '../features/stock/domain/unit_conversions.dart';
 import '../features/stock/domain/workspace_units.dart';
@@ -69,7 +71,9 @@ final List<Override> featureSheetsFromApp = [
     if (config == null || !config.stockable) return null;
     final units = await ref.watch(stock_units.workspaceUnitListProvider(key.workspaceId).future);
     final general = await ref.watch(stock_units.unitConversionListProvider(key.workspaceId).future);
-    final codes = convertibleUnitCodes(inventoryUnit: config.inventoryUnit, itemUnits: config.units, units: units, general: general);
+    // #4479 -- the units its group sells and buys it in count as the item's, as they do on the server (`unit_factor`, 0992)
+    final group = await _groupUnits(ref, key.workspaceId, key.itemId);
+    final codes = convertibleUnitCodes(inventoryUnit: config.inventoryUnit, itemUnits: group.unitsWith(config.units), units: units, general: general);
     final offered = [
       for (final u in units)
         if (codes.contains(u.code)) LineUnit(code: u.code, label: u.label, unEceCode: u.unEceCode),
@@ -80,9 +84,9 @@ final List<Override> featureSheetsFromApp = [
               .where((m) => m.active && m.supplierId == key.supplierId && m.itemId == key.itemId && (m.purchaseUnit ?? '').isNotEmpty)
               .map((m) => m.purchaseUnit!)
               .firstOrNull;
-    final own = config.units.where((u) => u.defaultPurchase).map((u) => u.unit).firstOrNull;
+    final own = group.purchaseStart(config.units);
     final start = [supplied, own, config.inventoryUnit].firstWhere((c) => c != null && codes.contains(c), orElse: () => null);
-    final sold = config.units.where((u) => u.defaultSale).map((u) => u.unit).firstOrNull;
+    final sold = group.saleStart(config.units);
     final sale = [sold, config.inventoryUnit].firstWhere((c) => c != null && codes.contains(c), orElse: () => null);
     return ItemOrderUnits(units: offered, defaultUnit: start, saleUnit: sale);
   }),
@@ -92,13 +96,15 @@ final List<Override> featureSheetsFromApp = [
     final item = (await ref.watch(servicesProvider.future)).where((s) => s.id == key.itemId).firstOrNull;
     if (config == null || item == null) return null;
     final general = await ref.watch(stock_units.unitConversionListProvider(key.workspaceId).future);
-    return unitPriceCents(
-      itemPriceCents: item.priceCents,
-      unit: key.unit,
-      inventoryUnit: config.inventoryUnit,
-      itemUnits: config.units,
-      general: general,
-    );
+    final group = await _groupUnits(ref, key.workspaceId, key.itemId);
+    return group.priceOf(key.unit, config.units) ??
+        unitPriceCents(
+          itemPriceCents: item.priceCents,
+          unit: key.unit,
+          inventoryUnit: config.inventoryUnit,
+          itemUnits: group.unitsWith(config.units),
+          general: general,
+        );
   }),
   // #4495 — the places a setting may name, each with its full path as site › place (the workspace feature never imports the stock).
   settingPlacesProvider.overrideWith((ref, workspaceId) async {
@@ -113,3 +119,9 @@ final List<Override> featureSheetsFromApp = [
   // #4294 — the names the low-stock notice of the inbox reads (events never import the stock).
   eventNameSourcesProvider.overrideWithValue(const [stockEventNames]),
 ];
+
+/// #4479 -- the units an item reads of its group, for a line that starts in one: none while the groups feature is off.
+Future<GroupUnitDefaults> _groupUnits(Ref ref, String workspaceId, String itemId) async {
+  if (!ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockItemGroups)) return GroupUnitDefaults.none;
+  return GroupUnitDefaults.of(await ref.watch(itemGroupsProvider).effective(workspaceId, itemId));
+}

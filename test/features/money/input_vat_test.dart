@@ -21,6 +21,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/screens/expense_vat_kind.dart';
 import '../../helpers/screens/money_screen.dart' show pumpMoney;
 import '../../helpers/screens/supply_expense.dart' show openExpenseSheet;
 
@@ -70,10 +71,8 @@ void main() {
     );
     await openExpenseSheet(tester);
     await tester.enterText(find.widgetWithText(TextField, 'Amount'), '120');
-    await tester.tap(find.byKey(const ValueKey('expense-vat-rate')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('20%').last);
-    await tester.pumpAndSettle();
+    await pickVatKind(tester, 'expense', 'VAT of this country');
+    await pickVatRate(tester, 'expense', 'Standard · 20%');
     await tester.enterText(
       find.descendant(
         of: find.byKey(const ValueKey('expense-vat-deductible')),
@@ -89,6 +88,8 @@ void main() {
     expect(money.submittedExpenseVat.single, {
       'percent': 20.0,
       'deductible_pct': 50.0,
+      'treatment': 'domestic',
+      'vat_rate_id': 'std',
     });
   });
 
@@ -102,10 +103,8 @@ void main() {
     );
     await openExpenseSheet(tester);
     await tester.enterText(find.widgetWithText(TextField, 'Amount'), '1200');
-    await tester.tap(find.byKey(const ValueKey('expense-vat-rate')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('20%').last);
-    await tester.pumpAndSettle();
+    await pickVatKind(tester, 'expense', 'VAT of this country');
+    await pickVatRate(tester, 'expense', 'Standard · 20%');
     await tester.ensureVisible(find.byKey(const ValueKey('expense-vat-asset')));
     await tester.tap(find.byKey(const ValueKey('expense-vat-asset')));
     await tester.pumpAndSettle();
@@ -116,6 +115,8 @@ void main() {
     expect(money.submittedExpenseVat.single, {
       'percent': 20.0,
       'deductible_pct': 100.0,
+      'treatment': 'domestic',
+      'vat_rate_id': 'std',
       'asset': true,
     });
   });
@@ -142,11 +143,8 @@ void main() {
       'Internet',
     );
     await tester.enterText(find.byKey(const ValueKey('schedule-amount')), '60');
-    await tester.ensureVisible(find.byKey(const ValueKey('schedule-vat-rate')));
-    await tester.tap(find.byKey(const ValueKey('schedule-vat-rate')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('20%').last);
-    await tester.pumpAndSettle();
+    await pickVatKind(tester, 'schedule', 'VAT of this country');
+    await pickVatRate(tester, 'schedule', 'Standard · 20%');
     await tester.ensureVisible(find.byKey(const ValueKey('schedule-submit')));
     await tester.tap(find.byKey(const ValueKey('schedule-submit')));
     await tester.pumpAndSettle();
@@ -155,6 +153,8 @@ void main() {
     expect(money.expenseScheduleVat[id], {
       'percent': 20.0,
       'deductible_pct': 100.0,
+      'treatment': 'domestic',
+      'vat_rate_id': 'std',
     });
   });
 
@@ -167,7 +167,7 @@ void main() {
       workspace: _registered(inputVat: false),
     );
     await openExpenseSheet(tester);
-    expect(find.byKey(const ValueKey('expense-vat-rate')), findsNothing);
+    expect(find.byKey(const ValueKey('expense-vat-kind')), findsNothing);
   });
 
   testWidgets('rates that could not be read are said: the expense form does not open as if the space had no VAT', (
@@ -193,7 +193,7 @@ void main() {
     await openExpenseSheet(tester);
     // Not a form without VAT fields: no form, and the reason.
     expect(find.text('This could not be loaded. Try again.'), findsOneWidget);
-    expect(find.byKey(const ValueKey('expense-vat-rate')), findsNothing);
+    expect(find.byKey(const ValueKey('expense-vat-kind')), findsNothing);
     expect(find.byKey(const ValueKey('expense-amount')), findsNothing);
 
     // Asking again reads the rates again, and the form states its VAT.
@@ -201,7 +201,7 @@ void main() {
     final before = reads;
     await openExpenseSheet(tester);
     expect(reads, greaterThan(before));
-    expect(find.byKey(const ValueKey('expense-vat-rate')), findsOneWidget);
+    expect(find.byKey(const ValueKey('expense-vat-kind')), findsOneWidget);
   });
 
   testWidgets('a screen left while the rates are read opens nothing and throws nothing', (tester) async {

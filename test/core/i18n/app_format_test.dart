@@ -27,7 +27,8 @@ void main() {
       expect(Currencies.minorDigits('EUR'), 2);
       expect(Currencies.minorDigits('JPY'), 0);
       expect(Currencies.minorDigits('KWD'), 3);
-      expect(Currencies.minorDigits('xyz'), 2, reason: 'unknown → ISO majority');
+      // #4501 -- a code the currency reference does not hold has no digits: it is refused, never read as two
+      expect(() => Currencies.minorDigits('xyz'), throwsArgumentError);
     });
 
     test('storage ↔ major round-trips at the currency\'s grain', () {

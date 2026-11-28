@@ -29,6 +29,9 @@ import 'lint_sources.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #4479/0992 restates item_group_param_kind from 0883's body as 0980 left it: the same three lists, the seven unit
+  // parameters moved from 'proposal' to 'item'. pgTAP 600 and 588 green on dev with it, rolled back.
+  'item_group_param_kind@0992',
   // #4479/0968 restates stock_to_inventory, stock_unit_factor and workspace_unit_convert from the bodies the earlier patches
   // left (0747/0836/0951 with 0952's item units and 0963's package dimension): the dimension step is replaced by
   // unit_factor/unit_convert, every other line is theirs. Proved on dev rolled back: 27 cases, parity table 15 cases.

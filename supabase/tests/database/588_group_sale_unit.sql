@@ -1,8 +1,8 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #4479 (0980): an item group carries the unit its items are sold in, what one of it makes of the inventory unit and its price, as it
--- carries the purchase unit: proposals, stored with the group, never inherited. A sale unit that is not one of the business's units is
+-- carries the purchase unit: inherited: an item without its own value reads the group's. A sale unit that is not one of the business's units is
 -- refused; a price that is no whole number of minor units is refused; the factor is both parts or none; the groups' catalogue names
--- the four as proposals. Rolled back.
+-- the four as item parameters (inherited since 0992). Rolled back.
 begin;
 select plan(8);
 
@@ -47,8 +47,8 @@ select is((select default_sale_unit || ' ' || default_sale_factor_num || '/' || 
 select is(pg_temp.sv(902, 502, 0, '{"name": "Plates", "parameters": {"default_sale_unit": "zzz"}}'), 'ERR DKG11', 'a sale unit that is not one of the business''s units is refused');
 select is(pg_temp.sv(903, 503, 0, '{"name": "Cups", "parameters": {"default_sale_unit": "carton", "default_sale_price_cents": "abc"}}'), 'ERR DKG11', 'a price that is no amount is refused');
 select is(pg_temp.sv(904, 504, 0, '{"name": "Pots", "parameters": {"default_sale_unit": "carton", "default_sale_factor_num": 12}}'), 'ERR DKG11', 'a factor is both parts or none');
-select is(public.item_group_param_kind('default_sale_unit') || ' ' || public.item_group_param_kind('default_sale_price_cents'), 'proposal proposal',
-  'the catalogue names them proposals: copied into a new item, never inherited');
+select is(public.item_group_param_kind('default_sale_unit') || ' ' || public.item_group_param_kind('default_sale_price_cents'), 'item item',
+  'the catalogue names them item parameters: an item reads its group''s unless it keeps its own (0992)');
 select ok('default_sale_factor_num' = any (public.item_group_params()) and 'default_sale_factor_den' = any (public.item_group_params()),
   'and lists them among the parameters');
 select is((select count(*)::int from public.item_groups where workspace_id = pg_temp.u(101)), 1, 'a refused group is not made');

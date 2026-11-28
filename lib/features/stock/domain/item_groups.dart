@@ -36,9 +36,8 @@ const groupParamSaleFactorNum = 'default_sale_factor_num';
 const groupParamSaleFactorDen = 'default_sale_factor_den';
 const groupParamSalePrice = 'default_sale_price_cents';
 
-/// The proposals a group carries: copied into a new item as a starting point, never inherited and never linked, so a
-/// change of one reaches no item.
-const itemGroupProposals = [
+/// The units a group carries (#4479): followed live by every item of the group that keeps no unit of its own, as the till category is.
+const itemGroupUnits = [
   groupParamPurchaseUnit,
   groupParamPurchaseFactorNum,
   groupParamPurchaseFactorDen,
@@ -46,6 +45,11 @@ const itemGroupProposals = [
   groupParamSaleFactorNum,
   groupParamSaleFactorDen,
   groupParamSalePrice,
+];
+
+/// The proposals a group carries: copied into a new item as a starting point, never inherited and never linked, so a
+/// change of one reaches no item.
+const itemGroupProposals = [
   'reorder_point_default',
   'reorder_quantity_default',
   'home_zone_id',
@@ -73,7 +77,7 @@ class ItemGroup {
       parentId: r.stringOrNull('parent_id'),
       name: r.string('name'),
       revision: r.intOrNull('revision') ?? 0,
-      params: {for (final k in [...itemGroupEditable, ...itemGroupProposals]) if (raw[k] != null) k: raw[k]},
+      params: {for (final k in [...itemGroupEditable, ...itemGroupUnits, ...itemGroupProposals]) if (raw[k] != null) k: raw[k]},
       items: r.intOrNull('items') ?? 0,
     );
   }

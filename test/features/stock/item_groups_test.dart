@@ -134,7 +134,7 @@ void main() {
       });
 
       testWidgets('a group carries what it proposes to a new item: the purchase unit with its factor, the reorder point and quantity, the home zone', (tester) async {
-        final w = await _open(tester, size);
+        final w = await _open(tester, size, finance: true); // #4479 the units are what an item sells and costs for
         await _tap(tester, 'item-group-add');
         await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Dry goods');
         await _choose(tester, 'item-group-purchase-unit', 'kg');
@@ -142,6 +142,8 @@ void main() {
         await tester.enterText(find.byKey(const ValueKey('item-group-reorder-point')), '5.5');
         await tester.enterText(find.byKey(const ValueKey('item-group-reorder-qty')), '20');
         await _choose(tester, 'item-group-home-zone', 'Back room');
+        await _tap(tester, 'item-group-save');
+        // #4479 the units reach the items of the group: previewed first, the second save applies them
         await _tap(tester, 'item-group-save');
         final saved = (await w.groups('ws-1')).firstWhere((g) => g.name == 'Dry goods');
         expect(saved.params['default_purchase_unit'], 'kg');
@@ -178,6 +180,7 @@ void main() {
         final w = await _open(
           tester,
           size,
+          finance: true,
           seed: (groups) => groups.save(
             'ws-1',
             requestId: 'old-free-unit',
@@ -198,12 +201,14 @@ void main() {
         expect(find.byKey(const ValueKey('item-group-save')), findsOneWidget, reason: 'nothing was saved: the sheet stays');
         await _choose(tester, 'item-group-purchase-unit', 'kg');
         await _tap(tester, 'item-group-save');
+        // #4479 the units reach the items of the group: previewed first, the second save applies them
+        await _tap(tester, 'item-group-save');
         final saved = (await w.groups('ws-1')).firstWhere((g) => g.id == 'old-group');
         expect(saved.params['default_purchase_unit'], 'kg');
       });
 
       testWidgets('a purchase unit needs its factor, a factor is one number or a fraction above zero, and a third is exact', (tester) async {
-        final w = await _open(tester, size);
+        final w = await _open(tester, size, finance: true);
         await _tap(tester, 'item-group-add');
         await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Syrups');
         await _choose(tester, 'item-group-purchase-unit', 'l');
@@ -213,6 +218,8 @@ void main() {
         await _tap(tester, 'item-group-save');
         expect(find.text(_en.stockReasonOutOfRange), findsOneWidget, reason: 'a zero denominator');
         await tester.enterText(find.byKey(const ValueKey('item-group-factor')), '1/3');
+        await _tap(tester, 'item-group-save');
+        // #4479 the units reach the items of the group: previewed first, the second save applies them
         await _tap(tester, 'item-group-save');
         final saved = (await w.groups('ws-1')).firstWhere((g) => g.name == 'Syrups');
         expect((saved.params['default_purchase_factor_num'], saved.params['default_purchase_factor_den']), (1, 3));
@@ -419,6 +426,70 @@ void main() {
         await _tap(tester, 'item-group-move');
         expect((await w.effective('ws-1', 'demo-item-syrup')).groupId, 'demo-group-home');
       });
+
+      // #4479
+      for (final finance in [true, false]) {
+        testWidgets('an item reads the units of its group and says so; ${finance ? 'someone who may see the finances' : 'someone who may not'} ${finance ? 'can take its own' : 'is shown them without the buttons'}', (tester) async {
+          final w = await _open(
+            tester,
+            size,
+            finance: finance,
+            home: Builder(
+              builder: (context) => Scaffold(
+                body: TextButton(
+                  key: const ValueKey('open'),
+                  onPressed: () => showItemGroupAssign(context, workspaceId: 'ws-1', itemId: 'demo-item-syrup', itemName: 'Syrup'),
+                  child: const Text('open'),
+                ),
+              ),
+            ),
+            seed: (groups) async {
+              final drinks = (await groups.groups('ws-1')).firstWhere((g) => g.id == 'demo-group-drinks');
+              await groups.save('ws-1', requestId: 'r-units', groupId: drinks.id, expectedRevision: drinks.revision, body: ItemGroupDraft(name: drinks.name, parentId: drinks.parentId, parameters: {groupParamSaleUnit: 'box', groupParamSaleFactorNum: 6, groupParamSaleFactorDen: 1, groupParamSalePrice: 500}));
+            },
+          );
+          await tester.tap(find.byKey(const ValueKey('open')));
+          await _frames(tester);
+          final sale = find.byKey(const ValueKey('item-group-unit-sale'));
+          expect(find.descendant(of: sale, matching: find.textContaining('box')), findsWidgets);
+          expect(find.descendant(of: sale, matching: find.textContaining('Drinks')), findsOneWidget, reason: 'it says the unit comes from the group');
+          expect(find.byKey(const ValueKey('item-group-unit-own-sale')), finance ? findsOneWidget : findsNothing);
+          expect(find.byKey(const ValueKey('item-group-unit-use-sale')), findsNothing, reason: 'nothing of its own to give back');
+          expect((await w.effective('ws-1', 'demo-item-syrup')).params[groupParamSaleUnit]!.own, isFalse);
+        });
+      }
     });
   }
+
+  // #4479 -- a group's units are followed live by the items without their own
+  test('an item without its own unit reads its group\'s as it is now; one that took its own keeps it; one that gave it back follows again', () async {
+    final config = DemoStockConfigCommands('ws-1');
+    final w = DemoItemGroups('ws-1', config, () => DateTime(2026, 11, 28));
+    Future<void> group(Map<String, Object?> parameters, String request) async {
+      final drinks = (await w.groups('ws-1')).firstWhere((g) => g.id == 'demo-group-drinks');
+      await w.save('ws-1', requestId: request, groupId: drinks.id, expectedRevision: drinks.revision, body: ItemGroupDraft(name: drinks.name, parentId: drinks.parentId, parameters: parameters));
+    }
+
+    Future<String?> sale(String item) async => (await w.effective('ws-1', item)).params[groupParamSaleUnit]!.value as String?;
+    Future<String> source(String item) async => (await w.effective('ws-1', item)).params[groupParamSaleUnit]!.source;
+    Future<void> own(String item, String mode, Object? value, String request) async => w.setOverride('ws-1', request, (
+      itemId: item,
+      expectedRevision: (await config.item('ws-1', item))!.revision,
+      parameter: groupParamSaleUnit,
+      mode: mode,
+      value: value,
+    ));
+
+    await group({groupParamSaleUnit: 'box', groupParamSaleFactorNum: 6, groupParamSaleFactorDen: 1, groupParamSalePrice: 500}, 'r-1');
+    expect((await sale('demo-item-milk'), await source('demo-item-milk')), ('box', 'group'), reason: 'nothing was copied: the item reads the group');
+    expect((await w.effective('ws-1', 'demo-item-milk')).params[groupParamSalePrice]!.value, 500);
+
+    await own('demo-item-milk', 'set', 'roll', 'r-2');
+    await group({groupParamSaleUnit: 'carton'}, 'r-3');
+    expect((await sale('demo-item-syrup'), await source('demo-item-syrup')), ('carton', 'group'), reason: 'the group changed: the item without its own follows at once');
+    expect((await sale('demo-item-milk'), await source('demo-item-milk')), ('roll', 'item'), reason: 'the one with its own keeps it');
+
+    await own('demo-item-milk', 'inherit', null, 'r-4');
+    expect((await sale('demo-item-milk'), await source('demo-item-milk')), ('carton', 'group'), reason: 'back to the group\'s');
+  });
 }

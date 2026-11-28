@@ -11345,11 +11345,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get expenseInvalidDeductible => 'Saisissez une part entre 0 et 100.';
 
   @override
+  String get expenseInvalidStatedVat =>
+      'Saisissez le taux de TVA indiqué sur le document, entre 0 et 100, et un montant qui n’est pas négatif.';
+
+  @override
   String get expenseInvalidSupplyQuantity => 'Saisissez au moins une unité.';
 
   @override
   String get expenseInvalidUnitPrice =>
       'Saisissez un prix unitaire valide, ou laissez-le vide.';
+
+  @override
+  String get expenseMissingSupplierCountry =>
+      'Choisissez le pays du fournisseur.';
 
   @override
   String get expenseMissingSupplyName => 'Nommez le nouvel article.';
@@ -11408,10 +11416,36 @@ class AppLocalizationsFr extends AppLocalizations {
       '100 % sauf si une partie de la dépense est privée ou sert une activité exonérée.';
 
   @override
+  String get expenseVatDocumentNumber => 'Numéro du document';
+
+  @override
+  String get expenseVatForeignNote =>
+      'Cette TVA n’est pas déduite dans cette déclaration : un fournisseur à l’étranger l’a facturée et elle ne peut être réclamée qu’auprès de ce pays. Le taux et le montant restent attachés à la dépense pour cette demande.';
+
+  @override
   String get expenseVatNone => 'Sans TVA';
 
   @override
   String get expenseVatRate => 'TVA sur cette dépense';
+
+  @override
+  String get expenseVatStatedPercent => 'Taux de TVA du document';
+
+  @override
+  String get expenseVatStatedTax => 'Montant de TVA du document';
+
+  @override
+  String get expenseVatSupplierCountry => 'Pays du fournisseur';
+
+  @override
+  String get expenseVatTreatment => 'Nature de la TVA';
+
+  @override
+  String get expenseVatTreatmentDomestic => 'TVA de ce pays';
+
+  @override
+  String get expenseVatTreatmentForeign =>
+      'TVA facturée par un fournisseur à l’étranger';
 
   @override
   String get exportAboutContents => 'Ce que contient ce fichier';
@@ -19626,6 +19660,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get itemGroupSet => 'Définie';
 
   @override
+  String get itemGroupSetOwn => 'Fixer la sienne';
+
+  @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
     return '$item : $parameter ($reason)';
   }
@@ -19665,6 +19702,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get itemGroupTrackingSerial => 'À la pièce (série)';
+
+  @override
+  String get itemGroupUnitsFollowHint =>
+      'Suivi par chaque article de ce groupe qui n’a pas d’unité propre';
 
   @override
   String get itemGroupUseGroup => 'Utiliser la valeur du groupe';
@@ -30123,6 +30164,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalCounterUnsupported =>
       'Cette opération n\'est pas prise en charge pour votre pays dans le cas que vous avez déclaré dans les paramètres : rien n\'a été numéroté et rien n\'a été encaissé.';
+
+  @override
+  String get refusalExpenseVat =>
+      'La TVA de cette dépense n’est pas acceptée : choisissez un taux de TVA de cette entreprise et saisissez la TVA facturée par un fournisseur à l’étranger uniquement comme taux et montant de son document.';
 
   @override
   String refusalMainStoreExpired(String held, String asked) {
@@ -41496,7 +41541,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxCertInvalidDate => 'Saisissez la date au format AAAA-MM-JJ';
 
   @override
-  String get taxCertInvalidState => 'Deux lettres, ou *';
+  String get taxCertInvalidState =>
+      'Choisissez l’État, ou indiquez un certificat multi-États.';
 
   @override
   String get taxCertKind => 'Type';
@@ -41514,6 +41560,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxCertKindResale => 'Revente';
 
   @override
+  String get taxCertMultistate => 'Certificat multi-États (SST ou MTC)';
+
+  @override
   String get taxCertNumber => 'Numéro du certificat';
 
   @override
@@ -41523,10 +41572,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxCertSave => 'Enregistrer le certificat';
-
-  @override
-  String get taxCertState =>
-      'État (deux lettres, ou * pour un certificat multi-États)';
 
   @override
   String get taxCertSubtitle =>

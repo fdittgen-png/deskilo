@@ -25,16 +25,16 @@ class GroupUnitProposals {
   /// The units of the business a proposal may name.
   final List<WorkspaceUnit> units;
 
-  /// The starting text of each field, from the group's own parameters.
-  static Map<String, String> initial(ItemGroup? group, AppFormat format) {
-    String factor(String numKey, String denKey) => group?.params[numKey] == null
+  /// The starting text of each field, from the parameters [params] (a group's own, or the values in force for an item).
+  static Map<String, String> initial(Map<String, Object?> params, AppFormat format) {
+    String factor(String numKey, String denKey) => params[numKey] == null
         ? ''
-        : purchaseFactorText((group!.params[numKey]! as num).toInt(), ((group.params[denKey] ?? 1) as num).toInt());
-    final price = group?.params[groupParamSalePrice];
+        : purchaseFactorText((params[numKey]! as num).toInt(), ((params[denKey] ?? 1) as num).toInt());
+    final price = params[groupParamSalePrice];
     return {
-      'purchaseUnit': '${group?.params[groupParamPurchaseUnit] ?? ''}',
+      'purchaseUnit': '${params[groupParamPurchaseUnit] ?? ''}',
       'purchaseFactor': factor(groupParamPurchaseFactorNum, groupParamPurchaseFactorDen),
-      'saleUnit': '${group?.params[groupParamSaleUnit] ?? ''}',
+      'saleUnit': '${params[groupParamSaleUnit] ?? ''}',
       'saleFactor': factor(groupParamSaleFactorNum, groupParamSaleFactorDen),
       'salePrice': price == null ? '' : amountInputText((price as num).toInt(), currency: format.currencyCode, locale: format.locale),
     };
@@ -46,11 +46,18 @@ class GroupUnitProposals {
       ? null
       : readAmountInput(fields.text('salePrice'), locale: format.locale, currency: format.currencyCode, allowNegative: false).minor;
 
-  /// What the group sends for these proposals.
-  Map<String, Object?> parameters() => {
+  /// What is sent for these units: the group's values, or an item's own.
+  Map<String, Object?> parameters() => {...purchaseParameters(), ...saleParameters()};
+
+  /// The purchase block: the unit and its factor.
+  Map<String, Object?> purchaseParameters() => {
     groupParamPurchaseUnit: fields.text('purchaseUnit').isEmpty ? null : fields.text('purchaseUnit'),
     groupParamPurchaseFactorNum: _factorOf('purchaseFactor')?.num,
     groupParamPurchaseFactorDen: _factorOf('purchaseFactor')?.den,
+  };
+
+  /// The sale block: the unit, its factor and its price.
+  Map<String, Object?> saleParameters() => {
     groupParamSaleUnit: fields.text('saleUnit').isEmpty ? null : fields.text('saleUnit'),
     groupParamSaleFactorNum: _factorOf('saleFactor')?.num,
     groupParamSaleFactorDen: _factorOf('saleFactor')?.den,
@@ -69,7 +76,11 @@ class GroupUnitProposals {
   };
 
   /// The fields of the sheet; [edit] redraws it and [touched] drops its preview.
-  List<Widget> widgets(AppLocalizations l10n, void Function(void Function()) edit, VoidCallback touched) => [
+  List<Widget> widgets(AppLocalizations l10n, void Function(void Function()) edit, VoidCallback touched) =>
+      [...purchaseWidgets(l10n, edit, touched), ...saleWidgets(l10n, edit, touched)];
+
+  /// The purchase block's fields.
+  List<Widget> purchaseWidgets(AppLocalizations l10n, void Function(void Function()) edit, VoidCallback touched) => [
     StockUnitPicker(
       key: const ValueKey('item-group-purchase-unit'),
       workspaceId: workspaceId,
@@ -85,6 +96,10 @@ class GroupUnitProposals {
     const FormGap(),
     AppTextField(key: const ValueKey('item-group-factor'), controller: fields['purchaseFactor'], fieldKey: 'purchaseFactor', label: l10n.itemGroupPurchaseFactor, onChanged: (_) => touched()),
     const FormGap(),
+  ];
+
+  /// The sale block's fields.
+  List<Widget> saleWidgets(AppLocalizations l10n, void Function(void Function()) edit, VoidCallback touched) => [
     StockUnitPicker(
       key: const ValueKey('item-group-sale-unit'),
       workspaceId: workspaceId,

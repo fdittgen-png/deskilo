@@ -11221,11 +11221,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expenseInvalidDeductible => 'Enter a share between 0 and 100.';
 
   @override
+  String get expenseInvalidStatedVat =>
+      'Enter the VAT rate shown on the document, between 0 and 100, and an amount that is not negative.';
+
+  @override
   String get expenseInvalidSupplyQuantity => 'Enter at least one unit.';
 
   @override
   String get expenseInvalidUnitPrice =>
       'Enter a valid unit price, or leave it empty.';
+
+  @override
+  String get expenseMissingSupplierCountry => 'Pick the supplier\'s country.';
 
   @override
   String get expenseMissingSupplyName => 'Name the new item.';
@@ -11282,10 +11289,35 @@ class AppLocalizationsEn extends AppLocalizations {
       '100 % unless part of the expense is private or serves an exempt activity.';
 
   @override
+  String get expenseVatDocumentNumber => 'Document number';
+
+  @override
+  String get expenseVatForeignNote =>
+      'This VAT is not deducted on this return: a supplier abroad charged it, and it can only be claimed back from that country. The rate and the amount stay with the expense for that claim.';
+
+  @override
   String get expenseVatNone => 'No VAT';
 
   @override
   String get expenseVatRate => 'VAT on this expense';
+
+  @override
+  String get expenseVatStatedPercent => 'VAT rate on the document';
+
+  @override
+  String get expenseVatStatedTax => 'VAT amount on the document';
+
+  @override
+  String get expenseVatSupplierCountry => 'Supplier\'s country';
+
+  @override
+  String get expenseVatTreatment => 'Kind of VAT';
+
+  @override
+  String get expenseVatTreatmentDomestic => 'VAT of this country';
+
+  @override
+  String get expenseVatTreatmentForeign => 'VAT charged by a supplier abroad';
 
   @override
   String get exportAboutContents => 'What this file holds';
@@ -19409,6 +19441,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemGroupSet => 'Set';
 
   @override
+  String get itemGroupSetOwn => 'Set its own';
+
+  @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
     return '$item: $parameter ($reason)';
   }
@@ -19448,6 +19483,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get itemGroupTrackingSerial => 'By piece (serial)';
+
+  @override
+  String get itemGroupUnitsFollowHint =>
+      'Followed by every item of this group that has no unit of its own';
 
   @override
   String get itemGroupUseGroup => 'Use the group’s value';
@@ -29788,6 +29827,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalCounterUnsupported =>
       'This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.';
+
+  @override
+  String get refusalExpenseVat =>
+      'The VAT of this expense is not accepted: pick a VAT rate of this business, and enter the VAT a supplier abroad charged only as the rate and amount on its document.';
 
   @override
   String refusalMainStoreExpired(String held, String asked) {
@@ -40981,7 +41024,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxCertInvalidDate => 'Enter the date as YYYY-MM-DD';
 
   @override
-  String get taxCertInvalidState => 'Two letters, or *';
+  String get taxCertInvalidState =>
+      'Pick the state, or mark the certificate multistate.';
 
   @override
   String get taxCertKind => 'Kind';
@@ -40999,6 +41043,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxCertKindResale => 'Resale';
 
   @override
+  String get taxCertMultistate => 'Multistate certificate (SST or MTC)';
+
+  @override
   String get taxCertNumber => 'Certificate number';
 
   @override
@@ -41008,10 +41055,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taxCertSave => 'Save certificate';
-
-  @override
-  String get taxCertState =>
-      'State (two letters, or * for a multistate certificate)';
 
   @override
   String get taxCertSubtitle =>
