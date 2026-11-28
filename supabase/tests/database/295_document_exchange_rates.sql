@@ -190,6 +190,11 @@ insert into public.members (workspace_id, user_id, is_owner, is_admin, status) v
  (current_setting('t.b')::uuid, pg_temp.u(3), true, true, 'active'),
  (current_setting('t.a')::uuid, pg_temp.u(4), true, true, 'active');
 
+-- #4512: the categories this fixture files under are the business's own
+insert into public.expense_categories (workspace_id, code, label)
+select w.id, c, c from public.workspaces w cross join unnest(array['software']) c
+ where w.id in (current_setting('t.a')::uuid, current_setting('t.b')::uuid)
+   and not exists (select 1 from public.expense_categories e where e.workspace_id = w.id and e.code = c);
 insert into public.sites (id, workspace_id, name) values
  (current_setting('t.site_a')::uuid, current_setting('t.a')::uuid, 'Rue Haute'),
  (current_setting('t.site_b')::uuid, current_setting('t.b')::uuid, 'Elsewhere');

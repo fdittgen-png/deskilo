@@ -23,9 +23,10 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/file_purchase_receipt.dart';
+import '../../domain/expense_category.dart';
 import '../../domain/purchase.dart';
 import '../../providers/purchase_providers.dart';
-import 'expense_sheet.dart';
+import '../expense_category_names.dart';
 import 'expense_vat_fields.dart';
 import 'purchase_labels.dart';
 import 'purchase_place_field.dart';
@@ -78,7 +79,7 @@ class _PurchaseReceiptSheetState extends ConsumerState<_PurchaseReceiptSheet> {
   Object? _vatUnread;
   var _nextId = 1;
   final _lines = [_Line(0)];
-  var _category = expenseCategories.first;
+  String? _category;
 
   @override
   void initState() {
@@ -158,8 +159,10 @@ class _PurchaseReceiptSheetState extends ConsumerState<_PurchaseReceiptSheet> {
   Future<String?> _submit(AppLocalizations l10n) async {
     final vatAsked = _vat?.percents.isNotEmpty ?? false;
     final now = ref.read(clockProvider).now();
+    final category = _category;
+    if (category == null) return l10n.expenseCategoriesEmpty;
     final draft = PurchaseReceiptDraft(
-      category: _category,
+      category: category,
       // The day the member files it: the date the receipt is booked on
       // (a document without a date never reaches the books).
       originalDate: DateTime(now.year, now.month, now.day),
@@ -204,20 +207,24 @@ class _PurchaseReceiptSheetState extends ConsumerState<_PurchaseReceiptSheet> {
       builder: (context, refresh) => [
         Text(l10n.purchaseReceiptIntro),
         const FormGap(),
-        DropdownButtonFormField<String>(
-          key: const ValueKey('receipt-category'),
-          initialValue: _category,
-          decoration: InputDecoration(
-            labelText: l10n.moneyExpenseCategoryLabel,
+        Consumer(
+          builder: (context, ref, _) => AsyncReadBody<List<ExpenseCategory>>.part(
+            value: ref.watch(expenseCategoriesProvider(widget.workspaceId)),
+            onRetry: () => ref.invalidate(expenseCategoriesProvider(widget.workspaceId)),
+            data: (all) {
+              final active = activeExpenseCategories(all);
+              _category ??= active.firstOrNull?.code;
+              return DropdownButtonFormField<String>(
+                key: const ValueKey('receipt-category'),
+                initialValue: _category,
+                decoration: InputDecoration(labelText: l10n.moneyExpenseCategoryLabel),
+                items: [
+                  for (final c in active) DropdownMenuItem(value: c.code, child: Text(expenseCategoryName(l10n, c))),
+                ],
+                onChanged: (v) => _category = v ?? _category,
+              );
+            },
           ),
-          items: [
-            for (final c in expenseCategories)
-              DropdownMenuItem(
-                value: c,
-                child: Text(expenseCategoryLabel(l10n, c)),
-              ),
-          ],
-          onChanged: (v) => _category = v ?? _category,
         ),
         for (final l in _lines) ..._lineFields(context, l, vat, refresh),
         const FormGap(),

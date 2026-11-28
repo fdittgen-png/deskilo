@@ -99,6 +99,12 @@ enum MasterDataKind {
     Icons.people_outline,
     [WorkspaceFeature.billingCustomers],
   ),
+  expenseCategories(
+    MasterDataGroup.organisation,
+    Routes.moneyExpenseCategories,
+    Icons.sell_outlined,
+    [WorkspaceFeature.expenseCategories],
+  ),
   bankAccounts(
     MasterDataGroup.organisation,
     Routes.moneyBankAccounts,
@@ -136,6 +142,7 @@ enum MasterDataKind {
     suppliers => l10n.bookRoleSuppliers,
     customers => l10n.billingCustomersTitle,
     bankAccounts => l10n.bankAccountsTitle,
+    expenseCategories => l10n.expenseCategoriesTitle,
     sites => l10n.featureMultiSite,
   };
 
@@ -152,6 +159,7 @@ enum MasterDataKind {
     suppliers => l10n.masterDataSuppliersDesc,
     customers => l10n.masterDataCustomersDesc,
     bankAccounts => l10n.bankAccountsSubtitle,
+    expenseCategories => l10n.masterDataExpenseCategoriesDesc,
     sites => l10n.masterDataSitesDesc,
   };
 

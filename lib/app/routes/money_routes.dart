@@ -18,6 +18,7 @@ import '../../features/money/presentation/screens/accounting_sign_in_return_scre
 import '../../features/money/presentation/screens/bank_accounts_screen.dart';
 import '../../features/money/presentation/screens/billing_screen.dart';
 import '../../features/money/presentation/screens/einvoice_config_screen.dart';
+import '../../features/money/presentation/screens/expense_categories_screen.dart';
 import '../../features/money/presentation/screens/guest_passes_screen.dart';
 import '../../features/money/presentation/screens/invoice_register_screen.dart';
 import '../../features/money/presentation/screens/invoices_screen.dart';
@@ -281,6 +282,12 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
       path: Routes.moneyBankAccounts,
       redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.bankImport], to: '/money')),
       builder: (context, state) => const BankAccountsScreen(),
+    ),
+    // #4512 — the categories an expense is filed under (Master data).
+    GoRoute(
+      path: Routes.moneyExpenseCategories,
+      redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.expenseCategories], to: '/money')),
+      builder: (context, state) => const ExpenseCategoriesScreen(),
     ),
     // #3070 — the suppliers as a screen: list, search, a deep link.
     GoRoute(

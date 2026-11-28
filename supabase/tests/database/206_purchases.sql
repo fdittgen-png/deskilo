@@ -114,6 +114,11 @@ insert into public.suppliers (id, workspace_id, supplier_number, name) values
  ('00000000-0000-4000-8000-0000257300a1', current_setting('t.a')::uuid, '1', 'ACME Sarl'),
  ('00000000-0000-4000-8000-0000257300b1', current_setting('t.b')::uuid, '1', 'Other Ltd');
 
+-- #4512: the categories this fixture files under are the business's own
+insert into public.expense_categories (workspace_id, code, label)
+select w.id, c, c from public.workspaces w cross join unnest(array['cleaning', 'stamps', 'mixed', 'x', 'tea']) c
+ where w.id in (current_setting('t.a')::uuid, current_setting('t.b')::uuid)
+   and not exists (select 1 from public.expense_categories e where e.workspace_id = w.id and e.code = c);
 -- ── A: the history of the expense events ───────────────────────────────
 create temp table before_ledger as select count(*) as n from public.ledger_entries;
 -- a pending expense with VAT, an approved one without any, a rejected asset

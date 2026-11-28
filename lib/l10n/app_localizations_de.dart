@@ -11372,6 +11372,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Kategorie wurde nicht gespeichert. Versuchen Sie es erneut.';
 
   @override
+  String get expenseCategoryScheduled => 'Geplante Ausgaben';
+
+  @override
   String get expenseCategorySupplies => 'Verbrauchsmaterial';
 
   @override

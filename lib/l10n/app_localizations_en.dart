@@ -11270,6 +11270,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'The category was not saved. Try again.';
 
   @override
+  String get expenseCategoryScheduled => 'Scheduled expenses';
+
+  @override
   String get expenseCategorySupplies => 'Supplies';
 
   @override

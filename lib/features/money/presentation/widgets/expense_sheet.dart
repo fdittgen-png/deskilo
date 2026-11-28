@@ -10,26 +10,16 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/submit_expense.dart';
 import '../../domain/service_item.dart';
+import '../../providers/expense_category_providers.dart';
 import '../../providers/money_providers.dart';
+import '../expense_category_names.dart';
 import 'expense_outcome_text.dart';
 import 'expense_vat_fields.dart';
-
-/// The categories an expense is filed under, in the order the form offers
-/// them; a receipt of several lines (#2573) offers the same.
-const expenseCategories = ['coffee', 'supplies', 'equipment', 'other'];
-
-String expenseCategoryLabel(AppLocalizations l10n, String key) => switch (key) {
-  'coffee' => l10n.expenseCategoryCoffee,
-  'supplies' => l10n.expenseCategorySupplies,
-  'equipment' => l10n.expenseCategoryEquipment,
-  _ => l10n.expenseCategoryOther,
-};
 
 Future<void> showExpenseSheet(
   BuildContext context,
@@ -40,12 +30,16 @@ Future<void> showExpenseSheet(
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
 
-  const categories = expenseCategories;
-  String categoryLabel(String key) => expenseCategoryLabel(l10n, key);
+  // #4512 -- the business's own categories: the sheet is opened after they were read (whenExpenseVatRead)
+  final categories = activeExpenseCategories(await ref.read(expenseCategoriesProvider(workspace.id).future));
+  if (categories.isEmpty) {
+    if (context.mounted) AppSnack.error(context, l10n.expenseCategoriesEmpty);
+    return;
+  }
 
   // The form's text, created on demand and disposed with the sheet.
   final fields = FormControllers({'supplyQuantity': '1', 'deductible': '100'});
-  var category = categories.first;
+  var category = categories.first.code;
   // #731 — a supply for the space: name (or an existing item), how
   // many, what a consumption will cost.
   final suppliesOn = ref
@@ -139,8 +133,8 @@ Future<void> showExpenseSheet(
             labelText: l10n.moneyExpenseCategoryLabel,
           ),
           items: [
-            for (final key in categories)
-              DropdownMenuItem(value: key, child: Text(categoryLabel(key))),
+            for (final c in categories)
+              DropdownMenuItem(value: c.code, child: Text(expenseCategoryName(l10n, c))),
           ],
           onChanged: (v) {
             category = v ?? category;

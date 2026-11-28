@@ -7005,6 +7005,10 @@
   "@expenseCategorySaveFailed": {
     "description": "#4512 expense categories: expenseCategorySaveFailed"
   },
+  "expenseCategoryScheduled": "Dépenses programmées",
+  "@expenseCategoryScheduled": {
+    "description": "#4512 expense categories: the built-in category scheduled occurrences are filed under"
+  },
   "expenseCategorySupplies": "Fournitures",
   "expenseInvalidAmount": "Saisissez un montant supérieur à zéro.",
   "expenseInvalidDeductible": "Saisissez une part entre 0 et 100.",

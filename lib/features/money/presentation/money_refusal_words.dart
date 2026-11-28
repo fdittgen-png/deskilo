@@ -27,5 +27,7 @@ String? _moneyWords(AppLocalizations l10n, String code, String? details) =>
       DkCode.dkb08 => l10n.refusalBooksClosedPeriodDated,
       // #4479 (0994): the VAT treatment of an expense is not accepted (a rate that is not the space's, a supplier abroad's VAT with a rate of the space).
       DkCode.dkv02 => l10n.refusalExpenseVat,
+      // #4512 (0998): an expense category that is unknown, retired or not the business's own.
+      DkCode.dkx01 => l10n.refusalExpenseCategory,
       _ => null,
     };

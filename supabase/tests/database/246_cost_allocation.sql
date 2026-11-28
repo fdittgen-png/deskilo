@@ -22,6 +22,11 @@ insert into public.members(id,workspace_id,user_id,is_owner,is_admin,status) val
  ('00000000-0000-4000-8000-0000025821c1','00000000-0000-4000-8000-0000025821b1','00000000-0000-4000-8000-0000025821a1',true,true,'active'),
  ('00000000-0000-4000-8000-0000025821c2','00000000-0000-4000-8000-0000025821b1','00000000-0000-4000-8000-0000025821a2',false,false,'active'),
  ('00000000-0000-4000-8000-0000025821c3','00000000-0000-4000-8000-0000025821b1','00000000-0000-4000-8000-0000025821a3',false,true,'active');
+-- #4512: the categories this fixture files under are the business's own
+insert into public.expense_categories (workspace_id, code, label)
+select w.id, c, c from public.workspaces w cross join unnest(array['cleaning', 'rent']) c
+ where w.id in ('00000000-0000-4000-8000-0000025821b1')
+   and not exists (select 1 from public.expense_categories e where e.workspace_id = w.id and e.code = c);
 insert into public.suppliers (id, workspace_id, supplier_number, name, status) values
  ('00000000-0000-4000-8000-0000025821f1','00000000-0000-4000-8000-0000025821b1','1','Nettoyage SA','active');
 insert into public.levels (id, workspace_id, name) values

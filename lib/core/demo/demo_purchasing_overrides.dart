@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import 'data/company_lookup_repository.dart';
+import 'data/money/demo_expense_categories.dart';
 import 'data/purchase_approval_reads.dart';
 import 'data/supplier_balance_repository.dart';
 import 'demo_space_pick.dart';
@@ -33,6 +34,8 @@ List<Override> demoPurchasingOverrides(
 }) {
   final DemoSpaces<DemoPurchasing> all = spaces ?? DemoSpaces((_) => purchasing);
   return [
+    // #4512 -- the business's expense categories, kept in memory
+    expenseCategoryRepositoryProvider.overrideWith((ref) => DemoExpenseCategories()),
     supplierRepositoryProvider.overrideWith(
       (ref) => demoPickSpace(ref, all).suppliers,
     ),

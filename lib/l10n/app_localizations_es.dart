@@ -11342,6 +11342,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'La categoría no se guardó. Inténtelo de nuevo.';
 
   @override
+  String get expenseCategoryScheduled => 'Gastos programados';
+
+  @override
   String get expenseCategorySupplies => 'Material';
 
   @override

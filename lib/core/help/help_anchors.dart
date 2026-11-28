@@ -20,6 +20,9 @@ abstract final class HelpAnchor {
   /// The supplier balance and its scoped payable list.
   /// #4496 -- Master data › Bank accounts.
   static const moneyBankAccounts = 'user.money.bank.accounts';
+
+  /// #4512 — the categories an expense is filed under, kept on the Master data page.
+  static const moneyExpenseCategories = 'user.money.expense.categories';
   static const moneySupplierBalance = 'user.money.suppliers.balance';
 
   /// #4164 — the billing customers: whom the business invoices, with or

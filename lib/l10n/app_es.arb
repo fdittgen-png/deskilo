@@ -7005,6 +7005,10 @@
   "@expenseCategorySaveFailed": {
     "description": "#4512 expense categories: expenseCategorySaveFailed"
   },
+  "expenseCategoryScheduled": "Gastos programados",
+  "@expenseCategoryScheduled": {
+    "description": "#4512 expense categories: the built-in category scheduled occurrences are filed under"
+  },
   "expenseCategorySupplies": "Material",
   "expenseInvalidAmount": "Introduzca un importe mayor que cero.",
   "expenseInvalidDeductible": "Introduzca una parte entre 0 y 100.",

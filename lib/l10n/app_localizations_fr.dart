@@ -11394,6 +11394,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'La catégorie n’a pas été enregistrée. Réessayez.';
 
   @override
+  String get expenseCategoryScheduled => 'Dépenses programmées';
+
+  @override
   String get expenseCategorySupplies => 'Fournitures';
 
   @override

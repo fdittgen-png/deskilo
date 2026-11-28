@@ -6,6 +6,9 @@ import '../data/supabase_purchase_repository.dart';
 import '../domain/purchase.dart';
 import 'credit_providers.dart';
 
+// #4512 -- the business's expense categories are read where a purchase is filed
+export 'expense_category_providers.dart';
+
 final purchaseRepositoryProvider = Provider<PurchaseRepository>(
   (ref) => SupabasePurchaseRepository(ref.watch(moneyClientProvider)),
 );

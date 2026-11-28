@@ -62,6 +62,8 @@ abstract final class Routes {
   static const moneySuppliers = '/money/suppliers';
   /// #4496 -- the bank accounts statements are imported into.
   static const moneyBankAccounts = '/money/bank-accounts';
+  /// #4512 -- the categories an expense is filed under.
+  static const moneyExpenseCategories = '/money/expense-categories';
   static const nfcConfig = '/nfc-config';
   static const onboarding = '/onboarding';
   static const onboardingJoin = '/onboarding?join=1';

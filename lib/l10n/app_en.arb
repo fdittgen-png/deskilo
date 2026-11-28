@@ -15071,6 +15071,10 @@
   "@expenseCategorySaveFailed": {
     "description": "#4512 expense categories: expenseCategorySaveFailed"
   },
+  "expenseCategoryScheduled": "Scheduled expenses",
+  "@expenseCategoryScheduled": {
+    "description": "#4512 expense categories: the built-in category scheduled occurrences are filed under"
+  },
   "expenseCategorySupplies": "Supplies",
   "@expenseCategorySupplies": {
     "description": "Expense category option"

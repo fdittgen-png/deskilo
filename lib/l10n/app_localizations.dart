@@ -17998,6 +17998,12 @@ abstract class AppLocalizations {
   /// **'The category was not saved. Try again.'**
   String get expenseCategorySaveFailed;
 
+  /// #4512 expense categories: the built-in category scheduled occurrences are filed under
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled expenses'**
+  String get expenseCategoryScheduled;
+
   /// Expense category option
   ///
   /// In en, this message translates to:

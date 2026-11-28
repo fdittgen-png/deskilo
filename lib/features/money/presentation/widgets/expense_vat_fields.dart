@@ -33,6 +33,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/submit_expense.dart';
 import '../../domain/vat_input.dart';
+import '../../providers/expense_category_providers.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 import '../vat_tax_point_labels.dart';
@@ -193,7 +194,11 @@ Future<T> whenExpenseVatRead<T>(
     await guardRead<List<double>?>(
       domain: 'money',
       message: 'expense VAT rates failed',
-      read: () => _expenseVatPercents(ref, workspace.vatRegime),
+      read: () async {
+        // #4512 -- the sheet offers the business's own categories: they are read with the rates, or the sheet does not open
+        await ref.read(expenseCategoriesProvider(workspace.id).future);
+        return _expenseVatPercents(ref, workspace.vatRegime);
+      },
       fallback: (e) {
         unread = e;
         return null;

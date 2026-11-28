@@ -86,5 +86,9 @@
   "expenseCategoryMoveDown": "Move down",
   "@expenseCategoryMoveDown": {
     "description": "#4512 expense categories: expenseCategoryMoveDown"
+  },
+  "expenseCategoryScheduled": "Scheduled expenses",
+  "@expenseCategoryScheduled": {
+    "description": "#4512 expense categories: the built-in category scheduled occurrences are filed under"
   }
 }
