@@ -18,6 +18,8 @@ abstract final class HelpAnchor {
   static const workspaceBusinessKind = 'user.workspace.settings.business-kind';
 
   /// The supplier balance and its scoped payable list.
+  /// #4496 -- Master data › Bank accounts.
+  static const moneyBankAccounts = 'user.money.bank.accounts';
   static const moneySupplierBalance = 'user.money.suppliers.balance';
 
   /// #4164 — the billing customers: whom the business invoices, with or

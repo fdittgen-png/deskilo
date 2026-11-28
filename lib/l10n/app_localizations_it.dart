@@ -2225,6 +2225,105 @@ class AppLocalizationsIt extends AppLocalizations {
       'Salvi questo QR adesso — viene mostrato una sola volta.';
 
   @override
+  String get bankAccountAdd => 'Aggiungere un conto bancario';
+
+  @override
+  String get bankAccountAliases => 'Noto anche come';
+
+  @override
+  String get bankAccountAliasesHint =>
+      'Altri nomi con cui sono stati importati estratti di questo conto, uno per riga.';
+
+  @override
+  String get bankAccountArchive => 'Archiviare';
+
+  @override
+  String get bankAccountArchived => 'Archiviato';
+
+  @override
+  String get bankAccountCurrency => 'Valuta';
+
+  @override
+  String get bankAccountEdit => 'Conto bancario';
+
+  @override
+  String get bankAccountIban => 'IBAN';
+
+  @override
+  String get bankAccountIbanHint => 'Facoltativo. Gli spazi non contano.';
+
+  @override
+  String get bankAccountIdentifiers => 'Altri identificativi';
+
+  @override
+  String get bankAccountIdentifiersHint =>
+      'Un numero di conto o il riferimento della banca, uno per riga.';
+
+  @override
+  String get bankAccountLedger => 'Conto contabile';
+
+  @override
+  String get bankAccountLedgerNone => 'Nessuno';
+
+  @override
+  String get bankAccountName => 'Nome';
+
+  @override
+  String get bankAccountRefusedBookAccount =>
+      'Il conto contabile deve essere un conto dell\'attivo movimentabile dell\'attività.';
+
+  @override
+  String bankAccountRefusedCurrency(String account, String currency) {
+    return 'L\'estratto è in un\'altra valuta rispetto al conto $account ($currency).';
+  }
+
+  @override
+  String get bankAccountRefusedCurrencyKept =>
+      'Gli estratti del conto sono nella sua valuta: la valuta resta.';
+
+  @override
+  String get bankAccountRefusedIban => 'Questo non è un IBAN.';
+
+  @override
+  String get bankAccountRefusedName =>
+      'Un conto bancario richiede un nome da 1 a 64 caratteri.';
+
+  @override
+  String get bankAccountRefusedNone =>
+      'Scelga il conto bancario di questo estratto.';
+
+  @override
+  String bankAccountRefusedOther(String name, String account) {
+    return 'Questo file è del conto $name, non di $account. Scelga il suo conto o aggiunga $name ai nomi di $account.';
+  }
+
+  @override
+  String bankAccountRefusedTaken(String name) {
+    return 'Un altro conto bancario dell\'attività porta già il nome $name.';
+  }
+
+  @override
+  String bankAccountSaved(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Salvato: $count estratti appartengono ora a questo conto.',
+      one: 'Salvato: $count estratto appartiene ora a questo conto.',
+      zero: 'Salvato.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bankAccountsNone => 'Ancora nessun conto bancario.';
+
+  @override
+  String get bankAccountsSubtitle => 'I conti in cui si importano gli estratti';
+
+  @override
+  String get bankAccountsTitle => 'Conti bancari';
+
+  @override
   String get bankBasisAmount => 'stesso importo e pagatore';
 
   @override
@@ -2351,6 +2450,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bankCsvHeader => 'La prima riga indica le colonne';
 
   @override
+  String bankCsvIntoAccount(String name, String currency) {
+    return 'Nel conto $name, in $currency.';
+  }
+
+  @override
   String bankCsvNeedsAccount(int max) {
     String _temp0 = intl.Intl.pluralLogic(
       max,
@@ -2417,11 +2521,21 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bankFormatTitle => 'Di quale file si tratta?';
 
   @override
+  String get bankImportAccountPick => 'Importarlo in questo conto';
+
+  @override
+  String get bankImportAccountTitle => 'Di quale conto è questo file?';
+
+  @override
   String get bankImportAction => 'Importa un estratto';
 
   @override
   String get bankImportFailed =>
       'Non è stato possibile importare l\'estratto. Non è stato aggiunto nulla.';
+
+  @override
+  String get bankImportNeedsAccount =>
+      'Aggiunga prima il conto bancario, in Impostazioni › Dati anagrafici › Conti bancari.';
 
   @override
   String get bankImportRepeated =>
@@ -2698,6 +2812,27 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bankStatementsTitle => 'Estratti conto';
+
+  @override
+  String get bankUnattachedAssign => 'Aggiungere a un conto';
+
+  @override
+  String get bankUnattachedHint =>
+      'Questi nomi non appartengono ancora a nessun conto: aggiunga ciascuno ai nomi del suo conto.';
+
+  @override
+  String bankUnattachedRow(String name, String currency, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count estratti',
+      one: '$count estratto',
+    );
+    return '$name ($currency): $_temp0';
+  }
+
+  @override
+  String get bankUnattachedTitle => 'Estratti senza conto';
 
   @override
   String get bankUndoBody =>

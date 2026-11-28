@@ -60,6 +60,8 @@ abstract final class Routes {
   static const moneyRepartitionWizard = '/money/repartition-wizard';
   static const moneyStatus = '/money/status';
   static const moneySuppliers = '/money/suppliers';
+  /// #4496 -- the bank accounts statements are imported into.
+  static const moneyBankAccounts = '/money/bank-accounts';
   static const nfcConfig = '/nfc-config';
   static const onboarding = '/onboarding';
   static const onboardingJoin = '/onboarding?join=1';

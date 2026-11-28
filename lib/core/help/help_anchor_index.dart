@@ -98,6 +98,7 @@ const helpAnchorIndex = <String>{
   HelpAnchor.workspacePaper,
   HelpAnchor.settingsUnits,
   HelpAnchor.settingsDevices,
+  HelpAnchor.moneyBankAccounts,
   HelpAnchor.masterData,
   HelpAnchor.masterDataMeasures,
   HelpAnchor.masterDataCatalogue,

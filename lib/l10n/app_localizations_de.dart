@@ -2231,6 +2231,107 @@ class AppLocalizationsDe extends AppLocalizations {
       'Speichern Sie diesen QR jetzt — er wird nur einmal angezeigt.';
 
   @override
+  String get bankAccountAdd => 'Bankkonto hinzufügen';
+
+  @override
+  String get bankAccountAliases => 'Auch bekannt als';
+
+  @override
+  String get bankAccountAliasesHint =>
+      'Andere Namen, unter denen Auszüge dieses Kontos eingelesen wurden, einer pro Zeile.';
+
+  @override
+  String get bankAccountArchive => 'Archivieren';
+
+  @override
+  String get bankAccountArchived => 'Archiviert';
+
+  @override
+  String get bankAccountCurrency => 'Währung';
+
+  @override
+  String get bankAccountEdit => 'Bankkonto';
+
+  @override
+  String get bankAccountIban => 'IBAN';
+
+  @override
+  String get bankAccountIbanHint =>
+      'Optional. Leerzeichen spielen keine Rolle.';
+
+  @override
+  String get bankAccountIdentifiers => 'Weitere Kennungen';
+
+  @override
+  String get bankAccountIdentifiersHint =>
+      'Eine Kontonummer oder die Referenz der Bank, eine pro Zeile.';
+
+  @override
+  String get bankAccountLedger => 'Sachkonto';
+
+  @override
+  String get bankAccountLedgerNone => 'Keines';
+
+  @override
+  String get bankAccountName => 'Name';
+
+  @override
+  String get bankAccountRefusedBookAccount =>
+      'Das Sachkonto muss ein bebuchbares Aktivkonto des Unternehmens sein.';
+
+  @override
+  String bankAccountRefusedCurrency(String account, String currency) {
+    return 'Der Auszug ist in einer anderen Währung als das Konto $account ($currency).';
+  }
+
+  @override
+  String get bankAccountRefusedCurrencyKept =>
+      'Die Auszüge des Kontos sind in seiner Währung: Die Währung bleibt.';
+
+  @override
+  String get bankAccountRefusedIban => 'Das ist keine IBAN.';
+
+  @override
+  String get bankAccountRefusedName =>
+      'Ein Bankkonto braucht einen Namen von 1 bis 64 Zeichen.';
+
+  @override
+  String get bankAccountRefusedNone =>
+      'Wählen Sie das Bankkonto dieses Auszugs.';
+
+  @override
+  String bankAccountRefusedOther(String name, String account) {
+    return 'Diese Datei gehört zum Konto $name, nicht zu $account. Wählen Sie sein Konto oder fügen Sie $name den Namen von $account hinzu.';
+  }
+
+  @override
+  String bankAccountRefusedTaken(String name) {
+    return 'Ein anderes Bankkonto des Unternehmens trägt bereits den Namen $name.';
+  }
+
+  @override
+  String bankAccountSaved(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Gespeichert: $count Auszüge gehören jetzt zu diesem Konto.',
+      one: 'Gespeichert: $count Auszug gehört jetzt zu diesem Konto.',
+      zero: 'Gespeichert.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bankAccountsNone => 'Noch kein Bankkonto.';
+
+  @override
+  String get bankAccountsSubtitle =>
+      'Die Konten, in die Kontoauszüge eingelesen werden';
+
+  @override
+  String get bankAccountsTitle => 'Bankkonten';
+
+  @override
   String get bankBasisAmount => 'gleicher Betrag und Zahler';
 
   @override
@@ -2355,6 +2456,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bankCsvHeader => 'Die erste Zeile benennt die Spalten';
 
   @override
+  String bankCsvIntoAccount(String name, String currency) {
+    return 'In das Konto $name, in $currency.';
+  }
+
+  @override
   String bankCsvNeedsAccount(int max) {
     String _temp0 = intl.Intl.pluralLogic(
       max,
@@ -2421,11 +2527,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bankFormatTitle => 'Welche Datei ist das?';
 
   @override
+  String get bankImportAccountPick => 'In dieses Konto einlesen';
+
+  @override
+  String get bankImportAccountTitle => 'Zu welchem Konto gehört diese Datei?';
+
+  @override
   String get bankImportAction => 'Auszug importieren';
 
   @override
   String get bankImportFailed =>
       'Der Auszug konnte nicht importiert werden. Nichts wurde hinzugefügt.';
+
+  @override
+  String get bankImportNeedsAccount =>
+      'Legen Sie zuerst das Bankkonto an, unter Einstellungen › Stammdaten › Bankkonten.';
 
   @override
   String get bankImportRepeated =>
@@ -2702,6 +2818,27 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bankStatementsTitle => 'Kontoauszüge';
+
+  @override
+  String get bankUnattachedAssign => 'Einem Konto hinzufügen';
+
+  @override
+  String get bankUnattachedHint =>
+      'Diese Namen gehören noch zu keinem Konto: Fügen Sie jeden den Namen seines Kontos hinzu.';
+
+  @override
+  String bankUnattachedRow(String name, String currency, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Auszüge',
+      one: '$count Auszug',
+    );
+    return '$name ($currency): $_temp0';
+  }
+
+  @override
+  String get bankUnattachedTitle => 'Auszüge ohne Konto';
 
   @override
   String get bankUndoBody =>

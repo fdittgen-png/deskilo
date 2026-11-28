@@ -4,9 +4,11 @@ import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/bank/bank_records.dart';
 import '../domain/bank/bank_statement.dart';
 import 'bank_rows.dart';
+import 'supabase_bank_account_repository.dart' show bankAccountRefusalOf;
 
 /// The bank statements (`bank_statements`, `bank_statement_lines`) through
 /// their RPCs. Every call checks the bankImport flag and the caller's
@@ -108,6 +110,24 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
 
   @override
   Future<BankImportResult> importStatement(
+    String workspaceId, {
+    required BankStatement statement,
+    required String sourceSha256,
+    required String fileName,
+    String? bankAccountId,
+  }) async {
+    try {
+      return await _import(workspaceId, statement: statement, sourceSha256: sourceSha256, fileName: fileName, bankAccountId: bankAccountId);
+    } on Object catch (e, st) {
+      // #4496 -- no account picked, another account's file, another currency: said as such
+      final refused = bankAccountRefusalOf(e);
+      if (refused == null) rethrow;
+      TraceLogger.instance.log(TraceLevel.info, 'money', 'a bank statement import refused for its account', error: e, stackTrace: st);
+      Error.throwWithStackTrace(refused, st);
+    }
+  }
+
+  Future<BankImportResult> _import(
     String workspaceId, {
     required BankStatement statement,
     required String sourceSha256,

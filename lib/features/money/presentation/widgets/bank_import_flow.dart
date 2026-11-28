@@ -12,13 +12,17 @@ import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/bank_import_commands.dart';
+import '../../domain/bank/bank_account.dart';
 import '../../domain/bank/bank_file.dart';
 import '../../domain/bank/bank_statement.dart';
 import '../../domain/bank/csv_statement.dart';
+import '../../providers/bank_account_providers.dart';
 import '../../providers/bank_statement_providers.dart';
+import '../bank_account_words.dart';
 import '../bank_labels.dart';
 import 'bank_csv_mapping_sheet.dart';
 
@@ -65,9 +69,12 @@ class BankImportFlow {
       builder: (_) => _BankFormatDialog(detected: detectBankFormat(bytes)),
     );
     if (format == null || !context.mounted) return;
+    // #4496 -- every statement is imported into one of the business's bank accounts
+    final account = await _pickAccount(context);
+    if (account == null || !context.mounted) return;
     BankCsvMapping? csv;
     if (format == BankFileFormat.csv) {
-      csv = await showBankCsvMapping(context, bytes, currency: currency);
+      csv = await showBankCsvMapping(context, bytes, account: account);
       if (csv == null || !context.mounted) return;
     }
     BankImportOutcome? outcome;
@@ -85,9 +92,15 @@ class BankImportFlow {
             format: format,
             settings: settings,
             csv: csv,
+            bankAccountId: account.id,
           ),
     );
     if (!ok || !context.mounted) return;
+    final accountRefused = outcome?.accountRefused;
+    if (accountRefused != null) {
+      AppSnack.error(context, bankAccountRefusalText(l10n, accountRefused, account: account));
+      return;
+    }
     final refused = outcome?.refused;
     if (refused != null) {
       AppSnack.error(
@@ -97,13 +110,37 @@ class BankImportFlow {
       return;
     }
     final result = outcome!.result!;
-    ref.invalidate(bankStatementsProvider(workspaceId));
+    ref
+      ..invalidate(bankStatementsProvider(workspaceId))
+      ..invalidate(unattachedBankNamesProvider(workspaceId));
     AppSnack.success(
       context,
       result.repeated
           ? l10n.bankImportRepeated
           : l10n.bankImported(result.created, result.known, result.review),
     );
+  }
+
+  /// The account the file is imported into: the only active one, else the one the person picks; none, and the person
+  /// is told to add one under Master data.
+  Future<BankAccount?> _pickAccount(BuildContext context) async {
+    final l10n = context.l10n;
+    final List<BankAccount> all;
+    try {
+      all = await _ref.read(bankAccountsProvider(workspaceId).future);
+    } on Object catch (e, st) {
+      TraceLogger.instance.log(TraceLevel.info, 'money', 'the bank accounts could not be read', error: e, stackTrace: st);
+      if (context.mounted) AppSnack.error(context, l10n.bankImportFailed);
+      return null;
+    }
+    final active = [for (final a in all) if (!a.archived) a];
+    if (!context.mounted) return null;
+    if (active.isEmpty) {
+      AppSnack.error(context, l10n.bankImportNeedsAccount);
+      return null;
+    }
+    if (active.length == 1) return active.single;
+    return showDialog<BankAccount>(context: context, builder: (_) => _BankAccountDialog(accounts: active));
   }
 }
 
@@ -182,6 +219,60 @@ class _BankFormatDialogState extends State<_BankFormatDialog> {
               ? null
               : () => Navigator.of(context).pop(_format),
           child: Text(l10n.bankFormatRead),
+        ),
+      ],
+    );
+  }
+}
+
+/// #4496 -- the account a statement is imported into, one of the business's active accounts.
+class _BankAccountDialog extends StatefulWidget {
+  const _BankAccountDialog({required this.accounts});
+
+  final List<BankAccount> accounts;
+
+  @override
+  State<_BankAccountDialog> createState() => _BankAccountDialogState();
+}
+
+class _BankAccountDialogState extends State<_BankAccountDialog> {
+  BankAccount? _account;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return AlertDialog(
+      title: Text(l10n.bankImportAccountTitle),
+      content: SingleChildScrollView(
+        child: RadioGroup<String>(
+          key: const ValueKey('bank-account-group'),
+          groupValue: _account?.id,
+          onChanged: (id) => setState(() => _account = widget.accounts.firstWhere((a) => a.id == id)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final a in widget.accounts)
+                RadioListTile<String>(
+                  key: ValueKey('bank-account-${a.id}'),
+                  value: a.id,
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(a.name),
+                  subtitle: Text(a.iban.isEmpty ? a.currency : '${a.iban} · ${a.currency}'),
+                ),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        TextButton(
+          key: const ValueKey('bank-account-cancel'),
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+        ),
+        FilledButton(
+          key: const ValueKey('bank-account-pick'),
+          onPressed: _account == null ? null : () => Navigator.of(context).pop(_account),
+          child: Text(l10n.bankImportAccountPick),
         ),
       ],
     );
