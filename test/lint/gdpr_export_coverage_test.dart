@@ -53,6 +53,10 @@ String _latestExportBody() {
 /// Tables with a member or user column that `export_my_data` does not
 /// return, and why each is right to leave out.
 const Map<String, String> _notExported = {
+  'till_terminal_leases':
+      '#4454 -- a cashier\'s authorization of a till board: the hash of the board\'s lease token and the '
+      'cashier\'s sign-in, sealed and erased when it ends; a security record, not the subject\'s data -- '
+      'what they sold on the board is in their receipts',
   'service_fulfilments':
       '#4178 — the engagement of a service the business ordered for a billing '
           'customer, keyed by that customer\'s subject. A customer has no account '

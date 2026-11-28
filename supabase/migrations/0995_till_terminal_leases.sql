@@ -62,9 +62,10 @@ revoke all on public.till_terminal_leases from public, anon, authenticated;
 create policy mcp_delegated_deny on public.till_terminal_leases as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 
--- The board, by its id and secret (the hex the board keeps): its paired row, or the refusal's reason.
+-- The board, by its id and secret (the hex the board keeps): its paired row, or the refusal's reason. Called only by
+-- the board's own definer functions below, so it runs with their rights.
 create or replace function public.till_terminal_proven(p_device_id uuid, p_secret text, out terminal public.till_terminals, out reason text)
-language plpgsql stable security definer set search_path = '' as $fn$
+language plpgsql stable set search_path = '' as $fn$
 begin
   if p_device_id is null or coalesce(p_secret, '') !~ '^[0-9a-fA-F]{64}$' then
     reason := 'pair_proof_invalid';
