@@ -73,29 +73,34 @@ Future<bool> showTillEditSheet(BuildContext context, TillDrawerCommands commands
               refresh();
             },
           ),
-        if (till != null && all.isNotEmpty) ...[
-          const FormGap(),
-          Text(l10n.tillDrawerTillNotes, style: Theme.of(context).textTheme.titleSmall),
-          Text(l10n.tillDrawerTillNotesHint, style: Theme.of(context).textTheme.bodySmall),
-          for (final v in all)
-            AppSwitchRow(
-              key: ValueKey('drawer-till-note-$v'),
-              title: appFormatOf(context).moneyIn(currency).formatMinor(v),
-              value: carried.contains(v),
-              onChanged: (on) {
-                // a drawer keeps at least one note or coin
-                if (on) {
-                  carried.add(v);
-                } else if (carried.length > 1) {
-                  carried.remove(v);
-                }
-                refresh();
-              },
-            ),
-        ],
+        if (till != null && all.isNotEmpty) ..._carriedRows(context, currency, all, carried, refresh),
       ],
     ),
   );
 }
 
 bool _same(Set<int> a, List<int> b) => a.length == b.length && b.every(a.contains);
+
+/// #4511 -- the notes and coins a till's drawer carries, one switch each; a drawer keeps at least one.
+List<Widget> _carriedRows(BuildContext context, String currency, List<int> all, Set<int> carried, VoidCallback refresh) {
+  final l10n = context.l10n;
+  return [
+    const FormGap(),
+    Text(l10n.tillDrawerTillNotes, style: Theme.of(context).textTheme.titleSmall),
+    Text(l10n.tillDrawerTillNotesHint, style: Theme.of(context).textTheme.bodySmall),
+    for (final v in all)
+      AppSwitchRow(
+        key: ValueKey('drawer-till-note-$v'),
+        title: appFormatOf(context).moneyIn(currency).formatMinor(v),
+        value: carried.contains(v),
+        onChanged: (on) {
+          if (on) {
+            carried.add(v);
+          } else if (carried.length > 1) {
+            carried.remove(v);
+          }
+          refresh();
+        },
+      ),
+  ];
+}

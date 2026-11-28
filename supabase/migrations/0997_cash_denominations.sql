@@ -180,6 +180,7 @@ create policy mcp_delegated_deny on public.cash_denominations as restrictive for
 create policy personal_native_session on public.cash_denominations as restrictive for all to public
   using ((select public.personal_native_session())) with check ((select public.personal_native_session()));
 
+-- audience: all row readers
 alter table public.counter_tills add column denominations bigint[]
   check (denominations is null or (cardinality(denominations) between 1 and 40 and 0 < all (denominations)));
 

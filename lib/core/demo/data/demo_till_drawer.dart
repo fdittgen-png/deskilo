@@ -151,7 +151,7 @@ class DemoTillDrawer implements TillDrawerPort {
       _tills.add(made);
       return _answered[requestId] = made;
     }
-    final at = _tills.indexWhere((t) => t.id == tillId);
+    final at = _tillAt(tillId);
     if (at < 0) throw _refused(DkCode.dkl12, 'not a till of this business', reason: 'till_unknown');
     if (!active && _openOn(tillId) != null) throw _refused(DkCode.dkl12, 'a till with an open session is closed first', reason: 'already_open');
     final saved = DrawerTill(id: tillId, name: clean, active: active, siteId: siteId, denominations: _tills[at].denominations);
@@ -159,9 +159,12 @@ class DemoTillDrawer implements TillDrawerPort {
     return _answered[requestId] = saved;
   }
 
+  /// Where [tillId] is in the list, or -1.
+  int _tillAt(String tillId) => _tills.indexWhere((t) => t.id == tillId);
+
   @override
   Future<List<int>?> setTillDenominations(String workspaceId, {required String tillId, required List<int> values}) async {
-    final at = _tills.indexWhere((t) => t.id == tillId);
+    final at = _tillAt(tillId);
     if (at < 0) throw _refused(DkCode.dkl02, 'no such till in this business', reason: 'till');
     final current = cashValuesOf(currency);
     for (final v in values) {

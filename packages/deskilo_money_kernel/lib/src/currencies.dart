@@ -4,12 +4,24 @@
 /// whether a business may keep its books in it ([business], the subset the pickers offer) and, for a currency its
 /// country replaced, the day it stopped being legal tender ([withdrawnOn]; a business that still holds it keeps it).
 final class CurrencyRef {
-  const CurrencyRef(this.code, this.minorDigits, {this.business = false, this.withdrawnOn});
+  const CurrencyRef(
+    this.code,
+    this.minorDigits, {
+    this.business = false,
+    this.withdrawnOn,
+    this.coins = const [],
+    this.notes = const [],
+  });
 
   final String code;
   final int minorDigits;
   final bool business;
   final String? withdrawnOn;
+
+  /// #4511 -- the coins and notes a till drawer in this currency is counted in, in minor units, smallest first; none for
+  /// a currency counted by its total.
+  final List<int> coins;
+  final List<int> notes;
 }
 
 /// #4501 (MD-06) -- THE currency reference: the currencies of ISO 4217 a business or a person may hold amounts in (the
@@ -25,7 +37,7 @@ const List<CurrencyRef> currencyReference = [
   CurrencyRef('ANG', 2),
   CurrencyRef('AOA', 2),
   CurrencyRef('ARS', 2),
-  CurrencyRef('AUD', 2, business: true),
+  CurrencyRef('AUD', 2, business: true, coins: [5, 10, 20, 50, 100, 200], notes: [500, 1000, 2000, 5000, 10000]),
   CurrencyRef('AWG', 2),
   CurrencyRef('AZN', 2),
   CurrencyRef('BAM', 2),
@@ -43,27 +55,27 @@ const List<CurrencyRef> currencyReference = [
   CurrencyRef('BWP', 2),
   CurrencyRef('BYN', 2),
   CurrencyRef('BZD', 2),
-  CurrencyRef('CAD', 2, business: true),
+  CurrencyRef('CAD', 2, business: true, coins: [5, 10, 25, 100, 200], notes: [500, 1000, 2000, 5000, 10000]),
   CurrencyRef('CDF', 2),
-  CurrencyRef('CHF', 2, business: true),
+  CurrencyRef('CHF', 2, business: true, coins: [5, 10, 20, 50, 100, 200, 500], notes: [1000, 2000, 5000, 10000, 20000, 100000]),
   CurrencyRef('CLP', 0),
   CurrencyRef('CNY', 2, business: true),
   CurrencyRef('COP', 2),
   CurrencyRef('CRC', 2),
   CurrencyRef('CUP', 2),
   CurrencyRef('CVE', 2),
-  CurrencyRef('CZK', 2, business: true),
+  CurrencyRef('CZK', 2, business: true, coins: [100, 200, 500, 1000, 2000, 5000], notes: [10000, 20000, 50000, 100000, 200000, 500000]),
   CurrencyRef('DJF', 0),
-  CurrencyRef('DKK', 2, business: true),
+  CurrencyRef('DKK', 2, business: true, coins: [50, 100, 200, 500, 1000, 2000], notes: [5000, 10000, 20000, 50000, 100000]),
   CurrencyRef('DOP', 2),
   CurrencyRef('DZD', 2),
   CurrencyRef('EGP', 2),
   CurrencyRef('ERN', 2),
   CurrencyRef('ETB', 2),
-  CurrencyRef('EUR', 2, business: true),
+  CurrencyRef('EUR', 2, business: true, coins: [1, 2, 5, 10, 20, 50, 100, 200], notes: [500, 1000, 2000, 5000, 10000, 20000, 50000]),
   CurrencyRef('FJD', 2),
   CurrencyRef('FKP', 2),
-  CurrencyRef('GBP', 2, business: true),
+  CurrencyRef('GBP', 2, business: true, coins: [1, 2, 5, 10, 20, 50, 100, 200], notes: [500, 1000, 2000, 5000]),
   CurrencyRef('GEL', 2),
   CurrencyRef('GHS', 2),
   CurrencyRef('GIP', 2),
@@ -84,7 +96,7 @@ const List<CurrencyRef> currencyReference = [
   CurrencyRef('ISK', 0, business: true),
   CurrencyRef('JMD', 2),
   CurrencyRef('JOD', 3),
-  CurrencyRef('JPY', 0, business: true),
+  CurrencyRef('JPY', 0, business: true, coins: [1, 5, 10, 50, 100, 500], notes: [1000, 2000, 5000, 10000]),
   CurrencyRef('KES', 2),
   CurrencyRef('KGS', 2),
   CurrencyRef('KHR', 2),
@@ -117,7 +129,7 @@ const List<CurrencyRef> currencyReference = [
   CurrencyRef('NAD', 2),
   CurrencyRef('NGN', 2),
   CurrencyRef('NIO', 2),
-  CurrencyRef('NOK', 2, business: true),
+  CurrencyRef('NOK', 2, business: true, coins: [100, 500, 1000, 2000], notes: [5000, 10000, 20000, 50000, 100000]),
   CurrencyRef('NPR', 2),
   CurrencyRef('NZD', 2, business: true),
   CurrencyRef('OMR', 3),
@@ -126,7 +138,7 @@ const List<CurrencyRef> currencyReference = [
   CurrencyRef('PGK', 2),
   CurrencyRef('PHP', 2),
   CurrencyRef('PKR', 2),
-  CurrencyRef('PLN', 2, business: true),
+  CurrencyRef('PLN', 2, business: true, coins: [1, 2, 5, 10, 20, 50, 100, 200, 500], notes: [1000, 2000, 5000, 10000, 20000, 50000]),
   CurrencyRef('PYG', 0),
   CurrencyRef('QAR', 2),
   CurrencyRef('RON', 2, business: true),
@@ -137,7 +149,7 @@ const List<CurrencyRef> currencyReference = [
   CurrencyRef('SBD', 2),
   CurrencyRef('SCR', 2),
   CurrencyRef('SDG', 2),
-  CurrencyRef('SEK', 2, business: true),
+  CurrencyRef('SEK', 2, business: true, coins: [100, 200, 500, 1000], notes: [2000, 5000, 10000, 20000, 50000, 100000]),
   CurrencyRef('SGD', 2, business: true),
   CurrencyRef('SHP', 2),
   CurrencyRef('SLE', 2),
@@ -159,7 +171,7 @@ const List<CurrencyRef> currencyReference = [
   CurrencyRef('TZS', 2),
   CurrencyRef('UAH', 2),
   CurrencyRef('UGX', 0),
-  CurrencyRef('USD', 2, business: true),
+  CurrencyRef('USD', 2, business: true, coins: [1, 5, 10, 25, 50, 100], notes: [100, 200, 500, 1000, 2000, 5000, 10000]),
   CurrencyRef('UYU', 2),
   CurrencyRef('UZS', 2),
   CurrencyRef('VES', 2),
