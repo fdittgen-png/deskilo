@@ -4,22 +4,28 @@
 // of (the IBAN they name), so its statements are imported into it; the reconciliation report's account is under a
 // name no account carries, so the Demo shows a name to attach. The same rules as the server's (0988): every name an
 // account is known by is its own, and an account known by a name takes on the statements under it.
-import '../../../features/money/domain/bank/bank_account.dart';
+import '../../bank/bank_account.dart';
+import '../../text/collation.dart';
 import 'bank_statement_repository.dart';
 
 /// The one account store of a space's statements.
 final _stores = Expando<FakeBankAccountRepository>('demo bank accounts');
-FakeBankAccountRepository demoBankAccountsOf(FakeBankStatementRepository bank) => _stores[bank] ??= FakeBankAccountRepository(bank);
+FakeBankAccountRepository demoBankAccountsOf(FakeBankStatementRepository bank) =>
+    _stores[bank] ??= FakeBankAccountRepository(bank);
 
 /// The IBAN the Demo's statements name.
-const demoBankIban = 'CH9300762011623852957';
+const _demoBankIban = 'CH9300762011623852957';
 
 class FakeBankAccountRepository implements BankAccountRepository {
   FakeBankAccountRepository(this._bank) {
-    final of = _bank.statements.where((s) => bankAccountKey(s.account) == demoBankIban);
+    final of = _bank.statements.where((s) => bankAccountKey(s.account) == _demoBankIban);
     if (of.isNotEmpty) {
-      _accounts['demo-bank-account-1'] =
-          BankAccount(id: 'demo-bank-account-1', name: 'Postfinance', iban: demoBankIban, currency: of.first.currency);
+      _accounts['demo-bank-account-1'] = BankAccount(
+        id: 'demo-bank-account-1',
+        name: 'Postfinance',
+        iban: _demoBankIban,
+        currency: of.first.currency,
+      );
     }
   }
 
@@ -29,11 +35,14 @@ class FakeBankAccountRepository implements BankAccountRepository {
 
   @override
   Future<List<BankAccount>> accounts(String workspaceId) async =>
-      [..._accounts.values]..sort((a, b) => a.archived == b.archived ? a.name.compareTo(b.name) : (a.archived ? 1 : -1));
+      [..._accounts.values]
+        ..sort((a, b) => a.archived == b.archived ? compareNames(a.name, b.name) : (a.archived ? 1 : -1));
 
   @override
   Future<({String id, int attached})> save(String workspaceId, BankAccount account) async {
-    if (account.name.trim().isEmpty || account.name.trim().length > 64) throw const BankAccountRefused(BankAccountRefusal.name);
+    if (account.name.trim().isEmpty || account.name.trim().length > bankAccountNameWidth) {
+      throw const BankAccountRefused(BankAccountRefusal.name);
+    }
     final iban = bankAccountKey(account.iban);
     if (iban.isNotEmpty && !RegExp(r'^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,30}$').hasMatch(iban)) {
       throw const BankAccountRefused(BankAccountRefusal.iban);
@@ -84,8 +93,7 @@ class FakeBankAccountRepository implements BankAccountRepository {
       final known = _accounts.values.any((a) => !a.archived && a.currency == s.currency && a.knownBy(s.account));
       if (!known) counts.update((s.account, s.currency), (n) => n + 1, ifAbsent: () => 1);
     }
-    return [
-      for (final e in counts.entries) UnattachedBankName(name: e.key.$1, currency: e.key.$2, statements: e.value),
-    ]..sort((a, b) => a.name.compareTo(b.name));
+    return [for (final e in counts.entries) UnattachedBankName(name: e.key.$1, currency: e.key.$2, statements: e.value)]
+      ..sort((a, b) => compareNames(a.name, b.name));
   }
 }

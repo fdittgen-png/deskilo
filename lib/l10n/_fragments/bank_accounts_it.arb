@@ -6,7 +6,6 @@
   "bankAccountAdd": "Aggiungere un conto bancario",
   "bankAccountEdit": "Conto bancario",
   "bankAccountName": "Nome",
-  "bankAccountIban": "IBAN",
   "bankAccountIbanHint": "Facoltativo. Gli spazi non contano.",
   "bankAccountIdentifiers": "Altri identificativi",
   "bankAccountIdentifiersHint": "Un numero di conto o il riferimento della banca, uno per riga.",

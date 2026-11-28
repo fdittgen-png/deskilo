@@ -2232,9 +2232,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bankAccountEdit => 'Bank account';
 
   @override
-  String get bankAccountIban => 'IBAN';
-
-  @override
   String get bankAccountIbanHint => 'Optional. Spaces do not matter.';
 
   @override

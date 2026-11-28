@@ -2249,9 +2249,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bankAccountEdit => 'Cuenta bancaria';
 
   @override
-  String get bankAccountIban => 'IBAN';
-
-  @override
   String get bankAccountIbanHint => 'Opcional. Los espacios no importan.';
 
   @override

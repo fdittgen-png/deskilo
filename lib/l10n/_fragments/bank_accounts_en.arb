@@ -24,10 +24,6 @@
   "@bankAccountName": {
     "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
   },
-  "bankAccountIban": "IBAN",
-  "@bankAccountIban": {
-    "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"
-  },
   "bankAccountIbanHint": "Optional. Spaces do not matter.",
   "@bankAccountIbanHint": {
     "description": "#4496 the bank accounts of a business (Master data) and the account a statement is imported into"

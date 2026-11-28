@@ -2253,9 +2253,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bankAccountEdit => 'Bankkonto';
 
   @override
-  String get bankAccountIban => 'IBAN';
-
-  @override
   String get bankAccountIbanHint =>
       'Optional. Leerzeichen spielen keine Rolle.';
 
@@ -2273,7 +2270,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bankAccountLedgerNone => 'Keines';
 
   @override
-  String get bankAccountName => 'Name';
+  String get bankAccountName => 'Kontoname';
 
   @override
   String get bankAccountRefusedBookAccount =>

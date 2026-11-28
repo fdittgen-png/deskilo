@@ -6,20 +6,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/bank/bank_account.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
-import '../../domain/bank/bank_account.dart';
 import '../../domain/book_chart.dart';
-import '../../providers/bank_account_providers.dart';
-import '../../providers/bank_statement_providers.dart' show bankStatementsProvider, currentWorkspaceProvider;
+import '../../providers/bank_statement_providers.dart';
 import '../../providers/book_profile_providers.dart';
+import '../bank_account_words.dart';
 import '../widgets/bank_account_sheet.dart';
 
 class BankAccountsScreen extends ConsumerWidget {
@@ -38,7 +39,7 @@ class BankAccountsScreen extends ConsumerWidget {
           ? null
           : FloatingActionButton.extended(
               key: const ValueKey('bank-account-add'),
-              onPressed: () => _edit(context, ref, workspace.id, workspace.currencyCode, null),
+              onPressed: () => _Editor.open(context, ref, workspace.id, workspace.currencyCode, null),
               icon: const Icon(Icons.add),
               label: Text(l10n.bankAccountAdd),
             ),
@@ -57,7 +58,8 @@ class BankAccountsScreen extends ConsumerWidget {
                       AsyncReadBody<List<BankAccount>>.part(
                         value: ref.watch(bankAccountsProvider(workspace.id)),
                         onRetry: () => ref.invalidate(bankAccountsProvider(workspace.id)),
-                        data: (accounts) => _Accounts(workspaceId: workspace.id, currency: workspace.currencyCode, accounts: accounts),
+                        data: (accounts) =>
+                            _Accounts(workspaceId: workspace.id, currency: workspace.currencyCode, accounts: accounts),
                       ),
                       const FormGap.large(),
                       AsyncReadBody<List<UnattachedBankName>>.part(
@@ -78,26 +80,37 @@ class BankAccountsScreen extends ConsumerWidget {
 
 /// The posting asset accounts of the business's book, when it keeps one: what an account books to.
 List<BookAccount> _ledgerOf(WidgetRef ref) => [
-  for (final a in ref.read(bookChartProvider).value?.accounts ?? const <BookAccount>[]) // empty-ok: no book, no ledger account to pick
+  for (final a
+      in ref.read(bookChartProvider).value?.accounts ??
+          const <BookAccount>[]) // empty-ok: no book, no ledger account to pick
     if (a.type == AccountType.asset && a.isPosting) a,
 ];
 
-Future<void> _edit(BuildContext context, WidgetRef ref, String workspaceId, String currency, BankAccount? account) async {
-  final l10n = context.l10n;
-  final repository = ref.read(bankAccountRepositoryProvider);
-  final attached = await showBankAccountSheet(
-    context,
-    account: account,
-    currency: currency,
-    ledger: _ledgerOf(ref),
-    save: (a) => repository.save(workspaceId, a),
-  );
-  if (attached == null) return;
-  ref
-    ..invalidate(bankAccountsProvider(workspaceId))
-    ..invalidate(unattachedBankNamesProvider(workspaceId))
-    ..invalidate(bankStatementsProvider(workspaceId));
-  if (context.mounted) AppSnack.success(context, l10n.bankAccountSaved(attached));
+/// The editor of an account, opened from the page.
+abstract final class _Editor {
+  static Future<void> open(
+    BuildContext context,
+    WidgetRef ref,
+    String workspaceId,
+    String currency,
+    BankAccount? account,
+  ) async {
+    final l10n = context.l10n;
+    final commands = ref.read(bankAccountCommandsProvider);
+    final attached = await showBankAccountSheet(
+      context,
+      account: account,
+      currency: currency,
+      ledger: _ledgerOf(ref),
+      save: (a) => commands.save(workspaceId, a),
+    );
+    if (attached == null) return;
+    ref
+      ..invalidate(bankAccountsProvider(workspaceId))
+      ..invalidate(unattachedBankNamesProvider(workspaceId))
+      ..invalidate(bankStatementsProvider(workspaceId));
+    if (context.mounted) AppSnack.success(context, l10n.bankAccountSaved(attached));
+  }
 }
 
 class _Accounts extends ConsumerWidget {
@@ -118,10 +131,13 @@ class _Accounts extends ConsumerWidget {
           Card(
             key: ValueKey('bank-account-${a.id}'),
             child: ListTile(
+              key: ValueKey('bank-account-open-${a.id}'),
               leading: const Icon(Icons.account_balance_outlined),
               title: Text(a.name),
-              subtitle: Text([if (a.iban.isNotEmpty) a.iban, a.currency, if (a.archived) l10n.bankAccountArchived].join(' · ')),
-              onTap: a.archived ? null : () => _edit(context, ref, workspaceId, currency, a),
+              subtitle: Text(
+                [if (a.iban.isNotEmpty) a.iban, a.currency, if (a.archived) l10n.bankAccountArchived].join(' · '),
+              ),
+              onTap: a.archived ? null : () => _Editor.open(context, ref, workspaceId, currency, a),
               trailing: a.archived
                   ? null
                   : IconButton(
@@ -129,7 +145,7 @@ class _Accounts extends ConsumerWidget {
                       tooltip: l10n.bankAccountArchive,
                       icon: const Icon(Icons.archive_outlined),
                       onPressed: () async {
-                        await ref.read(bankAccountRepositoryProvider).archive(workspaceId, a.id);
+                        await ref.read(bankAccountCommandsProvider).archive(workspaceId, a.id);
                         ref.invalidate(bankAccountsProvider(workspaceId));
                       },
                     ),
@@ -174,25 +190,21 @@ class _Unattached extends ConsumerWidget {
     if (account == null || !context.mounted) return;
     // the account, known by one more name
     try {
-      final saved = await ref.read(bankAccountRepositoryProvider).save(
-        workspaceId,
-        BankAccount(
-          id: account.id,
-          name: account.name,
-          iban: account.iban,
-          identifiers: account.identifiers,
-          aliases: [...account.aliases, name.name],
-          currency: account.currency,
-          bookAccountId: account.bookAccountId,
-        ),
-      );
+      final attached = await ref.read(bankAccountCommandsProvider).addName(workspaceId, account, name.name);
       ref
         ..invalidate(bankAccountsProvider(workspaceId))
         ..invalidate(unattachedBankNamesProvider(workspaceId))
         ..invalidate(bankStatementsProvider(workspaceId));
-      if (context.mounted) AppSnack.success(context, context.l10n.bankAccountSaved(saved.attached));
-    } on BankAccountRefused catch (e) {
-      if (context.mounted) AppSnack.error(context, context.l10n.bankAccountRefusedTaken(e.name));
+      if (context.mounted) AppSnack.success(context, context.l10n.bankAccountSaved(attached));
+    } on BankAccountRefused catch (e, st) {
+      TraceLogger.instance.log(
+        TraceLevel.info,
+        'money',
+        'a bank import name not added to an account',
+        error: e,
+        stackTrace: st,
+      );
+      if (context.mounted) AppSnack.error(context, bankAccountRefusalText(context.l10n, e, account: account));
     }
   }
 

@@ -2256,9 +2256,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bankAccountEdit => 'Compte bancaire';
 
   @override
-  String get bankAccountIban => 'IBAN';
-
-  @override
   String get bankAccountIbanHint => 'Facultatif. Les espaces ne comptent pas.';
 
   @override

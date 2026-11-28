@@ -958,7 +958,6 @@
   "bankAccountArchived": "Archiviato",
   "bankAccountCurrency": "Valuta",
   "bankAccountEdit": "Conto bancario",
-  "bankAccountIban": "IBAN",
   "bankAccountIbanHint": "Facoltativo. Gli spazi non contano.",
   "bankAccountIdentifiers": "Altri identificativi",
   "bankAccountIdentifiersHint": "Un numero di conto o il riferimento della banca, uno per riga.",

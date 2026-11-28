@@ -7,6 +7,11 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:meta/meta.dart';
 
+import '../failure/app_failure.dart' show TypedRefusal;
+
+/// The longest name of an account (bank_accounts.name, 0988).
+const bankAccountNameWidth = 64;
+
 /// A name as an account is matched by it: upper case, without its spaces (an IBAN in groups of four is the IBAN).
 String bankAccountKey(String name) => name.replaceAll(RegExp(r'\s+'), '').toUpperCase();
 
@@ -26,7 +31,10 @@ class BankAccount {
   /// A row of `bank_accounts`.
   factory BankAccount.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'bank_accounts');
-    List<String> list(String key) => [for (final v in (r.json[key] as List<Object?>? ?? const [])) if (v is String) v];
+    List<String> list(String key) => [
+      for (final v in (r.json[key] as List<Object?>? ?? const []))
+        if (v is String) v,
+    ];
     return BankAccount(
       id: r.string('id'),
       name: r.string('name'),
@@ -65,7 +73,11 @@ class UnattachedBankName {
 
   factory UnattachedBankName.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'bank_import_names_unattached');
-    return UnattachedBankName(name: r.string('name'), currency: r.string('currency'), statements: r.integer('statements'));
+    return UnattachedBankName(
+      name: r.string('name'),
+      currency: r.string('currency'),
+      statements: r.integer('statements'),
+    );
   }
 
   final String name;
@@ -76,7 +88,7 @@ class UnattachedBankName {
 /// Why the server refused an account or an import into one (0988: DKL02 / DKB03 with its reason).
 enum BankAccountRefusal { name, iban, currency, taken, bookAccount, none, otherAccount, other }
 
-class BankAccountRefused implements Exception {
+class BankAccountRefused implements TypedRefusal {
   const BankAccountRefused(this.reason, {this.name = ''});
 
   final BankAccountRefusal reason;

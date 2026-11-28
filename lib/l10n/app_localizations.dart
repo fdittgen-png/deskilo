@@ -3676,12 +3676,6 @@ abstract class AppLocalizations {
   /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
   ///
   /// In en, this message translates to:
-  /// **'IBAN'**
-  String get bankAccountIban;
-
-  /// #4496 the bank accounts of a business (Master data) and the account a statement is imported into
-  ///
-  /// In en, this message translates to:
   /// **'Optional. Spaces do not matter.'**
   String get bankAccountIbanHint;
 

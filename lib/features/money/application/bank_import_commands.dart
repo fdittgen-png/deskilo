@@ -11,9 +11,9 @@ import 'package:crypto/crypto.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show MatchResolution;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show supportedCurrencies;
 
+import '../../../core/bank/bank_account.dart';
 import '../../../core/trace/trace_logger.dart';
 
-import '../domain/bank/bank_account.dart';
 import '../domain/bank/bank_file.dart';
 import '../domain/bank/bank_import_settings.dart';
 import '../domain/bank/bank_match.dart';

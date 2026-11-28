@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2380 — the bank statements of a space and the movements of each.
-import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show FutureProvider, Provider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/bank/bank_account.dart';
 import '../../../core/data/unreadable_rows.dart';
 import '../../../core/settings/active_settings.dart';
+import '../application/bank_account_commands.dart';
 import '../application/bank_import_commands.dart';
 import '../application/bank_reconciliation_reader.dart';
+import '../data/supabase_bank_account_repository.dart';
 import '../data/supabase_bank_statement_repository.dart';
 import '../domain/bank/bank_import_settings.dart';
 import '../domain/bank/bank_match.dart';
@@ -73,3 +76,28 @@ Future<BankWorkList> bankWorkList(Ref ref, String statementId) async {
 /// a lower bound.
 bool bankStatementsLeftOut(String workspaceId) =>
     UnreadableRows.instance.count(bankStatementsArea(workspaceId)) > 0;
+
+// #4496 -- the bank accounts of a business, and the names statements were imported under that no account carries.
+/// Where the bank accounts live: the server's; the Demo its own.
+final bankAccountRepositoryProvider = Provider<BankAccountRepository>(
+  (ref) => SupabaseBankAccountRepository(ref.watch(moneyClientProvider)),
+  name: 'bankAccountRepositoryProvider',
+);
+
+/// The accounts of a business, active first, by name: what the import picks from and the Master data card counts.
+final bankAccountsProvider = FutureProvider.autoDispose.family<List<BankAccount>, String>(
+  (ref, workspaceId) => ref.watch(bankAccountRepositoryProvider).accounts(workspaceId),
+  retry: (_, _) => null,
+);
+
+/// The names earlier statements were imported under that no account carries yet.
+final unattachedBankNamesProvider = FutureProvider.autoDispose.family<List<UnattachedBankName>, String>(
+  (ref, workspaceId) => ref.watch(bankAccountRepositoryProvider).unattached(workspaceId),
+  retry: (_, _) => null,
+);
+
+/// #4496 -- what is done to the bank accounts.
+final bankAccountCommandsProvider = Provider<BankAccountCommands>(
+  (ref) => BankAccountCommands(ref.watch(bankAccountRepositoryProvider)),
+  name: 'bankAccountCommandsProvider',
+);

@@ -7,11 +7,12 @@ import 'dart:convert';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/bank/bank_account.dart';
 import '../../../core/codes/dk_code.dart';
 import '../../../core/data/app_failure_from.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/failure/app_failure.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../domain/bank/bank_account.dart';
 
 /// The reason of a refusal of 0988, or null when it is none of its own.
 BankAccountRefused? bankAccountRefusalOf(Object error) {
@@ -25,7 +26,13 @@ BankAccountRefused? bankAccountRefusalOf(Object error) {
       reason = r.stringOr('reason');
       name = r.stringOr('name');
     } on Object catch (e, st) {
-      TraceLogger.instance.log(TraceLevel.info, 'money', 'a bank account refusal without its reason', error: e, stackTrace: st);
+      TraceLogger.instance.log(
+        TraceLevel.info,
+        'money',
+        'a bank account refusal without its reason',
+        error: e,
+        stackTrace: st,
+      );
     }
   }
   final kind = switch (reason) {
@@ -59,12 +66,16 @@ class SupabaseBankAccountRepository implements BankAccountRepository {
 
   @override
   Future<List<BankAccount>> accounts(String workspaceId) async {
-    final rows = await _client
-        .from('bank_accounts')
-        .select('id, name, iban, identifiers, aliases, currency, book_account_id, archived')
-        .eq('workspace_id', workspaceId)
-        .order('archived')
-        .order('name');
+    final rows = await fetchConfigurationList(
+      table: 'bank_accounts',
+      build: () => _client
+          .from('bank_accounts')
+          .select('id, name, iban, identifiers, aliases, currency, book_account_id, archived')
+          .eq('workspace_id', workspaceId)
+          .order('archived', ascending: true)
+          .order('name', ascending: true)
+          .order('id', ascending: true),
+    );
     return [for (final row in rows) BankAccount.fromJson(row)];
   }
 

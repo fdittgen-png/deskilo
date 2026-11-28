@@ -5,11 +5,12 @@
 // business's book, when it keeps one). The server decides; its refusal is said under the sheet's buttons.
 import 'package:flutter/material.dart';
 
+import '../../../../core/bank/bank_account.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/currency_field.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../domain/bank/bank_account.dart';
+import '../../domain/bank/bank_statement.dart' show BankColumnWidths;
 import '../../domain/book_chart.dart';
 import '../bank_account_words.dart';
 
@@ -25,15 +26,15 @@ Future<int?> showBankAccountSheet(
   required BankAccount? account,
   required String currency,
   required List<BookAccount> ledger,
-  required Future<({String id, int attached})> Function(BankAccount account) save,
+  required Future<int> Function(BankAccount account) save,
 }) async {
   final l10n = context.l10n;
   final fields = FormControllers({
-    'name': account?.name ?? '',
-    'iban': account?.iban ?? '',
-    'identifiers': (account?.identifiers ?? const []).join('\n'),
-    'aliases': (account?.aliases ?? const []).join('\n'),
-    'currency': account?.currency ?? currency,
+    'accountName': account?.name ?? '',
+    'accountIban': account?.iban ?? '',
+    'accountIdentifiers': (account?.identifiers ?? const []).join('\n'),
+    'accountAliases': (account?.aliases ?? const []).join('\n'),
+    'accountCurrency': account?.currency ?? currency,
   });
   String? ledgerId = account?.bookAccountId;
   int? attached;
@@ -44,21 +45,20 @@ Future<int?> showBankAccountSheet(
       submitLabel: MaterialLocalizations.of(context).saveButtonLabel,
       submitKey: const ValueKey('bank-account-save'),
       onDispose: fields.dispose,
-      validate: () => {
-        if (fields.text('name').trim().isEmpty) 'name': l10n.bankAccountRefusedName,
-      },
+      validate: () => {if (fields.text('accountName').trim().isEmpty) 'accountName': l10n.bankAccountRefusedName},
       onSubmit: () async {
         try {
-          final saved = await save(BankAccount(
-            id: account?.id ?? '',
-            name: fields.text('name').trim(),
-            iban: fields.text('iban'),
-            identifiers: _lines(fields.text('identifiers')),
-            aliases: _lines(fields.text('aliases')),
-            currency: fields.text('currency').trim().toUpperCase(),
-            bookAccountId: ledgerId,
-          ));
-          attached = saved.attached;
+          attached = await save(
+            BankAccount(
+              id: account?.id ?? '',
+              name: fields.text('accountName').trim(),
+              iban: fields.text('accountIban'),
+              identifiers: _lines(fields.text('accountIdentifiers')),
+              aliases: _lines(fields.text('accountAliases')),
+              currency: fields.text('accountCurrency').trim().toUpperCase(),
+              bookAccountId: ledgerId,
+            ),
+          );
           return null;
         } on BankAccountRefused catch (e, st) {
           TraceLogger.instance.log(TraceLevel.info, 'money', 'a bank account refused', error: e, stackTrace: st);
@@ -68,24 +68,24 @@ Future<int?> showBankAccountSheet(
       builder: (context, refresh) => [
         AppTextField(
           key: const ValueKey('bank-account-name'),
-          controller: fields['name'],
-          fieldKey: 'name',
+          controller: fields['accountName'],
+          fieldKey: 'accountName',
           label: l10n.bankAccountName,
-          maxLength: 64,
+          maxLength: BankColumnWidths.account,
         ),
         const FormGap(),
         AppTextField(
           key: const ValueKey('bank-account-iban'),
-          controller: fields['iban'],
-          fieldKey: 'iban',
-          label: l10n.bankAccountIban,
+          controller: fields['accountIban'],
+          fieldKey: 'accountIban',
+          label: l10n.paymentInstructionsIbanTitle,
           helper: l10n.bankAccountIbanHint,
         ),
         const FormGap(),
         AppTextField(
           key: const ValueKey('bank-account-identifiers'),
-          controller: fields['identifiers'],
-          fieldKey: 'identifiers',
+          controller: fields['accountIdentifiers'],
+          fieldKey: 'accountIdentifiers',
           label: l10n.bankAccountIdentifiers,
           helper: l10n.bankAccountIdentifiersHint,
           maxLines: 3,
@@ -93,8 +93,8 @@ Future<int?> showBankAccountSheet(
         const FormGap(),
         AppTextField(
           key: const ValueKey('bank-account-aliases'),
-          controller: fields['aliases'],
-          fieldKey: 'aliases',
+          controller: fields['accountAliases'],
+          fieldKey: 'accountAliases',
           label: l10n.bankAccountAliases,
           helper: l10n.bankAccountAliasesHint,
           maxLines: 3,
@@ -102,8 +102,8 @@ Future<int?> showBankAccountSheet(
         const FormGap(),
         CurrencyField(
           textKey: const ValueKey('bank-account-currency'),
-          controller: fields['currency'],
-          fieldKey: 'currency',
+          controller: fields['accountCurrency'],
+          fieldKey: 'accountCurrency',
           label: l10n.bankAccountCurrency,
         ),
         if (ledger.isNotEmpty) ...[

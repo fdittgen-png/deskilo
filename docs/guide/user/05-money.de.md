@@ -600,7 +600,7 @@ Ein Bankkonto ist ein einziger Datensatz des Unternehmens: das Konto, in das sei
 **Schritte**
 
 1. Öffnen Sie **Einstellungen**, dann **Stammdaten**, dann **Bankkonten**.
-2. Tippen Sie auf **Bankkonto hinzufügen** und geben Sie **Name**, **IBAN**, gegebenenfalls **Weitere Kennungen** und die Namen an, unter denen es **Auch bekannt als** ist (einer pro Zeile), seine **Währung** und, wenn das Unternehmen hier seine Bücher führt, sein **Sachkonto**.
+2. Tippen Sie auf **Bankkonto hinzufügen** und geben Sie **Kontoname**, **IBAN**, gegebenenfalls **Weitere Kennungen** und die Namen an, unter denen es **Auch bekannt als** ist (einer pro Zeile), seine **Währung** und, wenn das Unternehmen hier seine Bücher führt, sein **Sachkonto**.
 3. Wählen Sie beim Einlesen eines Auszugs sein Konto: Eine Datei desselben Kontos unter zwei Namen liest nie eine Buchung zweimal ein.
 
 **Gut zu wissen**

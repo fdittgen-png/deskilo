@@ -6,11 +6,13 @@ import 'package:crypto/crypto.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-import '../../../features/money/domain/bank/bank_account.dart' show bankAccountKey;
 import '../../../features/money/domain/bank/bank_records.dart';
 import '../../../features/money/domain/bank/bank_statement.dart';
+import '../../bank/bank_account.dart' show bankAccountKey;
 import 'bank_unmatch_in.dart';
 import 'money_repository.dart';
+
+export 'demo_bank_accounts.dart' show demoBankAccountsOf; // #4496: the accounts beside the statements
 
 /// The bank statements in memory, with the server's rules the screens
 /// show (import_bank_statement_v1 and the line decisions of #2380): the
