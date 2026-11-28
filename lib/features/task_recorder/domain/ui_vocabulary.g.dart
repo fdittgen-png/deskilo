@@ -7215,6 +7215,7 @@ const Set<String> uiRoutes = {
   '/till/drawer',
   '/till/layout/:tillId',
   '/till/day',
+  '/till/reasons',
   '/till/receipts',
   '/money/quotes',
   '/money/quotes/:id',

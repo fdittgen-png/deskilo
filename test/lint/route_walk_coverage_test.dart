@@ -38,6 +38,7 @@ const Map<String, String> _noLayoutOfItsOwn = {
   '/stock/cycle-counts': '#4295 tabs of lists and a sheet; its widget tests render it at phone and desk widths',
   '/stock/cycle-counts/:taskId': '#4295 a list of lines and two sheets; its widget tests render it at phone and desk widths',
   '/till': '#4366 keys, a basket, two dialogs; widget tests render it at phone, tablet and desk',
+  '/till/reasons': '#4514 a list of reasons and its sheet; widget tests render it at phone and desk',
   '/till/day': '#4367 a list of closed days and a full-screen report; widget tests render it at phone and desk',
   '/till/receipts': '#4185 the receipts the till made with their sheets; widget tests render them at phone and desk',
   '/till/drawer': '#4367 the tills with their sessions and four sheets; widget tests render them at phone and desk',

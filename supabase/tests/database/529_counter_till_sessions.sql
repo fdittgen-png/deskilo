@@ -96,9 +96,9 @@ select is(pg_temp.entry(2, 7008, pg_temp.f(current_setting('t.s'), 'session_id')
 select is(left(pg_temp.sexp(2, pg_temp.f(current_setting('t.s'), 'session_id')::uuid), 9), 'ERR DKN01', 'while the session is open the counter does not see the expected cash (blind count)');
 select is(pg_temp.f(pg_temp.sexp(3, pg_temp.f(current_setting('t.s'), 'session_id')::uuid), 'expected_minor'), '14260', 'someone who may see the finances does: 150.00 + 5.00 - 12.40, derived, never typed');
 select is(pg_temp.sclose(1, 7009, pg_temp.f(current_setting('t.s'), 'session_id')::uuid, 14000), 'ERR DKL13 {"reason": "difference_reason", "difference_minor": "-260"}', 'a difference is not closed without its reason');
-select set_config('t.c', pg_temp.sclose(1, 7010, pg_temp.f(current_setting('t.s'), 'session_id')::uuid, 14000, 'coin dropped', 10000), false);
+select set_config('t.c', pg_temp.sclose(1, 7010, pg_temp.f(current_setting('t.s'), 'session_id')::uuid, 14000, 'counting_error', 10000), false);
 select is(pg_temp.f(current_setting('t.c'), 'difference_minor') || ' ' || pg_temp.f(current_setting('t.c'), 'expected_minor'), '-260 14260', 'the close records the counted amount, the expected, the difference and its reason');
-select is(pg_temp.f(pg_temp.sclose(1, 7010, pg_temp.f(current_setting('t.s'), 'session_id')::uuid, 14000, 'coin dropped', 10000), 'replayed'), 'true', 'a lost answer at the close recovers the same session');
+select is(pg_temp.f(pg_temp.sclose(1, 7010, pg_temp.f(current_setting('t.s'), 'session_id')::uuid, 14000, 'counting_error', 10000), 'replayed'), 'true', 'a lost answer at the close recovers the same session');
 select is(pg_temp.sqlstate_of(format('update public.counter_till_sessions set counted_minor = 1 where id = %L', pg_temp.f(current_setting('t.s'), 'session_id'))), 'DKL03', 'a closed session is never edited');
 select is(left(pg_temp.sclose(2, 7013, pg_temp.f(current_setting('t.s'), 'session_id')::uuid, 1), 9), 'ERR DKL12', 'a session already closed is not closed again');
 select is(pg_temp.entry(2, 7011, pg_temp.f(current_setting('t.s'), 'session_id')::uuid, 'paid_in', 100, 'change'), 'ERR DKL12 {"reason": "closed"}', 'and takes no more entries: a correction goes to the next session');
