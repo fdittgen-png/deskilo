@@ -93,6 +93,7 @@ String _reasonText(AppLocalizations l10n, StockRefusal reason) => switch (reason
   StockRefusal.outOfRange => l10n.stockReasonOutOfRange,
   StockRefusal.packageUnit => l10n.stockReasonPackageUnit,
   StockRefusal.overAllocated => l10n.stockReasonOverAllocated,
+  StockRefusal.placeUnusable => l10n.stockReasonPlaceUnusable,
   StockRefusal.parentInactive => l10n.stockReasonParentInactive,
   StockRefusal.pickRoleUnknown => l10n.stockReasonPickRoleUnknown,
   StockRefusal.placeUnknown => l10n.stockReasonGroupPlaceUnknown,

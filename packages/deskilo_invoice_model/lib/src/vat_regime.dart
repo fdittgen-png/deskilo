@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'national_invoice_rules.dart';
-
+import 'vatex_codes.dart';
 
 /// How the workspace stands towards VAT — the one fact EN 16931 cannot
 /// guess and cannot omit (BT-151, the invoice's tax category).
@@ -62,7 +62,7 @@ extension VatRegimeRules on VatRegime {
     String countryCode, {
     required NationalInvoiceRules rules,
   }) => switch (this) {
-        VatRegime.notSubject => 'VATEX-EU-O',
+        VatRegime.notSubject => vatexOutsideScope,
         VatRegime.exempt => rules.exemptionReasonCodeOf(countryCode),
         VatRegime.vatRegistered => '',
       };

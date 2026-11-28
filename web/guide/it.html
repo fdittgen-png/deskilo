@@ -3023,19 +3023,22 @@
 <li>Le unità sono sempre qui. La funzionalità <strong>Unità di misura</strong> in <strong>Funzionalità</strong> decide se i preventivi e le fatture offrono le unità proprie dell’attività e se i selettori di un articolo offrono ogni unità; finché è disattivata, offrono solo le unità consuete.</li>
 </ul>
 <p class="see-also"><strong>Vedi anche:</strong> <a href="#user.workspace.settings.paper">Carta dei documenti</a></p>
-</div></article><article class="section no-media" id="user.workspace.settings.devices" data-roles="owner admin"><header><h3>Dispositivi <a class="permalink" href="#user.workspace.settings.devices" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Proprietario</span><span class="role role-admin">Amministratore con il permesso</span></div></header><div class="body"><p>Un terminale di cassa è il piccolo schermo al banco che incassa. Lo si collega all'attività da <strong>Dispositivi</strong>: l'app legge il codice QR del terminale, o il codice di 10 caratteri accanto, e mostra di quale terminale si tratta.</p>
+</div></article><article class="section no-media" id="user.workspace.settings.devices" data-roles="owner admin"><header><h3>Dispositivi <a class="permalink" href="#user.workspace.settings.devices" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Proprietario</span><span class="role role-admin">Amministratore con il permesso</span></div></header><div class="body"><p>Un terminale di cassa è il piccolo schermo al banco che incassa. Lo si collega all'attività da <strong>Dispositivi</strong>: l'app legge il codice QR del terminale, mostra di quale terminale si tratta e Le dà il codice che lo collega a una cassa. Il terminale attende poi la Sua approvazione.</p>
 <h4 class="lbl lbl-steps">Passaggi</h4>
 <ol>
 <li>Attivi <strong>Terminali di cassa</strong> in <strong>Funzionalità</strong> (richiede <strong>Sessioni di cassa e chiusura della giornata</strong> ed è disattivato finché non lo richiede).</li>
 <li>Sul terminale, tenga premuto il pulsante <strong>BOOT</strong> per 3 secondi: mostra il codice QR e il codice, per esempio 3DNGP-UN9CG. Un terminale non ancora configurato li mostra da sé.</li>
-<li>In <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/settings/devices">Dispositivi</a>, avvicini il codice QR alla fotocamera, oppure digiti il codice in <strong>Digitare il codice</strong> e tocchi <strong>Verificare il codice</strong>.</li>
-<li>Confronti il terminale e la sua <strong>Impronta</strong> con lo schermo del terminale.</li>
+<li>In <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/settings/devices">Dispositivi</a>, avvicini il codice QR alla fotocamera. Confronti il terminale e la sua <strong>Impronta</strong> con lo schermo del terminale.</li>
+<li>Scelga la <strong>Cassa</strong> servita dal terminale e tocchi <strong>Ottenere un codice di collegamento</strong>. Il codice vale una sola volta, solo per questo terminale, per i minuti indicati dalle impostazioni (5 per impostazione predefinita).</li>
+<li>Quando il terminale ha usato il codice, compare nell'elenco come <strong>In attesa della Sua approvazione</strong>. Tocchi <strong>Approvare</strong>, verifichi che lo schermo del terminale mostri l'impronta indicata dall'app e confermi: il terminale è <strong>Collegato</strong>.</li>
 </ol>
 <h4 class="lbl lbl-know">Da sapere</h4>
 <ul>
-<li>Un codice non contiene mai 0, O, 1, I o L. Un carattere errato, o due invertiti, viene rifiutato subito, a parole sotto il campo; maiuscole, spazi e trattini non contano.</li>
-<li>Senza fotocamera (browser, computer), digitare il codice fa lo stesso.</li>
-<li>Il collegamento del terminale all'attività arriverà con un prossimo aggiornamento: oggi l'app legge e verifica il terminale, e non gli invia nulla.</li>
+<li>Solo il titolare dell'attività ottiene un codice, approva un terminale o lo rimuove. Chi può aprire le impostazioni vede l'elenco.</li>
+<li><strong>Rimuovere</strong> termina il collegamento di un terminale con l'attività. Per usarlo di nuovo, lo colleghi con un nuovo codice.</li>
+<li>Digitare il codice accanto al QR (dove non c'è fotocamera) mostra di quale terminale si tratta; per collegarlo, scansioni il suo codice QR. Un terminale il cui codice QR non viene accettato per il collegamento ha bisogno prima del nuovo firmware.</li>
+<li>Un codice presentato troppe volte da un terminale sbagliato si esaurisce (5 volte per impostazione predefinita). Entrambi i numeri sono nelle impostazioni dell'attività: <strong>Codice di collegamento di un dispositivo: minuti</strong> e <strong>Codice di collegamento di un dispositivo: tentativi</strong>.</li>
+<li>Un codice non contiene mai 0, O, 1, I o L. Un carattere sbagliato, o due invertiti, viene rifiutato subito, a parole sotto il campo; maiuscole, spazi e trattini non contano.</li>
 </ul>
 </div></article><article class="section no-media" id="user.workspace.settings.organisation" data-roles="owner"><header><h3>Organizzazione <a class="permalink" href="#user.workspace.settings.organisation" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Proprietario</span></div></header><div class="body"><p>La Sua attività ha sedi all'estero, in un altro paese o in un'altra valuta. Ognuna di esse è una casa: un'attività a sé con le regole del suo paese, la sua valuta e la sua contabilità. Insieme formano un'organizzazione con una sede.</p>
 <h4 class="lbl lbl-steps">Passaggi</h4>

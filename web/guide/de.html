@@ -2200,7 +2200,7 @@
 <h4 class="lbl lbl-steps">Schritte</h4>
 <ol>
 <li>Öffnen Sie <strong>Einstellungen</strong>, dann <strong>Stammdaten</strong>, dann <strong>Bankkonten</strong>.</li>
-<li>Tippen Sie auf <strong>Bankkonto hinzufügen</strong> und geben Sie <strong>Name</strong>, <strong>IBAN</strong>, gegebenenfalls <strong>Weitere Kennungen</strong> und die Namen an, unter denen es <strong>Auch bekannt als</strong> ist (einer pro Zeile), seine <strong>Währung</strong> und, wenn das Unternehmen hier seine Bücher führt, sein <strong>Sachkonto</strong>.</li>
+<li>Tippen Sie auf <strong>Bankkonto hinzufügen</strong> und geben Sie <strong>Kontoname</strong>, <strong>IBAN</strong>, gegebenenfalls <strong>Weitere Kennungen</strong> und die Namen an, unter denen es <strong>Auch bekannt als</strong> ist (einer pro Zeile), seine <strong>Währung</strong> und, wenn das Unternehmen hier seine Bücher führt, sein <strong>Sachkonto</strong>.</li>
 <li>Wählen Sie beim Einlesen eines Auszugs sein Konto: Eine Datei desselben Kontos unter zwei Namen liest nie eine Buchung zweimal ein.</li>
 </ol>
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
@@ -3023,19 +3023,22 @@
 <li>Die Einheiten sind immer da. Die Funktion <strong>Maßeinheiten</strong> unter <strong>Funktionen</strong> entscheidet, ob Angebote und Rechnungen Ihre eigenen Einheiten anbieten und ob die Auswahlfelder eines Artikels jede Einheit anbieten; solange sie aus ist, bieten sie nur die üblichen Einheiten an.</li>
 </ul>
 <p class="see-also"><strong>Siehe auch:</strong> <a href="#user.workspace.settings.paper">Papier der Dokumente</a></p>
-</div></article><article class="section no-media" id="user.workspace.settings.devices" data-roles="owner admin"><header><h3>Geräte <a class="permalink" href="#user.workspace.settings.devices" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Inhaber</span><span class="role role-admin">Administrator:in mit Berechtigung</span></div></header><div class="body"><p>Ein Kassenterminal ist der kleine Bildschirm an der Theke, der Zahlungen annimmt. Sie verbinden es unter <strong>Geräte</strong> mit Ihrem Unternehmen: Die App liest den QR-Code des Terminals oder den 10-stelligen Code daneben und zeigt, welches Terminal es ist.</p>
+</div></article><article class="section no-media" id="user.workspace.settings.devices" data-roles="owner admin"><header><h3>Geräte <a class="permalink" href="#user.workspace.settings.devices" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Inhaber</span><span class="role role-admin">Administrator:in mit Berechtigung</span></div></header><div class="body"><p>Ein Kassenterminal ist der kleine Bildschirm an der Theke, der Zahlungen annimmt. Sie verbinden es unter <strong>Geräte</strong> mit Ihrem Unternehmen: Die App liest den QR-Code des Terminals, zeigt, welches Terminal es ist, und gibt Ihnen den Code, der es mit einer Kasse verbindet. Das Terminal wartet dann auf Ihre Freigabe.</p>
 <h4 class="lbl lbl-steps">Schritte</h4>
 <ol>
 <li>Schalten Sie <strong>Kassenterminals</strong> unter <strong>Funktionen</strong> ein (es braucht <strong>Kassensitzungen und Tagesabschluss</strong> und ist aus, bis Sie es anfordern).</li>
 <li>Halten Sie am Terminal die <strong>BOOT</strong>-Taste 3 Sekunden gedrückt: Es zeigt seinen QR-Code und seinen Code, etwa 3DNGP-UN9CG. Ein noch nicht eingerichtetes Terminal zeigt sie von selbst.</li>
-<li>Halten Sie in <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/settings/devices">Geräte</a> den QR-Code vor die Kamera, oder tippen Sie den Code unter <strong>Code eintippen</strong> ein und tippen Sie auf <strong>Code prüfen</strong>.</li>
-<li>Vergleichen Sie das Terminal und seinen <strong>Fingerabdruck</strong> mit dem Bildschirm des Terminals.</li>
+<li>Halten Sie unter <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/settings/devices">Geräte</a> den QR-Code vor die Kamera. Vergleichen Sie das Terminal und seinen <strong>Fingerabdruck</strong> mit dem Bildschirm des Terminals.</li>
+<li>Wählen Sie die <strong>Kasse</strong>, der das Terminal dient, und tippen Sie auf <strong>Verbindungscode erhalten</strong>. Der Code gilt einmal, nur für dieses Terminal, so viele Minuten, wie Ihre Einstellungen vorgeben (standardmäßig 5).</li>
+<li>Hat das Terminal den Code verwendet, erscheint es in der Liste als <strong>Wartet auf Ihre Freigabe</strong>. Tippen Sie auf <strong>Freigeben</strong>, prüfen Sie, dass der Bildschirm des Terminals den von der App genannten Fingerabdruck zeigt, und bestätigen Sie: Das Terminal ist <strong>Verbunden</strong>.</li>
 </ol>
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
+<li>Nur der Inhaber des Unternehmens erhält einen Code, gibt ein Terminal frei oder entfernt es. Wer die Einstellungen öffnen darf, sieht die Liste.</li>
+<li><strong>Entfernen</strong> beendet die Verbindung eines Terminals mit dem Unternehmen. Um es wieder zu nutzen, verbinden Sie es mit einem neuen Code.</li>
+<li>Den Code neben dem QR-Code einzutippen (wo es keine Kamera gibt) zeigt, welches Terminal es ist; zum Verbinden scannen Sie seinen QR-Code. Ein Terminal, dessen QR-Code zum Verbinden nicht angenommen wird, braucht zuerst die neue Firmware.</li>
+<li>Ein Code, den ein falsches Terminal zu oft vorlegt, ist verbraucht (standardmäßig 5-mal). Beide Zahlen stehen in den Einstellungen des Unternehmens: <strong>Verbindungscode eines Geräts: Minuten</strong> und <strong>Verbindungscode eines Geräts: Versuche</strong>.</li>
 <li>Ein Code enthält nie 0, O, 1, I oder L. Ein falsches Zeichen oder zwei vertauschte werden sofort abgelehnt, in Worten unter dem Feld; Groß- und Kleinschreibung, Leerzeichen und Bindestriche spielen keine Rolle.</li>
-<li>Ohne Kamera (Browser, Desktop) leistet das Eintippen des Codes dasselbe.</li>
-<li>Das Verbinden des Terminals mit dem Unternehmen kommt mit einem späteren Update: Heute liest und prüft die App das Terminal und sendet ihm nichts.</li>
 </ul>
 </div></article><article class="section no-media" id="user.workspace.settings.organisation" data-roles="owner"><header><h3>Organisation <a class="permalink" href="#user.workspace.settings.organisation" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Inhaber</span></div></header><div class="body"><p>Ihr Unternehmen hat Standorte im Ausland, in einem anderen Land oder einer anderen Währung. Jeder davon ist ein Haus: ein eigenes Unternehmen mit den Regeln seines Landes, seiner Währung und seiner eigenen Buchhaltung. Zusammen bilden sie eine Organisation mit einem Hauptsitz.</p>
 <h4 class="lbl lbl-steps">Schritte</h4>

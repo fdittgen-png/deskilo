@@ -4287,20 +4287,23 @@ Sus artículos, presupuestos y facturas se miden en unidades, y algunas se convi
 
 **Público:** Propietario · Administrador/a con el permiso
 
-Un terminal de caja es la pequeña pantalla del mostrador que cobra. Lo conecta a su empresa desde **Dispositivos**: la aplicación lee el código QR del terminal, o el código de 10 caracteres junto a él, y muestra qué terminal es.
+Un terminal de caja es la pequeña pantalla del mostrador que cobra. Lo conecta a su empresa desde **Dispositivos**: la aplicación lee el código QR del terminal, muestra qué terminal es y le da el código que lo conecta a una caja. Después el terminal espera su aprobación.
 
 **Pasos**
 
 1. Active **Terminales de caja** en **Funciones** (necesita **Sesiones de caja y cierre del día** y está desactivado hasta que lo pida).
 2. En el terminal, mantenga pulsado el botón **BOOT** 3 segundos: muestra su código QR y su código, por ejemplo 3DNGP-UN9CG. Un terminal aún no configurado los muestra por sí solo.
-3. En [Dispositivos](https://fdittgen-png.github.io/deskilo/#/settings/devices), acerque el código QR a la cámara, o escriba el código en **Escribir el código** y pulse **Comprobar el código**.
-4. Compare el terminal y su **Huella** con la pantalla del terminal.
+3. En [Dispositivos](https://fdittgen-png.github.io/deskilo/#/settings/devices), ponga el código QR delante de la cámara. Compare el terminal y su **Huella** con la pantalla del terminal.
+4. Elija la **Caja** a la que sirve el terminal y toque **Obtener un código de conexión**. El código vale una sola vez, solo para este terminal, durante los minutos que indica su configuración (5 por defecto).
+5. Cuando el terminal ha usado el código, aparece en la lista como **Pendiente de su aprobación**. Toque **Aprobar**, compruebe que la pantalla del terminal muestra la huella que indica la aplicación y confirme: el terminal queda **Conectado**.
 
 **Conviene saber**
 
-- Un código nunca contiene 0, O, 1, I ni L. Un carácter erróneo, o dos intercambiados, se rechaza en el acto, con palabras bajo el campo; mayúsculas, espacios y guiones no importan.
-- Sin cámara (navegador, escritorio), escribir el código hace lo mismo.
-- Conectar el terminal a la empresa llegará con una próxima actualización: hoy la aplicación lee y comprueba el terminal, y no le envía nada.
+- Solo el propietario de la empresa obtiene un código, aprueba un terminal o lo quita. Quien puede abrir la configuración ve la lista.
+- **Quitar** pone fin a la conexión de un terminal con la empresa. Para volver a usarlo, conéctelo con un código nuevo.
+- Escribir el código junto al QR (donde no hay cámara) muestra qué terminal es; para conectarlo, escanee su código QR. Un terminal cuyo código QR no se acepta para conectar necesita primero el nuevo firmware.
+- Un código que un terminal equivocado presenta demasiadas veces se agota (5 veces por defecto). Ambos números están en la configuración de la empresa: **Código de conexión de un dispositivo: minutos** y **Código de conexión de un dispositivo: intentos**.
+- Un código nunca contiene 0, O, 1, I ni L. Un carácter erróneo, o dos intercambiados, se rechaza al instante, con palabras bajo el campo; mayúsculas, espacios y guiones no importan.
 
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organización

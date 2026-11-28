@@ -1,0 +1,40 @@
+{
+  "settingPlacePick": "Ort",
+  "@settingPlacePick": {
+    "description": "#4495 the place of a setting"
+  },
+  "settingPlaceFromCode": "{path} (über den Code {code} gefunden: wählen Sie ihn aus, um es festzulegen)",
+  "@settingPlaceFromCode": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceAmbiguous": "Der Code {code} gehört zu mehreren Orten: Wählen Sie einen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.",
+  "@settingPlaceAmbiguous": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceMissing": "Kein nutzbarer Ort trägt den Code {code}: Wählen Sie einen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.",
+  "@settingPlaceMissing": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceGone": "Der gewählte Ort ist nicht mehr nutzbar: Wählen Sie einen anderen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.",
+  "@settingPlaceGone": {
+    "description": "#4495 the place of a setting"
+  }
+}

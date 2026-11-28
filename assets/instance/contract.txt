@@ -2717,6 +2717,35 @@ constraint till_layouts.till_layouts_status_check CHECK ((status = ANY (ARRAY['d
 constraint till_layouts.till_layouts_till_id_fkey FOREIGN KEY (till_id) REFERENCES counter_tills(id) ON DELETE CASCADE
 constraint till_layouts.till_layouts_version_check CHECK ((version >= 1))
 constraint till_layouts.till_layouts_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint till_terminal_codes.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint till_terminal_codes.system_company_present CHECK ((company_id IS NOT NULL))
+constraint till_terminal_codes.till_terminal_codes_attempts_left_check CHECK ((attempts_left >= 0))
+constraint till_terminal_codes.till_terminal_codes_board_profile_check CHECK ((board_profile = ANY (ARRAY['lcdwiki_e32r40t_v1'::text, 'ideaspark_st7789_v1'::text])))
+constraint till_terminal_codes.till_terminal_codes_claim_secret_hash_check CHECK ((claim_secret_hash ~ '^[0-9a-f]{64}$'::text))
+constraint till_terminal_codes.till_terminal_codes_code_hash_check CHECK ((code_hash ~ '^[0-9a-f]{64}$'::text))
+constraint till_terminal_codes.till_terminal_codes_code_hash_key UNIQUE (code_hash)
+constraint till_terminal_codes.till_terminal_codes_created_by_fkey FOREIGN KEY (created_by) REFERENCES members(id) ON DELETE SET NULL
+constraint till_terminal_codes.till_terminal_codes_fingerprint_check CHECK ((fingerprint ~ '^[0-9A-F]{4}-[0-9A-F]{4}$'::text))
+constraint till_terminal_codes.till_terminal_codes_pkey PRIMARY KEY (id)
+constraint till_terminal_codes.till_terminal_codes_secret_hash_check CHECK ((secret_hash ~ '^[0-9a-f]{64}$'::text))
+constraint till_terminal_codes.till_terminal_codes_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint till_terminal_codes.till_terminal_codes_workspace_id_till_id_fkey FOREIGN KEY (workspace_id, till_id) REFERENCES counter_tills(workspace_id, id) ON DELETE CASCADE
+constraint till_terminals.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint till_terminals.system_company_present CHECK ((company_id IS NOT NULL))
+constraint till_terminals.till_terminals_approved_by_fkey FOREIGN KEY (approved_by) REFERENCES members(id) ON DELETE SET NULL
+constraint till_terminals.till_terminals_board_profile_check CHECK ((board_profile = ANY (ARRAY['lcdwiki_e32r40t_v1'::text, 'ideaspark_st7789_v1'::text])))
+constraint till_terminals.till_terminals_check CHECK (((status = 'paired'::text) = ((approved_at IS NOT NULL) AND (revoked_at IS NULL))))
+constraint till_terminals.till_terminals_check1 CHECK (((status = 'revoked'::text) = (revoked_at IS NOT NULL)))
+constraint till_terminals.till_terminals_code_id_fkey FOREIGN KEY (code_id) REFERENCES till_terminal_codes(id) ON DELETE SET NULL
+constraint till_terminals.till_terminals_fingerprint_check CHECK ((fingerprint ~ '^[0-9A-F]{4}-[0-9A-F]{4}$'::text))
+constraint till_terminals.till_terminals_firmware_check CHECK ((firmware ~ '^[!-~]{1,40}$'::text))
+constraint till_terminals.till_terminals_pkey PRIMARY KEY (id)
+constraint till_terminals.till_terminals_protocol_check CHECK ((protocol ~ '^v[0-9]{1,3}$'::text))
+constraint till_terminals.till_terminals_revoked_by_fkey FOREIGN KEY (revoked_by) REFERENCES members(id) ON DELETE SET NULL
+constraint till_terminals.till_terminals_secret_hash_check CHECK ((secret_hash ~ '^[0-9a-f]{64}$'::text))
+constraint till_terminals.till_terminals_status_check CHECK ((status = ANY (ARRAY['pending_approval'::text, 'paired'::text, 'revoked'::text])))
+constraint till_terminals.till_terminals_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint till_terminals.till_terminals_workspace_id_till_id_fkey FOREIGN KEY (workspace_id, till_id) REFERENCES counter_tills(workspace_id, id) ON DELETE CASCADE
 constraint trace_reports.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint trace_reports.trace_reports_app_version_check CHECK (((char_length(app_version) >= 1) AND (char_length(app_version) <= 40)))
 constraint trace_reports.trace_reports_device_id_check CHECK ((device_id ~ '^[A-Za-z0-9_-]{8,64}$'::text))
@@ -3587,6 +3616,9 @@ routine public.invoice_provenance_stamp() -> trigger | function | definer | vola
 routine public.invoice_qrr_freeze() -> trigger | function | definer | volatile | exec:service_role | body:1971502e7926
 routine public.invoice_region_missing(p_seller jsonb, p_buyer jsonb, p_seller_country text) -> text[] | function | invoker | stable | exec:service_role | body:4bd609229b2f
 routine public.invoice_reminder_evidence(p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5b7aa8cbdb2e
+routine public.invoice_sale_place(p_workspace_id uuid) -> TABLE(place_id uuid, problem text) | function | definer | stable | exec:service_role | body:d966a8881a9d
+routine public.invoice_sale_place_eligible(p_workspace_id uuid, p_place uuid) -> boolean | function | definer | stable | exec:service_role | body:72fcd90115be
+routine public.invoice_sale_place_value(p_workspace_id uuid, p_value jsonb) -> jsonb | function | definer | stable | exec:service_role | body:6d0e71242d58
 routine public.invoice_send_basis(p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3d2c32b0e706
 routine public.invoice_sent_document(p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:be6647353314
 routine public.invoice_still_due_cents(p_invoice_id uuid) -> bigint | function | definer | stable | exec:service_role | body:47d12f7b1ff8
@@ -4494,7 +4526,7 @@ routine public.set_role_permissions(p_workspace_id uuid, p_role text, p_permissi
 routine public.set_room_rental_audience_v1(p_workspace_id uuid, p_rental_id uuid, p_audience jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:18d680453d7a
 routine public.set_room_rental_fees_v1(p_workspace_id uuid, p_rental_id uuid, p_fees jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:add64c860328
 routine public.set_seat_block(p_seat_id uuid, p_blocked_from timestamp with time zone, p_blocked_to timestamp with time zone) -> void | function | definer | volatile | exec:authenticated,service_role | body:ce91f32479ec
-routine public.set_setting(p_workspace uuid, p_key text, p_value jsonb, p_note text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:db9be53c6abf
+routine public.set_setting(p_workspace uuid, p_key text, p_value jsonb, p_note text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:090fc9dcaf37
 routine public.set_stock_home_v1(p_workspace_id uuid, p_item_id uuid, p_variant_id uuid, p_location_id uuid, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:84b78397657a
 routine public.set_supplier_bank(p_supplier_id uuid, p_account_holder text, p_iban text, p_bic text) -> integer | function | definer | volatile | exec:authenticated,service_role | body:cd9a4434261e
 routine public.set_supplier_status(p_supplier_id uuid, p_status text) -> void | function | definer | volatile | exec:authenticated,service_role | body:0d297c73d180
@@ -4556,7 +4588,7 @@ routine public.stamp_accessory_supplements_since() -> trigger | function | invok
 routine public.standalone_invoice_buyer(p_workspace_id uuid, p_subject uuid) -> jsonb | function | definer | stable | exec:service_role | body:142f8bb03646
 routine public.standalone_invoice_goods_input(p_workspace_id uuid, p_line jsonb, p_index integer, p_seller_country text, p_buyer_country text, p_treatment text) -> jsonb | function | definer | stable | exec:service_role | body:6efe3302865f
 routine public.standalone_invoice_goods_mark(p_line jsonb, p_input jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:81687464ee8e
-routine public.standalone_invoice_goods_post(p_workspace_id uuid, p_actor uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:6febe69e11d0
+routine public.standalone_invoice_goods_post(p_workspace_id uuid, p_actor uuid, p_invoice_id uuid) -> integer | function | definer | volatile | exec:service_role | body:01b4fa5ada72
 routine public.standalone_invoice_issue_core(p_workspace_id uuid, p_actor members, p_draft standalone_invoice_drafts) -> uuid | function | definer | volatile | exec:service_role | body:53ec6841b9d5
 routine public.standalone_invoice_line_v1(p_line jsonb, p_index integer, p_currency text, p_percent numeric, p_category text, p_tax_point date) -> jsonb | function | invoker | stable | exec:service_role | body:5167a928fed0
 routine public.standalone_invoice_subject(p_workspace_id uuid, p_subject uuid) -> members | function | definer | stable | exec:service_role | body:03bed41502dd
@@ -4659,7 +4691,7 @@ routine public.stock_reorder_check(p_point_id uuid) -> void | function | definer
 routine public.stock_reorder_quantity(p_obj jsonb, p_key text, p_default numeric) -> numeric | function | invoker | immutable | exec:service_role | body:0b131a38cdb8
 routine public.stock_reorder_reader(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:4e84c60e590e
 routine public.stock_replenishment_v1(p_workspace_id uuid, p_site_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b71e455d57e3
-routine public.stock_resolve_code_v1(p_workspace_id uuid, p_code text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c259b66eed14
+routine public.stock_resolve_code_v1(p_workspace_id uuid, p_code text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a8fbc1e311e3
 routine public.stock_resolve_codes_v1(p_workspace_id uuid, p_codes text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6815bbd1a0a1
 routine public.stock_return_v1(p_workspace_id uuid, p_request_id uuid, p_return_id uuid, p_kind text, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6746c086b09f
 routine public.stock_returns_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:20ba809ab789
@@ -4763,6 +4795,17 @@ routine public.till_layout_problems(p_workspace_id uuid, p_name text, p_layout j
 routine public.till_layout_publish_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_expected_version integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f51623025526
 routine public.till_layout_reset_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f320b4400f09
 routine public.till_layout_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_expected_version integer, p_layout jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5ae3fc7e2d12
+routine public.till_terminal_approve_v1(p_terminal_id uuid, p_fingerprint text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7c11a3828256
+routine public.till_terminal_claim_v1(p_code text, p_device_id uuid, p_secret_hash text, p_firmware text, p_protocol text, p_claim_request_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:cdffb8adc42d
+routine public.till_terminal_code_cancel_v1(p_code_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:f6e5ee285df5
+routine public.till_terminal_code_create_v1(p_workspace_id uuid, p_till_id uuid, p_device_id uuid, p_board_profile text, p_secret_hash text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:cfed96cd777d
+routine public.till_terminal_code_normal(p_code text) -> text | function | invoker | immutable | exec:service_role | body:3313a21d56bb
+routine public.till_terminal_fingerprint(p_secret_hash text) -> text | function | invoker | immutable | exec:service_role | body:96803719c623
+routine public.till_terminal_new_code() -> text | function | invoker | volatile | exec:service_role | body:bb016e7bfab5
+routine public.till_terminal_owner(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:1a0fd4f9f3bb
+routine public.till_terminal_revoke_v1(p_terminal_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:7c1401c37ead
+routine public.till_terminal_status_v1(p_device_id uuid, p_secret text) -> jsonb | function | definer | volatile | exec:service_role | body:a7e35177dd77
+routine public.till_terminals_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c0eb77a8d35a
 routine public.toggle_message_star(p_kind text, p_message_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:88ca42478a05
 routine public.touch_conversation() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1a8384fd9011
 routine public.touch_last_seen() -> void | function | definer | volatile | exec:authenticated,service_role | body:2d50fbe02f88
@@ -5440,6 +5483,8 @@ trigger suppliers.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp
 trigger tax_exemption_certificates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.tax_exemption_certificates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger tax_reference.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.tax_reference FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger till_layouts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.till_layouts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger till_terminal_codes.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.till_terminal_codes FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger till_terminals.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.till_terminals FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger trace_reports.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.trace_reports FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger unit_conversions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.unit_conversions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger usage_records.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.usage_records FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

@@ -3023,19 +3023,22 @@
 <li>Les unités sont toujours là. La fonctionnalité <strong>Unités de mesure</strong> sous <strong>Fonctionnalités</strong> décide si les devis et les factures proposent vos propres unités et si les sélecteurs d’un article proposent toutes les unités ; tant qu’elle est désactivée, ils ne proposent que les unités habituelles.</li>
 </ul>
 <p class="see-also"><strong>Voir aussi:</strong> <a href="#user.workspace.settings.paper">Papier des documents</a></p>
-</div></article><article class="section no-media" id="user.workspace.settings.devices" data-roles="owner admin"><header><h3>Appareils <a class="permalink" href="#user.workspace.settings.devices" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Propriétaire</span><span class="role role-admin">Administrateur·rice avec l'autorisation</span></div></header><div class="body"><p>Un terminal de caisse est le petit écran du comptoir qui encaisse. Vous le reliez à votre entreprise depuis <strong>Appareils</strong> : l'application lit le code QR du terminal, ou le code de 10 caractères à côté, et indique de quel terminal il s'agit.</p>
+</div></article><article class="section no-media" id="user.workspace.settings.devices" data-roles="owner admin"><header><h3>Appareils <a class="permalink" href="#user.workspace.settings.devices" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Propriétaire</span><span class="role role-admin">Administrateur·rice avec l'autorisation</span></div></header><div class="body"><p>Un terminal de caisse est le petit écran du comptoir qui encaisse. Vous le reliez à votre entreprise depuis <strong>Appareils</strong> : l'application lit le code QR du terminal, indique de quel terminal il s'agit et vous donne le code qui le relie à une caisse. Le terminal attend ensuite votre approbation.</p>
 <h4 class="lbl lbl-steps">Étapes</h4>
 <ol>
 <li>Activez <strong>Terminaux de caisse</strong> sous <strong>Fonctionnalités</strong> (il demande <strong>Sessions de caisse et clôture de journée</strong> et reste désactivé tant que vous ne le demandez pas).</li>
 <li>Sur le terminal, maintenez le bouton <strong>BOOT</strong> 3 secondes : il affiche son code QR et son code, par exemple 3DNGP-UN9CG. Un terminal pas encore configuré les affiche de lui-même.</li>
-<li>Dans <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/settings/devices">Appareils</a>, présentez le code QR à la caméra, ou tapez le code sous <strong>Saisir le code</strong> et touchez <strong>Vérifier le code</strong>.</li>
-<li>Comparez le terminal et son <strong>Empreinte</strong> avec l'écran du terminal.</li>
+<li>Dans <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/settings/devices">Appareils</a>, présentez le code QR à la caméra. Comparez le terminal et son <strong>Empreinte</strong> avec l'écran du terminal.</li>
+<li>Choisissez la <strong>Caisse</strong> que sert le terminal et touchez <strong>Obtenir un code de connexion</strong>. Le code vaut une seule fois, pour ce terminal seulement, pendant les minutes que donnent vos paramètres (5 par défaut).</li>
+<li>Quand le terminal a utilisé le code, il apparaît dans la liste comme <strong>En attente de votre approbation</strong>. Touchez <strong>Approuver</strong>, vérifiez que l'écran du terminal affiche l'empreinte indiquée par l'application, puis confirmez : le terminal est <strong>Connecté</strong>.</li>
 </ol>
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
-<li>Un code ne contient jamais 0, O, 1, I ou L. Un caractère faux, ou deux inversés, est refusé aussitôt, en toutes lettres sous le champ ; majuscules, espaces et tirets n'importent pas.</li>
-<li>Sans caméra (navigateur, ordinateur), saisir le code fait de même.</li>
-<li>Relier le terminal à l'entreprise viendra avec une prochaine mise à jour : aujourd'hui l'application lit et vérifie le terminal, et ne lui envoie rien.</li>
+<li>Seul le propriétaire de l'entreprise obtient un code, approuve ou retire un terminal. Quiconque peut ouvrir les paramètres voit la liste.</li>
+<li><strong>Retirer</strong> met fin à la liaison d'un terminal avec l'entreprise. Pour l'utiliser à nouveau, reliez-le avec un nouveau code.</li>
+<li>Saisir le code à côté du QR (là où il n'y a pas de caméra) indique de quel terminal il s'agit ; pour le relier, scannez son code QR. Un terminal dont le code QR n'est pas accepté pour la liaison a d'abord besoin du nouveau micrologiciel.</li>
+<li>Un code présenté trop souvent par un mauvais terminal est épuisé (5 fois par défaut). Les deux nombres se trouvent dans les paramètres de l'entreprise : <strong>Code de connexion d'un appareil : minutes</strong> et <strong>Code de connexion d'un appareil : essais</strong>.</li>
+<li>Un code ne contient jamais 0, O, 1, I ni L. Un caractère faux, ou deux inversés, est refusé aussitôt, en clair sous le champ ; majuscules, espaces et tirets ne comptent pas.</li>
 </ul>
 </div></article><article class="section no-media" id="user.workspace.settings.organisation" data-roles="owner"><header><h3>Organisation <a class="permalink" href="#user.workspace.settings.organisation" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Propriétaire</span></div></header><div class="body"><p>Votre entreprise a des sites à l'étranger, dans un autre pays ou une autre devise. Chacun d'eux est une maison : une entreprise à part entière avec les règles de son pays, sa devise et sa propre comptabilité. Ensemble, elles forment une organisation avec une tête.</p>
 <h4 class="lbl lbl-steps">Étapes</h4>

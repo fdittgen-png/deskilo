@@ -5260,22 +5260,41 @@
   "@developmentWatermark": {
     "description": "#917 workspace environment: developmentWatermark"
   },
+  "devicePairingApprove": "Aprobar",
+  "devicePairingApproveBody": "Apruebe este dispositivo solo si su pantalla muestra la huella {fingerprint}.",
   "devicePairingBoard": "Terminal {id} · {model}",
   "devicePairingCheck": "Comprobar el código",
+  "devicePairingCode": "Código de conexión: {code}",
+  "devicePairingCodeHint": "Válido hasta las {time}, una sola vez, solo para este dispositivo.",
   "devicePairingConnect": "Conectar un dispositivo",
+  "devicePairingFailed": "El servidor no respondió: vuelva a intentarlo.",
   "devicePairingFingerprint": "Huella {fingerprint}: compárela con la pantalla del terminal.",
   "devicePairingFound": "Terminal encontrado",
-  "devicePairingLater": "Conectar el terminal a esta empresa llegará con una próxima actualización: no se le ha enviado nada.",
+  "devicePairingGetCode": "Obtener un código de conexión",
+  "devicePairingNeedsFirmware": "Este dispositivo necesita el nuevo firmware antes de poder conectarse.",
+  "devicePairingNoTill": "Añada primero una caja: un dispositivo sirve a una caja.",
   "devicePairingNone": "Todavía no hay ningún terminal de caja conectado a esta empresa.",
+  "devicePairingNotOwner": "Solo el propietario de la empresa conecta, aprueba o quita un dispositivo.",
+  "devicePairingNotWaiting": "Este dispositivo ya no está pendiente de aprobación.",
   "devicePairingRefusedAlphabet": "El código de un terminal nunca contiene 0, O, 1, I ni L, ni otros signos: compruebe el carácter en el terminal.",
   "devicePairingRefusedCheck": "Ningún terminal muestra este código: un carácter es incorrecto o dos están intercambiados. Compárelo con el terminal.",
   "devicePairingRefusedLength": "El código de un terminal tiene 10 caracteres, como XXXXX-XXXXX.",
   "devicePairingRefusedProfile": "Este terminal es de un modelo que esta aplicación aún no conoce. Actualice la aplicación y luego conéctelo.",
+  "devicePairingRevoke": "Quitar",
+  "devicePairingRevokeBody": "Este dispositivo dejará de estar conectado a la empresa. Para volver a usarlo, conéctelo con un código nuevo.",
   "devicePairingScanHint": "Acerque el código QR del terminal a la cámara. Para mostrarlo, mantenga pulsado el botón BOOT del terminal 3 segundos.",
+  "devicePairingScanToConnect": "Para conectar este dispositivo, escanee su código QR.",
+  "devicePairingStatusPaired": "Conectado",
+  "devicePairingStatusPending": "Pendiente de su aprobación",
   "devicePairingSubtitle": "Terminales de caja: conectar uno por su código QR o su código",
+  "devicePairingTill": "Caja: {till}",
+  "devicePairingTillInactive": "Esta caja no está activa: elija otra.",
+  "devicePairingTillPick": "Caja",
   "devicePairingTitle": "Dispositivos",
   "devicePairingType": "Escribir el código",
   "devicePairingTypeHelper": "Los 10 caracteres junto al código QR del terminal, por ejemplo 3DNGP-UN9CG.",
+  "devicePairingWithdraw": "Retirar el código",
+  "devicePairingWrongFingerprint": "La huella no corresponde a este dispositivo.",
   "directoryApproximate": "Ubicación aproximada de la dirección",
   "directoryCheckedIn": "Presente",
   "directoryCheckedInSeat": "Presente · {seat}",
@@ -19473,6 +19492,8 @@
     "description": "#4373 setting hint"
   },
   "settingHintCounterPaidOutLimit": "El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.",
+  "settingHintCounterTerminalPairAttempts": "Cuántas veces puede presentarse un código con un dispositivo o una prueba incorrectos antes de agotarse.",
+  "settingHintCounterTerminalPairMinutes": "Cuánto tiempo es válido el código que conecta un dispositivo de caja. Un cambio se aplica al próximo código, no a uno ya dado.",
   "settingHintDirectoryGeocoderUrl": "El servicio compatible con Photon que sitúa una dirección publicada en el mapa de descubrimiento: una dirección https en la internet pública, sin nombre de usuario, contraseña, consulta ni #. Déjelo vacío para usar la dirección con la que se construyó esta versión de la aplicación; si no, el servicio público Photon.",
   "settingHintDirectoryTileUrlTemplate": "El servidor de teselas con el que se dibuja el mapa de descubrimiento, con los marcadores z, x e y entre llaves en su dirección (se admite s entre llaves para un subdominio): https, en la internet pública, sin nombre de usuario, contraseña ni #. Déjelo vacío para usar el servidor de esta versión de la aplicación; si no, OpenStreetMap. Un nuevo host vuelve a preguntar a cada persona antes de cargar el mapa.",
   "settingHintDirectoryUpcomingWindowDays": "Cuántos días antes muestra el directorio la próxima reserva de un miembro.",
@@ -19625,7 +19646,7 @@
   },
   "settingHintStockGroupDefaultCountDays": "Cada cuántos días se propone para un recuento cíclico un artículo que ni un grupo ni un ajuste propio contempla. 0 significa sin programar.",
   "settingHintStockGroupDefaultTagMode": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza).",
-  "settingHintStockInvoiceSalePlace": "El código de un lugar de la empresa que tiene existencias, por ejemplo MAIN. Los bienes vendidos en factura salen de allí al emitir la factura.",
+  "settingHintStockInvoiceSalePlace": "Elija el lugar del que salen las mercancías vendidas en una factura, como sitio › lugar. Un código fijado antes sigue valiendo mientras solo un lugar lo lleve.",
   "@settingHintStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
   },
@@ -19736,6 +19757,8 @@
     "description": "#4373 setting label"
   },
   "settingLabelCounterPaidOutLimit": "Mayor salida sin autorización",
+  "settingLabelCounterTerminalPairAttempts": "Código de conexión de un dispositivo: intentos",
+  "settingLabelCounterTerminalPairMinutes": "Código de conexión de un dispositivo: minutos",
   "settingLabelDirectoryGeocoderUrl": "Servicio de búsqueda de direcciones",
   "settingLabelDirectoryTileUrlTemplate": "Servidor de teselas del mapa",
   "settingLabelDirectoryUpcomingWindowDays": "Vista previa del directorio",
@@ -19944,6 +19967,44 @@
   "settingOriginWorkspace": "Definido para este espacio",
   "@settingOriginWorkspace": {
     "description": "#2484 settings: Origin."
+  },
+  "settingPlaceAmbiguous": "El código {code} lo llevan varios lugares: elija uno. Las facturas con mercancías se rechazan hasta que lo haga.",
+  "@settingPlaceAmbiguous": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceFromCode": "{path} (encontrado por el código {code}: elíjalo para fijarlo)",
+  "@settingPlaceFromCode": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceGone": "El lugar elegido ya no se puede usar: elija otro. Las facturas con mercancías se rechazan hasta que lo haga.",
+  "@settingPlaceGone": {
+    "description": "#4495 the place of a setting"
+  },
+  "settingPlaceMissing": "Ningún lugar utilizable lleva el código {code}: elija uno. Las facturas con mercancías se rechazan hasta que lo haga.",
+  "@settingPlaceMissing": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlacePick": "Lugar",
+  "@settingPlacePick": {
+    "description": "#4495 the place of a setting"
   },
   "settingProblemAboveMax": "Por encima del máximo",
   "@settingProblemAboveMax": {
@@ -20992,7 +21053,7 @@
   "@standaloneFactLines": {
     "description": "#4165 standalone invoice composer: standaloneFactLines"
   },
-  "standaloneFactSalePlace": "el lugar del que se vende: indique un lugar con existencias en los ajustes de la empresa",
+  "standaloneFactSalePlace": "el lugar desde el que se venden las mercancías no está fijado, es ambiguo o ya no se puede usar: elija en los ajustes de existencias un lugar con existencias",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
   },
@@ -22227,6 +22288,10 @@
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
   "stockReasonPickRoleUnknown": "El uso debe ser picking o reserva.",
+  "stockReasonPlaceUnusable": "Ese lugar no se puede usar: elija un lugar en uso que lleve existencias.",
+  "@stockReasonPlaceUnusable": {
+    "description": "#4495 the place picked for a setting cannot be used"
+  },
   "stockReasonPointFixed": "El artículo, la variante y la sede de un punto de reposición no se cambian: cree otro.",
   "stockReasonPointTwice": "Este artículo ya tiene un punto de reposición en esta sede.",
   "stockReasonPriceInvalid": "Un precio es cero o más.",
@@ -22462,6 +22527,15 @@
   "stockScanUnknown": "Código {code} desconocido: ¿añadirlo a un artículo?",
   "stockScanUnknownAdd": "Abrir los artículos",
   "stockScanUnknownTag": "Etiqueta {code} desconocida",
+  "stockScanWhichPlace": "Varios lugares llevan el código {code}: ¿cuál?",
+  "@stockScanWhichPlace": {
+    "description": "#4495 a scanned code several places carry",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "stockSettingsElsewhere": "Los ajustes de existencias se mantienen en la página Ajustes de existencias.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

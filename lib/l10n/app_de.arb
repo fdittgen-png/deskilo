@@ -5260,22 +5260,41 @@
   "@developmentWatermark": {
     "description": "#917 workspace environment: developmentWatermark"
   },
+  "devicePairingApprove": "Freigeben",
+  "devicePairingApproveBody": "Geben Sie das Gerät nur frei, wenn sein Bildschirm den Fingerabdruck {fingerprint} zeigt.",
   "devicePairingBoard": "Terminal {id} · {model}",
   "devicePairingCheck": "Code prüfen",
+  "devicePairingCode": "Verbindungscode: {code}",
+  "devicePairingCodeHint": "Gültig bis {time}, einmal, nur für dieses Gerät.",
   "devicePairingConnect": "Gerät verbinden",
+  "devicePairingFailed": "Der Server hat nicht geantwortet: Versuchen Sie es erneut.",
   "devicePairingFingerprint": "Fingerabdruck {fingerprint}: vergleichen Sie ihn mit dem Bildschirm des Terminals.",
   "devicePairingFound": "Terminal gefunden",
-  "devicePairingLater": "Das Verbinden des Terminals mit diesem Unternehmen kommt mit einem späteren Update: nichts wurde an es gesendet.",
+  "devicePairingGetCode": "Verbindungscode erhalten",
+  "devicePairingNeedsFirmware": "Dieses Gerät braucht die neue Firmware, bevor es verbunden werden kann.",
+  "devicePairingNoTill": "Legen Sie zuerst eine Kasse an: Ein Gerät dient einer Kasse.",
   "devicePairingNone": "Mit diesem Unternehmen ist noch kein Kassenterminal verbunden.",
+  "devicePairingNotOwner": "Nur der Inhaber des Unternehmens verbindet, gibt frei oder entfernt ein Gerät.",
+  "devicePairingNotWaiting": "Dieses Gerät wartet nicht mehr auf eine Freigabe.",
   "devicePairingRefusedAlphabet": "Der Code eines Terminals enthält nie 0, O, 1, I oder L und keine anderen Zeichen: prüfen Sie das Zeichen auf dem Terminal.",
   "devicePairingRefusedCheck": "Kein Terminal zeigt diesen Code: ein Zeichen ist falsch, oder zwei sind vertauscht. Vergleichen Sie ihn mit dem Terminal.",
   "devicePairingRefusedLength": "Der Code eines Terminals hat 10 Zeichen, etwa XXXXX-XXXXX.",
   "devicePairingRefusedProfile": "Dieses Terminal ist ein Modell, das diese App noch nicht kennt. Aktualisieren Sie die App und verbinden Sie es dann.",
+  "devicePairingRevoke": "Entfernen",
+  "devicePairingRevokeBody": "Dieses Gerät ist dann nicht mehr mit dem Unternehmen verbunden. Um es wieder zu nutzen, verbinden Sie es mit einem neuen Code.",
   "devicePairingScanHint": "Halten Sie den QR-Code des Terminals vor die Kamera. Um ihn anzuzeigen, halten Sie die BOOT-Taste des Terminals 3 Sekunden gedrückt.",
+  "devicePairingScanToConnect": "Um dieses Gerät zu verbinden, scannen Sie seinen QR-Code.",
+  "devicePairingStatusPaired": "Verbunden",
+  "devicePairingStatusPending": "Wartet auf Ihre Freigabe",
   "devicePairingSubtitle": "Kassenterminals: eines per QR-Code oder Code verbinden",
+  "devicePairingTill": "Kasse: {till}",
+  "devicePairingTillInactive": "Diese Kasse ist nicht aktiv: Wählen Sie eine andere.",
+  "devicePairingTillPick": "Kasse",
   "devicePairingTitle": "Geräte",
   "devicePairingType": "Code eintippen",
   "devicePairingTypeHelper": "Die 10 Zeichen neben dem QR-Code des Terminals, zum Beispiel 3DNGP-UN9CG.",
+  "devicePairingWithdraw": "Code zurückziehen",
+  "devicePairingWrongFingerprint": "Der Fingerabdruck passt nicht zu diesem Gerät.",
   "directoryApproximate": "Ungefähre Lage der Adresse",
   "directoryCheckedIn": "Eingecheckt",
   "directoryCheckedInSeat": "Eingecheckt · {seat}",
@@ -19473,6 +19492,8 @@
     "description": "#4373 setting hint"
   },
   "settingHintCounterPaidOutLimit": "Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.",
+  "settingHintCounterTerminalPairAttempts": "Wie oft ein Code mit einem falschen Gerät oder Nachweis vorgelegt werden darf, bevor er verbraucht ist.",
+  "settingHintCounterTerminalPairMinutes": "Wie lange der Code gilt, der ein Kassengerät verbindet. Eine Änderung gilt für den nächsten Code, nicht für einen bereits vergebenen.",
   "settingHintDirectoryGeocoderUrl": "Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.",
   "settingHintDirectoryTileUrlTemplate": "Der Kachelserver, aus dem die Entdecken-Karte gezeichnet wird, mit den Platzhaltern z, x und y in geschweiften Klammern in der Adresse (s in geschweiften Klammern für eine Subdomain ist erlaubt): https, im öffentlichen Internet, ohne Benutzername, Passwort oder #. Leer lassen, um den Server dieser App-Version zu verwenden, sonst OpenStreetMap. Ein neuer Host fragt jede Person erneut, bevor die Karte lädt.",
   "settingHintDirectoryUpcomingWindowDays": "Wie viele Tage im Voraus das Mitgliederverzeichnis die nächste Buchung eines Mitglieds zeigt.",
@@ -19625,7 +19646,7 @@
   },
   "settingHintStockGroupDefaultCountDays": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. 0 heißt nicht geplant.",
   "settingHintStockGroupDefaultTagMode": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht).",
-  "settingHintStockInvoiceSalePlace": "Der Code eines Orts des Unternehmens, der Bestand führt, zum Beispiel MAIN. Auf Rechnung verkaufte Waren gehen beim Ausstellen der Rechnung von dort ab.",
+  "settingHintStockInvoiceSalePlace": "Wählen Sie den Ort, von dem auf einer Rechnung verkaufte Waren abgehen, als Standort › Ort. Ein früher gesetzter Code gilt weiter, solange nur ein Ort ihn trägt.",
   "@settingHintStockInvoiceSalePlace": {
     "description": "#4433 goods sold on an invoice: settingHintStockInvoiceSalePlace"
   },
@@ -19736,6 +19757,8 @@
     "description": "#4373 setting label"
   },
   "settingLabelCounterPaidOutLimit": "Größte Entnahme ohne Freigabe",
+  "settingLabelCounterTerminalPairAttempts": "Verbindungscode eines Geräts: Versuche",
+  "settingLabelCounterTerminalPairMinutes": "Verbindungscode eines Geräts: Minuten",
   "settingLabelDirectoryGeocoderUrl": "Adresssuchdienst",
   "settingLabelDirectoryTileUrlTemplate": "Kachelserver der Karte",
   "settingLabelDirectoryUpcomingWindowDays": "Vorschau im Verzeichnis",
@@ -19944,6 +19967,44 @@
   "settingOriginWorkspace": "Für diesen Arbeitsbereich festgelegt",
   "@settingOriginWorkspace": {
     "description": "#2484 settings: Origin."
+  },
+  "settingPlaceAmbiguous": "Der Code {code} gehört zu mehreren Orten: Wählen Sie einen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.",
+  "@settingPlaceAmbiguous": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceFromCode": "{path} (über den Code {code} gefunden: wählen Sie ihn aus, um es festzulegen)",
+  "@settingPlaceFromCode": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceGone": "Der gewählte Ort ist nicht mehr nutzbar: Wählen Sie einen anderen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.",
+  "@settingPlaceGone": {
+    "description": "#4495 the place of a setting"
+  },
+  "settingPlaceMissing": "Kein nutzbarer Ort trägt den Code {code}: Wählen Sie einen. Rechnungen mit Waren werden abgelehnt, bis Sie es tun.",
+  "@settingPlaceMissing": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlacePick": "Ort",
+  "@settingPlacePick": {
+    "description": "#4495 the place of a setting"
   },
   "settingProblemAboveMax": "Über dem Maximum",
   "@settingProblemAboveMax": {
@@ -20992,7 +21053,7 @@
   "@standaloneFactLines": {
     "description": "#4165 standalone invoice composer: standaloneFactLines"
   },
-  "standaloneFactSalePlace": "der Ort, von dem verkauft wird: einen Ort mit Bestand in den Unternehmenseinstellungen festlegen",
+  "standaloneFactSalePlace": "der Ort, von dem Waren verkauft werden, ist nicht festgelegt, nicht eindeutig oder nicht mehr nutzbar: Wählen Sie in den Lagereinstellungen einen Ort mit Bestand",
   "@standaloneFactSalePlace": {
     "description": "#4433 goods sold on an invoice: standaloneFactSalePlace"
   },
@@ -22227,6 +22288,10 @@
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
   "stockReasonPickRoleUnknown": "Die Verwendung muss Kommissionierung oder Reserve sein.",
+  "stockReasonPlaceUnusable": "Dieser Ort kann nicht verwendet werden: Wählen Sie einen Ort, der in Gebrauch ist und Bestand führt.",
+  "@stockReasonPlaceUnusable": {
+    "description": "#4495 the place picked for a setting cannot be used"
+  },
   "stockReasonPointFixed": "Artikel, Variante und Standort eines Meldebestands lassen sich nicht ändern: Legen Sie einen neuen an.",
   "stockReasonPointTwice": "Dieser Artikel hat an diesem Standort bereits einen Meldebestand.",
   "stockReasonPriceInvalid": "Ein Preis ist null oder größer.",
@@ -22462,6 +22527,15 @@
   "stockScanUnknown": "Unbekannter Code {code} — einem Artikel zuordnen?",
   "stockScanUnknownAdd": "Artikel öffnen",
   "stockScanUnknownTag": "Unbekannter Tag {code}",
+  "stockScanWhichPlace": "Mehrere Orte tragen den Code {code}: welcher ist es?",
+  "@stockScanWhichPlace": {
+    "description": "#4495 a scanned code several places carry",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "stockSettingsElsewhere": "Die Lagereinstellungen werden auf der Seite Lagereinstellungen geführt.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

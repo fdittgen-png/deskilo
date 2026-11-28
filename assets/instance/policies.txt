@@ -610,6 +610,8 @@ public.tax_reference.personal_native_session
 public.tax_reference.tax_reference_select
 public.till_layouts.mcp_delegated_deny
 public.till_layouts.till_layouts_select
+public.till_terminal_codes.mcp_delegated_deny
+public.till_terminals.mcp_delegated_deny
 public.trace_reports.mcp_delegated_deny
 public.trace_reports.personal_native_session
 public.unit_conversions.mcp_delegated_deny

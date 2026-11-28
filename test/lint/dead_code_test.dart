@@ -18,6 +18,10 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  // #4497 -- the one list of VATEX exemption codes: the setup questionnaire mirrors it (vatex_codes_parity_test); the
+  // app's VAT rate editor picks from it when its free-text reason becomes a picker.
+  'packages/deskilo_invoice_model/lib/src/vatex_codes.dart::vatRateExemptionCodes':
+      '#4501 — the app\'s VAT rate editor picks the exemption reason from it',
   // The registry as JSON and the keys a rows block writes: the generator's own checks read them (feature_registry_sql,
   // feature_countries, feature_registry tests) while the registry moves to rows; #4396 removes them with its last table.
   'lib/features/workspace/domain/feature_registry_sql.dart::featureRegistryJson':

@@ -1,0 +1,40 @@
+{
+  "settingPlacePick": "Emplacement",
+  "@settingPlacePick": {
+    "description": "#4495 the place of a setting"
+  },
+  "settingPlaceFromCode": "{path} (trouvé par le code {code} : choisissez-le pour le fixer)",
+  "@settingPlaceFromCode": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceAmbiguous": "Le code {code} est porté par plusieurs emplacements : choisissez-en un. Les factures avec des marchandises sont refusées tant que vous ne le faites pas.",
+  "@settingPlaceAmbiguous": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceMissing": "Aucun emplacement utilisable ne porte le code {code} : choisissez-en un. Les factures avec des marchandises sont refusées tant que vous ne le faites pas.",
+  "@settingPlaceMissing": {
+    "description": "#4495 the place of a setting",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "settingPlaceGone": "L'emplacement choisi n'est plus utilisable : choisissez-en un autre. Les factures avec des marchandises sont refusées tant que vous ne le faites pas.",
+  "@settingPlaceGone": {
+    "description": "#4495 the place of a setting"
+  }
+}

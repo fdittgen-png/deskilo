@@ -121,7 +121,7 @@ const DEFAULTS={
  // each workspace server (platform setting messaging.inbox_page_size).
  inbox:{pageSize:'50'},
  // #2863 — supplier lookup wait and quota (platform settings purchase.supplier_lookup_*).
- badgeSecurity:{failureLimit:'50',signinWhere:'enrolled_kiosks'},counter:{fiscalObligation:'register_required',documentChannel:'share',customerless:'allowed',blindCount:true,byDenomination:false,paidOutLimit:'0',cashReasons:'change,expense,other',offlineMinutes:'240',offlineSales:'200',offlineTolerance:'0',layoutMaxCells:'200',layoutCashierReorder:false,maxDiscount:'0'},stock:{allowNegative:false,addressSeparator:'-',tagMode:'none',countDays:'0',priceRounding:'none',tagGrace:'30',repeatedScan:'add_one',tagReadMax:'500',tagReadQuantity:false,cycleHighValue:'50000',cycleOverdue:'7',expiryHorizon:'30',weighedGoods:false,invoiceSalePlace:'MAIN'},business:{shopType:'grocery'},supplierLookup:{timeout:'15',perMinute:'20'},retention:{usYears:'0'},bank:{maxBytes:'5242880',maxLines:'5000',matchWindow:'60'},records:{hostingCountry:'',craReference:''},map:{tiles:'',geocoder:''},bi:{detailPageSize:'50'},region:{currency:'EUR',country:'FR',locale:'en_US',weekStart:'locale'}, // #2380 bank.import_max_*/match_window_days; #2378 records.hosting_country ('' = none declared), records.cra_authorisation_reference; #2488 locale.default_currency/country/locale; #3648 locale.default_week_start; directory.tile_url_template/geocoder_url ('' = the app's default); #2578 bi.detail_page_size
+ badgeSecurity:{failureLimit:'50',signinWhere:'enrolled_kiosks'},counter:{fiscalObligation:'register_required',documentChannel:'share',customerless:'allowed',blindCount:true,byDenomination:false,paidOutLimit:'0',cashReasons:'change,expense,other',offlineMinutes:'240',offlineSales:'200',offlineTolerance:'0',layoutMaxCells:'200',layoutCashierReorder:false,maxDiscount:'0',terminalPairMinutes:'5',terminalPairAttempts:'5'},stock:{allowNegative:false,addressSeparator:'-',tagMode:'none',countDays:'0',priceRounding:'none',tagGrace:'30',repeatedScan:'add_one',tagReadMax:'500',tagReadQuantity:false,cycleHighValue:'50000',cycleOverdue:'7',expiryHorizon:'30',weighedGoods:false,invoiceSalePlace:'MAIN'},business:{shopType:'grocery'},supplierLookup:{timeout:'15',perMinute:'20'},retention:{usYears:'0'},bank:{maxBytes:'5242880',maxLines:'5000',matchWindow:'60'},records:{hostingCountry:'',craReference:''},map:{tiles:'',geocoder:''},bi:{detailPageSize:'50'},region:{currency:'EUR',country:'FR',locale:'en_US',weekStart:'locale'}, // #2380 bank.import_max_*/match_window_days; #2378 records.hosting_country ('' = none declared), records.cra_authorisation_reference; #2488 locale.default_currency/country/locale; #3648 locale.default_week_start; directory.tile_url_template/geocoder_url ('' = the app's default); #2578 bi.detail_page_size
  weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
  halfDayHours:'4',fullDayHours:'8',deskOpacity:'100',
  horizonDays:'90',minDuration:'30',maxDuration:'1440',
@@ -190,6 +190,14 @@ function normalize(s){
  const levels=n.freeLevel?null:n.subLevels.length?n.subLevels:['100'],pk=n.packages.some(p=>p.name.trim());
  n.members.forEach((m,i)=>{if(levels&&!levels.includes(String(m.pct||'100')))n=put(n,`members.${i}.pct`,levels[0]);
   if((m.overage||'blocked')==='packages'&&!pk)n=put(n,`members.${i}.overage`,'blocked')});
+ // #4497 — every VAT rate has its own key (what a service names); a positive rate is standard, a 0 % rate keeps
+ // only a treatment of the list, and an exemption reason only one of its category's.
+ const keys=new Set(n.vatRates.map(r=>r.key).filter(Boolean));let next=1;
+ const fresh=()=>{while(keys.has('vat-'+next))next++;keys.add('vat-'+next);return 'vat-'+next};
+ n.vatRates.forEach((r,i)=>{const zero=r.percent!==''&&r.percent!=null&&parseFloat(r.percent)===0;
+  const cat=zero?(VAT_ZERO_CATEGORIES.some(([c])=>c===r.category)?r.category:''):'S';
+  const reason=VAT_EXEMPTIONS.some(([c,code])=>c===cat&&code===r.reason)?r.reason:'';
+  if(!r.key||r.category!==cat||(r.reason||'')!==reason)n=put(n,`vatRates.${i}`,{...r,key:r.key||fresh(),category:cat,reason})});
  return n;
 }
 
@@ -295,6 +303,26 @@ function section(title,...kids){const s=h('section',{},h('h2',{},title),h('div',
 function tableRows(cols,path,make,add,addLabel){const t=h('table',{},h('tr',{},...cols.map(c=>h('th',{},c)),h('th')));get(path).forEach((r,i)=>{const tr=h('tr',{},...make(r,`${path}.${i}`).map((c,j)=>h('td',{},(c&&/^(INPUT|SELECT)$/.test(c.tagName)&&typeof cols[j]==='string'&&c.setAttribute('aria-label',cols[j]),c))),h('td',{},h('button',{class:'del',type:'button','aria-label':T('tableRemoveRow'),onclick:()=>{set(path,get(path).filter((_,j)=>j!==i));render()}},'✕')));t.append(tr)});const w=h('div',{},t,h('button',{class:'add',type:'button',onclick:()=>{set(path,[...get(path),add()]);render()}},addLabel));return w}
 function cell(path,type='text',ph=''){const i=h('input',{type,placeholder:ph});i.value=get(path)??'';i.oninput=()=>set(path,i.value);return i}
 // A select over [value, label] pairs that writes `path`.
+// #4497 — a VAT rate's treatment and reason: a positive rate is standard (nothing to choose); a 0 % rate is chosen
+// zero-rated, exempt or outside the scope, and an exempt or out-of-scope one names its reason from the list.
+function vatTreatmentCells(r,rp){const zero=r.percent!==''&&r.percent!=null&&parseFloat(r.percent)===0;
+ if(!zero)return [h('span',{class:'hint'},T('vatCatStandard')),h('span')];
+ const cat=pick(`${rp}.category`,[['',T('vatPickTreatment')],...opts(VAT_ZERO_CATEGORIES)],r.category||'');
+ const reasons=VAT_EXEMPTIONS.filter(([c])=>c===r.category).map(([,code,label])=>[code,T(label)]);
+ return [cat,reasons.length?pick(`${rp}.reason`,[['',T('vatPickReason')],...reasons],r.reason||''):h('span')]}
+// #4497 — the review of the VAT rates: a 0 % rate says what it is, an exempt or out-of-scope one why, and no two rates
+// share a name (the configuration binds a service to its rate by that name); and a service names a rate that exists.
+function vatRateFindings(){const f=[];if(!registered()||!on('vatManagement'))return f;const seen=new Set();
+ for(const r of S.vatRates.filter(r=>String(r.label).trim()&&r.percent!=='')){const label=String(r.label).trim();
+  if(parseFloat(r.percent)===0&&!r.category)f.push(F.err(T('legalErrZeroTreatment',{label}),'legal'));
+  if((r.category==='E'||r.category==='O')&&!r.reason)f.push(F.err(T('legalErrExemptionReason',{label}),'legal'));
+  if(seen.has(label.toLowerCase()))f.push(F.err(T('legalErrDuplicateVatLabel',{label}),'legal'));seen.add(label.toLowerCase())}
+ return f}
+function serviceVatFindings(){if(!on('services')||!registered()||!on('vatManagement'))return [];
+ const keys=new Set(S.vatRates.filter(r=>String(r.label).trim()&&r.percent!=='').map(r=>r.key));
+ return S.services.filter(x=>x.name.trim()&&!keys.has(x.vatKey)).map(x=>F.err(T('servicesErrVatRate',{name:x.name.trim()}),'services'))}
+// #4497 — the rates a service picks from: each by its own key, named by its label and percentage.
+function vatRateOptions(){return [['',T('servicesVatPick')],...S.vatRates.filter(r=>String(r.label).trim()&&r.percent!=='').map(r=>[r.key,`${String(r.label).trim()} (${r.percent} %)`])]}
 function pick(path,opts,value){const s=h('select');for(const[v,l]of opts)s.append(h('option',{value:v},l));s.value=value;s.onchange=()=>set(path,s.value);return s}
 function yesNo(){const s=h('select');s.append(h('option',{value:'no'},T('optNo')),h('option',{value:'yes'},T('optYes')));return s}
 const num=v=>{const n=parseFloat(v);return isNaN(n)?null:n};
@@ -372,6 +400,7 @@ function boot(){
   get WD(){return WD},get COUNTRIES(){return COUNTRIES},
   T,setLang,featureTitle,featureDesc,processTitle,subprocessTitle,weekdayName,on,mins,num,save,set,setMany,get,normalize,onCountry,applyFeature,enableWith,alsoEnabled,
   get VAT_RATES(){return VAT_RATES},seedVatRates,buildXml,findings,restore,hooks:[],
+  L10N_TEXT:(lang,key)=>L10N[lang]?.s?.[key],
   reset(){S=restore(null);save();render()},
   rerender(){render()},
  };

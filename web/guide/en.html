@@ -3023,19 +3023,22 @@
 <li>The units are always here. The <strong>Units of measure</strong> feature under <strong>Features</strong> decides whether quotes and invoices offer your own units and whether the pickers of an item offer every unit; while it is off they offer the usual units only.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="#user.workspace.settings.paper">Paper of the documents</a></p>
-</div></article><article class="section no-media" id="user.workspace.settings.devices" data-roles="owner admin"><header><h3>Devices <a class="permalink" href="#user.workspace.settings.devices" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span><span class="role role-admin">Administrator with the permission</span></div></header><div class="body"><p>A till board is the small screen at the counter that takes payments. You connect it to your business from <strong>Devices</strong>: the app reads the board's QR code, or the code of 10 characters beside it, and shows which board it is.</p>
+</div></article><article class="section no-media" id="user.workspace.settings.devices" data-roles="owner admin"><header><h3>Devices <a class="permalink" href="#user.workspace.settings.devices" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span><span class="role role-admin">Administrator with the permission</span></div></header><div class="body"><p>A till board is the small screen at the counter that takes payments. You connect it to your business from <strong>Devices</strong>: the app reads the board's QR code, shows which board it is, and gives you the code that connects it to one till. The board then waits until you approve it.</p>
 <h4 class="lbl lbl-steps">Steps</h4>
 <ol>
 <li>Turn on <strong>Till boards</strong> under <strong>Features</strong> (it needs <strong>Till sessions and day close</strong> and is off until you ask for it).</li>
 <li>On the board, hold the <strong>BOOT</strong> button for 3 seconds: it shows its QR code and its code, such as 3DNGP-UN9CG. A board not yet set up shows them by itself.</li>
-<li>In <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/settings/devices">Devices</a>, hold the QR code in front of the camera, or type the code under <strong>Type the code</strong> and tap <strong>Check the code</strong>.</li>
-<li>Compare the board and its <strong>Fingerprint</strong> with the board's screen.</li>
+<li>In <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/settings/devices">Devices</a>, hold the QR code in front of the camera. Compare the board and its <strong>Fingerprint</strong> with the board's screen.</li>
+<li>Choose the <strong>Till</strong> the board serves and tap <strong>Get a connection code</strong>. The code is valid once, for this board only, for the minutes your settings give (5 by default).</li>
+<li>When the board has used the code, it appears in the list as <strong>Waiting for your approval</strong>. Tap <strong>Approve</strong>, check that the board's screen shows the fingerprint the app names, and confirm: the board is <strong>Connected</strong>.</li>
 </ol>
 <h4 class="lbl lbl-know">Good to know</h4>
 <ul>
+<li>Only the business's owner gets a code, approves a board or removes one. Whoever may open the settings sees the list.</li>
+<li><strong>Remove</strong> ends a board's connection to the business. To use it again, connect it with a new code.</li>
+<li>Typing the code beside the QR (where there is no camera) shows which board it is; to connect it, scan its QR code. A board whose QR code is not accepted for connecting needs the new firmware first.</li>
+<li>A code a wrong board presents too often is used up (5 times by default). Both numbers are in the business settings: <strong>Board connection code: minutes</strong> and <strong>Board connection code: attempts</strong>.</li>
 <li>A code never holds 0, O, 1, I or L. One wrong character, or two swapped, is refused at once, in words under the field; capitals, spaces and dashes do not matter.</li>
-<li>Where there is no camera (a browser, a desktop), typing the code does the same.</li>
-<li>Connecting the board to the business comes with a later update: today the app reads and checks the board, and sends it nothing.</li>
 </ul>
 </div></article><article class="section no-media" id="user.workspace.settings.organisation" data-roles="owner"><header><h3>Organisation <a class="permalink" href="#user.workspace.settings.organisation" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span></div></header><div class="body"><p>Your business has sites abroad, in another country or another currency. Each of them is a house: a business of its own with its country's rules, its currency and its own books. Together they form one organisation with one head.</p>
 <h4 class="lbl lbl-steps">Steps</h4>
