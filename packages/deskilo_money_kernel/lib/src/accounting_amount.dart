@@ -45,14 +45,9 @@ class AccountingException implements Exception {
 /// The largest magnitude that survives JSON (an IEEE double) exactly.
 const int maxSafeMinor = 9007199254740991;
 
-/// Currencies whose exponent was reviewed: the zero- and three-decimal
-/// tables plus the two-decimal codes the app offers. Anything else is
-/// refused rather than read as two decimals.
-Set<String> get supportedCurrencies => {
-  ...Currencies.zeroDecimal,
-  ...Currencies.threeDecimal,
-  ...Currencies.selectable,
-};
+/// Currencies whose exponent was reviewed: the currency reference (#4501).
+/// Anything else is refused rather than read as two decimals.
+Set<String> get supportedCurrencies => {for (final c in currencyReference) c.code};
 
 /// The exponent of [currency], or a refusal.
 int exponentOf(String currency) {

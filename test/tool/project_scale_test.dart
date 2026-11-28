@@ -33,6 +33,10 @@ const _notUsed = {
   924, // reserved with 0922-0923 (#4432), not needed
   932, // reserved for #4436, renumbered to 0939-0940
   933, // reserved for #4436, renumbered to 0939-0940
+  989, // the e-invoicing address schemes (#4501), in batch 20
+  990, // the picked rates of #4479, in batch 20
+  991, // the unit upgrade's children (#4499), in batch 20
+  992, // 2e's lane, on its own branch
 };
 
 int _valueOf(List<Measure> all, String startsWith) => all
