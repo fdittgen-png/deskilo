@@ -2746,6 +2746,19 @@ constraint till_terminal_codes.till_terminal_codes_pkey PRIMARY KEY (id)
 constraint till_terminal_codes.till_terminal_codes_secret_hash_check CHECK ((secret_hash ~ '^[0-9a-f]{64}$'::text))
 constraint till_terminal_codes.till_terminal_codes_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint till_terminal_codes.till_terminal_codes_workspace_id_till_id_fkey FOREIGN KEY (workspace_id, till_id) REFERENCES counter_tills(workspace_id, id) ON DELETE CASCADE
+constraint till_terminal_leases.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint till_terminal_leases.system_company_present CHECK ((company_id IS NOT NULL))
+constraint till_terminal_leases.till_terminal_leases_check CHECK (((granted_at IS NULL) = (member_id IS NULL)))
+constraint till_terminal_leases.till_terminal_leases_check1 CHECK (((granted_at IS NULL) OR ((user_id IS NOT NULL) AND (auth_session_id IS NOT NULL) AND (expires_at IS NOT NULL))))
+constraint till_terminal_leases.till_terminal_leases_check2 CHECK (((token_ciphertext IS NULL) = (token_nonce IS NULL)))
+constraint till_terminal_leases.till_terminal_leases_lease_hash_check CHECK ((lease_hash ~ '^[0-9a-f]{64}$'::text))
+constraint till_terminal_leases.till_terminal_leases_lease_hash_key UNIQUE (lease_hash)
+constraint till_terminal_leases.till_terminal_leases_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
+constraint till_terminal_leases.till_terminal_leases_pkey PRIMARY KEY (id)
+constraint till_terminal_leases.till_terminal_leases_revoked_reason_check CHECK ((revoked_reason = ANY (ARRAY['replaced'::text, 'device_revoked'::text, 'by_operator'::text, 'by_owner'::text, 'expired'::text])))
+constraint till_terminal_leases.till_terminal_leases_terminal_id_fkey FOREIGN KEY (terminal_id) REFERENCES till_terminals(id) ON DELETE CASCADE
+constraint till_terminal_leases.till_terminal_leases_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint till_terminal_leases.till_terminal_leases_workspace_id_till_id_fkey FOREIGN KEY (workspace_id, till_id) REFERENCES counter_tills(workspace_id, id) ON DELETE CASCADE
 constraint till_terminals.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint till_terminals.system_company_present CHECK ((company_id IS NOT NULL))
 constraint till_terminals.till_terminals_approved_by_fkey FOREIGN KEY (approved_by) REFERENCES members(id) ON DELETE SET NULL
@@ -4831,8 +4844,14 @@ routine public.till_terminal_code_cancel_v1(p_code_id uuid) -> boolean | functio
 routine public.till_terminal_code_create_v1(p_workspace_id uuid, p_till_id uuid, p_device_id uuid, p_board_profile text, p_secret_hash text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:cfed96cd777d
 routine public.till_terminal_code_normal(p_code text) -> text | function | invoker | immutable | exec:service_role | body:3313a21d56bb
 routine public.till_terminal_fingerprint(p_secret_hash text) -> text | function | invoker | immutable | exec:service_role | body:96803719c623
+routine public.till_terminal_lease_grant_v1(p_terminal_id uuid, p_token_ciphertext bytea, p_token_nonce bytea, p_token_expires_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3a155bd507f1
+routine public.till_terminal_lease_request_v1(p_device_id uuid, p_secret text, p_lease_hash text) -> jsonb | function | definer | volatile | exec:service_role | body:74681a93ddcc
+routine public.till_terminal_lease_resolve_v1(p_device_id uuid, p_secret text, p_lease_hash text) -> jsonb | function | definer | volatile | exec:service_role | body:1a1ee5322a2e
+routine public.till_terminal_lease_revoke_v1(p_lease_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:02f24bd845ae
+routine public.till_terminal_leases_end() -> trigger | function | definer | volatile | exec:service_role | body:352dc122e2b3
 routine public.till_terminal_new_code() -> text | function | invoker | volatile | exec:service_role | body:bb016e7bfab5
 routine public.till_terminal_owner(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:1a0fd4f9f3bb
+routine public.till_terminal_proven(p_device_id uuid, p_secret text, OUT terminal till_terminals, OUT reason text) -> record | function | invoker | stable | exec:service_role | body:d3f6942d6958
 routine public.till_terminal_revoke_v1(p_terminal_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:7c1401c37ead
 routine public.till_terminal_status_v1(p_device_id uuid, p_secret text) -> jsonb | function | definer | volatile | exec:service_role | body:a7e35177dd77
 routine public.till_terminals_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c0eb77a8d35a
@@ -5523,6 +5542,8 @@ trigger tax_exemption_certificates.zz_system_columns_stamp CREATE TRIGGER zz_sys
 trigger tax_reference.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.tax_reference FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger till_layouts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.till_layouts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger till_terminal_codes.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.till_terminal_codes FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger till_terminal_leases.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.till_terminal_leases FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger till_terminals.till_terminals_leases_end CREATE TRIGGER till_terminals_leases_end AFTER UPDATE OF status ON public.till_terminals FOR EACH ROW EXECUTE FUNCTION till_terminal_leases_end()
 trigger till_terminals.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.till_terminals FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger trace_reports.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.trace_reports FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger unit_conversions.unit_conversions_archived CREATE TRIGGER unit_conversions_archived BEFORE INSERT OR UPDATE OF from_unit, to_unit ON public.unit_conversions FOR EACH ROW EXECUTE FUNCTION unit_conversions_archived_guard()
