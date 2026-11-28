@@ -189,6 +189,35 @@ static void one_language(const char *lang) {
     CHECK(find(lv_scr_act(), T(S_BTN_KEYPAD)) != NULL, "and the quantity is used once");
 }
 
+// #4508 -- every object of [o] lies on the [w] x [h] glass and none of its words overlaps [qr]; true when so.
+static bool laid_out(lv_obj_t *o, const lv_area_t *qr, lv_coord_t w, lv_coord_t h) {
+    for (uint32_t i = 0; i < lv_obj_get_child_cnt(o); i++) {
+        lv_obj_t *c = lv_obj_get_child(o, i);
+        lv_area_t a;
+        lv_obj_get_coords(c, &a);
+        if (a.x1 < 0 || a.y1 < 0 || a.x2 >= w || a.y2 >= h) {
+            printf("  off the glass: %s %d,%d-%d,%d\n", lv_obj_check_type(c, &lv_label_class) ? lv_label_get_text(c) : "(obj)", a.x1, a.y1, a.x2, a.y2);
+            return false;
+        }
+        if (qr && lv_obj_check_type(c, &lv_label_class) && a.x1 <= qr->x2 && a.x2 >= qr->x1 && a.y1 <= qr->y2 && a.y2 >= qr->y1) {
+            printf("  on the QR: %s %d,%d-%d,%d\n", lv_label_get_text(c), a.x1, a.y1, a.x2, a.y2);
+            return false;
+        }
+        if (!laid_out(c, qr, w, h)) return false;
+    }
+    return true;
+}
+
+static lv_obj_t *find_qr(lv_obj_t *o) {
+    for (uint32_t i = 0; i < lv_obj_get_child_cnt(o); i++) {
+        lv_obj_t *c = lv_obj_get_child(o, i);
+        if (lv_obj_check_type(c, &lv_qrcode_class)) return c;
+        lv_obj_t *in = find_qr(c);
+        if (in) return in;
+    }
+    return NULL;
+}
+
 static void pairing(void) {
     s_lang = "pairing";
     strings_set_lang("de");
@@ -197,13 +226,13 @@ static void pairing(void) {
     pump(50);
     CHECK(ui_pairing_shown(), "the pairing code is shown");
     CHECK(find_prefix(lv_layer_top(), T(S_PAIR_TITLE)) != NULL, "with what to do, in the board's language");
-    bool qr = false;
-    for (uint32_t i = 0; i < lv_obj_get_child_cnt(lv_layer_top()); i++) {
-        lv_obj_t *o = lv_layer_top()->spec_attr->children[i];
-        for (uint32_t j = 0; j < lv_obj_get_child_cnt(o); j++) qr |= lv_obj_check_type(lv_obj_get_child(o, j), &lv_qrcode_class);
-    }
-    CHECK(qr, "and a QR code");
+    CHECK(find_qr(lv_layer_top()) != NULL, "and a QR code");
     CHECK(find_prefix(lv_layer_top(), "3DNGP-UM7BF") != NULL, "and its readable code beside it (#4466)");
+    lv_area_t q;
+    lv_obj_update_layout(lv_layer_top());
+    lv_obj_get_coords(find_qr(lv_layer_top()), &q);
+    CHECK(laid_out(lv_layer_top(), &q, 480, 320), "the QR and its words fit the 480 x 320 glass, no word on the QR (#4508)");
+    CHECK(q.x2 - q.x1 >= 200, "and the QR is large enough to scan");
     ui_toggle_pairing(NULL, NULL, NULL);
     pump(50);
     CHECK(!ui_pairing_shown(), "shown again, it closes");
@@ -225,17 +254,10 @@ static void portrait_pairing(void) {
     ui_toggle_pairing("deskilo-device:v1?id=11111111-1111-4111-8111-111111111111&board=ideaspark_st7789_v1&fw=a7e83a3-dirty&fp=AB12-CD34&h=ab12cd3400000000000000000000000000000000000000000000000000000000", "AB12-CD34", "3DNGP-UN9CG");
     pump(50);
     lv_obj_t *top = lv_disp_get_layer_top(d);
-    bool inside = true, qr = false;
-    for (uint32_t i = 0; i < lv_obj_get_child_cnt(top); i++) {
-        lv_obj_t *o = lv_obj_get_child(top, i);
-        for (uint32_t j = 0; j < lv_obj_get_child_cnt(o); j++) {
-            lv_obj_t *c = lv_obj_get_child(o, j);
-            lv_area_t a;
-            lv_obj_get_coords(c, &a);
-            qr |= lv_obj_check_type(c, &lv_qrcode_class);
-            inside &= a.x1 >= 0 && a.y1 >= 0 && a.x2 < 170 && a.y2 < 320;
-        }
-    }
+    lv_obj_update_layout(top);
+    lv_obj_t *code = find_qr(top);
+    bool qr = code != NULL, inside = false;
+    if (qr) { lv_area_t q; lv_obj_get_coords(code, &q); inside = laid_out(top, &q, 170, 320); }
     CHECK(qr, "the QR is drawn on the portrait screen");
     CHECK(inside, "and it and its words fit on the 170 x 320 glass");
     ui_toggle_pairing(NULL, NULL, NULL);

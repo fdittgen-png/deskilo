@@ -13,10 +13,12 @@
 #include "cJSON.h"
 #include "cfg.h"
 #include "pay_logic.h"
+#include "layout_keys.h"
 #include "text_copy.h"
 #include "esp_crt_bundle.h"
 #include "esp_event.h"
 #include "esp_http_client.h"
+#include "esp_timer.h"
 #include "esp_log.h"
 #include "esp_netif.h"
 #include "esp_random.h"
@@ -87,35 +89,69 @@ static void remember_refusal(int status, const char *path) {
     cJSON_Delete(j);
 }
 
+// #4508 -- one HTTPS connection to the installation, kept open and reused by every request: a new client per request
+// paid a whole TLS handshake and certificate check each time, which is most of a key's wait. A connection the server
+// closed is opened again, once, when the request could not be sent; once it was sent, the answer counts as lost (the
+// next draft sends the whole basket again, and a payment is settled by its own request id).
+static esp_http_client_handle_t s_conn;
+
+static void conn_drop(void) {
+    if (s_conn) { esp_http_client_cleanup(s_conn); s_conn = NULL; }
+}
+
+static esp_http_client_handle_t conn_for(const char *url, esp_http_client_method_t m) {
+    if (!s_conn) {
+        esp_http_client_config_t c = {.url = url, .method = m, .crt_bundle_attach = esp_crt_bundle_attach, .timeout_ms = 15000,
+                                      .buffer_size = 2048, .buffer_size_tx = 2048, .keep_alive_enable = true,
+                                      .save_client_session = true};   // a new connection resumes the TLS session
+        s_conn = esp_http_client_init(&c);
+        return s_conn;
+    }
+    esp_http_client_set_url(s_conn, url);
+    esp_http_client_set_method(s_conn, m);
+    return s_conn;
+}
+
+static int64_t ms_since(int64_t us) { return (esp_timer_get_time() - us) / 1000; }
+
 static int http(esp_http_client_method_t m, const char *path, const char *body, bool bearer) {
     static char url[640];   // the server (95) and the longest query (the roll's, ~300) with room to spare
     if (snprintf(url, sizeof url, "%s%s", g_cfg.url, path) >= (int)sizeof url) {
         ESP_LOGE(TAG, "request address too long, not sent");
         return -1;
     }
-    esp_http_client_config_t c = {.url = url, .method = m, .crt_bundle_attach = esp_crt_bundle_attach, .timeout_ms = 15000, .buffer_size = 2048, .buffer_size_tx = 2048};
-    esp_http_client_handle_t h = esp_http_client_init(&c);
-    if (!h) return -1;
-    esp_http_client_set_header(h, "apikey", g_cfg.anon);
-    esp_http_client_set_header(h, "Content-Type", "application/json");
-    if (bearer) {
-        static char auth[1440];
-        snprintf(auth, sizeof auth, "Bearer %s", s_access);
-        esp_http_client_set_header(h, "Authorization", auth);
-    }
+    const int64_t t0 = esp_timer_get_time();
     int len = body ? (int)strlen(body) : 0;
     int status = -1;
-    if (esp_http_client_open(h, len) == ESP_OK) {
-        if (len == 0 || esp_http_client_write(h, body, len) == len) {
-            esp_http_client_fetch_headers(h);
-            status = esp_http_client_get_status_code(h);
-            int total = 0, r;
-            while (total < RESP_MAX - 1 && (r = esp_http_client_read(h, s_resp + total, RESP_MAX - 1 - total)) > 0) total += r;
-            s_resp[total] = 0;
-            if (status >= 400) remember_refusal(status, path);
+    int64_t sent_ms = -1;
+    for (int attempt = 0; attempt < 2 && status < 0; attempt++) {
+        esp_http_client_handle_t h = conn_for(url, m);
+        if (!h) return -1;
+        esp_http_client_set_header(h, "apikey", g_cfg.anon);
+        esp_http_client_set_header(h, "Content-Type", "application/json");
+        if (bearer) {
+            static char auth[1440];
+            snprintf(auth, sizeof auth, "Bearer %s", s_access);
+            esp_http_client_set_header(h, "Authorization", auth);
+        } else esp_http_client_delete_header(h, "Authorization");
+        if (esp_http_client_open(h, len) != ESP_OK || (len > 0 && esp_http_client_write(h, body, len) != len)) {
+            conn_drop();   // not sent: the kept connection was closed by the server; one new one is tried
+            continue;
         }
+        sent_ms = ms_since(t0);
+        if (esp_http_client_fetch_headers(h) < 0) { conn_drop(); break; }   // sent, no answer: lost, never sent twice
+        status = esp_http_client_get_status_code(h);
+        int total = 0, r;
+        while (total < RESP_MAX - 1 && (r = esp_http_client_read(h, s_resp + total, RESP_MAX - 1 - total)) > 0) total += r;
+        s_resp[total] = 0;
+        int rest = 0;
+        if (esp_http_client_flush_response(h, &rest) != ESP_OK || !esp_http_client_is_complete_data_received(h)) conn_drop();
+        if (status >= 400) remember_refusal(status, path);
     }
-    esp_http_client_cleanup(h);
+    const char *q = strchr(path, '?');
+    int n = q ? (int)(q - path) : (int)strlen(path);
+    // #4508 -- the time a request took, and how much of it went before the request was on its way (the connection)
+    trace("%.*s %d in %lld ms (sent at %lld)", n > 40 ? 40 : n, path, status, (long long)ms_since(t0), (long long)sent_ms);
     if (status < 0) { snprintf(s_last_code, sizeof s_last_code, "no answer"); trace("%.40s: no answer from Deskilo", path); }
     return status;
 }
@@ -138,9 +174,32 @@ bool api_sign_in(char *why, int cap) {
     return ok;
 }
 
+// #4508 -- the item keys of the till's published layout (#4448), in their order; 0 when the till has none (no layout,
+// the layouts switched off, or not readable), and the board then offers the products as before.
+static int layout_items(char ids[][40], int max) {
+    if (!g_cfg.till[0]) return 0;
+    char path[200];
+    snprintf(path, sizeof path, "/rest/v1/till_layouts?select=layout,version&till_id=eq.%s&status=eq.published&limit=1", g_cfg.till);
+    if (http(HTTP_METHOD_GET, path, NULL, true) != 200) return 0;
+    cJSON *j = cJSON_Parse(s_resp);
+    const cJSON *row = cJSON_GetArrayItem(j, 0), *v = cJSON_GetObjectItem(row, "version");
+    int n = layout_item_ids(cJSON_GetObjectItem(row, "layout"), ids, max);
+    if (n > 0) trace("layout v%d: %d item keys", cJSON_IsNumber(v) ? v->valueint : 0, n);
+    cJSON_Delete(j);
+    return n;
+}
+
 int api_products(product_t *out, int max, char *why, int cap) {
-    char path[320];
-    snprintf(path, sizeof path, "/rest/v1/services?select=id,name,price_cents&workspace_id=eq.%s&active=eq.true&sellable=eq.true&order=sort_order.asc.nullslast,name.asc&limit=%d", g_cfg.workspace, max);
+    char ids[MAX_PRODUCTS][40];
+    int keys = layout_items(ids, max < MAX_PRODUCTS ? max : MAX_PRODUCTS);
+    static char path[720];   // the item ids of a layout's keys: up to 8 uuids
+    if (keys > 0) {
+        int at = snprintf(path, sizeof path, "/rest/v1/services?select=id,name,price_cents&workspace_id=eq.%s&active=eq.true&sellable=eq.true&id=in.(", g_cfg.workspace);
+        for (int i = 0; i < keys; i++) at += snprintf(path + at, sizeof path - at, "%s%s", i ? "," : "", ids[i]);
+        snprintf(path + at, sizeof path - at, ")&limit=%d", max);
+    } else {
+        snprintf(path, sizeof path, "/rest/v1/services?select=id,name,price_cents&workspace_id=eq.%s&active=eq.true&sellable=eq.true&order=sort_order.asc.nullslast,name.asc&limit=%d", g_cfg.workspace, max);
+    }
     int st = http(HTTP_METHOD_GET, path, NULL, true);
     if (st != 200) { say(why, cap, T(S_WHY_PRODUCTS), st); return -1; }
     cJSON *j = cJSON_Parse(s_resp);
@@ -164,6 +223,16 @@ int api_products(product_t *out, int max, char *why, int cap) {
         n++;
     }
     cJSON_Delete(j);
+    // #4508 -- the layout's order, not the server's: a key whose item is no longer sold is left out
+    if (keys > 0) {
+        product_t sorted[MAX_PRODUCTS];
+        int m = 0;
+        for (int i = 0; i < keys; i++)
+            for (int k2 = 0; k2 < n; k2++)
+                if (!strcmp(out[k2].id, ids[i])) { sorted[m++] = out[k2]; break; }
+        memcpy(out, sorted, sizeof sorted[0] * m);
+        n = m;
+    }
     return n;
 }
 

@@ -37,5 +37,9 @@ typedef struct {
     int phase;
     int64_t due, given;
     char paid_number[32];
+    // #4508 the basket as the screen shows it at once, from the board's prices, until the server confirms it
+    int shown_items;
+    int64_t shown_total;
+    bool unconfirmed;
     uint32_t version;
 } shared_t;

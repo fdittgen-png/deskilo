@@ -76,6 +76,9 @@ esp_err_t board_init(void);
 void board_backlight(bool on);
 // Draws the pixels [x0,x1)x[y0,y1) (RGB565 as LVGL gives them, row-major) and queues the transfer.
 esp_err_t board_draw(int x0, int y0, int x1, int y1, const void *pixels);
+// #4508 -- [done] is called (from the transfer's interrupt) once the pixels of a board_draw have reached the panel, so
+// their buffer may be drawn into again.
+void board_on_drawn(void (*done)(void *ctx), void *ctx);
 // True while the panel is touched; x,y are screen pixels (0..479, 0..319), through the touch calibration.
 bool board_touch(int *x, int *y);
 // True while the panel is touched; rx,ry are the XPT2046's raw readings (0..4095), for calibrating.

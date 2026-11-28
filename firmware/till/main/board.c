@@ -32,7 +32,9 @@ static const init_cmd_t INIT[] = {
     {0xE0, {0xD0, 0x08, 0x0F, 0x06, 0x06, 0x33, 0x30, 0x33, 0x47, 0x17, 0x13, 0x13, 0x2B, 0x31}, 14, 0},
     {0xE1, {0xD0, 0x0A, 0x11, 0x0B, 0x09, 0x07, 0x2F, 0x33, 0x47, 0x38, 0x15, 0x16, 0x2C, 0x32}, 14, 0},
     {0xF0, {0x3C}, 1, 0}, {0xF0, {0x69}, 1, 0},
-    {0x21, {0}, 0, 0},
+    // #4508 -- inversion OFF (0x20): with the vendor demo's 0x21 this panel showed every colour inverted, the QR code
+    // light on dark, which scanners refuse
+    {0x20, {0}, 0, 0},
     {0x29, {0}, 0, 120},
 };
 
@@ -63,6 +65,20 @@ esp_err_t board_init(void) {
 }
 
 void board_backlight(bool on) { gpio_set_level(PIN_LCD_BL, on ? 1 : 0); }
+
+// #4508 -- the end of a pixel transfer, told to whoever drew
+static void (*s_drawn)(void *);
+static void *s_drawn_ctx;
+static bool drawn_isr(esp_lcd_panel_io_handle_t io, esp_lcd_panel_io_event_data_t *e, void *ctx) {
+    if (s_drawn) s_drawn(s_drawn_ctx);
+    return false;
+}
+void board_on_drawn(void (*done)(void *ctx), void *ctx) {
+    s_drawn = done;
+    s_drawn_ctx = ctx;
+    const esp_lcd_panel_io_callbacks_t cbs = {.on_color_trans_done = drawn_isr};
+    ESP_ERROR_CHECK(esp_lcd_panel_io_register_event_callbacks(s_io, &cbs, NULL));
+}
 
 esp_err_t board_draw(int x0, int y0, int x1, int y1, const void *pixels) {
     uint8_t ca[4] = {x0 >> 8, x0 & 0xFF, (x1 - 1) >> 8, (x1 - 1) & 0xFF};
