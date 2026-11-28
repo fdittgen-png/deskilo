@@ -5,7 +5,7 @@
 -- and amount) that carries no percent, no rate of the space and no deduction, so no return reads it; the country of the supplier
 -- agrees with the treatment; a space whose return has no acquisition box still refuses an acquisition. Rolled back.
 begin;
-select plan(20);
+select plan(21);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -37,7 +37,8 @@ insert into public.vat_rates (id, workspace_id, label, percent, active) values
 -- a domestic expense names a rate of the space
 select is(pg_temp.j(101, format('{"vat_rate_id": "%s", "deductible_pct": 50}', pg_temp.u(901))) ->> 'percent', '8.1', 'the percent is the rate''s');
 select is(pg_temp.j(101, format('{"vat_rate_id": "%s"}', pg_temp.u(901))) ->> 'vat_rate_id', pg_temp.u(901)::text, 'the rate''s identity is kept');
-select is(pg_temp.j(101, format('{"vat_rate_id": "%s"}', pg_temp.u(901))) ->> 'treatment', 'domestic', 'no treatment reads as domestic');
+select is(pg_temp.j(101, '{"percent": 8.1}'), '{"percent": 8.1, "deductible_pct": 100}'::jsonb, 'a domestic expense is stored in the shape it always had');
+select is(pg_temp.j(101, '{"percent": 20, "asset": true}'), '{"percent": 20, "deductible_pct": 100, "asset": true}'::jsonb, 'so is an asset');
 select is(pg_temp.j(101, format('{"vat_rate_id": "%s", "percent": 99}', pg_temp.u(902))) ->> 'percent', '2.6', 'the identity wins over a percent sent beside it');
 select is(pg_temp.j(101, '{"percent": 8.1}') ->> 'percent', '8.1', 'a percent alone still works (a schedule, the MCP)');
 select ok(not (pg_temp.j(101, '{"percent": 8.1}') ? 'vat_rate_id'), 'and keeps no identity it was not given');
@@ -45,7 +46,7 @@ select matches(pg_temp.t(101, format('{"vat_rate_id": "%s"}', pg_temp.u(903))), 
 select matches(pg_temp.t(101, format('{"vat_rate_id": "%s"}', pg_temp.u(904))), 'vat_rate_unknown', 'a rate of another space is refused');
 
 -- an acquisition from abroad, the flag read as a treatment
-select is(pg_temp.j(101, '{"percent": 8.1, "acquisition": true}') ->> 'treatment', 'acquisition', 'the old flag reads as the acquisition treatment');
+select is(pg_temp.j(101, '{"percent": 8.1, "acquisition": true}'), '{"percent": 8.1, "deductible_pct": 100, "acquisition": true}'::jsonb, 'the old flag is the acquisition treatment, stored as it always was');
 select is(pg_temp.j(101, format('{"vat_rate_id": "%s", "treatment": "acquisition", "supplier_country": "de", "document_number": " R-77 ", "document_date": "2026-09-12"}', pg_temp.u(901))) ->> 'supplier_country', 'DE', 'the supplier''s country is kept, as a code');
 select is(pg_temp.j(101, format('{"vat_rate_id": "%s", "treatment": "acquisition", "document_number": " R-77 ", "document_date": "2026-09-12"}', pg_temp.u(901))) ->> 'document_number', 'R-77', 'the document number is kept, trimmed');
 select matches(pg_temp.t(101, '{"percent": 8.1, "treatment": "acquisition", "supplier_country": "CH"}'), 'supplier abroad', 'an acquisition from the space''s own country is refused');

@@ -17,8 +17,10 @@
 --                        (`stated_percent`, `stated_tax_cents`) for a later cross-border refund filing. It never carries
 --                        a catalogue rate: the space's sales catalogue says nothing about another country's rates;
 --       none             no VAT on the document.
---     A payload without a treatment reads as `acquisition` when its flag is set and as `domestic` otherwise; no event
---     already stored is rewritten, and a percent sent without a rate id keeps working as before (a schedule, the MCP).
+--     A payload without a treatment reads as `acquisition` when its flag is set and as `domestic` otherwise. Domestic and
+--     acquisition expenses are stored in the shape they always had (the flag, or nothing) plus the new facts they were given;
+--     `treatment` is stored only for foreign VAT and for none. No event already stored is rewritten, and a percent sent
+--     without a rate id keeps working as before (a schedule, the MCP).
 --   * the document's facts: `supplier_country` (a country code, differing from the space's for an acquisition or foreign
 --     VAT), `document_number`, `document_date`.
 -- Every reader of `payload.vat.percent` (the return, the purchase bridge) keeps reading it: a foreign-charged or untaxed
@@ -138,9 +140,10 @@ begin
         where w.id = p_workspace_id and coalesce(r.value -> 'categories' ? 'acquisition', false)) then
     raise exception 'this space''s return has no acquisition tax box';
   end if;
+  -- The space's own VAT and the acquisition keep the shape they always had (the acquisition is its flag, the space's own
+  -- VAT is the absence of any treatment); only what is new is stored: the identity of the rate and the document's facts.
   return jsonb_build_object('percent', trim_scale(v_percent),
-                            'deductible_pct', trim_scale(v_share),
-                            'treatment', v_treat)
+                            'deductible_pct', trim_scale(v_share))
          || case when v_rate_id is null then '{}'::jsonb else jsonb_build_object('vat_rate_id', v_rate_id) end
          || case when coalesce((p_vat ->> 'asset')::boolean, false)
                  then jsonb_build_object('asset', true) else '{}'::jsonb end
