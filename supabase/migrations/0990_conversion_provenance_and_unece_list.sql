@@ -86,6 +86,14 @@ returns boolean language sql immutable set search_path = public as $fn$
 $fn$;
 revoke execute on function public.unece_unit_known(text) from public, anon, authenticated;
 
+-- A packaging unit's code is written with the Recommendation 21 prefix X in the list an e-invoice is validated against (XBX, not BX). Before the
+-- list, the unit form took any code of the right shape, and a business that typed the Recommendation 20 form of a packaging code (BX, CT, PK ...)
+-- would have a line refused downstream. The mapping is exact, so the stored code is rewritten; the codes with no X form stay as they are, visible,
+-- until changed.
+update public.workspace_units
+   set un_ece_code = 'X' || un_ece_code
+ where un_ece_code = any(string_to_array('BX CT PK PA BG BO CA CS CR DR RO PL TU TN JR BA SA ST PF BE BL', ' '));
+
 do $patch$
 declare
   v_def text;
