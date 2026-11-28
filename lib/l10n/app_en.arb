@@ -25466,6 +25466,10 @@
   "@itemGroupSet": {
     "description": "#4361 G12 finance parameters of an item group"
   },
+  "itemGroupSetOwn": "Set its own",
+  "@itemGroupSetOwn": {
+    "description": "#4479 an item takes its own unit against its group"
+  },
   "itemGroupSkippedLine": "{item}: {parameter} ({reason})",
   "@itemGroupSkippedLine": {
     "description": "#4361 G12 item groups: itemGroupSkippedLine",
@@ -25528,6 +25532,10 @@
   "itemGroupTrackingSerial": "By piece (serial)",
   "@itemGroupTrackingSerial": {
     "description": "#4361 G12 item groups: itemGroupTrackingSerial"
+  },
+  "itemGroupUnitsFollowHint": "Followed by every item of this group that has no unit of its own",
+  "@itemGroupUnitsFollowHint": {
+    "description": "#4479 the group sheet: the units are followed live by the items without their own"
   },
   "itemGroupUseGroup": "Use the group’s value",
   "@itemGroupUseGroup": {

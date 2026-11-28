@@ -19617,6 +19617,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get itemGroupSet => 'Définie';
 
   @override
+  String get itemGroupSetOwn => 'Fixer la sienne';
+
+  @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
     return '$item : $parameter ($reason)';
   }
@@ -19656,6 +19659,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get itemGroupTrackingSerial => 'À la pièce (série)';
+
+  @override
+  String get itemGroupUnitsFollowHint =>
+      'Suivi par chaque article de ce groupe qui n’a pas d’unité propre';
 
   @override
   String get itemGroupUseGroup => 'Utiliser la valeur du groupe';

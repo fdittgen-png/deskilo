@@ -48,7 +48,7 @@ class DemoItemGroups implements ItemGroups {
   final List<GroupHistoryRow> _history = [];
   final Map<String, Object> _answers = {};
 
-  static const _params = itemGroupEditable;
+  static const _params = [...itemGroupEditable, ...itemGroupUnits];
 
   List<_Group> _childrenOf(String id) => [for (final g in _groups.values) if (g.parentId == id) g];
 

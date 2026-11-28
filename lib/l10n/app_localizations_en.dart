@@ -19400,6 +19400,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemGroupSet => 'Set';
 
   @override
+  String get itemGroupSetOwn => 'Set its own';
+
+  @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
     return '$item: $parameter ($reason)';
   }
@@ -19439,6 +19442,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get itemGroupTrackingSerial => 'By piece (serial)';
+
+  @override
+  String get itemGroupUnitsFollowHint =>
+      'Followed by every item of this group that has no unit of its own';
 
   @override
   String get itemGroupUseGroup => 'Use the group’s value';

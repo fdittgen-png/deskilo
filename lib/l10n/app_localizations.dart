@@ -30833,6 +30833,12 @@ abstract class AppLocalizations {
   /// **'Set'**
   String get itemGroupSet;
 
+  /// #4479 an item takes its own unit against its group
+  ///
+  /// In en, this message translates to:
+  /// **'Set its own'**
+  String get itemGroupSetOwn;
+
   /// #4361 G12 item groups: itemGroupSkippedLine
   ///
   /// In en, this message translates to:
@@ -30910,6 +30916,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'By piece (serial)'**
   String get itemGroupTrackingSerial;
+
+  /// #4479 the group sheet: the units are followed live by the items without their own
+  ///
+  /// In en, this message translates to:
+  /// **'Followed by every item of this group that has no unit of its own'**
+  String get itemGroupUnitsFollowHint;
 
   /// #4361 G12 item groups: itemGroupUseGroup
   ///

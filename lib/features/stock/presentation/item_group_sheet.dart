@@ -92,7 +92,7 @@ class _GroupDraft {
         'keyColour': '${group?.params[groupParamColour] ?? ''}',
         'depositMinor': '${group?.params[groupParamDepositMinor] ?? ''}',
         'labelTemplate': '${group?.params[groupParamLabelTemplate] ?? ''}',
-        ...GroupUnitProposals.initial(group, format),
+        ...GroupUnitProposals.initial(group?.params ?? const {}, format),
         'reorderPoint': _shownQuantity(format, group?.params['reorder_point_default']),
         'reorderQty': _shownQuantity(format, group?.params['reorder_quantity_default']),
         'margin': group?.params['target_margin_bps'] == null ? '' : percentOfMarginBps((group!.params['target_margin_bps']! as num).toInt()),
@@ -352,9 +352,12 @@ class _GroupDraft {
 
   List<Widget> _proposalFields(BuildContext context, AppLocalizations l10n, void Function(void Function()) edit) => [
       const FormGap(),
-      Text(l10n.itemGroupProposalHint, key: const ValueKey('item-group-proposals'), style: Theme.of(context).textTheme.bodySmall),
+      // #4479 -- the units are followed by the items of the group that keep none of their own
+      Text(l10n.itemGroupUnitsFollowHint, key: const ValueKey('item-group-units-follow'), style: Theme.of(context).textTheme.bodySmall),
       const FormGap.small(),
       ..._units.widgets(l10n, edit, () => _preview = null),
+      Text(l10n.itemGroupProposalHint, key: const ValueKey('item-group-proposals'), style: Theme.of(context).textTheme.bodySmall),
+      const FormGap.small(),
       StockQuantityField(
         key: const ValueKey('item-group-reorder-point'),
         controller: fields['reorderPoint'],

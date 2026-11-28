@@ -11559,6 +11559,10 @@
   "@itemGroupSet": {
     "description": "#4361 G12 finance parameters of an item group"
   },
+  "itemGroupSetOwn": "Fixer la sienne",
+  "@itemGroupSetOwn": {
+    "description": "#4479 an item takes its own unit against its group"
+  },
   "itemGroupSkippedLine": "{item} : {parameter} ({reason})",
   "itemGroupSkippedTitle": "Non atteints",
   "itemGroupSoldByWeight": "Vendu au poids",
@@ -11587,6 +11591,10 @@
     "description": "#4366 item groups: the till parameters"
   },
   "itemGroupTrackingSerial": "À la pièce (série)",
+  "itemGroupUnitsFollowHint": "Suivi par chaque article de ce groupe qui n’a pas d’unité propre",
+  "@itemGroupUnitsFollowHint": {
+    "description": "#4479 the group sheet: the units are followed live by the items without their own"
+  },
   "itemGroupUseGroup": "Utiliser la valeur du groupe",
   "itemGroupYes": "Oui",
   "itemGroupsAdd": "Ajouter un groupe",
