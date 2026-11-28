@@ -27,6 +27,7 @@
 #include "pending.h"
 #include "trace.h"
 #include "strings.h"
+#include "basket.h"
 
 
 static const char *TAG = "till";
@@ -41,8 +42,10 @@ static shared_t S;
 static SemaphoreHandle_t s_lock;
 static QueueHandle_t s_cmd;
 typedef struct { int kind; int index; int64_t value; } cmd_t;
-static basket_line_t s_basket[MAX_PRODUCTS];
-static int s_basket_n;
+// #4508 -- the basket the screen shows at once (guarded by s_lock): the screen adds a key to it, the network task sends it
+// and confirms it with the server's answer; s_last is the basket as the server last confirmed it.
+static basket_t s_local, s_last;
+static uint32_t s_seen;   // the state's version the screen shows
 
 static void with_lock(void (*fn)(void *), void *arg) { xSemaphoreTake(s_lock, portMAX_DELAY); fn(arg); S.version++; xSemaphoreGive(s_lock); }
 static void set_status_fn(void *a) { snprintf(S.status, sizeof S.status, "%s", (const char *)a); }
@@ -67,12 +70,12 @@ static void set_status(const char *t) { with_lock(set_status_fn, (void *)t); }
 static void roll_set_fn(void *a) { S.roll = *(roll_t *)a; S.has_roll = S.roll.n > 0; }
 static void products_set_fn(void *a) { S.n_products = 0; }
 
-// [qty] of product [id]: the quantity typed on the keypad, or one.
-static void add_to_basket(const char *id, int qty) {
-    if (qty < 1) qty = 1;
-    for (int i = 0; i < s_basket_n; i++)
-        if (!strcmp(s_basket[i].item_id, id)) { s_basket[i].qty += qty; return; }
-    if (s_basket_n < MAX_PRODUCTS) { strncpy(s_basket[s_basket_n].item_id, id, 39); s_basket[s_basket_n].item_id[39] = 0; s_basket[s_basket_n++].qty = qty; }
+// What the screen shows of the basket, from s_local (under s_lock).
+static void show_basket(void) {
+    S.shown_items = s_local.items;
+    S.shown_total = s_local.total_minor;
+    S.unconfirmed = !basket_is_confirmed(&s_local);
+    S.version++;
 }
 
 static void set_phase(int phase, const char *status) {
@@ -210,7 +213,7 @@ static void net_task(void *arg) {
             if (phase_now != PH_SELL) continue;
             int64_t due = api_draft_total();
             xSemaphoreTake(s_lock, portMAX_DELAY);
-            bool payable = S.has_roll && S.roll.revision > 0 && due > 0 && due == S.roll.total_minor;
+            bool payable = S.has_roll && S.roll.revision > 0 && due > 0 && due == S.roll.total_minor && basket_is_confirmed(&s_local);
             if (payable) { S.due = due; S.phase = PH_CASH; S.version++; }
             xSemaphoreGive(s_lock);
             if (!payable) set_status(T(S_ST_NOTHING_TO_PAY));
@@ -252,7 +255,7 @@ static void net_task(void *arg) {
             continue;
         }
         if (c.kind == CMD_NEXT) {
-            s_basket_n = 0;
+            xSemaphoreTake(s_lock, portMAX_DELAY); basket_clear(&s_local); s_last = s_local; show_basket(); xSemaphoreGive(s_lock);
             api_reset_draft();
             memset(&roll, 0, sizeof roll);
             xSemaphoreTake(s_lock, portMAX_DELAY); S.roll = roll; S.has_roll = false; S.phase = PH_SELL; S.paid_number[0] = 0; snprintf(S.status, sizeof S.status, T(S_ST_NEXT)); S.version++; xSemaphoreGive(s_lock);
@@ -260,19 +263,25 @@ static void net_task(void *arg) {
             continue;
         }
         if (phase_now != PH_SELL) continue;   // the basket is frozen from the cash count on
-        product_t p;
-        xSemaphoreTake(s_lock, portMAX_DELAY); bool in = c.index >= 0 && c.index < S.n_products; if (in) p = S.products[c.index]; xSemaphoreGive(s_lock);
-        if (!in) continue;
-        add_to_basket(p.id, c.value > 0 && c.value < 1000 ? (int)c.value : 1);
+        // #4508 -- the screen added the key already; the basket as it stands now goes to the server, once: keys pressed
+        // while an earlier draft was on its way are in it, and their own commands then find it confirmed
+        basket_t sent;
+        xSemaphoreTake(s_lock, portMAX_DELAY); sent = s_local; xSemaphoreGive(s_lock);
+        if (basket_is_confirmed(&sent)) continue;
         set_status(T(S_ST_SENDING));
-        bool ok = api_draft(s_basket, s_basket_n, &roll, why, sizeof why);
-        if (!ok && strstr(why, "401")) { api_sign_in(why, sizeof why); ok = api_draft(s_basket, s_basket_n, &roll, why, sizeof why); }
+        const int64_t t0 = esp_timer_get_time();
+        bool ok = api_draft(sent.lines, sent.n, &roll, why, sizeof why);
+        if (!ok && strstr(why, "401")) { api_sign_in(why, sizeof why); ok = api_draft(sent.lines, sent.n, &roll, why, sizeof why); }
         xSemaphoreTake(s_lock, portMAX_DELAY);
-        if (ok) { S.roll = roll; S.has_roll = true; snprintf(S.status, sizeof S.status, T(S_ST_ADDED), p.name); }
-        else snprintf(S.status, sizeof S.status, "%s", why);
-        S.version++;
+        if (ok) {
+            S.roll = roll; S.has_roll = true; basket_confirm(&s_local, sent.seq); s_last = sent; s_last.confirmed = sent.seq;
+            snprintf(S.status, sizeof S.status, "%s", basket_is_confirmed(&s_local) ? T(S_ST_CHOOSE) : T(S_ST_SENDING));
+        } else { basket_restore(&s_local, &s_last); snprintf(S.status, sizeof S.status, "%s", why); }
+        show_basket();
         xSemaphoreGive(s_lock);
-        if (ok) trace("%.30s added: receipt %.8s rev %d", p.name, roll.receipt_id, roll.revision); else fail("draft", why);
+        if (ok) trace("draft of %d items: receipt %.8s rev %d in %lld ms", sent.items, roll.receipt_id, roll.revision,
+                      (long long)((esp_timer_get_time() - t0) / 1000));
+        else fail("draft", why);
     }
 }
 
@@ -289,13 +298,30 @@ static void read_touch(lv_indev_drv_t *drv, lv_indev_data_t *d) {
 static void tick(void *arg) { lv_tick_inc(2); }
 
 
-static void ui_send(int kind, int index, int64_t value) { cmd_t c = {kind, index, value}; xQueueSend(s_cmd, &c, 0); }
+static void ui_send(int kind, int index, int64_t value) {
+    // #4508 -- a key is on the screen at once: its line and the total from the price the board holds; the server confirms
+    if (kind == CMD_TAP) {
+        static shared_t copy;
+        bool added = false;
+        xSemaphoreTake(s_lock, portMAX_DELAY);
+        if (S.phase == PH_SELL && index >= 0 && index < S.n_products) {
+            added = basket_add(&s_local, &S.products[index], value > 0 && value < 1000 ? (int)value : 1);
+            if (added) show_basket();
+        }
+        copy = S;
+        xSemaphoreGive(s_lock);
+        if (!added) return;
+        s_seen = copy.version;
+        ui_refresh(&copy);
+    }
+    cmd_t c = {kind, index, value};
+    xQueueSend(s_cmd, &c, 0);
+}
 static void ui_reset(void) { cfg_erase(); esp_restart(); }
 static void save_cal(const touch_cal_t *cal) {
     board_touch_set_cal(cal);
     if (touch_cal_save(cal) != ESP_OK) trace("touch calibration not kept: it holds until the next restart");
 }
-static uint32_t s_seen;
 // Hands the screen a copy of the shared state whenever its version changed.
 // ---- the pairing code (#4474): BOOT held for 3 s shows it, on every board; pressed again, it closes ----
 static char s_pairing[288];   // the payload with its 64-character hash and a firmware version of up to 40

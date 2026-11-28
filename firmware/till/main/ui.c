@@ -498,7 +498,12 @@ void ui_refresh(const shared_t *cp) {
             if (!s_keypad_on) lv_obj_clear_flag(s_keys[i], LV_OBJ_FLAG_HIDDEN);
         } else lv_obj_add_flag(s_keys[i], LV_OBJ_FLAG_HIDDEN);
     }
-    if (copy.has_roll) {
+    if (copy.unconfirmed) {   // #4508: the keys pressed, at once, from the board's prices; "..." until the server confirms
+        money(m, sizeof m, copy.shown_total, copy.roll.currency);
+        char tt[88]; snprintf(tt, sizeof tt, T(S_BASKET), copy.shown_items, m);
+        strncat(tt, " ...", sizeof tt - strlen(tt) - 1);
+        lv_label_set_text(s_basket_label, tt);
+    } else if (copy.has_roll) {
         money(m, sizeof m, copy.roll.total_minor, copy.roll.currency);
         int items = 0;
         for (int i = 0; i < copy.roll.n; i++) items += atoi(copy.roll.lines[i].qty);
@@ -506,7 +511,7 @@ void ui_refresh(const shared_t *cp) {
         lv_label_set_text(s_basket_label, tt);
     } else lv_label_set_text(s_basket_label, "");
     // the payment: Pay only on a priced basket while selling; the cash count while counting; Ask again while uncertain
-    bool payable = copy.phase == PH_SELL && copy.has_roll && copy.roll.total_minor > 0;
+    bool payable = copy.phase == PH_SELL && copy.has_roll && copy.roll.total_minor > 0 && !copy.unconfirmed;
     if (payable) lv_obj_clear_state(s_pay, LV_STATE_DISABLED); else lv_obj_add_state(s_pay, LV_STATE_DISABLED);
     if (copy.phase == PH_UNCERTAIN) { lv_obj_add_flag(s_pay, LV_OBJ_FLAG_HIDDEN); lv_obj_clear_flag(s_retry, LV_OBJ_FLAG_HIDDEN); }
     else { lv_obj_clear_flag(s_pay, LV_OBJ_FLAG_HIDDEN); lv_obj_add_flag(s_retry, LV_OBJ_FLAG_HIDDEN); }
