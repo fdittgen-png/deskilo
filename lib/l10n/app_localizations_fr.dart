@@ -2234,6 +2234,103 @@ class AppLocalizationsFr extends AppLocalizations {
       'Enregistrez ce QR maintenant — il n\'est affiché qu\'une seule fois.';
 
   @override
+  String get bankAccountAdd => 'Ajouter un compte bancaire';
+
+  @override
+  String get bankAccountAliases => 'Aussi appelé';
+
+  @override
+  String get bankAccountAliasesHint =>
+      'Les autres noms sous lesquels des relevés de ce compte ont été importés, un par ligne.';
+
+  @override
+  String get bankAccountArchive => 'Archiver';
+
+  @override
+  String get bankAccountArchived => 'Archivé';
+
+  @override
+  String get bankAccountCurrency => 'Devise';
+
+  @override
+  String get bankAccountEdit => 'Compte bancaire';
+
+  @override
+  String get bankAccountIbanHint => 'Facultatif. Les espaces ne comptent pas.';
+
+  @override
+  String get bankAccountIdentifiers => 'Autres identifiants';
+
+  @override
+  String get bankAccountIdentifiersHint =>
+      'Un numéro de compte ou la référence de la banque, un par ligne.';
+
+  @override
+  String get bankAccountLedger => 'Compte comptable';
+
+  @override
+  String get bankAccountLedgerNone => 'Aucun';
+
+  @override
+  String get bankAccountName => 'Nom';
+
+  @override
+  String get bankAccountRefusedBookAccount =>
+      'Le compte comptable doit être un compte d\'actif mouvementable de l\'entreprise.';
+
+  @override
+  String bankAccountRefusedCurrency(String account, String currency) {
+    return 'Le relevé est dans une autre devise que le compte $account ($currency).';
+  }
+
+  @override
+  String get bankAccountRefusedCurrencyKept =>
+      'Les relevés du compte sont dans sa devise : la devise reste.';
+
+  @override
+  String get bankAccountRefusedIban => 'Ce n\'est pas un IBAN.';
+
+  @override
+  String get bankAccountRefusedName =>
+      'Un compte bancaire demande un nom de 1 à 64 caractères.';
+
+  @override
+  String get bankAccountRefusedNone =>
+      'Choisissez le compte bancaire de ce relevé.';
+
+  @override
+  String bankAccountRefusedOther(String name, String account) {
+    return 'Ce fichier est du compte $name, pas de $account. Choisissez son compte, ou ajoutez $name aux noms de $account.';
+  }
+
+  @override
+  String bankAccountRefusedTaken(String name) {
+    return 'Un autre compte bancaire de l\'entreprise porte déjà le nom $name.';
+  }
+
+  @override
+  String bankAccountSaved(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Enregistré : $count relevés sont désormais de ce compte.',
+      one: 'Enregistré : $count relevé est désormais de ce compte.',
+      zero: 'Enregistré.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bankAccountsNone => 'Aucun compte bancaire pour l\'instant.';
+
+  @override
+  String get bankAccountsSubtitle =>
+      'Les comptes dans lesquels les relevés sont importés';
+
+  @override
+  String get bankAccountsTitle => 'Comptes bancaires';
+
+  @override
   String get bankBasisAmount => 'même montant et même payeur';
 
   @override
@@ -2361,6 +2458,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bankCsvHeader => 'La première ligne nomme les colonnes';
 
   @override
+  String bankCsvIntoAccount(String name, String currency) {
+    return 'Dans le compte $name, en $currency.';
+  }
+
+  @override
   String bankCsvNeedsAccount(int max) {
     String _temp0 = intl.Intl.pluralLogic(
       max,
@@ -2427,11 +2529,21 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bankFormatTitle => 'De quel fichier s\'agit-il ?';
 
   @override
+  String get bankImportAccountPick => 'L\'importer dans ce compte';
+
+  @override
+  String get bankImportAccountTitle => 'De quel compte est ce fichier ?';
+
+  @override
   String get bankImportAction => 'Importer un relevé';
 
   @override
   String get bankImportFailed =>
       'Le relevé n\'a pas pu être importé. Rien n\'a été ajouté.';
+
+  @override
+  String get bankImportNeedsAccount =>
+      'Ajoutez d\'abord le compte bancaire, sous Réglages › Données de base › Comptes bancaires.';
 
   @override
   String get bankImportRepeated =>
@@ -2708,6 +2820,27 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bankStatementsTitle => 'Relevés bancaires';
+
+  @override
+  String get bankUnattachedAssign => 'Ajouter à un compte';
+
+  @override
+  String get bankUnattachedHint =>
+      'Ces noms n\'appartiennent encore à aucun compte : ajoutez chacun aux noms de son compte.';
+
+  @override
+  String bankUnattachedRow(String name, String currency, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count relevés',
+      one: '$count relevé',
+    );
+    return '$name ($currency) : $_temp0';
+  }
+
+  @override
+  String get bankUnattachedTitle => 'Relevés sans compte';
 
   @override
   String get bankUndoBody =>
@@ -10058,6 +10191,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get editorSlot30 => '30 minutes';
+
+  @override
+  String get editorSlot5 => '5 minutes';
 
   @override
   String get editorSlot60 => '1 heure';
@@ -20521,6 +20657,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get leaseEveryYear => 'Chaque année';
 
   @override
+  String get leaseFieldArea => 'Surface (m²)';
+
+  @override
   String get leaseFieldDeposit => 'Dépôt de garantie';
 
   @override
@@ -20531,6 +20670,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get leaseFieldLessor => 'Bailleur (un fournisseur)';
+
+  @override
+  String get leaseFieldLevels => 'Niveaux couverts';
 
   @override
   String get leaseFieldNoticeMonths => 'Préavis en mois';
@@ -20688,6 +20830,19 @@ class AppLocalizationsFr extends AppLocalizations {
           '$count échéance a déjà été présentées pour une date postérieure à la fin.',
     );
     return '$_temp0';
+  }
+
+  @override
+  String get leaseRefDocument => 'Un document de contrat est joint';
+
+  @override
+  String leaseRefResponsible(String name) {
+    return 'Responsable : $name';
+  }
+
+  @override
+  String leaseRefSite(String name) {
+    return 'Site : $name';
   }
 
   @override
@@ -29901,6 +30056,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.';
 
   @override
+  String get refusalChoiceInUse =>
+      'Un choix déjà fait ne peut être ni supprimé ni renommé : retirez-le plutôt, il reste sur les réponses qui le portent.';
+
+  @override
   String get refusalCounterCashEntry =>
       'Cette écriture d\'espèces n\'est pas acceptée : le motif n\'est pas dans la liste, le montant dépasse votre limite, ou les nombres ne correspondent pas.';
 
@@ -38373,6 +38532,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonTransitIsSystem =>
       'L’emplacement « en route » appartient aux transferts entre sites.';
+
+  @override
+  String get stockReasonUnitArchived =>
+      'Cette unité est archivée et ne peut plus être utilisée.';
 
   @override
   String get stockReasonUnitDuplicate => 'Cette unité est listée deux fois.';

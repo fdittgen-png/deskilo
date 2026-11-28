@@ -75,17 +75,22 @@ class UnitPickerField extends ConsumerWidget {
 }
 
 /// Whether [percent] (null: none) is the rate of one of [rates].
-bool vatPercentIsListed(List<VatRate> rates, double? percent) => percent == null || rates.any((r) => r.percent == percent);
+bool _vatPercentIsListed(List<VatRate> rates, double? percent) => percent == null || rates.any((r) => r.percent == percent);
 
 const _noVat = 'none';
 
-/// The percent of a VAT rate, picked from the business's active rates; the percent is never typed.
-class VatPercentPicker extends ConsumerWidget {
-  const VatPercentPicker({super.key, required this.value, required this.onChanged, required this.label, this.enabled = true});
+/// A VAT rate of the business, picked by its identity (two rates may share a percentage); the percent is never typed (#4479).
+class VatRatePicker extends ConsumerWidget {
+  const VatRatePicker({super.key, required this.rateId, required this.percent, required this.onChanged, required this.label, this.enabled = true});
 
-  /// The percent the row holds; null while none is chosen (no VAT).
-  final double? value;
-  final ValueChanged<double?> onChanged;
+  /// The rate the row holds; null while none is chosen.
+  final String? rateId;
+
+  /// The percent the row holds: of the rate, or the one a line stored before it named a rate.
+  final double? percent;
+
+  /// The rate picked; null for none.
+  final ValueChanged<VatRate?> onChanged;
   final String label;
   final bool enabled;
 
@@ -96,7 +101,8 @@ class VatPercentPicker extends ConsumerWidget {
       rates: [
         for (final r in value) if (r.active) r,
       ],
-      current: this.value,
+      rateId: rateId,
+      percent: percent,
       onChanged: enabled ? onChanged : null,
       label: label,
     ),
@@ -109,34 +115,41 @@ class VatPercentPicker extends ConsumerWidget {
   };
 }
 
-/// The choice once the rates are read: none, each rate, and a percent that is no rate's, shown as it is and flagged.
+/// Whether the held rate is one of [rates]: a rate by its id, or a stored percent that is some rate's.
+bool vatRateIsListed(List<VatRate> rates, String? rateId, double? percent) =>
+    rateId != null ? rates.any((r) => r.id == rateId) : _vatPercentIsListed(rates, percent);
+
+/// The choice once the rates are read: none, each rate, and a held rate that is none of them, shown as it is and flagged.
 class _VatChoice extends StatelessWidget {
-  const _VatChoice({super.key, required this.rates, required this.current, required this.onChanged, required this.label});
+  const _VatChoice({super.key, required this.rates, required this.rateId, required this.percent, required this.onChanged, required this.label});
 
   final List<VatRate> rates;
-  final double? current;
-  final ValueChanged<double?>? onChanged;
+  final String? rateId;
+  final double? percent;
+  final ValueChanged<VatRate?>? onChanged;
   final String label;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final format = appFormatOf(context);
-    final listed = vatPercentIsListed(rates, current);
-    // the percent each choice stands for, so none is parsed back from its text
-    final percents = {for (final r in rates) '${r.percent}': r.percent};
+    final listed = vatRateIsListed(rates, rateId, percent);
+    // a line stored before it named a rate shows the one rate that has its percent
+    final sharing = [for (final r in rates) if (r.percent == percent) r.id];
+    final current = rateId ?? (percent == null ? _noVat : (sharing.length == 1 ? sharing.single : 'percent-$percent'));
+    final known = current == _noVat || rates.any((r) => r.id == current);
     final picked = onChanged;
     return AppDropdownField<String>(
       key: ValueKey('vat-$current'),
       label: label,
-      value: current == null ? _noVat : '$current',
+      value: current,
       error: listed ? null : l.masterDataUnlisted,
       items: [
-        if (!listed) ('$current', format.ratePercent(current!)),
+        if (!known) (current, percent == null ? current : format.ratePercent(percent!)),
         (_noVat, l.masterDataNoVat),
-        for (final r in rates) ('${r.percent}', '${r.label} (${format.ratePercent(r.percent)})'),
+        for (final r in rates) (r.id, '${r.label} (${format.ratePercent(r.percent)})'),
       ],
-      onChanged: picked == null ? null : (v) => picked(percents[v]),
+      onChanged: picked == null ? null : (v) => picked(rates.where((r) => r.id == v).firstOrNull),
     );
   }
 }

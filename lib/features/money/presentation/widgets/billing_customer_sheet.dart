@@ -8,8 +8,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/failure/app_failure.dart';
+import '../../../../core/jurisdiction/installed_postal_layouts.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/address_region_field.dart';
 import '../../../../core/ui/country_field.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -37,9 +39,13 @@ Future<bool> showBillingCustomerSheet(
       submitLabel: l10n.commonSave,
       submitKey: const ValueKey('billing-customer-save'),
       onDispose: form.fields.dispose,
-      validate: () => {
-        for (final e in commands.check(form.read()).entries)
-          e.key: _problemText(l10n, e.value),
+      validate: () {
+        final region = form.regionProblem();
+        form._regionError = region == null ? null : regionRefusalText(l10n, region);
+        return {
+          for (final e in commands.check(form.read()).entries) e.key: _problemText(l10n, e.value),
+          'billing-customer-region': ?form._regionError,
+        };
       },
       onSubmit: () => form.submit(l10n, commands, workspaceId),
       builder: (context, refresh) => form.widgets(context, l10n, refresh),
@@ -70,7 +76,8 @@ class _BillingCustomerForm {
   final BillingParty? existing;
   final bool canSetCapacity;
   final FormControllers fields;
-  final String _subdivision;
+  String _subdivision;
+  String? _regionError;
   String? capacity;
   bool _capacityChanged = false;
 
@@ -87,9 +94,17 @@ class _BillingCustomerForm {
     legalId: fields.text('legal'),
     email: fields.text('email'),
     phone: fields.text('phone'),
-    // The region is not edited here: it travels as the server holds it.
     subdivision: _subdivision,
   );
+
+  /// #4501 (FIN-10) -- why the region does not fit the country, once the country or the region was edited: a customer stored
+  /// before its country asked for one keeps saving as it is.
+  RegionRefusal? regionProblem() {
+    final draft = read();
+    final saved = existing?.draft;
+    final edited = saved == null || draft.countryCode != saved.countryCode || draft.subdivision != saved.subdivision;
+    return edited ? postalLayoutOf(draft.countryCode.trim().toUpperCase()).regionRefusal(draft.subdivision) : null;
+  }
 
   /// Sends the draft; null when saved, else the sentence to show.
   Future<String?> submit(
@@ -119,7 +134,7 @@ class _BillingCustomerForm {
   ) => [
     ..._name(l10n),
     const FormGap(),
-    ..._address(l10n),
+    ..._address(l10n, refresh),
     const FormGap(),
     ..._tax(l10n),
     const FormGap(),
@@ -163,7 +178,7 @@ class _BillingCustomerForm {
     ),
   ];
 
-  List<Widget> _address(AppLocalizations l10n) => [
+  List<Widget> _address(AppLocalizations l10n, VoidCallback refresh) => [
     AppTextField(
       controller: fields['street'],
       label: l10n.billingCustomerStreet,
@@ -194,7 +209,27 @@ class _BillingCustomerForm {
     CountryField(
       controller: fields['country'],
       fieldKey: 'country',
+      textKey: const ValueKey('billing-customer-country'),
       label: l10n.billingCustomerCountry,
+      // the region is asked again for the country now chosen: one that country has no place for is dropped
+      onChanged: (code) {
+        if (postalLayoutOf(code.trim().toUpperCase()).regionRefusal(_subdivision) != null) _subdivision = '';
+        _regionError = null;
+        refresh();
+      },
+    ),
+    if (fields.text('country').trim().isNotEmpty)
+      AddressRegionField(
+      key: ValueKey('billing-customer-region-${fields.text('country').trim().toUpperCase()}'),
+      fieldKey: 'billing-customer-region',
+      country: fields.text('country').trim().toUpperCase(),
+      value: _subdivision,
+      error: _regionError,
+      onChanged: (v) {
+        _subdivision = v;
+        _regionError = null;
+        refresh();
+      },
     ),
   ];
 

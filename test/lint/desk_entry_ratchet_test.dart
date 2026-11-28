@@ -21,7 +21,7 @@ import 'lint_sources.dart';
 
 /// Measured after the money module's dates and amounts moved (#3612).
 const int _pickerOnlyDateCeiling = 10;
-const int _numericWithoutFormatterCeiling = 77;
+const int _numericWithoutFormatterCeiling = 76;
 
 const _dateField = 'lib/core/ui/date_field.dart';
 const _amountField = 'lib/core/ui/amount_field.dart';

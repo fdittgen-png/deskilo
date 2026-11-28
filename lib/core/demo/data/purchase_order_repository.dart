@@ -121,6 +121,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
           unit: l.unit.trim(),
           unitPriceCents: l.unitPriceCents,
           vatRatePercent: l.vatRatePercent,
+          vatRateId: l.vatRateId,
         ),
     ];
     final PurchaseOrder saved;
@@ -368,6 +369,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
           unit: l.unit,
           unitPriceCents: l.unitPriceCents,
           vatRatePercent: l.vatRatePercent,
+          vatRateId: l.vatRateId,
           receivedQuantity:
               l.receivedQuantity +
               (draft.quantities[l.lineNo] ?? 0).clamp(0, l.remaining),

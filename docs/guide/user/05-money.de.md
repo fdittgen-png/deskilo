@@ -590,6 +590,25 @@ Sie möchten das erfasste Geld sehen, das hereinkam und hinausging, und was noch
 
 **Siehe auch:** [Was der Raum schuldet: Zu zahlen](help:user.money.purchases.to-pay)
 
+<!-- anchor: user.money.bank.accounts -->
+### Bankkonten
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Ein Bankkonto ist ein einziger Datensatz des Unternehmens: das Konto, in das seine Kontoauszüge eingelesen werden, gleich unter welchem Namen die Dateien der Bank es führen.
+
+**Schritte**
+
+1. Öffnen Sie **Einstellungen**, dann **Stammdaten**, dann **Bankkonten**.
+2. Tippen Sie auf **Bankkonto hinzufügen** und geben Sie **Kontoname**, **IBAN**, gegebenenfalls **Weitere Kennungen** und die Namen an, unter denen es **Auch bekannt als** ist (einer pro Zeile), seine **Währung** und, wenn das Unternehmen hier seine Bücher führt, sein **Sachkonto**.
+3. Wählen Sie beim Einlesen eines Auszugs sein Konto: Eine Datei desselben Kontos unter zwei Namen liest nie eine Buchung zweimal ein.
+
+**Gut zu wissen**
+
+- **Auszüge ohne Konto** listet die Namen, unter denen Auszüge eingelesen wurden und die noch kein Konto trägt. Tippen Sie auf **Einem Konto hinzufügen**, um einen Namen seinem Konto hinzuzufügen: Seine Auszüge gehören dann zu diesem Konto.
+- Ein Name, eine IBAN oder eine Kennung gehört nur zu einem Konto.
+- Ein nicht mehr genutztes Konto wird archiviert: Seine Auszüge behalten es.
+
 <!-- anchor: user.money.suppliers.balance -->
 ### Lieferantensalden
 

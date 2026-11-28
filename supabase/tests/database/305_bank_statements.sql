@@ -49,6 +49,8 @@ begin
   returning id into ws2;
   insert into public.members (workspace_id, user_id, is_owner, is_admin)
   values (ws, u_o, true, true), (ws, u_m, false, false), (ws, u_b, false, false), (ws2, u_x, true, true);
+  -- #4496: the account the statements are imported into (the IBAN the files name)
+  insert into public.bank_accounts (workspace_id, name, iban, currency) values (ws, 'Postfinance', 'CH9300762011623852957', 'CHF');
   select id into m_o from public.members where workspace_id = ws and user_id = u_o;
   select id into m_m from public.members where workspace_id = ws and user_id = u_m;
   select id into m_x from public.members where workspace_id = ws2 and user_id = u_x;

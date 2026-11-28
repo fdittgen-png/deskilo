@@ -1,0 +1,28 @@
+{
+  "leaseFieldArea": "Superficie (m²)",
+  "@leaseFieldArea": {
+    "description": "#4498 what a lease holds and a save keeps"
+  },
+  "leaseFieldLevels": "Niveles cubiertos",
+  "@leaseFieldLevels": {
+    "description": "#4498 what a lease holds and a save keeps"
+  },
+  "leaseRefSite": "Sede: {name}",
+  "@leaseRefSite": {
+    "description": "#4498 what a lease holds and a save keeps",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "leaseRefResponsible": "Responsable: {name}",
+  "@leaseRefResponsible": {
+    "description": "#4498 what a lease holds and a save keeps",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "leaseRefDocument": "Hay un documento de contrato adjunto",
+  "@leaseRefDocument": {
+    "description": "#4498 what a lease holds and a save keeps"
+  }
+}

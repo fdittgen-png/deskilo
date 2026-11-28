@@ -1,17 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2380 — how a spreadsheet export of the bank is read: the account it is
-// about (a CSV rarely names it), its currency, how it writes days and
-// amounts, and which column holds what, chosen among the file's own
+// #2380 — how a spreadsheet export of the bank is read: how it writes days
+// and amounts, and which column holds what, chosen among the file's own
 // column names.
+// #4496 — the account it is about (a CSV rarely names it) and its currency
+// are the bank account picked before: never typed here.
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/currency_field.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/bank_import_commands.dart';
+import '../../domain/bank/bank_records.dart';
 import '../../domain/bank/bank_statement.dart';
 import '../../domain/bank/csv_statement.dart';
 import '../bank_labels.dart';
@@ -20,7 +21,7 @@ import '../bank_labels.dart';
 Future<BankCsvMapping?> showBankCsvMapping(
   BuildContext context,
   List<int> bytes, {
-  required String currency,
+  required BankAccount account,
 }) async {
   final firstLine = String.fromCharCodes(bytes.takeWhile((b) => b != 10));
   final delimiter = guessCsvDelimiter(firstLine);
@@ -32,7 +33,7 @@ Future<BankCsvMapping?> showBankCsvMapping(
       context,
       columns: columns,
       delimiter: delimiter,
-      currency: currency,
+      account: account,
       onMapped: (m) => chosen = m,
     ),
   );
@@ -56,12 +57,13 @@ class _CsvDraft {
   _CsvDraft({
     required this.columns,
     required this.delimiter,
-    required String currency,
-  }) : fields = FormControllers({'currency': currency}),
+    required this.account,
+  }) : fields = FormControllers({'account': account.name, 'currency': account.currency}),
        decimalComma = delimiter == BankCsvDelimiters.semicolon;
 
   final List<String> columns;
   final String delimiter;
+  final BankAccount account;
   final FormControllers fields;
   final chosen = <String, int?>{};
   BankCsvDatePattern pattern = BankCsvDatePattern.isoDay;
@@ -105,14 +107,14 @@ AppFormSheet _mappingSheet(
   BuildContext context, {
   required List<String> columns,
   required String delimiter,
-  required String currency,
+  required BankAccount account,
   required ValueChanged<BankCsvMapping> onMapped,
 }) {
   final l10n = context.l10n;
   final draft = _CsvDraft(
     columns: columns,
     delimiter: delimiter,
-    currency: currency,
+    account: account,
   );
   return AppFormSheet(
     title: l10n.bankCsvTitle,
@@ -147,20 +149,9 @@ List<Widget> _typedFields(
 ) {
   final l10n = context.l10n;
   return [
-    AppTextField(
+    Text(
+      l10n.bankCsvIntoAccount(draft.account.name, draft.account.currency),
       key: const ValueKey('bank-csv-account'),
-      controller: draft.fields['account'],
-      fieldKey: 'account',
-      label: l10n.bankCsvAccount,
-      helper: l10n.bankCsvAccountHint,
-      maxLength: BankColumnWidths.account,
-    ),
-    const FormGap(),
-    CurrencyField(
-      textKey: const ValueKey('bank-csv-currency'),
-      controller: draft.fields['currency'],
-      fieldKey: 'currency',
-      label: l10n.bankCsvCurrency,
     ),
     const FormGap(),
     DropdownButtonFormField<BankCsvDatePattern>(
