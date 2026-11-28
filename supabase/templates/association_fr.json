@@ -95,7 +95,7 @@
         "coOwner": false,
         "configurableSettings": false,
         "configurationTransfer": false,
-        "counterCashReasons": true,
+        "counterCashReasons": false,
         "counterEmbeddedTerminal": false,
         "counterOfflineCash": false,
         "counterReceiptPrinter": false,
