@@ -162,5 +162,6 @@ abstract final class DkCode {
   static const dku04 = 'DKU04';
   static const dku05 = 'DKU05';
   static const dkv01 = 'DKV01';
+  static const dkv02 = 'DKV02';
   static const dkw01 = 'DKW01';
 }
