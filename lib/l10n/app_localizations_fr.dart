@@ -30166,6 +30166,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette opération n\'est pas prise en charge pour votre pays dans le cas que vous avez déclaré dans les paramètres : rien n\'a été numéroté et rien n\'a été encaissé.';
 
   @override
+  String get refusalExpenseVat =>
+      'La TVA de cette dépense n’est pas acceptée : choisissez un taux de TVA de cette entreprise et saisissez la TVA facturée par un fournisseur à l’étranger uniquement comme taux et montant de son document.';
+
+  @override
   String refusalMainStoreExpired(String held, String asked) {
     return 'Le magasin principal ne contient que $held sur les $asked que cette vente demande qui soient vendables : le reste a dépassé sa date. Rien n’a été prélevé et la vente n’a pas été confirmée.';
   }

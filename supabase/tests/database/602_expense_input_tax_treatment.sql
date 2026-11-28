@@ -5,7 +5,7 @@
 -- and amount) that carries no percent, no rate of the space and no deduction, so no return reads it; the country of the supplier
 -- agrees with the treatment; a space whose return has no acquisition box still refuses an acquisition. Rolled back.
 begin;
-select plan(21);
+select plan(22);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -62,6 +62,10 @@ select matches(pg_temp.t(101, '{"treatment": "foreign_charged", "stated_percent"
 -- without VAT, and what is refused
 select is(pg_temp.t(101, '{"treatment": "none"}'), '{"treatment": "none"}', 'no VAT states only that');
 select matches(pg_temp.t(101, '{"treatment": "refund"}'), 'unknown input tax treatment', 'an unknown treatment is refused');
+
+select throws_ok(
+  $$ select public.expense_vat_payload('00000000-0000-4000-8000-000000000101', '{"treatment": "refund"}'::jsonb) $$,
+  'DKV01', null, 'a refusal of the treatment carries its code');
 
 select * from finish();
 rollback;

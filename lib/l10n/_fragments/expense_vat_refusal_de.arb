@@ -1,0 +1,6 @@
+{
+  "refusalExpenseVat": "Die Umsatzsteuer dieser Ausgabe wird nicht angenommen: Wählen Sie einen Steuersatz dieses Unternehmens und geben Sie von einem Lieferanten im Ausland berechnete Umsatzsteuer nur als Satz und Betrag des Belegs an.",
+  "@refusalExpenseVat": {
+    "description": "#4479 (0994) DKV01: the VAT treatment of an expense is refused"
+  }
+}

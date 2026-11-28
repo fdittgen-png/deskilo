@@ -47850,6 +47850,12 @@ abstract class AppLocalizations {
   /// **'This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.'**
   String get refusalCounterUnsupported;
 
+  /// #4479 (0994) DKV01: the VAT treatment of an expense is refused
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT of this expense is not accepted: pick a VAT rate of this business, and enter the VAT a supplier abroad charged only as the rate and amount on its document.'**
+  String get refusalExpenseVat;
+
   /// #4170 a sale refused for what the main store holds
   ///
   /// In en, this message translates to:

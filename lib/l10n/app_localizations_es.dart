@@ -30044,6 +30044,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta operación no está soportada para su país en el caso que declaró en los ajustes: no se numeró nada y no se cobró nada.';
 
   @override
+  String get refusalExpenseVat =>
+      'No se acepta el IVA de este gasto: elija un tipo de IVA de este negocio e indique el IVA repercutido por un proveedor en el extranjero solo como el tipo y el importe de su documento.';
+
+  @override
   String refusalMainStoreExpired(String held, String asked) {
     return 'El almacén principal solo tiene $held de los $asked que pide esta venta aptos para vender: el resto ha caducado. No se retiró nada y la venta no se confirmó.';
   }

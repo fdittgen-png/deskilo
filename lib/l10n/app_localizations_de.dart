@@ -30122,6 +30122,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Vorgang wird für Ihr Land in dem in den Einstellungen erklärten Fall nicht unterstützt: Es wurde nichts nummeriert und nichts angenommen.';
 
   @override
+  String get refusalExpenseVat =>
+      'Die Umsatzsteuer dieser Ausgabe wird nicht angenommen: Wählen Sie einen Steuersatz dieses Unternehmens und geben Sie von einem Lieferanten im Ausland berechnete Umsatzsteuer nur als Satz und Betrag des Belegs an.';
+
+  @override
   String refusalMainStoreExpired(String held, String asked) {
     return 'Das Hauptlager enthält nur $held von den $asked, die dieser Verkauf verlangt, die verkäuflich sind: der Rest ist abgelaufen. Nichts wurde entnommen und der Verkauf wurde nicht bestätigt.';
   }

@@ -5672,6 +5672,7 @@ Map<String, _Getter> _part12() => {
   'refSortAmountLow': (l) => l.refSortAmountLow,
   'refSortNewest': (l) => l.refSortNewest,
   'refusalBankMatchUndoLaterFirst': (l) => l.refusalBankMatchUndoLaterFirst,
+  'refusalExpenseVat': (l) => l.refusalExpenseVat,
   'refusalStockCountSelf': (l) => l.refusalStockCountSelf,
   'refusalStockLocation': (l) => l.refusalStockLocation,
   'refusalStockVariant': (l) => l.refusalStockVariant,

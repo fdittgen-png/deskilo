@@ -11,6 +11,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/cache/read_failure.dart';
@@ -36,25 +37,32 @@ import '../../providers/money_providers.dart';
 import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 import '../vat_tax_point_labels.dart';
 
+/// The text of the deductible share in the sheet's controllers.
+const _deductibleKey = 'deductible';
+
 /// #4479 — what kind of VAT the expense carries: none; the VAT of the space's own country, at a rate picked from the space's
 /// rates; a service bought from a supplier abroad (the space owes the tax); or VAT a supplier abroad charged, kept as a fact.
 enum ExpenseVatKind { none, domestic, acquisition, foreignCharged }
 
 /// What the person chose; [share] is the deductible share as typed.
 class ExpenseVatChoice {
-  ExpenseVatChoice(this.fields, {this.countryCode = ''});
+  ExpenseVatChoice(this.fields, {this.countryCode = '', this.keyPrefix = 'expense'});
 
   /// #2360 — the choice for an expense of a space in [countryCode]: an acquisition from abroad is offered only where today's
   /// return has a box for the tax it then owes (the Swiss 383). The texts live in [fields], disposed with the sheet.
   factory ExpenseVatChoice.of(
     WidgetRef ref,
     String countryCode,
-    FormControllers fields,
-  ) => ExpenseVatChoice(fields, countryCode: countryCode);
+    FormControllers fields, {
+    required String keyPrefix,
+  }) => ExpenseVatChoice(fields, countryCode: countryCode, keyPrefix: keyPrefix);
 
   final FormControllers fields;
 
-  TextEditingController get share => fields['deductible'];
+  /// The sheet this choice is asked in: its fields are keyed `<keyPrefix>-vat-…`.
+  final String keyPrefix;
+
+  TextEditingController get share => fields[_deductibleKey];
 
   /// The country of the space the expense is for; whether the acquisition is
   /// offered is asked of the workspace's tax reference WHEN DRAWN, so a sheet
@@ -114,6 +122,15 @@ class ExpenseVatChoice {
     };
   }
 
+  /// Why the choice cannot be filed, in words, or null: a share outside 0..100, or VAT a supplier abroad charged without the
+  /// supplier's country or a rate the document can have.
+  String? problem(AppLocalizations l10n, String locale) {
+    if (!shareValid) return l10n.scheduleVatInvalid;
+    final foreign = this.foreign(locale);
+    if (foreign != null && (!foreign.valid || !facts.containsKey('supplier_country'))) return l10n.expenseInvalidStatedVat;
+    return null;
+  }
+
   /// The payload the RPCs take, or null without VAT.
   Map<String, Object?>? payload(String locale) => expenseVatPayload(
     percent: percent,
@@ -132,11 +149,11 @@ class ExpenseVatChoice {
 /// empty answer says "no VAT here", and the form would then file an expense
 /// without the VAT its space deducts. A form reads them before it opens
 /// ([whenExpenseVatRead]) or shows the failure with a way to try again.
-Future<List<double>> expenseVatPercents(WidgetRef ref, String vatRegime) async => {
+Future<List<double>> _expenseVatPercents(WidgetRef ref, String vatRegime) async => {
   for (final r in await expenseVatRates(ref, vatRegime)) r.percent,
 }.toList();
 
-/// The rates themselves, highest first, an expense picks by identity (#4479); the same rules as [expenseVatPercents].
+/// The rates themselves, highest first, an expense picks by identity (#4479); the same rules as [_expenseVatPercents].
 Future<List<VatRate>> expenseVatRates(WidgetRef ref, String vatRegime) async {
   if (!ref
           .read(enabledFeaturesSyncProvider)
@@ -176,7 +193,7 @@ Future<T> whenExpenseVatRead<T>(
     await guardRead<List<double>?>(
       domain: 'money',
       message: 'expense VAT rates failed',
-      read: () => expenseVatPercents(ref, workspace.vatRegime),
+      read: () => _expenseVatPercents(ref, workspace.vatRegime),
       fallback: (e) {
         unread = e;
         return null;
@@ -199,14 +216,14 @@ Future<T> whenExpenseVatRead<T>(
 
 /// #2573 — the rates a receipt line may carry in the current space, and its
 /// currency; null while no space is open. Throws what the read of the rates
-/// threw (see [expenseVatPercents]).
+/// threw (see [_expenseVatPercents]).
 Future<({List<double> percents, MoneyFormat currency})?> receiptVatContext(
   WidgetRef ref,
 ) async {
   final workspace = await ref.read(currentWorkspaceProvider.future);
   if (workspace == null) return null;
   return (
-    percents: await expenseVatPercents(ref, workspace.vatRegime),
+    percents: await _expenseVatPercents(ref, workspace.vatRegime),
     currency: ref.read(appFormatProvider).moneyIn(workspace.currencyCode),
   );
 }
@@ -225,36 +242,19 @@ List<Widget> expenseVatFields({
   required ExpenseVatChoice choice,
   required String amount,
   required VoidCallback refresh,
-  required String keyPrefix,
 }) {
   if (rates.isEmpty) return const [];
   final words = vatWords(l10n);
+  final prefix = choice.keyPrefix;
   final own = choice.kind == ExpenseVatKind.domestic || choice.kind == ExpenseVatKind.acquisition;
-  final abroad = choice.kind == ExpenseVatKind.acquisition || choice.kind == ExpenseVatKind.foreignCharged;
   return [
     const FormGap(),
-    _kindField(l10n, choice, refresh, keyPrefix),
-    if (own) ...[
-      const FormGap(),
-      _rateField(l10n, currency, rates, choice, refresh, keyPrefix),
-    ],
-    if (own && choice.rate != null) ...[
-      const FormGap(),
-      AppTextField(
-        key: ValueKey('$keyPrefix-vat-deductible'),
-        controller: choice.share,
-        fieldKey: 'deductible',
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        label: words.expenseVatDeductible,
-        helper: _deductibleHelper(l10n, currency, amount, choice),
-        onChanged: (_) => refresh(),
-      ),
-      _assetSwitch(words, choice, refresh, keyPrefix),
-    ],
-    if (abroad) ...[
+    _kindField(l10n, choice, refresh),
+    if (own) ..._ownFields(l10n, currency, rates, choice, amount, refresh),
+    if (choice.kind == ExpenseVatKind.acquisition || choice.kind == ExpenseVatKind.foreignCharged) ...[
       const FormGap(),
       CountryField(
-        textKey: ValueKey('$keyPrefix-vat-country'),
+        textKey: ValueKey('$prefix-vat-country'),
         controller: choice.fields['vatCountry'],
         fieldKey: 'vatCountry',
         label: words.expenseVatSupplierCountry,
@@ -264,34 +264,70 @@ List<Widget> expenseVatFields({
     if (choice.kind != ExpenseVatKind.none) ...[
       const FormGap(),
       AppTextField(
-        key: ValueKey('$keyPrefix-vat-number'),
+        key: ValueKey('$prefix-vat-number'),
         controller: choice.fields['vatDocumentNumber'],
         fieldKey: 'vatDocumentNumber',
         label: words.expenseVatDocumentNumber,
       ),
     ],
-    if (choice.kind == ExpenseVatKind.foreignCharged) ...[
-      const FormGap(),
-      AppTextField(
-        key: ValueKey('$keyPrefix-vat-stated-percent'),
-        controller: choice.fields['statedPercent'],
-        fieldKey: 'statedPercent',
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        label: words.expenseVatStatedPercent,
-        helper: words.expenseVatForeignNote,
-        onChanged: (_) => refresh(),
-      ),
-      const FormGap(),
-      AppTextField(
-        key: ValueKey('$keyPrefix-vat-stated-tax'),
-        controller: choice.fields['statedTax'],
-        fieldKey: 'statedTax',
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        label: words.expenseVatStatedTax,
-      ),
-    ],
+    if (choice.kind == ExpenseVatKind.foreignCharged) ..._foreignFields(words, currency, choice, refresh),
   ];
 }
+
+/// The rate of the space's own VAT, the share deducted and whether it bought a fixed asset.
+List<Widget> _ownFields(
+  AppLocalizations l10n,
+  MoneyFormat currency,
+  List<VatRate> rates,
+  ExpenseVatChoice choice,
+  String amount,
+  VoidCallback refresh,
+) => [
+  const FormGap(),
+  _rateField(l10n, currency, rates, choice, refresh),
+  if (choice.rate != null) ...[
+    const FormGap(),
+    AppTextField(
+      key: ValueKey('${choice.keyPrefix}-vat-deductible'),
+      controller: choice.share,
+      fieldKey: 'deductible',
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      label: vatWords(l10n).expenseVatDeductible,
+      helper: _deductibleHelper(l10n, currency, amount, choice),
+      onChanged: (_) => refresh(),
+    ),
+    _assetSwitch(l10n, choice, refresh),
+  ],
+];
+
+/// What a supplier abroad's invoice states: its VAT rate and, when it shows it, the amount; and why none of it is deducted.
+List<Widget> _foreignFields(
+  AppLocalizations words,
+  MoneyFormat currency,
+  ExpenseVatChoice choice,
+  VoidCallback refresh,
+) => [
+  const FormGap(),
+  AppTextField(
+    key: ValueKey('${choice.keyPrefix}-vat-stated-percent'),
+    controller: choice.fields['statedPercent'],
+    fieldKey: 'statedPercent',
+    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
+    label: words.expenseVatStatedPercent,
+    helper: words.expenseVatForeignNote,
+    onChanged: (_) => refresh(),
+  ),
+  const FormGap(),
+  AppAmountField(
+    key: ValueKey('${choice.keyPrefix}-vat-stated-tax'),
+    controller: choice.fields['statedTax'],
+    fieldKey: 'statedTax',
+    label: words.expenseVatStatedTax,
+    currency: currency.code,
+    allowNegative: false,
+  ),
+];
 
 /// What the VAT is: none, the space's own country's, a purchase from abroad where the return has a box for it, or the VAT a
 /// supplier abroad charged.
@@ -299,7 +335,6 @@ Widget _kindField(
   AppLocalizations l10n,
   ExpenseVatChoice choice,
   VoidCallback refresh,
-  String keyPrefix,
 ) => Consumer(
   builder: (context, ref, _) {
     final words = vatWords(l10n);
@@ -312,7 +347,7 @@ Widget _kindField(
           reference: reference,
         );
     return DropdownButtonFormField<ExpenseVatKind>(
-      key: ValueKey('$keyPrefix-vat-kind'),
+      key: ValueKey('${choice.keyPrefix}-vat-kind'),
       initialValue: choice.kind,
       isExpanded: true,
       decoration: InputDecoration(
@@ -354,9 +389,8 @@ Widget _assetSwitch(
   AppLocalizations words,
   ExpenseVatChoice choice,
   VoidCallback refresh,
-  String keyPrefix,
 ) => SwitchListTile(
-  key: ValueKey('$keyPrefix-vat-asset'),
+  key: ValueKey('${choice.keyPrefix}-vat-asset'),
   contentPadding: EdgeInsets.zero,
   title: Text(words.expenseVatAsset),
   subtitle: Text(words.expenseVatAssetHint),
@@ -413,11 +447,10 @@ Widget _rateField(
   List<VatRate> rates,
   ExpenseVatChoice choice,
   VoidCallback refresh,
-  String keyPrefix,
 ) {
   final words = vatWords(l10n);
   return DropdownButtonFormField<VatRate?>(
-    key: ValueKey('$keyPrefix-vat-rate'),
+    key: ValueKey('${choice.keyPrefix}-vat-rate'),
     initialValue: choice.rate,
     isExpanded: true,
     decoration: InputDecoration(

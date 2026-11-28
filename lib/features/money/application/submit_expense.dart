@@ -45,6 +45,9 @@ enum ExpenseOutcome {
 /// tax the space owes (CH 383).
 typedef ExpenseVatFlags = ({bool asset, bool acquisition});
 
+/// The key of the supplier's country in the document facts of the VAT payload.
+const _supplierCountry = 'supplier_country';
+
 /// #4479 — the VAT a supplier abroad charged on its invoice, kept as a fact of the document: the stated rate and, when the
 /// document shows it, the amount. It is not deducted on the space's return (a refund from the supplier's state is a filing of
 /// its own, Directive 2008/9/EC), so the space's sales catalogue never interprets it.
@@ -176,7 +179,7 @@ ExpenseOutcome expenseOutcome(ExpenseDraft draft) {
   if (cents == null || cents <= 0) return ExpenseOutcome.invalidAmount;
   final foreign = draft.foreignVat;
   if (foreign != null) {
-    if ((draft.vatFacts['supplier_country'] as String? ?? '').isEmpty) return ExpenseOutcome.missingSupplierCountry;
+    if ((draft.vatFacts[_supplierCountry] as String? ?? '').isEmpty) return ExpenseOutcome.missingSupplierCountry;
     if (!foreign.valid) return ExpenseOutcome.invalidStatedVat;
   } else if (draft.vat != null) {
     final share = draft.deductiblePct;

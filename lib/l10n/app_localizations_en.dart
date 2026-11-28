@@ -29829,6 +29829,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.';
 
   @override
+  String get refusalExpenseVat =>
+      'The VAT of this expense is not accepted: pick a VAT rate of this business, and enter the VAT a supplier abroad charged only as the rate and amount on its document.';
+
+  @override
   String refusalMainStoreExpired(String held, String asked) {
     return 'The main store holds only $held of the $asked this sale asks for that is fit to sell: the rest is past its date. Nothing was taken and the sale was not confirmed.';
   }

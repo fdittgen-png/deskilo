@@ -13967,6 +13967,7 @@ const Set<String> uiLabelKeys = {
   'refusalCounterTenders',
   'refusalCounterTill',
   'refusalCounterUnsupported',
+  'refusalExpenseVat',
   'refusalMemberReturnsAsNew',
   'refusalMoneyLocaleLocked',
   'refusalOpenStock',

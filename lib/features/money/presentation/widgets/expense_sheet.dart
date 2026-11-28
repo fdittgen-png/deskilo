@@ -17,6 +17,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/submit_expense.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
+import 'expense_outcome_text.dart';
 import 'expense_vat_fields.dart';
 
 /// The categories an expense is filed under, in the order the form offers
@@ -59,7 +60,7 @@ Future<void> showExpenseSheet(
   // may deduct and whether it bought a fixed asset.
   final vatRates = await expenseVatRates(ref, workspace.vatRegime);
   if (!context.mounted) return;
-  final vat = ExpenseVatChoice.of(ref, workspace.countryCode, fields);
+  final vat = ExpenseVatChoice.of(ref, workspace.countryCode, fields, keyPrefix: 'expense');
   void prefillUnit() {
     final cents = appFormatOf(context).parseMinor(fields['amount'].text) ?? 0;
     final qty = int.tryParse(fields['supplyQuantity'].text) ?? 0;
@@ -87,34 +88,8 @@ Future<void> showExpenseSheet(
   );
   // #1449 — the reason the typed expense cannot be filed, shown in the
   // sheet; the sheet only closes on a draft the rules accept.
-  String? reason(ExpenseOutcome outcome) => switch (outcome) {
-    ExpenseOutcome.submitted => null,
-    ExpenseOutcome.invalidAmount =>
-      l10n.expenseInvalidAmount,
-    ExpenseOutcome.missingSupplyName =>
-      l10n.expenseMissingSupplyName,
-    ExpenseOutcome.invalidSupplyQuantity =>
-      l10n.expenseInvalidSupplyQuantity,
-    ExpenseOutcome.invalidUnitPrice =>
-      l10n.expenseInvalidUnitPrice,
-    ExpenseOutcome.invalidDeductible =>
-      l10n.expenseInvalidDeductible,
-    ExpenseOutcome.missingSupplierCountry =>
-      l10n.expenseMissingSupplierCountry,
-    ExpenseOutcome.invalidStatedVat =>
-      l10n.expenseInvalidStatedVat,
-  };
-  // The field each refusal is about, so its words sit under that field.
-  String? fieldOf(ExpenseOutcome outcome) => switch (outcome) {
-    ExpenseOutcome.submitted => null,
-    ExpenseOutcome.invalidAmount => 'amount',
-    ExpenseOutcome.missingSupplyName => 'supplyName',
-    ExpenseOutcome.invalidSupplyQuantity => 'supplyQuantity',
-    ExpenseOutcome.invalidUnitPrice => 'supplyUnit',
-    ExpenseOutcome.invalidDeductible => 'deductible',
-    ExpenseOutcome.missingSupplierCountry => 'vatCountry',
-    ExpenseOutcome.invalidStatedVat => 'statedPercent',
-  };
+  String? reason(ExpenseOutcome outcome) => expenseOutcomeText(l10n, outcome);
+  String? fieldOf(ExpenseOutcome outcome) => expenseOutcomeField(outcome);
   final failed =
       l10n.workspaceGenericError;
 
@@ -184,7 +159,6 @@ Future<void> showExpenseSheet(
           choice: vat,
           amount: fields['amount'].text,
           refresh: refresh,
-          keyPrefix: 'expense',
         ),
         if (suppliesOn) ...[
           SwitchListTile(

@@ -17070,6 +17070,10 @@
   "refusalCounterTenders": "I pagamenti non saldano esattamente questa vendita, oppure uno di essi non è accettato qui.",
   "refusalCounterTill": "La cassa non è pronta per questo: la apra prima, oppure è già aperta o chiusa.",
   "refusalCounterUnsupported": "Questa operazione non è supportata per il Suo paese nel caso dichiarato nelle impostazioni: non è stato numerato nulla e non è stato incassato nulla.",
+  "refusalExpenseVat": "L’IVA di questa spesa non è accettata: scegliere un’aliquota IVA di questa attività e indicare l’IVA addebitata da un fornitore all’estero solo come aliquota e importo del suo documento.",
+  "@refusalExpenseVat": {
+    "description": "#4479 (0994) DKV01: the VAT treatment of an expense is refused"
+  },
   "refusalMainStoreExpired": "Il magazzino principale contiene solo {held} dei {asked} richiesti da questa vendita che siano vendibili: il resto è scaduto. Nulla è stato prelevato e la vendita non è stata confermata.",
   "@refusalMainStoreExpired": {
     "description": "#4170 a sale refused for what the main store holds",
