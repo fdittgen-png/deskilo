@@ -1045,7 +1045,7 @@ constraint invoices.system_columns_order CHECK ((modified_datetime >= created_da
 constraint invoices.system_company_present CHECK ((company_id IS NOT NULL))
 constraint item_codes.item_codes_check CHECK (((kind <> 'gtin'::text) OR (code ~ '^[0-9]{8,14}$'::text)))
 constraint item_codes.item_codes_code_check CHECK ((code ~ '^[0-9A-Za-z._/-]{1,64}$'::text))
-constraint item_codes.item_codes_item_id_unit_fkey FOREIGN KEY (item_id, unit) REFERENCES item_units(item_id, unit) ON DELETE CASCADE
+constraint item_codes.item_codes_item_id_unit_fkey FOREIGN KEY (item_id, unit) REFERENCES item_units(item_id, unit) ON UPDATE CASCADE ON DELETE CASCADE
 constraint item_codes.item_codes_kind_check CHECK ((kind = ANY (ARRAY['gtin'::text, 'own'::text])))
 constraint item_codes.item_codes_pkey PRIMARY KEY (id)
 constraint item_codes.item_codes_variant_fkey FOREIGN KEY (item_id, variant_id) REFERENCES item_variants(item_id, id)
@@ -2647,7 +2647,7 @@ constraint supplier_bank_revisions.supplier_bank_revisions_workspace_id_fkey FOR
 constraint supplier_bank_revisions.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint supplier_bank_revisions.system_company_present CHECK ((company_id IS NOT NULL))
 constraint supplier_item_mappings.supplier_item_mappings_article_ref_check CHECK (((char_length(btrim(article_ref)) >= 1) AND (char_length(btrim(article_ref)) <= 80)))
-constraint supplier_item_mappings.supplier_item_mappings_item_id_purchase_unit_fkey FOREIGN KEY (item_id, purchase_unit) REFERENCES item_units(item_id, unit)
+constraint supplier_item_mappings.supplier_item_mappings_item_id_purchase_unit_fkey FOREIGN KEY (item_id, purchase_unit) REFERENCES item_units(item_id, unit) ON UPDATE CASCADE
 constraint supplier_item_mappings.supplier_item_mappings_item_id_variant_id_fkey FOREIGN KEY (item_id, variant_id) REFERENCES item_variants(item_id, id)
 constraint supplier_item_mappings.supplier_item_mappings_pkey PRIMARY KEY (id)
 constraint supplier_item_mappings.supplier_item_mappings_supplier_id_article_ref_key UNIQUE (supplier_id, article_ref)
