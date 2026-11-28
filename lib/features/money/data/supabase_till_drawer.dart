@@ -27,7 +27,7 @@ class SupabaseTillDrawer implements TillDrawerPort {
 
   @override
   Future<List<DrawerTill>> tills(String workspaceId) async {
-    final tills = await _client.from('counter_tills').select('id, name, active, site_id').eq('workspace_id', workspaceId).order('name', ascending: true);
+    final tills = await _client.from('counter_tills').select('id, name, active, site_id, denominations').eq('workspace_id', workspaceId).order('name', ascending: true);
     final sessions = await fetchAllPages(
       table: counterTillSessionsTable,
       build: () => _client.from(counterTillSessionsTable).select('id, till_id, float_minor, opened_by_member_id').eq('workspace_id', workspaceId).eq('state', 'open').order('id', ascending: true),
@@ -48,6 +48,13 @@ class SupabaseTillDrawer implements TillDrawerPort {
         'p_site_id': siteId,
         'p_active': active,
       }));
+
+  @override
+  Future<List<int>?> setTillDenominations(String workspaceId, {required String tillId, required List<int> values}) async {
+    final answer = await _call('counter_till_denominations_set_v1', {'p_workspace_id': workspaceId, 'p_till_id': tillId, 'p_values': values});
+    final picked = answer is Map ? answer['denominations'] : null;
+    return picked is List ? [for (final v in picked) int.parse('$v')] : null;
+  }
 
   @override
   Future<DrawerOpened> openSession(String workspaceId, {required String requestId, required String tillId, required int floatMinor, Denominations? denominations}) async =>

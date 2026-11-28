@@ -9,6 +9,7 @@ import 'package:deskilo/features/money/domain/till_drawer.dart';
 import 'package:deskilo/features/money/presentation/till_drawer/till_drawer_screen.dart';
 import 'package:deskilo/features/money/providers/till_drawer_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show cashValuesOf;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -41,11 +42,12 @@ Future<void> _open(
   DemoTillDrawer drawer,
   Size size, {
   DrawerSettings settings = _blind,
+  String currency = 'EUR',
 }) async {
   drawer.rules = () => settings;
   await pumpApp(
     tester,
-    const TillDrawerScreen(workspaceId: 'ws-1', currency: 'EUR', canManage: true),
+    TillDrawerScreen(workspaceId: 'ws-1', currency: currency, canManage: true),
     size: size,
     overrides: [
       tillDrawerPortProvider.overrideWithValue(drawer),
@@ -63,6 +65,7 @@ Future<DemoTillDrawer> _openedDrawer({int float = 10000, bool seesFinances = fal
 }
 
 void main() {
+  _demoRefusesOutsideThePick();
   for (final size in const [Size(390, 844), Size(1440, 900)]) {
     group('the till drawer at ${size.width.toInt()}', () {
       testWidgets('the tills are listed closed, and a till is opened with its float', (tester) async {
@@ -85,13 +88,42 @@ void main() {
         expect(find.text(_en.tillDrawerAmountInvalid), findsWidgets);
       });
 
-      testWidgets('by denomination the rows add up to the float', (tester) async {
+      // #4511 -- the till's notes and coins are listed; only how many of each is entered
+      testWidgets('by denomination the till\'s notes and coins are listed and add up to the float', (tester) async {
         const settings = DrawerSettings(blindCount: true, byDenomination: true, reasons: ['change'], paidOutLimitMinor: 0);
         await _open(tester, DemoTillDrawer(), size, settings: settings);
         await _tap(tester, 'drawer-open-demo-till-front');
+        final fifty = cashValuesOf('EUR').indexOf(5000);
+        expect(find.byKey(const ValueKey('drawer-denom-add')), findsNothing, reason: 'no value is typed');
+        expect(find.byKey(ValueKey('drawer-denom-count-${cashValuesOf('EUR').length - 1}')), findsOneWidget, reason: 'down to the cent');
+        await _type(tester, 'drawer-denom-count-$fifty', '2');
+        expect(find.text(_en.tillDrawerDenomTotal('€100.00')), findsOneWidget);
+        await _tap(tester, 'drawer-open-submit');
+        expect(find.byKey(const ValueKey('drawer-close-demo-till-front')), findsOneWidget);
+      });
+
+      testWidgets('a till that carries no cents lists none, and its pick is made in its sheet', (tester) async {
+        const settings = DrawerSettings(blindCount: true, byDenomination: true, reasons: ['change'], paidOutLimitMinor: 0);
+        final drawer = DemoTillDrawer();
+        await _open(tester, drawer, size, settings: settings);
+        await _tap(tester, 'drawer-edit-demo-till-front');
+        expect(find.byKey(const ValueKey('drawer-till-note-1')), findsOneWidget);
+        await _tap(tester, 'drawer-till-note-1');
+        await _tap(tester, 'drawer-till-note-2');
+        await _tap(tester, 'drawer-till-save');
+        final front = (await drawer.tills('ws-1')).firstWhere((t) => t.id == 'demo-till-front');
+        expect(front.denominations, [for (final v in cashValuesOf('EUR')) if (v > 2) v]);
+        await _tap(tester, 'drawer-open-demo-till-front');
+        expect(find.byKey(ValueKey('drawer-denom-count-${cashValuesOf('EUR').length - 3}')), findsOneWidget);
+        expect(find.byKey(ValueKey('drawer-denom-count-${cashValuesOf('EUR').length - 2}')), findsNothing, reason: 'no 1 and 2 cents');
+      });
+
+      testWidgets('a currency the reference does not list is counted with typed values, as before', (tester) async {
+        const settings = DrawerSettings(blindCount: true, byDenomination: true, reasons: ['change'], paidOutLimitMinor: 0);
+        await _open(tester, DemoTillDrawer(currency: 'THB'), size, settings: settings, currency: 'THB');
+        await _tap(tester, 'drawer-open-demo-till-front');
         await _type(tester, 'drawer-denom-value-0', '50');
         await _type(tester, 'drawer-denom-count-0', '2');
-        expect(find.text(_en.tillDrawerDenomTotal('€100.00')), findsOneWidget);
         await _tap(tester, 'drawer-open-submit');
         expect(find.byKey(const ValueKey('drawer-close-demo-till-front')), findsOneWidget);
       });
@@ -159,5 +191,22 @@ void main() {
     await _settle(tester);
     expect(find.text(_en.tillDrawerNoTills), findsOneWidget);
     expect(find.byKey(const ValueKey('drawer-add-till')), findsOneWidget);
+  });
+}
+
+// #4511 -- the Demo refuses what the server refuses: a value the till does not carry
+void _demoRefusesOutsideThePick() {
+  test('a float naming a coin the till does not carry is refused; a currency not listed takes any value', () async {
+    final drawer = DemoTillDrawer();
+    await drawer.setTillDenominations('ws-1', tillId: 'demo-till-front', values: const [5000, 1000]);
+    await expectLater(
+      drawer.openSession('ws-1', requestId: 'r1', tillId: 'demo-till-front', floatMinor: 5001, denominations: const Denominations({5000: 1, 1: 1})),
+      throwsA(isA<Object>()),
+    );
+    expect(
+      await drawer.openSession('ws-1', requestId: 'r2', tillId: 'demo-till-front', floatMinor: 6000, denominations: const Denominations({5000: 1, 1000: 1})),
+      isNotNull,
+    );
+    await expectLater(drawer.setTillDenominations('ws-1', tillId: 'demo-till-front', values: const [300]), throwsA(isA<Object>()));
   });
 }

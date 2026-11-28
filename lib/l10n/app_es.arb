@@ -24547,6 +24547,8 @@
   "tillDrawerTillActive": "En uso",
   "tillDrawerTillName": "Nombre de la caja",
   "tillDrawerTillNewTitle": "Caja nueva",
+  "tillDrawerTillNotes": "Billetes y monedas de este cajón",
+  "tillDrawerTillNotesHint": "El cajón se cuenta con estos. Ninguno desactivado: todos los de la moneda.",
   "tillDrawerTillSave": "Guardar la caja",
   "tillDrawerTitle": "Cajón de caja",
   "tillFailed": "La caja no pudo hacerlo. Inténtelo de nuevo.",

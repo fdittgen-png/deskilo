@@ -54888,6 +54888,14 @@
   "@tillDrawerTillNewTitle": {
     "description": "#4367 till sessions: the cash drawer"
   },
+  "tillDrawerTillNotes": "Notes and coins in this drawer",
+  "@tillDrawerTillNotes": {
+    "description": "#4511 the section of the till sheet listing the notes and coins its drawer carries"
+  },
+  "tillDrawerTillNotesHint": "The drawer is counted in these. None switched off: all of the currency's.",
+  "@tillDrawerTillNotesHint": {
+    "description": "#4511 under the till notes and coins section"
+  },
   "tillDrawerTillSave": "Save the till",
   "@tillDrawerTillSave": {
     "description": "#4367 till sessions: the cash drawer"

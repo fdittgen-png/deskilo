@@ -148,7 +148,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
       workspaces: space.workspaces,
     );
   });
-  final drawers = demoSpacesOf((key) => DemoTillDrawer());
+  final drawers = demoSpacesOf((key) => DemoTillDrawer(currency: key.currency));
   final tills = _demoTills(fixture, drawers);
   final myReservations = _myReservations(fixture);
   final stocks = _DemoStocks(fixture);

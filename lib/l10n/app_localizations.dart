@@ -67718,6 +67718,18 @@ abstract class AppLocalizations {
   /// **'New till'**
   String get tillDrawerTillNewTitle;
 
+  /// #4511 the section of the till sheet listing the notes and coins its drawer carries
+  ///
+  /// In en, this message translates to:
+  /// **'Notes and coins in this drawer'**
+  String get tillDrawerTillNotes;
+
+  /// #4511 under the till notes and coins section
+  ///
+  /// In en, this message translates to:
+  /// **'The drawer is counted in these. None switched off: all of the currency\'s.'**
+  String get tillDrawerTillNotesHint;
+
   /// #4367 till sessions: the cash drawer
   ///
   /// In en, this message translates to:

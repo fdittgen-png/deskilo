@@ -379,6 +379,11 @@ constraint capability_states.capability_states_state_check CHECK ((state = ANY (
 constraint capability_states.capability_states_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint capability_states.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint capability_states.system_company_present CHECK ((company_id IS NOT NULL))
+constraint cash_denominations.cash_denominations_currency_fkey FOREIGN KEY (currency) REFERENCES currency_reference(code)
+constraint cash_denominations.cash_denominations_form_check CHECK ((form = ANY (ARRAY['note'::text, 'coin'::text])))
+constraint cash_denominations.cash_denominations_pkey PRIMARY KEY (currency, value_minor, form)
+constraint cash_denominations.cash_denominations_value_minor_check CHECK ((value_minor > 0))
+constraint cash_denominations.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint charging_stations.charging_stations_accessory_id_fkey FOREIGN KEY (accessory_id) REFERENCES accessories(id) ON DELETE SET NULL
 constraint charging_stations.charging_stations_connector_check CHECK ((connector = ANY (ARRAY['type2'::text, 'ccs'::text, 'chademo'::text, 'tesla'::text, 'schuko'::text])))
 constraint charging_stations.charging_stations_name_check CHECK ((char_length(name) <= 80))
@@ -558,6 +563,7 @@ constraint counter_till_sessions.counter_till_sessions_workspace_id_opened_by_me
 constraint counter_till_sessions.counter_till_sessions_workspace_id_till_id_fkey FOREIGN KEY (workspace_id, till_id) REFERENCES counter_tills(workspace_id, id)
 constraint counter_till_sessions.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint counter_till_sessions.system_company_present CHECK ((company_id IS NOT NULL))
+constraint counter_tills.counter_tills_denominations_check CHECK (((denominations IS NULL) OR (((cardinality(denominations) >= 1) AND (cardinality(denominations) <= 40)) AND (0 < ALL (denominations)))))
 constraint counter_tills.counter_tills_name_check CHECK (((char_length(btrim(name)) >= 1) AND (char_length(btrim(name)) <= 60)))
 constraint counter_tills.counter_tills_pkey PRIMARY KEY (id)
 constraint counter_tills.counter_tills_site_id_fkey FOREIGN KEY (site_id) REFERENCES sites(id)
@@ -3343,6 +3349,7 @@ routine public.cost_allocation_rules_v1(p_workspace_id uuid) -> jsonb | function
 routine public.counter_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:66c1d614d21a
 routine public.counter_adapters() -> text[] | function | invoker | immutable | exec:service_role | body:eea3a873b58c
 routine public.counter_cash_entry_v1(p_workspace_id uuid, p_request_id uuid, p_session_id uuid, p_kind text, p_amount_minor bigint, p_reason text, p_purchase_document_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:717b11c0e3ac
+routine public.counter_count_refusal(p_till counter_tills, p_counted jsonb, p_stored jsonb) -> bigint | function | definer | stable | exec:service_role | body:b002311fd1e8
 routine public.counter_day_close_v1(p_workspace_id uuid, p_request_id uuid, p_site_id uuid, p_business_date date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:574e10fa7ef5
 routine public.counter_day_report_v1(p_workspace_id uuid, p_day_close_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e7ad269ace0
 routine public.counter_denominations_total(p_denominations jsonb) -> bigint | function | invoker | immutable | exec:service_role | body:fe05c177ae65
@@ -3382,9 +3389,12 @@ routine public.counter_tender_reconcile_v1(p_workspace_id uuid, p_request_id uui
 routine public.counter_tender_request_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_kind text, p_amount_minor bigint) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7abb8d7623ef
 routine public.counter_tender_resolve_v1(p_workspace_id uuid, p_request_id uuid, p_tender_id uuid, p_outcome text, p_provider_ref text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5f6c84c49864
 routine public.counter_till_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:55c0e9ee1de4
+routine public.counter_till_cash_values(p_till counter_tills) -> bigint[] | function | definer | stable | exec:service_role | body:897812525fe8
+routine public.counter_till_denominations_set_v1(p_workspace_id uuid, p_till_id uuid, p_values bigint[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c4d2947b598e
 routine public.counter_till_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:230c75b0f4d8
 routine public.counter_till_or_finance_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:f0e35724ff78
 routine public.counter_till_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_site_id uuid, p_active boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:98c2a4d6aa78
+routine public.counter_till_sessions_counted_in_till() -> trigger | function | definer | volatile | exec:service_role | body:620eb58c9a98
 routine public.country_papers(p_country text, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:e88ec4f4583e
 routine public.courtesy_word(p_code text, p_lang text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:6ee8d303b265
 routine public.create_account_group(p_title text, p_users uuid[], p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8824f7fdaaa1
@@ -5058,6 +5068,7 @@ trigger business_kinds.business_kinds_profile_check CREATE TRIGGER business_kind
 trigger business_kinds.business_kinds_profile_version CREATE TRIGGER business_kinds_profile_version BEFORE INSERT OR UPDATE OF feature_profile ON public.business_kinds FOR EACH ROW EXECUTE FUNCTION business_kinds_profile_version()
 trigger business_kinds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.business_kinds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger capability_states.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.capability_states FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger cash_denominations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.cash_denominations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger charging_stations.charging_stations_fee CREATE TRIGGER charging_stations_fee AFTER INSERT OR DELETE OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION charging_stations_fee()
 trigger charging_stations.charging_stations_guard CREATE TRIGGER charging_stations_guard BEFORE INSERT OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION charging_stations_guard()
 trigger charging_stations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -5094,6 +5105,7 @@ trigger counter_tenders.counter_tenders_frozen CREATE TRIGGER counter_tenders_fr
 trigger counter_tenders.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_tenders FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_tenders.posted_site_kept CREATE TRIGGER posted_site_kept BEFORE UPDATE ON public.counter_tenders FOR EACH ROW WHEN ((old.site_id IS DISTINCT FROM new.site_id)) EXECUTE FUNCTION posted_site_kept()
 trigger counter_tenders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_tenders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger counter_till_sessions.counter_till_sessions_counted_in_till CREATE TRIGGER counter_till_sessions_counted_in_till BEFORE INSERT OR UPDATE OF float_denominations, counted_denominations ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION counter_till_sessions_counted_in_till()
 trigger counter_till_sessions.counter_till_sessions_frozen CREATE TRIGGER counter_till_sessions_frozen BEFORE DELETE OR UPDATE ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION counter_till_frozen_guard()
 trigger counter_till_sessions.posted_rows_no_truncate CREATE TRIGGER posted_rows_no_truncate BEFORE TRUNCATE ON public.counter_till_sessions FOR EACH STATEMENT EXECUTE FUNCTION posted_rows_no_truncate()
 trigger counter_till_sessions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

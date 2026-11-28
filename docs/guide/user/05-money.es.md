@@ -899,9 +899,9 @@ Probado hasta ahora: los bytes frente a archivos de referencia y un receptor loc
 
 Usted lleva un cajón de caja y quiere saber que el dinero que contiene es correcto al final del día.
 
-Abra **Cajón de caja** en el menú de ventas (requiere la función de sesiones de caja y el derecho de emitir facturas o de ver las finanzas). Cada caja del negocio aparece con su estado. Quien gestiona las sedes añade una caja con **Añadir una caja** y puede renombrarla o desactivarla.
+Abra **Cajón de caja** en el menú de ventas (requiere la función de sesiones de caja y el derecho de emitir facturas o de ver las finanzas). Cada caja del negocio aparece con su estado. Quien gestiona las sedes añade una caja con **Añadir una caja** y puede renombrarla o desactivarla. En la ficha de una caja, **Billetes y monedas de este cajón** fija con cuáles se cuenta; un cajón sin monedas de 1 y 2 céntimos, por ejemplo, nunca las lista. Un recuento que nombra un billete o una moneda que la caja no lleva se rechaza.
 
-Pulse **Abrir la caja**, escriba el **Fondo del cajón** (o, si su negocio cuenta por denominación, el valor de cada billete o moneda y cuántos hay) y confirme. Una caja tiene una sola sesión abierta a la vez, y con las sesiones de caja la caja solo vende sobre una sesión abierta: sin ninguna abierta, ofrece **Abrir la caja** en lugar de vender.
+Pulse **Abrir la caja**, escriba el **Fondo del cajón** (o, si su negocio cuenta por denominación, cuántos hay de cada billete y moneda que la caja lista; una moneda cuyos billetes la aplicación no conoce se cuenta escribiendo el valor de cada uno) y confirme. Una caja tiene una sola sesión abierta a la vez, y con las sesiones de caja la caja solo vende sobre una sesión abierta: sin ninguna abierta, ofrece **Abrir la caja** en lugar de vender.
 
 **Entrada o salida de efectivo** registra el dinero puesto en el cajón o sacado de él, con un **Motivo** elegido de la lista de su negocio. Una salida por encima del límite del negocio la registra quien puede registrar pagos salientes.
 

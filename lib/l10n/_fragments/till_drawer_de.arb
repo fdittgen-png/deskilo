@@ -112,5 +112,7 @@
   "settingUnitCells": "Zellen",
   "settingLabelCounterMaxDiscount": "Größter Rabatt an der Kasse",
   "settingHintCounterMaxDiscount": "Der größte Rabatt in Prozent, den eine Kassiererin oder ein Kassierer auf eine Kassenzeile geben darf. 0 heißt: kein Rabatt an der Kasse.",
-  "tillDayDepositsReturned": "Zurückgenommenes Pfand: {amount}"
+  "tillDayDepositsReturned": "Zurückgenommenes Pfand: {amount}",
+  "tillDrawerTillNotes": "Scheine und Münzen dieser Kasse",
+  "tillDrawerTillNotesHint": "Die Kasse wird mit diesen gezählt. Keiner abgeschaltet: alle der Währung."
 }
