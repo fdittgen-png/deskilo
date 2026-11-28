@@ -2908,7 +2908,7 @@ Le categorie sotto cui si registra una spesa o un giustificativo sono l’elenco
 
 ### Contatti e condizioni dei fornitori
 
-**Destinatari:** Amministratore · Titolare
+**Destinatari:** Amministratore · Proprietario
 
 Un fornitore ha contatti, ciascuno con un ruolo, e uno di essi è il suo contatto di acquisto preferito. Porta anche quanto concordato una volta: la valuta dei suoi ordini, i giorni di scadenza delle sue fatture e i giorni di consegna dei suoi ordini.
 
