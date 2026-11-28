@@ -3,14 +3,14 @@
         "counts": {
             "enums": 0,
             "views": 0,
-            "tables": 313,
-            "columns": 4948,
+            "tables": 319,
+            "columns": 5066,
             "domains": 0,
             "partitions": 0,
-            "foreignKeys": 795
+            "foreignKeys": 814
         },
         "source": "PostgreSQL catalogues (pg_class, pg_attribute, pg_constraint, pg_index, pg_inherits, pg_type) of the migration replay",
-        "checksum": "90ee3bc428b9217d2e35962f64476a6bdce71a766863cb1fb4df41a7fa2a0fde",
+        "checksum": "cc969ad347f21ffca17c88cb40b7d05d620097e7123884aa6fdaf371870c5534",
         "excluded": [
             "pg_catalog",
             "information_schema",
@@ -19,7 +19,7 @@
             "managed platform schemas (auth, storage, realtime, ...): version-qualified, not application migrations",
             "row values, function bodies, view definitions"
         ],
-        "schemaMarker": 980,
+        "schemaMarker": 997,
         "postgresMajor": 17,
         "applicationSchema": "public"
     },
@@ -4642,6 +4642,312 @@
         },
         {
             "kind": "table",
+            "name": "bank_accounts",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "name",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "iban",
+                    "type": "text",
+                    "default": "<redacted>",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "identifiers",
+                    "type": "text[]",
+                    "default": "'{}'::text[]",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "aliases",
+                    "type": "text[]",
+                    "default": "'{}'::text[]",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "currency",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "book_account_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "archived",
+                    "type": "boolean",
+                    "default": "false",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "created_by_member_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 12
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 15
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 16
+                }
+            ],
+            "comment": "#4496 -- the bank accounts of a business: the account a statement is imported into, and the names it is known by.",
+            "indexes": [
+                {
+                    "name": "bank_accounts_name",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX bank_accounts_name ON public.bank_accounts USING btree (workspace_id, lower(btrim(name)))"
+                },
+                {
+                    "name": "bank_accounts_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX bank_accounts_pkey ON public.bank_accounts USING btree (id)"
+                },
+                {
+                    "name": "bank_accounts_workspace_id_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX bank_accounts_workspace_id_id_key ON public.bank_accounts USING btree (workspace_id, id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "bank_accounts_aliases_check",
+                    "type": "check",
+                    "columns": [
+                        "aliases"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((cardinality(aliases) <= 20))"
+                },
+                {
+                    "name": "bank_accounts_book_account_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "book_account_id"
+                    ],
+                    "onDelete": "SET NULL",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (book_account_id) REFERENCES book_accounts(id) ON DELETE SET NULL",
+                    "references": {
+                        "table": "book_accounts",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "bank_accounts_created_by_member_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "created_by_member_id"
+                    ],
+                    "onDelete": "SET NULL",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (created_by_member_id) REFERENCES members(id) ON DELETE SET NULL",
+                    "references": {
+                        "table": "members",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "bank_accounts_currency_check",
+                    "type": "check",
+                    "columns": [
+                        "currency"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((currency ~ '^[A-Z]{3}$'::text))"
+                },
+                {
+                    "name": "bank_accounts_iban_check",
+                    "type": "check",
+                    "columns": [
+                        "iban"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((iban ~ '^([A-Z]{2}[0-9]{2}[A-Z0-9]{11,30})?$'::text))"
+                },
+                {
+                    "name": "bank_accounts_identifiers_check",
+                    "type": "check",
+                    "columns": [
+                        "identifiers"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((cardinality(identifiers) <= 10))"
+                },
+                {
+                    "name": "bank_accounts_name_check",
+                    "type": "check",
+                    "columns": [
+                        "name"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((char_length(btrim(name)) >= 1) AND (char_length(btrim(name)) <= 64)))"
+                },
+                {
+                    "name": "bank_accounts_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "bank_accounts_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "bank_accounts_workspace_id_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "workspace_id",
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (workspace_id, id)"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
             "name": "bank_line_unmatches",
             "schema": "public",
             "columns": [
@@ -5565,9 +5871,35 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 31
+                },
+                {
+                    "name": "bank_account_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 32
+                },
+                {
+                    "name": "movement_hash",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 33
                 }
             ],
             "indexes": [
+                {
+                    "name": "bank_statement_lines_account_movement",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX bank_statement_lines_account_movement ON public.bank_statement_lines USING btree (bank_account_id, movement_hash)"
+                },
+                {
+                    "name": "bank_statement_lines_account_tx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX bank_statement_lines_account_tx ON public.bank_statement_lines USING btree (bank_account_id, transaction_id) WHERE (transaction_id <> ''::text)"
+                },
                 {
                     "name": "bank_statement_lines_hash",
                     "valid": true,
@@ -5640,6 +5972,31 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK (((amount_cents <> 0) AND (abs(amount_cents) <= 2147483647)))"
+                },
+                {
+                    "name": "bank_statement_lines_bank_account",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "bank_account_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, bank_account_id) REFERENCES bank_accounts(workspace_id, id)",
+                    "references": {
+                        "table": "bank_accounts",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
                 },
                 {
                     "name": "bank_statement_lines_check",
@@ -5777,6 +6134,17 @@
                     },
                     "onDeleteColumns": [
                     ]
+                },
+                {
+                    "name": "bank_statement_lines_movement_hash_check",
+                    "type": "check",
+                    "columns": [
+                        "movement_hash"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((movement_hash ~ '^[0-9a-f]{64}$'::text))"
                 },
                 {
                     "name": "bank_statement_lines_outgoing_payment_id_fkey",
@@ -6149,6 +6517,12 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 20
+                },
+                {
+                    "name": "bank_account_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 21
                 }
             ],
             "indexes": [
@@ -6172,6 +6546,13 @@
                     "unique": true,
                     "primary": false,
                     "definition": "CREATE UNIQUE INDEX bank_statements_source ON public.bank_statements USING btree (workspace_id, source_sha256)"
+                },
+                {
+                    "name": "bank_statements_unattached",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX bank_statements_unattached ON public.bank_statements USING btree (workspace_id, account) WHERE (bank_account_id IS NULL)"
                 }
             ],
             "constraints": [
@@ -6185,6 +6566,31 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK (((char_length(account) >= 1) AND (char_length(account) <= 64)))"
+                },
+                {
+                    "name": "bank_statements_bank_account",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "bank_account_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, bank_account_id) REFERENCES bank_accounts(workspace_id, id)",
+                    "references": {
+                        "table": "bank_accounts",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
                 },
                 {
                     "name": "bank_statements_check",
@@ -9799,6 +10205,157 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "cash_denominations",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "currency",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "value_minor",
+                    "type": "bigint",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "form",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "withdrawn_on",
+                    "type": "date",
+                    "notNull": false,
+                    "position": 4
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                }
+            ],
+            "comment": "#4511 -- the notes and coins a till drawer is counted in, per currency; the app's cashDenominations.",
+            "indexes": [
+                {
+                    "name": "cash_denominations_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX cash_denominations_pkey ON public.cash_denominations USING btree (currency, value_minor, form)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "cash_denominations_currency_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "currency"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (currency) REFERENCES currency_reference(code)",
+                    "references": {
+                        "table": "currency_reference",
+                        "schema": "public",
+                        "columns": [
+                            "code"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "cash_denominations_form_check",
+                    "type": "check",
+                    "columns": [
+                        "form"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((form = ANY (ARRAY['note'::text, 'coin'::text])))"
+                },
+                {
+                    "name": "cash_denominations_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "currency",
+                        "value_minor",
+                        "form"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (currency, value_minor, form)"
+                },
+                {
+                    "name": "cash_denominations_value_minor_check",
+                    "type": "check",
+                    "columns": [
+                        "value_minor"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((value_minor > 0))"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
                 }
             ]
         },
@@ -14706,6 +15263,12 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 10
+                },
+                {
+                    "name": "denominations",
+                    "type": "bigint[]",
+                    "notNull": false,
+                    "position": 11
                 }
             ],
             "indexes": [
@@ -14732,6 +15295,17 @@
                 }
             ],
             "constraints": [
+                {
+                    "name": "counter_tills_denominations_check",
+                    "type": "check",
+                    "columns": [
+                        "denominations"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((denominations IS NULL) OR (((cardinality(denominations) >= 1) AND (cardinality(denominations) <= 40)) AND (0 < ALL (denominations)))))"
+                },
                 {
                     "name": "counter_tills_name_check",
                     "type": "check",
@@ -15105,6 +15679,133 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "currency_reference",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "code",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "minor_digits",
+                    "type": "integer",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "business",
+                    "type": "boolean",
+                    "default": "false",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "withdrawn_on",
+                    "type": "date",
+                    "notNull": false,
+                    "position": 4
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                }
+            ],
+            "comment": "#4501 -- the currencies an amount is read in, with their minor digits and lifecycle; the app's currencyReference.",
+            "indexes": [
+                {
+                    "name": "currency_reference_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX currency_reference_pkey ON public.currency_reference USING btree (code)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "currency_reference_code_check",
+                    "type": "check",
+                    "columns": [
+                        "code"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((code ~ '^[A-Z]{3}$'::text))"
+                },
+                {
+                    "name": "currency_reference_minor_digits_check",
+                    "type": "check",
+                    "columns": [
+                        "minor_digits"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((minor_digits >= 0) AND (minor_digits <= 4)))"
+                },
+                {
+                    "name": "currency_reference_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "code"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (code)"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
                 }
             ]
         },
@@ -29487,11 +30188,11 @@
                         "unit"
                     ],
                     "onDelete": "CASCADE",
-                    "onUpdate": "NO ACTION",
+                    "onUpdate": "CASCADE",
                     "inherited": false,
                     "validated": true,
                     "deferrable": false,
-                    "definition": "FOREIGN KEY (item_id, unit) REFERENCES item_units(item_id, unit) ON DELETE CASCADE",
+                    "definition": "FOREIGN KEY (item_id, unit) REFERENCES item_units(item_id, unit) ON UPDATE CASCADE ON DELETE CASCADE",
                     "references": {
                         "table": "item_units",
                         "schema": "public",
@@ -52903,6 +53604,12 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 17
+                },
+                {
+                    "name": "vat_rate_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 18
                 }
             ],
             "indexes": [
@@ -53082,6 +53789,29 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK (((unit_price_cents >= 0) AND (unit_price_cents <= '100000000000'::bigint)))"
+                },
+                {
+                    "name": "purchase_order_lines_vat_rate_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "vat_rate_id"
+                    ],
+                    "onDelete": "SET NULL",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (vat_rate_id) REFERENCES vat_rates(id) ON DELETE SET NULL",
+                    "references": {
+                        "table": "vat_rates",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
                 },
                 {
                     "name": "purchase_order_lines_vat_rate_percent_check",
@@ -63268,6 +63998,48 @@
                     "type": "text",
                     "notNull": false,
                     "position": 40
+                },
+                {
+                    "name": "default_purchase_unit",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 41
+                },
+                {
+                    "name": "default_purchase_factor_num",
+                    "type": "bigint",
+                    "notNull": false,
+                    "position": 42
+                },
+                {
+                    "name": "default_purchase_factor_den",
+                    "type": "bigint",
+                    "notNull": false,
+                    "position": 43
+                },
+                {
+                    "name": "default_sale_unit",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 44
+                },
+                {
+                    "name": "default_sale_factor_num",
+                    "type": "bigint",
+                    "notNull": false,
+                    "position": 45
+                },
+                {
+                    "name": "default_sale_factor_den",
+                    "type": "bigint",
+                    "notNull": false,
+                    "position": 46
+                },
+                {
+                    "name": "default_sale_price_cents",
+                    "type": "bigint",
+                    "notNull": false,
+                    "position": 47
                 }
             ],
             "indexes": [
@@ -63322,6 +64094,107 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK (((count_every_days >= 1) AND (count_every_days <= 365)))"
+                },
+                {
+                    "name": "services_default_purchase_factor_den_check",
+                    "type": "check",
+                    "columns": [
+                        "default_purchase_factor_den"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((default_purchase_factor_den > 0))"
+                },
+                {
+                    "name": "services_default_purchase_factor_num_check",
+                    "type": "check",
+                    "columns": [
+                        "default_purchase_factor_num"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((default_purchase_factor_num > 0))"
+                },
+                {
+                    "name": "services_default_purchase_factor_pair",
+                    "type": "check",
+                    "columns": [
+                        "default_purchase_factor_num",
+                        "default_purchase_factor_den"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((default_purchase_factor_num IS NULL) = (default_purchase_factor_den IS NULL)))"
+                },
+                {
+                    "name": "services_default_purchase_unit_check",
+                    "type": "check",
+                    "columns": [
+                        "default_purchase_unit"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((char_length(btrim(default_purchase_unit)) >= 1) AND (char_length(btrim(default_purchase_unit)) <= 30)))"
+                },
+                {
+                    "name": "services_default_sale_factor_den_check",
+                    "type": "check",
+                    "columns": [
+                        "default_sale_factor_den"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((default_sale_factor_den > 0))"
+                },
+                {
+                    "name": "services_default_sale_factor_num_check",
+                    "type": "check",
+                    "columns": [
+                        "default_sale_factor_num"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((default_sale_factor_num > 0))"
+                },
+                {
+                    "name": "services_default_sale_factor_pair",
+                    "type": "check",
+                    "columns": [
+                        "default_sale_factor_num",
+                        "default_sale_factor_den"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((default_sale_factor_num IS NULL) = (default_sale_factor_den IS NULL)))"
+                },
+                {
+                    "name": "services_default_sale_price_cents_check",
+                    "type": "check",
+                    "columns": [
+                        "default_sale_price_cents"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((default_sale_price_cents >= 0) AND (default_sale_price_cents <= 2000000000)))"
+                },
+                {
+                    "name": "services_default_sale_unit_check",
+                    "type": "check",
+                    "columns": [
+                        "default_sale_unit"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((char_length(btrim(default_sale_unit)) >= 1) AND (char_length(btrim(default_sale_unit)) <= 30)))"
                 },
                 {
                     "name": "services_deposit_item_fk",
@@ -73974,11 +74847,11 @@
                         "purchase_unit"
                     ],
                     "onDelete": "NO ACTION",
-                    "onUpdate": "NO ACTION",
+                    "onUpdate": "CASCADE",
                     "inherited": false,
                     "validated": true,
                     "deferrable": false,
-                    "definition": "FOREIGN KEY (item_id, purchase_unit) REFERENCES item_units(item_id, unit)",
+                    "definition": "FOREIGN KEY (item_id, purchase_unit) REFERENCES item_units(item_id, unit) ON UPDATE CASCADE",
                     "references": {
                         "table": "item_units",
                         "schema": "public",
@@ -75637,6 +76510,1162 @@
         },
         {
             "kind": "table",
+            "name": "till_terminal_codes",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "till_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "code_hash",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "device_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "board_profile",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "secret_hash",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "fingerprint",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "created_by",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "expires_at",
+                    "type": "timestamp with time zone",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "attempts_left",
+                    "type": "integer",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "claimed_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 12
+                },
+                {
+                    "name": "claim_request_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "claim_secret_hash",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "terminal_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 15
+                },
+                {
+                    "name": "cancelled_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 16
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 17
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 18
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 19
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 20
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 21
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 22
+                }
+            ],
+            "comment": "#4454 -- the codes that connect a till board to a business: the sha256 of each code, never the code; single use and expiring.",
+            "indexes": [
+                {
+                    "name": "till_terminal_codes_code_hash_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX till_terminal_codes_code_hash_key ON public.till_terminal_codes USING btree (code_hash)"
+                },
+                {
+                    "name": "till_terminal_codes_device",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX till_terminal_codes_device ON public.till_terminal_codes USING btree (workspace_id, device_id)"
+                },
+                {
+                    "name": "till_terminal_codes_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX till_terminal_codes_pkey ON public.till_terminal_codes USING btree (id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                },
+                {
+                    "name": "till_terminal_codes_attempts_left_check",
+                    "type": "check",
+                    "columns": [
+                        "attempts_left"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((attempts_left >= 0))"
+                },
+                {
+                    "name": "till_terminal_codes_board_profile_check",
+                    "type": "check",
+                    "columns": [
+                        "board_profile"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((board_profile = ANY (ARRAY['lcdwiki_e32r40t_v1'::text, 'ideaspark_st7789_v1'::text])))"
+                },
+                {
+                    "name": "till_terminal_codes_claim_secret_hash_check",
+                    "type": "check",
+                    "columns": [
+                        "claim_secret_hash"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((claim_secret_hash ~ '^[0-9a-f]{64}$'::text))"
+                },
+                {
+                    "name": "till_terminal_codes_code_hash_check",
+                    "type": "check",
+                    "columns": [
+                        "code_hash"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((code_hash ~ '^[0-9a-f]{64}$'::text))"
+                },
+                {
+                    "name": "till_terminal_codes_code_hash_key",
+                    "type": "unique",
+                    "columns": [
+                        "code_hash"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (code_hash)"
+                },
+                {
+                    "name": "till_terminal_codes_created_by_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "created_by"
+                    ],
+                    "onDelete": "SET NULL",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (created_by) REFERENCES members(id) ON DELETE SET NULL",
+                    "references": {
+                        "table": "members",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "till_terminal_codes_fingerprint_check",
+                    "type": "check",
+                    "columns": [
+                        "fingerprint"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((fingerprint ~ '^[0-9A-F]{4}-[0-9A-F]{4}$'::text))"
+                },
+                {
+                    "name": "till_terminal_codes_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "till_terminal_codes_secret_hash_check",
+                    "type": "check",
+                    "columns": [
+                        "secret_hash"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((secret_hash ~ '^[0-9a-f]{64}$'::text))"
+                },
+                {
+                    "name": "till_terminal_codes_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "till_terminal_codes_workspace_id_till_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "till_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, till_id) REFERENCES counter_tills(workspace_id, id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "counter_tills",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "till_terminal_leases",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "terminal_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "till_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "lease_hash",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "requested_at",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "request_expires_at",
+                    "type": "timestamp with time zone",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "member_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "user_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "auth_session_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "token_ciphertext",
+                    "type": "bytea",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "bytea",
+                    "notNull": false,
+                    "position": 12
+                },
+                {
+                    "name": "granted_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "expires_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "revoked_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 15
+                },
+                {
+                    "name": "revoked_reason",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 16
+                },
+                {
+                    "name": "last_used_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 17
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 18
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 19
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 20
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 21
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 22
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 23
+                }
+            ],
+            "comment": "#4454 -- who sells on a till board: the sha256 of the board's lease token and the cashier's access token, encrypted by the edge function; no client reads it.",
+            "indexes": [
+                {
+                    "name": "till_terminal_leases_lease_hash_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX till_terminal_leases_lease_hash_key ON public.till_terminal_leases USING btree (lease_hash)"
+                },
+                {
+                    "name": "till_terminal_leases_member",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX till_terminal_leases_member ON public.till_terminal_leases USING btree (member_id) WHERE (member_id IS NOT NULL)"
+                },
+                {
+                    "name": "till_terminal_leases_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX till_terminal_leases_pkey ON public.till_terminal_leases USING btree (id)"
+                },
+                {
+                    "name": "till_terminal_leases_terminal",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX till_terminal_leases_terminal ON public.till_terminal_leases USING btree (terminal_id, requested_at DESC)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                },
+                {
+                    "name": "till_terminal_leases_check",
+                    "type": "check",
+                    "columns": [
+                        "granted_at",
+                        "member_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((granted_at IS NULL) = (member_id IS NULL)))"
+                },
+                {
+                    "name": "till_terminal_leases_check1",
+                    "type": "check",
+                    "columns": [
+                        "granted_at",
+                        "user_id",
+                        "auth_session_id",
+                        "expires_at"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((granted_at IS NULL) OR ((user_id IS NOT NULL) AND (auth_session_id IS NOT NULL) AND (expires_at IS NOT NULL))))"
+                },
+                {
+                    "name": "till_terminal_leases_check2",
+                    "type": "check",
+                    "columns": [
+                        "token_ciphertext",
+                        "token_nonce"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((token_ciphertext IS NULL) = (token_nonce IS NULL)))"
+                },
+                {
+                    "name": "till_terminal_leases_lease_hash_check",
+                    "type": "check",
+                    "columns": [
+                        "lease_hash"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((lease_hash ~ '^[0-9a-f]{64}$'::text))"
+                },
+                {
+                    "name": "till_terminal_leases_lease_hash_key",
+                    "type": "unique",
+                    "columns": [
+                        "lease_hash"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (lease_hash)"
+                },
+                {
+                    "name": "till_terminal_leases_member_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "member_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "members",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "till_terminal_leases_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "till_terminal_leases_revoked_reason_check",
+                    "type": "check",
+                    "columns": [
+                        "revoked_reason"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((revoked_reason = ANY (ARRAY['replaced'::text, 'device_revoked'::text, 'by_operator'::text, 'by_owner'::text, 'expired'::text])))"
+                },
+                {
+                    "name": "till_terminal_leases_terminal_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "terminal_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (terminal_id) REFERENCES till_terminals(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "till_terminals",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "till_terminal_leases_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "till_terminal_leases_workspace_id_till_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "till_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, till_id) REFERENCES counter_tills(workspace_id, id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "counter_tills",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "till_terminals",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "till_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "device_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "board_profile",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "fingerprint",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "firmware",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "protocol",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "secret_hash",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "status",
+                    "type": "text",
+                    "default": "'pending_approval'::text",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "code_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "claimed_at",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 12
+                },
+                {
+                    "name": "approved_by",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "approved_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "revoked_by",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 15
+                },
+                {
+                    "name": "revoked_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 16
+                },
+                {
+                    "name": "last_seen_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 17
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 18
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 19
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 20
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 21
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 22
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 23
+                }
+            ],
+            "comment": "#4454 -- the till boards of a business: pending approval, paired or revoked. Only the sha256 of a board's secret is kept.",
+            "indexes": [
+                {
+                    "name": "till_terminals_device",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX till_terminals_device ON public.till_terminals USING btree (device_id, secret_hash)"
+                },
+                {
+                    "name": "till_terminals_one_paired",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX till_terminals_one_paired ON public.till_terminals USING btree (workspace_id, device_id) WHERE (status = 'paired'::text)"
+                },
+                {
+                    "name": "till_terminals_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX till_terminals_pkey ON public.till_terminals USING btree (id)"
+                },
+                {
+                    "name": "till_terminals_workspace",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX till_terminals_workspace ON public.till_terminals USING btree (workspace_id, claimed_at DESC)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                },
+                {
+                    "name": "till_terminals_approved_by_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "approved_by"
+                    ],
+                    "onDelete": "SET NULL",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (approved_by) REFERENCES members(id) ON DELETE SET NULL",
+                    "references": {
+                        "table": "members",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "till_terminals_board_profile_check",
+                    "type": "check",
+                    "columns": [
+                        "board_profile"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((board_profile = ANY (ARRAY['lcdwiki_e32r40t_v1'::text, 'ideaspark_st7789_v1'::text])))"
+                },
+                {
+                    "name": "till_terminals_check",
+                    "type": "check",
+                    "columns": [
+                        "status",
+                        "approved_at",
+                        "revoked_at"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((status = 'paired'::text) = ((approved_at IS NOT NULL) AND (revoked_at IS NULL))))"
+                },
+                {
+                    "name": "till_terminals_check1",
+                    "type": "check",
+                    "columns": [
+                        "status",
+                        "revoked_at"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((status = 'revoked'::text) = (revoked_at IS NOT NULL)))"
+                },
+                {
+                    "name": "till_terminals_code_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "code_id"
+                    ],
+                    "onDelete": "SET NULL",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (code_id) REFERENCES till_terminal_codes(id) ON DELETE SET NULL",
+                    "references": {
+                        "table": "till_terminal_codes",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "till_terminals_fingerprint_check",
+                    "type": "check",
+                    "columns": [
+                        "fingerprint"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((fingerprint ~ '^[0-9A-F]{4}-[0-9A-F]{4}$'::text))"
+                },
+                {
+                    "name": "till_terminals_firmware_check",
+                    "type": "check",
+                    "columns": [
+                        "firmware"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((firmware ~ '^[!-~]{1,40}$'::text))"
+                },
+                {
+                    "name": "till_terminals_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "till_terminals_protocol_check",
+                    "type": "check",
+                    "columns": [
+                        "protocol"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((protocol ~ '^v[0-9]{1,3}$'::text))"
+                },
+                {
+                    "name": "till_terminals_revoked_by_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "revoked_by"
+                    ],
+                    "onDelete": "SET NULL",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (revoked_by) REFERENCES members(id) ON DELETE SET NULL",
+                    "references": {
+                        "table": "members",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "till_terminals_secret_hash_check",
+                    "type": "check",
+                    "columns": [
+                        "secret_hash"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((secret_hash ~ '^[0-9a-f]{64}$'::text))"
+                },
+                {
+                    "name": "till_terminals_status_check",
+                    "type": "check",
+                    "columns": [
+                        "status"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((status = ANY (ARRAY['pending_approval'::text, 'paired'::text, 'revoked'::text])))"
+                },
+                {
+                    "name": "till_terminals_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "till_terminals_workspace_id_till_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "till_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, till_id) REFERENCES counter_tills(workspace_id, id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "counter_tills",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "table",
             "name": "trace_reports",
             "schema": "public",
             "columns": [
@@ -75930,6 +77959,20 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 12
+                },
+                {
+                    "name": "authored",
+                    "type": "boolean",
+                    "default": "false",
+                    "notNull": true,
+                    "position": 13
+                },
+                {
+                    "name": "needs_review",
+                    "type": "boolean",
+                    "default": "false",
+                    "notNull": true,
+                    "position": 14
                 }
             ],
             "indexes": [
