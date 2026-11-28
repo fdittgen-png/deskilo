@@ -11,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('an archived unit takes no new conversion; a unit that is not archived does', () async {
     final conversions = DemoUnitConversions()
-      ..unitsOf = (_) => [for (final u in builtInUnits) u.code == 'cm' ? u.copyWith(archived: true) : u];
+      ..unitsOf = (_) => [for (final u in builtInUnits) if (u.code == 'cm') u.copyWith(archived: true) else u];
     await expectLater(
       conversions.save('ws', requestId: 'r1', conversion: const UnitConversion(fromUnit: 'cm', toUnit: 'm', factorNum: 1, factorDen: 100)),
       throwsA(isA<StockConfigRefused>().having((e) => e.field, 'field', 'unit').having((e) => e.reason, 'reason', StockRefusal.unitArchived)),
