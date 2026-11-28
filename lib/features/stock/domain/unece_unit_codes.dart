@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4479 (0991) -- the UN/ECE Recommendation 20 / 21 codes a unit of measure may carry (the unit of an e-invoice line): a maintained
+// #4479 (0990) -- the UN/ECE Recommendation 20 / 21 codes a unit of measure may carry (the unit of an e-invoice line): a maintained
 // list, chosen from, never typed. The names are the Recommendation's own (English). A code outside the list is refused when a unit
-// is saved with it; one stored before stays until changed. Pinned to the server's `unece_unit_known` (0991) by
+// is saved with it; one stored before stays until changed. Pinned to the server's `unece_unit_known` (0990) by
 // test/parity/unece_unit_codes_parity_test.dart: a code is added to both or to neither.
 library;
 

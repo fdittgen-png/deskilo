@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4479 (0989): an order line holds the VAT rate the person PICKED, by its id: two active rates with one percentage are two choices, an
+-- #4479 (0988): an order line holds the VAT rate the person PICKED, by its id: two active rates with one percentage are two choices, an
 -- unknown or an inactive rate is refused, and a line sent with a percent alone keeps working. An archived unit is refused for a new
 -- association: an order line, an item's unit, a conversion, a line of a standalone invoice draft (a quote revision carries the same guard);
 -- an archived unit stays a readable row. Rolled back.

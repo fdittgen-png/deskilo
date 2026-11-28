@@ -20,7 +20,7 @@ language plpgsql
 as $f$
 begin
   if (length(p_def) - length(replace(p_def, p_old, ''))) / length(p_old) <> 1 then
-    raise exception '0991: % is not found exactly once', p_what using errcode = 'P0001';
+    raise exception '0990: % is not found exactly once', p_what using errcode = 'P0001';
   end if;
   return replace(p_def, p_old, p_new);
 end
@@ -69,7 +69,7 @@ language plpgsql
 as $f$
 begin
   if (select count(*) from regexp_matches(p_def, p_pattern, 'g')) <> 1 then
-    raise exception '0991: % is not found exactly once', p_what using errcode = 'P0001';
+    raise exception '0990: % is not found exactly once', p_what using errcode = 'P0001';
   end if;
   return regexp_replace(p_def, p_pattern, replace(p_new, '\', '\\'));
 end
@@ -118,4 +118,4 @@ end
 $patch$;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(991);
+select public.set_deskilo_schema_version(990);

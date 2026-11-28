@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4479 (0991) -- the Demo tells a conversion a person wrote from one the units generate, as the server does: editing a unit writes its
+// #4479 (0990) -- the Demo tells a conversion a person wrote from one the units generate, as the server does: editing a unit writes its
 // generated conversions again and keeps the authored one, asked to be looked at; writing it again clears the mark.
 import 'package:deskilo/core/demo/data/demo_unit_conversions.dart';
 import 'package:deskilo/features/stock/domain/unit_conversions.dart';

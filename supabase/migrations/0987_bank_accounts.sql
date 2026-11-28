@@ -161,7 +161,7 @@ begin
   for r in select distinct workspace_id from public.bank_statements loop
     v_total := v_total + public.bank_statements_attach(r.workspace_id);
   end loop;
-  raise notice '0988: % bank accounts made from payment details, % statements attached, % under a name no account carries',
+  raise notice '0987: % bank accounts made from payment details, % statements attached, % under a name no account carries',
     (select count(*) from public.bank_accounts), v_total,
     (select count(*) from public.bank_statements where bank_account_id is null);
 end
@@ -425,4 +425,4 @@ $fn$;
 revoke execute on function public.import_bank_statement_v1(uuid, jsonb, jsonb) from public, anon;
 grant execute on function public.import_bank_statement_v1(uuid, jsonb, jsonb) to authenticated;
 
-select public.set_deskilo_schema_version(988);
+select public.set_deskilo_schema_version(987);

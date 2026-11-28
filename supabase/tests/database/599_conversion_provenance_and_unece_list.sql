@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4479 (0991): a conversion a person wrote is told apart from one the units generate, and editing an unused custom unit no longer
+-- #4479 (0990): a conversion a person wrote is told apart from one the units generate, and editing an unused custom unit no longer
 -- deletes it: the generated rows of the unit are written again, the authored row stays, marked to be looked at, and saving it
 -- again clears the mark. The UN/ECE code of a unit is one of the maintained list: a code outside it is refused when given or
 -- changed, one the unit already holds stays until changed. Rolled back.

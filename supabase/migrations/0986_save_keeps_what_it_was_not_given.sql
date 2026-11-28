@@ -28,6 +28,21 @@ end
 $f$;
 revoke execute on function pg_temp.anchor_once(text, text, text, text) from public;
 
+-- a statement whose spelling differs between a replay from empty and a database that was patched by hand: found by its first and
+-- last words, exactly once, whatever the spacing between them
+create or replace function pg_temp.replace_statement(p_def text, p_pattern text, p_new text, p_what text)
+returns text
+language plpgsql
+as $f$
+begin
+  if (select count(*) from regexp_matches(p_def, p_pattern, 'g')) <> 1 then
+    raise exception '0986: % is not found exactly once', p_what using errcode = 'P0001';
+  end if;
+  return regexp_replace(p_def, p_pattern, replace(p_new, '\', '\\'));
+end
+$f$;
+revoke execute on function pg_temp.replace_statement(text, text, text, text) from public;
+
 do $migration$
 declare
   v_def text;
@@ -39,15 +54,14 @@ begin
     v_def := pg_temp.anchor_once(v_def, v_old_header, v_new_header, 'the parameters');
     v_def := pg_temp.anchor_once(v_def, $o$  if coalesce(array_length(p_contexts, 1), 0) = 0 then$o$,
       $n$  if p_contexts is not null and coalesce(array_length(p_contexts, 1), 0) = 0 then$n$, 'the contexts check');
-    v_def := pg_temp.anchor_once(v_def, $o$          p_visibility, p_contexts, coalesce(p_group_key,'general')$o$,
-      $n$          coalesce(p_visibility,'self'), coalesce(p_contexts, array['profile']::text[]), coalesce(p_group_key,'general')$n$, 'the new question');
-    v_def := pg_temp.anchor_once(v_def,
-      $o$    set type = excluded.type, required = excluded.required,
-        personal_data = excluded.personal_data, visibility = excluded.visibility,
-        contexts = excluded.contexts, group_key = excluded.group_key,
-        sort_order = excluded.sort_order, validation = excluded.validation,
-        active = excluded.active$o$,
-      $n$    set type = excluded.type,
+    v_def := pg_temp.replace_statement(v_def, 'insert into public\.workspace_field_definitions.*?returning id into v_id;',
+      $n$insert into public.workspace_field_definitions
+    (workspace_id, key, type, required, personal_data, visibility, contexts, group_key, sort_order, validation, active)
+  values (p_workspace_id, p_key, p_type, coalesce(p_required, false), coalesce(p_personal_data, true),
+          coalesce(p_visibility, 'self'), coalesce(p_contexts, array['profile']::text[]), coalesce(p_group_key, 'general'),
+          coalesce(p_sort_order, 0), coalesce(p_validation, '{}'::jsonb), coalesce(p_active, true))
+  on conflict (workspace_id, key) do update
+    set type = excluded.type,
         required = coalesce(p_required, public.workspace_field_definitions.required),
         personal_data = coalesce(p_personal_data, public.workspace_field_definitions.personal_data),
         visibility = coalesce(p_visibility, public.workspace_field_definitions.visibility),
@@ -55,11 +69,9 @@ begin
         group_key = coalesce(p_group_key, public.workspace_field_definitions.group_key),
         sort_order = coalesce(p_sort_order, public.workspace_field_definitions.sort_order),
         validation = coalesce(p_validation, public.workspace_field_definitions.validation),
-        active = coalesce(p_active, public.workspace_field_definitions.active)$n$, 'the question that exists');
-    v_def := pg_temp.anchor_once(v_def,
-      $o$  delete from public.workspace_field_labels where definition_id = v_id;
-  insert into public.workspace_field_labels (workspace_id, definition_id, locale, label)
-  select p_workspace_id, v_id, k, p_labels->>k from jsonb_object_keys(p_labels) k;$o$,
+        active = coalesce(p_active, public.workspace_field_definitions.active)
+  returning id into v_id;$n$, 'the question that is saved');
+    v_def := pg_temp.replace_statement(v_def, 'delete from public\.workspace_field_labels where definition_id = v_id;.*?from jsonb_object_keys\(p_labels\) k;',
       $n$  -- the labels are upserted by locale: the help text of a label the save names is kept; a locale it does not name goes
   delete from public.workspace_field_labels where definition_id = v_id and not (locale in (select jsonb_object_keys(p_labels)));
   insert into public.workspace_field_labels (workspace_id, definition_id, locale, label)
