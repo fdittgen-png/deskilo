@@ -1,0 +1,14 @@
+{
+  "standaloneInvoiceLineService": "Service of the catalogue",
+  "@standaloneInvoiceLineService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineService"
+  },
+  "standaloneInvoiceLineNoService": "No service (free line)",
+  "@standaloneInvoiceLineNoService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineNoService"
+  },
+  "standaloneFieldService": "a service of the catalogue that is on offer",
+  "@standaloneFieldService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneFieldService"
+  }
+}

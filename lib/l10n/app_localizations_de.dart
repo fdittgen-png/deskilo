@@ -36758,6 +36758,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'eine Menge über null mit höchstens sechs Nachkommastellen';
 
   @override
+  String get standaloneFieldService =>
+      'eine Leistung des Katalogs, die angeboten wird';
+
+  @override
   String get standaloneFieldStock =>
       'Waren, die der Bestand so verkaufen kann, wie sie erfasst sind';
 
@@ -36825,6 +36829,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nichts aus dem Bestand (eine Dienstleistung)';
 
   @override
+  String get standaloneInvoiceLineNoService => 'Keine Leistung (freie Zeile)';
+
+  @override
   String get standaloneInvoiceLinePieces => 'Etiketten der verkauften Stücke';
 
   @override
@@ -36842,6 +36849,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get standaloneInvoiceLineRateDefault => 'Standardsatz des Betriebs';
+
+  @override
+  String get standaloneInvoiceLineService => 'Leistung aus dem Katalog';
 
   @override
   String get standaloneInvoiceLineUnit => 'Einheit';

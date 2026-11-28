@@ -21225,6 +21225,10 @@
   "@standaloneFieldQuantity": {
     "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
   },
+  "standaloneFieldService": "un servizio del catalogo che è in offerta",
+  "@standaloneFieldService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneFieldService"
+  },
   "standaloneFieldStock": "beni che le scorte possono vendere così come inseriti",
   "@standaloneFieldStock": {
     "description": "#4433 goods sold on an invoice: standaloneFieldStock"
@@ -21306,6 +21310,10 @@
   "@standaloneInvoiceLineNoGoods": {
     "description": "#4433 goods sold on an invoice: standaloneInvoiceLineNoGoods"
   },
+  "standaloneInvoiceLineNoService": "Nessun servizio (riga libera)",
+  "@standaloneInvoiceLineNoService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineNoService"
+  },
   "standaloneInvoiceLinePieces": "Etichette dei pezzi venduti",
   "@standaloneInvoiceLinePieces": {
     "description": "#4433 goods sold on an invoice: standaloneInvoiceLinePieces"
@@ -21329,6 +21337,10 @@
   "standaloneInvoiceLineRateDefault": "L’aliquota predefinita dell’attività",
   "@standaloneInvoiceLineRateDefault": {
     "description": "#4165 standalone invoice composer: standaloneInvoiceLineRateDefault"
+  },
+  "standaloneInvoiceLineService": "Servizio del catalogo",
+  "@standaloneInvoiceLineService": {
+    "description": "#4510 FIN-05 service catalogue as a line source: standaloneInvoiceLineService"
   },
   "standaloneInvoiceLineUnit": "Unità",
   "@standaloneInvoiceLineUnit": {

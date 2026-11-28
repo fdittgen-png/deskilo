@@ -124,6 +124,7 @@ class DemoStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
         'commercial': {
           'version': 1,
           'line_id': l.lineId,
+          if (l.serviceId != null) 'service_id': l.serviceId,
           'quantity': qty.value!.text,
           'unit': {'code': l.unitCode, 'un_ece_code': l.unEceCode, 'label': l.unitLabel},
           'unit_price': {

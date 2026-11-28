@@ -21,6 +21,7 @@ String _text(AppLocalizations l, String key) {
       'vat_rate' => l.standaloneFieldVatRate,
       'amount' => l.standaloneFieldAmount,
       'line_id' => l.standaloneFieldLineId,
+      'service' => l.standaloneFieldService,
       final other => _goodsFact(l, other) ?? other ?? key,
     };
     return l.standaloneInvoiceMissingLine(line.group(1)!, fact);
